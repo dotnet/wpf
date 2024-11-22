@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -39,10 +41,7 @@ namespace System.Xaml.Schema
 
         public XamlTypeName(XamlType xamlType)
         {
-            if (xamlType == null)
-            {
-                throw new ArgumentNullException(nameof(xamlType));
-            }
+            ArgumentNullException.ThrowIfNull(xamlType);
             Name = xamlType.Name;
             Namespace = xamlType.GetXamlNamespaces()[0];
             if (xamlType.TypeArguments != null)
@@ -66,6 +65,8 @@ namespace System.Xaml.Schema
             }
         }
 
+        internal List<XamlTypeName> TypeArgumentsList => _typeArguments;
+
         public override string ToString()
         {
             return ToString(null);
@@ -85,27 +86,15 @@ namespace System.Xaml.Schema
 
         public static string ToString(IList<XamlTypeName> typeNameList, INamespacePrefixLookup prefixLookup)
         {
-            if (typeNameList == null)
-            {
-                throw new ArgumentNullException(nameof(typeNameList));
-            }
-            if (prefixLookup == null)
-            {
-                throw new ArgumentNullException(nameof(prefixLookup));
-            }
+            ArgumentNullException.ThrowIfNull(typeNameList);
+            ArgumentNullException.ThrowIfNull(prefixLookup);
             return ConvertListToStringInternal(typeNameList, prefixLookup.LookupPrefix);
         }
 
         public static XamlTypeName Parse(string typeName, IXamlNamespaceResolver namespaceResolver)
         {
-            if (typeName == null)
-            {
-                throw new ArgumentNullException(nameof(typeName));
-            }
-            if (namespaceResolver == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceResolver));
-            }
+            ArgumentNullException.ThrowIfNull(typeName);
+            ArgumentNullException.ThrowIfNull(namespaceResolver);
 
             string error;
             XamlTypeName result = ParseInternal(typeName, namespaceResolver.GetNamespace, out error);
@@ -118,14 +107,8 @@ namespace System.Xaml.Schema
 
         public static IList<XamlTypeName> ParseList(string typeNameList, IXamlNamespaceResolver namespaceResolver)
         {
-            if (typeNameList == null)
-            {
-                throw new ArgumentNullException(nameof(typeNameList));
-            }
-            if (namespaceResolver == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceResolver));
-            }
+            ArgumentNullException.ThrowIfNull(typeNameList);
+            ArgumentNullException.ThrowIfNull(namespaceResolver);
 
             string error;
             IList<XamlTypeName> result = ParseListInternal(typeNameList, namespaceResolver.GetNamespace, out error);
@@ -139,14 +122,8 @@ namespace System.Xaml.Schema
         public static bool TryParse(string typeName, IXamlNamespaceResolver namespaceResolver,
             out XamlTypeName result)
         {
-            if (typeName == null)
-            {
-                throw new ArgumentNullException(nameof(typeName));
-            }
-            if (namespaceResolver == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceResolver));
-            }
+            ArgumentNullException.ThrowIfNull(typeName);
+            ArgumentNullException.ThrowIfNull(namespaceResolver);
 
             result = ParseInternal(typeName, namespaceResolver.GetNamespace, out _);
             return (result != null);
@@ -155,14 +132,8 @@ namespace System.Xaml.Schema
         public static bool TryParseList(string typeNameList, IXamlNamespaceResolver namespaceResolver,
             out IList<XamlTypeName> result)
         {
-            if (typeNameList == null)
-            {
-                throw new ArgumentNullException(nameof(typeNameList));
-            }
-            if (namespaceResolver == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceResolver));
-            }
+            ArgumentNullException.ThrowIfNull(typeNameList);
+            ArgumentNullException.ThrowIfNull(namespaceResolver);
 
             result = ParseListInternal(typeNameList, namespaceResolver.GetNamespace, out _);
             return (result != null);
@@ -215,7 +186,7 @@ namespace System.Xaml.Schema
             return xamlTypeName;
         }
 
-        internal static IList<XamlTypeName> ParseListInternal(string typeNameList, 
+        internal static IList<XamlTypeName> ParseListInternal(string typeNameList,
             Func<string, string> prefixResolver, out string error)
         {
             GenericTypeNameParser nameParser = new GenericTypeNameParser(prefixResolver);
@@ -234,11 +205,11 @@ namespace System.Xaml.Schema
         {
             if (Namespace == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.XamlTypeNameNamespaceIsNull));
+                throw new InvalidOperationException(SR.XamlTypeNameNamespaceIsNull);
             }
             if (string.IsNullOrEmpty(Name))
             {
-                throw new InvalidOperationException(SR.Get(SRID.XamlTypeNameNameIsNullOrEmpty));
+                throw new InvalidOperationException(SR.XamlTypeNameNameIsNullOrEmpty);
             }
             if (prefixGenerator == null)
             {
@@ -251,7 +222,7 @@ namespace System.Xaml.Schema
                 string prefix = prefixGenerator.Invoke(Namespace);
                 if (prefix == null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.XamlTypeNameCannotGetPrefix, Namespace));
+                    throw new InvalidOperationException(SR.Format(SR.XamlTypeNameCannotGetPrefix, Namespace));
                 }
                 if (prefix.Length != 0)
                 {

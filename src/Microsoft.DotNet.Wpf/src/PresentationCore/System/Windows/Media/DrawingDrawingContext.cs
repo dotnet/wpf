@@ -23,7 +23,6 @@ using System.Windows.Media.Media3D;
 using System.Windows.Threading;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {
@@ -1064,7 +1063,7 @@ namespace System.Windows.Media
             if ( (_previousDrawingGroupStack == null) ||
                  (_previousDrawingGroupStack.Count == 0))
             {
-                throw new InvalidOperationException(SR.Get(SRID.DrawingContext_TooManyPops));
+                throw new InvalidOperationException(SR.DrawingContext_TooManyPops);
             }
 
             // Restore the previous value of the current drawing group
@@ -1134,7 +1133,7 @@ namespace System.Windows.Media
         public override void Close()
         {
             // Throw an exception if this object has already been closed/disposed.
-            VerifyNotDisposed();
+            ObjectDisposedException.ThrowIf(_disposed, typeof(DrawingDrawingContext));
 
             // Close this object
             ((IDisposable)this).Dispose();
@@ -1243,7 +1242,7 @@ namespace System.Windows.Media
         {
             base.VerifyApiNonstructuralChange();
 
-            VerifyNotDisposed();
+            ObjectDisposedException.ThrowIf(_disposed, typeof(DrawingDrawingContext));
         }
 
         #endregion Protected Methods
@@ -1273,17 +1272,6 @@ namespace System.Windows.Media
         #endregion Internal Properties
 
         #region Private Methods
-
-        /// <summary>
-        /// Throws an exception if this object is already disposed.
-        /// </summary>
-        private void VerifyNotDisposed()
-        {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("DrawingDrawingContext");
-            }
-        }
 
         /// <summary>
         /// Freezes the given freezable if the fFreeze flag is true.  Used by

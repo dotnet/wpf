@@ -37,10 +37,7 @@ namespace System.Windows.Xps.Packaging
             )
             : base(xpsManager)
         {
-            if (null == part)
-            {
-                throw new ArgumentNullException("part");
-            }
+            ArgumentNullException.ThrowIfNull(part);
 
             this.Uri = part.Uri;
 
@@ -70,10 +67,7 @@ namespace System.Windows.Xps.Packaging
             Uri inUri
             )
         {
-            if( inUri == null )
-            {
-                throw new ArgumentNullException("inUri");
-            }
+            ArgumentNullException.ThrowIfNull(inUri);
             return new Uri(XpsManager.MakeRelativePath(this.Uri, inUri), UriKind.Relative);
         }
 

@@ -88,7 +88,7 @@ namespace MS.Internal.AppModel
                                    (Object.ReferenceEquals(destinationUri.Scheme, Uri.UriSchemeHttps)) ||
                                    destinationUri.IsFile;
 
-            bool fIsMailTo = String.Compare(destinationUri.Scheme, Uri.UriSchemeMailto, StringComparison.OrdinalIgnoreCase) == 0;
+            bool fIsMailTo = string.Equals(destinationUri.Scheme, Uri.UriSchemeMailto, StringComparison.OrdinalIgnoreCase);
 
             // We elevate to navigate the browser iff: 
             //  We are user initiated AND
@@ -151,7 +151,7 @@ namespace MS.Internal.AppModel
             }
             sei.lpFile = uri.ToString(); // It's safe to use Uri.ToString since there's an inheritance demand on it that prevents spoofing by subclasses.
             if (!UnsafeNativeMethods.ShellExecuteEx(sei))
-                throw new InvalidOperationException(SR.Get(SRID.FailToLaunchDefaultBrowser),
+                throw new InvalidOperationException(SR.FailToLaunchDefaultBrowser,
                     new System.ComponentModel.Win32Exception(/*uses the last Win32 error*/));
         }
 
@@ -172,7 +172,7 @@ namespace MS.Internal.AppModel
                 // The headers we pass in to IWebBrowser2.Navigate must
                 // be terminated with a \r\n because the browser then
                 // concatenates its own headers on to the end of that string.
-                referer = RefererHeader + referer + "\r\n";
+                referer = $"{RefererHeader}{referer}\r\n";
             }
 
             return referer;
@@ -350,7 +350,7 @@ namespace MS.Internal.AppModel
                 _secMgr.ProcessUrlAction(targetString,
                                             NativeMethods.URLACTION_FEATURE_ZONE_ELEVATION,
                                             (byte*)&policy,
-                                            Marshal.SizeOf(typeof(int)),
+                                            sizeof(int),
                                             null,
                                             0,
                                             NativeMethods.PUAF_NOUI,
@@ -427,7 +427,7 @@ namespace MS.Internal.AppModel
 
         // Object to be used for locking.  Using typeof(Util) causes an FxCop
         // violation DoNotLockOnObjectsWithWeakIdentity
-        private static object _lockObj = new object();
+        private static readonly object _lockObj = new object();
 
         private static UnsafeNativeMethods.IInternetSecurityManager _secMgr;
 

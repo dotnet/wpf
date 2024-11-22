@@ -18,7 +18,6 @@ using System.Windows;
 using System.Windows.Media;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.TextFormatting
 {
@@ -38,8 +37,7 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="length">number of characters</param>
         public TextEndOfSegment(int length)
         {
-            if (length <= 0)
-                throw new ArgumentOutOfRangeException("length", SR.Get(SRID.ParameterMustBeGreaterThanZero));
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(length);
 
             _length = length;
         }

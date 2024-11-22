@@ -49,16 +49,13 @@ namespace MS.Internal.Printing.Configuration
         public InternalPrintCapabilities(Stream xmlStream)
         {
             // Verify input parameter
-            if (xmlStream == null)
-            {
-                throw new ArgumentNullException("xmlStream");
-            }
+            ArgumentNullException.ThrowIfNull(xmlStream);
 
-            #if _DEBUG
+#if _DEBUG
             // Direct Trace output to console
             Trace.Listeners.Clear();
             Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
-            #endif
+#endif
 
             // Calculate the read-only counter values (this rely on the internal rules listed at
             // PrintSchema.Features type)

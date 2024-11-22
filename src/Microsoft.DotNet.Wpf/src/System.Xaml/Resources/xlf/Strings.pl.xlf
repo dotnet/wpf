@@ -989,7 +989,7 @@
       </trans-unit>
       <trans-unit id="ObjectReaderTypeCannotRoundtrip">
         <source>Unable to read objects of the type '{0}' because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
-        <target state="translated">Nie można odczytać obiektów typu „{0}”, ponieważ są one niedostępne dla konstruktorów. Aby zezwolić na używanie tego typu w kodzie XAML, dodaj konstruktora domyślnego, użyj atrybutu ConstructorArgumentAttribute lub dostarcz obiekt InstanceDescriptor.</target>
+        <target state="translated">Nie można odczytać obiektów typu „{0}”, ponieważ nie istnieją dostępne konstruktory. Aby zezwolić na używanie tego typu w kodzie XAML, dodaj konstruktor domyślny, użyj atrybutu ConstructorArgumentAttribute lub dostarcz obiekt InstanceDescriptor.</target>
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderTypeIsNested">
@@ -1052,11 +1052,6 @@
         <target state="translated">Strumień węzłów XAML: brak metody EndMember dla elementu {0}.{1} przed metodą StartMember „{2}”.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Parametr musi być większy lub równy zeru.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParentlessPropertyElement">
         <source>The property element '{0}' is not contained by an object element.</source>
         <target state="translated">Element właściwości „{0}” nie jest zawarty w elemencie obiektu.</target>
@@ -1110,11 +1105,6 @@
       <trans-unit id="ProvideValueCycle">
         <source>Cannot call MarkupExtension.ProvideValue because of a cyclical dependency. Properties inside a MarkupExtension cannot reference objects that reference the result of the MarkupExtension. The affected MarkupExtensions are:</source>
         <target state="translated">Nie można wywołać metody MarkupExtension.ProvideValue z powodu zależności cyklicznej. Właściwości wewnątrz obiektu MarkupExtension nie mogą odwoływać się do obiektów, które odwołują się do wyniku obiektu MarkupExtension. Chodzi o następujące obiekty MarkupExtension:</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">Nazwa typu „{0}” nie ma oczekiwanego formatu „nazwaKlasy, zestaw”.</target>
         <note />
       </trans-unit>
       <trans-unit id="QuoteCharactersOutOfPlace">
@@ -1399,7 +1389,7 @@
       </trans-unit>
       <trans-unit id="UnresolvedNamespace">
         <source>XAML namespace '{0}' is not resolved.</source>
-        <target state="translated">Przestrzeń nazw  XAML „{0}” nie została rozpoznana.</target>
+        <target state="translated">Przestrzeń nazw XAML „{0}” nie została rozpoznana.</target>
         <note />
       </trans-unit>
       <trans-unit id="UriNotFound">

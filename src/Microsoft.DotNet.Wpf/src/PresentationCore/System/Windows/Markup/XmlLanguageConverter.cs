@@ -113,10 +113,7 @@ namespace System.Windows.Markup
                                          object value,
                                          Type destinationType)
         {
-            if (destinationType == null)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
+            ArgumentNullException.ThrowIfNull(destinationType);
 
             XmlLanguage xmlLanguage = value as XmlLanguage;
             if (xmlLanguage != null)

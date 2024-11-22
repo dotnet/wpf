@@ -95,11 +95,7 @@ namespace MS.Internal.AutomationProxies
         private static IRawElementProviderSimple Create(IntPtr hwnd, int idChild)
         {
             // Something is wrong if idChild is not zero 
-            if (idChild != 0)
-            {
-                System.Diagnostics.Debug.Assert (idChild == 0, "Invalid Child Id, idChild != 0");
-                throw new ArgumentOutOfRangeException("idChild", idChild, SR.Get(SRID.ShouldBeZero));
-            }
+            ArgumentOutOfRangeException.ThrowIfNotEqual(idChild, 0);
 
             ButtonType type;
             int style;
@@ -262,7 +258,7 @@ namespace MS.Internal.AutomationProxies
                 if (!WindowsFormsHelper.IsWindowsFormsControl(_hwnd, ref _windowsForms) && IsStartButton())
                 {
                     // Hard coded shortcut for the start button
-                    return SR.Get(SRID.KeyCtrl) + " + " + SR.Get(SRID.KeyEsc);
+                    return SR.KeyCtrl + " + " + SR.KeyEsc;
                 }
                 return Misc.AccessKey(Misc.ProxyGetText(_hwnd));
             }
@@ -376,13 +372,13 @@ namespace MS.Internal.AutomationProxies
         // Adds this element to the selection
         void ISelectionItemProvider.AddToSelection()
         {
-            throw new InvalidOperationException(SR.Get(SRID.DoesNotSupportMultipleSelection));
+            throw new InvalidOperationException(SR.DoesNotSupportMultipleSelection);
         }
 
         // Removes this element from the selection
         void ISelectionItemProvider.RemoveFromSelection()
         {
-            throw new InvalidOperationException(SR.Get(SRID.DoesNotSupportMultipleSelection));
+            throw new InvalidOperationException(SR.DoesNotSupportMultipleSelection);
         }
 
         // True if this element is part of the the selection

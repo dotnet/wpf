@@ -63,7 +63,7 @@ namespace MS.Internal.Drt
         public static extern int MapWindowPoints(NativeMethods.HWND hWndFrom, NativeMethods.HWND hWndTo, [In, Out] ref NativeMethods.RECT rect, int cPoints);
 
         [DllImport(PresentationNativeDll, EntryPoint="MapWindowPointsWrapper", SetLastError = true, ExactSpelling=true, CharSet=CharSet.Auto)]
-        public static extern int MapWindowPoints(NativeMethods.HWND hWndFrom, NativeMethods.HWND hWndTo, [In, Out] ref NativeMethods.POINT pt, int cPoints);
+        public static extern int MapWindowPoints(NativeMethods.HWND hWndFrom, NativeMethods.HWND hWndTo, ref NativeMethods.POINT pt, int cPoints);
 
 #elif UIAUTOMATIONCLIENTSIDEPROVIDERS   // UIAutomationClientSideProviders
 
@@ -161,5 +161,8 @@ namespace MS.Internal.Drt
         public static extern IntPtr SetWindowLongPtrWndProc(HandleRef hWnd, int nIndex, NativeMethods.WndProc dwNewLong);
 
 #endif
+
+        [DllImport(PresentationNativeDll, EntryPoint="LsDisableSpecialCharacterLigature")]
+        public static extern void LsDisableSpecialCharacterLigature(bool fDisable);
     }
 }

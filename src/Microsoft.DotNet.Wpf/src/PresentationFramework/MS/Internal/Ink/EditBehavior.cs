@@ -49,14 +49,8 @@ namespace MS.Internal.Ink
         /// <param name="inkCanvas">InkCanvas instance</param>
         internal EditingBehavior(EditingCoordinator editingCoordinator, InkCanvas inkCanvas)
         {
-            if (inkCanvas == null)
-            {
-                throw new ArgumentNullException("inkCanvas");
-            }
-            if (editingCoordinator == null)
-            {
-                throw new ArgumentNullException("editingCoordinator");
-            }
+            ArgumentNullException.ThrowIfNull(inkCanvas);
+            ArgumentNullException.ThrowIfNull(editingCoordinator);
             _inkCanvas = inkCanvas;
             _editingCoordinator = editingCoordinator;
         }

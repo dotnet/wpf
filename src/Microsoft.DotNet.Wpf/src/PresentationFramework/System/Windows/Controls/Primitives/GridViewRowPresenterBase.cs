@@ -36,7 +36,7 @@ namespace System.Windows.Controls.Primitives
         /// <returns></returns>
         public override string ToString()
         {
-            return SR.Get(SRID.ToStringFormatString_GridViewRowPresenterBase,
+            return SR.Format(SR.ToStringFormatString_GridViewRowPresenterBase,
                 this.GetType(),
                 (Columns != null) ? Columns.Count : 0);
         }
@@ -127,7 +127,7 @@ namespace System.Windows.Controls.Primitives
         {
             if (_uiElementCollection == null)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
             return _uiElementCollection[index];
         }
@@ -384,10 +384,8 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         public static void AddListener(GridViewColumnCollection source, IWeakEventListener listener)
         {
-            if (source == null)
-                throw new ArgumentNullException("source");
-            if (listener == null)
-                throw new ArgumentNullException("listener");
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(listener);
 
             CurrentManager.ProtectedAddListener(source, listener);
         }
@@ -397,10 +395,8 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         public static void RemoveListener(GridViewColumnCollection source, IWeakEventListener listener)
         {
-            if (source == null)
-                throw new ArgumentNullException("source");
-            if (listener == null)
-                throw new ArgumentNullException("listener");
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(listener);
 
             CurrentManager.ProtectedRemoveListener(source, listener);
         }
@@ -410,8 +406,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         public static void AddHandler(GridViewColumnCollection source, EventHandler<NotifyCollectionChangedEventArgs> handler)
         {
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(handler);
 
             CurrentManager.ProtectedAddHandler(source, handler);
         }
@@ -421,8 +416,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         public static void RemoveHandler(GridViewColumnCollection source, EventHandler<NotifyCollectionChangedEventArgs> handler)
         {
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(handler);
 
             CurrentManager.ProtectedRemoveHandler(source, handler);
         }

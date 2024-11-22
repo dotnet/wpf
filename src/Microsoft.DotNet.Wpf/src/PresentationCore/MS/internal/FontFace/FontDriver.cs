@@ -168,13 +168,13 @@ namespace MS.Internal.FontFace
         {
             if (_technology == FontTechnology.TrueTypeCollection)
             {
-                if (faceIndex < 0 || faceIndex >= _numFaces)
-                    throw new ArgumentOutOfRangeException("faceIndex");
+                ArgumentOutOfRangeException.ThrowIfNegative(faceIndex);
+                ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(faceIndex, _numFaces);
             }
             else
             {
                 if (faceIndex != 0)
-                    throw new ArgumentOutOfRangeException("faceIndex", SR.Get(SRID.FaceIndexValidOnlyForTTC));
+                    throw new ArgumentOutOfRangeException("faceIndex", SR.FaceIndexValidOnlyForTTC);
             }
 
             try

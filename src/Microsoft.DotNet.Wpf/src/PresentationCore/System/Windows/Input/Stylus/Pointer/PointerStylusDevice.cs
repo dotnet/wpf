@@ -15,7 +15,6 @@ using System.Windows.Input.StylusPlugIns;
 using System.Windows.Interop;
 using System.Windows.Media;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input.StylusPointer
 {
@@ -76,7 +75,7 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// The PresentationSource that the latest input for this device is associated with
         /// </summary>
-        private SecurityCriticalDataClass<PresentationSource> _inputSource = null;
+        private PresentationSource _inputSource;
 
         /// <summary>
         /// The time (in ticks) when the last event occurred
@@ -188,13 +187,7 @@ namespace System.Windows.Input.StylusPointer
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        internal override PresentationSource ActiveSource
-        {
-            get
-            {
-                return _inputSource.Value;
-            }
-        }
+        internal override PresentationSource ActiveSource => _inputSource;
 
         #endregion
 
@@ -342,17 +335,7 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         ///     Returns the PresentationSource that is reporting input for this device.
         /// </summary>
-        internal override PresentationSource CriticalActiveSource
-        {
-            get
-            {
-                if (_inputSource != null)
-                {
-                    return _inputSource.Value;
-                }
-                return null;
-            }
-        }
+        internal override PresentationSource CriticalActiveSource => _inputSource;
 
         /// <summary>
         /// Returns the button collection that is associated with the StylusDevice.
@@ -570,12 +553,12 @@ namespace System.Windows.Input.StylusPointer
                 element = null;
             }
 
-            // Validate that element is either a UIElement or a ContentElement
+            // Validate that element is either a UIElement, a ContentElement or a UIElement3D.
             DependencyObject doStylusCapture = element as DependencyObject;
 
             if (doStylusCapture != null && !InputElement.IsValid(element))
             {
-                throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, doStylusCapture.GetType()));
+                throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, doStylusCapture.GetType()));
             }
 
             doStylusCapture?.VerifyAccess();
@@ -632,14 +615,13 @@ namespace System.Windows.Input.StylusPointer
         {
             // Simulate a stylus move (if we are current stylus, inrange, visuals still valid to update
             // and has moved).
-            if (InRange && _inputSource != null && _inputSource.Value != null &&
-                _inputSource.Value.CompositionTarget != null && !_inputSource.Value.CompositionTarget.IsDisposed)
+            if (InRange && _inputSource?.CompositionTarget is { } target && !target.IsDisposed)
             {
                 Point rawScreenPoint = new Point(_pointerData.Info.ptPixelLocationRaw.X, _pointerData.Info.ptPixelLocationRaw.Y);
-                Point ptDevice = PointUtil.ScreenToClient(rawScreenPoint, _inputSource.Value);
+                Point ptDevice = PointUtil.ScreenToClient(rawScreenPoint, _inputSource);
 
                 // GlobalHitTest always returns an IInputElement, so we are sure to have one.
-                IInputElement stylusOver = Input.StylusDevice.GlobalHitTest(_inputSource.Value, ptDevice);
+                IInputElement stylusOver = Input.StylusDevice.GlobalHitTest(_inputSource, ptDevice);
                 bool fOffsetChanged = false;
 
                 if (_stylusOver == stylusOver)
@@ -669,7 +651,7 @@ namespace System.Windows.Input.StylusPointer
 
                         RawStylusInputReport report = new RawStylusInputReport(InputMode.Foreground,
                                                                              timeStamp,
-                                                                             _inputSource.Value,
+                                                                             _inputSource,
                                                                              InAir ? RawStylusActions.InAirMove : RawStylusActions.Move,
                                                                              () => { return PointerTabletDevice.StylusPointDescription; },
                                                                              TabletDevice.Id,
@@ -710,10 +692,7 @@ namespace System.Windows.Input.StylusPointer
         /// </summary>
         internal override StylusPointCollection GetStylusPoints(IInputElement relativeTo, StylusPointDescription subsetToReformatTo)
         {
-            if (null == subsetToReformatTo)
-            {
-                throw new ArgumentNullException("subsetToReformatTo");
-            }
+            ArgumentNullException.ThrowIfNull(subsetToReformatTo);
             // Fake up an empty one if we have to.
             if (_currentStylusPoints == null)
             {
@@ -730,7 +709,7 @@ namespace System.Windows.Input.StylusPointer
         {
             VerifyAccess();
 
-            // Validate that relativeTo is either a UIElement or a ContentElement
+            // Validate that relativeTo is either a UIElement, a ContentElement or a UIElement3D.
             if (relativeTo != null && !InputElement.IsValid(relativeTo))
             {
                 throw new InvalidOperationException();
@@ -749,9 +728,9 @@ namespace System.Windows.Input.StylusPointer
             }
             else
             {
-                if (_inputSource != null)
+                if (_inputSource is not null)
                 {
-                    relativePresentationSource = _inputSource.Value;
+                    relativePresentationSource = _inputSource;
                 }
             }
 
@@ -814,7 +793,7 @@ namespace System.Windows.Input.StylusPointer
         {
             _lastEventTimeTicks = Environment.TickCount;
 
-            _inputSource = new SecurityCriticalDataClass<PresentationSource>(inputSource);
+            _inputSource = inputSource;
 
             _pointerData = pointerData;
 
@@ -839,7 +818,7 @@ namespace System.Windows.Input.StylusPointer
             if (PointerTabletDevice.Type == TabletDeviceType.Touch)
             {
                 // If we are a touch device, sync the ActiveSource
-                TouchDevice.ChangeActiveSource(_inputSource.Value);
+                TouchDevice.ChangeActiveSource(_inputSource);
             }
         }
 
@@ -1095,10 +1074,10 @@ namespace System.Windows.Input.StylusPointer
                         IInputElement inputElementHit = _stylusCapture;
 
                         // See if we need to update over for subtree mode.
-                        if (CapturedMode == CaptureMode.SubTree && _inputSource != null && _inputSource.Value != null)
+                        if (CapturedMode == CaptureMode.SubTree && _inputSource is not null)
                         {
-                            Point pt = _pointerLogic.DeviceUnitsFromMeasureUnits(_inputSource.Value, GetPosition(null));
-                            inputElementHit = FindTarget(_inputSource.Value, pt);
+                            Point pt = _pointerLogic.DeviceUnitsFromMeasureUnits(_inputSource, GetPosition(null));
+                            inputElementHit = FindTarget(_inputSource, pt);
                         }
 
                         ChangeStylusOver(inputElementHit);
@@ -1106,11 +1085,11 @@ namespace System.Windows.Input.StylusPointer
                     else
                     {
                         // Only try to update over if we have a valid input source.
-                        if (_inputSource != null && _inputSource.Value != null)
+                        if (_inputSource is not null)
                         {
                             Point pt = GetPosition(null); // relative to window (root element)
-                            pt = _pointerLogic.DeviceUnitsFromMeasureUnits(_inputSource.Value, pt); // change back to device coords.
-                            IInputElement currentOver = Input.StylusDevice.GlobalHitTest(_inputSource.Value, pt);
+                            pt = _pointerLogic.DeviceUnitsFromMeasureUnits(_inputSource, pt); // change back to device coords.
+                            IInputElement currentOver = Input.StylusDevice.GlobalHitTest(_inputSource, pt);
                             ChangeStylusOver(currentOver);
                         }
                     }
@@ -1160,7 +1139,7 @@ namespace System.Windows.Input.StylusPointer
         internal GeneralTransform GetTabletToElementTransform(IInputElement relativeTo)
         {
             GeneralTransformGroup group = new GeneralTransformGroup();
-            Matrix toDevice = _inputSource.Value.CompositionTarget.TransformToDevice;
+            Matrix toDevice = _inputSource.CompositionTarget.TransformToDevice;
             toDevice.Invert();
             group.Children.Add(new MatrixTransform(PointerTabletDevice.TabletToScreen * toDevice));
             group.Children.Add(StylusDevice.GetElementTransform(relativeTo));

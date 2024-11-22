@@ -23,7 +23,6 @@ using System.Runtime.InteropServices;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Animation
 {
@@ -270,7 +269,7 @@ namespace System.Windows.Media.Animation
 
                     default:
                         // Invalid enum argument
-                        throw new InvalidEnumArgumentException(SR.Get(SRID.Enum_Invalid, "TimeSeekOrigin"));
+                        throw new InvalidEnumArgumentException(SR.Format(SR.Enum_Invalid, "TimeSeekOrigin"));
                 }
 
                 // Truncate to the beginning

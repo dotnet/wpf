@@ -135,8 +135,8 @@ namespace System.Windows.Xps.Packaging
         /// Gets the PrintTicket associated with this fixed page.
         /// </summary>
         /// <value>Value can be a PrintTicket or null.</value>
-        /// <exception cref="SRID.ReachPackaging_PrintTicketAlreadyCommitted">part is null.</exception>
-        /// <exception cref="SRID.ReachPackaging_NotAPrintTicket">part is null.</exception>
+        /// <exception cref="SR.ReachPackaging_PrintTicketAlreadyCommitted">part is null.</exception>
+        /// <exception cref="SR.ReachPackaging_NotAPrintTicket">part is null.</exception>
         PrintTicket PrintTicket { get; }
 
         /// <summary>
@@ -374,8 +374,8 @@ namespace System.Windows.Xps.Packaging
         /// committed to the package.  The commit happens when a valid PrintTicket
         /// is set and a subsequent flush on the document occurs.
         /// </value>
-        /// <exception cref="SRID.ReachPackaging_PrintTicketAlreadyCommitted">part is null.</exception>
-        /// <exception cref="SRID.ReachPackaging_NotAPrintTicket">part is null.</exception>
+        /// <exception cref="SR.ReachPackaging_PrintTicketAlreadyCommitted">part is null.</exception>
+        /// <exception cref="SR.ReachPackaging_NotAPrintTicket">part is null.</exception>
         PrintTicket PrintTicket { set; }
 
         /// <summary>
@@ -452,10 +452,7 @@ namespace System.Windows.Xps.Packaging
             )
             : base(xpsManager)
         {
-            if (null == part)
-            {
-                throw new ArgumentNullException(String.Format(CultureInfo.InvariantCulture, "part"));
-            }
+            ArgumentNullException.ThrowIfNull(part);
 
             this.Uri = part.Uri;
             _metroPart = part;
@@ -498,8 +495,8 @@ namespace System.Windows.Xps.Packaging
         /// it will cause an exception.
         /// </summary>
         /// <value>Value can be a PrintTicket or null.</value>
-        /// <exception cref="SRID.ReachPackaging_PrintTicketAlreadyCommitted">part is null.</exception>
-        /// <exception cref="SRID.ReachPackaging_NotAPrintTicket">part is null.</exception>
+        /// <exception cref="SR.ReachPackaging_PrintTicketAlreadyCommitted">part is null.</exception>
+        /// <exception cref="SR.ReachPackaging_NotAPrintTicket">part is null.</exception>
         public PrintTicket PrintTicket
         {
             get
@@ -516,11 +513,11 @@ namespace System.Windows.Xps.Packaging
                 {
                     if (_isPrintTicketCommitted)
                     {
-                        throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_PrintTicketAlreadyCommitted));
+                        throw new XpsPackagingException(SR.ReachPackaging_PrintTicketAlreadyCommitted);
                     }
                     if (!value.GetType().Equals(typeof(PrintTicket)))
                     {
-                        throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_NotAPrintTicket));
+                        throw new XpsPackagingException(SR.ReachPackaging_NotAPrintTicket);
                     }
 
                     _printTicket = value.Clone();
@@ -860,7 +857,7 @@ namespace System.Windows.Xps.Packaging
             if (this.StoryFragment != null)
             {
                 // StoryFragments already available for this FixedPage
-                throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_MoreThanOneStoryFragment));
+                throw new XpsPackagingException(SR.ReachPackaging_MoreThanOneStoryFragment);
             }
 
             Uri pageUri = this.CurrentXpsManager.CreateFragmentUri(PageNumber);
@@ -1194,7 +1191,7 @@ namespace System.Windows.Xps.Packaging
         /// <exception cref="ObjectDisposedException">FixedPageReader has already been disposed</exception>
         /// <exception cref="ArgumentNullException">imageType is null.</exception>
         /// <exception cref="ArgumentException">imageType is an empty string.</exception>
-        /// <exception cref="SRID.ReachPackaging_UnsupportedImageType">Unsupported image type</exception>
+        /// <exception cref="SR.ReachPackaging_UnsupportedImageType">Unsupported image type</exception>
         public
         XpsImage
         AddImage(
@@ -1218,7 +1215,7 @@ namespace System.Windows.Xps.Packaging
         /// <exception cref="ObjectDisposedException">FixedPageReader has already been disposed</exception>
         /// <exception cref="ArgumentNullException">imageType is null.</exception>
         /// <exception cref="ArgumentException">imageType is an empty string.</exception>
-        /// <exception cref="SRID.ReachPackaging_UnsupportedImageType">Unsupported image type</exception>
+        /// <exception cref="SR.ReachPackaging_UnsupportedImageType">Unsupported image type</exception>
         public
         XpsImage
         AddImage(
@@ -1229,13 +1226,10 @@ namespace System.Windows.Xps.Packaging
             {
                 throw new ObjectDisposedException("FixedPageReader");
             }
-            if (null == mimeType)
-            {
-                throw new ArgumentNullException("mimeType");
-            }
+            ArgumentNullException.ThrowIfNull(mimeType);
             if (0 == mimeType.Length)
             {
-                throw new ArgumentException(SR.Get(SRID.ReachPackaging_InvalidType));
+                throw new ArgumentException(SR.ReachPackaging_InvalidType);
             }
 
             return AddImage(new ContentType(mimeType));
@@ -1252,18 +1246,15 @@ namespace System.Windows.Xps.Packaging
             {
                 throw new ObjectDisposedException("FixedPageReader");
             }
-            if (null == mimeType)
-            {
-                throw new ArgumentNullException("mimeType");
-            }
+            ArgumentNullException.ThrowIfNull(mimeType);
             if (ContentType.Empty.AreTypeAndSubTypeEqual(mimeType))
             {
-                throw new ArgumentException(SR.Get(SRID.ReachPackaging_InvalidContentType, mimeType.ToString()));
+                throw new ArgumentException(SR.Format(SR.ReachPackaging_InvalidContentType, mimeType.ToString()));
             }
 
             if (!XpsManager.SupportedImageType(mimeType))
             {
-                throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_UnsupportedImageType));
+                throw new XpsPackagingException(SR.ReachPackaging_UnsupportedImageType);
             }
 
             //
@@ -1595,7 +1586,7 @@ namespace System.Windows.Xps.Packaging
                 {
                     if (_storyFragment != null)
                     {
-                        throw new InvalidDataException(SR.Get(SRID.ReachPackaging_MoreThanOneStoryFragment));
+                        throw new InvalidDataException(SR.ReachPackaging_MoreThanOneStoryFragment);
                     }
                     _storyFragment = new XpsStructure( CurrentXpsManager, this, part );
                 }
@@ -1866,26 +1857,23 @@ namespace System.Windows.Xps.Packaging
             Uri imageUri
             )
         {
-            //Extract file extension
-            String path = imageUri.OriginalString;
-            String extension = Path.GetExtension(path).ToLower(CultureInfo.InvariantCulture);
-            //remove .
-            extension = extension.Substring(1);
-
-            ContentType contentType = null;
-            if (String.CompareOrdinal(extension, XpsS0Markup.JpgExtension) == 0)
+            //Extract file extension without '.'
+            ReadOnlySpan<char> path = imageUri.OriginalString.AsSpan();
+            ReadOnlySpan<char> extension = Path.GetExtension(path).Slice(1);
+            ContentType contentType;
+            if (extension.Equals(XpsS0Markup.JpgExtension, StringComparison.OrdinalIgnoreCase))
             {
-                contentType =  XpsS0Markup.JpgContentType;
+                contentType = XpsS0Markup.JpgContentType;
             }
-            else if (String.CompareOrdinal(extension, XpsS0Markup.PngExtension) == 0)
+            else if (extension.Equals(XpsS0Markup.PngExtension, StringComparison.OrdinalIgnoreCase))
             {
                 contentType = XpsS0Markup.PngContentType;
             }
-            else if (String.CompareOrdinal(extension, XpsS0Markup.TifExtension) == 0)
+            else if (extension.Equals(XpsS0Markup.TifExtension, StringComparison.OrdinalIgnoreCase))
             {
                 contentType = XpsS0Markup.TifContentType;
             }
-            else if (String.CompareOrdinal(extension, XpsS0Markup.WdpExtension) == 0)
+            else if (extension.Equals(XpsS0Markup.WdpExtension, StringComparison.OrdinalIgnoreCase))
             {
                 contentType = XpsS0Markup.WdpContentType;
             }
@@ -1894,9 +1882,8 @@ namespace System.Windows.Xps.Packaging
                 //default to PNG
                 contentType = XpsS0Markup.PngContentType;
             }
-
             return contentType;
-         }
+        }
 
 
         /// <summary>
@@ -1917,11 +1904,11 @@ namespace System.Windows.Xps.Packaging
         {
             //Extract file extension
             String path = fontUri.OriginalString;
-            String extension = Path.GetExtension(path).ToLower(CultureInfo.InvariantCulture);
+            String extension = Path.GetExtension(path);
             String fileName = Path.GetFileNameWithoutExtension(path);
 
             ContentType contentType = null;
-            if (String.CompareOrdinal(extension, XpsS0Markup.ObfuscatedFontExt.ToLower(CultureInfo.InvariantCulture)) == 0)
+            if (string.Equals(extension, XpsS0Markup.ObfuscatedFontExt, StringComparison.OrdinalIgnoreCase))
             {
                 // Verify that the filename is a valid GUID string
                 // Until Guid has a TryParse method we will have to depend on an exception being thrown
@@ -1931,7 +1918,7 @@ namespace System.Windows.Xps.Packaging
                 }
                 catch( FormatException )
                 {
-                    throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_ObfucatedFontNeedGuid));
+                    throw new XpsPackagingException(SR.ReachPackaging_ObfucatedFontNeedGuid);
                 }
 
                 contentType =  XpsS0Markup.FontObfuscatedContentType;

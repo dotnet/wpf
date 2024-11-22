@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System;
 using System.Collections.Generic;
 using System.Xaml;
@@ -20,13 +22,13 @@ namespace MS.Internal.Xaml.Parser
 
         #region INamespacePrefixLookup Members
 
-        private int n = 0;
+        private int n;
         public string LookupPrefix(string ns)
         {
             // we really shouldn't generate extraneous new namespaces
             string newPrefix;
             do {
-                newPrefix = "prefix" + n++;
+                newPrefix = $"prefix{n++}";
             } while (_nsResolver(newPrefix) != null);
             _newNamespaces.Add(new NamespaceDeclaration(ns, newPrefix));
             return newPrefix;

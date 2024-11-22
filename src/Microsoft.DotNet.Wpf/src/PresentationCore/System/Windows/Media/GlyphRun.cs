@@ -40,7 +40,6 @@ using MS.Utility;
 using System.Security;
 using System.Windows.Interop;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {
@@ -411,38 +410,38 @@ namespace System.Windows.Media
                                     else
                                     {
                                         if (clusterMap[i] < clusterMap[i - 1])
-                                            throw new ArgumentException(SR.Get(SRID.ClusterMapEntriesShouldNotDecrease), "clusterMap");
+                                            throw new ArgumentException(SR.ClusterMapEntriesShouldNotDecrease, "clusterMap");
 
                                         if (clusterMap[i] >= GlyphCount)
-                                            throw new ArgumentException(SR.Get(SRID.ClusterMapEntryShouldPointWithinGlyphIndices), "clusterMap");
+                                            throw new ArgumentException(SR.ClusterMapEntryShouldPointWithinGlyphIndices, "clusterMap");
                                     }
                                 }
                             }
                             else
                             {
-                                throw new ArgumentException(SR.Get(SRID.ClusterMapFirstEntryMustBeZero), "clusterMap");
+                                throw new ArgumentException(SR.ClusterMapFirstEntryMustBeZero, "clusterMap");
                             }
                         }
                         else
                         {
-                            throw new ArgumentException(SR.Get(SRID.CollectionNumberOfElementsShouldBeEqualTo, characters.Count), "clusterMap");
+                            throw new ArgumentException(SR.Format(SR.CollectionNumberOfElementsShouldBeEqualTo, characters.Count), "clusterMap");
                         }
                     }
                     else
                     {
                         if (GlyphCount != characters.Count)
-                            throw new ArgumentException(SR.Get(SRID.CollectionNumberOfElementsShouldBeEqualTo, GlyphCount), "clusterMap");
+                            throw new ArgumentException(SR.Format(SR.CollectionNumberOfElementsShouldBeEqualTo, GlyphCount), "clusterMap");
                     }
                 }
 
                 if (caretStops != null && caretStops.Count != 0)
                 {
                     if (caretStops.Count != CodepointCount + 1)
-                        throw new ArgumentException(SR.Get(SRID.CollectionNumberOfElementsShouldBeEqualTo, CodepointCount + 1), "caretStops");
+                        throw new ArgumentException(SR.Format(SR.CollectionNumberOfElementsShouldBeEqualTo, CodepointCount + 1), "caretStops");
                 }
 
                 if (isSideways && (bidiLevel & 1) != 0)
-                    throw new ArgumentException(SR.Get(SRID.SidewaysRTLTextIsNotSupported));
+                    throw new ArgumentException(SR.SidewaysRTLTextIsNotSupported);
 
                 // NOTE:  In previous versions this function would estimate the size
                 // of this glyph run's bitmaps and compare it against the theoretical
@@ -454,34 +453,26 @@ namespace System.Windows.Media
             }
             else
             {
-                if (DoubleUtil.IsNaN(renderingEmSize))
-                    throw new ArgumentOutOfRangeException("renderingEmSize", SR.Get(SRID.ParameterValueCannotBeNaN));
-
-                if (renderingEmSize < 0.0)
-                    throw new ArgumentOutOfRangeException("renderingEmSize", SR.Get(SRID.ParameterValueCannotBeNegative));
-
-                if (glyphTypeface == null)
-                    throw new ArgumentNullException("glyphTypeface");
-
-                if (glyphIndices == null)
-                    throw new ArgumentNullException("glyphIndices");
+                ArgumentOutOfRangeException.ThrowIfEqual(renderingEmSize, double.NaN);
+                ArgumentOutOfRangeException.ThrowIfNegative(renderingEmSize);
+                ArgumentNullException.ThrowIfNull(glyphTypeface);
+                ArgumentNullException.ThrowIfNull(glyphIndices);
 
                 if (glyphIndices.Count <= 0)
-                    throw new ArgumentException(SR.Get(SRID.CollectionNumberOfElementsMustBeGreaterThanZero), "glyphIndices");
+                    throw new ArgumentException(SR.CollectionNumberOfElementsMustBeGreaterThanZero, "glyphIndices");
 
                 if (glyphIndices.Count > MaxGlyphCount)
                 {
-                    throw new ArgumentException(SR.Get(SRID.CollectionNumberOfElementsMustBeLessOrEqualTo, MaxGlyphCount), "glyphIndices");
+                    throw new ArgumentException(SR.Format(SR.CollectionNumberOfElementsMustBeLessOrEqualTo, MaxGlyphCount), "glyphIndices");
                 }
 
-                if (advanceWidths == null)
-                    throw new ArgumentNullException("advanceWidths");
+                ArgumentNullException.ThrowIfNull(advanceWidths);
 
                 if (advanceWidths.Count != glyphIndices.Count)
-                    throw new ArgumentException(SR.Get(SRID.CollectionNumberOfElementsShouldBeEqualTo, glyphIndices.Count), "advanceWidths");
+                    throw new ArgumentException(SR.Format(SR.CollectionNumberOfElementsShouldBeEqualTo, glyphIndices.Count), "advanceWidths");
 
                 if (glyphOffsets != null && glyphOffsets.Count != 0 && glyphOffsets.Count != glyphIndices.Count)
-                    throw new ArgumentException(SR.Get(SRID.CollectionNumberOfElementsShouldBeEqualTo, glyphIndices.Count), "glyphOffsets");
+                    throw new ArgumentException(SR.Format(SR.CollectionNumberOfElementsShouldBeEqualTo, glyphIndices.Count), "glyphOffsets");
 
                 // We should've caught all invalid cases above and thrown appropriate exceptions.
                 Invariant.Assert(false);
@@ -938,10 +929,7 @@ namespace System.Windows.Media
             {
                 CheckInitializing(); // This can only be set during initialization.
 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 _glyphTypeface = value;
             }
@@ -1119,11 +1107,10 @@ namespace System.Windows.Media
 
                 // The list must be non-empty list.
                 // The consistency with other lists would be checked at EndInit() time.
-                if (value == null)
-                    throw new ArgumentNullException("value");
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (value.Count <= 0)
-                    throw new ArgumentException(SR.Get(SRID.CollectionNumberOfElementsMustBeGreaterThanZero), "value");
+                    throw new ArgumentException(SR.CollectionNumberOfElementsMustBeGreaterThanZero, "value");
 
                 _glyphIndices = value;
             }
@@ -1150,11 +1137,10 @@ namespace System.Windows.Media
 
                 // The list must be non-empty list.
                 // The consistency with other lists would be checked at EndInit() time.
-                if (value == null)
-                    throw new ArgumentNullException("value");
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (value.Count <= 0)
-                    throw new ArgumentException(SR.Get(SRID.CollectionNumberOfElementsMustBeGreaterThanZero), "value");
+                    throw new ArgumentException(SR.CollectionNumberOfElementsMustBeGreaterThanZero, "value");
 
                 _advanceWidths = value;
             }
@@ -1781,11 +1767,11 @@ namespace System.Windows.Media
                 _baseVectorX = Math.Sqrt(m11 * m11 + m12 * m12);
 
                 // Check for wrong matrix.
-                if (DoubleUtil.IsNaN(_baseVectorX))
+                if (double.IsNaN(_baseVectorX))
                     _baseVectorX = 0;
 
                 _baseVectorY = _baseVectorX == 0 ? 0 : Math.Abs(m11 * m22 - m12 * m21) / _baseVectorX;
-                if (DoubleUtil.IsNaN(_baseVectorY))
+                if (double.IsNaN(_baseVectorY))
                     _baseVectorY = 0;
             }
 
@@ -2329,13 +2315,13 @@ namespace System.Windows.Media
             if (IsInitialized)
             {
                 // Cannot initialize a GlyphRun that is completely initialized.
-                throw new InvalidOperationException(SR.Get(SRID.OnlyOneInitialization));
+                throw new InvalidOperationException(SR.OnlyOneInitialization);
             }
 
             if (IsInitializing)
             {
                 // Cannot initialize a GlyphRun that is already being initialized.
-                throw new InvalidOperationException(SR.Get(SRID.InInitialization));
+                throw new InvalidOperationException(SR.InInitialization);
             }
 
             IsInitializing = true;
@@ -2346,7 +2332,7 @@ namespace System.Windows.Media
             if (!IsInitializing)
             {
                 // Cannot EndInit a GlyphRun that is not being initialized.
-                throw new InvalidOperationException(SR.Get(SRID.NotInInitialization));
+                throw new InvalidOperationException(SR.NotInInitialization);
             }
 
             //
@@ -2382,7 +2368,7 @@ namespace System.Windows.Media
         {
             if (!IsInitialized)
             {
-                throw new InvalidOperationException(SR.Get(SRID.InitializationIncomplete));
+                throw new InvalidOperationException(SR.InitializationIncomplete);
             }
 
             // Ensure the bits are set consistently. The object cannot be in both states.
@@ -2393,7 +2379,7 @@ namespace System.Windows.Media
         {
             if (!IsInitializing)
             {
-                throw new InvalidOperationException(SR.Get(SRID.NotInInitialization));
+                throw new InvalidOperationException(SR.NotInInitialization);
             }
 
             // Ensure the bits are set consistently. The object cannot be in both states.

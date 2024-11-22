@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Threading;
 
 namespace System.Xaml
@@ -49,7 +51,7 @@ namespace System.Xaml
         False,
         True
     }
-	
+
     // Thread safety: it's important that this structure remain word-sized, so that reads and
     // writes to it are atomic
     internal struct NullableReference<T> where T : class
@@ -74,7 +76,7 @@ namespace System.Xaml
         {
             get
             {
-                object value = Thread.VolatileRead(ref _value);
+                object value = Volatile.Read(ref _value);
                 return !(value is null);
             }
         }
@@ -98,7 +100,7 @@ namespace System.Xaml
         public void SetVolatile(T value)
         {
             object newValue = value is null ? s_NullSentinel : value;
-            Thread.VolatileWrite(ref _value, newValue);
+            Volatile.Write(ref _value, newValue);
         }
     }
 }

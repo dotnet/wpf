@@ -22,15 +22,14 @@ using System.Windows.Ink;
 using MS.Internal.IO.Packaging;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.Ink.InkSerializedFormat
 {
     internal class StrokeCollectionSerializer
     {
         #region Constants (Static Fields)
-        internal static readonly double AvalonToHimetricMultiplier = 2540.0d / 96.0d;
-        internal static readonly double HimetricToAvalonMultiplier = 96.0d / 2540.0d;
+        internal const double AvalonToHimetricMultiplier = 2540.0d / 96.0d;
+        internal const double HimetricToAvalonMultiplier = 96.0d / 2540.0d;
         internal static readonly TransformDescriptor IdentityTransformDescriptor;
 
         static StrokeCollectionSerializer()
@@ -145,57 +144,57 @@ namespace MS.Internal.Ink.InkSerializedFormat
             catch (ArgumentException ex)
             {
                 //only include an inner exception in debug builds
-                throw new ArgumentException(SR.Get(SRID.IsfOperationFailed), ex);
+                throw new ArgumentException(SR.IsfOperationFailed, ex);
             }
             catch (InvalidOperationException ex)
             {
                 //only include an inner exception in debug builds
-                throw new ArgumentException(SR.Get(SRID.IsfOperationFailed), ex);
+                throw new ArgumentException(SR.IsfOperationFailed, ex);
             }
             catch (IndexOutOfRangeException ex)
             {
                 //only include an inner exception in debug builds
-                throw new ArgumentException(SR.Get(SRID.IsfOperationFailed), ex);
+                throw new ArgumentException(SR.IsfOperationFailed, ex);
             }
             catch (NullReferenceException ex)
             {
                 //only include an inner exception in debug builds
-                throw new ArgumentException(SR.Get(SRID.IsfOperationFailed), ex);
+                throw new ArgumentException(SR.IsfOperationFailed, ex);
             }
             catch (EndOfStreamException ex)
             {
                 //only include an inner exception in debug builds
-                throw new ArgumentException(SR.Get(SRID.IsfOperationFailed), ex);
+                throw new ArgumentException(SR.IsfOperationFailed, ex);
             }
             catch (OverflowException ex)
             {
                 //only include an inner exception in debug builds
-                throw new ArgumentException(SR.Get(SRID.IsfOperationFailed), ex);
+                throw new ArgumentException(SR.IsfOperationFailed, ex);
             }
 #else
             catch (ArgumentException)
             {
-                throw new ArgumentException(SR.Get(SRID.IsfOperationFailed), "stream");//stream comes from StrokeCollection.ctor()
+                throw new ArgumentException(SR.IsfOperationFailed, "stream");//stream comes from StrokeCollection.ctor()
             }
             catch (InvalidOperationException)
             {
-                throw new ArgumentException(SR.Get(SRID.IsfOperationFailed), "stream");//stream comes from StrokeCollection.ctor()
+                throw new ArgumentException(SR.IsfOperationFailed, "stream");//stream comes from StrokeCollection.ctor()
             }
             catch (IndexOutOfRangeException)
             {
-                throw new ArgumentException(SR.Get(SRID.IsfOperationFailed), "stream");//stream comes from StrokeCollection.ctor()
+                throw new ArgumentException(SR.IsfOperationFailed, "stream");//stream comes from StrokeCollection.ctor()
             }
             catch (NullReferenceException)
             {
-                throw new ArgumentException(SR.Get(SRID.IsfOperationFailed), "stream");//stream comes from StrokeCollection.ctor()
+                throw new ArgumentException(SR.IsfOperationFailed, "stream");//stream comes from StrokeCollection.ctor()
             }
             catch (EndOfStreamException)
             {
-                throw new ArgumentException(SR.Get(SRID.IsfOperationFailed), "stream");//stream comes from StrokeCollection.ctor()
+                throw new ArgumentException(SR.IsfOperationFailed, "stream");//stream comes from StrokeCollection.ctor()
             }
             catch (OverflowException)
             {
-                throw new ArgumentException(SR.Get(SRID.IsfOperationFailed), "stream");//stream comes from StrokeCollection.ctor()
+                throw new ArgumentException(SR.IsfOperationFailed, "stream");//stream comes from StrokeCollection.ctor()
             }
 #endif
         }
@@ -282,14 +281,13 @@ namespace MS.Internal.Ink.InkSerializedFormat
             return;
         }
 
-        private static readonly byte[] Base64HeaderBytes
-                                            = new byte[]{(byte)'b',
-                                                        (byte)'a',
-                                                        (byte)'s',
-                                                        (byte)'e',
-                                                        (byte)'6',
-                                                        (byte)'4',
-                                                        (byte)':'};
+        private static ReadOnlySpan<byte> Base64HeaderBytes => [(byte)'b',
+                                                                (byte)'a',
+                                                                (byte)'s',
+                                                                (byte)'e',
+                                                                (byte)'6',
+                                                                (byte)'4',
+                                                                (byte)':'];
 
 #if OLD_ISF
         /// <summary>
@@ -355,7 +353,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             uint uiTag;
             uint localBytesDecoded = SerializationHelper.Decode(inputStream, out uiTag);
             if (0x00 != uiTag)
-                throw new ArgumentException(SR.Get(SRID.InvalidStream));
+                throw new ArgumentException(SR.InvalidStream);
 
             // Now read the size of the stream
             localBytesDecoded = SerializationHelper.Decode(inputStream, out remainingBytesInStream);
@@ -2114,15 +2112,14 @@ namespace MS.Internal.Ink.InkSerializedFormat
             long currentPosition = data.Position;
             try
             {
-                byte[] isfBase64PrefixBytes = Base64HeaderBytes;
-                if (data.Length < isfBase64PrefixBytes.Length)
+                if (data.Length < Base64HeaderBytes.Length)
                 {
                     return false;
                 }
 
-                for (int x = 0; x < isfBase64PrefixBytes.Length; x++)
+                for (int x = 0; x < Base64HeaderBytes.Length; x++)
                 {
-                    if ((byte)data.ReadByte() != isfBase64PrefixBytes[x])
+                    if ((byte)data.ReadByte() != Base64HeaderBytes[x])
                     {
                         return false;
                     }
@@ -2700,7 +2697,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 #if DEBUG
             return debugMessage;
 #else
-            return SR.Get(SRID.IsfOperationFailed);
+            return SR.IsfOperationFailed;
 #endif
         }
 

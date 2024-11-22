@@ -27,10 +27,7 @@ namespace System.Windows.Input
         /// </param>
         public StylusEventArgs(StylusDevice stylus, int timestamp) : base(stylus, timestamp)
         {
-            if( stylus == null )
-            {
-                throw new System.ArgumentNullException("stylus");
-            }
+            ArgumentNullException.ThrowIfNull(stylus);
         }
 
         /////////////////////////////////////////////////////////////////////

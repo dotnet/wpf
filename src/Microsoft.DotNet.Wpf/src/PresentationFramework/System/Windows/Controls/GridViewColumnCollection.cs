@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;   // ObservableCollection<T>
 using System.Collections.Specialized;   // NotifyCollectionChangedEventHandler
 using System.ComponentModel;            // DesignerSerializationVisibility
 using System.Diagnostics;               // Debug
+using System.Runtime.CompilerServices;
 using System.Windows.Data;              // Binding.IndexerName
 
 using MS.Internal;                      // Helper
@@ -242,8 +243,8 @@ namespace System.Windows.Controls
         {
             Debug.Assert(oldIndex != newIndex, "oldIndex==newIndex when perform move action.");
 
-            VerifyIndexInRange(oldIndex, "oldIndex");
-            VerifyIndexInRange(newIndex, "newIndex");
+            VerifyIndexInRange(oldIndex);
+            VerifyIndexInRange(newIndex);
 
             int actualIndex = _actualIndices[oldIndex];
 
@@ -292,7 +293,7 @@ namespace System.Windows.Controls
 
         private GridViewColumnCollectionChangedEventArgs RemoveAtPreprocess(int index)
         {
-            VerifyIndexInRange(index, "index");
+            VerifyIndexInRange(index);
 
             int actualIndex = _actualIndices[index];
             GridViewColumn column = _columns[actualIndex];
@@ -352,10 +353,8 @@ namespace System.Windows.Controls
         private GridViewColumnCollectionChangedEventArgs InsertPreprocess(int index, GridViewColumn column)
         {
             int count = _columns.Count;
-            if (index < 0 || index > count)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, count);
 
             ValidateColumnForInsert(column);
 
@@ -400,7 +399,7 @@ namespace System.Windows.Controls
         // This[index] = newColumn
         private GridViewColumnCollectionChangedEventArgs SetPreprocess(int index, GridViewColumn newColumn)
         {
-            VerifyIndexInRange(index, "index");
+            VerifyIndexInRange(index);
 
             GridViewColumn oldColumn = this[index];
 
@@ -420,25 +419,20 @@ namespace System.Windows.Controls
             return null;
         }
 
-        private void VerifyIndexInRange(int index, string indexName)
+        private void VerifyIndexInRange(int index, [CallerArgumentExpression(nameof(index))] string indexName = null)
         {
-            if (index < 0 || index >= _actualIndices.Count)
-            {
-                throw new ArgumentOutOfRangeException(indexName);
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index, indexName);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, _actualIndices.Count, indexName);
         }
 
         // Throw if column is null or already existed in a GVCC
         private void ValidateColumnForInsert(GridViewColumn column)
         {
-            if (column == null)
-            {
-                throw new ArgumentNullException("column");
-            }
+            ArgumentNullException.ThrowIfNull(column);
 
             if (column.ActualIndex >= 0)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ListView_NotAllowShareColumnToTwoColumnCollection));
+                throw new InvalidOperationException(SR.ListView_NotAllowShareColumnToTwoColumnCollection);
             }
         }
 
@@ -446,7 +440,7 @@ namespace System.Windows.Controls
         {
             if (IsImmutable)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ListView_GridViewColumnCollectionIsReadOnly));
+                throw new InvalidOperationException(SR.ListView_GridViewColumnCollectionIsReadOnly);
             }
 
             // Although CheckReentrancy() is called in base class, we still need to call it here again,

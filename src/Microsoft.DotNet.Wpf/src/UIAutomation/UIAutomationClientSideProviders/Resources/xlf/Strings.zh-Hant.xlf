@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
-  <file datatype="xml" source-language="en" target-language="zh-HANT" original="../Strings.resx">
+  <file datatype="xml" source-language="en" target-language="zh-Hant" original="../Strings.resx">
     <body>
       <trans-unit id="DoesNotSupportMultipleSelection">
         <source>Selection container does not support multiple selection.</source>
@@ -355,11 +355,6 @@
       <trans-unit id="SetFocusFailed">
         <source>Target element cannot receive focus.</source>
         <target state="translated">目標項目無法接收焦點。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ShouldBeZero">
-        <source>Must be zero.</source>
-        <target state="translated">必須為零。</target>
         <note />
       </trans-unit>
       <trans-unit id="ValueReadonly">

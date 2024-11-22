@@ -57,6 +57,7 @@ namespace System.Windows.Xps
         /// </summary>
         /// <param name="info"></param>
         /// <param name="context"></param>
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
         protected
         XpsException(
             SerializationInfo   info,
@@ -65,7 +66,7 @@ namespace System.Windows.Xps
             : base(info, context)
         {
         }
-
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
         #endregion Constructors
     }
 }

@@ -640,7 +640,7 @@ namespace MS.Internal.ComponentModel
                 // TypeDescriptor does find and use non-public methods.
                 if( !methodInfo.IsPublic )
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.SpecialMethodMustBePublic, methodInfo.Name));
+                    throw new InvalidOperationException(SR.Format(SR.SpecialMethodMustBePublic, methodInfo.Name));
                 }
             }
 

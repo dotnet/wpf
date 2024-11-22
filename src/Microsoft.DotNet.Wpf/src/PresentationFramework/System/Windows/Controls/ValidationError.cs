@@ -29,11 +29,9 @@ namespace System.Windows.Controls
         /// <param name="exception">exception that caused the validation failure; optional, can be null</param>
         public ValidationError(ValidationRule ruleInError, object bindingInError, object errorContent, Exception exception)
         {
-            if (ruleInError == null)
-                throw new ArgumentNullException("ruleInError");
-            if (bindingInError == null)
-                throw new ArgumentNullException("bindingInError");
-            
+            ArgumentNullException.ThrowIfNull(ruleInError);
+            ArgumentNullException.ThrowIfNull(bindingInError);
+
             _ruleInError = ruleInError;
             _bindingInError = bindingInError;
             _errorContent = errorContent;

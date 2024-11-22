@@ -88,15 +88,15 @@ namespace Microsoft.Windows.Automation.Peers
                     {
                         TextBox tb = owner.EditableTextBoxSite;
                         if (tb == null || !tb.IsKeyboardFocused)
-                            throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.SetFocusFailed));
+                            throw new InvalidOperationException(Microsoft.Windows.Controls.SR.SetFocusFailed);
                     }
                     else
-                        throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.SetFocusFailed));
+                        throw new InvalidOperationException(Microsoft.Windows.Controls.SR.SetFocusFailed);
                 }
             }
             else
             {
-                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.SetFocusFailed));
+                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.SetFocusFailed);
             }
         }
 
@@ -118,8 +118,7 @@ namespace Microsoft.Windows.Automation.Peers
             if (!owner.IsEnabled)
                 throw new ElementNotEnabledException();
 
-            if (value == null)
-                throw new ArgumentNullException("value");
+            ArgumentNullException.ThrowIfNull(value);
 
             owner.Text = value;
         }

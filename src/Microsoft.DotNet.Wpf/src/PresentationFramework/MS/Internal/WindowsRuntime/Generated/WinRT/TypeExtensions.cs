@@ -27,7 +27,7 @@ namespace WinRT
             string helperTypeName2 = $"MS.Internal.WindowsRuntime.ABI.{type.FullName}";
             if (type.FullName.StartsWith("MS.Internal.WindowsRuntime."))
             {
-                helper = "MS.Internal.WindowsRuntime.ABI." + RemoveNamespacePrefix(type.FullName);
+                helper = $"MS.Internal.WindowsRuntime.ABI.{RemoveNamespacePrefix(type.FullName)}";
             }
             return Type.GetType(helper) ?? Type.GetType(helperTypeName2);
         }

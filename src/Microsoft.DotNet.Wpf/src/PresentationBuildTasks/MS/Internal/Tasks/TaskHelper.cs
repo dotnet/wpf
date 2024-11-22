@@ -58,8 +58,8 @@ namespace MS.Internal.Tasks
             string avalonFileVersion = acFileVersionInfo.FileVersion;
 
             log.LogMessage(MessageImportance.Low,Environment.NewLine);
-            log.LogMessageFromResources(MessageImportance.Low, SRID.TaskLogo, taskName, avalonFileVersion);
-            log.LogMessageFromResources(MessageImportance.Low, SRID.TaskRight);
+            log.LogMessageFromResources(MessageImportance.Low, nameof(SR.TaskLogo), taskName, avalonFileVersion);
+            log.LogMessageFromResources(MessageImportance.Low, nameof(SR.TaskRight));
             log.LogMessage(MessageImportance.Low, Environment.NewLine);
         }
 

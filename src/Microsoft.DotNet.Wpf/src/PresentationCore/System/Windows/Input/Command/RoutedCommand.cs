@@ -16,7 +16,6 @@ using System.Windows.Markup;
 using MS.Internal.PresentationCore;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -56,20 +55,14 @@ namespace System.Windows.Input
         /// <param name="inputGestures">Default Input Gestures associated</param>
         public RoutedCommand(string name, Type ownerType, InputGestureCollection inputGestures)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
+            ArgumentNullException.ThrowIfNull(name);
 
             if (name.Length == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.StringEmpty), "name");
+                throw new ArgumentException(SR.StringEmpty, "name");
             }
 
-            if (ownerType == null)
-            {
-                throw new ArgumentNullException("ownerType");
-            }
+            ArgumentNullException.ThrowIfNull(ownerType);
 
             _name = name;
             _ownerType = ownerType;
@@ -138,7 +131,7 @@ namespace System.Windows.Input
             // We only support UIElement, ContentElement and UIElement3D
             if ((target != null) && !InputElement.IsValid(target))
             {
-                throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, target.GetType()));
+                throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, target.GetType()));
             }
 
             if (target == null)
@@ -171,10 +164,10 @@ namespace System.Windows.Input
         /// <returns>true if the command can be executed, false otherwise.</returns>
         internal bool CriticalCanExecute(object parameter, IInputElement target, bool trusted, out bool continueRouting)
         {
-            // We only support UIElement, ContentElement, and UIElement3D
+            // We only support UIElement, ContentElement and UIElement3D
             if ((target != null) && !InputElement.IsValid(target))
             {
-                throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, target.GetType()));
+                throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, target.GetType()));
             }
 
             if (target == null)
@@ -362,17 +355,17 @@ namespace System.Windows.Input
             // both of which derive from DO
             DependencyObject targetAsDO = (DependencyObject)target;
             
-            if (InputElement.IsUIElement(targetAsDO))
+            if (targetAsDO is UIElement uie)
             {
-                ((UIElement)targetAsDO).RaiseEvent(args, trusted);
+                uie.RaiseEvent(args, trusted);
             }
-            else if (InputElement.IsContentElement(targetAsDO))
+            else if (targetAsDO is ContentElement ce)
             {
-                ((ContentElement)targetAsDO).RaiseEvent(args, trusted);
+                ce.RaiseEvent(args, trusted);
             }
-            else if (InputElement.IsUIElement3D(targetAsDO))
+            else if (targetAsDO is UIElement3D uie3D)
             {
-                ((UIElement3D)targetAsDO).RaiseEvent(args, trusted);
+                uie3D.RaiseEvent(args, trusted);
             }            
         }
         internal bool ExecuteCore(object parameter, IInputElement target, bool userInitiated)
@@ -451,17 +444,17 @@ namespace System.Windows.Input
         {
             if (value)
             {
-                _flags.Value |= bit;
+                _flags |= bit;
             }
             else
             {
-                _flags.Value &= ~bit;
+                _flags &= ~bit;
             }
         }
 
         private bool ReadPrivateFlag(PrivateFlags bit)
         {
-            return (_flags.Value & bit) != 0;
+            return (_flags & bit) != 0;
         }
 
         #endregion PrivateMethods
@@ -470,7 +463,7 @@ namespace System.Windows.Input
 
         private string _name;
 
-        private MS.Internal.SecurityCriticalDataForSet<PrivateFlags> _flags;
+        private PrivateFlags _flags;
 
         private enum PrivateFlags : byte
         {

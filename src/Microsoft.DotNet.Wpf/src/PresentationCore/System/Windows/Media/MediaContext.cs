@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿//
+//
 //
 // Description:
 //      The MediaContext class controls the media layer.
@@ -26,14 +26,12 @@ using System.Security;
 using System.Windows.Media.Effects;
 
 using MS.Internal;
-using MS.Internal.PresentationCore;
 using MS.Utility;
 using MS.Win32;
 
 using Microsoft.Win32.SafeHandles;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {
@@ -146,56 +144,56 @@ namespace System.Windows.Media
         #region Compat support for rendering in a Non-interactive Window Station
 
         /// <summary>
-        /// General case: 
-        ///     True if our window station is interactive (WinSta0), otherwise false. 
-        ///     In addition to this, two compatibility switches are provided to opt-in 
+        /// General case:
+        ///     True if our window station is interactive (WinSta0), otherwise false.
+        ///     In addition to this, two compatibility switches are provided to opt-in
         ///     or opt-out of this behavior
-        ///     
+        ///
         /// Compatibility switches
-        ///     i. <see cref=" MS.Internal.CoreAppContextSwitches.ShouldRenderEvenWhenNoDisplayDevicesAreAvailable"/> 
+        ///     i. <see cref=" MS.Internal.CoreAppContextSwitches.ShouldRenderEvenWhenNoDisplayDevicesAreAvailable"/>
         ///     ii. <see cref="MS.Internal.CoreAppContextSwitches.ShouldNotRenderInNonInteractiveWindowStation"/>
-        /// 
+        ///
         /// How this will work:
         ///     Desktop/Interactive Window Stations:
-        ///         Rendering will be throttled back/stopped when no display devices are available. For e.g., when a TS 
+        ///         Rendering will be throttled back/stopped when no display devices are available. For e.g., when a TS
         ///         session is in WTSDisconnected state, the OS may not provide any display devices in response to our enumeration.
-        ///         If an application would like to continue rendering in the absence of display devices (accepting that 
-        ///         it can lead to a CPU spike), it can set <see cref=" MS.Internal.CoreAppContextSwitches.ShouldRenderEvenWhenNoDisplayDevicesAreAvailable"/> 
+        ///         If an application would like to continue rendering in the absence of display devices (accepting that
+        ///         it can lead to a CPU spike), it can set <see cref=" MS.Internal.CoreAppContextSwitches.ShouldRenderEvenWhenNoDisplayDevicesAreAvailable"/>
         ///         to true.
         ///     Service/Non-interactive Window Stations
         ///         Rendering will continue by default, irrespective of the presence of display devices.Unless the WPF
-        ///         API's being used are shortlived (like rendering to a bitmap), it can lead to a CPU spike. 
-        ///         If an application running inside a service would like to receive the 'default' WPF behavior, 
+        ///         API's being used are shortlived (like rendering to a bitmap), it can lead to a CPU spike.
+        ///         If an application running inside a service would like to receive the 'default' WPF behavior,
         ///         i.e., no rendering in the absence of display devices, then it should set
         ///         <see cref="MS.Internal.CoreAppContextSwitches.ShouldNotRenderInNonInteractiveWindowStation"/> to true
-        ///     In pseudocode, 
+        ///     In pseudocode,
         ///         IsNonInteractiveWindowStation = !Environment.UserInteractive
         ///         IF DisplayDevicesNotFound() THEN
-        ///             IF IsNonInteractiveWindowStation THEN 
+        ///             IF IsNonInteractiveWindowStation THEN
         ///                 // We are inside a SCM service
         ///                 // Default = True, AppContext switch can override it to False
         ///                 ShouldRender = !CoreAppContextSwitches.ShouldNotRenderInNonInteractiveWindowStation
-        ///             ELSE 
+        ///             ELSE
         ///                 // Desktop/interactive mode, including WTSDisconnected scenarios
         ///                 // Default = False, AppContext switch can override it to True
         ///                 ShouldRender = CoreAppContextSwitches.ShouldRenderEvenWhenNoDisplayDevicesAreAvailable
         ///             END IF
         ///         END IF
-        ///     
+        ///
         /// </summary>
         /// <remarks>
         /// i. <see cref=">Environment.UserInteractive"/> calls into Window Station related
-        /// Win32 API's to identify whether the current Window Station has WSF_VISIBLE 
-        /// flag set. 
-        /// 
+        /// Win32 API's to identify whether the current Window Station has WSF_VISIBLE
+        /// flag set.
+        ///
         /// ii. Field is internal to allow <see cref="HwndTarget"/> to consume its value
-        /// 
-        /// iii. This field is named to reflect the general use-case, namely to force rendering 
-        /// when inside a SCM service. 
+        ///
+        /// iii. This field is named to reflect the general use-case, namely to force rendering
+        /// when inside a SCM service.
         /// </remarks>
         internal static bool ShouldRenderEvenWhenNoDisplayDevicesAreAvailable { get; } =
-            !Environment.UserInteractive ? // IF DisplayDevicesNotAvailable && IsNonInteractiveWindowStation/IsService...  
-                !CoreAppContextSwitches.ShouldNotRenderInNonInteractiveWindowStation :      // THEN render by default, allow ShouldNotRender AppContext override 
+            !Environment.UserInteractive ? // IF DisplayDevicesNotAvailable && IsNonInteractiveWindowStation/IsService...
+                !CoreAppContextSwitches.ShouldNotRenderInNonInteractiveWindowStation :      // THEN render by default, allow ShouldNotRender AppContext override
                 CoreAppContextSwitches.ShouldRenderEvenWhenNoDisplayDevicesAreAvailable;   // ELSE do not render by default, allow ShouldRender AppContext override
 
 
@@ -353,7 +351,7 @@ namespace System.Windows.Media
             }
         }
 
-        // MediaSystem is per-AppDomain and so it uses this to ensure that InvalidateRenderMode() 
+        // MediaSystem is per-AppDomain and so it uses this to ensure that InvalidateRenderMode()
         // is called by the right thread.
         internal void PostInvalidateRenderMode()
         {
@@ -366,7 +364,7 @@ namespace System.Windows.Media
         private object InvalidateRenderMode(object dontCare)
         {
             Debug.Assert(CheckAccess());
-            
+
             foreach (ICompositionTarget target in _registeredICompositionTargets)
             {
                 HwndTarget hwndTarget = target as HwndTarget;
@@ -427,7 +425,7 @@ namespace System.Windows.Media
                 // It's never correct to not have an event handler hooked up in
                 // the case when an invalid shader is encountered.  Raise an
                 // exception directing the app to hook up an event handler.
-                throw new InvalidOperationException(SR.Get(SRID.MediaContext_NoBadShaderHandler));
+                throw new InvalidOperationException(SR.MediaContext_NoBadShaderHandler);
             }
         }
 
@@ -450,9 +448,9 @@ namespace System.Windows.Media
             case HRESULT.E_OUTOFMEMORY:
                 throw new System.OutOfMemoryException();
             case HRESULT.D3DERR_OUTOFVIDEOMEMORY:
-                throw new System.OutOfMemoryException(SR.Get(SRID.MediaContext_OutOfVideoMemory));
+                throw new System.OutOfMemoryException(SR.MediaContext_OutOfVideoMemory);
             default:
-                throw new System.InvalidOperationException(SR.Get(SRID.MediaContext_RenderThreadError));
+                throw new System.InvalidOperationException(SR.MediaContext_RenderThreadError);
             }
         }
 
@@ -518,7 +516,7 @@ namespace System.Windows.Media
             get;
             private set;
         }
-        
+
         /// <summary>
         /// Internal event which is raised when the Tier changes on this MediaContext.
         /// </summary>
@@ -996,11 +994,10 @@ namespace System.Windows.Media
                     if (Channel != null)
                     {
                         // SyncFlush will Commit()
-                        if (CommittingBatch != null)
-                        {
-                            CommittingBatch(Channel, new EventArgs());
-                        }
+
+                        CommittingBatch?.Invoke(Channel, new EventArgs());
                         
+
                         Channel.SyncFlush();
                     }
                 }
@@ -1217,12 +1214,12 @@ namespace System.Windows.Media
         {
             _channelManager.CreateChannels();
 
-            // Notify renderer how it should behave when no valid displays are available, 
-            // or when this process is running in a non-interactive Window Station, or when 
+            // Notify renderer how it should behave when no valid displays are available,
+            // or when this process is running in a non-interactive Window Station, or when
             // an application has opted into behavior that requests WPF to continue rendering
             // even when no valid displays are detected.
-            // 
-            // Do this immediately after creating channels. 
+            //
+            // Do this immediately after creating channels.
             DUCE.NotifyPolicyChangeForNonInteractiveMode(
                     ShouldRenderEvenWhenNoDisplayDevicesAreAvailable,
                     Channel);
@@ -1614,7 +1611,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Add a pending loaded or unloaded callback
         /// </summary>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal LoadedOrUnloadedOperation AddLoadedOrUnloadedCallback(
             DispatcherOperationCallback callback,
             DependencyObject target)
@@ -1634,7 +1630,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Remove a pending loaded or unloaded callback
         /// </summary>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal void RemoveLoadedOrUnloadedCallback(LoadedOrUnloadedOperation op)
         {
             Debug.Assert(op != null);
@@ -1822,7 +1817,7 @@ namespace System.Windows.Media
                     tickLoopCount++;
                     if (tickLoopCount > 153)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.MediaContext_InfiniteTickLoop));
+                        throw new InvalidOperationException(SR.MediaContext_InfiniteTickLoop);
                     }
 
                     _timeManager.Tick();
@@ -1849,7 +1844,7 @@ namespace System.Windows.Media
                         // (TimeManager gets its tick time from MediaContext's IClock implementation).
                         // In the case where we can't query QPC or aren't doing interlocked presents,
                         // this will be equal to the current time, which is a good enough approximation.
-                        Rendering(this.Dispatcher, new RenderingEventArgs(_timeManager.LastTickTime));
+                        Rendering?.Invoke(this.Dispatcher, new RenderingEventArgs(_timeManager.LastTickTime));
 
                         // call all render callbacks again in case the Rendering event affects layout
                         // this will enable layout effecting changes to get triggered this frame
@@ -1859,6 +1854,8 @@ namespace System.Windows.Media
                 while (_timeManager.IsDirty);
 
                 _timeManager.UnlockTickTime();
+
+                MediaSystem.PropagateDirtyRectangleSettings();
 
                 // Invalidate the input devices on the InputManager
                 InputManager.UnsecureCurrent.InvalidateInputDevices();
@@ -1921,7 +1918,7 @@ namespace System.Windows.Media
                 // Reset current operation so it can be re-queued by layout
                 // This is needed when exception happens in the midst of layout/TemplateExpansion
                 // and it unwinds from the stack. If we don't clean this field here, the subsequent
-                // PostRender won't queue new render operation and the window gets stuck. 
+                // PostRender won't queue new render operation and the window gets stuck.
                 if (gotException
                     && _currentRenderOp != null)
                 {
@@ -1959,7 +1956,7 @@ namespace System.Windows.Media
                     callbackLoopCount++;
                     if (callbackLoopCount > 153)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.MediaContext_InfiniteLayoutLoop));
+                        throw new InvalidOperationException(SR.MediaContext_InfiniteLayoutLoop);
                     }
 
                     FrugalObjectList<InvokeOnRenderCallback> callbacks = _invokeOnRenderCallbacks;
@@ -2183,10 +2180,7 @@ namespace System.Windows.Media
                     _lastCommitTime = currentTicks;
                 }
 
-                if (CommittingBatch != null)
-                {
-                    CommittingBatch(Channel, new EventArgs());
-                }
+                CommittingBatch?.Invoke(Channel, new EventArgs());
 
                 Channel.Commit();
 
@@ -2264,11 +2258,9 @@ namespace System.Windows.Media
                         do
                         {
                             // WaitForNextMessage will Commit()
-                            if (CommittingBatch != null)
-                            {
-                                CommittingBatch(Channel, new EventArgs());
-                            }
+                            CommittingBatch?.Invoke(Channel, new EventArgs());
                             
+
                             Channel.WaitForNextMessage();
                             NotifyChannelMessage();
                         } while (_interlockState == InterlockState.WaitingForResponse);
@@ -2307,11 +2299,9 @@ namespace System.Windows.Media
                 else
                 {
                     // SyncFlush() will Commit()
-                    if (CommittingBatch != null)
-                    {
-                        CommittingBatch(Channel, new EventArgs());
-                    }
+                    CommittingBatch?.Invoke(Channel, new EventArgs());
                     
+
                     //
                     // Issue a sync flush, which will only return after
                     // the last frame is presented
@@ -2339,7 +2329,7 @@ namespace System.Windows.Media
         {
             if (!WriteAccessEnabled)
             {
-                throw new InvalidOperationException(SR.Get(SRID.MediaContext_APINotAllowed));
+                throw new InvalidOperationException(SR.MediaContext_APINotAllowed);
             }
         }
 

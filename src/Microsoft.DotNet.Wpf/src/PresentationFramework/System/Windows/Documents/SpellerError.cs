@@ -94,15 +94,7 @@ namespace System.Windows.Controls
         /// </remarks>
         public IEnumerable<string> Suggestions
         {
-            get
-            {
-                IList suggestions = _speller.GetSuggestionsForError(this);
-
-                for (int i=0; i<suggestions.Count; i++)
-                {
-                    yield return (string)suggestions[i];
-                }
-            }
+            get => _speller.GetSuggestionsForError(this);
         }
 
         #endregion Public Properties

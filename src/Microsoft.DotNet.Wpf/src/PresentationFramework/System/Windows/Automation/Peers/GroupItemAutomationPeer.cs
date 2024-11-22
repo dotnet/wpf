@@ -327,7 +327,7 @@ namespace System.Windows.Automation.Peers
             {
                 if (owner.Expander.ExpanderToggleButton?.Focus() != true)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.SetFocusFailed));
+                    throw new InvalidOperationException(SR.SetFocusFailed);
                 }
             }
             else

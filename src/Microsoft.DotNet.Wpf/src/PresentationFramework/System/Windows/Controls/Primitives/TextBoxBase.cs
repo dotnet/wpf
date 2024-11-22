@@ -401,7 +401,7 @@ namespace System.Windows.Controls.Primitives
         {
             if (this.TextEditor.Selection.ChangeBlockLevel == 0)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextBoxBase_UnmatchedEndChange));
+                throw new InvalidOperationException(SR.TextBoxBase_UnmatchedEndChange);
             }
 
             this.TextEditor.Selection.EndChange();
@@ -1046,10 +1046,7 @@ namespace System.Windows.Controls.Primitives
         /// <param name="e">MouseWheelEventArgs</param>
         protected override void OnMouseWheel(MouseWheelEventArgs e)
         {
-            if (e == null)
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(e);
 
             if (this.ScrollViewer != null)
             {
@@ -1076,7 +1073,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
-            base.OnKeyDown(e);
+            base.OnPreviewKeyDown(e);
 
             if (e.Handled)
             {
@@ -1583,10 +1580,7 @@ namespace System.Windows.Controls.Primitives
         {
             Point offset;
 
-            if (position == null)
-            {
-                throw new ArgumentNullException("position");
-            }
+            ArgumentNullException.ThrowIfNull(position);
 
             // Validate layout information on TextView
             if (TextEditor.GetTextView(this.RenderScope).Validate(position))
@@ -1707,7 +1701,7 @@ namespace System.Windows.Controls.Primitives
             // to change....
             if (this.TextSelectionInternal.ChangeBlockLevel > 0)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextBoxBase_CantSetIsUndoEnabledInsideChangeBlock));
+                throw new InvalidOperationException(SR.TextBoxBase_CantSetIsUndoEnabledInsideChangeBlock);
             }
 
             UndoManager undoManager = UndoManager.GetUndoManager(this);
@@ -1737,7 +1731,7 @@ namespace System.Windows.Controls.Primitives
                 {
                     // the exception text isn't exactly right, but we can't
                     // introduce new strings in v3.5.
-                    throw new InvalidOperationException(SR.Get(SRID.TextBoxBase_CantSetIsUndoEnabledInsideChangeBlock));
+                    throw new InvalidOperationException(SR.TextBoxBase_CantSetIsUndoEnabledInsideChangeBlock);
                 }
 
                 int limit;
@@ -1995,7 +1989,7 @@ namespace System.Windows.Controls.Primitives
                     _renderScope = null;
                     _textBoxContentHost = null;
                     //  Do not throw exception
-                    throw new NotSupportedException(SR.Get(SRID.TextBoxScrollViewerMarkedAsTextBoxContentMustHaveNoContent));
+                    throw new NotSupportedException(SR.TextBoxScrollViewerMarkedAsTextBoxContentMustHaveNoContent);
                 }
                 else
                 {
@@ -2010,7 +2004,7 @@ namespace System.Windows.Controls.Primitives
                     _renderScope = null;
                     _textBoxContentHost = null;
                     //  Do not throw exception
-                    throw new NotSupportedException(SR.Get(SRID.TextBoxDecoratorMarkedAsTextBoxContentMustHaveNoContent));
+                    throw new NotSupportedException(SR.TextBoxDecoratorMarkedAsTextBoxContentMustHaveNoContent);
                 }
                 else
                 {
@@ -2029,7 +2023,7 @@ namespace System.Windows.Controls.Primitives
                 {
                     _textBoxContentHost = null;
                     //  Remove the exception
-                    throw new NotSupportedException(SR.Get(SRID.TextBoxInvalidTextContainer));
+                    throw new NotSupportedException(SR.TextBoxInvalidTextContainer);
                 }
             }
 

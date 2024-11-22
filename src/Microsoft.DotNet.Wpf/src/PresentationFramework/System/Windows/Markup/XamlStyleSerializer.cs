@@ -135,7 +135,7 @@ namespace System.Windows.Markup
             {
                 if (!styleTargetTypeSet)
                 {
-                    ThrowException(SRID.StyleNoDictionaryKey,
+                    ThrowException(nameof(SR.StyleNoDictionaryKey),
                                    parserContext.LineNumber,
                                    parserContext.LinePosition);
                 }
@@ -151,7 +151,7 @@ namespace System.Windows.Markup
              int  lineNumber,
              int  linePosition)
         {
-            string message = SR.Get(id);
+            string message = SR.GetResourceString(id);
             XamlParseException parseException;
 
             // Throw the appropriate execption.  If we have line numbers, then we are
@@ -160,7 +160,7 @@ namespace System.Windows.Markup
             if (lineNumber > 0)
             {
                 message += " ";
-                message += SR.Get(SRID.ParserLineAndOffset,
+                message += SR.Format(SR.ParserLineAndOffset,
                                   lineNumber.ToString(CultureInfo.CurrentCulture),
                                   linePosition.ToString(CultureInfo.CurrentCulture));
                 parseException = new XamlParseException(message, lineNumber, linePosition);
@@ -186,9 +186,9 @@ namespace System.Windows.Markup
         internal const string VisualTriggersPropertyName                    = "Triggers";
         internal const string ResourcesPropertyName                         = "Resources";
         internal const string SettersPropertyName                           = "Setters";
-        internal const string VisualTriggersFullPropertyName    = StyleTagName + "." + VisualTriggersPropertyName;
-        internal const string SettersFullPropertyName           = StyleTagName + "." + SettersPropertyName;
-        internal const string ResourcesFullPropertyName         = StyleTagName + "." + ResourcesPropertyName;
+        internal const string VisualTriggersFullPropertyName    = $"{StyleTagName}.{VisualTriggersPropertyName}";
+        internal const string SettersFullPropertyName           = $"{StyleTagName}.{SettersPropertyName}";
+        internal const string ResourcesFullPropertyName         = $"{StyleTagName}.{ResourcesPropertyName}";
         internal const string PropertyTriggerPropertyName                   = "Property";
         internal const string PropertyTriggerValuePropertyName              = "Value";
         internal const string PropertyTriggerSourceName                     = "SourceName";

@@ -103,16 +103,13 @@ namespace System.Windows
         {
             if (_sealed)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "SetterBaseCollection"));
+                throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "SetterBaseCollection"));
             }
         }
 
         private void SetterBaseValidation(SetterBase setterBase)
         {
-            if (setterBase == null)
-            {
-                throw new ArgumentNullException("setterBase");
-            }
+            ArgumentNullException.ThrowIfNull(setterBase);
         }
 
         #endregion PrivateMethods

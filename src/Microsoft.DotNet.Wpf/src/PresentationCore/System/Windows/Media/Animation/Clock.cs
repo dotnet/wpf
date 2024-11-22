@@ -21,7 +21,6 @@ using System.Windows.Media.Composition;
 using System.Windows.Markup;
 using System.Windows.Threading;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Animation
 {
@@ -595,8 +594,8 @@ namespace System.Windows.Media.Animation
                 // The derived class is trying to fool us -- we require a new,
                 // fresh, unassociated clock here
                 throw new InvalidOperationException(
-                    SR.Get(
-                        SRID.Timing_CreateClockMustReturnNewClock,
+                    SR.Format(
+                        SR.Timing_CreateClockMustReturnNewClock,
                         timeline.GetType().Name));
             }
 
@@ -625,7 +624,7 @@ namespace System.Windows.Media.Animation
                         (_timeline.AccelerationRatio > 0) ||
                         (_timeline.DecelerationRatio > 0))
                     {
-                        throw new NotSupportedException(SR.Get(SRID.Timing_CanSlipOnlyOnSimpleTimelines));
+                        throw new NotSupportedException(SR.Timing_CanSlipOnlyOnSimpleTimelines);
                     }
 
                     _syncData = new SyncData(this);  // CanSlip clocks keep themselves synced
@@ -638,7 +637,7 @@ namespace System.Windows.Media.Animation
                         if (current._timeline.AutoReverse || current._timeline.AccelerationRatio > 0
                                                           || current._timeline.DecelerationRatio > 0)
                         {
-                            throw new System.InvalidOperationException(SR.Get(SRID.Timing_SlipBehavior_SyncOnlyWithSimpleParents));
+                            throw new System.InvalidOperationException(SR.Timing_SlipBehavior_SyncOnlyWithSimpleParents);
                         }
 
                         current.SetFlag(ClockFlags.CanGrow, true);  // Propagate the slippage tracking up the tree
@@ -981,7 +980,7 @@ namespace System.Windows.Media.Animation
             if (effectiveDuration == null)
             {
                 // Can't seek to the end if the simple duration is not resolved
-                throw new InvalidOperationException(SR.Get(SRID.Timing_SkipToFillDestinationIndefinite));
+                throw new InvalidOperationException(SR.Timing_SkipToFillDestinationIndefinite);
             }
 
             // Offset to the end; override preceding seek requests
@@ -3236,7 +3235,7 @@ namespace System.Windows.Media.Animation
                                 {
                                     Debug.Assert(syncClockDuration == Duration.Automatic);
                                     // If we seek into an Automatic syncChild's duration, we may overseek it, so throw an exception
-                                    throw new InvalidOperationException(SR.Get(SRID.Timing_SeekDestinationAmbiguousDueToSlip));
+                                    throw new InvalidOperationException(SR.Timing_SeekDestinationAmbiguousDueToSlip);
                                 }
 
                                 // This is the heart of the HasSeekOccuredAfterLastTick codepath; we don't adjust our

@@ -110,7 +110,7 @@ namespace System.Windows
                     break;
 
                 default:
-                    throw new ArgumentException(SR.Get(SRID.UnknownExpressionMode));
+                    throw new ArgumentException(SR.UnknownExpressionMode);
             }
         }
 
@@ -118,7 +118,6 @@ namespace System.Windows
         // We need this Clone method to copy a binding during Freezable.Copy.  We shouldn't be taking
         // the target object/dp parameters here, but Binding.ProvideValue requires it.  (Binding
         // could probably be re-factored so that we don't need this).
-        [FriendAccessAllowed] // Used by Freezables
         internal virtual Expression Copy( DependencyObject targetObject, DependencyProperty targetDP )
         {
             // By default, just use the same copy.
@@ -200,19 +199,15 @@ namespace System.Windows
         /// <param name="newSources">New sources</param>
         internal void ChangeSources(DependencyObject d, DependencyProperty dp, DependencySource[] newSources)
         {
-            if (d == null && !ForwardsInvalidations)
+            if (!ForwardsInvalidations)
             {
-                throw new ArgumentNullException("d");
-            }
-
-            if (dp == null && !ForwardsInvalidations)
-            {
-                throw new ArgumentNullException("dp");
+                ArgumentNullException.ThrowIfNull(d);
+                ArgumentNullException.ThrowIfNull(dp);
             }
 
             if (Shareable)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ShareableExpressionsCannotChangeSources));
+                throw new InvalidOperationException(SR.ShareableExpressionsCannotChangeSources);
             }
 
             DependencyObject.ValidateSources(d, newSources, this);
@@ -278,7 +273,6 @@ namespace System.Windows
         /// Expression.GetValue can return NoValue to indicate that
         /// the property engine should obtain the value some other way.
         /// </summary>
-        [FriendAccessAllowed]
         internal static readonly object NoValue = new object();
 
         private InternalFlags _flags;

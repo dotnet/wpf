@@ -34,8 +34,6 @@ namespace MS.Win32
         internal static extern IntPtr OpenProcess(int flags, bool inherit, uint dwProcessId);
 
         [DllImport(ExternDll.Kernel32)]
-        public static extern uint GetCurrentProcessId();
-        [DllImport(ExternDll.Kernel32)]
         internal static extern void GetSystemInfo(out NativeMethods.SYSTEM_INFO SystemInfo);
         [DllImport(ExternDll.Kernel32, SetLastError = true)]
         internal static extern bool IsWow64Process(MS.Internal.AutomationProxies.SafeProcessHandle hProcess, out bool Wow64Process);
@@ -297,12 +295,12 @@ namespace MS.Win32
             internal NativeMethods.Win32Point ptStart;
         }
 
-        private struct POINTSTRUCT
+        private struct POINT
         {
             public int x;
             public int y;
 
-            public POINTSTRUCT(int x, int y)
+            public POINT(int x, int y)
             {
                 this.x = x;
                 this.y = y;
@@ -310,14 +308,14 @@ namespace MS.Win32
         }
 
         [DllImport(ExternDll.User32, EntryPoint = "WindowFromPoint", ExactSpelling = true, CharSet = CharSet.Auto)]
-        private static extern IntPtr IntWindowFromPoint(POINTSTRUCT pt);
+        private static extern IntPtr IntWindowFromPoint(POINT pt);
 
         [DllImport(ExternDll.User32, EntryPoint = "WindowFromPhysicalPoint", ExactSpelling = true, CharSet = CharSet.Auto)]
-        private static extern IntPtr IntWindowFromPhysicalPoint(POINTSTRUCT pt);
+        private static extern IntPtr IntWindowFromPhysicalPoint(POINT pt);
 
         public static IntPtr WindowFromPhysicalPoint(int x, int y)
         {
-            POINTSTRUCT ps = new POINTSTRUCT(x, y);
+            POINT ps = new POINT(x, y);
             if (System.Environment.OSVersion.Version.Major >= 6)
                 return IntWindowFromPhysicalPoint(ps);
             else

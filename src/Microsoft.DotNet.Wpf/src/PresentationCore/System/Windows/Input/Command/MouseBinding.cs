@@ -19,7 +19,6 @@ using System.Windows.Markup;
 using System.ComponentModel;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -112,7 +111,7 @@ namespace System.Windows.Input
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Get(SRID.InputBinding_ExpectedInputGesture, typeof(MouseGesture)));
+                    throw new ArgumentException(SR.Format(SR.InputBinding_ExpectedInputGesture, typeof(MouseGesture)));
                 }
              }
         }
@@ -228,7 +227,7 @@ namespace System.Windows.Input
 
         private void OnMouseGesturePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (string.Compare(e.PropertyName, "MouseAction", StringComparison.Ordinal) == 0)
+            if (string.Equals(e.PropertyName, "MouseAction", StringComparison.Ordinal))
             {
                 MouseGesture mouseGesture = Gesture as MouseGesture;
                 if (mouseGesture != null)

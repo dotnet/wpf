@@ -1039,7 +1039,7 @@ namespace MS.Internal.PtsHost
                     {
                         if(!(Element is TextElement) || ((TextElement)Element).ContentStart != textPointer)
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.TextSchema_TextIsNotAllowedInThisContext, Element.GetType().Name));
+                            throw new InvalidOperationException(SR.Format(SR.TextSchema_TextIsNotAllowedInThisContext, Element.GetType().Name));
                         }
                     }
 

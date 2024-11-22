@@ -48,10 +48,7 @@ namespace System.Windows
         public DataObjectCopyingEventArgs(IDataObject dataObject, bool isDragDrop) //
             : base(System.Windows.DataObject.CopyingEvent, isDragDrop)
         {
-            if (dataObject == null)
-            {
-                throw new ArgumentNullException("dataObject");
-            }
+            ArgumentNullException.ThrowIfNull(dataObject);
 
             _dataObject = dataObject;
         }

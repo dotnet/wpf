@@ -496,12 +496,7 @@ namespace System.Windows.Controls
         /// </summary>
         bool IProvidePropertyFallback.CanProvidePropertyFallback(string property)
         {
-            if (String.CompareOrdinal(property, "Source") == 0)
-            {
-                return true;
-            }
-
-            return false;
+            return string.Equals(property, "Source", StringComparison.Ordinal);
         }
 
         /// <summary>
@@ -509,7 +504,7 @@ namespace System.Windows.Controls
         /// </summary>
         object IProvidePropertyFallback.ProvidePropertyFallback(string property, Exception cause)
         {
-            if (String.CompareOrdinal(property, "Source") == 0)
+            if (string.Equals(property, "Source", StringComparison.Ordinal))
             {
                 RaiseEvent(new ExceptionRoutedEventArgs(ImageFailedEvent, this, cause));
             }
@@ -550,8 +545,7 @@ namespace System.Windows.Controls
             /// </summary>
             public static void AddHandler(BitmapSource source, EventHandler<EventArgs> handler)
             {
-                if (handler == null)
-                    throw new ArgumentNullException("handler");
+                ArgumentNullException.ThrowIfNull(handler);
 
                 CurrentManager.ProtectedAddHandler(source, handler);
             }
@@ -561,8 +555,7 @@ namespace System.Windows.Controls
             /// </summary>
             public static void RemoveHandler(BitmapSource source, EventHandler<EventArgs> handler)
             {
-                if (handler == null)
-                    throw new ArgumentNullException("handler");
+                ArgumentNullException.ThrowIfNull(handler);
 
                 CurrentManager.ProtectedRemoveHandler(source, handler);
             }
@@ -676,8 +669,7 @@ namespace System.Windows.Controls
             /// </summary>
             public static void AddHandler(BitmapSource source, EventHandler<ExceptionEventArgs> handler)
             {
-                if (handler == null)
-                    throw new ArgumentNullException("handler");
+                ArgumentNullException.ThrowIfNull(handler);
 
                 CurrentManager.ProtectedAddHandler(source, handler);
             }
@@ -687,8 +679,7 @@ namespace System.Windows.Controls
             /// </summary>
             public static void RemoveHandler(BitmapSource source, EventHandler<ExceptionEventArgs> handler)
             {
-                if (handler == null)
-                    throw new ArgumentNullException("handler");
+                ArgumentNullException.ThrowIfNull(handler);
 
                 CurrentManager.ProtectedRemoveHandler(source, handler);
             }
@@ -802,8 +793,7 @@ namespace System.Windows.Controls
             /// </summary>
             public static void AddHandler(BitmapSource source, EventHandler<ExceptionEventArgs> handler)
             {
-                if (handler == null)
-                    throw new ArgumentNullException("handler");
+                ArgumentNullException.ThrowIfNull(handler);
 
                 CurrentManager.ProtectedAddHandler(source, handler);
             }
@@ -813,8 +803,7 @@ namespace System.Windows.Controls
             /// </summary>
             public static void RemoveHandler(BitmapSource source, EventHandler<ExceptionEventArgs> handler)
             {
-                if (handler == null)
-                    throw new ArgumentNullException("handler");
+                ArgumentNullException.ThrowIfNull(handler);
 
                 CurrentManager.ProtectedRemoveHandler(source, handler);
             }

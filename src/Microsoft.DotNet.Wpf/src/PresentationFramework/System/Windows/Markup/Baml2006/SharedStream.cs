@@ -24,10 +24,7 @@ namespace System.Windows.Baml2006
 
         public SharedStream(Stream baseStream)
         {
-            if (baseStream == null)
-            {
-                throw new ArgumentNullException(nameof(baseStream));
-            }
+            ArgumentNullException.ThrowIfNull(baseStream);
 
             Initialize(baseStream, 0, baseStream.Length);
         }
@@ -40,10 +37,7 @@ namespace System.Windows.Baml2006
         /// <param name="length"></param>
         public SharedStream(Stream baseStream, long offset, long length)
         {
-            if (baseStream == null)
-            {
-                throw new ArgumentNullException(nameof(baseStream));
-            }
+            ArgumentNullException.ThrowIfNull(baseStream);
 
             Initialize(baseStream, offset, length);
         }
@@ -55,15 +49,9 @@ namespace System.Windows.Baml2006
                 throw new ArgumentException("can\u2019t seek on baseStream");
             }
 
-            if (offset < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(offset));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(offset);
 
-            if (length < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(length));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(length);
 
             SharedStream subStream = baseStream as SharedStream;
             if (subStream != null)
@@ -176,20 +164,11 @@ namespace System.Windows.Baml2006
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            if (buffer == null)
-            {
-                throw new ArgumentNullException(nameof(buffer));
-            }
+            ArgumentNullException.ThrowIfNull(buffer);
 
-            if (offset < 0 || offset >= buffer.Length)
-            {
-                throw new ArgumentOutOfRangeException(nameof(offset));
-            }
-
-            if ((offset + count) > buffer.Length)
-            {
-                throw new ArgumentOutOfRangeException(nameof(count));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(offset);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(offset, buffer.Length);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(offset, buffer.Length - count);
 
             CheckDisposed();
 

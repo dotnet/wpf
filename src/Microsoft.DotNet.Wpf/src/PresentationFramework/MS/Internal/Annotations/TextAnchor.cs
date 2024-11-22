@@ -102,14 +102,11 @@ namespace System.Windows.Annotations
         /// <param name="textPointer">text pointer to test</param>
         internal bool Contains(ITextPointer textPointer)
         {
-            if (textPointer == null)
-            {
-                throw new ArgumentNullException("textPointer");
-            }
+            ArgumentNullException.ThrowIfNull(textPointer);
 
             if (textPointer.TextContainer != this.Start.TextContainer)
             {
-                throw new ArgumentException(SR.Get(SRID.NotInAssociatedTree, "textPointer"));
+                throw new ArgumentException(SR.Format(SR.NotInAssociatedTree, "textPointer"));
             }
 
             // Correct position normalization on range boundary so that
@@ -639,11 +636,11 @@ namespace System.Windows.Annotations
 
             // Make sure it starts after the one its being put behind
             if (i > 0 && newSegment.Start.CompareTo(_segments[i - 1].End) < 0)
-                throw new InvalidOperationException(SR.Get(SRID.TextSegmentsMustNotOverlap));
+                throw new InvalidOperationException(SR.TextSegmentsMustNotOverlap);
 
             // Make sure it ends before the one its being put ahead of
             if (i < _segments.Count && newSegment.End.CompareTo(_segments[i].Start) > 0)
-                throw new InvalidOperationException(SR.Get(SRID.TextSegmentsMustNotOverlap));
+                throw new InvalidOperationException(SR.TextSegmentsMustNotOverlap);
 
             _segments.Insert(i, newSegment);
         }

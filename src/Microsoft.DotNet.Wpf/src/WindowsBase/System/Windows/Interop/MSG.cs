@@ -7,8 +7,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Diagnostics.CodeAnalysis;
 using System.Security;
-using MS.Internal.WindowsBase;
-    
+
 namespace System.Windows.Interop
 {
     /// <summary>
@@ -41,7 +40,6 @@ namespace System.Windows.Interop
     [Serializable]
     public struct MSG
     {
-        [FriendAccessAllowed] // Built into Base, used by Core or Framework.
         internal MSG(IntPtr hwnd, int message, IntPtr wParam, IntPtr lParam, int time, int pt_x, int pt_y)
         {
             _hwnd = hwnd;
@@ -61,7 +59,6 @@ namespace System.Windows.Interop
         ///     The handle of the window to which the message was sent. 
         /// </summary>
         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
-        [SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         [SuppressMessage("Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources")]
         public IntPtr hwnd
         {
@@ -94,7 +91,6 @@ namespace System.Windows.Interop
         ///     The wParam of the window message. 
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         [SuppressMessage("Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources")]
         public IntPtr wParam
         {
@@ -112,7 +108,6 @@ namespace System.Windows.Interop
         ///     The lParam of the window message. 
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         [SuppressMessage("Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources")]
         public IntPtr lParam
         {

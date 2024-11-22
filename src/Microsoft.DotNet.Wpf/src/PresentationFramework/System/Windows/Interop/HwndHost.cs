@@ -135,7 +135,7 @@ namespace System.Windows.Interop
         protected override void OnKeyUp(KeyEventArgs e)
         {
             MSG msg;
-            if (_fTrusted.Value)
+            if (_fTrusted)
             {
                 msg = ComponentDispatcher.UnsecureCurrentKeyboardMessage;
             }
@@ -169,7 +169,7 @@ namespace System.Windows.Interop
         protected override void OnKeyDown(KeyEventArgs e)
         {
             MSG msg;
-            if (_fTrusted.Value)
+            if (_fTrusted)
             {
                 msg = ComponentDispatcher.UnsecureCurrentKeyboardMessage;
             }
@@ -212,10 +212,9 @@ namespace System.Windows.Interop
         /// </summary>
         protected virtual IKeyboardInputSite RegisterKeyboardInputSinkCore(IKeyboardInputSink sink)
         {
-            throw new InvalidOperationException(SR.Get(SRID.HwndHostDoesNotSupportChildKeyboardSinks));
+            throw new InvalidOperationException(SR.HwndHostDoesNotSupportChildKeyboardSinks);
         }
 
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         IKeyboardInputSite IKeyboardInputSink.RegisterKeyboardInputSink(IKeyboardInputSink sink)
         {
             return RegisterKeyboardInputSinkCore(sink);
@@ -235,7 +234,6 @@ namespace System.Windows.Interop
             return false;
         }
 
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         bool IKeyboardInputSink.TranslateAccelerator(ref MSG msg, ModifierKeys modifiers)
         {
             return TranslateAcceleratorCore(ref msg, modifiers);
@@ -277,7 +275,6 @@ namespace System.Windows.Interop
             return false;
         }
 
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         bool IKeyboardInputSink.OnMnemonic(ref MSG msg, ModifierKeys modifiers)
         {
             return OnMnemonicCore(ref msg, modifiers);
@@ -296,7 +293,6 @@ namespace System.Windows.Interop
             return false;
         }
 
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         bool IKeyboardInputSink.TranslateChar(ref MSG msg, ModifierKeys modifiers)
         {
             return TranslateCharCore(ref msg, modifiers);
@@ -490,7 +486,7 @@ namespace System.Windows.Interop
                 if (_hwndSubclass != null)
                 {
                     // Check if it is trusted (WebOC and AddInHost), call CriticalDetach to avoid the Demand.
-                    if (_fTrusted.Value == true)
+                    if (_fTrusted == true)
                     {
                         _hwndSubclass.CriticalDetach(false);
                     }
@@ -829,7 +825,7 @@ namespace System.Windows.Interop
 
         private void Initialize( bool fTrusted )
         {
-            _fTrusted = new SecurityCriticalDataForSet<bool> ( fTrusted ) ;
+            _fTrusted = fTrusted;
 
             _hwndSubclassHook = new HwndWrapperHook(SubclassWndProc);
             _handlerLayoutUpdated = new EventHandler(OnLayoutUpdated);
@@ -845,7 +841,7 @@ namespace System.Windows.Interop
         ///</summary>
         private void DemandIfUntrusted()
         {
-            if ( ! _fTrusted.Value )
+            if ( ! _fTrusted )
             {
             }
         }
@@ -1021,20 +1017,20 @@ namespace System.Windows.Interop
 
             if(_hwnd.Handle == IntPtr.Zero || !UnsafeNativeMethods.IsWindow(_hwnd))
             {
-                throw new InvalidOperationException(SR.Get(SRID.ChildWindowNotCreated));
+                throw new InvalidOperationException(SR.ChildWindowNotCreated);
             }
 
             // Make sure that the window that was created is indeed a child window.
             int windowStyle = UnsafeNativeMethods.GetWindowLong(new HandleRef(this,_hwnd.Handle), NativeMethods.GWL_STYLE);
             if((windowStyle & NativeMethods.WS_CHILD) == 0)
             {
-                throw new InvalidOperationException(SR.Get(SRID.HostedWindowMustBeAChildWindow));
+                throw new InvalidOperationException(SR.HostedWindowMustBeAChildWindow);
             }
 
             // Make sure the child window is the child of the expected parent window.
             if(hwndParent.Handle != UnsafeNativeMethods.GetParent(_hwnd))
             {
-                throw new InvalidOperationException(SR.Get(SRID.ChildWindowMustHaveCorrectParent));
+                throw new InvalidOperationException(SR.ChildWindowMustHaveCorrectParent);
             }
 
             // Test to see if hwndParent and _hwnd have different DPI_AWARENESS_CONTEXT's
@@ -1053,7 +1049,7 @@ namespace System.Windows.Interop
                 (idWindowProcess == UnsafeNativeMethods.GetProcessIdOfThread(hCurrentThread)))
 #else
             if ((idWindowThread == SafeNativeMethods.GetCurrentThreadId()) &&
-                (idWindowProcess == SafeNativeMethods.GetCurrentProcessId()))
+                (idWindowProcess == Environment.ProcessId))
 #endif
             {
                 _hwndSubclass = new HwndSubclass(_hwndSubclassHook);
@@ -1171,7 +1167,7 @@ namespace System.Windows.Interop
         /// </summary>
         private bool _hasDpiAwarenessContextTransition = false;
 
-        private SecurityCriticalDataForSet<bool> _fTrusted ;
+        private bool _fTrusted;
 
         private bool _isBuildingWindow = false;
 

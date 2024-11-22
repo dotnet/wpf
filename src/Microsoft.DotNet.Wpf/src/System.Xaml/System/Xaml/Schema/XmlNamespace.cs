@@ -91,7 +91,7 @@ namespace System.Xaml.Schema
         protected override string TargetNamespaceCore
         {
             get { return XmlDirectives.Uri; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         // -------------------------------------

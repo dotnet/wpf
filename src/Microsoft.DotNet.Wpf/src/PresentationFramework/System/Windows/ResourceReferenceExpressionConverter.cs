@@ -66,10 +66,7 @@ namespace System.Windows.Markup
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             // Validate Input Arguments
-            if (destinationType == null)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
+            ArgumentNullException.ThrowIfNull(destinationType);
 
             //MarkupExtention
             if (destinationType == typeof(MarkupExtension))
@@ -122,12 +119,9 @@ namespace System.Windows.Markup
             ResourceReferenceExpression expr = value as ResourceReferenceExpression;
             if (expr == null)
             {
-                throw new ArgumentException(SR.Get(SRID.MustBeOfType, "value", "ResourceReferenceExpression"));
+                throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "ResourceReferenceExpression"));
             }
-            if (destinationType == null)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
+            ArgumentNullException.ThrowIfNull(destinationType);
 
             // MarkupExtension
             if (destinationType == typeof(MarkupExtension))

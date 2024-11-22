@@ -24,7 +24,6 @@ using System.Windows.Media.Media3D;
 using MS.Internal.PresentationCore;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Animation
 {       
@@ -91,14 +90,8 @@ namespace System.Windows.Media.Animation
         public override sealed object GetCurrentValue(object defaultOriginValue, object defaultDestinationValue, AnimationClock animationClock)
         {
             // Verify that object arguments are non-null since we are a value type
-            if (defaultOriginValue == null)
-            {
-                throw new ArgumentNullException("defaultOriginValue");
-            }
-            if (defaultDestinationValue == null)
-            {
-                throw new ArgumentNullException("defaultDestinationValue");
-            }
+            ArgumentNullException.ThrowIfNull(defaultOriginValue);
+            ArgumentNullException.ThrowIfNull(defaultDestinationValue);
             return GetCurrentValue((Quaternion)defaultOriginValue, (Quaternion)defaultDestinationValue, animationClock);
         }
 
@@ -152,15 +145,12 @@ namespace System.Windows.Media.Animation
         {
             ReadPreamble();
 
-            if (animationClock == null)
-            {
-                throw new ArgumentNullException("animationClock");
-            }
+            ArgumentNullException.ThrowIfNull(animationClock);
 
             // We check for null above but presharp doesn't notice so we suppress the 
             // warning here.
 
-            #pragma warning suppress 6506
+#pragma warning suppress 6506
             if (animationClock.CurrentState == ClockState.Stopped)
             {
                 return defaultDestinationValue;
@@ -170,8 +160,8 @@ namespace System.Windows.Media.Animation
             if (!AnimatedTypeHelpers.IsValidAnimationValueQuaternion(defaultDestinationValue))
             {
                 throw new ArgumentException(
-                    SR.Get(
-                        SRID.Animation_InvalidBaseValue,
+                    SR.Format(
+                        SR.Animation_InvalidBaseValue,
                         defaultDestinationValue, 
                         defaultDestinationValue.GetType(), 
                         GetType()),

@@ -42,11 +42,8 @@ namespace System.Windows.Media
             //  5.  _bounds is the transformed bounds of the _hitGeometryInternal (outer space).
             //  6.  _matrixStack is an empty stack.            
 
-            if (geometry == null)
-            {                
-                throw new ArgumentNullException("geometry");
-            }
-            
+            ArgumentNullException.ThrowIfNull(geometry);
+
             // Convert the Geometry to an equivilent PathGeometry up front to prevent
             // conversion on every call to DoesContainWithDetail.  If the geometry is
             // animate this also has the side effect of eliminating animation interplay.

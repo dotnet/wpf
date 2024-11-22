@@ -1,0 +1,10 @@
+<Project>
+  <!--
+    Generates implicit global namespace imports file <projectname>.ImplicitGlobalNamespaceImports.cs.
+  -->
+  <ItemGroup Condition="'$(UseWPF)' == 'true' and ('$(ImplicitUsings)' == 'true' or '$(ImplicitUsings)' == 'enable')">
+    <Using Remove="System.IO" />
+    <Using Remove="System.Net.Http" />
+  </ItemGroup>
+
+</Project>

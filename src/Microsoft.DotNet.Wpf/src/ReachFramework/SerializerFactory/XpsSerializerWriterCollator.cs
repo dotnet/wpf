@@ -116,7 +116,7 @@ namespace System.Windows.Xps.Serialization
         {
             if (_collator == null)
             {
-                throw new XpsSerializationException(SR.Get(SRID.XpsSerializerFactory_WriterIsClosed));
+                throw new XpsSerializationException(SR.XpsSerializerFactory_WriterIsClosed);
             }
         }
 

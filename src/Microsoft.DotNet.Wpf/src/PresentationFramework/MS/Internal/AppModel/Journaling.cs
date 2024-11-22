@@ -272,7 +272,7 @@ namespace MS.Internal.AppModel
             : base(info, context)
         {
             _pageFunctionId = (Guid)info.GetValue("_pageFunctionId", typeof(Guid));
-            _parentPageFunctionId = (Guid)info.GetValue("_parentPageFunctionId", typeof(Guid)); ;
+            _parentPageFunctionId = (Guid)info.GetValue("_parentPageFunctionId", typeof(Guid));
         }
 
         //
@@ -539,14 +539,13 @@ namespace MS.Internal.AppModel
         //
         internal override void RestoreState(object contentObject)
         {
-            if (contentObject == null)
-                throw new ArgumentNullException("contentObject");
+            ArgumentNullException.ThrowIfNull(contentObject);
 
             PageFunctionBase pageFunction = (PageFunctionBase)contentObject;
 
             if (pageFunction == null)
             {
-                throw new Exception(SR.Get(SRID.InvalidPageFunctionType, contentObject.GetType()));
+                throw new Exception(SR.Format(SR.InvalidPageFunctionType, contentObject.GetType()));
             }
 
             pageFunction.ParentPageFunctionId = ParentPageFunctionId;
@@ -626,7 +625,7 @@ namespace MS.Internal.AppModel
             : base(jeGroupState, pageFunction)
         {
             string typeName = pageFunction.GetType().AssemblyQualifiedName;
-            this._typeName = new SecurityCriticalDataForSet<string>(typeName);
+            this._typeName = typeName;
         }
 
 
@@ -637,7 +636,7 @@ namespace MS.Internal.AppModel
         protected JournalEntryPageFunctionType(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            _typeName = new SecurityCriticalDataForSet<string>(info.GetString("_typeName"));
+            _typeName = info.GetString("_typeName");
         }
 
         //
@@ -646,7 +645,7 @@ namespace MS.Internal.AppModel
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
-            info.AddValue("_typeName", _typeName.Value);
+            info.AddValue("_typeName", _typeName);
         }
         #endregion
 
@@ -657,7 +656,7 @@ namespace MS.Internal.AppModel
 
         internal override void SaveState(object contentObject)
         {
-            Debug.Assert(contentObject.GetType().AssemblyQualifiedName == this._typeName.Value,
+            Debug.Assert(contentObject.GetType().AssemblyQualifiedName == this._typeName,
                 "The type of a PageFunction a journal entry is associated with cannot change.");
             base.SaveState(contentObject); // Save controls state (JournalDataStreams).
         }
@@ -672,7 +671,7 @@ namespace MS.Internal.AppModel
         {
             PageFunctionBase pageFunction;
 
-            Invariant.Assert(this._typeName.Value != null, "JournalEntry does not contain the Type for the PageFunction to be created");
+            Invariant.Assert(this._typeName != null, "JournalEntry does not contain the Type for the PageFunction to be created");
 
             //First try Type.GetType from the saved typename, then try Activator.CreateInstanceFrom
             //Type.GetType - Since the typename is fullyqualified
@@ -680,14 +679,14 @@ namespace MS.Internal.AppModel
             //If the assembly was not a strongly named one nor is present in the APPBASE, this will
             //fail.
 
-            Type pfType = Type.GetType(this._typeName.Value);
+            Type pfType = Type.GetType(this._typeName);
             try
             {
                 pageFunction = (PageFunctionBase)Activator.CreateInstance(pfType);
             }
             catch (Exception ex)
             {
-                throw new Exception(SR.Get(SRID.FailedResumePageFunction, this._typeName.Value), ex);
+                throw new Exception(SR.Format(SR.FailedResumePageFunction, this._typeName), ex);
             }
 
             InitializeComponent(pageFunction);
@@ -727,7 +726,7 @@ namespace MS.Internal.AppModel
         #region Private fields
 
         /// AssemblyQualifiedName of the PageFunction Type
-        private SecurityCriticalDataForSet<string> _typeName;
+        private string _typeName;
 
         #endregion
     }

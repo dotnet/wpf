@@ -243,7 +243,7 @@ namespace System.Windows.Threading
             }
         }
 
-        private object _instanceLock = new object();
+        private readonly object _instanceLock = new object();
 
         private EventHandler _dispatcherInactive;
 

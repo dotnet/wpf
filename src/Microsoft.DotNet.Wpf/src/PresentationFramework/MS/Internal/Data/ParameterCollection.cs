@@ -169,7 +169,7 @@ namespace MS.Internal.Data
         {
             if (this.IsReadOnly)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ObjectDataProviderParameterCollectionIsNotInUse));
+                throw new InvalidOperationException(SR.ObjectDataProviderParameterCollectionIsNotInUse);
             }
         }
 

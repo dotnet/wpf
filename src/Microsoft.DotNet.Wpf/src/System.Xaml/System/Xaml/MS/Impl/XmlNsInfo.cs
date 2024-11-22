@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -38,7 +40,7 @@ namespace System.Xaml.MS.Impl
         }
 
         // Note this, is the only dictionary that we synchronize, because XamlSchemaContext adds to it
-        private ConcurrentDictionary<string, IList<string>> _clrToXmlNs = null;
+        private ConcurrentDictionary<string, IList<string>> _clrToXmlNs;
         internal ConcurrentDictionary<string, IList<string>> ClrToXmlNs
         {
             get
@@ -64,7 +66,7 @@ namespace System.Xaml.MS.Impl
             }
         }
 
-        private Dictionary<string, string> _oldToNewNs = null;
+        private Dictionary<string, string> _oldToNewNs;
         internal Dictionary<string, string> OldToNewNs
         {
             get
@@ -77,7 +79,7 @@ namespace System.Xaml.MS.Impl
             }
         }
 
-        private Dictionary<string, string> _prefixes = null;
+        private Dictionary<string, string> _prefixes;
         internal Dictionary<string, string> Prefixes
         {
             get
@@ -90,7 +92,7 @@ namespace System.Xaml.MS.Impl
             }
         }
 
-        private string _rootNamespace = null;
+        private string _rootNamespace;
         internal string RootNamespace
         {
             get
@@ -185,7 +187,7 @@ namespace System.Xaml.MS.Impl
         {
             if (String.IsNullOrEmpty(xmlns) || clrns == null)
             {
-                throw new XamlSchemaException(SR.Get(SRID.BadXmlnsDefinition, assembly.FullName));
+                throw new XamlSchemaException(SR.Format(SR.BadXmlnsDefinition, assembly.FullName));
             }
 
             result.Add(new XmlNsDefinition { ClrNamespace = clrns, XmlNamespace = xmlns });
@@ -212,7 +214,7 @@ namespace System.Xaml.MS.Impl
                 xmlNamespaceList.Add(nsDef.XmlNamespace);
             }
 
-            string assemblyName = _fullyQualifyAssemblyName ? 
+            string assemblyName = _fullyQualifyAssemblyName ?
                 assembly.FullName : XamlSchemaContext.GetAssemblyShortName(assembly);
             foreach (KeyValuePair<string, IList<string>> clrToXmlNs in result)
             {
@@ -266,7 +268,7 @@ namespace System.Xaml.MS.Impl
         {
             if (assemblyName == null)
             {
-                throw new XamlSchemaException(SR.Get(SRID.BadInternalsVisibleTo1, assembly.FullName));
+                throw new XamlSchemaException(SR.Format(SR.BadInternalsVisibleTo1, assembly.FullName));
             }
             try
             {
@@ -274,12 +276,12 @@ namespace System.Xaml.MS.Impl
             }
             catch (ArgumentException ex)
             {
-                throw new XamlSchemaException(SR.Get(SRID.BadInternalsVisibleTo2, assemblyName, assembly.FullName), ex);
+                throw new XamlSchemaException(SR.Format(SR.BadInternalsVisibleTo2, assemblyName, assembly.FullName), ex);
             }
             // AssemblyName.ctor throws FLE on malformed assembly name
             catch (FileLoadException ex)
             {
-                throw new XamlSchemaException(SR.Get(SRID.BadInternalsVisibleTo2, assemblyName, assembly.FullName), ex);
+                throw new XamlSchemaException(SR.Format(SR.BadInternalsVisibleTo2, assemblyName, assembly.FullName), ex);
             }
         }
 
@@ -324,12 +326,12 @@ namespace System.Xaml.MS.Impl
         {
             if (String.IsNullOrEmpty(newns) || String.IsNullOrEmpty(oldns))
             {
-                throw new XamlSchemaException(SR.Get(SRID.BadXmlnsCompat, assembly.FullName));
+                throw new XamlSchemaException(SR.Format(SR.BadXmlnsCompat, assembly.FullName));
             }
 
             if (result.ContainsKey(oldns))
             {
-                throw new XamlSchemaException(SR.Get(SRID.DuplicateXmlnsCompat, assembly.FullName, oldns));
+                throw new XamlSchemaException(SR.Format(SR.DuplicateXmlnsCompat, assembly.FullName, oldns));
             }
             result.Add(oldns, newns);
         }
@@ -373,7 +375,7 @@ namespace System.Xaml.MS.Impl
         {
             if (String.IsNullOrEmpty(prefix) || String.IsNullOrEmpty(xmlns))
             {
-                throw new XamlSchemaException(SR.Get(SRID.BadXmlnsPrefix, assembly.FullName));
+                throw new XamlSchemaException(SR.Format(SR.BadXmlnsPrefix, assembly.FullName));
             }
 
             string oldPrefix;
@@ -449,7 +451,7 @@ namespace System.Xaml.MS.Impl
                     {
                         if (!visited.Add(ns))
                         {
-                            throw new XamlSchemaException(SR.Get(SRID.XmlnsCompatCycle, assembly.FullName, ns));
+                            throw new XamlSchemaException(SR.Format(SR.XmlnsCompatCycle, assembly.FullName, ns));
                         }
                         IncrementSubsumeCount(ns);
                         ns = GetNewNs(ns);

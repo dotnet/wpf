@@ -585,8 +585,8 @@ namespace System.Windows
                 using (Dispatcher.DisableProcessing())
                 {
                     //enforce that Measure can not receive NaN size .
-                    if (DoubleUtil.IsNaN(availableSize.Width) || DoubleUtil.IsNaN(availableSize.Height))
-                        throw new InvalidOperationException(SR.Get(SRID.UIElement_Layout_NaNMeasure));
+                    if (double.IsNaN(availableSize.Width) || double.IsNaN(availableSize.Height))
+                        throw new InvalidOperationException(SR.UIElement_Layout_NaNMeasure);
 
                     bool neverMeasured = NeverMeasured;
 
@@ -679,11 +679,11 @@ namespace System.Windows
                     //enforce that MeasureCore can not return PositiveInfinity size even if given Infinte availabel size.
                     //Note: NegativeInfinity can not be returned by definition of Size structure.
                     if (double.IsPositiveInfinity(desiredSize.Width) || double.IsPositiveInfinity(desiredSize.Height))
-                        throw new InvalidOperationException(SR.Get(SRID.UIElement_Layout_PositiveInfinityReturned, this.GetType().FullName));
+                        throw new InvalidOperationException(SR.Format(SR.UIElement_Layout_PositiveInfinityReturned, this.GetType().FullName));
 
                     //enforce that MeasureCore can not return NaN size .
-                    if (DoubleUtil.IsNaN(desiredSize.Width) || DoubleUtil.IsNaN(desiredSize.Height))
-                        throw new InvalidOperationException(SR.Get(SRID.UIElement_Layout_NaNReturned, this.GetType().FullName));
+                    if (double.IsNaN(desiredSize.Width) || double.IsNaN(desiredSize.Height))
+                        throw new InvalidOperationException(SR.Format(SR.UIElement_Layout_NaNReturned, this.GetType().FullName));
 
                     //reset measure dirtiness
 
@@ -801,14 +801,14 @@ namespace System.Windows
                     //enforce that Arrange can not come with Infinity size or NaN
                     if (double.IsPositiveInfinity(finalRect.Width)
                         || double.IsPositiveInfinity(finalRect.Height)
-                        || DoubleUtil.IsNaN(finalRect.Width)
-                        || DoubleUtil.IsNaN(finalRect.Height)
+                        || double.IsNaN(finalRect.Width)
+                        || double.IsNaN(finalRect.Height)
                       )
                     {
                         DependencyObject parent = GetUIParent() as UIElement;
                         throw new InvalidOperationException(
-                            SR.Get(
-                                SRID.UIElement_Layout_InfinityArrange,
+                            SR.Format(
+                                SR.UIElement_Layout_InfinityArrange,
                                     (parent == null ? "" : parent.GetType().FullName),
                                     this.GetType().FullName));
                     }
@@ -1095,7 +1095,7 @@ namespace System.Windows
             {
                 newValue = Math.Round(value * dpiScale) / dpiScale;
                 // If rounding produces a value unacceptable to layout (NaN, Infinity or MaxValue), use the original value.
-                if (DoubleUtil.IsNaN(newValue) ||
+                if (double.IsNaN(newValue) ||
                     Double.IsInfinity(newValue) ||
                     DoubleUtil.AreClose(newValue, Double.MaxValue))
                 {
@@ -1403,8 +1403,8 @@ namespace System.Windows
         private static bool IsRenderTransformOriginValid(object value)
         {
             Point v = (Point)value;
-            return (    (!DoubleUtil.IsNaN(v.X) && !Double.IsPositiveInfinity(v.X) && !Double.IsNegativeInfinity(v.X))
-                     && (!DoubleUtil.IsNaN(v.Y) && !Double.IsPositiveInfinity(v.Y) && !Double.IsNegativeInfinity(v.Y)));
+            return (    (!double.IsNaN(v.X) && !Double.IsPositiveInfinity(v.X) && !Double.IsNegativeInfinity(v.X))
+                     && (!double.IsNaN(v.Y) && !Double.IsPositiveInfinity(v.Y) && !Double.IsNegativeInfinity(v.Y)));
         }
 
 
@@ -1443,7 +1443,7 @@ namespace System.Windows
             {
                 DependencyObject parent = _parent;
 
-                if (!InputElement.IsUIElement(parent) && !InputElement.IsUIElement3D(parent))
+                if (parent is not UIElement and not UIElement3D)
                 {
                     Visual parentAsVisual = parent as Visual;
 
@@ -1490,7 +1490,7 @@ namespace System.Windows
             {
                 DependencyObject parent = oldParent;
 
-                if (!InputElement.IsUIElement(parent) && !InputElement.IsUIElement3D(parent))
+                if (parent is not UIElement and not UIElement3D)
                 {
                     // We are being unplugged from a non-UIElement visual. This
                     // means that our parent didn't play by the same rules we
@@ -1649,24 +1649,18 @@ namespace System.Windows
 
         internal static void BuildRouteHelper(DependencyObject e, EventRoute route, RoutedEventArgs args)
         {
-            if (route == null)
-            {
-                throw new ArgumentNullException("route");
-            }
+            ArgumentNullException.ThrowIfNull(route);
 
-            if (args == null)
-            {
-                throw new ArgumentNullException("args");
-            }
+            ArgumentNullException.ThrowIfNull(args);
 
             if (args.Source == null)
             {
-                throw new ArgumentException(SR.Get(SRID.SourceNotSet));
+                throw new ArgumentException(SR.SourceNotSet);
             }
 
             if (args.RoutedEvent != route.RoutedEvent)
             {
-                throw new ArgumentException(SR.Get(SRID.Mismatched_RoutedEvent));
+                throw new ArgumentException(SR.Mismatched_RoutedEvent);
             }
 
             // Route via visual tree
@@ -1724,7 +1718,7 @@ namespace System.Windows
                     // that we will process.
                     if (cElements++ > MAX_ELEMENTS_IN_ROUTE)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.TreeLoop));
+                        throw new InvalidOperationException(SR.TreeLoop);
                     }
 
                     // Allow the element to adjust source
@@ -1891,13 +1885,9 @@ namespace System.Windows
         /// <summary>
         ///     Adds a handler for the given attached event
         /// </summary>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal static void AddHandler(DependencyObject d, RoutedEvent routedEvent, Delegate handler)
         {
-            if (d == null)
-            {
-                throw new ArgumentNullException("d");
-            }
+            ArgumentNullException.ThrowIfNull(d);
 
             Debug.Assert(routedEvent != null, "RoutedEvent must not be null");
 
@@ -1922,7 +1912,7 @@ namespace System.Windows
                     }
                     else
                     {
-                        throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement, d.GetType()));
+                        throw new ArgumentException(SR.Format(SR.Invalid_IInputElement, d.GetType()));
                     }
                 }
             }
@@ -1931,13 +1921,9 @@ namespace System.Windows
         /// <summary>
         ///     Removes a handler for the given attached event
         /// </summary>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal static void RemoveHandler(DependencyObject d, RoutedEvent routedEvent, Delegate handler)
         {
-            if (d == null)
-            {
-                throw new ArgumentNullException("d");
-            }
+            ArgumentNullException.ThrowIfNull(d);
 
             Debug.Assert(routedEvent != null, "RoutedEvent must not be null");
 
@@ -1962,7 +1948,7 @@ namespace System.Windows
                     }
                     else
                     {
-                        throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement, d.GetType()));
+                        throw new ArgumentException(SR.Format(SR.Invalid_IInputElement, d.GetType()));
                     }
                 }
             }
@@ -2391,7 +2377,6 @@ namespace System.Windows
         /// <summary>
         ///     Asynchronously re-evaluate the reverse-inherited properties.
         /// </summary>
-        [FriendAccessAllowed]
         internal void SynchronizeReverseInheritPropertyFlags(DependencyObject oldParent, bool isCoreParent)
         {
             if(IsKeyboardFocusWithin)
@@ -3145,7 +3130,6 @@ namespace System.Windows
         /// Opens the DrawingVisual for rendering. The returned DrawingContext can be used to
         /// render into the DrawingVisual.
         /// </summary>
-        [FriendAccessAllowed]
         internal DrawingContext RenderOpen()
         {
             return new VisualDrawingContext(this);
@@ -4117,7 +4101,6 @@ namespace System.Windows
         /// <param name="value"></param>
         /// To keep PersistId from being serialized the set has been removed from the property and a separate
         /// set method has been created.
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal void SetPersistId(int value)
         {
             _persistId = value;
@@ -4140,7 +4123,6 @@ namespace System.Windows
         internal Rect PreviousArrangeRect
         {
             //  called from PresentationFramework!System.Windows.Controls.Primitives.LayoutInformation.GetLayoutSlot()
-            [FriendAccessAllowed]
             get
             {
                 return _finalRect;
@@ -4348,7 +4330,7 @@ namespace System.Windows
         ///     Setting to false will immediately complete any current manipulation or inertia
         ///     on this element and raise a ManipulationCompleted event.
         /// </remarks>
-        [CustomCategory(SRID.Touch_Category)]
+        [CustomCategory(nameof(SR.Touch_Category))]
         public bool IsManipulationEnabled
         {
             get
@@ -4402,7 +4384,7 @@ namespace System.Windows
         /// <summary>
         ///     Indicates that a manipulation is about to start and allows for configuring its behavior.
         /// </summary>
-        [CustomCategory(SRID.Touch_Category)]
+        [CustomCategory(nameof(SR.Touch_Category))]
         public event EventHandler<ManipulationStartingEventArgs> ManipulationStarting
         {
             add { AddHandler(ManipulationStartingEvent, value, false); }
@@ -4427,7 +4409,7 @@ namespace System.Windows
         /// <summary>
         ///     Indicates that a manipulation has started.
         /// </summary>
-        [CustomCategory(SRID.Touch_Category)]
+        [CustomCategory(nameof(SR.Touch_Category))]
         public event EventHandler<ManipulationStartedEventArgs> ManipulationStarted
         {
             add { AddHandler(ManipulationStartedEvent, value, false); }
@@ -4452,7 +4434,7 @@ namespace System.Windows
         /// <summary>
         ///     Provides data regarding changes to a currently occurring manipulation.
         /// </summary>
-        [CustomCategory(SRID.Touch_Category)]
+        [CustomCategory(nameof(SR.Touch_Category))]
         public event EventHandler<ManipulationDeltaEventArgs> ManipulationDelta
         {
             add { AddHandler(ManipulationDeltaEvent, value, false); }
@@ -4477,7 +4459,7 @@ namespace System.Windows
         /// <summary>
         ///     Allows a handler to customize the parameters of an inertia processor.
         /// </summary>
-        [CustomCategory(SRID.Touch_Category)]
+        [CustomCategory(nameof(SR.Touch_Category))]
         public event EventHandler<ManipulationInertiaStartingEventArgs> ManipulationInertiaStarting
         {
             add { AddHandler(ManipulationInertiaStartingEvent, value, false); }
@@ -4502,7 +4484,7 @@ namespace System.Windows
         /// <summary>
         ///     Allows a handler to provide feedback when a manipulation has encountered a boundary.
         /// </summary>
-        [CustomCategory(SRID.Touch_Category)]
+        [CustomCategory(nameof(SR.Touch_Category))]
         public event EventHandler<ManipulationBoundaryFeedbackEventArgs> ManipulationBoundaryFeedback
         {
             add { AddHandler(ManipulationBoundaryFeedbackEvent, value, false); }
@@ -4527,7 +4509,7 @@ namespace System.Windows
         /// <summary>
         ///     Indicates that a manipulation has completed.
         /// </summary>
-        [CustomCategory(SRID.Touch_Category)]
+        [CustomCategory(nameof(SR.Touch_Category))]
         public event EventHandler<ManipulationCompletedEventArgs> ManipulationCompleted
         {
             add { AddHandler(ManipulationCompletedEvent, value, false); }
@@ -4587,10 +4569,7 @@ namespace System.Windows
         /// <returns>True if capture was taken.</returns>
         public bool CaptureTouch(TouchDevice touchDevice)
         {
-            if (touchDevice == null)
-            {
-                throw new ArgumentNullException("touchDevice");
-            }
+            ArgumentNullException.ThrowIfNull(touchDevice);
 
             return touchDevice.Capture(this);
         }
@@ -4602,10 +4581,7 @@ namespace System.Windows
         /// <returns>true if capture was released, false otherwise.</returns>
         public bool ReleaseTouchCapture(TouchDevice touchDevice)
         {
-            if (touchDevice == null)
-            {
-                throw new ArgumentNullException("touchDevice");
-            }
+            ArgumentNullException.ThrowIfNull(touchDevice);
 
             if (touchDevice.Captured == this)
             {

@@ -55,7 +55,7 @@ namespace System.Windows.Interop
     ///     host an ActiveX control. Currently the support is limited to
     ///     windowed controls. This class provides a technology bridge
     ///     between unmanaged ActiveXControls and Avalon framework.
-    ///     
+    ///
     ///     The only reason we expose this class public in ArrowHead without public OM
     ///     is for the WebBrowser control. The WebBrowser class derives from ActiveXHost, and
     ///     we are exposing the WebBrowser class in ArrowHead. This class does not have public
@@ -99,11 +99,11 @@ namespace System.Windows.Interop
             // What if the control is marked as free-threaded?
             if (Thread.CurrentThread.ApartmentState != ApartmentState.STA)
             {
-                throw new ThreadStateException(SR.Get(SRID.AxRequiresApartmentThread, clsid.ToString()));
+                throw new ThreadStateException(SR.Format(SR.AxRequiresApartmentThread, clsid.ToString()));
             }
             #pragma warning restore 0618
 
-            _clsid.Value = clsid;
+            _clsid = clsid;
 
             // hookup so we are notified when loading is finished.
             Initialized += new EventHandler(OnInitialized);
@@ -157,13 +157,13 @@ namespace System.Windows.Interop
 
             //The above call should have set this interface
             Invariant.Assert(_axOleInPlaceActiveObject != null, "InPlace activation of ActiveX control failed");
-            
+
             if (ControlHandle.Handle == IntPtr.Zero)
             {
                 IntPtr inplaceWindow = IntPtr.Zero;
                 _axOleInPlaceActiveObject.GetWindow(out inplaceWindow);
                 AttachWindow(inplaceWindow);
-            }                        
+            }
 
             return _axWindow;
         }
@@ -520,7 +520,7 @@ namespace System.Windows.Interop
                                          this.ParentHandle.Handle,
                                          _bounds);
 
-            Debug.Assert(hr == NativeMethods.S_OK, String.Format(CultureInfo.CurrentCulture, "DoVerb call failed for verb 0x{0:X}", verb));
+            Debug.Assert(hr == NativeMethods.S_OK, $"DoVerb call failed for verb 0x{verb:X}");
             return hr == NativeMethods.S_OK;
         }
 
@@ -570,7 +570,7 @@ namespace System.Windows.Interop
                 // First, create the ActiveX control
                 Debug.Assert(_axInstance == null, "_axInstance must be null");
 
-                _axInstance = CreateActiveXObject(_clsid.Value);
+                _axInstance = CreateActiveXObject(_clsid);
                 Debug.Assert(_axInstance != null, "w/o an exception being thrown we must have an object...");
 
                 //
@@ -677,7 +677,7 @@ namespace System.Windows.Interop
                     }
                     else
                     {
-                        throw new TargetInvocationException(SR.Get(SRID.AXNohWnd, GetType().Name), e);
+                        throw new TargetInvocationException(SR.Format(SR.AXNohWnd, GetType().Name), e);
                     }
                 }
 
@@ -1051,7 +1051,7 @@ namespace System.Windows.Interop
 
         #region ActiveX Related
 
-        private SecurityCriticalDataForSet<Guid>    _clsid;
+        private Guid                        _clsid;
 
         private HandleRef                   _axWindow;
         private BitVector32                 _axHostState    = new BitVector32();

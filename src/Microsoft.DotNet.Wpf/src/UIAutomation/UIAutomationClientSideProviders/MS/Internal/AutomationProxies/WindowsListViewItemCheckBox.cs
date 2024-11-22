@@ -218,7 +218,7 @@ namespace MS.Internal.AutomationProxies
             {
                 case ListViewItem.CheckState.NoCheckbox :
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
                     }
 
                 case ListViewItem.CheckState.Checked :

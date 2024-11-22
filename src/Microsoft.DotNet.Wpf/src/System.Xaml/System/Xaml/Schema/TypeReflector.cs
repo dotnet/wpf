@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +15,7 @@ using XAML3 = System.Windows.Markup;
 
 namespace System.Xaml.Schema
 {
+    [Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2002:Do not lock on objects with weak identity", Justification = "This type is internal.")]
     class TypeReflector : Reflector
     {
         private const XamlCollectionKind XamlCollectionKindInvalid = (XamlCollectionKind)byte.MaxValue;
@@ -73,7 +76,7 @@ namespace System.Xaml.Schema
             _nonAttachableMemberCache.IsComplete = true;
             _attachableMemberCache = new ThreadSafeDictionary<string, XamlMember>();
             _attachableMemberCache.IsComplete = true;
-            
+
             _baseType.Value = XamlLanguage.Object;
             _boolTypeBits = (int)BoolTypeBits.Default | (int)BoolTypeBits.Unknown | (int)BoolTypeBits.WhitespaceSignificantCollection | (int)BoolTypeBits.AllValid;
             _collectionKind = XamlCollectionKind.None;
@@ -616,7 +619,7 @@ namespace System.Xaml.Schema
         private void PickAttachablePropertyAccessors(List<MethodInfo> getters,
             List<MethodInfo> setters, out MethodInfo getter, out MethodInfo setter)
         {
-            List<KeyValuePair<MethodInfo, MethodInfo>> candidates = 
+            List<KeyValuePair<MethodInfo, MethodInfo>> candidates =
                 new List<KeyValuePair<MethodInfo, MethodInfo>>();
 
             if (setters != null && getters != null)
@@ -641,7 +644,7 @@ namespace System.Xaml.Schema
             // check "IsAssignableFrom" to find the most derived type/property, etc.
             // OR ... we can use the undocumented fact that the most derived
             // type/properties appear to be returned first.
-            // This is for cases where there are multiple overloaded get/set pairs 
+            // This is for cases where there are multiple overloaded get/set pairs
             // for the same attached property name (or multiple overloaded setters with no getter, or multiple adders for an event).
             if (candidates.Count > 0)
             {
@@ -705,7 +708,7 @@ namespace System.Xaml.Schema
             return PickAttachableEventAdder(adders);
         }
 
-        private void LookupAllStaticAccessors(out Dictionary<string, List<MethodInfo>> getters, 
+        private void LookupAllStaticAccessors(out Dictionary<string, List<MethodInfo>> getters,
             out Dictionary<string, List<MethodInfo>> setters, out Dictionary<string, List<MethodInfo>> adders)
         {
             getters = new Dictionary<string,List<MethodInfo>>();
@@ -813,7 +816,7 @@ namespace System.Xaml.Schema
                             preferredAccessors = new List<MethodInfo>();
                         }
                         preferredAccessors.Add(accessor);
-                    }   
+                    }
                 }
             }
         }
@@ -824,7 +827,7 @@ namespace System.Xaml.Schema
             {
                 return IsAttachableEventAdder(accessor);
             }
-            
+
             if (isGetter)
             {
                 return IsAttachablePropertyGetter(accessor);
@@ -914,7 +917,7 @@ namespace System.Xaml.Schema
 
         private bool IsAttachablePropertySetter(MethodInfo mi)
         {
-            // Static Setter has two arguments 
+            // Static Setter has two arguments
             ParameterInfo[] pmi = mi.GetParameters();
             return (pmi.Length == 2);
         }
@@ -930,7 +933,7 @@ namespace System.Xaml.Schema
             {
                 return false;
             }
-            name = mi.Name.Substring(KnownStrings.Add.Length, 
+            name = mi.Name.Substring(KnownStrings.Add.Length,
                 mi.Name.Length - KnownStrings.Add.Length - KnownStrings.Handler.Length);
             return true;
         }
@@ -961,7 +964,7 @@ namespace System.Xaml.Schema
             return result;
         }
 
-        private void GetOrCreateAttachableProperties(XamlSchemaContext schemaContext, List<XamlMember> result, 
+        private void GetOrCreateAttachableProperties(XamlSchemaContext schemaContext, List<XamlMember> result,
             Dictionary<string, List<MethodInfo>> getters, Dictionary<string, List<MethodInfo>> setters)
         {
             foreach (KeyValuePair<string, List<MethodInfo>> nameAndSetterList in setters)
@@ -972,7 +975,7 @@ namespace System.Xaml.Schema
                 {
                     List<MethodInfo> getterList;
                     getters.TryGetValue(name, out getterList);
-                    
+
                     // removing the current entry from getters dictionary because it is not needed anymore
                     getters.Remove(name);
                     MethodInfo getter, setter;
@@ -1002,7 +1005,7 @@ namespace System.Xaml.Schema
             }
         }
 
-        private void GetOrCreateAttachableEvents(XamlSchemaContext schemaContext, 
+        private void GetOrCreateAttachableEvents(XamlSchemaContext schemaContext,
             List<XamlMember> result, Dictionary<string, List<MethodInfo>> adders)
         {
             foreach (KeyValuePair<string, List<MethodInfo>> nameAndAdderList in adders)
@@ -1052,7 +1055,7 @@ namespace System.Xaml.Schema
             }
             if (objs.Length > 1)
             {
-                string message = SR.Get(SRID.TooManyAttributesOnType,
+                string message = SR.Format(SR.TooManyAttributesOnType,
                                                     reflectedType.Name, attrType.Name);
                 throw new XamlSchemaException(message);
             }

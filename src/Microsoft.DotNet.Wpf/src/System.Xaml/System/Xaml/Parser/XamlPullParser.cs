@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -40,7 +42,7 @@ namespace MS.Internal.Xaml.Parser
         // Attribute and Directive values can be markup extensions.
 
         ///////////////////////////
-        //  XamlPullParser Exception Strings 
+        //  XamlPullParser Exception Strings
         //
         private const string ElementRuleException = "Element ::= . EmptyElement | ( StartElement ElementBody ).";
         private const string EmptyElementRuleException = "EmptyElement ::= . EMPTYELEMENT DIRECTIVE* ATTRIBUTE*.";
@@ -931,7 +933,7 @@ namespace MS.Internal.Xaml.Parser
 
         #region Optimizations
         private readonly XamlTypeName arrayType = new XamlTypeName(@"http://schemas.microsoft.com/winfx/2006/xaml", "Array");
-        private XamlType _arrayExtensionType = null;
+        private XamlType _arrayExtensionType;
         private XamlType ArrayExtensionType
         {
             get
@@ -944,7 +946,7 @@ namespace MS.Internal.Xaml.Parser
             }
         }
 
-        private XamlMember _arrayTypeMember = null;
+        private XamlMember _arrayTypeMember;
         private XamlMember ArrayTypeMember
         {
             get
@@ -957,7 +959,7 @@ namespace MS.Internal.Xaml.Parser
             }
         }
 
-        private XamlMember _itemsTypeMember = null;
+        private XamlMember _itemsTypeMember;
         private XamlMember ItemsTypeMember
         {
             get
@@ -1193,7 +1195,7 @@ namespace MS.Internal.Xaml.Parser
             : base(message, innerException) { }
 
         public XamlUnexpectedParseException(XamlScanner xamlScanner, ScannerNodeType nodetype, string parseRule)
-            : base(xamlScanner, SR.Get(SRID.UnexpectedNodeType, nodetype.ToString(), parseRule)) { }
+            : base(xamlScanner, SR.Format(SR.UnexpectedNodeType, nodetype.ToString(), parseRule)) { }
 
         protected XamlUnexpectedParseException(SerializationInfo info,
                                                StreamingContext context)

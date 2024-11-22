@@ -49,10 +49,8 @@ namespace System.ComponentModel
         /// </summary>
         public static void AddListener(INotifyPropertyChanged source, IWeakEventListener listener, string propertyName)
         {
-            if (source == null)
-                throw new ArgumentNullException("source");
-            if (listener == null)
-                throw new ArgumentNullException("listener");
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(listener);
 
             CurrentManager.PrivateAddListener(source, listener, propertyName);
         }
@@ -66,8 +64,7 @@ namespace System.ComponentModel
             if (source == null)
                 throw new ArgumentNullException("source");
             */
-            if (listener == null)
-                throw new ArgumentNullException("listener");
+            ArgumentNullException.ThrowIfNull(listener);
 
             CurrentManager.PrivateRemoveListener(source, listener, propertyName);
         }
@@ -77,8 +74,7 @@ namespace System.ComponentModel
         /// </summary>
         public static void AddHandler(INotifyPropertyChanged source, EventHandler<PropertyChangedEventArgs> handler, string propertyName)
         {
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(handler);
 
             CurrentManager.PrivateAddHandler(source, handler, propertyName);
         }
@@ -88,8 +84,7 @@ namespace System.ComponentModel
         /// </summary>
         public static void RemoveHandler(INotifyPropertyChanged source, EventHandler<PropertyChangedEventArgs> handler, string propertyName)
         {
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(handler);
 
             CurrentManager.PrivateRemoveHandler(source, handler, propertyName);
         }
@@ -158,7 +153,7 @@ namespace System.ComponentModel
                         }
 
                         // for each key, remove dead entries in its list
-                        bool removeList = purgeAll || source == null;
+                        bool removeList = /*purgeAll || purgeAll is always false*/ source == null;
 
                         if (!removeList)
                         {
@@ -211,7 +206,7 @@ namespace System.ComponentModel
                         }
 
                         // for each key, remove dead entries in its list
-                        bool removeList = purgeAll || source == null;
+                        bool removeList = /*purgeAll || purgeAll is always false*/ source == null;
 
                         if (!removeList)
                         {
@@ -229,7 +224,7 @@ namespace System.ComponentModel
                             // if a cloned list changed, remember the details
                             // so that the clone can be installed back into the
                             // dictionary outside the iteration
-                            if (!removeList && inUse && isChanged)
+                            if (/*!removeList && !removeList is always true*/ inUse && isChanged)
                             {
                                 if (toInstall == null)
                                 {

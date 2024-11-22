@@ -497,21 +497,18 @@ namespace MS.Internal.TextFormatting
             {
                 for (int i = 0; i < 10; ++i)
                 {
-                    digits[i] = new string((char)(firstDigit + i), 1);
+                    digits[i] = ((char)(firstDigit + i)).ToString();
                 }
             }
             else
             {
+                Span<char> twoChars = stackalloc char[2];
                 for (int i = 0; i < 10; ++i)
                 {
                     int n = firstDigit + i - 0x10000;
-
-                    digits[i] = new string(
-                        new char[] {
-                            (char)((n >> 10) | 0xD800),     // high surrogate
-                            (char)((n & 0x03FF) | 0xDC00)   // low surrogate
-                            }
-                        );
+                    twoChars[0] = (char)((n >> 10) | 0xD800);     // high surrogate
+                    twoChars[1] = (char)((n & 0x03FF) | 0xDC00);  // low surrogate
+                    digits[i] = new string(twoChars);
                 }
             }
 

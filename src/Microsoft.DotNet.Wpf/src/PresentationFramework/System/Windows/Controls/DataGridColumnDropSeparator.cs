@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿
+
 using System;
 using System.Windows;
 using System.Windows.Controls.Primitives;
@@ -40,7 +40,7 @@ namespace System.Windows.Controls
         private static object OnCoerceWidth(DependencyObject d, object baseValue)
         {
             double width = (double)baseValue;
-            if (DoubleUtil.IsNaN(width))
+            if (double.IsNaN(width))
             {
                 return 2.0;
             }
@@ -52,7 +52,7 @@ namespace System.Windows.Controls
         {
             double height = (double)baseValue;
             DataGridColumnDropSeparator separator = (DataGridColumnDropSeparator)d;
-            if (separator._referenceHeader != null && DoubleUtil.IsNaN(height))
+            if (separator._referenceHeader != null && double.IsNaN(height))
             {
                 return separator._referenceHeader.ActualHeight;
             }

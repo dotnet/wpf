@@ -128,6 +128,14 @@ namespace MS.Internal
             set { _mc.XamlDebuggingInformation = value; }
         }
 
+        /// <summary>
+        /// Sets the checksum algorithm used in code-behind.
+        /// </summary>
+        internal string ChecksumAlgorithm
+        {
+            set => _mc.ChecksumAlgorithm = value;
+        }
+
         // <summary>
         // Controls how to generate localization information for each xaml file.
         // Valid values: None, CommentsOnly, All.
@@ -253,7 +261,7 @@ namespace MS.Internal
 
                     if (asmReference != null)
                     {
-                        if (String.Compare(asmReference.AssemblyName, assemblyName, StringComparison.OrdinalIgnoreCase) == 0)
+                        if (string.Equals(asmReference.AssemblyName, assemblyName, StringComparison.OrdinalIgnoreCase))
                         {
                             // Set the local assembly file to markupCompiler
                             _mc.LocalAssemblyFile = asmReference;
@@ -299,13 +307,13 @@ namespace MS.Internal
                 // If the exception is a Xml exception, show a pre-asigned error id for it.
                 if (IsXmlException(e.Exception))
                 {
-                    message = SR.Get(SRID.InvalidXml, message);
+                    message = SR.Format(SR.InvalidXml, message);
                     strErrorCode = _taskLogger.ExtractMessageCode(message, out errorText);
                 }
                 else
                 {
                     strErrorCode = _unknownErrorID;
-                    errorText = SR.Get(SRID.UnknownBuildError, errorText);
+                    errorText = SR.Format(SR.UnknownBuildError, errorText);
                 }
             }
 
@@ -355,7 +363,7 @@ namespace MS.Internal
             {
                 newRelativeFilePath = GetResolvedFilePath(sourceFileInfo.OriginalFilePath, ref newSourceDir);
 
-                _taskLogger.LogMessageFromResources(MessageImportance.Low, SRID.FileResolved, sourceFileInfo.OriginalFilePath, newRelativeFilePath, newSourceDir);
+                _taskLogger.LogMessageFromResources(MessageImportance.Low, nameof(SR.FileResolved), sourceFileInfo.OriginalFilePath, newRelativeFilePath, newSourceDir);
             }
 
             if (sourceFileInfo.IsXamlFile)

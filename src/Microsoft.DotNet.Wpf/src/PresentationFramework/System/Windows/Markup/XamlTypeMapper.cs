@@ -10,28 +10,20 @@
 using System;
 using System.Xml;
 using System.IO;
+using MS.Utility;
 using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.ComponentModel;
 using System.Collections.Specialized;
+using System.Runtime.CompilerServices;
 using System.Diagnostics;
 using System.Reflection;
-using MS.Utility;
 
 #if !PBTCOMPILER
 
-using System.Windows;
-using System.Windows.Markup;
-using System.Windows.Resources;
-using System.Windows.Threading;
-using SecurityHelper=MS.Internal.PresentationFramework.SecurityHelper;
 using MS.Internal;  // CriticalExceptions
-
-#else
-
-using System.Runtime.CompilerServices;
 
 #endif
 
@@ -173,7 +165,7 @@ namespace System.Windows.Markup
             // Add mapping to the table keyed by assembly and clrnamespace
             string upperAssemblyName = assemblyName.ToUpper(
                                               TypeConverterHelper.InvariantEnglishUS);
-            String fullName = clrNamespace + "#" + upperAssemblyName;
+            String fullName = $"{clrNamespace}#{upperAssemblyName}";
 
             _piReverseTable[fullName] = xmlNamespace;
 
@@ -208,12 +200,12 @@ namespace System.Windows.Markup
             if (assemblyPath == string.Empty)
             {
                 _lineNumber = 0;  // Public API, so we don't know the line number.
-                ThrowException(SRID.ParserBadAssemblyPath);
+                ThrowException(nameof(SR.ParserBadAssemblyPath));
             }
             if (assemblyName == string.Empty)
             {
                 _lineNumber = 0;  // Public API, so we don't know the line number.
-                ThrowException(SRID.ParserBadAssemblyName);
+                ThrowException(nameof(SR.ParserBadAssemblyName));
             }
 
             string asmName = assemblyName.ToUpper(CultureInfo.InvariantCulture);
@@ -229,9 +221,11 @@ namespace System.Windows.Markup
             // so they can be loaded again.   The is the Dev build/load/build/load
             // Designer scenario.  (Don't mess with GACed assemblies)
             Assembly assem = ReflectionHelper.GetAlreadyLoadedAssembly(asmName);
-            #pragma warning disable SYSLIB0005 // 'Assembly.GlobalAssemblyCache' is obsolete. 
-            if (assem != null && !assem.GlobalAssemblyCache)
-            #pragma warning restore SYSLIB0005 // 'Assembly.GlobalAssemblyCache' is obsolete. 
+            if (assem != null
+#if NETFX
+                 && !assem.GlobalAssemblyCache
+#endif
+                )
             {
                 ReflectionHelper.ResetCacheForAssembly(asmName);
                 // No way to reset SchemaContext at assembly granularity, so just reset the whole context
@@ -404,24 +398,24 @@ namespace System.Windows.Markup
 
         private void PreLoadDefaultAssemblies(string asmName, string asmPath)
         {
-            if (AssemblyWB == null && string.Compare(asmName, _assemblyNames[0], StringComparison.OrdinalIgnoreCase) == 0)
+            if (AssemblyWB == null && string.Equals(asmName, _assemblyNames[0], StringComparison.OrdinalIgnoreCase))
             {
                 AssemblyWB = ReflectionHelper.LoadAssembly(asmName, asmPath);
             }
-            else if (AssemblyPC == null && string.Compare(asmName, _assemblyNames[1], StringComparison.OrdinalIgnoreCase) == 0)
+            else if (AssemblyPC == null && string.Equals(asmName, _assemblyNames[1], StringComparison.OrdinalIgnoreCase))
             {
                 AssemblyPC = ReflectionHelper.LoadAssembly(asmName, asmPath);
             }
-            else if (AssemblyPF == null && string.Compare(asmName, _assemblyNames[2], StringComparison.OrdinalIgnoreCase) == 0)
+            else if (AssemblyPF == null && string.Equals(asmName, _assemblyNames[2], StringComparison.OrdinalIgnoreCase))
             {
                 AssemblyPF = ReflectionHelper.LoadAssembly(asmName, asmPath);
             }
-            else if (string.Compare(asmName, "SYSTEM.XML", StringComparison.OrdinalIgnoreCase) == 0)
+            else if (string.Equals(asmName, "SYSTEM.XML", StringComparison.OrdinalIgnoreCase))
             {
                 // make sure System.Xml is at least loaded as ReflectionOnly
                 ReflectionHelper.LoadAssembly(asmName, asmPath);
             }
-            else if (string.Compare(asmName, "SYSTEM", StringComparison.OrdinalIgnoreCase) == 0)
+            else if (string.Equals(asmName, "SYSTEM", StringComparison.OrdinalIgnoreCase))
             {
                 // make sure System is at least loaded as ReflectionOnly
                 ReflectionHelper.LoadAssembly(asmName, asmPath);
@@ -470,7 +464,7 @@ namespace System.Windows.Markup
             if (owner != null && !ReflectionHelper.IsPublicType(owner))
             {
                 _lineNumber = 0;  // Public API, so we don't know the line number.
-                ThrowException(SRID.ParserOwnerEventMustBePublic, owner.FullName );
+                ThrowException(nameof(SR.ParserOwnerEventMustBePublic), owner.FullName );
             }
 
             RoutedEvent Event = GetDependencyObject(true,owner,xmlNamespace,
@@ -529,7 +523,7 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-                    string message = SR.Get(SRID.ParserCannotConvertPropertyValueString, value, propName, propType.FullName);
+                    string message = SR.Format(SR.ParserCannotConvertPropertyValueString, value, propName, propType.FullName);
                     XamlParseException.ThrowException(parserContext, _lineNumber, _linePosition, message, null);
                 }
             }
@@ -557,7 +551,7 @@ namespace System.Windows.Markup
                     ||
                     propType.Assembly.FullName == "WindowsBase" )
                 {
-                    Debug.WriteLine( "Reflected for type converter on " + propType.Name + "." + propName );
+                    Debug.WriteLine($"Reflected for type converter on {propType.Name}.{propName}");
                 }
                 #endif
             }
@@ -610,13 +604,13 @@ namespace System.Windows.Markup
                         // <SomeElement SomeProp="SomeText"/> and there's no TypeConverter
                         //  to handle converting "SomeText" into an instance of something
                         //  that can be set into SomeProp.
-                        message = SR.Get(SRID.ParserDefaultConverterProperty, propType.FullName, propName, value);
+                        message = SR.Format(SR.ParserDefaultConverterProperty, propType.FullName, propName, value);
                     }
                     else
                     {
                         // <SomeElement>SomeText</SomeElement> and there's no TypeConverter
                         //  associated with the type SomeElement
-                        message = SR.Get(SRID.ParserDefaultConverterElement, propType.FullName, value);
+                        message = SR.Format(SR.ParserDefaultConverterElement, propType.FullName, value);
                     }
                     XamlParseException.ThrowException(parserContext, _lineNumber, _linePosition, message, null);
                 }
@@ -655,7 +649,7 @@ namespace System.Windows.Markup
                 //
                 // propName is 'Fill' in this case.
 
-                message = SR.Get(SRID.ParserCannotConvertPropertyValueString, value, propName, propType);
+                message = SR.Format(SR.ParserCannotConvertPropertyValueString, value, propName, propType);
             }
             else
             {
@@ -668,7 +662,7 @@ namespace System.Windows.Markup
                 // There is no associated propName available in this case, so we
                 //  give a different error message.
 
-                message = SR.Get(SRID.ParserCannotConvertInitializationText, value, propType );
+                message = SR.Format(SR.ParserCannotConvertInitializationText, value, propType );
             }
             return message;
         }
@@ -698,14 +692,14 @@ namespace System.Windows.Markup
 
             if (value == string.Empty)
             {
-                ThrowException(SRID.ParserBadName, value);
+                ThrowException(nameof(SR.ParserBadName), value);
             }
 
             if (MarkupExtensionParser.LooksLikeAMarkupExtension(value))
             {
-                string message = SR.Get(SRID.ParserBadUidOrNameME, value);
+                string message = SR.Format(SR.ParserBadUidOrNameME, value);
                 message += " ";
-                message += SR.Get(SRID.ParserLineAndOffset,
+                message += SR.Format(SR.ParserLineAndOffset,
                             lineNumber.ToString(CultureInfo.CurrentCulture),
                             linePosition.ToString(CultureInfo.CurrentCulture));
 
@@ -716,7 +710,7 @@ namespace System.Windows.Markup
 
             if (!NameValidationHelper.IsValidIdentifierName(value))
             {
-                ThrowException(SRID.ParserBadName, value);
+                ThrowException(nameof(SR.ParserBadName), value);
             }
         }
 
@@ -749,7 +743,7 @@ namespace System.Windows.Markup
                         }
                         else if (Char.IsDigit(attribValue[i]))
                         {
-                            ThrowException(SRID.ParserNoDigitEnums, propName, attribValue);
+                            ThrowException(nameof(SR.ParserNoDigitEnums), propName, attribValue);
                         }
                         else
                         {
@@ -789,7 +783,7 @@ namespace System.Windows.Markup
             infoRecord = null;
             if (MapTable != null)
             {
-                string fullName = owner.IsGenericType ? owner.Namespace + "." + owner.Name : owner.FullName;
+                string fullName = owner.IsGenericType ? $"{owner.Namespace}.{owner.Name}" : owner.FullName;
                 object key = MapTable.GetAttributeInfoKey(fullName, propName);
                 infoRecord = MapTable.GetHashTableData(key) as BamlAttributeInfoRecord;
 
@@ -1287,7 +1281,7 @@ namespace System.Windows.Markup
                         if (isEvent)
                         {
                             // See if attached event first
-                            memberInfo = objectType.GetMethod("Add" + localName + "Handler",
+                            memberInfo = objectType.GetMethod($"Add{localName}Handler",
                                 defaultBinding |
                                 BindingFlags.Static |
                                 BindingFlags.FlattenHierarchy);
@@ -1308,7 +1302,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                                     if (tryInternal && memberInfo != null && !IsAllowedMethod(mi, false))
                                     {
-                                        ThrowException(SRID.ParserCantSetAttribute, "bubbling event", objectType.Name + "." + localName, "Add Handler method");
+                                        ThrowException(nameof(SR.ParserCantSetAttribute), "bubbling event", $"{objectType.Name}.{localName}", "Add Handler method");
                                     }
 #endif
                                 }
@@ -1331,7 +1325,7 @@ namespace System.Windows.Markup
                                     if (!ReflectionHelper.IsPublicType(ei.EventHandlerType))
 #endif
                                     {
-                                        ThrowException(SRID.ParserEventDelegateTypeNotAccessible, ei.EventHandlerType.FullName, objectType.Name + "." + localName);
+                                        ThrowException(nameof(SR.ParserEventDelegateTypeNotAccessible), ei.EventHandlerType.FullName, $"{objectType.Name}.{localName}");
                                     }
 
 #if PBTCOMPILER
@@ -1342,7 +1336,7 @@ namespace System.Windows.Markup
                                         // check to make sure that the public type is accessible\allowed.
                                         if (!IsAllowedEvent(ei, false))
                                         {
-                                            ThrowException(SRID.ParserCantSetAttribute, "event", objectType.Name + "." + localName, "add");
+                                            ThrowException(nameof(SR.ParserCantSetAttribute), "event", $"{objectType.Name}.{localName}", "add");
                                         }
                                     }
                                     else
@@ -1354,7 +1348,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                                             memberInfo = null;
 #else
-                                            ThrowException(SRID.ParserCantSetAttribute, "event", objectType.Name + "." + localName, "add");
+                                            ThrowException(nameof(SR.ParserCantSetAttribute), "event", $"{objectType.Name}.{localName}", "add");
 #endif
                                         }
 #if PBTCOMPILER
@@ -1366,7 +1360,7 @@ namespace System.Windows.Markup
                         else
                         {
                             // See if attached property first - start from a Setter
-                            memberInfo = objectType.GetMethod("Set" + localName,
+                            memberInfo = objectType.GetMethod($"Set{localName}",
                                 defaultBinding |
                                 BindingFlags.Static |
                                 BindingFlags.FlattenHierarchy);
@@ -1377,7 +1371,7 @@ namespace System.Windows.Markup
                             // Try read-only case (Getter only)
                             if (memberInfo == null)
                             {
-                                memberInfo = objectType.GetMethod("Get" + localName,
+                                memberInfo = objectType.GetMethod($"Get{localName}",
                                     defaultBinding |
                                     BindingFlags.Static |
                                     BindingFlags.FlattenHierarchy);
@@ -1390,7 +1384,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                             if (tryInternal && memberInfo != null && !IsAllowedMethod(memberInfo as MethodInfo, false))
                             {
-                                ThrowException(SRID.ParserCantSetAttribute, "attached property", objectType.Name + "." + localName, "Set method");
+                                ThrowException(nameof(SR.ParserCantSetAttribute), "attached property", $"{objectType.Name}.{localName}", "Set method");
                             }
 #endif
 
@@ -1407,8 +1401,8 @@ namespace System.Windows.Markup
                                     if (owner != null &&
                                         !objectType.IsAssignableFrom(owner))
                                     {
-                                        ThrowException(SRID.ParserAttachedPropInheritError,
-                                                       String.Format(CultureInfo.CurrentCulture, "{0}.{1}", objectType.Name, localName),
+                                        ThrowException(nameof(SR.ParserAttachedPropInheritError),
+                                                       $"{objectType.Name}.{localName}",
                                                        owner.Name);
                                     }
                                 }
@@ -1448,7 +1442,7 @@ namespace System.Windows.Markup
                         if (isEvent)
                         {
                             // See if attached event first
-                            memberInfo = baseType.GetMethod("Add" + localName + "Handler",
+                            memberInfo = baseType.GetMethod($"Add{localName}Handler",
                                 defaultBinding | BindingFlags.Static | BindingFlags.FlattenHierarchy);
 
                             // Make sure that we found a method of the right signature.
@@ -1467,7 +1461,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                                     if (tryInternal && memberInfo != null && !IsAllowedMethod(mi, true))
                                     {
-                                        ThrowException(SRID.ParserCantSetAttribute, "bubbling event", owner.Name + "." + localName, "Add Handler method");
+                                        ThrowException(nameof(SR.ParserCantSetAttribute), "bubbling event", $"{owner.Name}.{localName}", "Add Handler method");
                                     }
 #endif
                                 }
@@ -1488,7 +1482,7 @@ namespace System.Windows.Markup
                                     if (!ReflectionHelper.IsPublicType(ei.EventHandlerType))
 #endif
                                     {
-                                        ThrowException(SRID.ParserEventDelegateTypeNotAccessible, ei.EventHandlerType.FullName, owner.Name + "." + localName);
+                                        ThrowException(nameof(SR.ParserEventDelegateTypeNotAccessible), ei.EventHandlerType.FullName, $"{owner.Name}.{localName}");
                                     }
 
 #if PBTCOMPILER
@@ -1500,7 +1494,7 @@ namespace System.Windows.Markup
                                         // since that would have all ready been done in the caller of this fucntion.
                                         if (!IsAllowedEvent(ei, true))
                                         {
-                                            ThrowException(SRID.ParserCantSetAttribute, "event", owner.Name + "." + localName, "add");
+                                            ThrowException(nameof(SR.ParserCantSetAttribute), "event", $"{owner.Name}.{localName}", "add");
                                         }
                                     }
                                     else
@@ -1512,7 +1506,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                                             memberInfo = null;
 #else
-                                            ThrowException(SRID.ParserCantSetAttribute, "event", owner.Name + "." + localName, "add");
+                                            ThrowException(nameof(SR.ParserCantSetAttribute), "event", $"{owner.Name}.{localName}", "add");
 #endif
                                         }
 #if PBTCOMPILER
@@ -1524,7 +1518,7 @@ namespace System.Windows.Markup
                         else
                         {
                             // See if attached property first - start from a Setter
-                            memberInfo = baseType.GetMethod("Set" + localName,
+                            memberInfo = baseType.GetMethod($"Set{localName}",
                                 defaultBinding |
                                 BindingFlags.Static |
                                 BindingFlags.FlattenHierarchy);
@@ -1535,7 +1529,7 @@ namespace System.Windows.Markup
                             // Try read-only case (Getter only)
                             if (memberInfo == null)
                             {
-                                memberInfo = baseType.GetMethod("Get" + localName,
+                                memberInfo = baseType.GetMethod($"Get{localName}",
                                     defaultBinding |
                                     BindingFlags.Static |
                                     BindingFlags.FlattenHierarchy);
@@ -1548,7 +1542,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                             if (tryInternal && memberInfo != null && !IsAllowedMethod(memberInfo as MethodInfo, true))
                             {
-                                ThrowException(SRID.ParserCantSetAttribute, "attached property", owner.Name + "." + localName, "Set method");
+                                ThrowException(nameof(SR.ParserCantSetAttribute), "attached property", $"{owner.Name}.{localName}", "Set method");
                             }
 #endif
 
@@ -1788,7 +1782,7 @@ namespace System.Windows.Markup
                     GetTypeOnly(xmlNamespace, globalClassName);
                 if (typeAndSerializer == null || typeAndSerializer.ObjectType == null)
                 {
-                    ThrowException(SRID.ParserNoType, globalClassName);
+                    ThrowException(nameof(SR.ParserNoType), globalClassName);
                 }
                 ownerType = typeAndSerializer.ObjectType;
             }
@@ -1874,7 +1868,7 @@ namespace System.Windows.Markup
                             //  was no name specified at all.  (null or empty string.)
                             // The latter case may get a special meaning in the future,
                             //  but for now they're all errors.
-                            ThrowException(SRID.ParserXmlLangPropertyValueInvalid);
+                            ThrowException(nameof(SR.ParserXmlLangPropertyValueInvalid));
                         }
                     }
                 }
@@ -2008,7 +2002,7 @@ namespace System.Windows.Markup
             // Force load the Statics by walking up the hierarchy and running class constructors
             while (null != currentType)
             {
-                MS.Internal.WindowsBase.SecurityHelper.RunClassConstructor(currentType);
+                RuntimeHelpers.RunClassConstructor(currentType.TypeHandle);
                 currentType = GetCachedBaseType(currentType);
             }
 
@@ -2212,7 +2206,7 @@ namespace System.Windows.Markup
                             Assembly assy = ReflectionHelper.LoadAssembly(usd.AssemblyName, null);
                             if (assy != null)
                             {
-                                string fullTypeName = String.Format(TypeConverterHelper.InvariantEnglishUS, "{0}.{1}", usd.ClrNamespace, typeName);
+                                string fullTypeName = $"{usd.ClrNamespace}.{typeName}";
                                 Type t = assy.GetType(fullTypeName);
                                 if (t != null)
                                     return t;
@@ -2232,7 +2226,7 @@ namespace System.Windows.Markup
                 Assembly assy = namespaces[i].Assembly;
                 if (assy != null)
                 {
-                    string fullTypeName = String.Format(TypeConverterHelper.InvariantEnglishUS, "{0}.{1}", namespaces[i].ClrNamespace, typeName);
+                    string fullTypeName = $"{namespaces[i].ClrNamespace}.{typeName}";
                     Type t = assy.GetType(fullTypeName);
                     if (t != null)
                     {
@@ -2277,7 +2271,7 @@ namespace System.Windows.Markup
                 }
                 if (targetType == null)
                 {
-                    ThrowException(SRID.ParserNoType, typeName);
+                    ThrowException(nameof(SR.ParserNoType), typeName);
                 }
             }
             else if (!isTypeExpected && prefix.Length == 0)
@@ -2290,7 +2284,7 @@ namespace System.Windows.Markup
             else
             {
                 // A type was expected but we didn't find one. So throw.
-                ThrowException(SRID.ParserBadMemberReference, valueParam);
+                ThrowException(nameof(SR.ParserBadMemberReference), valueParam);
             }
 
 
@@ -2310,12 +2304,12 @@ namespace System.Windows.Markup
                 if (targetType == null)
                 {
                     // if there was also no default target type then throw.
-                    ThrowException(SRID.ParserBadMemberReference, memberValue);
+                    ThrowException(nameof(SR.ParserBadMemberReference), memberValue);
                 }
             }
 
             Debug.Assert(memberName != null);
-            string fieldName = memberName + "Property";
+            string fieldName = $"{memberName}Property";
             MemberInfo memberInfo = GetStaticMemberInfo(targetType, fieldName, true);
             Debug.Assert(memberInfo != null);
 
@@ -2357,14 +2351,14 @@ namespace System.Windows.Markup
 
                     if (!isAllowed)
                     {
-                        ThrowException(SRID.ParserStaticMemberNotAllowed, memberName, targetType.Name);
+                        ThrowException(nameof(SR.ParserStaticMemberNotAllowed), memberName, targetType.Name);
                     }
                 }
             }
 #endif
             if (mi == null)
             {
-                ThrowException(SRID.ParserInvalidStaticMember, memberName, targetType.Name);
+                ThrowException(nameof(SR.ParserInvalidStaticMember), memberName, targetType.Name);
             }
 
             return mi;
@@ -2412,7 +2406,7 @@ namespace System.Windows.Markup
             Debug.Assert(null != localName,"null value passed for localName");
 
             // check if object is in the Hash.
-            String hashString = xmlNamespace + ":" + localName;
+            String hashString = $"{xmlNamespace}:{localName}";
 
             TypeAndSerializer typeAndSerializer =
                  _typeLookupFromXmlHashtable[hashString] as TypeAndSerializer;
@@ -2451,7 +2445,7 @@ namespace System.Windows.Markup
             Debug.Assert(null != localName,"null value passed for localName");
 
             // check if object is in the Hash.
-            String hashString = xmlNamespace + ":" + localName;
+            String hashString = $"{xmlNamespace}:{localName}";
 
             TypeAndSerializer typeAndSerializer =
                 _typeLookupFromXmlHashtable[hashString] as TypeAndSerializer;
@@ -2561,7 +2555,7 @@ namespace System.Windows.Markup
                                 if (!IsInternalTypeAllowedInFullTrust(objectType))
 #endif
                                 {
-                                    ThrowException(SRID.ParserPublicType, objectType.Name);
+                                    ThrowException(nameof(SR.ParserPublicType), objectType.Name);
                                 }
                             }
                             // Create new data structure to store information for the current type
@@ -2636,7 +2630,7 @@ namespace System.Windows.Markup
                     // Type loads may fail if all the prerequisite assemblies haven't been loaded
                     // yet.  In this case, try one more time after loaded all assemblies that the
                     // compiler may have told the XamlTypeMapper about.
-                    string fullTypeName = namespaceMap.ClrNamespace + "." + localName;
+                    string fullTypeName = $"{namespaceMap.ClrNamespace}.{localName}";
                     try
                     {
                         type = assembly.GetType(fullTypeName);
@@ -2734,7 +2728,7 @@ namespace System.Windows.Markup
                 return null;
             }
 
-            Type ithType = a.GetType(GeneratedNamespace + "." + GeneratedInternalTypeHelperClassName);
+            Type ithType = a.GetType($"{GeneratedNamespace}.{GeneratedInternalTypeHelperClassName}");
             if (ithType == null)
             {
                 // if GITH is not found, try to see if a root namespace was implicitly added to it.
@@ -2744,7 +2738,7 @@ namespace System.Windows.Markup
                 if (rnsa != null)
                 {
                     string rootNamespace = rnsa.Namespace;
-                    ithType = a.GetType(rootNamespace + "." + GeneratedNamespace + "." + GeneratedInternalTypeHelperClassName);
+                    ithType = a.GetType($"{rootNamespace}.{GeneratedNamespace}.{GeneratedInternalTypeHelperClassName}");
                 }
             }
 
@@ -2866,7 +2860,7 @@ namespace System.Windows.Markup
                 xmlns = context.XmlnsDictionary[string.Empty];
                 if (xmlns == null)
                 {
-                    ThrowException(SRID.ParserUndeclaredNS, string.Empty);
+                    ThrowException(nameof(SR.ParserUndeclaredNS), string.Empty);
                 }
             }
             else
@@ -2875,7 +2869,7 @@ namespace System.Windows.Markup
                 xmlns = context.XmlnsDictionary[prefix];
                 if (xmlns == null)
                 {
-                    ThrowException(SRID.ParserUndeclaredNS, prefix);
+                    ThrowException(nameof(SR.ParserUndeclaredNS), prefix);
                 }
                 else
                 {
@@ -2885,7 +2879,7 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
             // Optimize for SystemMetric types that are very frequently used.
-            if (string.CompareOrdinal(xmlns, XamlReaderHelper.DefaultNamespaceURI) == 0)
+            if (string.Equals(xmlns, XamlReaderHelper.DefaultNamespaceURI, StringComparison.Ordinal))
             {
                 switch (typeString)
                 {
@@ -2918,7 +2912,7 @@ namespace System.Windows.Markup
                     _lineNumber = context != null ? context.LineNumber : 0;
                     _linePosition = context != null ? context.LinePosition : 0;
 
-                    ThrowException(SRID.ParserResourceKeyType, typeString);
+                    ThrowException(nameof(SR.ParserResourceKeyType), typeString);
                 }
             }
 
@@ -2944,7 +2938,7 @@ namespace System.Windows.Markup
                 string xmlns = context.XmlnsDictionary[string.Empty];
                 if (xmlns == null)
                 {
-                    ThrowException(SRID.ParserUndeclaredNS, string.Empty);
+                    ThrowException(nameof(SR.ParserUndeclaredNS), string.Empty);
                 }
                 else
                 {
@@ -2957,7 +2951,7 @@ namespace System.Windows.Markup
                 string xmlns = context.XmlnsDictionary[prefix];
                 if (xmlns == null)
                 {
-                    ThrowException(SRID.ParserUndeclaredNS, prefix);
+                    ThrowException(nameof(SR.ParserUndeclaredNS), prefix);
                 }
                 else
                 {
@@ -3048,7 +3042,7 @@ namespace System.Windows.Markup
             string namespaceURI = parserContext.XmlnsDictionary[nsPrefix];
             if (namespaceURI == null)
             {
-                parserContext.XamlTypeMapper.ThrowException(SRID.ParserPrefixNSProperty, nsPrefix, nameString);
+                parserContext.XamlTypeMapper.ThrowException(nameof(SR.ParserPrefixNSProperty), nsPrefix, nameString);
             }
 
             return namespaceURI;
@@ -3385,7 +3379,7 @@ namespace System.Windows.Markup
             string upperAssemblyName = assemblyFullName.ToUpper(
                                               TypeConverterHelper.InvariantEnglishUS);
 
-            String fullName = clrNamespaceFullName + "#" + upperAssemblyName;
+            String fullName = $"{clrNamespaceFullName}#{upperAssemblyName}";
 
             String ret;
 
@@ -3510,7 +3504,7 @@ namespace System.Windows.Markup
 
             if (null == typeConverter)
             {
-                ThrowException(SRID.ParserNoTypeConv, type.Name);
+                ThrowException(nameof(SR.ParserNoTypeConv), type.Name);
             }
 
             return typeConverter;
@@ -3788,22 +3782,22 @@ namespace System.Windows.Markup
 
         private void ThrowException(string id)
         {
-            ThrowExceptionWithLine(SR.Get(id), null);
+            ThrowExceptionWithLine(SR.GetResourceString(id), null);
         }
 
         internal void ThrowException(string id, string parameter)
         {
-            ThrowExceptionWithLine(SR.Get(id, parameter), null);
+            ThrowExceptionWithLine(SR.Format(SR.GetResourceString(id), parameter), null);
         }
 
         private void ThrowException(string id, string parameter1, string parameter2)
         {
-            ThrowExceptionWithLine(SR.Get(id, parameter1, parameter2), null);
+            ThrowExceptionWithLine(SR.Format(SR.GetResourceString(id), parameter1, parameter2), null);
         }
 
         private void ThrowException(string id, string parameter1, string parameter2, string parameter3)
         {
-            ThrowExceptionWithLine(SR.Get(id, parameter1, parameter2, parameter3), null);
+            ThrowExceptionWithLine(SR.Format(SR.GetResourceString(id), parameter1, parameter2, parameter3), null);
         }
 
 

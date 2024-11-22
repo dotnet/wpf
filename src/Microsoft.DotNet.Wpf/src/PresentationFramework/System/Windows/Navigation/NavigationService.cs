@@ -123,7 +123,7 @@ namespace System.Windows.Navigation
 
                 //Throw an exception if IUriContext is not implemented, any element can raise this event since it is public.
                 if (uc == null)
-                    throw new Exception(SR.Get(SRID.MustImplementIUriContext, typeof(IUriContext)));
+                    throw new Exception(SR.Format(SR.MustImplementIUriContext, typeof(IUriContext)));
 
                 bpu = BindUriHelper.GetUriToNavigate(dobj, uc.BaseUri, e.Uri);
             }
@@ -204,7 +204,7 @@ namespace System.Windows.Navigation
             }
             else
             {
-                throw new System.ArgumentException(SR.Get(SRID.HyperLinkTargetNotFound));
+                throw new System.ArgumentException(SR.HyperLinkTargetNotFound);
             }
         }
 
@@ -227,9 +227,7 @@ namespace System.Windows.Navigation
 
             if (isSame && withFragment)
             {
-                isSame = isSame &&
-                         (string.Compare(aResolved.Fragment, bResolved.Fragment,
-                                        StringComparison.OrdinalIgnoreCase) == 0);
+                isSame = isSame && string.Equals(aResolved.Fragment, bResolved.Fragment, StringComparison.OrdinalIgnoreCase);
             }
 
             return isSame;
@@ -569,7 +567,7 @@ namespace System.Windows.Navigation
             // _navStatus or _navigateQueueItem are not checked here, because they are set only after
             // raising the Navigating event, while an event handler might cause journal ownership to change.
             if (_journalScope != null && _journalScope.Journal.HasUncommittedNavigation)
-                throw new InvalidOperationException(SR.Get(SRID.InvalidOperation_CantChangeJournalOwnership));
+                throw new InvalidOperationException(SR.InvalidOperation_CantChangeJournalOwnership);
 
             _journalScope = null;
 
@@ -605,7 +603,7 @@ namespace System.Windows.Navigation
         {
             // This can happen when a Frame is navigated to the page containing it (object navigation).
             if (ncChild == this)
-                throw new Exception(SR.Get(SRID.LoopDetected, _currentCleanSource));
+                throw new Exception(SR.Format(SR.LoopDetected, _currentCleanSource));
 
             Invariant.Assert(ncChild.ParentNavigationService == null);
             Invariant.Assert(ncChild.JournalScope == null || ncChild.IsJournalLevelContainer,
@@ -701,7 +699,7 @@ namespace System.Windows.Navigation
             FrameworkElement fe = INavigatorHost as FrameworkElement;
 
             Debug.Assert(fe != null, "INavigatorHost needs to be FrameworkElement");
-            if (String.Compare(name, fe.Name, StringComparison.OrdinalIgnoreCase) == 0)
+            if (string.Equals(name, fe.Name, StringComparison.OrdinalIgnoreCase))
             {
                 return INavigatorHost;
             }
@@ -1039,7 +1037,7 @@ namespace System.Windows.Navigation
                 UpdateJournal(navInfo.NavigationMode, JournalReason.NewContentNavigation, navInfo.JournalEntry);
             }
 
-            // Future: 
+            // Future:
             // The journal entry of the new page that is navigated to might be lost because the navigation is
             // cancelled after the current page being added to jounral. E.g, The journal looks like:
             //  Page1
@@ -1130,7 +1128,7 @@ namespace System.Windows.Navigation
             // If an invalid root element is passed to Navigation Service, throw exception here.
             if (IsValidRootElement(bp) == false)
             {
-                throw new InvalidOperationException(SR.Get(SRID.WrongNavigateRootElement, bp.ToString()));
+                throw new InvalidOperationException(SR.Format(SR.WrongNavigateRootElement, bp.ToString()));
             }
 
             /*TODO: Uncomment after new loader design is implemented or sync bind reentrancy is resolved
@@ -1332,10 +1330,7 @@ namespace System.Windows.Navigation
         /// <returns></returns>
         public static NavigationService GetNavigationService(DependencyObject dependencyObject)
         {
-            if (dependencyObject == null)
-            {
-                throw new ArgumentNullException("dependencyObject");
-            }
+            ArgumentNullException.ThrowIfNull(dependencyObject);
 
             return dependencyObject.GetValue(NavigationServiceProperty) as NavigationService;
         }
@@ -1442,7 +1437,7 @@ namespace System.Windows.Navigation
                 return;
             }
             if (_bp == null)
-                throw new InvalidOperationException(SR.Get(SRID.InvalidOperation_AddBackEntryNoContent));
+                throw new InvalidOperationException(SR.InvalidOperation_AddBackEntryNoContent);
 
             _customContentStateToSave = state;
             JournalEntry je = UpdateJournal(NavigationMode.New, JournalReason.AddBackEntry, null);
@@ -1459,7 +1454,7 @@ namespace System.Windows.Navigation
             {
                 RemoveBackEntry();
                 throw new InvalidOperationException(
-                    SR.Get(SRID.InvalidOperation_MustImplementIPCCSOrHandleNavigating,
+                    SR.Format(SR.InvalidOperation_MustImplementIPCCSOrHandleNavigating,
                             _bp != null ? _bp.GetType().ToString() : "null"));
             }
         }
@@ -1539,7 +1534,7 @@ namespace System.Windows.Navigation
                 EventTrace.EventProvider.TraceEvent(
                     EventTrace.Event.Wpf_NavigationStart, EventTrace.Keyword.KeywordHosting | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Info,
                     navInfo != null ? navInfo.NavigationMode.ToString() : NavigationMode.New.ToString(),
-                    source != null ? "\"" + source.ToString() + "\"" : "(null)");
+                    source != null ? $"\"{source}\"" : "(null)");
             }
 
             Invariant.Assert(IsConsistent(navInfo));
@@ -1670,7 +1665,7 @@ namespace System.Windows.Navigation
                 // This won't detect the case when no Return event handler was attached, but then
                 // we don't run the risk of overwriting the ReturnEventSaver.
                 if (pf != null && (pf._Resume || pf._Saver != null))
-                    throw new InvalidOperationException(SR.Get(SRID.InvalidOperation_CannotReenterPageFunction));
+                    throw new InvalidOperationException(SR.InvalidOperation_CannotReenterPageFunction);
             }
 
             Uri source = navigateInfo == null ? null : navigateInfo.Source;
@@ -1751,7 +1746,7 @@ namespace System.Windows.Navigation
         public void GoForward()
         {
             if (JournalScope == null)
-                throw new InvalidOperationException(SR.Get(SRID.NoForwardEntry));
+                throw new InvalidOperationException(SR.NoForwardEntry);
             JournalScope.GoForward();
         }
 
@@ -1765,7 +1760,7 @@ namespace System.Windows.Navigation
         public void GoBack()
         {
             if (JournalScope == null)
-                throw new InvalidOperationException(SR.Get(SRID.NoBackEntry));
+                throw new InvalidOperationException(SR.NoBackEntry);
             JournalScope.GoBack();
         }
 
@@ -1868,7 +1863,7 @@ namespace System.Windows.Navigation
                     {
                         // WebRequest.Abort() wants to call the AsyncCallback that was passed to
                         // BeginGetResponse(). Our HandleWebResponse() has to know that the request was
-                        // aborted. That's why _request is cleared before calling Abort(). 
+                        // aborted. That's why _request is cleared before calling Abort().
                         WebRequest request = _request;
                         _request = null;
                         request.Abort();
@@ -2690,7 +2685,7 @@ namespace System.Windows.Navigation
                     if (response == null)
                     {
                         Uri requestUri = BindUriHelper.GetUriRelativeToPackAppBase(_request.RequestUri);
-                        throw new Exception(SR.Get(SRID.GetResponseFailed, requestUri.ToString()));
+                        throw new Exception(SR.Format(SR.GetResponseFailed, requestUri.ToString()));
                     }
 
                     // Have to use source instead of _request.RequestUri because the work around we put in
@@ -2923,7 +2918,7 @@ namespace System.Windows.Navigation
                 {
                     Uri requestUri = BindUriHelper.GetUriRelativeToPackAppBase(_request.RequestUri);
 
-                    throw new Exception(SR.Get(SRID.GetStreamFailed, requestUri.ToString()));
+                    throw new Exception(SR.Format(SR.GetStreamFailed, requestUri.ToString()));
                 }
 
                 long contentLength = response.ContentLength;
@@ -2945,7 +2940,7 @@ namespace System.Windows.Navigation
                 // o will be null.
                 // We don't support browser hosting since .NET Core 3.0, so therefore canUseTopLevelBrowserForHTMLRendering = false
                 bool canUseTopLevelBrowserForHTMLRendering = false;
-                Object o = MimeObjectFactory.GetObjectAndCloseStream(bindStream, contentType, destinationUri, canUseTopLevelBrowserForHTMLRendering, sandBoxContent, true /*allowAsync*/, IsJournalNavigation(navigateInfo), out _asyncObjectConverter);
+                Object o = MimeObjectFactory.GetObjectAndCloseStreamCore(bindStream, contentType, destinationUri, canUseTopLevelBrowserForHTMLRendering, sandBoxContent, true /*allowAsync*/, IsJournalNavigation(navigateInfo), out _asyncObjectConverter, IsUnsafe);
 
                 if (o != null)
                 {
@@ -2972,12 +2967,12 @@ namespace System.Windows.Navigation
                         // browser if safe to do so.
                         // For loose XAML viewing, we can get in this situation if the web server doesn't
                         // return the right MIME type. UrlMon in IE 7+ has some heuristics based on file extension
-                        // to detect XAML, so PresentationHost may get invoked, but our 
-                        // WpfWebRequestHelper.GetContentType() fails to do the same inference. In particular, 
+                        // to detect XAML, so PresentationHost may get invoked, but our
+                        // WpfWebRequestHelper.GetContentType() fails to do the same inference. In particular,
                         // it appears that UrlMon looks at the Content-Disposition HTTP header, but we don't.
                         if (!IsTopLevelContainer || BrowserInteropHelper.IsInitialViewerNavigation)
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.FailedToConvertResource));
+                            throw new InvalidOperationException(SR.FailedToConvertResource);
                         }
 
                         DelegateToBrowser(response is PackWebResponse, destinationUri);
@@ -3189,6 +3184,7 @@ namespace System.Windows.Navigation
         /// Makes the appropriate kind of journal entry for the current Content and its state.
         /// For certain types of content, no journal entry is created (null is returned).
         /// </summary>
+#pragma warning disable SYSLIB0050
         internal JournalEntry MakeJournalEntry(JournalReason journalReason)
         {
             if (_bp == null)
@@ -3294,7 +3290,7 @@ namespace System.Windows.Navigation
                 Type type = ccs.GetType();
                 if (!type.IsSerializable)
                 {
-                    throw new SystemException(SR.Get(SRID.CustomContentStateMustBeSerializable, type));
+                    throw new SystemException(SR.Format(SR.CustomContentStateMustBeSerializable, type));
                 }
                 journalEntry.CustomContentState = ccs;
             }
@@ -3342,7 +3338,7 @@ namespace System.Windows.Navigation
                         string fragment = BindUriHelper.GetFragment(_currentSource);
                         if (!string.IsNullOrEmpty(fragment))
                         {
-                            name = name + "#" + fragment;
+                            name = $"{name}#{fragment}";
                         }
                     }
                 }
@@ -3357,7 +3353,7 @@ namespace System.Windows.Navigation
                     {
                         if (CurrentSource != null)
                         {
-                            name = String.Format(CultureInfo.CurrentCulture, "{0} ({1})", navWin.Title, JournalEntry.GetDisplayName(_currentSource, SiteOfOriginContainer.SiteOfOrigin));
+                            name = $"{navWin.Title} ({JournalEntry.GetDisplayName(_currentSource, SiteOfOriginContainer.SiteOfOrigin)})";
                         }
                         else
                         {
@@ -3373,7 +3369,7 @@ namespace System.Windows.Navigation
                         }
                         else
                         {
-                            name = SR.Get(SRID.Untitled);
+                            name = SR.Untitled;
                         }
                     }
                 }
@@ -3387,7 +3383,7 @@ namespace System.Windows.Navigation
 
             return journalEntry;
         }
-
+#pragma warning restore SYSLIB0050
         /// <summary>
         /// Called by ApplicationProxyInternal when a XAML Browser Application is about to be shut down
         /// and the entire journal needs to be serialized.
@@ -3641,6 +3637,8 @@ namespace System.Windows.Navigation
             _webBrowser = null;
         }
 
+        // This is set when the navigationservice is loaded from unsafe xps doc.
+        internal bool IsUnsafe { get; set; }
         #region Private Functions
 
         /// <summary>
@@ -3724,7 +3722,7 @@ namespace System.Windows.Navigation
                     endingPF.ToString());
             }
 
-            // 
+            //
             // handle this situation gracefully -
             // this happens if someone calls Navigate() and then Finishes
             // before we have a chance to navigate.
@@ -3737,7 +3735,7 @@ namespace System.Windows.Navigation
 
             if (JournalScope == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.WindowAlreadyClosed));
+                throw new InvalidOperationException(SR.WindowAlreadyClosed);
             }
 
             Journal journal = JournalScope.Journal;
@@ -3939,7 +3937,7 @@ namespace System.Windows.Navigation
                 // We shouldn't be navigating to a PageFunction that's UiLess at this stage.
                 // By now it should have started another navigation it was delegating to a child PF.
                 if (parentEntry.EntryType == JournalEntryType.UiLess)
-                    throw new InvalidOperationException(SR.Get(SRID.UiLessPageFunctionNotCallingOnReturn));
+                    throw new InvalidOperationException(SR.UiLessPageFunctionNotCallingOnReturn);
 
                 NavigateInfo navInfo = finishingChildPageFunction.RemoveFromJournal ?
                     new NavigateInfo(parentEntry.Source, NavigationMode.Back, parentEntry) :
@@ -3968,7 +3966,7 @@ namespace System.Windows.Navigation
             }
             else
             {
-                Debug.Fail("Unhandled scenario: PageFunction returning to " + parentEntry.GetType().Name);
+                Debug.Fail($"Unhandled scenario: PageFunction returning to {parentEntry.GetType().Name}");
             }
         }
 

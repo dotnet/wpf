@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿
+
 
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Shell
@@ -337,7 +337,7 @@ namespace Microsoft.Windows.Shell
                     new Binding
                     {
 #if RIBBON_IN_FRAMEWORK
-                        Path = new PropertyPath("(SystemParameters." + bp.SystemParameterPropertyName + ")"),
+                        Path = new PropertyPath($"(SystemParameters.{bp.SystemParameterPropertyName})"),
 #else
                         Source = SystemParameters2.Current,
                         Path = new PropertyPath(bp.SystemParameterPropertyName),

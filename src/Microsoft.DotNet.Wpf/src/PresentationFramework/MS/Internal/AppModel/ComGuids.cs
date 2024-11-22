@@ -15,6 +15,8 @@ namespace MS.Internal.AppModel
         public const string EnumObjects = "2c1c7e2e-2d0e-4059-831e-1e6f82335c2e";
         /// <summary>IID_IFileDialog</summary>
         public const string FileDialog = "42f85136-db7e-439c-85f1-e4075d135fc8";
+        /// <summary>IID_IFileDialog2</summary>
+        public const string FileDialog2 = "61744fc7-85b5-4791-a9b0-272276309b13";
         /// <summary>IID_IFileDialogEvents</summary>
         public const string FileDialogEvents = "973510DB-7D7F-452B-8975-74A85828D354";
         /// <summary>IID_IFileOpenDialog</summary>

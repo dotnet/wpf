@@ -46,10 +46,7 @@ namespace System.Windows.Xps.Packaging
             PackagePart     metroPart
             )
         {
-            if (null == metroPart)
-            {
-                throw new ArgumentNullException("metroPart");
-            }
+            ArgumentNullException.ThrowIfNull(metroPart);
 
             _metroPart = metroPart;
         }
@@ -240,7 +237,7 @@ namespace System.Windows.Xps.Packaging
         {
             if (_xmlReader != null)
             {
-                throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_OpenDocOrElementAlreadyCalled));
+                throw new XpsPackagingException(SR.ReachPackaging_OpenDocOrElementAlreadyCalled);
             }
 
             Stream stream = MetroPart.GetStream(FileMode.Open);
@@ -258,7 +255,7 @@ namespace System.Windows.Xps.Packaging
         {
             if (_xmlWriter != null)
             {
-                throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_OpenDocOrElementAlreadyCalled));
+                throw new XpsPackagingException(SR.ReachPackaging_OpenDocOrElementAlreadyCalled);
             }
 
             Stream stream = MetroPart.GetStream(FileMode.Create);

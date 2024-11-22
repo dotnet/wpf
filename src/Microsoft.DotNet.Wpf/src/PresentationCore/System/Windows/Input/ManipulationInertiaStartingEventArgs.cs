@@ -34,10 +34,7 @@ namespace System.Windows.Input
             bool isInInertia)
             : base(manipulationDevice, timestamp)
         {
-            if (initialVelocities == null)
-            {
-                throw new ArgumentNullException("initialVelocities");
-            }
+            ArgumentNullException.ThrowIfNull(initialVelocities);
 
             RoutedEvent = Manipulation.ManipulationInertiaStartingEvent;
 
@@ -52,15 +49,9 @@ namespace System.Windows.Input
         /// </summary>
         protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
-            if (genericHandler == null)
-            {
-                throw new ArgumentNullException("genericHandler");
-            }
+            ArgumentNullException.ThrowIfNull(genericHandler);
 
-            if (genericTarget == null)
-            {
-                throw new ArgumentNullException("genericTarget");
-            }
+            ArgumentNullException.ThrowIfNull(genericTarget);
 
             if (RoutedEvent == Manipulation.ManipulationInertiaStartingEvent)
             {
@@ -208,10 +199,7 @@ namespace System.Windows.Input
         [Browsable(false)]
         public void SetInertiaParameter(InertiaParameters2D parameter)
         {
-            if (parameter == null)
-            {
-                throw new ArgumentNullException("parameter");
-            }
+            ArgumentNullException.ThrowIfNull(parameter);
 
             if (_inertiaParameters == null)
             {

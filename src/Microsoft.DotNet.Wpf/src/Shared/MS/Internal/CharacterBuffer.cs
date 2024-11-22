@@ -25,7 +25,6 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Security;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal
 {
@@ -180,11 +179,8 @@ namespace MS.Internal
             char[]  characterArray
             )
         {
-            if (characterArray == null) 
-            {
-                throw new ArgumentNullException("characterArray");
-            }
-            
+            ArgumentNullException.ThrowIfNull(characterArray);
+
             _characterArray = characterArray;
         }
 
@@ -282,11 +278,8 @@ namespace MS.Internal
             string  characterString
             )
         {
-            if (characterString == null)
-            {
-                throw new ArgumentNullException("characterString");
-            }
-            
+            ArgumentNullException.ThrowIfNull(characterString);
+
             _string = characterString;
         }
 
@@ -394,11 +387,8 @@ namespace MS.Internal
                 throw new ArgumentNullException("characterString");
             }
 
-            if (length <= 0)
-            {
-                throw new ArgumentOutOfRangeException("length", SR.Get(SRID.ParameterValueMustBeGreaterThanZero));
-            }
-            
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(length);
+
             _unsafeString = characterString;
             _length = length;
         }
@@ -410,8 +400,9 @@ namespace MS.Internal
         public override char this[int characterOffset]
         {
             get {
-                if (characterOffset >= _length || characterOffset < 0)
-                    throw new ArgumentOutOfRangeException("characterOffset", SR.Get(SRID.ParameterMustBeBetween,0,_length));
+                ArgumentOutOfRangeException.ThrowIfNegative(characterOffset);
+                ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(characterOffset, _length);
+
                 return _unsafeString[characterOffset];
             }
             set { throw new NotSupportedException(); }
@@ -466,15 +457,11 @@ namespace MS.Internal
             )
         {
 
-            if (characterOffset >= _length || characterOffset < 0)
-            {
-                throw new ArgumentOutOfRangeException("characterOffset", SR.Get(SRID.ParameterMustBeBetween,0,_length));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(characterOffset);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(characterOffset, _length);
 
-            if (characterLength < 0 || characterOffset + characterLength > _length)
-            {
-                throw new ArgumentOutOfRangeException("characterLength", SR.Get(SRID.ParameterMustBeBetween,0, _length - characterOffset));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(characterLength);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(characterLength, _length - characterOffset);
 
             stringBuilder.Append(new string(_unsafeString, characterOffset, characterLength));
         }

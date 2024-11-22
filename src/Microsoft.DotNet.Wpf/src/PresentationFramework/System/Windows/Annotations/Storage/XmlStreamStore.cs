@@ -73,11 +73,10 @@ namespace System.Windows.Annotations.Storage
         public XmlStreamStore(Stream stream)
             : base()
         {
-            if (stream == null)
-                throw new ArgumentNullException("stream");
+            ArgumentNullException.ThrowIfNull(stream);
 
             if (!stream.CanSeek)
-                throw new ArgumentException(SR.Get(SRID.StreamDoesNotSupportSeek));
+                throw new ArgumentException(SR.StreamDoesNotSupportSeek);
 
             SetStream(stream, null);
         }
@@ -102,8 +101,7 @@ namespace System.Windows.Annotations.Storage
         public XmlStreamStore(Stream stream, IDictionary<Uri, IList<Uri>> knownNamespaces)
             : base()
         {
-            if (stream == null)
-                throw new ArgumentNullException("stream");
+            ArgumentNullException.ThrowIfNull(stream);
 
             SetStream(stream, knownNamespaces);
         }
@@ -129,8 +127,7 @@ namespace System.Windows.Annotations.Storage
         /// <exception cref="ObjectDisposedException">if object has been Disposed</exception>
         public override void AddAnnotation(Annotation newAnnotation)
         {
-            if (newAnnotation == null)
-                throw new ArgumentNullException("newAnnotation");
+            ArgumentNullException.ThrowIfNull(newAnnotation);
 
             // We are going to modify internal data. Lock the object
             // to avoid modifications from other threads
@@ -146,11 +143,11 @@ namespace System.Windows.Annotations.Storage
 
                     // we are making sure that the newAnnotation doesn't already exist in the store
                     if (editor != null)
-                        throw new ArgumentException(SR.Get(SRID.AnnotationAlreadyExists), "newAnnotation");
+                        throw new ArgumentException(SR.AnnotationAlreadyExists, "newAnnotation");
 
                     // we are making sure that the newAnnotation doesn't already exist in the store map
                     if (_storeAnnotationsMap.FindAnnotation(newAnnotation.Id) != null)
-                        throw new ArgumentException(SR.Get(SRID.AnnotationAlreadyExists), "newAnnotation");
+                        throw new ArgumentException(SR.AnnotationAlreadyExists, "newAnnotation");
 
                     // simply add the annotation to the map to save on performance
                     // notice that we need to tell the map that this instance of the annotation is dirty
@@ -241,8 +238,7 @@ namespace System.Windows.Annotations.Storage
         public override IList<Annotation> GetAnnotations(ContentLocator anchorLocator)
         {
             // First we generate the XPath expression
-            if (anchorLocator == null)
-                throw new ArgumentNullException("anchorLocator");
+            ArgumentNullException.ThrowIfNull(anchorLocator);
 
             if (anchorLocator.Parts == null)
                 throw new ArgumentNullException("anchorLocator.Parts");
@@ -252,7 +248,7 @@ namespace System.Windows.Annotations.Storage
             IList<Annotation> annotations = null;
             try
             {
-                string query = @"//" + AnnotationXmlConstants.Prefixes.CoreSchemaPrefix + ":" + AnnotationXmlConstants.Elements.ContentLocator;
+                string query = $@"//{AnnotationXmlConstants.Prefixes.CoreSchemaPrefix}:{AnnotationXmlConstants.Elements.ContentLocator}";
 
                 if (anchorLocator.Parts.Count > 0)
                 {
@@ -280,7 +276,7 @@ namespace System.Windows.Annotations.Storage
                     }
                 }
 
-                query += @"/ancestor::" + AnnotationXmlConstants.Prefixes.CoreSchemaPrefix + ":Anchors/ancestor::" + AnnotationXmlConstants.Prefixes.CoreSchemaPrefix + ":Annotation";
+                query += $@"/ancestor::{AnnotationXmlConstants.Prefixes.CoreSchemaPrefix}:Anchors/ancestor::{AnnotationXmlConstants.Prefixes.CoreSchemaPrefix}:Annotation";
 
                 annotations = InternalGetAnnotations(query, anchorLocator);
             }
@@ -305,7 +301,7 @@ namespace System.Windows.Annotations.Storage
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordAnnotation, EventTrace.Event.GetAnnotationsBegin);
             try
             {
-                string query = "//" + AnnotationXmlConstants.Prefixes.CoreSchemaPrefix + ":Annotation";
+                string query = $"//{AnnotationXmlConstants.Prefixes.CoreSchemaPrefix}:Annotation";
 
                 annotations = InternalGetAnnotations(query, null);
             }
@@ -376,7 +372,7 @@ namespace System.Windows.Annotations.Storage
                 CheckStatus();
                 if (!_stream.CanWrite)
                 {
-                    throw new UnauthorizedAccessException(SR.Get(SRID.StreamCannotBeWritten));
+                    throw new UnauthorizedAccessException(SR.StreamCannotBeWritten);
                 }
 
                 if (_dirty)
@@ -402,10 +398,7 @@ namespace System.Windows.Annotations.Storage
         /// registered with the XmlStreamStore ctor</remarks>
         public static IList<Uri> GetWellKnownCompatibleNamespaces(Uri name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
+            ArgumentNullException.ThrowIfNull(name);
             if (_predefinedNamespaces.ContainsKey(name))
                 return _predefinedNamespaces[name];
             return null;
@@ -582,7 +575,7 @@ namespace System.Windows.Annotations.Storage
                         string nodeId = node.GetAttribute("Id", "");
                         if (String.IsNullOrEmpty(nodeId))
                         {
-                            throw new XmlException(SR.Get(SRID.RequiredAttributeMissing, AnnotationXmlConstants.Attributes.Id, AnnotationXmlConstants.Elements.Annotation));
+                            throw new XmlException(SR.Format(SR.RequiredAttributeMissing, AnnotationXmlConstants.Attributes.Id, AnnotationXmlConstants.Elements.Annotation));
                         }
 
                         try
@@ -591,7 +584,7 @@ namespace System.Windows.Annotations.Storage
                         }
                         catch (FormatException fe)
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.CannotParseId), fe);
+                            throw new InvalidOperationException(SR.CannotParseId, fe);
                         }
 
                         retObj.Add(annId);
@@ -746,9 +739,8 @@ namespace System.Windows.Annotations.Storage
                 _document.PreserveWhitespace = false;
                 if (_stream.Length == 0)
                 {
-                    _document.LoadXml("<?xml version=\"1.0\" encoding=\"utf-8\"?> <" +
-                        AnnotationXmlConstants.Prefixes.CoreSchemaPrefix + ":Annotations xmlns:" + AnnotationXmlConstants.Prefixes.CoreSchemaPrefix + "=\"" +
-                        AnnotationXmlConstants.Namespaces.CoreSchemaNamespace + "\" xmlns:" + AnnotationXmlConstants.Prefixes.BaseSchemaPrefix + "=\"" + AnnotationXmlConstants.Namespaces.BaseSchemaNamespace + "\" />");
+                    _document.LoadXml(
+                        $"<?xml version=\"1.0\" encoding=\"utf-8\"?> <{AnnotationXmlConstants.Prefixes.CoreSchemaPrefix}:Annotations xmlns:{AnnotationXmlConstants.Prefixes.CoreSchemaPrefix}=\"{AnnotationXmlConstants.Namespaces.CoreSchemaNamespace}\" xmlns:{AnnotationXmlConstants.Prefixes.BaseSchemaPrefix}=\"{AnnotationXmlConstants.Namespaces.BaseSchemaNamespace}\" />");
                 }
                 else
                 {
@@ -765,7 +757,7 @@ namespace System.Windows.Annotations.Storage
                 // use an iterator to get a single node.
 
                 XPathNavigator navigator = _document.CreateNavigator();
-                XPathNodeIterator iterator = navigator.Select("//" + AnnotationXmlConstants.Prefixes.CoreSchemaPrefix + ":Annotations", _namespaceManager);
+                XPathNodeIterator iterator = navigator.Select($"//{AnnotationXmlConstants.Prefixes.CoreSchemaPrefix}:Annotations", _namespaceManager);
                 Invariant.Assert(iterator.Count == 1, "More than one annotation returned for the query");
 
                 iterator.MoveNext();
@@ -797,11 +789,11 @@ namespace System.Windows.Annotations.Storage
             {
                 if (knownNamespace == null)
                 {
-                    throw new ArgumentException(SR.Get(SRID.NullUri), "knownNamespaces");
+                    throw new ArgumentException(SR.NullUri, "knownNamespaces");
                 }
                 if (allNamespaces.Contains(knownNamespace))
                 {
-                    throw new ArgumentException(SR.Get(SRID.DuplicatedUri), "knownNamespaces");
+                    throw new ArgumentException(SR.DuplicatedUri, "knownNamespaces");
                 }
                 allNamespaces.Add(knownNamespace);
             }
@@ -815,12 +807,12 @@ namespace System.Windows.Annotations.Storage
                     {
                         if (name == null)
                         {
-                            throw new ArgumentException(SR.Get(SRID.NullUri), "knownNamespaces");
+                            throw new ArgumentException(SR.NullUri, "knownNamespaces");
                         }
 
                         if (allNamespaces.Contains(name))
                         {
-                            throw new ArgumentException(SR.Get(SRID.DuplicatedCompatibleUri), "knownNamespaces");
+                            throw new ArgumentException(SR.DuplicatedCompatibleUri, "knownNamespaces");
                         }
                         allNamespaces.Add(name);
                     }//foreach
@@ -894,7 +886,7 @@ namespace System.Windows.Annotations.Storage
             {
                 if (!Uri.IsWellFormedUriString(xmlNamespace, UriKind.RelativeOrAbsolute))
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidNamespace, xmlNamespace), "xmlNamespace");
+                    throw new ArgumentException(SR.Format(SR.InvalidNamespace, xmlNamespace), "xmlNamespace");
                 }
                 Uri namespaceUri = new Uri(xmlNamespace, UriKind.RelativeOrAbsolute);
                 if (!_ignoredNamespaces.Contains(namespaceUri))
@@ -927,7 +919,7 @@ namespace System.Windows.Annotations.Storage
 
                 // We use XmlConvert.ToString to turn the Guid into a string because
                 // that's what is used by the Annotation's serialization methods.
-                XPathNodeIterator iterator = tempNavigator.Select(@"//" + AnnotationXmlConstants.Prefixes.CoreSchemaPrefix + @":Annotation[@Id=""" + XmlConvert.ToString(id) + @"""]", _namespaceManager);
+                XPathNodeIterator iterator = tempNavigator.Select($@"//{AnnotationXmlConstants.Prefixes.CoreSchemaPrefix}:Annotation[@Id=""{XmlConvert.ToString(id)}""]", _namespaceManager);
                 if (iterator.MoveNext())
                 {
                     navigator = (XPathNavigator)iterator.Current;
@@ -945,10 +937,10 @@ namespace System.Windows.Annotations.Storage
             lock (SyncRoot)
             {
                 if (IsDisposed)
-                    throw new ObjectDisposedException(null, SR.Get(SRID.ObjectDisposed_StoreClosed));
+                    throw new ObjectDisposedException(null, SR.ObjectDisposed_StoreClosed);
 
                 if (_stream == null)
-                    throw new InvalidOperationException(SR.Get(SRID.StreamNotSet));
+                    throw new InvalidOperationException(SR.StreamNotSet);
             }
         }
 

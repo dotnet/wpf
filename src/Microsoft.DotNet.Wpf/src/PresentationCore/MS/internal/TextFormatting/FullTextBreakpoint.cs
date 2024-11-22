@@ -24,7 +24,6 @@ using System.Windows.Media.TextFormatting;
 
 using MS.Internal.PresentationCore;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 
 namespace MS.Internal.TextFormatting
@@ -38,8 +37,8 @@ namespace MS.Internal.TextFormatting
     internal sealed class FullTextBreakpoint : TextBreakpoint
     {
         private TextMetrics                         _metrics;           // full text metrics
-        private SecurityCriticalDataForSet<IntPtr>  _ploline;           // native object representing this break
-        private SecurityCriticalDataForSet<IntPtr>  _penaltyResource;   // unsafe handle to the internal factors used to determines penalty of the break. By default, the lifetime of this resource is managed by _ploline.
+        private IntPtr                              _ploline;           // native object representing this break
+        private IntPtr                              _penaltyResource;   // unsafe handle to the internal factors used to determines penalty of the break. By default, the lifetime of this resource is managed by _ploline.
         private bool                                _isDisposed;        // flag indicates whether this object is disposed
         private bool                                _isLineTruncated;   // flag indicates whether the line produced at this breakpoint is truncated.
 
@@ -86,7 +85,7 @@ namespace MS.Internal.TextFormatting
 
             IntPtr previousBreakRecord = IntPtr.Zero;
             if (settings.PreviousLineBreak != null)
-                previousBreakRecord = settings.PreviousLineBreak.BreakRecord.Value;
+                previousBreakRecord = settings.PreviousLineBreak.BreakRecord;
 
             // need not consider marker as tab since marker does not affect line metrics and it wasnt drawn.
             fullText.SetTabs(context);
@@ -96,7 +95,7 @@ namespace MS.Internal.TextFormatting
             LsErr lserr = context.CreateBreaks(
                 fullText.GetBreakpointInternalCp(firstCharIndex),
                 previousBreakRecord,
-                paragraphCache.Ploparabreak.Value,  // para breaking session
+                paragraphCache.Ploparabreak,  // para breaking session
                 penaltyRestriction,
                 ref lsbreaks, 
                 out bestFitIndex
@@ -118,7 +117,7 @@ namespace MS.Internal.TextFormatting
                 else
                 {
                     // throw with LS error codes
-                    TextFormatterContext.ThrowExceptionFromLsError(SR.Get(SRID.CreateBreaksFailure, lserr), lserr);
+                    TextFormatterContext.ThrowExceptionFromLsError(SR.Format(SR.CreateBreaksFailure, lserr), lserr);
                 }
             }
 
@@ -180,10 +179,10 @@ namespace MS.Internal.TextFormatting
                     &lsbreaks.plslinfoArray[breakIndex]
                     );
 
-                _ploline = new SecurityCriticalDataForSet<IntPtr>(lsbreaks.pplolineArray[breakIndex]);
+                _ploline = lsbreaks.pplolineArray[breakIndex];
 
                 // keep the line penalty handle
-                _penaltyResource = new SecurityCriticalDataForSet<IntPtr>(lsbreaks.plinepenaltyArray[breakIndex]);
+                _penaltyResource = lsbreaks.plinepenaltyArray[breakIndex];
 
                 if (lsbreaks.plslinfoArray[breakIndex].fForcedBreak != 0)
                     _isLineTruncated = true;
@@ -214,11 +213,11 @@ namespace MS.Internal.TextFormatting
         /// </summary>
         protected override void Dispose(bool disposing)
         {
-            if(_ploline.Value != IntPtr.Zero)
+            if(_ploline != IntPtr.Zero)
             {
-                UnsafeNativeMethods.LoDisposeLine(_ploline.Value, !disposing);
-                _ploline.Value = IntPtr.Zero;
-                _penaltyResource.Value = IntPtr.Zero;
+                UnsafeNativeMethods.LoDisposeLine(_ploline, !disposing);
+                _ploline = IntPtr.Zero;
+                _penaltyResource = IntPtr.Zero;
                 _isDisposed = true;
                 GC.KeepAlive(this);
             }
@@ -236,9 +235,9 @@ namespace MS.Internal.TextFormatting
         {
             if (_isDisposed)
             {
-                throw new ObjectDisposedException(SR.Get(SRID.TextBreakpointHasBeenDisposed));
+                throw new ObjectDisposedException(SR.TextBreakpointHasBeenDisposed);
             }
-            return _metrics.GetTextLineBreak(_ploline.Value);
+            return _metrics.GetTextLineBreak(_ploline);
         }
 
 
@@ -250,17 +249,17 @@ namespace MS.Internal.TextFormatting
         /// We would make a correspondent call to notify our unmanaged wrapper to release them from duty of managing this 
         /// resource. 
         /// </remarks>
-        internal override SecurityCriticalDataForSet<IntPtr> GetTextPenaltyResource()
+        internal override IntPtr GetTextPenaltyResource()
         {
             if (_isDisposed)
             {
-                throw new ObjectDisposedException(SR.Get(SRID.TextBreakpointHasBeenDisposed));
+                throw new ObjectDisposedException(SR.TextBreakpointHasBeenDisposed);
             }
 
-            LsErr lserr = UnsafeNativeMethods.LoRelievePenaltyResource(_ploline.Value);
+            LsErr lserr = UnsafeNativeMethods.LoRelievePenaltyResource(_ploline);
             if (lserr != LsErr.None)
             {
-                TextFormatterContext.ThrowExceptionFromLsError(SR.Get(SRID.RelievePenaltyResourceFailure, lserr), lserr);
+                TextFormatterContext.ThrowExceptionFromLsError(SR.Format(SR.RelievePenaltyResourceFailure, lserr), lserr);
             }
 
             return _penaltyResource;

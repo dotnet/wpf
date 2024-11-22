@@ -11,11 +11,9 @@
 using System;
 using System.Reflection;                // Assembly
 using System.Collections.Specialized;   // HybridDictionary
-using MS.Internal.WindowsBase;          // [FriendAccessAllowed]
 
 namespace MS.Internal
 {
-    [FriendAccessAllowed]   // defined in Base, used in Core and Framework
     internal static class BaseHashHelper
     {
         static BaseHashHelper()
@@ -24,7 +22,6 @@ namespace MS.Internal
             MS.Internal.Hashing.WindowsBase.HashHelper.Initialize();
         }
 
-        [FriendAccessAllowed]   // defined in Base, used in Core and Framework
         internal static void RegisterTypes(Assembly assembly, Type[] types)
         {
             HybridDictionary dictionary = DictionaryFromList(types);
@@ -39,7 +36,6 @@ namespace MS.Internal
         // during the lifetime of an object of that type.  Such an object cannot
         // be used as the key of a hashtable or dictionary.  This is where we
         // detect such objects, so the caller can find some other way to cope.
-        [FriendAccessAllowed]   // defined in Base, used in Core and Framework
         internal static bool HasReliableHashCode(object item)
         {
             // null doesn't actually have a hashcode at all.  This method can be

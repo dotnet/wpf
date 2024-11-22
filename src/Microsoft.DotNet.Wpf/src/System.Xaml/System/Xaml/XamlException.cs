@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Runtime.Serialization;
 using System.Security;
 using MS.Internal.Xaml.Parser;
@@ -43,9 +45,9 @@ namespace System.Xaml
                 {
                     if (LinePosition != 0)
                     {
-                        return SR.Get(SRID.LineNumberAndPosition, base.Message, LineNumber, LinePosition);
+                        return SR.Format(SR.LineNumberAndPosition, base.Message, LineNumber, LinePosition);
                     }
-                    return SR.Get(SRID.LineNumberOnly, base.Message, LineNumber);
+                    return SR.Format(SR.LineNumberOnly, base.Message, LineNumber);
                 }
                 return base.Message;
             }
@@ -61,32 +63,29 @@ namespace System.Xaml
             :base(message) { }
 
         // FxCop required this.
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
         protected XamlException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            ArgumentNullException.ThrowIfNull(info);
             LineNumber = info.GetInt32("Line");
             LinePosition = info.GetInt32("Offset");
         }
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
 
-#if TARGETTING35SP1
-#else
-#endif
+#pragma warning disable CS0672 // Member overrides obsolete member
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            ArgumentNullException.ThrowIfNull(info);
 
             info.AddValue("Line", LineNumber);
             info.AddValue("Offset", LinePosition);
             base.GetObjectData(info, context);
         }
     }
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
+#pragma warning restore CS0672 // Member overrides obsolete member
 
     [Serializable]  // FxCop advised this be Serializable.
     public class XamlParseException : XamlException
@@ -99,7 +98,7 @@ namespace System.Xaml
 
         internal XamlParseException(int lineNumber, int linePosition, string message)
             : base(message, null, lineNumber, linePosition) { }
-        
+
         // FxCop required these.
         public XamlParseException() { }
 
@@ -141,11 +140,11 @@ namespace System.Xaml
     {
         public XamlMember DuplicateMember { get; set; }
         public XamlType ParentType { get; set; }
-        
+
         public XamlDuplicateMemberException() { }
 
         public XamlDuplicateMemberException(XamlMember member, XamlType type)
-            : base(SR.Get(SRID.DuplicateMemberSet, (member != null) ? member.Name : null, (type != null) ? type.Name : null))
+            : base(SR.Format(SR.DuplicateMemberSet, (member != null) ? member.Name : null, (type != null) ? type.Name : null))
         {
             DuplicateMember = member;
             ParentType = type;
@@ -160,28 +159,23 @@ namespace System.Xaml
         protected XamlDuplicateMemberException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            ArgumentNullException.ThrowIfNull(info);
             DuplicateMember = (XamlMember)info.GetValue("DuplicateMember", typeof(XamlMember));
             ParentType = (XamlType)info.GetValue("ParentType", typeof(XamlType));
         }
 
-#if TARGETTING35SP1
-#else
-#endif
+#pragma warning disable CS0672 // Member overrides obsolete member
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            ArgumentNullException.ThrowIfNull(info);
             info.AddValue("DuplicateMember", DuplicateMember);
             info.AddValue("ParentType", ParentType);
             base.GetObjectData(info, context);
         }
     }
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
+#pragma warning restore CS0672 // Member overrides obsolete member
 
     [Serializable]  // FxCop advised this be Serializable.
     public class XamlInternalException : XamlException

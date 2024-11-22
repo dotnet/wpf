@@ -93,7 +93,7 @@ HRESULT CDesktopRenderTarget::Create(
     // check whether any adapters don't support Hw acceleration or D3D is not
     // available.
     //
-    if (   pDisplaySet->IsNonLocalDisplayPresent()
+    if (   (!(RenderOptions::IsHardwareAccelerationInRdpEnabled()) && pDisplaySet->IsNonLocalDisplayPresent())
         || !pDisplaySet->D3DObject())
     {
         // If possible, just revert to Sw.  This simply prevents trying Hw and

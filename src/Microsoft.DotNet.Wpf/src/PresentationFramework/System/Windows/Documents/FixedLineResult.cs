@@ -14,7 +14,7 @@ namespace System.Windows.Documents
     using System.Collections;
     using System.Diagnostics;
     using System.Globalization;
-    
+
 
     //=====================================================================
     /// <summary>
@@ -35,7 +35,7 @@ namespace System.Windows.Documents
             _layoutBox = layoutBox;
         }
         #endregion Constructors
-        
+
         //--------------------------------------------------------------------
         //
         // Public Methods
@@ -45,14 +45,11 @@ namespace System.Windows.Documents
         // IComparable Override
         public int CompareTo(object o)
         {
-            if (o == null)
-            {
-                throw new ArgumentNullException("o");
-            }
+            ArgumentNullException.ThrowIfNull(o);
 
             if (o.GetType() != typeof(FixedLineResult))
             {
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, o.GetType(), typeof(FixedLineResult)), "o");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, o.GetType(), typeof(FixedLineResult)), "o");
             }
 
             FixedLineResult lineResult = (FixedLineResult)o;
@@ -67,7 +64,7 @@ namespace System.Windows.Documents
         /// <returns>string - A string representation of this object</returns>
         public override string ToString()
         {
-            return String.Format(CultureInfo.InvariantCulture, "FLR[{0}:{1}][{2}][{3}]", Start.ToString(), End.ToString(), BaseLine, _layoutBox);
+            return string.Create(CultureInfo.InvariantCulture, $"FLR[{Start}:{End}][{BaseLine}][{_layoutBox}]");
         }
 #endif
 

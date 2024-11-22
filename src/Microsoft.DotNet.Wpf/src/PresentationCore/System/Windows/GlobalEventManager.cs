@@ -8,7 +8,6 @@ using System.Diagnostics;
 using MS.Utility;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows
 {
@@ -438,7 +437,7 @@ namespace System.Windows
                 // overflow. This check will explicitly catch this error, instead of silently malfuntioning.
                 if (_globalIndexToEventMap.Count >= Int32.MaxValue)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.TooManyRoutedEvents));
+                    throw new InvalidOperationException(SR.TooManyRoutedEvents);
                 }
 
                 index = _globalIndexToEventMap.Add(value);

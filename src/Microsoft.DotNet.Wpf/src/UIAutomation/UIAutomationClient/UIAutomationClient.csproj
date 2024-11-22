@@ -1,13 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{2DD6F2F8-DFF4-4EE1-9D48-0FD692DB084D}</ProjectGuid>
-    <Platforms>AnyCPU;x64;arm64</Platforms>
+    <Platforms>x86;x64;arm64</Platforms>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DefineConstants>$(DefineConstants);UIAUTOMATIONCLIENT</DefineConstants>
     <NoWarn>$(NoWarn);0618;CA1821</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
     <EnableDefaultItems>false</EnableDefaultItems>
     <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
@@ -17,7 +16,6 @@
   <ItemGroup>
     <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
     <Compile Include="$(WpfSharedDir)MS\Win32\NativeMethodsSetLastError.cs" />
-    <Compile Include="SR.cs" />
     <Compile Include="$(WpfCommonDir)src\System\SR.cs">
       <Link>Common\System\SR.cs</Link>
     </Compile>
@@ -70,6 +68,7 @@
     <Compile Include="System\Windows\Automation\ExpandCollapsePattern.cs" />
     <Compile Include="System\Windows\Automation\GridItemPattern.cs" />
     <Compile Include="System\Windows\Automation\GridPattern.cs" />
+    <Compile Include="System\Windows\Automation\HeadingLevel.cs" />
     <Compile Include="System\Windows\Automation\InvokePattern.cs" />
     <Compile Include="System\Windows\Automation\ItemContainerPattern.cs" />
     <Compile Include="System\Windows\Automation\MultipleViewPattern.cs" />
@@ -95,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationClient\ref\UIAutomationClient-ref.csproj">
@@ -102,23 +102,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <NetCoreReference Include="netstandard" />
-    <NetCoreReference Include="System" />
-    <NetCoreReference Include="Microsoft.Win32.Primitives" />
-    <NetCoreReference Include="System.Collections.NonGeneric" />
-    <NetCoreReference Include="System.ComponentModel.Primitives" />
-    <NetCoreReference Include="System.ComponentModel.EventBasedAsync" />
-    <NetCoreReference Include="System.Diagnostics.Debug" />
-    <NetCoreReference Include="System.Diagnostics.Process" />
-    <NetCoreReference Include="System.Diagnostics.StackTrace" />
-    <NetCoreReference Include="System.Diagnostics.Tools" />
-    <NetCoreReference Include="System.Resources.ResourceManager" />
-    <NetCoreReference Include="System.Runtime" />
-    <NetCoreReference Include="System.Resources.ResourceManager" />
-    <NetCoreReference Include="System.Runtime.Extensions" />
-    <NetCoreReference Include="System.Runtime.InteropServices" />
-    <NetCoreReference Include="System.Threading" />
-    <NetCoreReference Include="System.Threading.Thread" />
     <MicrosoftPrivateWinFormsReference Include="Accessibility" />
   </ItemGroup>
 </Project>

@@ -266,8 +266,7 @@ namespace MS.Internal.IO.Packaging
         //------------------------------------------------------
         private void CheckDisposed()
         {
-            if (_closed)
-                throw new ObjectDisposedException("ResponseStream");
+            ObjectDisposedException.ThrowIf(_closed, typeof(ResponseStream));
         }
 
         //------------------------------------------------------

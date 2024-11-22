@@ -11,14 +11,6 @@ HwndSourceDisposed=Cannot access a disposed HwndSource.
 NullHwnd=Hwnd of zero is not valid.
 UsesPerPixelOpacityIsObsolete=UsesPerPixelOpacity is obsolete and should not be set when using UsesPerPixelTransparency
 
-;ParameterValidation
-ParameterMustBeGreaterThanZero=The parameter value must be greater than zero.
-ParameterCannotBeLessThan=The parameter value cannot be less than '{0}'.
-ParameterCannotBeGreaterThan=The parameter value cannot be greater than '{0}'.
-ParameterMustBeBetween=The parameter value must be between '{0}' and '{1}'.
-ParameterValueCannotBeInfinity=The parameter value must be finite.
-ParameterValueCannotBeNegative='{0}' parameter value cannot be negative.
-
 ; General
 General_BadType=The object passed to '{0}' is not a valid type.
 General_Expected_Type=Expected object of type '{0}'.

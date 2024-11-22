@@ -564,14 +564,11 @@ namespace MS.Internal.Printing.Configuration
 
         private void VerifyAccess()
         {
-            if (_providerHandle == null)
-            {
-                throw new ObjectDisposedException("PTProvider");
-            }
+            ObjectDisposedException.ThrowIf(_providerHandle is null, typeof(PTProvider));
 
             if(_thread != Thread.CurrentThread)
             {
-                throw new InvalidOperationException(SR.Get(SRID.PTProvider_VerifyAccess));
+                throw new InvalidOperationException(SR.PTProvider_VerifyAccess);
             }
         }
         

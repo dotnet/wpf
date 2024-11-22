@@ -23,7 +23,6 @@ using MS.Internal;
 using MS.Internal.TextFormatting;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 
 namespace System.Windows.Media.TextFormatting
@@ -34,8 +33,8 @@ namespace System.Windows.Media.TextFormatting
     /// </summary>
     public sealed class TextLineBreak : IDisposable
     {
-        private TextModifierScope                   _currentScope;
-        private SecurityCriticalDataForSet<IntPtr>  _breakRecord;
+        private TextModifierScope  _currentScope;
+        private IntPtr             _breakRecord;
 
         #region Constructors
 
@@ -43,14 +42,14 @@ namespace System.Windows.Media.TextFormatting
         /// Internallly construct the line break
         /// </summary>
         internal TextLineBreak(
-            TextModifierScope                   currentScope,
-            SecurityCriticalDataForSet<IntPtr>  breakRecord
+            TextModifierScope  currentScope,
+            IntPtr             breakRecord
             )
         {
             _currentScope = currentScope;
             _breakRecord = breakRecord;
 
-            if (breakRecord.Value == IntPtr.Zero)
+            if (breakRecord == IntPtr.Zero)
             {
                 // this object does not hold unmanaged resource,
                 // remove it from the finalizer queue.
@@ -87,17 +86,17 @@ namespace System.Windows.Media.TextFormatting
         {
             IntPtr pbreakrec = IntPtr.Zero;
 
-            if (_breakRecord.Value != IntPtr.Zero)
+            if (_breakRecord != IntPtr.Zero)
             {
-                LsErr lserr = UnsafeNativeMethods.LoCloneBreakRecord(_breakRecord.Value, out pbreakrec);
+                LsErr lserr = UnsafeNativeMethods.LoCloneBreakRecord(_breakRecord, out pbreakrec);
 
                 if (lserr != LsErr.None)
                 {
-                    TextFormatterContext.ThrowExceptionFromLsError(SR.Get(SRID.CloneBreakRecordFailure, lserr), lserr);
+                    TextFormatterContext.ThrowExceptionFromLsError(SR.Format(SR.CloneBreakRecordFailure, lserr), lserr);
                 }
             }
 
-            return new TextLineBreak(_currentScope, new SecurityCriticalDataForSet<IntPtr>(pbreakrec));
+            return new TextLineBreak(_currentScope, pbreakrec);
         }
 
 
@@ -108,11 +107,11 @@ namespace System.Windows.Media.TextFormatting
         /// </summary>
         private void DisposeInternal(bool finalizing)
         {
-            if (_breakRecord.Value != IntPtr.Zero)
+            if (_breakRecord != IntPtr.Zero)
             {
-                UnsafeNativeMethods.LoDisposeBreakRecord(_breakRecord.Value, finalizing);
+                UnsafeNativeMethods.LoDisposeBreakRecord(_breakRecord, finalizing);
 
-                _breakRecord.Value = IntPtr.Zero;
+                _breakRecord = IntPtr.Zero;
                 GC.KeepAlive(this);
             }
         }
@@ -130,7 +129,7 @@ namespace System.Windows.Media.TextFormatting
         /// <summary>
         /// Unmanaged pointer to LS break records structure
         /// </summary>
-        internal SecurityCriticalDataForSet<IntPtr> BreakRecord
+        internal IntPtr BreakRecord
         {
             get { return _breakRecord; }
         }

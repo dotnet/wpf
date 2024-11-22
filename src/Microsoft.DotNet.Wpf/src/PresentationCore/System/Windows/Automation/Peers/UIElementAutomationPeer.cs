@@ -15,7 +15,6 @@ using MS.Internal.Automation;
 
 using MS.Internal;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Automation.Peers
 {
@@ -25,10 +24,7 @@ namespace System.Windows.Automation.Peers
         ///
         public UIElementAutomationPeer(UIElement owner)
         {
-            if(owner == null)
-            {
-                throw new ArgumentNullException("owner");
-            }
+            ArgumentNullException.ThrowIfNull(owner);
             _owner = owner;
         }
 
@@ -54,21 +50,15 @@ namespace System.Windows.Automation.Peers
         ///</summary>
         public static AutomationPeer CreatePeerForElement(UIElement element)
         {
-            if(element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
-            
+            ArgumentNullException.ThrowIfNull(element);
+
             return element.CreateAutomationPeer();
         }
 
         ///
         public static AutomationPeer FromElement(UIElement element)
         {
-            if(element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return element.GetAutomationPeer();
         }
@@ -366,6 +356,12 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
+        override protected bool IsDialogCore()
+        {
+            return AutomationProperties.GetIsDialog(_owner);
+        }
+
+        ///
         override protected bool IsPasswordCore()
         {
             return false;
@@ -487,6 +483,15 @@ namespace System.Windows.Automation.Peers
             return sizeOfSet;
         }
 
+        /// <summary>
+        /// Provides a value for UIAutomation's HeadingLevel property
+        /// Reads <see cref="AutomationProperties.HeadingLevelProperty"/> and returns the value
+        /// </summary>
+        override protected AutomationHeadingLevel GetHeadingLevelCore()
+        {
+            return AutomationProperties.GetHeadingLevel(_owner);
+        }
+
         //
         // M E T H O D S
         //
@@ -522,7 +527,7 @@ namespace System.Windows.Automation.Peers
         override protected void SetFocusCore() 
         { 
             if (!_owner.Focus())
-                throw new InvalidOperationException(SR.Get(SRID.SetFocusFailed));
+                throw new InvalidOperationException(SR.SetFocusFailed);
         }
 
         private UIElement _owner;

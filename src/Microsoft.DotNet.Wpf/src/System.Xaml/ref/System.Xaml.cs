@@ -495,7 +495,9 @@ namespace System.Xaml
         public XamlDuplicateMemberException(System.Xaml.XamlMember member, System.Xaml.XamlType type) { }
         public System.Xaml.XamlMember DuplicateMember { get { throw null; } set { } }
         public System.Xaml.XamlType ParentType { get { throw null; } set { } }
+        #pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+        #pragma warning restore CS0672 // Member overrides obsolete member
     }
     public partial class XamlException : System.Exception
     {
@@ -507,7 +509,9 @@ namespace System.Xaml
         public int LineNumber { get { throw null; } protected set { } }
         public int LinePosition { get { throw null; } protected set { } }
         public override string Message { get { throw null; } }
+#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public partial class XamlInternalException : System.Xaml.XamlException
     {

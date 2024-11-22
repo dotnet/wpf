@@ -25,10 +25,7 @@ namespace System.Windows.Input
         /// </param>
         public MouseEventArgs(MouseDevice mouse, int timestamp) : base(mouse, timestamp)
         {
-            if( mouse == null )
-            {
-                throw new System.ArgumentNullException("mouse");
-            }
+            ArgumentNullException.ThrowIfNull(mouse);
             _stylusDevice = null;
         }
 
@@ -46,10 +43,7 @@ namespace System.Windows.Input
         /// </param>
         public MouseEventArgs(MouseDevice mouse, int timestamp, StylusDevice stylusDevice) : base(mouse, timestamp)
         {
-            if( mouse == null )
-            {
-                throw new System.ArgumentNullException("mouse");
-            }
+            ArgumentNullException.ThrowIfNull(mouse);
             _stylusDevice = stylusDevice;
         }
 

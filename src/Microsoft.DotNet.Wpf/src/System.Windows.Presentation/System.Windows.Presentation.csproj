@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <Platforms>AnyCPU;x64;arm64</Platforms>
+    <Platforms>x86;x64;arm64</Platforms>
     <EnableDefaultItems>false</EnableDefaultItems>
     <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
@@ -10,14 +9,6 @@
     <Compile Include="System\Windows\Threading\TaskExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <NetCoreReference Include="netstandard" />
-    <NetCoreReference Include="System" />
-    <NetCoreReference Include="System.ComponentModel.Primitives" />
-    <NetCoreReference Include="System.Diagnostics.Tools" />
-    <NetCoreReference Include="System.Runtime" />
-    <NetCoreReference Include="System.Runtime.InteropServices" />
-    <NetCoreReference Include="System.Resources.ResourceManager" />
-
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
     <ProjectReference Include="$(WpfSourceDir)System.Windows.Presentation\ref\System.Windows.Presentation-ref.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

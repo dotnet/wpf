@@ -114,7 +114,7 @@ namespace System.Windows.Documents.Tracing
         /// A lock object to serialize updates to <see cref="_instanceInfos"/>
         /// and the <see cref="InstanceInfo"/> instances contained therein.
         /// </summary>
-        private static object _lockObject = new object();
+        private static readonly object _lockObject = new object();
 
         /// <summary>
         /// The current COM action being tracked
@@ -157,7 +157,7 @@ namespace System.Windows.Documents.Tracing
                         NumCallsMeasured = new Dictionary<Actions, long>()
                     };
 
-                    foreach (Actions a in Enum.GetValues(typeof(Actions)))
+                    foreach (Actions a in Enum.GetValues<Actions>())
                     {
                         instanceInfo.CumulativeCallTime100Ns.Add(a, 0);
                         instanceInfo.NumCallsMeasured.Add(a, 0);

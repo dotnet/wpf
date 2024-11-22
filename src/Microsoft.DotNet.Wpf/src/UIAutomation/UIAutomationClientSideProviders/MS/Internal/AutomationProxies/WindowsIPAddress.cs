@@ -33,7 +33,7 @@ namespace MS.Internal.AutomationProxies
         {
             // IP Address control itself is custom so need to also return LocalizedControlType property
             _cControlType = ControlType.Custom;
-            _sType = SR.Get( SRID.LocalizedControlTypeIPAddress ); ;
+            _sType = SR.LocalizedControlTypeIPAddress;
             _fIsKeyboardFocusable = true;
 
             // support for events
@@ -54,11 +54,7 @@ namespace MS.Internal.AutomationProxies
         private static IRawElementProviderSimple Create(IntPtr hwnd, int idChild)
         {
             // Something is wrong if idChild is not zero 
-            if (idChild != 0)
-            {
-                System.Diagnostics.Debug.Assert (idChild == 0, "Invalid Child Id, idChild != 0");
-                throw new ArgumentOutOfRangeException("idChild", idChild, SR.Get(SRID.ShouldBeZero));
-            }
+            ArgumentOutOfRangeException.ThrowIfNotEqual(idChild, 0);
 
             return new WindowsIPAddress(hwnd, null, 0);
         }
@@ -147,7 +143,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // this was no a valid IP address
-            throw new InvalidOperationException (SR.Get(SRID.OperationCannotBePerformed));
+            throw new InvalidOperationException (SR.OperationCannotBePerformed);
         }
 
 
@@ -179,12 +175,12 @@ namespace MS.Internal.AutomationProxies
             // NOTE: IPAddress has only 1 row
             if (row != 0)
             {
-                throw new ArgumentOutOfRangeException("row", row, SR.Get(SRID.GridRowOutOfRange));
+                throw new ArgumentOutOfRangeException("row", row, SR.GridRowOutOfRange);
             }
 
             if (column < 0 || column >= OCTETCOUNT)
             {
-                throw new ArgumentOutOfRangeException("column", column, SR.Get(SRID.GridColumnOutOfRange));
+                throw new ArgumentOutOfRangeException("column", column, SR.GridColumnOutOfRange);
             }
 
             // Note: GridItem position is in reverse from the hwnd position
@@ -310,7 +306,7 @@ namespace MS.Internal.AutomationProxies
         internal ByteEditBoxOverride(IntPtr hwnd, int position) : 
                 base(hwnd, null, 0)
         {
-            _sType = SR.Get(SRID.LocalizedControlTypeOctet);
+            _sType = SR.LocalizedControlTypeOctet;
             _position = position;
             _sAutomationId = "Octet " + position.ToString(CultureInfo.CurrentCulture); // This string is a non-localizable string
             _fIsKeyboardFocusable = true;
@@ -376,11 +372,11 @@ namespace MS.Internal.AutomationProxies
             // Check range
             if (i > 255)
             {
-                throw new ArgumentOutOfRangeException("value", val, SR.Get(SRID.RangeValueMax));
+                throw new ArgumentOutOfRangeException("value", val, SR.RangeValueMax);
             }
             if (i < 0)
             {
-                throw new ArgumentOutOfRangeException("value", val, SR.Get(SRID.RangeValueMin));
+                throw new ArgumentOutOfRangeException("value", val, SR.RangeValueMin);
             }
 
             // Set text

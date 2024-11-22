@@ -7,7 +7,6 @@
 using MS.Internal;
 using MS.Internal.Media;
 using MS.Internal.Media3D;
-using MS.Internal.PresentationCore;
 using System;
 using System.Diagnostics;
 using System.Security;
@@ -16,7 +15,6 @@ using System.Windows.Media.Composition;
 using System.Windows.Media;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Media3D
 {
@@ -238,7 +236,7 @@ namespace System.Windows.Media.Media3D
             // might be iterating during a property invalidation tree walk.
             if (IsVisualChildrenIterationInProgress)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotModifyVisualChildrenDuringTreeWalk));
+                throw new InvalidOperationException(SR.CannotModifyVisualChildrenDuringTreeWalk);
             }
 
             // invalid during a VisualTreeChanged event
@@ -289,7 +287,7 @@ namespace System.Windows.Media.Media3D
             // might be iterating during a property invalidation tree walk.
             if (IsVisualChildrenIterationInProgress)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotModifyVisualChildrenDuringTreeWalk));
+                throw new InvalidOperationException(SR.CannotModifyVisualChildrenDuringTreeWalk);
             }
 
             Debug.Assert(child != null);
@@ -642,15 +640,9 @@ namespace System.Windows.Media.Media3D
             HitTestResultCallback resultCallback,
             HitTestParameters3D hitTestParameters)
         {
-            if (resultCallback == null)
-            {
-                throw new ArgumentNullException("resultCallback");
-            }
+            ArgumentNullException.ThrowIfNull(resultCallback);
 
-            if (hitTestParameters == null)
-            {
-                throw new ArgumentNullException("hitTestParameters");
-            }
+            ArgumentNullException.ThrowIfNull(hitTestParameters);
 
             VerifyAPIReadWrite();
 
@@ -810,7 +802,6 @@ namespace System.Windows.Media.Media3D
         /// Visual2DContentBounds returns the 2D bounding box for the content of this 3D object.  The 2D bounding box
         /// is the projection of the 3D content bounding box up to the nearest 2D visual that contains the Visual3D.
         /// </summary>
-        [FriendAccessAllowed]
         internal Rect Visual2DContentBounds
         {
             get
@@ -1004,7 +995,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         protected virtual Visual3D GetVisual3DChild(int index)
         {
-           throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+           throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
         }
 
         /// <summary>
@@ -1328,10 +1319,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public bool IsDescendantOf(DependencyObject ancestor)
         {
-            if (ancestor == null)
-            {
-                throw new ArgumentNullException("ancestor");
-            }
+            ArgumentNullException.ThrowIfNull(ancestor);
 
             VisualTreeUtils.EnsureVisual(ancestor);
 
@@ -1421,10 +1409,7 @@ namespace System.Windows.Media.Media3D
         {
             VerifyAPIReadOnly(otherVisual);
 
-            if (otherVisual == null)
-            {
-                throw new System.ArgumentNullException("otherVisual");
-            }
+            ArgumentNullException.ThrowIfNull(otherVisual);
 
             // Since we can't rely on code running in the CLR, we need to first make sure
             // that the FindCommonAncestor flag is not set. It is enought to ensure this
@@ -1634,10 +1619,7 @@ namespace System.Windows.Media.Media3D
         /// <exception cref="InvalidOperationException">If the Visual3Ds are not connected.</exception>
         public GeneralTransform3D TransformToAncestor(Visual3D ancestor)
         {
-            if (ancestor == null)
-            {
-                throw new ArgumentNullException("ancestor");
-            }
+            ArgumentNullException.ThrowIfNull(ancestor);
 
             VerifyAPIReadOnly(ancestor);
 
@@ -1658,10 +1640,7 @@ namespace System.Windows.Media.Media3D
         /// <exception cref="InvalidOperationException">If the Visual3Ds are not connected.</exception>
         public GeneralTransform3D TransformToDescendant(Visual3D descendant)
         {
-            if (descendant == null)
-            {
-                throw new ArgumentNullException("descendant");
-            }
+            ArgumentNullException.ThrowIfNull(descendant);
 
             VerifyAPIReadOnly(descendant);
 
@@ -1759,7 +1738,7 @@ namespace System.Windows.Media.Media3D
 
             if (g != ancestor)
             {
-                throw new System.InvalidOperationException(SR.Get(inverse ? SRID.Visual_NotADescendant : SRID.Visual_NotAnAncestor));
+                throw new System.InvalidOperationException(inverse ? SR.Visual_NotADescendant : SR.Visual_NotAnAncestor);
             }
 
             // construct the generaltransform3d to return and invert it if necessary
@@ -1808,10 +1787,7 @@ namespace System.Windows.Media.Media3D
         /// <exception cref="InvalidOperationException">If the Visual3D and Visual are not connected.</exception>
         public GeneralTransform3DTo2D TransformToAncestor(Visual ancestor)
         {
-            if (ancestor == null)
-            {
-                throw new ArgumentNullException("ancestor");
-            }
+            ArgumentNullException.ThrowIfNull(ancestor);
 
             VerifyAPIReadOnly(ancestor);
 
@@ -1889,10 +1865,8 @@ namespace System.Windows.Media.Media3D
         // This flag is set during a descendents walk, for property invalidation.
         internal bool IsVisualChildrenIterationInProgress
         {
-            [FriendAccessAllowed]
             get { return CheckFlagsAnd(VisualFlags.IsVisualChildrenIterationInProgress); }
 
-            [FriendAccessAllowed]
             set { SetFlags(value, VisualFlags.IsVisualChildrenIterationInProgress); }
         }
 

@@ -85,7 +85,7 @@ namespace MS.Internal.Controls
 #pragma warning disable 1634 // about to use PreSharp message numbers - unknown to C#
                 // Fall through -- can't enumerate (before beginning or after end)
 #pragma warning suppress 6503   
-                throw new InvalidOperationException(SR.Get(SRID.EnumeratorInvalidOperation));
+                throw new InvalidOperationException(SR.EnumeratorInvalidOperation);
                 // above exception is part of the IEnumerator.Current contract when moving beyond begin/end
 #pragma warning restore 1634
             }
@@ -129,7 +129,7 @@ namespace MS.Internal.Controls
             // If the content has changed, then throw an exception
             if (!IsUnchanged)
             {
-                throw new InvalidOperationException(SR.Get(SRID.EnumeratorVersionChanged));
+                throw new InvalidOperationException(SR.EnumeratorVersionChanged);
             }
         }
 

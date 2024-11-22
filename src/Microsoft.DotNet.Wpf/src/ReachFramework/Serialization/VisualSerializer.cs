@@ -987,11 +987,11 @@ namespace System.Windows.Xps.Serialization
         {
             if (!Utility.IsIdentity(mat))
             {
-                rslt.Append(CheckFloat(mat.M11).ToString(CultureInfo.InvariantCulture)); rslt.Append(",");
-                rslt.Append(CheckFloat(mat.M12).ToString(CultureInfo.InvariantCulture)); rslt.Append(",");
-                rslt.Append(CheckFloat(mat.M21).ToString(CultureInfo.InvariantCulture)); rslt.Append(",");
-                rslt.Append(CheckFloat(mat.M22).ToString(CultureInfo.InvariantCulture)); rslt.Append(",");
-                rslt.Append(CheckFloat(mat.OffsetX).ToString(CultureInfo.InvariantCulture)); rslt.Append(",");
+                rslt.Append(CheckFloat(mat.M11).ToString(CultureInfo.InvariantCulture)); rslt.Append(',');
+                rslt.Append(CheckFloat(mat.M12).ToString(CultureInfo.InvariantCulture)); rslt.Append(',');
+                rslt.Append(CheckFloat(mat.M21).ToString(CultureInfo.InvariantCulture)); rslt.Append(',');
+                rslt.Append(CheckFloat(mat.M22).ToString(CultureInfo.InvariantCulture)); rslt.Append(',');
+                rslt.Append(CheckFloat(mat.OffsetX).ToString(CultureInfo.InvariantCulture)); rslt.Append(',');
                 rslt.Append(CheckFloat(mat.OffsetY).ToString(CultureInfo.InvariantCulture));
             }
         }

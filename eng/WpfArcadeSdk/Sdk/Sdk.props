@@ -5,7 +5,7 @@
   <Import Project="Sdk.props" Sdk="Microsoft.DotNet.Arcade.Sdk" />
 
   <PropertyGroup>
-    <WpfArcadeSdkRoot>$([System.IO.Directory]::GetParent("$(MSBuildThisFileDirectory.TrimEnd('\'))"))\</WpfArcadeSdkRoot>
+    <WpfArcadeSdkRoot>$([System.IO.Directory]::GetParent("$(MSBuildThisFileDirectory.TrimEnd('\').TrimEnd('/'))"))\</WpfArcadeSdkRoot>
     <WpfArcadeSdkToolsDir>$(WpfArcadeSdkRoot)tools\</WpfArcadeSdkToolsDir>
   </PropertyGroup>
   
@@ -14,7 +14,8 @@
 
   <PropertyGroup>
     <GenXmlStringTable>$(WpfArcadeSdkToolsDir)GenXmlStringTable.pl</GenXmlStringTable>
-    <LangVersion Condition="'$(LangVersion)'==''">8.0</LangVersion>
+    <LangVersion Condition="'$(LangVersion)'=='' and ($(PreReleaseVersionLabel.Contains('rc')) or $(PreReleaseVersionLabel.Contains('preview')) or $(PreReleaseVersionLabel.Contains('alpha')))">preview</LangVersion>
+    <LangVersion Condition="'$(LangVersion)'==''">12</LangVersion>
     <CLSCompliant Condition="'$(CLSCompliant)'==''">true</CLSCompliant>
     <IncludeDllSafeSearchPathAttribute Condition="'$(IncludeDllSafeSearchPathAttribute )'==''">true</IncludeDllSafeSearchPathAttribute>
 
@@ -24,7 +25,7 @@
     -->
     <WpfRuntimeIdentifier Condition="('$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32') Or $(Platform.EndsWith('x64'))">win-$(Platform)</WpfRuntimeIdentifier>
     <WpfRuntimeIdentifier Condition="'$(Platform)'=='AnyCPU' or '$(Platform)'=='Win32' or '$(Platform)'=='x86'">win-x86</WpfRuntimeIdentifier>
-    <WpfRuntimeIdentifier Condition="'$(Platform)'=='ARM64'">win-arm64</WpfRuntimeIdentifier>
+    <WpfRuntimeIdentifier Condition="'$(Platform)'=='arm64'">win-arm64</WpfRuntimeIdentifier>
   </PropertyGroup>
 
   <Import Project="$(WpfArcadeSdkToolsDir)RuntimeFrameworkReference.props"/>
@@ -43,6 +44,7 @@
   <Import Project="$(WpfArcadeSdkToolsDir)ApiCompat.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)GenApi.props" />
   <Import Project="$(WpfArcadeSdkToolsDir)Publishing.props" />
+  <Import Project="$(WpfArcadeSdkToolsDir)CodeAnalysis.props" />
   
   <PropertyGroup>
     <DebugType>full</DebugType>

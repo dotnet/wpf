@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 //
 //
 //
@@ -50,16 +52,16 @@ namespace System.Xaml
         // System.Reflection.MetadataLoadContext instance
         private static MetadataLoadContext _metadataLoadContext = null;
 
-        // MetadataLoadContext Assembly cache 
-        private static Dictionary<string, Assembly> _cachedMetadataLoadContextAssemblies = null; 
-        private static Dictionary<string, Assembly> _cachedMetadataLoadContextAssembliesByNameNoExtension = null; 
+        // MetadataLoadContext Assembly cache
+        private static Dictionary<string, Assembly> _cachedMetadataLoadContextAssemblies = null;
+        private static Dictionary<string, Assembly> _cachedMetadataLoadContextAssembliesByNameNoExtension = null;
 
         // The local assembly that contains the baml.
         private static string _localAssemblyName = string.Empty;
 
         internal static void Initialize(IEnumerable<string> assemblyPaths)
-        { 
-            // System.Reflection.MetadataLoadContext Assembly cache 
+        {
+            // System.Reflection.MetadataLoadContext Assembly cache
             _cachedMetadataLoadContextAssemblies = new Dictionary<string, Assembly>(StringComparer.OrdinalIgnoreCase);
             _cachedMetadataLoadContextAssembliesByNameNoExtension = new Dictionary<string, Assembly>(StringComparer.OrdinalIgnoreCase);
             _metadataLoadContext = new MetadataLoadContext(new PathAssemblyResolver(assemblyPaths), MscorlibReflectionAssemblyName);
@@ -79,60 +81,45 @@ namespace System.Xaml
 
 #region Type
         /// <summary>
-        /// Parse and get the type of the passed in string
+        /// Parse and get the type of the passed-in string.
         /// </summary>
         internal static Type GetQualifiedType(string typeName)
         {
-            // ISSUE: we only parse the assembly name and type name
-            // all other Type.GetType() type fragments (version, culture info, pub key token etc) are ignored!!!
-            string[] nameFrags = typeName.Split(new Char[] { ',' }, 2);
-            Type type = null;
+            // We only parse the assembly name and type name.
+            // All other Type.GetType() type fragments (version, culture info, public
+            // key token etc) are ignored.
+            string[] nameFrags = typeName.Split(new char[] { ',' }, 2);
             if (nameFrags.Length == 1)
             {
-                // treat it as an absolute name
-                type = Type.GetType(nameFrags[0]);
+                // Treat this as an absolute name.
+                return Type.GetType(nameFrags[0]);
             }
-            else
+
+            Assembly a = null;
+            try
             {
-                if (nameFrags.Length != 2)
-                    throw new InvalidOperationException(SR.Get(SRID.QualifiedNameHasWrongFormat, typeName));
-
-                Assembly a = null;
-                try
-                {
-                    a = LoadAssembly(nameFrags[1].TrimStart(), null);
-                }
-                // ifdef magic to save compiler update.
-                // the fix below is for an FxCop rule about non-CLR exceptions.
-                // however this rule has now been removed.
-                catch (Exception e)   // Load throws generic Exceptions, so this can't be made more specific.
-                {
-                    if (CriticalExceptions.IsCriticalException(e))
-                    {
-                        throw;
-                    }
-                    else
-                    {
-                        // If we can't load the assembly, just return null (fall-through).
-                        a = null;
-                    }
-                }
-
-                if (a != null)
-                {
-                    try
-                    {
-                        type = a.GetType(nameFrags[0]);
-                        // If we can't get the type, just return null (fall-through).
-                    }
-                    catch (ArgumentException)
-                    {
-                        a = null;
-                    }
-                }
+                a = LoadAssembly(nameFrags[1].TrimStart(), null);
+            }
+            catch (Exception e) when (!CriticalExceptions.IsCriticalException(e))
+            {
             }
 
-            return type;
+            // If we can't load the assembly, just return null.
+            if (a == null)
+            {
+                return null;
+            }
+
+            try
+            {
+                return a.GetType(nameFrags[0]);
+            }
+            catch (ArgumentException)
+            {
+            }
+
+            // If we can't get the type, just return null.
+            return null;
         }
 
         internal static bool IsNullableType(Type type)
@@ -183,7 +170,7 @@ namespace System.Xaml
         {
 #if PBTCOMPILER
             Assembly reflectionAssembly = LoadAssembly(assemblyName, null);
-    
+
             if (reflectionAssembly != null)
             {
                 type = reflectionAssembly.GetType(type.FullName);
@@ -196,10 +183,12 @@ namespace System.Xaml
             return type;
         }
 
+#if PBTCOMPILER
         internal static Type GetMscorlibType(Type type)
         {
             return GetFrameworkType(MscorlibReflectionAssemblyName, type);
         }
+#endif
 
         internal static Type GetSystemType(Type type)
         {
@@ -222,7 +211,7 @@ namespace System.Xaml
                 return ictp.GetCustomType();
         }
 #endif
-        
+
 #endregion Type
 
         #region Attributes
@@ -361,7 +350,7 @@ namespace System.Xaml
 
                     if (attrValue == null)
                     {
-                        throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsLow, attrType.Name));
+                        throw new ArgumentException(SR.Format(SR.ParserAttributeArgsLow, attrType.Name));
                     }
                 }
                 else if (constructorArguments.Count == 0)
@@ -374,12 +363,12 @@ namespace System.Xaml
                     }
                     else
                     {
-                        throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsLow, attrType.Name));
+                        throw new ArgumentException(SR.Format(SR.ParserAttributeArgsLow, attrType.Name));
                     }
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsHigh, attrType.Name));
+                    throw new ArgumentException(SR.Format(SR.ParserAttributeArgsHigh, attrType.Name));
                 }
             }
 
@@ -439,7 +428,7 @@ namespace System.Xaml
                     {
                         string request = assemblyName.ToString();
                         string found = cachedName.ToString();
-                        throw new InvalidOperationException(SR.Get(SRID.ParserAssemblyLoadVersionMismatch, request, found));
+                        throw new InvalidOperationException(SR.Format(SR.ParserAssemblyLoadVersionMismatch, request, found));
                     }
                 }
             }
@@ -516,10 +505,12 @@ namespace System.Xaml
             return isFriend;
         }
 
+#if PBTCOMPILER
         internal static bool IsInternalAllowedOnType(Type type)
         {
             return ((LocalAssemblyName == type.Assembly.GetName().Name) || IsFriendAssembly(type.Assembly));
         }
+#endif
 
         // The local assembly that contains the baml.
         internal static string LocalAssemblyName
@@ -545,13 +536,13 @@ namespace System.Xaml
         // For a given assembly name and its full path, Reflection-Only load the assembly directly
         // from the file in disk or load the file to memory and then create assembly instance from
         // memory buffer data.
-        // 
+        //
         private static Assembly ReflectionOnlyLoadAssembly(string assemblyName, string fullPathToAssembly)
         {
-            Assembly assembly = null; 
+            Assembly assembly = null;
 
-            // If the assembly path is empty, try to load assembly by name. LoadFromAssemblyName 
-            // will result in a MetadataLoadContext.Resolve event that will contain more information about the 
+            // If the assembly path is empty, try to load assembly by name. LoadFromAssemblyName
+            // will result in a MetadataLoadContext.Resolve event that will contain more information about the
             // requested assembly.
             if (String.IsNullOrEmpty(fullPathToAssembly))
             {

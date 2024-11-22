@@ -19,7 +19,6 @@ using System.Security;
 using System.Net.Cache;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {    
@@ -83,10 +82,10 @@ namespace System.Windows.Media
 
             if (null == s)
             {
-                throw new ArgumentException(SR.Get(SRID.General_BadType, "ConvertFrom"), "value");
+                throw new ArgumentException(SR.Format(SR.General_BadType, "ConvertFrom"), "value");
             }
 
-            HttpRequestCacheLevel level = (HttpRequestCacheLevel)Enum.Parse(typeof(HttpRequestCacheLevel), s, true);
+            HttpRequestCacheLevel level = Enum.Parse<HttpRequestCacheLevel>(s, true);
             
             return new HttpRequestCachePolicy(level);
         }
@@ -114,10 +113,7 @@ namespace System.Windows.Media
                                          object value,
                                          Type destinationType)
         {
-            if (destinationType == null)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
+            ArgumentNullException.ThrowIfNull(destinationType);
 
             HttpRequestCachePolicy httpPolicy = value as HttpRequestCachePolicy;
             if(httpPolicy != null)

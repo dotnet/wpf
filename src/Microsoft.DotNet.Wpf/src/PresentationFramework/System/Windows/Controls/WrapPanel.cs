@@ -76,7 +76,7 @@ namespace System.Windows.Controls
         private static bool IsWidthHeightValid(object value)
         {
             double v = (double)value;
-            return (DoubleUtil.IsNaN(v)) || (v >= 0.0d && !Double.IsPositiveInfinity(v));
+            return (double.IsNaN(v)) || (v >= 0.0d && !Double.IsPositiveInfinity(v));
         }
 
         /// <summary>
@@ -225,8 +225,8 @@ namespace System.Windows.Controls
             UVSize uvConstraint = new UVSize(Orientation, constraint.Width, constraint.Height);
             double itemWidth = ItemWidth;
             double itemHeight = ItemHeight;
-            bool itemWidthSet = !DoubleUtil.IsNaN(itemWidth);
-            bool itemHeightSet = !DoubleUtil.IsNaN(itemHeight);
+            bool itemWidthSet = !double.IsNaN(itemWidth);
+            bool itemHeightSet = !double.IsNaN(itemHeight);
             
             Size childConstraint = new Size(
                 (itemWidthSet ?  itemWidth  : constraint.Width),
@@ -288,8 +288,8 @@ namespace System.Windows.Controls
             double itemU = (Orientation == Orientation.Horizontal ? itemWidth : itemHeight);
             UVSize curLineSize = new UVSize(Orientation);
             UVSize uvFinalSize = new UVSize(Orientation, finalSize.Width, finalSize.Height);
-            bool itemWidthSet = !DoubleUtil.IsNaN(itemWidth);
-            bool itemHeightSet = !DoubleUtil.IsNaN(itemHeight);
+            bool itemWidthSet = !double.IsNaN(itemWidth);
+            bool itemHeightSet = !double.IsNaN(itemHeight);
             bool useItemU = (Orientation == Orientation.Horizontal ? itemWidthSet : itemHeightSet);
 
             UIElementCollection children = InternalChildren;

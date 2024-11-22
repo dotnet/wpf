@@ -22,7 +22,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows
 {
@@ -109,7 +108,6 @@ namespace System.Windows
         /// OnContentParentChanged is called when the parent of the content element is changed.
         /// </summary>
         /// <param name="oldParent">Old parent or null if the content element did not have a parent before.</param>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal virtual void OnContentParentChanged(DependencyObject oldParent)
         {
             SynchronizeReverseInheritPropertyFlags(oldParent, true);
@@ -272,7 +270,6 @@ namespace System.Windows
         /// <summary>
         ///     Asynchronously re-evaluate the reverse-inherited properties.
         /// </summary>
-        [FriendAccessAllowed]
         internal void SynchronizeReverseInheritPropertyFlags(DependencyObject oldParent, bool isCoreParent)
         {
             if(IsKeyboardFocusWithin)
@@ -866,10 +863,7 @@ namespace System.Windows
         /// <returns>True if capture was taken.</returns>
         public bool CaptureTouch(TouchDevice touchDevice)
         {
-            if (touchDevice == null)
-            {
-                throw new ArgumentNullException("touchDevice");
-            }
+            ArgumentNullException.ThrowIfNull(touchDevice);
 
             return touchDevice.Capture(this);
         }
@@ -881,10 +875,7 @@ namespace System.Windows
         /// <returns>true if capture was released, false otherwise.</returns>
         public bool ReleaseTouchCapture(TouchDevice touchDevice)
         {
-            if (touchDevice == null)
-            {
-                throw new ArgumentNullException("touchDevice");
-            }
+            ArgumentNullException.ThrowIfNull(touchDevice);
 
             if (touchDevice.Captured == this)
             {

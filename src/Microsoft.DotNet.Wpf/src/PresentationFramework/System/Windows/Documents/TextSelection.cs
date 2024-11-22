@@ -841,12 +841,12 @@ namespace System.Windows.Documents
                 if (anchorWordRange.Start.CompareTo(cursorWordRange.Start) <= 0)
                 {
                     startPosition = anchorWordRange.Start.GetFrozenPointer(LogicalDirection.Forward);
-                    movingPosition = cursorWordRange.End.GetFrozenPointer(LogicalDirection.Backward); ;
+                    movingPosition = cursorWordRange.End.GetFrozenPointer(LogicalDirection.Backward);
                 }
                 else
                 {
                     startPosition = anchorWordRange.End.GetFrozenPointer(LogicalDirection.Backward);
-                    movingPosition = cursorWordRange.Start.GetFrozenPointer(LogicalDirection.Forward); ;
+                    movingPosition = cursorWordRange.Start.GetFrozenPointer(LogicalDirection.Forward);
                 }
 
                 // Note that we use includeCellAtMovingPosition=true because we want that hit-tested table cell

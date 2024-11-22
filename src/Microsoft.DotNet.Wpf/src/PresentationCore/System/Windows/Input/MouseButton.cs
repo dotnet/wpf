@@ -4,7 +4,6 @@
 
 
 using System;
-using MS.Internal.PresentationCore;
 
 namespace System.Windows.Input
 {
@@ -66,7 +65,6 @@ namespace System.Windows.Input
         ///     There is a proscription against using Enum.IsDefined().  (it is slow)
         ///     So we manually validate using a switch statement.
         /// </remarks>
-        [FriendAccessAllowed]
         internal static void Validate(MouseButton button)
         {
             switch(button)

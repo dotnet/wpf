@@ -39,11 +39,8 @@ namespace System.Windows.Threading
         /// </summary>
         public DispatcherSynchronizationContext(Dispatcher dispatcher, DispatcherPriority priority)
         {
-            if(dispatcher == null)
-            {
-                throw new ArgumentNullException("dispatcher");
-            }
-            
+            ArgumentNullException.ThrowIfNull(dispatcher);
+
             Dispatcher.ValidatePriority(priority, "priority");
             
             _dispatcher = dispatcher;
@@ -89,9 +86,6 @@ namespace System.Windows.Threading
         /// <summary>
         ///     Wait for a set of handles.
         /// </summary>
-        #pragma warning disable SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.
-        [PrePrepareMethod]
-        #pragma warning restore SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.
         public override int Wait(IntPtr[] waitHandles, bool waitAll, int millisecondsTimeout)
         {
             if(_dispatcher._disableProcessingCount > 0)

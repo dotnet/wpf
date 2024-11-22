@@ -10,7 +10,7 @@ namespace System.Windows.Baml2006
 {
     partial class WpfSharedBamlSchemaContext: XamlSchemaContext
     {
-        const int KnownPropertyCount = 268;
+        const int KnownPropertyCount = 270;
 
 
         private WpfKnownMember CreateKnownMember(short bamlNumber)
@@ -284,6 +284,8 @@ namespace System.Windows.Baml2006
                 case 266: return Create_BamlProperty_Window_Content();
                 case 267: return Create_BamlProperty_WrapPanel_Children();
                 case 268: return Create_BamlProperty_XmlDataProvider_XmlSerializer();
+                case 269: return Create_BamlProperty_TextBox_IsReadOnly();
+                case 270: return Create_BamlProperty_RichTextBox_IsReadOnly();
                 default:
                     throw new InvalidOperationException("Invalid BAML number");
             }
@@ -640,6 +642,7 @@ namespace System.Windows.Baml2006
                     switch(property)
                     {
                         case "Text": return GetKnownBamlMember(-114);
+                        case "IsReadOnly": return GetKnownBamlMember(-269);
                         case "TextWrapping": return Create_BamlProperty_TextBox_TextWrapping();
                         case "TextAlignment": return Create_BamlProperty_TextBox_TextAlignment();
                         default: return null;
@@ -1196,6 +1199,7 @@ namespace System.Windows.Baml2006
                     switch(property)
                     {
                         case "Document": return GetKnownBamlMember(-224);
+                        case "IsReadOnly": return GetKnownBamlMember(-270);
                         default: return null;
                     }
                 case 1536792507:
@@ -3629,6 +3633,23 @@ namespace System.Windows.Baml2006
         }
 
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+        private WpfKnownMember Create_BamlProperty_TextBox_IsReadOnly()
+        {
+            Type type = typeof(System.Windows.Controls.TextBox);
+            DependencyProperty dp = System.Windows.Controls.TextBox.IsReadOnlyProperty;
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
+                            this.GetXamlType(typeof(System.Windows.Controls.TextBox)), // DeclaringType
+                            "IsReadOnly", // Name
+                             dp, // DependencyProperty
+                            false, // IsReadOnly
+                            false // IsAttachable
+                                     );
+            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
+            bamlMember.Freeze();
+            return bamlMember;
+        }
+
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
         private WpfKnownMember Create_BamlProperty_TextElement_Background()
         {
             Type type = typeof(System.Windows.Documents.TextElement);
@@ -5485,6 +5506,23 @@ namespace System.Windows.Baml2006
                                      );
             bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Controls.RichTextBox)target).Document = (System.Windows.Documents.FlowDocument)value; };
             bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.RichTextBox)target).Document; };
+            bamlMember.Freeze();
+            return bamlMember;
+        }
+
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+        private WpfKnownMember Create_BamlProperty_RichTextBox_IsReadOnly()
+        {
+            Type type = typeof(System.Windows.Controls.RichTextBox);
+            DependencyProperty dp = System.Windows.Controls.RichTextBox.IsReadOnlyProperty;
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
+                            this.GetXamlType(typeof(System.Windows.Controls.RichTextBox)), // DeclaringType
+                            "IsReadOnly", // Name
+                             dp, // DependencyProperty
+                            false, // IsReadOnly
+                            false // IsAttachable
+                                     );
+            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
             bamlMember.Freeze();
             return bamlMember;
         }

@@ -63,40 +63,28 @@ namespace System.Windows.Media
 
         public static void SetTextFormattingMode(DependencyObject element, TextFormattingMode value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(TextFormattingModeProperty, value);
         }
 
         public static TextFormattingMode GetTextFormattingMode(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (TextFormattingMode)element.GetValue(TextFormattingModeProperty);
         }
         
         public static void SetTextRenderingMode(DependencyObject element, TextRenderingMode value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(TextRenderingModeProperty, value);
         }
 
         public static TextRenderingMode GetTextRenderingMode(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (TextRenderingMode)element.GetValue(TextRenderingModeProperty);
         }
@@ -104,20 +92,14 @@ namespace System.Windows.Media
 
         public static void SetTextHintingMode(DependencyObject element, TextHintingMode value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(TextHintingModeProperty, value);
         }
 
         public static TextHintingMode GetTextHintingMode(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (TextHintingMode)element.GetValue(TextHintingModeProperty);
         }

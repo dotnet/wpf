@@ -224,12 +224,14 @@ namespace MS.Internal.Shaping
         const ushort XAdvanceDeviceFlag  = 0x0040;
         const ushort YAdvanceDeviceFlag  = 0x0080;
         
-        private static ushort[] BitCount = 
-                    new ushort[16] { 0, 2, 2, 4,  2, 4, 4, 6,  2, 4, 4, 6,  4, 6, 6, 8 };
+        private static ReadOnlySpan<ushort> BitCount => [0, 2, 2, 4,
+                                                         2, 4, 4, 6,
+                                                         2, 4, 4, 6,
+                                                         4, 6, 6, 8];
 
         public static ushort Size(ushort Format)
         {
-            return (ushort)(BitCount[Format&0x000F]+BitCount[(Format>>4)&0x000F]);
+            return (ushort)(BitCount[Format & 0x000F] + BitCount[(Format >> 4) & 0x000F]);
         }
          
         public void AdjustPos(  FontTable Table,

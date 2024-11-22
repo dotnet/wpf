@@ -178,7 +178,7 @@ namespace System.Windows.Documents
         // that also creates TextEditors and want undo.
         internal void EnableUndo(FrameworkElement uiScope)
         {
-            Invariant.Assert(_undoManager == null, SR.Get(SRID.TextContainer_UndoManagerCreatedMoreThanOnce));
+            Invariant.Assert(_undoManager == null, SR.TextContainer_UndoManagerCreatedMoreThanOnce);
 
             _undoManager = new UndoManager();
             MS.Internal.Documents.UndoManager.AttachUndoManager(uiScope, _undoManager);
@@ -217,14 +217,8 @@ namespace System.Windows.Documents
 
 //             VerifyAccess();
 
-            if (position == null)
-            {
-                throw new ArgumentNullException("position");
-            }
-            if (property == null)
-            {
-                throw new ArgumentNullException("property");
-            }
+            ArgumentNullException.ThrowIfNull(position);
+            ArgumentNullException.ThrowIfNull(property);
 
             EmptyDeadPositionList();
 
@@ -265,10 +259,7 @@ namespace System.Windows.Documents
 
 //             VerifyAccess();
 
-            if (position == null)
-            {
-                throw new ArgumentNullException("position");
-            }
+            ArgumentNullException.ThrowIfNull(position);
 
             // LocalValueEnumerator is a struct.
             // if (values == null)
@@ -3266,7 +3257,7 @@ namespace System.Windows.Documents
 
             if (position.TextContainer != this)
             {
-                throw new InvalidOperationException(SR.Get(SRID.NotInThisTree, "position"));
+                throw new InvalidOperationException(SR.Format(SR.NotInThisTree, "position"));
             }
 
             position.SyncToTreeGeneration();
@@ -3274,7 +3265,7 @@ namespace System.Windows.Documents
             element = position.Parent as TextElement;
             if (element == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.NoElement));
+                throw new InvalidOperationException(SR.NoElement);
             }
         }
 

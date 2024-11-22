@@ -137,4 +137,5 @@ EXPORTS
 
     RenderOptions_ForceSoftwareRenderingModeForProcess
     RenderOptions_IsSoftwareRenderingForcedForProcess
+    RenderOptions_EnableHardwareAccelerationInRdp
 

@@ -28,16 +28,16 @@ namespace System.Windows.Documents
         /// a resilient (to out-of-proc COM server failures) interface to callers.
         /// </summary>
         /// <remarks>
-        /// The ISpellCheckerFactory and IUserDictionareisRegistrar methods are implemented using the following pattern. 
-        /// For a method Foo(), we see the following entries: 
-        /// 
+        /// The ISpellCheckerFactory and IUserDictionareisRegistrar methods are implemented using the following pattern.
+        /// For a method Foo(), we see the following entries:
+        ///
         ///     1. The most basic implementation of the method.
         ///         private FooImpl();
-        ///         
+        ///
         ///     2. Some resilience added to the basic implementation. This calls into FooImpl repeatedly.
         ///         private FooImplWithRetries(bool shouldSuppressCOMExceptions);
-        ///         
-        ///     3. Finally, the version that is exposed to callers. 
+        ///
+        ///     3. Finally, the version that is exposed to callers.
         ///         public Foo(bool shouldSuppressCOMExceptions = true);
         /// </remarks>
         internal partial class SpellChecker : IDisposable
@@ -71,7 +71,7 @@ namespace System.Windows.Documents
             #region GetLanguageTage
 
             /// <remarks>
-            ///     We really don't need to call into COM to get this 
+            ///     We really don't need to call into COM to get this
             ///     value since we cache it.
             /// </remarks>
             public string GetLanguageTag()
@@ -88,23 +88,23 @@ namespace System.Windows.Documents
             {
                 IEnumString suggestions = _speller.Value.Suggest(word);
 
-                return 
-                    suggestions != null ? 
-                        suggestions.ToList(shouldSuppressCOMExceptions:false, shouldReleaseCOMObject:true) : 
-                        null; 
+                return
+                    suggestions != null ?
+                        suggestions.ToList(shouldSuppressCOMExceptions:false, shouldReleaseCOMObject:true) :
+                        null;
             }
-            
+
             public List<string> SuggestImplWithRetries(string word, bool shouldSuppressCOMExceptions = true)
             {
                 List<string> result = null;
                 bool callSucceeded =
                     RetryHelper.TryExecuteFunction(
-                        func: () => { return SuggestImpl(word); }, 
+                        func: () => { return SuggestImpl(word); },
                         result: out result,
                         preamble:  () => Init(shouldSuppressCOMExceptions),
                         ignoredExceptions: SuppressedExceptions[shouldSuppressCOMExceptions]);
 
-                return callSucceeded ? result : null; 
+                return callSucceeded ? result : null;
             }
 
             public List<string> Suggest(string word, bool shouldSuppressCOMExceptions = true)
@@ -114,7 +114,7 @@ namespace System.Windows.Documents
 
             #endregion // Suggest
 
-            #region Add 
+            #region Add
 
             private void AddImpl(string word)
             {
@@ -123,8 +123,8 @@ namespace System.Windows.Documents
 
             private void AddImplWithRetries(string word, bool shouldSuppressCOMExceptions = true)
             {
-                // AddImpl and Init are SecuritySafeCritical, so it is okay to 
-                // create an anon. lambdas that calls into them, and pass 
+                // AddImpl and Init are SecuritySafeCritical, so it is okay to
+                // create an anon. lambdas that calls into them, and pass
                 // those lambdas below.
                 RetryHelper.TryCallAction(
                     action: () => AddImpl(word),
@@ -141,7 +141,7 @@ namespace System.Windows.Documents
 
             #endregion // Add
 
-            #region Ignore 
+            #region Ignore
 
             private void IgnoreImpl(string word)
             {
@@ -150,8 +150,8 @@ namespace System.Windows.Documents
 
             public void IgnoreImplWithRetries(string word, bool shouldSuppressCOMExceptions = true)
             {
-                // IgnoreImpl and Init are SecuritySafeCritical, so it is okay to 
-                // create anon. lambdas that calls into them, and pass 
+                // IgnoreImpl and Init are SecuritySafeCritical, so it is okay to
+                // create anon. lambdas that calls into them, and pass
                 // those lambdas below.
                 RetryHelper.TryCallAction(
                     action: () => IgnoreImpl(word),
@@ -189,7 +189,7 @@ namespace System.Windows.Documents
 
             #endregion
 
-            #region GetOptionValue 
+            #region GetOptionValue
 
             private byte GetOptionValueImpl(string optionId)
             {
@@ -214,16 +214,16 @@ namespace System.Windows.Documents
                 return GetOptionValueImplWithRetries(optionId, suppressCOMExceptions);
             }
 
-            #endregion // GetOptionValue 
+            #endregion // GetOptionValue
 
             #region GetOptionIds
 
             private List<string> GetOptionIdsImpl()
             {
                 IEnumString optionIds = _speller.Value.OptionIds;
-                return (optionIds != null) ? optionIds.ToList(false, true) : null; 
+                return (optionIds != null) ? optionIds.ToList(false, true) : null;
             }
-            
+
             private List<string> GetOptionIdsImplWithRetries(bool suppressCOMExceptions)
             {
                 List<string> optionIds = null;
@@ -234,7 +234,7 @@ namespace System.Windows.Documents
                         preamble: () => Init(suppressCOMExceptions),
                         ignoredExceptions: SuppressedExceptions[suppressCOMExceptions]);
 
-                return callSucceeded ? optionIds : null; 
+                return callSucceeded ? optionIds : null;
             }
 
             public List<string> GetOptionIds(bool suppressCOMExceptions = true)
@@ -261,7 +261,7 @@ namespace System.Windows.Documents
                         preamble: () => Init(suppressCOMExceptions),
                         ignoredExceptions: SuppressedExceptions[suppressCOMExceptions]);
 
-                return callSucceeded ? id : null; 
+                return callSucceeded ? id : null;
             }
 
             string GetId(bool suppressCOMExceptions = true)
@@ -288,7 +288,7 @@ namespace System.Windows.Documents
                         preamble: () => Init(suppressCOMExceptions),
                         ignoredExceptions: SuppressedExceptions[suppressCOMExceptions]);
 
-                return callSucceeded ? localizedName : null; 
+                return callSucceeded ? localizedName : null;
             }
 
             public string GetLocalizedName(bool suppressCOMExceptions = true)
@@ -303,7 +303,7 @@ namespace System.Windows.Documents
             private OptionDescription GetOptionDescriptionImpl(string optionId)
             {
                 IOptionDescription iod = _speller.Value.GetOptionDescription(optionId);
-                return (iod != null) ? OptionDescription.Create(iod, false, true) : null; 
+                return (iod != null) ? OptionDescription.Create(iod, false, true) : null;
             }
 
             private OptionDescription GetOptionDescriptionImplWithRetries(string optionId, bool suppressCOMExceptions)
@@ -316,7 +316,7 @@ namespace System.Windows.Documents
                         preamble: () => Init(suppressCOMExceptions),
                         ignoredExceptions: SuppressedExceptions[suppressCOMExceptions]);
 
-                return callSucceeded ? optionDescription : null; 
+                return callSucceeded ? optionDescription : null;
             }
 
             public OptionDescription GetOptionDescription(string optionId, bool suppressCOMExceptions = true)
@@ -326,12 +326,12 @@ namespace System.Windows.Documents
 
             #endregion // GetOptionDescription
 
-            #region Check 
+            #region Check
 
             private List<SpellingError> CheckImpl(string text)
             {
                 IEnumSpellingError errors = _speller.Value.Check(text);
-                return (errors != null) ? errors.ToList(this, text, false, true) : null; 
+                return (errors != null) ? errors.ToList(this, text, false, true) : null;
             }
 
             private List<SpellingError> CheckImplWithRetries(string text, bool suppressCOMExceptions)
@@ -344,7 +344,7 @@ namespace System.Windows.Documents
                         preamble: () => Init(suppressCOMExceptions),
                         ignoredExceptions: SuppressedExceptions[suppressCOMExceptions]);
 
-                return callSucceeded ? errors : null; 
+                return callSucceeded ? errors : null;
             }
 
             public List<SpellingError> Check(string text, bool suppressCOMExceptions = true)
@@ -359,7 +359,7 @@ namespace System.Windows.Documents
             public List<SpellingError> ComprehensiveCheckImpl(string text)
             {
                 IEnumSpellingError errors = _speller.Value.ComprehensiveCheck(text);
-                return (errors != null) ? errors.ToList(this, text, false, true) : null; 
+                return (errors != null) ? errors.ToList(this, text, false, true) : null;
             }
 
             public List<SpellingError> ComprehensiveCheckImplWithRetries(string text, bool shouldSuppressCOMExceptions = true)
@@ -372,7 +372,7 @@ namespace System.Windows.Documents
                         preamble: () => Init(shouldSuppressCOMExceptions),
                         ignoredExceptions: SuppressedExceptions[shouldSuppressCOMExceptions]);
 
-                return callSucceeded ? errors : null; 
+                return callSucceeded ? errors : null;
             }
 
             public List<SpellingError> ComprehensiveCheck(string text, bool shouldSuppressCOMExceptions = true)
@@ -381,6 +381,108 @@ namespace System.Windows.Documents
             }
 
             #endregion // ComprehensiveCheck
+
+            #region HasErrors
+
+            // This returns true if the given text has any spelling errors.
+            // It is a shortcut for
+            //      ComprehensiveCheck(text)?.Count != 0
+            // that avoids the (expensive) creation of the managed list of errors and
+            // their suggested corrections.
+            public bool HasErrorsImpl(string text)
+            {
+                IEnumSpellingError errors = _speller.Value.ComprehensiveCheck(text);
+                return (errors != null) ? errors.HasErrors(false, true) : false;
+            }
+
+            public bool HasErrorsImplWithRetries(string text, bool shouldSuppressCOMExceptions = true)
+            {
+                bool hasErrors = false;
+                bool callSucceeded =
+                    RetryHelper.TryExecuteFunction(
+                        func: () => HasErrorsImpl(text),
+                        result: out hasErrors,
+                        preamble: () => Init(shouldSuppressCOMExceptions),
+                        ignoredExceptions: SuppressedExceptions[shouldSuppressCOMExceptions]);
+
+                return callSucceeded ? hasErrors : false;
+            }
+
+            public bool HasErrors(string text, bool shouldSuppressCOMExceptions = true)
+            {
+                if (_disposed || String.IsNullOrWhiteSpace(text))
+                    return false;
+
+                // In practice, this method is called many times on the same few
+                // words in the vicinity of the insertion caret. The calls to the
+                // native spell-checker can be expensive (more so for misspelled
+                // that have many nearby corrections), enough to cause lags in
+                // response time.  To mitigate this, we keep a cache of the most
+                // recent queries and answer from the cache when possible, avoiding
+                // the expensive native calls about 80% of the time.
+
+                // The _hasErrorsCache member can be set to null by another thread
+                // when the native spell-checker changes.  To avoid NREs, use a local
+                // reference here.  If the cache is nulled out while we're in
+                // this method, the worst that happens is that a new entry we add
+                // to the old cache won't be visible to the next query, causing one
+                // extra "avoidable" native query.  It's not worth the effort and
+                // synchronization overhead to "solve" this very infrequent case.
+                List<HasErrorsResult> hasErrorsCache = _hasErrorsCache;
+
+                // search the MRU cache for the text
+                int cacheSize = (hasErrorsCache != null) ? hasErrorsCache.Count : 0;
+                int index;
+                for (index = 0; index < cacheSize; ++index)
+                {
+                    if (text == hasErrorsCache[index].Text)
+                        break;
+                }
+
+                HasErrorsResult result;
+                if (index < cacheSize)
+                {
+                    // if found, use the cached result
+                    result = hasErrorsCache[index];
+                }
+                else
+                {
+                    // otherwise, get the result from the native spell checker
+                    result = new HasErrorsResult(text, HasErrorsImplWithRetries(text, shouldSuppressCOMExceptions));
+
+                    // add it to the cache, initializing as needed
+                    if (hasErrorsCache == null)
+                    {
+                        hasErrorsCache = new List<HasErrorsResult>(HasErrorsCacheCapacity);
+                        _hasErrorsCache = hasErrorsCache;
+                    }
+
+                    if (cacheSize < HasErrorsCacheCapacity)
+                    {
+                        // add an entry at index cacheSize.  It will get overwritten
+                        // in the first iteration of the move-to-front loop,
+                        // but we have to add something so that the reference
+                        // to cache[index] doesn't hit an out-of-range exception.
+                        hasErrorsCache.Add(result);
+                    }
+                    else
+                    {
+                        index = HasErrorsCacheCapacity - 1;
+                    }
+                }
+
+                // move the entry to the front of the cache (to preserve MRU),
+                // and return the result
+                for (; index > 0; --index)
+                {
+                    hasErrorsCache[index] = hasErrorsCache[index-1];
+                }
+                hasErrorsCache[0] = result;
+
+                return result.HasErrors;
+            }
+
+            #endregion HasErrors
 
             #region Add/Remove SpellCheckerChanged support
 
@@ -399,7 +501,7 @@ namespace System.Windows.Documents
                         preamble: () => Init(suppressCOMExceptions),
                         ignoredExceptions: SuppressedExceptions[suppressCOMExceptions]);
 
-                return callSucceeded ? eventCookie : null; 
+                return callSucceeded ? eventCookie : null;
             }
 
             private uint? add_SpellCheckerChanged(ISpellCheckerChangedEventHandler handler, bool suppressCOMExceptions = true)
@@ -422,21 +524,23 @@ namespace System.Windows.Documents
 
             private void remove_SpellCheckerChanged(uint eventCookie, bool suppressCOMExceptions = true)
             {
-                if (_disposed) return; 
+                if (_disposed) return;
                 remove_SpellCheckerChangedImplWithRetries(eventCookie, suppressCOMExceptions);
             }
 
             /// <summary>
-            /// This is called when the ISpellChecker instnace stored in <see cref="_speller"/>.Value 
-            /// changes (likely due to a COM failure and reinitialization). When this happens, 
+            /// This is called when the ISpellChecker instance stored in <see cref="_speller"/>.Value
+            /// changes (likely due to a COM failure and reinitialization). When this happens,
             /// we will re-register with add_SpellCheckerChanged if appropriate and update
-            /// the eventCookie. Thsi will in-turn permit users of the SpellChecker type 
-            /// to listen to SpellChecker.Changed event when the underlying ISpellChecker 
-            /// instance indicates a change. 
+            /// the eventCookie. Thsi will in-turn permit users of the SpellChecker type
+            /// to listen to SpellChecker.Changed event when the underlying ISpellChecker
+            /// instance indicates a change.
             /// </summary>
             private void SpellerInstanceChanged(object sender, PropertyChangedEventArgs args)
             {
-                // Re-register callbacks with ISpellChecker 
+                _hasErrorsCache = null;     // cached HasErrors results are no longer valid
+
+                // Re-register callbacks with ISpellChecker
                 if (_changed != null)
                 {
                     lock (_changed)
@@ -450,18 +554,20 @@ namespace System.Windows.Documents
             }
 
             /// <summary>
-            /// Called when ISpellChecker instnace calls into _spellCheckerChangedEventHandler.Invoke
-            /// to indicate a change. Invoke in turn calls OnChanged. 
+            /// Called when ISpellChecker instance calls into _spellCheckerChangedEventHandler.Invoke
+            /// to indicate a change. Invoke in turn calls OnChanged.
             /// </summary>
             internal virtual void OnChanged(SpellCheckerChangedEventArgs e)
             {
+                _hasErrorsCache = null;     // cached HasErrors results are no longer valid
+
                 _changed?.Invoke(this, e);
             }
 
             #region Events
 
             /// <summary>
-            /// Event used to receive notifications when the underlying ISpellChecker 
+            /// Event used to receive notifications when the underlying ISpellChecker
             /// instance indicates a change.
             /// </summary>
             public event EventHandler<SpellCheckerChangedEventArgs> Changed
@@ -547,13 +653,23 @@ namespace System.Windows.Documents
             private string _languageTag;
 
             // Change notification related fields
-            SpellCheckerChangedEventHandler _spellCheckerChangedEventHandler; 
+            SpellCheckerChangedEventHandler _spellCheckerChangedEventHandler;
             private uint? _eventCookie = null;
-            private event EventHandler<SpellCheckerChangedEventArgs> _changed;          
+            private event EventHandler<SpellCheckerChangedEventArgs> _changed;
+
+            // caching HasErrors results
+            private class HasErrorsResult : Tuple<string, bool>
+            {
+                public HasErrorsResult(string text, bool hasErrors) : base(text, hasErrors) {}
+                public string Text { get { return Item1; } }
+                public bool HasErrors { get { return Item2; } }
+            }
+            private List<HasErrorsResult> _hasErrorsCache;
+            const int HasErrorsCacheCapacity = 10;      // cache the most recent 10 results
 
             private bool _disposed = false;
 
-            #endregion // Fields 
+            #endregion // Fields
         }
     }
 }

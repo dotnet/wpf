@@ -23,7 +23,6 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Imaging
 {
@@ -46,16 +45,13 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         public BitmapPalette(IList<Color> colors)
         {
-            if (colors == null)
-            {
-                throw new ArgumentNullException("colors");
-            }
+            ArgumentNullException.ThrowIfNull(colors);
 
             int count = colors.Count;
 
             if (count < 1 || count > 256)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Image_PaletteZeroColors, null));
+                throw new InvalidOperationException(SR.Format(SR.Image_PaletteZeroColors, null));
             }
 
             Color[] colorArray = new Color[count];
@@ -85,10 +81,7 @@ namespace System.Windows.Media.Imaging
         {
             // Note: we will never return a palette from BitmapPalettes.
 
-            if (bitmapSource == null)
-            {
-                throw new ArgumentNullException("bitmapSource");
-            }
+            ArgumentNullException.ThrowIfNull(bitmapSource);
 
             SafeMILHandle unmanagedBitmap = bitmapSource.WicSourceHandle;
 
@@ -136,7 +129,7 @@ namespace System.Windows.Media.Imaging
                     break;
 
                 default:
-                    throw new System.ArgumentException(SR.Get(SRID.Image_PaletteFixedType, paletteType));
+                    throw new System.ArgumentException(SR.Format(SR.Image_PaletteFixedType, paletteType));
             }
 
             _palette = CreateInternalPalette();
@@ -327,7 +320,7 @@ namespace System.Windows.Media.Imaging
 
             if (numColors < 1 || numColors > 256)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Image_PaletteZeroColors, null));
+                throw new InvalidOperationException(SR.Format(SR.Image_PaletteZeroColors, null));
             }
             else
             {

@@ -74,7 +74,7 @@ namespace System.Windows.Annotations
             _isFixedContent = originalPaginator is FixedDocumentPaginator || originalPaginator is FixedDocumentSequencePaginator;
 
             if (!_isFixedContent && !(originalPaginator is FlowDocumentPaginator))
-                throw new ArgumentException(SR.Get(SRID.OnlyFlowAndFixedSupported));
+                throw new ArgumentException(SR.OnlyFlowAndFixedSupported);
 
             _originalPaginator = originalPaginator;
             _annotationStore = annotationStore;
@@ -363,8 +363,7 @@ namespace System.Windows.Annotations
 
         private IList<IAttachedAnnotation> ProcessAnnotations(DocumentPageView dpv)
         {
-            if (dpv == null)
-                throw new ArgumentNullException("dpv");
+            ArgumentNullException.ThrowIfNull(dpv);
 
             IList<IAttachedAnnotation> attachedAnnotations = new List<IAttachedAnnotation>();
             IList<ContentLocatorBase> locators = _locatorManager.GenerateLocators(dpv);

@@ -22,7 +22,6 @@ using System.Windows.Media.Imaging;
 using System.Security;
 using MS.Win32.PresentationCore;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using System.Diagnostics.CodeAnalysis;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
@@ -93,7 +92,7 @@ namespace System.Windows.Media.Imaging
             if (containerFormat == Guid.Empty)
             {
                 throw new ArgumentException(
-                    SR.Get(SRID.Image_GuidEmpty, "containerFormat"),
+                    SR.Format(SR.Image_GuidEmpty, "containerFormat"),
                     "containerFormat"
                     );
             }
@@ -147,14 +146,11 @@ namespace System.Windows.Media.Imaging
                 VerifyAccess();
                 EnsureBuiltIn();
 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (!_supportsColorContext)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Image_EncoderNoColorContext));
+                    throw new InvalidOperationException(SR.Image_EncoderNoColorContext);
                 }
 
                 _readOnlycolorContexts = value;
@@ -177,14 +173,11 @@ namespace System.Windows.Media.Imaging
                 VerifyAccess();
                 EnsureBuiltIn();
 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (!_supportsGlobalThumbnail)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Image_EncoderNoGlobalThumbnail));
+                    throw new InvalidOperationException(SR.Image_EncoderNoGlobalThumbnail);
                 }
 
                 _thumbnail = value;
@@ -209,19 +202,16 @@ namespace System.Windows.Media.Imaging
                 VerifyAccess();
                 EnsureBuiltIn();
 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (value.GuidFormat != ContainerFormat)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Image_MetadataNotCompatible));
+                    throw new InvalidOperationException(SR.Image_MetadataNotCompatible);
                 }
 
                 if (!_supportsGlobalMetadata)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Image_EncoderNoGlobalMetadata));
+                    throw new InvalidOperationException(SR.Image_EncoderNoGlobalMetadata);
                 }
 
                 _metadata = value;
@@ -244,14 +234,11 @@ namespace System.Windows.Media.Imaging
                 VerifyAccess();
                 EnsureBuiltIn();
 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (!_supportsPreview)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Image_EncoderNoPreview));
+                    throw new InvalidOperationException(SR.Image_EncoderNoPreview);
                 }
 
                 _preview = value;
@@ -302,10 +289,7 @@ namespace System.Windows.Media.Imaging
                 VerifyAccess();
                 EnsureBuiltIn();
 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 _palette = value;
             }
@@ -332,10 +316,7 @@ namespace System.Windows.Media.Imaging
                 VerifyAccess();
                 EnsureBuiltIn();
 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 _frames = value;
             }
@@ -362,18 +343,18 @@ namespace System.Windows.Media.Imaging
 
             if (_hasSaved)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Image_OnlyOneSave));
+                throw new InvalidOperationException(SR.Image_OnlyOneSave);
             }
 
             if (_frames == null)
             {
-                throw new System.NotSupportedException(SR.Get(SRID.Image_NoFrames, null));
+                throw new System.NotSupportedException(SR.Format(SR.Image_NoFrames, null));
             }
 
             int count = _frames.Count;
             if (count <= 0)
             {
-                throw new System.NotSupportedException(SR.Get(SRID.Image_NoFrames, null));
+                throw new System.NotSupportedException(SR.Format(SR.Image_NoFrames, null));
             }
 
             IntPtr comStream = IntPtr.Zero;

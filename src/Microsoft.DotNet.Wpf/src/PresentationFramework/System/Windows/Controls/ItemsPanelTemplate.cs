@@ -76,7 +76,7 @@ namespace System.Windows.Controls
         // target type.  For ItemsPanelTemplate, this is not allowed.
         internal override void SetTargetTypeInternal(Type targetType)
         {
-            throw new InvalidOperationException(SR.Get(SRID.TemplateNotTargetType));
+            throw new InvalidOperationException(SR.TemplateNotTargetType);
         }
 
         // Target type of ItemsPanelTemplate is ItemsPresenter
@@ -120,7 +120,7 @@ namespace System.Windows.Controls
                 System.Xaml.XamlType panelType = templateHolder.SchemaContext.GetXamlType(typeof(Panel));
                 if (templateHolder.RootType == null || !templateHolder.RootType.CanAssignTo(panelType))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.ItemsPanelNotAPanel, templateHolder.RootType));
+                    throw new InvalidOperationException(SR.Format(SR.ItemsPanelNotAPanel, templateHolder.RootType));
                 }
             }
 
@@ -128,7 +128,7 @@ namespace System.Windows.Controls
             {
                 // This is a FEF-style template
                 if (!typeof(Panel).IsAssignableFrom(root.Type))
-                    throw new InvalidOperationException(SR.Get(SRID.ItemsPanelNotAPanel, root.Type));
+                    throw new InvalidOperationException(SR.Format(SR.ItemsPanelNotAPanel, root.Type));
 
                 root.SetValue(Panel.IsItemsHostProperty, true);
             }
@@ -153,15 +153,12 @@ namespace System.Windows.Controls
         protected override void ValidateTemplatedParent(FrameworkElement templatedParent)
         {
             // Must have a non-null feTemplatedParent
-            if (templatedParent == null)
-            {
-                throw new ArgumentNullException("templatedParent");
-            }
+            ArgumentNullException.ThrowIfNull(templatedParent);
 
             // A ItemsPanelTemplate must be applied to an ItemsPresenter
             if (!(templatedParent is ItemsPresenter))
             {
-                throw new ArgumentException(SR.Get(SRID.TemplateTargetTypeMismatch, "ItemsPresenter", templatedParent.GetType().Name));
+                throw new ArgumentException(SR.Format(SR.TemplateTargetTypeMismatch, "ItemsPresenter", templatedParent.GetType().Name));
             }
         }
 

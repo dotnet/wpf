@@ -80,7 +80,7 @@ $(PreparePackageAssetsDependsOn):
           Condition="'$(PackageName)'!=''">
 
     <PropertyGroup>
-      <DestinationSubFolder Condition="'$(DestinationSubFolder)'=='' and '$(TargetFramework)'!=''">$(LibFolder)\$(TargetFramework)\</DestinationSubFolder>
+      <DestinationSubFolder Condition="'$(DestinationSubFolder)'=='' and '$(TargetFramework)'!='' and !('$(MSBuildProjectExtension)'=='.vcxproj' and '$(UseDestinationLibFolder)' == '')">$(LibFolder)\$(TargetFramework)\</DestinationSubFolder>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(MSBuildProjectExtension)'=='.vcxproj' and '$(DestinationSubFolder)'==''">

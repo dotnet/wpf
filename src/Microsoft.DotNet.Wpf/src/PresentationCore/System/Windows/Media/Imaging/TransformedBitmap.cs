@@ -24,7 +24,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Imaging
 {
@@ -50,19 +49,16 @@ namespace System.Windows.Media.Imaging
         public TransformedBitmap(BitmapSource source, Transform newTransform)
             : base(true) // Use base class virtuals
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException("source");
-            }
+            ArgumentNullException.ThrowIfNull(source);
 
             if (newTransform == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Image_NoArgument, "Transform"));
+                throw new InvalidOperationException(SR.Format(SR.Image_NoArgument, "Transform"));
             }
 
             if (!CheckTransform(newTransform))
             {
-                throw new InvalidOperationException(SR.Get(SRID.Image_OnlyOrthogonal));
+                throw new InvalidOperationException(SR.Image_OnlyOrthogonal);
             }
 
             _bitmapInit.BeginInit();
@@ -298,7 +294,7 @@ namespace System.Windows.Media.Imaging
             {
                 if (throwIfInvalid)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Image_NoArgument, "Source"));
+                    throw new InvalidOperationException(SR.Format(SR.Image_NoArgument, "Source"));
                 }
                 return false;
             }
@@ -308,7 +304,7 @@ namespace System.Windows.Media.Imaging
             {
                 if (throwIfInvalid)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Image_NoArgument, "Transform"));
+                    throw new InvalidOperationException(SR.Format(SR.Image_NoArgument, "Transform"));
                 }
                 return false;
             }
@@ -317,7 +313,7 @@ namespace System.Windows.Media.Imaging
             {
                 if (throwIfInvalid)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Image_OnlyOrthogonal));
+                    throw new InvalidOperationException(SR.Image_OnlyOrthogonal);
                 }
                 return false;
             }

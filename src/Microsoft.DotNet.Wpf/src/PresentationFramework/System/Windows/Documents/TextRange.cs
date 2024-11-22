@@ -90,14 +90,8 @@ namespace System.Windows.Documents
         // Used for fine-grained control by IMEs.
         internal TextRange(ITextPointer position1, ITextPointer position2, bool ignoreTextUnitBoundaries)
         {
-            if (position1 == null)
-            {
-                throw new ArgumentNullException("position1");
-            }
-            if (position2 == null)
-            {
-                throw new ArgumentNullException("position2");
-            }
+            ArgumentNullException.ThrowIfNull(position1);
+            ArgumentNullException.ThrowIfNull(position2);
 
             SetFlags(ignoreTextUnitBoundaries, Flags.IgnoreTextUnitBoundaries);
 
@@ -792,16 +786,13 @@ namespace System.Windows.Documents
         {
             Invariant.Assert(this.HasConcreteTextContainer, "Can't apply property to non-TextContainer range!");
 
-            if (formattingProperty == null)
-            {
-                throw new ArgumentNullException("formattingProperty");
-            }
+            ArgumentNullException.ThrowIfNull(formattingProperty);
 
             if (!TextSchema.IsCharacterProperty(formattingProperty) &&
                 !TextSchema.IsParagraphProperty(formattingProperty))
             {
                 #pragma warning suppress 6506 // formattingProperty is obviously not null
-                throw new ArgumentException(SR.Get(SRID.TextEditorPropertyIsNotApplicableForTextFormatting, formattingProperty.Name));
+                throw new ArgumentException(SR.Format(SR.TextEditorPropertyIsNotApplicableForTextFormatting, formattingProperty.Name));
             }
 
             // Convert property value from a string to object if needed
@@ -818,7 +809,7 @@ namespace System.Windows.Documents
             {
                 // We exclude checking thcickness values because we have special treatment for negative values
                 // in TextRangeEdit.SetParagraphProperty - negative values mean: "leave the value as is".
-                throw new ArgumentException(SR.Get(SRID.TextEditorTypeOfParameterIsNotAppropriateForFormattingProperty, value == null ? "null" : value.GetType().Name, formattingProperty.Name), "value");
+                throw new ArgumentException(SR.Format(SR.TextEditorTypeOfParameterIsNotAppropriateForFormattingProperty, value == null ? "null" : value.GetType().Name, formattingProperty.Name), "value");
             }
 
             // Check propertyValueAction validity
@@ -828,13 +819,13 @@ namespace System.Windows.Documents
                 propertyValueAction != PropertyValueAction.IncreaseByPercentageValue &&
                 propertyValueAction != PropertyValueAction.DecreaseByPercentageValue)
             {
-                throw new ArgumentException(SR.Get(SRID.TextRange_InvalidParameterValue), "propertyValueAction");
+                throw new ArgumentException(SR.TextRange_InvalidParameterValue, "propertyValueAction");
             }
             // Check if propertyValueAction is applicable to this property
             if (propertyValueAction != PropertyValueAction.SetValue &&
                 !TextSchema.IsPropertyIncremental(formattingProperty))
             {
-                throw new ArgumentException(SR.Get(SRID.TextRange_PropertyCannotBeIncrementedOrDecremented, formattingProperty.Name), "propertyValueAction");
+                throw new ArgumentException(SR.Format(SR.TextRange_PropertyCannotBeIncrementedOrDecremented, formattingProperty.Name), "propertyValueAction");
             }
 
             ApplyPropertyToTextVirtual(formattingProperty, value, applyToParagraphs, propertyValueAction);
@@ -865,15 +856,12 @@ namespace System.Windows.Documents
         /// </returns>
         public object GetPropertyValue(DependencyProperty formattingProperty)
         {
-            if (formattingProperty == null)
-            {
-                throw new ArgumentNullException("formattingProperty");
-            }
+            ArgumentNullException.ThrowIfNull(formattingProperty);
             if (!TextSchema.IsCharacterProperty(formattingProperty) &&
                 !TextSchema.IsParagraphProperty(formattingProperty))
             {
                 #pragma warning suppress 6506 // formattingProperty is obviously not null
-                throw new ArgumentException(SR.Get(SRID.TextEditorPropertyIsNotApplicableForTextFormatting, formattingProperty.Name));
+                throw new ArgumentException(SR.Format(SR.TextEditorPropertyIsNotApplicableForTextFormatting, formattingProperty.Name));
             }
 
             // Redirect to virtual implementation - to allow extensiblity on TextSelection level

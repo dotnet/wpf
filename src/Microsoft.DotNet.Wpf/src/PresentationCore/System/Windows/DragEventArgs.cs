@@ -16,7 +16,6 @@ using System.Windows.Media;
 using System.Windows.Input;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows
 {
@@ -94,10 +93,7 @@ namespace System.Windows
         {
             Point dropPoint;
 
-            if (relativeTo == null)
-            {
-                throw new ArgumentNullException("relativeTo");
-            }
+            ArgumentNullException.ThrowIfNull(relativeTo);
 
             dropPoint = new Point(0, 0);
 
@@ -162,7 +158,7 @@ namespace System.Windows
             {
                 if (!DragDrop.IsValidDragDropEffects(value))
                 {
-                    throw new ArgumentException(SR.Get(SRID.DragDrop_DragDropEffectsInvalid, "value"));
+                    throw new ArgumentException(SR.Format(SR.DragDrop_DragDropEffectsInvalid, "value"));
                 }
 
                 _effects = value;

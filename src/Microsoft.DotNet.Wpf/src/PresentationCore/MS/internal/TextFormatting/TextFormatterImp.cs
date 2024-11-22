@@ -23,7 +23,6 @@ using System.Windows.Media.TextFormatting;
 using MS.Utility;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using MS.Internal.Shaping;
 using MS.Internal.Text.TextInterface;
 using MS.Internal.FontCache;
@@ -398,7 +397,7 @@ namespace MS.Internal.TextFormatting
             if (!settings.Pap.Wrap && settings.Pap.OptimalBreak)
             {
                 // Optimal paragraph must wrap.
-                throw new ArgumentException(SR.Get(SRID.OptimalParagraphMustWrap));
+                throw new ArgumentException(SR.OptimalParagraphMustWrap);
             }
 
             // create paragraph content cache object
@@ -466,14 +465,11 @@ namespace MS.Internal.TextFormatting
             TextRunCache                textRunCache
             )
         {
-            if (textSource == null)
-                throw new ArgumentNullException("textSource");
+            ArgumentNullException.ThrowIfNull(textSource);
 
-            if (textRunCache == null)
-                throw new ArgumentNullException("textRunCache");
+            ArgumentNullException.ThrowIfNull(textRunCache);
 
-            if (paragraphProperties == null)
-                throw new ArgumentNullException("paragraphProperties");
+            ArgumentNullException.ThrowIfNull(paragraphProperties);
 
             if (paragraphProperties.DefaultTextRunProperties == null)
                 throw new ArgumentNullException("paragraphProperties.DefaultTextRunProperties");
@@ -481,37 +477,19 @@ namespace MS.Internal.TextFormatting
             if (paragraphProperties.DefaultTextRunProperties.Typeface == null)
                 throw new ArgumentNullException("paragraphProperties.DefaultTextRunProperties.Typeface");
 
-            if (DoubleUtil.IsNaN(paragraphWidth))
-                throw new ArgumentOutOfRangeException("paragraphWidth", SR.Get(SRID.ParameterValueCannotBeNaN));
-
-            if (double.IsInfinity(paragraphWidth))
-                throw new ArgumentOutOfRangeException("paragraphWidth", SR.Get(SRID.ParameterValueCannotBeInfinity));
-
-            if (    paragraphWidth < 0
-                || paragraphWidth > Constants.RealInfiniteWidth)
-            {
-                throw new ArgumentOutOfRangeException("paragraphWidth", SR.Get(SRID.ParameterMustBeBetween, 0, Constants.RealInfiniteWidth));
-            }
+            ArgumentOutOfRangeException.ThrowIfEqual(paragraphWidth, double.NaN);
+            ArgumentOutOfRangeException.ThrowIfNegative(paragraphWidth);
+            ArgumentOutOfRangeException.ThrowIfEqual(paragraphWidth, double.PositiveInfinity);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(paragraphWidth, Constants.RealInfiniteWidth);
 
             double realMaxFontRenderingEmSize = Constants.RealInfiniteWidth / Constants.GreatestMutiplierOfEm;
 
-            if (    paragraphProperties.DefaultTextRunProperties.FontRenderingEmSize < 0
-                ||  paragraphProperties.DefaultTextRunProperties.FontRenderingEmSize > realMaxFontRenderingEmSize)
-            {
-                throw new ArgumentOutOfRangeException("paragraphProperties.DefaultTextRunProperties.FontRenderingEmSize", SR.Get(SRID.ParameterMustBeBetween, 0, realMaxFontRenderingEmSize));
-            }
-
-            if (paragraphProperties.Indent > Constants.RealInfiniteWidth)
-                throw new ArgumentOutOfRangeException("paragraphProperties.Indent", SR.Get(SRID.ParameterCannotBeGreaterThan, Constants.RealInfiniteWidth));
-
-            if (paragraphProperties.LineHeight > Constants.RealInfiniteWidth)
-                throw new ArgumentOutOfRangeException("paragraphProperties.LineHeight", SR.Get(SRID.ParameterCannotBeGreaterThan, Constants.RealInfiniteWidth));
-
-            if (   paragraphProperties.DefaultIncrementalTab < 0
-                || paragraphProperties.DefaultIncrementalTab > Constants.RealInfiniteWidth)
-            {
-                throw new ArgumentOutOfRangeException("paragraphProperties.DefaultIncrementalTab", SR.Get(SRID.ParameterMustBeBetween, 0, Constants.RealInfiniteWidth));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(paragraphProperties.DefaultTextRunProperties.FontRenderingEmSize, "paragraphProperties.DefaultTextRunProperties.FontRenderingEmSize");
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(paragraphProperties.DefaultTextRunProperties.FontRenderingEmSize, realMaxFontRenderingEmSize, "paragraphProperties.DefaultTextRunProperties.FontRenderingEmSize");
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(paragraphProperties.Indent, Constants.RealInfiniteWidth, "paragraphProperties.Indent");
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(paragraphProperties.LineHeight, Constants.RealInfiniteWidth, "paragraphProperties.LineHeight");
+            ArgumentOutOfRangeException.ThrowIfNegative(paragraphProperties.DefaultIncrementalTab, "paragraphProperties.DefaultIncrementalTab");
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(paragraphProperties.DefaultIncrementalTab, Constants.RealInfiniteWidth, "paragraphProperties.DefaultIncrementalTab");
         }
 
 
@@ -524,16 +502,10 @@ namespace MS.Internal.TextFormatting
             int             cchLength
             )
         {
-            if (    characterHit.FirstCharacterIndex < cpFirst
-                ||  characterHit.FirstCharacterIndex > cpFirst + cchLength)
-            {
-                throw new ArgumentOutOfRangeException("cpFirst", SR.Get(SRID.ParameterMustBeBetween, cpFirst, cpFirst + cchLength));
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(cpFirst, characterHit.FirstCharacterIndex);
+            ArgumentOutOfRangeException.ThrowIfLessThan(cpFirst, characterHit.FirstCharacterIndex - cchLength);
 
-            if (characterHit.TrailingLength < 0)
-            {
-                throw new ArgumentOutOfRangeException("cchLength", SR.Get(SRID.ParameterCannotBeNegative));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(characterHit.TrailingLength, nameof(cchLength));
         }
 
 
@@ -569,7 +541,7 @@ namespace MS.Internal.TextFormatting
                     if(context.Owner == null)
                         break;
                 }
-                else if (ploc == context.Ploc.Value)
+                else if (ploc == context.Ploc)
                 {
                     // LS requires that we use the exact same context for line
                     // destruction or hittesting (part of the reason is that LS
@@ -598,7 +570,7 @@ namespace MS.Internal.TextFormatting
                     // This requirement is currently enforced only during optimal break computation.
                     // Client implementing nesting of optimal break content inside another must create
                     // a separate TextFormatter instance for each content in different nesting level.
-                    throw new InvalidOperationException(SR.Get(SRID.TextFormatterReentranceProhibited));
+                    throw new InvalidOperationException(SR.TextFormatterReentranceProhibited);
                 }
             }
 

@@ -30,7 +30,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 using System.Security;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using System.Windows.Media.Imaging;
 // These types are aliased to match the unamanaged names used in interop
 using BOOL = System.UInt32;
@@ -243,18 +242,13 @@ namespace System.Windows.Media.Media3D
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
             // BCL Collection implementations. (Windows 1587365)
-            if (index < 0  || (index + _collection.Count) > array.Length)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, array.Length - _collection.Count);
 
             _collection.CopyTo(array, index);
         }
@@ -371,22 +365,17 @@ namespace System.Windows.Media.Media3D
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
             // BCL Collection implementations. (Windows 1587365)
-            if (index < 0  || (index + _collection.Count) > array.Length)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, array.Length - _collection.Count);
 
             if (array.Rank != 1)
             {
-                throw new ArgumentException(SR.Get(SRID.Collection_BadRank));
+                throw new ArgumentException(SR.Collection_BadRank);
             }
 
             // Elsewhere in the collection we throw an AE when the type is
@@ -401,7 +390,7 @@ namespace System.Windows.Media.Media3D
             }
             catch (InvalidCastException e)
             {
-                throw new ArgumentException(SR.Get(SRID.Collection_BadDestArray, this.GetType().Name), e);
+                throw new ArgumentException(SR.Format(SR.Collection_BadDestArray, this.GetType().Name), e);
             }
         }
 
@@ -470,14 +459,11 @@ namespace System.Windows.Media.Media3D
 
         private Point3D Cast(object value)
         {
-            if( value == null )
-            {
-                throw new System.ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             if (!(value is Point3D))
             {
-                throw new System.ArgumentException(SR.Get(SRID.Collection_BadType, this.GetType().Name, value.GetType().Name, "Point3D"));
+                throw new System.ArgumentException(SR.Format(SR.Collection_BadType, this.GetType().Name, value.GetType().Name, "Point3D"));
             }
 
             return (Point3D) value;
@@ -719,7 +705,7 @@ namespace System.Windows.Media.Media3D
 
                 if (i != _collection.Count-1)
                 {
-                    str.Append(" ");
+                    str.Append(' ');
                 }
             }
 
@@ -835,7 +821,7 @@ namespace System.Windows.Media.Media3D
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Enumerator_CollectionChanged));
+                    throw new InvalidOperationException(SR.Enumerator_CollectionChanged);
                 }
             }
 
@@ -853,7 +839,7 @@ namespace System.Windows.Media.Media3D
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Enumerator_CollectionChanged));
+                    throw new InvalidOperationException(SR.Enumerator_CollectionChanged);
                 }
             }
 
@@ -887,12 +873,12 @@ namespace System.Windows.Media.Media3D
                     }
                     else if (_index == -1)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Enumerator_NotStarted));
+                        throw new InvalidOperationException(SR.Enumerator_NotStarted);
                     }
                     else
                     {
                         Debug.Assert(_index == -2, "expected -2, got " + _index + "\n");
-                        throw new InvalidOperationException(SR.Get(SRID.Enumerator_ReachedEnd));
+                        throw new InvalidOperationException(SR.Enumerator_ReachedEnd);
                     }
                 }
             }
@@ -945,45 +931,40 @@ namespace System.Windows.Media.Media3D
 
             WritePreamble();
 
-            if (collection != null)
+            ArgumentNullException.ThrowIfNull(collection);
+
+            ICollection<Point3D> icollectionOfT = collection as ICollection<Point3D>;
+
+            if (icollectionOfT != null)
             {
-                ICollection<Point3D> icollectionOfT = collection as ICollection<Point3D>;
-
-                if (icollectionOfT != null)
-                {
-                    _collection = new FrugalStructList<Point3D>(icollectionOfT);
-                }
-                else
-                {       
-                    ICollection icollection = collection as ICollection;
-
-                    if (icollection != null) // an IC but not and IC<T>
-                    {
-                        _collection = new FrugalStructList<Point3D>(icollection);
-                    }
-                    else // not a IC or IC<T> so fall back to the slower Add
-                    {
-                        _collection = new FrugalStructList<Point3D>();
-
-                        foreach (Point3D item in collection)
-                        {
-                            _collection.Add(item);
-                        }
-}
-                }
-
-
-
-
-
-
-
-                WritePostscript();
+                _collection = new FrugalStructList<Point3D>(icollectionOfT);
             }
             else
             {
-                throw new ArgumentNullException("collection");
+                ICollection icollection = collection as ICollection;
+
+                if (icollection != null) // an IC but not and IC<T>
+                {
+                    _collection = new FrugalStructList<Point3D>(icollection);
+                }
+                else // not a IC or IC<T> so fall back to the slower Add
+                {
+                    _collection = new FrugalStructList<Point3D>();
+
+                    foreach (Point3D item in collection)
+                    {
+                        _collection.Add(item);
+                    }
+                }
             }
+
+
+
+
+
+
+
+            WritePostscript();
         }
 
         #endregion Constructors

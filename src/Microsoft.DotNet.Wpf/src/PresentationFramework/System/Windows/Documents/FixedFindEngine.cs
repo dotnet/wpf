@@ -343,7 +343,7 @@ namespace System.Windows.Documents
             Debug.Assert(translatedPageNo >= 0 && translatedPageNo < doc.PageCount);
             
             PageContent pageContent = doc.Pages[translatedPageNo];
-            Stream pageStream = pageContent.GetPageStream();
+            using Stream pageStream = pageContent.GetPageStream();
             bool reverseRTL = true;
             if (doc.HasExplicitStructure)
             {
@@ -382,7 +382,6 @@ namespace System.Windows.Documents
             xmlReader.MoveToContent();
 
             StringBuilder pageString = new StringBuilder();
-            bool isSideways = false;
             string unicodeStr = null;
             
             while (xmlReader.Read())
@@ -395,15 +394,10 @@ namespace System.Windows.Documents
                         {
                             unicodeStr = xmlReader.GetAttribute("UnicodeString");
 
-                            if (!String.IsNullOrEmpty(unicodeStr))
+                            if (!string.IsNullOrEmpty(unicodeStr))
                             {
                                 string sidewaysString = xmlReader.GetAttribute("IsSideways");
-                                isSideways = false;
-                                if (sidewaysString != null &&
-                                    String.Compare(sidewaysString, Boolean.TrueString, StringComparison.OrdinalIgnoreCase) == 0)
-                                {
-                                    isSideways = true;
-                                }
+                                bool isSideways = string.Equals(sidewaysString, "True", StringComparison.OrdinalIgnoreCase);
                                 
                                 if (reverseRTL)
                                 {

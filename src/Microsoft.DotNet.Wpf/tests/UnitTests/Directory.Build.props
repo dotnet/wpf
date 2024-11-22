@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <IsTestProject Condition="'$(IsTestProject)' == ''">true</IsTestProject>
+  </PropertyGroup>
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+  <PropertyGroup>
+    <WpfTestsDir>$(MsBuildThisFileDirectory)</WpfTestsDir>
+  </PropertyGroup>
+</Project>

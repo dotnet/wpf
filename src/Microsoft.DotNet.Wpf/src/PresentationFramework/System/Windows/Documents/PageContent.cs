@@ -83,7 +83,7 @@ namespace System.Windows.Documents
         public FixedPage GetPageRoot(bool forceReload)
         {
 #if DEBUG
-            DocumentsTrace.FixedFormat.PageContent.Trace(string.Format("PageContent.GetPageRoot Source={0}", Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source));
+            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRoot Source={(Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}");
 #endif
 
 //             VerifyAccess();
@@ -115,7 +115,7 @@ namespace System.Windows.Documents
         public void GetPageRootAsync(bool forceReload)
         {
 #if DEBUG
-            DocumentsTrace.FixedFormat.PageContent.Trace(string.Format("PageContent.GetPageRootAsync Source={0}", Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source));
+            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRootAsync Source={(Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}");
 #endif
 
 //             VerifyAccess();
@@ -155,7 +155,7 @@ namespace System.Windows.Documents
         public void GetPageRootAsyncCancel()
         {
 #if DEBUG
-            DocumentsTrace.FixedFormat.PageContent.Trace(string.Format("PageContent.GetPageRootAsyncCancel Source={0}", Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source));
+            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRootAsyncCancel Source={(Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}");
 #endif
 //             VerifyAccess();
             // Important: do not throw if no outstanding GetPageRootAsyncCall
@@ -182,21 +182,18 @@ namespace System.Windows.Documents
         {
 //             VerifyAccess();
 
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
 
             FixedPage fp = value as FixedPage;
             if (fp == null)
             {
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(FixedPage)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(FixedPage)), "value");
             }
 
             if (_child != null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CanOnlyHaveOneChild, typeof(PageContent), value));
+                throw new InvalidOperationException(SR.Format(SR.CanOnlyHaveOneChild, typeof(PageContent), value));
             }
 
             _pageRef = null;
@@ -285,14 +282,11 @@ namespace System.Windows.Documents
             }
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (_child != null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CanOnlyHaveOneChild, typeof(PageContent), value));
+                    throw new InvalidOperationException(SR.Format(SR.CanOnlyHaveOneChild, typeof(PageContent), value));
                 }
 
                 _pageRef = null;
@@ -364,10 +358,7 @@ namespace System.Windows.Documents
         internal bool IsOwnerOf(FixedPage pageVisual)
         {
 //             VerifyAccess();
-            if (pageVisual == null)
-            {
-                throw new ArgumentNullException("pageVisual");
-            }
+            ArgumentNullException.ThrowIfNull(pageVisual);
 
             if (_child == pageVisual)
             {
@@ -395,7 +386,7 @@ namespace System.Windows.Documents
                 pageStream = WpfWebRequestHelper.CreateRequestAndGetResponseStream(uriToLoad);
                 if (pageStream == null)
                 {
-                    throw new ApplicationException(SR.Get(SRID.PageContentNotFound));
+                    throw new ApplicationException(SR.PageContentNotFound);
                 }
             }
 
@@ -550,8 +541,8 @@ namespace System.Windows.Documents
 
                     if (uriToLoad != null)
                     {
-                        _LoadPageImpl(((IUriContext)this).BaseUri, uriToLoad, out p, out pageStream);			    
-                        
+                        _LoadPageImpl(((IUriContext)this).BaseUri, uriToLoad, out p, out pageStream);
+
                         if (p == null || p.IsInitialized)
                         {
                             pageStream.Close();
@@ -589,7 +580,7 @@ namespace System.Windows.Documents
             {
                 p = (FixedPage)_pageRef.Target;
             }
-        
+
             return p;
         }
 
@@ -602,7 +593,7 @@ namespace System.Windows.Documents
                 _pendingStreams.Remove(sender);
             }
         }
-    
+
         internal static void _LoadPageImpl(Uri baseUri, Uri uriToLoad, out FixedPage fixedPage, out Stream pageStream)
         {
             ContentType mimeType;
@@ -610,7 +601,7 @@ namespace System.Windows.Documents
             object o = null;
             if (pageStream == null)
             {
-                throw new ApplicationException(SR.Get(SRID.PageContentNotFound));
+                throw new ApplicationException(SR.PageContentNotFound);
             }
 
             ParserContext pc = new ParserContext();
@@ -627,12 +618,12 @@ namespace System.Windows.Documents
             }
             else
             {
-                throw new ApplicationException(SR.Get(SRID.PageContentUnsupportedMimeType));
+                throw new ApplicationException(SR.PageContentUnsupportedMimeType);
             }
 
             if (o != null && !(o is FixedPage))
             {
-                throw new ApplicationException(SR.Get(SRID.PageContentUnsupportedPageType, o.GetType()));
+                throw new ApplicationException(SR.Format(SR.PageContentUnsupportedPageType, o.GetType()));
             }
 
             fixedPage =  (FixedPage)o;

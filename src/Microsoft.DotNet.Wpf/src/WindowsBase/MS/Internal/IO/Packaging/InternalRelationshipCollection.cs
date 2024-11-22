@@ -23,7 +23,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Xml;                           // for XmlReader/Writer
 using System.IO.Packaging;
-using System.Windows;                       // For Exception strings - SRID
+using System.Windows;                       // For Exception strings - SR
 using System.IO;
 using System.Diagnostics;
 using System.Windows.Markup;                // For XMLCompatibilityReader

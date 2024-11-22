@@ -306,7 +306,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         IDWriteFontFace* fontFace = NULL;
         HRESULT hr = _font->Value->CreateFontFace(&fontFace);
         ConvertHresultToException(hr, "FontMetrics^ Font::DisplayMetrics");
-        DWRITE_MATRIX transform = Factory::GetIdentityTransform();
+        DWRITE_MATRIX transform = InternalFactory::GetIdentityTransform();
         hr = fontFace->GetGdiCompatibleMetrics(
                                     emSize,
                                     pixelsPerDip,

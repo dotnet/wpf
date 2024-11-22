@@ -45,7 +45,8 @@ namespace MS.Internal.Automation
         // compare two arrays
         internal static bool Compare(int[] a1, int[] a2)
         {
-            CheckNonNull(a1, a2);
+            ArgumentNullException.ThrowIfNull(a1);
+            ArgumentNullException.ThrowIfNull(a2);
 
             int l = a1.Length;
 
@@ -66,7 +67,8 @@ namespace MS.Internal.Automation
         // compare two AutomationElements
         internal static bool Compare(AutomationElement el1, AutomationElement el2)
         {
-            CheckNonNull(el1, el2);
+            ArgumentNullException.ThrowIfNull(el1);
+            ArgumentNullException.ThrowIfNull(el2);
             return Compare(el1.GetRuntimeId(), el2.GetRuntimeId());
         }
         #endregion Element Comparisons
@@ -149,7 +151,7 @@ namespace MS.Internal.Automation
 
             if (!Schema.GetPatternInfo(pattern, out pi))
             {
-                throw new ArgumentException(SR.Get(SRID.UnsupportedPattern));
+                throw new ArgumentException(SR.UnsupportedPattern);
             }
 
             if (pi.ClientSideWrapper == null)
@@ -168,19 +170,10 @@ namespace MS.Internal.Automation
 
         #region Param validation & Error related
 
-        // Check that specified argument is non-null, if so, throw exception
-        internal static void ValidateArgumentNonNull(object obj, string argName)
-        {
-            if (obj == null)
-            {
-                throw new ArgumentNullException(argName);
-            }
-        }
-
         // Throw an argument Exception with a generic error
         internal static void ThrowInvalidArgument(string argName)
         {
-            throw new ArgumentException(SR.Get(SRID.GenericInvalidArgument, argName));
+            throw new ArgumentException(SR.Format(SR.GenericInvalidArgument, argName));
         }
 
         // Check that specified condition is true; if not, throw exception
@@ -188,16 +181,7 @@ namespace MS.Internal.Automation
         {
             if (!cond)
             {
-                throw new ArgumentException(SR.Get(reason));
-            }
-        }
-
-        // Check that specified condition is true; if not, throw exception
-        internal static void ValidateArgumentInRange(bool cond, string argName)
-        {
-            if (!cond)
-            {
-                throw new ArgumentOutOfRangeException(argName);
+                throw new ArgumentException(SR.GetResourceString(reason, null));
             }
         }
 
@@ -206,7 +190,7 @@ namespace MS.Internal.Automation
         {
             if (!cached)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CacheRequestNeedCache));
+                throw new InvalidOperationException(SR.CacheRequestNeedCache);
             }
         }
 
@@ -215,7 +199,7 @@ namespace MS.Internal.Automation
         {
             if (hPattern.IsInvalid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CacheRequestNeedLiveForProperties));
+                throw new InvalidOperationException(SR.CacheRequestNeedLiveForProperties);
             }
         }
 
@@ -503,9 +487,6 @@ namespace MS.Internal.Automation
             }
             else
             {
-                #pragma warning disable SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.  
-                RuntimeHelpers.PrepareConstrainedRegions();
-                #pragma warning restore SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported.  
                 bool fRelease = false;
                 try
                 {
@@ -750,16 +731,6 @@ namespace MS.Internal.Automation
         //------------------------------------------------------
 
         #region Private Methods
-
-        // Helper used by the various comparison functions above
-        private static void CheckNonNull(object el1, object el2)
-        {
-            if (el1 == null)
-                throw new ArgumentNullException("el1");
-
-            if (el2 == null)
-                throw new ArgumentNullException("el2");
-        }
 
         //This function throws corresponding exception depending on the last error.
         private static void EvaluateSendMessageTimeoutError(int error)

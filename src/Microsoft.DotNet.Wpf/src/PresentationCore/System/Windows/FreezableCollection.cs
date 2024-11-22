@@ -37,7 +37,6 @@ using System.Windows.Markup;
 using System.Windows.Media.Converters;
 using System.Security;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 // These types are aliased to match the unamanaged names used in interop
 using BOOL = System.UInt32;
 using WORD = System.UInt16;
@@ -90,37 +89,32 @@ namespace System.Windows
 
             WritePreamble();
 
-            if (collection != null)
+            ArgumentNullException.ThrowIfNull(collection);
+
+            int count = GetCount(collection);
+
+            if (count > 0)
             {
-                int count = GetCount(collection);
-
-                if (count > 0)
-                {
-                    _collection = new List<T>(count);
-                }
-                else
-                {
-                    _collection = new List<T>();
-                }
-
-                foreach (T item in collection)
-                {
-                    if (item == null)
-                    {
-                        throw new System.ArgumentException(SR.Get(SRID.Collection_NoNull));
-                    }
-
-                    OnFreezablePropertyChanged(/* oldValue = */ null, item);
-
-                    _collection.Add(item);
-                }
-
-                WritePostscript();
+                _collection = new List<T>(count);
             }
             else
             {
-                throw new ArgumentNullException("collection");
+                _collection = new List<T>();
             }
+
+            foreach (T item in collection)
+            {
+                if (item == null)
+                {
+                    throw new System.ArgumentException(SR.Collection_NoNull);
+                }
+
+                OnFreezablePropertyChanged(/* oldValue = */ null, item);
+
+                _collection.Add(item);
+            }
+
+            WritePostscript();
         }
 
         #endregion Constructors
@@ -224,7 +218,7 @@ namespace System.Windows
         {
             if (value == null)
             {
-                throw new System.ArgumentException(SR.Get(SRID.Collection_NoNull));
+                throw new System.ArgumentException(SR.Collection_NoNull);
             }
 
             CheckReentrancy();
@@ -341,7 +335,7 @@ namespace System.Windows
             {
                 if (value == null)
                 {
-                    throw new System.ArgumentException(SR.Get(SRID.Collection_NoNull));
+                    throw new System.ArgumentException(SR.Collection_NoNull);
                 }
 
                 CheckReentrancy();
@@ -392,18 +386,13 @@ namespace System.Windows
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
             // BCL Collection implementations. (Windows 1587365)
-            if (index < 0  || (index + _collection.Count) > array.Length)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, array.Length - _collection.Count);
 
             _collection.CopyTo(array, index);
         }
@@ -507,22 +496,17 @@ namespace System.Windows
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
             // BCL Collection implementations. (Windows 1587365)
-            if (index < 0  || (index + _collection.Count) > array.Length)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, array.Length - _collection.Count);
 
             if (array.Rank != 1)
             {
-                throw new ArgumentException(SR.Get(SRID.Collection_BadRank));
+                throw new ArgumentException(SR.Collection_BadRank);
             }
 
             // Elsewhere in the collection we throw an AE when the type is
@@ -537,7 +521,7 @@ namespace System.Windows
             }
             catch (InvalidCastException e)
             {
-                throw new ArgumentException(SR.Get(SRID.Collection_BadDestArray, this.GetType().Name), e);
+                throw new ArgumentException(SR.Format(SR.Collection_BadDestArray, this.GetType().Name), e);
             }
         }
 
@@ -676,14 +660,11 @@ namespace System.Windows
 
         private T Cast(object value)
         {
-            if( value == null )
-            {
-                throw new System.ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             if (!(value is T))
             {
-                throw new System.ArgumentException(SR.Get(SRID.Collection_BadType, this.GetType().Name, value.GetType().Name, "T"));
+                throw new System.ArgumentException(SR.Format(SR.Collection_BadType, this.GetType().Name, value.GetType().Name, "T"));
             }
 
             return (T) value;
@@ -739,7 +720,7 @@ namespace System.Windows
         {
             if (value == null)
             {
-                throw new System.ArgumentException(SR.Get(SRID.Collection_NoNull));
+                throw new System.ArgumentException(SR.Collection_NoNull);
             }
             WritePreamble();
             T newValue = value;
@@ -798,7 +779,7 @@ namespace System.Windows
                             args = new NotifyCollectionChangedEventArgs(action, newValue, oldValue, newIndex);
                             break;
                         default:
-                            throw new InvalidOperationException(SR.Get(SRID.Freezable_UnexpectedChange));
+                            throw new InvalidOperationException(SR.Freezable_UnexpectedChange);
                     }
 
                     OnCollectionChanged(args);
@@ -870,7 +851,7 @@ namespace System.Windows
 
                     if (newValue == null)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Freezable_CloneInvalidType, typeof(T).Name));
+                        throw new InvalidOperationException(SR.Format(SR.Freezable_CloneInvalidType, typeof(T).Name));
                     }
                 }
 
@@ -977,7 +958,7 @@ namespace System.Windows
         {
             if (_monitor.Busy)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Freezable_Reentrant));
+                throw new InvalidOperationException(SR.Freezable_Reentrant);
             }
         }
 
@@ -1066,7 +1047,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Enumerator_CollectionChanged));
+                    throw new InvalidOperationException(SR.Enumerator_CollectionChanged);
                 }
             }
 
@@ -1084,7 +1065,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Enumerator_CollectionChanged));
+                    throw new InvalidOperationException(SR.Enumerator_CollectionChanged);
                 }
             }
 
@@ -1118,12 +1099,12 @@ namespace System.Windows
                     }
                     else if (_index == -1)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Enumerator_NotStarted));
+                        throw new InvalidOperationException(SR.Enumerator_NotStarted);
                     }
                     else
                     {
                         Debug.Assert(_index == -2, "expected -2, got " + _index + "\n");
-                        throw new InvalidOperationException(SR.Get(SRID.Enumerator_ReachedEnd));
+                        throw new InvalidOperationException(SR.Enumerator_ReachedEnd);
                     }
                 }
             }

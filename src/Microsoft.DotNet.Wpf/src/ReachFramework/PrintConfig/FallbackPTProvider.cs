@@ -304,10 +304,7 @@ namespace MS.Internal.Printing.Configuration
         {
             VerifyAccess();
 
-            if (devMode == null)
-            {
-                throw new ArgumentNullException("devMode");
-            }
+            ArgumentNullException.ThrowIfNull(devMode);
 
             InternalPrintTicket result = DevModeToPrintTicket(new DevMode(devMode), scope, DevModeFields.All);
             return result.XmlStream;
@@ -399,9 +396,7 @@ namespace MS.Internal.Printing.Configuration
                             CultureInfo.InvariantCulture,
                             DeviceNamespaceFormat,
                             BuildInfo.WCP_VERSION_SUFFIX,
-                            #pragma warning disable SYSLIB0013
-                            Uri.EscapeUriString(this._driverName),
-                            #pragma warning restore SYSLIB0013
+                            Uri.EscapeDataString(this._driverName),
                             this._driverVersion);
                     }
 
@@ -651,10 +646,7 @@ namespace MS.Internal.Printing.Configuration
 
         private void VerifyAccess()
         {
-            if (_deviceHandle == null)
-            {
-                throw new ObjectDisposedException("PTProvider");
-            }
+            ObjectDisposedException.ThrowIf(_deviceHandle is null, typeof(PTProvider));
         }
 
         #endregion Private Methods
@@ -764,28 +756,28 @@ namespace MS.Internal.Printing.Configuration
                     IntPtr ptr = pPrinterBuffer.Handle.DangerousGetHandle();
 
                     //   LPTSTR               pPrinterName;
-                    IntPtr pPrinterName = Marshal.ReadIntPtr(ptr, 1 * Marshal.SizeOf(typeof(IntPtr)));
+                    IntPtr pPrinterName = Marshal.ReadIntPtr(ptr, 1 * IntPtr.Size);
                     if (pPrinterName != IntPtr.Zero)
                     {
                         PRINTER_INFO_2.pPrinterName = Marshal.PtrToStringUni(pPrinterName);
                     }
 
                     //   LPTSTR               pPortName;
-                    IntPtr pPortName = Marshal.ReadIntPtr(ptr, 3 * Marshal.SizeOf(typeof(IntPtr)));
+                    IntPtr pPortName = Marshal.ReadIntPtr(ptr, 3 * IntPtr.Size);
                     if (pPortName != IntPtr.Zero)
                     {
                         PRINTER_INFO_2.pPortName = Marshal.PtrToStringUni(pPortName);
                     }
 
                     //   LPTSTR               pDriverName;
-                    IntPtr pDriverName = Marshal.ReadIntPtr(ptr, 4 * Marshal.SizeOf(typeof(IntPtr)));
+                    IntPtr pDriverName = Marshal.ReadIntPtr(ptr, 4 * IntPtr.Size);
                     if (pDriverName != IntPtr.Zero)
                     {
                         PRINTER_INFO_2.pDriverName = Marshal.PtrToStringUni(pDriverName);
                     }
 
                     //   LPDEVMODE            pDevMode;
-                    IntPtr pDevMode = Marshal.ReadIntPtr(ptr, 7 * Marshal.SizeOf(typeof(IntPtr)));
+                    IntPtr pDevMode = Marshal.ReadIntPtr(ptr, 7 * IntPtr.Size);
                     if (pDevMode != IntPtr.Zero)
                     {
                         PRINTER_INFO_2.pDevMode = DevMode.FromIntPtr(pDevMode);

@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Security;
@@ -51,53 +53,39 @@ namespace System.Xaml.Schema
 
         public virtual object GetValue(object instance)
         {
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
+            ArgumentNullException.ThrowIfNull(instance);
             ThrowIfUnknown();
             if (UnderlyingGetter == null)
             {
-                throw new NotSupportedException(SR.Get(SRID.CantGetWriteonlyProperty, _member));
+                throw new NotSupportedException(SR.Format(SR.CantGetWriteonlyProperty, _member));
             }
-            return GetValueSafeCritical(instance);
-        }
 
-        private object GetValueSafeCritical(object instance)
-        {
             if (UnderlyingGetter.IsStatic)
             {
-                return SafeReflectionInvoker.InvokeMethod(UnderlyingGetter, null, new object[] { instance });
+                return UnderlyingGetter.Invoke(null, new object[] { instance });
             }
             else
             {
-                return SafeReflectionInvoker.InvokeMethod(UnderlyingGetter, instance, s_emptyObjectArray);
+                return UnderlyingGetter.Invoke(instance, s_emptyObjectArray);
             }
         }
 
         public virtual void SetValue(object instance, object value)
         {
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
+            ArgumentNullException.ThrowIfNull(instance);
             ThrowIfUnknown();
             if (UnderlyingSetter == null)
             {
-                throw new NotSupportedException(SR.Get(SRID.CantSetReadonlyProperty, _member));
+                throw new NotSupportedException(SR.Format(SR.CantSetReadonlyProperty, _member));
             }
-            SetValueSafeCritical(instance, value);
-        }
 
-        private void SetValueSafeCritical(object instance, object value)
-        {
             if (UnderlyingSetter.IsStatic)
             {
-                SafeReflectionInvoker.InvokeMethod(UnderlyingSetter, null, new object[] { instance, value });
+                UnderlyingSetter.Invoke(null, new object[] { instance, value });
             }
             else
             {
-                SafeReflectionInvoker.InvokeMethod(UnderlyingSetter, instance, new object[] { value });
+                UnderlyingSetter.Invoke(instance, new object[] { value });
             }
         }
 
@@ -160,7 +148,6 @@ namespace System.Xaml.Schema
         }
 
         // vvvvv---- Unused members.  Servicing policy is to retain these anyway.  -----vvvvv
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Retained per servicing policy.")]
         private static bool IsSystemXamlNonPublic(
             ref ThreeValuedBool methodIsSystemXamlNonPublic, MethodInfo method)
         {
@@ -182,7 +169,7 @@ namespace System.Xaml.Schema
         {
             if (IsUnknown)
             {
-                throw new NotSupportedException(SR.Get(SRID.NotSupportedOnUnknownMember));
+                throw new NotSupportedException(SR.NotSupportedOnUnknownMember);
             }
         }
 
@@ -190,12 +177,12 @@ namespace System.Xaml.Schema
         {
             public override object GetValue(object instance)
             {
-                throw new NotSupportedException(SR.Get(SRID.NotSupportedOnDirective));
+                throw new NotSupportedException(SR.NotSupportedOnDirective);
             }
 
             public override void SetValue(object instance, object value)
             {
-                throw new NotSupportedException(SR.Get(SRID.NotSupportedOnDirective));
+                throw new NotSupportedException(SR.NotSupportedOnDirective);
             }
         }
     }

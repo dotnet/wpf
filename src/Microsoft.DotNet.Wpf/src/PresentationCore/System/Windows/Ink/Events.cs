@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Ink
 {
@@ -42,7 +41,7 @@ namespace System.Windows.Ink
         {
             if ( added == null && removed == null )
             {
-                throw new ArgumentException(SR.Get(SRID.CannotBothBeNull, "added", "removed"));
+                throw new ArgumentException(SR.Format(SR.CannotBothBeNull, "added", "removed"));
             }
             _added = ( added == null ) ? null : new StrokeCollection.ReadOnlyStrokeCollection(added);
             _removed = ( removed == null ) ? null : new StrokeCollection.ReadOnlyStrokeCollection(removed);
@@ -108,7 +107,7 @@ namespace System.Windows.Ink
         {
             if ( newValue == null && previousValue == null )
             {
-                throw new ArgumentException(SR.Get(SRID.CannotBothBeNull, "newValue", "previousValue"));
+                throw new ArgumentException(SR.Format(SR.CannotBothBeNull, "newValue", "previousValue"));
             }
 
             _propertyGuid = propertyGuid;
@@ -206,14 +205,8 @@ namespace System.Windows.Ink
         /// </remarks>
         public DrawingAttributesReplacedEventArgs(DrawingAttributes newDrawingAttributes, DrawingAttributes previousDrawingAttributes)
         {
-            if ( newDrawingAttributes == null )
-            {
-                throw new ArgumentNullException("newDrawingAttributes");
-            }
-            if ( previousDrawingAttributes == null )
-            {
-                throw new ArgumentNullException("previousDrawingAttributes");
-            }
+            ArgumentNullException.ThrowIfNull(newDrawingAttributes);
+            ArgumentNullException.ThrowIfNull(previousDrawingAttributes);
             _newDrawingAttributes = newDrawingAttributes;
             _previousDrawingAttributes = previousDrawingAttributes;
         }
@@ -256,14 +249,8 @@ namespace System.Windows.Ink
         /// </remarks>
         public StylusPointsReplacedEventArgs(StylusPointCollection newStylusPoints, StylusPointCollection previousStylusPoints)
         {
-            if ( newStylusPoints == null )
-            {
-                throw new ArgumentNullException("newStylusPoints");
-            }
-            if ( previousStylusPoints == null )
-            {
-                throw new ArgumentNullException("previousStylusPoints");
-            }
+            ArgumentNullException.ThrowIfNull(newStylusPoints);
+            ArgumentNullException.ThrowIfNull(previousStylusPoints);
             _newStylusPoints = newStylusPoints;
             _previousStylusPoints = previousStylusPoints;
         }

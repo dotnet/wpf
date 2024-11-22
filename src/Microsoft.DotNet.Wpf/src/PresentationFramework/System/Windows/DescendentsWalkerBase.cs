@@ -38,9 +38,8 @@ namespace System.Windows
             {
                 DependencyObject logicalParent;
 
-                if (FrameworkElement.DType.IsInstanceOfType(ancestor))
+                if (ancestor is FrameworkElement fe)
                 {
-                    FrameworkElement fe = ancestor as FrameworkElement;
                     logicalParent = fe.Parent;
                     // FrameworkElement
                     DependencyObject dependencyObjectParent = VisualTreeHelper.GetParent(fe);

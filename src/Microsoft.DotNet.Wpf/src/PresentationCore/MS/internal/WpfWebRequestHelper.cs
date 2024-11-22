@@ -50,7 +50,6 @@ namespace MS.Internal
 /// </summary>
 static class WpfWebRequestHelper
 {
-    [FriendAccessAllowed]
     internal static WebRequest CreateRequest(Uri uri)
     {
         // Ideally we would want to use RegisterPrefix and WebRequest.Create.
@@ -58,7 +57,7 @@ static class WpfWebRequestHelper
         //  which is mostly for logging and config.
         // Call PackWebRequestFactory.CreateWebRequest to bypass the regression if possible
         //  by calling Create on PackWebRequest if uri is pack scheme
-        if (string.Compare(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.Ordinal) == 0)
+        if (string.Equals(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.Ordinal))
         {
             return PackWebRequestFactory.CreateWebRequest(uri);
             // The PackWebRequest may end up creating a "real" web request as its inner request.
@@ -86,7 +85,7 @@ static class WpfWebRequestHelper
             // occurred. This is the default value for Status."
             Uri requestUri = BaseUriHelper.PackAppBaseUri.MakeRelativeUri(uri);
             throw new WebException(requestUri.ToString(), WebExceptionStatus.RequestCanceled);
-            //throw new IOException(SR.Get(SRID.GetResponseFailed, requestUri.ToString()));
+            //throw new IOException(SR.Format(SR.GetResponseFailed, requestUri.ToString()));
         }
         
         HttpWebRequest httpRequest = request as HttpWebRequest;
@@ -120,7 +119,6 @@ static class WpfWebRequestHelper
     /// change behavior in SP1/v3.5, ConfigCachePolicy() is called separately by the code that previously
     /// relied on ConfigHttpWebRequest().
     /// </remarks>
-    [FriendAccessAllowed]
     static internal void ConfigCachePolicy(WebRequest request, bool isRefresh)
     {
         HttpWebRequest httpRequest = request as HttpWebRequest;
@@ -168,33 +166,28 @@ static class WpfWebRequestHelper
     }
     private static string _defaultUserAgent;
 
-    [FriendAccessAllowed]
     internal static void HandleWebResponse(WebResponse response)
     {
         CookieHandler.HandleWebResponse(response);
     }
 
-    [FriendAccessAllowed]
     internal static Stream CreateRequestAndGetResponseStream(Uri uri)
     {
         WebRequest request = CreateRequest(uri);
         return GetResponseStream(request);
     }
-    [FriendAccessAllowed]
     internal static Stream CreateRequestAndGetResponseStream(Uri uri, out ContentType contentType)
     {
         WebRequest request = CreateRequest(uri);
         return GetResponseStream(request, out contentType);
     }
 
-    [FriendAccessAllowed]
     internal static WebResponse CreateRequestAndGetResponse(Uri uri)
     {
         WebRequest request = CreateRequest(uri);
         return GetResponse(request);
     }
 
-    [FriendAccessAllowed]
     internal static WebResponse GetResponse(WebRequest request)
     {
         WebResponse response = request.GetResponse();
@@ -209,13 +202,12 @@ static class WpfWebRequestHelper
         if (response == null)
         {
             Uri requestUri = BaseUriHelper.PackAppBaseUri.MakeRelativeUri(request.RequestUri);
-            throw new IOException(SR.Get(SRID.GetResponseFailed, requestUri.ToString()));
+            throw new IOException(SR.Format(SR.GetResponseFailed, requestUri.ToString()));
         }
         
         HandleWebResponse(response);
         return response;
     }
-    [FriendAccessAllowed]
     internal static WebResponse EndGetResponse(WebRequest request, IAsyncResult ar)
     {
         WebResponse response = request.EndGetResponse(ar);
@@ -226,13 +218,12 @@ static class WpfWebRequestHelper
         if (response == null)
         {
             Uri requestUri = BaseUriHelper.PackAppBaseUri.MakeRelativeUri(request.RequestUri);
-            throw new IOException(SR.Get(SRID.GetResponseFailed, requestUri.ToString()));
+            throw new IOException(SR.Format(SR.GetResponseFailed, requestUri.ToString()));
         }
         HandleWebResponse(response);
         return response;
     }
 
-    [FriendAccessAllowed]
     internal static Stream GetResponseStream(WebRequest request)
     {
         WebResponse response = GetResponse(request);
@@ -242,7 +233,6 @@ static class WpfWebRequestHelper
     /// Gets the response from the given request and determines the content type using the special rules 
     /// implemented in GetContentType().
     /// </summary>
-    [FriendAccessAllowed]
     internal static Stream GetResponseStream(WebRequest request, out ContentType contentType)
     {
         WebResponse response = GetResponse(request);
@@ -258,7 +248,6 @@ static class WpfWebRequestHelper
     /// - Unconfigured web servers don't return the right type for WPF content. This method does lookup based on
     ///   file extension.
     /// </summary>
-    [FriendAccessAllowed]
     internal static ContentType GetContentType(WebResponse response)
     {
         ContentType contentType = ContentType.Empty;
@@ -281,8 +270,8 @@ static class WpfWebRequestHelper
                     MimeTypeMapper.TextPlainMime.AreTypeAndSubTypeEqual(contentType, true))
                 {
                     string extension = MimeTypeMapper.GetFileExtension(response.ResponseUri);
-                    if ((String.Compare(extension, MimeTypeMapper.XamlExtension, StringComparison.OrdinalIgnoreCase) == 0) ||
-                            (String.Compare(extension, MimeTypeMapper.XbapExtension, StringComparison.OrdinalIgnoreCase) == 0))
+                    if (string.Equals(extension, MimeTypeMapper.XamlExtension, StringComparison.OrdinalIgnoreCase) ||
+                        string.Equals(extension, MimeTypeMapper.XbapExtension, StringComparison.OrdinalIgnoreCase))
                     {
                         contentType = ContentType.Empty;  // Will cause GetMimeTypeFromUri to be called below
                     }

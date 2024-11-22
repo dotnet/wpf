@@ -291,7 +291,8 @@ namespace MS.Internal.FontFace
             // If the run starts with combining marks, we will not be able to find base characters for them
             // within the run. These combining marks will be mapped to their best fonts as normal characters.
             //
-            bool hasBaseChar = false;
+            const int NOBASE = -1; // null char is a valid base
+            int baseChar = NOBASE;
 
             // Determine how many characters we can advance, i.e., find the first invalid character.
             for (; advance < unicodeString.Length; advance += sizeofChar)
@@ -307,12 +308,16 @@ namespace MS.Internal.FontFace
 
                 if (!Classification.IsCombining(originalChar))
                 {
-                    hasBaseChar = true;
+                    baseChar = originalChar;
                 }
-                else if (hasBaseChar)
+                else if (baseChar != NOBASE)
                 {
-                    // continue to advance for combining mark with base char
-                    continue;
+                    // continue to advance for combining mark with base char (can be precomposed by shaping engine)
+                    // except if it is a different script (#6801)
+                    if (Classification.GetScript(baseChar) == Classification.GetScript(originalChar))
+                    {
+                        continue;
+                    }
                 }
 
                 int ch = digitMap[originalChar];
@@ -365,7 +370,7 @@ namespace MS.Internal.FontFace
                     // The same goes for joiner. Note that "hasBaseChar" here indicates if there is an invalid base
                     // char in front.
                     if (Classification.IsJoiner(ch)
-                       || (hasBaseChar && Classification.IsCombining(ch))
+                       || (baseChar != NOBASE && Classification.IsCombining(ch) && Classification.GetScript(ch) == Classification.GetScript(baseChar))
                        )
                        continue;
 

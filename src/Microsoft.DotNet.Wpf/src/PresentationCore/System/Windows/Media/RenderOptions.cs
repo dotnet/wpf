@@ -45,7 +45,7 @@ namespace System.Windows.Media
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static EdgeMode GetEdgeMode(DependencyObject target)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            ArgumentNullException.ThrowIfNull(target);
             return (EdgeMode)target.GetValue(EdgeModeProperty);
         }
 
@@ -54,7 +54,7 @@ namespace System.Windows.Media
         /// </summary>
         public static void SetEdgeMode(DependencyObject target, EdgeMode edgeMode)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            ArgumentNullException.ThrowIfNull(target);
             target.SetValue(EdgeModeProperty, edgeMode);
         }
 
@@ -78,7 +78,7 @@ namespace System.Windows.Media
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static BitmapScalingMode GetBitmapScalingMode(DependencyObject target)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            ArgumentNullException.ThrowIfNull(target);
             return (BitmapScalingMode)target.GetValue(BitmapScalingModeProperty);
         }
 
@@ -87,7 +87,7 @@ namespace System.Windows.Media
         /// </summary>
         public static void SetBitmapScalingMode(DependencyObject target, BitmapScalingMode bitmapScalingMode)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            ArgumentNullException.ThrowIfNull(target);
             target.SetValue(BitmapScalingModeProperty, bitmapScalingMode);
         }       
 
@@ -111,7 +111,7 @@ namespace System.Windows.Media
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static ClearTypeHint GetClearTypeHint(DependencyObject target)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            ArgumentNullException.ThrowIfNull(target);
             return (ClearTypeHint)target.GetValue(ClearTypeHintProperty);
         }
 
@@ -120,7 +120,7 @@ namespace System.Windows.Media
         /// </summary>
         public static void SetClearTypeHint(DependencyObject target, ClearTypeHint clearTypeHint)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            ArgumentNullException.ThrowIfNull(target);
             target.SetValue(ClearTypeHintProperty, clearTypeHint);
         } 
 
@@ -145,7 +145,7 @@ namespace System.Windows.Media
         [AttachedPropertyBrowsableForType(typeof(TileBrush))]
         public static CachingHint GetCachingHint(DependencyObject target)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            ArgumentNullException.ThrowIfNull(target);
             return (CachingHint)target.GetValue(CachingHintProperty);
         }
 
@@ -154,7 +154,7 @@ namespace System.Windows.Media
         /// </summary>
         public static void SetCachingHint(DependencyObject target, CachingHint cachingHint)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            ArgumentNullException.ThrowIfNull(target);
             target.SetValue(CachingHintProperty, cachingHint);
         }
 
@@ -178,7 +178,7 @@ namespace System.Windows.Media
         [AttachedPropertyBrowsableForType(typeof(TileBrush))]
         public static double GetCacheInvalidationThresholdMinimum(DependencyObject target)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            ArgumentNullException.ThrowIfNull(target);
             return (double)target.GetValue(CacheInvalidationThresholdMinimumProperty);
         }
 
@@ -187,7 +187,7 @@ namespace System.Windows.Media
         /// </summary>
         public static void SetCacheInvalidationThresholdMinimum(DependencyObject target, double cacheInvalidationThresholdMinimum)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            ArgumentNullException.ThrowIfNull(target);
             target.SetValue(CacheInvalidationThresholdMinimumProperty, cacheInvalidationThresholdMinimum);
         }
 
@@ -211,7 +211,7 @@ namespace System.Windows.Media
         [AttachedPropertyBrowsableForType(typeof(TileBrush))]
         public static double GetCacheInvalidationThresholdMaximum(DependencyObject target)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            ArgumentNullException.ThrowIfNull(target);
             return (double)target.GetValue(CacheInvalidationThresholdMaximumProperty);
         }
 
@@ -220,7 +220,7 @@ namespace System.Windows.Media
         /// </summary>
         public static void SetCacheInvalidationThresholdMaximum(DependencyObject target, double cacheInvalidationThresholdMaximum)
         {
-            if (target == null) { throw new ArgumentNullException("target"); }
+            ArgumentNullException.ThrowIfNull(target);
             target.SetValue(CacheInvalidationThresholdMaximumProperty, cacheInvalidationThresholdMaximum);
         }     
 

@@ -17,7 +17,6 @@ using MS.Internal.PresentationCore;                        // SecurityHelper
 using MS.Win32.Penimc;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {

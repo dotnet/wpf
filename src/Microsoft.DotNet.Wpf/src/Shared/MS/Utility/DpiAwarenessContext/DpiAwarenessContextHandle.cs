@@ -132,7 +132,7 @@ namespace MS.Utility
         /// <param name="dpiAwarenessContextHandle">Handle being converted</param>
         public static explicit operator DpiAwarenessContextValue(DpiAwarenessContextHandle dpiAwarenessContextHandle)
         {
-            foreach (DpiAwarenessContextValue dpiContextValue in Enum.GetValues(typeof(DpiAwarenessContextValue)))
+            foreach (DpiAwarenessContextValue dpiContextValue in Enum.GetValues<DpiAwarenessContextValue>())
             {
                 if (dpiContextValue != DpiAwarenessContextValue.Invalid)
                 {

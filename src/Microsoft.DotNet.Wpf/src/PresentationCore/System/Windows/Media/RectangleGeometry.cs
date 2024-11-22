@@ -21,7 +21,6 @@ using System.Runtime.InteropServices;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media 
 {
@@ -221,10 +220,10 @@ namespace System.Windows.Media
                     // We've checked that rect isn't empty above
                     Invariant.Assert(pointCount != 0);
 
-                    Point * pPoints = stackalloc Point[(int)pointCount];
+                    Point* pPoints = stackalloc Point[(int)pointCount];
                     RectangleGeometry.GetPointList(pPoints, pointCount, rect, radiusX, radiusY);
 
-                    fixed (byte *pTypes = RectangleGeometry.GetTypeList(rect, radiusX, radiusY))
+                    fixed (byte* pTypes = GetTypeList(rect, radiusX, radiusY)) //Merely retrieves the pointer to static PE data, no actual pinning occurs
                     {
                         boundingRect = Geometry.GetBoundsHelper(
                             pen,
@@ -260,10 +259,10 @@ namespace System.Windows.Media
             
             unsafe
             {
-                Point *pPoints = stackalloc Point[(int)pointCount];
+                Point* pPoints = stackalloc Point[(int)pointCount];
                 RectangleGeometry.GetPointList(pPoints, pointCount, rect, radiusX, radiusY);
 
-                fixed (byte* pTypes = GetTypeList(rect, radiusX, radiusY))
+                fixed (byte* pTypes = GetTypeList(rect, radiusX, radiusY)) //Merely retrieves the pointer to static PE data, no actual pinning occurs
                 {
                     return ContainsInternal(
                         pen,
@@ -439,9 +438,9 @@ namespace System.Windows.Media
             else
             {   
                 ctx.BeginFigure(rect.TopLeft, true /* is filled */, true /* is closed */);
-                ctx.LineTo(Rect.TopRight, true /* is stroked */, false /* is smooth join */);
-                ctx.LineTo(Rect.BottomRight, true /* is stroked */, false /* is smooth join */);
-                ctx.LineTo(Rect.BottomLeft, true /* is stroked */, false /* is smooth join */);
+                ctx.LineTo(rect.TopRight, true /* is stroked */, false /* is smooth join */);
+                ctx.LineTo(rect.BottomRight, true /* is stroked */, false /* is smooth join */);
+                ctx.LineTo(rect.BottomLeft, true /* is stroked */, false /* is smooth join */);
             }
 
             ctx.Close();
@@ -511,7 +510,7 @@ namespace System.Windows.Media
             }
         }
 
-        private static byte[] GetTypeList(Rect rect, double radiusX, double radiusY)
+        private static ReadOnlySpan<byte> GetTypeList(Rect rect, double radiusX, double radiusY)
         {
             if (rect.IsEmpty)
             {
@@ -519,11 +518,11 @@ namespace System.Windows.Media
             }
             else if (IsRounded(radiusX, radiusY))
             {
-                return s_roundedPathTypes;
+                return RoundedPathTypes;
             }
             else
             {
-                return s_squaredPathTypes;
+                return SquaredPathTypes;
             }
         }
 
@@ -611,30 +610,28 @@ namespace System.Windows.Media
 
         static private byte smoothLine = (byte)MILCoreSegFlags.SegTypeLine | (byte)MILCoreSegFlags.SegSmoothJoin;
 
-        static private byte[] s_roundedPathTypes = {
-            (byte)MILCoreSegFlags.SegTypeBezier | 
+        private static ReadOnlySpan<byte> RoundedPathTypes => new byte[] {
+            (byte)MILCoreSegFlags.SegTypeBezier |
             (byte)MILCoreSegFlags.SegIsCurved   |
-            (byte)MILCoreSegFlags.SegSmoothJoin | 
+            (byte)MILCoreSegFlags.SegSmoothJoin |
             (byte)MILCoreSegFlags.SegClosed,
-            smoothLine, 
+            smoothLine,
             smoothBezier,
-            smoothLine, 
+            smoothLine,
             smoothBezier,
-            smoothLine, 
+            smoothLine,
             smoothBezier,
-            smoothLine 
+            smoothLine
         };
 
         // Squared
         private const UInt32 c_squaredSegmentCount = 4;
         private const UInt32 c_squaredPointCount = 5;
 
-        private static readonly byte[] s_squaredPathTypes = {
-            (byte)MILCoreSegFlags.SegTypeLine | (byte)MILCoreSegFlags.SegClosed,
-            (byte)MILCoreSegFlags.SegTypeLine,
-            (byte)MILCoreSegFlags.SegTypeLine,
-            (byte)MILCoreSegFlags.SegTypeLine
-        };
+        private static ReadOnlySpan<byte> SquaredPathTypes => [(byte)MILCoreSegFlags.SegTypeLine | (byte)MILCoreSegFlags.SegClosed,
+                                                               (byte)MILCoreSegFlags.SegTypeLine,
+                                                               (byte)MILCoreSegFlags.SegTypeLine,
+                                                               (byte)MILCoreSegFlags.SegTypeLine];
 
         #endregion
     }

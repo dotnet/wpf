@@ -33,8 +33,7 @@ namespace System.Windows.Input
         /// </param>
         public KeyEventArgs(KeyboardDevice keyboard, PresentationSource inputSource, int timestamp, Key key) : base(keyboard, timestamp)
         {
-            if (inputSource == null)
-                throw new ArgumentNullException("inputSource");
+            ArgumentNullException.ThrowIfNull(inputSource);
 
             if (!Keyboard.IsValidKey(key))
                 throw new System.ComponentModel.InvalidEnumArgumentException("key", (int)key, typeof(Key));

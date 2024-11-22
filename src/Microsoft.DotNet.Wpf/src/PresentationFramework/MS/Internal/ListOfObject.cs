@@ -17,8 +17,7 @@ namespace MS.Internal
         IList _list;
         internal ListOfObject(IList list)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
+            ArgumentNullException.ThrowIfNull(list);
             _list = list;
         }
 

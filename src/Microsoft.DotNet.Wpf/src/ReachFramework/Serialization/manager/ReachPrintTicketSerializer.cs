@@ -77,7 +77,7 @@ namespace System.Windows.Xps.Serialization
                 //
                 // Throw a meaningful exception
                 //
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_TargetNotPrintTicket));
+                throw new XpsSerializationException(SR.ReachSerialization_TargetNotPrintTicket);
             }
 
             //  The new class XpsOMSerializationManager now also interacts with this class
@@ -111,10 +111,7 @@ namespace System.Windows.Xps.Serialization
             SerializablePropertyContext serializedProperty
             )
         {
-            if(serializedProperty == null)
-            {
-                throw new ArgumentNullException("serializedProperty");
-            }
+            ArgumentNullException.ThrowIfNull(serializedProperty);
 
             SerializeObject(serializedProperty.Value);
         }

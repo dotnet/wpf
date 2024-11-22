@@ -1,7 +1,5 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.props))\dir.props" />
-
   <ItemGroup>
     <ThemeXaml Include="Aero.NormalColor.xaml" />
     <ThemeXaml Include="Aero2.NormalColor.xaml" />

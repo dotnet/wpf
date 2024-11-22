@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 namespace System.Xaml.MS.Impl
 {
     internal static class KnownStrings
@@ -33,7 +35,7 @@ namespace System.Xaml.MS.Impl
         public const string DefaultPrefix = "p";
 
         public const string ReferenceName = "__ReferenceID";
-        public static readonly char[] WhitespaceChars = new char[] { ' ', '\t', '\n', '\r', '\f' };
+        public static readonly char[] WhitespaceChars = [' ', '\t', '\n', '\r', '\f'];
         public const char SpaceChar = ' ';
         public const char TabChar = '\t';
         public const char NewlineChar = '\n';
@@ -62,6 +64,11 @@ namespace System.Xaml.MS.Impl
             return string.Equals(a, b, StringComparison.Ordinal);
         }
 
+        public static bool Eq(ReadOnlySpan<char> a, ReadOnlySpan<char> b)
+        {
+            return a.Equals(b, StringComparison.Ordinal);
+        }
+
         /// <summary>
         /// Standard String Index search operation.
         /// </summary>
@@ -86,11 +93,6 @@ namespace System.Xaml.MS.Impl
         public static bool StartsWith(string src, string target)
         {
             return src.StartsWith(target, StringComparison.Ordinal);
-        }
-
-        public static string Fmt(string formatString, params object[] otherArgs)
-        {
-            return string.Format(TypeConverterHelper.InvariantEnglishUS, formatString, otherArgs);
         }
     }
 }

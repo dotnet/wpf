@@ -24,7 +24,7 @@ namespace System.Windows.Markup
             WpfSharedXamlSchemaContext _sharedSchemaContext;
 
             // Lock on syncObject
-            object syncObject = new object();
+            readonly object syncObject = new object();
             Dictionary<string, string> _piNamespaces;
             IEnumerable<string> _allXamlNamespaces;
             Dictionary<Type, XamlType> _allowedInternalTypes;

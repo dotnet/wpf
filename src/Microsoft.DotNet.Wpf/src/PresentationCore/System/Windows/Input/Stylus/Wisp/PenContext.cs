@@ -16,7 +16,6 @@ using MS.Internal;
 using MS.Win32.Penimc;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -29,11 +28,11 @@ namespace System.Windows.Input
                                 int id, IntPtr commHandle, int tabletDeviceId, UInt32 wispContextKey)
         {
             _contexts = contexts;
-            _pimcContext = new SecurityCriticalDataClass<IPimcContext3>(pimcContext);
+            _pimcContext = pimcContext;
             _id = id;
             _tabletDeviceId = tabletDeviceId;
-            _commHandle = new SecurityCriticalData<IntPtr>(commHandle);
-            _hwnd = new SecurityCriticalData<IntPtr>(hwnd);
+            _commHandle = commHandle;
+            _hwnd = hwnd;
             _supportInRange = supportInRange;
             _isIntegrated = isIntegrated;
             WispContextKey = wispContextKey;
@@ -67,13 +66,7 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        internal IntPtr CommHandle
-        {
-            get
-            {
-                return _commHandle.Value;
-            }
-        }
+        internal IntPtr CommHandle => _commHandle;
 
         /////////////////////////////////////////////////////////////////////
 
@@ -120,12 +113,12 @@ namespace System.Windows.Input
 
             // Make sure we are never called on the application thread when we need to talk
             // to penimc or else we can cause reentrancy!
-            Debug.Assert(!_contexts._inputSource.Value.CheckAccess());
+            Debug.Assert(!_contexts._inputSource.CheckAccess());
 
             // We should always have a valid IPimcContext3 interface pointer.
-            Debug.Assert(_pimcContext != null && _pimcContext.Value != null);
+            Debug.Assert(_pimcContext != null);
             
-            _pimcContext.Value.GetPacketDescriptionInfo(out cProps, out cButtons); // Calls Unmanaged code - SecurityCritical with SUC.
+            _pimcContext.GetPacketDescriptionInfo(out cProps, out cButtons); // Calls Unmanaged code - SecurityCritical with SUC.
 
             List<StylusPointPropertyInfo> propertyInfos = new List<StylusPointPropertyInfo>(cProps + cButtons + 3);
             for (int i = 0; i < cProps; i++)
@@ -134,7 +127,7 @@ namespace System.Windows.Input
                 int min, max;
                 int units;
                 float res;
-                _pimcContext.Value.GetPacketPropertyInfo(i, out guid, out min, out max, out units, out res); // Calls Unmanaged code - SecurityCritical with SUC.
+                _pimcContext.GetPacketPropertyInfo(i, out guid, out min, out max, out units, out res); // Calls Unmanaged code - SecurityCritical with SUC.
 
                 if (pressureIndex == -1 && guid == StylusPointPropertyIds.NormalPressure)
                 {
@@ -159,7 +152,7 @@ namespace System.Windows.Input
                 for (int i = 0; i < cButtons; i++)
                 {
                     Guid buttonGuid;
-                    _pimcContext.Value.GetPacketButtonInfo(i, out buttonGuid); // Calls Unmanaged code - SecurityCritical with SUC.
+                    _pimcContext.GetPacketButtonInfo(i, out buttonGuid); // Calls Unmanaged code - SecurityCritical with SUC.
 
                     StylusPointProperty buttonProperty = new StylusPointProperty(buttonGuid, true);
                     StylusPointPropertyInfo buttonInfo = new StylusPointPropertyInfo(buttonProperty);
@@ -186,7 +179,7 @@ namespace System.Windows.Input
 
         internal void Enable()
         {
-            if (_pimcContext != null && _pimcContext.Value != null)
+            if (_pimcContext is not null)
             {
                 _penThreadPenContext = PenThreadPool.GetPenThreadForPenContext(this);
             }
@@ -421,7 +414,7 @@ namespace System.Windows.Input
             int x, y, buttonState; // (these are not used)
 
             MS.Win32.Penimc.UnsafeNativeMethods.GetLastSystemEventData(
-                _commHandle.Value,
+                _commHandle,
                 out id, out modifier, out character,
                 out x, out y, out stylusMode, out buttonState);
 
@@ -528,11 +521,9 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        internal SecurityCriticalDataClass<IPimcContext3> _pimcContext;
-        
-        SecurityCriticalData<IntPtr> _hwnd;
-        
-        SecurityCriticalData<IntPtr> _commHandle;
+        internal IPimcContext3 _pimcContext;
+        private readonly IntPtr _hwnd;
+        private readonly IntPtr _commHandle;
         
         PenContexts             _contexts;
         

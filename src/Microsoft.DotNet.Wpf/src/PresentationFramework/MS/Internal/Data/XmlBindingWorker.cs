@@ -551,8 +551,7 @@ namespace MS.Internal.Data
             if (node == null)
                 return "<null>";
 
-            return String.Format(TypeConverterHelper.InvariantEnglishUS, "{0} ({1})",
-                                    node.GetType().Name, node.Name);
+            return $"{node.GetType().Name} ({node.Name})";
         }
 
         private string IdentifyNodeList(XmlNodeList nodeList)
@@ -560,8 +559,7 @@ namespace MS.Internal.Data
             if (nodeList == null)
                 return "<null>";
 
-            return String.Format(TypeConverterHelper.InvariantEnglishUS, "{0} (hash={1} Count={2})",
-                                    nodeList.GetType().Name, AvTrace.GetHashCodeHelper(nodeList), nodeList.Count);
+            return string.Create(TypeConverterHelper.InvariantEnglishUS, $"{nodeList.GetType().Name} (hash={AvTrace.GetHashCodeHelper(nodeList)} Count={nodeList.Count})");
         }
 
         // 90% of the XPaths used in practice are very simple - consisting of a

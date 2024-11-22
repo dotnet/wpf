@@ -15,7 +15,6 @@ using System.Windows;
 #elif DRT
     using MS.Internal.Drt;
 #else
-#error Attempt to use FriendAccessAllowedAttribute from an unknown assembly.
 using MS.Internal.YourAssemblyName;
 #endif
 
@@ -35,7 +34,6 @@ namespace MS.Internal
     ///    This should not be a problem unless the caller stops enumerating
     ///    before the end of the list AND holds the enumerator alive forever.
     /// </remarks>
-    [FriendAccessAllowed]
     internal struct WeakReferenceListEnumerator : IEnumerator
     {
         public WeakReferenceListEnumerator( ArrayList List)
@@ -55,7 +53,7 @@ namespace MS.Internal
                 if( null == _StrongReference )
                 {
 #pragma warning suppress 6503
-                    throw new System.InvalidOperationException(SR.Get(SRID.Enumerator_VerifyContext));
+                    throw new System.InvalidOperationException(SR.Enumerator_VerifyContext);
                 }
                 return _StrongReference;
             }

@@ -18,7 +18,6 @@ using MS.Internal.PresentationCore;                        // SecurityHelper
 using MS.Win32.PresentationCore;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Imaging
 {
@@ -138,12 +137,12 @@ namespace System.Windows.Media.Imaging
                     if (!_fStarted)
                     {
 #pragma warning suppress 56503 // Suppress presharp warning: Follows a pattern similar to Nullable.
-                    throw new InvalidOperationException(SR.Get(SRID.Enumerator_NotStarted));
+                    throw new InvalidOperationException(SR.Enumerator_NotStarted);
                     }
                     else
                     {
 #pragma warning suppress 56503 // Suppress presharp warning: Follows a pattern similar to Nullable.
-                    throw new InvalidOperationException(SR.Get(SRID.Enumerator_ReachedEnd));
+                    throw new InvalidOperationException(SR.Enumerator_ReachedEnd);
                     }
                 }
 

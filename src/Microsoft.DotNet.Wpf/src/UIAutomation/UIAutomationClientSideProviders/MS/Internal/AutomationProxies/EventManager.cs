@@ -582,7 +582,7 @@ namespace MS.Internal.AutomationProxies
         private static Hashtable _objectIdScroll;
         private static Hashtable _objectIdCaret;
         private static Hashtable _objectIdMenu;
-        private static object _classLock = new object();   // use lock object vs typeof(class) for perf 
+        private static readonly object _classLock = new object();   // use lock object vs typeof(class) for perf 
 
         // The hwndLast and objLast is to allow limited filtering of events.
         private static IntPtr _hwndLast = IntPtr.Zero;

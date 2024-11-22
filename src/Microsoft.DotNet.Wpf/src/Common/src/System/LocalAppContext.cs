@@ -3,34 +3,36 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Collections.Generic;
-using System.Reflection;
+using System.Threading;
 
 namespace System
 {
-// error CS0436: When building PresentationFramework, the type 'LocalAppContext' 
-// conflicts with the imported type 'LocalAppContext' in 'PresentationCore
-#pragma warning disable 436
-    internal partial class LocalAppContext
+    internal static class LocalAppContext
     {
-        private delegate bool TryGetSwitchDelegate(string switchName, out bool value);
-
-        private static TryGetSwitchDelegate TryGetSwitchFromCentralAppContext;
-        private static bool s_canForwardCalls;
-
-        private static Dictionary<string, bool> s_switchMap = new Dictionary<string, bool>();
-        private static readonly object s_syncLock = new object();
+        /// <summary>
+        /// Holds the switch names and their values. In case it is modified outside <see cref="DefineSwitchDefault"/>,
+        /// proper thread synchronization is required as the switch state can be queried from any thread.
+        /// </summary>
+        private static readonly Dictionary<string, bool> s_switchMap = new();
+#if !NETFX
+        private static readonly Lock s_syncLock = new();
+#else
+        private static readonly object s_syncLock = new();
+#endif
 
         private static bool DisableCaching { get; set; }
 
         static LocalAppContext()
         {
-            // Try to setup the callback into the central AppContext
-            s_canForwardCalls = SetupDelegate();
+            // When building PresentationFramework, 'LocalAppContext' from WindowsBase.dll conflicts
+            // with 'LocalAppContext' from PresentationCore.dll since there is InternalsVisibleTo set
+#pragma warning disable CS0436 // Type conflicts with imported type
 
             // Populate the default values of the local app context 
             AppContextDefaultValues.PopulateDefaultValues();
+
+#pragma warning restore CS0436 // Type conflicts with imported type
 
             // Cache the value of the switch that help with testing
             DisableCaching = IsSwitchEnabled(@"TestSwitch.LocalAppContext.DisableCaching");
@@ -38,17 +40,13 @@ namespace System
 
         public static bool IsSwitchEnabled(string switchName)
         {
-            if (s_canForwardCalls)
+            if (AppContext.TryGetSwitch(switchName, out bool isEnabledCentrally))
             {
-                bool isEnabledCentrally;
-                if (TryGetSwitchFromCentralAppContext(switchName, out isEnabledCentrally))
-                {
-                    // we found the switch, so return whatever value it has
-                    return isEnabledCentrally;
-                }
-                // if we could not get the value from the central authority, try the local storage.
+                // we found the switch, so return whatever value it has
+                return isEnabledCentrally;
             }
 
+            // if we could not get the value from the central authority, try the local storage.
             return IsSwitchEnabledLocal(switchName);
         }
 
@@ -56,7 +54,7 @@ namespace System
         {
             // read the value from the set of local defaults
             bool isEnabled, isPresent;
-            lock (s_switchMap)
+            lock (s_syncLock)
             {
                 isPresent = s_switchMap.TryGetValue(switchName, out isEnabled);
             }
@@ -72,44 +70,25 @@ namespace System
             return false;
         }
 
-        private static bool SetupDelegate()
-        {
-            Type appContextType = typeof(object).Assembly.GetType("System.AppContext");
-            if (appContextType == null)
-                return false;
-
-            MethodInfo method = appContextType.GetMethod(
-                                            "TryGetSwitch",  // the method name
-                                            BindingFlags.Static | BindingFlags.Public,  // binding flags
-                                            null, // use the default binder
-                                            new Type[] { typeof(string), typeof(bool).MakeByRefType() },
-                                            null); // parameterModifiers - this is ignored by the default binder 
-            if (method == null)
-                return false;
-
-            // Create delegate if we found the method.
-            TryGetSwitchFromCentralAppContext = (TryGetSwitchDelegate)Delegate.CreateDelegate(typeof(TryGetSwitchDelegate), method);
-
-            return true;
-        }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static bool GetCachedSwitchValue(string switchName, ref int switchValue)
         {
-            if (switchValue < 0) return false;
-            if (switchValue > 0) return true;
+            if (switchValue < 0)
+                return false;
+            if (switchValue > 0)
+                return true;
 
             return GetCachedSwitchValueInternal(switchName, ref switchValue);
         }
 
         private static bool GetCachedSwitchValueInternal(string switchName, ref int switchValue)
         {
-            if (LocalAppContext.DisableCaching)
+            if (DisableCaching)
             {
-                return LocalAppContext.IsSwitchEnabled(switchName);
+                return IsSwitchEnabled(switchName);
             }
 
-            bool isEnabled = LocalAppContext.IsSwitchEnabled(switchName);
+            bool isEnabled = IsSwitchEnabled(switchName);
             switchValue = isEnabled ? 1 /*true*/ : -1 /*false*/;
             return isEnabled;
         }
@@ -124,5 +103,4 @@ namespace System
             s_switchMap[switchName] = initialValue;
         }
     }
-#pragma warning restore 436
 }

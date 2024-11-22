@@ -19,10 +19,7 @@ using System.Windows.Media.Composition;
 using System.Windows.Markup;
 using System.Windows.Media.Effects;
 
-using MS.Internal.PresentationCore;
-
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Media3D
 {
@@ -334,7 +331,7 @@ namespace System.Windows.Media.Media3D
             // might be iterating during a property invalidation tree walk.
             if (IsVisualChildrenIterationInProgress)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotModifyVisualChildrenDuringTreeWalk));
+                throw new InvalidOperationException(SR.CannotModifyVisualChildrenDuringTreeWalk);
             }
 
             // invalid during a VisualTreeChanged event
@@ -385,7 +382,7 @@ namespace System.Windows.Media.Media3D
             // might be iterating during a property invalidation tree walk.
             if (IsVisualChildrenIterationInProgress)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotModifyVisualChildrenDuringTreeWalk));
+                throw new InvalidOperationException(SR.CannotModifyVisualChildrenDuringTreeWalk);
             }
 
             // invalid during a VisualTreeChanged event
@@ -513,7 +510,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         protected override GeometryHitTestResult HitTestCore(GeometryHitTestParameters hitTestParameters)
         {
-            throw new NotSupportedException(SR.Get(SRID.HitTest_Invalid, typeof(GeometryHitTestParameters).Name, this.GetType().Name));
+            throw new NotSupportedException(SR.Format(SR.HitTest_Invalid, typeof(GeometryHitTestParameters).Name, this.GetType().Name));
         }
 
         internal Point WorldToViewport(Point4D point)
@@ -868,7 +865,6 @@ namespace System.Windows.Media.Media3D
         // Because 2D Visuals and FEs do not participate in inheritance context
         // we allow this backdoor for a Viewport3D to set itself as the inheritance
         // context of the Visual3DCollection it exposes as Children.
-        [FriendAccessAllowed]
         internal void SetInheritanceContextForChildren(DependencyObject inheritanceContextForChildren)
         {
             _inheritanceContextForChildren = inheritanceContextForChildren;

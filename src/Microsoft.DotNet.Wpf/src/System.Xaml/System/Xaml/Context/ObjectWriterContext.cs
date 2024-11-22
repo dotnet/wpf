@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -17,7 +19,7 @@ namespace MS.Internal.Xaml.Context
     {
         private XamlContextStack<ObjectWriterFrame> _stack;
 
-        private object _rootInstance = null;
+        private object _rootInstance;
 
         ServiceProviderContext _serviceProviderContext;
         XamlRuntime _runtime;
@@ -26,7 +28,7 @@ namespace MS.Internal.Xaml.Context
         XamlObjectWriterSettings _settings;
         List<NameScopeInitializationCompleteSubscriber> _nameScopeInitializationCompleteSubscribers;
 
-        public ObjectWriterContext(XamlSavedContext savedContext, 
+        public ObjectWriterContext(XamlSavedContext savedContext,
             XamlObjectWriterSettings settings, XAML3.INameScope rootNameScope, XamlRuntime runtime)
             : base(savedContext.SchemaContext)
         {
@@ -46,11 +48,7 @@ namespace MS.Internal.Xaml.Context
                 XAML3.INameScopeDictionary rootNameScopeDictionary = null;
                 if (rootNameScope == null)
                 {
-#if TARGETTING35SP1
-                    rootNameScopeDictionary = new NameScopeDictionary(new NameScope());
-#else
                     rootNameScopeDictionary = new NameScope();
-#endif
                 }
                 else
                 {
@@ -63,7 +61,7 @@ namespace MS.Internal.Xaml.Context
                 }
 
                 // Push an extra frame to ensure that the template NameScope is
-                // not part of the saved context.  Otherwise, the namescope 
+                // not part of the saved context.  Otherwise, the namescope
                 // will hold things alive as long as the template is alive
                 _stack.PushScope();
                 _savedDepth = _stack.Depth;
@@ -88,11 +86,7 @@ namespace MS.Internal.Xaml.Context
             XAML3.INameScopeDictionary rootNameScopeDictionary = null;
             if (rootNameScope == null)
             {
-#if TARGETTING35SP1
-                rootNameScopeDictionary = new NameScopeDictionary(new NameScope());
-#else
                 rootNameScopeDictionary = new NameScope();
-#endif
             }
             else
             {
@@ -165,7 +159,7 @@ namespace MS.Internal.Xaml.Context
             {
                 XamlTypeName name = XamlTypeName.Parse(qName, _serviceProviderContext);
                 xamlType = GetXamlType(name, true, true);
-                throw new XamlParseException(SR.Get(SRID.TypeNotFound, xamlType.GetQualifiedName()));
+                throw new XamlParseException(SR.Format(SR.TypeNotFound, xamlType.GetQualifiedName()));
             }
             return xamlType.UnderlyingType;
         }
@@ -203,22 +197,6 @@ namespace MS.Internal.Xaml.Context
         {
             List<AmbientPropertyValue> valueList = FindAmbientValues(ceilingTypes, searchLiveStackOnly, types, properties, false);
             return valueList;
-        }
-
-        private static void CheckAmbient(XamlMember xamlMember)
-        {
-            if (!xamlMember.IsAmbient)
-            {
-                throw new ArgumentException(SR.Get(SRID.NotAmbientProperty, xamlMember.DeclaringType.Name, xamlMember.Name), nameof(xamlMember));
-            }
-        }
-
-        private static void CheckAmbient(XamlType xamlType)
-        {
-            if (!xamlType.IsAmbient)
-            {
-                throw new ArgumentException(SR.Get(SRID.NotAmbientType, xamlType.Name), nameof(xamlType));
-            }
         }
 
         internal XamlObjectWriterSettings ServiceProvider_GetSettings()
@@ -285,7 +263,7 @@ namespace MS.Internal.Xaml.Context
 
         // ----- methods to support the Service Providers
 
-        internal ServiceProviderContext ServiceProviderContext    
+        internal ServiceProviderContext ServiceProviderContext
         {
             get
             {
@@ -326,8 +304,15 @@ namespace MS.Internal.Xaml.Context
                                                              XamlMember[] properties,
                                                              bool stopAfterFirst)
         {
-            ArrayHelper.ForAll<XamlMember>(properties, CheckAmbient);
-            List<XamlType> ceilingTypes = ArrayHelper.ToList<XamlType>(ceilingTypesEnumerable);
+            foreach (XamlMember xamlMember in properties)
+            {
+                if (!xamlMember.IsAmbient)
+                {
+                    throw new ArgumentException(SR.Format(SR.NotAmbientProperty, xamlMember.DeclaringType.Name, xamlMember.Name), nameof(properties));
+                }
+            }
+
+            List<XamlType> ceilingTypes = ceilingTypesEnumerable != null ? new List<XamlType>(ceilingTypesEnumerable) : null;
 
             List<AmbientPropertyValue> retList = new List<AmbientPropertyValue>();
 
@@ -436,13 +421,18 @@ namespace MS.Internal.Xaml.Context
 
         private List<object> FindAmbientValues(XamlType[] types, bool stopAfterFirst)
         {
-            ArrayHelper.ForAll<XamlType>(types, CheckAmbient);
+            foreach (XamlType xamlType in types)
+            {
+                if (!xamlType.IsAmbient)
+                {
+                    throw new ArgumentException(SR.Format(SR.NotAmbientType, xamlType.Name), nameof(types));
+                }
+            }
 
             List<object> retList = new List<object>();
 
             // Start the search for ambient properties with the parent frame.
             ObjectWriterFrame frame = _stack.PreviousFrame;
-            ObjectWriterFrame lowerFrame = _stack.CurrentFrame;
 
             while (frame.Depth >= 1)
             {
@@ -463,7 +453,6 @@ namespace MS.Internal.Xaml.Context
                     }
                 }
 
-                lowerFrame = frame;
                 frame = (ObjectWriterFrame)frame.Previous;
                 Debug.Assert(frame != null);
             }
@@ -494,7 +483,7 @@ namespace MS.Internal.Xaml.Context
         {
             _stack.PopScope();
         }
-        
+
         /// <summary>
         /// Total depth of the stack SavedDepth+LiveDepth
         /// </summary>
@@ -665,7 +654,7 @@ namespace MS.Internal.Xaml.Context
         {
             get { return _settings != null ? _settings.SourceBamlUri : null; }
         }
-        
+
         // This specifically stores the start line number for a start object for consistency
         public int LineNumber_StartObject { get; set; }
 
@@ -817,11 +806,7 @@ namespace MS.Internal.Xaml.Context
                         if (frame.Depth == SavedDepth + 1 &&
                             _settings != null && !_settings.RegisterNamesOnExternalNamescope)
                         {
-#if TARGETTING35SP1
-                            frame.NameScopeDictionary = new NameScopeDictionary(new NameScope());
-#else
                             frame.NameScopeDictionary = new NameScope();
-#endif
                         }
                         else
                         {
@@ -883,7 +868,7 @@ namespace MS.Internal.Xaml.Context
             object inst = rootFrame.Instance;
             if (inst == null && rootFrame.XamlType.IsNameScope)
             {
-                throw new InvalidOperationException(SR.Get(SRID.NameScopeOnRootInstance));
+                throw new InvalidOperationException(SR.NameScopeOnRootInstance);
             }
 
             XAML3.INameScopeDictionary nameScopeDictionary = null;
@@ -898,7 +883,7 @@ namespace MS.Internal.Xaml.Context
                     nameScopeDictionary = new NameScopeDictionary(nameScope);
                 }
             }
-            
+
             // If the root instance isn't a name scope
             // then perhaps it designated a property as the name scope.
             if (nameScopeDictionary == null)
@@ -915,11 +900,7 @@ namespace MS.Internal.Xaml.Context
                         XAML3.INameScope nameScope = (XAML3.INameScope)_runtime.GetValue(inst, nameScopeProperty, false);
                         if (nameScope == null)
                         {
-#if TARGETTING35SP1
-                            nameScopeDictionary = new NameScopeDictionary(new NameScope());
-#else
                             nameScopeDictionary = new NameScope();
-#endif
                             _runtime.SetValue(inst, nameScopeProperty, nameScopeDictionary);
                         }
                         else
@@ -934,7 +915,7 @@ namespace MS.Internal.Xaml.Context
                 }
             }
 
-            if (nameScopeDictionary == null && _settings != null 
+            if (nameScopeDictionary == null && _settings != null
                 && _settings.RegisterNamesOnExternalNamescope)
             {
                 ObjectWriterFrame frameZero = (ObjectWriterFrame)rootFrame.Previous;
@@ -945,11 +926,7 @@ namespace MS.Internal.Xaml.Context
             // for our own usage.  For IXamlNameResolver() to use.
             if (nameScopeDictionary == null)
             {
-#if TARGETTING35SP1
-                nameScopeDictionary = new NameScopeDictionary(new NameScope());
-#else
                 nameScopeDictionary = new NameScope();
-#endif
             }
 
             rootFrame.NameScopeDictionary = nameScopeDictionary;
@@ -966,7 +943,7 @@ namespace MS.Internal.Xaml.Context
             }
 
             // Clone the stack
-            var newStack = new XamlContextStack<ObjectWriterFrame>(_stack, true);            
+            var newStack = new XamlContextStack<ObjectWriterFrame>(_stack, true);
             XamlSavedContext savedContext = new XamlSavedContext(savedContextType, this, newStack);
             return savedContext;
         }
@@ -1095,7 +1072,7 @@ namespace MS.Internal.Xaml.Context
 
             public event EventHandler OnNameScopeInitializationComplete
             {
-                // at this point all name scopes have been completed, and we will 
+                // at this point all name scopes have been completed, and we will
                 // not raise any event for subscriptions that come after this.
                 add
                 {

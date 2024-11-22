@@ -50,15 +50,8 @@ namespace System.Windows.Markup
         /// <param name="service"></param>
         public void AddService(Type serviceType, Object service)
         {
-            if (serviceType == null)
-            {
-                throw new ArgumentNullException("serviceType");
-            }
-
-            if (service == null)
-            {
-                throw new ArgumentNullException("service");
-            }
+            ArgumentNullException.ThrowIfNull(serviceType);
+            ArgumentNullException.ThrowIfNull(service);
 
             if (_objDict.ContainsKey(serviceType) == false)
             {
@@ -66,7 +59,7 @@ namespace System.Windows.Markup
             }
             else if (_objDict[serviceType] != service)
             {
-                throw new ArgumentException(SR.Get(SRID.ServiceTypeAlreadyAdded), "serviceType");
+                throw new ArgumentException(SR.ServiceTypeAlreadyAdded, "serviceType");
             }
         }
 

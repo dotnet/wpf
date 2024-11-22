@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Automation.Provider;
@@ -161,7 +161,7 @@ namespace System.Windows.Automation.Peers
             {
                 if (!IsPropertySupportedByControlForFindItem(propertyId))
                 {
-                    throw new ArgumentException(SR.Get(SRID.PropertyNotSupported));
+                    throw new ArgumentException(SR.PropertyNotSupported);
                 }
             }
 
@@ -188,7 +188,7 @@ namespace System.Windows.Automation.Peers
                 {
                     if (startAfterItem.Item == null)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.InavalidStartItem));
+                        throw new InvalidOperationException(SR.InavalidStartItem);
                     }
 
                     // To find the index of the column items collection which occurs

@@ -148,7 +148,7 @@ namespace System.Windows
             {
                 DependencyObject parent = InternalVisualParent;
 
-                if (!InputElement.IsUIElement(parent) && !InputElement.IsUIElement3D(parent))
+                if (parent is not UIElement and not UIElement3D)
                 {
                     Visual parentAsVisual = parent as Visual;
 
@@ -192,7 +192,7 @@ namespace System.Windows
             {
                 DependencyObject parent = oldParent;
 
-                if (!InputElement.IsUIElement(parent) && !InputElement.IsUIElement3D(parent))
+                if (parent is not UIElement and not UIElement3D)
                 {
                     // We are being unplugged from a non-UIElement visual. This
                     // means that our parent didn't play by the same rules we
@@ -358,7 +358,6 @@ namespace System.Windows
         /// <summary>
         ///     Asynchronously re-evaluate the reverse-inherited properties.
         /// </summary>
-        [FriendAccessAllowed]
         internal void SynchronizeReverseInheritPropertyFlags(DependencyObject oldParent, bool isCoreParent)
         {
             if (IsKeyboardFocusWithin)
@@ -1470,10 +1469,7 @@ namespace System.Windows
         /// <returns>True if capture was taken.</returns>
         public bool CaptureTouch(TouchDevice touchDevice)
         {
-            if (touchDevice == null)
-            {
-                throw new ArgumentNullException("touchDevice");
-            }
+            ArgumentNullException.ThrowIfNull(touchDevice);
 
             return touchDevice.Capture(this);
         }
@@ -1485,10 +1481,7 @@ namespace System.Windows
         /// <returns>true if capture was released, false otherwise.</returns>
         public bool ReleaseTouchCapture(TouchDevice touchDevice)
         {
-            if (touchDevice == null)
-            {
-                throw new ArgumentNullException("touchDevice");
-            }
+            ArgumentNullException.ThrowIfNull(touchDevice);
 
             if (touchDevice.Captured == this)
             {

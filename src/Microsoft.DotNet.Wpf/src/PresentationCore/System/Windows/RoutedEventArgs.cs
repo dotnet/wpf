@@ -6,8 +6,6 @@ using System;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
-using MS.Internal.PresentationCore;
 using System.Collections.Specialized ;
 using System.Windows.Input;
 using System.Diagnostics;
@@ -96,7 +94,7 @@ namespace System.Windows
             set
             {
                 if (UserInitiated && InvokingHandler)
-                    throw new InvalidOperationException(SR.Get(SRID.RoutedEventCannotChangeWhileRouting));
+                    throw new InvalidOperationException(SR.RoutedEventCannotChangeWhileRouting);
 
                 _routedEvent = value;
             }
@@ -136,7 +134,7 @@ namespace System.Windows
             {
                 if (_routedEvent == null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.RoutedEventArgsMustHaveRoutedEvent));
+                    throw new InvalidOperationException(SR.RoutedEventArgsMustHaveRoutedEvent);
                 }
 
 
@@ -188,11 +186,11 @@ namespace System.Windows
             set
             {
                 if (InvokingHandler && UserInitiated)
-                    throw new InvalidOperationException(SR.Get(SRID.RoutedEventCannotChangeWhileRouting));
+                    throw new InvalidOperationException(SR.RoutedEventCannotChangeWhileRouting);
 
                 if (_routedEvent == null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.RoutedEventArgsMustHaveRoutedEvent));
+                    throw new InvalidOperationException(SR.RoutedEventArgsMustHaveRoutedEvent);
                 }
 
 
@@ -280,19 +278,13 @@ namespace System.Windows
         /// </param>
         protected virtual void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
-            if (genericHandler == null)
-            {
-                throw new ArgumentNullException("genericHandler");
-            }
+            ArgumentNullException.ThrowIfNull(genericHandler);
 
-            if (genericTarget == null)
-            {
-                throw new ArgumentNullException("genericTarget");
-            }
+            ArgumentNullException.ThrowIfNull(genericTarget);
 
             if (_routedEvent == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.RoutedEventArgsMustHaveRoutedEvent));
+                throw new InvalidOperationException(SR.RoutedEventArgsMustHaveRoutedEvent);
             }
 
             InvokingHandler = true;
@@ -343,7 +335,6 @@ namespace System.Windows
 
         internal bool UserInitiated
         {
-            [FriendAccessAllowed] // Also used by Framework.
             get
             {
                 if (_flags [UserInitiatedIndex])

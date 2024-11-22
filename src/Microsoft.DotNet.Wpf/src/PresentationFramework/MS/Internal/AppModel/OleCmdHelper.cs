@@ -164,103 +164,103 @@ namespace MS.Internal.AppModel
             if (guidCmdGroup.Equals(CGID_ApplicationCommands))
             {
                 EnsureApplicationCommandsTable();
-                mappingTable = _applicationCommandsMappingTable.Value;
+                mappingTable = _applicationCommandsMappingTable;
             }
             else if (guidCmdGroup.Equals(Guid.Empty))
             {
                 EnsureOleCmdMappingTable();
-                mappingTable = _oleCmdMappingTable.Value;
+                mappingTable = _oleCmdMappingTable;
             }
             else if (guidCmdGroup.Equals(CGID_EditingCommands))
             {
                 EnsureEditingCommandsTable();
-                mappingTable = _editingCommandsMappingTable.Value;
+                mappingTable = _editingCommandsMappingTable;
             }
 
             return mappingTable;
         }
         private void EnsureOleCmdMappingTable()
         {
-            if (_oleCmdMappingTable.Value == null)
+            if (_oleCmdMappingTable == null)
             {
-                _oleCmdMappingTable.Value = new SortedList(10);
+                _oleCmdMappingTable = new SortedList(10);
 
                 //Add applevel commands here
-                _oleCmdMappingTable.Value.Add((uint)UnsafeNativeMethods.OLECMDID.OLECMDID_SAVE, new CommandWithArgument(ApplicationCommands.Save));
-                _oleCmdMappingTable.Value.Add((uint)UnsafeNativeMethods.OLECMDID.OLECMDID_SAVEAS, new CommandWithArgument(ApplicationCommands.SaveAs));
-                _oleCmdMappingTable.Value.Add((uint)UnsafeNativeMethods.OLECMDID.OLECMDID_PRINT, new CommandWithArgument(ApplicationCommands.Print));
-                _oleCmdMappingTable.Value.Add((uint)UnsafeNativeMethods.OLECMDID.OLECMDID_CUT, new CommandWithArgument(ApplicationCommands.Cut));
-                _oleCmdMappingTable.Value.Add((uint)UnsafeNativeMethods.OLECMDID.OLECMDID_COPY, new CommandWithArgument(ApplicationCommands.Copy));
-                _oleCmdMappingTable.Value.Add((uint)UnsafeNativeMethods.OLECMDID.OLECMDID_PASTE, new CommandWithArgument(ApplicationCommands.Paste));
-                _oleCmdMappingTable.Value.Add((uint)UnsafeNativeMethods.OLECMDID.OLECMDID_PROPERTIES, new CommandWithArgument(ApplicationCommands.Properties));
+                _oleCmdMappingTable.Add((uint)UnsafeNativeMethods.OLECMDID.OLECMDID_SAVE, new CommandWithArgument(ApplicationCommands.Save));
+                _oleCmdMappingTable.Add((uint)UnsafeNativeMethods.OLECMDID.OLECMDID_SAVEAS, new CommandWithArgument(ApplicationCommands.SaveAs));
+                _oleCmdMappingTable.Add((uint)UnsafeNativeMethods.OLECMDID.OLECMDID_PRINT, new CommandWithArgument(ApplicationCommands.Print));
+                _oleCmdMappingTable.Add((uint)UnsafeNativeMethods.OLECMDID.OLECMDID_CUT, new CommandWithArgument(ApplicationCommands.Cut));
+                _oleCmdMappingTable.Add((uint)UnsafeNativeMethods.OLECMDID.OLECMDID_COPY, new CommandWithArgument(ApplicationCommands.Copy));
+                _oleCmdMappingTable.Add((uint)UnsafeNativeMethods.OLECMDID.OLECMDID_PASTE, new CommandWithArgument(ApplicationCommands.Paste));
+                _oleCmdMappingTable.Add((uint)UnsafeNativeMethods.OLECMDID.OLECMDID_PROPERTIES, new CommandWithArgument(ApplicationCommands.Properties));
 
                 //Set the Enabled property of Stop and Refresh commands correctly
-                _oleCmdMappingTable.Value.Add((uint)UnsafeNativeMethods.OLECMDID.OLECMDID_REFRESH, new CommandWithArgument(NavigationCommands.Refresh));
-                _oleCmdMappingTable.Value.Add((uint)UnsafeNativeMethods.OLECMDID.OLECMDID_STOP, new CommandWithArgument(NavigationCommands.BrowseStop));
+                _oleCmdMappingTable.Add((uint)UnsafeNativeMethods.OLECMDID.OLECMDID_REFRESH, new CommandWithArgument(NavigationCommands.Refresh));
+                _oleCmdMappingTable.Add((uint)UnsafeNativeMethods.OLECMDID.OLECMDID_STOP, new CommandWithArgument(NavigationCommands.BrowseStop));
             }
         }
 
         private void EnsureApplicationCommandsTable()
         {
-            if (_applicationCommandsMappingTable.Value == null)
+            if (_applicationCommandsMappingTable == null)
             {
                 /* we want to possible add 26 entries, so the capacity should be
                  * 26/0.72 = 19 for default of 1.0 load factor*/
-                _applicationCommandsMappingTable.Value = new Hashtable(19);
+                _applicationCommandsMappingTable = new Hashtable(19);
 
                 //Add applevel commands here
                 // Note: The keys are added as uint type so that the default container comparer works
                 // when we try to look up a command by a uint cmdid.
-                _applicationCommandsMappingTable.Value.Add((uint)AppCommands.Edit_Cut, new CommandWithArgument(ApplicationCommands.Cut));
-                _applicationCommandsMappingTable.Value.Add((uint)AppCommands.Edit_Copy, new CommandWithArgument(ApplicationCommands.Copy));
-                _applicationCommandsMappingTable.Value.Add((uint)AppCommands.Edit_Paste, new CommandWithArgument(ApplicationCommands.Paste));
-                _applicationCommandsMappingTable.Value.Add((uint)AppCommands.Edit_SelectAll, new CommandWithArgument(ApplicationCommands.SelectAll));
-                _applicationCommandsMappingTable.Value.Add((uint)AppCommands.Edit_Find, new CommandWithArgument(ApplicationCommands.Find));
+                _applicationCommandsMappingTable.Add((uint)AppCommands.Edit_Cut, new CommandWithArgument(ApplicationCommands.Cut));
+                _applicationCommandsMappingTable.Add((uint)AppCommands.Edit_Copy, new CommandWithArgument(ApplicationCommands.Copy));
+                _applicationCommandsMappingTable.Add((uint)AppCommands.Edit_Paste, new CommandWithArgument(ApplicationCommands.Paste));
+                _applicationCommandsMappingTable.Add((uint)AppCommands.Edit_SelectAll, new CommandWithArgument(ApplicationCommands.SelectAll));
+                _applicationCommandsMappingTable.Add((uint)AppCommands.Edit_Find, new CommandWithArgument(ApplicationCommands.Find));
 
                 // Add standard navigation commands
-                _applicationCommandsMappingTable.Value.Add((uint)AppCommands.View_Refresh, new CommandWithArgument(NavigationCommands.Refresh));
-                _applicationCommandsMappingTable.Value.Add((uint)AppCommands.View_Stop, new CommandWithArgument(NavigationCommands.BrowseStop));
+                _applicationCommandsMappingTable.Add((uint)AppCommands.View_Refresh, new CommandWithArgument(NavigationCommands.Refresh));
+                _applicationCommandsMappingTable.Add((uint)AppCommands.View_Stop, new CommandWithArgument(NavigationCommands.BrowseStop));
 
                 // add document viewer commands
-                _applicationCommandsMappingTable.Value.Add((uint)AppCommands.Edit_Digitalsignatures_SignDocument, new CommandWithArgument(DocumentApplicationDocumentViewer.Sign));
-                _applicationCommandsMappingTable.Value.Add((uint)AppCommands.Edit_Digitalsignatures_RequestSignature, new CommandWithArgument(DocumentApplicationDocumentViewer.RequestSigners));
-                _applicationCommandsMappingTable.Value.Add((uint)AppCommands.Edit_Digitalsignatures_ViewSignature, new CommandWithArgument(DocumentApplicationDocumentViewer.ShowSignatureSummary));
-                _applicationCommandsMappingTable.Value.Add((uint)AppCommands.Edit_Permission_Set, new CommandWithArgument(DocumentApplicationDocumentViewer.ShowRMPublishingUI));
-                _applicationCommandsMappingTable.Value.Add((uint)AppCommands.Edit_Permission_View, new CommandWithArgument(DocumentApplicationDocumentViewer.ShowRMPermissions));
-                _applicationCommandsMappingTable.Value.Add((uint)AppCommands.Edit_Permission_Restrict, new CommandWithArgument(DocumentApplicationDocumentViewer.ShowRMCredentialManager));
-                _applicationCommandsMappingTable.Value.Add((uint)AppCommands.View_Zoom_In, new CommandWithArgument(NavigationCommands.IncreaseZoom));
-                _applicationCommandsMappingTable.Value.Add((uint)AppCommands.View_Zoom_Out, new CommandWithArgument(NavigationCommands.DecreaseZoom));
-                _applicationCommandsMappingTable.Value.Add((uint)AppCommands.View_Zoom_400, new CommandWithArgument(NavigationCommands.Zoom, 400));
-                _applicationCommandsMappingTable.Value.Add((uint)AppCommands.View_Zoom_250, new CommandWithArgument(NavigationCommands.Zoom, 250));
-                _applicationCommandsMappingTable.Value.Add((uint)AppCommands.View_Zoom_150, new CommandWithArgument(NavigationCommands.Zoom, 150));
-                _applicationCommandsMappingTable.Value.Add((uint)AppCommands.View_Zoom_100, new CommandWithArgument(NavigationCommands.Zoom, 100));
-                _applicationCommandsMappingTable.Value.Add((uint)AppCommands.View_Zoom_75, new CommandWithArgument(NavigationCommands.Zoom, 75));
-                _applicationCommandsMappingTable.Value.Add((uint)AppCommands.View_Zoom_50, new CommandWithArgument(NavigationCommands.Zoom, 50));
-                _applicationCommandsMappingTable.Value.Add((uint)AppCommands.View_Zoom_25, new CommandWithArgument(NavigationCommands.Zoom, 25));
-                _applicationCommandsMappingTable.Value.Add((uint)AppCommands.View_Zoom_PageWidth, new CommandWithArgument(DocumentViewer.FitToWidthCommand));
-                _applicationCommandsMappingTable.Value.Add((uint)AppCommands.View_Zoom_WholePage, new CommandWithArgument(DocumentViewer.FitToHeightCommand));
-                _applicationCommandsMappingTable.Value.Add((uint)AppCommands.View_Zoom_TwoPages, new CommandWithArgument(DocumentViewer.FitToMaxPagesAcrossCommand, 2));
-                _applicationCommandsMappingTable.Value.Add((uint)AppCommands.View_Zoom_Thumbnails, new CommandWithArgument(DocumentViewer.ViewThumbnailsCommand));
+                _applicationCommandsMappingTable.Add((uint)AppCommands.Edit_Digitalsignatures_SignDocument, new CommandWithArgument(DocumentApplicationDocumentViewer.Sign));
+                _applicationCommandsMappingTable.Add((uint)AppCommands.Edit_Digitalsignatures_RequestSignature, new CommandWithArgument(DocumentApplicationDocumentViewer.RequestSigners));
+                _applicationCommandsMappingTable.Add((uint)AppCommands.Edit_Digitalsignatures_ViewSignature, new CommandWithArgument(DocumentApplicationDocumentViewer.ShowSignatureSummary));
+                _applicationCommandsMappingTable.Add((uint)AppCommands.Edit_Permission_Set, new CommandWithArgument(DocumentApplicationDocumentViewer.ShowRMPublishingUI));
+                _applicationCommandsMappingTable.Add((uint)AppCommands.Edit_Permission_View, new CommandWithArgument(DocumentApplicationDocumentViewer.ShowRMPermissions));
+                _applicationCommandsMappingTable.Add((uint)AppCommands.Edit_Permission_Restrict, new CommandWithArgument(DocumentApplicationDocumentViewer.ShowRMCredentialManager));
+                _applicationCommandsMappingTable.Add((uint)AppCommands.View_Zoom_In, new CommandWithArgument(NavigationCommands.IncreaseZoom));
+                _applicationCommandsMappingTable.Add((uint)AppCommands.View_Zoom_Out, new CommandWithArgument(NavigationCommands.DecreaseZoom));
+                _applicationCommandsMappingTable.Add((uint)AppCommands.View_Zoom_400, new CommandWithArgument(NavigationCommands.Zoom, 400));
+                _applicationCommandsMappingTable.Add((uint)AppCommands.View_Zoom_250, new CommandWithArgument(NavigationCommands.Zoom, 250));
+                _applicationCommandsMappingTable.Add((uint)AppCommands.View_Zoom_150, new CommandWithArgument(NavigationCommands.Zoom, 150));
+                _applicationCommandsMappingTable.Add((uint)AppCommands.View_Zoom_100, new CommandWithArgument(NavigationCommands.Zoom, 100));
+                _applicationCommandsMappingTable.Add((uint)AppCommands.View_Zoom_75, new CommandWithArgument(NavigationCommands.Zoom, 75));
+                _applicationCommandsMappingTable.Add((uint)AppCommands.View_Zoom_50, new CommandWithArgument(NavigationCommands.Zoom, 50));
+                _applicationCommandsMappingTable.Add((uint)AppCommands.View_Zoom_25, new CommandWithArgument(NavigationCommands.Zoom, 25));
+                _applicationCommandsMappingTable.Add((uint)AppCommands.View_Zoom_PageWidth, new CommandWithArgument(DocumentViewer.FitToWidthCommand));
+                _applicationCommandsMappingTable.Add((uint)AppCommands.View_Zoom_WholePage, new CommandWithArgument(DocumentViewer.FitToHeightCommand));
+                _applicationCommandsMappingTable.Add((uint)AppCommands.View_Zoom_TwoPages, new CommandWithArgument(DocumentViewer.FitToMaxPagesAcrossCommand, 2));
+                _applicationCommandsMappingTable.Add((uint)AppCommands.View_Zoom_Thumbnails, new CommandWithArgument(DocumentViewer.ViewThumbnailsCommand));
             }
         }
 
         private void EnsureEditingCommandsTable()
         {
-            if (_editingCommandsMappingTable.Value == null)
+            if (_editingCommandsMappingTable == null)
             {
-                _editingCommandsMappingTable.Value = new SortedList(2);
+                _editingCommandsMappingTable = new SortedList(2);
                 // Note: The keys are added as uint type so that the default container comparer works
                 // when we try to look up a command by a uint cmdid.
-                _editingCommandsMappingTable.Value.Add((uint)EditingCommandIds.Backspace,
+                _editingCommandsMappingTable.Add((uint)EditingCommandIds.Backspace,
                     new CommandWithArgument(System.Windows.Documents.EditingCommands.Backspace));
-                _editingCommandsMappingTable.Value.Add((uint)EditingCommandIds.Delete,
+                _editingCommandsMappingTable.Add((uint)EditingCommandIds.Delete,
                     new CommandWithArgument(System.Windows.Documents.EditingCommands.Delete));
             }
         }
 
-        private SecurityCriticalDataForSet<SortedList> _oleCmdMappingTable;
-        private SecurityCriticalDataForSet<Hashtable> _applicationCommandsMappingTable;
-        private SecurityCriticalDataForSet<SortedList> _editingCommandsMappingTable;
+        private SortedList _oleCmdMappingTable;
+        private Hashtable _applicationCommandsMappingTable;
+        private SortedList _editingCommandsMappingTable;
     }
     #endregion OleCmdHelper class
 
@@ -280,7 +280,7 @@ namespace MS.Internal.AppModel
 
         public CommandWithArgument(RoutedCommand command, object argument)
         {
-            _command = new SecurityCriticalDataForSet<RoutedCommand>(command);
+            _command = command;
             _argument = argument;
         }
 
@@ -293,19 +293,19 @@ namespace MS.Internal.AppModel
 
             // ISecureCommand is used to enforce user-initiated invocation. Cut, Copy and Paste
             // are marked as such. See ApplicationCommands.GetRequiredPermissions.
-            if (_command.Value is ISecureCommand)
+            if (_command is ISecureCommand)
             {
                 bool unused;
-                if (_command.Value.CriticalCanExecute(argument, target, /* trusted: */ true, out unused))
+                if (_command.CriticalCanExecute(argument, target, /* trusted: */ true, out unused))
                 {
-                    _command.Value.ExecuteCore(argument, target, /* userInitiated: */ true);
+                    _command.ExecuteCore(argument, target, /* userInitiated: */ true);
                     return true;
                 }
                 return false;
             }
-            if (_command.Value.CanExecute(argument, target))
+            if (_command.CanExecute(argument, target))
             {
-                _command.Value.Execute(argument, target);
+                _command.Execute(argument, target);
                 return true;
             }
             return false;
@@ -321,25 +321,25 @@ namespace MS.Internal.AppModel
 
             // ISecureCommand is used to enforce user-initiated invocation. Cut, Copy and Paste
             // are marked as such. See ApplicationCommands.GetRequiredPermissions.
-            if (_command.Value is ISecureCommand)
+            if (_command is ISecureCommand)
             {
                 bool unused;
-                return _command.Value.CriticalCanExecute(argument, target, /* trusted: */ true, out unused);
+                return _command.CriticalCanExecute(argument, target, /* trusted: */ true, out unused);
             }
-            return _command.Value.CanExecute(argument, target);
+            return _command.CanExecute(argument, target);
         }
 
         public RoutedCommand Command
         {
             get
             {
-                return _command.Value;
+                return _command;
             }
         }
 
         private object _argument;
 
-        private SecurityCriticalDataForSet<RoutedCommand> _command;
+        private RoutedCommand _command;
     }
 
     #endregion

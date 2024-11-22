@@ -31,13 +31,11 @@ namespace MS.Win32
 #elif DRT
     using MS.Internal.Drt;
 #else
-#error Attempt to use FriendAccessAllowedAttribute from an unknown assembly.
     using MS.Internal.YourAssemblyName;
 #endif
 
     using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
-    [FriendAccessAllowed]
     internal partial class UnsafeNativeMethods
     {
         [DllImport(ExternDll.Kernel32, CharSet=CharSet.Unicode, SetLastError=true, EntryPoint="GetTempFileName")]
@@ -170,9 +168,7 @@ namespace MS.Win32
         /// </summary>
         /// <param name="hMem"></param>
         /// <returns></returns>
-        #pragma warning disable SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported. 
-        [DllImport(ExternDll.Kernel32, SetLastError = true), ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
-        #pragma warning restore SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported. 
+        [DllImport(ExternDll.Kernel32, SetLastError = true)]
         internal static extern IntPtr LocalFree(IntPtr hMem);
 
 #if BASE_NATIVEMETHODS
@@ -189,9 +185,11 @@ namespace MS.Win32
 
 
 #if BASE_NATIVEMETHODS
-
         [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
         internal static extern IntPtr GetMessageExtraInfo();
+
+        [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
+        internal static extern IntPtr SetMessageExtraInfo(IntPtr lParam);
 #endif
 
 #if BASE_NATIVEMETHODS
@@ -638,9 +636,7 @@ namespace MS.Win32
             }
         }
         [DllImport(ExternDll.User32, EntryPoint = "GetIconInfo", CharSet = CharSet.Auto, SetLastError = true)]
-        #pragma warning disable SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported. 
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
-        #pragma warning restore SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported. 
+
         private static extern bool GetIconInfoImpl(HandleRef hIcon, [Out] ICONINFO_IMPL piconinfo);
 
         [StructLayout(LayoutKind.Sequential)]
@@ -664,9 +660,6 @@ namespace MS.Win32
             piconinfo = new NativeMethods.ICONINFO();
             ICONINFO_IMPL iconInfoImpl = new ICONINFO_IMPL();
 
-            #pragma warning disable SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported. 
-            SRCS.RuntimeHelpers.PrepareConstrainedRegions(); // Mark the following as special
-            #pragma warning restore SYSLIB0004 // The Constrained Execution Region (CER) feature is not supported. 
             try
             {
                 // Intentionally empty

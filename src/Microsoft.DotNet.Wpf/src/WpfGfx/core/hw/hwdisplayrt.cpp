@@ -113,7 +113,7 @@ CHwDisplayRenderTarget::Create(
             associatedDisplay,
             eWindowLayerType
             );
-        
+
         IFCOOM(*ppRenderTarget);
         (*ppRenderTarget)->AddRef(); // CHwDisplayRenderTarget::ctor sets ref count == 0
     }
@@ -163,6 +163,8 @@ CHwDisplayRenderTarget::Init(
         hwnd,
         dwFlags
         );
+
+    m_fDisableDirtyRectangles = (dwFlags & MilRTInitialization::DisableDirtyRectangles) != 0;
 
 #if DBG_STEP_RENDERING
     m_fDbgClearOnPresent = !(dwFlags & MilRTInitialization::PresentRetainContents);
@@ -378,6 +380,12 @@ CHwDisplayRenderTarget::Present(
         goto Cleanup;
     }
 
+    if (m_fDisableDirtyRectangles)
+    {
+        // invalidating the empty rect tells ShouldPresent to present everything
+        InvalidateRect(reinterpret_cast<const CMILSurfaceRect *>(&CMILSurfaceRect::sc_rcEmpty));
+    }
+
     bool fPresent = false;
     RGNDATA *pDirtyRegion = NULL;
     IFC(ShouldPresent(
@@ -417,8 +425,8 @@ CHwDisplayRenderTarget::Present(
     // Note that WGXERR_DISPLAYSTATEINVALID is bubbled up here so the caller is
     // responsible for recreating this object
     if (m_D3DPresentParams.SwapEffect == D3DSWAPEFFECT_COPY)
-    {        
-        AssertConstMsgW(   (  m_MILDC.GetRTInitializationFlags() 
+    {
+        AssertConstMsgW(   (  m_MILDC.GetRTInitializationFlags()
                             & MilRTInitialization::PresentRetainContents
                               )
                         || IsTagEnabled(tagMILStepRendering),
@@ -497,11 +505,11 @@ Cleanup:
 //
 //  Member:    CHwDisplayRenderTarget::InvalidateRect
 //
-//  Synopsis:  Check for enabled rendering and retain contents before 
+//  Synopsis:  Check for enabled rendering and retain contents before
 //             delegating to base class.
 //
 
-HRESULT 
+HRESULT
 CHwDisplayRenderTarget::InvalidateRect(
     __in_ecount(1) CMILSurfaceRect const *pRect
     )
@@ -525,7 +533,7 @@ Cleanup:
 //             layout, and desired swap effect.
 //
 
-HRESULT 
+HRESULT
 CHwDisplayRenderTarget::PresentInternal(
     __in_ecount(1) CMILSurfaceRect const *prcSource,
     __in_ecount(1) CMILSurfaceRect const *prcDest,
@@ -602,7 +610,7 @@ volatile BOOL g_fStepHWRendering = false;
 volatile BOOL g_fStepHWRenderingLock = false;
 #endif
 
-void 
+void
 CHwDisplayRenderTarget::ShowSteppedRendering(
     __in LPCTSTR pszRenderDesc,
     __in_ecount(1) const ISteppedRenderingSurfaceRT *pRT
@@ -628,8 +636,8 @@ CHwDisplayRenderTarget::ShowSteppedRendering(
     CMILSurfaceRect rcPresentSource;
     CMILSurfaceRect rcPresentDest(
         0,
-        0, 
-        m_uWidth, 
+        0,
+        m_uWidth,
         m_uHeight,
         XYWH_Parameters
         );
@@ -975,10 +983,10 @@ Cleanup:
 
 //+----------------------------------------------------------------------------
 //
-//  Member:    
+//  Member:
 //      CHwDisplayRenderTarget::DbgStepCreateD3DSurfaceFromBitmapSource
 //
-//  Synopsis:  
+//  Synopsis:
 //      Creates a CD3DSurface in video memory from an IWGXBitmapSource. This
 //      method was written for stepped rendering, so it is named as such.
 //      Before renaming this function and using it retail, investigate whether
@@ -1009,7 +1017,7 @@ CHwDisplayRenderTarget::DbgStepCreateD3DSurfaceFromBitmapSource(
     IFC(pBitmap->GetPixelFormat(
         &fmtBitmap
         ));
-    
+
     Assert(fmtBitmap == MilPixelFormat::PBGRA32bpp);
 
     hwVidMemManager.SetRealizationParameters(
@@ -1310,7 +1318,7 @@ CHwDisplayRenderTarget::AdvanceFrame(
     if (SUCCEEDED(m_hrDisplayInvalid) && m_pD3DDevice)
     {
         ENTER_DEVICE_FOR_SCOPE(*m_pD3DDevice);
-        
+
         m_pD3DDevice->AdvanceFrame(uFrameNumber);
     }
 }

@@ -16,20 +16,20 @@ namespace System.Windows.Media
     internal class MatrixStack
     {
         private Matrix[] _items;
-        private int _size; 
-        
+        private int _size;
+
 #if DEBUG
-        private static readonly int s_initialSize = 4;
+        private const int s_initialSize = 4;
 #else
         private static readonly int s_initialSize = 40; // sizeof(Matrix) * 40 =  2240 bytes. Must be > 4
 #endif
-        private static readonly int s_growFactor = 2; 
-        private static readonly int s_shrinkFactor = s_growFactor + 1;
+        private const int s_growFactor = 2;
+        private const int s_shrinkFactor = s_growFactor + 1;
 
         // The following members are used to lazily manage the memory allocated by the stack.
         private int _highWaterMark;
         private int _observeCount;
-        private static readonly int s_trimCount = 10;
+        private const int s_trimCount = 10;
 
         public MatrixStack()
         {

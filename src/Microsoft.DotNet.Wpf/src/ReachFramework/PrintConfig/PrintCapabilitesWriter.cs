@@ -27,10 +27,7 @@ namespace MS.Internal.Printing.Configuration
         /// </remarks>
         public PrintCapabilitiesWriter(Stream stream, string privateQname, string privateNamespace, bool indent)
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
+            ArgumentNullException.ThrowIfNull(stream);
 
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.CheckCharacters = false;

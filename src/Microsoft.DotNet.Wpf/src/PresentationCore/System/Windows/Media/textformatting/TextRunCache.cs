@@ -15,7 +15,6 @@
 using System;
 using System.Collections.Generic;
 
-using MS.Internal.PresentationCore;
 using MS.Internal.TextFormatting;
 
 namespace System.Windows.Media.TextFormatting
@@ -83,7 +82,6 @@ namespace System.Windows.Media.TextFormatting
 #if OPTIMALBREAK_API
         public IList<TextSpan<TextRun>> GetTextRunSpans()
 #else
-        [FriendAccessAllowed]
         internal IList<TextSpan<TextRun>> GetTextRunSpans()
 #endif               
         {

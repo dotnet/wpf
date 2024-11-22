@@ -36,11 +36,9 @@ namespace MS.Internal.IO.Packaging
         /// <param name="syncRoot">object to lock on</param>
         internal SynchronizingStream(Stream stream, Object syncRoot)
         {
-            if (stream == null)
-                throw new ArgumentNullException("stream");
+            ArgumentNullException.ThrowIfNull(stream);
 
-            if (syncRoot == null)
-                throw new ArgumentNullException("syncRoot");
+            ArgumentNullException.ThrowIfNull(syncRoot);
 
             _baseStream = stream;
             _syncRoot = syncRoot;
@@ -271,8 +269,7 @@ namespace MS.Internal.IO.Packaging
         /// <remarks>Pre-condition that lock has been acquired.</remarks>
         private void CheckDisposed()
         {
-            if (_baseStream == null)
-                throw new ObjectDisposedException("Stream");
+            ObjectDisposedException.ThrowIf(_baseStream is null, typeof(Stream));
         }
 
         //------------------------------------------------------

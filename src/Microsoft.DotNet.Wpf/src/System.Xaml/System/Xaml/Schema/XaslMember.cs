@@ -70,7 +70,7 @@ namespace System.Xaml.Schema
         new public XamlType DeclaringType
         {
             get { return DeclaringTypeCore; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         // Should the default be "x:String"?
@@ -214,8 +214,8 @@ namespace System.Xaml.Schema
         //protected override bool IsDirectiveCore { get; set; }
         protected override XamlType TargetTypeCore
         {
-            get { throw new InvalidOperationException(SR.Get(SRID.GetTargetTypeOnNonAttachableMember)); }
-            set { throw new InvalidOperationException(SR.Get(SRID.SetTargetTypeOnNonAttachableMember)); }
+            get { throw new InvalidOperationException(SR.GetTargetTypeOnNonAttachableMember); }
+            set { throw new InvalidOperationException(SR.SetTargetTypeOnNonAttachableMember); }
         }
 
         protected override AllowedMemberLocation AllowedLocationCore
@@ -257,19 +257,19 @@ namespace System.Xaml.Schema
         protected override bool IsAttachableCore
         {
             get { return false; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override bool IsEventCore
         {
             get { return false; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override bool IsDirectiveCore
         {
             get { return false; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
     }
 
@@ -283,19 +283,19 @@ namespace System.Xaml.Schema
         protected override bool IsAttachableCore
         {
             get { return false; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override bool IsEventCore
         {
             get { return false; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override bool IsDirectiveCore
         {
             get { return true; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
     }
 
@@ -309,19 +309,19 @@ namespace System.Xaml.Schema
         protected override bool IsAttachableCore
         {
             get { return false; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override bool IsEventCore
         {
             get { return true; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override bool IsDirectiveCore
         {
             get { return false; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
     }
 
@@ -351,19 +351,19 @@ namespace System.Xaml.Schema
         protected override bool IsAttachableCore
         {
             get { return true; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override bool IsEventCore
         {
             get { return false; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override bool IsDirectiveCore
         {
             get { return false; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
     }
 
@@ -377,19 +377,19 @@ namespace System.Xaml.Schema
         protected override bool IsAttachableCore
         {
             get { return true; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override bool IsEventCore
         {
             get { return true; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override bool IsDirectiveCore
         {
             get { return false; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
     }
 

@@ -1,0 +1,9 @@
+<Project>
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+  <PropertyGroup>
+    <IsShipping>false</IsShipping>
+    <CLSCompliant>false</CLSCompliant>
+    <CopyTransitiveReferences>true</CopyTransitiveReferences>
+    <DisableTransitiveProjectReferences>false</DisableTransitiveProjectReferences>
+  </PropertyGroup>
+</Project>

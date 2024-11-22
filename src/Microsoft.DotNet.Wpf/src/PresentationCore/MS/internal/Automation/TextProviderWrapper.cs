@@ -18,7 +18,6 @@ using System.Windows.Automation.Provider;
 using System.Windows.Automation.Text;
 using System.Windows.Automation.Peers;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.Automation
 {
@@ -64,7 +63,7 @@ namespace MS.Internal.Automation
         {
             if (!(childElement is ElementProxy))
             {
-                throw new ArgumentException(SR.Get(SRID.TextProvider_InvalidChild, "childElement"));
+                throw new ArgumentException(SR.Format(SR.TextProvider_InvalidChild, "childElement"));
             }
 
             return (ITextRangeProvider)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(RangeFromChild), childElement);

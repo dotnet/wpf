@@ -362,7 +362,7 @@ namespace System.Windows.Controls
             {
                 if (value.CacheLengthUnit == VirtualizationCacheLengthUnit.Page)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.PageCacheSizeNotAllowed));
+                    throw new InvalidOperationException(SR.PageCacheSizeNotAllowed);
                 }
                 GroupItem.HierarchicalVirtualizationConstraintsField.SetValue(this, value);
             }
@@ -377,8 +377,8 @@ namespace System.Windows.Controls
 
                 Helper.ApplyCorrectionFactorToPixelHeaderSize(ParentTreeView, this, ItemsHost, ref pixelHeaderSize);
 
-                Size logicalHeaderSize = new Size(DoubleUtil.GreaterThan(pixelHeaderSize.Width, 0) ? 1 : 0,
-                                DoubleUtil.GreaterThan(pixelHeaderSize.Height, 0) ? 1 : 0);
+                Size logicalHeaderSize = new Size(DoubleUtil.GreaterThanZero(pixelHeaderSize.Width) ? 1 : 0,
+                                DoubleUtil.GreaterThanZero(pixelHeaderSize.Height) ? 1 : 0);
 
                 return new HierarchicalVirtualizationHeaderDesiredSizes(logicalHeaderSize, pixelHeaderSize);
             }
@@ -998,7 +998,7 @@ namespace System.Windows.Controls
                     break;
 
                 default:
-                    throw new NotSupportedException(SR.Get(SRID.UnexpectedCollectionChangeAction, e.Action));
+                    throw new NotSupportedException(SR.Format(SR.UnexpectedCollectionChangeAction, e.Action));
             }
         }
 

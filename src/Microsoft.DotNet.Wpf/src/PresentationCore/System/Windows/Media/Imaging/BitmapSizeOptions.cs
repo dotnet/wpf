@@ -16,7 +16,6 @@ using System.Windows.Media;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Imaging
 {
@@ -118,10 +117,7 @@ namespace System.Windows.Media.Imaging
         /// <param name="pixelHeight">Height of the resulting Bitmap</param>
         public static BitmapSizeOptions FromHeight(int pixelHeight)
         {
-            if (pixelHeight <= 0)
-            {
-                throw new System.ArgumentOutOfRangeException("pixelHeight", SR.Get(SRID.ParameterMustBeGreaterThanZero));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pixelHeight);
 
             BitmapSizeOptions sizeOptions = new BitmapSizeOptions();
 
@@ -139,10 +135,7 @@ namespace System.Windows.Media.Imaging
         /// <param name="pixelWidth">Width of the resulting Bitmap</param>
         public static BitmapSizeOptions FromWidth(int pixelWidth)
         {
-            if (pixelWidth <= 0)
-            {
-                throw new System.ArgumentOutOfRangeException("pixelWidth", SR.Get(SRID.ParameterMustBeGreaterThanZero));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pixelWidth);
 
             BitmapSizeOptions sizeOptions = new BitmapSizeOptions();
 
@@ -162,15 +155,8 @@ namespace System.Windows.Media.Imaging
         /// <param name="pixelHeight">Height of the resulting Bitmap</param>
         public static BitmapSizeOptions FromWidthAndHeight(int pixelWidth, int pixelHeight)
         {
-            if (pixelWidth <= 0)
-            {
-                throw new System.ArgumentOutOfRangeException("pixelWidth", SR.Get(SRID.ParameterMustBeGreaterThanZero));
-            }
-
-            if (pixelHeight <= 0)
-            {
-                throw new System.ArgumentOutOfRangeException("pixelHeight", SR.Get(SRID.ParameterMustBeGreaterThanZero));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pixelWidth);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pixelHeight);
 
             BitmapSizeOptions sizeOptions = new BitmapSizeOptions();
 
@@ -197,7 +183,7 @@ namespace System.Windows.Media.Imaging
                 case Rotation.Rotate270:
                     break;
                 default:
-                    throw new ArgumentException(SR.Get(SRID.Image_SizeOptionsAngle), "rotation");
+                    throw new ArgumentException(SR.Image_SizeOptionsAngle, "rotation");
             }
 
             BitmapSizeOptions sizeOptions = new BitmapSizeOptions();

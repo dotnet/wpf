@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -312,7 +314,7 @@ namespace System.Xaml
                     ObjectMarkupInfo r = Children[0] as ObjectMarkupInfo;
                     if (r == null)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.ExpectedObjectMarkupInfo));
+                        throw new InvalidOperationException(SR.ExpectedObjectMarkupInfo);
                     }
 
                     return r.IsAttributableMarkupExtension;
@@ -345,7 +347,7 @@ namespace System.Xaml
                 XamlDeferringLoader converter = deferringLoader.ConverterInstance;
                 if (converter == null)
                 {
-                    throw new XamlObjectReaderException(SR.Get(SRID.DeferringLoaderInstanceNull, deferringLoader));
+                    throw new XamlObjectReaderException(SR.Format(SR.DeferringLoaderInstanceNull, deferringLoader));
                 }
 
                 context.Instance = propertyValue;
@@ -910,11 +912,11 @@ namespace System.Xaml
                 {
                     if (property != null)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.AttachedPropertyOnTypeConvertedOrStringProperty, property.Name, value.ToString(), props[0].Key.ToString()));
+                        throw new InvalidOperationException(SR.Format(SR.AttachedPropertyOnTypeConvertedOrStringProperty, property.Name, value.ToString(), props[0].Key.ToString()));
                     }
                     else
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.AttachedPropertyOnDictionaryKey, value.ToString(), props[0].Key.ToString()));
+                        throw new InvalidOperationException(SR.Format(SR.AttachedPropertyOnDictionaryKey, value.ToString(), props[0].Key.ToString()));
                     }
                 }
             }
@@ -951,7 +953,7 @@ namespace System.Xaml
                     // that read-only properties must be attributed with DesignerSerializationVisibility.Content
                     // to visible. Unless RequireExplicitContentVisibility is set to true, we don't require that
                     // for readonly collection/dictionary/xdata.
-                    return !context.Settings.RequireExplicitContentVisibility || 
+                    return !context.Settings.RequireExplicitContentVisibility ||
                            GetSerializationVisibility(property) == DesignerSerializationVisibility.Content;
                 }
             }
@@ -994,7 +996,7 @@ namespace System.Xaml
         class ObjectMarkupInfo : ObjectOrValueMarkupInfo
         {
             List<MarkupInfo> properties = new List<MarkupInfo>();
-            bool? isAttributableMarkupExtension = null;
+            bool? isAttributableMarkupExtension;
 
             public List<MarkupInfo> Properties { get { return properties; } }
             public string Name { get; set; }
@@ -1259,20 +1261,20 @@ namespace System.Xaml
                 {
                     if (arguments != null && arguments.Count > 0)
                     {
-                        throw new XamlObjectReaderException(SR.Get(SRID.ObjectReaderInstanceDescriptorIncompatibleArguments));
+                        throw new XamlObjectReaderException(SR.ObjectReaderInstanceDescriptorIncompatibleArguments);
                     }
                     return;
                 }
                 else
                 {
-                    throw new XamlObjectReaderException(SR.Get(SRID.ObjectReaderInstanceDescriptorInvalidMethod));
+                    throw new XamlObjectReaderException(SR.ObjectReaderInstanceDescriptorInvalidMethod);
                 }
 
                 if (arguments != null)
                 {
                     if (arguments.Count != methodParams.Length)
                     {
-                        throw new XamlObjectReaderException(SR.Get(SRID.ObjectReaderInstanceDescriptorIncompatibleArguments));
+                        throw new XamlObjectReaderException(SR.ObjectReaderInstanceDescriptorIncompatibleArguments);
                     }
 
                     int argPos = 0;
@@ -1286,13 +1288,13 @@ namespace System.Xaml
                                 if (!(parameterInfo.ParameterType.IsGenericType &&
                                     parameterInfo.ParameterType.GetGenericTypeDefinition() == typeof(Nullable<>)))
                                 {
-                                    throw new XamlObjectReaderException(SR.Get(SRID.ObjectReaderInstanceDescriptorIncompatibleArgumentTypes, "null", parameterInfo.ParameterType));
+                                    throw new XamlObjectReaderException(SR.Format(SR.ObjectReaderInstanceDescriptorIncompatibleArgumentTypes, "null", parameterInfo.ParameterType));
                                 }
                             }
                         }
                         else if (!parameterInfo.ParameterType.IsAssignableFrom(argument.GetType()))
                         {
-                            throw new XamlObjectReaderException(SR.Get(SRID.ObjectReaderInstanceDescriptorIncompatibleArgumentTypes, argument.GetType(), parameterInfo.ParameterType));
+                            throw new XamlObjectReaderException(SR.Format(SR.ObjectReaderInstanceDescriptorIncompatibleArgumentTypes, argument.GetType(), parameterInfo.ParameterType));
                         }
                     }
                 }
@@ -1693,9 +1695,9 @@ namespace System.Xaml
                 {
                     if (ctorArgProps.Count == 0)
                     {
-                        throw new XamlObjectReaderException(SR.Get(SRID.ObjectReaderNoDefaultConstructor, value.GetType()));
+                        throw new XamlObjectReaderException(SR.Format(SR.ObjectReaderNoDefaultConstructor, value.GetType()));
                     }
-                    throw new XamlObjectReaderException(SR.Get(SRID.ObjectReaderNoMatchingConstructor, value.GetType()));
+                    throw new XamlObjectReaderException(SR.Format(SR.ObjectReaderNoMatchingConstructor, value.GetType()));
                 }
             }
 
@@ -1717,11 +1719,11 @@ namespace System.Xaml
 
                     if (xamlType.UnderlyingType.IsNested)
                     {
-                        throw new XamlObjectReaderException(SR.Get(SRID.ObjectReaderTypeIsNested, xamlType.Name));
+                        throw new XamlObjectReaderException(SR.Format(SR.ObjectReaderTypeIsNested, xamlType.Name));
                     }
                     else
                     {
-                        throw new XamlObjectReaderException(SR.Get(SRID.ObjectReaderTypeCannotRoundtrip, xamlType.Name));
+                        throw new XamlObjectReaderException(SR.Format(SR.ObjectReaderTypeCannotRoundtrip, xamlType.Name));
                     }
                 }
             }
@@ -1772,7 +1774,7 @@ namespace System.Xaml
                 if (!String.IsNullOrEmpty(Name) &&
                     !namesInCurrentScope.Peek().Add(Name))
                 {
-                    throw new XamlObjectReaderException(SR.Get(SRID.ObjectReaderXamlNamedElementAlreadyRegistered, Name));
+                    throw new XamlObjectReaderException(SR.Format(SR.ObjectReaderXamlNamedElementAlreadyRegistered, Name));
                 }
 
                 // Recurse through all of the values I have.
@@ -1790,14 +1792,14 @@ namespace System.Xaml
             {
                 string typestring = context.ConvertXamlTypeToString(context.LocalAssemblyAwareGetXamlType(type));
 
-                return typestring + "." + methodName;
+                return $"{typestring}.{methodName}";
             }
 
             static ObjectMarkupInfo ForArray(Array value, SerializerContext context)
             {
                 if (value.Rank > 1)
                 {
-                    throw new XamlObjectReaderException(SR.Get(SRID.ObjectReaderMultidimensionalArrayNotSupported));
+                    throw new XamlObjectReaderException(SR.ObjectReaderMultidimensionalArrayNotSupported);
                 }
 
                 var type = context.LocalAssemblyAwareGetXamlType(value.GetType());
@@ -1875,7 +1877,7 @@ namespace System.Xaml
 
                         if (attachedProperty == null)
                         {
-                            throw new XamlObjectReaderException(SR.Get(SRID.ObjectReaderAttachedPropertyNotFound, owningType, ap.Key.MemberName));
+                            throw new XamlObjectReaderException(SR.Format(SR.ObjectReaderAttachedPropertyNotFound, owningType, ap.Key.MemberName));
                         }
 
                         if (!CanPropertyXamlRoundtrip(attachedProperty, context))
@@ -2091,7 +2093,7 @@ namespace System.Xaml
 
             static bool IsNull(MemberMarkupInfo propertyInfo)
             {
-                return propertyInfo.Children.Count == 1 && 
+                return propertyInfo.Children.Count == 1 &&
                        propertyInfo.Children[0] is ObjectMarkupInfo objectInfo &&
                        objectInfo.XamlNode.XamlType == XamlLanguage.Null;
             }
@@ -2130,7 +2132,7 @@ namespace System.Xaml
                     }
                 }
                 XamlMember property = propertyInfo.XamlNode.Member;
-                throw new XamlObjectReaderException(SR.Get(SRID.ObjectReaderXamlNamePropertyMustBeString, property.Name, property.DeclaringType));
+                throw new XamlObjectReaderException(SR.Format(SR.ObjectReaderXamlNamePropertyMustBeString, property.Name, property.DeclaringType));
             }
 
             //public override void Write(XamlWriter writer)
@@ -2244,7 +2246,7 @@ namespace System.Xaml
                     if (xIsDirective && !yIsDirective) { return XFirst; }
                     if (yIsDirective && !xIsDirective) { return YFirst; }
 
-                    return String.CompareOrdinal(xProperty.Name, yProperty.Name);
+                    return string.CompareOrdinal(xProperty.Name, yProperty.Name);
                 }
             }
 
@@ -2304,7 +2306,7 @@ namespace System.Xaml
                     if (xIsDirective && !yIsDirective) { return XFirst; }
                     if (yIsDirective && !yIsDirective) { return YFirst; }
 
-                    return String.CompareOrdinal(xProperty.Name, yProperty.Name);
+                    return string.CompareOrdinal(xProperty.Name, yProperty.Name);
                 }
             }
 
@@ -2627,7 +2629,7 @@ namespace System.Xaml
                 XamlType result = schemaContext.GetXamlType(clrType);
                 if (result == null)
                 {
-                    throw new XamlObjectReaderException(SR.Get(SRID.ObjectReaderTypeNotAllowed,
+                    throw new XamlObjectReaderException(SR.Format(SR.ObjectReaderTypeNotAllowed,
                         schemaContext.GetType(), clrType));
                 }
                 return result;
@@ -2638,7 +2640,7 @@ namespace System.Xaml
                 XamlType result = GetXamlType(clrType);
                 if(!result.IsVisibleTo(LocalAssembly) && !typeof(Type).IsAssignableFrom(clrType))
                 {
-                    throw new XamlObjectReaderException(SR.Get(SRID.ObjectReader_TypeNotVisible, clrType.FullName));
+                    throw new XamlObjectReaderException(SR.Format(SR.ObjectReader_TypeNotVisible, clrType.FullName));
                 }
                 return result;
             }
@@ -2850,10 +2852,7 @@ namespace System.Xaml
 
             public string GetName(object value)
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException(nameof(value));
-                }
+                ArgumentNullException.ThrowIfNull(value);
                 return context.GetName(value);
             }
         }
@@ -2881,7 +2880,7 @@ namespace System.Xaml
                 {
                     if (reader.NodeType != XamlNodeType.NamespaceDeclaration)
                     {
-                        throw new XamlObjectReaderException(SR.Get(SRID.XamlFactoryInvalidXamlNode, reader.NodeType));
+                        throw new XamlObjectReaderException(SR.Format(SR.XamlFactoryInvalidXamlNode, reader.NodeType));
                     }
 
                     if (!context.TryHoistNamespaceDeclaration(reader.Namespace))
@@ -2892,7 +2891,7 @@ namespace System.Xaml
 
                 if (reader.NodeType != XamlNodeType.StartObject)
                 {
-                    throw new XamlObjectReaderException(SR.Get(SRID.XamlFactoryInvalidXamlNode, reader.NodeType));
+                    throw new XamlObjectReaderException(SR.Format(SR.XamlFactoryInvalidXamlNode, reader.NodeType));
                 }
 
                 nodes.Add(new ValueMarkupInfo { XamlNode = new XamlNode(XamlNodeType.StartObject, reader.Type) });
@@ -2931,7 +2930,7 @@ namespace System.Xaml
                         break;
 
                     default:
-                        throw new InvalidOperationException(SR.Get(SRID.XamlFactoryInvalidXamlNode, reader.NodeType));
+                        throw new InvalidOperationException(SR.Format(SR.XamlFactoryInvalidXamlNode, reader.NodeType));
                     }
                 }
 
@@ -2946,7 +2945,7 @@ namespace System.Xaml
                 {
                     if (reader.NodeType != XamlNodeType.StartMember)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.XamlFactoryInvalidXamlNode(reader.NodeType, XamlNodeType.StartMember)));
+                        throw new InvalidOperationException(SR.Format(SR.XamlFactoryInvalidXamlNode(reader.NodeType, XamlNodeType.StartMember)));
                     }
 
                     var propertyInfo = new MemberMarkupInfo()
@@ -2997,41 +2996,6 @@ namespace System.Xaml
                 foreach (var property in Properties)
                 {
                     property.FindNamespace(context);
-                }
-            }
-        }
-
-        // need to implement our own Set class to alleviate ties to System.Core.dll
-        // HashSet<T> lives in System.Core.dll
-        class HashSet<T>
-        {
-            Dictionary<T, bool> dictionary;
-
-            public HashSet()
-            {
-                dictionary = new Dictionary<T, bool>();
-            }
-
-            public HashSet(IEqualityComparer<T> comparer)
-            {
-                dictionary = new Dictionary<T, bool>(comparer);
-            }
-
-            public bool Contains(T member)
-            {
-                return dictionary.ContainsKey(member);
-            }
-
-            public bool Add(T member)
-            {
-                if (Contains(member))
-                {
-                    return false;
-                }
-                else
-                {
-                    dictionary.Add(member, true);
-                    return true;
                 }
             }
         }

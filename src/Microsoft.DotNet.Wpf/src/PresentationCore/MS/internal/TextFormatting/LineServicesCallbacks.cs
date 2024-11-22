@@ -26,7 +26,6 @@ using MS.Internal.Shaping;
 using MS.Internal.FontCache;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 using MS.Internal.Text.TextInterface;
 
@@ -3418,7 +3417,7 @@ namespace MS.Internal.TextFormatting
 
         private void SaveNonCLSException(string methodName, Plsrun plsrun, LSRun lsrun)
         {
-            Exception e = new System.Exception(SR.Get(SRID.NonCLSException));
+            Exception e = new System.Exception(SR.NonCLSException);
             e.Data[ExceptionContext.Key] = new ExceptionContext(null, methodName, plsrun, lsrun);
             _exception = e;
         }

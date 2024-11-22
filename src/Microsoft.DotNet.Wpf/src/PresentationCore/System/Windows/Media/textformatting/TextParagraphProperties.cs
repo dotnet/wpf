@@ -11,12 +11,9 @@
 //
 //
 
-
 using System;
 using System.Collections.Generic;
 using System.Windows;
-using MS.Internal.PresentationCore;
-
 
 namespace System.Windows.Media.TextFormatting
 {
@@ -143,10 +140,8 @@ namespace System.Windows.Media.TextFormatting
         private TextLexicalService  _hyphenator;
         internal virtual TextLexicalService Hyphenator
         {
-            [FriendAccessAllowed]   // used by Framework
             get { return _hyphenator; }
 
-            [FriendAccessAllowed]   // used by Framework
             set { _hyphenator = value; }
         }
 #endif

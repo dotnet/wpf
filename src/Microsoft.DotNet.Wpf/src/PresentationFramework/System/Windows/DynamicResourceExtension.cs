@@ -39,10 +39,7 @@ namespace System.Windows
         public DynamicResourceExtension(
             object resourceKey)
         {
-            if (resourceKey == null)
-            {
-                throw new ArgumentNullException("resourceKey");
-            }
+            ArgumentNullException.ThrowIfNull(resourceKey);
             _resourceKey = resourceKey;
         }
 
@@ -59,7 +56,7 @@ namespace System.Windows
         {
             if (ResourceKey == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.MarkupExtensionResourceKey));
+                throw new InvalidOperationException(SR.MarkupExtensionResourceKey);
             }
 
             if (serviceProvider != null)
@@ -86,10 +83,7 @@ namespace System.Windows
             get { return _resourceKey; }
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
                 _resourceKey = value;
             }
         }

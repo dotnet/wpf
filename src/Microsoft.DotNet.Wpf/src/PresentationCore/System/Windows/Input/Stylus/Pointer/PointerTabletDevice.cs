@@ -121,13 +121,9 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// Updates the various size parameters for drag/drop/tap.
         /// </summary>
-        /// <param name="description"></param>
-        /// <param name="stylusLogic"></param>
         internal void UpdateSizeDeltas()
         {
             // Query default settings for mouse drag and double tap (with minimum of 1x1 size).
-            Size mouseDragDefault = new Size(Math.Max(1, MS.Win32.SafeSystemMetrics.DragDeltaX / 2),
-                                           Math.Max(1, MS.Win32.SafeSystemMetrics.DragDeltaY / 2));
             Size mouseDoubleTapDefault = new Size(Math.Max(1, MS.Win32.SafeSystemMetrics.DoubleClickDeltaX / 2),
                                            Math.Max(1, MS.Win32.SafeSystemMetrics.DoubleClickDeltaY / 2));
 

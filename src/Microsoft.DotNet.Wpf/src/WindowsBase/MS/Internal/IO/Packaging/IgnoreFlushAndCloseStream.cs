@@ -32,8 +32,7 @@ namespace MS.Internal.IO.Packaging
         /// <param name="stream"></param>
         internal IgnoreFlushAndCloseStream(Stream stream)
         {
-            if (stream == null)
-                throw new ArgumentNullException("stream");
+            ArgumentNullException.ThrowIfNull(stream);
 
             _stream = stream;
         }
@@ -213,7 +212,7 @@ namespace MS.Internal.IO.Packaging
         private void ThrowIfStreamDisposed()
         {
             if (_disposed)
-                throw new ObjectDisposedException(null, SR.Get(SRID.StreamObjectDisposed));
+                throw new ObjectDisposedException(null, SR.StreamObjectDisposed);
         }
 
         #endregion Private Methods

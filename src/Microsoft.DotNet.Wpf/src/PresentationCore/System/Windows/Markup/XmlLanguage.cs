@@ -118,9 +118,8 @@ namespace System.Windows.Markup
         public static XmlLanguage GetLanguage(string ietfLanguageTag)
         {
             XmlLanguage language;
-            
-            if (ietfLanguageTag == null)
-                throw new ArgumentNullException("ietfLanguageTag");
+
+            ArgumentNullException.ThrowIfNull(ietfLanguageTag);
 
             string lowercase = AsciiToLower(ietfLanguageTag);   // throws on non-ascii
 
@@ -189,7 +188,7 @@ namespace System.Windows.Markup
                 // see http://www.w3.org/International/questions/qa-no-language
                 //
                 // Just treat it the same as xml:lang=""
-                if(String.CompareOrdinal(lowerCaseTag, "und") == 0)
+                if(string.Equals(lowerCaseTag, "und", StringComparison.Ordinal))
                 {
                     lowerCaseTag = String.Empty;
                 }            
@@ -203,7 +202,7 @@ namespace System.Windows.Markup
                 catch (ArgumentException e)
                 {
                     _equivalentCultureFailed = true;
-                    throw new InvalidOperationException(SR.Get(SRID.XmlLangGetCultureFailure, lowerCaseTag), e);
+                    throw new InvalidOperationException(SR.Format(SR.XmlLangGetCultureFailure, lowerCaseTag), e);
                 }
             }
 
@@ -229,7 +228,7 @@ namespace System.Windows.Markup
         {
             if (_specificCulture == null)
             {
-                if (_lowerCaseTag.Length == 0 || String.CompareOrdinal(_lowerCaseTag, "und") == 0)
+                if (_lowerCaseTag.Length == 0 || string.Equals(_lowerCaseTag, "und", StringComparison.Ordinal))
                 {
                     _specificCulture = GetEquivalentCulture();
                 }
@@ -239,7 +238,7 @@ namespace System.Windows.Markup
 
                     if (culture.IetfLanguageTag.Length == 0)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.XmlLangGetSpecificCulture, _lowerCaseTag));
+                        throw new InvalidOperationException(SR.Format(SR.XmlLangGetSpecificCulture, _lowerCaseTag));
                     }
 
                     if (!culture.IsNeutralCulture)
@@ -256,7 +255,7 @@ namespace System.Windows.Markup
                         }
                         catch (ArgumentException e)
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.XmlLangGetSpecificCulture, _lowerCaseTag), e);
+                            throw new InvalidOperationException(SR.Format(SR.XmlLangGetSpecificCulture, _lowerCaseTag), e);
                         }
                     }
                 }
@@ -269,7 +268,6 @@ namespace System.Windows.Markup
         ///     Finds a registered CultureInfo corresponding to the IetfLanguageTag, or the longest
         ///       sequence of leading subtags for which we have a registered CultureInfo.
         /// </summary>
-        [FriendAccessAllowed]
         internal CultureInfo GetCompatibleCulture()
         {
             if (_compatibleCulture == null)
@@ -320,7 +318,6 @@ namespace System.Windows.Markup
         ///      "sr-latn-sp" is in the range covered by "sr-latn".  (Note that "sr-latn" does
         ///      does not have a registered CultureInfo.)
         /// </remarks>
-        [FriendAccessAllowed]
         internal bool RangeIncludes(XmlLanguage language)
         {
             if (this.IsPrefixOf(language.IetfLanguageTag))
@@ -348,13 +345,10 @@ namespace System.Windows.Markup
         /// </remarks>
         internal bool RangeIncludes(CultureInfo culture)
         {
-            if (culture == null)
-            {
-                throw new ArgumentNullException("culture");
-            }
+            ArgumentNullException.ThrowIfNull(culture);
 
             // no need for special cases for InvariantCulture, which has IetfLanguageTag == ""
-            
+
             // Limit how far we'll walk up the hierarchy to avoid security threat.
             // We could check for cycles (e.g., culture.Parent.Parent == culture)
             // but in in the case of non-malicious code there should be no cycles,
@@ -529,11 +523,11 @@ namespace System.Windows.Markup
                 {
                     if (_atStart)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Enumerator_NotStarted));
+                        throw new InvalidOperationException(SR.Enumerator_NotStarted);
                     }
                     if (_pastEnd)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Enumerator_ReachedEnd));
+                        throw new InvalidOperationException(SR.Enumerator_ReachedEnd);
                     }
  
                     return _current;
@@ -719,10 +713,7 @@ namespace System.Windows.Markup
         /// <exception cref="ArgumentException">tag is non-empty, but does not conform to RFC 3066.</exception>
         private static void ValidateLowerCaseTag(string ietfLanguageTag)
         {
-            if (ietfLanguageTag == null)
-            {
-                throw new ArgumentNullException("ietfLanguageTag");
-            }
+            ArgumentNullException.ThrowIfNull(ietfLanguageTag);
 
             if (ietfLanguageTag.Length > 0)
             {
@@ -805,7 +796,7 @@ namespace System.Windows.Markup
 
         static private void ThrowParseException(string ietfLanguageTag)
         {
-             throw new ArgumentException(SR.Get(SRID.XmlLangMalformed, ietfLanguageTag), "ietfLanguageTag");
+             throw new ArgumentException(SR.Format(SR.XmlLangMalformed, ietfLanguageTag), "ietfLanguageTag");
         }
 
         // throws if there is a non-7-bit ascii character

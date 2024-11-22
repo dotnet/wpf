@@ -42,10 +42,7 @@ namespace System.Security.RightsManagement
         {
             // Add validation here 
 
-            if (user == null)
-            {
-                throw new ArgumentNullException("user");
-            }
+            ArgumentNullException.ThrowIfNull(user);
 
             if ((right != ContentRight.View) && 
                 (right != ContentRight.Edit) && 
@@ -64,10 +61,7 @@ namespace System.Security.RightsManagement
                 throw new ArgumentOutOfRangeException("right");                
             }
 
-            if (validFrom > validUntil)
-            {
-                throw new ArgumentOutOfRangeException("validFrom");                
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(validFrom, validUntil);
 
             _user = user;
             _right = right;

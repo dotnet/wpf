@@ -23,7 +23,7 @@ using System.Runtime.Serialization;
 using System.Diagnostics;               // For Assert
 using MS.Utility;                       // for EventTrace
 using MS.Internal.IO.Packaging;         // for PackageCacheEntry
-using MS.Internal.PresentationCore;     // for SRID exception strings
+using MS.Internal.PresentationCore;     // for SR exception strings
 using MS.Internal;
 
 namespace MS.Internal.IO.Packaging
@@ -201,8 +201,7 @@ namespace MS.Internal.IO.Packaging
             }
             set
             {
-                if (value == null)
-                   throw new ArgumentNullException("value");
+                ArgumentNullException.ThrowIfNull(value);
 
                 _headers = value;
             }
@@ -222,8 +221,7 @@ namespace MS.Internal.IO.Packaging
             }
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException("value");
+                ArgumentNullException.ThrowIfNull(value);
 
                 _method = value;
             }
@@ -280,9 +278,11 @@ namespace MS.Internal.IO.Packaging
             }
             set
             {
-                // negative time that is not -1 (infinite) is an error case
-                if (value < 0 && value != System.Threading.Timeout.Infinite)
-                    throw new ArgumentOutOfRangeException("value");
+                if (value != System.Threading.Timeout.Infinite)
+                {
+                    // negative time that is not -1 (infinite) is an error case
+                    ArgumentOutOfRangeException.ThrowIfNegative(value);
+                }
 
                 _timeout = value;
             }
@@ -331,7 +331,7 @@ namespace MS.Internal.IO.Packaging
         //------------------------------------------------------
         private bool IsScheme(String schemeName)
         {
-            return (String.CompareOrdinal(_innerUri.Scheme, schemeName) == 0);
+            return (string.Equals(_innerUri.Scheme, schemeName, StringComparison.Ordinal));
         }
 
         /// <summary>

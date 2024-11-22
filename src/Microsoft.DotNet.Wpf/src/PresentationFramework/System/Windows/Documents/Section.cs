@@ -42,10 +42,7 @@ namespace System.Windows.Documents
         public Section(Block block)
             : base()
         {
-            if (block == null)
-            {
-                throw new ArgumentNullException("block");
-            }
+            ArgumentNullException.ThrowIfNull(block);
 
             this.Blocks.Add(block);
         }

@@ -170,10 +170,8 @@ namespace System.Windows
         /// </summary>
         public static ValueSource GetValueSource(DependencyObject dependencyObject, DependencyProperty dependencyProperty)
         {
-            if (dependencyObject == null)
-                throw new ArgumentNullException(nameof(dependencyObject));
-            if (dependencyProperty == null)
-                throw new ArgumentNullException(nameof(dependencyProperty));
+            ArgumentNullException.ThrowIfNull(dependencyObject);
+            ArgumentNullException.ThrowIfNull(dependencyProperty);
 
             dependencyObject.VerifyAccess();
 
@@ -198,18 +196,15 @@ namespace System.Windows
         /// </remarks>
         public static bool IsTemplatedValueDynamic(DependencyObject elementInTemplate, DependencyProperty dependencyProperty)
         {
-            if (elementInTemplate == null)
-                throw new ArgumentNullException(nameof(elementInTemplate));
-
-            if (dependencyProperty == null)
-                throw new ArgumentNullException(nameof(dependencyProperty));
+            ArgumentNullException.ThrowIfNull(elementInTemplate);
+            ArgumentNullException.ThrowIfNull(dependencyProperty);
 
             FrameworkObject child = new FrameworkObject(elementInTemplate);
             DependencyObject templatedParent = child.TemplatedParent;
 
             if (templatedParent == null)
             {
-                throw new ArgumentException(SR.Get(SRID.ElementMustBelongToTemplate), nameof(elementInTemplate));
+                throw new ArgumentException(SR.ElementMustBelongToTemplate, nameof(elementInTemplate));
             }
 
             int templateChildIndex = child.TemplateChildIndex;

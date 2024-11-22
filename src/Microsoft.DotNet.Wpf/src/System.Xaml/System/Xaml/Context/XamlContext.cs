@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -76,18 +78,18 @@ namespace MS.Internal.Xaml
         {
             if (tagType == null)
             {
-                throw new XamlInternalException(SR.Get(SRID.ParentlessPropertyElement, propName.ScopedName));
+                throw new XamlInternalException(SR.Format(SR.ParentlessPropertyElement, propName.ScopedName));
             }
             XamlMember property = null;
             XamlType ownerType = null;
             string ns = ResolveXamlNameNS(propName);
             if (ns == null)
             {
-                throw new XamlParseException(SR.Get(SRID.PrefixNotFound, propName.Prefix));
+                throw new XamlParseException(SR.Format(SR.PrefixNotFound, propName.Prefix));
             }
             XamlType rootTagType = tagIsRoot ? tagType : null;
 
-            // If we have <foo x:TA="" foo.bar=""/> we want foo in foo.bar to match the tag 
+            // If we have <foo x:TA="" foo.bar=""/> we want foo in foo.bar to match the tag
             // type since there is no way to specify generic syntax in dotted property notation
             // If that fails, then we fall back to the non-generic case below.
             bool ownerTypeMatchesGenericTagType = false;
@@ -236,7 +238,7 @@ namespace MS.Internal.Xaml
             string xamlNs = ResolveXamlNameNS(typeName);
             if (xamlNs == null)
             {
-                throw new XamlParseException(SR.Get(SRID.PrefixNotFound, typeName.Prefix));
+                throw new XamlParseException(SR.Format(SR.PrefixNotFound, typeName.Prefix));
             }
             return new XamlTypeName(xamlNs, typeName.Name);
         }
@@ -251,7 +253,7 @@ namespace MS.Internal.Xaml
             return GetXamlType(typeName, returnUnknownTypesOnFailure, false);
         }
 
-        internal XamlType GetXamlType(XamlTypeName typeName, bool returnUnknownTypesOnFailure, 
+        internal XamlType GetXamlType(XamlTypeName typeName, bool returnUnknownTypesOnFailure,
             bool skipVisibilityCheck)
         {
             Debug.Assert(typeName != null, "typeName cannot be null and should have been checked before now");
@@ -268,8 +270,12 @@ namespace MS.Internal.Xaml
                 XamlType[] typeArgs = null;
                 if (typeName.HasTypeArgs)
                 {
-                    typeArgs = ArrayHelper.ConvertArrayType<XamlTypeName, XamlType>(
-                        typeName.TypeArguments, GetXamlTypeOrUnknown);
+                    List<XamlTypeName> typeNames = typeName.TypeArgumentsList;
+                    typeArgs = new XamlType[typeNames.Count];
+                    for (int i = 0; i < typeArgs.Length; i++)
+                    {
+                        typeArgs[i] = GetXamlTypeOrUnknown(typeNames[i]);
+                    }
                 }
                 xamlType = new XamlType(typeName.Namespace, typeName.Name, typeArgs, SchemaContext);
             }
@@ -288,7 +294,7 @@ namespace MS.Internal.Xaml
             }
         }
 
-        private string ResolveXamlNameNS(XamlName name) 
+        private string ResolveXamlNameNS(XamlName name)
         {
             return name.Namespace ?? FindNamespaceByPrefix(name.Prefix);
         }

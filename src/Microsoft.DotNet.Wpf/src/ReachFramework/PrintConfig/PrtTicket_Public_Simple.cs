@@ -1380,7 +1380,6 @@ namespace System.Printing
         /// <summary>
         /// Gets a boolean to indicate whether or not public setting in the PrinTicket has been changed by the client.
         /// </summary>
-        [MS.Internal.ReachFramework.FriendAccessAllowed]
         internal bool IsSettingChanged
         {
             get

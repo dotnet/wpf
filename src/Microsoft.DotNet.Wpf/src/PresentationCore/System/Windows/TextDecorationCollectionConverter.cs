@@ -19,7 +19,6 @@ using System.Reflection;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows
 {
@@ -81,7 +80,7 @@ namespace System.Windows
             
             if (null == value)
             {
-                throw new ArgumentException(SR.Get(SRID.General_BadType, "ConvertFrom"), "input");
+                throw new ArgumentException(SR.Format(SR.General_BadType, "ConvertFrom"), "input");
             }                       
                         
             return ConvertFromString(value);            
@@ -164,7 +163,7 @@ namespace System.Windows
 
             if (index < 0)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidTextDecorationCollectionString, text));
+                throw new ArgumentException(SR.Format(SR.InvalidTextDecorationCollectionString, text));
             }
             
             return textDecorations;            

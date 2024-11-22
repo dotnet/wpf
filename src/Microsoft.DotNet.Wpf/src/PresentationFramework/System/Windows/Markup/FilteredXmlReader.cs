@@ -125,7 +125,7 @@ internal class FilteredXmlReader : XmlTextReader
     {
         // Index-based acccess are not allowed.  See remark at top of this file.
         throw new InvalidOperationException(
-            SR.Get(SRID.ParserFilterXmlReaderNoIndexAttributeAccess));
+            SR.ParserFilterXmlReaderNoIndexAttributeAccess);
     }
 
     public override string GetAttribute( string attributeName )
@@ -157,7 +157,7 @@ internal class FilteredXmlReader : XmlTextReader
     {
         // Index-based acccess are not allowed.  See remark at top of this file.
         throw new InvalidOperationException(
-            SR.Get(SRID.ParserFilterXmlReaderNoIndexAttributeAccess));
+            SR.ParserFilterXmlReaderNoIndexAttributeAccess);
     }
 
     public override bool MoveToAttribute( string attributeName )
@@ -238,7 +238,7 @@ internal class FilteredXmlReader : XmlTextReader
     {
         haveUid = false;
         uidPrefix = defaultPrefix;  
-        uidQualifiedName = uidPrefix + ":" + uidLocalName; 
+        uidQualifiedName = $"{uidPrefix}:{uidLocalName}"; 
     }
 
     #endregion Internal Constructors
@@ -321,7 +321,7 @@ internal class FilteredXmlReader : XmlTextReader
         if( base.Prefix != uidPrefix )
         {
             uidPrefix = base.Prefix;
-            uidQualifiedName = uidPrefix + ":" + uidLocalName;
+            uidQualifiedName = $"{uidPrefix}:{uidLocalName}";
 
             // Prefix updated - run a check again for Uid.
             CheckForUidAttribute();
@@ -344,7 +344,7 @@ internal class FilteredXmlReader : XmlTextReader
             base.Value == uidNamespace)
         {
             throw new InvalidOperationException(
-                SR.Get(SRID.ParserFilterXmlReaderNoDefinitionPrefixChangeAllowed));
+                SR.ParserFilterXmlReaderNoDefinitionPrefixChangeAllowed);
         }
     }
 

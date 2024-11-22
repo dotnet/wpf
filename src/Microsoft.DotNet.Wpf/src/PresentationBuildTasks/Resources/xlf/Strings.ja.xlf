@@ -224,7 +224,7 @@
       </trans-unit>
       <trans-unit id="InvalidXml">
         <source>MC3000: '{0}' XML is not valid.</source>
-        <target state="translated">MC3000:  '{0}' XML が無効です。</target>
+        <target state="translated">MC3000: '{0}' XML が無効です。</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalNamePropertyNotAllowed">
@@ -810,11 +810,6 @@
       <trans-unit id="PreparingCompile">
         <source>Preparing for the markup compilation...</source>
         <target state="translated">マークアップのコンパイルを準備しています...</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>MC4301: Type name '{0}' does not have the expected format 'className, assembly'.</source>
-        <target state="translated">MC4301: 型名 '{0}' には、予期された書式 'className, assembly' がありません。</target>
         <note />
       </trans-unit>
       <trans-unit id="ReadResourceFile">

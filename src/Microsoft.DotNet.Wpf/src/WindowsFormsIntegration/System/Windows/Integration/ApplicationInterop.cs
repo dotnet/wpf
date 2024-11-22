@@ -308,7 +308,7 @@ namespace System.Windows.Forms.Integration
     internal class WeakReferenceList<T> where T : class
     {
         List<WeakReference> _internalList;
-        object _syncRoot = new object();
+        readonly object _syncRoot = new object();
 
         public WeakReferenceList()
             : base()

@@ -28,7 +28,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 using UnsafeNativeMethodsMilCoreApi = MS.Win32.PresentationCore.UnsafeNativeMethods;
 using IWICCC = MS.Win32.PresentationCore.UnsafeNativeMethods.IWICColorContext;
 
@@ -164,11 +163,7 @@ namespace System.Windows.Media
                     break;
             }
 
-
-            // SECURITY NOTE: This constructor does not set a Uri because the profile comes from raw file
-            //                data. Thus, we don't set _isProfileUriNotFromUser to true because we
-            //                don't want get_ProfileUri to demand permission to return null.
-            Debug.Assert(_profileUri.Value == null);
+            Debug.Assert(_profileUri is null);
         }
 
         /// <summary>
@@ -257,13 +252,13 @@ namespace System.Windows.Media
         {
             get
             {
-                Uri uri = _profileUri.Value;
+                Uri uri = _profileUri;
 
                 //
                 // If the user didn't give us the uri value, then the uri has
                 // to be a file path because we got it from GetStandardColorSpaceProfile
                 //
-                if (_isProfileUriNotFromUser.Value)
+                if (_isProfileUriNotFromUser)
                 {
                     Invariant.Assert(uri.IsFile);
                 }
@@ -504,18 +499,15 @@ namespace System.Windows.Media
         {
             bool tryProfileFromResource = false;
 
-            if (profileUri == null)
-            {
-                throw new ArgumentNullException("profileUri");
-            }
+            ArgumentNullException.ThrowIfNull(profileUri);
 
             if (!profileUri.IsAbsoluteUri)
             {
-                throw new ArgumentException(SR.Get(SRID.UriNotAbsolute), "profileUri");
+                throw new ArgumentException(SR.UriNotAbsolute, "profileUri");
             }
 
-            _profileUri = new SecurityCriticalData<Uri>(profileUri);
-            _isProfileUriNotFromUser = new SecurityCriticalDataForSet<bool>(isStandardProfileUriNotFromUser);
+            _profileUri = profileUri;
+            _isProfileUriNotFromUser = isStandardProfileUriNotFromUser;
 
             Stream profileStream = null;
 
@@ -553,7 +545,7 @@ namespace System.Windows.Media
                     // this is safe because it can only happen when the URI is given to us by the user.
                     //
                     Invariant.Assert(!isStandardProfileUriNotFromUser);
-                    throw new FileNotFoundException(SR.Get(SRID.FileNotFoundExceptionWithFileName, profileUri.AbsolutePath), profileUri.AbsolutePath);
+                    throw new FileNotFoundException(SR.Format(SR.FileNotFoundExceptionWithFileName, profileUri.AbsolutePath), profileUri.AbsolutePath);
                 }
             }
 
@@ -637,7 +629,7 @@ namespace System.Windows.Media
                 }
             }
 
-            throw new ArgumentException(SR.Get(SRID.ColorContext_FileTooLarge), filename);
+            throw new ArgumentException(SR.ColorContext_FileTooLarge, filename);
         }
 
         /// Note: often the data buffer is larger than the actual data in it.
@@ -809,9 +801,9 @@ namespace System.Windows.Media
 
         private int _numChannels;
 
-        private SecurityCriticalData<Uri> _profileUri;
+        private Uri _profileUri;
         
-        private SecurityCriticalDataForSet<bool> _isProfileUriNotFromUser;
+        private bool _isProfileUriNotFromUser;
 
         private AbbreviatedPROFILEHEADER _profileHeader;
 
@@ -834,9 +826,9 @@ namespace System.Windows.Media
                 NativeMethods.COLORTYPE.COLOR_8_CHANNEL
                 };
 
-        private readonly static string _colorProfileResources = "ColorProfiles";
+        private const string _colorProfileResources = "ColorProfiles";
 
-        private readonly static string _sRGBProfileName = "sRGB_icm";
+        private const string _sRGBProfileName = "sRGB_icm";
 
         [StructLayout(LayoutKind.Sequential)]
         private struct AbbreviatedPROFILEHEADER

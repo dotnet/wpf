@@ -104,7 +104,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForChildren()]
         public static Dock GetDock(UIElement element)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (Dock) element.GetValue(DockProperty);
         }
@@ -117,7 +117,7 @@ namespace System.Windows.Controls
         /// <seealso cref="DockPanel.DockProperty" />
         public static void SetDock(UIElement element, Dock dock)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(DockProperty, dock);
         }

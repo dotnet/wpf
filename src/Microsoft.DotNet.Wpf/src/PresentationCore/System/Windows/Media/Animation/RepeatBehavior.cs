@@ -14,7 +14,6 @@ using System.Diagnostics;
 using System.Text;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Animation
 {
@@ -48,10 +47,10 @@ namespace System.Windows.Media.Animation
         public RepeatBehavior(double count)
         {
             if (   Double.IsInfinity(count)
-                || DoubleUtil.IsNaN(count)
+                || double.IsNaN(count)
                 || count < 0.0)
             {
-                throw new ArgumentOutOfRangeException("count", SR.Get(SRID.Timing_RepeatBehaviorInvalidIterationCount, count));
+                throw new ArgumentOutOfRangeException("count", SR.Format(SR.Timing_RepeatBehaviorInvalidIterationCount, count));
             }
 
             _repeatDuration = new TimeSpan(0);
@@ -68,7 +67,7 @@ namespace System.Windows.Media.Animation
         {
             if (duration < new TimeSpan(0))
             {
-                throw new ArgumentOutOfRangeException("duration", SR.Get(SRID.Timing_RepeatBehaviorInvalidRepeatDuration, duration));
+                throw new ArgumentOutOfRangeException("duration", SR.Format(SR.Timing_RepeatBehaviorInvalidRepeatDuration, duration));
             }
 
             _iterationCount = 0.0;
@@ -133,7 +132,7 @@ namespace System.Windows.Media.Animation
                 if (_type != RepeatBehaviorType.IterationCount)
                 {
 #pragma warning suppress 56503 // Suppress presharp warning: Follows a pattern similar to Nullable.
-                    throw new InvalidOperationException(SR.Get(SRID.Timing_RepeatBehaviorNotIterationCount, this));
+                    throw new InvalidOperationException(SR.Format(SR.Timing_RepeatBehaviorNotIterationCount, this));
                 }
 
                 return _iterationCount;
@@ -152,7 +151,7 @@ namespace System.Windows.Media.Animation
                 if (_type != RepeatBehaviorType.RepeatDuration)
                 {
 #pragma warning suppress 56503 // Suppress presharp warning: Follows a pattern similar to Nullable.
-                    throw new InvalidOperationException(SR.Get(SRID.Timing_RepeatBehaviorNotRepeatDuration, this));
+                    throw new InvalidOperationException(SR.Format(SR.Timing_RepeatBehaviorNotRepeatDuration, this));
                 }
 
                 return _repeatDuration;

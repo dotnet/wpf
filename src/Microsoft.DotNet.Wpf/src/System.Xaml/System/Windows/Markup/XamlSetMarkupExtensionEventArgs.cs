@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Xaml;
 
 namespace System.Windows.Markup
@@ -15,7 +17,7 @@ namespace System.Windows.Markup
             ServiceProvider = serviceProvider;
         }
 
-        public MarkupExtension MarkupExtension { get { return Value as MarkupExtension; } }
+        public MarkupExtension MarkupExtension => Value as MarkupExtension;
         public IServiceProvider ServiceProvider { get; private set; }
 
         internal XamlSetMarkupExtensionEventArgs(XamlMember member,
@@ -33,7 +35,6 @@ namespace System.Windows.Markup
             if (CurrentType != null)
             {
                 XamlType baseType = CurrentType.BaseType;
-
                 if (baseType != null)
                 {
                     CurrentType = baseType;

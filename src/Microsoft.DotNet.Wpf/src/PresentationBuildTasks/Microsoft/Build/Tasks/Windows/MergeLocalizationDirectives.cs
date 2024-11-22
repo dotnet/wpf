@@ -71,9 +71,9 @@ namespace Microsoft.Build.Tasks.Windows
                           )
                     {
 
-                        Log.LogMessageFromResources(SRID.CommentFileGenerating, _outputFile);
+                        Log.LogMessageFromResources(nameof(SR.CommentFileGenerating), _outputFile);
 
-                        streamWriter.WriteLine("<" + LocComments.LocDocumentRoot + ">");
+                        streamWriter.WriteLine($"<{LocComments.LocDocumentRoot}>");
 
                         // keep things simple and fast. Just keep appending the
                         // xml fragments that are already outputed.
@@ -86,8 +86,8 @@ namespace Microsoft.Build.Tasks.Windows
                             }
                         }
 
-                        streamWriter.WriteLine("</" + LocComments.LocDocumentRoot + ">");
-                        Log.LogMessageFromResources(SRID.CommentFileGenerated, _outputFile);
+                        streamWriter.WriteLine($"</{LocComments.LocDocumentRoot}>");
+                        Log.LogMessageFromResources(nameof(SR.CommentFileGenerated), _outputFile);
                     }
                 }
                 catch (Exception e)
@@ -106,7 +106,7 @@ namespace Microsoft.Build.Tasks.Windows
 #pragma warning disable 6500
                 catch // Non-CLS compliant errors
                 {
-                    Log.LogErrorWithCodeFromResources(SRID.NonClsError);
+                    Log.LogErrorWithCodeFromResources(nameof(SR.NonClsError));
                     return false;
                 }
 #pragma warning restore 6500

@@ -11,14 +11,12 @@
 using System;
 using System.Diagnostics;
 using System.Windows;       // WeakEventManager
-using MS.Internal.WindowsBase;  // [FriendAccessAllowed]
 
 namespace MS.Internal
 {
     /// <summary>
     /// Manager for the DependencyObject.InheritanceContextChanged event.
     /// </summary>
-    [FriendAccessAllowed]
     internal class InheritanceContextChangedEventManager : WeakEventManager
     {
         #region Constructors
@@ -44,10 +42,8 @@ namespace MS.Internal
         /// </summary>
         public static void AddListener(DependencyObject source, IWeakEventListener listener)
         {
-            if (source == null)
-                throw new ArgumentNullException("source");
-            if (listener == null)
-                throw new ArgumentNullException("listener");
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(listener);
 
             // Freezable.Freeze() relies on the assumption that a frozen Freezable
             // has no listeners.  This is because Freeze() fails if the Freezable
@@ -63,10 +59,8 @@ namespace MS.Internal
         /// </summary>
         public static void RemoveListener(DependencyObject source, IWeakEventListener listener)
         {
-            if (source == null)
-                throw new ArgumentNullException("source");
-            if (listener == null)
-                throw new ArgumentNullException("listener");
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(listener);
 
             CurrentManager.ProtectedRemoveListener(source, listener);
         }
@@ -76,8 +70,7 @@ namespace MS.Internal
         /// </summary>
         public static void AddHandler(DependencyObject source, EventHandler<EventArgs> handler)
         {
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(handler);
 
             CurrentManager.ProtectedAddHandler(source, handler);
         }
@@ -87,8 +80,7 @@ namespace MS.Internal
         /// </summary>
         public static void RemoveHandler(DependencyObject source, EventHandler<EventArgs> handler)
         {
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(handler);
 
             CurrentManager.ProtectedRemoveHandler(source, handler);
         }

@@ -12,7 +12,6 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input.StylusWisp
 {
@@ -136,48 +135,18 @@ namespace System.Windows.Input.StylusWisp
         /// <summary>
         ///     Returns the PresentationSource that is reporting input for this device.
         /// </summary>
-        internal override PresentationSource ActiveSource
-        {
-            get
-            {
-                if (_inputSource != null)
-                {
-                    return _inputSource.Value;
-                }
-                return null;
-            }
-        }
+        internal override PresentationSource ActiveSource => _inputSource;
 
         /// <summary>
         ///     Returns the PresentationSource that is reporting input for this device.
         /// </summary>
-        internal override PresentationSource CriticalActiveSource
-        {
-            get
-            {
-                if (_inputSource != null)
-                {
-                    return _inputSource.Value;
-                }
-                return null;
-            }
-        }
+        internal override PresentationSource CriticalActiveSource => _inputSource;
 
         /// <summary>
         ///     Returns the currently active PenContext (if seen) for this device.
         ///     Gets set on InRange and cleared on the out of range event (that matches PenContext).
         /// </summary>
-        internal PenContext ActivePenContext
-        {
-            get
-            {
-                if (_activePenContext != null)
-                {
-                    return _activePenContext.Value;
-                }
-                return null;
-            }
-        }
+        internal PenContext ActivePenContext => _activePenContext;
 
         /////////////////////////////////////////////////////////////////////
         /// <summary>
@@ -273,11 +242,11 @@ namespace System.Windows.Input.StylusWisp
                 element = null;
             }
 
-            // Validate that element is either a UIElement or a ContentElement
+            // Validate that element is either a UIElement, a ContentElement or a UIElement3D.
             DependencyObject doStylusCapture = element as DependencyObject;
             if (doStylusCapture != null && !InputElement.IsValid(element))
             {
-                throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, doStylusCapture.GetType()));
+                throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, doStylusCapture.GetType()));
             }
 
             if (doStylusCapture != null)
@@ -353,13 +322,12 @@ namespace System.Windows.Input.StylusWisp
         {
             // Simulate a stylus move (if we are current stylus, inrange, visuals still valid to update
             // and has moved).
-            if (InRange && _inputSource != null && _inputSource.Value != null &&
-                _inputSource.Value.CompositionTarget != null && !_inputSource.Value.CompositionTarget.IsDisposed)
+            if (InRange && _inputSource?.CompositionTarget is { } target && !target.IsDisposed)
             {
-                Point ptDevice = PointUtil.ScreenToClient(_lastScreenLocation, _inputSource.Value);
+                Point ptDevice = PointUtil.ScreenToClient(_lastScreenLocation, _inputSource);
 
                 // GlobalHitTest always returns an IInputElement, so we are sure to have one.
-                IInputElement stylusOver = Input.StylusDevice.GlobalHitTest(_inputSource.Value, ptDevice);
+                IInputElement stylusOver = Input.StylusDevice.GlobalHitTest(_inputSource, ptDevice);
                 bool fOffsetChanged = false;
 
                 if (_stylusOver == stylusOver)
@@ -371,7 +339,7 @@ namespace System.Windows.Input.StylusWisp
                 if (fOffsetChanged || _stylusOver != stylusOver)
                 {
                     int timeStamp = Environment.TickCount;
-                    PenContext penContext = _stylusLogic.GetStylusPenContextForHwnd(_inputSource.Value, TabletDevice.Id);
+                    PenContext penContext = _stylusLogic.GetStylusPenContextForHwnd(_inputSource, TabletDevice.Id);
 
                     if (_eventStylusPoints != null &&
                         _eventStylusPoints.Count > 0 &&
@@ -390,7 +358,7 @@ namespace System.Windows.Input.StylusWisp
 
                         RawStylusInputReport report = new RawStylusInputReport(InputMode.Foreground,
                                                                              timeStamp,
-                                                                             _inputSource.Value,
+                                                                             _inputSource,
                                                                              penContext,
                                                                              InAir ? RawStylusActions.InAirMove : RawStylusActions.Move,
                                                                              TabletDevice.Id,
@@ -418,51 +386,59 @@ namespace System.Windows.Input.StylusWisp
             if (oldOver != null)
             {
                 o = oldOver as DependencyObject;
-                if (InputElement.IsUIElement(o))
+                if (o is UIElement uie)
                 {
-                    ((UIElement)o).IsEnabledChanged -= _overIsEnabledChangedEventHandler;
-                    ((UIElement)o).IsVisibleChanged -= _overIsVisibleChangedEventHandler;
-                    ((UIElement)o).IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
+                    uie.IsEnabledChanged -= _overIsEnabledChangedEventHandler;
+                    uie.IsVisibleChanged -= _overIsVisibleChangedEventHandler;
+                    uie.IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
                 }
-                else if (InputElement.IsContentElement(o))
+                else if (o is ContentElement ce)
                 {
-                    ((ContentElement)o).IsEnabledChanged -= _overIsEnabledChangedEventHandler;
+                    ce.IsEnabledChanged -= _overIsEnabledChangedEventHandler;
 
                     // NOTE: there are no IsVisible or IsHitTestVisible properties for ContentElements.
                     //
-                    // ((ContentElement)o).IsVisibleChanged -= _overIsVisibleChangedEventHandler;
-                    // ((ContentElement)o).IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
+                    // ce.IsVisibleChanged -= _overIsVisibleChangedEventHandler;
+                    // ce.IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
+                }
+                else if (o is UIElement3D uie3D)
+                {
+                    uie3D.IsEnabledChanged -= _overIsEnabledChangedEventHandler;
+                    uie3D.IsVisibleChanged -= _overIsVisibleChangedEventHandler;
+                    uie3D.IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
                 }
                 else
                 {
-                    ((UIElement3D)o).IsEnabledChanged -= _overIsEnabledChangedEventHandler;
-                    ((UIElement3D)o).IsVisibleChanged -= _overIsVisibleChangedEventHandler;
-                    ((UIElement3D)o).IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
+                    throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, oldOver.GetType())); 
                 }
             }
             if (_stylusOver != null)
             {
                 o = _stylusOver as DependencyObject;
-                if (InputElement.IsUIElement(o))
+                if (o is UIElement uie)
                 {
-                    ((UIElement)o).IsEnabledChanged += _overIsEnabledChangedEventHandler;
-                    ((UIElement)o).IsVisibleChanged += _overIsVisibleChangedEventHandler;
-                    ((UIElement)o).IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
+                    uie.IsEnabledChanged += _overIsEnabledChangedEventHandler;
+                    uie.IsVisibleChanged += _overIsVisibleChangedEventHandler;
+                    uie.IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
                 }
-                else if (InputElement.IsContentElement(o))
+                else if (o is ContentElement ce)
                 {
-                    ((ContentElement)o).IsEnabledChanged += _overIsEnabledChangedEventHandler;
+                    ce.IsEnabledChanged += _overIsEnabledChangedEventHandler;
 
                     // NOTE: there are no IsVisible or IsHitTestVisible properties for ContentElements.
                     //
-                    // ((ContentElement)o).IsVisibleChanged += _overIsVisibleChangedEventHandler;
-                    // ((ContentElement)o).IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
+                    // ce.IsVisibleChanged += _overIsVisibleChangedEventHandler;
+                    // ce.IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
+                }
+                else if (o is UIElement3D uie3D)
+                {
+                    uie3D.IsEnabledChanged += _overIsEnabledChangedEventHandler;
+                    uie3D.IsVisibleChanged += _overIsVisibleChangedEventHandler;
+                    uie3D.IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
                 }
                 else
                 {
-                    ((UIElement3D)o).IsEnabledChanged += _overIsEnabledChangedEventHandler;
-                    ((UIElement3D)o).IsVisibleChanged += _overIsVisibleChangedEventHandler;
-                    ((UIElement3D)o).IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
+                    throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, _stylusOver.GetType())); 
                 }
             }
 
@@ -674,10 +650,10 @@ namespace System.Windows.Input.StylusWisp
                         IInputElement inputElementHit = _stylusCapture;
 
                         // See if we need to update over for subtree mode.
-                        if (CapturedMode == CaptureMode.SubTree && _inputSource != null && _inputSource.Value != null)
+                        if (CapturedMode == CaptureMode.SubTree && _inputSource != null)
                         {
-                            Point pt = _stylusLogic.DeviceUnitsFromMeasureUnits(_inputSource.Value, GetPosition(null));
-                            inputElementHit = FindTarget(_inputSource.Value, pt);
+                            Point pt = _stylusLogic.DeviceUnitsFromMeasureUnits(_inputSource, GetPosition(null));
+                            inputElementHit = FindTarget(_inputSource, pt);
                         }
 
                         ChangeStylusOver(inputElementHit);
@@ -685,11 +661,11 @@ namespace System.Windows.Input.StylusWisp
                     else
                     {
                         // Only try to update over if we have a valid input source.
-                        if (_inputSource != null && _inputSource.Value != null)
+                        if (_inputSource is not null)
                         {
                             Point pt = GetPosition(null); // relative to window (root element)
-                            pt = _stylusLogic.DeviceUnitsFromMeasureUnits(_inputSource.Value, pt); // change back to device coords.
-                            IInputElement currentOver = Input.StylusDevice.GlobalHitTest(_inputSource.Value, pt);
+                            pt = _stylusLogic.DeviceUnitsFromMeasureUnits(_inputSource, pt); // change back to device coords.
+                            IInputElement currentOver = Input.StylusDevice.GlobalHitTest(_inputSource, pt);
                             ChangeStylusOver(currentOver);
                         }
                     }
@@ -1150,10 +1126,7 @@ namespace System.Windows.Input.StylusWisp
         /// </summary>
         internal override StylusPointCollection GetStylusPoints(IInputElement relativeTo, StylusPointDescription subsetToReformatTo)
         {
-            if (null == subsetToReformatTo)
-            {
-                throw new ArgumentNullException("subsetToReformatTo");
-            }
+            ArgumentNullException.ThrowIfNull(subsetToReformatTo);
             // Fake up an empty one if we have to.
             if (_eventStylusPoints == null)
             {
@@ -1184,10 +1157,10 @@ namespace System.Windows.Input.StylusWisp
         {
             VerifyAccess();
 
-            // Validate that relativeTo is either a UIElement or a ContentElement
+            // Validate that relativeTo is either a UIElement, a ContentElement or a UIElement3D.
             if (relativeTo != null && !InputElement.IsValid(relativeTo))
             {
-                throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, relativeTo.GetType()));
+                throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, relativeTo.GetType()));
             }
 
             PresentationSource relativePresentationSource = null;
@@ -1205,7 +1178,7 @@ namespace System.Windows.Input.StylusWisp
             {
                 if (_inputSource != null)
                 {
-                    relativePresentationSource = _inputSource.Value;
+                    relativePresentationSource = _inputSource;
                 }
             }
 
@@ -1450,9 +1423,9 @@ namespace System.Windows.Input.StylusWisp
 
             _rawPosition = _eventStylusPoints[_eventStylusPoints.Count - 1];
 
-            _inputSource = new SecurityCriticalDataClass<PresentationSource>(inputSource);
+            _inputSource = inputSource;
 
-            if (inputSource != null)
+            if (inputSource is not null)
             {
                 // Update our screen position from this move.
                 Point pt = _stylusLogic.DeviceUnitsFromMeasureUnits(inputSource, (Point)_rawPosition);
@@ -1593,7 +1566,7 @@ namespace System.Windows.Input.StylusWisp
             // Make sure we clean the last _inputSource for down at this time.
             //_inputSourceForDown = null;
             if (inRange)
-                _activePenContext = new SecurityCriticalDataClass<PenContext>(penContext);
+                _activePenContext = penContext;
             else
                 _activePenContext = null;
         }
@@ -1669,7 +1642,7 @@ namespace System.Windows.Input.StylusWisp
                             }
 
                             _rawPosition = _eventStylusPoints[_eventStylusPoints.Count - 1];
-                            _inputSource = new SecurityCriticalDataClass<PresentationSource>(inputSource);
+                            _inputSource = inputSource;
                             Point pt = _stylusLogic.DeviceUnitsFromMeasureUnits(inputSource, (Point)_rawPosition);
                             _lastScreenLocation = PointUtil.ClientToScreen(pt, inputSource);
                         }
@@ -1752,8 +1725,8 @@ namespace System.Windows.Input.StylusWisp
                 else if (_stylusOver != null)
                 {
                     // Use our current input source (or one we're may be over) if no capture.
-                    mouseInputSource = (_inputSource != null && _inputSource.Value != null) ?
-                                            DetermineValidSource(_inputSource.Value, _eventStylusPoints, null) : null;
+                    mouseInputSource = (_inputSource is not null) ?
+                                            DetermineValidSource(_inputSource, _eventStylusPoints, null) : null;
                 }
             }
 
@@ -1993,9 +1966,9 @@ namespace System.Windows.Input.StylusWisp
         Point _rawElementRelativePosition = new Point(0, 0);
         StylusPointCollection _eventStylusPoints;
 
-        private SecurityCriticalDataClass<PresentationSource> _inputSource;
+        private PresentationSource _inputSource;
 
-        private SecurityCriticalDataClass<PenContext> _activePenContext;
+        private PenContext _activePenContext;
 
         bool _needToSendMouseDown;
         private Point _lastMouseScreenLocation = new Point(0, 0);

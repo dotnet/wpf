@@ -147,7 +147,7 @@ public:
         THIS_
         __in_ecount(1) const RECT *prcSource,
         __in_ecount(1) const RECT *prcDest
-        ) PURE;    
+        ) PURE;
 
     STDMETHOD(InvalidateRect)(
         __in_ecount(1) CMILSurfaceRect const *pRect
@@ -158,7 +158,7 @@ public:
     {
         return CBaseSurfaceRenderTarget<CHwRenderTargetLayerData>::ClearInvalidatedRects();
     }
-    
+
     STDMETHOD(WaitForVBlank)();
 
     STDMETHOD_(VOID, AdvanceFrame)(
@@ -186,6 +186,7 @@ protected:
 
 protected:
     BOOL    m_fEnableRendering; // Rendering is disabled during resize
+    BOOL    m_fDisableDirtyRectangles;  // app wants to skip D3D dirty-rect optimization
     CD3DSwapChain *m_pD3DSwapChain;
     D3DPRESENT_PARAMETERS m_D3DPresentParams;
     UINT const m_AdapterOrdinalInGroup;
@@ -230,7 +231,7 @@ private:
         __in_ecount(1) IWGXBitmapSource *pBitmap,
         __deref_out_ecount(1) CD3DSurface **ppD3DSurface
         );
-        
+
     BOOL m_fDbgClearOnPresent;
 #endif DBG_STEP_RENDERING
 };

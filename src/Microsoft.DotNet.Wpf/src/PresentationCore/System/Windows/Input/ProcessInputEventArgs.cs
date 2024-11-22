@@ -7,7 +7,6 @@ using System.Security;
 using MS.Internal;
 using MS.Internal.PresentationCore;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input 
 {
@@ -55,7 +54,7 @@ namespace System.Windows.Input
         {
             if(!_allowAccessToStagingArea)
             {
-                throw new InvalidOperationException(SR.Get(SRID.NotAllowedToAccessStagingArea));
+                throw new InvalidOperationException(SR.NotAllowedToAccessStagingArea);
             }
             
             return this.UnsecureInputManager.PushInput(input, promote);
@@ -75,7 +74,7 @@ namespace System.Windows.Input
         {
             if(!_allowAccessToStagingArea)
             {
-                throw new InvalidOperationException(SR.Get(SRID.NotAllowedToAccessStagingArea));
+                throw new InvalidOperationException(SR.NotAllowedToAccessStagingArea);
             }
             
             return this.UnsecureInputManager.PushInput(input);
@@ -93,7 +92,7 @@ namespace System.Windows.Input
             
             if(!_allowAccessToStagingArea)
             {
-                throw new InvalidOperationException(SR.Get(SRID.NotAllowedToAccessStagingArea));
+                throw new InvalidOperationException(SR.NotAllowedToAccessStagingArea);
             }
             
             return this.UnsecureInputManager.PopInput();
@@ -111,7 +110,7 @@ namespace System.Windows.Input
 
             if(!_allowAccessToStagingArea)
             {
-                throw new InvalidOperationException(SR.Get(SRID.NotAllowedToAccessStagingArea));
+                throw new InvalidOperationException(SR.NotAllowedToAccessStagingArea);
             }
             
             return this.UnsecureInputManager.PeekInput();

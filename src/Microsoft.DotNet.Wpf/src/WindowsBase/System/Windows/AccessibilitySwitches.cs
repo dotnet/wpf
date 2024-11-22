@@ -28,21 +28,16 @@ namespace System.Windows
         /// <summary>
         /// This id is used by .NET to report a fatal error.
         /// </summary>
-        const int EventId = 1023;
+        private const int EventId = 1023;
 
         /// <summary>
         /// This source is used by .NET to report events.
         /// </summary>
-        const string EventSource = ".NET Runtime";
+        private const string EventSource = ".NET Runtime";
 
         #endregion
 
         #region Fields
-
-        /// <summary>
-        /// Guards against multiple definitions of default switch values.
-        /// </summary>
-        static int s_DefaultsSet = 0;
 
         /// <summary>
         /// Guards against multiple verifications of the switch values.
@@ -172,41 +167,11 @@ namespace System.Windows
         /// <param name="targetFrameworkVersion"></param>
         internal static void SetSwitchDefaults(string platformIdentifier, int targetFrameworkVersion)
         {
-            switch (platformIdentifier)
-            {
-
-                case ".NETFramework":
-                    if (Interlocked.CompareExchange(ref s_DefaultsSet, 1, 0) == 0)
-                    {
-                        if (targetFrameworkVersion <= 40700)
-                        {
-                            LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeaturesSwitchName, true);
-                        }
-
-                        if (targetFrameworkVersion <= 40701)
-                        {
-                            LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeatures2SwitchName, true);
-                        }
-
-                        if (targetFrameworkVersion <= 40702)
-                        {
-                            LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeatures3SwitchName, true);
-                            LocalAppContext.DefineSwitchDefault(UseLegacyToolTipDisplaySwitchName, true);
-                            LocalAppContext.DefineSwitchDefault(ItemsControlDoesNotSupportAutomationSwitchName, true);
-                        }
-                    }
-                    break;
-
-                case ".NETCoreApp":
-                    {
-                        LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeaturesSwitchName, false);
-                        LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeatures2SwitchName, false);
-                        LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeatures3SwitchName, false);
-                        LocalAppContext.DefineSwitchDefault(UseLegacyToolTipDisplaySwitchName, false);
-                        LocalAppContext.DefineSwitchDefault(ItemsControlDoesNotSupportAutomationSwitchName, false);
-                    }
-                    break;
-            }
+            LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeaturesSwitchName, false);
+            LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeatures2SwitchName, false);
+            LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeatures3SwitchName, false);
+            LocalAppContext.DefineSwitchDefault(UseLegacyToolTipDisplaySwitchName, false);
+            LocalAppContext.DefineSwitchDefault(ItemsControlDoesNotSupportAutomationSwitchName, false);
         }
 
         /// <summary>
@@ -249,7 +214,7 @@ namespace System.Windows
                 {
                     // Dispatch an EventLog and error throw so we get loaded UI, then the crash.
                     // This ensures the WER dialog shows.
-                    DispatchOnError(dispatcher, SR.Get(SRID.CombinationOfAccessibilitySwitchesNotSupported));
+                    DispatchOnError(dispatcher, SR.CombinationOfAccessibilitySwitchesNotSupported);
                 }
 
                 VerifyDependencies(dispatcher);
@@ -264,11 +229,11 @@ namespace System.Windows
         {
             if (!UseLegacyToolTipDisplay && UseNetFx472CompatibleAccessibilityFeatures)
             {
-                DispatchOnError(dispatcher, String.Format(SR.Get(SRID.AccessibilitySwitchDependencyNotSatisfied), UseLegacyToolTipDisplaySwitchName, UseLegacyAccessibilityFeatures3SwitchName, 3));
+                DispatchOnError(dispatcher, String.Format(SR.AccessibilitySwitchDependencyNotSatisfied, UseLegacyToolTipDisplaySwitchName, UseLegacyAccessibilityFeatures3SwitchName, 3));
             }
             if (!ItemsControlDoesNotSupportAutomation && UseNetFx472CompatibleAccessibilityFeatures)
             {
-                DispatchOnError(dispatcher, String.Format(SR.Get(SRID.AccessibilitySwitchDependencyNotSatisfied), ItemsControlDoesNotSupportAutomationSwitchName, UseLegacyAccessibilityFeatures3SwitchName, 3));
+                DispatchOnError(dispatcher, String.Format(SR.AccessibilitySwitchDependencyNotSatisfied, ItemsControlDoesNotSupportAutomationSwitchName, UseLegacyAccessibilityFeatures3SwitchName, 3));
             }
         }
 

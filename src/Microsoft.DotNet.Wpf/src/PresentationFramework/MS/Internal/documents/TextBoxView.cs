@@ -551,10 +551,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected override Visual GetVisualChild(int index)
         {
-            if (index >= this.VisualChildrenCount)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, this.VisualChildrenCount);
 
             return _visualChildren[index];
         }
@@ -783,7 +780,7 @@ namespace System.Windows.Controls
             {
                 nextLinePosition = position.GetFrozenPointer(position.LogicalDirection);
             }
-            else if (DoubleUtil.IsNaN(suggestedX))
+            else if (double.IsNaN(suggestedX))
             {
                 nextLinePosition = _host.TextContainer.CreatePointerAtOffset(_lineMetrics[lineIndex + linesMoved].Offset, LogicalDirection.Forward);
             }
@@ -1220,6 +1217,8 @@ namespace System.Windows.Controls
             if (!CheckFlags(Flags.TextContainerListenersInitialized))
                 return;
 
+            ((Control)_host).Unloaded -= OnHostUnloaded;
+
             // if the flag got set, all the variables should be non-null
             System.Diagnostics.Debug.Assert(_host != null && _host.TextContainer != null && _host.TextContainer.Highlights != null,
                 "TextBoxView partners should not be null");
@@ -1395,6 +1394,8 @@ namespace System.Windows.Controls
         {
             if (CheckFlags(Flags.TextContainerListenersInitialized))
                 return;
+
+            ((Control)_host).Unloaded += OnHostUnloaded;
 
             _host.TextContainer.Changing += new EventHandler(OnTextContainerChanging);
             _host.TextContainer.Change += new TextContainerChangeEventHandler(OnTextContainerChange);
@@ -1676,10 +1677,13 @@ namespace System.Windows.Controls
                 }
                 else
                 {
-                    if (!snapToText &&
-                        (point.X < 0 || point.X >= record.Width))
+                    if (!snapToText)
                     {
-                        index = -1;
+                        double alignmentOffset = GetContentOffset(record.Width, CalculatedTextAlignment);
+                        if (point.X < alignmentOffset || point.X >= record.Width + alignmentOffset)
+                        {
+                            index = -1;
+                        }
                     }
                     break;
                 }
@@ -2829,13 +2833,31 @@ namespace System.Windows.Controls
         // Resumes backgound layout.
         private void OnThrottleBackgroundTimeout(object sender, EventArgs e)
         {
-            _throttleBackgroundTimer.Stop();
-            _throttleBackgroundTimer = null;
+            StopAndClearThrottleBackgroundTimer();
 
-            if (this.IsBackgroundLayoutPending)
+            if (IsBackgroundLayoutPending)
             {
                 OnBackgroundMeasure(null);
             }
+        }
+
+        // We have to stop and clear the _throttleBackgroundTimer to prevent memory leaks as it's a DispatcherTimer.
+        // If we don't stop and clear _throttleBackgroundTimer on unload this instance and the referenced host are held in memory till the timer ticks again.
+        private void OnHostUnloaded(object sender, RoutedEventArgs e)
+        {
+            StopAndClearThrottleBackgroundTimer();
+        }
+
+        public void StopAndClearThrottleBackgroundTimer()
+        {
+            if (_throttleBackgroundTimer == null)
+            {
+                return;
+            }
+
+            _throttleBackgroundTimer.Stop();
+            _throttleBackgroundTimer.Tick -= OnThrottleBackgroundTimeout;
+            _throttleBackgroundTimer = null;
         }
 
         // Returns the x-axis offset of content on a line, based on current

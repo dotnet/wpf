@@ -183,7 +183,7 @@ namespace MS.Internal.AppModel
         {
             // CanGoForward checks the calling thread and InAppShutdown as well
             if (CanGoForward == false)
-                throw new InvalidOperationException(SR.Get(SRID.NoForwardEntry));
+                throw new InvalidOperationException(SR.NoForwardEntry);
 
             if (!_host.GoForwardOverride())
             {
@@ -205,7 +205,7 @@ namespace MS.Internal.AppModel
         {
             // CanGoBack checks the calling thread and InAppShutdown as well
             if (CanGoBack == false)
-                throw new InvalidOperationException(SR.Get(SRID.NoBackEntry));
+                throw new InvalidOperationException(SR.NoBackEntry);
 
             if (!_host.GoBackOverride())
             {
@@ -378,7 +378,7 @@ namespace MS.Internal.AppModel
                             s += "u";
                             break;
                         default:
-                            Invariant.Assert(false, "Invalid JournalEntryType: " + journal[i].EntryType);
+                            Invariant.Assert(false, $"Invalid JournalEntryType: {journal[i].EntryType}");
                             break;
                     }
                 }

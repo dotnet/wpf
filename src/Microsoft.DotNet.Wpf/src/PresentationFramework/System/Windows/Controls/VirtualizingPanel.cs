@@ -68,10 +68,7 @@ namespace System.Windows.Controls
         /// <returns>True if virtualizing, false otherwise.</returns>
         public static bool GetIsVirtualizing(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(IsVirtualizingProperty);
         }
@@ -83,10 +80,7 @@ namespace System.Windows.Controls
         /// <param name="value">True if virtualizing, false otherwise.</param>
         public static void SetIsVirtualizing(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(IsVirtualizingProperty, value);
         }
@@ -108,10 +102,7 @@ namespace System.Windows.Controls
         /// <returns>The current virtualization mode.</returns>
         public static VirtualizationMode GetVirtualizationMode(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (VirtualizationMode)element.GetValue(VirtualizationModeProperty);
         }
@@ -123,10 +114,7 @@ namespace System.Windows.Controls
         /// <param name="value">The desired virtualization mode.</param>
         public static void SetVirtualizationMode(DependencyObject element, VirtualizationMode value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(VirtualizationModeProperty, value);
         }
@@ -146,10 +134,7 @@ namespace System.Windows.Controls
         /// <returns>True if virtualizing, false otherwise.</returns>
         public static bool GetIsVirtualizingWhenGrouping(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(IsVirtualizingWhenGroupingProperty);
         }
@@ -161,10 +146,7 @@ namespace System.Windows.Controls
         /// <param name="value">True if virtualizing, false otherwise.</param>
         public static void SetIsVirtualizingWhenGrouping(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(IsVirtualizingWhenGroupingProperty, value);
         }
@@ -183,10 +165,7 @@ namespace System.Windows.Controls
         /// <param name="element">The object on which to query the value.</param>
         public static ScrollUnit GetScrollUnit(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (ScrollUnit)element.GetValue(ScrollUnitProperty);
         }
@@ -197,10 +176,7 @@ namespace System.Windows.Controls
         /// <param name="element">The element on which to set the value.</param>
         public static void SetScrollUnit(DependencyObject element, ScrollUnit value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(ScrollUnitProperty, value);
         }
@@ -224,10 +200,7 @@ namespace System.Windows.Controls
         /// viewport.</returns>
         public static VirtualizationCacheLength GetCacheLength(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (VirtualizationCacheLength)element.GetValue(CacheLengthProperty);
         }
@@ -240,10 +213,7 @@ namespace System.Windows.Controls
         /// viewport.</param>
         public static void SetCacheLength(DependencyObject element, VirtualizationCacheLength value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(CacheLengthProperty, value);
         }
@@ -264,10 +234,7 @@ namespace System.Windows.Controls
         /// <returns>The CacheLenghtUnit for the matching CacheLength property.</returns>
         public static VirtualizationCacheLengthUnit GetCacheLengthUnit(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (VirtualizationCacheLengthUnit)element.GetValue(CacheLengthUnitProperty);
         }
@@ -279,10 +246,7 @@ namespace System.Windows.Controls
         /// <param name="value">The CacheLenghtUnit for the matching CacheLength property.</param>
         public static void SetCacheLengthUnit(DependencyObject element, VirtualizationCacheLengthUnit value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(CacheLengthUnitProperty, value);
         }
@@ -302,10 +266,7 @@ namespace System.Windows.Controls
         /// <returns>True if the container is virtualizable, false otherwise.</returns>
         public static bool GetIsContainerVirtualizable(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(IsContainerVirtualizableProperty);
         }
@@ -317,10 +278,7 @@ namespace System.Windows.Controls
         /// <param name="value">True if container is virtualizable, false otherwise.</param>
         public static void SetIsContainerVirtualizable(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(IsContainerVirtualizableProperty, value);
         }
@@ -340,10 +298,7 @@ namespace System.Windows.Controls
         /// <returns>True if the container size should be cached, false otherwise.</returns>
         internal static bool GetShouldCacheContainerSize(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             if (VirtualizingStackPanel.IsVSP45Compat)
             {

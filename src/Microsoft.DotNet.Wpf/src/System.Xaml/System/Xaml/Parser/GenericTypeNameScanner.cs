@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System;
 using System.Diagnostics;
 using System.Xaml.MS.Impl;
@@ -138,7 +140,7 @@ namespace MS.Internal.Xaml.Parser
             }
             while (pos < subscript.Length);
             //unterminated string
-            return 0; 
+            return 0;
         }
 
         // strips the subscript off the end of typeName, and returns it

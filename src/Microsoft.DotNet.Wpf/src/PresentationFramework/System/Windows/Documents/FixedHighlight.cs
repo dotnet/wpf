@@ -177,7 +177,7 @@ namespace System.Windows.Documents
             designRect.Width = width;
 
 #if DEBUG
-            DocumentsTrace.FixedTextOM.Highlight.Trace(string.Format("DesignBound {0}", designRect));
+            DocumentsTrace.FixedTextOM.Highlight.Trace($"DesignBound {designRect}");
 #endif
             return designRect;
         }

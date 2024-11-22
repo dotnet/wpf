@@ -277,13 +277,13 @@ namespace MS.Internal.Shaping
     {
         private ushort*     _array;
 
-        private SecurityCriticalDataForSet<int>         _arrayLength;
+        private int         _arrayLength;
 
 
         internal UnsafeUshortArray(CheckedUShortPointer array, int arrayLength)
         {            
             _array = array.Probe(0, arrayLength);
-            _arrayLength.Value = arrayLength;
+            _arrayLength = arrayLength;
         }
 
 
@@ -291,19 +291,19 @@ namespace MS.Internal.Shaping
         {
             get
             {
-                Invariant.Assert(index >= 0 && index < _arrayLength.Value);
+                Invariant.Assert(index >= 0 && index < _arrayLength);
                 return _array[index];
             }
             set
             {
-                Invariant.Assert(index >= 0 && index < _arrayLength.Value);
+                Invariant.Assert(index >= 0 && index < _arrayLength);
                 _array[index] = value;
             }
         }
 
         public override int Length
         {
-            get { return _arrayLength.Value; }
+            get { return _arrayLength; }
         }
     }
 }

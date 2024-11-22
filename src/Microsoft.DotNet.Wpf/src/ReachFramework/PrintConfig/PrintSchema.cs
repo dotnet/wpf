@@ -1986,7 +1986,7 @@ namespace MS.Internal.Printing.Configuration
                 internal const string DocumentCollate = "DocumentCollate";
 
                 internal static string[] CollationNames = Enum.GetNames(typeof(Collation));
-                internal static int[] CollationEnums = (int[])Enum.GetValues(typeof(Collation));
+                internal static int[] CollationEnums = (int[])(Array)Enum.GetValues<Collation>();
             }
 
             internal class DuplexKeys
@@ -1996,7 +1996,7 @@ namespace MS.Internal.Printing.Configuration
                 internal const string JobDuplex = "JobDuplexAllDocumentsContiguously";
 
                 internal static string[] DuplexNames = Enum.GetNames(typeof(Duplexing));
-                internal static int[] DuplexEnums = (int[])Enum.GetValues(typeof(Duplexing));
+                internal static int[] DuplexEnums = (int[])(Array)Enum.GetValues<Duplexing>();
             }
 
             internal class NUpKeys
@@ -2008,7 +2008,7 @@ namespace MS.Internal.Printing.Configuration
                 internal const string PresentationDirection = "PresentationDirection";
 
                 internal static string[] DirectionNames = Enum.GetNames(typeof(PagesPerSheetDirection));
-                internal static int[] DirectionEnums = (int[])Enum.GetValues(typeof(PagesPerSheetDirection));
+                internal static int[] DirectionEnums = (int[])(Array)Enum.GetValues<PagesPerSheetDirection>();
             }
 
             internal class StapleKeys
@@ -2018,7 +2018,7 @@ namespace MS.Internal.Printing.Configuration
                 internal const string JobStaple = "JobStapleAllDocuments";
 
                 internal static string[] StaplingNames = Enum.GetNames(typeof(Stapling));
-                internal static int[] StaplingEnums = (int[])Enum.GetValues(typeof(Stapling));
+                internal static int[] StaplingEnums = (int[])(Array)Enum.GetValues<Stapling>();
             }
 
             internal class PageDeviceFontSubstitutionKeys
@@ -2028,7 +2028,7 @@ namespace MS.Internal.Printing.Configuration
                 internal const string Self = "PageDeviceFontSubstitution";
 
                 internal static string[] SubstitutionNames = Enum.GetNames(typeof(DeviceFontSubstitution));
-                internal static int[] SubstitutionEnums = (int[])Enum.GetValues(typeof(DeviceFontSubstitution));
+                internal static int[] SubstitutionEnums = (int[])(Array)Enum.GetValues<DeviceFontSubstitution>();
             }
 
             internal class PageMediaSizeKeys
@@ -2047,7 +2047,7 @@ namespace MS.Internal.Printing.Configuration
                 internal const string CustomMediaSizeHeight =       "CustomMediaSizeHeight";
 
                 internal static string[] MediaSizeNames = Enum.GetNames(typeof(PageMediaSizeName));
-                internal static int[] MediaSizeEnums = (int[])Enum.GetValues(typeof(PageMediaSizeName));
+                internal static int[] MediaSizeEnums = (int[])(Array)Enum.GetValues<PageMediaSizeName>();
             }
 
             internal class PageImageableSizeKeys
@@ -2073,7 +2073,7 @@ namespace MS.Internal.Printing.Configuration
                 internal const string Self =         "PageMediaType";
 
                 internal static string[] MediaTypeNames = Enum.GetNames(typeof(PageMediaType));
-                internal static int[] MediaTypeEnums = (int[])Enum.GetValues(typeof(PageMediaType));
+                internal static int[] MediaTypeEnums = (int[])(Array)Enum.GetValues<PageMediaType>();
             }
 
             internal class PageOrientationKeys
@@ -2083,7 +2083,7 @@ namespace MS.Internal.Printing.Configuration
                 internal const string Self = "PageOrientation";
 
                 internal static string[] OrientationNames = Enum.GetNames(typeof(PageOrientation));
-                internal static int[] OrientationEnums = (int[])Enum.GetValues(typeof(PageOrientation));
+                internal static int[] OrientationEnums = (int[])(Array)Enum.GetValues<PageOrientation>();
             }
 
             internal class PageOutputColorKeys
@@ -2093,7 +2093,7 @@ namespace MS.Internal.Printing.Configuration
                 internal const string Self =   "PageOutputColor";
 
                 internal static string[] ColorNames = Enum.GetNames(typeof(OutputColor));
-                internal static int[] ColorEnums = (int[])Enum.GetValues(typeof(OutputColor));
+                internal static int[] ColorEnums = (int[])(Array)Enum.GetValues<OutputColor>();
             }
 
             internal class PageResolutionKeys
@@ -2106,7 +2106,7 @@ namespace MS.Internal.Printing.Configuration
                 internal const string QualitativeResolution = "QualitativeResolution";
 
                 internal static string[] QualityNames = Enum.GetNames(typeof(PageQualitativeResolution));
-                internal static int[] QualityEnums = (int[])Enum.GetValues(typeof(PageQualitativeResolution));
+                internal static int[] QualityEnums = (int[])(Array)Enum.GetValues<PageQualitativeResolution>();
             }
 
             internal class PageScalingKeys
@@ -2119,7 +2119,7 @@ namespace MS.Internal.Printing.Configuration
                 internal const string CustomSquareScale  = "Scale";
 
                 internal static string[] ScalingNames = Enum.GetNames(typeof(PageScaling));
-                internal static int[] ScalingEnums = (int[])Enum.GetValues(typeof(PageScaling));
+                internal static int[] ScalingEnums = (int[])(Array)Enum.GetValues<PageScaling>();
             }
 
             internal class PageTrueTypeFontModeKeys
@@ -2129,7 +2129,7 @@ namespace MS.Internal.Printing.Configuration
                 internal const string Self = "PageTrueTypeFontMode";
 
                 internal static string[] ModeNames = Enum.GetNames(typeof(TrueTypeFontMode));
-                internal static int[] ModeEnums = (int[])Enum.GetValues(typeof(TrueTypeFontMode));
+                internal static int[] ModeEnums = (int[])(Array)Enum.GetValues<TrueTypeFontMode>();
             }
 
             internal class JobPageOrderKeys
@@ -2139,7 +2139,7 @@ namespace MS.Internal.Printing.Configuration
                 internal const string Self = "JobPageOrder";
 
                 internal static string[] PageOrderNames = Enum.GetNames(typeof(PageOrder));
-                internal static int[] PageOrderEnums = (int[])Enum.GetValues(typeof(PageOrder));
+                internal static int[] PageOrderEnums = (int[])(Array)Enum.GetValues<PageOrder>();
             }
 
             internal class PagePhotoPrintingIntentKeys
@@ -2149,7 +2149,7 @@ namespace MS.Internal.Printing.Configuration
                 internal const string Self = "PagePhotoPrintingIntent";
 
                 internal static string[] PhotoIntentNames = Enum.GetNames(typeof(PhotoPrintingIntent));
-                internal static int[] PhotoIntentEnums = (int[])Enum.GetValues(typeof(PhotoPrintingIntent));
+                internal static int[] PhotoIntentEnums = (int[])(Array)Enum.GetValues<PhotoPrintingIntent>();
             }
 
             internal class PageBorderlessKeys
@@ -2159,7 +2159,7 @@ namespace MS.Internal.Printing.Configuration
                 internal const string Self = "PageBorderless";
 
                 internal static string[] BorderlessNames = Enum.GetNames(typeof(PageBorderless));
-                internal static int[] BorderlessEnums = (int[])Enum.GetValues(typeof(PageBorderless));
+                internal static int[] BorderlessEnums = (int[])(Array)Enum.GetValues<PageBorderless>();
             }
 
             internal class PageOutputQualityKeys
@@ -2169,7 +2169,7 @@ namespace MS.Internal.Printing.Configuration
                 internal const string Self = "PageOutputQuality";
 
                 internal static string[] OutputQualityNames = Enum.GetNames(typeof(OutputQuality));
-                internal static int[] OutputQualityEnums = (int[])Enum.GetValues(typeof(OutputQuality));
+                internal static int[] OutputQualityEnums = (int[])(Array)Enum.GetValues<OutputQuality>();
             }
 
             internal class InputBinKeys
@@ -2181,7 +2181,7 @@ namespace MS.Internal.Printing.Configuration
                 internal const string PageInputBin = "PageInputBin";
 
                 internal static string[] InputBinNames = Enum.GetNames(typeof(InputBin));
-                internal static int[] InputBinEnums = (int[])Enum.GetValues(typeof(InputBin));
+                internal static int[] InputBinEnums = (int[])(Array)Enum.GetValues<InputBin>();
             }
 
             internal class ParameterProps

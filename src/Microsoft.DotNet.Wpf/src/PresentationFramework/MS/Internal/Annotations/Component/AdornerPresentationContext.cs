@@ -4,7 +4,7 @@
 
 //
 // Description:
-//      AdornerPresentationContext knows that annotation comonents are wrapped 
+//      AdornerPresentationContext knows that annotation components are wrapped 
 //      in an AnnotationAdorner and hosted in the AdornerLayer. Note, implementation-wise 
 //      a new PresentationContext is created for every annotation component. Executing 
 //      operations on a presentation context for a different annotation component 
@@ -19,17 +19,16 @@ using System.Windows;
 using System.Windows.Annotations;
 using System.Windows.Documents;
 using System.Windows.Media;
-using System.Collections;
 
 namespace MS.Internal.Annotations.Component
 {
     /// <summary>
-    /// AdornerPresentationContext knows that annotation comonents are wrapped in an AnnotationAdorner and hosted in the AdornerLayer.
+    /// AdornerPresentationContext knows that annotation components are wrapped in an AnnotationAdorner and hosted in the AdornerLayer.
     /// Note,  implementation-wise a new PresentationContext is created for every annotation component. Executing operations on a presentation context
     /// for a different annotation component (located in the same adorner layer) works, but is slower than using the presentation context stored in the
     /// annotation component.
     /// </summary>
-    internal class AdornerPresentationContext : PresentationContext
+    internal sealed class AdornerPresentationContext : PresentationContext
     {
         #region Constructors
 
@@ -41,7 +40,7 @@ namespace MS.Internal.Annotations.Component
         /// <param name="adorner">AnnotationAdorner that wraps the annotation component.  Will be null in case of creating enclosing context</param>
         private AdornerPresentationContext(AdornerLayer adornerLayer, AnnotationAdorner adorner)
         {
-            if (adornerLayer == null) throw new ArgumentNullException("adornerLayer");
+            ArgumentNullException.ThrowIfNull(adornerLayer);
 
             _adornerLayer = adornerLayer;
             if (adorner != null)
@@ -49,7 +48,7 @@ namespace MS.Internal.Annotations.Component
                 if (adorner.AnnotationComponent == null)
                     throw new ArgumentNullException("annotation component");
                 if (adorner.AnnotationComponent.PresentationContext != null)
-                    throw new InvalidOperationException(SR.Get(SRID.ComponentAlreadyInPresentationContext, adorner.AnnotationComponent));
+                    throw new InvalidOperationException(SR.Format(SR.ComponentAlreadyInPresentationContext, adorner.AnnotationComponent));
                 _annotationAdorner = adorner;
             }
         }
@@ -100,22 +99,14 @@ namespace MS.Internal.Annotations.Component
         /// BringToTop method. This will move the component to the top of its priority group. If there are other
         /// components with higher priority they will still be on top of that component. If more than
         /// one component type have the same ZLevel that means they all can stay on top of each other.
-        /// Setting IAnnotationComponent.ZOrder must be invoked only by the PrezentationContext
+        /// Setting IAnnotationComponent.ZOrder must be invoked only by the PresentationContext
         /// when the Z-order changes. It can not be set by application in v1.</remarks>
         internal static void SetTypeZLevel(Type type, int level)
         {
             Invariant.Assert(level >= 0, "level is < 0");
-
             Invariant.Assert(type != null, "type is null");
 
-            if (_ZLevel.ContainsKey(type))
-            {
-                _ZLevel[type] = level;
-            }
-            else
-            {
-                _ZLevel.Add(type, level);
-            }
+            s_ZLevel[type] = level;
         }
 
         /// <summary>
@@ -128,9 +119,9 @@ namespace MS.Internal.Annotations.Component
         /// <param name="max">max Z-order value for this level</param>
         internal static void SetZLevelRange(int level, int min, int max)
         {
-            if (_ZRanges[level] == null)
+            if (!s_ZRanges.ContainsKey(level))
             {
-                _ZRanges.Add(level, new ZRange(min, max));
+                s_ZRanges.Add(level, new ZRange(min, max));
             }
         }
 
@@ -177,7 +168,7 @@ namespace MS.Internal.Annotations.Component
         /// <param name="component">Component to add to host</param>
         public override void AddToHost(IAnnotationComponent component)
         {
-            if (component == null) throw new ArgumentNullException("component");
+            ArgumentNullException.ThrowIfNull(component);
 
             AdornerPresentationContext.HostComponent(_adornerLayer, component, component.AnnotatedElement, false);
         }
@@ -192,7 +183,7 @@ namespace MS.Internal.Annotations.Component
         /// <param name="reorder">if true - recalculate z-order</param>
         public override void RemoveFromHost(IAnnotationComponent component, bool reorder)
         {
-            if (component == null) throw new ArgumentNullException("component");
+            ArgumentNullException.ThrowIfNull(component);
 
             if (IsInternalComponent(component))
             {
@@ -205,7 +196,7 @@ namespace MS.Internal.Annotations.Component
             {// need to find annotation adorner in layer, remove it and do house-keeping
                 AnnotationAdorner foundAdorner = this.FindAnnotationAdorner(component);
 
-                if (foundAdorner == null) throw new InvalidOperationException(SR.Get(SRID.ComponentNotInPresentationContext, component));
+                if (foundAdorner == null) throw new InvalidOperationException(SR.Format(SR.ComponentNotInPresentationContext, component));
 
                 _adornerLayer.Remove(foundAdorner);
                 foundAdorner.RemoveChildren();
@@ -491,7 +482,7 @@ namespace MS.Internal.Annotations.Component
         /// <returns></returns>
         private AnnotationAdorner GetAnnotationAdorner(IAnnotationComponent component)
         {
-            if (component == null) throw new ArgumentNullException("component");
+            ArgumentNullException.ThrowIfNull(component);
 
             //find the adornerLayer
             AnnotationAdorner adorner = _annotationAdorner;
@@ -499,7 +490,7 @@ namespace MS.Internal.Annotations.Component
             {
                 adorner = this.FindAnnotationAdorner(component);
 
-                if (adorner == null) throw new InvalidOperationException(SR.Get(SRID.ComponentNotInPresentationContext, component));
+                if (adorner == null) throw new InvalidOperationException(SR.Format(SR.ComponentNotInPresentationContext, component));
             }
 
             return adorner;
@@ -512,12 +503,9 @@ namespace MS.Internal.Annotations.Component
         /// <returns>ZLevel</returns>
         private static int GetComponentLevel(IAnnotationComponent component)
         {
-            int level = 0;
             Type type = component.GetType();
-            if (_ZLevel.ContainsKey(type))
-                level = (int)_ZLevel[type];
 
-            return level;
+            return s_ZLevel.TryGetValue(type, out int value) ? value : 0;
         }
 
         /// <summary>
@@ -531,18 +519,21 @@ namespace MS.Internal.Annotations.Component
         private static int ComponentToAdorner(int zOrder, int level)
         {
             int res = zOrder;
-            ZRange range = (ZRange)_ZRanges[level];
-            if (range != null)
+
+            if (s_ZRanges.TryGetValue(level, out ZRange range))
             {
                 //adjust the Z-order (shift it with the minimal value for this range)
                 //that way the component does need to know the range for its type that is 
                 // set by the application. It always sets the z-order as it starts from 0
                 res += range.Min;
+
                 if (res < range.Min)
                     res = range.Min;
+
                 if (res > range.Max)
                     res = range.Max;
             }
+
             return res;
         }
 
@@ -559,19 +550,17 @@ namespace MS.Internal.Annotations.Component
         /// <summary>
         /// The adornerLayer which contains the annotation component.  Basically what the presentation hides.
         /// </summary>
-        private AdornerLayer _adornerLayer;
+        private readonly AdornerLayer _adornerLayer;
 
         /// <summary>
-        /// The hashtable holds the priority level for each Component type as defined by the application
+        /// The dictionary holds the priority level for each Component type as defined by the application
         /// </summary>
-        private static Hashtable _ZLevel = new Hashtable();
+        private static readonly Dictionary<Type, int> s_ZLevel = new();
 
         /// <summary>
         /// The ZRanges for the ZLevels. 
         /// </summary>
-        private static Hashtable _ZRanges = new Hashtable();
-
-
+        private static readonly Dictionary<int, ZRange> s_ZRanges = new();
 
         #endregion Private Fields
 
@@ -581,40 +570,28 @@ namespace MS.Internal.Annotations.Component
         /// This is to control the relationships with TextSelection which lives in the same
         /// AdornerLayer. Will be removed when more flexible Z-ordering mechanism is available
         /// </summary>
-        private class ZRange
+        private readonly struct ZRange
         {
             public ZRange(int min, int max)
             {
-                //exchange values if needed
+                // Swap values if needed
                 if (min > max)
                 {
-                    int temp = min;
+                    int num = min;
                     min = max;
-                    max = temp;
+                    max = num;
                 }
-                _min = min;
-                _max = max;
+
+                Min = min;
+                Max = max;
             }
 
-            public int Min
-            {
-                get
-                {
-                    return _min;
-                }
-            }
-            public int Max
-            {
-                get
-                {
-                    return _max;
-                }
-            }
+            public int Min { get; }
+            public int Max { get; }
 
-            private int _min, _max;
         }
 
-        #endregion Internal classes
+        #endregion Private classes
     }
 }
 

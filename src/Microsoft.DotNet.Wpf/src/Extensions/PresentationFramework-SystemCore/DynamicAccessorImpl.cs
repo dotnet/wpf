@@ -156,7 +156,7 @@ namespace MS.Internal
         MulticastDelegate   _getterDelegate, _setterDelegate;
 
         static DynamicIndexerAccessor[] _accessors = new DynamicIndexerAccessor[1];
-        static object _lock = new object();
+        static readonly object _lock = new object();
     }
 
     #endregion DynamicIndexerAccessor

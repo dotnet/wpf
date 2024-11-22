@@ -429,6 +429,21 @@ namespace System.Windows
             }
         }
 
+        internal static double ThemeMessageFontSize
+        {
+            get
+            {
+                // TODO : Find a better solution to this. Difference in default size of font in Fluent and other themes.
+                if(ThemeManager.IsFluentThemeEnabled 
+                    || ThemeManager.IsFluentThemeDictionaryIncluded())
+                {
+                    return MessageFontSize * ThemeManager.DefaultFluentFontSizeFactor ;
+                }
+
+                return MessageFontSize;
+            }
+        }
+
 
         /// <summary>
         ///     Maps to SPI_NONCLIENTMETRICS

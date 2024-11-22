@@ -40,7 +40,7 @@ namespace System.Windows.Input
             // Constructing a WispTabletDevice means we will actually use this tablet for input purposes.
             // Lock the tablet and underlying WISP tablet at this point.
             // This is balanced in DisposeOrDeferDisposal.
-            _penThread.WorkerAcquireTabletLocks(tabletInfo.PimcTablet.Value, tabletInfo.WispTabletKey);
+            _penThread.WorkerAcquireTabletLocks(tabletInfo.PimcTablet, tabletInfo.WispTabletKey);
 
             int count = tabletInfo.StylusDevicesInfo.Length;
 
@@ -99,7 +99,7 @@ namespace System.Windows.Input
             //                  PenImc will cache all the stylus device info so we don't have 
             //                  any Out of Proc calls to wisptis.exe to get this info.
 
-            StylusDeviceInfo[] stylusDevicesInfo = _penThread.WorkerRefreshCursorInfo(_tabletInfo.PimcTablet.Value);
+            StylusDeviceInfo[] stylusDevicesInfo = _penThread.WorkerRefreshCursorInfo(_tabletInfo.PimcTablet);
 
             int cCursors = stylusDevicesInfo.Length;
 
@@ -198,12 +198,12 @@ namespace System.Windows.Input
             bool isIntegrated = (this.TabletHardwareCapabilities & TabletHardwareCapabilities.Integrated) != 0;
 
             // Use a PenThread to create a tablet context so we don't cause reentrancy.
-            PenContextInfo result = _penThread.WorkerCreateContext(hwnd, _tabletInfo.PimcTablet.Value);
+            PenContextInfo result = _penThread.WorkerCreateContext(hwnd, _tabletInfo.PimcTablet);
 
-            penContext = new PenContext(result.PimcContext != null ? result.PimcContext.Value : null,
+            penContext = new PenContext(result.PimcContext,
                                         hwnd, contexts,
                                         supportInRange, isIntegrated, result.ContextId,
-                                        result.CommHandle != null ? result.CommHandle.Value : IntPtr.Zero,
+                                        result.CommHandle,
                                         Id, result.WispContextKey);
             return penContext;
         }
@@ -232,7 +232,7 @@ namespace System.Windows.Input
             _doubleTapSize = Size.Empty;
 
             // Update the size info we use to map tablet coordinates to screen coordinates.
-            _tabletInfo.SizeInfo = _penThread.WorkerGetUpdatedSizes(_tabletInfo.PimcTablet.Value);
+            _tabletInfo.SizeInfo = _penThread.WorkerGetUpdatedSizes(_tabletInfo.PimcTablet);
         }
 
         // NOTE: UpdateSizeDeltas MUST be called before the returned Size is valid.
@@ -341,12 +341,11 @@ namespace System.Windows.Input
                 
                 // Force tablets to clean up as soon as they are disposed.  This helps to reduce
                 // COM references that might be waiting for RCWs to finalize.
-                IPimcTablet3 tablet = _tabletInfo.PimcTablet?.Value;
+                IPimcTablet3 tablet = _tabletInfo.PimcTablet;
                 _tabletInfo.PimcTablet = null;
 
                 if (tablet != null)
                 {
-                    
                     // Balance calls in PenThreadWorker.GetTabletInfoHelper and CPimcTablet::Init.
                     PenThread.WorkerReleaseTabletLocks(tablet, _tabletInfo.WispTabletKey);
                     

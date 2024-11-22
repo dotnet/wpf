@@ -41,10 +41,7 @@ namespace System.Windows.Documents
         internal Typography(DependencyObject owner)
         {
             //there should be actual owner
-            if(owner == null)
-            {
-                throw new ArgumentNullException(nameof(owner));
-            }
+            ArgumentNullException.ThrowIfNull(owner);
             _owner = owner;
         }
 
@@ -378,10 +375,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.StandardLigaturesProperty" />
         public static void SetStandardLigatures(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(StandardLigaturesProperty, value);
         }
@@ -394,10 +388,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetStandardLigatures(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(StandardLigaturesProperty);
         }
@@ -410,10 +401,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.ContextualLigaturesProperty" />
         public static void SetContextualLigatures(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(ContextualLigaturesProperty, value);
         }
@@ -426,10 +414,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetContextualLigatures(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(ContextualLigaturesProperty);
         }
@@ -442,10 +427,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.DiscretionaryLigaturesProperty" />
         public static void SetDiscretionaryLigatures(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(DiscretionaryLigaturesProperty, value);
         }
@@ -458,10 +440,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetDiscretionaryLigatures(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(DiscretionaryLigaturesProperty);
         }
@@ -474,10 +453,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.HistoricalLigaturesProperty" />
         public static void SetHistoricalLigatures(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(HistoricalLigaturesProperty, value);
         }
@@ -490,10 +466,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetHistoricalLigatures(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(HistoricalLigaturesProperty);
         }
@@ -506,10 +479,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.AnnotationAlternatesProperty" />
         public static void SetAnnotationAlternates(DependencyObject element, int value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(AnnotationAlternatesProperty, value);
         }
@@ -522,10 +492,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static int GetAnnotationAlternates(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (int)element.GetValue(AnnotationAlternatesProperty);
         }
@@ -538,10 +505,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.ContextualAlternatesProperty" />
         public static void SetContextualAlternates(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(ContextualAlternatesProperty, value);
         }
@@ -554,10 +518,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetContextualAlternates(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(ContextualAlternatesProperty);
         }
@@ -570,10 +531,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.HistoricalFormsProperty" />
         public static void SetHistoricalForms(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(HistoricalFormsProperty, value);
         }
@@ -586,10 +544,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetHistoricalForms(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(HistoricalFormsProperty);
         }
@@ -602,10 +557,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.KerningProperty" />
         public static void SetKerning(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(KerningProperty, value);
         }
@@ -618,10 +570,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetKerning(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(KerningProperty);
         }
@@ -634,10 +583,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.CapitalSpacingProperty" />
         public static void SetCapitalSpacing(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(CapitalSpacingProperty, value);
         }
@@ -650,10 +596,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetCapitalSpacing(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(CapitalSpacingProperty);
         }
@@ -666,10 +609,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.CaseSensitiveFormsProperty" />
         public static void SetCaseSensitiveForms(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(CaseSensitiveFormsProperty, value);
         }
@@ -682,10 +622,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetCaseSensitiveForms(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(CaseSensitiveFormsProperty);
         }
@@ -698,10 +635,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.StylisticSet1Property" />
         public static void SetStylisticSet1(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(StylisticSet1Property, value);
         }
@@ -714,10 +648,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetStylisticSet1(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(StylisticSet1Property);
         }
@@ -730,10 +661,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.StylisticSet2Property" />
         public static void SetStylisticSet2(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(StylisticSet2Property, value);
         }
@@ -746,10 +674,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetStylisticSet2(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(StylisticSet2Property);
         }
@@ -762,10 +687,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.StylisticSet3Property" />
         public static void SetStylisticSet3(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(StylisticSet3Property, value);
         }
@@ -778,10 +700,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetStylisticSet3(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(StylisticSet3Property);
         }
@@ -794,10 +713,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.StylisticSet4Property" />
         public static void SetStylisticSet4(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(StylisticSet4Property, value);
         }
@@ -810,10 +726,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetStylisticSet4(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(StylisticSet4Property);
         }
@@ -826,10 +739,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.StylisticSet5Property" />
         public static void SetStylisticSet5(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(StylisticSet5Property, value);
         }
@@ -842,10 +752,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetStylisticSet5(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(StylisticSet5Property);
         }
@@ -858,10 +765,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.StylisticSet6Property" />
         public static void SetStylisticSet6(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(StylisticSet6Property, value);
         }
@@ -874,10 +778,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetStylisticSet6(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(StylisticSet6Property);
         }
@@ -890,10 +791,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.StylisticSet7Property" />
         public static void SetStylisticSet7(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(StylisticSet7Property, value);
         }
@@ -906,10 +804,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetStylisticSet7(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(StylisticSet7Property);
         }
@@ -922,10 +817,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.StylisticSet8Property" />
         public static void SetStylisticSet8(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(StylisticSet8Property, value);
         }
@@ -938,10 +830,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetStylisticSet8(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(StylisticSet8Property);
         }
@@ -954,10 +843,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.StylisticSet9Property" />
         public static void SetStylisticSet9(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(StylisticSet9Property, value);
         }
@@ -970,10 +856,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetStylisticSet9(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(StylisticSet9Property);
         }
@@ -986,10 +869,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.StylisticSet10Property" />
         public static void SetStylisticSet10(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(StylisticSet10Property, value);
         }
@@ -1002,10 +882,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetStylisticSet10(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(StylisticSet10Property);
         }
@@ -1018,10 +895,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.StylisticSet11Property" />
         public static void SetStylisticSet11(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(StylisticSet11Property, value);
         }
@@ -1034,10 +908,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetStylisticSet11(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(StylisticSet11Property);
         }
@@ -1050,10 +921,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.StylisticSet12Property" />
         public static void SetStylisticSet12(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(StylisticSet12Property, value);
         }
@@ -1066,10 +934,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetStylisticSet12(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(StylisticSet12Property);
         }
@@ -1082,10 +947,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.StylisticSet13Property" />
         public static void SetStylisticSet13(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(StylisticSet13Property, value);
         }
@@ -1098,10 +960,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetStylisticSet13(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(StylisticSet13Property);
         }
@@ -1114,10 +973,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.StylisticSet14Property" />
         public static void SetStylisticSet14(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(StylisticSet14Property, value);
         }
@@ -1130,10 +986,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetStylisticSet14(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(StylisticSet14Property);
         }
@@ -1146,10 +999,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.StylisticSet15Property" />
         public static void SetStylisticSet15(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(StylisticSet15Property, value);
         }
@@ -1162,10 +1012,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetStylisticSet15(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(StylisticSet15Property);
         }
@@ -1178,10 +1025,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.StylisticSet16Property" />
         public static void SetStylisticSet16(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(StylisticSet16Property, value);
         }
@@ -1194,10 +1038,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetStylisticSet16(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(StylisticSet16Property);
         }
@@ -1210,10 +1051,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.StylisticSet17Property" />
         public static void SetStylisticSet17(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(StylisticSet17Property, value);
         }
@@ -1226,10 +1064,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetStylisticSet17(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(StylisticSet17Property);
         }
@@ -1242,10 +1077,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.StylisticSet18Property" />
         public static void SetStylisticSet18(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(StylisticSet18Property, value);
         }
@@ -1258,10 +1090,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetStylisticSet18(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(StylisticSet18Property);
         }
@@ -1274,10 +1103,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.StylisticSet19Property" />
         public static void SetStylisticSet19(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(StylisticSet19Property, value);
         }
@@ -1290,10 +1116,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetStylisticSet19(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(StylisticSet19Property);
         }
@@ -1306,10 +1129,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.StylisticSet20Property" />
         public static void SetStylisticSet20(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(StylisticSet20Property, value);
         }
@@ -1322,10 +1142,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetStylisticSet20(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(StylisticSet20Property);
         }
@@ -1338,10 +1155,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.FractionProperty" />
         public static void SetFraction(DependencyObject element, FontFraction value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(FractionProperty, value);
         }
@@ -1354,10 +1168,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static FontFraction GetFraction(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (FontFraction)element.GetValue(FractionProperty);
         }
@@ -1370,10 +1181,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.SlashedZeroProperty" />
         public static void SetSlashedZero(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(SlashedZeroProperty, value);
         }
@@ -1386,10 +1194,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetSlashedZero(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(SlashedZeroProperty);
         }
@@ -1402,10 +1207,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.MathematicalGreekProperty" />
         public static void SetMathematicalGreek(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(MathematicalGreekProperty, value);
         }
@@ -1418,10 +1220,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetMathematicalGreek(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(MathematicalGreekProperty);
         }
@@ -1434,10 +1233,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.EastAsianExpertFormsProperty" />
         public static void SetEastAsianExpertForms(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(EastAsianExpertFormsProperty, value);
         }
@@ -1450,10 +1246,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetEastAsianExpertForms(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(EastAsianExpertFormsProperty);
         }
@@ -1466,10 +1259,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.VariantsProperty" />
         public static void SetVariants(DependencyObject element, FontVariants value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(VariantsProperty, value);
         }
@@ -1482,10 +1272,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static FontVariants GetVariants(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (FontVariants)element.GetValue(VariantsProperty);
         }
@@ -1498,10 +1285,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.CapitalsProperty" />
         public static void SetCapitals(DependencyObject element, FontCapitals value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(CapitalsProperty, value);
         }
@@ -1514,10 +1298,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static FontCapitals GetCapitals(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (FontCapitals)element.GetValue(CapitalsProperty);
         }
@@ -1530,10 +1311,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.NumeralStyleProperty" />
         public static void SetNumeralStyle(DependencyObject element, FontNumeralStyle value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(NumeralStyleProperty, value);
         }
@@ -1546,10 +1324,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static FontNumeralStyle GetNumeralStyle(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (FontNumeralStyle)element.GetValue(NumeralStyleProperty);
         }
@@ -1562,10 +1337,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.NumeralAlignmentProperty" />
         public static void SetNumeralAlignment(DependencyObject element, FontNumeralAlignment value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(NumeralAlignmentProperty, value);
         }
@@ -1578,10 +1350,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static FontNumeralAlignment GetNumeralAlignment(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (FontNumeralAlignment)element.GetValue(NumeralAlignmentProperty);
         }
@@ -1594,10 +1363,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.EastAsianWidthsProperty" />
         public static void SetEastAsianWidths(DependencyObject element, FontEastAsianWidths value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(EastAsianWidthsProperty, value);
         }
@@ -1610,10 +1376,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static FontEastAsianWidths GetEastAsianWidths(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (FontEastAsianWidths)element.GetValue(EastAsianWidthsProperty);
         }
@@ -1626,10 +1389,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.EastAsianLanguageProperty" />
         public static void SetEastAsianLanguage(DependencyObject element, FontEastAsianLanguage value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(EastAsianLanguageProperty, value);
         }
@@ -1642,10 +1402,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static FontEastAsianLanguage GetEastAsianLanguage(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (FontEastAsianLanguage)element.GetValue(EastAsianLanguageProperty);
         }
@@ -1658,10 +1415,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.StandardSwashesProperty" />
         public static void SetStandardSwashes(DependencyObject element, int value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(StandardSwashesProperty, value);
         }
@@ -1674,10 +1428,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static int GetStandardSwashes(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (int)element.GetValue(StandardSwashesProperty);
         }
@@ -1690,10 +1441,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.ContextualSwashesProperty" />
         public static void SetContextualSwashes(DependencyObject element, int value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(ContextualSwashesProperty, value);
         }
@@ -1706,10 +1454,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static int GetContextualSwashes(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (int)element.GetValue(ContextualSwashesProperty);
         }
@@ -1722,10 +1467,7 @@ namespace System.Windows.Documents
         /// <seealso cref="Typography.StylisticAlternatesProperty" />
         public static void SetStylisticAlternates(DependencyObject element, int value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(StylisticAlternatesProperty, value);
         }
@@ -1738,10 +1480,7 @@ namespace System.Windows.Documents
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static int GetStylisticAlternates(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (int)element.GetValue(StylisticAlternatesProperty);
         }

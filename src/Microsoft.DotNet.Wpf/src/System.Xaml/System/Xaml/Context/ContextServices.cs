@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Diagnostics;
 using System.Windows.Markup;
 using System.Xaml;
@@ -24,7 +26,7 @@ namespace MS.Internal.Xaml.Context
 
             XamlMember parentProperty = xamlContext.ParentProperty;
             //
-            // We should never have a null ParentProperty here but 
+            // We should never have a null ParentProperty here but
             // protect against null refs since we are going to dereference it
             if (parentProperty == null)
             {
@@ -34,16 +36,16 @@ namespace MS.Internal.Xaml.Context
             if (parentProperty.IsAttachable)
             {
                 //
-                // IPVT returns the static Set method for attached properties in 3.0 
+                // IPVT returns the static Set method for attached properties in 3.0
                 return parentProperty.Setter;
             }
             else
             {
                 //
-                // This branch cover regular property (will return non null) 
+                // This branch cover regular property (will return non null)
                 // and items in a collection/diction (will return null - IPVT returns null in 3.0 for collections/dictionaries).
                 return parentProperty.UnderlyingMember;
             }
-        }        
+        }
     }
 }

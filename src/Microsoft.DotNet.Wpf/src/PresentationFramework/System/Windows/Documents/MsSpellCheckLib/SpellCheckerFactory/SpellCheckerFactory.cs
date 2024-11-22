@@ -324,8 +324,8 @@ namespace System.Windows.Documents
 
             private void RegisterUserDictionaryImplWithRetries(string dictionaryPath, string languageTag, bool suppressCOMExceptions = true)
             {
-                if (dictionaryPath == null) throw new ArgumentNullException(nameof(dictionaryPath));
-                if (languageTag == null) throw new ArgumentNullException(nameof(languageTag));
+                ArgumentNullException.ThrowIfNull(dictionaryPath);
+                ArgumentNullException.ThrowIfNull(languageTag);
 
                 // RegisterUserDicionaryImpl is SecuritySafeCritical, so it is okay to 
                 // create an anon. lambda that calls into it, and pass 
@@ -355,8 +355,8 @@ namespace System.Windows.Documents
 
             private void UnregisterUserDictionaryImplWithRetries(string dictionaryPath, string languageTag, bool suppressCOMExceptions = true)
             {
-                if (dictionaryPath == null) throw new ArgumentNullException(nameof(dictionaryPath));
-                if (languageTag == null) throw new ArgumentNullException(nameof(languageTag));
+                ArgumentNullException.ThrowIfNull(dictionaryPath);
+                ArgumentNullException.ThrowIfNull(languageTag);
 
                 // UnregisterUserDictionaryImpl is SecuritySafeCritical, so it is okay to 
                 // create an anon. lambda that calls into it, and pass 

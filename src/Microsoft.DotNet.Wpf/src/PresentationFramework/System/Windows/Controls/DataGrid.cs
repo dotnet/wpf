@@ -206,7 +206,7 @@ namespace System.Windows.Controls
         private static bool ValidateMinColumnWidth(object v)
         {
             double value = (double)v;
-            return !(value < 0d || DoubleUtil.IsNaN(value) || Double.IsPositiveInfinity(value));
+            return !(value < 0d || double.IsNaN(value) || Double.IsPositiveInfinity(value));
         }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace System.Windows.Controls
         private static bool ValidateMaxColumnWidth(object v)
         {
             double value = (double)v;
-            return !(value < 0d || DoubleUtil.IsNaN(value));
+            return !(value < 0d || double.IsNaN(value));
         }
 
         /// <summary>
@@ -363,7 +363,7 @@ namespace System.Windows.Controls
                 int retries = BringColumnIntoViewRetryCountField.GetValue(this);
                 if (retries < MaxBringColumnIntoViewRetries)
                 {
-                    BringColumnIntoViewRetryCountField.SetValue(this, retries+1);
+                    BringColumnIntoViewRetryCountField.SetValue(this, retries + 1);
                     return true;
                 }
             }
@@ -384,7 +384,7 @@ namespace System.Windows.Controls
         {
             if (displayIndex < 0 || displayIndex >= Columns.Count)
             {
-                throw new ArgumentOutOfRangeException("displayIndex", displayIndex, SR.Get(SRID.DataGrid_DisplayIndexOutOfRange));
+                throw new ArgumentOutOfRangeException("displayIndex", displayIndex, SR.DataGrid_DisplayIndexOutOfRange);
             }
 
             return InternalColumns.ColumnFromDisplayIndex(displayIndex);
@@ -1262,7 +1262,7 @@ namespace System.Windows.Controls
             var dataGrid = ((DataGrid)d);
             var newValue = (double)e.NewValue;
 
-            if (!DoubleUtil.IsNaN(newValue))
+            if (!double.IsNaN(newValue))
             {
                 dataGrid.RowHeaderActualWidth = newValue;
             }
@@ -1281,7 +1281,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void ResetRowHeaderActualWidth()
         {
-            if (DoubleUtil.IsNaN(RowHeaderWidth))
+            if (double.IsNaN(RowHeaderWidth))
             {
                 RowHeaderActualWidth = 0.0;
             }
@@ -1540,10 +1540,7 @@ namespace System.Windows.Controls
         /// <param name="item">The data item of the row to bring into view.</param>
         public void ScrollIntoView(object item)
         {
-            if (item == null)
-            {
-                throw new ArgumentNullException("item");
-            }
+            ArgumentNullException.ThrowIfNull(item);
 
             ScrollIntoView(NewItemInfo(item));
         }
@@ -2736,7 +2733,7 @@ namespace System.Windows.Controls
                     {
                         info = ItemInfoFromIndex(index);
                     }
-                break;
+                    break;
 
                 case NewItemPlaceholderPosition.AtBeginning:
                     index = 1;
@@ -2744,7 +2741,7 @@ namespace System.Windows.Controls
                     {
                         info = ItemInfoFromIndex(index);
                     }
-                break;
+                    break;
             }
 
             // but if it's not where we expect, find it the hard way
@@ -2962,7 +2959,7 @@ namespace System.Windows.Controls
                         cell.NotifyCurrentCellContainerChanged();
                     }
                 }
-                else if  (oldCellContainer != null)
+                else if (oldCellContainer != null)
                 {
                     oldCellContainer.NotifyCurrentCellContainerChanged();
                 }
@@ -3083,7 +3080,7 @@ namespace System.Windows.Controls
             get { return LeaseItemInfo(CurrentCell.ItemInfo); }
         }
 
-        internal bool IsCurrent(DataGridRow row, DataGridColumn column=null)
+        internal bool IsCurrent(DataGridRow row, DataGridColumn column = null)
         {
             DataGridCellInfo currentCell = CurrentCell;
             if (currentCell.ItemInfo == null)
@@ -3096,9 +3093,9 @@ namespace System.Windows.Controls
             }
             DependencyObject currentContainer = currentCell.ItemInfo.Container;
             int currentIndex = currentCell.ItemInfo.Index;
-            return  (column == null || column == currentCell.Column) &&             // columns match
-                    (   (currentContainer != null && currentContainer == row) ||    // rows match (the easy way)
-                        (   ItemsControl.EqualsEx(CurrentItem, row.Item) &&         // rows match (the hard way)
+            return (column == null || column == currentCell.Column) &&             // columns match
+                    ((currentContainer != null && currentContainer == row) ||    // rows match (the easy way)
+                        (ItemsControl.EqualsEx(CurrentItem, row.Item) &&         // rows match (the hard way)
                             (currentIndex < 0 || currentIndex == ItemContainerGenerator.IndexFromContainer(row))
                         )
                     );
@@ -4082,7 +4079,7 @@ namespace System.Windows.Controls
             if (!_newItemMarginComputationPending)
             {
                 _newItemMarginComputationPending = true;
-                Dispatcher.BeginInvoke((Action)delegate()
+                Dispatcher.BeginInvoke((Action)delegate ()
                 {
                     double marginLeft = 0;
                     if (IsGrouping && InternalScrollHost != null)
@@ -4154,7 +4151,7 @@ namespace System.Windows.Controls
             DataGridSelectionUnit selectionUnit = SelectionUnit;
             if (!IsUpdatingSelectedCells && (selectionUnit == DataGridSelectionUnit.FullRow))
             {
-                throw new InvalidOperationException(SR.Get(SRID.DataGrid_CannotSelectCell));
+                throw new InvalidOperationException(SR.DataGrid_CannotSelectCell);
             }
 
             // Update the pending list of changes
@@ -5378,13 +5375,13 @@ namespace System.Windows.Controls
         private void OnItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             _currentCellContainer = null;
-            List<Tuple<int,int>> ranges = null;
+            List<Tuple<int, int>> ranges = null;
 
             using (UpdateSelectedCells())
             {
                 if (e.Action == NotifyCollectionChangedAction.Reset)
                 {
-                    ranges = new List<Tuple<int,int>>();
+                    ranges = new List<Tuple<int, int>>();
                     LocateSelectedItems(ranges);
                 }
 
@@ -5713,7 +5710,7 @@ namespace System.Windows.Controls
                                         else if (keyboardNavigationMode == KeyboardNavigationMode.Contained)
                                         {
                                             DependencyObject nextFocusTarget = keyboardNavigation.PredictFocusedElement(currentCellContainer, KeyToTraversalDirection(rtlKey),
-                                                treeViewNavigation:false, considerDescendants:false);
+                                                treeViewNavigation: false, considerDescendants: false);
                                             if (nextFocusTarget != null && keyboardNavigation.IsAncestorOfEx(this, nextFocusTarget))
                                             {
                                                 Keyboard.Focus(nextFocusTarget as IInputElement);
@@ -5759,7 +5756,7 @@ namespace System.Windows.Controls
                                         else if (keyboardNavigationMode == KeyboardNavigationMode.Contained)
                                         {
                                             DependencyObject nextFocusTarget = keyboardNavigation.PredictFocusedElement(currentCellContainer, KeyToTraversalDirection(rtlKey),
-                                                treeViewNavigation:false, considerDescendants:false);
+                                                treeViewNavigation: false, considerDescendants: false);
                                             if (nextFocusTarget != null && keyboardNavigation.IsAncestorOfEx(this, nextFocusTarget))
                                             {
                                                 Keyboard.Focus(nextFocusTarget as IInputElement);
@@ -5793,7 +5790,7 @@ namespace System.Windows.Controls
                                         else if (keyboardNavigationMode == KeyboardNavigationMode.Contained)
                                         {
                                             DependencyObject nextFocusTarget = keyboardNavigation.PredictFocusedElement(currentCellContainer, KeyToTraversalDirection(rtlKey),
-                                                treeViewNavigation:false, considerDescendants:false);
+                                                treeViewNavigation: false, considerDescendants: false);
                                             if (nextFocusTarget != null && keyboardNavigation.IsAncestorOfEx(this, nextFocusTarget))
                                             {
                                                 Keyboard.Focus(nextFocusTarget as IInputElement);
@@ -5828,7 +5825,7 @@ namespace System.Windows.Controls
                                         else if (keyboardNavigationMode == KeyboardNavigationMode.Contained)
                                         {
                                             DependencyObject nextFocusTarget = keyboardNavigation.PredictFocusedElement(currentCellContainer, KeyToTraversalDirection(rtlKey),
-                                                treeViewNavigation:false, considerDescendants:false);
+                                                treeViewNavigation: false, considerDescendants: false);
                                             if (nextFocusTarget != null && keyboardNavigation.IsAncestorOfEx(this, nextFocusTarget))
                                             {
                                                 Keyboard.Focus(nextFocusTarget as IInputElement);
@@ -6727,11 +6724,11 @@ namespace System.Windows.Controls
         [Flags]
         private enum RelativeMousePositions
         {
-            Over    = 0x00,
-            Above   = 0x01,
-            Below   = 0x02,
-            Left    = 0x04,
-            Right   = 0x08,
+            Over = 0x00,
+            Above = 0x01,
+            Below = 0x02,
+            Left = 0x04,
+            Right = 0x08,
         }
 
         #endregion
@@ -6886,17 +6883,20 @@ namespace System.Windows.Controls
                     if (AutomationPeer.ListenerExists(AutomationEvents.PropertyChanged))
                     {
                         DataGridColumn column = (_cell != null) ? _cell.Column : _column;
-                        DataGridAutomationPeer peer = DataGridAutomationPeer.FromElement(column.DataGridOwner) as DataGridAutomationPeer;
-                        if (peer != null)
+                        if (column.DataGridOwner != null)
                         {
-                            object item = (_cell != null) ? _cell.DataContext : _item;
-                            DataGridItemAutomationPeer dataGridItemAutomationPeer = peer.FindOrCreateItemAutomationPeer(item) as DataGridItemAutomationPeer;
-                            if (dataGridItemAutomationPeer != null)
+                            DataGridAutomationPeer peer = DataGridAutomationPeer.FromElement(column.DataGridOwner) as DataGridAutomationPeer;
+                            if (peer != null)
                             {
-                                DataGridCellItemAutomationPeer cellPeer = dataGridItemAutomationPeer.GetOrCreateCellItemPeer(column);
-                                if (cellPeer != null)
+                                object item = (_cell != null) ? _cell.DataContext : _item;
+                                DataGridItemAutomationPeer dataGridItemAutomationPeer = peer.FindOrCreateItemAutomationPeer(item) as DataGridItemAutomationPeer;
+                                if (dataGridItemAutomationPeer != null)
                                 {
-                                    cellPeer.RaisePropertyChangedEvent(ValuePatternIdentifiers.ValueProperty, _value, newValue);
+                                    DataGridCellItemAutomationPeer cellPeer = dataGridItemAutomationPeer.GetOrCreateCellItemPeer(column);
+                                    if (cellPeer != null)
+                                    {
+                                        cellPeer.RaisePropertyChangedEvent(ValuePatternIdentifiers.ValueProperty, _value, newValue);
+                                    }
                                 }
                             }
                         }
@@ -7088,7 +7088,7 @@ namespace System.Windows.Controls
         private static object OnCoerceCanUserSortColumns(DependencyObject d, object baseValue)
         {
             DataGrid dataGrid = (DataGrid)d;
-            if( DataGridHelper.IsPropertyTransferEnabled(dataGrid, CanUserSortColumnsProperty) &&
+            if (DataGridHelper.IsPropertyTransferEnabled(dataGrid, CanUserSortColumnsProperty) &&
                 DataGridHelper.IsDefaultValue(dataGrid, CanUserSortColumnsProperty) &&
                 dataGrid.Items.CanSort == false)
             {
@@ -7156,7 +7156,7 @@ namespace System.Windows.Controls
                     catch (InvalidOperationException invalidOperationException)
                     {
                         Items.SortDescriptions.Clear();
-                        throw new InvalidOperationException(SR.Get(SRID.DataGrid_ProbableInvalidSortDescription), invalidOperationException);
+                        throw new InvalidOperationException(SR.DataGrid_ProbableInvalidSortDescription, invalidOperationException);
                     }
                 }
             }
@@ -7220,7 +7220,7 @@ namespace System.Windows.Controls
                             // get the index of existing descriptor to replace it
                             for (int i = 0; i < Items.SortDescriptions.Count; i++)
                             {
-                                if (string.Compare(Items.SortDescriptions[i].PropertyName, sortPropertyName, StringComparison.Ordinal) == 0 &&
+                                if (string.Equals(Items.SortDescriptions[i].PropertyName, sortPropertyName, StringComparison.Ordinal) &&
                                     (GroupingSortDescriptionIndices == null ||
                                     !GroupingSortDescriptionIndices.Contains(i)))
                                 {
@@ -7653,7 +7653,7 @@ namespace System.Windows.Controls
             {
                 // Selector will try to maintain the previous row selection.
                 // Keep SelectedCells in sync.
-                List<Tuple<int,int>> ranges = new List<Tuple<int, int>>();
+                List<Tuple<int, int>> ranges = new List<Tuple<int, int>>();
                 LocateSelectedItems(ranges);
                 _selectedCells.RestoreOnlyFullRows(ranges);
             }
@@ -7763,7 +7763,7 @@ namespace System.Windows.Controls
             if (CellInfoNeedsAdjusting(CurrentCell))
                 list.Add(CurrentCell.ItemInfo);
 
-            AdjustItemInfosAfterGeneratorChange(list, claimUniqueContainer:false);
+            AdjustItemInfosAfterGeneratorChange(list, claimUniqueContainer: false);
             base.AdjustItemInfosAfterGeneratorChangeOverride();
             AdjustPendingInfos();
         }
@@ -7782,7 +7782,7 @@ namespace System.Windows.Controls
             {
                 using (UpdateSelectedCells())
                 {
-                    for (int i=_pendingInfos.Count - 1; i>=0; --i)
+                    for (int i = _pendingInfos.Count - 1; i >= 0; --i)
                     {
                         ItemInfo info = _pendingInfos[i];
                         if (info.Index >= 0)
@@ -7856,10 +7856,7 @@ namespace System.Windows.Controls
         /// <returns></returns>
         public static Collection<DataGridColumn> GenerateColumns(IItemProperties itemProperties)
         {
-            if (itemProperties == null)
-            {
-                throw new ArgumentNullException("itemProperties");
-            }
+            ArgumentNullException.ThrowIfNull(itemProperties);
 
             Collection<DataGridColumn> columnCollection = new Collection<DataGridColumn>();
             DataGrid.GenerateColumns(
@@ -8275,7 +8272,7 @@ namespace System.Windows.Controls
         {
             if (ClipboardCopyMode == DataGridClipboardCopyMode.None)
             {
-                throw new NotSupportedException(SR.Get(SRID.ClipboardCopyMode_Disabled));
+                throw new NotSupportedException(SR.ClipboardCopyMode_Disabled);
             }
 
             args.Handled = true;

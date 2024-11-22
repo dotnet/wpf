@@ -18,7 +18,6 @@ using System.Windows;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -37,10 +36,7 @@ namespace System.Windows.Input
         /// <param name="element">The registration element</param>
         public static void Register(string key, IInputElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             key = NormalizeKey(key);
 
             AccessKeyManager akm = AccessKeyManager.Current;
@@ -71,10 +67,7 @@ namespace System.Windows.Input
         /// <param name="element"></param>
         public static void Unregister(string key, IInputElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             key = NormalizeKey(key);
 
             AccessKeyManager akm = AccessKeyManager.Current;
@@ -136,16 +129,13 @@ namespace System.Windows.Input
         /// <returns></returns>
         private static string NormalizeKey(string key)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException("key");
-            }
+            ArgumentNullException.ThrowIfNull(key);
 
             string firstCharacter = StringInfo.GetNextTextElement(key);
 
             if (key != firstCharacter)
             {
-                throw new ArgumentException(SR.Get(SRID.AccessKeyManager_NotAUnicodeCharacter, "key"));
+                throw new ArgumentException(SR.Format(SR.AccessKeyManager_NotAUnicodeCharacter, "key"));
             }
 
             return firstCharacter.ToUpperInvariant();
@@ -858,12 +848,12 @@ namespace System.Windows.Input
         {
             _key = key;
             _isMultiple = isMultiple;
-            _userInitiated = new SecurityCriticalDataForSet<bool>(userInitiated);
+            _userInitiated = userInitiated;
         }
 
         internal void ClearUserInitiated()
         {
-            _userInitiated.Value = false;
+            _userInitiated = false;
         }
         /// <summary>
         /// The key that was pressed which invoked this access key
@@ -885,12 +875,12 @@ namespace System.Windows.Input
 
         internal bool UserInitiated
         {
-            get { return _userInitiated.Value; }
+            get { return _userInitiated; }
         }
         
 
         private string _key;
         private bool _isMultiple;
-        private SecurityCriticalDataForSet<bool >_userInitiated;
+        private bool _userInitiated;
 }
 }

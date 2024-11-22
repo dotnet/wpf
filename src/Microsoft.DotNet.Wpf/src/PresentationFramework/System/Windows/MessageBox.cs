@@ -379,7 +379,7 @@ namespace System.Windows
             {
                 if (owner != IntPtr.Zero)
                 {
-                    throw new ArgumentException(SR.Get(SRID.CantShowMBServiceWithOwner));
+                    throw new ArgumentException(SR.CantShowMBServiceWithOwner);
                 }                
             }
             else

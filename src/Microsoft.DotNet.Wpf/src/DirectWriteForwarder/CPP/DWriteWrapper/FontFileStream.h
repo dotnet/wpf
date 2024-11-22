@@ -20,16 +20,16 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     private ref class FontFileStream : public IDWriteFontFileStreamMirror
     {  
         private:
-            Stream^                            _fontSourceStream;
+            UnmanagedMemoryStream^             _fontSourceStream;
+            Byte*                              _fontSourcePointer;
             INT64                              _lastWriteTime;
-            Object^                            _fontSourceStreamLock;
 
         public:
 
             /// Asserts false because COM convention requires us to have a default constructor
             /// but we are the only entity that can construct these objects, and we use the
             /// other constructor.            
-            FontFileStream() { Debug::Assert(false); }
+            FontFileStream() { Debug::Fail("Assertion failed"); }
             
             /// <summary>
             /// ctor.

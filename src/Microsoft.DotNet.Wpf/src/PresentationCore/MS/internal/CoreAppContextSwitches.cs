@@ -2,20 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿//
-//
-
 using System;
 using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace MS.Internal
 {
-    // WPF's builds are seeing new warnings as as result of using LocalAppContext in PresentationFramework, PresentationCore and WindowsBase.
-    // These binaries have internalsVisibleTo attribute set between them - which results in the warning.
-    // We don't have a way of suppressing this warning effectively until the shared copies of LocalAppContext and
-    // AppContextDefaultValues have pragmas added to suppress warning 436
-#pragma warning disable 436
     internal static class CoreAppContextSwitches
     {
         #region DoNotScaleForDpiChanges
@@ -337,6 +329,78 @@ namespace MS.Internal
 
         #endregion
 
+        #region DisableDirtyRectangles
+
+        internal const string DisableDirtyRectanglesSwitchName = "Switch.System.Windows.Media.MediaContext.DisableDirtyRectangles";
+        private static int _DisableDirtyRectangles;
+        public static bool DisableDirtyRectangles
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                /// <summary>
+                /// Due to a limitation of D3D's implementation of
+                /// dirty-rectangle processing, images occasionally render incorrectly.
+                /// An app can disable dirty-rectangle processing by setting this switch to true.
+                /// This will cause more work for the GPU, but the results will be better.
+                /// </summary>
+                if (EnableDynamicDirtyRectangles)
+                {
+                    bool disableDirtyRectangles;
+                    AppContext.TryGetSwitch(DisableDirtyRectanglesSwitchName, out disableDirtyRectangles);
+                    return disableDirtyRectangles;
+                }
+
+                return LocalAppContext.GetCachedSwitchValue(DisableDirtyRectanglesSwitchName, ref _DisableDirtyRectangles);
+            }
+        }
+
+        internal const string EnableDynamicDirtyRectanglesSwitchName = "Switch.System.Windows.Media.MediaContext.EnableDynamicDirtyRectangles";
+        private static int _EnableDynamicDirtyRectangles;
+        public static bool EnableDynamicDirtyRectangles
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                /// <summary>
+                /// Setting this switch to true causes the DisableDirtyRectangles
+                /// switch to be re-evaluated before each render.
+                /// </summary>
+                return LocalAppContext.GetCachedSwitchValue(EnableDynamicDirtyRectanglesSwitchName, ref _EnableDynamicDirtyRectangles);
+            }
+        }
+
+        #endregion
+
+        #region EnableHardwareAccelerationInRdp
+
+        internal const string EnableHardwareAccelerationInRdpSwitchName = "Switch.System.Windows.Media.EnableHardwareAccelerationInRdp";
+        private static int _enableHardwareAccelerationInRdp;
+        public static bool EnableHardwareAccelerationInRdp
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return LocalAppContext.GetCachedSwitchValue(EnableHardwareAccelerationInRdpSwitchName, ref _enableHardwareAccelerationInRdp);
+            }
+        }
+
+        #endregion
+
+        #region DisableSpecialCharacterLigature
+
+        internal const string DisableSpecialCharacterLigatureSwitchName = "Switch.System.Windows.DisableSpecialCharacterLigature";
+        private static int _disableSpecialCharacterLigature;
+        public static bool DisableSpecialCharacterLigature
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return LocalAppContext.GetCachedSwitchValue(DisableSpecialCharacterLigatureSwitchName, ref _disableSpecialCharacterLigature);
+            }
+        }
+
+        #endregion
+
     }
-#pragma warning restore 436
 }

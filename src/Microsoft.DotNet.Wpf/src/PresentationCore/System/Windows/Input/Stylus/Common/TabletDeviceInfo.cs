@@ -35,7 +35,7 @@ namespace System.Windows.Input
     /// </summary>
     internal class TabletDeviceInfo
     {
-        public SecurityCriticalDataClass<IPimcTablet3> PimcTablet;
+        public IPimcTablet3 PimcTablet;
         public int Id;
         public string Name;
         public string PlugAndPlayId;
@@ -50,6 +50,6 @@ namespace System.Windows.Input
         /// The GIT key for a WISP tablet COM object.
         /// </summary>
         public UInt32 WispTabletKey {  get;  set; }
-    }    
+    }
 }
 

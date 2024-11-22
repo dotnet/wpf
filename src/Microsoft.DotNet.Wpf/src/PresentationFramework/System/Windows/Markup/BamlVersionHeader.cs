@@ -79,7 +79,7 @@ namespace System.Windows.Markup
             // the code, we can't read it.
             if (BamlVersion.ReaderVersion != BamlWriterVersion)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ParserBamlVersion,
+                throw new InvalidOperationException(SR.Format(SR.ParserBamlVersion,
                                          (BamlVersion.ReaderVersion.Major.ToString(CultureInfo.CurrentCulture) + "." +
                                           BamlVersion.ReaderVersion.Minor.ToString(CultureInfo.CurrentCulture)),
                                          (BamlWriterVersion.Major.ToString(CultureInfo.CurrentCulture) + "." +

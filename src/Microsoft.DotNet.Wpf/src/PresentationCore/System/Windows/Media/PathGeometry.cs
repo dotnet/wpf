@@ -30,7 +30,6 @@ using System.Security;
 using MS.Win32;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media
@@ -67,17 +66,11 @@ namespace System.Windows.Media
         /// <param name="figures">A collection of figures</param>
         public PathGeometry(IEnumerable<PathFigure> figures)
         {
-            if (figures != null)
-            {
-                foreach (PathFigure item in figures)
-                {
-                    Figures.Add(item);
-                }
-            }
-            else
-            {
-                throw new ArgumentNullException("figures");   
+            ArgumentNullException.ThrowIfNull(figures);
 
+            foreach (PathFigure item in figures)
+            {
+                Figures.Add(item);
             }
 
             SetDirty();
@@ -96,16 +89,11 @@ namespace System.Windows.Media
             {
                 FillRule = fillRule;
 
-                if (figures != null)
+                ArgumentNullException.ThrowIfNull(figures);
+
+                foreach (PathFigure item in figures)
                 {
-                    foreach (PathFigure item in figures)
-                    {
-                        Figures.Add(item);
-                    }
-                }
-                else
-                {
-                    throw new ArgumentNullException("figures");
+                    Figures.Add(item);
                 }
 
                 SetDirty();
@@ -388,10 +376,7 @@ namespace System.Windows.Media
         /// </summary>
         public void AddGeometry(Geometry geometry)
         {
-            if (geometry == null)
-            {
-                throw new System.ArgumentNullException("geometry");
-            }
+            ArgumentNullException.ThrowIfNull(geometry);
 
             if (geometry.IsEmpty())
             {
@@ -496,7 +481,7 @@ namespace System.Windows.Media
                         {
                             if (pointIndex+sameSegCount > pointCount)
                             {
-                                throw new System.InvalidOperationException(SR.Get(SRID.PathGeometry_InternalReadBackError));
+                                throw new System.InvalidOperationException(SR.PathGeometry_InternalReadBackError);
                             }
 
                             if (sameSegCount>1)
@@ -527,7 +512,7 @@ namespace System.Windows.Media
 
                             if (pointIndex+pointBezierCount > pointCount)
                             {
-                                throw new System.InvalidOperationException(SR.Get(SRID.PathGeometry_InternalReadBackError));
+                                throw new System.InvalidOperationException(SR.PathGeometry_InternalReadBackError);
                             }
 
                             if (sameSegCount>1)
@@ -560,7 +545,7 @@ namespace System.Windows.Media
                         }
                         else
                         {
-                            throw new System.InvalidOperationException(SR.Get(SRID.PathGeometry_InternalReadBackError));
+                            throw new System.InvalidOperationException(SR.PathGeometry_InternalReadBackError);
                         }
                     }
 

@@ -14,7 +14,6 @@ using System.Windows.Input.StylusPlugIns;
 using System.Security;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input.StylusWisp
 {

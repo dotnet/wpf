@@ -696,15 +696,8 @@ namespace MS.Internal.Documents
         /// <param name="count"></param>
         private void ValidatePaginationArgs(int start, int count)
         {
-            if (start < 0)
-            {
-                throw new ArgumentOutOfRangeException("start");
-            }
-
-            if (count <= 0)
-            {
-                throw new ArgumentOutOfRangeException("count");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(start);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(count);
         }
 
         /// <summary>
@@ -762,15 +755,8 @@ namespace MS.Internal.Documents
         private PageCacheChange AddRange(int start, int count)
         {
             //Make sure we're in range.
-            if (start < 0)
-            {
-                throw new ArgumentOutOfRangeException("start");
-            }
-
-            if (count < 1)
-            {
-                throw new ArgumentOutOfRangeException("count");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(start);
+            ArgumentOutOfRangeException.ThrowIfLessThan(count, 1);
 
             Invariant.Assert(_defaultPageSize != Size.Empty, "Default Page Size is Empty.");
 
@@ -804,10 +790,8 @@ namespace MS.Internal.Documents
         private PageCacheChange UpdateEntry(int index, PageCacheEntry newEntry)
         {
             //Make sure we're in range.
-            if (index >= _cache.Count || index < 0)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, _cache.Count);
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
 
             Invariant.Assert(newEntry.PageSize != Size.Empty, "Updated entry newEntry has Empty PageSize.");
 
@@ -833,15 +817,10 @@ namespace MS.Internal.Documents
         private PageCacheChange DirtyRange(int start, int count)
         {
             //Make sure we're in range.
-            if (start >= _cache.Count)
-            {
-                throw new ArgumentOutOfRangeException("start");
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(start, _cache.Count);
 
-            if (start + count > _cache.Count || count < 1)
-            {
-                throw new ArgumentOutOfRangeException("count");
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(count, _cache.Count - start);
+            ArgumentOutOfRangeException.ThrowIfLessThan(count, 1);
 
             Invariant.Assert(_defaultPageSize != Size.Empty, "Default Page Size is Empty.");
 

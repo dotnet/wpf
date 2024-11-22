@@ -29,10 +29,7 @@ namespace System.Windows.Input
         /// </param>
         public TextCompositionEventArgs(InputDevice inputDevice, TextComposition composition) : base(inputDevice, Environment.TickCount)
         {
-            if (composition == null)
-            {
-                throw new ArgumentNullException("composition");
-            }
+            ArgumentNullException.ThrowIfNull(composition);
 
             _composition = composition;
         }

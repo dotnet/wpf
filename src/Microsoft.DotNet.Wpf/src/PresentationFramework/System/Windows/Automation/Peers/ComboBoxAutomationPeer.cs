@@ -109,15 +109,15 @@ namespace System.Windows.Automation.Peers
                     {
                         TextBox tb = owner.EditableTextBoxSite;
                         if (tb == null || !tb.IsKeyboardFocused)
-                            throw new InvalidOperationException(SR.Get(SRID.SetFocusFailed));
+                            throw new InvalidOperationException(SR.SetFocusFailed);
                     }
                     else
-                        throw new InvalidOperationException(SR.Get(SRID.SetFocusFailed));
+                        throw new InvalidOperationException(SR.SetFocusFailed);
                 }
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.SetFocusFailed));
+                throw new InvalidOperationException(SR.SetFocusFailed);
             }
         }
 
@@ -152,8 +152,7 @@ namespace System.Windows.Automation.Peers
         //[CodeAnalysis("AptcaMethodsShouldOnlyCallAptcaMethods")] //Tracking Bug: 29647
         void IValueProvider.SetValue(string val)
         {
-            if (val == null)
-                throw new ArgumentNullException("val");
+            ArgumentNullException.ThrowIfNull(val);
 
             ComboBox owner = (ComboBox)Owner;
 

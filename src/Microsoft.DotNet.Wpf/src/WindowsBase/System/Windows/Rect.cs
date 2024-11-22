@@ -60,7 +60,7 @@ namespace System.Windows
         {
             if (width < 0 || height < 0)
             {
-                throw new System.ArgumentException(SR.Get(SRID.Size_WidthAndHeightCannotBeNegative));
+                throw new System.ArgumentException(SR.Size_WidthAndHeightCannotBeNegative);
             }
 
             _x    = x;
@@ -160,7 +160,7 @@ namespace System.Windows
             {
                 if (IsEmpty)
                 {
-                    throw new System.InvalidOperationException(SR.Get(SRID.Rect_CannotModifyEmptyRect));
+                    throw new System.InvalidOperationException(SR.Rect_CannotModifyEmptyRect);
                 }
                 
                 _x = value._x;
@@ -189,7 +189,7 @@ namespace System.Windows
                 {
                     if (IsEmpty)
                     {
-                        throw new System.InvalidOperationException(SR.Get(SRID.Rect_CannotModifyEmptyRect));
+                        throw new System.InvalidOperationException(SR.Rect_CannotModifyEmptyRect);
                     }
 
                     _width = value._width;
@@ -213,7 +213,7 @@ namespace System.Windows
             {
                 if (IsEmpty)
                 {
-                    throw new System.InvalidOperationException(SR.Get(SRID.Rect_CannotModifyEmptyRect));
+                    throw new System.InvalidOperationException(SR.Rect_CannotModifyEmptyRect);
                 }
 
                 _x = value;
@@ -235,7 +235,7 @@ namespace System.Windows
             {
                 if (IsEmpty)
                 {
-                    throw new System.InvalidOperationException(SR.Get(SRID.Rect_CannotModifyEmptyRect));
+                    throw new System.InvalidOperationException(SR.Rect_CannotModifyEmptyRect);
                 }
 
                 _y = value;
@@ -257,12 +257,12 @@ namespace System.Windows
             {
                 if (IsEmpty)
                 {
-                    throw new System.InvalidOperationException(SR.Get(SRID.Rect_CannotModifyEmptyRect));
+                    throw new System.InvalidOperationException(SR.Rect_CannotModifyEmptyRect);
                 }
                                 
                 if (value < 0)
                 {
-                    throw new System.ArgumentException(SR.Get(SRID.Size_WidthCannotBeNegative));
+                    throw new System.ArgumentException(SR.Size_WidthCannotBeNegative);
                 }
 
                 _width = value;
@@ -284,12 +284,12 @@ namespace System.Windows
             {
                 if (IsEmpty)
                 {
-                    throw new System.InvalidOperationException(SR.Get(SRID.Rect_CannotModifyEmptyRect));
+                    throw new System.InvalidOperationException(SR.Rect_CannotModifyEmptyRect);
                 }
 
                 if (value < 0)
                 {
-                    throw new System.ArgumentException(SR.Get(SRID.Size_HeightCannotBeNegative));
+                    throw new System.ArgumentException(SR.Size_HeightCannotBeNegative);
                 }
 
                 _height = value;
@@ -594,7 +594,7 @@ namespace System.Windows
         {
             if (IsEmpty)
             {
-                throw new System.InvalidOperationException(SR.Get(SRID.Rect_CannotCallMethod));
+                throw new System.InvalidOperationException(SR.Rect_CannotCallMethod);
             }
 
             _x += offsetVector._x;
@@ -609,7 +609,7 @@ namespace System.Windows
         {
             if (IsEmpty)
             {
-                throw new System.InvalidOperationException(SR.Get(SRID.Rect_CannotCallMethod));
+                throw new System.InvalidOperationException(SR.Rect_CannotCallMethod);
             }
 
             _x += offsetX;
@@ -654,7 +654,7 @@ namespace System.Windows
         {
             if (IsEmpty)
             {
-                throw new System.InvalidOperationException(SR.Get(SRID.Rect_CannotCallMethod));
+                throw new System.InvalidOperationException(SR.Rect_CannotCallMethod);
             }
 
             _x -= width;

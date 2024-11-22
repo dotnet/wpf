@@ -17,7 +17,6 @@ using System;
 using System.Security;
 using SecurityHelper=MS.Internal.SecurityHelper;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Ink
 {
@@ -131,7 +130,7 @@ namespace System.Windows.Ink
             //can be null if the call to SetEnabledGestures failed
             if (_enabledGestures == null)
             {
-                _enabledGestures = new ApplicationGesture[] { };
+                _enabledGestures = Array.Empty<ApplicationGesture>();
             }
             return new ReadOnlyCollection<ApplicationGesture>(_enabledGestures);
         }
@@ -173,13 +172,10 @@ namespace System.Windows.Ink
         /// <returns></returns>
         private ReadOnlyCollection<GestureRecognitionResult> RecognizeImpl(StrokeCollection strokes)
         {
-            if (strokes == null)
-            {
-                throw new ArgumentNullException("strokes"); // Null is not allowed as the argument value
-            }
+            ArgumentNullException.ThrowIfNull(strokes);
             if (strokes.Count > 2)
             {
-                throw new ArgumentException(SR.Get(SRID.StrokeCollectionCountTooBig), "strokes");
+                throw new ArgumentException(SR.StrokeCollectionCountTooBig, "strokes");
             }
             VerifyAccess();
             VerifyDisposed();
@@ -268,17 +264,14 @@ namespace System.Windows.Ink
         {
             if (_nativeRecognizer == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.GestureRecognizerNotAvailable));
+                throw new InvalidOperationException(SR.GestureRecognizerNotAvailable);
             }
         }
         
         // Verify whether this object has been disposed.
         private void VerifyDisposed()
         {
-            if ( _disposed )
-            {
-                throw new ObjectDisposedException("GestureRecognizer");
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(GestureRecognizer));
         }
 
         #endregion Private Methods

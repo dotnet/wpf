@@ -41,7 +41,7 @@ namespace MS.Internal.IO.Packaging
             SecuritySuppressedIStream stream = underlyingStream as SecuritySuppressedIStream;
             Debug.Assert(stream != null);
 
-            _securitySuppressedIStream = new SecurityCriticalDataForSet<SecuritySuppressedIStream>(stream);
+            _securitySuppressedIStream = stream;
             
             _access = openAccess;
             // we only work for reading.
@@ -108,7 +108,7 @@ namespace MS.Internal.IO.Packaging
                     // call Stat to get length back.  STATFLAG_NONAME means string buffer
                     // is not populated.
 
-                    _securitySuppressedIStream.Value.Stat(out streamStat, NativeMethods.STATFLAG_NONAME);
+                    _securitySuppressedIStream.Stat(out streamStat, NativeMethods.STATFLAG_NONAME);
 
                     _isLengthInitialized = true;
                     _length = streamStat.cbSize;
@@ -131,7 +131,7 @@ namespace MS.Internal.IO.Packaging
                 
                 long seekPos = 0;
 
-                _securitySuppressedIStream.Value.Seek(0,
+                _securitySuppressedIStream.Seek(0,
                                                       NativeMethods.STREAM_SEEK_CUR,
                                                       out seekPos);
 
@@ -144,18 +144,18 @@ namespace MS.Internal.IO.Packaging
 
                 if (!CanSeek)
                 {
-                    throw new NotSupportedException(SR.Get(SRID.SetPositionNotSupported));
+                    throw new NotSupportedException(SR.SetPositionNotSupported);
                 }
                 
                 long seekPos = 0;
 
-                _securitySuppressedIStream.Value.Seek(value,
+                _securitySuppressedIStream.Seek(value,
                                                       NativeMethods.STREAM_SEEK_SET,
                                                       out seekPos);
 
                 if (value != seekPos)
                 {
-                    throw new IOException(SR.Get(SRID.SeekFailed));
+                    throw new IOException(SR.SeekFailed);
                 }
             }
         }
@@ -192,7 +192,7 @@ namespace MS.Internal.IO.Packaging
 
             if (!CanSeek)
             {
-                throw new NotSupportedException(SR.Get(SRID.SeekNotSupported));
+                throw new NotSupportedException(SR.SeekNotSupported);
             }
 
             long seekPos = 0;
@@ -205,7 +205,7 @@ namespace MS.Internal.IO.Packaging
                     if (0 > offset)
                     {
                         throw new ArgumentOutOfRangeException("offset",
-                                                              SR.Get(SRID.SeekNegative));
+                                                              SR.SeekNegative);
                     }
                     break;
 
@@ -222,7 +222,7 @@ namespace MS.Internal.IO.Packaging
                                                                                  typeof(SeekOrigin));
             }
 
-            _securitySuppressedIStream.Value.Seek(offset, translatedSeekOrigin, out seekPos);
+            _securitySuppressedIStream.Seek(offset, translatedSeekOrigin, out seekPos);
 
             return seekPos;
         }
@@ -235,7 +235,7 @@ namespace MS.Internal.IO.Packaging
         /// <param name="newLength">New length</param>
         public override void SetLength(long newLength)
         {
-            throw new NotSupportedException(SR.Get(SRID.SetLengthNotSupported));
+            throw new NotSupportedException(SR.SetLengthNotSupported);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace MS.Internal.IO.Packaging
 
             if (!CanRead)
             {
-                throw new NotSupportedException(SR.Get(SRID.ReadNotSupported));
+                throw new NotSupportedException(SR.ReadNotSupported);
             }
             
             int read = 0;
@@ -267,27 +267,27 @@ namespace MS.Internal.IO.Packaging
             if (0 > count)
             {
                 throw new ArgumentOutOfRangeException("count",
-                                                      SR.Get(SRID.ReadCountNegative));
+                                                      SR.ReadCountNegative);
             }
 
             // offset has to be a positive number
             if (0 > offset)
             {
                 throw new ArgumentOutOfRangeException("offset",
-                                                      SR.Get(SRID.BufferOffsetNegative));
+                                                      SR.BufferOffsetNegative);
             }
 
             // make sure that we have a buffer that matches number of bytes we need to read 
             // since all values are > 0, there is no chance of overflow
             if (!((buffer.Length > 0) && ((buffer.Length - offset) >= count)))
             {
-                throw new ArgumentException(SR.Get(SRID.BufferTooSmall), "buffer");
+                throw new ArgumentException(SR.BufferTooSmall, "buffer");
             }
             
             // offset == 0 is the normal case
             if (0 == offset)
             {
-                _securitySuppressedIStream.Value.Read(buffer, count, out read);
+                _securitySuppressedIStream.Read(buffer, count, out read);
             }
             // offset involved.  Must be positive
             else if (0 < offset)
@@ -296,7 +296,7 @@ namespace MS.Internal.IO.Packaging
                 //  the specified offset.
                 byte[] localBuffer = new byte[count];
 
-                _securitySuppressedIStream.Value.Read(localBuffer, count, out read);
+                _securitySuppressedIStream.Read(localBuffer, count, out read);
 
                 if (read > 0)
                 {
@@ -319,7 +319,7 @@ namespace MS.Internal.IO.Packaging
         /// <param name="count">Number of bytes to write</param>
         public override void Write(byte[] buffer, int offset, int count)
         {
-            throw new NotSupportedException(SR.Get(SRID.WriteNotSupported));
+            throw new NotSupportedException(SR.WriteNotSupported);
         }
 
         /// <summary>
@@ -348,7 +348,7 @@ namespace MS.Internal.IO.Packaging
         internal void CheckDisposedStatus()
         {
             if (StreamDisposed)
-                throw new ObjectDisposedException(null, SR.Get(SRID.StreamObjectDisposed));
+                throw new ObjectDisposedException(null, SR.StreamObjectDisposed);
         }
 
         #endregion Internal Methods
@@ -385,7 +385,7 @@ namespace MS.Internal.IO.Packaging
         // This class does not control the life cycle of _securitySupressedIStream
         //  thus it should not dispose it when this class gets disposed
         //  the client code of this class should be the one that dispose _securitySupressedIStream
-        SecurityCriticalDataForSet<SecuritySuppressedIStream> _securitySuppressedIStream;
+        SecuritySuppressedIStream _securitySuppressedIStream;
 
         FileAccess                 _access;
         long                       _length = 0;

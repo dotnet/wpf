@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿using MS.Utility;
+using MS.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -39,10 +39,7 @@ namespace MS.Internal.Documents
         {
             Version++;
 
-            if (item == null)
-            {
-                throw new ArgumentNullException("item");
-            }
+            ArgumentNullException.ThrowIfNull(item);
             if (Size == Items.Length)
             {
                 EnsureCapacity(Size + 1);
@@ -105,12 +102,9 @@ namespace MS.Internal.Documents
 
             if (index < 0 || index > Size)
             {
-                throw new ArgumentOutOfRangeException(SR.Get(SRID.TableCollectionOutOfRange));
+                throw new ArgumentOutOfRangeException(SR.TableCollectionOutOfRange);
             }
-            if (item == null)
-            {
-                throw new ArgumentNullException("item");
-            }
+            ArgumentNullException.ThrowIfNull(item);
             if (Size == Items.Length)
             {
                 EnsureCapacity(Size + 1);
@@ -152,14 +146,14 @@ namespace MS.Internal.Documents
             {
                 if (LogicalTreeHelper.GetParent(item.Parent) != Owner)
                 {
-                    throw new System.ArgumentException(SR.Get(SRID.TableCollectionWrongProxyParent));
+                    throw new System.ArgumentException(SR.TableCollectionWrongProxyParent);
                 }
             }
             else
             {
                 if (item.Parent != null)
                 {
-                    throw new System.ArgumentException(SR.Get(SRID.TableCollectionInOtherCollection));
+                    throw new System.ArgumentException(SR.TableCollectionInOtherCollection);
                 }
 
                 Owner.AddLogicalChild(item);
@@ -217,10 +211,7 @@ namespace MS.Internal.Documents
         {
             Version++;
 
-            if (item == null)
-            {
-                throw new ArgumentNullException("item");
-            }
+            ArgumentNullException.ThrowIfNull(item);
             if (!BelongsToOwner(item))
             {
                 return false;
@@ -251,7 +242,7 @@ namespace MS.Internal.Documents
 
             if (index < 0 || index >= Size)
             {
-                throw new ArgumentOutOfRangeException(SR.Get(SRID.TableCollectionOutOfRange));
+                throw new ArgumentOutOfRangeException(SR.TableCollectionOutOfRange);
             }
 
             PrivateRemove(Items[index]);
@@ -283,15 +274,15 @@ namespace MS.Internal.Documents
 
             if (index < 0 || index >= Size)
             {
-                throw new ArgumentOutOfRangeException(SR.Get(SRID.TableCollectionOutOfRange));
+                throw new ArgumentOutOfRangeException(SR.TableCollectionOutOfRange);
             }
             if (count < 0)
             {
-                throw new ArgumentOutOfRangeException(SR.Get(SRID.TableCollectionCountNeedNonNegNum));
+                throw new ArgumentOutOfRangeException(SR.TableCollectionCountNeedNonNegNum);
             }
             if (Size - index < count)
             {
-                throw new ArgumentException(SR.Get(SRID.TableCollectionRangeOutOfRange));
+                throw new ArgumentException(SR.TableCollectionRangeOutOfRange);
             }
 
             if (count > 0)
@@ -330,7 +321,7 @@ namespace MS.Internal.Documents
             {
                 if (index < 0 || index >= Size)
                 {
-                    throw new ArgumentOutOfRangeException(SR.Get(SRID.TableCollectionOutOfRange));
+                    throw new ArgumentOutOfRangeException(SR.TableCollectionOutOfRange);
                 }
                 return (Items[index]);
             }
@@ -338,13 +329,10 @@ namespace MS.Internal.Documents
             {
                 if (index < 0 || index >= Size)
                 {
-                    throw new ArgumentOutOfRangeException(SR.Get(SRID.TableCollectionOutOfRange));
+                    throw new ArgumentOutOfRangeException(SR.TableCollectionOutOfRange);
                 }
 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 PrivateDisconnectChild(Items[index]);
                 PrivateConnectChild(index, value);

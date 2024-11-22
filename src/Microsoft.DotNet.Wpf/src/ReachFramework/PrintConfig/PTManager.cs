@@ -189,7 +189,6 @@ namespace System.Printing
     /// <summary>
     /// PrintTicketManager class that supports PrintTicket and PrintCapabilities functions.
     /// </summary>
-    [MS.Internal.ReachFramework.FriendAccessAllowed]
     internal class PrintTicketManager : IDisposable
     {
         #region Constructors
@@ -213,17 +212,11 @@ namespace System.Printing
         public PrintTicketManager(string deviceName, int clientPrintSchemaVersion)
         {
             // Check input argument
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException("deviceName");
-            }
+            ArgumentNullException.ThrowIfNull(deviceName);
 
             // Check if we can support the schema version client has requested
-            if ((clientPrintSchemaVersion > MaxPrintSchemaVersion) ||
-                (clientPrintSchemaVersion <= 0))
-            {
-                throw new ArgumentOutOfRangeException("clientPrintSchemaVersion");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(clientPrintSchemaVersion);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(clientPrintSchemaVersion, MaxPrintSchemaVersion);
 
             // Instantiate a new PTProvider instance. PTProvider constructor throws exception if it fails for any reason.
             _ptProvider = PTProviderBase.Create(deviceName,
@@ -300,10 +293,7 @@ namespace System.Printing
         {
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXGetPrintCapStart);
 
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("PrintTicketManager");
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(PrintTicketManager));
 
             MemoryStream ptStream = null;
 
@@ -380,16 +370,10 @@ namespace System.Printing
                                                             PrintTicket      deltaPrintTicket,
                                                             PrintTicketScope scope)
         {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("PrintTicketManager");
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(PrintTicketManager));
 
             // Base PrintTicket is required. Delta PrintTicket is optional.
-            if (basePrintTicket == null)
-            {
-                throw new ArgumentNullException("basePrintTicket");
-            }
+            ArgumentNullException.ThrowIfNull(basePrintTicket);
 
             // validate scope value
             if ((scope != PrintTicketScope.PageScope) &&
@@ -424,10 +408,7 @@ namespace System.Printing
         /// <returns>The converted PrintTicket object.</returns>
         public PrintTicket ConvertDevModeToPrintTicket(byte[] devMode)
         {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("PrintTicketManager");
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(PrintTicketManager));
 
             return PrintTicketConverter.InternalConvertDevModeToPrintTicket(_ptProvider,
                                                                             devMode,
@@ -443,10 +424,7 @@ namespace System.Printing
         public byte[] ConvertPrintTicketToDevMode(PrintTicket printTicket,
                                                   BaseDevModeType baseType)
         {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("PrintTicketManager");
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(PrintTicketManager));
 
             return PrintTicketConverter.InternalConvertPrintTicketToDevMode(_ptProvider,
                                                                             printTicket,

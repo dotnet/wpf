@@ -420,6 +420,18 @@ namespace System.Windows.Documents
         // Default ContextMenu for TextBox and RichTextBox.
         private class EditorContextMenu : ContextMenu
         {
+            public EditorContextMenu() : base()
+            {
+                if(ThemeManager.IsFluentThemeEnabled)
+                {
+                    SetResourceReference(StyleProperty, typeof(ContextMenu));
+                }
+                else
+                {
+                    // Default to previous behavior where we did nothing.
+                }
+            }
+
             // Initialize the context menu.
             // Creates a new instance.
             internal void AddMenuItems(TextEditor textEditor)
@@ -492,7 +504,7 @@ namespace System.Windows.Documents
                 if (!addedSuggestion)
                 {
                     menuItem = new EditorMenuItem();
-                    menuItem.Header = SR.Get(SRID.TextBox_ContextMenu_NoSpellingSuggestions);
+                    menuItem.Header = SR.TextBox_ContextMenu_NoSpellingSuggestions;
                     menuItem.IsEnabled = false;
                     this.Items.Add(menuItem);
                 }
@@ -500,7 +512,7 @@ namespace System.Windows.Documents
                 AddSeparator();
 
                 menuItem = new EditorMenuItem();
-                menuItem.Header = SR.Get(SRID.TextBox_ContextMenu_IgnoreAll);
+                menuItem.Header = SR.TextBox_ContextMenu_IgnoreAll;
                 menuItem.Command = EditingCommands.IgnoreSpellingError;
                 this.Items.Add(menuItem);
                 menuItem.CommandTarget = textEditor.UiScope;
@@ -516,11 +528,11 @@ namespace System.Windows.Documents
                 {
                     if (suggestion[0] == 0x0020)
                     {
-                        return SR.Get(SRID.TextBox_ContextMenu_Description_SBCSSpace);
+                        return SR.TextBox_ContextMenu_Description_SBCSSpace;
                     }
                     else if (suggestion[0] == 0x3000)
                     {
-                        return SR.Get(SRID.TextBox_ContextMenu_Description_DBCSSpace);
+                        return SR.TextBox_ContextMenu_Description_DBCSSpace;
                     }
                 }
                 return null;
@@ -540,7 +552,7 @@ namespace System.Windows.Documents
                 }
 
                 ReleaseCandidateList(null);
-                _candidateList = new  SecurityCriticalDataClass<UnsafeNativeMethods.ITfCandidateList>(textStore.GetReconversionCandidateList());
+                _candidateList = textStore.GetReconversionCandidateList();
                 if (CandidateList == null)
                 {
                     GC.SuppressFinalize(this);
@@ -576,7 +588,7 @@ namespace System.Windows.Documents
                 if (count > 5)
                 {
                     menuItem = new EditorMenuItem();
-                    menuItem.Header = SR.Get(SRID.TextBox_ContextMenu_More);
+                    menuItem.Header = SR.TextBox_ContextMenu_More;
                     menuItem.Command = ApplicationCommands.CorrectionList;
                     this.Items.Add(menuItem);
                     menuItem.CommandTarget = textEditor.UiScope;
@@ -592,19 +604,19 @@ namespace System.Windows.Documents
                 MenuItem menuItem;
 
                 menuItem = new EditorMenuItem();
-                menuItem.Header = SR.Get(SRID.TextBox_ContextMenu_Cut);
+                menuItem.Header = SR.TextBox_ContextMenu_Cut;
                 menuItem.CommandTarget = textEditor.UiScope;
                 menuItem.Command = ApplicationCommands.Cut;
                 this.Items.Add(menuItem);
 
                 menuItem = new EditorMenuItem();
-                menuItem.Header = SR.Get(SRID.TextBox_ContextMenu_Copy);
+                menuItem.Header = SR.TextBox_ContextMenu_Copy;
                 menuItem.CommandTarget = textEditor.UiScope;
                 menuItem.Command = ApplicationCommands.Copy;
                 this.Items.Add(menuItem);
 
                 menuItem = new EditorMenuItem();
-                menuItem.Header = SR.Get(SRID.TextBox_ContextMenu_Paste);
+                menuItem.Header = SR.TextBox_ContextMenu_Paste;
                 menuItem.CommandTarget = textEditor.UiScope;
                 menuItem.Command = ApplicationCommands.Paste;
                 this.Items.Add(menuItem);
@@ -636,23 +648,12 @@ namespace System.Windows.Documents
 
             // ReconversionMenuItem uses this to finalzie the candidate string.
 
-            internal UnsafeNativeMethods.ITfCandidateList CandidateList
-            {
-                 get
-                 {
-                     if ( _candidateList == null)
-                     {
-                         return null;
-                     }
-
-                     return _candidateList.Value;
-                 }
-            }
+            internal UnsafeNativeMethods.ITfCandidateList CandidateList => _candidateList;
 
             // The candidate list for Cicero Reconversion.
             // We need to use same ITfCandidateList object for both listing up and finalizing because
             // the index of the candidate string needs to match.
-            private SecurityCriticalDataClass<UnsafeNativeMethods.ITfCandidateList> _candidateList;
+            private UnsafeNativeMethods.ITfCandidateList _candidateList;
         }
 
         // Default EditorContextMenu item base class.

@@ -284,8 +284,8 @@ namespace System.Windows.Documents.MsSpellCheckLib
         /// <returns></returns>
         private static bool MatchException(Exception exception, List<Type> exceptions)
         {
-            if (exception == null) throw new ArgumentNullException(nameof(exception));
-            if (exceptions == null) throw new ArgumentNullException(nameof(exceptions));
+            ArgumentNullException.ThrowIfNull(exception);
+            ArgumentNullException.ThrowIfNull(exceptions);
 
             Type exceptionType = exception.GetType();
 
@@ -299,7 +299,7 @@ namespace System.Windows.Documents.MsSpellCheckLib
         /// <param name="exceptions"></param>
         private static void ValidateExceptionTypeList(List<Type> exceptions)
         {
-            if (exceptions == null) throw new ArgumentNullException(nameof(exceptions));
+            ArgumentNullException.ThrowIfNull(exceptions);
 
             Invariant.Assert(exceptions.TrueForAll((t) => typeof(Exception).IsAssignableFrom(t)));
         }

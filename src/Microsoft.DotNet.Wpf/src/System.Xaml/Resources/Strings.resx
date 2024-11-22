@@ -747,9 +747,6 @@
   <data name="OpenPropertyInCurrentFrame_SM" space_="preserve">
     <value>XAML Node Stream: Missing EndMember for '{0}.{1}' before StartMember '{2}'.</value>
   </data>
-  <data name="ParameterCannotBeNegative" space_="preserve">
-    <value>Parameter must be greater than or equal to zero.</value>
-  </data>
   <data name="ParentlessPropertyElement" space_="preserve">
     <value>The property element '{0}' is not contained by an object element.</value>
   </data>
@@ -782,9 +779,6 @@
   </data>
   <data name="ProvideValueCycle" space_="preserve">
     <value>Cannot call MarkupExtension.ProvideValue because of a cyclical dependency. Properties inside a MarkupExtension cannot reference objects that reference the result of the MarkupExtension. The affected MarkupExtensions are:</value>
-  </data>
-  <data name="QualifiedNameHasWrongFormat" space_="preserve">
-    <value>'{0}' type name does not have the expected format 'className, assembly'.</value>
   </data>
   <data name="QuoteCharactersOutOfPlace" space_="preserve">
     <value>Quote characters ' or " are only allowed at the start of values.</value>

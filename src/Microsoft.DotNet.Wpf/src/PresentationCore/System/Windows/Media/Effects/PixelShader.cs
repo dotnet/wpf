@@ -24,7 +24,6 @@ using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
 using System.Windows.Markup;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using System.Windows.Navigation;
 using System.IO.Packaging;
 using MS.Internal.PresentationCore; 
@@ -111,7 +110,7 @@ namespace System.Windows.Media.Effects
                     if (!newUri.IsFile && 
                         !MS.Internal.IO.Packaging.PackUriHelper.IsPackUri(newUri))
                     {
-                        throw new ArgumentException(SR.Get(SRID.Effect_SourceUriMustBeFileOrPack));
+                        throw new ArgumentException(SR.Effect_SourceUriMustBeFileOrPack);
                     }
 
                     stream = WpfWebRequestHelper.CreateRequestAndGetResponseStream(newUri);
@@ -134,35 +133,34 @@ namespace System.Windows.Media.Effects
         /// </summary>
         private void LoadPixelShaderFromStreamIntoMemory(Stream source) 
         {
-            
-            _shaderBytecode = new SecurityCriticalData<byte[]>(null);
-            
+            _shaderBytecode = null;
+
             if (source != null)
             {
                 if (!source.CanSeek)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Effect_ShaderSeekableStream));
+                    throw new InvalidOperationException(SR.Effect_ShaderSeekableStream);
                 }
 
                 int len = (int)source.Length;  // only works on seekable streams.
 
                 if (len % sizeof(int) != 0)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Effect_ShaderBytecodeSize));
+                    throw new InvalidOperationException(SR.Effect_ShaderBytecodeSize);
                 }
                 
                 BinaryReader br = new BinaryReader(source);
-                _shaderBytecode = new SecurityCriticalData<byte[]>(new byte[len]);
-                int lengthRead = br.Read(_shaderBytecode.Value, 0, (int)len);
+                _shaderBytecode = new byte[len];
+                int lengthRead = br.Read(_shaderBytecode, 0, (int)len);
 
                 //
                 // The first 4 bytes contain version info in the form of
                 // [Minor][Major][xx][xx]
                 //
-                if (_shaderBytecode.Value != null && _shaderBytecode.Value.Length > 3)
+                if (_shaderBytecode != null && _shaderBytecode.Length > 3)
                 {
-                    ShaderMajorVersion = _shaderBytecode.Value[1];
-                    ShaderMinorVersion = _shaderBytecode.Value[0];
+                    ShaderMajorVersion = _shaderBytecode[1];
+                    ShaderMinorVersion = _shaderBytecode[0];
                 }
                 else
                 {
@@ -201,20 +199,20 @@ namespace System.Windows.Media.Effects
                     DUCE.MILCMD_PIXELSHADER data;
                     data.Type = MILCMD.MilCmdPixelShader;
                     data.Handle = _duceResource.GetHandle(channel);
-                    data.PixelShaderBytecodeSize = (_shaderBytecode.Value == null) ? 0 : (uint)(_shaderBytecode.Value).Length;
+                    data.PixelShaderBytecodeSize = (uint)(_shaderBytecode?.Length ?? 0);
                     data.ShaderRenderMode = ShaderRenderMode;
                     data.CompileSoftwareShader = CompositionResourceManager.BooleanToUInt32(!(ShaderMajorVersion == 3 && ShaderMinorVersion == 0));
 
                     unsafe
                     {
                         channel.BeginCommand(
-                            (byte*)&data,                      
+                            (byte*)&data,
                             sizeof(DUCE.MILCMD_PIXELSHADER),
                             (int)data.PixelShaderBytecodeSize);   // extra data
 
                             if (data.PixelShaderBytecodeSize > 0)
                             {
-                                fixed (byte *pPixelShaderBytecode = _shaderBytecode.Value)
+                                fixed (byte *pPixelShaderBytecode = _shaderBytecode)
                                 {
                                     channel.AppendCommandData(pPixelShaderBytecode, (int)data.PixelShaderBytecodeSize);
                                 }
@@ -279,19 +277,19 @@ namespace System.Windows.Media.Effects
         /// <param name="transform"></param>
         private void CopyCommon(PixelShader shader)
         {
-            byte[] sourceBytecode = shader._shaderBytecode.Value;
+            byte[] sourceBytecode = shader._shaderBytecode;
             byte[] destinationBytecode = null;
 
             if (sourceBytecode != null)
             {
                 destinationBytecode = new byte[sourceBytecode.Length];
                 sourceBytecode.CopyTo(destinationBytecode, 0);
-            }                          
+            }
 
-            _shaderBytecode = new SecurityCriticalData<byte[]>(destinationBytecode);
+            _shaderBytecode = destinationBytecode;
         }
 
-        private SecurityCriticalData<byte[]> _shaderBytecode;
+        private byte[] _shaderBytecode;
 
         //
         // Introduced with ps_3_0 for ShaderEffect's use

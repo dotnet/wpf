@@ -13,8 +13,6 @@ using System.IO;
 using System.Security;
 using SecurityHelper=MS.Internal.SecurityHelper;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
-using MS.Internal.PresentationCore;     //  FriendAccessAllowed
 
 namespace System.Windows.Input
 {
@@ -39,7 +37,7 @@ namespace System.Windows.Input
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidCursorType, cursorType));
+                throw new ArgumentException(SR.Format(SR.InvalidCursorType, cursorType));
             }
         }
 
@@ -59,8 +57,7 @@ namespace System.Windows.Input
         public Cursor(string cursorFile, bool scaleWithDpi)
         {
             _scaleWithDpi = scaleWithDpi;
-            if (cursorFile == null)
-                throw new ArgumentNullException("cursorFile");
+            ArgumentNullException.ThrowIfNull(cursorFile);
 
             if ((cursorFile != String.Empty) &&
                 (cursorFile.EndsWith(".cur", StringComparison.OrdinalIgnoreCase) ||
@@ -71,7 +68,7 @@ namespace System.Windows.Input
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.Cursor_UnsupportedFormat , cursorFile));
+                throw new ArgumentException(SR.Format(SR.Cursor_UnsupportedFormat , cursorFile));
             }
         }
 
@@ -91,10 +88,7 @@ namespace System.Windows.Input
         public Cursor(Stream cursorStream, bool scaleWithDpi)
         {
             _scaleWithDpi = scaleWithDpi;
-            if (cursorStream == null)
-            {
-                throw new ArgumentNullException("cursorStream");
-            }
+            ArgumentNullException.ThrowIfNull(cursorStream);
             LoadFromStream(cursorStream);
         }
 
@@ -102,7 +96,6 @@ namespace System.Windows.Input
         ///     Cursor from a SafeHandle to an HCURSOR
         /// </summary>
         /// <param name="cursorHandle"></param>
-        [FriendAccessAllowed] //used by ColumnHeader.GetCursor in PresentationFramework
         internal Cursor(SafeHandle cursorHandle )
         {
             if (! cursorHandle.IsInvalid )
@@ -203,7 +196,7 @@ namespace System.Windows.Input
                 {
                     if ((errorCode == NativeMethods.ERROR_FILE_NOT_FOUND) || (errorCode == NativeMethods.ERROR_PATH_NOT_FOUND))
                     {
-                        throw new Win32Exception(errorCode, SR.Get(SRID.Cursor_LoadImageFailure, fileName));
+                        throw new Win32Exception(errorCode, SR.Format(SR.Cursor_LoadImageFailure, fileName));
                     }
                     else
                     {
@@ -212,7 +205,7 @@ namespace System.Windows.Input
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Get(SRID.Cursor_LoadImageFailure, fileName));
+                    throw new ArgumentException(SR.Format(SR.Cursor_LoadImageFailure, fileName));
                 }
             }
         }
@@ -266,7 +259,7 @@ namespace System.Windows.Input
                                                                     (_scaleWithDpi? NativeMethods.LR_DEFAULTSIZE : 0x0000));
                 if (_cursorHandle == null || _cursorHandle.IsInvalid)
                 {
-                     throw new ArgumentException(SR.Get(SRID.Cursor_InvalidStream));
+                     throw new ArgumentException(SR.Cursor_InvalidStream);
                 }
             }
             finally
@@ -312,7 +305,7 @@ namespace System.Windows.Input
                                                                     (_scaleWithDpi? NativeMethods.LR_DEFAULTSIZE : 0x0000));
                 if (_cursorHandle == null || _cursorHandle.IsInvalid)
                 {
-                     throw new ArgumentException(SR.Get(SRID.Cursor_InvalidStream));
+                     throw new ArgumentException(SR.Cursor_InvalidStream);
                 }
             }
             finally
@@ -344,7 +337,7 @@ namespace System.Windows.Input
             else
             {
                 // Get the string representation fo the cursor type enumeration.
-                return Enum.GetName(typeof(CursorType), _cursorType);
+                return Enum.GetName(_cursorType);
             }
         }
 
@@ -359,7 +352,7 @@ namespace System.Windows.Input
 
         private SafeHandle  _cursorHandle;
 
-        private static readonly int[] CursorTypes = {
+        private static ReadOnlySpan<int> CursorTypes => [
             0, // None
             NativeMethods.IDC_NO,
             NativeMethods.IDC_ARROW,
@@ -388,6 +381,6 @@ namespace System.Windows.Input
             NativeMethods.IDC_ARROW + 149, // ScrollSWCursor
             NativeMethods.IDC_ARROW + 150, // ScrollSECursor
             NativeMethods.IDC_ARROW + 151 // ArrowCDCursor
-       };
+       ];
     }
 }

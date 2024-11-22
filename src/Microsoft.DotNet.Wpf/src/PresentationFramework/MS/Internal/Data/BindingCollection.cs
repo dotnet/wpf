@@ -84,8 +84,7 @@ namespace MS.Internal.Data
         /// </summary>
         protected override void InsertItem(int index, BindingBase item)
         {
-            if (item == null)
-                throw new ArgumentNullException("item");
+            ArgumentNullException.ThrowIfNull(item);
             ValidateItem(item);
             _owner.CheckSealed();
 
@@ -99,8 +98,7 @@ namespace MS.Internal.Data
         /// </summary>
         protected override void SetItem(int index, BindingBase item)
         {
-            if (item == null)
-                throw new ArgumentNullException("item");
+            ArgumentNullException.ThrowIfNull(item);
             ValidateItem(item);
             _owner.CheckSealed();
 
@@ -121,7 +119,7 @@ namespace MS.Internal.Data
         {
             // for V1, we only allow Binding as an item of BindingCollection.
             if (!(binding is Binding))
-                throw new NotSupportedException(SR.Get(SRID.BindingCollectionContainsNonBinding, binding.GetType().Name));
+                throw new NotSupportedException(SR.Format(SR.BindingCollectionContainsNonBinding, binding.GetType().Name));
         }
 
         void OnBindingCollectionChanged()

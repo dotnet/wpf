@@ -62,8 +62,8 @@ namespace System.Windows.Input
                 string mouseActionToken;
                 string modifiersToken;
 
-                if (fullName == String.Empty)
-                    return new MouseGesture(MouseAction.None, ModifierKeys.None); ;
+                if (fullName.Length == 0)
+                    return new MouseGesture(MouseAction.None, ModifierKeys.None);
 
                 // break apart LocalName and Prefix
                 int Offset = fullName.LastIndexOf(MODIFIERS_DELIMITER);
@@ -145,9 +145,8 @@ namespace System.Windows.Input
         /// <returns>string if parameter is a MouseGesture</returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType == null)
-                throw new ArgumentNullException("destinationType");
- 
+            ArgumentNullException.ThrowIfNull(destinationType);
+
             if (destinationType == typeof(string))
             {
                 if (value == null)

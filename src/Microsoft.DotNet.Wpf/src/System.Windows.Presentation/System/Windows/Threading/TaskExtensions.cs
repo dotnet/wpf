@@ -16,8 +16,7 @@ namespace System.Windows.Threading
         /// </summary>
         public static bool IsDispatcherOperationTask(this Task @this)
         {
-            var mapping = @this.AsyncState as DispatcherOperationTaskMapping;
-            return mapping != null;
+            return @this.AsyncState is DispatcherOperationTaskMapping;
         }
         
         /// <summary>

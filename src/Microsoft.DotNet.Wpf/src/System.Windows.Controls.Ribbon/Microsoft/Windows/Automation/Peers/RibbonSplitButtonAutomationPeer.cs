@@ -75,7 +75,7 @@ namespace Microsoft.Windows.Automation.Peers
 
             if (!OwningSplitButton.IsCheckable)
             {
-                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.UIA_OperationCannotBePerformed));
+                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
             }
 
             if (OwningSplitButton.HeaderButton != null)
@@ -108,7 +108,7 @@ namespace Microsoft.Windows.Automation.Peers
             // When IsCheckable is true, TogglePattern should be used
             if (OwningSplitButton.IsCheckable)
             {
-                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.UIA_OperationCannotBePerformed));
+                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
             }
 
             if (OwningSplitButton.HeaderButton != null)

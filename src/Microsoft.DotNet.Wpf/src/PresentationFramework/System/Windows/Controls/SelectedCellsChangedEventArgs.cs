@@ -22,15 +22,8 @@ namespace System.Windows.Controls
         /// <param name="removedCells">The cells that were removed. Must be non-null, but may be empty.</param>
         public SelectedCellsChangedEventArgs(List<DataGridCellInfo> addedCells, List<DataGridCellInfo> removedCells)
         {
-            if (addedCells == null)
-            {
-                throw new ArgumentNullException("addedCells");
-            }
-
-            if (removedCells == null)
-            {
-                throw new ArgumentNullException("removedCells");
-            }
+            ArgumentNullException.ThrowIfNull(addedCells);
+            ArgumentNullException.ThrowIfNull(removedCells);
 
             _addedCells = addedCells.AsReadOnly();
             _removedCells = removedCells.AsReadOnly();
@@ -43,15 +36,8 @@ namespace System.Windows.Controls
         /// <param name="removedCells">The cells that were removed. Must be non-null, but may be empty.</param>
         public SelectedCellsChangedEventArgs(ReadOnlyCollection<DataGridCellInfo> addedCells, ReadOnlyCollection<DataGridCellInfo> removedCells)
         {
-            if (addedCells == null)
-            {
-                throw new ArgumentNullException("addedCells");
-            }
-
-            if (removedCells == null)
-            {
-                throw new ArgumentNullException("removedCells");
-            }
+            ArgumentNullException.ThrowIfNull(addedCells);
+            ArgumentNullException.ThrowIfNull(removedCells);
 
             _addedCells = addedCells;
             _removedCells = removedCells;

@@ -39,7 +39,7 @@ namespace System.Windows.Documents
             Debug.Assert(This != null);
             if (compared == null)
             {
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, comparedObj.GetType(), typeof(FixedSOMContainer)), "comparedObj");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, comparedObj.GetType(), typeof(FixedSOMContainer)), "comparedObj");
             }
             SpatialComparison compareHor = base._CompareHorizontal(compared, false);
             SpatialComparison compareVer = base._CompareVertical(compared);

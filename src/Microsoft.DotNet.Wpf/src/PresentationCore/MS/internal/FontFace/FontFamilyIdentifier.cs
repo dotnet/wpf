@@ -202,8 +202,8 @@ namespace MS.Internal.FontFace
         {
             get
             {
-                if (tokenIndex < 0 || tokenIndex >= Count)
-                    throw new ArgumentOutOfRangeException("tokenIndex");
+                ArgumentOutOfRangeException.ThrowIfNegative(tokenIndex);
+                ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(tokenIndex, Count);
 
                 // Have we already been canonicalized?
                 if (_canonicalReferences != null)

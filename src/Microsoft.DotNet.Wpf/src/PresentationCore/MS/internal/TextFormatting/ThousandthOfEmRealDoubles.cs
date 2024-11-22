@@ -16,7 +16,6 @@ using System.Collections.Generic;
 using System.Windows;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.TextFormatting
 {
@@ -177,30 +176,24 @@ namespace MS.Internal.TextFormatting
         }
 
         public void CopyTo(double[] array, int arrayIndex)
-        {            
+        {
             // parameter validations
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             if (array.Rank != 1)
             {
                 throw new ArgumentException(
-                    SR.Get(SRID.Collection_CopyTo_ArrayCannotBeMultidimensional), 
+                    SR.Collection_CopyTo_ArrayCannotBeMultidimensional, 
                     "array");                
             }
 
-            if (arrayIndex < 0)
-            {
-                throw new ArgumentOutOfRangeException("arrayIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(arrayIndex);
 
             if (arrayIndex >= array.Length)
             {
                 throw new ArgumentException(
-                    SR.Get(
-                        SRID.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, 
+                    SR.Format(
+                        SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, 
                         "arrayIndex", 
                         "array"),
                     "arrayIndex");
@@ -209,8 +202,8 @@ namespace MS.Internal.TextFormatting
             if ((array.Length - Count - arrayIndex) < 0)
             {
                 throw new ArgumentException(
-                    SR.Get(
-                        SRID.Collection_CopyTo_NumberOfElementsExceedsArrayLength,
+                    SR.Format(
+                        SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength,
                         "arrayIndex",
                         "array"));
             }           
@@ -240,25 +233,25 @@ namespace MS.Internal.TextFormatting
         public void Add(double value)
         {
             // not supported, same as double[] 
-            throw new NotSupportedException(SR.Get(SRID.CollectionIsFixedSize));                           
+            throw new NotSupportedException(SR.CollectionIsFixedSize);                           
         }
 
         public void Insert(int index, double item)
         {
             // not supported, same as double[] 
-            throw new NotSupportedException(SR.Get(SRID.CollectionIsFixedSize));                           
+            throw new NotSupportedException(SR.CollectionIsFixedSize);                           
         }
 
         public bool Remove(double item)
         {
             // not supported, same as double[]             
-            throw new NotSupportedException(SR.Get(SRID.CollectionIsFixedSize));                           
+            throw new NotSupportedException(SR.CollectionIsFixedSize);                           
         }
 
         public void RemoveAt(int index)
         {
             // not supported, same as double[]             
-            throw new NotSupportedException(SR.Get(SRID.CollectionIsFixedSize));                           
+            throw new NotSupportedException(SR.CollectionIsFixedSize);                           
         }
 
         //---------------------------------------------

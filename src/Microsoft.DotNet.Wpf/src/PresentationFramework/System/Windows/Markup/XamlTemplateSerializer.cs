@@ -130,7 +130,7 @@ namespace System.Windows.Markup
                             Exception ex = TemplateKey.ValidateDataType(dataType, null);
                             if (ex != null)
                             {
-                                ThrowException(SRID.TemplateBadDictionaryKey,
+                                ThrowException(nameof(SR.TemplateBadDictionaryKey),
                                                parserContext.LineNumber,
                                                parserContext.LinePosition,
                                                ex);
@@ -153,7 +153,7 @@ namespace System.Windows.Markup
 
             if (key == null)
             {
-                ThrowException(SRID.StyleNoDictionaryKey,
+                ThrowException(nameof(SR.StyleNoDictionaryKey),
                                parserContext.LineNumber,
                                parserContext.LinePosition,
                                null);
@@ -169,7 +169,7 @@ namespace System.Windows.Markup
              int  linePosition,
              Exception innerException)
         {
-            string message = SR.Get(id);
+            string message = SR.GetResourceString(id);
             XamlParseException parseException;
 
             // Throw the appropriate execption.  If we have line numbers, then we are
@@ -178,7 +178,7 @@ namespace System.Windows.Markup
             if (lineNumber > 0)
             {
                 message += " ";
-                message += SR.Get(SRID.ParserLineAndOffset,
+                message += SR.Format(SR.ParserLineAndOffset,
                                   lineNumber.ToString(CultureInfo.CurrentUICulture),
                                   linePosition.ToString(CultureInfo.CurrentUICulture));
                 parseException = new XamlParseException(message, lineNumber, linePosition);
@@ -215,19 +215,19 @@ namespace System.Windows.Markup
         internal const string ItemStringFormatPropertyName                  = "ItemStringFormat";
         internal const string ItemBindingGroupPropertyName                  = "ItemBindingGroup";
         internal const string AlternationCountPropertyName                  = "AlternationCount";
-        internal const string ControlTemplateTriggersFullPropertyName       = ControlTemplateTagName + "." + TriggersPropertyName;
-        internal const string ControlTemplateResourcesFullPropertyName      = ControlTemplateTagName + "." + ResourcesPropertyName;
-        internal const string DataTemplateTriggersFullPropertyName          = DataTemplateTagName + "." + TriggersPropertyName;
-        internal const string DataTemplateResourcesFullPropertyName         = DataTemplateTagName + "." + ResourcesPropertyName;
-        internal const string HierarchicalDataTemplateTriggersFullPropertyName = HierarchicalDataTemplateTagName + "." + TriggersPropertyName;
-        internal const string HierarchicalDataTemplateItemsSourceFullPropertyName = HierarchicalDataTemplateTagName + "." + ItemsSourcePropertyName;
-        internal const string HierarchicalDataTemplateItemTemplateFullPropertyName = HierarchicalDataTemplateTagName + "." + ItemTemplatePropertyName;
-        internal const string HierarchicalDataTemplateItemTemplateSelectorFullPropertyName = HierarchicalDataTemplateTagName + "." + ItemTemplateSelectorPropertyName;
-        internal const string HierarchicalDataTemplateItemContainerStyleFullPropertyName = HierarchicalDataTemplateTagName + "." + ItemContainerStylePropertyName;
-        internal const string HierarchicalDataTemplateItemContainerStyleSelectorFullPropertyName = HierarchicalDataTemplateTagName + "." + ItemContainerStyleSelectorPropertyName;
-        internal const string HierarchicalDataTemplateItemStringFormatFullPropertyName = HierarchicalDataTemplateTagName + "." + ItemStringFormatPropertyName;
-        internal const string HierarchicalDataTemplateItemBindingGroupFullPropertyName = HierarchicalDataTemplateTagName + "." + ItemBindingGroupPropertyName;
-        internal const string HierarchicalDataTemplateAlternationCountFullPropertyName = HierarchicalDataTemplateTagName + "." + AlternationCountPropertyName;
+        internal const string ControlTemplateTriggersFullPropertyName       = $"{ControlTemplateTagName}.{TriggersPropertyName}";
+        internal const string ControlTemplateResourcesFullPropertyName      = $"{ControlTemplateTagName}.{ResourcesPropertyName}";
+        internal const string DataTemplateTriggersFullPropertyName          = $"{DataTemplateTagName}.{TriggersPropertyName}";
+        internal const string DataTemplateResourcesFullPropertyName         = $"{DataTemplateTagName}.{ResourcesPropertyName}";
+        internal const string HierarchicalDataTemplateTriggersFullPropertyName = $"{HierarchicalDataTemplateTagName}.{TriggersPropertyName}";
+        internal const string HierarchicalDataTemplateItemsSourceFullPropertyName = $"{HierarchicalDataTemplateTagName}.{ItemsSourcePropertyName}";
+        internal const string HierarchicalDataTemplateItemTemplateFullPropertyName = $"{HierarchicalDataTemplateTagName}.{ItemTemplatePropertyName}";
+        internal const string HierarchicalDataTemplateItemTemplateSelectorFullPropertyName = $"{HierarchicalDataTemplateTagName}.{ItemTemplateSelectorPropertyName}";
+        internal const string HierarchicalDataTemplateItemContainerStyleFullPropertyName = $"{HierarchicalDataTemplateTagName}.{ItemContainerStylePropertyName}";
+        internal const string HierarchicalDataTemplateItemContainerStyleSelectorFullPropertyName = $"{HierarchicalDataTemplateTagName}.{ItemContainerStyleSelectorPropertyName}";
+        internal const string HierarchicalDataTemplateItemStringFormatFullPropertyName = $"{HierarchicalDataTemplateTagName}.{ItemStringFormatPropertyName}";
+        internal const string HierarchicalDataTemplateItemBindingGroupFullPropertyName = $"{HierarchicalDataTemplateTagName}.{ItemBindingGroupPropertyName}";
+        internal const string HierarchicalDataTemplateAlternationCountFullPropertyName = $"{HierarchicalDataTemplateTagName}.{AlternationCountPropertyName}";
         internal const string PropertyTriggerPropertyName                   = "Property";
         internal const string PropertyTriggerValuePropertyName              = "Value";
         internal const string PropertyTriggerSourceName                     = "SourceName";

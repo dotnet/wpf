@@ -68,10 +68,7 @@ namespace System.Windows.Documents
         public bool MoveNext()
         {
             // If _textSegments has been disposed, throw exception
-            if (_textSegments == null)
-            {
-                throw new ObjectDisposedException("HostedElements");
-            }
+            ObjectDisposedException.ThrowIf(_textSegments == null, typeof(HostedElements));
 
             if (_textSegments.Count == 0)
                 return false;
@@ -173,14 +170,14 @@ namespace System.Windows.Documents
                 {
                     // Collection was modified 
 #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
-                    throw new InvalidOperationException(SR.Get(SRID.EnumeratorCollectionDisposed));
+                    throw new InvalidOperationException(SR.EnumeratorCollectionDisposed);
                 }
 
                 if (_currentPosition == null)
                 {
                     // Enumerator not started. Call MoveNext to see if we can move ahead
 #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
-                    throw new InvalidOperationException(SR.Get(SRID.EnumeratorNotStarted));
+                    throw new InvalidOperationException(SR.EnumeratorNotStarted);
                 }
 
                 IInputElement currentElement = null;

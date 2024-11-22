@@ -32,8 +32,7 @@ namespace MS.Internal.Controls
         internal InkCanvasFeedbackAdorner(InkCanvas inkCanvas)
             : base((inkCanvas != null ? inkCanvas.InnerCanvas : null))
         {
-            if (inkCanvas == null)
-                throw new ArgumentNullException("inkCanvas");
+            ArgumentNullException.ThrowIfNull(inkCanvas);
 
             // Initialize the internal data
             _inkCanvas = inkCanvas;
@@ -51,10 +50,7 @@ namespace MS.Internal.Controls
         /// </summary>
         public override GeneralTransform GetDesiredTransform(GeneralTransform transform)
         {
-            if (transform == null)
-            {
-                throw new ArgumentNullException("transform");
-            }
+            ArgumentNullException.ThrowIfNull(transform);
 
             VerifyAccess();
             GeneralTransformGroup desiredTransform = new GeneralTransformGroup();

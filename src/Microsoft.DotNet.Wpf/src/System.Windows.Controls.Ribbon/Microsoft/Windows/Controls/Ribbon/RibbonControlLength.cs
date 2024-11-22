@@ -48,14 +48,14 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public RibbonControlLength(double value, RibbonControlLengthUnitType type)
         {
-            if (DoubleUtil.IsNaN(value))
+            if (double.IsNaN(value))
             {
-                throw new ArgumentException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.InvalidCtorParameterNoNaN, "value"));
+                throw new ArgumentException(Microsoft.Windows.Controls.SR.Format(Microsoft.Windows.Controls.SR.InvalidCtorParameterNoNaN, "value"));
             }
 
             if (type == RibbonControlLengthUnitType.Star && double.IsInfinity(value))
             {
-                throw new ArgumentException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.InvalidCtorParameterNoInfinityForStarSize, "value"));
+                throw new ArgumentException(Microsoft.Windows.Controls.SR.Format(Microsoft.Windows.Controls.SR.InvalidCtorParameterNoInfinityForStarSize, "value"));
             }
 
             if (type != RibbonControlLengthUnitType.Auto
@@ -63,7 +63,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 && type != RibbonControlLengthUnitType.Item
                 && type != RibbonControlLengthUnitType.Star)
             {
-                throw new ArgumentException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.InvalidCtorParameterUnknownRibbonControlLengthUnitType, "type"));
+                throw new ArgumentException(Microsoft.Windows.Controls.SR.Format(Microsoft.Windows.Controls.SR.InvalidCtorParameterUnknownRibbonControlLengthUnitType, "type"));
             }
 
             _unitValue = (type == RibbonControlLengthUnitType.Auto) ? 0.0 : value;

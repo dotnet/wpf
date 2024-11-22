@@ -25,7 +25,7 @@ namespace MS.Internal.AutomationProxies
 
             if (hwnd == IntPtr.Zero)
             {
-                processId = UnsafeNativeMethods.GetCurrentProcessId();
+                processId = (uint)Environment.ProcessId;
             }
             else
             {

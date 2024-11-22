@@ -18,7 +18,6 @@ using System.Windows.Media.Composition;
 using System.Windows.Markup;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Animation
 {
@@ -168,7 +167,7 @@ namespace System.Windows.Media.Animation
 
             if (!TimeEnumHelper.IsValidTimeSeekOrigin(origin))
             {
-                throw new InvalidEnumArgumentException(SR.Get(SRID.Enum_Invalid, "TimeSeekOrigin"));
+                throw new InvalidEnumArgumentException(SR.Format(SR.Enum_Invalid, "TimeSeekOrigin"));
             }
 
             if (origin == TimeSeekOrigin.Duration)
@@ -179,7 +178,7 @@ namespace System.Windows.Media.Animation
                 {
                     // Can't seek relative to the Duration if it has been specified as Forever or if
                     // it has not yet been resolved.
-                    throw new InvalidOperationException(SR.Get(SRID.Timing_SeekDestinationIndefinite));
+                    throw new InvalidOperationException(SR.Timing_SeekDestinationIndefinite);
                 }
                 else
                 {
@@ -191,7 +190,7 @@ namespace System.Windows.Media.Animation
             // duration it means execute the FillBehavior.
             if (offset < TimeSpan.Zero)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Timing_SeekDestinationNegative));
+                throw new InvalidOperationException(SR.Timing_SeekDestinationNegative);
             }
 
             _owner.InternalSeek(offset);
@@ -210,7 +209,7 @@ namespace System.Windows.Media.Animation
 
             if (!TimeEnumHelper.IsValidTimeSeekOrigin(origin))
             {
-                throw new InvalidEnumArgumentException(SR.Get(SRID.Enum_Invalid, "TimeSeekOrigin"));
+                throw new InvalidEnumArgumentException(SR.Format(SR.Enum_Invalid, "TimeSeekOrigin"));
             }
 
             if (origin == TimeSeekOrigin.Duration)
@@ -221,7 +220,7 @@ namespace System.Windows.Media.Animation
                 {
                     // Can't seek relative to the Duration if it has been specified as Forevor or if
                     // it has not yet been resolved.
-                    throw new InvalidOperationException(SR.Get(SRID.Timing_SeekDestinationIndefinite));
+                    throw new InvalidOperationException(SR.Timing_SeekDestinationIndefinite);
                 }
                 else
                 {
@@ -233,7 +232,7 @@ namespace System.Windows.Media.Animation
             // duration it means execute the FillBehavior.
             if (offset < TimeSpan.Zero)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Timing_SeekDestinationNegative));
+                throw new InvalidOperationException(SR.Timing_SeekDestinationNegative);
             }
 
             _owner.InternalSeekAlignedToLastTick(offset);
@@ -291,7 +290,7 @@ namespace System.Windows.Media.Animation
             {
                 if (value < 0 || value > double.MaxValue || double.IsNaN(value))
                 {
-                    throw new ArgumentException(SR.Get(SRID.Timing_InvalidArgFinitePositive), "value");
+                    throw new ArgumentException(SR.Timing_InvalidArgFinitePositive, "value");
                 }
 
                 _owner.InternalSetSpeedRatio(value);

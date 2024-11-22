@@ -190,11 +190,11 @@ namespace MS.Internal.Documents
                     case 0:
                         return _documentContainer;
                     default:
-                        throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+                        throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
                 }
             }
 
-            throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+            throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
         }
 
         /// <summary>
@@ -362,10 +362,7 @@ namespace MS.Internal.Documents
         /// </summary>
         private void CheckDisposed()
         {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException(typeof(DocumentPageView).ToString());
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(DocumentPageView));
         }
 
         #endregion Private Methods

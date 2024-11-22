@@ -198,6 +198,16 @@ namespace System.Windows.Automation
         /// </summary>
         public static readonly AutomationProperty PositionInSetProperty = AutomationElementIdentifiers.PositionInSetProperty;
 
+        /// <summary>
+        /// Property ID: HeadingLevel - Describes the heading level of an element.
+        /// </summary>
+        public static readonly AutomationProperty HeadingLevelProperty = AutomationElementIdentifiers.HeadingLevelProperty;
+
+        /// <summary>
+        /// Property ID: IsDialog - Identifies if the automation element is a dialog.
+        /// </summary>
+        public static readonly AutomationProperty IsDialogProperty = AutomationElementIdentifiers.IsDialogProperty;
+
         #region IsNnnnPatternAvailable properties
         /// <summary>Property that indicates whether the DockPattern is available for this AutomationElement</summary>
         public static readonly AutomationProperty IsDockPatternAvailableProperty = AutomationElementIdentifiers.IsDockPatternAvailableProperty;
@@ -272,8 +282,14 @@ namespace System.Windows.Automation
         /// <summary>Event ID: LayoutInvalidated - Indicates that many element locations/extents/offscreenedness have changed.</summary>
         public static readonly AutomationEvent LayoutInvalidatedEvent = AutomationElementIdentifiers.LayoutInvalidatedEvent;
 
+        /// <summary>Event ID: Notification - used mainly by servers to raise a generic notification.</summary>
+        public static readonly AutomationEvent NotificationEvent = AutomationElementIdentifiers.NotificationEvent;
+
+        /// <summary>Event ID: ActiveTextPositionChanged - Indicates that the active position within a text element has changed.</summary>
+        public static readonly AutomationEvent ActiveTextPositionChangedEvent = AutomationElementIdentifiers.ActiveTextPositionChangedEvent;
+
         #endregion Events
-        
+
         #endregion Public Constants and Readonly Fields
 
 
@@ -282,7 +298,7 @@ namespace System.Windows.Automation
         //  Public Methods
         //
         //------------------------------------------------------
- 
+
         #region Public Methods
 
         #region Equality
@@ -317,7 +333,7 @@ namespace System.Windows.Automation
             {
                 // Hash codes need to be unique if the runtime ids are null we will end up 
                 // handing out duplicates so throw an exception.
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             for (int i = 0; i < id.Length; i++)
@@ -415,7 +431,7 @@ namespace System.Windows.Automation
         /// <returns>element representing root node of specified window</returns>
         public static AutomationElement FromHandle(IntPtr hwnd)
         {
-            Misc.ValidateArgument(hwnd != IntPtr.Zero, SRID.HwndMustBeNonNULL);
+            Misc.ValidateArgument(hwnd != IntPtr.Zero, nameof(SR.HwndMustBeNonNULL));
 
             SafeNodeHandle hnode = UiaCoreApi.UiaNodeFromHandle(hwnd);
             if (hnode.IsInvalid)
@@ -443,7 +459,7 @@ namespace System.Windows.Automation
         /// </remarks>
         public static AutomationElement FromLocalProvider(IRawElementProviderSimple localImpl)
         {
-            Misc.ValidateArgumentNonNull(localImpl, "localImpl");
+            ArgumentNullException.ThrowIfNull(localImpl);
 
             return AutomationElement.Wrap(UiaCoreApi.UiaNodeFromProvider(localImpl));
         }
@@ -486,13 +502,13 @@ namespace System.Windows.Automation
         /// </remarks>
         public object GetCurrentPropertyValue(AutomationProperty property, bool ignoreDefaultValue)
         {
-            Misc.ValidateArgumentNonNull(property, "property");
+            ArgumentNullException.ThrowIfNull(property);
             CheckElement();
 
             AutomationPropertyInfo pi;
             if (!Schema.GetPropertyInfo(property, out pi))
             {
-                return new ArgumentException(SR.Get(SRID.UnsupportedProperty));
+                return new ArgumentException(SR.UnsupportedProperty);
             }
 
             object value;
@@ -544,7 +560,7 @@ namespace System.Windows.Automation
             object retObject;
             if (!TryGetCurrentPattern(pattern, out retObject))
             {
-                throw new InvalidOperationException(SR.Get(SRID.UnsupportedPattern));
+                throw new InvalidOperationException(SR.UnsupportedPattern);
             }
 
             return retObject;
@@ -569,7 +585,7 @@ namespace System.Windows.Automation
         public bool TryGetCurrentPattern(AutomationPattern pattern, out object patternObject)
         {
             patternObject = null;
-            Misc.ValidateArgumentNonNull(pattern, "pattern");
+            ArgumentNullException.ThrowIfNull(pattern);
             CheckElement();
             // Need to catch non-critical exceptions. The WinFormsSpinner will raise an
             // InvalidOperationException if it is a domain spinner and the SelectionPattern is asked for.
@@ -636,7 +652,7 @@ namespace System.Windows.Automation
         /// </remarks>
         public object GetCachedPropertyValue(AutomationProperty property, bool ignoreDefaultValue)
         {
-            Misc.ValidateArgumentNonNull(property, "property");
+            ArgumentNullException.ThrowIfNull(property);
 
             // true -> throw if not available, true -> wrap
             object val = LookupCachedValue(property, true, true);
@@ -667,7 +683,7 @@ namespace System.Windows.Automation
             object patternObject;
             if (!TryGetCachedPattern(pattern, out patternObject))
             {
-                throw new InvalidOperationException(SR.Get(SRID.UnsupportedPattern));
+                throw new InvalidOperationException(SR.UnsupportedPattern);
             }
             return patternObject;
         }
@@ -688,7 +704,7 @@ namespace System.Windows.Automation
             // Lookup a cached remote reference - but even if we get
             // back null, still go ahead an create a pattern wrapper
             // to provide access to cached properties
-            Misc.ValidateArgumentNonNull(pattern, "pattern");
+            ArgumentNullException.ThrowIfNull(pattern);
 
             // false -> don't throw, false -> don't wrap
             object obj = LookupCachedValue(pattern, false, false);
@@ -701,7 +717,7 @@ namespace System.Windows.Automation
             AutomationPatternInfo pi;
             if (!Schema.GetPatternInfo(pattern, out pi))
             {
-                throw new ArgumentException(SR.Get(SRID.UnsupportedPattern));
+                throw new ArgumentException(SR.UnsupportedPattern);
             }
 
             patternObject = pi.ClientSideWrapper(this, hPattern, true);
@@ -722,7 +738,7 @@ namespace System.Windows.Automation
         /// </remarks>
         public AutomationElement GetUpdatedCache(CacheRequest request)
         {
-            Misc.ValidateArgumentNonNull(request, "request");
+            ArgumentNullException.ThrowIfNull(request);
             CheckElement();
 
             UiaCoreApi.UiaCacheRequest cacheRequest = request.GetUiaCacheRequest();
@@ -742,7 +758,7 @@ namespace System.Windows.Automation
         /// or null if no match is found.</returns>
         public AutomationElement FindFirst(TreeScope scope, Condition condition)
         {
-            Misc.ValidateArgumentNonNull(condition, "condition");
+            ArgumentNullException.ThrowIfNull(condition);
             UiaCoreApi.UiaCacheResponse[] responses = Find(scope, condition, CacheRequest.CurrentUiaCacheRequest, true, null);
             if (responses.Length < 1)
             {
@@ -765,7 +781,7 @@ namespace System.Windows.Automation
         /// no matches found.</returns>
         public AutomationElementCollection FindAll(TreeScope scope, Condition condition)
         {
-            Misc.ValidateArgumentNonNull(condition, "condition");
+            ArgumentNullException.ThrowIfNull(condition);
             UiaCoreApi.UiaCacheRequest request = CacheRequest.CurrentUiaCacheRequest;
             UiaCoreApi.UiaCacheResponse[] responses = Find(scope, condition, request, false, null);
 
@@ -850,7 +866,7 @@ namespace System.Windows.Automation
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.SetFocusFailed));
+                throw new InvalidOperationException(SR.SetFocusFailed);
             }
         }
 
@@ -912,7 +928,7 @@ namespace System.Windows.Automation
         {
             Point pt;
             if ( !TryGetClickablePoint( out pt ) )
-                throw new NoClickablePointException(SR.Get(SRID.LogicalElementNoClickablePoint));
+                throw new NoClickablePointException(SR.LogicalElementNoClickablePoint);
 
             return pt;
         }
@@ -1030,7 +1046,7 @@ namespace System.Windows.Automation
                     // PRESHARP will flag this as a warning 56503/6503: Property get methods should not throw exceptions
                     // We've spec'd as throwing an Exception, and that's what we do PreSharp shouldn't complain
 #pragma warning suppress 6503
-                    throw new InvalidOperationException(SR.Get(SRID.CachedPropertyNotRequested));
+                    throw new InvalidOperationException(SR.CachedPropertyNotRequested);
                 }
 
                 return _cachedParent;
@@ -1062,7 +1078,7 @@ namespace System.Windows.Automation
                     // PRESHARP will flag this as a warning 56503/6503: Property get methods should not throw exceptions
                     // We've spec'd as throwing an Exception, and that's what we do PreSharp shouldn't complain
 #pragma warning suppress 6503
-                    throw new InvalidOperationException(SR.Get(SRID.CachedPropertyNotRequested));
+                    throw new InvalidOperationException(SR.CachedPropertyNotRequested);
                 }
 
                 // Build up an array to return - first count the children,
@@ -1104,7 +1120,7 @@ namespace System.Windows.Automation
         {
             if (_hnode == null || _hnode.IsInvalid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CacheRequestNeedElementReference));
+                throw new InvalidOperationException(SR.CacheRequestNeedElementReference);
             }
         }
 
@@ -1206,7 +1222,7 @@ namespace System.Windows.Automation
             {
                 if (throwIfNotRequested)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CachedPropertyNotRequested));
+                    throw new InvalidOperationException(SR.CachedPropertyNotRequested);
                 }
                 else
                 {
@@ -1237,7 +1253,7 @@ namespace System.Windows.Automation
             {
                 if (throwIfNotRequested)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CachedPropertyNotRequested));
+                    throw new InvalidOperationException(SR.CachedPropertyNotRequested);
                 }
                 else
                 {
@@ -1283,14 +1299,14 @@ namespace System.Windows.Automation
         // called by FindFirst and FindAll
         private UiaCoreApi.UiaCacheResponse[] Find(TreeScope scope, Condition condition, UiaCoreApi.UiaCacheRequest request, bool findFirst, BackgroundWorker worker)
         {
-            Misc.ValidateArgumentNonNull(condition, "condition");
+            ArgumentNullException.ThrowIfNull(condition);
             if (scope == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.TreeScopeNeedAtLeastOne));
+                throw new ArgumentException(SR.TreeScopeNeedAtLeastOne);
             }
             if ((scope & ~(TreeScope.Element | TreeScope.Children | TreeScope.Descendants)) != 0)
             {
-                throw new ArgumentException(SR.Get(SRID.TreeScopeElementChildrenDescendantsOnly));
+                throw new ArgumentException(SR.TreeScopeElementChildrenDescendantsOnly);
             }
 
             // Set up a find struct...

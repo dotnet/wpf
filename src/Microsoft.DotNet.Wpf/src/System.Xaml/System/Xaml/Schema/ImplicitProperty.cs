@@ -109,13 +109,13 @@ namespace System.Xaml.Schema
         protected override bool IsBrowsableCore
         {
             get { return false; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override bool IsObsoleteCore
         {
             get { return false; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override XamlType DeclaringTypeCore
@@ -139,55 +139,55 @@ namespace System.Xaml.Schema
         protected override bool IsReadOnlyCore
         {
             get { return false; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override bool IsStaticCore
         {
             get { return false; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override bool IsAttachableCore
         {
             get { return false; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override bool IsEventCore
         {
             get { return false; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override bool IsDirectiveCore
         {
             get { return false; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override XamlType TargetTypeCore
         {
             get { return null; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override AllowedMemberLocation AllowedLocationCore
         {
             get { return AllowedMemberLocation.Any; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override XamlProperty DependsOnCore
         {
             get { return null; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
 
         protected override bool IsAmbientCore
         {
             get { return false; }
-            set { throw new InvalidOperationException(SR.Get(SRID.MustNotCallSetter)); }
+            set { throw new InvalidOperationException(SR.MustNotCallSetter); }
         }
      }
 }

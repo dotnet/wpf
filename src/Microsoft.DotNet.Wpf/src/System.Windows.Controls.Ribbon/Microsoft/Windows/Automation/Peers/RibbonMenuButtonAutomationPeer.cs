@@ -173,7 +173,7 @@ namespace Microsoft.Windows.Automation.Peers
             RibbonMenuButton owner = OwningMenuButton;
             if (!owner.HasItems)
             {
-                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.UIA_OperationCannotBePerformed));
+                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
             }
 
             owner.IsDropDownOpen = false;
@@ -187,7 +187,7 @@ namespace Microsoft.Windows.Automation.Peers
             RibbonMenuButton owner = OwningMenuButton;
             if (!owner.HasItems)
             {
-                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.UIA_OperationCannotBePerformed));
+                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
             }
 
             owner.IsDropDownOpen = true;
@@ -237,7 +237,7 @@ namespace Microsoft.Windows.Automation.Peers
 
         void ITransformProvider.Move(double x, double y)
         {
-            throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.UIA_OperationCannotBePerformed));
+            throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
         }
 
         void ITransformProvider.Resize(double width, double height)
@@ -246,17 +246,17 @@ namespace Microsoft.Windows.Automation.Peers
                 throw new ElementNotEnabledException();
 
             if (!((ITransformProvider)this).CanResize || width <= 0 || height <= 0)
-                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.UIA_OperationCannotBePerformed));
+                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
 
             if (!OwningMenuButton.ResizePopupInternal(width, height))
             {
-                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.ResizeParametersNotValid));
+                throw new InvalidOperationException(Microsoft.Windows.Controls.SR.ResizeParametersNotValid);
             }
         }
 
         void ITransformProvider.Rotate(double degrees)
         {
-            throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.UIA_OperationCannotBePerformed));
+            throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
         }
 
         #endregion

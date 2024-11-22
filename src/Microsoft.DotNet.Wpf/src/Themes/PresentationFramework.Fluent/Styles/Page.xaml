@@ -1,0 +1,35 @@
+﻿<!--
+    This Source Code Form is subject to the terms of the MIT License.
+    If a copy of the MIT was not distributed with this file, You can obtain one at https://opensource.org/licenses/MIT.
+    Copyright (C) Leszek Pomianowski and WPF UI Contributors.
+    All Rights Reserved.
+-->
+
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="DefaultPageStyle" TargetType="{x:Type Page}">
+        <Setter Property="Foreground" Value="{DynamicResource PageForeground}" />
+        <Setter Property="Background" Value="{DynamicResource PageBackground}" />
+        <!--  The Display option casues a large aliasing effect  -->
+        <!-- <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" /> -->
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Page}">
+                    <Border 
+                        Background="{TemplateBinding Background}" 
+                        CornerRadius="8">
+                        <ContentPresenter
+                            Content="{TemplateBinding ContentControl.Content}"
+                            TextElement.Foreground="{TemplateBinding Foreground}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style BasedOn="{StaticResource DefaultPageStyle}" TargetType="{x:Type Page}" />
+
+</ResourceDictionary>

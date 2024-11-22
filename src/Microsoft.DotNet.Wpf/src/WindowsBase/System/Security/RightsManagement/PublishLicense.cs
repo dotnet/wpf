@@ -44,11 +44,8 @@ namespace System.Security.RightsManagement
         public PublishLicense(string signedPublishLicense)
         {
 
-            if (signedPublishLicense == null)
-            {
-                throw new ArgumentNullException("signedPublishLicense");
-            }
-            
+            ArgumentNullException.ThrowIfNull(signedPublishLicense);
+
             _serializedPublishLicense = signedPublishLicense;
 
             /////////////////
@@ -92,11 +89,8 @@ namespace System.Security.RightsManagement
         /// </summary>
         public UnsignedPublishLicense DecryptUnsignedPublishLicense(CryptoProvider cryptoProvider )
         {
-            
-            if (cryptoProvider == null)
-            {
-                throw new ArgumentNullException("cryptoProvider");
-            }
+
+            ArgumentNullException.ThrowIfNull(cryptoProvider);
 
             return cryptoProvider.DecryptPublishLicense(_serializedPublishLicense);
         }
@@ -169,11 +163,8 @@ namespace System.Security.RightsManagement
         /// </summary>
         public UseLicense AcquireUseLicense(SecureEnvironment secureEnvironment)
         {
-            
-            if (secureEnvironment == null)
-            {
-                throw new ArgumentNullException("secureEnvironment");
-            }
+
+            ArgumentNullException.ThrowIfNull(secureEnvironment);
 
             // The SecureEnvironment constructor makes sure ClientSession cannot be null.
             // Accordingly suppressing preSharp warning about having to validate ClientSession.
@@ -191,11 +182,8 @@ namespace System.Security.RightsManagement
         /// </summary>
         public UseLicense AcquireUseLicenseNoUI(SecureEnvironment secureEnvironment)
         {
-                    
-            if (secureEnvironment == null)
-            {
-                throw new ArgumentNullException("secureEnvironment");
-            }
+
+            ArgumentNullException.ThrowIfNull(secureEnvironment);
 
             // The SecureEnvironment constructor makes sure ClientSession cannot be null.
             // Accordingly suppressing preSharp warning about having to validate ClientSession.

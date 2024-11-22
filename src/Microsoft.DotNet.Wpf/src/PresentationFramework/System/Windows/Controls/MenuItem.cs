@@ -174,7 +174,7 @@ namespace System.Windows.Controls
 
             ForegroundProperty.OverrideMetadata(typeof(MenuItem), new FrameworkPropertyMetadata(SystemColors.MenuTextBrush));
             FontFamilyProperty.OverrideMetadata(typeof(MenuItem), new FrameworkPropertyMetadata(SystemFonts.MessageFontFamily));
-            FontSizeProperty.OverrideMetadata(typeof(MenuItem), new FrameworkPropertyMetadata(SystemFonts.MessageFontSize));
+            FontSizeProperty.OverrideMetadata(typeof(MenuItem), new FrameworkPropertyMetadata(SystemFonts.ThemeMessageFontSize));
             FontStyleProperty.OverrideMetadata(typeof(MenuItem), new FrameworkPropertyMetadata(SystemFonts.MessageFontStyle));
             FontWeightProperty.OverrideMetadata(typeof(MenuItem), new FrameworkPropertyMetadata(SystemFonts.MessageFontWeight));
 
@@ -486,7 +486,9 @@ namespace System.Windows.Controls
         public static readonly DependencyProperty CommandParameterProperty =
                 ButtonBase.CommandParameterProperty.AddOwner(
                         typeof(MenuItem),
-                        new FrameworkPropertyMetadata((object) null));
+                        new FrameworkPropertyMetadata(
+                                (object)null,
+                                new PropertyChangedCallback(OnCommandParameterChanged)));
 
         /// <summary>
         ///     The parameter to pass to MenuItem's Command.
@@ -497,6 +499,12 @@ namespace System.Windows.Controls
         {
             get { return GetValue(CommandParameterProperty); }
             set { SetValue(CommandParameterProperty, value); }
+        }
+
+        private static void OnCommandParameterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            MenuItem item = (MenuItem)d;
+            item.UpdateCanExecute();
         }
 
         /// <summary>
@@ -946,13 +954,22 @@ namespace System.Windows.Controls
         {
             MenuItem menuItem = (MenuItem) d;
 
-            if ((bool) e.NewValue)
+            bool oldValue = (bool)e.OldValue;
+            bool newValue = (bool)e.NewValue;
+
+            if (newValue)
             {
                 menuItem.OnChecked(new RoutedEventArgs(CheckedEvent));
             }
             else
             {
                 menuItem.OnUnchecked(new RoutedEventArgs(UncheckedEvent));
+            }
+            
+            MenuItemAutomationPeer peer = UIElementAutomationPeer.FromElement(menuItem) as MenuItemAutomationPeer;
+            if (peer != null)
+            {
+                peer.RaiseToggleStatePropertyChangedEvent(oldValue, newValue);
             }
         }
 
@@ -1504,8 +1521,8 @@ namespace System.Windows.Controls
                         }
                         else
                         {
-                            // This is the case where the mouse down happend on a different element
-                            // but the moust up is happening on the menuitem. this is to prevent spoofing
+                            // This is the case where the mouse down happened on a different element
+                            // but the mouse up is happening on the menuitem. this is to prevent spoofing
                             // attacks where someone substitutes an element with a menu item
                             ClickItem(false);
                         }
@@ -2099,7 +2116,7 @@ namespace System.Windows.Controls
                     }
                     else
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.InvalidItemContainer, this.GetType().Name, typeof(MenuItem).Name, typeof(Separator).Name, itemContainer));
+                        throw new InvalidOperationException(SR.Format(SR.InvalidItemContainer, this.GetType().Name, typeof(MenuItem).Name, typeof(Separator).Name, itemContainer));
                     }
                 }
             }
@@ -2498,7 +2515,10 @@ namespace System.Windows.Controls
             // but if we fail to focus we should still select.
             // (This is to help enable focusless menus).
             // Check IsKeyboardFocusWithin to allow rich content within the menuitem.
-            if (!IsKeyboardFocusWithin)
+            if (!IsKeyboardFocusWithin
+                // But only acquire focus if the window we are inside of is currently active or there is no window.
+                // Otherwise we would potentially steal focus from other applications.
+                && (Window.GetWindow(this)?.IsActive ?? true))
             {
                 Focus();
             }

@@ -6,21 +6,16 @@
     <DefineConstants>$(DefineConstants);REACHFRAMEWORK;</DefineConstants>
     <!-- don't sign nor binplace this non-shipping assembly -->
     <ShouldWriteSigningRequired>false</ShouldWriteSigningRequired>
-    <Platforms>AnyCPU;x64;arm64</Platforms>
+    <Platforms>x86;x64;arm64</Platforms>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>  
     <EnableDefaultItems>false</EnableDefaultItems>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="System.Printing.PrintQueue.cs" />
     <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <NetCoreReference Include="System.Runtime" />
-    <NetCoreReference Include="System.Runtime.InteropServices" />
-    <NetCoreReference Include="System.Resources.ResourceManager" />
   </ItemGroup>
 </Project>

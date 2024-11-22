@@ -19,7 +19,6 @@ using System.Windows;
 using MS.Internal.FontCache; // for HashFn
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 // Allow suppression of presharp warnings
 #pragma warning disable 1634, 1691
@@ -99,7 +98,7 @@ namespace System.Windows.Media
         {
             if (!IsValidCultureOverride(culture))
             {
-                throw new ArgumentException(SR.Get(SRID.SpecificNumberCultureRequired));
+                throw new ArgumentException(SR.SpecificNumberCultureRequired);
             }
             return culture;
         }
@@ -159,10 +158,7 @@ namespace System.Windows.Media
         /// </summary>
         public static void SetCultureSource(DependencyObject target, NumberCultureSource value)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             target.SetValue(CultureSourceProperty, value);
         }
@@ -173,10 +169,7 @@ namespace System.Windows.Media
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static NumberCultureSource GetCultureSource(DependencyObject target)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             return (NumberCultureSource)(target.GetValue(CultureSourceProperty));
         }
@@ -198,10 +191,7 @@ namespace System.Windows.Media
         /// </summary>
         public static void SetCultureOverride(DependencyObject target, CultureInfo value)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             target.SetValue(CultureOverrideProperty, value);
         }
@@ -213,10 +203,7 @@ namespace System.Windows.Media
         [TypeConverter(typeof(System.Windows.CultureInfoIetfLanguageTagConverter))]
         public static CultureInfo GetCultureOverride(DependencyObject target)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             return (CultureInfo)(target.GetValue(CultureOverrideProperty));
         }
@@ -235,10 +222,7 @@ namespace System.Windows.Media
         /// </summary>
         public static void SetSubstitution(DependencyObject target, NumberSubstitutionMethod value)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             target.SetValue(SubstitutionProperty, value);
         }
@@ -249,10 +233,7 @@ namespace System.Windows.Media
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static NumberSubstitutionMethod GetSubstitution(DependencyObject target)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             return (NumberSubstitutionMethod)(target.GetValue(SubstitutionProperty));
         }

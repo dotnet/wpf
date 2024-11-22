@@ -26,7 +26,6 @@ using System.Security.AccessControl;//for semaphore access permissions
 using System.Net;
 using Microsoft.Win32;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 //
@@ -263,10 +262,8 @@ namespace System.Windows.Media
             set
             {
                 VerifyAPI();
-                if (Double.IsNaN(value))
-                {
-                    throw new ArgumentException(SR.Get(SRID.ParameterValueCannotBeNaN), "value");
-                }
+
+                ArgumentOutOfRangeException.ThrowIfEqual(value, double.NaN);
 
                 if (DoubleUtil.GreaterThanOrClose(value, 1))
                 {
@@ -313,10 +310,8 @@ namespace System.Windows.Media
             set
             {
                 VerifyAPI();
-                if (Double.IsNaN(value))
-                {
-                    throw new ArgumentException(SR.Get(SRID.ParameterValueCannotBeNaN), "value");
-                }
+
+                ArgumentOutOfRangeException.ThrowIfEqual(value, double.NaN);
 
                 if (DoubleUtil.GreaterThanOrClose(value, 1))
                 {
@@ -850,7 +845,7 @@ namespace System.Windows.Media
                 catch (InvalidOperationException)
                 {
                     source = null;
-                    _mediaEventsHelper.RaiseMediaFailed(new System.NotSupportedException(SR.Get(SRID.Media_PackURIsAreNotSupported, null)));
+                    _mediaEventsHelper.RaiseMediaFailed(new System.NotSupportedException(SR.Format(SR.Media_PackURIsAreNotSupported, null)));
                 }
             }
 
@@ -933,10 +928,7 @@ namespace System.Windows.Media
             {
                 VerifyAPI();
 
-                if (Double.IsNaN(value))
-                {
-                    throw new ArgumentException(SR.Get(SRID.ParameterValueCannotBeNaN), "value");
-                }
+                ArgumentOutOfRangeException.ThrowIfEqual(value, double.NaN);
 
                 HRESULT.Check(MILMedia.SetRate(_nativeMedia, value));
             }
@@ -1001,7 +993,7 @@ namespace System.Windows.Media
 
             if (_nativeMedia == null || _nativeMedia.IsInvalid)
             {
-                throw new System.NotSupportedException(SR.Get(SRID.Image_BadVersion));
+                throw new System.NotSupportedException(SR.Image_BadVersion);
             }
         }
 
@@ -1015,7 +1007,7 @@ namespace System.Windows.Media
         {
             if (Clock != null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Media_NotAllowedWhileTimingEngineInControl));
+                throw new InvalidOperationException(SR.Media_NotAllowedWhileTimingEngineInControl);
             }
         }
 

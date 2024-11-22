@@ -28,7 +28,7 @@ namespace MS.Internal.ComponentModel
         /// </summary>
         internal DependencyPropertyAttribute(DependencyProperty dependencyProperty, bool isAttached) 
         {
-            if (dependencyProperty == null) throw new ArgumentNullException("dependencyProperty");
+            ArgumentNullException.ThrowIfNull(dependencyProperty);
 
             _dp = dependencyProperty;
             _isAttached = isAttached;

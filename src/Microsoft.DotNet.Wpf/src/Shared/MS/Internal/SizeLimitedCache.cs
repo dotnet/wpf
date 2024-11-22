@@ -25,7 +25,6 @@ namespace MS.Internal
     ///     changed, it gets moved to the end of the list. Also, permanent items,
     ///     though in the hash table, are NOT in the linked list.
     /// </remarks>
-    [FriendAccessAllowed]
     internal class SizeLimitedCache<K, V>
     {
         //*****************************************************
@@ -40,10 +39,7 @@ namespace MS.Internal
         /// </param>
         public SizeLimitedCache(int maximumItems)
         {
-            if (maximumItems <= 0)
-            {
-                throw new ArgumentOutOfRangeException("maximumItems");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(maximumItems);
 
             _maximumItems = maximumItems;
             _permanentCount = 0;

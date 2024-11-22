@@ -42,12 +42,9 @@ namespace System.Windows
         public ColorConvertedBitmapExtension(
             object image) 
         {
-            if (image == null)
-            {
-                throw new ArgumentNullException("image");
-            }
+            ArgumentNullException.ThrowIfNull(image);
 
-            string[] tokens = ((string)image).Split(new char[] { ' ' });
+            string[] tokens = ((string)image).Split(' ');
 
             foreach (string str in tokens)
             {
@@ -67,7 +64,7 @@ namespace System.Windows
                     }
                     else
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.ColorConvertedBitmapExtensionSyntax));
+                        throw new InvalidOperationException(SR.ColorConvertedBitmapExtensionSyntax);
                     }
                 }
             }
@@ -85,11 +82,11 @@ namespace System.Windows
         {
             if (_image == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ColorConvertedBitmapExtensionNoSourceImage));
+                throw new InvalidOperationException(SR.ColorConvertedBitmapExtensionNoSourceImage);
             }
             if (_sourceProfile == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ColorConvertedBitmapExtensionNoSourceProfile));
+                throw new InvalidOperationException(SR.ColorConvertedBitmapExtensionNoSourceProfile);
             }
             
             // [BreakingChange] 
@@ -100,7 +97,7 @@ namespace System.Windows
             IUriContext uriContext = serviceProvider.GetService(typeof(IUriContext)) as IUriContext;
             if( uriContext == null )
             {
-                throw new InvalidOperationException(SR.Get(SRID.MarkupExtensionNoContext, GetType().Name, "IUriContext" ));
+                throw new InvalidOperationException(SR.Format(SR.MarkupExtensionNoContext, GetType().Name, "IUriContext" ));
             }
             _baseUri = uriContext.BaseUri;
             

@@ -433,7 +433,7 @@ namespace MS.Internal.AutomationProxies
 
             if (!SafeNativeMethods.IsWindowVisible(_hwnd))
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             //

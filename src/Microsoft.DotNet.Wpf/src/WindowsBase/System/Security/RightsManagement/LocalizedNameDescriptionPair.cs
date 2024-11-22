@@ -39,17 +39,10 @@ namespace System.Security.RightsManagement
         /// </summary>
         public LocalizedNameDescriptionPair(string name, string description)
         {
-        
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
 
-            if (description == null)
-            {
-                throw new ArgumentNullException("description");
-            }
-            
+            ArgumentNullException.ThrowIfNull(name);
+            ArgumentNullException.ThrowIfNull(description);
+
             _name = name;
             _description = description;
         }
@@ -94,9 +87,9 @@ namespace System.Security.RightsManagement
             //PRESHARP:Parameter to this public method must be validated:  A null-dereference can occur here. 
             //This is a false positive as the checks above can gurantee no null dereference will occur  
 #pragma warning disable 6506
-            return (String.CompareOrdinal(localizedNameDescr.Name, Name) == 0)
+            return (string.Equals(localizedNameDescr.Name, Name, StringComparison.Ordinal))
                         &&
-                    (String.CompareOrdinal(localizedNameDescr.Description, Description) == 0);
+                    (string.Equals(localizedNameDescr.Description, Description, StringComparison.Ordinal));
 #pragma warning restore 6506
         }        
             

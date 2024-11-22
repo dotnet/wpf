@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using MS.Internal.WindowsBase;
@@ -20,10 +20,7 @@ namespace System.Windows.Baml2006
         /// <param name="name">A fully qualified assembly name</param>
         public Baml6Assembly(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
+            ArgumentNullException.ThrowIfNull(name);
 
             Name = name;
             _assembly = null;
@@ -31,10 +28,7 @@ namespace System.Windows.Baml2006
 
         public Baml6Assembly(Assembly assembly)
         {
-            if (assembly == null)
-            {
-                throw new ArgumentNullException("assembly");
-            }
+            ArgumentNullException.ThrowIfNull(assembly);
 
             Name = null;
             _assembly = assembly;

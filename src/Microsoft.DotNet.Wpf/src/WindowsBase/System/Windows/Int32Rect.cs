@@ -79,25 +79,12 @@ namespace System.Windows
         // concerns prevent this until a side-by-side release.
         internal void ValidateForDirtyRect(string paramName, int width, int height)
         {
-            if (_x < 0)
-            {
-                throw new ArgumentOutOfRangeException(paramName, SR.Get(SRID.ParameterCannotBeNegative));
-            }
-
-            if (_y < 0)
-            {
-                throw new ArgumentOutOfRangeException(paramName, SR.Get(SRID.ParameterCannotBeNegative));
-            }            
-            
-            if (_width < 0 || _width > width)
-            {
-                throw new ArgumentOutOfRangeException(paramName, SR.Get(SRID.ParameterMustBeBetween, 0, width));
-            }
-
-            if (_height < 0 || _height > height)
-            {
-                throw new ArgumentOutOfRangeException(paramName, SR.Get(SRID.ParameterMustBeBetween, 0, height));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(_x, paramName);
+            ArgumentOutOfRangeException.ThrowIfNegative(_y, paramName);
+            ArgumentOutOfRangeException.ThrowIfNegative(_width, paramName);
+            ArgumentOutOfRangeException.ThrowIfNegative(_height, paramName);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(_width, width, paramName);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(_height, height, paramName);
         }
 
         private readonly static Int32Rect s_empty = new Int32Rect(0,0,0,0);

@@ -36,12 +36,9 @@ namespace System.Windows.Controls
             IList removedItems,
             IList addedItems)
         {
-            if (id == null)
-                throw new ArgumentNullException("id");
-            if (removedItems == null)
-                throw new ArgumentNullException("removedItems");
-            if (addedItems == null)
-                throw new ArgumentNullException("addedItems");
+            ArgumentNullException.ThrowIfNull(id);
+            ArgumentNullException.ThrowIfNull(removedItems);
+            ArgumentNullException.ThrowIfNull(addedItems);
 
             RoutedEvent = id;
 

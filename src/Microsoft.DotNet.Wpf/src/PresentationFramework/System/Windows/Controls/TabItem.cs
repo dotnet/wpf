@@ -353,7 +353,22 @@ namespace System.Windows.Controls
 
                                 // If we successfully move focus inside the content then don't set focus to the header
                                 if (success)
+                                {
                                     e.Handled = true;
+
+                                    // However, if the focus got switched to a different focus scope,
+                                    // mark the header as the one last focused in its focus scope. #8293
+                                    if (Keyboard.FocusedElement is DependencyObject focusedElement)
+                                    {
+                                        DependencyObject thisFocusScope = FocusManager.GetFocusScope(this);
+                                        if (thisFocusScope != null && Keyboard.FocusedElement is DependencyObject currentFocus)
+                                        {
+                                            DependencyObject currentFocusScope = FocusManager.GetFocusScope(currentFocus);
+                                            if (currentFocusScope != thisFocusScope && thisFocusScope != null)
+                                                FocusManager.SetFocusedElement(thisFocusScope, this);
+                                        }
+                                    }
+                                }
                             }
                         }
                     }

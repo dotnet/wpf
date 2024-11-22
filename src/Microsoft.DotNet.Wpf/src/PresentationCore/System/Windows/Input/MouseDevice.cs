@@ -12,13 +12,11 @@ using System.Windows.Interop;
 using System.Windows.Threading;
 using System.Security;
 using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
 using MS.Win32; // *NativeMethods
 using System.Runtime.InteropServices;
 using System;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -39,10 +37,10 @@ namespace System.Windows.Input
     {
        internal MouseDevice(InputManager inputManager)
        {
-            _inputManager = new SecurityCriticalData<InputManager>(inputManager);
-            _inputManager.Value.PreProcessInput += new PreProcessInputEventHandler(PreProcessInput);
-            _inputManager.Value.PreNotifyInput += new NotifyInputEventHandler(PreNotifyInput);
-            _inputManager.Value.PostProcessInput += new ProcessInputEventHandler(PostProcessInput);
+            _inputManager = inputManager;
+            _inputManager.PreProcessInput += new PreProcessInputEventHandler(PreProcessInput);
+            _inputManager.PreNotifyInput += new NotifyInputEventHandler(PreNotifyInput);
+            _inputManager.PostProcessInput += new ProcessInputEventHandler(PostProcessInput);
 
             // Get information about how far two clicks of a double click can be considered
             // to be in the "same place and time".
@@ -65,7 +63,7 @@ namespace System.Windows.Input
             _reevaluateCaptureDelegate = new DispatcherOperationCallback(ReevaluateCaptureAsync);
             _reevaluateCaptureOperation = null;
 
-            _inputManager.Value.HitTestInvalidatedAsync += new EventHandler(OnHitTestInvalidatedAsync);
+            _inputManager.HitTestInvalidatedAsync += new EventHandler(OnHitTestInvalidatedAsync);
         }
 
         /// <summary>
@@ -209,32 +207,12 @@ namespace System.Windows.Input
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
 
-        public override PresentationSource ActiveSource
-        {
-            get
-            {
-                if (_inputSource != null)
-                {
-                    return _inputSource.Value;
-                }
-                return null;
-            }
-        }
+        public override PresentationSource ActiveSource => _inputSource;
 
         /// <summary>
         ///     Returns the PresentationSource that is reporting input for this device.
         /// </summary>
-        internal PresentationSource CriticalActiveSource
-        {
-            get
-            {
-                if (_inputSource != null)
-                {
-                    return _inputSource.Value;
-                }
-                return null;
-            }
-        }
+        internal PresentationSource CriticalActiveSource => _inputSource;
 
         /// <summary>
         ///     Returns the element that the mouse is over.
@@ -247,7 +225,6 @@ namespace System.Windows.Input
         {
             get
             {
-//                 VerifyAccess();
                 return _mouseOver;
             }
         }
@@ -256,7 +233,6 @@ namespace System.Windows.Input
         ///     Returns the element that the mouse is over regardless of
         ///     its IsEnabled state.
         /// </summary>
-        [FriendAccessAllowed]
         internal IInputElement RawDirectlyOver
         {
             get
@@ -328,11 +304,11 @@ namespace System.Windows.Input
                 element = null;
             }
 
-            // Validate that elt is either a UIElement or a ContentElement
+            // Validate that elt is either a UIElement, a ContentElement or a UIElement3D.
             DependencyObject eltDO = element as DependencyObject;
             if (eltDO != null && !InputElement.IsValid(element))
             {
-                throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, eltDO.GetType()));
+                throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, eltDO.GetType()));
             }
 
             bool success = false;
@@ -396,7 +372,7 @@ namespace System.Windows.Input
                 }
                 else if (_mouseCapture != null)
                 {
-                    mouseInputProvider = _providerCapture.Value;
+                    mouseInputProvider = _providerCapture;
                 }
 
                 // If we found a mouse input provider, ask it to either capture
@@ -449,7 +425,7 @@ namespace System.Windows.Input
 
             IMouseInputProvider mouseInputProvider = null;
 
-            IEnumerator inputProviders = _inputManager.Value.UnsecureInputProviders.GetEnumerator();
+            IEnumerator inputProviders = _inputManager.UnsecureInputProviders.GetEnumerator();
 
             while (inputProviders.MoveNext())
             {
@@ -579,10 +555,10 @@ namespace System.Windows.Input
         {
 //             VerifyAccess();
 
-            // Validate that relativeTo is either a UIElement or a ContentElement
+            // Validate that relativeTo is either a UIElement, a ContentElement or a UIElement3D.
             if (relativeTo != null && !InputElement.IsValid(relativeTo))
             {
-                throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, relativeTo.GetType()));
+                throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, relativeTo.GetType()));
             }
 
             PresentationSource relativePresentationSource = null;
@@ -599,9 +575,9 @@ namespace System.Windows.Input
             }
             else
             {
-                if (_inputSource != null)
+                if (_inputSource is not null)
                 {
-                    relativePresentationSource = _inputSource.Value;
+                    relativePresentationSource = _inputSource;
                 }
             }
 
@@ -739,17 +715,17 @@ namespace System.Windows.Input
             // First, check things like IsEnabled, IsVisible, etc. on a
             // UIElement vs. ContentElement basis.
             //
-            if (InputElement.IsUIElement(dependencyObject))
+            if (dependencyObject is UIElement uie)
             {
-                killCapture = !ValidateUIElementForCapture((UIElement)_mouseCapture);
+                killCapture = !ValidateUIElementForCapture(uie);
             }
-            else if (InputElement.IsContentElement(dependencyObject))
+            else if (dependencyObject is ContentElement ce)
             {
-                killCapture = !ValidateContentElementForCapture((ContentElement)_mouseCapture);
+                killCapture = !ValidateContentElementForCapture(ce);
             }
-            else if (InputElement.IsUIElement3D(dependencyObject))
+            else if (dependencyObject is UIElement3D uie3D)
             {
-                killCapture = !ValidateUIElement3DForCapture((UIElement3D)_mouseCapture);
+                killCapture = !ValidateUIElement3DForCapture(uie3D);
             }
 
             //
@@ -944,7 +920,7 @@ namespace System.Windows.Input
                 inputReportEventArgs.RoutedEvent=InputManager.PreviewInputReportEvent;
 
                 //ProcessInput has a linkdemand
-                _inputManager.Value.ProcessInput(inputReportEventArgs);
+                _inputManager.ProcessInput(inputReportEventArgs);
             }
         }
 
@@ -971,7 +947,7 @@ namespace System.Windows.Input
             queryCursor.Cursor = Cursors.Arrow;
             queryCursor.RoutedEvent=Mouse.QueryCursorEvent;
             //ProcessInput has a linkdemand
-            _inputManager.Value.ProcessInput(queryCursor);
+            _inputManager.ProcessInput(queryCursor);
             return queryCursor.Handled;
         }
 
@@ -993,51 +969,51 @@ namespace System.Windows.Input
                     if(oldMouseOver != null)
                     {
                         o = oldMouseOver as DependencyObject;
-                        if (InputElement.IsUIElement(o))
+                        if (o is UIElement uie)
                         {
-                            ((UIElement)o).IsEnabledChanged -= _overIsEnabledChangedEventHandler;
-                            ((UIElement)o).IsVisibleChanged -= _overIsVisibleChangedEventHandler;
-                            ((UIElement)o).IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
+                            uie.IsEnabledChanged -= _overIsEnabledChangedEventHandler;
+                            uie.IsVisibleChanged -= _overIsVisibleChangedEventHandler;
+                            uie.IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
                         }
-                        else if (InputElement.IsContentElement(o))
+                        else if (o is ContentElement ce)
                         {
-                            ((ContentElement)o).IsEnabledChanged -= _overIsEnabledChangedEventHandler;
+                            ce.IsEnabledChanged -= _overIsEnabledChangedEventHandler;
 
                             // NOTE: there are no IsVisible or IsHitTestVisible properties for ContentElements.
                             //
-                            // ((ContentElement)o).IsVisibleChanged -= _overIsVisibleChangedEventHandler;
-                            // ((ContentElement)o).IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
+                            // ce.IsVisibleChanged -= _overIsVisibleChangedEventHandler;
+                            // ce.IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
                         }
-                        else if (InputElement.IsUIElement3D(o))
+                        else if (o is UIElement3D uie3D)
                         {
-                            ((UIElement3D)o).IsEnabledChanged -= _overIsEnabledChangedEventHandler;
-                            ((UIElement3D)o).IsVisibleChanged -= _overIsVisibleChangedEventHandler;
-                            ((UIElement3D)o).IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
+                            uie3D.IsEnabledChanged -= _overIsEnabledChangedEventHandler;
+                            uie3D.IsVisibleChanged -= _overIsVisibleChangedEventHandler;
+                            uie3D.IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
                         }
                     }
                     if(_mouseOver != null)
                     {
                         o = _mouseOver as DependencyObject;
-                        if (InputElement.IsUIElement(o))
+                        if (o is UIElement uie)
                         {
-                            ((UIElement)o).IsEnabledChanged += _overIsEnabledChangedEventHandler;
-                            ((UIElement)o).IsVisibleChanged += _overIsVisibleChangedEventHandler;
-                            ((UIElement)o).IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
+                            uie.IsEnabledChanged += _overIsEnabledChangedEventHandler;
+                            uie.IsVisibleChanged += _overIsVisibleChangedEventHandler;
+                            uie.IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
                         }
-                        else if (InputElement.IsContentElement(o))
+                        else if (o is ContentElement ce)
                         {
-                            ((ContentElement)o).IsEnabledChanged += _overIsEnabledChangedEventHandler;
+                            ce.IsEnabledChanged += _overIsEnabledChangedEventHandler;
 
                             // NOTE: there are no IsVisible or IsHitTestVisible properties for ContentElements.
                             //
-                            // ((ContentElement)o).IsVisibleChanged += _overIsVisibleChangedEventHandler;
-                            // ((ContentElement)o).IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
+                            // ce.IsVisibleChanged += _overIsVisibleChangedEventHandler;
+                            // ce.IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
                         }
-                        else if (InputElement.IsUIElement3D(o))
+                        else if (o is UIElement3D uie3D)
                         {
-                            ((UIElement3D)o).IsEnabledChanged += _overIsEnabledChangedEventHandler;
-                            ((UIElement3D)o).IsVisibleChanged += _overIsVisibleChangedEventHandler;
-                            ((UIElement3D)o).IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
+                            uie3D.IsEnabledChanged += _overIsEnabledChangedEventHandler;
+                            uie3D.IsVisibleChanged += _overIsVisibleChangedEventHandler;
+                            uie3D.IsHitTestVisibleChanged += _overIsHitTestVisibleChangedEventHandler;
                         }
                     }
                 }
@@ -1073,7 +1049,7 @@ namespace System.Windows.Input
                 _mouseCapture = mouseCapture;
                 if (_mouseCapture != null)
                 {
-                    _providerCapture = new SecurityCriticalDataClass<IMouseInputProvider>(providerCapture);
+                    _providerCapture = providerCapture;
                 }
                 else
                 {
@@ -1087,51 +1063,51 @@ namespace System.Windows.Input
                     if (oldMouseCapture != null)
                     {
                         o = oldMouseCapture as DependencyObject;
-                        if (InputElement.IsUIElement(o))
+                        if (o is UIElement uie)
                         {
-                            ((UIElement)o).IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
-                            ((UIElement)o).IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
-                            ((UIElement)o).IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
+                            uie.IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
+                            uie.IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
+                            uie.IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
                         }
-                        else if (InputElement.IsContentElement(o))
+                        else if (o is ContentElement ce)
                         {
-                            ((ContentElement)o).IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
+                            ce.IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
 
                             // NOTE: there are no IsVisible or IsHitTestVisible properties for ContentElements.
                             //
-                            // ((ContentElement)o).IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
-                            // ((ContentElement)o).IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
+                            // ce.IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
+                            // ce.IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
                         }
-                        else if (InputElement.IsUIElement3D(o))
+                        else if (o is UIElement3D uie3D)
                         {
-                            ((UIElement3D)o).IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
-                            ((UIElement3D)o).IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
-                            ((UIElement3D)o).IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
+                            uie3D.IsEnabledChanged -= _captureIsEnabledChangedEventHandler;
+                            uie3D.IsVisibleChanged -= _captureIsVisibleChangedEventHandler;
+                            uie3D.IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
                         }
                     }
                     if (_mouseCapture != null)
                     {
                         o = _mouseCapture as DependencyObject;
-                        if (InputElement.IsUIElement(o))
+                        if (o is UIElement uie)
                         {
-                            ((UIElement)o).IsEnabledChanged += _captureIsEnabledChangedEventHandler;
-                            ((UIElement)o).IsVisibleChanged += _captureIsVisibleChangedEventHandler;
-                            ((UIElement)o).IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
+                            uie.IsEnabledChanged += _captureIsEnabledChangedEventHandler;
+                            uie.IsVisibleChanged += _captureIsVisibleChangedEventHandler;
+                            uie.IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
                         }
-                        else if (InputElement.IsContentElement(o))
+                        else if (o is ContentElement ce)
                         {
-                            ((ContentElement)o).IsEnabledChanged += _captureIsEnabledChangedEventHandler;
+                            ce.IsEnabledChanged += _captureIsEnabledChangedEventHandler;
 
                             // NOTE: there are no IsVisible or IsHitTestVisible properties for ContentElements.
                             //
-                            // ((ContentElement)o).IsVisibleChanged += _captureIsVisibleChangedEventHandler;
-                            // ((ContentElement)o).IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
+                            // ce.IsVisibleChanged += _captureIsVisibleChangedEventHandler;
+                            // ce.IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
                         }
-                        else if (InputElement.IsUIElement3D(o))
+                        else if (o is UIElement3D uie3D)
                         {
-                            ((UIElement3D)o).IsEnabledChanged += _captureIsEnabledChangedEventHandler;
-                            ((UIElement3D)o).IsVisibleChanged += _captureIsVisibleChangedEventHandler;
-                            ((UIElement3D)o).IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
+                            uie3D.IsEnabledChanged += _captureIsEnabledChangedEventHandler;
+                            uie3D.IsVisibleChanged += _captureIsVisibleChangedEventHandler;
+                            uie3D.IsHitTestVisibleChanged += _captureIsHitTestVisibleChangedEventHandler;
                         }
                     }
                 }
@@ -1160,7 +1136,7 @@ namespace System.Windows.Input
                     lostCapture.RoutedEvent=Mouse.LostMouseCaptureEvent;
                     lostCapture.Source= oldMouseCapture;
                     //ProcessInput has a linkdemand
-                    _inputManager.Value.ProcessInput(lostCapture);
+                    _inputManager.ProcessInput(lostCapture);
                 }
                 if (_mouseCapture != null)
                 {
@@ -1168,7 +1144,7 @@ namespace System.Windows.Input
                     gotCapture.RoutedEvent=Mouse.GotMouseCaptureEvent;
                     gotCapture.Source= _mouseCapture;
                     //ProcessInput has a linkdemand
-                    _inputManager.Value.ProcessInput(gotCapture);
+                    _inputManager.ProcessInput(gotCapture);
                 }
 
                 // Force a mouse move so we can update the mouse over.
@@ -1215,24 +1191,11 @@ namespace System.Windows.Input
                             actionsArgs.RoutedEvent=InputManager.PreviewInputReportEvent;
                             e.PushInput(actionsArgs, null);
 
-                            // Create a new RawMouseInputReport for the activate.
-                            RawMouseInputReport reportActivate = new RawMouseInputReport(rawMouseInputReport.Mode,
-                                                                                         rawMouseInputReport.Timestamp,
-                                                                                         rawMouseInputReport.InputSource,
-                                                                                         RawMouseActions.Activate,
-                                                                                         rawMouseInputReport.X,
-                                                                                         rawMouseInputReport.Y,
-                                                                                         rawMouseInputReport.Wheel,
-                                                                                         rawMouseInputReport.ExtraInformation);
-
-                            // Push a new RawMouseInputReport for the activate.
-                            InputReportEventArgs activateArgs = new InputReportEventArgs(inputReportEventArgs.Device, reportActivate);
-                            activateArgs.RoutedEvent=InputManager.PreviewInputReportEvent;
-                            e.PushInput(activateArgs, null);
+                            PushActivateInputReport(e, inputReportEventArgs, rawMouseInputReport, clearExtraInformation:false);
                         }
                     }
                     // Only process mouse input that is from our active PresentationSource.
-                    else if ((_inputSource != null) && (rawMouseInputReport.InputSource == _inputSource.Value))
+                    else if ((_inputSource is not null) && (rawMouseInputReport.InputSource == _inputSource))
                     {
                         // We need to remember the StylusDevice that generated this input.  Use the _tagStylusDevice
                         // to store this in before we take over the inputReport Device and loose it.  Any
@@ -1365,7 +1328,7 @@ namespace System.Windows.Input
                             MouseButtonEventArgs clickThrough = new MouseButtonEventArgs(this, mouseButtonEventArgs.Timestamp, mouseButtonEventArgs.ChangedButton, GetStylusDevice(e.StagingItem));
                             clickThrough.RoutedEvent=Mouse.PreviewMouseDownOutsideCapturedElementEvent;
                             //ProcessInput has a linkdemand
-                            _inputManager.Value.ProcessInput(clickThrough);
+                            _inputManager.ProcessInput(clickThrough);
                         }
                     }
 
@@ -1381,12 +1344,36 @@ namespace System.Windows.Input
                             MouseButtonEventArgs clickThrough = new MouseButtonEventArgs(this, mouseButtonEventArgs.Timestamp, mouseButtonEventArgs.ChangedButton, GetStylusDevice(e.StagingItem));
                             clickThrough.RoutedEvent=Mouse.PreviewMouseUpOutsideCapturedElementEvent;
                             //ProcessInput has a linkdemand
-                            _inputManager.Value.ProcessInput(clickThrough);
+                            _inputManager.ProcessInput(clickThrough);
                         }
                     }
                 }
             }
 }
+
+        /// <summary>
+        /// Push an Activate input report, on behalf of the given RawMouseInputReport.
+        /// Common logic used by MouseDevice.PreProcessInput and PointerDevice.PreProcessMouseInput
+        /// </summary>
+        internal static void PushActivateInputReport(PreProcessInputEventArgs e, InputReportEventArgs inputReportEventArgs, RawMouseInputReport rawMouseInputReport, bool clearExtraInformation)
+        {
+            IntPtr extraInformation = clearExtraInformation ? IntPtr.Zero : rawMouseInputReport.ExtraInformation;
+
+            // Create a new RawMouseInputReport for the activate.
+            RawMouseInputReport reportActivate = new RawMouseInputReport(rawMouseInputReport.Mode,
+                                                                         rawMouseInputReport.Timestamp,
+                                                                         rawMouseInputReport.InputSource,
+                                                                         RawMouseActions.Activate,
+                                                                         rawMouseInputReport.X,
+                                                                         rawMouseInputReport.Y,
+                                                                         rawMouseInputReport.Wheel,
+                                                                         extraInformation);
+
+            // Push a new RawMouseInputReport for the activate.
+            InputReportEventArgs activateArgs = new InputReportEventArgs(inputReportEventArgs.Device, reportActivate);
+            activateArgs.RoutedEvent=InputManager.PreviewInputReportEvent;
+            e.PushInput(activateArgs, null);
+        }
 
         private void PreNotifyInput(object sender, NotifyInputEventArgs e)
         {
@@ -1435,15 +1422,15 @@ namespace System.Windows.Input
                         // if the existing source is null, no need to do any special-case handling
                         if (_inputSource == null)
                         {
-                            _inputSource = new SecurityCriticalDataClass<PresentationSource>(rawMouseInputReport.InputSource);
+                            _inputSource = rawMouseInputReport.InputSource;
                         }
                         // if the new source is the same as the old source, don't bother doing anything
-                        else if (_inputSource.Value != rawMouseInputReport.InputSource)
+                        else if (_inputSource != rawMouseInputReport.InputSource)
                         {
-                            IMouseInputProvider toDeactivate = _inputSource.Value.GetInputProvider(typeof(MouseDevice)) as IMouseInputProvider;
+                            IMouseInputProvider toDeactivate = _inputSource.GetInputProvider(typeof(MouseDevice)) as IMouseInputProvider;
 
                             // All mouse information is now restricted to this presentation source.
-                            _inputSource = new SecurityCriticalDataClass<PresentationSource>(rawMouseInputReport.InputSource);
+                            _inputSource = rawMouseInputReport.InputSource;
 
                             if (toDeactivate != null)
                             {
@@ -1453,7 +1440,7 @@ namespace System.Windows.Input
                     }
 
                     // Only process mouse input that is from our active presentation source.
-                    if ((_inputSource != null) && (rawMouseInputReport.InputSource == _inputSource.Value))
+                    if ((_inputSource is not null) && (rawMouseInputReport.InputSource == _inputSource))
                     {
                         // If the input is reporting mouse deactivation, we need
                         // to break any capture we may have.  Note that we only do
@@ -1510,11 +1497,11 @@ namespace System.Windows.Input
                                         {
                                             if (rawMouseInputReport._isSynchronize)
                                             {
-                                                GlobalHitTest(true, ptClient, _inputSource.Value, out mouseOver, out rawMouseOver);
+                                                GlobalHitTest(true, ptClient, _inputSource, out mouseOver, out rawMouseOver);
                                             }
                                             else
                                             {
-                                                LocalHitTest(true, ptClient, _inputSource.Value, out mouseOver, out rawMouseOver);
+                                                LocalHitTest(true, ptClient, _inputSource, out mouseOver, out rawMouseOver);
                                             }
 
                                             if (mouseOver == rawMouseOver)
@@ -1527,9 +1514,13 @@ namespace System.Windows.Input
                                             // If we are over something else (like a raw visual)
                                             // find the containing element.
                                             if (!InputElement.IsValid(mouseOver))
+                                            {
                                                 mouseOver = InputElement.GetContainingInputElement(mouseOver as DependencyObject);
+                                            }
                                             if ((rawMouseOver != null) && !InputElement.IsValid(rawMouseOver))
+                                            {
                                                 rawMouseOver = InputElement.GetContainingInputElement(rawMouseOver as DependencyObject);
+                                            }
                                         }
                                         break;
 
@@ -1539,11 +1530,11 @@ namespace System.Windows.Input
                                     case CaptureMode.Element:
                                         if (rawMouseInputReport._isSynchronize)
                                         {
-                                            mouseOver = GlobalHitTest(true, ptClient, _inputSource.Value);
+                                            mouseOver = GlobalHitTest(true, ptClient, _inputSource);
                                         }
                                         else
                                         {
-                                            mouseOver = LocalHitTest(true, ptClient, _inputSource.Value);
+                                            mouseOver = LocalHitTest(true, ptClient, _inputSource);
                                         }
 
                                         // There is no reason to process rawMouseOver when
@@ -1571,7 +1562,7 @@ namespace System.Windows.Input
                                                 // This allows us to have our capture-to-subtree span multiple windows.
 
                                                 // GlobalHitTest always returns an IInputElement, so we are sure to have one.
-                                                GlobalHitTest(true, ptClient, _inputSource.Value, out mouseOver, out rawMouseOver);
+                                                GlobalHitTest(true, ptClient, _inputSource, out mouseOver, out rawMouseOver);
                                             }
 
                                             if (mouseOver != null && !InputElement.IsValid(mouseOver) )
@@ -1725,7 +1716,7 @@ namespace System.Windows.Input
                             actions |= RawMouseActions.VerticalWheelRotate;
 
                             // Tell the InputManager that the MostRecentDevice is us.
-                            _inputManager.Value.MostRecentInputDevice = this;
+                            _inputManager.MostRecentInputDevice = this;
                         }
 
                         // Mouse query cursor events are never considered redundant.
@@ -1736,7 +1727,7 @@ namespace System.Windows.Input
                             actions |= RawMouseActions.QueryCursor;
                         }
 
-                        RawMouseActions[] ButtonPressActions =
+                        ReadOnlySpan<RawMouseActions> ButtonPressActions = stackalloc RawMouseActions[5]
                         {
                             RawMouseActions.Button1Press,
                             RawMouseActions.Button2Press,
@@ -1745,7 +1736,7 @@ namespace System.Windows.Input
                             RawMouseActions.Button5Press
                         };
 
-                        RawMouseActions[] ButtonReleaseActions =
+                        ReadOnlySpan<RawMouseActions> ButtonReleaseActions = stackalloc RawMouseActions[5]
                         {
                             RawMouseActions.Button1Release,
                             RawMouseActions.Button2Release,
@@ -1761,7 +1752,7 @@ namespace System.Windows.Input
                                 actions |= ButtonPressActions[iButton];
 
                                 // Tell the InputManager that the MostRecentDevice is us.
-                                _inputManager.Value.MostRecentInputDevice = this;
+                                _inputManager.MostRecentInputDevice = this;
                             }
 
                             if ((rawMouseInputReport.Actions & ButtonReleaseActions[iButton]) == ButtonReleaseActions[iButton])
@@ -1769,7 +1760,7 @@ namespace System.Windows.Input
                                 actions |= ButtonReleaseActions[iButton];
 
                                 // Tell the InputManager that the MostRecentDevice is us.
-                                _inputManager.Value.MostRecentInputDevice = this;
+                                _inputManager.MostRecentInputDevice = this;
                             }
                         }
                     }
@@ -1897,7 +1888,7 @@ namespace System.Windows.Input
                     RawMouseInputReport rawMouseInputReport = (RawMouseInputReport) inputReportEventArgs.Report;
 
                     // Only process mouse input that is from our active visual manager.
-                    if ((_inputSource != null) && (rawMouseInputReport.InputSource == _inputSource.Value))
+                    if ((_inputSource is not null) && (rawMouseInputReport.InputSource == _inputSource))
                     {
                         // In general, this is where we promote the non-redundant
                         // reported actions to our premier events.
@@ -2206,7 +2197,7 @@ namespace System.Windows.Input
         {
             get
             {
-                return _inputSource != null && _inputSource.Value != null;
+                return _inputSource != null;
             }
         }
 
@@ -2250,9 +2241,9 @@ namespace System.Windows.Input
             }
         }
 
-        private SecurityCriticalDataClass<PresentationSource> _inputSource;
+        private PresentationSource _inputSource;
 
-        private SecurityCriticalData<InputManager> _inputManager;
+        private InputManager _inputManager;
 
         private IInputElement _mouseOver;
         private DeferredElementTreeState _mouseOverTreeState;
@@ -2261,7 +2252,7 @@ namespace System.Windows.Input
 
         private IInputElement _mouseCapture;
         private DeferredElementTreeState _mouseCaptureWithinTreeState;
-        private SecurityCriticalDataClass<IMouseInputProvider> _providerCapture;
+        private IMouseInputProvider _providerCapture;
         private CaptureMode _captureMode;
         private bool _isCaptureMouseInProgress;
 

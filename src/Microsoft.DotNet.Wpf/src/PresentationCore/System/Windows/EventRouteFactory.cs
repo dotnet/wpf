@@ -98,7 +98,7 @@ namespace System.Windows
 
         private static EventRoute[] _eventRouteStack;
         private static int _stackTop;
-        private static object _synchronized = new object();
+        private static readonly object _synchronized = new object();
 
         #endregion Data
     }

@@ -5,21 +5,21 @@
     <DefineConstants>$(DefineConstants);UIAUTOMATIONTYPES</DefineConstants>
     <NoWarn>$(NoWarn);0618</NoWarn>
     <EnablePInvokeAnalyzer>false</EnablePInvokeAnalyzer>
-    <Platforms>AnyCPU;x64;arm64</Platforms>
+    <Platforms>x86;x64;arm64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
     <EnableDefaultItems>false</EnableDefaultItems>
   </PropertyGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.resx" />
+    <Compile Include="$(WpfCommonDir)src\System\SR.cs">
+        <Link>Common\System\SR.cs</Link>
+    </Compile>
     <Compile Include="$(WpfSharedDir)\RefAssemblyAttrs.cs" />
     <Compile Include="$(WpfSharedDir)\System\Windows\Interop\OperatingSystemVersion.cs" />
     <Compile Include="$(WpfSharedDir)\System\Windows\Interop\OSVersionHelper.cs" />
-    <Compile Include="$(WpfSharedDir)\MS\Internal\SecurityCriticalDataForSet.cs" />
-    <Compile Include="$(WpfSharedDir)\MS\Internal\FriendAccessAllowedAttribute.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Win32\ExternDll.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Win32\HandleCollector.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Win32\LoadLibraryHelper.cs" />
@@ -30,12 +30,15 @@
     <Compile Include="MS\Internal\Automation\AutomationIdentifierConstants.cs" />
     <Compile Include="MS\Internal\Automation\CodeQuality_Approved.cs" />
     <Compile Include="MS\Internal\Automation\UiaCoreTypesApi.cs" />
+    <Compile Include="System\Windows\Automation\ActiveTextPositionChangedEventArgs.cs" />
     <Compile Include="System\Windows\Automation\AsyncContentLoadedEventArgs.cs" />
     <Compile Include="System\Windows\Automation\AsyncContentLoadedState.cs" />
     <Compile Include="System\Windows\Automation\AutomationElementIdentifiers.cs" />
     <Compile Include="System\Windows\Automation\AutomationEvent.cs" />
     <Compile Include="System\Windows\Automation\AutomationEventArgs.cs" />
     <Compile Include="System\Windows\Automation\AutomationIdentifier.cs" />
+    <Compile Include="System\Windows\Automation\AutomationNotificationKind.cs" />
+    <Compile Include="System\Windows\Automation\AutomationNotificationProcessing.cs" />
     <Compile Include="System\Windows\Automation\AutomationPattern.cs" />
     <Compile Include="System\Windows\Automation\AutomationProperty.cs" />
     <Compile Include="System\Windows\Automation\AutomationPropertyChangedEventArgs.cs" />
@@ -51,6 +54,7 @@
     <Compile Include="System\Windows\Automation\ItemContainerPatternIdentifiers.cs" />
     <Compile Include="System\Windows\Automation\MultipleViewPatternIdentifiers.cs" />
     <Compile Include="System\Windows\Automation\NoClickablePointException.cs" />
+    <Compile Include="System\Windows\Automation\NotificationEventArgs.cs" />
     <Compile Include="System\Windows\Automation\OrientationType.cs" />
     <Compile Include="System\Windows\Automation\ProxyAssemblyNotLoadedException.cs" />
     <Compile Include="System\Windows\Automation\RangeValuePatternIdentifiers.cs" />
@@ -71,6 +75,8 @@
     <Compile Include="System\Windows\Automation\WindowClosedEventArgs.cs" />
     <Compile Include="System\Windows\Automation\WindowPatternIdentifiers.cs" />
     <Compile Include="System\Windows\Automation\Text\TextEnums.cs" />
+    <Compile Include="System\Windows\Automation\Provider\IRawElementProviderSimple.cs" />
+    <Compile Include="System\Windows\Automation\Provider\ITextRangeProvider.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -82,21 +88,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <NetCoreReference Include="netstandard" />
-    <NetCoreReference Include="Microsoft.Win32.Primitives" />
-    <NetCoreReference Include="System" />
-    <NetCoreReference Include="System.Runtime" />
-    <NetCoreReference Include="System.Resources.ResourceManager" />
-    <NetCoreReference Include="System.Runtime.InteropServices" />
-    <NetCoreReference Include="System.Threading" />
-    <NetCoreReference Include="System.Threading.Thread" />
-    <NetCoreReference Include="System.Diagnostics.Tools" />
-    <NetCoreReference Include="System.Diagnostics.Debug" />
-    <NetCoreReference Include="System.Runtime.Extensions" />
     <MicrosoftPrivateWinFormsReference Include="Accessibility" />
   </ItemGroup>
-
-  <ItemGroup>
-  </ItemGroup>
-
 </Project>

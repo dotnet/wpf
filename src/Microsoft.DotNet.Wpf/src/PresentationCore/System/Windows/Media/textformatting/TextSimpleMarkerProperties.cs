@@ -18,7 +18,6 @@ using System.Windows;
 using MS.Internal.TextFormatting;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.TextFormatting
 {
@@ -45,8 +44,7 @@ namespace System.Windows.Media.TextFormatting
             TextParagraphProperties     textParagraphProperties
             ) 
         {
-            if (textParagraphProperties == null)
-                throw new ArgumentNullException("textParagraphProperties");
+            ArgumentNullException.ThrowIfNull(textParagraphProperties);
 
             _offset = offset;
 
@@ -59,15 +57,12 @@ namespace System.Windows.Media.TextFormatting
                 else if (TextMarkerSource.IsKnownIndexMarkerStyle(style))
                 {
                     // validate autoNumberingIndex
-                    if (autoNumberingIndex < 1)
-                    {
-                        throw new ArgumentOutOfRangeException("autoNumberingIndex", SR.Get(SRID.ParameterCannotBeLessThan, 1));
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegativeOrZero(autoNumberingIndex);
                 }
                 else
                 {
                     // invalid style
-                    throw new ArgumentException(SR.Get(SRID.Enum_Invalid, typeof(TextMarkerStyle)), "style");
+                    throw new ArgumentException(SR.Format(SR.Enum_Invalid, typeof(TextMarkerStyle)), "style");
                 }
 
                 _textSource = new TextMarkerSource(

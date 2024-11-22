@@ -100,13 +100,13 @@ namespace MS.Internal.PtsHost
                 }
                 else
                 {
-                    if (DoubleUtil.GreaterThan(_borderThickness.Left, 0))
+                    if (DoubleUtil.GreaterThanZero(_borderThickness.Left))
                     {
                         dc.DrawLine(pen,
                             new Point(_renderBounds.Left + pen.Thickness / 2, _renderBounds.Top),
                             new Point(_renderBounds.Left + pen.Thickness / 2, _renderBounds.Bottom));
                     }
-                    if (DoubleUtil.GreaterThan(_borderThickness.Right, 0))
+                    if (DoubleUtil.GreaterThanZero(_borderThickness.Right))
                     {
                         pen = new Pen();
                         pen.Brush = _borderBrush;
@@ -117,7 +117,7 @@ namespace MS.Internal.PtsHost
                             new Point(_renderBounds.Right - pen.Thickness / 2, _renderBounds.Top),
                             new Point(_renderBounds.Right - pen.Thickness / 2, _renderBounds.Bottom));
                     }
-                    if (DoubleUtil.GreaterThan(_borderThickness.Top, 0))
+                    if (DoubleUtil.GreaterThanZero(_borderThickness.Top))
                     {
                         pen = new Pen();
                         pen.Brush = _borderBrush;
@@ -128,7 +128,7 @@ namespace MS.Internal.PtsHost
                             new Point(_renderBounds.Left, _renderBounds.Top + pen.Thickness / 2),
                             new Point(_renderBounds.Right, _renderBounds.Top + pen.Thickness / 2));
                     }
-                    if (DoubleUtil.GreaterThan(_borderThickness.Bottom, 0))
+                    if (DoubleUtil.GreaterThanZero(_borderThickness.Bottom))
                     {
                         pen = new Pen();
                         pen.Brush = _borderBrush;

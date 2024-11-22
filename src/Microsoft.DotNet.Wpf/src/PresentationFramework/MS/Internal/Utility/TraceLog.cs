@@ -36,9 +36,7 @@ namespace MS.Internal.Utility
         internal void Add(string message, params object[] args)
         {
             // create timestamped message string
-            string s = DateTime.Now.Ticks.ToString(CultureInfo.InvariantCulture)
-                        + " "
-                        + String.Format(CultureInfo.InvariantCulture, message, args);
+            string s = $"{DateTime.Now.Ticks.ToString(CultureInfo.InvariantCulture)} {String.Format(CultureInfo.InvariantCulture, message, args)}";
 
             // if log is full, discard the oldest message
             if (_log.Count == _size)
@@ -61,8 +59,7 @@ namespace MS.Internal.Utility
             if (o == null)
                 return "NULL";
             else
-                return String.Format(CultureInfo.InvariantCulture, "{0}.{1}",
-                        o.GetType().Name, o.GetHashCode());
+                return string.Create(CultureInfo.InvariantCulture, $"{o.GetType().Name}.{o.GetHashCode()}");
         }
 
         ArrayList _log;

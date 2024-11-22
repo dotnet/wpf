@@ -48,7 +48,7 @@ namespace System.Windows
         {
             if ( _sealed )
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "SetterBase"));
+                throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "SetterBase"));
             }            
         }
 

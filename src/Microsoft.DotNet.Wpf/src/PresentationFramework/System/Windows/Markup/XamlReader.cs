@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿//
+//
 // Description:
 //   base Parser class that parses XML markup into an Avalon Element Tree
 //
@@ -19,7 +19,6 @@ using System.Diagnostics;
 using System.Reflection;
 
 using MS.Utility;
-using System.Security;
 using System.Text;
 using System.ComponentModel.Design.Serialization;
 using System.Globalization;
@@ -34,6 +33,7 @@ using System.Xaml;
 using System.Xaml.Permissions;
 using System.Windows.Navigation;
 using MS.Internal.Xaml.Context;
+using System.Runtime.CompilerServices;
 
 namespace System.Windows.Markup
 {
@@ -142,10 +142,7 @@ namespace System.Windows.Markup
         /// <returns>object root generated after xml parsed</returns>
         public static object Load(XmlReader reader, bool useRestrictiveXamlReader)
         {
-            if (reader == null)
-            {
-                throw new ArgumentNullException(nameof(reader));
-            }
+            ArgumentNullException.ThrowIfNull(reader);
 
             return Load(reader, null, XamlParseMode.Synchronous, useRestrictiveXamlReader);
         }
@@ -173,17 +170,14 @@ namespace System.Windows.Markup
         /// <returns>object root generated after xml parsed</returns>
         public static object Load(Stream stream, ParserContext parserContext, bool useRestrictiveXamlReader )
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
+            ArgumentNullException.ThrowIfNull(stream);
             if (parserContext == null)
             {
                 parserContext = new ParserContext();
             }
 
             XmlReader reader = XmlReader.Create(stream, null, parserContext);
-            object tree = Load(reader, parserContext, XamlParseMode.Synchronous, useRestrictiveXamlReader);
+            object tree = Load(reader, parserContext, XamlParseMode.Synchronous, useRestrictiveXamlReader || parserContext.FromRestrictiveReader);
             stream.Close();
             return tree;
         }
@@ -217,16 +211,13 @@ namespace System.Windows.Markup
         /// </remarks>
         public object LoadAsync(Stream stream, bool useRestrictiveXamlReader)
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
+            ArgumentNullException.ThrowIfNull(stream);
             _stream = stream;
 
             if (_objectWriter != null)
             {
                 // A XamlReader instance cannot be shared across two load operations
-                throw new InvalidOperationException(SR.Get(SRID.ParserCannotReuseXamlReader));
+                throw new InvalidOperationException(SR.ParserCannotReuseXamlReader);
             }
 
             return LoadAsync(stream, null, useRestrictiveXamlReader);
@@ -263,10 +254,7 @@ namespace System.Windows.Markup
         /// </remarks>
         public object LoadAsync(XmlReader reader, bool useRestrictiveXamlReader)
         {
-            if (reader == null)
-            {
-                throw new ArgumentNullException(nameof(reader));
-            }
+            ArgumentNullException.ThrowIfNull(reader);
             return LoadAsync(reader, null, useRestrictiveXamlReader);
         }
 
@@ -302,16 +290,13 @@ namespace System.Windows.Markup
         /// </remarks>
         public object LoadAsync(Stream stream, ParserContext parserContext , bool useRestrictiveXamlReader)
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException(nameof(stream));
-            }
+            ArgumentNullException.ThrowIfNull(stream);
             _stream = stream;
 
             if (_objectWriter != null)
             {
                 // A XamlReader instance cannot be shared across two load operations
-                throw new InvalidOperationException(SR.Get(SRID.ParserCannotReuseXamlReader));
+                throw new InvalidOperationException(SR.ParserCannotReuseXamlReader);
             }
 
             if (parserContext == null)
@@ -343,10 +328,7 @@ namespace System.Windows.Markup
 
         private object LoadAsync(XmlReader reader, ParserContext parserContext, bool useRestrictiveXamlReader)
         {
-            if (reader == null)
-            {
-                throw new ArgumentNullException(nameof(reader));
-            }
+            ArgumentNullException.ThrowIfNull(reader);
 
             if (parserContext == null)
             {
@@ -378,8 +360,8 @@ namespace System.Windows.Markup
 
             try
             {
-                _textReader = (useRestrictiveXamlReader) ? new RestrictiveXamlXmlReader(reader, schemaContext, settings) :
-                                                           new System.Xaml.XamlXmlReader(reader, schemaContext, settings);
+                _textReader = (useRestrictiveXamlReader || parserContext.FromRestrictiveReader) ? new RestrictiveXamlXmlReader(reader, schemaContext, settings) :
+                                                                 new System.Xaml.XamlXmlReader(reader, schemaContext, settings);
 
                 _stack = new XamlContextStack<WpfXamlFrame>(() => new WpfXamlFrame());
 
@@ -917,7 +899,7 @@ namespace System.Windows.Markup
 
                 XamlSchemaContext schemaContext = parserContext.XamlTypeMapper != null ?
                     parserContext.XamlTypeMapper.SchemaContext : GetWpfSchemaContext();
-                System.Xaml.XamlXmlReader xamlXmlReader = (useRestrictiveXamlReader) ? new RestrictiveXamlXmlReader(reader, schemaContext, settings, safeTypes) :
+                System.Xaml.XamlXmlReader xamlXmlReader = (useRestrictiveXamlReader || parserContext.FromRestrictiveReader) ? new RestrictiveXamlXmlReader(reader, schemaContext, settings, safeTypes) :
                                                                                        new System.Xaml.XamlXmlReader(reader, schemaContext, settings);
                 root = Load(xamlXmlReader, parserContext);
                 reader.Close();
@@ -961,7 +943,7 @@ namespace System.Windows.Markup
 
             // In some cases, the application constructor is not run prior to loading,
             // causing the loader not to recognize URIs beginning with "pack:" or "application:".
-            MS.Internal.WindowsBase.SecurityHelper.RunClassConstructor(typeof(System.Windows.Application));
+            RuntimeHelpers.RunClassConstructor(typeof(Application).TypeHandle);
 
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordXamlBaml | EventTrace.Keyword.KeywordPerf, EventTrace.Event.WClientParseXamlBegin, parserContext.BaseUri);
 
@@ -989,10 +971,7 @@ namespace System.Windows.Markup
 
         public static object Load(System.Xaml.XamlReader reader)
         {
-            if (reader == null)
-            {
-                throw new ArgumentNullException(nameof(reader));
-            }
+            ArgumentNullException.ThrowIfNull(reader);
             object root = null;
             try
             {

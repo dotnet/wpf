@@ -16,7 +16,6 @@ using System.Diagnostics;
 
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.Ink.InkSerializedFormat
 {
@@ -147,10 +146,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <returns>number of bits encoded, 0 for failure</returns>
         internal byte Encode(int data, int extra, BitStreamWriter writer)
         {
-            if (writer == null)
-            {
-                throw new ArgumentNullException("writer");
-            }
+            ArgumentNullException.ThrowIfNull(writer);
             if (data == 0)
             {
                 writer.Write((byte)0, 1); //more efficent
@@ -266,7 +262,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <summary>
         /// Private statics
         /// </summary>
-        private static readonly byte MaxBAASize = 10;
+        private const byte MaxBAASize = 10;
 
         /// <summary>
         /// Private helper class
@@ -334,8 +330,8 @@ namespace MS.Internal.Ink.InkSerializedFormat
             /// <summary>
             /// Private statics
             /// </summary>
-            private static readonly byte MaxBAASize = 10;
-            private static readonly byte DefaultBAACount = 8;
+            private const byte MaxBAASize = 10;
+            private const byte DefaultBAACount = 8;
             private static readonly byte[][] DefaultBAAData = new byte[][]
             {
                 new byte[]{0, 1,  2,  4,  6,  8, 12, 16, 24, 32},

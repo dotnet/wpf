@@ -6,7 +6,7 @@ namespace System.Windows.Markup
 {
     /// <summary>
     /// Attribute to declare that this associated property will have special parsing rules
-    /// for any text that is enclosed between these special characters. 
+    /// for any text that is enclosed between these special characters.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = true, Inherited = false)]
     public sealed class MarkupExtensionBracketCharactersAttribute : Attribute

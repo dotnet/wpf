@@ -19,7 +19,6 @@ using System.Windows;
 using MS.Internal.PresentationCore;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Media3D
 {
@@ -106,10 +105,8 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public void RemoveAt(int index)
         {
-            if (index < 0 || index >= InternalCount)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, InternalCount);
 
             VerifyAPIReadWrite(_collection[index]);
 
@@ -146,18 +143,14 @@ namespace System.Windows.Media.Media3D
         {
             VerifyAPIReadOnly();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // The extra "index >= array.Length" check in because even if _collection.Count
             // is 0 the index is not allowed to be equal or greater than the length
             // (from the MSDN ICollection docs)
-            if (index < 0 || index >= array.Length || (index + _collection.Count) > array.Length)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, array.Length);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, array.Length - Count);
 
             _collection.CopyTo(array, index);
         }
@@ -166,22 +159,18 @@ namespace System.Windows.Media.Media3D
         {
             VerifyAPIReadOnly();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // The extra "index >= array.Length" check in because even if _collection.Count
             // is 0 the index is not allowed to be equal or greater than the length
             // (from the MSDN ICollection docs)
-            if (index < 0 || index >= array.Length || (index + _collection.Count) > array.Length)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, array.Length);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, array.Length - Count);
 
             if (array.Rank != 1)
             {
-                throw new ArgumentException(SR.Get(SRID.Collection_BadRank));
+                throw new ArgumentException(SR.Collection_BadRank);
             }
 
             // Elsewhere in the collection we throw an AE when the type is
@@ -196,7 +185,7 @@ namespace System.Windows.Media.Media3D
             }
             catch (InvalidCastException e)
             {
-                throw new ArgumentException(SR.Get(SRID.Collection_BadDestArray, "Visual3DCollection"), e);
+                throw new ArgumentException(SR.Format(SR.Collection_BadDestArray, "Visual3DCollection"), e);
             }
         }
 
@@ -270,10 +259,8 @@ namespace System.Windows.Media.Media3D
             }
             set
             {
-                if (index < 0 || index >= InternalCount)
-                {
-                    throw new ArgumentOutOfRangeException("index");
-                }
+                ArgumentOutOfRangeException.ThrowIfNegative(index);
+                ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, InternalCount);
 
                 VerifyAPIForAdd(value);
 
@@ -472,14 +459,11 @@ namespace System.Windows.Media.Media3D
 
         private Visual3D Cast(object value)
         {
-            if( value == null )
-            {
-                throw new System.ArgumentNullException("value");
-            }
-            
+            ArgumentNullException.ThrowIfNull(value);
+
             if (!(value is Visual3D))
             {
-                throw new System.ArgumentException(SR.Get(SRID.Collection_BadType, this.GetType().Name, value.GetType().Name, "Visual3D"));
+                throw new System.ArgumentException(SR.Format(SR.Collection_BadType, this.GetType().Name, value.GetType().Name, "Visual3D"));
             }
 
             return (Visual3D) value;
@@ -489,14 +473,14 @@ namespace System.Windows.Media.Media3D
         {
             if (value == null)
             {
-                throw new System.ArgumentException(SR.Get(SRID.Collection_NoNull));
+                throw new System.ArgumentException(SR.Collection_NoNull);
             }
 
             VerifyAPIReadWrite(value);
 
             if (value.InternalVisualParent != null)
             {
-                throw new System.ArgumentException(SR.Get(SRID.VisualCollection_VisualHasParent));
+                throw new System.ArgumentException(SR.VisualCollection_VisualHasParent);
             }
         }
 
@@ -647,7 +631,7 @@ namespace System.Windows.Media.Media3D
             {
                 if (_list._version != _version)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Enumerator_CollectionChanged));
+                    throw new InvalidOperationException(SR.Enumerator_CollectionChanged);
                 }
 
                 int count = _list.Count;
@@ -667,7 +651,7 @@ namespace System.Windows.Media.Media3D
             {
                 if (_list._version != _version)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Enumerator_CollectionChanged));
+                    throw new InvalidOperationException(SR.Enumerator_CollectionChanged);
                 }
 
                 _index = -1;
@@ -701,7 +685,7 @@ namespace System.Windows.Media.Media3D
                 {
                     if ((_index < 0) || (_index >= _list.Count))
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Enumerator_VerifyContext));
+                        throw new InvalidOperationException(SR.Enumerator_VerifyContext);
                     }
 
                     return _list[_index];

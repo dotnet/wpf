@@ -241,7 +241,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                         {
                             if (item == null)
                             {
-                                throw new System.ArgumentException(SR.Get(SRID.Collection_NoNull));
+                                throw new System.ArgumentException(SR.Collection_NoNull);
                             }
                             OnFreezablePropertyChanged(/* oldValue = */ null, item);
                             [[onInsert]]
@@ -294,7 +294,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                     [[inline]]
                         if ([[value]] == null)
                         {
-                            throw new System.ArgumentException(SR.Get(SRID.Collection_NoNull));
+                            throw new System.ArgumentException(SR.Collection_NoNull);
                         }
                     [[/inline]];
             }
@@ -367,7 +367,7 @@ namespace MS.Internal.MilCodeGen.Helpers
 
                         if (array.Rank != 1)
                         {
-                            throw new ArgumentException(SR.Get(SRID.Collection_BadRank));
+                            throw new ArgumentException(SR.Collection_BadRank);
                         }
 
                         // Elsewhere in the collection we throw an AE when the type is
@@ -382,7 +382,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                         }
                         catch (InvalidCastException e)
                         {
-                            throw new ArgumentException(SR.Get(SRID.Collection_BadDestArray, this.GetType().Name), e);
+                            throw new ArgumentException(SR.Format(SR.Collection_BadDestArray, this.GetType().Name), e);
                         }
                     }
                 [[/inline]];
@@ -724,7 +724,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                             }
                             else
                             {
-                                throw new InvalidOperationException(SR.Get(SRID.Enumerator_CollectionChanged));
+                                throw new InvalidOperationException(SR.Enumerator_CollectionChanged);
                             }
                         }
 
@@ -742,7 +742,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                             }
                             else
                             {
-                                throw new InvalidOperationException(SR.Get(SRID.Enumerator_CollectionChanged));
+                                throw new InvalidOperationException(SR.Enumerator_CollectionChanged);
                             }
                         }
 
@@ -776,12 +776,12 @@ namespace MS.Internal.MilCodeGen.Helpers
                                 }
                                 else if (_index == -1)
                                 {
-                                    throw new InvalidOperationException(SR.Get(SRID.Enumerator_NotStarted));
+                                    throw new InvalidOperationException(SR.Enumerator_NotStarted);
                                 }
                                 else
                                 {
                                     Debug.Assert(_index == -2, "expected -2, got " + _index + "\n");
-                                    throw new InvalidOperationException(SR.Get(SRID.Enumerator_ReachedEnd));
+                                    throw new InvalidOperationException(SR.Enumerator_ReachedEnd);
                                 }
                             }
                         }
@@ -1179,7 +1179,7 @@ namespace MS.Internal.MilCodeGen.Helpers
 
                         if (!(value is [[type]]))
                         {
-                            throw new System.ArgumentException(SR.Get(SRID.Collection_BadType, this.GetType().Name, value.GetType().Name, "[[type]]"));
+                            throw new System.ArgumentException(SR.Format(SR.Collection_BadType, this.GetType().Name, value.GetType().Name, "[[type]]"));
                         }
 
                         return ([[type]]) value;

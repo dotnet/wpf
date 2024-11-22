@@ -55,11 +55,7 @@ namespace MS.Internal.AutomationProxies
         private static IRawElementProviderSimple Create(IntPtr hwnd, int idChild)
         {
             // Something is wrong if idChild is not zero 
-            if (idChild != 0)
-            {
-                System.Diagnostics.Debug.Assert (idChild == 0, "Invalid Child Id, idChild != 0");
-                throw new ArgumentOutOfRangeException("idChild", idChild, SR.Get(SRID.ShouldBeZero));
-            }
+            ArgumentOutOfRangeException.ThrowIfNotEqual(idChild, 0);
 
             return new WindowsTooltip(hwnd, null, idChild);
         }
@@ -184,20 +180,20 @@ namespace MS.Internal.AutomationProxies
 
             string className = Misc.ProxyGetClassName(hwnd);
 
-            return String.Compare(className, "tooltips_class32", StringComparison.OrdinalIgnoreCase) == 0 ||
-                String.Compare(className, CLASS_TITLEBAR_TOOLTIP, StringComparison.OrdinalIgnoreCase) == 0 ||
-                String.Compare(className, "VBBubble", StringComparison.OrdinalIgnoreCase) == 0;
+            return string.Equals(className, "tooltips_class32", StringComparison.OrdinalIgnoreCase) ||
+                   string.Equals(className, CLASS_TITLEBAR_TOOLTIP, StringComparison.OrdinalIgnoreCase) ||
+                   string.Equals(className, "VBBubble", StringComparison.OrdinalIgnoreCase);
         }
 
         private string GetText()
         {
             string className = Misc.ProxyGetClassName(_hwnd);
 
-            if (String.Compare(className, CLASS_TITLEBAR_TOOLTIP, StringComparison.OrdinalIgnoreCase) == 0)
+            if (string.Equals(className, CLASS_TITLEBAR_TOOLTIP, StringComparison.OrdinalIgnoreCase))
             {
                 return GetTitleBarToolTipText();
             }
-            else if (String.Compare(className, "VBBubble", StringComparison.OrdinalIgnoreCase) == 0)
+            else if (string.Equals(className, "VBBubble", StringComparison.OrdinalIgnoreCase))
             {
                 // The WM_GETTEXT should work for VBBubble.  It seems that the string being returned is having
                 // a problem with Unicode covertion and therefore trunk'ing the string after the first character.
@@ -275,21 +271,21 @@ namespace MS.Internal.AutomationProxies
             {
                 case NativeMethods.INDEX_TITLEBAR_MINBUTTON:
                     if (Misc.IsBitSet(WindowStyle, NativeMethods.WS_MINIMIZE))
-                        return SR.Get(SRID.LocalizedNameWindowsTitleBarButtonRestore);
+                        return SR.LocalizedNameWindowsTitleBarButtonRestore;
                     else
-                        return SR.Get(SRID.LocalizedNameWindowsTitleBarButtonMinimize);
+                        return SR.LocalizedNameWindowsTitleBarButtonMinimize;
 
                 case NativeMethods.INDEX_TITLEBAR_HELPBUTTON:
-                    return SR.Get(SRID.LocalizedNameWindowsTitleBarButtonContextHelp);
+                    return SR.LocalizedNameWindowsTitleBarButtonContextHelp;
 
                 case NativeMethods.INDEX_TITLEBAR_MAXBUTTON:
                     if (Misc.IsBitSet(WindowStyle, NativeMethods.WS_MAXIMIZE))
-                        return SR.Get(SRID.LocalizedNameWindowsTitleBarButtonRestore);
+                        return SR.LocalizedNameWindowsTitleBarButtonRestore;
                     else
-                        return SR.Get(SRID.LocalizedNameWindowsTitleBarButtonMaximize);
+                        return SR.LocalizedNameWindowsTitleBarButtonMaximize;
 
                 case NativeMethods.INDEX_TITLEBAR_CLOSEBUTTON:
-                    return SR.Get(SRID.LocalizedNameWindowsTitleBarButtonClose);
+                    return SR.LocalizedNameWindowsTitleBarButtonClose;
 
                 case NativeMethods.INDEX_TITLEBAR_SELF:
                     return Misc.ProxyGetText(hwnd);
@@ -319,28 +315,28 @@ namespace MS.Internal.AutomationProxies
             {
                 case NativeMethods.HTMINBUTTON:
                     if (Misc.IsBitSet(Misc.GetWindowStyle(hwnd), NativeMethods.WS_MINIMIZE))
-                        return SR.Get(SRID.LocalizedNameWindowsTitleBarButtonRestore);
+                        return SR.LocalizedNameWindowsTitleBarButtonRestore;
                     else
-                        return SR.Get(SRID.LocalizedNameWindowsTitleBarButtonMinimize);
+                        return SR.LocalizedNameWindowsTitleBarButtonMinimize;
 
                 case NativeMethods.HTMAXBUTTON:
                     if (Misc.IsBitSet(Misc.GetWindowStyle(hwnd), NativeMethods.WS_MAXIMIZE))
-                        return SR.Get(SRID.LocalizedNameWindowsTitleBarButtonRestore);
+                        return SR.LocalizedNameWindowsTitleBarButtonRestore;
                     else
-                        return SR.Get(SRID.LocalizedNameWindowsTitleBarButtonMaximize);
+                        return SR.LocalizedNameWindowsTitleBarButtonMaximize;
 
                 case NativeMethods.HTCLOSE:
                 case NativeMethods.HTMDICLOSE:
-                    return SR.Get(SRID.LocalizedNameWindowsTitleBarButtonClose);
+                    return SR.LocalizedNameWindowsTitleBarButtonClose;
 
                 case NativeMethods.HTHELP:
-                    return SR.Get(SRID.LocalizedNameWindowsTitleBarButtonContextHelp);
+                    return SR.LocalizedNameWindowsTitleBarButtonContextHelp;
 
                 case NativeMethods.HTMDIMINBUTTON:
-                    return SR.Get(SRID.LocalizedNameWindowsTitleBarButtonMinimize);
+                    return SR.LocalizedNameWindowsTitleBarButtonMinimize;
 
                 case NativeMethods.HTMDIMAXBUTTON:
-                    return SR.Get(SRID.LocalizedNameWindowsTitleBarButtonMaximize);
+                    return SR.LocalizedNameWindowsTitleBarButtonMaximize;
 
                 case NativeMethods.HTCAPTION:
                     return Misc.ProxyGetText(hwnd);

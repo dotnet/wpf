@@ -82,7 +82,7 @@ static class CookieHandler
             // associated with it. (WebHeaderCollection's internal storage is a string->ArrayList(of string) map.)
             for (int i = headers.Count-1; i >= 0; i--)
             {
-                if (string.Compare(headers.Keys[i], "Set-Cookie", StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(headers.Keys[i], "Set-Cookie", StringComparison.OrdinalIgnoreCase))
                 {
                     string p3pHeader = httpResponse.Headers["P3P"];
                     foreach (string cookie in headers.GetValues(i))
@@ -104,7 +104,6 @@ static class CookieHandler
         }
     }
 
-    [FriendAccessAllowed] // called by PF.Application.GetCookie()
     [SuppressMessage("Microsoft.Interoperability", "CA1404:CallGetLastErrorImmediatelyAfterPInvoke", 
         Justification="It's okay now. Be careful on change.")]
     internal static string GetCookie(Uri uri, bool throwIfNoCookie)
@@ -128,7 +127,6 @@ static class CookieHandler
         throw new Win32Exception(/*uses last error code*/);
     }
 
-    [FriendAccessAllowed] // called by PF.Application.SetCookie()
     internal static bool SetCookie(Uri uri, string cookieData)
     {
         return SetCookieUnsafe(uri, cookieData, null);

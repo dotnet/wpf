@@ -20,7 +20,6 @@ using System.Windows.Media.Composition;
 using System.Windows.Markup;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Media3D
 {
@@ -88,16 +87,13 @@ namespace System.Windows.Media.Media3D
         
         void IAddChild.AddChild(Object value)
         {
-            if( value == null )
-            {
-                throw new System.ArgumentNullException("value");
-            }
-            
+            ArgumentNullException.ThrowIfNull(value);
+
             Visual3D visual3D = value as Visual3D;
 
             if (visual3D == null)
             {
-                throw new System.ArgumentException(SR.Get(SRID.Collection_BadType, this.GetType().Name, value.GetType().Name, typeof(Visual3D).Name));
+                throw new System.ArgumentException(SR.Format(SR.Collection_BadType, this.GetType().Name, value.GetType().Name, typeof(Visual3D).Name));
             }
 
             Children.Add(visual3D);
@@ -110,7 +106,7 @@ namespace System.Windows.Media.Media3D
             {
                 if (!Char.IsWhiteSpace(c))
                 {
-                    throw new System.InvalidOperationException(SR.Get(SRID.AddText_Invalid, this.GetType().Name));
+                    throw new System.InvalidOperationException(SR.Format(SR.AddText_Invalid, this.GetType().Name));
                 }
             }
         }

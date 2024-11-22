@@ -218,19 +218,13 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         public static Geometry GetPathData(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (Geometry)element.GetValue(PathDataProperty);
         }
 
         public static void SetPathData(DependencyObject element, Geometry value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(PathDataProperty, value);
         }
 
@@ -249,19 +243,13 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static bool GetHasTwoLines(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(HasTwoLinesProperty);
         }
 
         public static void SetHasTwoLines(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(HasTwoLinesProperty, value);
         }
 

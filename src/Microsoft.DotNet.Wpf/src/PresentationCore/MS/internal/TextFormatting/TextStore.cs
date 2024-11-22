@@ -24,7 +24,6 @@ using MS.Internal.Shaping;
 using MS.Internal.Generic;
 using System.Security;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.TextFormatting
 {
@@ -1673,7 +1672,7 @@ namespace MS.Internal.TextFormatting
             ref int           lastBidiLevel
             )
         {
-            ICollection<TextShapeableSymbols> shapeables = null;
+            IList<TextShapeableSymbols> shapeables = null;
 
             ITextSymbols textSymbols = runInfo.TextRun as ITextSymbols;
 
@@ -1716,8 +1715,11 @@ namespace MS.Internal.TextFormatting
             double realToIdeal = TextFormatterImp.ToIdeal;
             int ich = 0;
 
-            foreach (TextShapeableSymbols shapeable in shapeables)
+            int shapeablesCount = shapeables.Count;
+            for (int i = 0; i < shapeablesCount; i++)
             {
+                TextShapeableSymbols shapeable = shapeables[i];
+
                 int cch = shapeable.Length;
                 Debug.Assert(cch > 0 && cch <= stringLength - ich);
 
@@ -2373,7 +2375,7 @@ namespace MS.Internal.TextFormatting
                 else if (metrics.Width > _settings.Formatter.IdealToReal((Constants.IdealInfiniteWidth - currentPosition), _settings.TextSource.PixelsPerDip))
                 {
                     // LS cannot compute value greater than its maximum computable value
-                    throw new ArgumentException(SR.Get(SRID.TextObjectMetrics_WidthOutOfRange));
+                    throw new ArgumentException(SR.TextObjectMetrics_WidthOutOfRange);
                 }
 
                 _textObjectMetricsVector.SetReference(cpFirst, textObject.Length, metrics);

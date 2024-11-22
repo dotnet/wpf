@@ -12,14 +12,8 @@ namespace System.Windows
     {
         public override object Load(XamlReader xamlReader, IServiceProvider serviceProvider)
         {
-            if (serviceProvider == null)
-            {
-                throw new ArgumentNullException("serviceProvider");
-            }
-            else if (xamlReader == null)
-            {
-                throw new ArgumentNullException("xamlReader");
-            }
+            ArgumentNullException.ThrowIfNull(serviceProvider);
+            ArgumentNullException.ThrowIfNull(xamlReader);
 
             IXamlObjectWriterFactory factory = RequireService<IXamlObjectWriterFactory>(serviceProvider);
             return new TemplateContent(xamlReader, factory, serviceProvider);
@@ -30,14 +24,14 @@ namespace System.Windows
             T result = provider.GetService(typeof(T)) as T;
             if (result == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.DeferringLoaderNoContext,typeof(TemplateContentLoader).Name, typeof(T).Name));
+                throw new InvalidOperationException(SR.Format(SR.DeferringLoaderNoContext,typeof(TemplateContentLoader).Name, typeof(T).Name));
             }
             return result;
         }
 
         public override XamlReader Save(object value, IServiceProvider serviceProvider)
         {
-            throw new NotSupportedException(SR.Get(SRID.DeferringLoaderNoSave, typeof(TemplateContentLoader).Name));
+            throw new NotSupportedException(SR.Format(SR.DeferringLoaderNoSave, typeof(TemplateContentLoader).Name));
         }
     }
 }

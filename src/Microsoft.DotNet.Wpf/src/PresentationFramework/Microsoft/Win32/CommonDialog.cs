@@ -74,7 +74,7 @@ namespace Microsoft.Win32
             // (for example, if we're running as a service)
             if (!Environment.UserInteractive)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CantShowModalOnNonInteractive));
+                throw new InvalidOperationException(SR.CantShowModalOnNonInteractive);
             }
 
             // Call GetActiveWindow to retrieve the window handle to the active window
@@ -151,7 +151,7 @@ namespace Microsoft.Win32
             // (for example, if we're running as a service)
             if (!Environment.UserInteractive)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CantShowModalOnNonInteractive));
+                throw new InvalidOperationException(SR.CantShowModalOnNonInteractive);
             }
 
             // Get the handle of the owner window using WindowInteropHelper.
@@ -221,7 +221,7 @@ namespace Microsoft.Win32
         //---------------------------------------------------
         #region Protected Methods
 
-
+        // This method is not used by IFileDialog API. Kept for compatibility as CommonDialog can be derived from.
         /// <summary>
         ///  Defines the common dialog box hook procedure that is overridden to 
         ///  add specific functionality to a common dialog box.
@@ -261,7 +261,7 @@ namespace Microsoft.Win32
             // This mitigates multi-threaded attacks without having to make the file dialogs thread-safe.
             if (_thread != Thread.CurrentThread)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CantShowOnDifferentThread));
+                throw new InvalidOperationException(SR.CantShowOnDifferentThread);
             }
 
         }
@@ -275,13 +275,12 @@ namespace Microsoft.Win32
         //---------------------------------------------------
         #region Internal Methods
 
+        // This method is not used by IFileDialog API. Kept for compatibility (see HookProc).
         /// <summary>
         ///  Centers the given window on the screen. This method is used by HookProc
-        ///  to center the dialog on the screen before it is shown.  We can't mark it
-        ///  private because we need to call it from our derived classes like
-        ///  FileDialog.
+        ///  to center the dialog on the screen before it is shown.
         /// </summary>
-        internal void MoveToScreenCenter(HandleRef hWnd)
+        private void MoveToScreenCenter(HandleRef hWnd)
         {
             // Create an IntPtr to store a handle to the monitor.
             IntPtr hMonitor = IntPtr.Zero;
@@ -343,9 +342,8 @@ namespace Microsoft.Win32
         // Internal Properties
         //
         //---------------------------------------------------
-        #region Internal Properties
-
-        #endregion Internal Properties
+        //#region Internal Properties
+        //#endregion Internal Properties
 
         //---------------------------------------------------
         //

@@ -2791,7 +2791,7 @@ namespace MS.Internal.MilCodeGen.Generators
                         [[inline]]
                             if (!CanFreeze)
                             {
-                                throw new NotSupportedException(SR.Get(SRID.Converter_ConvertToNotSupported));
+                                throw new NotSupportedException(SR.Converter_ConvertToNotSupported);
                             }
                         [[/inline]]
                     );

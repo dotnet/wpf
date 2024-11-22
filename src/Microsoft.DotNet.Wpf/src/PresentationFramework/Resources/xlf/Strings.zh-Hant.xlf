@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
-  <file datatype="xml" source-language="en" target-language="zh-HANT" original="../Strings.resx">
+  <file datatype="xml" source-language="en" target-language="zh-Hant" original="../Strings.resx">
     <body>
       <trans-unit id="AXNohWnd">
         <source>Cannot get window handle for control '{0}'. Windowless ActiveX controls are not supported.</source>
@@ -1607,11 +1607,6 @@
         <target state="translated">無法將資源轉換為物件。</target>
         <note />
       </trans-unit>
-      <trans-unit id="FileDialogBufferTooSmall">
-        <source>Too many files selected. Select fewer files and try again.</source>
-        <target state="translated">選取太多檔案。請少選一點檔案再試一次。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="FileDialogCreatePrompt">
         <source>'{0}' does not exist.
 Do you want to create it?</source>
@@ -1624,11 +1619,6 @@ Do you want to create it?</source>
 Verify that the file name is correct.</source>
         <target state="translated">'{0}' 不存在。
 請確認檔案名稱是正確的。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="FileDialogInvalidFileName">
-        <source>'{0}' is not a valid file name.</source>
-        <target state="translated">'{0}' 不是有效的檔案名稱。</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogInvalidFilter">
@@ -1646,11 +1636,6 @@ Verify that the file name is correct.</source>
 Do you want to replace it?</source>
         <target state="translated">'{0}' 已存在。
 您想要取代它嗎?</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="FileDialogSubClassFailure">
-        <source>Cannot subclass a file dialog because sufficient memory is not available.</source>
-        <target state="translated">因為記憶體不足，無法將檔案對話方塊設定為子類別。</target>
         <note />
       </trans-unit>
       <trans-unit id="FileFormatException">
@@ -3623,11 +3608,6 @@ Do you want to replace it?</source>
         <target state="translated">安裝 '{1}' 時必須提供 '{0}'。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">參數必須大於或等於零。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeLogicalNode">
         <source>Parameter must be FrameworkElement or FrameworkContentElement.</source>
         <target state="translated">參數必須是 FrameworkElement 或 FrameworkContentElement。</target>
@@ -4785,7 +4765,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_PageDown">
         <source>Page Down</source>
-        <target state="translated">Page Down</target>
+        <target state="translated">下一頁</target>
         <note />
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_PageLeft">
@@ -4800,7 +4780,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_PageUp">
         <source>Page Up</source>
-        <target state="translated">Page Up</target>
+        <target state="translated">上一頁</target>
         <note />
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_RightEdge">
@@ -4835,7 +4815,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_Top">
         <source>Top</source>
-        <target state="translated">Top</target>
+        <target state="translated">回到頂端</target>
         <note />
       </trans-unit>
       <trans-unit id="ScrollViewer_CannotBeNaN">

@@ -392,7 +392,7 @@ namespace System.Windows.Annotations.Storage
         private bool _disposed = false;
 
         /// Private object used for synchronization
-        private Object lockObject = new Object();
+        private readonly Object lockObject = new Object();
 
         #endregion Private Fields
     }

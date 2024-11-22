@@ -1292,16 +1292,6 @@
         <target state="translated">Указанный эталонный объект конфликтует с предопределенной ссылкой для заданного пакета.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Значение параметра должно быть больше или равно 0.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterMustBeBetween">
-        <source>The parameter value must be between '{0}' and '{1}'.</source>
-        <target state="translated">Параметр должен принимать значения от "{0}" до "{1}".</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParentContainerClosed">
         <source>Cannot access part because parent package was closed.</source>
         <target state="translated">Не удается получить доступ к части, так как родительский пакет был закрыт.</target>
@@ -1415,11 +1405,6 @@
       <trans-unit id="PublishLicenseStreamHeaderTooLong">
         <source>Variable-length header in publish license stream is {0} bytes, which exceeds the maximum length of {1} bytes.</source>
         <target state="translated">Заголовок переменной длины в потоке лицензии на публикацию имеет длину в байтах: {0}. Это значение превышает максимальную длину в байтах: {1}.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">Формат имени типа "{0}" отличается от ожидаемого формата "имя класса, сборка".</target>
         <note />
       </trans-unit>
       <trans-unit id="ReachOutOfRange">

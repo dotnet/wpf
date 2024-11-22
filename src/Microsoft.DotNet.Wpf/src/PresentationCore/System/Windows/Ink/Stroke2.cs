@@ -17,7 +17,6 @@ using MS.Internal;
 using MS.Internal.Ink;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using MS.Internal.PresentationCore;
 
 // Primary root namespace for TabletPC/Ink/Handwriting/Recognition in .NET
@@ -59,10 +58,7 @@ namespace System.Windows.Ink
         /// <param name="context"></param>
         public void Draw(DrawingContext context)
         {
-            if (null == context)
-            {
-                throw new System.ArgumentNullException("context");
-            }
+            ArgumentNullException.ThrowIfNull(context);
 
             //our code never calls this public API so we can assume that opacity
             //has not been set up
@@ -80,15 +76,9 @@ namespace System.Windows.Ink
         /// <param name="drawingAttributes"></param>
         public void Draw(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
         {
-            if (null == drawingContext)
-            {
-                throw new System.ArgumentNullException("context");
-            }
+            ArgumentNullException.ThrowIfNull(drawingContext);
 
-            if (null == drawingAttributes)
-            {
-                throw new System.ArgumentNullException("drawingAttributes");
-            }
+            ArgumentNullException.ThrowIfNull(drawingAttributes);
 
             //             context.VerifyAccess();
 
@@ -133,14 +123,11 @@ namespace System.Windows.Ink
         public StrokeCollection GetClipResult(IEnumerable<Point> lassoPoints)
         {
             // Check the input parameters
-            if (lassoPoints == null)
-            {
-                throw new System.ArgumentNullException("lassoPoints");
-            }
+            ArgumentNullException.ThrowIfNull(lassoPoints);
 
             if (IEnumerablePointHelper.GetCount(lassoPoints) == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.EmptyArray));
+                throw new ArgumentException(SR.EmptyArray);
             }
 
             Lasso lasso = new SingleLoopLasso();
@@ -167,14 +154,11 @@ namespace System.Windows.Ink
         public StrokeCollection GetEraseResult(IEnumerable<Point> lassoPoints)
         {
             // Check the input parameters
-            if (lassoPoints == null)
-            {
-                throw new System.ArgumentNullException("lassoPoints");
-            }
+            ArgumentNullException.ThrowIfNull(lassoPoints);
 
             if (IEnumerablePointHelper.GetCount(lassoPoints) == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.EmptyArray));
+                throw new ArgumentException(SR.EmptyArray);
             }
 
             Lasso lasso = new SingleLoopLasso();
@@ -191,14 +175,8 @@ namespace System.Windows.Ink
         public StrokeCollection GetEraseResult(IEnumerable<Point> eraserPath, StylusShape eraserShape)
         {
             // Check the input parameters
-            if (eraserShape == null)
-            {
-                throw new System.ArgumentNullException("eraserShape");
-            }
-            if (eraserPath == null)
-            {
-                throw new System.ArgumentNullException("eraserPath");
-            }
+            ArgumentNullException.ThrowIfNull(eraserShape);
+            ArgumentNullException.ThrowIfNull(eraserPath);
 
             return this.Erase(this.EraseTest(eraserPath, eraserShape));
         }
@@ -224,7 +202,7 @@ namespace System.Windows.Ink
         {
             if (Double.IsNaN(diameter) || diameter < DrawingAttributes.MinWidth || diameter > DrawingAttributes.MaxWidth)
             {
-                throw new ArgumentOutOfRangeException("diameter", SR.Get(SRID.InvalidDiameter));
+                throw new ArgumentOutOfRangeException("diameter", SR.InvalidDiameter);
             }
             return HitTest(new Point[]{point}, new EllipseStylusShape(diameter, diameter, TapHitRotation));
         }
@@ -287,10 +265,7 @@ namespace System.Windows.Ink
         /// <returns></returns>
         public bool HitTest(IEnumerable<Point> lassoPoints, int percentageWithinLasso)
         {
-            if (lassoPoints == null)
-            {
-                throw new System.ArgumentNullException("lassoPoints");
-            }
+            ArgumentNullException.ThrowIfNull(lassoPoints);
 
             if ((percentageWithinLasso < 0) || (percentageWithinLasso > 100))
             {
@@ -347,14 +322,8 @@ namespace System.Windows.Ink
         public bool HitTest(IEnumerable<Point> path, StylusShape stylusShape)
         {
             // Check the input parameters
-            if (path == null)
-            {
-                throw new System.ArgumentNullException("path");
-            }
-            if (stylusShape == null)
-            {
-                throw new System.ArgumentNullException("stylusShape");
-            }
+            ArgumentNullException.ThrowIfNull(path);
+            ArgumentNullException.ThrowIfNull(stylusShape);
 
             if (IEnumerablePointHelper.GetCount(path) == 0)
             {
@@ -409,15 +378,9 @@ namespace System.Windows.Ink
         /// <param name="drawingAttributes">DrawingAttributes to draw with</param>
         protected virtual void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
         {
-            if (null == drawingContext)
-            {
-                throw new System.ArgumentNullException("drawingContext");
-            }
+            ArgumentNullException.ThrowIfNull(drawingContext);
 
-            if (null == drawingAttributes)
-            {
-                throw new System.ArgumentNullException("drawingAttributes");
-            }
+            ArgumentNullException.ThrowIfNull(drawingAttributes);
 
             if (_drawAsHollow == true)
             {
@@ -497,14 +460,11 @@ namespace System.Windows.Ink
         /// <returns></returns>
         public Geometry GetGeometry(DrawingAttributes drawingAttributes)
         {
-            if (drawingAttributes == null)
-            {
-                throw new ArgumentNullException("drawingAttributes");
-            }
+            ArgumentNullException.ThrowIfNull(drawingAttributes);
 
             bool geometricallyEqual = DrawingAttributes.GeometricallyEqual(drawingAttributes, this.DrawingAttributes);
 
-            // need to recalculate the PathGemetry if the DA passed in is "geometrically" different from
+            // need to recalculate the PathGeometry if the DA passed in is "geometrically" different from
             // this DA, or if the cached PathGeometry is dirty.
             if (false == geometricallyEqual || (true == geometricallyEqual && null == _cachedGeometry))
             {
@@ -549,7 +509,6 @@ namespace System.Windows.Ink
         /// so we can assume the correct opacity has already been pushed on dc. The flag drawAsHollow is set
         /// to true when this function is called from Renderer and this.IsSelected == true.
         /// </summary>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal void DrawInternal(DrawingContext dc, DrawingAttributes DrawingAttributes, bool drawAsHollow)
         {
             if (drawAsHollow == true)
@@ -578,7 +537,6 @@ namespace System.Windows.Ink
         /// <summary>
         /// Used by Inkcanvas to draw selected stroke as hollow.
         /// </summary>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal bool IsSelected
         {
             get { return _isSelected; }
@@ -754,7 +712,7 @@ namespace System.Windows.Ink
         private bool                    _drawAsHollow       = false;
         private bool                    _cloneStylusPoints  = true;
         private bool                    _delayRaiseInvalidated  = false;
-        private static readonly double  HollowLineSize      = 1.0f;
+        private const double            HollowLineSize = 1.0f;
         private Rect                    _cachedBounds       = Rect.Empty;
 
         // The private PropertyChanged event
@@ -765,7 +723,7 @@ namespace System.Windows.Ink
 
         #endregion
 
-        internal static readonly double PercentageTolerance = 0.0001d;
+        internal const double PercentageTolerance = 0.0001d;
         #endregion
     }
 }

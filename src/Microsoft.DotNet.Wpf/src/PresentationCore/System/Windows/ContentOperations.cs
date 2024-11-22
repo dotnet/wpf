@@ -15,11 +15,8 @@ namespace System.Windows
         /// </summary>
         public static DependencyObject GetParent(ContentElement reference)
         {
-            if(reference == null)
-            {
-                throw new ArgumentNullException("reference");
-            }
-            
+            ArgumentNullException.ThrowIfNull(reference);
+
             return reference._parent;
         }
 
@@ -35,10 +32,7 @@ namespace System.Windows
         /// </remarks>
         public static void SetParent(ContentElement reference, DependencyObject parent)
         {
-            if(reference == null)
-            {
-                throw new ArgumentNullException("reference");
-            }
+            ArgumentNullException.ThrowIfNull(reference);
 
             DependencyObject oldParent = reference._parent;
             reference._parent = parent;

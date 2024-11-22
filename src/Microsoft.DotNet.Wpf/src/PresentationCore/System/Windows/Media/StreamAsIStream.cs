@@ -10,6 +10,7 @@ using System.Security;
 using System;
 using MS.Internal;
 using MS.Win32;
+using System.Buffers;
 using System.Reflection;
 using System.Collections;
 using System.Diagnostics;
@@ -17,7 +18,6 @@ using System.Runtime.InteropServices;
 using MS.Internal.PresentationCore;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 
@@ -28,7 +28,7 @@ namespace System.Windows.Media
     internal struct StreamDescriptor
     {
         internal delegate void Dispose(ref StreamDescriptor pSD);
-        internal delegate int Read(ref StreamDescriptor pSD, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2), Out]byte[] buffer, uint cb, out uint cbRead);
+        internal delegate int Read(ref StreamDescriptor pSD, IntPtr buffer, uint cb, out uint cbRead);
 
         internal unsafe delegate int Seek(ref StreamDescriptor pSD, long offset, uint origin, long* plibNewPostion);
         internal delegate int Stat(ref StreamDescriptor pSD, out System.Runtime.InteropServices.ComTypes.STATSTG statstg, uint grfStatFlag);
@@ -237,7 +237,7 @@ namespace System.Windows.Media
 
                     uint read = 0;
 
-                    hr = Read(buffer, toRead, out read);
+                    hr = Read(buffer.AsSpan(0, (int) toRead), out read);
 
                     if (read == 0)
                     {
@@ -290,7 +290,7 @@ namespace System.Windows.Media
             return NativeMethods.E_NOTIMPL;
         }
 
-        public int Read(byte[] buffer, uint cb, out uint cbRead)
+        public int Read(Span<byte> buffer, out uint cbRead)
         {
             cbRead = 0;
 
@@ -301,7 +301,7 @@ namespace System.Windows.Media
                 Verify();
                 ActualizeVirtualPosition();
 
-                cbRead = (uint) dataStream.Read(buffer, 0, (int) cb);
+                cbRead = (uint) dataStream.Read(buffer);
             }
             catch (Exception e)
             {
@@ -564,7 +564,7 @@ namespace System.Windows.Media
         {
             if (this.dataStream == null)
             {
-                throw new System.ObjectDisposedException(SR.Get(SRID.Media_StreamClosed));
+                throw new System.ObjectDisposedException(SR.Media_StreamClosed);
             }
         }
         #endregion
@@ -597,9 +597,10 @@ namespace System.Windows.Media
             return (StreamAsIStream.FromSD(ref pSD)).LockRegion(libOffset, cb, dwLockType);
         }
 
-        internal static int Read(ref StreamDescriptor pSD, byte[] buffer, uint cb, out uint cbRead)
+        internal static unsafe int Read(ref StreamDescriptor pSD, IntPtr buffer, uint cb, out uint cbRead)
         {
-            return (StreamAsIStream.FromSD(ref pSD)).Read(buffer, cb, out cbRead);
+            var span = new Span<byte>(buffer.ToPointer(), (int) cb);
+            return (StreamAsIStream.FromSD(ref pSD)).Read(span, out cbRead);
         }
 
         internal static int Revert(ref StreamDescriptor pSD)
@@ -692,10 +693,7 @@ namespace System.Windows.Media
         #region IStreamFrom System.IO.Stream
         internal static IntPtr IStreamFrom(System.IO.Stream stream)
         {
-            if (stream == null)
-            {
-                throw new System.ArgumentNullException("stream");
-            }
+            ArgumentNullException.ThrowIfNull(stream);
 
             IntPtr pStream = IntPtr.Zero;
 

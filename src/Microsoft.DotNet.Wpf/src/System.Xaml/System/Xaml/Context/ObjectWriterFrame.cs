@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,7 +29,7 @@ namespace MS.Internal.Xaml.Context
         public ObjectWriterFrame(ObjectWriterFrame source)
             : base(source)
         {
-            // Calling the getter will instantiate new Dictionaries. 
+            // Calling the getter will instantiate new Dictionaries.
             // So we just check the field instead to verify that it isn't
             // being used.
             if (source._preconstructionPropertyValues != null)
@@ -74,14 +76,13 @@ namespace MS.Internal.Xaml.Context
             string prop = (Member == null) ? "-" : Member.Name;
             string inst = (Instance == null) ? "-" : ((Instance is string) ? Instance.ToString() : "*");
             string coll = (Collection == null) ? "-" : "*";
-            string res = KS.Fmt("{0}.{1} inst={2} coll={3}",
-                                 type, prop, inst, coll);
+            string res = string.Create(TypeConverterHelper.InvariantEnglishUS, $"{type}.{prop} inst={inst} coll={coll}");
             return res;
         }
 
         public object Instance { get; set; }
         public object Collection { get; set; }
-        
+
         public bool WasAssignedAtCreation
         {
             get { return GetFlag(ObjectWriterFrameFlags.WasAssignedAtCreation); }

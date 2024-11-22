@@ -49,8 +49,8 @@
 using System;
 using System.Collections.Generic;   // For Dictionary<string, string>
 using System.Text;                  // For StringBuilder
-using System.Windows;               // For Exception strings - SRID
-using MS.Internal.WindowsBase;      // For FriendAccessAllowed
+using System.Windows;               // For Exception strings - SR
+using MS.Internal.WindowsBase;
 using System.Diagnostics;           // For Debug.Assert
 
 namespace MS.Internal
@@ -58,7 +58,6 @@ namespace MS.Internal
     /// <summary>
     /// Content Type class
     /// </summary>
-    [FriendAccessAllowed]
     internal sealed class ContentType
     {       
         //------------------------------------------------------
@@ -83,17 +82,16 @@ namespace MS.Internal
         /// <exception cref="ArgumentException">If the contentType string invalid CR-LF characters</exception>
         internal ContentType(string contentType)
         {
-            if (contentType == null)
-                throw new ArgumentNullException("contentType");
-                       
-            if (String.CompareOrdinal(contentType, String.Empty) == 0)
+            ArgumentNullException.ThrowIfNull(contentType);
+
+            if (contentType.Length == 0)
             {
-                _contentType = String.Empty;             
+                _contentType = String.Empty;
             }
             else
             {
                 if (IsLinearWhiteSpaceChar(contentType[0]) || IsLinearWhiteSpaceChar(contentType[contentType.Length - 1]))
-                    throw new ArgumentException(SR.Get(SRID.ContentTypeCannotHaveLeadingTrailingLWS));
+                    throw new ArgumentException(SR.ContentTypeCannotHaveLeadingTrailingLWS);
 
                 //Carriage return can be expressed as '\r\n' or '\n\r'
                 //We need to make sure that a \r is accompanied by \n
@@ -110,8 +108,8 @@ namespace MS.Internal
                 else
                 {
                     // Parse content type similar to - type/subtype ; param1=value1 ; param2=value2 ; param3="value3"
-                    ParseTypeAndSubType(contentType.Substring(0, semiColonIndex));
-                    ParseParameterAndValue(contentType.Substring(semiColonIndex));
+                    ParseTypeAndSubType(contentType.AsSpan(0, semiColonIndex));
+                    ParseParameterAndValue(contentType.AsSpan(semiColonIndex));
                 }
             }
 
@@ -259,8 +257,8 @@ namespace MS.Internal
                 // safe comparison because the _type and _subType strings have been restricted to
                 // ASCII characters, digits, and a small set of symbols.  This is not a safe comparison
                 // for the broader set of strings that have not been restricted in the same way.
-                result = (String.Compare(_type, contentType.TypeComponent, StringComparison.OrdinalIgnoreCase) == 0 &&
-                          String.Compare(_subType, contentType.SubTypeComponent, StringComparison.OrdinalIgnoreCase) == 0);
+                result = string.Equals(_type, contentType.TypeComponent, StringComparison.OrdinalIgnoreCase) &&
+                         string.Equals(_subType, contentType.SubTypeComponent, StringComparison.OrdinalIgnoreCase);
             }           
             return result;
         }
@@ -278,20 +276,20 @@ namespace MS.Internal
                 if (!_isInitialized)
                     return String.Empty;
 
-                Debug.Assert(String.CompareOrdinal(_type, String.Empty) != 0
-                   || String.CompareOrdinal(_subType, String.Empty) != 0);
+                Debug.Assert(!string.IsNullOrEmpty(_type)
+                             || !string.IsNullOrEmpty(_subType));
             
                 StringBuilder stringBuilder = new StringBuilder(_type);
-                stringBuilder.Append(_forwardSlashSeparator[0]);
+                stringBuilder.Append('/');
                 stringBuilder.Append(_subType);
 
                 if (_parameterDictionary != null && _parameterDictionary.Count > 0)
                 {   
                     foreach (string paramterKey in _parameterDictionary.Keys)
                     {
-                        stringBuilder.Append(_LinearWhiteSpaceChars[0]);
+                        stringBuilder.Append(_linearWhiteSpaceChars[0]);
                         stringBuilder.Append(_semicolonSeparator);
-                        stringBuilder.Append(_LinearWhiteSpaceChars[0]);
+                        stringBuilder.Append(_linearWhiteSpaceChars[0]);
                         stringBuilder.Append(paramterKey);
                         stringBuilder.Append(_equalSeparator);
                         stringBuilder.Append(_parameterDictionary[paramterKey]);
@@ -401,16 +399,16 @@ namespace MS.Internal
             //character of the content type are not Linear White Spaces. So its safe to
             //assume that the index will be greater than 0 and less that length-2.
 
-            int index = contentType.IndexOf(_LinearWhiteSpaceChars[2]);
+            int index = contentType.IndexOf(_linearWhiteSpaceChars[2]);
             
             while (index != -1)
             {
-                if (contentType[index - 1] == _LinearWhiteSpaceChars[1] || contentType[index + 1] == _LinearWhiteSpaceChars[1])
+                if (contentType[index - 1] == _linearWhiteSpaceChars[1] || contentType[index + 1] == _linearWhiteSpaceChars[1])
                 {
-                    index = contentType.IndexOf(_LinearWhiteSpaceChars[2], ++index);
+                    index = contentType.IndexOf(_linearWhiteSpaceChars[2], ++index);
                 }
                 else
-                    throw new ArgumentException(SR.Get(SRID.InvalidLinearWhiteSpaceCharacter));
+                    throw new ArgumentException(SR.InvalidLinearWhiteSpaceCharacter);
             }
         }
 
@@ -420,18 +418,20 @@ namespace MS.Internal
         /// </summary>
         /// <param name="typeAndSubType">substring that has the type and subType of the content type</param>
         /// <exception cref="ArgumentException">If the typeAndSubType parameter does not have the "/" character</exception>
-        private void ParseTypeAndSubType(string typeAndSubType)
+        private void ParseTypeAndSubType(ReadOnlySpan<char> typeAndSubType)
         {
             //okay to trim at this point the end of the string as Linear White Spaces(LWS) chars are allowed here.
-            typeAndSubType = typeAndSubType.TrimEnd(_LinearWhiteSpaceChars);
+            typeAndSubType = typeAndSubType.TrimEnd(_linearWhiteSpaceChars);
 
-            string[] splitBasedOnForwardSlash = typeAndSubType.Split(_forwardSlashSeparator);
+            int forwardSlashPos = typeAndSubType.IndexOf('/');
+            if (forwardSlashPos < 0 || // no slashes
+                typeAndSubType.Slice(forwardSlashPos + 1).IndexOf('/') >= 0) // more than one slash
+            {
+                throw new ArgumentException(SR.InvalidTypeSubType);
+            }
 
-            if (splitBasedOnForwardSlash.Length != 2)
-                throw new ArgumentException(SR.Get(SRID.InvalidTypeSubType));
-
-            _type    = ValidateToken(splitBasedOnForwardSlash[0]);
-            _subType = ValidateToken(splitBasedOnForwardSlash[1]);
+            _type    = ValidateToken(typeAndSubType.Slice(0, forwardSlashPos).ToString());
+            _subType = ValidateToken(typeAndSubType.Slice(forwardSlashPos + 1).ToString());
         }
 
         /// <summary>
@@ -440,32 +440,32 @@ namespace MS.Internal
         /// <param name="parameterAndValue">This string has the parameter and value pair of the form
         /// parameter=value</param>
         /// <exception cref="ArgumentException">If the string does not have the required "="</exception>
-        private void ParseParameterAndValue(string parameterAndValue)
+        private void ParseParameterAndValue(ReadOnlySpan<char> parameterAndValue)
         {
-            while (String.CompareOrdinal(parameterAndValue, String.Empty) != 0)
+            while (!parameterAndValue.IsEmpty)
             {
                 //At this point the first character MUST be a semi-colon
                 //First time through this test is serving more as an assert.
                 if (parameterAndValue[0] != _semicolonSeparator)
-                    throw new ArgumentException(SR.Get(SRID.ExpectingSemicolon));
+                    throw new ArgumentException(SR.ExpectingSemicolon);
 
                 //At this point if we have just one semicolon, then its an error.
                 //Also, there can be no trailing LWS characters, as we already checked for that
                 //in the constructor.
                 if (parameterAndValue.Length == 1)
-                    throw new ArgumentException(SR.Get(SRID.ExpectingParameterValuePairs));
+                    throw new ArgumentException(SR.ExpectingParameterValuePairs);
 
                 //Removing the leading ; from the string
-                parameterAndValue = parameterAndValue.Substring(1);
+                parameterAndValue = parameterAndValue.Slice(1);
 
                 //okay to trim start as there can be spaces before the begining
                 //of the parameter name.
-                parameterAndValue = parameterAndValue.TrimStart(_LinearWhiteSpaceChars);
+                parameterAndValue = parameterAndValue.TrimStart(_linearWhiteSpaceChars);
 
                 int equalSignIndex = parameterAndValue.IndexOf(_equalSeparator);
 
                 if (equalSignIndex <= 0 || equalSignIndex == (parameterAndValue.Length - 1))
-                    throw new ArgumentException(SR.Get(SRID.InvalidParameterValuePair));
+                    throw new ArgumentException(SR.InvalidParameterValuePair);
 
                 int parameterStartIndex = equalSignIndex + 1;
 
@@ -475,10 +475,10 @@ namespace MS.Internal
                 EnsureParameterDictionary();
 
                 _parameterDictionary.Add(
-                    ValidateToken(parameterAndValue.Substring(0, equalSignIndex)),
-                    ValidateQuotedStringOrToken(parameterAndValue.Substring(parameterStartIndex, parameterValueLength)));
+                    ValidateToken(parameterAndValue.Slice(0, equalSignIndex).ToString()),
+                    ValidateQuotedStringOrToken(parameterAndValue.Slice(parameterStartIndex, parameterValueLength).ToString()));
 
-                parameterAndValue = parameterAndValue.Substring(parameterStartIndex + parameterValueLength).TrimStart(_LinearWhiteSpaceChars);
+                parameterAndValue = parameterAndValue.Slice(parameterStartIndex + parameterValueLength).TrimStart(_linearWhiteSpaceChars);
             }
         }
 
@@ -488,34 +488,29 @@ namespace MS.Internal
         /// <param name="s"></param>
         /// <param name="startIndex">Starting index for parsing</param>
         /// <returns></returns>
-        private static int GetLengthOfParameterValue(string s, int startIndex)
+        private static int GetLengthOfParameterValue(ReadOnlySpan<char> s, int startIndex)
         {
-            Debug.Assert(s != null);
-
-            int length = 0;
+            int length;
             
             //if the parameter value does not start with a '"' then,
             //we expect a valid token. So we look for Linear White Spaces or
             //a ';' as the terminator for the token value.
             if (s[startIndex] != '"')
             {
-                int semicolonIndex = s.IndexOf(_semicolonSeparator, startIndex);
+                int semicolonIndex = s.Slice(startIndex).IndexOf(_semicolonSeparator);
 
                 if (semicolonIndex != -1)
                 {
-                    int lwsIndex = s.IndexOfAny(_LinearWhiteSpaceChars, startIndex);
-                    if (lwsIndex != -1 && lwsIndex < semicolonIndex)
-                        length = lwsIndex;
-                    else
-                        length = semicolonIndex;
+                    int lwsIndex = s.Slice(startIndex).IndexOfAny(_linearWhiteSpaceChars);
+                    length = lwsIndex != -1 && lwsIndex < semicolonIndex ? lwsIndex : semicolonIndex;
+                    length += startIndex; // the indexes from IndexOf{Any} are based on slicing from startIndex
                 }
                 else
-                    length = semicolonIndex;
-
-                //If there is no linear white space found we treat the entire remaining string as 
-                //parameter value.
-                if (length == -1)
+                {
+                    //If there is no linear white space found we treat the entire remaining string as 
+                    //parameter value.
                     length = s.Length;
+                }
             }
             else
             {
@@ -526,10 +521,12 @@ namespace MS.Internal
 
                 while (!found)
                 {
-                    length = s.IndexOf('"', ++length);
+                    int startingLength = ++length;
+                    length = s.Slice(startingLength).IndexOf('"');
 
                     if (length == -1)
-                        throw new ArgumentException(SR.Get(SRID.InvalidParameterValue));
+                        throw new ArgumentException(SR.InvalidParameterValue);
+                    length += startingLength; // IndexOf result is based on slicing from startingLength
 
                     if (s[length - 1] != '\\')
                     {
@@ -552,8 +549,8 @@ namespace MS.Internal
         /// <exception cref="ArgumentException">If the token is Empty</exception>
         private static string ValidateToken(string token)
         {
-            if (String.CompareOrdinal(token, String.Empty)==0)
-                throw new ArgumentException(SR.Get(SRID.InvalidToken));
+            if (string.IsNullOrEmpty(token))
+                throw new ArgumentException(SR.InvalidToken);
 
             for (int i = 0; i < token.Length; i++)
             {
@@ -563,7 +560,7 @@ namespace MS.Internal
                     if (IsAllowedCharacter(token[i]))
                         continue;
                     else
-                        throw new ArgumentException(SR.Get(SRID.InvalidToken));
+                        throw new ArgumentException(SR.InvalidToken);
             }
 
             return token;
@@ -578,13 +575,13 @@ namespace MS.Internal
         /// <exception cref="ArgumentException">If the paramter value is empty</exception>
         private static string ValidateQuotedStringOrToken(string parameterValue)
         {
-            if (String.CompareOrdinal(parameterValue, String.Empty) == 0)
-                throw new ArgumentException(SR.Get(SRID.InvalidParameterValue));
+            if (string.IsNullOrEmpty(parameterValue))
+                throw new ArgumentException(SR.InvalidParameterValue);
 
             if (parameterValue.Length >= 2 && 
                 parameterValue.StartsWith(_quote, StringComparison.Ordinal) && 
                 parameterValue.EndsWith(_quote, StringComparison.Ordinal))
-                ValidateQuotedText(parameterValue.Substring(1, parameterValue.Length-2));
+                ValidateQuotedText(parameterValue.AsSpan(1, parameterValue.Length-2));
             else
                 ValidateToken(parameterValue);
 
@@ -595,7 +592,7 @@ namespace MS.Internal
         /// This method validates if the text in the quoted string
         /// </summary>
         /// <param name="quotedText"></param>
-        private static void ValidateQuotedText(string quotedText)
+        private static void ValidateQuotedText(ReadOnlySpan<char> quotedText)
         {
             //empty is okay
 
@@ -605,11 +602,11 @@ namespace MS.Internal
                     continue;
 
                 if (quotedText[i] <= ' ' || quotedText[i] >= 0xFF)
-                    throw new ArgumentException(SR.Get(SRID.InvalidParameterValue));
+                    throw new ArgumentException(SR.InvalidParameterValue);
                 else
                     if (quotedText[i] == '"' && 
                         (i==0 || quotedText[i-1] != '\\'))
-                        throw new ArgumentException(SR.Get(SRID.InvalidParameterValue));
+                        throw new ArgumentException(SR.InvalidParameterValue);
             }
         }
 
@@ -619,17 +616,7 @@ namespace MS.Internal
         /// </summary>
         /// <param name="character">input character</param>
         /// <returns></returns>
-        private static bool IsAllowedCharacter(char character)
-        {
-            //We did not use any of the .Contains methods as
-            //it will result in boxing costs.
-            foreach (char c in _allowedCharacters)
-            {
-                if (c == character)
-                    return true;               
-            }
-            return false;
-        }
+        private static bool IsAllowedCharacter(char character) => AllowedCharacters.Contains(character);
 
         /// <summary>
         /// Returns true if the input character is an ASCII digit or letter
@@ -637,37 +624,9 @@ namespace MS.Internal
         /// </summary>
         /// <param name="character">input character</param>
         /// <returns></returns>
-        private static bool IsAsciiLetterOrDigit(char character)
-        {
-            if (IsAsciiLetter(character))
-            {
-                return true;
-            }
-            if (character >= '0')
-            {
-                return (character <= '9');
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// Returns true if the input character is an ASCII letter
-        /// Returns false if the input character is not an ASCII letter
-        /// </summary>
-        /// <param name="character">input character</param>
-        /// <returns></returns>
-        private static bool IsAsciiLetter(char character)
-        {
-            if ((character >= 'a') && (character <= 'z'))
-            {
-                return true;
-            }
-            if (character >= 'A')
-            {
-                return (character <= 'Z');
-            }
-            return false;
-        }
+        private static bool IsAsciiLetterOrDigit(char character) =>
+            ((((uint)character - 'A') & ~0x20) < 26) ||
+            (((uint)character - '0') < 10);
  
         /// <summary>
         /// Returns true if the input character is one of the Linear White Space characters - 
@@ -676,21 +635,7 @@ namespace MS.Internal
         /// </summary>
         /// <param name="ch">input character</param>
         /// <returns></returns>
-        private static bool IsLinearWhiteSpaceChar(char ch)
-        {
-            if (ch > ' ')
-            {
-                return false;
-            }
-
-            foreach (char c in _LinearWhiteSpaceChars)
-            {
-                if (ch == c)
-                    return true;
-            }
-
-            return false;
-        }
+        private static bool IsLinearWhiteSpaceChar(char ch) => new ReadOnlySpan<char>(_linearWhiteSpaceChars).Contains(ch);
 
         /// <summary>
         /// Lazy initialization for the ParameterDictionary
@@ -724,23 +669,21 @@ namespace MS.Internal
         private const char       _equalSeparator     = '=';
 
         //This array is sorted by the ascii value of these characters.
-        private static readonly char[] _allowedCharacters = 
-         { '!' /*33*/, '#' /*35*/ , '$'  /*36*/,
+        private static ReadOnlySpan<char> AllowedCharacters => [
+           '!' /*33*/, '#' /*35*/ , '$'  /*36*/,
            '%' /*37*/, '&' /*38*/ , '\'' /*39*/,
            '*' /*42*/, '+' /*43*/ , '-'  /*45*/,
            '.' /*46*/, '^' /*94*/ , '_'  /*95*/,
            '`' /*96*/, '|' /*124*/, '~'  /*126*/, 
-         };
-
-        private static readonly char[]     _forwardSlashSeparator = { '/' };
+         ];
         
         //Linear White Space characters
-        private static readonly char[]     _LinearWhiteSpaceChars = 
-         { ' ',  // space           - \x20
+        private static readonly char[] _linearWhiteSpaceChars = [
+           ' ',  // space           - \x20
            '\n', // new line        - \x0A
            '\r', // carriage return - \x0D
            '\t'  // horizontal tab  - \x09
-         };
+         ];
 
         private static readonly ContentType _emptyContentType = new ContentType("");
 

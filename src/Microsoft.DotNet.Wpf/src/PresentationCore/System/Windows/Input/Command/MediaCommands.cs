@@ -19,7 +19,6 @@ using System.Collections;
 using System.ComponentModel;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -265,30 +264,30 @@ namespace System.Windows.Input
 
             switch ((CommandId)commandId)
             {
-                case  CommandId.Play: uiText = SR.Get(SRID.MediaPlayText); break;
-                case  CommandId.Pause: uiText = SR.Get(SRID.MediaPauseText); break;
-                case  CommandId.Stop: uiText = SR.Get(SRID.MediaStopText); break;
-                case  CommandId.Record: uiText = SR.Get(SRID.MediaRecordText); break;
-                case  CommandId.NextTrack: uiText = SR.Get(SRID.MediaNextTrackText); break;
-                case  CommandId.PreviousTrack: uiText = SR.Get(SRID.MediaPreviousTrackText); break;
-                case  CommandId.FastForward: uiText = SR.Get(SRID.MediaFastForwardText); break;
-                case  CommandId.Rewind: uiText = SR.Get(SRID.MediaRewindText); break;
-                case  CommandId.ChannelUp: uiText = SR.Get(SRID.MediaChannelUpText); break;
-                case  CommandId.ChannelDown: uiText = SR.Get(SRID.MediaChannelDownText); break;
-                case  CommandId.TogglePlayPause: uiText = SR.Get(SRID.MediaTogglePlayPauseText); break;
-                case  CommandId.IncreaseVolume: uiText = SR.Get(SRID.MediaIncreaseVolumeText); break;
-                case  CommandId.DecreaseVolume: uiText = SR.Get(SRID.MediaDecreaseVolumeText); break;
-                case  CommandId.MuteVolume: uiText = SR.Get(SRID.MediaMuteVolumeText); break;
-                case  CommandId.IncreaseTreble: uiText = SR.Get(SRID.MediaIncreaseTrebleText); break;
-                case  CommandId.DecreaseTreble: uiText = SR.Get(SRID.MediaDecreaseTrebleText); break;
-                case  CommandId.IncreaseBass: uiText = SR.Get(SRID.MediaIncreaseBassText); break;
-                case  CommandId.DecreaseBass: uiText = SR.Get(SRID.MediaDecreaseBassText); break;
-                case  CommandId.BoostBass: uiText = SR.Get(SRID.MediaBoostBassText); break;
-                case  CommandId.IncreaseMicrophoneVolume: uiText = SR.Get(SRID.MediaIncreaseMicrophoneVolumeText); break;
-                case  CommandId.DecreaseMicrophoneVolume: uiText = SR.Get(SRID.MediaDecreaseMicrophoneVolumeText); break;
-                case  CommandId.MuteMicrophoneVolume: uiText = SR.Get(SRID.MediaMuteMicrophoneVolumeText); break;
-                case  CommandId.ToggleMicrophoneOnOff: uiText = SR.Get(SRID.MediaToggleMicrophoneOnOffText); break;
-                case  CommandId.Select:uiText = SR.Get(SRID.MediaSelectText);break;
+                case  CommandId.Play: uiText = SR.MediaPlayText; break;
+                case  CommandId.Pause: uiText = SR.MediaPauseText; break;
+                case  CommandId.Stop: uiText = SR.MediaStopText; break;
+                case  CommandId.Record: uiText = SR.MediaRecordText; break;
+                case  CommandId.NextTrack: uiText = SR.MediaNextTrackText; break;
+                case  CommandId.PreviousTrack: uiText = SR.MediaPreviousTrackText; break;
+                case  CommandId.FastForward: uiText = SR.MediaFastForwardText; break;
+                case  CommandId.Rewind: uiText = SR.MediaRewindText; break;
+                case  CommandId.ChannelUp: uiText = SR.MediaChannelUpText; break;
+                case  CommandId.ChannelDown: uiText = SR.MediaChannelDownText; break;
+                case  CommandId.TogglePlayPause: uiText = SR.MediaTogglePlayPauseText; break;
+                case  CommandId.IncreaseVolume: uiText = SR.MediaIncreaseVolumeText; break;
+                case  CommandId.DecreaseVolume: uiText = SR.MediaDecreaseVolumeText; break;
+                case  CommandId.MuteVolume: uiText = SR.MediaMuteVolumeText; break;
+                case  CommandId.IncreaseTreble: uiText = SR.MediaIncreaseTrebleText; break;
+                case  CommandId.DecreaseTreble: uiText = SR.MediaDecreaseTrebleText; break;
+                case  CommandId.IncreaseBass: uiText = SR.MediaIncreaseBassText; break;
+                case  CommandId.DecreaseBass: uiText = SR.MediaDecreaseBassText; break;
+                case  CommandId.BoostBass: uiText = SR.MediaBoostBassText; break;
+                case  CommandId.IncreaseMicrophoneVolume: uiText = SR.MediaIncreaseMicrophoneVolumeText; break;
+                case  CommandId.DecreaseMicrophoneVolume: uiText = SR.MediaDecreaseMicrophoneVolumeText; break;
+                case  CommandId.MuteMicrophoneVolume: uiText = SR.MediaMuteMicrophoneVolumeText; break;
+                case  CommandId.ToggleMicrophoneOnOff: uiText = SR.MediaToggleMicrophoneOnOffText; break;
+                case  CommandId.Select:uiText = SR.MediaSelectText;break;
             }
             return uiText;
         }
@@ -302,146 +301,146 @@ namespace System.Windows.Input
             {
                 case  CommandId.Play:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.MediaPlayKey),
-                        SR.Get(SRID.MediaPlayKeyDisplayString),
+                        SR.MediaPlayKey,
+                        SR.MediaPlayKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.Pause:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.MediaPauseKey),
-                        SR.Get(SRID.MediaPauseKeyDisplayString),
+                        SR.MediaPauseKey,
+                        SR.MediaPauseKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.Stop:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.MediaStopKey),
-                        SR.Get(SRID.MediaStopKeyDisplayString),
+                        SR.MediaStopKey,
+                        SR.MediaStopKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.Record:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.MediaRecordKey),
-                        SR.Get(SRID.MediaRecordKeyDisplayString),
+                        SR.MediaRecordKey,
+                        SR.MediaRecordKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.NextTrack:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.MediaNextTrackKey),
-                        SR.Get(SRID.MediaNextTrackKeyDisplayString),
+                        SR.MediaNextTrackKey,
+                        SR.MediaNextTrackKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.PreviousTrack:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.MediaPreviousTrackKey),
-                        SR.Get(SRID.MediaPreviousTrackKeyDisplayString),
+                        SR.MediaPreviousTrackKey,
+                        SR.MediaPreviousTrackKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.FastForward:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.MediaFastForwardKey),
-                        SR.Get(SRID.MediaFastForwardKeyDisplayString),
+                        SR.MediaFastForwardKey,
+                        SR.MediaFastForwardKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.Rewind:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.MediaRewindKey),
-                        SR.Get(SRID.MediaRewindKeyDisplayString),
+                        SR.MediaRewindKey,
+                        SR.MediaRewindKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.ChannelUp:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.MediaChannelUpKey),
-                        SR.Get(SRID.MediaChannelUpKeyDisplayString),
+                        SR.MediaChannelUpKey,
+                        SR.MediaChannelUpKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.ChannelDown:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.MediaChannelDownKey),
-                        SR.Get(SRID.MediaChannelDownKeyDisplayString),
+                        SR.MediaChannelDownKey,
+                        SR.MediaChannelDownKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.TogglePlayPause:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.MediaTogglePlayPauseKey),
-                        SR.Get(SRID.MediaTogglePlayPauseKeyDisplayString),
+                        SR.MediaTogglePlayPauseKey,
+                        SR.MediaTogglePlayPauseKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.IncreaseVolume:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.MediaIncreaseVolumeKey),
-                        SR.Get(SRID.MediaIncreaseVolumeKeyDisplayString),
+                        SR.MediaIncreaseVolumeKey,
+                        SR.MediaIncreaseVolumeKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.DecreaseVolume:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.MediaDecreaseVolumeKey),
-                        SR.Get(SRID.MediaDecreaseVolumeKeyDisplayString),
+                        SR.MediaDecreaseVolumeKey,
+                        SR.MediaDecreaseVolumeKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.MuteVolume:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.MediaMuteVolumeKey),
-                        SR.Get(SRID.MediaMuteVolumeKeyDisplayString),
+                        SR.MediaMuteVolumeKey,
+                        SR.MediaMuteVolumeKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.IncreaseTreble:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.MediaIncreaseTrebleKey),
-                        SR.Get(SRID.MediaIncreaseTrebleKeyDisplayString),
+                        SR.MediaIncreaseTrebleKey,
+                        SR.MediaIncreaseTrebleKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.DecreaseTreble:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.MediaDecreaseTrebleKey),
-                        SR.Get(SRID.MediaDecreaseTrebleKeyDisplayString),
+                        SR.MediaDecreaseTrebleKey,
+                        SR.MediaDecreaseTrebleKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.IncreaseBass:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.MediaIncreaseBassKey),
-                        SR.Get(SRID.MediaIncreaseBassKeyDisplayString),
+                        SR.MediaIncreaseBassKey,
+                        SR.MediaIncreaseBassKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.DecreaseBass:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.MediaDecreaseBassKey),
-                        SR.Get(SRID.MediaDecreaseBassKeyDisplayString),
+                        SR.MediaDecreaseBassKey,
+                        SR.MediaDecreaseBassKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.BoostBass:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.MediaBoostBassKey),
-                        SR.Get(SRID.MediaBoostBassKeyDisplayString),
+                        SR.MediaBoostBassKey,
+                        SR.MediaBoostBassKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.IncreaseMicrophoneVolume:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.MediaIncreaseMicrophoneVolumeKey),
-                        SR.Get(SRID.MediaIncreaseMicrophoneVolumeKeyDisplayString),
+                        SR.MediaIncreaseMicrophoneVolumeKey,
+                        SR.MediaIncreaseMicrophoneVolumeKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.DecreaseMicrophoneVolume:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.MediaDecreaseMicrophoneVolumeKey),
-                        SR.Get(SRID.MediaDecreaseMicrophoneVolumeKeyDisplayString),
+                        SR.MediaDecreaseMicrophoneVolumeKey,
+                        SR.MediaDecreaseMicrophoneVolumeKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.MuteMicrophoneVolume:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.MediaMuteMicrophoneVolumeKey),
-                        SR.Get(SRID.MediaMuteMicrophoneVolumeKeyDisplayString),
+                        SR.MediaMuteMicrophoneVolumeKey,
+                        SR.MediaMuteMicrophoneVolumeKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.ToggleMicrophoneOnOff:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.MediaToggleMicrophoneOnOffKey),
-                        SR.Get(SRID.MediaToggleMicrophoneOnOffKeyDisplayString),
+                        SR.MediaToggleMicrophoneOnOffKey,
+                        SR.MediaToggleMicrophoneOnOffKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.Select:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.MediaSelectKey),
-                        SR.Get(SRID.MediaSelectKeyDisplayString),
+                        SR.MediaSelectKey,
+                        SR.MediaSelectKeyDisplayString,
                         gestures);
                     break;
             }

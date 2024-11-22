@@ -229,7 +229,7 @@
       </trans-unit>
       <trans-unit id="DocumentPropertiesDialogContentLabel">
         <source>Content:</source>
-        <target state="translated">Contenu  :</target>
+        <target state="translated">Contenu :</target>
         <note />
       </trans-unit>
       <trans-unit id="DocumentPropertiesDialogDateFormat">

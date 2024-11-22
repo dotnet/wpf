@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-// 
+//
 // Description: DocumentSequence's HighlightLayer for TextSelection.
 //
 
@@ -24,7 +24,7 @@ namespace System.Windows.Documents
     // The FixedDoc then uses the DocumentSequence's Highlights directly to
     // get the highlight information.
     // Note: Some of the methods below are used in constructing the event args
-    // but others are not. This class is not intended to be used directly as an 
+    // but others are not. This class is not intended to be used directly as an
     // actual highlight layer.
     internal class DocumentSequenceHighlightLayer : HighlightLayer
     {
@@ -74,7 +74,7 @@ namespace System.Windows.Documents
         // to the FixedDocumentTextContainer which contains this layer.
         internal void RaiseHighlightChangedEvent(IList ranges)
         {
-            DocumentsTrace.FixedDocumentSequence.Highlights.Trace(string.Format("DSHL.RaiseHighlightChangedEvent ranges={0}", ranges.Count));
+            DocumentsTrace.FixedDocumentSequence.Highlights.Trace($"DSHL.RaiseHighlightChangedEvent ranges={ranges.Count}");
             Debug.Assert(ranges.Count > 0);
             if (this.Changed != null)
             {

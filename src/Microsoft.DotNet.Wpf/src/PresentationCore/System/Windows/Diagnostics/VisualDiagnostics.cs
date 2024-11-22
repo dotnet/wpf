@@ -15,7 +15,6 @@ using System.Windows.Interop;       // HwndSource
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Diagnostics
 {
@@ -217,7 +216,7 @@ namespace System.Windows.Diagnostics
             {
                 if (!EnableHelper.AllowChangesDuringVisualTreeChanged(d))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.ReentrantVisualTreeChangeError, nameof(VisualTreeChanged)));
+                    throw new InvalidOperationException(SR.Format(SR.ReentrantVisualTreeChangeError, nameof(VisualTreeChanged)));
                 }
             }
         }
@@ -258,7 +257,7 @@ namespace System.Windows.Diagnostics
             internal static void EnableVisualTreeChanged()
             {
                 if (!IsEnableVisualTreeChangedAllowed)
-                    throw new InvalidOperationException(SR.Get(SRID.MethodCallNotAllowed, nameof(VisualDiagnostics.EnableVisualTreeChanged)));
+                    throw new InvalidOperationException(SR.Format(SR.MethodCallNotAllowed, nameof(VisualDiagnostics.EnableVisualTreeChanged)));
 
                 s_IsVisualTreeChangedEnabled = true;
             }
@@ -292,7 +291,7 @@ namespace System.Windows.Diagnostics
                     {
                         // user wants to allow re-entrant changes, and this is the first one.
                         // Issue a warning to debug output
-                        System.Diagnostics.Debug.WriteLine(SR.Get(SRID.ReentrantVisualTreeChangeWarning, nameof(VisualTreeChanged)));
+                        System.Diagnostics.Debug.WriteLine(SR.Format(SR.ReentrantVisualTreeChangeWarning, nameof(VisualTreeChanged)));
                     }
 
                     return (s_AllowChangesDuringVisualTreeChanged == true);

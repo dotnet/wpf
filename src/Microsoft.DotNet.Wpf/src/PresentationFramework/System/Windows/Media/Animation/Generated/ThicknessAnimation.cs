@@ -321,8 +321,8 @@ namespace System.Windows.Media.Animation
                 && !AnimatedTypeHelpers.IsValidAnimationValueThickness(defaultOriginValue))
             {
                 throw new InvalidOperationException(
-                    SR.Get(
-                        SRID.Animation_Invalid_DefaultValue,
+                    SR.Format(
+                        SR.Animation_Invalid_DefaultValue,
                         this.GetType(),
                         "origin",
                         defaultOriginValue.ToString(CultureInfo.InvariantCulture)));
@@ -332,8 +332,8 @@ namespace System.Windows.Media.Animation
                 && !AnimatedTypeHelpers.IsValidAnimationValueThickness(defaultDestinationValue))
             {
                 throw new InvalidOperationException(
-                    SR.Get(
-                        SRID.Animation_Invalid_DefaultValue,
+                    SR.Format(
+                        SR.Animation_Invalid_DefaultValue,
                         this.GetType(),
                         "destination",
                         defaultDestinationValue.ToString(CultureInfo.InvariantCulture)));

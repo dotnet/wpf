@@ -137,7 +137,7 @@ namespace System.Windows.Controls.Primitives
                     contentSize.Height = _rowHeight * _numRows;
     
                     // If we don't have constraint or content wisth is smaller than constraint width then size to content
-                    if (double.IsInfinity(contentSize.Width) || DoubleUtil.IsNaN(contentSize.Width) || maxRowWidth < constraint.Width)
+                    if (double.IsInfinity(contentSize.Width) || double.IsNaN(contentSize.Width) || maxRowWidth < constraint.Width)
                         contentSize.Width = maxRowWidth;
                     else
                         contentSize.Width = constraint.Width;

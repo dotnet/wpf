@@ -220,10 +220,10 @@ namespace System.Windows.Markup.Primitives
             {
                 Type ownerType = dpd.DependencyProperty.OwnerType;
                 string propertyName = dpd.DependencyProperty.Name;
-                string keyName = propertyName + "!";
+                string keyName = $"{propertyName}!";
                 if (!TryGetShouldSerializeMethod(new ShouldSerializeKey(ownerType, keyName), out shouldSerializeMethod)) 
                 {
-                    string methodName = "ShouldSerialize" + propertyName;
+                    string methodName = $"ShouldSerialize{propertyName}";
                     shouldSerializeMethod = ownerType.GetMethod(methodName, BindingFlags.Static |
                         BindingFlags.NonPublic | BindingFlags.Public, null, _shouldSerializeArgsObject, null);
                     if (shouldSerializeMethod == null)
@@ -246,7 +246,7 @@ namespace System.Windows.Markup.Primitives
                 if (!TryGetShouldSerializeMethod(new ShouldSerializeKey(instance.GetType(), pd.Name), out shouldSerializeMethod)) 
                 {
                     Type instanceType = instance.GetType();
-                    string methodName = "ShouldSerialize" + pd.Name;
+                    string methodName = $"ShouldSerialize{pd.Name}";
                     shouldSerializeMethod = instanceType.GetMethod(methodName, BindingFlags.Instance | BindingFlags.Static |
                         BindingFlags.NonPublic | BindingFlags.Public, null, _shouldSerializeArgsObject, null);
                     if (shouldSerializeMethod == null)
@@ -406,7 +406,7 @@ namespace System.Windows.Markup.Primitives
             return false;
         }
 
-        private static object _shouldSerializeCacheLock = new object();
+        private static readonly object _shouldSerializeCacheLock = new object();
         private static Hashtable _shouldSerializeCache = new Hashtable();
         private static Type[] _shouldSerializeArgsObject = new Type[] { typeof(DependencyObject) };
         private static Type[] _shouldSerializeArgsManager = new Type[] { typeof(XamlDesignerSerializationManager) };
@@ -942,7 +942,7 @@ namespace System.Windows.Markup.Primitives
                     ValueSerializer typeSerializer = context.GetValueSerializerFor(typeof(Type));
                     Debug.Assert(typeSerializer != null, "typeSerializer for Enum was null");
                     string typeName = typeSerializer.ConvertToString(enumValue.GetType(), context);
-                    return new StaticExtension(typeName + "." + enumValue.ToString());
+                    return new StaticExtension($"{typeName}.{enumValue}");
                 }
             }
 

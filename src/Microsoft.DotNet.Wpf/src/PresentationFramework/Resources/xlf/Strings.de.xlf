@@ -1607,11 +1607,6 @@
         <target state="translated">Fehler beim Konvertieren der Ressource in ein Objekt.</target>
         <note />
       </trans-unit>
-      <trans-unit id="FileDialogBufferTooSmall">
-        <source>Too many files selected. Select fewer files and try again.</source>
-        <target state="translated">Zu viele Dateien ausgewählt. Wählen Sie weniger Dateien aus, und wiederholen Sie den Vorgang.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="FileDialogCreatePrompt">
         <source>'{0}' does not exist.
 Do you want to create it?</source>
@@ -1626,14 +1621,9 @@ Verify that the file name is correct.</source>
 Überprüfen Sie den Dateinamen.</target>
         <note />
       </trans-unit>
-      <trans-unit id="FileDialogInvalidFileName">
-        <source>'{0}' is not a valid file name.</source>
-        <target state="translated">'{0}' ist ein ungültiger Dateiname.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="FileDialogInvalidFilter">
         <source>Provided filter string is not valid. Filter string should contain a description of the filter, followed by a vertical bar and the filter pattern. Must also separate multiple filter description and pattern pairs by a vertical bar. Must separate multiple extensions in a filter pattern with a semicolon. Example: \"Image files (*.bmp, *.jpg)|*.bmp;*.jpg|All files (*.*)|*.*\"</source>
-        <target state="translated">Die bereitgestellte Filterzeichenfolge ist ungültig. Die Filterzeichenfolge muss eine Beschreibung des Filters enthalten, gefolgt von einem vertikalen Strich und dem Filtermuster. Weitere Paare aus Filterbeschreibung und Muster müssen ebenfalls durch einen vertikalen Strich getrennt werden. Mehrere Erweiterungen in Filtermustern werden mit einem Semikolon getrennt. Beispiel: "Bilddateien (*.bmp, *.jpg)|*.bmp;*.jpg|Alle Dateien (*.*)|*.*"</target>
+        <target state="translated">Die bereitgestellte Filterzeichenfolge ist ungültig. Die Filterzeichenfolge muss eine Beschreibung des Filters enthalten, gefolgt von einem vertikalen Strich und dem Filtermuster. Weitere Paare aus Filterbeschreibung und Muster müssen ebenfalls durch einen vertikalen Strich getrennt werden. Mehrere Erweiterungen in Filtermustern werden mit einem Semikolon getrennt. Beispiel: \"Bilddateien (*.bmp, *.jpg)|*.bmp;*.jpg|Alle Dateien (*.*)|*.*\"</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogInvalidFilterIndex">
@@ -1646,11 +1636,6 @@ Verify that the file name is correct.</source>
 Do you want to replace it?</source>
         <target state="translated">'{0}' ist bereits vorhanden.
 Möchten Sie das Element ersetzen?</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="FileDialogSubClassFailure">
-        <source>Cannot subclass a file dialog because sufficient memory is not available.</source>
-        <target state="translated">Ein Dateidialogfeld kann nicht als Unterklasse verwendet werden, da nicht genügend Speicher zur Verfügung steht.</target>
         <note />
       </trans-unit>
       <trans-unit id="FileFormatException">
@@ -3623,11 +3608,6 @@ Möchten Sie das Element ersetzen?</target>
         <target state="translated">"{0}" muss beim Instanziieren von "{1}" bereitgestellt werden.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Der Parameter muss größer oder gleich null sein.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeLogicalNode">
         <source>Parameter must be FrameworkElement or FrameworkContentElement.</source>
         <target state="translated">Bei dem Parameter muss es sich um "FrameworkElement" oder "FrameworkContentElement" handeln.</target>
@@ -4835,7 +4815,7 @@ Möchten Sie das Element ersetzen?</target>
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_Top">
         <source>Top</source>
-        <target state="translated">Top</target>
+        <target state="translated">Nach oben</target>
         <note />
       </trans-unit>
       <trans-unit id="ScrollViewer_CannotBeNaN">

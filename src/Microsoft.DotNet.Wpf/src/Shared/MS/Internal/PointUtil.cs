@@ -27,7 +27,6 @@ namespace MS.Internal
      ///    "point" and "rect" respectively, whereas Win32 POINT and RECT variables are
      ///    prefixed with "pt" and "rc" respectively.
      /// </remarks>
-    [FriendAccessAllowed] // Built into Core, also used by Framework.
     internal static class PointUtil
     {
         /// <summary>
@@ -178,7 +177,7 @@ namespace MS.Internal
             NativeMethods.POINT ptClient            = FromPoint(pointClient);
             NativeMethods.POINT ptClientRTLAdjusted = AdjustForRightToLeft(ptClient, handleRef);
 
-            UnsafeNativeMethods.ClientToScreen(handleRef, ptClientRTLAdjusted);
+            UnsafeNativeMethods.ClientToScreen(handleRef, ref ptClientRTLAdjusted);
 
             return ToPoint(ptClientRTLAdjusted);
         }
@@ -200,7 +199,7 @@ namespace MS.Internal
 
             NativeMethods.POINT ptClient = FromPoint(pointScreen);
 
-            SafeNativeMethods.ScreenToClient(handleRef, ptClient);
+            SafeNativeMethods.ScreenToClient(handleRef, ref ptClient);
 
             ptClient = AdjustForRightToLeft(ptClient, handleRef);
 

@@ -10,7 +10,6 @@
 using System;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows
 {
@@ -57,24 +56,18 @@ namespace System.Windows
         public DataObjectPastingEventArgs(IDataObject dataObject, bool isDragDrop, string formatToApply) //
             : base(System.Windows.DataObject.PastingEvent, isDragDrop)
         {
-            if (dataObject == null)
-            {
-                throw new ArgumentNullException("dataObject");
-            }
+            ArgumentNullException.ThrowIfNull(dataObject);
 
-            if (formatToApply == null)
-            {
-                throw new ArgumentNullException("formatToApply");
-            }
+            ArgumentNullException.ThrowIfNull(formatToApply);
 
             if (formatToApply == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             if (!dataObject.GetDataPresent(formatToApply))
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_DataFormatNotPresentOnDataObject, formatToApply));
+                throw new ArgumentException(SR.Format(SR.DataObject_DataFormatNotPresentOnDataObject, formatToApply));
             }
 
             _originalDataObject = dataObject;
@@ -137,15 +130,12 @@ namespace System.Windows
             {
                 string[] availableFormats;
 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 availableFormats = value.GetFormats(/*autoConvert:*/false);
                 if (availableFormats == null || availableFormats.Length == 0)
                 {
-                    throw new ArgumentException(SR.Get(SRID.DataObject_DataObjectMustHaveAtLeastOneFormat));
+                    throw new ArgumentException(SR.DataObject_DataObjectMustHaveAtLeastOneFormat);
                 }
 
                 _dataObject = value;
@@ -170,14 +160,11 @@ namespace System.Windows
             }
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (!_dataObject.GetDataPresent(value))
                 {
-                    throw new ArgumentException(SR.Get(SRID.DataObject_DataFormatNotPresentOnDataObject, value));
+                    throw new ArgumentException(SR.Format(SR.DataObject_DataFormatNotPresentOnDataObject, value));
                 }
 
                 _formatToApply = value;

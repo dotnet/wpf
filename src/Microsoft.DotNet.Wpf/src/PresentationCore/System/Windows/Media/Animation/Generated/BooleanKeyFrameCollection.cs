@@ -287,10 +287,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         public int Add(BooleanKeyFrame keyFrame)
         {
-            if (keyFrame == null)
-            {
-                throw new ArgumentNullException("keyFrame");
-            }
+            ArgumentNullException.ThrowIfNull(keyFrame);
 
             WritePreamble();
 
@@ -371,10 +368,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         public void Insert(int index, BooleanKeyFrame keyFrame)
         {
-            if (keyFrame == null)
-            {
-                throw new ArgumentNullException("keyFrame");
-            }
+            ArgumentNullException.ThrowIfNull(keyFrame);
 
             WritePreamble();
 

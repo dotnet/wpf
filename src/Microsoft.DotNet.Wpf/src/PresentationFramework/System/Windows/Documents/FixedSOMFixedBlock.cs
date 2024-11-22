@@ -224,7 +224,7 @@ namespace System.Windows.Documents
                 if (run != null)
                 {
                     builder.Append(run.Text);
-                    builder.Append(" ");
+                    builder.Append(' ');
                 }
             }
             return builder.ToString();

@@ -269,7 +269,7 @@ namespace System.Windows.Controls.Primitives
         {
             double d = (double)value;
 
-            return !(DoubleUtil.IsNaN(d) || double.IsInfinity(d));
+            return !(double.IsNaN(d) || double.IsInfinity(d));
         }
 
         /// <summary>
@@ -404,7 +404,7 @@ namespace System.Windows.Controls.Primitives
             // If min, max, value are defined
             if (valuesDefined)
             {
-                return SR.Get(SRID.ToStringFormatString_RangeBase, typeText, min, max, val);
+                return SR.Format(SR.ToStringFormatString_RangeBase, typeText, min, max, val);
             }
 
             // Not able to access the dispatcher

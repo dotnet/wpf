@@ -67,8 +67,8 @@ namespace System.Windows.Xps.Packaging
         /// Gets the PrintTicket associated with this fixed document.
         /// </summary>
         /// <value>Value can be a PrintTicket or null.</value>
-        /// <exception cref="SRID.ReachPackaging_PrintTicketAlreadyCommitted">PrintTicket has already been committed.</exception>
-        /// <exception cref="SRID.ReachPackaging_NotAPrintTicket">Property is not a valid PrintTicket instance.</exception>
+        /// <exception cref="SR.ReachPackaging_PrintTicketAlreadyCommitted">PrintTicket has already been committed.</exception>
+        /// <exception cref="SR.ReachPackaging_NotAPrintTicket">Property is not a valid PrintTicket instance.</exception>
         PrintTicket PrintTicket { get; }
 
         /// <summary>
@@ -98,13 +98,13 @@ namespace System.Windows.Xps.Packaging
         SignatureDefinitions{ get; }
 
         /// <summary>
-        /// thumbnail image associated with this doucment
+        /// thumbnail image associated with this document
         /// </summary>
         XpsThumbnail
         Thumbnail{ get; }
 
         /// <summary>
-        /// Document Structure associated with this doucment
+        /// Document Structure associated with this document
         /// </summary>
         XpsStructure
         DocumentStructure{ get; }
@@ -164,7 +164,7 @@ namespace System.Windows.Xps.Packaging
         /// Returns an interface to the newly created fixed page.
         /// </returns>
         /// <exception cref="ObjectDisposedException">The FixedDocument has already been disposed</exception>
-        /// <exception cref="SRID.ReachPackaging_PanelOrSequenceAlreadyOpen">FixedPage is not completed.</exception>
+        /// <exception cref="SR.ReachPackaging_PanelOrSequenceAlreadyOpen">FixedPage is not completed.</exception>
         IXpsFixedPageWriter
         AddFixedPage(
             );
@@ -206,8 +206,8 @@ namespace System.Windows.Xps.Packaging
         /// committed to the package.  The commit happens when a valid PrintTicket
         /// is set and a subsequent flush on the document occurs.
         /// </value>
-        /// <exception cref="SRID.ReachPackaging_PrintTicketAlreadyCommitted">PrintTicket has already been committed.</exception>
-        /// <exception cref="SRID.ReachPackaging_NotAPrintTicket">Property is not a valid PrintTicket instance.</exception>
+        /// <exception cref="SR.ReachPackaging_PrintTicketAlreadyCommitted">PrintTicket has already been committed.</exception>
+        /// <exception cref="SR.ReachPackaging_NotAPrintTicket">Property is not a valid PrintTicket instance.</exception>
         PrintTicket PrintTicket { set; }
 
         /// <summary>
@@ -265,10 +265,7 @@ namespace System.Windows.Xps.Packaging
             )
             : base(xpsManager)
         {
-            if (null == part)
-            {
-                throw new ArgumentNullException("part");
-            }
+            ArgumentNullException.ThrowIfNull(part);
 
             this.Uri = part.Uri;
 
@@ -277,7 +274,7 @@ namespace System.Windows.Xps.Packaging
             _partEditor = new XmlPartEditor(_metroPart);
 
             _pageCache = new List<IXpsFixedPageReader>();
-            
+
             _pagesWritten = 0;
 
             _parentNode = parent;
@@ -299,8 +296,8 @@ namespace System.Windows.Xps.Packaging
         /// is set and a subsequent flush on the document occurs.
         /// </summary>
         /// <value>Value can be a PrintTicket or null.</value>
-        /// <exception cref="SRID.ReachPackaging_PrintTicketAlreadyCommitted">PrintTicket has already been committed.</exception>
-        /// <exception cref="SRID.ReachPackaging_NotAPrintTicket">Property is not a valid PrintTicket instance.</exception>
+        /// <exception cref="SR.ReachPackaging_PrintTicketAlreadyCommitted">PrintTicket has already been committed.</exception>
+        /// <exception cref="SR.ReachPackaging_NotAPrintTicket">Property is not a valid PrintTicket instance.</exception>
         public PrintTicket PrintTicket
         {
             get
@@ -317,11 +314,11 @@ namespace System.Windows.Xps.Packaging
                 {
                     if (_isPrintTicketCommitted)
                     {
-                        throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_PrintTicketAlreadyCommitted));
+                        throw new XpsPackagingException(SR.ReachPackaging_PrintTicketAlreadyCommitted);
                     }
                     if (!value.GetType().Equals(typeof(PrintTicket)))
                     {
-                        throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_NotAPrintTicket));
+                        throw new XpsPackagingException(SR.ReachPackaging_NotAPrintTicket);
                     }
 
                     _printTicket = value.Clone();
@@ -394,7 +391,7 @@ namespace System.Windows.Xps.Packaging
         {
             get
             {
-                EnsureDoucmentStructure();
+                EnsureDocumentStructure();
                 return _documentStructure;
             }
         }
@@ -410,26 +407,23 @@ namespace System.Windows.Xps.Packaging
         /// Returns an interface to the newly created fixed page.
         /// </returns>
         /// <exception cref="ObjectDisposedException">The FixedDocument has already been disposed</exception>
-        /// <exception cref="SRID.ReachPackaging_PanelOrSequenceAlreadyOpen">FixedPage is not completed.</exception>
+        /// <exception cref="SR.ReachPackaging_PanelOrSequenceAlreadyOpen">FixedPage is not completed.</exception>
         public
         IXpsFixedPageWriter
         AddFixedPage(
             )
         {
-            if (null == _metroPart || null == CurrentXpsManager.MetroPackage)
-            {
-                throw new ObjectDisposedException("XpsFixedDocumentReaderWriter");
-            }
+            ObjectDisposedException.ThrowIf(_metroPart is null || CurrentXpsManager.MetroPackage is null, typeof(XpsFixedDocumentReaderWriter));
 
             //
             // Only one page can be created/written at a time.
             //
             if (null != _currentPage)
             {
-                throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_PanelOrSequenceAlreadyOpen));
+                throw new XpsPackagingException(SR.ReachPackaging_PanelOrSequenceAlreadyOpen);
             }
 
-            
+
             _linkTargetStream = new List<String>();
 
             //
@@ -443,7 +437,7 @@ namespace System.Windows.Xps.Packaging
             //
             _currentPage = fixedPage;
 
-             
+
             //Here we used to add the fixed page to _pageCache, but _pageCache is never accessed if this object was created as an IXpsFixedDocumentWriter.
             //So instead keep a separate pagesWritten count and forget about the cache when using this method.
             _pagesWritten++;
@@ -462,7 +456,7 @@ namespace System.Windows.Xps.Packaging
         public
         XpsThumbnail
         AddThumbnail(
-            XpsImageType imageType 
+            XpsImageType imageType
             )
         {
             _thumbnail = CurrentXpsManager.AddThumbnail( imageType, this, Thumbnail );
@@ -483,7 +477,7 @@ namespace System.Windows.Xps.Packaging
             if (this.DocumentStructure != null)
             {
                 // Document structure already available for this FixedDocument
-                throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_MoreThanOneDocStructure));
+                throw new XpsPackagingException(SR.ReachPackaging_MoreThanOneDocStructure);
             }
 
             Uri pageUri = this.CurrentXpsManager.CreateStructureUri();
@@ -684,7 +678,7 @@ namespace System.Windows.Xps.Packaging
                 ((INode)this).Flush();
                 _partEditor.Close();
 
- 
+
                 _partEditor     = null;
                 _metroPart      = null;
 
@@ -693,7 +687,7 @@ namespace System.Windows.Xps.Packaging
                 _thumbnail      = null;
 
                 _pageCache      = null;
-                
+
                 _pagesWritten     = 0;
 
                 _hasParsedPages = false;
@@ -727,7 +721,7 @@ namespace System.Windows.Xps.Packaging
             //
             PackagePart signatureDefinitionPart =
                 CurrentXpsManager.GetSignatureDefinitionPart(Uri);
-            
+
             //
             // Add Signature Definitions
             //
@@ -735,9 +729,9 @@ namespace System.Windows.Xps.Packaging
                                     Uri,
                                     PackageRelationshipSelectorType.Type,
                                     XpsS0Markup.SignatureDefinitionRelationshipName
-                                    ) 
+                                    )
                                  );
-            
+
 
             if( signatureDefinitionPart != null )
             {
@@ -750,7 +744,7 @@ namespace System.Windows.Xps.Packaging
                                     Uri,
                                     PackageRelationshipSelectorType.Type,
                                     XpsS0Markup.RestrictedFontRelationshipType
-                                    ) 
+                                    )
                                  );
             //
             // Add Document Structure relationship
@@ -759,7 +753,7 @@ namespace System.Windows.Xps.Packaging
                                     Uri,
                                     PackageRelationshipSelectorType.Type,
                                     XpsS0Markup.StructureRelationshipName
-                                    ) 
+                                    )
                                  );
             //
             // Add this documents dependants
@@ -788,7 +782,7 @@ namespace System.Windows.Xps.Packaging
             //
             // Add DocumentStructure
             //
-            EnsureDoucmentStructure();
+            EnsureDocumentStructure();
             if (_documentStructure != null)
             {
                 //
@@ -828,7 +822,7 @@ namespace System.Windows.Xps.Packaging
             foreach( IXpsFixedPageReader reader in _pageCache)
             {
                 (reader as XpsFixedPageReaderWriter).
-                    CollectSelfAndDependents( 
+                    CollectSelfAndDependents(
                     dependents,
                     selectorList,
                     restrictions
@@ -838,7 +832,7 @@ namespace System.Windows.Xps.Packaging
             //
             // Add DocumentStructure
             //
-            EnsureDoucmentStructure();
+            EnsureDocumentStructure();
             if( _documentStructure != null )
             {
                 dependents[_documentStructure.Uri] = _documentStructure.Uri;
@@ -876,7 +870,7 @@ namespace System.Windows.Xps.Packaging
                 {
                      xmlWriter.WriteRaw (String.Format(
                         System.Globalization.CultureInfo.InvariantCulture,
-                        "<LinkTarget Name=\"{0}\" />", 
+                        "<LinkTarget Name=\"{0}\" />",
                         nameElement)
                         );
                 }
@@ -927,7 +921,7 @@ namespace System.Windows.Xps.Packaging
                 _currentPage = null;
             }
         }
-         
+
         /// <summary>
         /// Test if the page cache has been initialized  and
         /// updates it if necessary
@@ -983,12 +977,12 @@ namespace System.Windows.Xps.Packaging
 
             if (pagePart == null)
             {
-                 throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_PartNotFound));
+                 throw new XpsPackagingException(SR.ReachPackaging_PartNotFound);
             }
-            
+
             if (!pagePart.ValidatedContentType().AreTypeAndSubTypeEqual(XpsS0Markup.FixedPageContentType))
             {
-                throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_NotAFixedPage));
+                throw new XpsPackagingException(SR.ReachPackaging_NotAFixedPage);
             }
 
             //
@@ -1036,7 +1030,7 @@ namespace System.Windows.Xps.Packaging
 
         private
         void
-        EnsureDoucmentStructure()
+        EnsureDocumentStructure()
         {
             // if _xpsSignaturs is not null we have already initialized this
             //
@@ -1051,7 +1045,7 @@ namespace System.Windows.Xps.Packaging
             {
                 if (documentStructureRelationship != null)
                 {
-                    throw new InvalidDataException(SR.Get(SRID.ReachPackaging_MoreThanOneDocStructure));
+                    throw new InvalidDataException(SR.ReachPackaging_MoreThanOneDocStructure);
                 }
 
                 documentStructureRelationship = rel;
@@ -1059,7 +1053,7 @@ namespace System.Windows.Xps.Packaging
 
             if (documentStructureRelationship != null)
             {
-                Uri documentStructureUri = PackUriHelper.ResolvePartUri(documentStructureRelationship.SourceUri, 
+                Uri documentStructureUri = PackUriHelper.ResolvePartUri(documentStructureRelationship.SourceUri,
                                                                 documentStructureRelationship.TargetUri);
 
                 if (CurrentXpsManager.MetroPackage.PartExists(documentStructureUri))
@@ -1159,7 +1153,7 @@ namespace System.Windows.Xps.Packaging
         private IList<String> _linkTargetStream;
 
         private List<IXpsFixedPageReader> _pageCache;
-        
+
         //
         // This variable is used to keep a count of pages written via AddFixedPage
         //
@@ -1209,7 +1203,7 @@ namespace System.Windows.Xps.Packaging
         // has been changed
         //
         private bool                                _sigCollectionDirty;
-        
+
         private XpsStructure                        _documentStructure;
         #endregion Private data
 

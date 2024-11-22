@@ -23,7 +23,6 @@ using MS.Internal ;
 using MS.Internal.PresentationCore;                        // SecurityHelper
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -61,10 +60,7 @@ namespace System.Windows.Input
         /// <param name="handler">Event Handler to be added</param>
         public static void AddPreviewTextInputStartHandler(DependencyObject element, TextCompositionEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             UIElement.AddHandler(element, PreviewTextInputStartEvent, handler);
         }
@@ -76,10 +72,7 @@ namespace System.Windows.Input
         /// <param name="handler">Event Handler to be removed</param>
         public static void RemovePreviewTextInputStartHandler(DependencyObject element, TextCompositionEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             UIElement.RemoveHandler(element, PreviewTextInputStartEvent, handler);
         }
@@ -96,10 +89,7 @@ namespace System.Windows.Input
         /// <param name="handler">Event Handler to be added</param>
         public static void AddTextInputStartHandler(DependencyObject element, TextCompositionEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             UIElement.AddHandler(element, TextInputStartEvent, handler);
         }
@@ -111,10 +101,7 @@ namespace System.Windows.Input
         /// <param name="handler">Event Handler to be removed</param>
         public static void RemoveTextInputStartHandler(DependencyObject element, TextCompositionEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             UIElement.RemoveHandler(element, TextInputStartEvent, handler);
         }
@@ -131,10 +118,7 @@ namespace System.Windows.Input
         /// <param name="handler">Event Handler to be added</param>
         public static void AddPreviewTextInputUpdateHandler(DependencyObject element, TextCompositionEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             UIElement.AddHandler(element, PreviewTextInputUpdateEvent, handler);
         }
@@ -146,10 +130,7 @@ namespace System.Windows.Input
         /// <param name="handler">Event Handler to be removed</param>
         public static void RemovePreviewTextInputUpdateHandler(DependencyObject element, TextCompositionEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             UIElement.RemoveHandler(element, PreviewTextInputUpdateEvent, handler);
         }
@@ -166,10 +147,7 @@ namespace System.Windows.Input
         /// <param name="handler">Event Handler to be added</param>
         public static void AddTextInputUpdateHandler(DependencyObject element, TextCompositionEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             UIElement.AddHandler(element, TextInputUpdateEvent, handler);
         }
@@ -181,10 +159,7 @@ namespace System.Windows.Input
         /// <param name="handler">Event Handler to be removed</param>
         public static void RemoveTextInputUpdateHandler(DependencyObject element, TextCompositionEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             UIElement.RemoveHandler(element, TextInputUpdateEvent, handler);
         }
@@ -201,10 +176,7 @@ namespace System.Windows.Input
         /// <param name="handler">Event Handler to be added</param>
         public static void AddPreviewTextInputHandler(DependencyObject element, TextCompositionEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             UIElement.AddHandler(element, PreviewTextInputEvent, handler);
         }
@@ -216,10 +188,7 @@ namespace System.Windows.Input
         /// <param name="handler">Event Handler to be removed</param>
         public static void RemovePreviewTextInputHandler(DependencyObject element, TextCompositionEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             UIElement.RemoveHandler(element, PreviewTextInputEvent, handler);
         }
@@ -236,10 +205,7 @@ namespace System.Windows.Input
         /// <param name="handler">Event Handler to be added</param>
         public static void AddTextInputHandler(DependencyObject element, TextCompositionEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             UIElement.AddHandler(element, TextInputEvent, handler);
         }
@@ -251,10 +217,7 @@ namespace System.Windows.Input
         /// <param name="handler">Event Handler to be removed</param>
         public static void RemoveTextInputHandler(DependencyObject element, TextCompositionEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             UIElement.RemoveHandler(element, TextInputEvent, handler);
         }
@@ -350,19 +313,16 @@ namespace System.Windows.Input
 
         private static bool UnsafeStartComposition(TextComposition composition)
         {
-            if (composition == null)
-            {
-                throw new ArgumentNullException("composition");
-            }
+            ArgumentNullException.ThrowIfNull(composition);
 
             if (composition._InputManager == null)
             {
-                throw new ArgumentException(SR.Get(SRID.TextCompositionManager_NoInputManager, "composition"));
+                throw new ArgumentException(SR.Format(SR.TextCompositionManager_NoInputManager, "composition"));
             }
 
             if (composition.Stage != TextCompositionStage.None)
             {
-                throw new ArgumentException(SR.Get(SRID.TextCompositionManager_TextCompositionHasStarted, "composition"));
+                throw new ArgumentException(SR.Format(SR.TextCompositionManager_TextCompositionHasStarted, "composition"));
             }
 
             composition.Stage = TextCompositionStage.Started;
@@ -374,24 +334,21 @@ namespace System.Windows.Input
 
         private static bool UnsafeUpdateComposition(TextComposition composition)
         {
-            if (composition == null)
-            {
-                throw new ArgumentNullException("composition");
-            }
+            ArgumentNullException.ThrowIfNull(composition);
 
             if (composition._InputManager == null)
             {
-                throw new ArgumentException(SR.Get(SRID.TextCompositionManager_NoInputManager, "composition"));
+                throw new ArgumentException(SR.Format(SR.TextCompositionManager_NoInputManager, "composition"));
             }
 
             if (composition.Stage == TextCompositionStage.None)
             {
-                throw new ArgumentException(SR.Get(SRID.TextCompositionManager_TextCompositionNotStarted, "composition"));
+                throw new ArgumentException(SR.Format(SR.TextCompositionManager_TextCompositionNotStarted, "composition"));
             }
 
             if (composition.Stage == TextCompositionStage.Done)
             {
-                throw new ArgumentException(SR.Get(SRID.TextCompositionManager_TextCompositionHasDone, "composition"));
+                throw new ArgumentException(SR.Format(SR.TextCompositionManager_TextCompositionHasDone, "composition"));
             }
 
             TextCompositionEventArgs textargs = new TextCompositionEventArgs(composition._InputDevice, composition);
@@ -402,24 +359,21 @@ namespace System.Windows.Input
 
         private static bool UnsafeCompleteComposition(TextComposition composition)
         {
-            if (composition == null)
-            {
-                throw new ArgumentNullException("composition");
-            }
+            ArgumentNullException.ThrowIfNull(composition);
 
             if (composition._InputManager == null)
             {
-                throw new ArgumentException(SR.Get(SRID.TextCompositionManager_NoInputManager, "composition"));
+                throw new ArgumentException(SR.Format(SR.TextCompositionManager_NoInputManager, "composition"));
             }
 
             if (composition.Stage == TextCompositionStage.None)
             {
-                throw new ArgumentException(SR.Get(SRID.TextCompositionManager_TextCompositionNotStarted, "composition"));
+                throw new ArgumentException(SR.Format(SR.TextCompositionManager_TextCompositionNotStarted, "composition"));
             }
 
             if (composition.Stage == TextCompositionStage.Done)
             {
-                throw new ArgumentException(SR.Get(SRID.TextCompositionManager_TextCompositionHasDone, "composition"));
+                throw new ArgumentException(SR.Format(SR.TextCompositionManager_TextCompositionHasDone, "composition"));
             }
 
             composition.Stage = TextCompositionStage.Done;

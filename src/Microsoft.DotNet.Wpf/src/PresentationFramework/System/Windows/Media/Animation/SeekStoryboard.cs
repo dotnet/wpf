@@ -36,7 +36,7 @@ public sealed class SeekStoryboard : ControllableStoryboardAction
         {
             if (IsSealed)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "SeekStoryboard"));
+                throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "SeekStoryboard"));
             }
             // TimeSpan is a struct and can't be null - hence no ArgumentNullException check.
             _offset = value;
@@ -71,7 +71,7 @@ public sealed class SeekStoryboard : ControllableStoryboardAction
         {
             if (IsSealed)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "SeekStoryboard"));
+                throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "SeekStoryboard"));
             }
 
             if( value == TimeSeekOrigin.BeginTime || value == TimeSeekOrigin.Duration ) // FxCop doesn't like Enum.IsDefined, probably need some central validation mechanism.
@@ -80,7 +80,7 @@ public sealed class SeekStoryboard : ControllableStoryboardAction
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.Storyboard_UnrecognizedTimeSeekOrigin));
+                throw new ArgumentException(SR.Storyboard_UnrecognizedTimeSeekOrigin);
             }
         }
     }

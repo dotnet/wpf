@@ -136,7 +136,7 @@ C|ABCABCABC|ABCABCABC|ABCABCABC|ABCABCABC|A
 
  |123456789|  / 9 [ Norm-hw ]
 
-We can cheat like crazy here.  The CHwVertexBuffer generates the
+We can cheat here.  The CHwVertexBuffer generates the
 norm-vp coordinates from x,y, based on the rgmatPointToUV matrix.  If
 we append a scale by 1 / N to this matrix (where N is the multiplicity
 of the multipack) then the CHwVertexBuffer will never even realize

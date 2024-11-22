@@ -22,7 +22,6 @@ using System.Security;
 using MS.Win32;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -114,7 +113,7 @@ namespace System.Windows.Input
 
             if (resultText == null)
             {
-                throw new ArgumentException(SR.Get(SRID.TextComposition_NullResultText));
+                throw new ArgumentException(SR.TextComposition_NullResultText);
             }
 
             _resultText = resultText;

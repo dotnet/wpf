@@ -2,12 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System;
 using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
-using System.Windows;
-using System.Diagnostics.CodeAnalysis;
 #if SYSTEM_XAML
 using System.Xaml;
 #else
@@ -16,7 +16,6 @@ using MS.Internal.WindowsBase;
 
 //using MS.Internal.PresentationCore;
 //using SR=MS.Internal.WindowsBase.SR;
-//using SRID=MS.Internal.WindowsBase.SRID;
 
     // These classes implement a frugal storage model for lists of type <T>.
     // Performance measurements show that Avalon has many lists that contain
@@ -47,7 +46,6 @@ using MS.Internal.WindowsBase;
     // We suppress two FxCop warnings in this module because not all usages
     // of FrugalList will instantiate all the storage classes and not all class instances
     // will use every method.
-    // CA1811:AvoidUncalledPrivateCode
     // CA1812:AvoidUninstantiatedInternalClasses
     //
 
@@ -265,12 +263,12 @@ namespace MS.Utility
 
         public override bool Contains(T value)
         {
-            return _loneEntry.Equals(value);
+            return EqualityComparer<T>.Default.Equals(_loneEntry, value);
         }
 
         public override int IndexOf(T value)
         {
-            if (_loneEntry.Equals(value))
+            if (EqualityComparer<T>.Default.Equals(_loneEntry, value))
             {
                 return 0;
             }
@@ -298,7 +296,7 @@ namespace MS.Utility
         public override bool Remove(T value)
         {
             // Wipe out the info in the only entry if it matches the item.
-            if (_loneEntry.Equals(value))
+            if (EqualityComparer<T>.Default.Equals(_loneEntry, value))
             {
                 _loneEntry = default(T);
                 --_count;
@@ -311,15 +309,10 @@ namespace MS.Utility
         public override void RemoveAt(int index)
         {
             // Wipe out the info at index
-            if (0 == index)
-            {
-                _loneEntry = default(T);
-                --_count;
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException(nameof(index));
-            }
+            ArgumentOutOfRangeException.ThrowIfNotEqual(index, 0);
+
+            _loneEntry = default(T);
+            --_count;
         }
 
         public override T EntryAt(int index)
@@ -337,7 +330,7 @@ namespace MS.Utility
             else
             {
                 // this list is smaller than oldList
-                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
+                throw new ArgumentException(SR.Format(SR.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
             }
         }
 
@@ -369,14 +362,10 @@ namespace MS.Utility
 
         private void SetCount(int value)
         {
-            if ((value >= 0) && (value <= SIZE))
-            {
-                _count = value;
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException(nameof(value));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(value);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(value, SIZE);
+
+            _count = value;
         }
 
         private const int SIZE = 1;
@@ -440,17 +429,17 @@ namespace MS.Utility
 
         public override int IndexOf(T value)
         {
-            if (_entry0.Equals(value))
+            if (EqualityComparer<T>.Default.Equals(_entry0, value))
             {
                 return 0;
             }
             if (_count > 1)
             {
-                if (_entry1.Equals(value))
+                if (EqualityComparer<T>.Default.Equals(_entry1, value))
                 {
                     return 1;
                 }
-                if ((3 == _count) && (_entry2.Equals(value)))
+                if ((3 == _count) && EqualityComparer<T>.Default.Equals(_entry2, value))
                 {
                     return 2;
                 }
@@ -516,19 +505,19 @@ namespace MS.Utility
             // If the item matches an existing entry, wipe out the last
             // entry and move all the other entries up.  Because we only
             // have three entries we can just unravel all the cases.
-            if (_entry0.Equals(value))
+            if (EqualityComparer<T>.Default.Equals(_entry0, value))
             {
                 RemoveAt(0);
                 return true;
             }
             else if ( _count > 1)
             {
-                if (_entry1.Equals(value))
+                if (EqualityComparer<T>.Default.Equals(_entry1, value))
                 {
                     RemoveAt(1);
                     return true;
                 }
-                else if ((3 == _count) && (_entry2.Equals(value)))
+                else if ((3 == _count) && EqualityComparer<T>.Default.Equals(_entry2, value))
                 {
                     RemoveAt(2);
                     return true;
@@ -615,7 +604,7 @@ namespace MS.Utility
             else
             {
                 // this list is smaller than oldList
-                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
+                throw new ArgumentException(SR.Format(SR.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
             }
         }
 
@@ -695,14 +684,10 @@ namespace MS.Utility
 
         private void SetCount(int value)
         {
-            if ((value >= 0) && (value <= SIZE))
-            {
-                _count = value;
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException(nameof(value));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(value);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(value, SIZE);
+
+            _count = value;
         }
 
         private const int SIZE = 3;
@@ -781,35 +766,35 @@ namespace MS.Utility
 
         public override int IndexOf(T value)
         {
-            if (_entry0.Equals(value))
+            if (EqualityComparer<T>.Default.Equals(_entry0, value))
             {
                 return 0;
             }
             if (_count > 1)
             {
-                if (_entry1.Equals(value))
+                if (EqualityComparer<T>.Default.Equals(_entry1, value))
                 {
                     return 1;
                 }
                 if (_count > 2)
                 {
-                    if (_entry2.Equals(value))
+                    if (EqualityComparer<T>.Default.Equals(_entry2, value))
                     {
                         return 2;
                     }
                     if (_count > 3)
                     {
-                        if (_entry3.Equals(value))
+                        if (EqualityComparer<T>.Default.Equals(_entry3, value))
                         {
                             return 3;
                         }
                         if (_count > 4)
                         {
-                            if (_entry4.Equals(value))
+                            if (EqualityComparer<T>.Default.Equals(_entry4, value))
                             {
                                 return 4;
                             }
-                            if ((6 == _count) && (_entry5.Equals(value)))
+                            if ((6 == _count) && EqualityComparer<T>.Default.Equals(_entry5, value))
                             {
                                 return 5;
                             }
@@ -914,40 +899,40 @@ namespace MS.Utility
             // If the item matches an existing entry, wipe out the last
             // entry and move all the other entries up.  Because we only
             // have six entries we can just unravel all the cases.
-            if (_entry0.Equals(value))
+            if (EqualityComparer<T>.Default.Equals(_entry0, value))
             {
                 RemoveAt(0);
                 return true;
             }
             else if (_count > 1)
             {
-                if (_entry1.Equals(value))
+                if (EqualityComparer<T>.Default.Equals(_entry1, value))
                 {
                     RemoveAt(1);
                     return true;
                 }
                 else if (_count > 2)
                 {
-                    if (_entry2.Equals(value))
+                    if (EqualityComparer<T>.Default.Equals(_entry2, value))
                     {
                         RemoveAt(2);
                         return true;
                     }
                     else if (_count > 3)
                     {
-                        if (_entry3.Equals(value))
+                        if (EqualityComparer<T>.Default.Equals(_entry3, value))
                         {
                             RemoveAt(3);
                             return true;
                         }
                         else if (_count > 4)
                         {
-                            if (_entry4.Equals(value))
+                            if (EqualityComparer<T>.Default.Equals(_entry4, value))
                             {
                                 RemoveAt(4);
                                 return true;
                             }
-                            else if ((6 == _count) && (_entry5.Equals(value)))
+                            else if ((6 == _count) && EqualityComparer<T>.Default.Equals(_entry5, value))
                             {
                                 RemoveAt(5);
                                 return true;
@@ -1092,7 +1077,7 @@ namespace MS.Utility
             else
             {
                 // this list is smaller than oldList
-                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
+                throw new ArgumentException(SR.Format(SR.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
             }
         }
 
@@ -1131,7 +1116,7 @@ namespace MS.Utility
             else
             {
                 // this list is smaller than oldList
-                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
+                throw new ArgumentException(SR.Format(SR.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
             }
         }
 
@@ -1258,14 +1243,10 @@ namespace MS.Utility
 
         private void SetCount(int value)
         {
-            if ((value >= 0) && (value <= SIZE))
-            {
-                _count = value;
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException(nameof(value));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(value);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(value, SIZE);
+
+            _count = value;
         }
 
         private const int SIZE = 6;
@@ -1284,10 +1265,6 @@ namespace MS.Utility
     /// </summary>
     internal sealed class ArrayItemList<T> : FrugalListBase<T>
     {
-        public ArrayItemList()
-        {
-        }
-
         public ArrayItemList(int size)
         {
             // Make size a multiple of GROWTH
@@ -1298,73 +1275,52 @@ namespace MS.Utility
 
         public ArrayItemList(ICollection collection)
         {
-            if (collection != null)
-            {
-                _count = collection.Count;
-                _entries = new T[_count];
-                collection.CopyTo(_entries, 0);
-            }
+            Debug.Assert(collection is not null);
+            _count = collection.Count;
+            _entries = new T[_count];
+            collection.CopyTo(_entries, 0);
         }
 
         public ArrayItemList(ICollection<T> collection)
         {
-            if (collection != null)
-            {
-                _count = collection.Count;
-                _entries = new T[_count];
-                collection.CopyTo(_entries, 0);
-            }
+            Debug.Assert(collection is not null);
+            _count = collection.Count;
+            _entries = new T[_count];
+            collection.CopyTo(_entries, 0);
         }
 
         // Capacity of this store
-        public override int Capacity
-        {
-            get
-            {
-                if (_entries != null)
-                {
-                    return _entries.Length;
-                }
-                return 0;
-            }
-        }
+        public override int Capacity => _entries.Length;
 
         public override FrugalListStoreState Add(T value)
         {
             // If we don't have any entries or the existing entry is being overwritten,
             // then we can use this store. Otherwise we have to promote.
-            if ((null != _entries) && (_count < _entries.Length))
+            if (_count < _entries.Length)
             {
                 _entries[_count] = value;
                 ++_count;
             }
             else
             {
-                if (null != _entries)
+                int size = _entries.Length;
+
+                // Grow the list slowly while it is small but
+                // faster once it reaches the LARGEGROWTH size
+                if (size < LARGEGROWTH)
                 {
-                    int size = _entries.Length;
-
-                    // Grow the list slowly while it is small but
-                    // faster once it reaches the LARGEGROWTH size
-                    if (size < LARGEGROWTH)
-                    {
-                        size += GROWTH;
-                    }
-                    else
-                    {
-                        size += size >> 2;
-                    }
-
-                    T[] destEntries = new T[size];
-
-                    // Copy old array
-                    Array.Copy(_entries, 0, destEntries, 0, _entries.Length);
-                    _entries = destEntries;
+                    size += GROWTH;
                 }
                 else
                 {
-                    _entries = new T[MINSIZE];
+                    size += size >> 2;
                 }
+
+                T[] destEntries = new T[size];
+
+                // Copy old array
+                Array.Copy(_entries, 0, destEntries, 0, _entries.Length);
+                _entries = destEntries;
 
                 // Insert into new array
                 _entries[_count] = value;
@@ -1375,34 +1331,17 @@ namespace MS.Utility
 
         public override void Clear()
         {
-            // Wipe out the info.
-            for (int i = 0; i < _count; ++i)
-            {
-                _entries[i] = default(T);
-            }
+            _entries.AsSpan(0, _count).Clear();
             _count = 0;
         }
 
-        public override bool Contains(T value)
-        {
-            return (-1 != IndexOf(value));
-        }
+        public override bool Contains(T value) => IndexOf(value) >= 0;
 
-        public override int IndexOf(T value)
-        {
-            for (int index = 0; index < _count; ++index)
-            {
-                if (_entries[index].Equals(value))
-                {
-                    return index;
-                }
-            }
-            return -1;
-        }
+        public override int IndexOf(T value) => Array.IndexOf(_entries, value, 0, _count);
 
         public override void Insert(int index, T value)
         {
-            if ((null != _entries) && (_count < _entries.Length))
+            if (_count < _entries.Length)
             {
                 // Move down the required number of items
                 Array.Copy(_entries, index, _entries, index + 1, _count - index);
@@ -1423,13 +1362,11 @@ namespace MS.Utility
 
         public override bool Remove(T value)
         {
-            for (int index = 0; index < _count; ++index)
+            int index = IndexOf(value);
+            if (index >= 0)
             {
-                if (_entries[index].Equals(value))
-                {
-                    RemoveAt(index);
-                    return true;
-                }
+                RemoveAt(index);
+                return true;
             }
 
             return false;
@@ -1464,7 +1401,7 @@ namespace MS.Utility
                     continue;
                 }
                 // this list is smaller than oldList
-                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
+                throw new ArgumentException(SR.Format(SR.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
             }
         }
 
@@ -1539,28 +1476,13 @@ namespace MS.Utility
             else
             {
                 // this list is smaller than oldList
-                throw new ArgumentException(SR.Get(SRID.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
+                throw new ArgumentException(SR.Format(SR.FrugalList_TargetMapCannotHoldAllData, oldList.ToString(), this.ToString()), nameof(oldList));
             }
         }
 
-        public override T[] ToArray()
-        {
-            T[] array = new T[_count];
+        public override T[] ToArray() => _entries.AsSpan(0, _count).ToArray();
 
-            for (int i = 0; i < _count; ++i)
-            {
-                array[i] = _entries[i];
-            }
-            return array;
-        }
-
-        public override void CopyTo(T[] array, int index)
-        {
-            for (int i = 0; i < _count; ++i)
-            {
-                array[index+i] = _entries[i];
-            }
-        }
+        public override void CopyTo(T[] array, int index) => _entries.AsSpan(0, _count).CopyTo(array.AsSpan(index));
 
         public override object Clone()
         {
@@ -1571,14 +1493,10 @@ namespace MS.Utility
 
         private void SetCount(int value)
         {
-            if ((value >= 0) && (value <= _entries.Length))
-            {
-                _count = value;
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException(nameof(value));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(value);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(value, _entries.Length);
+
+            _count = value;
         }
 
         // MINSIZE and GROWTH chosen to minimize memory footprint
@@ -1685,9 +1603,6 @@ namespace MS.Utility
     // Use FrugalObjectList when more than one reference to the list is needed.
     // The "object" in FrugalObjectLIst refers to the list itself, not what the list contains.
 
-#if !SYSTEM_XAML
-    [FriendAccessAllowed] // Built into Core, also used by Framework.
-#endif
     internal class FrugalObjectList<T>
     {
         public FrugalObjectList()
@@ -1847,7 +1762,7 @@ namespace MS.Utility
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.FrugalList_CannotPromoteBeyondArray));
+                    throw new InvalidOperationException(SR.FrugalList_CannotPromoteBeyondArray);
                 }
             }
             return _listStore.Count - 1;
@@ -1922,25 +1837,22 @@ namespace MS.Utility
 
         public void EnsureIndex(int index)
         {
-            if (index >= 0)
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+
+            int delta = (index + 1) - Count;
+            if (delta > 0)
             {
-                int delta = (index + 1) - Count;
-                if (delta > 0)
+                // Grow the store
+                Capacity = index + 1;
+
+                T filler = default(T);
+
+                // Insert filler structs or objects
+                for (int i = 0; i < delta; ++i)
                 {
-                    // Grow the store
-                    Capacity = index + 1;
-
-                    T filler = default(T);
-
-                    // Insert filler structs or objects
-                    for (int i = 0; i < delta; ++i)
-                    {
-                        _listStore.Add(filler);
-                    }
+                    _listStore.Add(filler);
                 }
-                return;
             }
-            throw new ArgumentOutOfRangeException(nameof(index));
         }
 
         public T[] ToArray()
@@ -2019,9 +1931,6 @@ namespace MS.Utility
 
     // Use FrugalStructList when only one reference to the list is needed.
     // The "struct" in FrugalStructList refers to the list itself, not what the list contains.
-#if !SYSTEM_XAML
-    [FriendAccessAllowed] // Built into Core, also used by Framework.
-#endif
     internal struct FrugalStructList<T>
     {
         public FrugalStructList(int size)
@@ -2032,14 +1941,15 @@ namespace MS.Utility
 
         public FrugalStructList(ICollection collection)
         {
-            if (collection.Count > 6)
+            int count = collection.Count;
+            if (count > 6)
             {
                 _listStore = new ArrayItemList<T>(collection);
             }
             else
             {
                 _listStore = null;
-                Capacity = collection.Count;
+                Capacity = count;
                 foreach (T item in collection)
                 {
                     Add(item);
@@ -2049,17 +1959,29 @@ namespace MS.Utility
 
         public FrugalStructList(ICollection<T> collection)
         {
-            if (collection.Count > 6)
+            int count = collection.Count;
+            if (count > 6)
             {
                 _listStore = new ArrayItemList<T>(collection);
             }
             else
             {
                 _listStore = null;
-                Capacity = collection.Count;
-                foreach (T item in collection)
+                Capacity = count;
+
+                if (collection is IList<T> list)
                 {
-                    Add(item);
+                    for (int i = 0; i < count; i++)
+                    {
+                        Add(list[i]);
+                    }
+                }
+                else
+                {
+                    foreach (T item in collection)
+                    {
+                        Add(item);
+                    }
                 }
             }
         }
@@ -2212,7 +2134,7 @@ namespace MS.Utility
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.FrugalList_CannotPromoteBeyondArray));
+                    throw new InvalidOperationException(SR.FrugalList_CannotPromoteBeyondArray);
                 }
             }
             return _listStore.Count - 1;
@@ -2287,25 +2209,22 @@ namespace MS.Utility
 
         public void EnsureIndex(int index)
         {
-            if (index >= 0)
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+
+            int delta = (index + 1) - Count;
+            if (delta > 0)
             {
-                int delta = (index + 1) - Count;
-                if (delta > 0)
+                // Grow the store
+                Capacity = index + 1;
+
+                T filler = default(T);
+
+                // Insert filler structs or objects
+                for (int i = 0; i < delta; ++i)
                 {
-                    // Grow the store
-                    Capacity = index + 1;
-
-                    T filler = default(T);
-
-                    // Insert filler structs or objects
-                    for (int i = 0; i < delta; ++i)
-                    {
-                        _listStore.Add(filler);
-                    }
+                    _listStore.Add(filler);
                 }
-                return;
             }
-            throw new ArgumentOutOfRangeException(nameof(index));
         }
 
         public T[] ToArray()

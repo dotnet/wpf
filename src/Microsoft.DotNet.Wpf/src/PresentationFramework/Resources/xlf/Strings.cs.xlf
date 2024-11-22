@@ -1607,11 +1607,6 @@
         <target state="translated">Nepodařilo se převést zdroj na objekt.</target>
         <note />
       </trans-unit>
-      <trans-unit id="FileDialogBufferTooSmall">
-        <source>Too many files selected. Select fewer files and try again.</source>
-        <target state="translated">Bylo vybráno příliš mnoho souborů. Vyberte menší počet souborů a akci zopakujte.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="FileDialogCreatePrompt">
         <source>'{0}' does not exist.
 Do you want to create it?</source>
@@ -1624,11 +1619,6 @@ Chcete ho vytvořit?</target>
 Verify that the file name is correct.</source>
         <target state="translated">Prvek {0} neexistuje.
 Ověřte, zda je správný název souboru.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="FileDialogInvalidFileName">
-        <source>'{0}' is not a valid file name.</source>
-        <target state="translated">Název {0} není platným názvem souboru.</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogInvalidFilter">
@@ -1646,11 +1636,6 @@ Ověřte, zda je správný název souboru.</target>
 Do you want to replace it?</source>
         <target state="translated">Prvek {0} již existuje.
 Chcete ho nahradit?</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="FileDialogSubClassFailure">
-        <source>Cannot subclass a file dialog because sufficient memory is not available.</source>
-        <target state="translated">Nelze vytvořit podtřídu dialogu souboru, protože není k dispozici dostatek paměti.</target>
         <note />
       </trans-unit>
       <trans-unit id="FileFormatException">
@@ -3623,11 +3608,6 @@ Chcete ho nahradit?</target>
         <target state="translated">Prvek {0} musí být poskytnut při vytváření instance {1}.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Hodnota tohoto parametru musí být větší nebo rovna nule.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeLogicalNode">
         <source>Parameter must be FrameworkElement or FrameworkContentElement.</source>
         <target state="translated">Parametr musí být FrameworkElement nebo FrameworkContentElement.</target>
@@ -4785,7 +4765,7 @@ Chcete ho nahradit?</target>
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_PageDown">
         <source>Page Down</source>
-        <target state="translated">Page Down</target>
+        <target state="translated">O stránku dolů</target>
         <note />
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_PageLeft">
@@ -4800,7 +4780,7 @@ Chcete ho nahradit?</target>
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_PageUp">
         <source>Page Up</source>
-        <target state="translated">Page Up</target>
+        <target state="translated">O stránku nahoru</target>
         <note />
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_RightEdge">
@@ -4835,7 +4815,7 @@ Chcete ho nahradit?</target>
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_Top">
         <source>Top</source>
-        <target state="translated">Top</target>
+        <target state="translated">Nahoře</target>
         <note />
       </trans-unit>
       <trans-unit id="ScrollViewer_CannotBeNaN">

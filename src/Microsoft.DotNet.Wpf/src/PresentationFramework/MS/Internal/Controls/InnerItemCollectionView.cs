@@ -317,7 +317,7 @@ namespace MS.Internal.Controls
             else
             {
                 throw new ArgumentOutOfRangeException("index",
-                            SR.Get(SRID.ItemCollectionRemoveArgumentOutOfRange));
+                            SR.ItemCollectionRemoveArgumentOutOfRange);
             }
         }
 
@@ -462,8 +462,8 @@ namespace MS.Internal.Controls
         /// <returns>true if <seealso cref="CollectionView.CurrentItem"/> points to an item within the view.</returns>
         public override bool MoveCurrentToPosition(int position)
         {
-            if (position < -1 || position > ViewCount)
-                throw new ArgumentOutOfRangeException("position");
+            ArgumentOutOfRangeException.ThrowIfLessThan(position, -1);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(position, ViewCount);
 
             if (position != CurrentPosition && OKToChangeCurrent())
             {
@@ -713,7 +713,7 @@ namespace MS.Internal.Controls
             //  an attempt to add the same element twice to the collection
             if (LogicalTreeHelper.GetParent(node) != null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ReparentModelChildIllegal));
+                throw new InvalidOperationException(SR.ReparentModelChildIllegal);
             }
             return node;
         }

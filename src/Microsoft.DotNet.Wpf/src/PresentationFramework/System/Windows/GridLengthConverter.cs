@@ -126,7 +126,7 @@ namespace System.Windows
 
                     value = Convert.ToDouble(source, cultureInfo);
 
-                    if (DoubleUtil.IsNaN(value))
+                    if (double.IsNaN(value))
                     {
                         //  this allows for conversion from Width / Height = "Auto" 
                         value = 1.0;
@@ -166,10 +166,7 @@ namespace System.Windows
             object value,
             Type destinationType)
         {
-            if (destinationType == null)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
+            ArgumentNullException.ThrowIfNull(destinationType);
 
             if (    value != null
                 &&  value is GridLength )
@@ -220,7 +217,7 @@ namespace System.Windows
                     return (
                         DoubleUtil.IsOne(gl.Value)
                         ? "*"
-                        : Convert.ToString(gl.Value, cultureInfo) + "*");
+                        : $"{Convert.ToString(gl.Value, cultureInfo)}*");
 
                 //  for Pixel print out the numeric value. "px" can be omitted.
                 default:

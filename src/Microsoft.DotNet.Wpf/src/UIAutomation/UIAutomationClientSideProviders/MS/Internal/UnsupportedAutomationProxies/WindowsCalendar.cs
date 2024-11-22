@@ -356,7 +356,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
 
             if ((int)verticalPercent != (int)ScrollPattern.NoScroll)
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
             else if ((int)horizontalPercent == (int)ScrollPattern.NoScroll)
             {
@@ -364,7 +364,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
             }
             else if (horizontalPercent < 0 || horizontalPercent > 100)
             {
-                throw new ArgumentOutOfRangeException("horizontalPercent", SR.Get(SRID.ScrollBarOutOfRange));
+                throw new ArgumentOutOfRangeException("horizontalPercent", SR.ScrollBarOutOfRange);
             }
 
             int cDisplayedMonths = GetMonthCount();
@@ -415,12 +415,12 @@ namespace MS.Internal.UnsupportedAutomationProxies
 
             if (verticalAmount != ScrollAmount.NoAmount)
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             if (!Scroll(horizontalAmount))
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
         }
 
@@ -1138,7 +1138,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
             if (!fValid)
             {
                 throw new ArgumentException (
-                    SR.Get(SRID.InvalidDataTypeOfParameter, " DateTime or string "), "val");
+                    SR.Format(SR.InvalidDataTypeOfParameter, " DateTime or string "), "val");
             }
 
             return systemTime;
@@ -1646,11 +1646,11 @@ namespace MS.Internal.UnsupportedAutomationProxies
                 {
                     if (_item == (int)ButtonItem.Prev)
                     {
-                        return SR.Get(SRID.LocalizedNameWindowsCalendarButtonPrev);
+                        return SR.LocalizedNameWindowsCalendarButtonPrev;
                     }
                     else
                     {
-                        return SR.Get(SRID.LocalizedNameWindowsCalendarButtonNext);
+                        return SR.LocalizedNameWindowsCalendarButtonNext;
                     }
                 }
             }
@@ -1796,7 +1796,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
                         + item * (int) WindowsCalendar.CalendarItem.Last,
                     type, item)
             {
-                _sType = SR.Get(SRID.LocalizedControlTypeCalendarYear);
+                _sType = SR.LocalizedControlTypeCalendarYear;
                 _sAutomationId = "Calendar.Year " + item.ToString(CultureInfo.CurrentCulture); // This string is a non-localizable string
             }
 
@@ -1838,7 +1838,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
             void IRangeValueProvider.SetValue (double val)
             {
                 // It's Read Only...
-                throw new InvalidOperationException(SR.Get(SRID.ValueReadonly));
+                throw new InvalidOperationException(SR.ValueReadonly);
             }
 
             bool IRangeValueProvider.IsReadOnly
@@ -2024,7 +2024,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
                             + item * (int) WindowsCalendar.CalendarItem.Last,
                     type, item)
             {
-                _sType = SR.Get(SRID.LocalizedControlTypeCalendarMonth);
+                _sType = SR.LocalizedControlTypeCalendarMonth;
                 _sAutomationId = "Calendar.Month " + item.ToString(CultureInfo.CurrentCulture); // This string is a non-localizable string
             }
 
@@ -2254,7 +2254,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
                         WindowsCalendar.CalendarItem type)
                 : base (hwnd, parent, item, type, 0)
             {
-                _sType = SR.Get(SRID.LocalizedControlTypeCalendarTodayButton);
+                _sType = SR.LocalizedControlTypeCalendarTodayButton;
             }
 
             #endregion
@@ -2277,7 +2277,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
             {
                 get
                 {
-                    return SR.Get(SRID.LocalizedNameWindowsCalendarTodayLink);
+                    return SR.LocalizedNameWindowsCalendarTodayLink;
                 }
             }
 
@@ -2343,7 +2343,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
         internal CalendarTodayCircle(IntPtr hwnd, ProxyFragment parent, int item, WindowsCalendar.CalendarItem type)
             : base (hwnd, parent, item, type, item)
         {
-            _sType = SR.Get(SRID.LocalizedControlTypeCalendarTodayCircle);
+            _sType = SR.LocalizedControlTypeCalendarTodayCircle;
         }
     }
         #endregion CalendarTodayCircle 
@@ -2378,7 +2378,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
                     type, item)
             {
                 _cControlType = ControlType.List;
-                _sType = SR.Get(SRID.LocalizedControlTypeCalendarDays);
+                _sType = SR.LocalizedControlTypeCalendarDays;
                 _sAutomationId = "Calendar.Days " + item.ToString(CultureInfo.CurrentCulture); // This string is a non-localizable string
                 _winCalendar = (WindowsCalendar) _parent;
             }
@@ -2404,7 +2404,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
             {
                 get
                 {
-                    return SR.Get(SRID.LocalizedNameWindowsCalendarDates);
+                    return SR.LocalizedNameWindowsCalendarDates;
                 }
             }
 
@@ -2512,12 +2512,12 @@ namespace MS.Internal.UnsupportedAutomationProxies
             {
                 if (row < 0 || row >= MAX_WEEKS)
                 {
-                    throw new ArgumentOutOfRangeException("row", row, SR.Get(SRID.GridRowOutOfRange));
+                    throw new ArgumentOutOfRangeException("row", row, SR.GridRowOutOfRange);
                 }
 
                 if (column < 0 || column >= MAX_DAYS)
                 {
-                    throw new ArgumentOutOfRangeException("column", column, SR.Get(SRID.GridColumnOutOfRange));
+                    throw new ArgumentOutOfRangeException("column", column, SR.GridColumnOutOfRange);
                 }
 
                 int dayIndex = CalendarDay.DayIndexFromRowColumn(row, column);
@@ -2969,7 +2969,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
                 : base (hwnd, parent, item, iCalendar)
                 {
                     _cControlType = ControlType.HeaderItem;
-                    _sType = SR.Get(SRID.LocalizedControlTypeCalendarWeekNumber);
+                    _sType = SR.LocalizedControlTypeCalendarWeekNumber;
                     _sAutomationId = "Calendar.WeekNumber " + item.ToString(CultureInfo.CurrentCulture); // This string is a non-localizable string
                 }
 
@@ -3329,7 +3329,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
                 : base (hwnd, parent, item, iCalendar)
                 {
                     _cControlType = ControlType.HeaderItem;
-                    _sType = SR.Get(SRID.LocalizedControlTypeCalendarDayOfWeek);
+                    _sType = SR.LocalizedControlTypeCalendarDayOfWeek;
                     int adjustedItem = item + 8;
                     _sAutomationId = "Calendar.DayOfWeek " + adjustedItem.ToString(CultureInfo.CurrentCulture); // This string is a non-localizable string
                 }
@@ -3493,7 +3493,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
                 {
                     _winCalendar = (WindowsCalendar) parent._parent;
                     _cControlType = ControlType.ListItem;
-                    _sType = SR.Get(SRID.LocalizedControlTypeCalendarDay);
+                    _sType = SR.LocalizedControlTypeCalendarDay;
                     _sAutomationId = GetAutomationId();
 
                     _fIsContent = (GetDateTime() != DateTime.MinValue);
@@ -3641,7 +3641,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
                     // Could be a cell without a date.
                     if (itemDateTime == DateTime.MinValue)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
                     }
 
                     DateTime [] dateSelection = new DateTime [2];
@@ -3651,7 +3651,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
                     // do the selection
                     if (!WindowsCalendar.SetRawValue(_hwnd, dateSelection))
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
                     }
                 }
 
@@ -3676,7 +3676,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
                     // and other element(not us) is already selected return false
                     if (!WindowsCalendar.IsMultiSelect(_hwnd))
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.DoesNotSupportMultipleSelection));
+                        throw new InvalidOperationException(SR.DoesNotSupportMultipleSelection);
                     }
 
                     DateTime [] dateSelection =
@@ -3687,7 +3687,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
                     // Valid grid item but no date int the cell, before beginning or end of the week
                     if (itemDateTime == DateTime.MinValue)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
                     }
 
                     // The day can only be added if it 
@@ -3705,7 +3705,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
                     {
                         // Probably should throw
                         // cannot add
-                        throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
                     }
 
                     // check if there is enough space to add an element
@@ -3713,13 +3713,13 @@ namespace MS.Internal.UnsupportedAutomationProxies
                                         _hwnd, NativeMethods.MCM_GETMAXSELCOUNT, IntPtr.Zero, IntPtr.Zero);
                     if ((dateSelection [1] - dateSelection [0]).Days >= cSelCount)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
                     }
 
                     // do the selection
                     if (!WindowsCalendar.SetRawValue(_hwnd, dateSelection))
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
                     }
                 }
 
@@ -3742,7 +3742,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
 
                     if (!WindowsCalendar.IsMultiSelect (_hwnd))
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.DoesNotSupportMultipleSelection));
+                        throw new InvalidOperationException(SR.DoesNotSupportMultipleSelection);
                     }
 
                     DateTime [] dateSelection =
@@ -3754,7 +3754,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
 
                     if (itemDateTime == DateTime.MinValue)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
                     }
 
                     TimeSpan ts = itemDateTime - dateSelection[0];
@@ -3763,7 +3763,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
                     //currently selected. We cannot remove the selection if its only the selected one.
                     if ((dateSelection[1] - dateSelection[0]).Days == 0)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
                     }
                     else if (ts.Days == 0)
                     {
@@ -3776,13 +3776,13 @@ namespace MS.Internal.UnsupportedAutomationProxies
                     else
                     {
                         // Check if the day is next to any other day
-                        throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
                     }
 
                     // do the selection
                     if (!WindowsCalendar.SetRawValue(_hwnd, dateSelection))
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
                     }
                 }
 

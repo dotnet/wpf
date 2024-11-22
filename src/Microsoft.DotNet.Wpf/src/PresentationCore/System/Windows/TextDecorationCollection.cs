@@ -18,8 +18,6 @@ using System.Globalization;
 using System.Windows.Media.Animation;
 using System.Windows.Markup;
 
-using MS.Internal.PresentationCore;
-
 namespace System.Windows
 {
     /// <summary>
@@ -42,7 +40,6 @@ namespace System.Windows
         /// It only compares the public properties to serve the specific Framework's needs in inline property 
         /// management and Editing serialization. 
         /// </remarks>        
-        [FriendAccessAllowed]   // used by Framework
         internal bool ValueEquals(TextDecorationCollection textDecorations)
         {
             if (textDecorations == null) 
@@ -72,12 +69,9 @@ namespace System.Windows
         [CLSCompliant(false)]
         public void Add(IEnumerable<TextDecoration> textDecorations)
         {
-            if (textDecorations == null)
-            {
-                throw new ArgumentNullException("textDecorations");
-            }
+            ArgumentNullException.ThrowIfNull(textDecorations);
 
-            foreach(TextDecoration textDecoration in textDecorations)
+            foreach (TextDecoration textDecoration in textDecorations)
             {
                 Add(textDecoration);
             }                
@@ -99,10 +93,7 @@ namespace System.Windows
         /// <returns>True if at least one item was removed from the current collection, False otherwise</returns>
         public bool TryRemove(IEnumerable<TextDecoration> textDecorations, out TextDecorationCollection result)
         {
-            if (textDecorations == null)
-            {
-                throw new ArgumentNullException(nameof(textDecorations));
-            }
+            ArgumentNullException.ThrowIfNull(textDecorations);
 
             bool removed = false;
             result = this.Clone(); //the current collection might be frozen, so clone it

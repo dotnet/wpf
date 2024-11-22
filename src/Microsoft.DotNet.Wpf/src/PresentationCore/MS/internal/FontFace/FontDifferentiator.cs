@@ -68,7 +68,7 @@ namespace MS.Internal.FontFace
             {
                 if (faceNameBuilder.Length > 0)
                 {
-                    faceNameBuilder.Append(" ");
+                    faceNameBuilder.Append(' ');
                 }
                 faceNameBuilder.Append(parsedWeightName);
             }
@@ -77,7 +77,7 @@ namespace MS.Internal.FontFace
             {
                 if (faceNameBuilder.Length > 0)
                 {
-                    faceNameBuilder.Append(" ");
+                    faceNameBuilder.Append(' ');
                 }
                 faceNameBuilder.Append(parsedStyleName);
             }

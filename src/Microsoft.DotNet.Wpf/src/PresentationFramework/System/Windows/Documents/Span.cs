@@ -96,21 +96,15 @@ namespace System.Windows.Documents
         /// </remarks>
         public Span(TextPointer start, TextPointer end)
         {
-            if (start == null)
-            {
-                throw new ArgumentNullException("start");
-            }
-            if (end == null)
-            {
-                throw new ArgumentNullException("start");
-            }
+            ArgumentNullException.ThrowIfNull(start);
+            ArgumentNullException.ThrowIfNull(end);
             if (start.TextContainer != end.TextContainer)
             {
-                throw new ArgumentException(SR.Get(SRID.InDifferentTextContainers, "start", "end"));
+                throw new ArgumentException(SR.Format(SR.InDifferentTextContainers, "start", "end"));
             }
             if (start.CompareTo(end) > 0)
             {
-                throw new ArgumentException(SR.Get(SRID.BadTextPositionOrder, "start", "end"));
+                throw new ArgumentException(SR.Format(SR.BadTextPositionOrder, "start", "end"));
             }
 
             start.TextContainer.BeginChange();
@@ -123,18 +117,18 @@ namespace System.Windows.Documents
 
                 if (start.Paragraph != end.Paragraph)
                 {
-                    throw new ArgumentException(SR.Get(SRID.InDifferentParagraphs, "start", "end"));
+                    throw new ArgumentException(SR.Format(SR.InDifferentParagraphs, "start", "end"));
                 }
 
                 // If start or end positions have a Hyperlink ancestor, we cannot split them.
                 Inline nonMergeableAncestor;
                 if ((nonMergeableAncestor = start.GetNonMergeableInlineAncestor()) != null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.TextSchema_CannotSplitElement, nonMergeableAncestor.GetType().Name));
+                    throw new InvalidOperationException(SR.Format(SR.TextSchema_CannotSplitElement, nonMergeableAncestor.GetType().Name));
                 }
                 if ((nonMergeableAncestor = end.GetNonMergeableInlineAncestor()) != null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.TextSchema_CannotSplitElement, nonMergeableAncestor.GetType().Name));
+                    throw new InvalidOperationException(SR.Format(SR.TextSchema_CannotSplitElement, nonMergeableAncestor.GetType().Name));
                 }
 
                 TextElement commonAncestor = TextElement.GetCommonAncestor((TextElement)start.Parent, (TextElement)end.Parent);

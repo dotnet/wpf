@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -31,7 +33,7 @@ namespace System.Xaml
         /// Lazy init: NullableReference.IsSet is null when not initialized
         /// </summary>
         private NullableReference<Type> _underlyingType;
-        
+
         // Lazy init: null until initialized
         // Thread safety: idempotent, assignment races are okay; do not assign incomplete values
         ReadOnlyCollection<string> _namespaces;
@@ -46,17 +48,14 @@ namespace System.Xaml
 
         public XamlType(string unknownTypeNamespace, string unknownTypeName, IList<XamlType> typeArguments, XamlSchemaContext schemaContext)
         {
-            if (unknownTypeNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(unknownTypeNamespace));
-            }
+            ArgumentNullException.ThrowIfNull(unknownTypeNamespace);
 
             _name = unknownTypeName ?? throw new ArgumentNullException(nameof(unknownTypeName));
             _namespaces = new ReadOnlyCollection<string>(new string[] { unknownTypeNamespace });
             _schemaContext = schemaContext ?? throw new ArgumentNullException(nameof(schemaContext));
             _typeArguments = GetTypeArguments(typeArguments);
             _reflector = TypeReflector.UnknownReflector;
-        }        
+        }
 
         public XamlType(Type underlyingType, XamlSchemaContext schemaContext)
             :this(underlyingType, schemaContext, null)
@@ -70,10 +69,7 @@ namespace System.Xaml
 
         internal XamlType(string alias, Type underlyingType, XamlSchemaContext schemaContext, XamlTypeInvoker invoker, TypeReflector reflector)
         {
-            if (underlyingType == null)
-            {
-                throw new ArgumentNullException(nameof(underlyingType));
-            }
+            ArgumentNullException.ThrowIfNull(underlyingType);
 
             _reflector = reflector ?? new TypeReflector(underlyingType);
             _name = alias ?? GetTypeName(underlyingType);
@@ -231,7 +227,7 @@ namespace System.Xaml
             get
             {
                 XamlCollectionKind collectionKind = GetCollectionKind();
-                if (collectionKind != XamlCollectionKind.Collection && 
+                if (collectionKind != XamlCollectionKind.Collection &&
                     collectionKind != XamlCollectionKind.Dictionary)
                 {
                     return null;
@@ -239,7 +235,7 @@ namespace System.Xaml
                 Debug.Assert(_reflector != null, "_reflector should have been initialized by GetCollectionKind");
                 if (_reflector.AllowedContentTypes == null)
                 {
-                    _reflector.AllowedContentTypes = LookupAllowedContentTypes() ?? 
+                    _reflector.AllowedContentTypes = LookupAllowedContentTypes() ??
                         EmptyList<XamlType>.Value;
                 }
                 return _reflector.AllowedContentTypes;
@@ -257,7 +253,7 @@ namespace System.Xaml
                 Debug.Assert(_reflector != null, "_reflector should have been initialized by IsCollection");
                 if (_reflector.ContentWrappers == null)
                 {
-                    _reflector.ContentWrappers = LookupContentWrappers() ?? 
+                    _reflector.ContentWrappers = LookupContentWrappers() ??
                         EmptyList<XamlType>.Value;
                 }
                 return _reflector.ContentWrappers;
@@ -370,7 +366,7 @@ namespace System.Xaml
         public XamlMember GetAliasedProperty(XamlDirective directive)
         {
             EnsureReflector();
-            // Perf note: would be nice to optimize this. We currently have to do the same mapping of 
+            // Perf note: would be nice to optimize this. We currently have to do the same mapping of
             // the directive to one of the four known directives 3 times for each type in the hierarchy
             XamlMember result;
             if (!_reflector.TryGetAliasedProperty(directive, out result))
@@ -477,19 +473,19 @@ namespace System.Xaml
             AppendTypeName(sb, false);
             return sb.ToString();
         }
-        
+
         internal bool IsUsableAsReadOnly
         {
             get
             {
                 XamlCollectionKind collectionKind = GetCollectionKind();
-                return 
+                return
                     (collectionKind == XamlCollectionKind.Collection) ||
                     (collectionKind == XamlCollectionKind.Dictionary) ||
                     IsXData;
             }
         }
-       
+
         internal MethodInfo IsReadOnlyMethod
         {
             get
@@ -1001,8 +997,8 @@ namespace System.Xaml
             }
 
             EnsureReflector();
-            ICollection<PropertyInfo> properties; 
-            ICollection<EventInfo> events; 
+            ICollection<PropertyInfo> properties;
+            ICollection<EventInfo> events;
             List<XamlMember> result;
             _reflector.LookupAllMembers(out properties, out events, out result);
 
@@ -1282,7 +1278,7 @@ namespace System.Xaml
                     {
                         return null;
                     }
-                    return (EventHandler<XamlSetMarkupExtensionEventArgs>)SafeReflectionInvoker.CreateDelegate(
+                    return (EventHandler<XamlSetMarkupExtensionEventArgs>)Delegate.CreateDelegate(
                         typeof(EventHandler<XamlSetMarkupExtensionEventArgs>), UnderlyingType, methodName);
                 }
             }
@@ -1304,7 +1300,7 @@ namespace System.Xaml
                     {
                         return null;
                     }
-                    return (EventHandler<XamlSetTypeConverterEventArgs>)SafeReflectionInvoker.CreateDelegate(
+                    return (EventHandler<XamlSetTypeConverterEventArgs>)Delegate.CreateDelegate(
                         typeof(EventHandler<XamlSetTypeConverterEventArgs>), UnderlyingType, methodName);
                 }
             }
@@ -1481,7 +1477,7 @@ namespace System.Xaml
             {
                 if (typeArg == null)
                 {
-                    throw new ArgumentException(SR.Get(SRID.CollectionCannotContainNulls, "typeArguments"));
+                    throw new ArgumentException(SR.Format(SR.CollectionCannotContainNulls, "typeArguments"));
                 }
             }
             return new List<XamlType>(typeArguments).AsReadOnly();
@@ -1517,7 +1513,7 @@ namespace System.Xaml
                 // save the subscript
                 string subscript;
                 typeName = GenericTypeNameScanner.StripSubscript(typeName, out subscript);
-                typeName = typeName.Substring(0, index) + subscript;
+                typeName = string.Concat(typeName.AsSpan(0, index), subscript);
             }
             // if nested, add the containing name
             if (type.IsNested)
@@ -1541,7 +1537,7 @@ namespace System.Xaml
             {
                 return null;
             }
-            
+
             // Force the list of all members to populate
             ICollection<XamlMember> allMembers = GetAllMembers();
 
@@ -1597,7 +1593,7 @@ namespace System.Xaml
                 {
                     if (!SchemaContext.SupportMarkupExtensionsWithDuplicateArity)
                     {
-                        throw new XamlSchemaException(SR.Get(SRID.MarkupExtensionWithDuplicateArity, UnderlyingType, typeVector.Length));
+                        throw new XamlSchemaException(SR.Format(SR.MarkupExtensionWithDuplicateArity, UnderlyingType, typeVector.Length));
                     }
                     // Otherwise we just ignore the dupe
                 }
@@ -1647,7 +1643,7 @@ namespace System.Xaml
                     if (bit && IsMarkupExtension)
                     {
                         // MarkupExtension cannot be used during initialization.
-                        string err = SR.Get(SRID.UsableDuringInitializationOnME, this);
+                        string err = SR.Format(SR.UsableDuringInitializationOnME, this);
                         throw new XamlSchemaException(err);
                     }
                     break;
@@ -1681,7 +1677,7 @@ namespace System.Xaml
         // This poses a challenge: if the attribute is defined on a base type, and a derived type
         //   shadows the named member, which do we return?
         // v3 returned that derived member. Also, some attribute lookup methods (e.g. TypeDescriptor)
-        //   always coalesce inheritance hierarchy, which would make it difficult to determine 
+        //   always coalesce inheritance hierarchy, which would make it difficult to determine
         //   whether the attribute was defined on a base or derived class.
         // So, for consistency and compat, we coalesce the hierarchy here, so the caller will always
         //   return the derived member.
@@ -1725,8 +1721,11 @@ namespace System.Xaml
         {
             if (IsUnknown)
             {
-                Debug.Assert(_namespaces != null && _namespaces.Count > 0);
-                int result = _name.GetHashCode() ^ _namespaces[0].GetHashCode();
+                int result = _name.GetHashCode();
+                if (_namespaces != null && _namespaces.Count > 0)
+                {
+                    result ^= _namespaces[0].GetHashCode();
+                }
                 if (_typeArguments != null && _typeArguments.Count > 0)
                 {
                     foreach (XamlType typeArgument in _typeArguments)
@@ -1768,11 +1767,20 @@ namespace System.Xaml
             {
                 if (xamlType2.IsUnknown)
                 {
-                    Debug.Assert(xamlType1._namespaces != null && xamlType1._namespaces.Count > 0);
-                    Debug.Assert(xamlType2._namespaces != null && xamlType2._namespaces.Count > 0);
+                    if (xamlType1._namespaces != null)
+                    {
+                        if (xamlType2._namespaces == null || xamlType1._namespaces[0] != xamlType2._namespaces[0])
+                        {
+                            return false;
+                        }
+                    }
+                    else if (xamlType2._namespaces != null)
+                    {
+                        return false;
+                    }
+
                     return (xamlType1._name == xamlType2._name) &&
-                        (xamlType1._namespaces[0] == xamlType2._namespaces[0]) &&
-                        typeArgumentsAreEqual(xamlType1, xamlType2);
+                        TypeArgumentsAreEqual(xamlType1, xamlType2);
                 }
                 return false;
             }
@@ -1791,9 +1799,10 @@ namespace System.Xaml
             return !(xamlType1 == xamlType2);
         }
 
-        private static bool typeArgumentsAreEqual(XamlType xamlType1, XamlType xamlType2)
+        private static bool TypeArgumentsAreEqual(XamlType xamlType1, XamlType xamlType2)
         {
-            Debug.Assert(xamlType1.IsUnknown && xamlType2.IsUnknown);
+            Debug.Assert(xamlType1.IsUnknown);
+            Debug.Assert(xamlType2.IsUnknown);
             if (!xamlType1.IsGeneric)
             {
                 return !xamlType2.IsGeneric;

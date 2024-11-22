@@ -28,7 +28,6 @@ using System.Globalization;
 using MS.Internal.PresentationCore;                        // SafeSecurityHelper
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.Automation
 {
@@ -241,11 +240,11 @@ namespace MS.Internal.Automation
 
                 if(dispatcherInShutdown)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.AutomationDispatcherShutdown));
+                    throw new InvalidOperationException(SR.AutomationDispatcherShutdown);
                 }
                 else
                 {
-                    throw new TimeoutException(SR.Get(SRID.AutomationTimeout));
+                    throw new TimeoutException(SR.AutomationTimeout);
                 }
             }
             

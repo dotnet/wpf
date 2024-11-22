@@ -152,10 +152,7 @@ namespace System.Windows.Controls
         /// </remarks>
         internal static Label GetLabeledBy(DependencyObject o)
         {
-            if (o == null)
-            {
-                throw new ArgumentNullException("o");
-            }
+            ArgumentNullException.ThrowIfNull(o);
 
             return (Label)o.GetValue(LabeledByProperty);
         }

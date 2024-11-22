@@ -11,7 +11,6 @@ using System.Windows.Media.Media3D;
 using MS.Internal.PresentationCore;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.Media
 {
@@ -224,7 +223,7 @@ namespace MS.Internal.Media
             // Would DTypes be faster?
             if (!(element is Visual || element is Visual3D))
             {
-                throw new ArgumentException(SR.Get(SRID.Visual_NotAVisual));
+                throw new ArgumentException(SR.Visual_NotAVisual);
             }
 
             element.VerifyAccess();            
@@ -236,10 +235,7 @@ namespace MS.Internal.Media
         /// </summary>
         internal static void AsNonNullVisual(DependencyObject element, out Visual visual, out Visual3D visual3D)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             AsVisual(element, out visual, out visual3D);
 
@@ -261,7 +257,7 @@ namespace MS.Internal.Media
             {
                 if (!castSucceeded)
                 {
-                    throw new System.InvalidOperationException(SR.Get(SRID.Visual_NotAVisual, element.GetType()));
+                    throw new System.InvalidOperationException(SR.Format(SR.Visual_NotAVisual, element.GetType()));
                 }
 
                 Debug.Assert(castSucceeded && ((visual == null) != (visual3D == null)),

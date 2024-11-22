@@ -123,7 +123,7 @@ namespace System.Windows.Documents
 
             if (_disposed)
             {
-                throw new ObjectDisposedException(SR.Get(SRID.HyphenatorDisposed));
+                throw new ObjectDisposedException(SR.HyphenatorDisposed);
             }
 
             byte[] isHyphenPositions = new byte[(length + 7) / 8];

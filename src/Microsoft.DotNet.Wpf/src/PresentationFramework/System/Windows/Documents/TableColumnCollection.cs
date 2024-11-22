@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿//
+//
 // Description: Collection of TableColumn objects.
 //
 
@@ -278,7 +278,7 @@ namespace System.Windows.Documents
 
             if (item == null)
             {
-                throw new ArgumentException(SR.Get(SRID.TableCollectionElementTypeExpected, typeof(TableColumn).Name), "value");
+                throw new ArgumentException(SR.Format(SR.TableCollectionElementTypeExpected, typeof(TableColumn).Name), "value");
             }
 
             return ((IList)_columnCollection).Add(value);

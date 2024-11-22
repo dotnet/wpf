@@ -125,19 +125,7 @@ namespace MS.Internal.AutomationProxies
 
         ITextRangeProvider ITextRangeProvider.FindText(string text, bool backwards, bool ignoreCase)
         {
-            // PerSharp/PreFast will flag this as warning 6507/56507: Prefer 'string.IsNullOrEmpty(text)' over checks for null and/or emptiness.
-            // A null string is not should throw an ArgumentNullException while an empty string should throw an ArgumentException.
-            // Therefore we can not use IsNullOrEmpty() here, suppress the warning.
-#pragma warning suppress 6507
-            if (text == null)
-            {
-                throw new ArgumentNullException("text");
-            }
-#pragma warning suppress 6507
-            if (text.Length == 0)
-            {
-                throw new ArgumentException(SR.Get(SRID.InvalidParameter));
-            }
+            ArgumentException.ThrowIfNullOrEmpty(text);
 
             // copy the our range and search from the start point or end point depending on 
             // whether we are searching backwards.
@@ -741,7 +729,7 @@ namespace MS.Internal.AutomationProxies
                     else
                     {
                         // on subsequent iterations compare if the font name is the same.
-                        if (string.Compare(name, unitRange.Font.Name, StringComparison.Ordinal) != 0)
+                        if (!string.Equals(name, unitRange.Font.Name, StringComparison.Ordinal))
                         {
                             return TextPattern.MixedAttributeValue;
                         }

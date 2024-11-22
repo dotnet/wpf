@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -101,10 +100,7 @@ namespace System.Windows.Media.Animation
         /// <returns></returns>
         public bool Contains(Clock item)
         {
-            if (item == null)
-            {
-                throw new ArgumentNullException("item");
-            }
+            ArgumentNullException.ThrowIfNull(item);
 
             foreach (Clock t in this)
             {
@@ -361,7 +357,7 @@ namespace System.Windows.Media.Animation
              {
                 get
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Timing_EnumeratorOutOfRange));
+                    throw new InvalidOperationException(SR.Timing_EnumeratorOutOfRange);
                 }
             }
 
@@ -403,7 +399,7 @@ namespace System.Windows.Media.Animation
 
                 if (clockGroup != null && clockGroup.InternalChildren != null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Timing_EnumeratorInvalidated));
+                    throw new InvalidOperationException(SR.Timing_EnumeratorInvalidated);
                 }
 
                 return false;

@@ -64,10 +64,8 @@ namespace System.Windows.Automation.Peers
         virtual internal void SetValueCore(double val)
         {
             RangeBase owner = (RangeBase)Owner;
-            if (val < owner.Minimum || val > owner.Maximum)
-            {
-                throw new ArgumentOutOfRangeException("val");
-            }
+            ArgumentOutOfRangeException.ThrowIfLessThan(val, owner.Minimum);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(val, owner.Maximum);
 
             owner.Value = (double)val;
         }

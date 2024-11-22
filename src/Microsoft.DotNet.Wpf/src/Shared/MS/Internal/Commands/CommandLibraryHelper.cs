@@ -19,11 +19,9 @@ using System.Security;
 using System.Windows.Input; 
 
 
-using MS.Internal.PresentationCore; // for FriendAccessAllowed
 
 namespace MS.Internal
 {
-    [FriendAccessAllowed]
     internal static class CommandLibraryHelper
     {
         internal static RoutedUICommand CreateUICommand(string name, Type ownerType, byte commandId)

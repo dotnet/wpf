@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,9 +14,7 @@ using System.Threading;
 using System.Xaml.MS.Impl;
 using System.Xaml.Schema;
 using MS.Internal.Xaml.Parser;
-#if !TARGETTING35SP1
 using System.Collections.Concurrent;
-#endif
 
 namespace System.Xaml
 {
@@ -36,8 +36,8 @@ namespace System.Xaml
         private readonly ReadOnlyCollection<Assembly> _referenceAssemblies;
 
         // take this lock when iterating new assemblies in the AppDomain/RefAssm
-        object _syncExaminingAssemblies;               
-        
+        object _syncExaminingAssemblies;
+
         #endregion
 
         #region Constructors
@@ -136,10 +136,7 @@ namespace System.Xaml
 
         public virtual string GetPreferredPrefix(string xmlns)
         {
-            if (xmlns == null)
-            {
-                throw new ArgumentNullException(nameof(xmlns));
-            }
+            ArgumentNullException.ThrowIfNull(xmlns);
             UpdateXmlNsInfo();
             if (_preferredPrefixes == null)
             {
@@ -186,7 +183,7 @@ namespace System.Xaml
             if (sb.Length > 0)
             {
                 string result = sb.ToString();
-                
+
                 if (KS.Eq(result, XamlLanguage.PreferredPrefix))
                 {
                     // Prevent this algorithm from stealing 'x'
@@ -250,14 +247,8 @@ namespace System.Xaml
 
         public virtual XamlDirective GetXamlDirective(string xamlNamespace, string name)
         {
-            if (xamlNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(xamlNamespace));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            ArgumentNullException.ThrowIfNull(xamlNamespace);
+            ArgumentNullException.ThrowIfNull(name);
 
             if (XamlLanguage.XamlNamespaces.Contains(xamlNamespace))
             {
@@ -272,17 +263,14 @@ namespace System.Xaml
 
         public XamlType GetXamlType(XamlTypeName xamlTypeName)
         {
-            if (xamlTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(xamlTypeName));
-            }
+            ArgumentNullException.ThrowIfNull(xamlTypeName);
             if (xamlTypeName.Name == null)
             {
-                throw new ArgumentException(SR.Get(SRID.ReferenceIsNull, "xamlTypeName.Name"), nameof(xamlTypeName));
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "xamlTypeName.Name"), nameof(xamlTypeName));
             }
             if (xamlTypeName.Namespace == null)
             {
-                throw new ArgumentException(SR.Get(SRID.ReferenceIsNull, "xamlTypeName.Namespace"), nameof(xamlTypeName));
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "xamlTypeName.Namespace"), nameof(xamlTypeName));
             }
 
             XamlType[] typeArgs = null;
@@ -293,7 +281,7 @@ namespace System.Xaml
                 {
                     if (xamlTypeName.TypeArguments[i] == null)
                     {
-                        throw new ArgumentException(SR.Get(SRID.CollectionCannotContainNulls, "xamlTypeName.TypeArguments"));
+                        throw new ArgumentException(SR.Format(SR.CollectionCannotContainNulls, "xamlTypeName.TypeArguments"));
                     }
                     typeArgs[i] = GetXamlType(xamlTypeName.TypeArguments[i]);
                     if (typeArgs[i] == null)
@@ -307,21 +295,15 @@ namespace System.Xaml
 
         protected internal virtual XamlType GetXamlType(string xamlNamespace, string name, params XamlType[] typeArguments)
         {
-            if (xamlNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(xamlNamespace));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            ArgumentNullException.ThrowIfNull(xamlNamespace);
+            ArgumentNullException.ThrowIfNull(name);
             if (typeArguments != null)
             {
                 foreach (XamlType typeArg in typeArguments)
                 {
                     if (typeArg == null)
                     {
-                        throw new ArgumentException(SR.Get(SRID.CollectionCannotContainNulls, "typeArguments"));
+                        throw new ArgumentException(SR.Format(SR.CollectionCannotContainNulls, "typeArguments"));
                     }
                     if (typeArg.UnderlyingType == null)
                     {
@@ -368,7 +350,7 @@ namespace System.Xaml
         // Laziy init, always access through property
         private ConcurrentDictionary<string, string> _xmlNsCompatDict;
 
-        // Thread-safe cache - always use TryAdd or TryUpdate to write 
+        // Thread-safe cache - always use TryAdd or TryUpdate to write
         private ConcurrentDictionary<string, string> XmlNsCompatDict
         {
             get
@@ -382,10 +364,7 @@ namespace System.Xaml
         // Note: this method doesn't apply transitive subsuming, the caller is responsible for doing that.
         public virtual bool TryGetCompatibleXamlNamespace(string xamlNamespace, out string compatibleNamespace)
         {
-            if (xamlNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(xamlNamespace));
-            }
+            ArgumentNullException.ThrowIfNull(xamlNamespace);
 
             // Note: this method has order-dependent behavior for backcompat.
             // When we look up a namespace, we throw if it has conflicting XmlnsCompatAttributes.
@@ -397,11 +376,11 @@ namespace System.Xaml
             {
                 return true;
             }
-            
+
             // Then look for XmlnsCompatAttributes
             UpdateXmlNsInfo();
             compatibleNamespace = GetCompatibleNamespace(xamlNamespace);
-            
+
             // Fall back to just using the requested namespace;
             if (compatibleNamespace == null)
             {
@@ -469,7 +448,7 @@ namespace System.Xaml
                     {
                         if (result != null && result != newNs)
                         {
-                            throw new XamlSchemaException(SR.Get(SRID.DuplicateXmlnsCompatAcrossAssemblies,
+                            throw new XamlSchemaException(SR.Format(SR.DuplicateXmlnsCompatAcrossAssemblies,
                                 resultAssembly.FullName, curAssembly.FullName, oldNs));
                         }
                         result = newNs;
@@ -490,13 +469,13 @@ namespace System.Xaml
         private ConcurrentDictionary<ReferenceEqualityTuple<MemberInfo, MemberInfo>, XamlMember> _masterMemberList;
         private ConcurrentDictionary<XamlType, Dictionary<string,SpecialBracketCharacters> > _masterBracketCharacterCache;
 
-        // Security note: all of these ConcurrentDictionaries use Reference Equality to prevent spoofing of 
+        // Security note: all of these ConcurrentDictionaries use Reference Equality to prevent spoofing of
         // RuntimeTypes/Members by other custom derived descendants of System.Type/MemberInfo.
         // E.g. if a user called GetXamlType(Type) and passed in a custom descendant of System.Type
         // that reported itself as Equal to some real type, then when we went to look up the real
         // type, we would get the spoofed one instead. Using reference equality avoids that.
 
-        // Thread-safe cache - always use TryAdd or TryUpdate to write 
+        // Thread-safe cache - always use TryAdd or TryUpdate to write
         private ConcurrentDictionary<XamlType, Dictionary<string, SpecialBracketCharacters> > MasterBracketCharacterCache
         {
             get
@@ -507,7 +486,7 @@ namespace System.Xaml
             }
         }
 
-        // Thread-safe cache - always use TryAdd or TryUpdate to write 
+        // Thread-safe cache - always use TryAdd or TryUpdate to write
         private ConcurrentDictionary<Type, XamlType> MasterTypeList
         {
             get
@@ -518,7 +497,7 @@ namespace System.Xaml
             }
         }
 
-        // Thread-safe cache - always use TryAdd or TryUpdate to write 
+        // Thread-safe cache - always use TryAdd or TryUpdate to write
         private ConcurrentDictionary<ReferenceEqualityTuple<Type, XamlType, Type>, object> MasterValueConverterList
         {
             get
@@ -529,7 +508,7 @@ namespace System.Xaml
             }
         }
 
-        // Thread-safe cache - always use TryAdd or TryUpdate to write 
+        // Thread-safe cache - always use TryAdd or TryUpdate to write
         private ConcurrentDictionary<ReferenceEqualityTuple<MemberInfo, MemberInfo>, XamlMember> MasterMemberList
         {
             get
@@ -542,15 +521,14 @@ namespace System.Xaml
 
         public virtual XamlType GetXamlType(Type type)
         {
+            ArgumentNullException.ThrowIfNull(type);
+
             return GetXamlType(type, XamlLanguage.TypeAlias(type));
         }
 
         internal XamlType GetXamlType(Type type, string alias)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
+            ArgumentNullException.ThrowIfNull(type);
             XamlType xamlType = null;
             if (!MasterTypeList.TryGetValue(type, out xamlType))
             {
@@ -561,16 +539,13 @@ namespace System.Xaml
         }
 
         /// <summary>
-        /// Constructs a cache of all the members in this particular type that have 
+        /// Constructs a cache of all the members in this particular type that have
         /// MarkupExtensionBracketCharactersAttribute set on them. This cache is added to a master
         /// cache which stores the BracketCharacter cache for each type.
         /// </summary>
         internal Dictionary<string, SpecialBracketCharacters> InitBracketCharacterCacheForType(XamlType type)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
+            ArgumentNullException.ThrowIfNull(type);
 
             Dictionary<string, SpecialBracketCharacters> bracketCharacterCache = null;
             if (type.IsMarkupExtension)
@@ -581,7 +556,7 @@ namespace System.Xaml
                     bracketCharacterCache = TryAdd(MasterBracketCharacterCache, type, bracketCharacterCache);
                 }
             }
-            
+
             return bracketCharacterCache;
         }
 
@@ -613,7 +588,7 @@ namespace System.Xaml
             }
 
             return map.Count > 0 ? map : null;
-        } 
+        }
 
         protected internal XamlValueConverter<TConverterBase> GetValueConverter<TConverterBase>(
             Type converterType, XamlType targetType)
@@ -683,7 +658,7 @@ namespace System.Xaml
         #region Settings
 
         // Unchanging, initialized in ctor
-        private readonly XamlSchemaContextSettings _settings = null;
+        private readonly XamlSchemaContextSettings _settings;
 
         public bool SupportMarkupExtensionsWithDuplicateArity
         {
@@ -719,7 +694,7 @@ namespace System.Xaml
 
         // take this lock when modifying _unexaminedAssemblies or _isGCCallbackPending
         // Acquisition order: If also taking _syncExaminingAssemblies, take it first
-        object _syncAccessingUnexaminedAssemblies;     
+        object _syncAccessingUnexaminedAssemblies;
 
         // This dictionary is also thread-safe for single reads and writes, but if you're
         // iterating them, lock on _syncExaminingAssemblies to ensure consistent results
@@ -869,7 +844,7 @@ namespace System.Xaml
         private void RegisterAssemblyCleanup()
         {
             // Locking around this check prevents multiple threads from redundantly registering
-            // callbacks at the same time. 
+            // callbacks at the same time.
             // We could use either the examining or unexamined lock, since clenaup touches both;
             // we use the unexamined because it has a shorter blocking time.
             lock (_syncAccessingUnexaminedAssemblies)
@@ -922,7 +897,7 @@ namespace System.Xaml
 
             if (XamlLanguage.AllTypes.Contains(type))
             {
-                // We need a read-only list which combines the directive namespace(s) with the 
+                // We need a read-only list which combines the directive namespace(s) with the
                 // the namespaces(s) that this type supports through standard CLR binding rules
                 IList<string> clrBoundNamespaces = GetXmlNsMappings(clrType.Assembly, clrType.Namespace);
                 List<string> combinedList = new List<string>();
@@ -1137,7 +1112,7 @@ namespace System.Xaml
                         if (throwOnError || CriticalExceptions.IsCriticalException(ex))
                         {
                             // The assemblies after the i'th one in unexaminedAssembliesCopy have not been examined (including the i'th assembly).
-                            // So we need to add them back to _unexaminedAssemblies while also keeping the assemblies that might have been added 
+                            // So we need to add them back to _unexaminedAssemblies while also keeping the assemblies that might have been added
                             // to _unexaminedAssemblies in parallel.
                             lock (_syncAccessingUnexaminedAssemblies)
                             {
@@ -1174,8 +1149,10 @@ namespace System.Xaml
         {
             bool foundNew = false;
             IList<XmlNsInfo.XmlNsDefinition> xmlnsDefs = nsInfo.NsDefs;
-            foreach (XmlNsInfo.XmlNsDefinition xmlnsDef in xmlnsDefs)
+            int xmlnsDefsCount = xmlnsDefs.Count;
+            for (int i = 0; i < xmlnsDefsCount; i++)
             {
+                XmlNsInfo.XmlNsDefinition xmlnsDef = xmlnsDefs[i];
                 AssemblyNamespacePair pair = new AssemblyNamespacePair(nsInfo.Assembly, xmlnsDef.ClrNamespace);
                 XamlNamespace ns = GetXamlNamespace(xmlnsDef.XmlNamespace);
                 ns.AddAssemblyNamespacePair(pair);
@@ -1382,17 +1359,11 @@ namespace System.Xaml
                 }
             }
 
-#if TARGETTING35SP1
-#else
-#endif
             public void Hook()
             {
                 AppDomain.CurrentDomain.AssemblyLoad += OnAssemblyLoad;
             }
 
-#if TARGETTING35SP1
-#else
-#endif
             public void Unhook()
             {
                 AppDomain.CurrentDomain.AssemblyLoad -= OnAssemblyLoad;

@@ -97,7 +97,7 @@ namespace WinRT
 
         protected void ThrowIfDisposed()
         {
-            if (disposed) throw new ObjectDisposedException("ObjectReference");
+            ObjectDisposedException.ThrowIf(disposed, typeof(ObjectReference<>));
         }
 
         public void Dispose()

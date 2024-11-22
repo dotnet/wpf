@@ -200,10 +200,7 @@ namespace System.Windows.Automation
         /// <returns>A range that spans the child element.</returns>
         public TextPatternRange RangeFromChild(AutomationElement childElement)
         {
-            if (childElement == null)
-            {
-                throw new ArgumentNullException("childElement");
-            }
+            ArgumentNullException.ThrowIfNull(childElement);
             SafeTextRangeHandle hTextRange = UiaCoreApi.TextPattern_RangeFromChild(_hPattern, childElement.RawNode);
             return TextPatternRange.Wrap(hTextRange, this);
         }
@@ -223,7 +220,7 @@ namespace System.Windows.Automation
             Rect rect = (Rect)_element.GetCurrentPropertyValue(AutomationElement.BoundingRectangleProperty);
             if (screenLocation.X < rect.Left || screenLocation.X >= rect.Right || screenLocation.Y < rect.Top || screenLocation.Y >= rect.Bottom)
             {
-                throw new ArgumentException(SR.Get(SRID.ScreenCoordinatesOutsideBoundingRect));
+                throw new ArgumentException(SR.ScreenCoordinatesOutsideBoundingRect);
             }
 
             SafeTextRangeHandle hTextRange = UiaCoreApi.TextPattern_RangeFromPoint(_hPattern, screenLocation);
@@ -278,7 +275,7 @@ namespace System.Windows.Automation
         {
             if (hPattern.IsInvalid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CantPrefetchTextPattern));
+                throw new InvalidOperationException(SR.CantPrefetchTextPattern);
             }
 
             return new TextPattern(el, hPattern);

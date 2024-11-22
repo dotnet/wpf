@@ -30,10 +30,7 @@ namespace System.Windows.Input
         /// <param name="parameter">The parameter that was passed when executing the command.</param>
         internal CanExecuteRoutedEventArgs(ICommand command, object parameter)
         {
-            if (command == null)
-            {
-                throw new ArgumentNullException("command");
-            }
+            ArgumentNullException.ThrowIfNull(command);
 
             _command = command;
             _parameter = parameter;

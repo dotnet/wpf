@@ -13,7 +13,6 @@ using System.ComponentModel;
 using MS.Utility;
 using MS.Win32.Pointer;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input.StylusPointer
 {

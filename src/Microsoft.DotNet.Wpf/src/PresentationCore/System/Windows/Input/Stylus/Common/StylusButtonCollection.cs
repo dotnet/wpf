@@ -13,7 +13,6 @@ using System.Windows.Media;
 using MS.Utility;
 using MS.Internal;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {

@@ -4,7 +4,6 @@
 
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
-using System.Collections;
 using System.Globalization;
 using System.Reflection;
 using System.Windows.Media; // TypeConverterHelper, UriHolder
@@ -54,34 +53,28 @@ namespace System.Windows.Input
         }
 
         /// <summary>
-        ///     Gets the public/static properties of the Cursors class
-        /// </summary>
-        /// <returns>PropertyInfo array of the objects properties</returns>
-        private PropertyInfo[] GetProperties()
-        {
-            return typeof(Cursors).GetProperties(BindingFlags.Public | BindingFlags.Static);
-        }
-
-        /// <summary>
         ///     StandardValuesCollection method override
         /// </summary>
         /// <param name="context">ITypeDescriptorContext</param>
         /// <returns>TypeConverter.StandardValuesCollection</returns>
         public override TypeConverter.StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
         {
-            if(this._standardValues == null)
+            if(_standardValues is null)
             {
-                ArrayList list1 = new ArrayList();
-                PropertyInfo[] infoArray1 = this.GetProperties();
-                for(int num1 = 0; num1 < infoArray1.Length; num1++)
+                PropertyInfo[] properties = typeof(Cursors).GetProperties(BindingFlags.Public | BindingFlags.Static);
+                object[] values = new object[properties.Length]; //Could use Cursor but its wrapped in ICollection anyways
+
+                for (int i = 0; i < properties.Length; i++)
                 {
-                    PropertyInfo info1 = infoArray1[num1];
-                    object[] objArray1 = null;
-                    list1.Add(info1.GetValue(null, objArray1));
+                    PropertyInfo info = properties[i];
+
+                    values[i] = info.GetValue(null, null);
                 }
-                this._standardValues = new TypeConverter.StandardValuesCollection(list1.ToArray());
+
+                _standardValues = new TypeConverter.StandardValuesCollection(values);
             }
-            return this._standardValues;
+
+            return _standardValues;
         }
 
         /// <summary>
@@ -115,7 +108,7 @@ namespace System.Windows.Input
                 {
                     if (text.LastIndexOf('.') == -1)
                     {
-                        CursorType ct = (CursorType)Enum.Parse(typeof(CursorType), text);
+                        CursorType ct = Enum.Parse<CursorType>(text);
 
                         switch (ct)
                         {
@@ -217,13 +210,10 @@ namespace System.Windows.Input
         /// <returns>converted value</returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType == null)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
-            
-	        // If value is not a Cursor or null, it will throw GetConvertToException.
-            if(destinationType == typeof(string))
+            ArgumentNullException.ThrowIfNull(destinationType);
+
+            // If value is not a Cursor or null, it will throw GetConvertToException.
+            if (destinationType == typeof(string))
             {
                 Cursor cursor = value as Cursor;
                 if (cursor != null)

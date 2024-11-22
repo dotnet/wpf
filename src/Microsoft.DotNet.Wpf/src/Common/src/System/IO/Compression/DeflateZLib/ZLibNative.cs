@@ -235,8 +235,7 @@ namespace System.IO.Compression
 
             private void EnsureNotDisposed()
             {
-                if (InitializationState == State.Disposed)
-                    throw new ObjectDisposedException(GetType().ToString());
+                ObjectDisposedException.ThrowIf(InitializationState == State.Disposed, this);
             }
 
 
@@ -252,7 +251,7 @@ namespace System.IO.Compression
                 EnsureNotDisposed();
                 EnsureState(State.NotInitialized);
 
-                ErrorCode errC = Interop.zlib.DeflateInit2_(ref _zStream, level, CompressionMethod.Deflated, windowBits, memLevel, strategy);
+                ErrorCode errC = Interop.Zlib.DeflateInit2_(ref _zStream, level, CompressionMethod.Deflated, windowBits, memLevel, strategy);
                 _initializationState = State.InitializedForDeflate;
 
                 return errC;
@@ -263,7 +262,7 @@ namespace System.IO.Compression
             {
                 EnsureNotDisposed();
                 EnsureState(State.InitializedForDeflate);
-                return Interop.zlib.Deflate(ref _zStream, flush);
+                return Interop.Zlib.Deflate(ref _zStream, flush);
             }
 
 
@@ -272,7 +271,7 @@ namespace System.IO.Compression
                 EnsureNotDisposed();
                 EnsureState(State.InitializedForDeflate);
 
-                ErrorCode errC = Interop.zlib.DeflateEnd(ref _zStream);
+                ErrorCode errC = Interop.Zlib.DeflateEnd(ref _zStream);
                 _initializationState = State.Disposed;
 
                 return errC;
@@ -284,7 +283,7 @@ namespace System.IO.Compression
                 EnsureNotDisposed();
                 EnsureState(State.NotInitialized);
 
-                ErrorCode errC = Interop.zlib.InflateInit2_(ref _zStream, windowBits);
+                ErrorCode errC = Interop.Zlib.InflateInit2_(ref _zStream, windowBits);
                 _initializationState = State.InitializedForInflate;
 
                 return errC;
@@ -295,7 +294,7 @@ namespace System.IO.Compression
             {
                 EnsureNotDisposed();
                 EnsureState(State.InitializedForInflate);
-                return Interop.zlib.Inflate(ref _zStream, flush);
+                return Interop.Zlib.Inflate(ref _zStream, flush);
             }
 
 
@@ -304,7 +303,7 @@ namespace System.IO.Compression
                 EnsureNotDisposed();
                 EnsureState(State.InitializedForInflate);
 
-                ErrorCode errC = Interop.zlib.InflateEnd(ref _zStream);
+                ErrorCode errC = Interop.Zlib.InflateEnd(ref _zStream);
                 _initializationState = State.Disposed;
 
                 return errC;

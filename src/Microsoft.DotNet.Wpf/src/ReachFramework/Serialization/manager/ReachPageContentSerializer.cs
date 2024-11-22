@@ -100,13 +100,13 @@ namespace System.Windows.Xps.Serialization
                     }
                     else
                     {
-                        throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoSerializer));
+                        throw new XpsSerializationException(SR.ReachSerialization_NoSerializer);
                     }
                 }
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_WrongPropertyTypeForPageContent));
+                throw new XpsSerializationException(SR.ReachSerialization_WrongPropertyTypeForPageContent);
             }
         }
 

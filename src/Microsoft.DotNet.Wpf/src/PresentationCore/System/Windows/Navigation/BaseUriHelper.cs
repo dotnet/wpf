@@ -11,7 +11,6 @@ using System.Diagnostics;
 using System.IO.Packaging;
 using System.Globalization;
 using System.Net;
-using System.Security;
 using System.Text;
 using System.Windows;
 using System.Windows.Markup;
@@ -42,7 +41,7 @@ namespace System.Windows.Navigation
         private const string APPBASE = "application://";
         private static readonly Uri _packAppBaseUri = PackUriHelper.Create(new Uri(APPBASE));
 
-        private static SecurityCriticalDataForSet<Uri> _baseUri;
+        private static Uri _baseUri;
 
         // Cached result of calling
         // PackUriHelper.GetPackageUri(BaseUriHelper.PackAppBaseUri).GetComponents(
@@ -53,7 +52,7 @@ namespace System.Windows.Navigation
 
         static BaseUriHelper()
         {
-            _baseUri = new SecurityCriticalDataForSet<Uri>(_packAppBaseUri);
+            _baseUri = _packAppBaseUri;
             // Add an instance of the ResourceContainer to PreloadedPackages so that PackWebRequestFactory can find it
             // and mark it as thread-safe so PackWebResponse won't protect returned streams with a synchronizing wrapper
             PreloadedPackages.AddPackage(PackUriHelper.GetPackageUri(SiteOfOriginBaseUri), new SiteOfOriginContainer(), true);
@@ -129,7 +128,6 @@ namespace System.Windows.Navigation
 
         static internal Uri SiteOfOriginBaseUri
         {
-            [FriendAccessAllowed]
             get
             {
                 return _siteOfOriginBaseUri;
@@ -138,7 +136,6 @@ namespace System.Windows.Navigation
 
         static internal Uri PackAppBaseUri
         {
-            [FriendAccessAllowed]
             get
             {
                 return _packAppBaseUri;
@@ -155,12 +152,12 @@ namespace System.Windows.Navigation
                 uri.IsAbsoluteUri && 
 
                 // Does the "outer" URI have the pack: scheme?
-                SecurityHelper.AreStringTypesEqual(uri.Scheme, System.IO.Packaging.PackUriHelper.UriSchemePack) &&
+                string.Equals(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase) &&
 
                 // Does the "inner" URI have the application: scheme
-                SecurityHelper.AreStringTypesEqual(
-                    PackUriHelper.GetPackageUri(uri).GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped),
-                    _packageApplicationBaseUriEscaped);
+                string.Equals(PackUriHelper.GetPackageUri(uri).GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped),
+                              _packageApplicationBaseUriEscaped,
+                              StringComparison.OrdinalIgnoreCase);
         }
 
         // The method accepts a relative or absolute Uri and returns the appropriate assembly.
@@ -172,13 +169,12 @@ namespace System.Windows.Navigation
         // assembly name matches the text string in the first segment. otherwise, this method
         // would return EntryAssembly in the AppDomain.
         //
-        [FriendAccessAllowed]
         internal static void GetAssemblyAndPartNameFromPackAppUri(Uri uri, out Assembly assembly, out string partName)
         {
             // The input Uri is assumed to be a valid absolute pack application Uri.
             // The caller should guarantee that.
             // Perform a sanity check to make sure the assumption stays.
-            Debug.Assert(uri != null && uri.IsAbsoluteUri && SecurityHelper.AreStringTypesEqual(uri.Scheme, System.IO.Packaging.PackUriHelper.UriSchemePack) && IsPackApplicationUri(uri));
+            Debug.Assert(uri is not null && uri.IsAbsoluteUri && string.Equals(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase) && IsPackApplicationUri(uri));
 
             // Generate a relative Uri which gets rid of the pack://application:,,, authority part.
             Uri partUri = new Uri(uri.AbsolutePath, UriKind.Relative);
@@ -189,13 +185,13 @@ namespace System.Windows.Navigation
 
             GetAssemblyNameAndPart(partUri, out partName, out assemblyName, out assemblyVersion, out assemblyKey);
 
-            if (String.IsNullOrEmpty(assemblyName))
+            if (string.IsNullOrEmpty(assemblyName))
             {
                 // The uri doesn't contain ";component". it should map to the enty application assembly.
                 assembly = ResourceAssembly;
 
                 // The partName returned from GetAssemblyNameAndPart should be escaped.
-                Debug.Assert(String.Compare(partName, uri.GetComponents(UriComponents.Path, UriFormat.UriEscaped), StringComparison.OrdinalIgnoreCase) == 0);
+                Debug.Assert(string.Equals(partName, uri.GetComponents(UriComponents.Path, UriFormat.UriEscaped), StringComparison.OrdinalIgnoreCase));
             }
             else
             {
@@ -206,7 +202,6 @@ namespace System.Windows.Navigation
 
         //
         //
-        [FriendAccessAllowed]
         internal static Assembly GetLoadedAssembly(string assemblyName, string assemblyVersion, string assemblyKey)
         {
             Assembly assembly;
@@ -243,7 +238,6 @@ namespace System.Windows.Navigation
         //
         // Return assembly Name, Version, Key and package Part from a relative Uri.
         //
-        [FriendAccessAllowed]
         internal static void GetAssemblyNameAndPart(Uri uri, out string partName, out string assemblyName, out string assemblyVersion, out string assemblyKey)
         {
             Invariant.Assert(uri != null && uri.IsAbsoluteUri == false, "This method accepts relative uri only.");
@@ -285,13 +279,13 @@ namespace System.Windows.Navigation
 
             if (fHasComponent)
             {
-                string[] assemblyInfo = firstSegment.Split(new char[] { COMPONENT_DELIMITER });
+                string[] assemblyInfo = firstSegment.Split(COMPONENT_DELIMITER);
 
                 int count = assemblyInfo.Length;
 
                 if ((count > 4) || (count < 2))
                 {
-                    throw new UriFormatException(SR.Get(SRID.WrongFirstSegment));
+                    throw new UriFormatException(SR.WrongFirstSegment);
                 }
 
                 //
@@ -312,7 +306,7 @@ namespace System.Windows.Navigation
                         }
                         else
                         {
-                            throw new UriFormatException(SR.Get(SRID.WrongFirstSegment));
+                            throw new UriFormatException(SR.WrongFirstSegment);
                         }
                     }
                     else
@@ -323,7 +317,7 @@ namespace System.Windows.Navigation
                         }
                         else
                         {
-                            throw new UriFormatException(SR.Get(SRID.WrongFirstSegment));
+                            throw new UriFormatException(SR.WrongFirstSegment);
                         }
                     }
                 } // end of for loop
@@ -331,12 +325,11 @@ namespace System.Windows.Navigation
             } // end of if fHasComponent
         }
 
-        [FriendAccessAllowed]
         static internal bool IsComponentEntryAssembly(string component)
         {
             if (component.EndsWith(COMPONENT, StringComparison.OrdinalIgnoreCase))
             {
-                string[] assemblyInfo = component.Split(new Char[] { COMPONENT_DELIMITER });
+                string[] assemblyInfo = component.Split(COMPONENT_DELIMITER);
                 // Check whether the assembly name is the same as the EntryAssembly.
                 int count = assemblyInfo.Length;
                 if ((count >= 2) && (count <= 4))
@@ -347,7 +340,7 @@ namespace System.Windows.Navigation
 
                     if (assembly != null)
                     {
-                        return (String.Compare(SafeSecurityHelper.GetAssemblyPartialName(assembly), assemblyName, StringComparison.OrdinalIgnoreCase) == 0);
+                        return (string.Equals(SafeSecurityHelper.GetAssemblyPartialName(assembly), assemblyName, StringComparison.OrdinalIgnoreCase));
                     }
                     else
                     {
@@ -358,19 +351,17 @@ namespace System.Windows.Navigation
             return false;
         }
                 
-        [FriendAccessAllowed]
         static internal Uri GetResolvedUri(Uri baseUri, Uri orgUri)
         {
             return new Uri(baseUri, orgUri);
         }
 
-        [FriendAccessAllowed]
         static internal Uri MakeRelativeToSiteOfOriginIfPossible(Uri sUri)
         {
             if (Uri.Compare(sUri, SiteOfOriginBaseUri, UriComponents.Scheme, UriFormat.UriEscaped, StringComparison.OrdinalIgnoreCase) == 0)
             {                
                 Uri packageUri = PackUriHelper.GetPackageUri(sUri);
-                if (String.Compare(packageUri.GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped), _packageSiteOfOriginBaseUriEscaped, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(packageUri.GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped), _packageSiteOfOriginBaseUriEscaped, StringComparison.OrdinalIgnoreCase))
                 {
                     return (new Uri(sUri.GetComponents(UriComponents.SchemeAndServer, UriFormat.UriEscaped))).MakeRelativeUri(sUri);
                 }
@@ -379,10 +370,9 @@ namespace System.Windows.Navigation
             return sUri;
         }
 
-        [FriendAccessAllowed]
         static internal Uri ConvertPackUriToAbsoluteExternallyVisibleUri(Uri packUri)
         {
-            Invariant.Assert(packUri.IsAbsoluteUri && SecurityHelper.AreStringTypesEqual(packUri.Scheme, PackAppBaseUri.Scheme));
+            Invariant.Assert(packUri.IsAbsoluteUri && string.Equals(packUri.Scheme, PackAppBaseUri.Scheme, StringComparison.OrdinalIgnoreCase));
 
             Uri relative = MakeRelativeToSiteOfOriginIfPossible(packUri);
 
@@ -392,7 +382,7 @@ namespace System.Windows.Navigation
             }
             else
             {
-               throw new InvalidOperationException(SR.Get(SRID.CannotNavigateToApplicationResourcesInWebBrowser, packUri));
+               throw new InvalidOperationException(SR.Format(SR.CannotNavigateToApplicationResourcesInWebBrowser, packUri));
             }
         }
 
@@ -400,10 +390,10 @@ namespace System.Windows.Navigation
         // object will not correctly resolve relative Uris in some cases.  This method
         // detects and fixes this by constructing a new Uri with an original string
         // that contains the scheme file://.
-        [FriendAccessAllowed]
         static internal Uri FixFileUri(Uri uri)
         {
-            if (uri != null && uri.IsAbsoluteUri && SecurityHelper.AreStringTypesEqual(uri.Scheme, Uri.UriSchemeFile) &&
+            if (uri is not null && uri.IsAbsoluteUri &&
+                string.Equals(uri.Scheme, Uri.UriSchemeFile, StringComparison.OrdinalIgnoreCase) &&
                 string.Compare(uri.OriginalString, 0, Uri.UriSchemeFile, 0, Uri.UriSchemeFile.Length, StringComparison.OrdinalIgnoreCase) != 0)
             {
                 return new Uri(uri.AbsoluteUri);
@@ -414,17 +404,15 @@ namespace System.Windows.Navigation
 
         static internal Uri BaseUri
         {
-            [FriendAccessAllowed]
             get
             {
-                return _baseUri.Value;
+                return _baseUri;
             }
-            [FriendAccessAllowed]
             set
             {
                 // This setter should only be called from Framework through
                 // BindUriHelper.set_BaseUri.
-                _baseUri.Value = value;
+                _baseUri = value;
             }
         }
 
@@ -438,7 +426,6 @@ namespace System.Windows.Navigation
                 }
                 return _resourceAssembly;
             }
-            [FriendAccessAllowed]
             set
             {
                 // This should only be called from Framework through Application.ResourceAssembly setter.
@@ -550,16 +537,13 @@ namespace System.Windows.Navigation
             Uri baseUri = null;
             DependencyObject doCurrent;
 
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
-                //
-                // Search the tree to find the closest parent which implements
-                // IUriContext or have set value for BaseUri property.
-                //
-                doCurrent = element;
+            //
+            // Search the tree to find the closest parent which implements
+            // IUriContext or have set value for BaseUri property.
+            //
+            doCurrent = element;
 
                 while (doCurrent != null)
                 {
@@ -643,8 +627,7 @@ namespace System.Windows.Navigation
                 byte[] keyToken = new byte[byteCount];
                 for (int i = 0; i < byteCount; i++)
                 {
-                    string byteString = assemblyKey.Substring(i * 2, 2);
-                    keyToken[i] = byte.Parse(byteString, NumberStyles.HexNumber, CultureInfo.InvariantCulture);
+                    keyToken[i] = byte.Parse(assemblyKey.AsSpan(i * 2, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture);
                 }
 
                 return keyToken;

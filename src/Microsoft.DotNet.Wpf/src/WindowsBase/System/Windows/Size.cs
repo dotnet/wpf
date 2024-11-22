@@ -34,7 +34,7 @@ namespace System.Windows
         {
             if (width < 0 || height < 0)
             {
-                throw new System.ArgumentException(SR.Get(SRID.Size_WidthAndHeightCannotBeNegative));
+                throw new System.ArgumentException(SR.Size_WidthAndHeightCannotBeNegative);
             }
 
             _width = width;
@@ -88,12 +88,12 @@ namespace System.Windows
             {
                 if (IsEmpty)
                 {
-                    throw new System.InvalidOperationException(SR.Get(SRID.Size_CannotModifyEmptySize));
+                    throw new System.InvalidOperationException(SR.Size_CannotModifyEmptySize);
                 }
                     
                 if (value < 0)
                 {
-                    throw new System.ArgumentException(SR.Get(SRID.Size_WidthCannotBeNegative));
+                    throw new System.ArgumentException(SR.Size_WidthCannotBeNegative);
                 }
 
                 _width = value;
@@ -113,12 +113,12 @@ namespace System.Windows
             {
                 if (IsEmpty)
                 {
-                    throw new System.InvalidOperationException(SR.Get(SRID.Size_CannotModifyEmptySize));
+                    throw new System.InvalidOperationException(SR.Size_CannotModifyEmptySize);
                 }
                     
                 if (value < 0)
                 {
-                    throw new System.ArgumentException(SR.Get(SRID.Size_HeightCannotBeNegative));
+                    throw new System.ArgumentException(SR.Size_HeightCannotBeNegative);
                 }
 
                 _height = value;

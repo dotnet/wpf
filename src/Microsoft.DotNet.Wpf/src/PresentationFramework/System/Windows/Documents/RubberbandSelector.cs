@@ -53,10 +53,7 @@ namespace System.Windows.Documents
         /// <param name="scope">the scope, typically a DocumentGrid</param>
         internal void AttachRubberbandSelector(FrameworkElement scope)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException("scope");
-            }
+            ArgumentNullException.ThrowIfNull(scope);
 
             ClearSelection();
             scope.MouseLeftButtonDown += new MouseButtonEventHandler(OnLeftMouseDown);
@@ -324,7 +321,7 @@ namespace System.Windows.Documents
             foreach (TextPositionPair range in ranges)
             {
                 Debug.Assert(range.first != null && range.second != null);
-                text = text + TextRangeBase.GetTextInternal(range.first, range.second) + "\r\n"; //CRLF
+                text = $"{text}{TextRangeBase.GetTextInternal(range.first, range.second)}\r\n"; //CRLF
             }
 
             return text;

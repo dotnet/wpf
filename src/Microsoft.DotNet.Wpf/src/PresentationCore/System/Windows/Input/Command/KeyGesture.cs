@@ -97,12 +97,11 @@ namespace System.Windows.Input
             if(!IsDefinedKey(key))
                 throw new InvalidEnumArgumentException("key", (int)key, typeof(Key));
 
-            if (displayString == null)
-                throw new ArgumentNullException("displayString");
+            ArgumentNullException.ThrowIfNull(displayString);
 
-            if(validateGesture && !IsValid(key, modifiers))
+            if (validateGesture && !IsValid(key, modifiers))
             {
-                throw new NotSupportedException(SR.Get(SRID.KeyGesture_Invalid, modifiers, key));
+                throw new NotSupportedException(SR.Format(SR.KeyGesture_Invalid, modifiers, key));
             }
 
             _modifiers = modifiers;

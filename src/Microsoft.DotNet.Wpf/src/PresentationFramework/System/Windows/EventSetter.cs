@@ -31,14 +31,8 @@ namespace System.Windows
         /// </summary>
         public EventSetter(RoutedEvent routedEvent, Delegate handler)
         {
-            if (routedEvent == null)
-            {
-                throw new ArgumentNullException("routedEvent");
-            }
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler");
-            }
+            ArgumentNullException.ThrowIfNull(routedEvent);
+            ArgumentNullException.ThrowIfNull(handler);
 
             _event = routedEvent;
             _handler = handler;
@@ -51,11 +45,8 @@ namespace System.Windows
         {
             get { return _event; }
             set 
-            { 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+            {
+                ArgumentNullException.ThrowIfNull(value);
 
                 CheckSealed();
                 _event = value; 
@@ -70,11 +61,8 @@ namespace System.Windows
         {
             get { return _handler; }
             set 
-            { 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+            {
+                ArgumentNullException.ThrowIfNull(value);
 
                 CheckSealed();
                 _handler = value; 
@@ -106,15 +94,15 @@ namespace System.Windows
 
             if (_event == null)
             {
-                throw new ArgumentException(SR.Get(SRID.NullPropertyIllegal, "EventSetter.Event"));
+                throw new ArgumentException(SR.Format(SR.NullPropertyIllegal, "EventSetter.Event"));
             }
             if (_handler == null)
             {
-                throw new ArgumentException(SR.Get(SRID.NullPropertyIllegal, "EventSetter.Handler"));
+                throw new ArgumentException(SR.Format(SR.NullPropertyIllegal, "EventSetter.Handler"));
             }
             if (_handler.GetType() != _event.HandlerType)
             {
-                throw new ArgumentException(SR.Get(SRID.HandlerTypeIllegal));
+                throw new ArgumentException(SR.HandlerTypeIllegal);
             }
 
             base.Seal();

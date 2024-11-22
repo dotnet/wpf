@@ -1,6 +1,6 @@
 # Testing in Helix
 
-I'd recommend seeing the official Helix [readme](https://github.com/dotnet/arcade/blob/master/src/Microsoft.DotNet.Helix/Sdk/Readme.md) if you are interested in some of the general Helix concepts. I'll briefly outline what we are doing that is a bit unique:
+I'd recommend seeing the official Helix [readme](https://github.com/dotnet/arcade/blob/main/src/Microsoft.DotNet.Helix/Sdk/Readme.md) if you are interested in some of the general Helix concepts. I'll briefly outline what we are doing that is a bit unique:
 
 1. Helix has built-in support for running xUnit tests. Since we are not using xUnit, we have to manually setup our machines so that they work with QualityVault and STI. During the build, we create a payload directory that contains the infrastructure we need. A single project (in our case `DrtXaml`) is responsible for creating this directory (see instances of the MSBuild property `CreateTestPayload`).
 2. After the build is done, we utilize Arcade's `AfterSolutionBuild.targets` extension point to finish creating the rest of the payload if the `-test` parameter is passed to the build. Here we add the just built DRTs and if `-ci` was **not** passed into to the build, run the tests. 

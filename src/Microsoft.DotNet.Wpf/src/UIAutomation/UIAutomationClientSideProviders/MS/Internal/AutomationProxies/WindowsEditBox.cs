@@ -83,11 +83,7 @@ namespace MS.Internal.AutomationProxies
             // AutomationElement.LogicalMapping, BUT user still can get "edit"
             // from Hwnd
             // Something is wrong if idChild is not zero
-            if (idChild != 0)
-            {
-                System.Diagnostics.Debug.Assert (idChild == 0, "Invalid Child Id, idChild != 0");
-                throw new ArgumentOutOfRangeException("idChild", idChild, SR.Get(SRID.ShouldBeZero));
-            }
+            ArgumentOutOfRangeException.ThrowIfNotEqual(idChild, 0);
 
             return new WindowsEditBox(hwnd, null, 0);
         }
@@ -277,7 +273,7 @@ namespace MS.Internal.AutomationProxies
 
             if (Misc.IsBitSet(styles, NativeMethods.ES_READONLY))
             {
-                throw new InvalidOperationException(SR.Get(SRID.ValueReadonly));
+                throw new InvalidOperationException(SR.ValueReadonly);
             }
 
             // check if control only accepts numbers
@@ -288,7 +284,7 @@ namespace MS.Internal.AutomationProxies
                 {
                     if (char.IsLetter (ch))
                     {
-                        throw new ArgumentException(SR.Get(SRID.NotAValidValue, str), "val");
+                        throw new ArgumentException(SR.Format(SR.NotAValidValue, str), "val");
                     }
                 }
             }
@@ -299,14 +295,14 @@ namespace MS.Internal.AutomationProxies
             // A result of -1 means that no limit is set.
             if (result != -1 && result < str.Length)
             {
-                throw new InvalidOperationException (SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException (SR.OperationCannotBePerformed);
             }
 
             // Send the message...
             result = Misc.ProxySendMessageInt(_hwnd, NativeMethods.WM_SETTEXT, IntPtr.Zero, new StringBuilder(str));
             if (result != 1)
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
         }
 
@@ -349,7 +345,7 @@ namespace MS.Internal.AutomationProxies
         ITextRangeProvider ITextProvider.RangeFromChild(IRawElementProviderSimple childElement)
         {
             // we don't have any children so this call must be in error.
-            throw new InvalidOperationException(SR.Get(SRID.EditControlsHaveNoChildren,GetType().FullName));
+            throw new InvalidOperationException(SR.Format(SR.EditControlsHaveNoChildren, GetType().FullName));
         }
 
         ITextRangeProvider ITextProvider.RangeFromPoint(Point screenLocation)

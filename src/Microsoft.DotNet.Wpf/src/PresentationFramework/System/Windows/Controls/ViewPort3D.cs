@@ -188,7 +188,7 @@ namespace System.Windows.Controls
                     return _viewport3DVisual;
 
                 default:
-                    throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+                    throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
         }
 
@@ -228,16 +228,13 @@ namespace System.Windows.Controls
 
         void IAddChild.AddChild(Object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             Visual3D visual3D = value as Visual3D;
 
             if (visual3D == null)
             {
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(Visual3D)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(Visual3D)), "value");
             }
 
             Children.Add(visual3D);

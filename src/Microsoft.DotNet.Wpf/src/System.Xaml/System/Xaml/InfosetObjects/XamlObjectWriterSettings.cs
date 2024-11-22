@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Windows.Markup;
 using System.Xaml.Permissions;
 
@@ -15,17 +17,14 @@ namespace System.Xaml
 
         public XamlObjectWriterSettings(XamlObjectWriterSettings settings)
         {
-            if (settings == null)
-            {
-                throw new ArgumentNullException(nameof(settings));
-            }
+            ArgumentNullException.ThrowIfNull(settings);
             AfterBeginInitHandler = settings.AfterBeginInitHandler;
             BeforePropertiesHandler = settings.BeforePropertiesHandler;
             AfterPropertiesHandler = settings.AfterPropertiesHandler;
             AfterEndInitHandler = settings.AfterEndInitHandler;
-#if !TARGETTING35SP1
+
             XamlSetValueHandler = settings.XamlSetValueHandler;
-#endif
+
             RootObjectInstance = settings.RootObjectInstance;
             IgnoreCanConvert = settings.IgnoreCanConvert;
             ExternalNameScope = settings.ExternalNameScope;
@@ -41,9 +40,7 @@ namespace System.Xaml
         public EventHandler<XamlObjectEventArgs> BeforePropertiesHandler { get; set; }
         public EventHandler<XamlObjectEventArgs> AfterPropertiesHandler { get; set; }
         public EventHandler<XamlObjectEventArgs> AfterEndInitHandler { get; set; }
-#if !TARGETTING35SP1
         public EventHandler<XamlSetValueEventArgs> XamlSetValueHandler { get; set; }
-#endif
 
         public Object RootObjectInstance { get; set; }
         public bool IgnoreCanConvert { get; set; }
@@ -55,7 +52,7 @@ namespace System.Xaml
 
         /// <summary>
         /// SourceBamlUri will be used by XamlObjectWriter in BeginInitHandler's SourceBamlUri property, in place of the actual BaseUri.
-        /// This is only useful to give the correct info in that handler, while keeping runtime behavior fully compatible. 
+        /// This is only useful to give the correct info in that handler, while keeping runtime behavior fully compatible.
         /// </summary>
         public Uri SourceBamlUri { get; set; }
 
@@ -66,15 +63,16 @@ namespace System.Xaml
 
         internal XamlObjectWriterSettings StripDelegates()
         {
-            XamlObjectWriterSettings result = new XamlObjectWriterSettings(this);
-            // We need better protection against leaking out these delegates
-            result.AfterBeginInitHandler = null;
-            result.AfterEndInitHandler = null;
-            result.AfterPropertiesHandler = null;
-            result.BeforePropertiesHandler = null;
-#if !TARGETTING35SP1
-            result.XamlSetValueHandler = null;
-#endif
+            XamlObjectWriterSettings result = new XamlObjectWriterSettings(this)
+            {
+                // We need better protection against leaking out these delegates
+                AfterBeginInitHandler = null,
+                AfterEndInitHandler = null,
+                AfterPropertiesHandler = null,
+                BeforePropertiesHandler = null,
+                XamlSetValueHandler = null
+            };
+
             return result;
         }
     }

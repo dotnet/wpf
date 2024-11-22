@@ -8,10 +8,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 
 using MS.Utility;
-using MS.Internal.PresentationCore;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows
 {
@@ -23,7 +21,6 @@ namespace System.Windows
     ///     of handlers for a given 
     ///     EventPrivateKey or RoutedEvent
     /// </remarks>
-    [FriendAccessAllowed] // Built into Core, also used by Framework.
     internal class EventHandlersStore
     {
         #region Construction
@@ -60,14 +57,8 @@ namespace System.Windows
         /// </param>
         public void Add(EventPrivateKey key, Delegate handler)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException("key"); 
-            }
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler"); 
-            }
+            ArgumentNullException.ThrowIfNull(key);
+            ArgumentNullException.ThrowIfNull(handler);
 
             // Get the entry corresponding to the given key
             Delegate existingDelegate = (Delegate)this[key];
@@ -101,14 +92,8 @@ namespace System.Windows
         /// </remarks>
         public void Remove(EventPrivateKey key, Delegate handler)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException("key"); 
-            }
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler"); 
-            }
+            ArgumentNullException.ThrowIfNull(key);
+            ArgumentNullException.ThrowIfNull(handler);
 
             // Get the entry corresponding to the given key
             Delegate existingDelegate = (Delegate) this[key];
@@ -144,10 +129,7 @@ namespace System.Windows
         /// </remarks>
         public Delegate Get(EventPrivateKey key)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException("key"); 
-            }
+            ArgumentNullException.ThrowIfNull(key);
 
             // Return the handlers corresponding to the given key
             return (Delegate)this[key];
@@ -166,17 +148,11 @@ namespace System.Windows
             Delegate handler,
             bool handledEventsToo)
         {
-            if (routedEvent == null)
-            {
-                throw new ArgumentNullException("routedEvent"); 
-            }
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler"); 
-            }
+            ArgumentNullException.ThrowIfNull(routedEvent);
+            ArgumentNullException.ThrowIfNull(handler);
             if (!routedEvent.IsLegalHandler(handler))
             {
-                throw new ArgumentException(SR.Get(SRID.HandlerTypeIllegal));
+                throw new ArgumentException(SR.HandlerTypeIllegal);
             }
             
             // Create a new RoutedEventHandler
@@ -206,17 +182,11 @@ namespace System.Windows
         /// </remarks>
         public void RemoveRoutedEventHandler(RoutedEvent routedEvent, Delegate handler)
         {
-            if (routedEvent == null)
-            {
-                throw new ArgumentNullException("routedEvent"); 
-            }
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler"); 
-            }
+            ArgumentNullException.ThrowIfNull(routedEvent);
+            ArgumentNullException.ThrowIfNull(handler);
             if (!routedEvent.IsLegalHandler(handler))
             {
-                throw new ArgumentException(SR.Get(SRID.HandlerTypeIllegal));
+                throw new ArgumentException(SR.HandlerTypeIllegal);
             }
             
             // Get the entry corresponding to the given RoutedEvent
@@ -256,25 +226,11 @@ namespace System.Windows
 
         public bool Contains(RoutedEvent routedEvent)
         {
-            if (routedEvent == null)
-            {
-                throw new ArgumentNullException("routedEvent"); 
-            }
+            ArgumentNullException.ThrowIfNull(routedEvent);
 
             FrugalObjectList<RoutedEventHandlerInfo> handlers = (FrugalObjectList<RoutedEventHandlerInfo>)this[routedEvent];
 
             return handlers != null && handlers.Count != 0;
-        }
-
-
-        
-        private static void OnEventHandlersIterationCallback(ArrayList list, int key, object value)
-        {
-            RoutedEvent routedEvent = GlobalEventManager.EventFromGlobalIndex(key) as RoutedEvent;
-            if (routedEvent != null && ((FrugalObjectList<RoutedEventHandlerInfo>)value).Count > 0)
-            {
-                list.Add(routedEvent);
-            }
         }
 
         /// <summary>
@@ -282,10 +238,7 @@ namespace System.Windows
         /// </summary>
         public RoutedEventHandlerInfo[] GetRoutedEventHandlers(RoutedEvent routedEvent)
         {
-            if (routedEvent == null)
-            {
-                throw new ArgumentNullException("routedEvent"); 
-            }
+            ArgumentNullException.ThrowIfNull(routedEvent);
 
             FrugalObjectList<RoutedEventHandlerInfo> handlers = this[routedEvent];
             if (handlers != null)
@@ -347,8 +300,6 @@ namespace System.Windows
 
         // Map of EventPrivateKey/RoutedEvent to Delegate/FrugalObjectList<RoutedEventHandlerInfo> (respectively)
         private FrugalMap _entries;
-
-        private static FrugalMapIterationCallback _iterationCallback = new FrugalMapIterationCallback(OnEventHandlersIterationCallback);
         
         #endregion Data
     }

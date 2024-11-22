@@ -13,7 +13,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows 
 {
@@ -42,8 +41,8 @@ namespace System.Windows
         // Important note: when changing this method signature please make sure to update FontWeightConverter accordingly.
         public static FontWeight FromOpenTypeWeight(int weightValue)
         {
-            if (weightValue < 1 || weightValue > 999)
-                throw new ArgumentOutOfRangeException("weightValue", SR.Get(SRID.ParameterMustBeBetween, 1, 999));
+            ArgumentOutOfRangeException.ThrowIfLessThan(weightValue, 1);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(weightValue, 999);
             return new FontWeight(weightValue);
         }
 

@@ -15,7 +15,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using System.Windows.Markup;
-using MS.Internal.WindowsBase;
 
 namespace System.Windows.Markup.Primitives
 {
@@ -28,7 +27,6 @@ namespace System.Windows.Markup.Primitives
         /// <summary>
         /// Prevent external specialization
         /// </summary>
-        [FriendAccessAllowed] // Used by ElementMarkupObject and others in Framework
         internal MarkupObject() { }
 
         /// <summary>

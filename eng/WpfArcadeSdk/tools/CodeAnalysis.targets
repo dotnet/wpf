@@ -1,14 +1,17 @@
 <Project>
-  <PropertyGroup>
-    <CodeAnalysisRuleSet Condition="'$(IsTestProject)'!='true' AND '$(EnableAnalyzers)'=='true'">$(MSBuildThisFileDirectory)CodeAnalysis\WpfCodeAnalysis.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
+  <ItemGroup Condition="'$(EnableAnalyzers)'=='true'">
+    <!-- Managed Code analyzers -->
 
-  <ItemGroup Condition="'$(IsTestProject)'!='true' AND '$(EnableAnalyzers)'=='true'">
-    <!-- Managed Code Reference analyzers -->
-    <PackageReference Include="Microsoft.DotNet.CodeAnalysis" Version="$(MicrosoftDotNetCodeAnalysisPackageVersion)" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="2.9.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.3" />
-    <PackageReference Include="System.Runtime.Analyzers" Version="1.1.0" />
-    <PackageReference Include="System.Runtime.InteropServices.Analyzers" Version="1.1.0" />
+    <!-- https://github.com/DotNetAnalyzers/StyleCopAnalyzers -->
+    <PackageReference Include="StyleCop.Analyzers" Version="$(StyleCopAnalyzersVersion)" PrivateAssets="all" />
+
+    <!-- https://github.com/dotnet/roslyn-analyzers -->
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="$(MicrosoftCodeAnalysisNetAnalyzersVersion)" PrivateAssets="all" />
+
+    <!-- https://github.com/DotNetAnalyzers/DocumentationAnalyzers -->
+    <PackageReference Include="DotNetAnalyzers.DocumentationAnalyzers" Version="$(DotNetAnalyzersDocumentationAnalyzersVersion)" PrivateAssets="all" />
+
+    <!-- https://github.com/AArnott/CSharpIsNull -->
+    <PackageReference Include="CSharpIsNullAnalyzer" Version="$(CSharpIsNullAnalyzersVersion)" PrivateAssets="all" />
   </ItemGroup>
 </Project>

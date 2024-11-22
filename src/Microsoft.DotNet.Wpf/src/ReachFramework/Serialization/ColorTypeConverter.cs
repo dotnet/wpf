@@ -108,13 +108,10 @@ namespace System.Windows.Xps.Serialization
             object                              value
             )
         {
-            if( value == null )
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
             if (!IsSupportedType(value.GetType()))
             {
-                throw new NotSupportedException(SR.Get(SRID.Converter_ConvertFromNotSupported));
+                throw new NotSupportedException(SR.Converter_ConvertFromNotSupported);
             }
 
             throw new NotImplementedException();
@@ -152,7 +149,7 @@ namespace System.Windows.Xps.Serialization
         {
             if (!IsSupportedType(destinationType))
             {
-                throw new NotSupportedException(SR.Get(SRID.Converter_ConvertToNotSupported));
+                throw new NotSupportedException(SR.Converter_ConvertToNotSupported);
             }
 
             Color color = (Color)value;
@@ -188,10 +185,10 @@ namespace System.Windows.Xps.Serialization
 
                 sb.AppendFormat(provider, "ContextColor {0} ", uriString);
                 sb.AppendFormat(provider, "{1:R}{0}", separator, color.ScA);
-                for (int i = 0; i < color.GetNativeColorValues().GetLength(0); ++i)
+                for (int i = 0; i < color.GetNativeColorValues().Length; ++i)
                 {
                     sb.AppendFormat(provider, "{0:R}", color.GetNativeColorValues()[i]);
-                    if (i < color.GetNativeColorValues().GetLength(0) - 1)
+                    if (i < color.GetNativeColorValues().Length - 1)
                     {
                         sb.AppendFormat(provider, "{0}", separator);
                     }
@@ -255,18 +252,7 @@ namespace System.Windows.Xps.Serialization
             Type            type
             )
         {
-            bool isSupported = false;
-
-            foreach (Type t in SupportedTargetTypes)
-            {
-                if (t.Equals(type))
-                {
-                    isSupported = true;
-                    break;
-                }
-            }
-
-            return isSupported;
+            return typeof(string).Equals(type);
         }
 
         #endregion Private static helper methods
@@ -295,10 +281,7 @@ namespace System.Windows.Xps.Serialization
         {
             Uri profileUri = null;
 
-            if( colorContext == null )
-            {
-                throw new ArgumentNullException("colorContext");
-            }
+            ArgumentNullException.ThrowIfNull(colorContext);
             if ( context!= null )
             {
                 PackageSerializationManager manager = (PackageSerializationManager)context.GetService(typeof(XpsSerializationManager));
@@ -346,12 +329,12 @@ namespace System.Windows.Xps.Serialization
                         
                     XpsResourceStream resourceStream = manager.AcquireResourceStream(typeof(ColorContext), colorContextMimeType.ToString());
 
-                    byte [] buffer = new byte[512];
+                    byte[] buffer = new byte[512];
 
                     Stream profileStream = colorContext.OpenProfileStream();
                     int count;
                     
-                    while ( (count = profileStream.Read( buffer, 0, buffer.GetLength(0)) ) > 0 )
+                    while ( (count = profileStream.Read( buffer, 0, buffer.Length) ) > 0 )
                     {
                         resourceStream.Stream.Write(buffer,0,count);
                     }
@@ -385,13 +368,6 @@ namespace System.Windows.Xps.Serialization
         #endregion Public static helper methods
 
         #region Private static data
-
-        /// <summary>
-        /// A table of supported types for this type converter
-        /// </summary>
-        private static Type[] SupportedTargetTypes = {
-            typeof(string)
-        };
 
         #endregion Private static data
     }

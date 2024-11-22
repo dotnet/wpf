@@ -9,7 +9,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Windows.Media.Animation;
 
-using MS.Internal.PresentationCore;     // SR, SRID
+using MS.Internal.PresentationCore;     // SR
 
 namespace System.Windows.Media.Animation
 {
@@ -53,9 +53,11 @@ namespace System.Windows.Media.Animation
         /// </summary>
         /// <param name="info"></param>
         /// <param name="context"></param>
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
         private AnimationException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
 
         #endregion // Constructors
 

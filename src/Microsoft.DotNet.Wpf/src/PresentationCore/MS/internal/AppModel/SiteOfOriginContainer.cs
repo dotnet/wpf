@@ -23,7 +23,6 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Navigation;
 using System.Security;
-using MS.Internal.PresentationCore;
 
 namespace MS.Internal.AppModel
 {
@@ -46,48 +45,19 @@ namespace MS.Internal.AppModel
 
         internal static Uri SiteOfOrigin
         {
-            [FriendAccessAllowed]
             get
             {
-                Uri siteOfOrigin = SiteOfOriginForClickOnceApp;
-                if (siteOfOrigin == null)
-                {
-                    // Calling FixFileUri because BaseDirectory will be a c:\\ style path
-                    siteOfOrigin = BaseUriHelper.FixFileUri(new Uri(System.AppDomain.CurrentDomain.BaseDirectory));
-                }
+                // Calling FixFileUri because BaseDirectory will be a c:\\ style path
+                Uri siteOfOrigin = BaseUriHelper.FixFileUri(new Uri(System.AppDomain.CurrentDomain.BaseDirectory));
 #if DEBUG
             if (_traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + 
+                        Environment.CurrentManagedThreadId + 
                         ": SiteOfOriginContainer: returning site of origin " + siteOfOrigin);
 #endif
 
                 return siteOfOrigin;
-            }
-        }
-
-        // we separated this from the rest of the code because this code is used for media permission
-        // tests in partial trust but we want to do this without hitting the code path for regular exe's
-        // as in the code above. This will get hit for click once apps, xbaps, xaml and xps
-        internal static Uri SiteOfOriginForClickOnceApp
-        {
-            get
-            {
-                // The ClickOnce API, ApplicationDeployment.IsNetworkDeployed, determines whether the app is network-deployed
-                // by getting the ApplicationDeployment.CurrentDeployment property and catch the exception it can throw.
-                // The exception is a first chance exception and caught, but it often confuses developers,
-                // and can also have a perf impact. So we change to cache the value of SiteofOrigin in Dev10 to avoid the 
-                // exception being thrown too many times.
-                // An alternative is to cache the value of ApplicationDeployment.IsNetworkDeployed.
-                if (_siteOfOriginForClickOnceApp == null)
-                {
-                    _siteOfOriginForClickOnceApp = new SecurityCriticalDataForSet<Uri>(null);
-                }
-
-                Invariant.Assert(_siteOfOriginForClickOnceApp != null);
-
-                return _siteOfOriginForClickOnceApp.Value.Value;
             }
         }
        
@@ -95,11 +65,11 @@ namespace MS.Internal.AppModel
         {
             get
             {
-                return _browserSource.Value;
+                return _browserSource;
             }
             set
             {    
-               _browserSource.Value = value; 
+               _browserSource = value; 
             }
         }
    
@@ -230,7 +200,7 @@ namespace MS.Internal.AppModel
             if (_traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + 
+                        Environment.CurrentManagedThreadId + 
                         ": SiteOfOriginContainer: Creating SiteOfOriginPart for Uri " + uri);
 #endif
             return new SiteOfOriginPart(this, uri);
@@ -246,8 +216,7 @@ namespace MS.Internal.AppModel
 
         #region Private Members
 
-        private static SecurityCriticalDataForSet<Uri> _browserSource;
-        private static SecurityCriticalDataForSet<Uri>? _siteOfOriginForClickOnceApp;
+        private static Uri _browserSource;
 
         #endregion Private Members
 

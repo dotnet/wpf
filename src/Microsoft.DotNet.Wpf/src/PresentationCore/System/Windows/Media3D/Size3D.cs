@@ -17,7 +17,6 @@ using System.Windows.Media.Media3D;
 using System;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Media3D
 {
@@ -39,7 +38,7 @@ namespace System.Windows.Media.Media3D
         {
             if (x < 0 || y < 0 || z < 0)
             {
-                throw new System.ArgumentException(SR.Get(SRID.Size3D_DimensionCannotBeNegative));
+                throw new System.ArgumentException(SR.Size3D_DimensionCannotBeNegative);
             }
 
 
@@ -95,12 +94,12 @@ namespace System.Windows.Media.Media3D
             {
                 if (IsEmpty)
                 {
-                    throw new System.InvalidOperationException(SR.Get(SRID.Size3D_CannotModifyEmptySize));
+                    throw new System.InvalidOperationException(SR.Size3D_CannotModifyEmptySize);
                 }
                 
                 if (value < 0)
                 {
-                    throw new System.ArgumentException(SR.Get(SRID.Size3D_DimensionCannotBeNegative));
+                    throw new System.ArgumentException(SR.Size3D_DimensionCannotBeNegative);
                 }
 
                 _x = value;
@@ -120,12 +119,12 @@ namespace System.Windows.Media.Media3D
             {
                 if (IsEmpty)
                 {
-                    throw new System.InvalidOperationException(SR.Get(SRID.Size3D_CannotModifyEmptySize));
+                    throw new System.InvalidOperationException(SR.Size3D_CannotModifyEmptySize);
                 }
                 
                 if (value < 0)
                 {
-                    throw new System.ArgumentException(SR.Get(SRID.Size3D_DimensionCannotBeNegative));
+                    throw new System.ArgumentException(SR.Size3D_DimensionCannotBeNegative);
                 }
 
                 _y = value;
@@ -146,12 +145,12 @@ namespace System.Windows.Media.Media3D
             {
                 if (IsEmpty)
                 {
-                    throw new System.InvalidOperationException(SR.Get(SRID.Size3D_CannotModifyEmptySize));
+                    throw new System.InvalidOperationException(SR.Size3D_CannotModifyEmptySize);
                 }
                 
                 if (value < 0)
                 {
-                    throw new System.ArgumentException(SR.Get(SRID.Size3D_DimensionCannotBeNegative));
+                    throw new System.ArgumentException(SR.Size3D_DimensionCannotBeNegative);
                 }
 
                 _z = value;

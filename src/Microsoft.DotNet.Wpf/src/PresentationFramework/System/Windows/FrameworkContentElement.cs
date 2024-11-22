@@ -361,10 +361,7 @@ namespace System.Windows
             // Verify Context Access
             //             VerifyAccess();
 
-            if (resourceKey == null)
-            {
-                throw new ArgumentNullException("resourceKey");
-            }
+            ArgumentNullException.ThrowIfNull(resourceKey);
 
             object resource = FrameworkElement.FindResourceInternal(null /* fe */, this, resourceKey);
 
@@ -391,10 +388,7 @@ namespace System.Windows
             // Verify Context Access
 //             VerifyAccess();
 
-            if (resourceKey == null)
-            {
-                throw new ArgumentNullException("resourceKey");
-            }
+            ArgumentNullException.ThrowIfNull(resourceKey);
 
             object resource = FrameworkElement.FindResourceInternal(null /* fe */, this, resourceKey);
 
@@ -451,10 +445,7 @@ namespace System.Windows
         /// </summary>
         public void BeginStoryboard(Storyboard storyboard, HandoffBehavior handoffBehavior, bool isControllable)
         {
-            if( storyboard == null )
-            {
-                throw new ArgumentNullException("storyboard");
-            }
+            ArgumentNullException.ThrowIfNull(storyboard);
 
             // Storyboard.Begin is a public API and needs to be validating handoffBehavior anyway.
 
@@ -546,7 +537,7 @@ namespace System.Windows
                     // Commented this because the implicit fetch could also return a DeferredDictionaryReference
                     // if (!(implicitValue is Style))
                     // {
-                    //     throw new InvalidOperationException(SR.Get(SRID.InvalidImplicitStyleResource, this.GetType().Name, implicitValue));
+                    //     throw new InvalidOperationException(SR.Format(SR.InvalidImplicitStyleResource, this.GetType().Name, implicitValue));
                     // }
 
                     // This style has been fetched from resources
@@ -607,7 +598,7 @@ namespace System.Windows
                                 #region EventTracing
                                 if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordGeneral, EventTrace.Level.Verbose))
                                 {
-                                    string TypeAndName = "[" + GetType().Name + "]" + dp.Name;
+                                    string TypeAndName = $"[{GetType().Name}]{dp.Name}";
                                     EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientPropParentCheck,
                                                                          EventTrace.Keyword.KeywordGeneral, EventTrace.Level.Verbose,
                                                                          GetHashCode(), TypeAndName);
@@ -1014,10 +1005,7 @@ namespace System.Windows
         /// <returns> Returns true if focus is moved successfully. Returns false if there is no next element</returns>
         public sealed override bool MoveFocus(TraversalRequest request)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException("request");
-            }
+            ArgumentNullException.ThrowIfNull(request);
 
             return KeyboardNavigation.Current.Navigate(this, request);
         }
@@ -1542,7 +1530,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Illegal_InheritanceBehaviorSettor));
+                    throw new InvalidOperationException(SR.Illegal_InheritanceBehaviorSettor);
                 }
             }
         }
@@ -1559,7 +1547,7 @@ namespace System.Windows
             // Nested BeginInits on the same instance aren't permitted
             if (ReadInternalFlag(InternalFlags.InitPending))
             {
-                throw new InvalidOperationException(SR.Get(SRID.NestedBeginInitNotSupported));
+                throw new InvalidOperationException(SR.NestedBeginInitNotSupported);
             }
 
             // Mark the element as pending initialization
@@ -1574,7 +1562,7 @@ namespace System.Windows
             // Every EndInit must be preceeded by a BeginInit
             if (!ReadInternalFlag(InternalFlags.InitPending))
             {
-                throw new InvalidOperationException(SR.Get(SRID.EndInitWithoutBeginInitNotSupported));
+                throw new InvalidOperationException(SR.EndInitWithoutBeginInitNotSupported);
             }
 
             // Reset the pending flag
@@ -2135,7 +2123,7 @@ namespace System.Windows
                 // Thus we support any indices in the range [-1, 65535).
                 if (value < -1 || value >= 0xFFFF)
                 {
-                    throw new ArgumentOutOfRangeException("value", SR.Get(SRID.TemplateChildIndexOutOfRange));
+                    throw new ArgumentOutOfRangeException("value", SR.TemplateChildIndexOutOfRange);
                 }
 
                 uint childIndex = (value == -1) ? 0xFFFF : (uint)value;

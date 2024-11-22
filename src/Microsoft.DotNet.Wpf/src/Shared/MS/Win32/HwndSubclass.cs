@@ -50,7 +50,6 @@ namespace MS.Win32
     ///     the window.
     /// </summary>
     /// <remarks> Not available to partial trust callers</remarks>
-    [FriendAccessAllowed] // Built into Base, also used by Framework
     internal class HwndSubclass : IDisposable
     {
         static HwndSubclass()
@@ -78,10 +77,7 @@ namespace MS.Win32
         /// </returns>
         internal HwndSubclass(HwndWrapperHook hook)
         {
-            if(hook == null)
-            {
-                throw new ArgumentNullException("hook");
-            }
+            ArgumentNullException.ThrowIfNull(hook);
 
             _bond = Bond.Unattached;
             _hook = new WeakReference(hook);
@@ -141,7 +137,7 @@ namespace MS.Win32
         {
 
             if (_bond != Bond.Unattached)
-                throw new InvalidOperationException(SR.Get(SRID.HwndSubclassMultipleAttach));
+                throw new InvalidOperationException(SR.HwndSubclassMultipleAttach);
 
             return CriticalAttach( hwnd ) ;
         }

@@ -12,7 +12,6 @@
 //
 
 using MS.Internal;
-using MS.Internal.PresentationCore;
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -28,7 +27,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media 
 {
@@ -80,7 +78,6 @@ namespace System.Windows.Media
         /// <exception cref="System.ArgumentNullException">
         /// Thrown if "writer" is null.
         /// </exception>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal static bool SerializeOn(BinaryWriter writer, string stringValue)
         {
             // ********* VERY IMPORTANT NOTE *****************
@@ -89,11 +86,8 @@ namespace System.Windows.Media
             // and duplicates the code below to avoid pulling in SCB & base classes as well.
             // ********* VERY IMPORTANT NOTE *****************
 
-            if (writer == null)
-            {
-                throw new ArgumentNullException("writer");
-            }
-            
+            ArgumentNullException.ThrowIfNull(writer);
+
             KnownColor knownColor = KnownColors.ColorStringToKnownColor(stringValue);
 #if !PBTCOMPILER
             // ***************** NOTE *****************
@@ -148,10 +142,7 @@ namespace System.Windows.Media
         /// </exception>
         public static object DeserializeFrom(BinaryReader reader)
         {
-            if (reader == null)
-            {
-                throw new ArgumentNullException("reader");
-            }
+            ArgumentNullException.ThrowIfNull(reader);
 
             return DeserializeFrom(reader, null);
         }
@@ -184,7 +175,7 @@ namespace System.Windows.Media
             }
             else
             {
-                throw new Exception(SR.Get(SRID.BrushUnknownBamlType));
+                throw new Exception(SR.BrushUnknownBamlType);
             }
         }
 

@@ -16,10 +16,7 @@ namespace System.Xaml
     {
         public XamlCreatedObjectEventArgs(Object createdObject)
         {
-            if (createdObject == null)
-            {
-                throw new ArgumentNullException("createdObject");
-            }
+            ArgumentNullException.ThrowIfNull(createdObject);
 
             CreatedObject = createdObject;
         }

@@ -36,7 +36,7 @@ namespace System.Windows.Input
             {
                 if ((value & ~ManipulationModes.All) != 0)
                 {
-                    throw new ArgumentException(SR.Get(SRID.Manipulation_InvalidManipulationMode), "value");
+                    throw new ArgumentException(SR.Manipulation_InvalidManipulationMode, "value");
                 }
 
                 _mode = value;
@@ -113,15 +113,9 @@ namespace System.Windows.Input
         /// </summary>
         protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
-            if (genericHandler == null)
-            {
-                throw new ArgumentNullException("genericHandler");
-            }
+            ArgumentNullException.ThrowIfNull(genericHandler);
 
-            if (genericTarget == null)
-            {
-                throw new ArgumentNullException("genericTarget");
-            }
+            ArgumentNullException.ThrowIfNull(genericTarget);
 
             if (RoutedEvent == Manipulation.ManipulationStartingEvent)
             {

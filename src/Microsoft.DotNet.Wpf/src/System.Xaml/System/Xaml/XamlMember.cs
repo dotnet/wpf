@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -52,14 +54,8 @@ namespace System.Xaml
 
         internal XamlMember(PropertyInfo propertyInfo, XamlSchemaContext schemaContext, XamlMemberInvoker invoker, MemberReflector reflector)
         {
-            if (propertyInfo == null)
-            {
-                throw new ArgumentNullException(nameof(propertyInfo));
-            }
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException(nameof(schemaContext));
-            }
+            ArgumentNullException.ThrowIfNull(propertyInfo);
+            ArgumentNullException.ThrowIfNull(schemaContext);
             _name = propertyInfo.Name;
             _declaringType = schemaContext.GetXamlType(propertyInfo.DeclaringType);
             _memberType = MemberType.Instance;
@@ -81,14 +77,8 @@ namespace System.Xaml
 
         internal XamlMember(EventInfo eventInfo, XamlSchemaContext schemaContext, XamlMemberInvoker invoker, MemberReflector reflector)
         {
-            if (eventInfo == null)
-            {
-                throw new ArgumentNullException(nameof(eventInfo));
-            }
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException(nameof(schemaContext));
-            }
+            ArgumentNullException.ThrowIfNull(eventInfo);
+            ArgumentNullException.ThrowIfNull(schemaContext);
             _name = eventInfo.Name;
             _declaringType = schemaContext.GetXamlType(eventInfo.DeclaringType);
             _memberType = MemberType.Instance;
@@ -113,14 +103,11 @@ namespace System.Xaml
         internal XamlMember(string attachablePropertyName, MethodInfo getter, MethodInfo setter,
             XamlSchemaContext schemaContext, XamlMemberInvoker invoker, MemberReflector reflector)
         {
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException(nameof(schemaContext));
-            }
+            ArgumentNullException.ThrowIfNull(schemaContext);
             MethodInfo accessor = getter ?? setter;
             if (accessor == null)
             {
-                throw new ArgumentNullException(SR.Get(SRID.GetterOrSetterRequired), (Exception)null);
+                throw new ArgumentNullException(SR.GetterOrSetterRequired, (Exception)null);
             }
             _name = attachablePropertyName ?? throw new ArgumentNullException(nameof(attachablePropertyName));
 
@@ -149,14 +136,8 @@ namespace System.Xaml
         internal XamlMember(string attachableEventName, MethodInfo adder, XamlSchemaContext schemaContext,
             XamlMemberInvoker invoker, MemberReflector reflector)
         {
-            if (adder == null)
-            {
-                throw new ArgumentNullException(nameof(adder));
-            }
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException(nameof(schemaContext));
-            }
+            ArgumentNullException.ThrowIfNull(adder);
+            ArgumentNullException.ThrowIfNull(schemaContext);
             ValidateSetter(adder, "adder");
 
             _name = attachableEventName ?? throw new ArgumentNullException(nameof(attachableEventName));
@@ -358,7 +339,7 @@ namespace System.Xaml
         public override string ToString()
         {
             Debug.Assert(_declaringType != null, "XamlDirective should not call base.ToString");
-            return _declaringType.ToString() + "." + Name;
+            return $"{_declaringType}.{Name}";
         }
 
         public IList<XamlMember> DependsOn
@@ -519,7 +500,7 @@ namespace System.Xaml
             MethodInfo setter = Setter;
             if (setter != null)
             {
-                return MemberReflector.GenericArgumentsAreVisibleTo(setter, accessingAssembly, SchemaContext) && 
+                return MemberReflector.GenericArgumentsAreVisibleTo(setter, accessingAssembly, SchemaContext) &&
                     (MemberReflector.IsInternalVisibleTo(setter, accessingAssembly, SchemaContext) ||
                     MemberReflector.IsProtectedVisibleTo(setter, accessingType, SchemaContext));
             }
@@ -823,7 +804,7 @@ namespace System.Xaml
             }
             if ((method.GetParameters().Length != 1) || (method.ReturnType == typeof(void)))
             {
-                throw new ArgumentException(SR.Get(SRID.IncorrectGetterParamNum), argumentName);
+                throw new ArgumentException(SR.IncorrectGetterParamNum, argumentName);
             }
         }
 
@@ -831,7 +812,7 @@ namespace System.Xaml
         {
             if ((method != null) && (method.GetParameters().Length != 2))
             {
-                throw new ArgumentException(SR.Get(SRID.IncorrectSetterParamNum), argumentName);
+                throw new ArgumentException(SR.IncorrectSetterParamNum, argumentName);
             }
         }
 
@@ -854,7 +835,7 @@ namespace System.Xaml
                     ICustomAttributeProvider attrProvider = LookupCustomAttributeProvider();
                     if (attrProvider == null)
                     {
-                        // Set the member that _reflector will use. Note this also ensures that 
+                        // Set the member that _reflector will use. Note this also ensures that
                         // _underlyingMember is initialized, so it's safe to access the field directly below.
                         _reflector.UnderlyingMember = UnderlyingMember;
                     }
@@ -884,8 +865,8 @@ namespace System.Xaml
             if (!_reflector.DefaultValueIsSet)
             {
                 DefaultValueAttribute defaultValueAttrib = null;
-                // Unlike other component-model attributes, DefaultValueAttribute is unsealed, and the 
-                // Value property is virtual. So we cannot reliably process DefaultValueAttribute in ROL. 
+                // Unlike other component-model attributes, DefaultValueAttribute is unsealed, and the
+                // Value property is virtual. So we cannot reliably process DefaultValueAttribute in ROL.
                 // The DefaultValue property is internal and is only called from XamlObjectReader, so it
                 // is safe to use live reflection.
                 if (AreAttributesAvailable)

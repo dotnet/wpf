@@ -431,8 +431,8 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                             && !AnimatedTypeHelpers.IsValidAnimationValue[[instance.TypeName]](defaultOriginValue))
                                         {
                                             throw new InvalidOperationException(
-                                                SR.Get(
-                                                    SRID.Animation_Invalid_DefaultValue,
+                                                SR.Format(
+                                                    SR.Animation_Invalid_DefaultValue,
                                                     this.GetType(),
                                                     "origin",
                                                     defaultOriginValue.ToString(CultureInfo.InvariantCulture)));
@@ -442,8 +442,8 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                             && !AnimatedTypeHelpers.IsValidAnimationValue[[instance.TypeName]](defaultDestinationValue))
                                         {
                                             throw new InvalidOperationException(
-                                                SR.Get(
-                                                    SRID.Animation_Invalid_DefaultValue,
+                                                SR.Format(
+                                                    SR.Animation_Invalid_DefaultValue,
                                                     this.GetType(),
                                                     "destination",
                                                     defaultDestinationValue.ToString(CultureInfo.InvariantCulture)));

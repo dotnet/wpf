@@ -39,14 +39,9 @@ namespace System.Windows
         public TemplateBindingExtension(
             DependencyProperty property)
         {
-            if (property != null)
-            {
-                _property = property;
-            }
-            else
-            {
-                throw new ArgumentNullException("property");
-            }
+            ArgumentNullException.ThrowIfNull(property);
+
+            _property = property;
         }
 
         /// <summary>
@@ -62,7 +57,7 @@ namespace System.Windows
         {
             if (Property == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.MarkupExtensionProperty));
+                throw new InvalidOperationException(SR.MarkupExtensionProperty);
             }
 
             return new TemplateBindingExpression(this);
@@ -77,10 +72,7 @@ namespace System.Windows
             get { return _property; }
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
                 _property = value;
             }
         }
@@ -94,10 +86,7 @@ namespace System.Windows
             get { return _converter; }
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
                 _converter = value;
             }
         }

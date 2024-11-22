@@ -11,7 +11,6 @@ using System.Windows.Threading;
 using System.Windows.Input;
 using System.Diagnostics;
 using System.IO;
-using MS.Internal.PresentationUI;
 using System.Windows.Interop;
 using System.Security;
 
@@ -20,7 +19,6 @@ namespace Microsoft.Internal.DeploymentUI
     /// <summary>
     /// Interaction logic for TenFeetInstallationError.xaml
     /// </summary>
-    [FriendAccessAllowed] // Built into UI, used by Framework.
     internal partial class TenFeetInstallationError : IErrorPage
     {
         public TenFeetInstallationError()

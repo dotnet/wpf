@@ -40,6 +40,8 @@ namespace System.Windows.Documents
         /// </summary>
         public static RoutedUICommand  Delete                  { get { return EnsureCommand(ref _Delete                 , "Delete"                   ); } }
 
+        internal static RoutedUICommand Clear                  { get { return EnsureCommand(ref _Clear                  , "Clear"                    ); } }
+
         /// <summary>
         /// Backspace command.
         /// When selection is empty deleted the previous character or paragraph separator.
@@ -477,6 +479,7 @@ namespace System.Windows.Documents
         // --------------
         private static RoutedUICommand _ToggleInsert;
         private static RoutedUICommand _Delete;
+        private static RoutedUICommand _Clear;
         private static RoutedUICommand _Backspace;
         private static RoutedUICommand _DeleteNextWord;
         private static RoutedUICommand _DeletePreviousWord;

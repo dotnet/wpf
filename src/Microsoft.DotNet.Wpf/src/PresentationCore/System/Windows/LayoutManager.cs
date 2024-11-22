@@ -22,7 +22,6 @@ using MS.Internal;
 using MS.Utility;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows
 {
@@ -147,7 +146,7 @@ namespace System.Windows
             _lastExceptionElement = null;
             _measuresOnStack++;
             if(_measuresOnStack > s_LayoutRecursionLimit)
-                throw new InvalidOperationException(SR.Get(SRID.LayoutManager_DeepRecursion, s_LayoutRecursionLimit));
+                throw new InvalidOperationException(SR.Format(SR.LayoutManager_DeepRecursion, s_LayoutRecursionLimit));
 
             _firePostLayoutEvents = true;
         }
@@ -164,7 +163,7 @@ namespace System.Windows
             _lastExceptionElement = null;
             _arrangesOnStack++;
             if(_arrangesOnStack > s_LayoutRecursionLimit)
-                throw new InvalidOperationException(SR.Get(SRID.LayoutManager_DeepRecursion, s_LayoutRecursionLimit));
+                throw new InvalidOperationException(SR.Format(SR.LayoutManager_DeepRecursion, s_LayoutRecursionLimit));
 
             _firePostLayoutEvents = true;
         }

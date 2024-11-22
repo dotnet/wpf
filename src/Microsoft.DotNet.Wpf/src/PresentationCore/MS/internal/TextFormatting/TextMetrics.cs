@@ -18,7 +18,6 @@ using System.Security;
 using MS.Internal.FontCache;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 
 namespace MS.Internal.TextFormatting
@@ -309,7 +308,7 @@ namespace MS.Internal.TextFormatting
 
                 if (lserr != LsErr.None)
                 {
-                    TextFormatterContext.ThrowExceptionFromLsError(SR.Get(SRID.AcquireBreakRecordFailure, lserr), lserr);
+                    TextFormatterContext.ThrowExceptionFromLsError(SR.Format(SR.AcquireBreakRecordFailure, lserr), lserr);
                 }
             }
 
@@ -319,10 +318,10 @@ namespace MS.Internal.TextFormatting
             {
                 return new TextLineBreak(
                     _lastRun.TextModifierScope, 
-                    new SecurityCriticalDataForSet<IntPtr>(pbreakrec)
+                    pbreakrec
                     );
             }
-            return (pbreakrec != IntPtr.Zero) ? new TextLineBreak(null, new SecurityCriticalDataForSet<IntPtr>(pbreakrec)) : null;
+            return (pbreakrec != IntPtr.Zero) ? new TextLineBreak(null, pbreakrec) : null;
         }
 
 

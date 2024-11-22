@@ -15,7 +15,6 @@ using System.Windows.Automation.Provider;
 
 using MS.Internal;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.Automation
 {
@@ -47,7 +46,7 @@ namespace MS.Internal.Automation
                 inputType != SynchronizedInputType.MouseRightButtonDown &&
                 inputType != SynchronizedInputType.MouseRightButtonUp)
             {
-                throw new ArgumentException(SR.Get(SRID.Automation_InvalidSynchronizedInputType, inputType));
+                throw new ArgumentException(SR.Format(SR.Automation_InvalidSynchronizedInputType, inputType));
             }
             
             UIElement e = _owner as UIElement;
@@ -55,7 +54,7 @@ namespace MS.Internal.Automation
             {
                 if (!e.StartListeningSynchronizedInput(inputType))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Automation_RecursivePublicCall));
+                    throw new InvalidOperationException(SR.Automation_RecursivePublicCall);
                 }
             }
             else
@@ -65,7 +64,7 @@ namespace MS.Internal.Automation
                 {
                     if (!ce.StartListeningSynchronizedInput(inputType))
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Automation_RecursivePublicCall));
+                        throw new InvalidOperationException(SR.Automation_RecursivePublicCall);
                     }
                 }
                 else
@@ -73,7 +72,7 @@ namespace MS.Internal.Automation
                     UIElement3D e3D = (UIElement3D)_owner;
                     if (!e3D.StartListeningSynchronizedInput(inputType))
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Automation_RecursivePublicCall));
+                        throw new InvalidOperationException(SR.Automation_RecursivePublicCall);
                     }
 }
             }

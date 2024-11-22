@@ -10,7 +10,6 @@ using System.Windows.Media;
 using System.Windows.Threading;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using System.Security ; 
 using MS.Internal.PresentationCore; 
 
@@ -20,17 +19,11 @@ namespace System.Windows.Interop
     {
         public HwndSourceKeyboardInputSite(HwndSource source, IKeyboardInputSink sink)
         {
-            if(source == null)
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(sink);
+            if (!(sink is UIElement))
             {
-                throw new ArgumentNullException("source");
-            }
-            if(sink == null)
-            {
-                throw new ArgumentNullException("sink");
-            }
-            if(!(sink is UIElement))
-            {
-                throw new ArgumentException(SR.Get(SRID.KeyboardSinkMustBeAnElement), "sink");
+                throw new ArgumentException(SR.KeyboardSinkMustBeAnElement, "sink");
             }
             
             _source = source;

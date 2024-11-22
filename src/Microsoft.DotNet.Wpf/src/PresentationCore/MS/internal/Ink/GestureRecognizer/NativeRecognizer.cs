@@ -32,7 +32,6 @@ using MS.Internal.PresentationCore;
 
 using MS.Utility;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -71,7 +70,7 @@ namespace MS.Internal.Ink.GestureRecognition
             if (HRESULT.Failed(hr))
             {
                 //don't throw a com exception here, we don't need to pass out any details
-                throw new InvalidOperationException(SR.Get(SRID.UnspecifiedGestureConstructionException));
+                throw new InvalidOperationException(SR.UnspecifiedGestureConstructionException);
             }
 
             // We add a reference of the recognizer to the context handle.
@@ -112,10 +111,7 @@ namespace MS.Internal.Ink.GestureRecognition
         /// <param name="applicationGestures"></param>
         internal ApplicationGesture[] SetEnabledGestures(IEnumerable<ApplicationGesture> applicationGestures)
         {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("NativeRecognizer");
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(NativeRecognizer));
 
             //validate and get an array out
             ApplicationGesture[] enabledGestures =
@@ -126,7 +122,7 @@ namespace MS.Internal.Ink.GestureRecognition
             if (HRESULT.Failed(hr))
             {
                 //don't throw a com exception here, we don't need to pass out any details
-                throw new InvalidOperationException(SR.Get(SRID.UnspecifiedSetEnabledGesturesException));
+                throw new InvalidOperationException(SR.UnspecifiedSetEnabledGesturesException);
             }
 
             return enabledGestures;
@@ -139,26 +135,20 @@ namespace MS.Internal.Ink.GestureRecognition
         /// <returns></returns>
         internal GestureRecognitionResult[] Recognize(StrokeCollection strokes)
         {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("NativeRecognizer");
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(NativeRecognizer));
 
             //
             // note that we validate this argument from GestureRecognizer 
             // but since this is marked TAS, we want to do it here as well
             //
-            if (strokes == null)
-            {
-                throw new ArgumentNullException("strokes"); // Null is not allowed as the argument value
-            }
+            ArgumentNullException.ThrowIfNull(strokes);
             if (strokes.Count > 2)
             {
-                throw new ArgumentException(SR.Get(SRID.StrokeCollectionCountTooBig), "strokes");
+                throw new ArgumentException(SR.StrokeCollectionCountTooBig, "strokes");
             }
 
             // Create an empty result.
-            GestureRecognitionResult[] recResults = new GestureRecognitionResult[]{};
+            GestureRecognitionResult[] recResults = Array.Empty<GestureRecognitionResult>();
 
             if ( strokes.Count == 0 )
             {
@@ -207,7 +197,7 @@ namespace MS.Internal.Ink.GestureRecognition
                 if ( HRESULT.Failed(hr) )
                 {
                     //don't throw a com exception here, we don't need to pass out any details
-                    throw new InvalidOperationException(SR.Get(SRID.UnspecifiedGestureException));
+                    throw new InvalidOperationException(SR.UnspecifiedGestureException);
                 }
             }
 
@@ -217,11 +207,7 @@ namespace MS.Internal.Ink.GestureRecognition
 
         internal static ApplicationGesture[] GetApplicationGestureArrayAndVerify(IEnumerable<ApplicationGesture> applicationGestures)
         {
-            if (applicationGestures == null)
-            {
-                // Null is not allowed as the argument value
-                throw new ArgumentNullException("applicationGestures");
-            }
+            ArgumentNullException.ThrowIfNull(applicationGestures);
 
             uint count = 0;
             //we need to make a disconnected copy
@@ -242,7 +228,7 @@ namespace MS.Internal.Ink.GestureRecognition
             if (count == 0)
             {
                 // An empty array is not allowed.
-                throw new ArgumentException(SR.Get(SRID.ApplicationGestureArrayLengthIsZero), "applicationGestures");
+                throw new ArgumentException(SR.ApplicationGestureArrayLengthIsZero, "applicationGestures");
             }
 
             bool foundAllGestures = false;
@@ -251,7 +237,7 @@ namespace MS.Internal.Ink.GestureRecognition
             {
                 if (!ApplicationGestureHelper.IsDefined(gesture))
                 {
-                    throw new ArgumentException(SR.Get(SRID.ApplicationGestureIsInvalid), "applicationGestures");
+                    throw new ArgumentException(SR.ApplicationGestureIsInvalid, "applicationGestures");
                 }
 
                 //check for allgestures
@@ -263,7 +249,7 @@ namespace MS.Internal.Ink.GestureRecognition
                 //check for dupes
                 if (gestures.Contains(gesture))
                 {
-                    throw new ArgumentException(SR.Get(SRID.DuplicateApplicationGestureFound), "applicationGestures");
+                    throw new ArgumentException(SR.DuplicateApplicationGestureFound, "applicationGestures");
                 }
 
                 gestures.Add(gesture);
@@ -273,7 +259,7 @@ namespace MS.Internal.Ink.GestureRecognition
             if (foundAllGestures && gestures.Count != 1)
             {
                 // no dupes allowed
-                throw new ArgumentException(SR.Get(SRID.AllGesturesMustExistAlone), "applicationGestures");
+                throw new ArgumentException(SR.AllGesturesMustExistAlone, "applicationGestures");
             }
 
             return gestures.ToArray();
@@ -519,7 +505,7 @@ namespace MS.Internal.Ink.GestureRecognition
             Debug.Assert(propertyGuids.Length == StylusPointDescription.RequiredCountOfProperties);
 
             // Get the packet description
-            packetDescription.cbPacketSize = (uint)(propertyGuids.Length * Marshal.SizeOf(typeof(Int32)));
+            packetDescription.cbPacketSize = (uint)(propertyGuids.Length * sizeof(Int32));
             packetDescription.cPacketProperties = (uint)propertyGuids.Length;
 
             //
@@ -568,7 +554,7 @@ namespace MS.Internal.Ink.GestureRecognition
             int packetCount = rawPackets.Length;
             if (packetCount != 0)
             {
-                countOfBytes = packetCount * Marshal.SizeOf(typeof(Int32));
+                countOfBytes = packetCount * sizeof(Int32);
                 packets = Marshal.AllocCoTaskMem(countOfBytes);
                 Marshal.Copy(rawPackets, 0, packets, packetCount);
             }
@@ -617,7 +603,7 @@ namespace MS.Internal.Ink.GestureRecognition
         /// <returns></returns>
         private GestureRecognitionResult[] InvokeGetAlternateList()
         {
-            GestureRecognitionResult[] recResults = new GestureRecognitionResult[] { };
+            GestureRecognitionResult[] recResults = Array.Empty<GestureRecognitionResult>();
             int hr = 0;
 
             MS.Win32.Recognizer.RECO_RANGE recoRange;
@@ -681,7 +667,7 @@ namespace MS.Internal.Ink.GestureRecognition
         /// <returns></returns>
         private GestureRecognitionResult[] InvokeGetLatticePtr()
         {
-            GestureRecognitionResult[] recResults = new GestureRecognitionResult[] { };
+            GestureRecognitionResult[] recResults = Array.Empty<GestureRecognitionResult>();
 
 //            int hr = 0;
             IntPtr ptr = IntPtr.Zero;
@@ -834,7 +820,7 @@ namespace MS.Internal.Ink.GestureRecognition
         /// <summary>
         /// Used to lock for instancing the native recognizer handle
         /// </summary>
-        private static object                           _syncRoot = new object();
+        private static readonly object                  _syncRoot = new object();
 
         /// <summary>
         /// All NativeRecognizer share a single handle to the recognizer

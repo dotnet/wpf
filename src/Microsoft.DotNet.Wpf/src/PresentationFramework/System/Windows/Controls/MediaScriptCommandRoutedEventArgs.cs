@@ -22,15 +22,9 @@ namespace System.Windows
             string          parameterValue
             )  : base(routedEvent, sender)
         {
-            if (parameterType == null)
-            {
-                throw new ArgumentNullException("parameterType");
-            }
+            ArgumentNullException.ThrowIfNull(parameterType);
 
-            if (parameterValue == null)
-            {
-                throw new ArgumentNullException("parameterValue");
-            }
+            ArgumentNullException.ThrowIfNull(parameterValue);
 
             _parameterType = parameterType;
             _parameterValue = parameterValue;

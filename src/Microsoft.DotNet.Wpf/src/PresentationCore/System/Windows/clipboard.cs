@@ -13,7 +13,6 @@
 
 using MS.Win32;
 using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
 using System.Collections.Specialized;
 using System.IO;
 using System.Security;
@@ -25,7 +24,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 namespace System.Windows
@@ -88,14 +86,11 @@ namespace System.Windows
         /// </summary>
         public static bool ContainsData(string format)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException(nameof(format));
-            }
+            ArgumentNullException.ThrowIfNull(format);
 
-            if (format == string.Empty)
+            if (format.Length == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             return ContainsDataInternal(format);
@@ -180,14 +175,11 @@ namespace System.Windows
         /// </summary>
         public static object GetData(string format)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException(nameof(format));
-            }
+            ArgumentNullException.ThrowIfNull(format);
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             return GetDataInternal(format);
@@ -255,10 +247,7 @@ namespace System.Windows
         /// </summary>
         public static void SetAudio(byte[] audioBytes)
         {
-            if (audioBytes == null)
-            {
-                throw new ArgumentNullException(nameof(audioBytes));
-            }
+            ArgumentNullException.ThrowIfNull(audioBytes);
 
             SetAudio(new MemoryStream(audioBytes));
         }
@@ -268,10 +257,7 @@ namespace System.Windows
         /// </summary>
         public static void SetAudio(Stream audioStream)
         {
-            if (audioStream == null)
-            {
-                throw new ArgumentNullException(nameof(audioStream));
-            }
+            ArgumentNullException.ThrowIfNull(audioStream);
 
             SetDataInternal(DataFormats.WaveAudio, audioStream);
         }
@@ -281,20 +267,14 @@ namespace System.Windows
         /// </summary>
         public static void SetData(string format, object data)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException(nameof(format));
-            }
+            ArgumentNullException.ThrowIfNull(format);
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            ArgumentNullException.ThrowIfNull(data);
 
             SetDataInternal(format, data);
         }
@@ -304,14 +284,11 @@ namespace System.Windows
         /// </summary>
         public static void SetFileDropList(StringCollection fileDropList)
         {
-            if (fileDropList == null)
-            {
-                throw new ArgumentNullException(nameof(fileDropList));
-            }
+            ArgumentNullException.ThrowIfNull(fileDropList);
 
             if (fileDropList.Count == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_FileDropListIsEmpty, fileDropList));
+                throw new ArgumentException(SR.Format(SR.DataObject_FileDropListIsEmpty, fileDropList));
             }
 
             foreach (string fileDrop in fileDropList)
@@ -322,7 +299,7 @@ namespace System.Windows
                 }
                 catch (ArgumentException)
                 {
-                    throw new ArgumentException(SR.Get(SRID.DataObject_FileDropListHasInvalidFileDropPath, fileDropList));
+                    throw new ArgumentException(SR.Format(SR.DataObject_FileDropListHasInvalidFileDropPath, fileDropList));
                 }
             }
 
@@ -339,10 +316,7 @@ namespace System.Windows
         /// </summary>
         public static void SetImage(BitmapSource image)
         {
-            if (image == null)
-            {
-                throw new ArgumentNullException(nameof(image));
-            }
+            ArgumentNullException.ThrowIfNull(image);
 
             SetDataInternal(DataFormats.Bitmap, image);
         }
@@ -352,10 +326,7 @@ namespace System.Windows
         /// </summary>
         public static void SetText(string text)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
+            ArgumentNullException.ThrowIfNull(text);
 
             SetText(text, TextDataFormat.UnicodeText);
         }
@@ -365,10 +336,7 @@ namespace System.Windows
         /// </summary>
         public static void SetText(string text, TextDataFormat format)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
+            ArgumentNullException.ThrowIfNull(text);
 
             if (!DataFormats.IsValidTextDataFormat(format))
             {
@@ -402,10 +370,7 @@ namespace System.Windows
         {
             bool bReturn;
 
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            ArgumentNullException.ThrowIfNull(data);
 
             bReturn = false;
 
@@ -454,10 +419,7 @@ namespace System.Windows
         public static void SetDataObject(object data) 
         {
 
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            ArgumentNullException.ThrowIfNull(data);
 
             SetDataObject(data, false);
         }
@@ -500,13 +462,9 @@ namespace System.Windows
         /// <param name="copy">
         /// Specify whether the data should remain on the clipboard after the application exits.
         /// </param>
-        [FriendAccessAllowed]
         internal static void CriticalSetDataObject(object data, bool copy)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            ArgumentNullException.ThrowIfNull(data);
 
             IComDataObject dataObject;
 
@@ -557,7 +515,6 @@ namespace System.Windows
             }
         }
 
-        [FriendAccessAllowed]
         internal static bool IsClipboardPopulated()
         {
             return (GetDataObjectInternal() != null);
@@ -763,8 +720,8 @@ namespace System.Windows
         {
             bool autoConvert;
 
-            if (String.CompareOrdinal(format, DataFormats.FileDrop) == 0 ||
-                String.CompareOrdinal(format, DataFormats.Bitmap) == 0)
+            if (string.Equals(format, DataFormats.FileDrop, StringComparison.Ordinal) ||
+                string.Equals(format, DataFormats.Bitmap, StringComparison.Ordinal))
             {
                 autoConvert = true;
             }

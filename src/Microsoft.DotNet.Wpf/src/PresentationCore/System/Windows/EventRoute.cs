@@ -9,8 +9,8 @@ using System.Diagnostics;
 using MS.Utility;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using MS.Internal;
+using MS.Internal.KnownBoxes;
 
 namespace System.Windows
 {
@@ -44,11 +44,8 @@ namespace System.Windows
         /// </param>
         public EventRoute(RoutedEvent routedEvent)
         {
-            if (routedEvent == null)
-            {
-                throw new ArgumentNullException("routedEvent"); 
-            }
-            
+            ArgumentNullException.ThrowIfNull(routedEvent);
+
             _routedEvent = routedEvent;
 
             // Changed the initialization size to 16 
@@ -84,16 +81,10 @@ namespace System.Windows
         /// </param>
         public void Add(object target, Delegate handler, bool handledEventsToo)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target"); 
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler"); 
-            }
-            
+            ArgumentNullException.ThrowIfNull(handler);
+
             RouteItem routeItem = new RouteItem(target, new RoutedEventHandlerInfo(handler, handledEventsToo));
 
             _routeItemList.Add(routeItem);
@@ -135,24 +126,18 @@ namespace System.Windows
 
         private void InvokeHandlersImpl(object source, RoutedEventArgs args, bool reRaised)
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException("source"); 
-            }
+            ArgumentNullException.ThrowIfNull(source);
 
-            if (args == null)
-            {
-                throw new ArgumentNullException("args"); 
-            }
+            ArgumentNullException.ThrowIfNull(args);
 
             if (args.Source == null)
             {
-                throw new ArgumentException(SR.Get(SRID.SourceNotSet)); 
+                throw new ArgumentException(SR.SourceNotSet); 
             }
 
             if (args.RoutedEvent != _routedEvent)
             {
-                throw new ArgumentException(SR.Get(SRID.Mismatched_RoutedEvent));
+                throw new ArgumentException(SR.Mismatched_RoutedEvent);
             }
 
             // Check RoutingStrategy to know the order of invocation
@@ -193,27 +178,28 @@ namespace System.Windows
                     
                     // Invoke listeners
 
-                    if( TraceRoutedEvent.IsEnabled )
+                    var traceRoutedEventIsEnabled = TraceRoutedEvent.IsEnabled;
+                    if ( traceRoutedEventIsEnabled )
                     {
+                        _traceArguments ??= new object[3];
+                        _traceArguments[0] = _routeItemList[i].Target;
+                        _traceArguments[1] = args;
+                        _traceArguments[2] = BooleanBoxes.Box(args.Handled);
                         TraceRoutedEvent.Trace(
                             TraceEventType.Start,
-                            TraceRoutedEvent.InvokeHandlers,  
-                            _routeItemList[i].Target,
-                            args,
-                            args.Handled );
-
+                            TraceRoutedEvent.InvokeHandlers,
+                            _traceArguments);
                     }
                     
                     _routeItemList[i].InvokeHandler(args);
 
-                    if( TraceRoutedEvent.IsEnabled )
+                    if( traceRoutedEventIsEnabled )
                     {
+                        _traceArguments[2] = BooleanBoxes.Box(args.Handled);
                         TraceRoutedEvent.Trace(
                             TraceEventType.Stop,
-                            TraceRoutedEvent.InvokeHandlers,  
-                            _routeItemList[i].Target,
-                            args,
-                            args.Handled );
+                            TraceRoutedEvent.InvokeHandlers,
+                            _traceArguments);
                     }
 
 
@@ -264,27 +250,29 @@ namespace System.Windows
                         }
                         
                         
-                        if( TraceRoutedEvent.IsEnabled )
+                        var traceRoutedEventIsEnabled = TraceRoutedEvent.IsEnabled;
+                        if ( traceRoutedEventIsEnabled )
                         {
+                            _traceArguments ??= new object[3];
+                            _traceArguments[0] = _routeItemList[i].Target;
+                            _traceArguments[1] = args;
+                            _traceArguments[2] = BooleanBoxes.Box(args.Handled);
                             TraceRoutedEvent.Trace(
                                 TraceEventType.Start,
-                                TraceRoutedEvent.InvokeHandlers,  
-                                _routeItemList[i].Target,
-                                args,
-                                args.Handled );
+                                TraceRoutedEvent.InvokeHandlers,
+                                _traceArguments);
                         }
 
                         // Invoke listeners
                         _routeItemList[i].InvokeHandler(args);
 
-                        if( TraceRoutedEvent.IsEnabled )
+                        if (traceRoutedEventIsEnabled)
                         {
+                            _traceArguments[2] = BooleanBoxes.Box(args.Handled);
                             TraceRoutedEvent.Trace(
                                 TraceEventType.Stop,
-                                TraceRoutedEvent.InvokeHandlers,  
-                                _routeItemList[i].Target,
-                                args,
-                                args.Handled );
+                                TraceRoutedEvent.InvokeHandlers,
+                                _traceArguments);
                         }
 
                     }
@@ -321,7 +309,7 @@ namespace System.Windows
             branchNode.Node = node;
             branchNode.Source = source;
             
-            BranchNodeStack.Push(branchNode);
+            (_branchNodeStack ??= new Stack<BranchNode>(1)).Push(branchNode);
         }
 
         /// <summary>
@@ -343,12 +331,12 @@ namespace System.Windows
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Advanced)]
         public object PopBranchNode()
         {
-            if (BranchNodeStack.Count == 0)
-                return null;
-            
-            BranchNode branchNode = BranchNodeStack.Pop();
+            if (_branchNodeStack is { Count: > 0 } stack)
+            {
+                return stack.Pop().Node;
+            }
 
-            return branchNode.Node;
+            return null;
         }
 
         /// <summary>
@@ -370,12 +358,12 @@ namespace System.Windows
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Advanced)]
         public object PeekBranchNode()
         {
-            if (BranchNodeStack.Count == 0)
-                return null;
+            if (_branchNodeStack is { Count: > 0 } stack)
+            {
+                return stack.Peek().Node;
+            }
 
-            BranchNode branchNode = BranchNodeStack.Peek();
-
-            return branchNode.Node;
+            return null;
         }
 
         /// <summary>
@@ -397,12 +385,12 @@ namespace System.Windows
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Advanced)]
         public object PeekBranchSource()
         {
-            if (BranchNodeStack.Count == 0)
-                return null;
+            if (_branchNodeStack is { Count: > 0 } stack)
+            {
+                return stack.Peek().Source;
+            }
 
-            BranchNode branchNode = BranchNodeStack.Peek();
-
-            return branchNode.Source;
+            return null;
         }
         
         #endregion External API
@@ -427,20 +415,6 @@ namespace System.Windows
         {
             public object Node;
             public object Source;
-        }
-
-        // Branch nodes are stored on a stack, which we create on-demand.
-        private Stack<BranchNode> BranchNodeStack
-        {
-            get
-            {
-                if (_branchNodeStack == null)
-                {
-                    _branchNodeStack = new Stack<BranchNode>(1);
-                }
-                
-                return _branchNodeStack;
-            }
         }
 
         // Add the given source to the source item list
@@ -565,6 +539,9 @@ namespace System.Windows
 
         // Stores Source Items for separated trees
         private FrugalStructList<SourceItem> _sourceItemList;
+
+        // Stores arguments that are passed to TraceRoutedEvent.Trace (to reduce allocations)
+        private object[] _traceArguments;
 
         #endregion Data
     }

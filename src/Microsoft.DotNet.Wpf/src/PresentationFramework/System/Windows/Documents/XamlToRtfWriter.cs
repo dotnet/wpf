@@ -533,17 +533,17 @@ namespace System.Windows.Documents
             {
                 FontTableEntry entry = fontTable.EntryAt(i);
 
-                _rtfBuilder.Append("{");
+                _rtfBuilder.Append('{');
                 _rtfBuilder.Append("\\f");
                 _rtfBuilder.Append(entry.Index.ToString(CultureInfo.InvariantCulture));
                 _rtfBuilder.Append("\\fcharset");
                 _rtfBuilder.Append(entry.CharSet.ToString(CultureInfo.InvariantCulture));
-                _rtfBuilder.Append(" ");
+                _rtfBuilder.Append(' ');
                 XamlParserHelper.AppendRTFText(_rtfBuilder, entry.Name, entry.CodePage);
                 _rtfBuilder.Append(";}");
             }
 
-            _rtfBuilder.Append("}");
+            _rtfBuilder.Append('}');
         }
 
         private void WriteColorTable()
@@ -563,10 +563,10 @@ namespace System.Windows.Documents
                 _rtfBuilder.Append(color.G.ToString(CultureInfo.InvariantCulture));
                 _rtfBuilder.Append("\\blue");
                 _rtfBuilder.Append(color.B.ToString(CultureInfo.InvariantCulture));
-                _rtfBuilder.Append(";");
+                _rtfBuilder.Append(';');
             }
 
-            _rtfBuilder.Append("}");
+            _rtfBuilder.Append('}');
         }
 
         private void WriteListTable()
@@ -631,13 +631,13 @@ namespace System.Windows.Documents
                         _rtfBuilder.Append(indent);
                         _rtfBuilder.Append("\\jclisttab\\tx");
                         _rtfBuilder.Append(indent);
-                        _rtfBuilder.Append("}");
+                        _rtfBuilder.Append('}');
                     }
 
                     _rtfBuilder.Append("\r\n{\\listname ;}");
                     _rtfBuilder.Append("\\listid");
                     _rtfBuilder.Append(listTableEntry.ID.ToString(CultureInfo.InvariantCulture));
-                    _rtfBuilder.Append("}");
+                    _rtfBuilder.Append('}');
                 }
 
                 _rtfBuilder.Append("}\r\n");
@@ -664,7 +664,7 @@ namespace System.Windows.Documents
                     }
                     _rtfBuilder.Append("\\ls");
                     _rtfBuilder.Append(lo.Index.ToString(CultureInfo.InvariantCulture));
-                    _rtfBuilder.Append("}");
+                    _rtfBuilder.Append('}');
                 }
 
                 _rtfBuilder.Append("\r\n}\r\n");
@@ -717,7 +717,7 @@ namespace System.Windows.Documents
             // Start a context so any properties only apply here
             if (outAny)
             {
-                _rtfBuilder.Append("{");
+                _rtfBuilder.Append('{');
             }
 
             // Write properties
@@ -828,7 +828,7 @@ namespace System.Windows.Documents
             // Ensure space delimiter after control word
             if (outAny)
             {
-                _rtfBuilder.Append(" ");
+                _rtfBuilder.Append(' ');
             }
 
             // Write contents here
@@ -889,13 +889,13 @@ namespace System.Windows.Documents
             // End context
             if (outAny)
             {
-                _rtfBuilder.Append("}");
+                _rtfBuilder.Append('}');
             }
         }
 
         private void WriteUIContainerChild(DocumentNode documentNode)
         {
-            _rtfBuilder.Append("{");
+            _rtfBuilder.Append('{');
 
             DocumentNodeArray dna = _converterState.DocumentNodeArray;
 
@@ -921,7 +921,7 @@ namespace System.Windows.Documents
             }
 
             // Close Section writing
-            _rtfBuilder.Append("}");
+            _rtfBuilder.Append('}');
             _rtfBuilder.Append("\r\n");
         }
 
@@ -935,7 +935,7 @@ namespace System.Windows.Documents
             FormatState fsParent = dnThis.Parent != null ? dnThis.Parent.FormatState : FormatState.EmptyFormatState;
             DocumentNodeArray dna = _converterState.DocumentNodeArray;
 
-            _rtfBuilder.Append("{");
+            _rtfBuilder.Append('{');
 
             // CultureInfo
             if (fsThis.Lang != fsParent.Lang && fsThis.Lang > 0)
@@ -953,7 +953,7 @@ namespace System.Windows.Documents
             // Write the font information
             if (WriteParagraphFontInfo(dnThis, fsThis, fsParent))
             {
-                _rtfBuilder.Append(" ");
+                _rtfBuilder.Append(' ');
             }
 
             // Foreground
@@ -1018,7 +1018,7 @@ namespace System.Windows.Documents
             }
 
             // Close Section writing
-            _rtfBuilder.Append("}");
+            _rtfBuilder.Append('}');
             _rtfBuilder.Append("\r\n");
         }
 
@@ -1032,7 +1032,7 @@ namespace System.Windows.Documents
             FormatState fsParent = dnThis.Parent != null ? dnThis.Parent.FormatState : FormatState.EmptyFormatState;
             DocumentNodeArray dna = _converterState.DocumentNodeArray;
 
-            _rtfBuilder.Append("{");
+            _rtfBuilder.Append('{');
 
             bool bOutControl = WriteParagraphFontInfo(dnThis, fsThis, fsParent);
 
@@ -1045,13 +1045,13 @@ namespace System.Windows.Documents
             }
             if (bOutControl)
             {
-                _rtfBuilder.Append(" ");
+                _rtfBuilder.Append(' ');
             }
 
             bOutControl = WriteParagraphListInfo(dnThis, fsThis);
             if (bOutControl)
             {
-                _rtfBuilder.Append(" ");
+                _rtfBuilder.Append(' ');
             }
 
             // FlowDirection control - state it before writing nested inline node.
@@ -1176,7 +1176,7 @@ namespace System.Windows.Documents
             {
                 _rtfBuilder.Append("\\par");
             }
-            _rtfBuilder.Append("}");
+            _rtfBuilder.Append('}');
             _rtfBuilder.Append("\r\n");
         }
 
@@ -1301,7 +1301,7 @@ namespace System.Windows.Documents
                         if (dnList.FormatState.Marker != MarkerStyle.MarkerBullet
                             && dnList.FormatState.Marker != MarkerStyle.MarkerNone)
                         {
-                            _rtfBuilder.Append(".");
+                            _rtfBuilder.Append('.');
                         }
                         _rtfBuilder.Append("\\tab}");
 
@@ -1326,7 +1326,7 @@ namespace System.Windows.Documents
                         if (dnList.FormatState.Marker != MarkerStyle.MarkerBullet
                             && dnList.FormatState.Marker != MarkerStyle.MarkerNone)
                         {
-                            _rtfBuilder.Append(".");
+                            _rtfBuilder.Append('.');
                         }
                         _rtfBuilder.Append("\\tab}{\\*\\pn");
                         _rtfBuilder.Append(Converters.MarkerStyleToOldRTFString(dnList.FormatState.Marker));
@@ -1376,7 +1376,7 @@ namespace System.Windows.Documents
             //  [Repeat] \row
             //
             _rtfBuilder.Append("\r\n");
-            _rtfBuilder.Append("{");
+            _rtfBuilder.Append('{');
             if (nDepth == 1)
             {
                 WriteRowStart(dnRow);
@@ -1396,7 +1396,7 @@ namespace System.Windows.Documents
                 _rtfBuilder.Append("\\intbl\\itap");
                 _rtfBuilder.Append(nDepth.ToString(CultureInfo.InvariantCulture));
             }
-            _rtfBuilder.Append("{");
+            _rtfBuilder.Append('{');
             if (nDepth > 1)
             {
                 _rtfBuilder.Append("\\*\\nesttableprops");
@@ -1521,14 +1521,14 @@ namespace System.Windows.Documents
         {
             DocumentNodeArray cellArray = dnRow.GetRowsCells();
 
-            _rtfBuilder.Append("{");
+            _rtfBuilder.Append('{');
             for (int i = 0; i < cellArray.Count; i++)
             {
                 DocumentNode dnCell = cellArray.EntryAt(i);
 
                 WriteStructure(dnCell);
             }
-            _rtfBuilder.Append("}");
+            _rtfBuilder.Append('}');
         }
 
         private long WriteCellProperties(DocumentNode dnCell, int nCol, long lastCellX)
@@ -1991,7 +1991,7 @@ namespace System.Windows.Documents
 
         private void WriteEpilog()
         {
-            _rtfBuilder.Append("}");
+            _rtfBuilder.Append('}');
         }
 
         private void WriteOutput()
@@ -2237,29 +2237,29 @@ namespace System.Windows.Documents
             {
                 string imageFormatName = imageName.Substring(extensionIndex);
 
-                if (string.Compare(".png", imageFormatName, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(".png", imageFormatName, StringComparison.OrdinalIgnoreCase))
                 {
                     imageFormat = RtfImageFormat.Png;
                 }
-                if (string.Compare(".jpeg", imageFormatName, StringComparison.OrdinalIgnoreCase) == 0 ||
-                    string.Compare(".jpg", imageFormatName, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(".jpeg", imageFormatName, StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(".jpg", imageFormatName, StringComparison.OrdinalIgnoreCase))
                 {
                     imageFormat = RtfImageFormat.Jpeg;
                 }
-                if (string.Compare(".gif", imageFormatName, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(".gif", imageFormatName, StringComparison.OrdinalIgnoreCase))
                 {
                     imageFormat = RtfImageFormat.Gif;
                 }
-                if (string.Compare(".tif", imageFormatName, StringComparison.OrdinalIgnoreCase) == 0 ||
-                    string.Compare(".tiff", imageFormatName, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(".tif", imageFormatName, StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(".tiff", imageFormatName, StringComparison.OrdinalIgnoreCase))
                 {
                     imageFormat = RtfImageFormat.Tif;
                 }
-                if (string.Compare(".bmp", imageFormatName, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(".bmp", imageFormatName, StringComparison.OrdinalIgnoreCase))
                 {
                     imageFormat = RtfImageFormat.Bmp;
                 }
-                if (string.Compare(".dib", imageFormatName, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(".dib", imageFormatName, StringComparison.OrdinalIgnoreCase))
                 {
                     imageFormat = RtfImageFormat.Dib;
                 }
@@ -2271,11 +2271,11 @@ namespace System.Windows.Documents
         // Get the image stretch type
         private System.Windows.Media.Stretch GetImageStretch(string imageStretch)
         {
-            if (string.Compare("Fill", imageStretch, StringComparison.OrdinalIgnoreCase) == 0)
+            if (string.Equals("Fill", imageStretch, StringComparison.OrdinalIgnoreCase))
             {
                 return System.Windows.Media.Stretch.Fill;
             }
-            else if (string.Compare("UniformToFill", imageStretch, StringComparison.OrdinalIgnoreCase) == 0)
+            else if (string.Equals("UniformToFill", imageStretch, StringComparison.OrdinalIgnoreCase))
             {
                 return System.Windows.Media.Stretch.UniformToFill;
             }
@@ -2288,11 +2288,11 @@ namespace System.Windows.Documents
         // Get the image stretch direction type
         private System.Windows.Controls.StretchDirection GetImageStretchDirection(string imageStretchDirection)
         {
-            if (string.Compare("UpOnly", imageStretchDirection, StringComparison.OrdinalIgnoreCase) == 0)
+            if (string.Equals("UpOnly", imageStretchDirection, StringComparison.OrdinalIgnoreCase))
             {
                 return System.Windows.Controls.StretchDirection.UpOnly;
             }
-            else if (string.Compare("DownOnly", imageStretchDirection, StringComparison.OrdinalIgnoreCase) == 0)
+            else if (string.Equals("DownOnly", imageStretchDirection, StringComparison.OrdinalIgnoreCase))
             {
                 return System.Windows.Controls.StretchDirection.DownOnly;
             }
@@ -2720,47 +2720,42 @@ namespace System.Windows.Documents
             {
                 XamlToRtfError xamlToRtfError = XamlToRtfError.None;
 
-                if (string.Compare(name, "&gt;", StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(name, "&gt;", StringComparison.OrdinalIgnoreCase))
                 {
                     return ((IXamlContentHandler)this).Characters(">");
                 }
-                else if (string.Compare(name, "&lt;", StringComparison.OrdinalIgnoreCase) == 0)
+                else if (string.Equals(name, "&lt;", StringComparison.OrdinalIgnoreCase))
                 {
                     return ((IXamlContentHandler)this).Characters("<");
                 }
-                else if (string.Compare(name, "&amp;", StringComparison.OrdinalIgnoreCase) == 0)
+                else if (string.Equals(name, "&amp;", StringComparison.OrdinalIgnoreCase))
                 {
                     return ((IXamlContentHandler)this).Characters("&");
                 }
-                else if (name.IndexOf("&#x", StringComparison.OrdinalIgnoreCase) == 0)
+                else if (name.StartsWith("&#x", StringComparison.OrdinalIgnoreCase))
                 {
                     xamlToRtfError = XamlToRtfError.InvalidFormat;
                     if (name.Length >= 5)
                     {
-                        string num = name.Substring(3, name.Length - 4);
                         int i = 0;
-                        bool ret = Converters.HexStringToInt(num, ref i);
+                        bool ret = Converters.HexStringToInt(name.AsSpan(3, name.Length - 4), ref i);
                         if (i >= 0 && i <= 0xFFFF)
                         {
-                            char[] ac = new char[1];
-                            ac[0] = (char)i;
-                            string s = new string(ac);
+                            string s = char.ToString((char)i);
                             return ((IXamlContentHandler)this).Characters(s);
                         }
                     }
                 }
-                else if (name.IndexOf("&#", StringComparison.OrdinalIgnoreCase) == 0)
+                else if (name.StartsWith("&#", StringComparison.OrdinalIgnoreCase))
                 {
                     if (name.Length >= 4)
                     {
-                        string num = name.Substring(2, name.Length - 3);
+                        ReadOnlySpan<char> num = name.AsSpan(2, name.Length - 3);
                         int i = 0;
                         bool ret = Converters.StringToInt(num, ref i);
                         if (i >= 0 && i <= 0xFFFF)
                         {
-                            char[] ac = new char[1];
-                            ac[0] = (char)i;
-                            string s = new string(ac);
+                            string s = char.ToString((char)i);
                             return ((IXamlContentHandler)this).Characters(s);
                         }
                     }
@@ -2880,11 +2875,11 @@ namespace System.Windows.Documents
                                         break;
 
                                     case XamlAttribute.XAFontWeight:
-                                        if (string.Compare(valueString, "Normal", StringComparison.OrdinalIgnoreCase) == 0)
+                                        if (string.Equals(valueString, "Normal", StringComparison.OrdinalIgnoreCase))
                                         {
                                             formatState.Bold = false;
                                         }
-                                        else if (string.Compare(valueString, "Bold", StringComparison.OrdinalIgnoreCase) == 0)
+                                        else if (string.Equals(valueString, "Bold", StringComparison.OrdinalIgnoreCase))
                                         {
                                             formatState.Bold = true;
                                         }
@@ -2900,7 +2895,7 @@ namespace System.Windows.Documents
                                         break;
 
                                     case XamlAttribute.XAFontStyle:
-                                        if (string.Compare(valueString, "Italic", StringComparison.OrdinalIgnoreCase) == 0)
+                                        if (string.Equals(valueString, "Italic", StringComparison.OrdinalIgnoreCase))
                                         {
                                             formatState.Italic = true;
                                         }
@@ -3471,7 +3466,7 @@ namespace System.Windows.Documents
             {
                 for (int i = 0; i < entries.Length; i++)
                 {
-                    if (string.Compare(entries[i].Name, name, StringComparison.OrdinalIgnoreCase) == 0)
+                    if (string.Equals(entries[i].Name, name, StringComparison.OrdinalIgnoreCase))
                     {
                         return entries[i].Value;
                     }
@@ -3547,7 +3542,7 @@ namespace System.Windows.Documents
                 return true;
             }
 
-            internal static bool ConvertToFontSize(ConverterState converterState, string s, ref double d)
+            internal static bool ConvertToFontSize(ConverterState converterState, ReadOnlySpan<char> s, ref double d)
             {
                 if (s.Length == 0)
                 {
@@ -3561,11 +3556,11 @@ namespace System.Windows.Documents
                     n--;
                 }
 
-                string units = null;
+                ReadOnlySpan<char> units = default;
                 if (n < s.Length - 1)
                 {
-                    units = s.Substring(n + 1);
-                    s = s.Substring(0, n + 1);
+                    units = s.Slice(n + 1);
+                    s = s.Slice(0, n + 1);
                 }
 
                 // Now convert number part
@@ -3574,7 +3569,7 @@ namespace System.Windows.Documents
                 if (ret)
                 {
                     // No units mean pixels
-                    if (units == null || units.Length == 0)
+                    if (units.IsEmpty)
                     {
                         d = Converters.PxToPt(d);
                     }
@@ -3694,12 +3689,12 @@ namespace System.Windows.Documents
                 if (dirName.Length == 0)
                     return false;
 
-                if (string.Compare("RightToLeft", dirName, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals("RightToLeft", dirName, StringComparison.OrdinalIgnoreCase))
                 {
                     dirState = DirState.DirRTL;
                     return true;
                 }
-                else if (string.Compare("LeftToRight", dirName, StringComparison.OrdinalIgnoreCase) == 0)
+                else if (string.Equals("LeftToRight", dirName, StringComparison.OrdinalIgnoreCase))
                 {
                     dirState = DirState.DirLTR;
                     return true;
@@ -3813,7 +3808,7 @@ namespace System.Windows.Documents
                 return ret;
             }
 
-            internal static bool ConvertToThickness(ConverterState converterState, string thickness, ref XamlThickness xthickness)
+            internal static bool ConvertToThickness(ConverterState converterState, ReadOnlySpan<char> thickness, ref XamlThickness xthickness)
             {
                 int numints = 0;
                 int s = 0;
@@ -3827,7 +3822,7 @@ namespace System.Windows.Documents
                         e++;
                     }
 
-                    string onenum = thickness.Substring(s, e - s);
+                    ReadOnlySpan<char> onenum = thickness.Slice(s, e - s);
                     if (onenum.Length > 0)
                     {
                         double d = 0.0f;
@@ -4038,7 +4033,7 @@ namespace System.Windows.Documents
                     sb.Append("\\u");
                     short sc = (short)c;
                     sb.Append(sc.ToString(CultureInfo.InvariantCulture));
-                    sb.Append("?");
+                    sb.Append('?');
                 }
             }
 

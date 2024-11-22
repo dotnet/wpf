@@ -24,8 +24,6 @@ using MS.Win32;
 using System.IO.Packaging;
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
-using MS.Internal.PresentationCore;                        // SecurityHelper
 
 namespace System.Windows.Media.Imaging
 {
@@ -648,18 +646,16 @@ namespace System.Windows.Media.Imaging
         /// <param name="pixels"></param>
         /// <param name="stride"></param>
         /// <param name="offset"></param>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         unsafe internal void CriticalCopyPixels(Int32Rect sourceRect, Array pixels, int stride, int offset)
         {
             ReadPreamble();
             _bitmapInit.EnsureInitializedComplete();
             CompleteDelayedCreation();
 
-            if (pixels == null)
-                throw new System.ArgumentNullException("pixels");
+            ArgumentNullException.ThrowIfNull(pixels);
 
             if (pixels.Rank != 1)
-                throw new ArgumentException(SR.Get(SRID.Collection_BadRank), "pixels");
+                throw new ArgumentException(SR.Collection_BadRank, "pixels");
 
             if (offset < 0)
             {
@@ -678,7 +674,7 @@ namespace System.Windows.Media.Imaging
                 elementSize = 8;
 
             if (elementSize == -1)
-                throw new ArgumentException(SR.Get(SRID.Image_InvalidArrayForPixel));
+                throw new ArgumentException(SR.Image_InvalidArrayForPixel);
 
             int destBufferSize = checked(elementSize * (pixels.Length - offset));
 
@@ -732,8 +728,7 @@ namespace System.Windows.Media.Imaging
             if (buffer == IntPtr.Zero)
                 throw new ArgumentNullException("buffer");
 
-            if (stride <= 0)
-                throw new ArgumentOutOfRangeException("stride", SR.Get(SRID.ParameterMustBeGreaterThanZero));
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(stride);
 
             if (sourceRect.Width <= 0)
                 sourceRect.Width = PixelWidth;
@@ -741,19 +736,14 @@ namespace System.Windows.Media.Imaging
             if (sourceRect.Height <= 0)
                 sourceRect.Height = PixelHeight;
 
-            if (sourceRect.Width > PixelWidth)
-                throw new ArgumentOutOfRangeException("sourceRect.Width", SR.Get(SRID.ParameterCannotBeGreaterThan, PixelWidth));
-
-            if (sourceRect.Height > PixelHeight)
-                throw new ArgumentOutOfRangeException("sourceRect.Height", SR.Get(SRID.ParameterCannotBeGreaterThan, PixelHeight));
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(sourceRect.Width, PixelWidth, "sourceRect.Width");
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(sourceRect.Height, PixelHeight, "sourceRect.Height");
 
             int minStride = checked(((sourceRect.Width * Format.BitsPerPixel) + 7) / 8);
-            if (stride < minStride)
-                throw new ArgumentOutOfRangeException("stride", SR.Get(SRID.ParameterCannotBeLessThan, minStride));
+            ArgumentOutOfRangeException.ThrowIfLessThan(stride, minStride);
 
             int minRequiredDestSize = checked((stride * (sourceRect.Height - 1)) + minStride);
-            if (bufferSize < minRequiredDestSize)
-                throw new ArgumentOutOfRangeException("buffer", SR.Get(SRID.ParameterCannotBeLessThan, minRequiredDestSize));
+            ArgumentOutOfRangeException.ThrowIfLessThan(bufferSize, minRequiredDestSize);
 
             lock (_syncObject)
             {
@@ -1748,10 +1738,7 @@ namespace System.Windows.Media.Imaging
 
             public ManagedBitmapSource(BitmapSource bitmapSource)
             {
-                if (bitmapSource == null)
-                {
-                    throw new System.ArgumentNullException("bitmapSource");
-                }
+                ArgumentNullException.ThrowIfNull(bitmapSource);
                 _bitmapSource = new WeakReference<BitmapSource>(bitmapSource);
             }
 
@@ -1847,7 +1834,7 @@ namespace System.Windows.Media.Imaging
                     }
                     else
                     {
-                        rc = (Int32Rect)Marshal.PtrToStructure(prc, typeof(Int32Rect));
+                        rc = Marshal.PtrToStructure<Int32Rect>(prc);
                     }
                     
                     int rectHeight, rectWidth;

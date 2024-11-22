@@ -5,7 +5,6 @@
 
 namespace System.Windows 
 {
-    using MS.Internal.WindowsBase;
     using System;
 
     /// <summary>
@@ -47,7 +46,6 @@ namespace System.Windows
         ///     Returns true if the object allows the given dependency property 
         ///     should be visible on the given dependency object.
         /// </summary>
-        [FriendAccessAllowed] // Built into Base, also used by Framework.
         internal abstract bool IsBrowsable(DependencyObject d, DependencyProperty dp);
     }
 }

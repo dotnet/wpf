@@ -54,7 +54,7 @@ namespace MS.Internal.IO.Packaging
                     case PropSpecType.Name: break;
 
                     default:
-                        throw new ArgumentException(SR.Get(SRID.FilterPropSpecUnknownUnionSelector), "propSpec");
+                        throw new ArgumentException(SR.FilterPropSpecUnknownUnionSelector, "propSpec");
                 }
                 _propType = value;
             }
@@ -74,8 +74,7 @@ namespace MS.Internal.IO.Packaging
             }
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException("value");
+                ArgumentNullException.ThrowIfNull(value);
 
                 _name = value;
                 _id = 0;
@@ -133,7 +132,7 @@ namespace MS.Internal.IO.Packaging
                         break;
                     }
                 default:
-                    throw new ArgumentException(SR.Get(SRID.FilterPropSpecUnknownUnionSelector), "propSpec");
+                    throw new ArgumentException(SR.FilterPropSpecUnknownUnionSelector, "propSpec");
             }
         }
 

@@ -470,7 +470,7 @@ namespace System.Windows.Controls.Primitives
         {
             if (index != 0 || _pageHost == null)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
             return _pageHost;
         }
@@ -509,10 +509,7 @@ namespace System.Windows.Controls.Primitives
         protected object GetService(Type serviceType)
         {
             object service = null;
-            if (serviceType == null)
-            {
-                throw new ArgumentNullException("serviceType");
-            }
+            ArgumentNullException.ThrowIfNull(serviceType);
             CheckDisposed();
 
             // No service is available if the Content does not provide
@@ -882,10 +879,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         private void CheckDisposed()
         {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException(typeof(DocumentPageView).ToString());
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(DocumentPageView));
         }
 
         /// <summary>

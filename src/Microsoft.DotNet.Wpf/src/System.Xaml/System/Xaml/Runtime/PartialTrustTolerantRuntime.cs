@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,7 +17,7 @@ using System.Xaml.Schema;
 namespace MS.Internal.Xaml.Runtime
 {
     // Perf notes
-    // - Need a perf test to decide whether it's faster to check for public visibility, or just always 
+    // - Need a perf test to decide whether it's faster to check for public visibility, or just always
     //   fall through to the elevated case once we've determined we don't have MemberAccess permission.
     // - Consider checking ctor visibility in CreateInstance
     // - Consider checking method visibility in CreateWithFactoryMethod

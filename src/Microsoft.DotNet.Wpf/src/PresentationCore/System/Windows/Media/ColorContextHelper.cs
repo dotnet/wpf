@@ -20,7 +20,6 @@ using System.Diagnostics;
 using System.Globalization;
 using Microsoft.Win32.SafeHandles;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using UnsafeNativeMethodsMilCoreApi=MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media
@@ -85,7 +84,7 @@ namespace System.Windows.Media
         {
             if (IsInvalid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Image_ColorContextInvalid));
+                throw new InvalidOperationException(SR.Image_ColorContextInvalid);
             }
 
             return UnsafeNativeMethodsMilCoreApi.Mscms.GetColorProfileHeader(_profileHandle, out header);
@@ -98,7 +97,7 @@ namespace System.Windows.Media
             
             if (IsInvalid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Image_ColorContextInvalid));
+                throw new InvalidOperationException(SR.Image_ColorContextInvalid);
             }
 
             // If the buffer is null, this function will return FALSE because it didn't actually copy anything. That's fine and that's

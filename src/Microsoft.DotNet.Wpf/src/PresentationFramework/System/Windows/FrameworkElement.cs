@@ -463,10 +463,7 @@ namespace System.Windows
         /// </summary>
         public void BeginStoryboard(Storyboard storyboard, HandoffBehavior handoffBehavior, bool isControllable)
         {
-            if( storyboard == null )
-            {
-                throw new ArgumentNullException("storyboard");
-            }
+            ArgumentNullException.ThrowIfNull(storyboard);
 
             // Storyboard.Begin is a public API and needs to be validating handoffBehavior anyway.
 
@@ -496,7 +493,7 @@ namespace System.Windows
 
                 if( targetObject == null )
                 {
-                    throw new ArgumentException( SR.Get(SRID.TargetNameNotFound, targetName));
+                    throw new ArgumentException( SR.Format(SR.TargetNameNotFound, targetName));
                 }
 
                 FrameworkObject fo = new FrameworkObject(targetObject);
@@ -506,7 +503,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.NamedObjectMustBeFrameworkElement, targetName));
+                    throw new InvalidOperationException(SR.Format(SR.NamedObjectMustBeFrameworkElement, targetName));
                 }
             }
 
@@ -655,11 +652,11 @@ namespace System.Windows
         {
             if (_templateChild == null)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
             if (index != 0)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
             return _templateChild;
         }
@@ -710,6 +707,8 @@ namespace System.Windows
             }
             set
             {
+                bool invalidateResources = false;
+                
                 ResourceDictionary oldValue = ResourcesField.GetValue(this);
                 ResourcesField.SetValue(this, value);
 
@@ -730,6 +729,11 @@ namespace System.Windows
                     oldValue.RemoveOwner(this);
                 }
 
+                if(this is Window window)
+                {
+                    window.AddFluentDictionary(value, out invalidateResources);
+                }
+
                 if (value != null)
                 {
                     if (!value.ContainsOwner(this))
@@ -746,7 +750,7 @@ namespace System.Windows
                 // final invalidation & it is no worse than the old code that also did not invalidate in this case
                 // Removed the not-empty check to allow invalidations in the case that the old dictionary
                 // is replaced with a new empty dictionary
-                if (oldValue != value)
+                if (oldValue != value || invalidateResources)
                 {
                     TreeWalkHelper.InvalidateOnResourcesChange(this, null, new ResourcesChangeInfo(oldValue, value));
                 }
@@ -834,10 +838,7 @@ namespace System.Windows
             // Verify Context Access
             // VerifyAccess();
 
-            if (resourceKey == null)
-            {
-                throw new ArgumentNullException("resourceKey");
-            }
+            ArgumentNullException.ThrowIfNull(resourceKey);
 
             object resource = FrameworkElement.FindResourceInternal(this, null /* fce */, resourceKey);
 
@@ -865,10 +866,7 @@ namespace System.Windows
             // Verify Context Access
             // VerifyAccess();
 
-            if (resourceKey == null)
-            {
-                throw new ArgumentNullException("resourceKey");
-            }
+            ArgumentNullException.ThrowIfNull(resourceKey);
 
             object resource = FrameworkElement.FindResourceInternal(this, null /* fce */, resourceKey);
 
@@ -1194,7 +1192,7 @@ namespace System.Windows
                 {
                     // We suspect a loop here because the loop count
                     // has exceeded the MAX_TREE_DEPTH expected
-                    throw new InvalidOperationException(SR.Get(SRID.LogicalTreeLoop));
+                    throw new InvalidOperationException(SR.LogicalTreeLoop);
                 }
                 else
                 {
@@ -1894,7 +1892,7 @@ namespace System.Windows
                     // Commented this because the implicit fetch could also return a DeferredDictionaryReference
                     // if (!(implicitValue is Style))
                     // {
-                    //     throw new InvalidOperationException(SR.Get(SRID.InvalidImplicitStyleResource, this.GetType().Name, implicitValue));
+                    //     throw new InvalidOperationException(SR.Format(SR.InvalidImplicitStyleResource, this.GetType().Name, implicitValue));
                     // }
 
                     // This style has been fetched from resources
@@ -2004,7 +2002,7 @@ namespace System.Windows
 #region EventTracing
                         if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordGeneral, EventTrace.Level.Verbose))
                         {
-                            string TypeAndName = String.Format(CultureInfo.InvariantCulture, "[{0}]{1}({2})",GetType().Name,dp.Name,base.GetHashCode());
+                            string TypeAndName = string.Create(CultureInfo.InvariantCulture, $"[{GetType().Name}]{dp.Name}({base.GetHashCode()})");
                             EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientPropParentCheck,
                                                                 EventTrace.Keyword.KeywordGeneral, EventTrace.Level.Verbose,
                                                                 base.GetHashCode(), TypeAndName ); // base.GetHashCode() to avoid calling a virtual, which FxCop doesn't like.
@@ -2233,8 +2231,10 @@ namespace System.Windows
                                 {
                                     //let incrementally-updating FrameworkElements to mark the vicinity of the affected child
                                     //to perform partial update.
-                                    if(FrameworkElement.DType.IsInstanceOfType(layoutParent))
-                                        ((FrameworkElement)layoutParent).ParentLayoutInvalidated(this);
+                                    if(layoutParent is FrameworkElement fe)
+                                    {
+                                        fe.ParentLayoutInvalidated(this);
+                                    }
 
                                     if (affectsParentMeasure)
                                     {
@@ -2411,7 +2411,7 @@ namespace System.Windows
 
             // Coerce Callback for font properties for responding to system themes
             TextElement.FontFamilyProperty.OverrideMetadata(_typeofThis, new FrameworkPropertyMetadata(SystemFonts.MessageFontFamily, FrameworkPropertyMetadataOptions.Inherits, null, new CoerceValueCallback(CoerceFontFamily)));
-            TextElement.FontSizeProperty.OverrideMetadata(_typeofThis, new FrameworkPropertyMetadata(SystemFonts.MessageFontSize, FrameworkPropertyMetadataOptions.Inherits, null, new CoerceValueCallback(CoerceFontSize)));
+            TextElement.FontSizeProperty.OverrideMetadata(_typeofThis, new FrameworkPropertyMetadata(SystemFonts.ThemeMessageFontSize, FrameworkPropertyMetadataOptions.Inherits, null, new CoerceValueCallback(CoerceFontSize)));
             TextElement.FontStyleProperty.OverrideMetadata(_typeofThis, new FrameworkPropertyMetadata(SystemFonts.MessageFontStyle, FrameworkPropertyMetadataOptions.Inherits, null, new CoerceValueCallback(CoerceFontStyle)));
             TextElement.FontWeightProperty.OverrideMetadata(_typeofThis, new FrameworkPropertyMetadata(SystemFonts.MessageFontWeight, FrameworkPropertyMetadataOptions.Inherits, null, new CoerceValueCallback(CoerceFontWeight)));
 
@@ -2667,7 +2667,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Illegal_InheritanceBehaviorSettor));
+                    throw new InvalidOperationException(SR.Illegal_InheritanceBehaviorSettor);
                 }
             }
         }
@@ -3458,19 +3458,19 @@ namespace System.Windows
         private static bool IsWidthHeightValid(object value)
         {
             double v = (double)value;
-            return (DoubleUtil.IsNaN(v)) || (v >= 0.0d && !Double.IsPositiveInfinity(v));
+            return (double.IsNaN(v)) || (v >= 0.0d && !Double.IsPositiveInfinity(v));
         }
 
         private static bool IsMinWidthHeightValid(object value)
         {
             double v = (double)value;
-            return (!DoubleUtil.IsNaN(v) && v >= 0.0d && !Double.IsPositiveInfinity(v));
+            return (!double.IsNaN(v) && v >= 0.0d && !Double.IsPositiveInfinity(v));
         }
 
         private static bool IsMaxWidthHeightValid(object value)
         {
             double v = (double)value;
-            return (!DoubleUtil.IsNaN(v) && v >= 0.0d);
+            return (!double.IsNaN(v) && v >= 0.0d);
         }
 
         private static void OnTransformDirty(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -3701,7 +3701,7 @@ namespace System.Windows
         /// <seealso cref="DockPanel.DockProperty" />
         public static FlowDirection GetFlowDirection(DependencyObject element)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            ArgumentNullException.ThrowIfNull(element);
             return (FlowDirection)element.GetValue(FlowDirectionProperty);
         }
 
@@ -3711,7 +3711,7 @@ namespace System.Windows
         /// <seealso cref="DockPanel.DockProperty" />
         public static void SetFlowDirection(DependencyObject element, FlowDirection value)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(FlowDirectionProperty, value);
         }
 
@@ -4062,20 +4062,20 @@ namespace System.Windows
                 minHeight = e.MinHeight;
                 double l  = e.Height;
 
-                double height = (DoubleUtil.IsNaN(l) ? Double.PositiveInfinity : l);
+                double height = (double.IsNaN(l) ? Double.PositiveInfinity : l);
                 maxHeight = Math.Max(Math.Min(height, maxHeight), minHeight);
 
-                height = (DoubleUtil.IsNaN(l) ? 0 : l);
+                height = (double.IsNaN(l) ? 0 : l);
                 minHeight = Math.Max(Math.Min(maxHeight, height), minHeight);
 
                 maxWidth = e.MaxWidth;
                 minWidth = e.MinWidth;
                 l        = e.Width;
 
-                double width = (DoubleUtil.IsNaN(l) ? Double.PositiveInfinity : l);
+                double width = (double.IsNaN(l) ? Double.PositiveInfinity : l);
                 maxWidth = Math.Max(Math.Min(width, maxWidth), minWidth);
 
-                width = (DoubleUtil.IsNaN(l) ? 0 : l);
+                width = (double.IsNaN(l) ? 0 : l);
                 minWidth = Math.Max(Math.Min(maxWidth, width), minWidth);
             }
 
@@ -4333,11 +4333,11 @@ namespace System.Windows
                 {
                     // Related: WPF popup windows appear in wrong place when
                     // windows is in Medium DPI and a search box changes height
-                    // 
+                    //
                     // ScrollViewer and ScrollContentPresenter depend on rounding their
                     // measurements in a consistent way.  Round the margins first - if we
                     // round the result of (size-margin), the answer might round up or
-                    // down depending on size. 
+                    // down depending on size.
                     marginWidth = RoundLayoutValue(marginWidth, dpi.DpiScaleX);
                     marginHeight = RoundLayoutValue(marginHeight, dpi.DpiScaleY);
                 }
@@ -5315,10 +5315,7 @@ namespace System.Windows
         /// <returns> Returns true if focus is moved successfully. Returns false if there is no next element</returns>
         public sealed override bool MoveFocus(TraversalRequest request)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException("request");
-            }
+            ArgumentNullException.ThrowIfNull(request);
 
             return KeyboardNavigation.Current.Navigate(this, request);
         }
@@ -5414,7 +5411,7 @@ namespace System.Windows
             // Nested BeginInits on the same instance aren't permitted
             if (ReadInternalFlag(InternalFlags.InitPending))
             {
-                throw new InvalidOperationException(SR.Get(SRID.NestedBeginInitNotSupported));
+                throw new InvalidOperationException(SR.NestedBeginInitNotSupported);
             }
 
             // Mark the element as pending initialization
@@ -5429,7 +5426,7 @@ namespace System.Windows
             // Every EndInit must be preceeded by a BeginInit
             if (!ReadInternalFlag(InternalFlags.InitPending))
             {
-                throw new InvalidOperationException(SR.Get(SRID.EndInitWithoutBeginInitNotSupported));
+                throw new InvalidOperationException(SR.EndInitWithoutBeginInitNotSupported);
             }
 
             // Reset the pending flag
@@ -5567,7 +5564,7 @@ namespace System.Windows
             // For root elements with default values, return current system metric if local value has not been set
             if (ShouldUseSystemFont((FrameworkElement)o, TextElement.FontSizeProperty))
             {
-                return SystemFonts.MessageFontSize;
+                return SystemFonts.ThemeMessageFontSize;
             }
 
             return value;
@@ -5846,14 +5843,6 @@ namespace System.Windows
                 // STA Requirement are checked in InputManager cctor where InputManager.Current is used in KeyboardNavigation cctor
                 _keyboardNavigation = new KeyboardNavigation();
                 _popupControlService = new PopupControlService();
-
-                // Tooltips should show on Keyboard focus.
-                // This event lets PopupControlService know when keyboard focus changed, so it can
-                // inspect for tooltips. Don't add the event handler when the compat flag is on.
-                if (!AccessibilitySwitches.UseLegacyToolTipDisplay)
-                {
-                    _keyboardNavigation.FocusChanged += _popupControlService.FocusChangedEventHandler;
-                }
             }
 
             internal KeyboardNavigation _keyboardNavigation;
@@ -6268,7 +6257,7 @@ namespace System.Windows
                 // Thus we support any indices in the range [-1, 65535).
                 if (value < -1 || value >= 0xFFFF)
                 {
-                    throw new ArgumentOutOfRangeException("value", SR.Get(SRID.TemplateChildIndexOutOfRange));
+                    throw new ArgumentOutOfRangeException("value", SR.TemplateChildIndexOutOfRange);
                 }
 
                 uint childIndex = (value == -1) ? 0xFFFF : (uint)value;

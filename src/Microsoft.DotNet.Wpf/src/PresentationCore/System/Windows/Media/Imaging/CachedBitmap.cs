@@ -25,7 +25,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Imaging
 {
@@ -45,10 +44,7 @@ namespace System.Windows.Media.Imaging
         public CachedBitmap(BitmapSource source, BitmapCreateOptions createOptions, BitmapCacheOption cacheOption)
             : base(true) // Use base class virtuals
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException("source");
-            }
+            ArgumentNullException.ThrowIfNull(source);
 
             BeginInit();
             _source = source;
@@ -87,10 +83,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         internal CachedBitmap(BitmapSourceSafeMILHandle bitmap) : base(true)
         {
-            if (bitmap == null)
-            {
-                throw new ArgumentNullException("bitmap");
-            }
+            ArgumentNullException.ThrowIfNull(bitmap);
 
             // We're not calling CachedBitmap.Begin/EndInit because that would
             // invoke FinalizeCreation which calls CreateCachedBitmap that does
@@ -138,11 +131,10 @@ namespace System.Windows.Media.Imaging
             )
             : base(true) // Use base class virtuals
         {
-            if (pixels == null)
-                throw new System.ArgumentNullException ("pixels");
+            ArgumentNullException.ThrowIfNull(pixels);
 
             if (pixels.Rank != 1)
-                throw new ArgumentException (SR.Get (SRID.Collection_BadRank), "pixels");
+                throw new ArgumentException(SR.Collection_BadRank, "pixels");
 
             int elementSize = -1;
 
@@ -156,7 +148,7 @@ namespace System.Windows.Media.Imaging
                 elementSize = 8;
 
             if (elementSize == -1)
-                throw new ArgumentException(SR.Get(SRID.Image_InvalidArrayForPixel));
+                throw new ArgumentException(SR.Image_InvalidArrayForPixel);
 
             int destBufferSize = elementSize * pixels.Length;
 
@@ -417,12 +409,12 @@ namespace System.Windows.Media.Imaging
                     )
         {
             if (pixelFormat.Palettized == true && palette == null)
-                throw new InvalidOperationException(SR.Get(SRID.Image_IndexedPixelFormatRequiresPalette));
+                throw new InvalidOperationException(SR.Image_IndexedPixelFormatRequiresPalette);
 
             if (pixelFormat.Format == PixelFormatEnum.Default && pixelFormat.Guid == WICPixelFormatGUIDs.WICPixelFormatDontCare)
             {
                 throw new System.ArgumentException(
-                        SR.Get(SRID.Effect_PixelFormat, pixelFormat),
+                        SR.Format(SR.Effect_PixelFormat, pixelFormat),
                         "pixelFormat"
                         );
             }

@@ -129,7 +129,6 @@ namespace System.ComponentModel
         ///     what should be done if the attribute is not defined.
         ///     Our default is to return all properties.
         /// </summary>
-        [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
         public static readonly PropertyFilterAttribute Default = new PropertyFilterAttribute(PropertyFilterOptions.All);
 
         #endregion Public Fields

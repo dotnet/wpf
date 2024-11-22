@@ -2,7 +2,7 @@
 
 source="${BASH_SOURCE[0]}"
 darcVersion=''
-versionEndpoint='https://maestro-prod.westus2.cloudapp.azure.com/api/assets/darc-version?api-version=2019-01-16'
+versionEndpoint='https://maestro.dot.net/api/assets/darc-version?api-version=2020-02-20'
 verbosity='minimal'
 
 while [[ $# > 0 ]]; do
@@ -53,7 +53,7 @@ fi
 function InstallDarcCli {
   local darc_cli_package_name="microsoft.dotnet.darc"
 
-  InitializeDotNetCli
+  InitializeDotNetCli true
   local dotnet_root=$_InitializeDotNetCli
 
   if [ -z "$toolpath" ]; then

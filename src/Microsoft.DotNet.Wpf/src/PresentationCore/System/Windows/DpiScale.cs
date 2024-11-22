@@ -77,6 +77,8 @@ namespace System.Windows
             get { return DpiUtil.DefaultPixelsPerInch * _dpiScaleY; }
         }
 
+        internal bool Equals(DpiScale other) => _dpiScaleX == other._dpiScaleX && _dpiScaleY == other._dpiScaleY;
+
         private readonly double _dpiScaleX;
         private readonly double _dpiScaleY;
     }

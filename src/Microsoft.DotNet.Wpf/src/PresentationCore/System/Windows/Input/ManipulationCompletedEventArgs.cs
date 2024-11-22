@@ -32,15 +32,9 @@ namespace System.Windows.Input
             bool isInertial)
             : base(manipulationDevice, timestamp)
         {
-            if (total == null)
-            {
-                throw new ArgumentNullException("total");
-            }
+            ArgumentNullException.ThrowIfNull(total);
 
-            if (velocities == null)
-            {
-                throw new ArgumentNullException("velocities");
-            }
+            ArgumentNullException.ThrowIfNull(velocities);
 
             RoutedEvent = Manipulation.ManipulationCompletedEvent;
 
@@ -56,15 +50,9 @@ namespace System.Windows.Input
         /// </summary>
         protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
-            if (genericHandler == null)
-            {
-                throw new ArgumentNullException("genericHandler");
-            }
+            ArgumentNullException.ThrowIfNull(genericHandler);
 
-            if (genericTarget == null)
-            {
-                throw new ArgumentNullException("genericTarget");
-            }
+            ArgumentNullException.ThrowIfNull(genericTarget);
 
             if (RoutedEvent == Manipulation.ManipulationCompletedEvent)
             {

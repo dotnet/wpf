@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
@@ -170,7 +170,7 @@ namespace System.Windows.Automation.Peers
 
         void ITransformProvider.Move(double x, double y)
         {
-            throw new InvalidOperationException(SR.Get(SRID.DataGridColumnHeaderItemAutomationPeer_Unsupported));
+            throw new InvalidOperationException(SR.DataGridColumnHeaderItemAutomationPeer_Unsupported);
         } 
 
         void ITransformProvider.Resize(double width, double height)
@@ -181,13 +181,13 @@ namespace System.Windows.Automation.Peers
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.DataGridColumnHeaderItemAutomationPeer_Unresizable));
+                throw new InvalidOperationException(SR.DataGridColumnHeaderItemAutomationPeer_Unresizable);
             }
         }
 
         void ITransformProvider.Rotate(double degrees)
         {
-            throw new InvalidOperationException(SR.Get(SRID.DataGridColumnHeaderItemAutomationPeer_Unsupported));
+            throw new InvalidOperationException(SR.DataGridColumnHeaderItemAutomationPeer_Unsupported);
         }
 
         #endregion

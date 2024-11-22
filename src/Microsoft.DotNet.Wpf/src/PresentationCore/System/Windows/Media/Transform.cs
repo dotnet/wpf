@@ -24,7 +24,6 @@ using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 using System.Windows.Markup;
-using MS.Internal.PresentationCore;
 
 namespace System.Windows.Media
 {
@@ -177,7 +176,6 @@ namespace System.Windows.Media
         /// </summary>        
         internal override Transform AffineTransform
         {
-            [FriendAccessAllowed] // Built into Core, also used by Framework.
             get
             {
                 return this;

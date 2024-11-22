@@ -1607,11 +1607,6 @@
         <target state="translated">Kaynak nesneye dönüştürülemedi.</target>
         <note />
       </trans-unit>
-      <trans-unit id="FileDialogBufferTooSmall">
-        <source>Too many files selected. Select fewer files and try again.</source>
-        <target state="translated">Çok fazla dosya seçildi. Daha az dosya seçin ve yeniden deneyin.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="FileDialogCreatePrompt">
         <source>'{0}' does not exist.
 Do you want to create it?</source>
@@ -1624,11 +1619,6 @@ Oluşturmak ister misiniz?</target>
 Verify that the file name is correct.</source>
         <target state="translated">'{0}' yok.
 Dosya adının doğruluğunu denetleyin.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="FileDialogInvalidFileName">
-        <source>'{0}' is not a valid file name.</source>
-        <target state="translated">'{0}' geçerli bir dosya adı değildir.</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogInvalidFilter">
@@ -1646,11 +1636,6 @@ Dosya adının doğruluğunu denetleyin.</target>
 Do you want to replace it?</source>
         <target state="translated">'{0}' zaten var.
 Değiştirmek istiyor musunuz?</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="FileDialogSubClassFailure">
-        <source>Cannot subclass a file dialog because sufficient memory is not available.</source>
-        <target state="translated">Yeterli kullanılabilir bellek olmadığı için bir dosya iletişim kutusunun alt sınıfı oluşturulamıyor.</target>
         <note />
       </trans-unit>
       <trans-unit id="FileFormatException">
@@ -3623,11 +3608,6 @@ Değiştirmek istiyor musunuz?</target>
         <target state="translated">'{1}' örneği oluşturulurken '{0}' sağlanmalıdır.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Parametre sıfıra eşit veya daha büyük olmalıdır.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeLogicalNode">
         <source>Parameter must be FrameworkElement or FrameworkContentElement.</source>
         <target state="translated">Parametre FrameworkElement veya FrameworkContentElement olmalıdır.</target>
@@ -4785,7 +4765,7 @@ Değiştirmek istiyor musunuz?</target>
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_PageDown">
         <source>Page Down</source>
-        <target state="translated">Page Down</target>
+        <target state="translated">Aşağı</target>
         <note />
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_PageLeft">
@@ -4800,7 +4780,7 @@ Değiştirmek istiyor musunuz?</target>
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_PageUp">
         <source>Page Up</source>
-        <target state="translated">Page Up</target>
+        <target state="translated">Yukarı</target>
         <note />
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_RightEdge">
@@ -4835,7 +4815,7 @@ Değiştirmek istiyor musunuz?</target>
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_Top">
         <source>Top</source>
-        <target state="translated">Top</target>
+        <target state="translated">Üst</target>
         <note />
       </trans-unit>
       <trans-unit id="ScrollViewer_CannotBeNaN">
@@ -6205,7 +6185,7 @@ Değiştirmek istiyor musunuz?</target>
       </trans-unit>
       <trans-unit id="UnexpectedXmlNodeInXmlFixedPageInfoConstructor">
         <source>\"{{{0}}}{1}\" element found. Expected fixed page element ({{{2}}}{3}).</source>
-        <target state="translated">"{{{0}}}{1}" öğe bulundu. Sabit sayfa öğesi bekleniyor ({{{2}}}{3}).</target>
+        <target state="translated">\"{{{0}}}{1}\" öğe bulundu. Sabit sayfa öğesi bekleniyor ({{{2}}}{3}).</target>
         <note />
       </trans-unit>
       <trans-unit id="UnknownBamlRecord">

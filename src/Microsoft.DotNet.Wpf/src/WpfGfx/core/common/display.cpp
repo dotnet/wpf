@@ -2125,7 +2125,7 @@ CDisplaySet::GetGraphicsAccelerationCaps(
         *pulDisplayUniqueness = m_ulDisplayUniquenessLoader;
     }
 
-    if (m_rgpDisplays.GetCount() == 0 || m_fNonLocalDevicePresent)
+    if (m_rgpDisplays.GetCount() == 0 || (!RenderOptions::IsHardwareAccelerationInRdpEnabled() && m_fNonLocalDevicePresent))
     {
         //
         // No display - no acceleration

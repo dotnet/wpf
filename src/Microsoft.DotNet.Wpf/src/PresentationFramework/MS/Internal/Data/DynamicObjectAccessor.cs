@@ -7,7 +7,7 @@
 //
 
 using System;
-using SW = System.Windows;              // SRID, SR
+using SW = System.Windows;              // SR
 
 namespace MS.Internal.Data
 {
@@ -28,7 +28,7 @@ namespace MS.Internal.Data
 
         public static string MissingMemberErrorString(object target, string name)
         {
-            return SW.SR.Get(SW.SRID.PropertyPathNoProperty, target, "Items");
+            return SW.SR.Format(SW.SR.PropertyPathNoProperty, target, "Items");
         }
 
         Type _ownerType;

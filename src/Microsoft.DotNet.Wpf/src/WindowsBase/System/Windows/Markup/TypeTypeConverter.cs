@@ -18,19 +18,14 @@ namespace System.Windows.Markup
     {
 #if !PBTCOMPILER
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
-        {
-            return sourceType == typeof(string);
-        }
+            => sourceType == typeof(string);
 
         public override object ConvertFrom(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value)
         {
-            string typeName = value as string;
-
-            if (null != context && typeName != null)
+            if (context != null && value is string typeName)
             {
                 IXamlTypeResolver xamlTypeResolver = (IXamlTypeResolver)context.GetService(typeof(IXamlTypeResolver));
-
-                if (null != xamlTypeResolver)
+                if (xamlTypeResolver != null)
                 {
                     return xamlTypeResolver.Resolve(typeName);
                 }

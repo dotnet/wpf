@@ -46,7 +46,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             return E_INVALIDARG;
         }
 
-        return Factory::CreateFontFile(
+        return InternalFactory::CreateFontFile(
                                       _factory,
                                       _fontFileLoader,
                                       _fontSourceCollectionEnumerator->Current->Uri,

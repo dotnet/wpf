@@ -202,7 +202,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.ContentControlCannotHaveMultipleContent));
+                throw new InvalidOperationException(SR.ContentControlCannotHaveMultipleContent);
             }
         }
 

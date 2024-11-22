@@ -12,7 +12,6 @@ using System.Diagnostics;
 using System.ComponentModel;
 using MS.Utility;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -64,13 +63,13 @@ namespace System.Windows.Input
             // validate min/max
             if (maximum < minimum)
             {
-                throw new ArgumentException(SR.Get(SRID.Stylus_InvalidMax), "maximum");
+                throw new ArgumentException(SR.Stylus_InvalidMax, "maximum");
             }
 
             // validate resolution
             if (resolution < 0.0f)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidStylusPointPropertyInfoResolution), "resolution");
+                throw new ArgumentException(SR.InvalidStylusPointPropertyInfoResolution, "resolution");
             }
 
             _min = minimum;

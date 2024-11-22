@@ -93,7 +93,7 @@ namespace System.Windows.Input
                 }
                 else
                 {
-                    throw new NotSupportedException(SR.Get(SRID.Unsupported_Key, fullName));
+                    throw new NotSupportedException(SR.Format(SR.Unsupported_Key, fullName));
                 }
             }
             throw GetConvertFromException(source);
@@ -110,8 +110,7 @@ namespace System.Windows.Input
         /// <ExternalAPI/> 
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType == null)
-                throw new ArgumentNullException("destinationType");
+            ArgumentNullException.ThrowIfNull(destinationType);
 
             if (destinationType == typeof(string) && value != null)
             {
@@ -161,7 +160,7 @@ namespace System.Windows.Input
                     }
                     else
                     {
-                        throw new ArgumentException(SR.Get(SRID.CannotConvertStringToType, keyToken, typeof(Key)));
+                        throw new ArgumentException(SR.Format(SR.CannotConvertStringToType, keyToken, typeof(Key)));
                     }
                 }
                 else
@@ -216,7 +215,7 @@ namespace System.Windows.Input
                         case "PLAY": keyFound = Key.Play; break;
                         case "ZOOM": keyFound = Key.Zoom; break;
                         case "PA1": keyFound = Key.Pa1; break;
-                        default: keyFound = (Key)Enum.Parse(typeof(Key), keyToken, true); break;
+                        default: keyFound = Enum.Parse<Key>(keyToken, true); break;
                     }
 
                     if ((int)keyFound != -1)

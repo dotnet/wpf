@@ -34,10 +34,7 @@ namespace System.Windows.Input
 
         internal TabletDevice(TabletDeviceBase impl)
         {
-            if (impl == null)
-            {
-                throw new ArgumentNullException(nameof(impl));
-            }
+            ArgumentNullException.ThrowIfNull(impl);
 
             TabletDeviceImpl = impl;
         }

@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -107,7 +107,7 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_WrongPropertyTypeForFixedDocument));
+                throw new XpsSerializationException(SR.ReachSerialization_WrongPropertyTypeForFixedDocument);
             }
 
             EndPersistObjectData();
@@ -119,10 +119,7 @@ namespace System.Windows.Xps.Serialization
             SerializableObjectContext serializableObjectContext
         )
         {
-            if (serializableObjectContext == null)
-            {
-                throw new ArgumentNullException(nameof(serializableObjectContext));
-            }
+            ArgumentNullException.ThrowIfNull(serializableObjectContext);
 
             _xpsOMSerializationManager.RegisterDocumentStart();
 

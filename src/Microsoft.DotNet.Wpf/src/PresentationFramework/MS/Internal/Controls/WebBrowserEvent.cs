@@ -24,8 +24,8 @@ using MS.Win32;
 using MS.Internal.AppModel;
 using MS.Internal.Interop;
 
-//In order to avoid generating warnings about unknown message numbers and 
-//unknown pragmas when compiling your C# source code with the actual C# compiler, 
+//In order to avoid generating warnings about unknown message numbers and
+//unknown pragmas when compiling your C# source code with the actual C# compiler,
 //you need to disable warnings 1634 and 1691. (Presharp Documentation)
 #pragma warning disable 1634, 1691
 
@@ -72,21 +72,20 @@ namespace MS.Internal.Controls
 
                 UnsafeNativeMethods.IWebBrowser2 axIWebBrowser2 = (UnsafeNativeMethods.IWebBrowser2)pDisp;
                 // If _parent.AxIWebBrowser2 != axIWebBrowser2, navigation happens in a nested [i]frame.
-                // in that case we do not want to enforce site locking as we want the default IE behavior to take 
-                // over. 
+                // in that case we do not want to enforce site locking as we want the default IE behavior to take
+                // over.
                 if (_parent.AxIWebBrowser2 == axIWebBrowser2)
                 {
                     // The NavigatingToAboutBlank property indicates whether we are navigating to "about:blank"
                     // as a result of navigating to null or stream/string navigation.
                     // We set the NavigatingToAboutBlank bit to true in the WebBrowser DoNavigate method. When the above
-                    // conditions occur, the NavigatingToAboutBlank is true and the source must be "about:blank". 
-                    // 
+                    // conditions occur, the NavigatingToAboutBlank is true and the source must be "about:blank".
+                    //
                     // But when end user navigates away from the current about:blank page (by clicking
                     // on a hyperlink, Goback/Forward), or programmatically call GoBack and Forward,
                     // When we get the navigating event, NavigatingToAboutBlank is true, but the source is not "about:blank".
                     // Clear the NavigatingToAboutBlank bit in that case.
-                    if ((_parent.NavigatingToAboutBlank) &&
-                         String.Compare(urlString, WebBrowser.AboutBlankUriString, StringComparison.OrdinalIgnoreCase) != 0)
+                    if ((_parent.NavigatingToAboutBlank) && !string.Equals(urlString, WebBrowser.AboutBlankUriString, StringComparison.OrdinalIgnoreCase))
                     {
                         _parent.NavigatingToAboutBlank = false;
                     }
@@ -174,15 +173,14 @@ namespace MS.Internal.Controls
         {
             Debug.Assert(url == null || url is string, "invalid url type");
 
-            // Events only fired for top level navigation. 
+            // Events only fired for top level navigation.
             UnsafeNativeMethods.IWebBrowser2 axIWebBrowser2 = (UnsafeNativeMethods.IWebBrowser2)pDisp;
-            if (_parent.AxIWebBrowser2 == axIWebBrowser2)
+            if (_parent.AxIWebBrowser2 == axIWebBrowser2 && !ShouldIgnoreCompletionEvent(ref url))
             {
-                // If we are loading from stream.                
+                // If we are loading from stream.
                 if (_parent.DocumentStream != null)
                 {
-                    Invariant.Assert(_parent.NavigatingToAboutBlank &&
-                        (String.Compare((string)url, WebBrowser.AboutBlankUriString, StringComparison.OrdinalIgnoreCase) == 0));
+                    Invariant.Assert(_parent.NavigatingToAboutBlank && string.Equals((string)url, WebBrowser.AboutBlankUriString, StringComparison.OrdinalIgnoreCase));
 
                     try
                     {
@@ -207,13 +205,13 @@ namespace MS.Internal.Controls
                 {
                     string urlString = (string)url;
                     // When source set to null or navigating to stream/string, we navigate to "about:blank"
-                    // internally. Make sure we pass null in the event args. 
+                    // internally. Make sure we pass null in the event args.
                     if (_parent.NavigatingToAboutBlank)
                     {
-                        Invariant.Assert(String.Compare(urlString, WebBrowser.AboutBlankUriString, StringComparison.OrdinalIgnoreCase) == 0);
+                        Invariant.Assert(string.Equals(urlString, WebBrowser.AboutBlankUriString, StringComparison.OrdinalIgnoreCase));
                         urlString = null;
                     }
-                    Uri source = (String.IsNullOrEmpty(urlString) ? null : new Uri(urlString));
+                    Uri source = string.IsNullOrEmpty(urlString) ? null : new Uri(urlString);
                     NavigationEventArgs e = new NavigationEventArgs(source, null, null, null, null, true);
 
                     _parent.OnNavigated(e);
@@ -229,23 +227,33 @@ namespace MS.Internal.Controls
         {
             Debug.Assert(url == null || url is string, "invalid url type");
 
-            // Events only fired for top level navigation. 
+            // Events only fired for top level navigation.
             UnsafeNativeMethods.IWebBrowser2 axIWebBrowser2 = (UnsafeNativeMethods.IWebBrowser2)pDisp;
-            if (_parent.AxIWebBrowser2 == axIWebBrowser2)
+            if (_parent.AxIWebBrowser2 == axIWebBrowser2 && !ShouldIgnoreCompletionEvent(ref url))
             {
                 string urlString = (string)url;
                 // When source set to null or navigating to stream/string, we navigate to "about:blank"
-                // internally. Make sure we pass null in the event args. 
+                // internally. Make sure we pass null in the event args.
                 if (_parent.NavigatingToAboutBlank)
                 {
-                    Invariant.Assert(String.Compare(urlString, WebBrowser.AboutBlankUriString, StringComparison.OrdinalIgnoreCase) == 0);
+                    Invariant.Assert(string.Equals(urlString, WebBrowser.AboutBlankUriString, StringComparison.OrdinalIgnoreCase));
                     urlString = null;
                 }
-                Uri source = (String.IsNullOrEmpty(urlString) ? null : new Uri(urlString));
+                Uri source = string.IsNullOrEmpty(urlString) ? null : new Uri(urlString);
                 NavigationEventArgs e = new NavigationEventArgs(source, null, null, null, null, true);
 
                 _parent.OnLoadCompleted(e);
             }
+        }
+
+        // if we are navigating to "about:blank", ignore completion events
+        // for any other url.  These can happen despite our attempt to cancel
+        // outstanding navigations (see WebBrowser.DoNavigate), due to race
+        // conditions between the browser and us.
+        private bool ShouldIgnoreCompletionEvent(ref object url)
+        {
+            string urlString = url as string;
+            return _parent.NavigatingToAboutBlank && !string.Equals(urlString, WebBrowser.AboutBlankUriString, StringComparison.OrdinalIgnoreCase);
         }
 
         public void CommandStateChange(long command, bool enable)

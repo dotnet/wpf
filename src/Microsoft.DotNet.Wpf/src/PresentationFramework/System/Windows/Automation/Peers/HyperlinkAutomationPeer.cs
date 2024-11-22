@@ -50,14 +50,12 @@ namespace System.Windows.Automation.Peers
         {
             string name = base.GetNameCore();
 
-            if (name == string.Empty)
+            if (name.Length == 0)
             {
                 Hyperlink owner = (Hyperlink)Owner;
 
-                name = owner.Text;
-
-                if (name == null)
-                    name = string.Empty;
+                if (owner.Text != null)
+                    name = owner.Text;
             }
 
             return name;

@@ -93,17 +93,14 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentException">annotationType's Name or Namespace is null or empty string</exception>
         public Annotation(XmlQualifiedName annotationType)
         {
-            if (annotationType == null)
-            {
-                throw new ArgumentNullException("annotationType");
-            }
+            ArgumentNullException.ThrowIfNull(annotationType);
             if (String.IsNullOrEmpty(annotationType.Name))
             {
-                throw new ArgumentException(SR.Get(SRID.TypeNameMustBeSpecified), "annotationType.Name");// needs better message
+                throw new ArgumentException(SR.TypeNameMustBeSpecified, "annotationType.Name");// needs better message
             }
             if (String.IsNullOrEmpty(annotationType.Namespace))
             {
-                throw new ArgumentException(SR.Get(SRID.TypeNameMustBeSpecified), "annotationType.Namespace");//needs better message
+                throw new ArgumentException(SR.TypeNameMustBeSpecified, "annotationType.Namespace");//needs better message
             }
 
             _id = Guid.NewGuid();
@@ -132,26 +129,23 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentException">id is equal to Guid.Empty</exception>
         public Annotation(XmlQualifiedName annotationType, Guid id, DateTime creationTime, DateTime lastModificationTime)
         {
-            if (annotationType == null)
-            {
-                throw new ArgumentNullException("annotationType");
-            }
+            ArgumentNullException.ThrowIfNull(annotationType);
             if (String.IsNullOrEmpty(annotationType.Name))
             {
-                throw new ArgumentException(SR.Get(SRID.TypeNameMustBeSpecified), "annotationType.Name");//needs better message
+                throw new ArgumentException(SR.TypeNameMustBeSpecified, "annotationType.Name");//needs better message
             }
             if (String.IsNullOrEmpty(annotationType.Namespace))
             {
-                throw new ArgumentException(SR.Get(SRID.TypeNameMustBeSpecified), "annotationType.Namespace");//needs better message
+                throw new ArgumentException(SR.TypeNameMustBeSpecified, "annotationType.Namespace");//needs better message
             }
 
             if (id.Equals(Guid.Empty))
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidGuid), "id");
+                throw new ArgumentException(SR.InvalidGuid, "id");
             }
             if (lastModificationTime.CompareTo(creationTime) < 0)
             {
-                throw new ArgumentException(SR.Get(SRID.ModificationEarlierThanCreation), "lastModificationTime");
+                throw new ArgumentException(SR.ModificationEarlierThanCreation, "lastModificationTime");
             }
             _id = id;
             _typeName = annotationType;
@@ -190,10 +184,7 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentNullException">writer is null</exception>
         public void WriteXml(XmlWriter writer)
         {
-            if (writer == null)
-            {
-                throw new ArgumentNullException("writer");
-            }
+            ArgumentNullException.ThrowIfNull(writer);
 
             //fire trace event
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordAnnotation, EventTrace.Event.SerializeAnnotationBegin);
@@ -210,7 +201,7 @@ namespace System.Windows.Annotations
 
                 if (_typeName == null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CannotSerializeInvalidInstance));
+                    throw new InvalidOperationException(SR.CannotSerializeInvalidInstance);
                 }
 
                 // XmlConvert.ToString is [Obsolete]
@@ -279,10 +270,7 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentNullException">reader is null</exception>
         public void ReadXml(XmlReader reader)
         {
-            if (reader == null)
-            {
-                throw new ArgumentNullException("reader");
-            }
+            ArgumentNullException.ThrowIfNull(reader);
 
             //fire trace event
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordAnnotation, EventTrace.Event.DeserializeAnnotationBegin);
@@ -342,7 +330,7 @@ namespace System.Windows.Annotations
                                 {
                                     if (!(AnnotationXmlConstants.Elements.StringAuthor == reader.LocalName && XmlNodeType.Element == reader.NodeType))
                                     {
-                                        throw new XmlException(SR.Get(SRID.InvalidXmlContent, AnnotationXmlConstants.Elements.Annotation));
+                                        throw new XmlException(SR.Format(SR.InvalidXmlContent, AnnotationXmlConstants.Elements.Annotation));
                                     }
 
                                     XmlNode node = doc.ReadNode(reader);  // Reads the entire "StringAuthor" tag
@@ -357,7 +345,7 @@ namespace System.Windows.Annotations
                         else
                         {
                             // The annotation must contain some invalid content which is not part of the schema.
-                            throw new XmlException(SR.Get(SRID.InvalidXmlContent, AnnotationXmlConstants.Elements.Annotation));
+                            throw new XmlException(SR.Format(SR.InvalidXmlContent, AnnotationXmlConstants.Elements.Annotation));
                         }
                     }
                 }
@@ -567,7 +555,7 @@ namespace System.Windows.Annotations
                     continue;
                 }
 
-                throw new XmlException(SR.Get(SRID.UnexpectedAttribute, reader.LocalName, elementName));
+                throw new XmlException(SR.Format(SR.UnexpectedAttribute, reader.LocalName, elementName));
             }
 
             // We need to move the reader back to the original element the
@@ -653,7 +641,7 @@ namespace System.Windows.Annotations
                             if (String.IsNullOrEmpty(typeName[0]))
                             {
                                 // Just a string of whitespace (empty string doesn't get processed)
-                                throw new FormatException(SR.Get(SRID.InvalidAttributeValue, AnnotationXmlConstants.Attributes.TypeName));
+                                throw new FormatException(SR.Format(SR.InvalidAttributeValue, AnnotationXmlConstants.Attributes.TypeName));
                             }
                             _typeName = new XmlQualifiedName(typeName[0]);
                         }
@@ -664,20 +652,20 @@ namespace System.Windows.Annotations
                             if (String.IsNullOrEmpty(typeName[0]) || String.IsNullOrEmpty(typeName[1]))
                             {
                                 // One colon, prefix or suffix is empty string or whitespace
-                                throw new FormatException(SR.Get(SRID.InvalidAttributeValue, AnnotationXmlConstants.Attributes.TypeName));
+                                throw new FormatException(SR.Format(SR.InvalidAttributeValue, AnnotationXmlConstants.Attributes.TypeName));
                             }
                             _typeName = new XmlQualifiedName(typeName[1], reader.LookupNamespace(typeName[0]));
                         }
                         else
                         {
                             // More than one colon
-                            throw new FormatException(SR.Get(SRID.InvalidAttributeValue, AnnotationXmlConstants.Attributes.TypeName));
+                            throw new FormatException(SR.Format(SR.InvalidAttributeValue, AnnotationXmlConstants.Attributes.TypeName));
                         }
                         break;
 
                     default:
                         if (!Annotation.IsNamespaceDeclaration(reader))
-                           throw new XmlException(SR.Get(SRID.UnexpectedAttribute, reader.LocalName, AnnotationXmlConstants.Elements.Annotation));
+                           throw new XmlException(SR.Format(SR.UnexpectedAttribute, reader.LocalName, AnnotationXmlConstants.Elements.Annotation));
                        break;
                 }
             }
@@ -685,19 +673,19 @@ namespace System.Windows.Annotations
             // Test to see if any required attribute was missing
             if (_id.Equals(Guid.Empty))
             {
-                throw new XmlException(SR.Get(SRID.RequiredAttributeMissing, AnnotationXmlConstants.Attributes.Id, AnnotationXmlConstants.Elements.Annotation));
+                throw new XmlException(SR.Format(SR.RequiredAttributeMissing, AnnotationXmlConstants.Attributes.Id, AnnotationXmlConstants.Elements.Annotation));
             }
             if (_created.Equals(DateTime.MinValue))
             {
-                throw new XmlException(SR.Get(SRID.RequiredAttributeMissing, AnnotationXmlConstants.Attributes.CreationTime, AnnotationXmlConstants.Elements.Annotation));
+                throw new XmlException(SR.Format(SR.RequiredAttributeMissing, AnnotationXmlConstants.Attributes.CreationTime, AnnotationXmlConstants.Elements.Annotation));
             }
             if (_modified.Equals(DateTime.MinValue))
             {
-                throw new XmlException(SR.Get(SRID.RequiredAttributeMissing, AnnotationXmlConstants.Attributes.LastModificationTime, AnnotationXmlConstants.Elements.Annotation));
+                throw new XmlException(SR.Format(SR.RequiredAttributeMissing, AnnotationXmlConstants.Attributes.LastModificationTime, AnnotationXmlConstants.Elements.Annotation));
             }
             if (_typeName == null)
             {
-                throw new XmlException(SR.Get(SRID.RequiredAttributeMissing, AnnotationXmlConstants.Attributes.TypeName, AnnotationXmlConstants.Elements.Annotation));
+                throw new XmlException(SR.Format(SR.RequiredAttributeMissing, AnnotationXmlConstants.Attributes.TypeName, AnnotationXmlConstants.Elements.Annotation));
             }
 
             // Move back to the parent "Annotation" element
@@ -746,7 +734,7 @@ namespace System.Windows.Annotations
                     break;
 
                 default:
-                    throw new NotSupportedException(SR.Get(SRID.UnexpectedCollectionChangeAction, e.Action));
+                    throw new NotSupportedException(SR.Format(SR.UnexpectedCollectionChangeAction, e.Action));
             }
 
             if (changedItems != null)
@@ -800,7 +788,7 @@ namespace System.Windows.Annotations
                     break;
 
                 default:
-                    throw new NotSupportedException(SR.Get(SRID.UnexpectedCollectionChangeAction, e.Action));
+                    throw new NotSupportedException(SR.Format(SR.UnexpectedCollectionChangeAction, e.Action));
             }
 
             if (changedItems != null)
@@ -849,7 +837,7 @@ namespace System.Windows.Annotations
                     break;
 
                 default:
-                    throw new NotSupportedException(SR.Get(SRID.UnexpectedCollectionChangeAction, e.Action));
+                    throw new NotSupportedException(SR.Format(SR.UnexpectedCollectionChangeAction, e.Action));
             }
 
             if (changedItems != null)
@@ -966,7 +954,7 @@ namespace System.Windows.Annotations
         /// <summary>
         /// Colon used to split the parts of a qualified name attribute value
         /// </summary>
-        private static readonly char[] _Colon = new char[] { ':' };
+        private const char _Colon = ':';
 
         #endregion Private Fields
     }

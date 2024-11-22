@@ -63,7 +63,6 @@ using MS.Internal.AppModel;
     // a FontCache service, but over time other parts of WPF might
     // have started to depend on this, so we leave it as-is for 
     // compat. 
-    [FriendAccessAllowed] 
 #endif
 
 
@@ -111,22 +110,13 @@ internal static class SecurityHelper
               //
               if (targetZone < 0)
               {
-                throw new SecurityException( SR.Get(SRID.Invalid_URI) );
+                throw new SecurityException( SR.Invalid_URI );
               }
               pSec = null;
               curSecMgr = null;
               return targetZone;
         }
 #endif
-
-
-#if WINDOWS_BASE
-        internal static void RunClassConstructor(Type t)
-        {
-            System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(t.TypeHandle);
-        }
-
-#endif //  WINDOWS_BASE
 
 #if DRT
         /// <remarks> The LinkDemand on Marshal.SizeOf() was removed in v4. </remarks>
@@ -158,10 +148,7 @@ internal static class SecurityHelper
         
         internal static int GetHRForException(Exception exception)
         {
-            if (exception == null)
-            {
-                throw new ArgumentNullException("exception");
-            }
+            ArgumentNullException.ThrowIfNull(exception);
 
             // GetHRForException fills a per thread IErrorInfo object with data from the exception
             // The exception may contain security sensitive data like full file paths that we do not
@@ -223,16 +210,6 @@ internal static class SecurityHelper
             System.Windows.MessageBox.ShowCore(parentHwnd, text, title, buttons, image, MessageBoxResult.None, MessageBoxOptions.None);
         }
 #endif
-
-#if PRESENTATION_CORE || PRESENTATIONFRAMEWORK || WINDOWS_BASE
-
-        internal static bool AreStringTypesEqual(string m1, string m2)
-        {
-            return (String.Compare(m1, m2, StringComparison.OrdinalIgnoreCase) == 0);
-        }
-
-#endif //PRESENTATION_CORE || PRESENTATIONFRAMEWORK || WINDOWS_BASE
-
 
 #if WINDOWS_BASE
         ///

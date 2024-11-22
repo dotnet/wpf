@@ -194,10 +194,7 @@ namespace System.Windows.Controls.Primitives
         /// <returns></returns>
         public static bool GetIsSelectionActive(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool) element.GetValue(IsSelectionActiveProperty);
         }
 
@@ -221,10 +218,7 @@ namespace System.Windows.Controls.Primitives
         [AttachedPropertyBrowsableForChildren()]
         public static bool GetIsSelected(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool) element.GetValue(IsSelectedProperty);
         }
@@ -237,10 +231,7 @@ namespace System.Windows.Controls.Primitives
         /// <param name="isSelected">The new value of the attached property.</param>
         public static void SetIsSelected(DependencyObject element, bool isSelected)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(IsSelectedProperty, BooleanBoxes.Box(isSelected));
         }
@@ -265,7 +256,7 @@ namespace System.Windows.Controls.Primitives
         /// Whether this Selector should keep SelectedItem in sync with the ItemCollection's current item.
         /// </summary>
         [Bindable(true), Category("Behavior")]
-        [TypeConverter("System.Windows.NullableBoolConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+        [TypeConverter($"System.Windows.NullableBoolConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
         [Localizability(LocalizationCategory.NeverLocalize)] // not localizable
         public bool? IsSynchronizedWithCurrentItem
         {
@@ -880,7 +871,7 @@ namespace System.Windows.Controls.Primitives
 
             if (!CanSelectMultiple)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ChangingCollectionNotSupported));
+                throw new InvalidOperationException(SR.ChangingCollectionNotSupported);
             }
 
             SelectionChange.Begin();
@@ -891,14 +882,14 @@ namespace System.Windows.Controls.Primitives
                 {
                     case NotifyCollectionChangedAction.Add:
                         if (e.NewItems.Count != 1)
-                            throw new NotSupportedException(SR.Get(SRID.RangeActionsNotSupported));
+                            throw new NotSupportedException(SR.RangeActionsNotSupported);
 
                         SelectionChange.Select(NewUnresolvedItemInfo(e.NewItems[0]), false /* assumeInItemsCollection */);
                         break;
 
                     case NotifyCollectionChangedAction.Remove:
                         if (e.OldItems.Count != 1)
-                            throw new NotSupportedException(SR.Get(SRID.RangeActionsNotSupported));
+                            throw new NotSupportedException(SR.RangeActionsNotSupported);
 
                         SelectionChange.Unselect(NewUnresolvedItemInfo(e.OldItems[0]));
                         break;
@@ -920,7 +911,7 @@ namespace System.Windows.Controls.Primitives
 
                     case NotifyCollectionChangedAction.Replace:
                         if (e.NewItems.Count != 1 || e.OldItems.Count != 1)
-                            throw new NotSupportedException(SR.Get(SRID.RangeActionsNotSupported));
+                            throw new NotSupportedException(SR.RangeActionsNotSupported);
 
                         SelectionChange.Unselect(NewUnresolvedItemInfo(e.OldItems[0]));
                         SelectionChange.Select(NewUnresolvedItemInfo(e.NewItems[0]), false /* assumeInItemsCollection */);
@@ -930,7 +921,7 @@ namespace System.Windows.Controls.Primitives
                         break;  // order within SelectedItems doesn't matter
 
                     default:
-                        throw new NotSupportedException(SR.Get(SRID.UnexpectedCollectionChangeAction, e.Action));
+                        throw new NotSupportedException(SR.Format(SR.UnexpectedCollectionChangeAction, e.Action));
                 }
 
                 SelectionChange.End();
@@ -1261,7 +1252,7 @@ namespace System.Windows.Controls.Primitives
                     break;
                 }
                 default:
-                    throw new NotSupportedException(SR.Get(SRID.UnexpectedCollectionChangeAction, e.Action));
+                    throw new NotSupportedException(SR.Format(SR.UnexpectedCollectionChangeAction, e.Action));
             }
         }
 
@@ -1449,7 +1440,7 @@ namespace System.Windows.Controls.Primitives
 
             if (selectable == false && selected)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotSelectNotSelectableItem));
+                throw new InvalidOperationException(SR.CannotSelectNotSelectableItem);
             }
 
             SelectionChange.Begin();
@@ -1857,7 +1848,7 @@ namespace System.Windows.Controls.Primitives
         }
 
         /// <summary>
-        /// Returns false if FrameworkElement representing this item has Selector.SelectableProperty set to false.  True otherwise.
+        /// Returns false if FrameworkElement representing this item is not selectable. True otherwise. If the FrameworkElement is Separator or null, we return False.
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
@@ -2289,7 +2280,7 @@ namespace System.Windows.Controls.Primitives
             internal void Begin()
             {
                 Debug.Assert(_owner.CheckAccess());
-                Debug.Assert(!_active, SR.Get(SRID.SelectionChangeActive));
+                Debug.Assert(!_active, SR.SelectionChangeActive);
 
                 _active = true;
                 _toSelect.Clear();
@@ -2512,7 +2503,7 @@ namespace System.Windows.Controls.Primitives
             internal bool Select(ItemInfo info, bool assumeInItemsCollection)
             {
                 Debug.Assert(_owner.CheckAccess());
-                Debug.Assert(_active, SR.Get(SRID.SelectionChangeNotActive));
+                Debug.Assert(_active, SR.SelectionChangeNotActive);
                 Debug.Assert(info != null, "parameter info should not be null");
 
                 // Disallow selecting !IsSelectable things
@@ -2569,7 +2560,7 @@ namespace System.Windows.Controls.Primitives
             internal bool Unselect(ItemInfo info)
             {
                 Debug.Assert(_owner.CheckAccess());
-                Debug.Assert(_active, SR.Get(SRID.SelectionChangeNotActive));
+                Debug.Assert(_active, SR.SelectionChangeNotActive);
                 Debug.Assert(info != null, "info should not be null");
 
                 ItemInfo key = ItemInfo.Key(info);

@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿//
+//
 //  Description:
 //      Deployment progress page. This is primarily a proxy to the native progress page, which supersedes
 //      the managed one from up to v3.5. See Host\DLL\ProgressPage.hxx for details.

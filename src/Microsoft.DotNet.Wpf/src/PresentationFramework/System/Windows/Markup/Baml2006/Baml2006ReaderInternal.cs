@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xaml;
@@ -42,7 +42,7 @@ namespace System.Windows.Baml2006
         #endregion
 
         // Return the full assembly name, this includes the assembly version
-        internal override string GetAssemblyNameForNamespace(Assembly asm)
+        internal override ReadOnlySpan<char> GetAssemblyNameForNamespace(Assembly asm)
         {
             return asm.FullName;
         }

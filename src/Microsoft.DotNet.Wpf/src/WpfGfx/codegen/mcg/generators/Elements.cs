@@ -416,7 +416,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
                         if (!routedEvent.IsLegalHandler(handler))
                         {
-                            throw new ArgumentException(SR.Get(SRID.HandlerTypeIllegal));
+                            throw new ArgumentException(SR.HandlerTypeIllegal);
                         }
 
                         EnsureEventHandlersStore();
@@ -477,7 +477,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
                         if (!routedEvent.IsLegalHandler(handler))
                         {
-                            throw new ArgumentException(SR.Get(SRID.HandlerTypeIllegal));
+                            throw new ArgumentException(SR.HandlerTypeIllegal);
                         }
 
                         EventHandlersStore store = EventHandlersStore;
@@ -595,7 +595,6 @@ namespace MS.Internal.MilCodeGen.Generators
                     /// </remarks>
                     internal EventHandlersStore EventHandlersStore
                     {
-                        [FriendAccessAllowed] // Built into Core, also used by Framework.
                         get
                         {
                             if(!ReadFlag(CoreFlags.ExistsEventHandlersStore))
@@ -610,7 +609,6 @@ namespace MS.Internal.MilCodeGen.Generators
                     ///     Ensures that EventHandlersStore will return
                     ///     non-null when it is called.
                     /// </summary>
-                    [FriendAccessAllowed] // Built into Core, also used by Framework.
                     internal void EnsureEventHandlersStore()
                     {
                         if (EventHandlersStore == null)

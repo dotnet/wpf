@@ -30,7 +30,6 @@ using MS.Internal.PresentationCore;
 
 namespace MS.Internal.FontCache
 {
-    [FriendAccessAllowed]
     internal sealed class FontFaceLayoutInfo
     {
         private FontTechnology _fontTechnology;
@@ -727,23 +726,19 @@ namespace MS.Internal.FontCache
 
             public void CopyTo(KeyValuePair<int, ushort>[] array, int arrayIndex)
             {
-                if (array == null)
-                {
-                    throw new ArgumentNullException("array");
-                }
+                ArgumentNullException.ThrowIfNull(array);
 
                 if (array.Rank != 1)
                 {
-                    throw new ArgumentException(SR.Get(SRID.Collection_BadRank));
+                    throw new ArgumentException(SR.Collection_BadRank);
                 }
 
                 // The extra "arrayIndex >= array.Length" check in because even if _collection.Count
                 // is 0 the index is not allowed to be equal or greater than the length
                 // (from the MSDN ICollection docs)
-                if (arrayIndex < 0 || arrayIndex >= array.Length || (arrayIndex + Count) > array.Length)
-                {
-                    throw new ArgumentOutOfRangeException("arrayIndex");
-                }
+                ArgumentOutOfRangeException.ThrowIfNegative(arrayIndex);
+                ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(arrayIndex, array.Length);
+                ArgumentOutOfRangeException.ThrowIfGreaterThan(arrayIndex, array.Length - Count);
 
                 foreach (KeyValuePair<int, ushort> pair in this)
                     array[arrayIndex++] = pair;

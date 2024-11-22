@@ -46,10 +46,8 @@ namespace MS.Internal.Data
         /// </summary>
         public static void AddHandler(Type type, EventHandler<PropertyChangedEventArgs> handler, string propertyName)
         {
-            if (type == null)
-                throw new ArgumentNullException("type");
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(type);
+            ArgumentNullException.ThrowIfNull(handler);
 
             CurrentManager.PrivateAddHandler(type, handler, propertyName);
         }
@@ -59,10 +57,8 @@ namespace MS.Internal.Data
         /// </summary>
         public static void RemoveHandler(Type type, EventHandler<PropertyChangedEventArgs> handler, string propertyName)
         {
-            if (type == null)
-                throw new ArgumentNullException("type");
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(type);
+            ArgumentNullException.ThrowIfNull(handler);
 
             CurrentManager.PrivateRemoveHandler(type, handler, propertyName);
         }
@@ -608,7 +604,7 @@ namespace MS.Internal.Data
 
             public void StartListening(Type type)
             {
-                string eventName = _propertyName + "Changed";
+                string eventName = $"{_propertyName}Changed";
                 EventInfo eventInfo = type.GetEvent(eventName, BindingFlags.Public | BindingFlags.Static);
                 if (eventInfo != null)
                 {
@@ -619,7 +615,7 @@ namespace MS.Internal.Data
 
             public void StopListening(Type type)
             {
-                string eventName = _propertyName + "Changed";
+                string eventName = $"{_propertyName}Changed";
                 EventInfo eventInfo = type.GetEvent(eventName, BindingFlags.Public | BindingFlags.Static);
                 if (eventInfo != null)
                 {

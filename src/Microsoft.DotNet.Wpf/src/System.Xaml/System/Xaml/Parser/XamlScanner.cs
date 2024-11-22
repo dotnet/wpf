@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -29,14 +31,14 @@ namespace MS.Internal.Xaml.Parser
         XamlScannerStack _scannerStack;
         XamlParserContext _parserContext;
 
-        XamlText _accumulatedText = null;
+        XamlText _accumulatedText;
         List<XamlAttribute> _attributes;
         int _nextAttribute;
         XamlScannerNode _currentNode;
         Queue<XamlScannerNode> _readNodesQueue;
         XamlXmlReaderSettings _settings;
         XamlAttribute _typeArgumentAttribute;
-        bool _hasKeyAttribute = false;
+        bool _hasKeyAttribute;
 
         internal XamlScanner(XamlParserContext context, XmlReader xmlReader, XamlXmlReaderSettings settings)
         {
@@ -247,7 +249,7 @@ namespace MS.Internal.Xaml.Parser
                 XamlPropertyName name = XamlPropertyName.Parse(_xmlReader.Name, _xmlReader.NamespaceURI);
                 if (_scannerStack.CurrentType == null)
                 {
-                    throw LineInfo(new XamlParseException(SR.Get(SRID.ParentlessPropertyElement, _xmlReader.Name)));
+                    throw LineInfo(new XamlParseException(SR.Format(SR.ParentlessPropertyElement, _xmlReader.Name)));
                 }
                 ReadPropertyElement(name, _scannerStack.CurrentType, _scannerStack.CurrentTypeNamespace, isEmptyTag);
             }
@@ -558,7 +560,7 @@ namespace MS.Internal.Xaml.Parser
 
                 if (propName == null)
                 {
-                    throw new XamlParseException(SR.Get(SRID.InvalidXamlMemberName, xmlName));
+                    throw new XamlParseException(SR.Format(SR.InvalidXamlMemberName, xmlName));
                 }
 
                 XamlAttribute attr = new XamlAttribute(propName, val, _xmlLineInfo);
@@ -779,12 +781,12 @@ namespace MS.Internal.Xaml.Parser
                 break;
 
             default:
-                throw new XamlInternalException(SR.Get(SRID.AttributeUnhandledKind));
+                throw new XamlInternalException(SR.AttributeUnhandledKind);
             }
 
             // (GetFixedDocumentSequence raises Exception "UnicodeString property does not
             // contain enough characters to correspond to the contents of Indices property.")
-            // 
+            //
             // XamlText.Paste normally converts CRLF to LF, even in attribute values.
             // When the property is Glyphs.UnicodeString, disable this;
             // the length of the string must correspond to the number of entries in

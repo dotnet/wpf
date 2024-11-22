@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -44,7 +46,7 @@ namespace MS.Internal.Xaml.Runtime
         {
             if (xamlType.IsUnknown)
             {
-                throw CreateException(SR.Get(SRID.CannotCreateBadType, xamlType.Name));
+                throw CreateException(SR.Format(SR.CannotCreateBadType, xamlType.Name));
             }
             try
             {
@@ -52,7 +54,7 @@ namespace MS.Internal.Xaml.Runtime
             }
             catch (MissingMethodException ex)
             {
-                throw CreateException(SR.Get(SRID.NoConstructor, xamlType.UnderlyingType), ex);
+                throw CreateException(SR.Format(SR.NoConstructor, xamlType.UnderlyingType), ex);
             }
             catch (Exception ex)
             {
@@ -60,7 +62,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
-                throw CreateException(SR.Get(SRID.ConstructorInvocation, xamlType.UnderlyingType), UnwrapTargetInvocationException(ex));
+                throw CreateException(SR.Format(SR.ConstructorInvocation, xamlType.UnderlyingType), UnwrapTargetInvocationException(ex));
             }
         }
 
@@ -74,9 +76,8 @@ namespace MS.Internal.Xaml.Runtime
             Type type = xamlType.UnderlyingType;
             if (type == null)
             {
-                throw CreateException((SR.Get(SRID.CannotResolveTypeForFactoryMethod, xamlType, methodName)));
+                throw CreateException((SR.Format(SR.CannotResolveTypeForFactoryMethod, xamlType, methodName)));
             }
-            string qMethodName = type.ToString() + "." + methodName;
             object instance = null;
             try
             {
@@ -88,11 +89,15 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
-                throw CreateException(SR.Get(SRID.MethodInvocation, qMethodName), UnwrapTargetInvocationException(e));
+
+                string qMethodName = $"{type}.{methodName}";
+                throw CreateException(SR.Format(SR.MethodInvocation, qMethodName), UnwrapTargetInvocationException(e));
             }
+
             if (instance == null)
             {
-                throw CreateException(SR.Get(SRID.FactoryReturnedNull, qMethodName));
+                string qMethodName = $"{type}.{methodName}";
+                throw CreateException(SR.Format(SR.FactoryReturnedNull, qMethodName));
             }
             return instance;
         }
@@ -100,7 +105,7 @@ namespace MS.Internal.Xaml.Runtime
         protected virtual object InvokeFactoryMethod(Type type, string methodName, object[] args)
         {
             MethodInfo method = GetFactoryMethod(type, methodName, args, BindingFlags.Public | BindingFlags.Static);
-            return SafeReflectionInvoker.InvokeMethod(method, null, args);
+            return method.Invoke(null, args);
         }
 
         protected MethodInfo GetFactoryMethod(Type type, string methodName, object[] args, BindingFlags flags)
@@ -159,7 +164,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
-                throw CreateException(SR.Get(SRID.TypeConverterFailed2, instance, typeof(string)), ex);
+                throw CreateException(SR.Format(SR.TypeConverterFailed2, instance, typeof(string)), ex);
             }
         }
 
@@ -175,7 +180,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
-                throw CreateException(SR.Get(SRID.CanConvertFromFailed, typeof(T), converter.GetType()), ex);
+                throw CreateException(SR.Format(SR.CanConvertFromFailed, typeof(T), converter.GetType()), ex);
             }
         }
 
@@ -191,7 +196,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
-                throw CreateException(SR.Get(SRID.CanConvertToFailed, type, converter.GetType()), ex);
+                throw CreateException(SR.Format(SR.CanConvertToFailed, type, converter.GetType()), ex);
             }
         }
 
@@ -207,7 +212,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
-                throw CreateException(SR.Get(SRID.TypeConverterFailed2, instance, typeof(string)), ex);
+                throw CreateException(SR.Format(SR.TypeConverterFailed2, instance, typeof(string)), ex);
             }
         }
 
@@ -223,7 +228,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
-                throw CreateException(SR.Get(SRID.TypeConverterFailed2, instance, typeof(T)), ex);
+                throw CreateException(SR.Format(SR.TypeConverterFailed2, instance, typeof(T)), ex);
             }
         }
 
@@ -258,7 +263,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
-                throw CreateException(SR.Get(SRID.GetValue, property), UnwrapTargetInvocationException(e));
+                throw CreateException(SR.Format(SR.GetValue, property), UnwrapTargetInvocationException(e));
             }
             return value;
         }
@@ -284,7 +289,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
-                throw CreateException(SR.Get(SRID.SetValue, property), UnwrapTargetInvocationException(e));
+                throw CreateException(SR.Format(SR.SetValue, property), UnwrapTargetInvocationException(e));
             }
         }
 
@@ -305,7 +310,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
-                throw CreateException(SR.Get(SRID.AddCollection, collectionType), UnwrapTargetInvocationException(e));
+                throw CreateException(SR.Format(SR.AddCollection, collectionType), UnwrapTargetInvocationException(e));
             }
         }
 
@@ -321,13 +326,13 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
-                throw CreateException(SR.Get(SRID.AddDictionary, dictionaryType), UnwrapTargetInvocationException(e));
+                throw CreateException(SR.Format(SR.AddDictionary, dictionaryType), UnwrapTargetInvocationException(e));
             }
         }
 
         public override IList<object> GetCollectionItems(object collection, XamlType collectionType)
         {
-            List<object> result; 
+            List<object> result;
             IEnumerator enumerator = GetItems(collection, collectionType);
             try
             {
@@ -343,7 +348,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
-                throw CreateException(SR.Get(SRID.GetItemsException, collectionType), ex);
+                throw CreateException(SR.Format(SR.GetItemsException, collectionType), ex);
             }
             return result;
         }
@@ -355,7 +360,7 @@ namespace MS.Internal.Xaml.Runtime
             {
                 // Dictionaries are required to either give us an either:
                 // - an IDictionaryEnumerator,
-                // - an IEnumerator<KeyValuePair<K,V>>, or 
+                // - an IEnumerator<KeyValuePair<K,V>>, or
                 // - an IEnumerator that returns DictionaryEntrys
                 IDictionaryEnumerator dictionaryEnumerator = enumerator as IDictionaryEnumerator;
                 if (dictionaryEnumerator != null)
@@ -388,7 +393,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
-                throw CreateException(SR.Get(SRID.GetItemsException, dictionaryType), ex);
+                throw CreateException(SR.Format(SR.GetItemsException, dictionaryType), ex);
             }
         }
 
@@ -404,7 +409,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
-                throw CreateException(SR.Get(SRID.APSException, instance));
+                throw CreateException(SR.Format(SR.APSException, instance));
             }
         }
 
@@ -427,7 +432,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
-                throw CreateException(SR.Get(SRID.APSException, instance));
+                throw CreateException(SR.Format(SR.APSException, instance));
             }
         }
 
@@ -447,7 +452,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
-                throw CreateException(SR.Get(SRID.SetConnectionId), e);
+                throw CreateException(SR.SetConnectionId, e);
             }
         }
 
@@ -474,7 +479,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
-                throw CreateException(SR.Get(SRID.InitializationGuard, xamlType), e);
+                throw CreateException(SR.Format(SR.InitializationGuard, xamlType), e);
             }
         }
 
@@ -491,7 +496,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
-                throw CreateException(SR.Get(SRID.ProvideValue, me.GetType()), e);
+                throw CreateException(SR.Format(SR.ProvideValue, me.GetType()), e);
             }
         }
 
@@ -511,7 +516,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
-                throw CreateException(SR.Get(SRID.AddDictionary, xamlType), e);
+                throw CreateException(SR.Format(SR.AddDictionary, xamlType), e);
             }
         }
 
@@ -523,13 +528,13 @@ namespace MS.Internal.Xaml.Runtime
             IXmlSerializable iXmlSerial = propInstance as IXmlSerializable;
             if(iXmlSerial == null)
             {
-                throw CreateException((SR.Get(SRID.XmlDataNull, property.Name)));
+                throw CreateException((SR.Format(SR.XmlDataNull, property.Name)));
             }
 
             XmlReader reader = xData.XmlReader as XmlReader;
             if(reader == null)
             {
-                throw new XamlInternalException(SR.Get(SRID.XmlValueNotReader, property.Name));
+                throw new XamlInternalException(SR.Format(SR.XmlValueNotReader, property.Name));
             }
             try
             {
@@ -541,7 +546,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
-                throw CreateException(SR.Get(SRID.SetXmlInstance, property), e);
+                throw CreateException(SR.Format(SR.SetXmlInstance, property), e);
             }
         }
 
@@ -559,7 +564,7 @@ namespace MS.Internal.Xaml.Runtime
                 XamlDeferringLoader converter = GetConverterInstance(deferringLoader);
                 if(converter == null)
                 {
-                    throw new XamlObjectWriterException(SR.Get(SRID.DeferringLoaderInstanceNull, deferringLoader));
+                    throw new XamlObjectWriterException(SR.Format(SR.DeferringLoaderInstanceNull, deferringLoader));
                 }
                 return converter.Load(deferredContent, serviceContext);
             }
@@ -575,7 +580,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
-                throw CreateException(SR.Get(SRID.DeferredLoad), e);
+                throw CreateException(SR.DeferredLoad, e);
             }
         }
 
@@ -588,7 +593,7 @@ namespace MS.Internal.Xaml.Runtime
                 XamlDeferringLoader converter = GetConverterInstance(deferringLoader);
                 if (converter == null)
                 {
-                    throw new XamlObjectWriterException(SR.Get(SRID.DeferringLoaderInstanceNull, deferringLoader));
+                    throw new XamlObjectWriterException(SR.Format(SR.DeferringLoaderInstanceNull, deferringLoader));
                 }
                 return converter.Save(value, serviceContext);
             }
@@ -598,7 +603,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
-                throw CreateException(SR.Get(SRID.DeferredSave), e);
+                throw CreateException(SR.DeferredSave, e);
             }
         }
 
@@ -614,7 +619,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
-                throw CreateException(SR.Get(SRID.ShouldSerializeFailed, member));
+                throw CreateException(SR.Format(SR.ShouldSerializeFailed, member));
             }
         }
 
@@ -649,13 +654,13 @@ namespace MS.Internal.Xaml.Runtime
                 //let the value passthrough (to be set as the property value later).
                 obj = value;
             }
-            
+
             return obj;
         }
 
         protected virtual Delegate CreateDelegate(Type delegateType, object target, string methodName)
         {
-            return SafeReflectionInvoker.CreateDelegate(delegateType, target, methodName);
+            return Delegate.CreateDelegate(delegateType, target, methodName);
         }
 
         internal XamlRuntimeSettings GetSettings()
@@ -695,11 +700,11 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
-                throw CreateException(SR.Get(SRID.GetItemsException, collectionType), UnwrapTargetInvocationException(ex));
+                throw CreateException(SR.Format(SR.GetItemsException, collectionType), UnwrapTargetInvocationException(ex));
             }
             if (result == null)
             {
-                throw CreateException(SR.Get(SRID.GetItemsReturnedNull, collectionType));
+                throw CreateException(SR.Format(SR.GetItemsReturnedNull, collectionType));
             }
             return result;
         }

@@ -18,7 +18,6 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -48,10 +47,7 @@ namespace System.Windows.Input
         /// <param name="impl">The base of the internal hierarchy</param>
         internal StylusDevice(StylusDeviceBase impl)
         {
-            if (impl == null)
-            {
-                throw new ArgumentNullException(nameof(impl));
-            }
+            ArgumentNullException.ThrowIfNull(impl);
 
             StylusDeviceImpl = impl;
         }

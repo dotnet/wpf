@@ -61,7 +61,7 @@ namespace MS.Internal.PtsHost
             base.OnArrange();
 
             PTS.FSFLOATERDETAILS floaterDetails;
-            PTS.Validate(PTS.FsQueryFloaterDetails(PtsContext.Context, _paraHandle.Value, out floaterDetails));
+            PTS.Validate(PTS.FsQueryFloaterDetails(PtsContext.Context, _paraHandle, out floaterDetails));
 
             // Get paragraph's rectangle.
             _rect = floaterDetails.fsrcFloater;

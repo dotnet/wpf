@@ -46,7 +46,7 @@ namespace WinRT
             if (type.IsGenericType)
             {
                 var args = type.GetGenericArguments().Select(t => GetSignature(t));
-                return "pinterface({" + GetGUID(type) + "};" + String.Join(";", args) + ")";
+                return $"pinterface({{{GetGUID(type)}}};{String.Join(";", args)})";
             }
 
             if (type.IsValueType)
@@ -71,12 +71,12 @@ namespace WinRT
                             if (type.IsEnum)
                             {
                                 var isFlags = type.CustomAttributes.Any(cad => cad.AttributeType == typeof(FlagsAttribute));
-                                return "enum(" + TypeExtensions.RemoveNamespacePrefix(type.FullName) + ";" + (isFlags ? "u4" : "i4") + ")";
+                                return $"enum({TypeExtensions.RemoveNamespacePrefix(type.FullName)};{(isFlags ? "u4" : "i4")})";
                             }
                             if (!type.IsPrimitive)
                             {
                                 var args = type.GetFields(BindingFlags.Instance | BindingFlags.Public).Select(fi => GetSignature(fi.FieldType));
-                                return "struct(" + TypeExtensions.RemoveNamespacePrefix(type.FullName) + ";" + String.Join(";", args) + ")";
+                                return $"struct({TypeExtensions.RemoveNamespacePrefix(type.FullName)};{String.Join(";", args)})";
                             }
                             throw new InvalidOperationException("unsupported value type");
                         }
@@ -90,15 +90,15 @@ namespace WinRT
 
             if (Projections.TryGetDefaultInterfaceTypeForRuntimeClassType(type, out Type iface))
             {
-                return "rc(" + TypeExtensions.RemoveNamespacePrefix(type.FullName) + ";" + GetSignature(iface) + ")";
+                return $"rc({TypeExtensions.RemoveNamespacePrefix(type.FullName)};{GetSignature(iface)})";
             }
 
             if (type.IsDelegate())
             {
-                return "delegate({" + GetGUID(type) + "})";
+                return $"delegate({{{GetGUID(type)}}})";
             }
 
-            return "{" + type.GUID.ToString() + "}";
+            return $"{{{type.GUID}}}";
         }
 
         private static Guid encode_guid(byte[] data)

@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿
+
 
 namespace Standard
 {
@@ -38,12 +38,11 @@ namespace Standard
             private set; 
         }
 
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public MessageWindow(CS classStyle, WS style, WS_EX exStyle, Rect location, string name, WndProc callback)
         {
             // A null callback means just use DefWindowProc.
             _wndProcCallback = callback;
-            _className = "MessageWindowClass+" + Guid.NewGuid().ToString();
+            _className = $"MessageWindowClass+{Guid.NewGuid()}";
 
             var wc = new WNDCLASSEX
             {
@@ -150,7 +149,7 @@ namespace Standard
 
             if (msg == WM.CREATE)
             {
-                var createStruct = (CREATESTRUCT)Marshal.PtrToStructure(lParam, typeof(CREATESTRUCT));
+                var createStruct = Marshal.PtrToStructure<CREATESTRUCT>(lParam);
                 GCHandle gcHandle = GCHandle.FromIntPtr(createStruct.lpCreateParams);
                 hwndWrapper = (MessageWindow)gcHandle.Target;
                 s_windowLookup.Add(hwnd, hwndWrapper);

@@ -20,10 +20,8 @@ using System.Runtime.InteropServices;
 using System.Windows.Markup;
 using System.Windows.Media.Composition;
 using System.Diagnostics;
-using MS.Internal.PresentationCore;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Media3D
 {
@@ -139,7 +137,6 @@ namespace System.Windows.Media.Media3D
         /// </summary>        
         internal override Transform3D AffineTransform
         {
-            [FriendAccessAllowed] // Built into Core, also used by Framework.
             get
             {
                 // cache the children to avoid a repeated DP access

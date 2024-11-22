@@ -9,25 +9,16 @@ using System.Windows.Automation.Provider;
 
 using System.Security;
 
-using MS.Internal.PresentationCore;
-
 namespace MS.Internal.Automation
 {
-    [FriendAccessAllowed] // Built into Core, also used by Framework.
     internal class InteropAutomationProvider: IRawElementProviderFragmentRoot
     {
         #region Constructors
 
         internal InteropAutomationProvider(HostedWindowWrapper wrapper, AutomationPeer parent)
         {
-            if (wrapper == null)
-            {
-                throw new ArgumentNullException("wrapper");
-            }
-            if (parent == null)
-            {
-                throw new ArgumentNullException("parent");
-            }
+            ArgumentNullException.ThrowIfNull(wrapper);
+            ArgumentNullException.ThrowIfNull(parent);
 
             _wrapper = wrapper;
             _parent = parent;

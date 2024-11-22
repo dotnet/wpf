@@ -82,7 +82,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                             using System.Windows.Media.Composition;
 
                             using SR = MS.Internal.PresentationCore.SR;
-                            using SRID = MS.Internal.PresentationCore.SRID;
 
                             namespace [[instance.Namespace]]
                             {

@@ -54,7 +54,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private Popup _overflowPopup;                                   // The Popup that hosts the overflow panel.
         private RibbonToggleButton _overflowButton;                     // The ToggleButton that hosts the overflow panel popup.
         private BitVector32 _bits = new BitVector32(0);
-        private static string _overflowButtonToolTipText = Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.RibbonQuickAccessToolBar_OverflowButtonToolTip);
+        private static string _overflowButtonToolTipText = Microsoft.Windows.Controls.SR.RibbonQuickAccessToolBar_OverflowButtonToolTip;
 
         private enum Bits
         {
@@ -281,10 +281,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// <returns>The property's value.</returns>
         public static bool GetIsOverflowItem(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(IsOverflowItemProperty);
         }
 

@@ -34,14 +34,11 @@ namespace System.Windows
         /// </summary>
         public DataFormat(string name, int id)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
+            ArgumentNullException.ThrowIfNull(name);
 
-            if (name == string.Empty)
+            if (name.Length == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed)); 
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed); 
             }
 
             this._name = name;

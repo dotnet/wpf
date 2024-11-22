@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -125,7 +127,7 @@ namespace MS.Internal.Xaml.Context
             {
                 return true;
             }
-            
+
             // If the property setter is not visible, but the property getter is, treat the property
             // as if it were read-only
             if (member.IsReadOnly || (member.Type != null && member.Type.IsUsableAsReadOnly))

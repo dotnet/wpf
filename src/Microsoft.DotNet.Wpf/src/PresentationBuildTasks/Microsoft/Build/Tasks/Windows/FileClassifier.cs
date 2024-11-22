@@ -121,7 +121,7 @@ namespace Microsoft.Build.Tasks.Windows
                     if (String.IsNullOrEmpty(errorId))
                     {
                         errorId = UnknownErrorID;
-                        message = SR.Get(SRID.UnknownBuildError, message);
+                        message = SR.Format(SR.UnknownBuildError, message);
                     }
 
                     Log.LogError(null, errorId, null, null, 0, 0, 0, 0, message, null);
@@ -132,7 +132,7 @@ namespace Microsoft.Build.Tasks.Windows
 #pragma warning disable 6500
             catch // Non-CLS compliant errors
             {
-                Log.LogErrorWithCodeFromResources(SRID.NonClsError);
+                Log.LogErrorWithCodeFromResources(nameof(SR.NonClsError));
                 return false;
             }
 #pragma warning restore 6500
@@ -280,7 +280,7 @@ namespace Microsoft.Build.Tasks.Windows
                 case SharedStrings.Exe     :
                     break;
                 default :
-                    Log.LogErrorWithCodeFromResources(SRID.TargetIsNotSupported, targetType);
+                    Log.LogErrorWithCodeFromResources(nameof(SR.TargetIsNotSupported), targetType);
                     bValidInput = false;
                     break;
             }
@@ -291,7 +291,7 @@ namespace Microsoft.Build.Tasks.Windows
 
             if (TaskHelper.IsValidCultureName(Culture) == false)
             {
-                Log.LogErrorWithCodeFromResources(SRID.InvalidCulture, Culture);
+                Log.LogErrorWithCodeFromResources(nameof(SR.InvalidCulture), Culture);
                 bValidInput = false;
             }
 
@@ -329,25 +329,19 @@ namespace Microsoft.Build.Tasks.Windows
         // <returns></returns>
         private bool IsItemLocalizable(ITaskItem fileItem)
         {
-            bool isLocalizable = false;
-
             // if the default culture is not set, by default all
             // the items are not localizable.
+            bool isLocalizable = false;
 
-            if (Culture != null && Culture.Equals("") == false)
+            if (!string.IsNullOrEmpty(Culture))
             {
-                string localizableString;
+                string localizableString = fileItem.GetMetadata(SharedStrings.Localizable);
 
                 // Default culture is set, by default the item is localizable
-                // unless it is set as false in the Localizable attribute.
-
-                isLocalizable = true;
-
-                localizableString = fileItem.GetMetadata(SharedStrings.Localizable);
-
-                if (localizableString != null && String.Compare(localizableString, "false", StringComparison.OrdinalIgnoreCase) ==0 )
+                // unless it is set as false in the Localizable attribute.         
+                if (!string.Equals(localizableString, "false", StringComparison.OrdinalIgnoreCase))
                 {
-                    isLocalizable = false;
+                    isLocalizable = true;
                 }
             }
 

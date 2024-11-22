@@ -150,10 +150,10 @@ namespace System.Windows.Controls.Primitives
         /// <summary>Returns a string representation of the GeneratorPosition</summary>
         public override string ToString()
         {
-            return string.Concat("GeneratorPosition (", _index.ToString(TypeConverterHelper.InvariantEnglishUS), ",", _offset.ToString(TypeConverterHelper.InvariantEnglishUS), ")");
+            return string.Create(TypeConverterHelper.InvariantEnglishUS, $"GeneratorPosition ({_index},{_offset})");
         }
 
-        
+
         // The remaining methods are present only because they are required by FxCop.
 
         /// <summary> Equality test </summary>

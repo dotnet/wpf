@@ -54,14 +54,11 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
 
         public void RegisterStarLayoutProvider(IProvideStarLayoutInfoBase starLayoutInfoProvider)
         {
-            if (starLayoutInfoProvider == null)
-            {
-                throw new ArgumentNullException("starLayoutInfoProvider");
-            }
+            ArgumentNullException.ThrowIfNull(starLayoutInfoProvider);
             IProvideStarLayoutInfo provider = starLayoutInfoProvider as IProvideStarLayoutInfo;
             if (provider == null)
             {
-                throw new ArgumentException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.RibbonGroupsPanel_InvalidRegistrationParameter), "starLayoutInfoProvider");
+                throw new ArgumentException(Microsoft.Windows.Controls.SR.RibbonGroupsPanel_InvalidRegistrationParameter, "starLayoutInfoProvider");
             }
             if (!_registeredStarLayoutProviders.Contains(provider))
             {
@@ -72,14 +69,11 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
 
         public void UnregisterStarLayoutProvider(IProvideStarLayoutInfoBase starLayoutInfoProvider)
         {
-            if (starLayoutInfoProvider == null)
-            {
-                throw new ArgumentNullException("starLayoutInfoProvider");
-            }
+            ArgumentNullException.ThrowIfNull(starLayoutInfoProvider);
             IProvideStarLayoutInfo provider = starLayoutInfoProvider as IProvideStarLayoutInfo;
             if (provider == null)
             {
-                throw new ArgumentException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.RibbonGroupsPanel_InvalidRegistrationParameter), "starLayoutInfoProvider");
+                throw new ArgumentException(Microsoft.Windows.Controls.SR.RibbonGroupsPanel_InvalidRegistrationParameter, "starLayoutInfoProvider");
             }
             if (_registeredStarLayoutProviders.Contains(provider))
             {

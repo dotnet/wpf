@@ -134,10 +134,7 @@ namespace System.Windows.Automation.Peers
 
             PasswordBox owner = (PasswordBox)Owner;
 
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             owner.Password = value;
         }

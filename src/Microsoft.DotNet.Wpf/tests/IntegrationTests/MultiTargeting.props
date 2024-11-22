@@ -1,0 +1,26 @@
+<Project>
+  <PropertyGroup>
+    <TargetFrameworks>net6.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Reflection.Emit" Version="$(SystemReflectionEmitPackageVersion)" />
+  </ItemGroup>
+
+  <!--
+       When IsUnitTestProject is set by Arcade, these ProjectReferences are implicitly included. Many of our
+       tests don't require xUnit. So a non-unit test that does require xUnit has to set the IsXUnitProject property
+       to true.
+  -->
+  <ItemGroup Condition="'$(IsUnitTestProject)'!='true' and '$(IsXUnitProject)'=='true'">
+    <PackageReference Include="xunit" Version="$(XUnitVersion)" />
+    <PackageReference Include="xunit.runner.console" Version="$(XUnitRunnerConsoleVersion)">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="xunit.runner.visualstudio" Version="$(XUnitRunnerVisualStudioVersion)">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+</Project>

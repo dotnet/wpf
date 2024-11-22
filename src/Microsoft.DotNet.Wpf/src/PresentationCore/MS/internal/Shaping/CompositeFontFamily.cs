@@ -25,7 +25,6 @@ using MS.Internal.FontFace;
 using MS.Internal.TextFormatting;
 using FontFamily = System.Windows.Media.FontFamily;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.Shaping
 {

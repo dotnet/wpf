@@ -262,10 +262,7 @@ namespace MS.Internal
         /// </remarks>
         private bool ExecuteWithinLockInternal(Action lockAcquire, Action lockRelease, ref object result, Delegate criticalAction, params object[] args)
         {
-            if (criticalAction == null)
-            {
-                throw new ArgumentNullException(nameof(criticalAction));
-            }
+            ArgumentNullException.ThrowIfNull(criticalAction);
 
             bool lockAcquired = false;
             DispatcherProcessingDisabled? dispatcherProcessingDisabled = null;
@@ -342,10 +339,7 @@ namespace MS.Internal
 
         protected virtual void Dispose(bool disposing)
         {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException(nameof(ReaderWriterLockSlimWrapper));
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(ReaderWriterLockSlimWrapper));
 
             try
             {

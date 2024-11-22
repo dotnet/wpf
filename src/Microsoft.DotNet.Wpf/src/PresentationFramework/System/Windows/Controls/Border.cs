@@ -456,7 +456,7 @@ namespace System.Windows.Controls
                     else
                     {
                         // Nonuniform border; stroke each edge.
-                        if (DoubleUtil.GreaterThan(border.Left, 0))
+                        if (DoubleUtil.GreaterThanZero(border.Left))
                         {
                             halfThickness = pen.Thickness * 0.5;
                             dc.DrawLine(
@@ -465,7 +465,7 @@ namespace System.Windows.Controls
                                 new Point(halfThickness, RenderSize.Height));
                         }
 
-                        if (DoubleUtil.GreaterThan(border.Right, 0))
+                        if (DoubleUtil.GreaterThanZero(border.Right))
                         {
                             pen = RightPenCache;
                             if (pen == null)
@@ -497,7 +497,7 @@ namespace System.Windows.Controls
                                 new Point(RenderSize.Width - halfThickness, RenderSize.Height));
                         }
 
-                        if (DoubleUtil.GreaterThan(border.Top, 0))
+                        if (DoubleUtil.GreaterThanZero(border.Top))
                         {
                             pen = TopPenCache;
                             if (pen == null)
@@ -528,7 +528,7 @@ namespace System.Windows.Controls
                                 new Point(RenderSize.Width, halfThickness));
                         }
 
-                        if (DoubleUtil.GreaterThan(border.Bottom, 0))
+                        if (DoubleUtil.GreaterThanZero(border.Bottom))
                         {
                             pen = BottomPenCache;
                             if (pen == null)

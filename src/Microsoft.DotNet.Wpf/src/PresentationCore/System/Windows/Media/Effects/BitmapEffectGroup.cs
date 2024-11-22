@@ -23,7 +23,6 @@ using System.Diagnostics;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 
 namespace System.Windows.Media.Effects

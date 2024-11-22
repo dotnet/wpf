@@ -1292,16 +1292,6 @@
         <target state="translated">El objeto de referencia especificado entra en conflicto con la referencia específica de paquete predefinida.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">El parámetro debe ser mayor que o igual a cero.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterMustBeBetween">
-        <source>The parameter value must be between '{0}' and '{1}'.</source>
-        <target state="translated">El valor del parámetro debe estar comprendido entre "{0}" y "{1}".</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParentContainerClosed">
         <source>Cannot access part because parent package was closed.</source>
         <target state="translated">No se puede acceder a la parte porque el paquete principal se cerró.</target>
@@ -1415,11 +1405,6 @@
       <trans-unit id="PublishLicenseStreamHeaderTooLong">
         <source>Variable-length header in publish license stream is {0} bytes, which exceeds the maximum length of {1} bytes.</source>
         <target state="translated">El encabezado de longitud variable en la secuencia de licencias de publicación es de {0} bytes, que supera la longitud máxima de {1} bytes.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">El nombre de tipo '{0}' no tiene el formato esperado 'nombreDeClase, ensamblado'.</target>
         <note />
       </trans-unit>
       <trans-unit id="ReachOutOfRange">

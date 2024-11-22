@@ -1607,11 +1607,6 @@
         <target state="translated">Konwersja zasobu w obiekt nie powiodła się.</target>
         <note />
       </trans-unit>
-      <trans-unit id="FileDialogBufferTooSmall">
-        <source>Too many files selected. Select fewer files and try again.</source>
-        <target state="translated">Wybrano zbyt wiele plików. Wybierz mniej plików i ponów próbę.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="FileDialogCreatePrompt">
         <source>'{0}' does not exist.
 Do you want to create it?</source>
@@ -1624,11 +1619,6 @@ Czy chcesz go utworzyć?</target>
 Verify that the file name is correct.</source>
         <target state="translated">„{0}” nie istnieje.
 Sprawdź, czy nazwa pliku jest prawidłowa.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="FileDialogInvalidFileName">
-        <source>'{0}' is not a valid file name.</source>
-        <target state="translated">„{0}” nie jest prawidłową nazwą pliku.</target>
         <note />
       </trans-unit>
       <trans-unit id="FileDialogInvalidFilter">
@@ -1646,11 +1636,6 @@ Sprawdź, czy nazwa pliku jest prawidłowa.</target>
 Do you want to replace it?</source>
         <target state="translated">„{0}” już istnieje.
 Czy chcesz go zastąpić?</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="FileDialogSubClassFailure">
-        <source>Cannot subclass a file dialog because sufficient memory is not available.</source>
-        <target state="translated">Nie można uzyskać dostępu do podklasy okna dialogowego pliku z powodu braku wystarczającej ilości pamięci.</target>
         <note />
       </trans-unit>
       <trans-unit id="FileFormatException">
@@ -3623,11 +3608,6 @@ Czy chcesz go zastąpić?</target>
         <target state="translated">Podczas tworzenia wystąpienia „{1}” należy dostarczyć „{0}”.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Parametr musi być większy lub równy zeru.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeLogicalNode">
         <source>Parameter must be FrameworkElement or FrameworkContentElement.</source>
         <target state="translated">Parametrem musi być FrameworkElement lub FrameworkContentElement.</target>
@@ -4785,7 +4765,7 @@ Czy chcesz go zastąpić?</target>
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_PageDown">
         <source>Page Down</source>
-        <target state="translated">Page Down</target>
+        <target state="translated">Strona w dół</target>
         <note />
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_PageLeft">
@@ -4800,7 +4780,7 @@ Czy chcesz go zastąpić?</target>
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_PageUp">
         <source>Page Up</source>
-        <target state="translated">Page Up</target>
+        <target state="translated">Strona w górę</target>
         <note />
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_RightEdge">
@@ -4835,7 +4815,7 @@ Czy chcesz go zastąpić?</target>
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_Top">
         <source>Top</source>
-        <target state="translated">Top</target>
+        <target state="translated">Góra</target>
         <note />
       </trans-unit>
       <trans-unit id="ScrollViewer_CannotBeNaN">

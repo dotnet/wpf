@@ -14,7 +14,6 @@ using System.Text;
 using MS.Internal.Ink.InkSerializedFormat;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Ink
 {
@@ -33,7 +32,7 @@ namespace System.Windows.Ink
         {
             if (id == Guid.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidGuid));
+                throw new ArgumentException(SR.InvalidGuid);
             }
             _id = id;
             Value = value;
@@ -164,10 +163,7 @@ namespace System.Windows.Ink
             }
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 // validate the type information for the id against the id
                 ExtendedPropertySerializer.Validate(_id, value);
@@ -217,7 +213,7 @@ namespace System.Windows.Ink
             //
             // we didn't find a type we expect, throw
             //
-            throw new InvalidOperationException(SR.Get(SRID.InvalidDataTypeForExtendedProperty));
+            throw new InvalidOperationException(SR.InvalidDataTypeForExtendedProperty);
         }
 
 

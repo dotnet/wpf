@@ -83,10 +83,7 @@ namespace System.Windows.Documents
         /// </summary>
         void IAddChild.AddChild(object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             TableRow row = value as TableRow;
             if (row != null)
@@ -96,7 +93,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            throw (new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(TableRow)), "value"));
+            throw (new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(TableRow)), "value"));
         }
 
         /// <summary>
@@ -321,7 +318,7 @@ namespace System.Windows.Documents
 
             if (newParent != null && !(newParent is Table))
             {
-                throw new InvalidOperationException(SR.Get(SRID.TableInvalidParentNodeType, newParent.GetType().ToString()));
+                throw new InvalidOperationException(SR.Format(SR.TableInvalidParentNodeType, newParent.GetType().ToString()));
             }
 
             if (oldParent != null)

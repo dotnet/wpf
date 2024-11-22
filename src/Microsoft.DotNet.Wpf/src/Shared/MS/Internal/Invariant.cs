@@ -26,7 +26,6 @@ namespace MS.Internal
     /// <summary>
     /// Provides methods that assert an application is in a valid state. 
     /// </summary>
-    [FriendAccessAllowed] // Built into Base, used by Framework.
     internal // DO NOT MAKE PUBLIC - See security notes on Assert
         static class Invariant
     {
@@ -209,7 +208,7 @@ namespace MS.Internal
 
             Debug.Assert(false, "Invariant failure: " + message, detailMessage);
 
-            Environment.FailFast(SR.Get(SRID.InvariantFailure));
+            Environment.FailFast(SR.InvariantFailure);
         }
 
         #endregion Private Methods
@@ -238,16 +237,15 @@ namespace MS.Internal
                 enabled = false;
 
                 //extracting all the data under an elevation.
-                object dbgJITDebugLaunchSettingValue;
-                string dbgManagedDebuggerValue;
                 key = Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\.NETFramework");
-                dbgJITDebugLaunchSettingValue = key.GetValue("DbgJITDebugLaunchSetting");
-                dbgManagedDebuggerValue = key.GetValue("DbgManagedDebugger") as string;
                 //
                 // Check for the enable.
                 //
                 if (key != null)
                 {
+                    object dbgJITDebugLaunchSettingValue = key.GetValue("DbgJITDebugLaunchSetting");
+                    string dbgManagedDebuggerValue = key.GetValue("DbgManagedDebugger") as string;
+
                     //
                     // Only count the enable if there's a JIT debugger to launch.
                     //

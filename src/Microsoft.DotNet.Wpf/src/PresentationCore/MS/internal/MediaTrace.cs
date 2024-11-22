@@ -15,7 +15,8 @@ namespace MS.Internal
 
     internal class MediaTrace : IDisposable
     {
-        public static MediaTrace NodeFlag = new MediaTrace("Node Flags"); public static MediaTrace NodeOp = new MediaTrace("Node Operations");
+        public static MediaTrace NodeFlag = new MediaTrace("Node Flags");
+        public static MediaTrace NodeOp = new MediaTrace("Node Operations");
         public static MediaTrace NodeCreation = new MediaTrace("Node creation");
         public static MediaTrace DrawingContextOp = new MediaTrace("Drawing Context Op");
         public static MediaTrace ContainerOp = new MediaTrace("Drawing Visual Operations Operations");
@@ -72,7 +73,7 @@ namespace MS.Internal
     
         public MediaTrace(string switchName)
         {
-            _switch = new BooleanSwitch(switchName, "[" + SafeSecurityHelper.GetAssemblyPartialName(Assembly.GetCallingAssembly()) + "]");
+            _switch = new BooleanSwitch(switchName, "[PresentationCore]");
         }
 
         public MediaTrace(string switchName, bool initialState) : this(switchName)

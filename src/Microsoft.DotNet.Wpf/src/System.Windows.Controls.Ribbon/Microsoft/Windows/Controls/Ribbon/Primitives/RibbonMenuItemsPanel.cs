@@ -32,10 +32,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
 
         public void RegisterStarLayoutProvider(IProvideStarLayoutInfoBase starLayoutInfoProvider)
         {
-            if (starLayoutInfoProvider == null)
-            {
-                throw new ArgumentNullException("starLayoutInfoProvider");
-            }
+            ArgumentNullException.ThrowIfNull(starLayoutInfoProvider);
             if (!_registeredStarLayoutProviders.Contains(starLayoutInfoProvider))
             {
                 _registeredStarLayoutProviders.Add(starLayoutInfoProvider);
@@ -45,10 +42,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
 
         public void UnregisterStarLayoutProvider(IProvideStarLayoutInfoBase starLayoutInfoProvider)
         {
-            if (starLayoutInfoProvider == null)
-            {
-                throw new ArgumentNullException("starLayoutInfoProvider");
-            }
+            ArgumentNullException.ThrowIfNull(starLayoutInfoProvider);
             if (_registeredStarLayoutProviders.Contains(starLayoutInfoProvider))
             {
                 _registeredStarLayoutProviders.Remove(starLayoutInfoProvider);

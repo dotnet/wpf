@@ -6,7 +6,6 @@
 using System;
 using System.Security;
 using MS.Internal;
-using MS.Internal.PresentationCore;
 using MS.Win32;
 using System.Windows;
 
@@ -21,7 +20,6 @@ namespace System.Windows.Input
     ///     blittable types.  This is required so that the report can be
     ///     marshalled across application domains.
     /// </remarks>
-    [FriendAccessAllowed]
     internal abstract class InputReport
     {
         /// <summary>
@@ -41,12 +39,11 @@ namespace System.Windows.Input
         /// </param>
         protected InputReport(PresentationSource inputSource, InputType type, InputMode mode, int timestamp)
         {
-            if (inputSource == null)
-                throw new ArgumentNullException("inputSource");
+            ArgumentNullException.ThrowIfNull(inputSource);
 
             Validate_InputType( type );
             Validate_InputMode( mode );
-            _inputSource= new SecurityCriticalData<PresentationSource>(inputSource);
+            _inputSource= inputSource;
             _type = type;
             _mode = mode;
             _timestamp = timestamp;
@@ -55,13 +52,7 @@ namespace System.Windows.Input
         /// <summary>
         ///     Read-only access to the type of input source that reported input.
         /// </summary>
-        public PresentationSource InputSource 
-        { 
-            get 
-            {
-                return _inputSource.Value;
-            }
-        }
+        public PresentationSource InputSource => _inputSource;
 
         /// <summary>
         ///     Read-only access to the type of input that was reported.
@@ -114,7 +105,7 @@ namespace System.Windows.Input
             }
         }
 
-        private SecurityCriticalData<PresentationSource> _inputSource;
+        private readonly PresentationSource _inputSource;
         private InputType _type;
         private InputMode _mode;
         private int _timestamp;

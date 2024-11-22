@@ -207,18 +207,7 @@ namespace System.Windows.Documents
 
 
         // Return ITfThreadMgr
-        internal UnsafeNativeMethods.ITfThreadMgr ThreadManager
-        {
-            get
-            {
-                if (_threadManager == null)
-                {
-                    return null;
-                }
-
-                return _threadManager.Value;
-            }
-        }
+        internal UnsafeNativeMethods.ITfThreadMgr ThreadManager => _threadManager;
 
         //------------------------------------------------------
         //
@@ -234,7 +223,7 @@ namespace System.Windows.Documents
             UnsafeNativeMethods.ITfContext context;
             UnsafeNativeMethods.ITfSource source;
 
-            if ((_threadManager == null) || (_threadManager.Value == null))
+            if (_threadManager is null)
             {
                 return null;
             }
@@ -246,7 +235,7 @@ namespace System.Windows.Documents
             // TextEditor's Finalizer through TextStore.OnDetach. GC Thread does not take Dispatcher.
             if (textstore.ThreadFocusCookie != UnsafeNativeMethods.TF_INVALID_COOKIE)
             {
-                source = _threadManager.Value as UnsafeNativeMethods.ITfSource;
+                source = _threadManager as UnsafeNativeMethods.ITfSource;
                 source.UnadviseSink(textstore.ThreadFocusCookie);
                 textstore.ThreadFocusCookie = UnsafeNativeMethods.TF_INVALID_COOKIE;
             }
@@ -323,33 +312,30 @@ namespace System.Windows.Documents
                 Debug.Assert(_registeredtextstorecount == 0, "TextStore was registered without ThreadMgr?");
 
                 // TextServicesLoader.Load() might return null if no text services are installed or enabled.
-                _threadManager = new SecurityCriticalDataClass<UnsafeNativeMethods.ITfThreadMgr>(TextServicesLoader.Load());
+                _threadManager = TextServicesLoader.Load();
 
-                if (_threadManager.Value == null)
+                if (_threadManager is null)
                 {
-                    _threadManager = null;
                     return;
                 }
 
                 // Activate TSF on this thread if this is the first TextStore.
-                int clientIdTemp;
-                _threadManager.Value.Activate(out clientIdTemp);
-                _clientId = new SecurityCriticalData<int>(clientIdTemp);
+                _threadManager.Activate(out _clientId);
 
                 // We want to get the notification when Dispatcher is finished.
                 Dispatcher.ShutdownFinished += new EventHandler(OnDispatcherShutdownFinished);
             }
 
             // Create a TSF document.
-            _threadManager.Value.CreateDocumentMgr(out doc);
-            doc.CreateContext(_clientId.Value, 0 /* flags */, textstore, out context, out editCookie);
+            _threadManager.CreateDocumentMgr(out doc);
+            doc.CreateContext(_clientId, flags: 0, textstore, out context, out editCookie);
             doc.Push(context);
 
             // Attach a thread focus sink.
             if (textstore is UnsafeNativeMethods.ITfThreadFocusSink)
             {
                 guid = UnsafeNativeMethods.IID_ITfThreadFocusSink;
-                source = _threadManager.Value as UnsafeNativeMethods.ITfSource;
+                source = _threadManager as UnsafeNativeMethods.ITfSource;
                 source.AdviseSink(ref guid, textstore, out threadFocusCookie);
             }
 
@@ -383,26 +369,24 @@ namespace System.Windows.Documents
         // Deactivate and release ThreadManager.
         private void DeactivateThreadManager()
         {
-            if (_threadManager != null) 
+            if (_threadManager is not null) 
             {
-                if (_threadManager.Value != null)
+                // On XP, if we're called on a worker thread (during AppDomain shutdown)
+                // we can't call call any methods on _threadManager.  The problem is
+                // that there's no proxy registered for ITfThreadMgr on OS versions
+                // previous to Vista.  Not calling Deactivate will leak the IMEs, but
+                // in practice (1) they're singletons, so it's not unbounded; and (2)
+                // most applications will share the thread with other AppDomains that
+                // have a UI, in which case the IME won't be released until the process
+                // shuts down in any case.  In theory we could also work around this
+                // problem by creating our own XP proxy/stub implementation, which would
+                // be added to WPF setup....
+                if (_thread == Thread.CurrentThread || System.Environment.OSVersion.Version.Major >= 6)
                 {
-                    // On XP, if we're called on a worker thread (during AppDomain shutdown)
-                    // we can't call call any methods on _threadManager.  The problem is
-                    // that there's no proxy registered for ITfThreadMgr on OS versions
-                    // previous to Vista.  Not calling Deactivate will leak the IMEs, but
-                    // in practice (1) they're singletons, so it's not unbounded; and (2)
-                    // most applications will share the thread with other AppDomains that
-                    // have a UI, in which case the IME won't be released until the process
-                    // shuts down in any case.  In theory we could also work around this
-                    // problem by creating our own XP proxy/stub implementation, which would
-                    // be added to WPF setup....
-                    if (_thread == Thread.CurrentThread || System.Environment.OSVersion.Version.Major >= 6)
-                    {
-                        _threadManager.Value.Deactivate();
-                    }
-                    Marshal.ReleaseComObject(_threadManager.Value);
+                    _threadManager.Deactivate();
                 }
+
+                Marshal.ReleaseComObject(_threadManager);
                 _threadManager = null;
             }
 
@@ -425,10 +409,10 @@ namespace System.Windows.Documents
         private int _registeredtextstorecount;
 
         // TSF ClientId from Activate call.
-        private SecurityCriticalData<int> _clientId;
+        private int _clientId;
 
         // The root TSF object, created on demand.
-        private SecurityCriticalDataClass<UnsafeNativeMethods.ITfThreadMgr> _threadManager;
+        private UnsafeNativeMethods.ITfThreadMgr _threadManager;
 
         // This is true if Dispatcher is finished.
         private bool _isDispatcherShutdownFinished;

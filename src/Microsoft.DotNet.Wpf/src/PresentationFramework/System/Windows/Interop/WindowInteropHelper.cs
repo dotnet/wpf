@@ -38,8 +38,7 @@ namespace System.Windows.Interop
         /// <param name="window"></param>
         public WindowInteropHelper(Window window)
         {
-            if (window == null)
-                throw new ArgumentNullException("window");
+            ArgumentNullException.ThrowIfNull(window);
             _window = window;
         }
 

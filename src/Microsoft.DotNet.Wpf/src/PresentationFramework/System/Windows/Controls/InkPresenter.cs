@@ -261,7 +261,7 @@ namespace System.Windows.Controls
                         return _renderer.RootVisual;
 
                     default:
-                        throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+                        throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
                 }
             }
             else if (index == 0 && count == 1)
@@ -275,7 +275,7 @@ namespace System.Windows.Controls
                     return base.Child;
                 }
             }
-            throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+            throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
         }
 
         

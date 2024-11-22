@@ -35,9 +35,9 @@ namespace System.Windows.Documents
             _eventMin = eventMin;
             _eventMax = eventMax;
 
-            _winEventProc.Value = new NativeMethods.WinEventProcDef(WinEventDefaultProc);
+            _winEventProc = new NativeMethods.WinEventProcDef(WinEventDefaultProc);
             // Keep the garbage collector from moving things around
-            _gchThis = GCHandle.Alloc(_winEventProc.Value);
+            _gchThis = GCHandle.Alloc(_winEventProc);
 
             // Workaround for bug 150666.
             _shutdownListener = new WinEventHandlerShutDownListener(this);
@@ -88,9 +88,9 @@ namespace System.Windows.Documents
         {
             if (_gchThis.IsAllocated)
             {
-                _hHook.Value = UnsafeNativeMethods.SetWinEventHook(_eventMin, _eventMax, IntPtr.Zero, _winEventProc.Value,
+                _hHook = UnsafeNativeMethods.SetWinEventHook(_eventMin, _eventMax, IntPtr.Zero, _winEventProc,
                                                              0, 0, NativeMethods.WINEVENT_OUTOFCONTEXT);
-                if (_hHook.Value == IntPtr.Zero )
+                if (_hHook == IntPtr.Zero )
                 {
                     Stop();
                 }
@@ -100,10 +100,10 @@ namespace System.Windows.Documents
         // uninstall WinEvent hook.
         internal void Stop()
         {
-            if (_hHook.Value != IntPtr.Zero )
+            if (_hHook != IntPtr.Zero )
             {
-                UnsafeNativeMethods.UnhookWinEvent(_hHook.Value);
-                _hHook.Value = IntPtr.Zero ;
+                UnsafeNativeMethods.UnhookWinEvent(_hHook);
+                _hHook = IntPtr.Zero ;
             }
 
             if (_shutdownListener != null)
@@ -163,10 +163,10 @@ namespace System.Windows.Documents
         private int _eventMax;
 
         // hook handle
-        private SecurityCriticalDataForSet<IntPtr> _hHook;
+        private IntPtr _hHook;
 
         // the callback.
-        private SecurityCriticalDataForSet<NativeMethods.WinEventProcDef> _winEventProc;
+        private NativeMethods.WinEventProcDef _winEventProc;
 
         // GCHandle to keep the garbage collector from moving things around
         private GCHandle _gchThis;

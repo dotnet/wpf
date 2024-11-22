@@ -6,7 +6,6 @@ using System.Collections;
 
 using System;
 using System.Security; 
-using MS.Internal.PresentationCore; // for FriendAccessAllowed
 
 namespace System.Windows.Input
 {
@@ -15,7 +14,6 @@ namespace System.Windows.Input
     ///     are relevant to all input events.
     /// </summary>
 
-    [FriendAccessAllowed ] // expose UserInitiated 
     public class InputEventArgs : RoutedEventArgs
     {
         /// <summary>
@@ -71,7 +69,7 @@ namespace System.Windows.Input
         }
 
         private InputDevice _inputDevice;
-        private static int _timestamp;
+        private int _timestamp;
      }
 }
 

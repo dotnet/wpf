@@ -160,9 +160,9 @@ namespace System.Windows.Markup
                     WritePosition = (int) (WritePosition + offset);
                     break;
                 case SeekOrigin.End:
-                    throw new NotSupportedException(SR.Get(SRID.ParserWriterNoSeekEnd));
+                    throw new NotSupportedException(SR.ParserWriterNoSeekEnd);
                 default:
-                    throw new ArgumentException(SR.Get(SRID.ParserWriterUnknownOrigin));
+                    throw new ArgumentException(SR.ParserWriterUnknownOrigin);
             }
 
             if( (!( WritePosition <= WriteLength ))
@@ -184,20 +184,14 @@ namespace System.Windows.Markup
         /// <param name="position">Absolute position in the stream</param>
         internal void UpdateReaderLength(long position)
         {
-            if(!(ReadLength <= position))
-            {
-                throw new ArgumentOutOfRangeException( "position" );
-            }
+            ArgumentOutOfRangeException.ThrowIfLessThan(position, ReadLength);
 #if DEBUG
             Debug.Assert(!WriteComplete,"UpdateReaderLength called after close");
 #endif
 
             ReadLength = position;
 
-            if(!(ReadLength <= WriteLength))
-            {
-                throw new ArgumentOutOfRangeException( "position" );
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(position, WriteLength);
 
             // safe for them to check and remove unused buffers.
             CheckIfCanRemoveFromArrayList(position,WriterBufferArrayList,
@@ -228,10 +222,7 @@ namespace System.Windows.Markup
         /// <returns></returns>
         internal int Read(byte[] buffer, int offset, int count)
         {
-            if(!(count  + ReadPosition <= ReadLength))
-            {
-                throw new ArgumentOutOfRangeException( "count" );
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(count, ReadLength - ReadPosition);
             int bufferOffset;
             int bufferIndex;
 
@@ -313,9 +304,9 @@ namespace System.Windows.Markup
                     ReadPosition = (int) (ReadPosition + offset);
                     break;
                 case SeekOrigin.End:
-                    throw new NotSupportedException(SR.Get(SRID.ParserWriterNoSeekEnd));
+                    throw new NotSupportedException(SR.ParserWriterNoSeekEnd);
                 default:
-                    throw new ArgumentException(SR.Get(SRID.ParserWriterUnknownOrigin));
+                    throw new ArgumentException(SR.ParserWriterUnknownOrigin);
             }
 
             // validate if at a good readPosition.

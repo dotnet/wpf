@@ -105,13 +105,10 @@ namespace System.Windows.Xps.Serialization
             object                              value
             )
         {
-            if( value == null )
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
             if (!IsSupportedType(value.GetType()))
             {
-                throw new NotSupportedException(SR.Get(SRID.Converter_ConvertFromNotSupported));
+                throw new NotSupportedException(SR.Converter_ConvertFromNotSupported);
             }
 
             throw new NotImplementedException();
@@ -147,15 +144,12 @@ namespace System.Windows.Xps.Serialization
             Type                                destinationType
             )
         {
-            if( context == null )
-            {
-                throw new ArgumentNullException("context");
-            }
+            ArgumentNullException.ThrowIfNull(context);
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXConvertFontBegin);
 
             if (!IsSupportedType(destinationType))
             {
-                throw new NotSupportedException(SR.Get(SRID.Converter_ConvertToNotSupported));
+                throw new NotSupportedException(SR.Converter_ConvertToNotSupported);
             }
 
             PackageSerializationManager manager = (PackageSerializationManager)context.GetService(typeof(XpsSerializationManager));
@@ -165,7 +159,7 @@ namespace System.Windows.Xps.Serialization
             GlyphRun fontGlyphRun = (GlyphRun)value;
             if (fontGlyphRun == null)
             {
-                throw new ArgumentException(SR.Get(SRID.MustBeOfType, "value", "GlyphRun"));
+                throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "GlyphRun"));
             }
 
             //
@@ -175,7 +169,7 @@ namespace System.Windows.Xps.Serialization
             XpsFontSerializationService fontService = (XpsFontSerializationService)resourceServiceProvider.GetService(typeof(XpsFontSerializationService));
             if (fontService == null)
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoFontService));
+                throw new XpsSerializationException(SR.ReachSerialization_NoFontService);
             }
 
             //
@@ -246,30 +240,12 @@ namespace System.Windows.Xps.Serialization
             Type    type
             )
         {
-            bool bSupported = false;
-
-            foreach (Type t in SupportedTargetTypes)
-            {
-                if (t.Equals(type))
-                {
-                    bSupported = true;
-                    break;
-                }
-            }
-
-            return bSupported;
+            return typeof(Uri).Equals(type);
         }
 
         #endregion Private static helper methods
 
         #region Private static data
-
-        /// <summary>
-        /// A table of supported types for this type converter
-        /// </summary>
-        private static Type[] SupportedTargetTypes = {
-            typeof(Uri)
-        };
 
         #endregion Private static data
     }

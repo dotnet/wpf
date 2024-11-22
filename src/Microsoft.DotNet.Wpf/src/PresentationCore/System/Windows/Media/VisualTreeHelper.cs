@@ -15,10 +15,8 @@ using System.Collections;
 using System.Diagnostics;
 using MS.Internal;
 using MS.Internal.Media;
-using MS.Internal.PresentationCore;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {
@@ -37,10 +35,7 @@ namespace System.Windows.Media
     {
         private static void CheckVisualReferenceArgument(DependencyObject reference)
         {
-            if (reference == null)
-            {
-                throw new ArgumentNullException("reference");
-            }
+            ArgumentNullException.ThrowIfNull(reference);
         }
 
         /// <summary>
@@ -51,7 +46,6 @@ namespace System.Windows.Media
         /// <remarks>
 		/// This could be considered to be made public
 		/// </remarks>
-        [FriendAccessAllowed]
         internal static bool IsVisualType(DependencyObject reference)
         {
             return (reference is Visual) || (reference is Visual3D);
@@ -155,7 +149,6 @@ namespace System.Windows.Media
         /// It is also different in that null is allowed as an argument, in which case
         /// it returns null.
         /// </summary>
-        [FriendAccessAllowed]
         internal static DependencyObject GetParentInternal(DependencyObject reference)
         {
             Visual visual;
@@ -236,14 +229,8 @@ namespace System.Windows.Media
         // of the given type
         internal static bool IsAncestorOf(DependencyObject ancestor, DependencyObject descendant, Type stopType)
         {
-            if (ancestor == null)
-            {
-                throw new ArgumentNullException("ancestor");
-            }
-            if (descendant == null)
-            {
-                throw new ArgumentNullException("descendant");
-            }
+            ArgumentNullException.ThrowIfNull(ancestor);
+            ArgumentNullException.ThrowIfNull(descendant);
 
             VisualTreeUtils.EnsureVisual(ancestor);
             VisualTreeUtils.EnsureVisual(descendant);
@@ -254,14 +241,11 @@ namespace System.Windows.Media
 
             while ((current != null) && (current != ancestor) && !stopType.IsInstanceOfType(current))
             {
-                Visual visual;
-                Visual3D visual3D;
-
-                if ((visual = current as Visual) != null)
+                if (current is Visual visual)
                 {
                     current = visual.InternalVisualParent;
                 }
-                else if ((visual3D = current as Visual3D) != null)
+                else if (current is Visual3D visual3D)
                 {
                     current = visual3D.InternalVisualParent;
                 }
@@ -459,7 +443,6 @@ namespace System.Windows.Media
 
         /// <summary>
         /// </summary>
-        [FriendAccessAllowed]
         internal static HitTestResult HitTest(Visual reference, Point point, bool include2DOn3D)
         {
             CheckVisualReferenceArgument(reference);

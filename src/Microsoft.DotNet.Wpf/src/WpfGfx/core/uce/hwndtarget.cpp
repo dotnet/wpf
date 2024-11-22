@@ -20,31 +20,31 @@ MtDefine(CSlaveHWndRenderTarget, MILRender, "CSlaveHWndRenderTarget");
 
 //------------------------------------------------------------------
 // CSlaveHwndRenderTarget::ctor
-// 
+//
 // Note:
-//      It is important that m_disableCookie start at zero to 
-//      allow an initial UpdateWindowSettings(enable) command to 
-//      enable the render target without a preceeding 
+//      It is important that m_disableCookie start at zero to
+//      allow an initial UpdateWindowSettings(enable) command to
+//      enable the render target without a preceeding
 //      UpdateWindowSettings(disable) command.
 //
 //      This is a good place to force sw fallback by initializing
 //      m_fSoftwareFallback = true
-//  
+//
 //      Everything else not initialized here is initialized to zero
 //      by DECLARE_METERHEAP_CLEAR
 //
 //      DpiProvider is a CDelegatingUnknown, which requires the correct
 //      version of IUnknown to delegate AddRef/Release/QueryInterface
-//      calls to. This is accomplished by passing the CMILCOMBase* 
-//      version of the IUnknown to it. 
+//      calls to. This is accomplished by passing the CMILCOMBase*
+//      version of the IUnknown to it.
 //------------------------------------------------------------------
 
-CSlaveHWndRenderTarget::CSlaveHWndRenderTarget(CComposition *pComposition) : 
-    CRenderTarget(pComposition), 
-    m_DisplayDevicesAvailabilityChangedWindowMessage(RegisterWindowMessage(L"DisplayDevicesAvailabilityChanged")), 
-    m_LastKnownDisplayDevicesAvailabilityChangedWParam(-1), 
-    m_WindowLayerType(MilWindowLayerType::NotLayered), 
-    m_WindowTransparency(MilTransparency::Opaque), 
+CSlaveHWndRenderTarget::CSlaveHWndRenderTarget(CComposition *pComposition) :
+    CRenderTarget(pComposition),
+    m_DisplayDevicesAvailabilityChangedWindowMessage(RegisterWindowMessage(L"DisplayDevicesAvailabilityChanged")),
+    m_LastKnownDisplayDevicesAvailabilityChangedWParam(-1),
+    m_WindowLayerType(MilWindowLayerType::NotLayered),
+    m_WindowTransparency(MilTransparency::Opaque),
     m_hWnd(nullptr),                                // Will be changed during ProcessCreate
     m_UCETargetFlags(MilRTInitialization::Null),    // Will be changed during ProcessCreate
     m_RenderTargetFlags(MilRTInitialization::Null), // Will be changed during ProcessCreate
@@ -89,10 +89,10 @@ CSlaveHWndRenderTarget::Render(
 
     CDrawingContext *pDrawingContext = NULL;
     IFC(GetDrawingContext(&pDrawingContext));
-    
+
     if (m_pRenderTarget
         && m_fRenderingEnabled
-        && !m_fNoScreenAccess  // If we don't have screen access we don't need to render. 
+        && !m_fNoScreenAccess  // If we don't have screen access we don't need to render.
         && !m_fIsZombie)       // The hwnd target is going away and therefore we don't need to render.
     {
         UINT uNumInvalidTargetRegions = 0;
@@ -103,13 +103,13 @@ CSlaveHWndRenderTarget::Render(
         if (m_hWnd)
         {
             //
-            // Get list of areas of target that don't have valid contents. 
+            // Get list of areas of target that don't have valid contents.
             // Later add the list to the dirty areas.
             // This happens when SetPosition() has been called on the render target
             // to change the window size.
             //
             bool fWholeTargetInvalid = false;
-            
+
             IFC(m_pRenderTarget->GetInvalidRegions(
                 &rgInvalidTargetRegions,
                 &uNumInvalidTargetRegions,
@@ -159,7 +159,7 @@ CSlaveHWndRenderTarget::Render(
             //   the layered window is opaque, I just tried it and artifacts appeared everywhere,
             //   and since it's not a goal to make it work, I haven't debugged it).
             //
-            bool fCanAccelerateScroll =    !m_fNeedsFullRender 
+            bool fCanAccelerateScroll =    !m_fNeedsFullRender
                                         && (uNumInvalidTargetRegions == 0)
                                         && (m_WindowLayerType == MilWindowLayerType::NotLayered);
 
@@ -191,7 +191,7 @@ CSlaveHWndRenderTarget::Render(
                     uNumInvalidTargetRegions,
                     rgInvalidTargetRegions,
                     fCanAccelerateScroll,
-                    &fNeedsFullPresent                    
+                    &fNeedsFullPresent
                     ));
 
                 pDrawingContext->EndFrame();
@@ -220,11 +220,11 @@ CSlaveHWndRenderTarget::Render(
         //
         // If we have no invalid regions for this frame, we will
         // not present and will keep the previous frames invalid regions
-        // because we did not copy them in CDrawingContext::Render. We 
+        // because we did not copy them in CDrawingContext::Render. We
         // will copy them on the next frame that actually does get presented.
         //
         if (m_fHasInvalidRegions)
-        {   
+        {
             IFC(SendInvalidRegions());
         }
 
@@ -266,13 +266,13 @@ CSlaveHWndRenderTarget::Present()
     if (m_fNeedsPresent)
     {
         m_fNeedsPresent = false;
-        
+
         if (   m_pRenderTarget
             && m_fRenderingEnabled
             && !m_fNoScreenAccess  // If we don't have screen access; so no need to present.
             && !m_fIsZombie)
         {
-            
+
             IFC(m_pRenderTarget->Present());
             if (g_uMilPerfInstrumentationFlags & MilPerfInstrumentation_SignalPresent)
             {
@@ -295,7 +295,7 @@ Cleanup:
     // HandleWindowErrors also handles some success codes (e.g. S_PRESENT_OCCLUDED). Hence calling it
     // outside of the if-FAILED block.
     hr = HandleWindowErrors(hr);
-    
+
     RRETURN1(hr, S_PRESENT_OCCLUDED);
 }
 
@@ -303,11 +303,11 @@ Cleanup:
 //
 //  Member: CSlaveHWndRenderTarget::PostDisplayAvailabilityMessage
 //
-//  Synopsis:  Sends m_DisplayDevicesAvailabilityChangedWindowMessage to the 
-//             HWND. 
+//  Synopsis:  Sends m_DisplayDevicesAvailabilityChangedWindowMessage to the
+//             HWND.
 //
-//             wParam for this message is set to 0 if no displays are available, 
-//             and it is set to 1 when > 0 displays are available. 
+//             wParam for this message is set to 0 if no displays are available,
+//             and it is set to 1 when > 0 displays are available.
 //
 //             lParam is unused.
 //  Parameters:
@@ -320,11 +320,11 @@ Cleanup:
 BOOL CSlaveHWndRenderTarget::PostDisplayAvailabilityMessage(int displayCount)
 {
     m_LastKnownDisplayDevicesAvailabilityChangedWParam = (displayCount > 0) ? 1 : 0;
-    return 
+    return
         PostMessage(
-            m_hWnd, 
-            m_DisplayDevicesAvailabilityChangedWindowMessage, 
-            m_LastKnownDisplayDevicesAvailabilityChangedWParam, 
+            m_hWnd,
+            m_DisplayDevicesAvailabilityChangedWindowMessage,
+            m_LastKnownDisplayDevicesAvailabilityChangedWParam,
             0);
 }
 
@@ -332,11 +332,11 @@ BOOL CSlaveHWndRenderTarget::PostDisplayAvailabilityMessage(int displayCount)
 //
 //  Member: CSlaveHWndRenderTarget::NotifyInvalidDisplaySet
 //
-//  Synopsis:  Invalidates this particulare HWND render target if it isn't 
-//             a full-screen render target (typically used by the DWM) 
+//  Synopsis:  Invalidates this particulare HWND render target if it isn't
+//             a full-screen render target (typically used by the DWM)
 //  Parameters:
-//                  invalid:  When true, indicates that the new display set 
-//                            obtained after the recent mode-change is invalid. 
+//                  invalid:  When true, indicates that the new display set
+//                            obtained after the recent mode-change is invalid.
 //           oldDisplayCount: The number of valid displays available before this
 //                            change.
 //              displayCount: Indicates the number of valid displays available
@@ -360,7 +360,7 @@ CSlaveHWndRenderTarget::NotifyDisplaySetChange(bool invalid , int oldDisplayCoun
         // Let the UI thread know that the display-set has changed in a meaningful way.
         // This helps in ensuring that the UI thread does not repeatedly attempt to process
         // WM_PAINT or invalidate itself when the render-thread is unable to render.
-        if ((invalid || (displayCount == 0)) && 
+        if ((invalid || (displayCount == 0)) &&
             (oldDisplayCount != displayCount))
         {
             PostDisplayAvailabilityMessage(displayCount); // ignore return value
@@ -403,9 +403,9 @@ CSlaveHWndRenderTarget::ProcessCreate(
     HRESULT hr = S_OK;
 
     RtlCopyMemory(&m_clearColor, &pCmd->clearColor, sizeof(m_clearColor));
-    
+
     m_hWnd = (HWND)pCmd->hwnd;
-    
+
     DpiProvider::UpdateDpi(DpiScale(pCmd->DpiX, pCmd->DpiY));
     DpiProvider::SetDpiAwarenessContext(pCmd->DpiAwarenessContext);
 
@@ -418,7 +418,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT 
+HRESULT
 CSlaveHWndRenderTarget::ProcessSuppressLayered(
     __in_ecount(1) CMilSlaveHandleTable* pHandleTable,
     __in_ecount(1) const MILCMD_HWNDTARGET_SUPPRESSLAYERED* pCmd
@@ -427,7 +427,7 @@ CSlaveHWndRenderTarget::ProcessSuppressLayered(
     RRETURN(S_OK);
 }
 
-HRESULT 
+HRESULT
 CSlaveHWndRenderTarget::ProcessDpiChanged(
     __in_ecount(1) CMilSlaveHandleTable* pHandleTable,
     __in_ecount(1) const MILCMD_HWNDTARGET_DPICHANGED* pCmd
@@ -443,7 +443,7 @@ CSlaveHWndRenderTarget::ProcessDpiChanged(
 //      CSlaveHWndRenderTarget::CalculateWindowRect
 //
 //  Synopsis:
-//      A helper method that obtains the window rect. 
+//      A helper method that obtains the window rect.
 //
 //----------------------------------------------------------------------------
 
@@ -487,19 +487,19 @@ CSlaveHWndRenderTarget::CalculateWindowRect()
 Cleanup:
     if (FAILED(hr))
     {
-        // 
-        // Since there appear to be random multiple errors being 
+        //
+        // Since there appear to be random multiple errors being
         // returned here, and we can't rely on WIN32 error codes being
         // accurate, for the time being we are dying silently on the ones
         // below by returning a WGXERR_GENERIC_IGNORE.
         //
-        TraceTag((tagMILWarning, 
-                     "CSlaveHWndRenderTarget::GetWindowRect: Failure occurred, converting to WGXERR_GENERIC_IGNORE"));        
+        TraceTag((tagMILWarning,
+                     "CSlaveHWndRenderTarget::GetWindowRect: Failure occurred, converting to WGXERR_GENERIC_IGNORE"));
 
         MIL_THR(WGXERR_GENERIC_IGNORE);
     }
 
-    RRETURN(hr);    
+    RRETURN(hr);
 }
 
 
@@ -509,7 +509,7 @@ Cleanup:
 
 HRESULT
 CSlaveHWndRenderTarget::ProcessUpdateWindowSettings(
-    __in_ecount(1) CMilSlaveHandleTable* pHandleTable, 
+    __in_ecount(1) CMilSlaveHandleTable* pHandleTable,
     __in_ecount(1) const MILCMD_TARGET_UPDATEWINDOWSETTINGS* pCmd
     )
 {
@@ -569,7 +569,7 @@ CSlaveHWndRenderTarget::ProcessUpdateWindowSettings(
         {
             // Remember the lastest cookie.
             m_disableCookie = pCmd->disableCookie;
-        
+
             m_fRenderingEnabled = false;
         }
     }
@@ -645,7 +645,7 @@ CSlaveHWndRenderTarget::ProcessUpdateWindowSettings(
     IFC(UpdateRenderTargetFlags(
         m_UCETargetFlags
         ));
-    
+
 
 Cleanup:
     RRETURN(hr);
@@ -694,7 +694,7 @@ CSlaveHWndRenderTarget::ProcessSetFlags(
     HRESULT hr = S_OK;
 
     const MilRTInitialization::Flags c_dwAllowedFlags =
-        (MilRTInitialization::TypeMask | MilRTInitialization::UseRefRast | MilRTInitialization::UseRgbRast);
+        (MilRTInitialization::TypeMask | MilRTInitialization::UseRefRast | MilRTInitialization::UseRgbRast | MilRTInitialization::DisableDirtyRectangles);
 
     MilRTInitialization::Flags dwNewInitializationFlags;
 
@@ -725,8 +725,8 @@ CSlaveHWndRenderTarget::ProcessInvalidate(
     UINT cbPayload
     )
 {
-    HRESULT hr = S_OK; 
-    
+    HRESULT hr = S_OK;
+
     // We get a WM_PAINT when the screen is unlocked.... or immediately after
     // invalidation if the window is layered or running in the DWM.
 
@@ -734,7 +734,7 @@ CSlaveHWndRenderTarget::ProcessInvalidate(
     // non-layered windows on XPDM. Other scenarios will still render when the
     // screen is locked but those scenarios are not as bad. See comment in
     // HandleWindowErrors for more information.
-    
+
     m_fNoScreenAccess = false;
 
     if (   (pCmd->rc.right > pCmd->rc.left)
@@ -754,7 +754,7 @@ CSlaveHWndRenderTarget::ProcessInvalidate(
 Cleanup:
     RRETURN(hr);
 }
-  
+
 
 //-----------------------------------------------------------------------------
 // CSlaveHWndRenderTarget::SetNewRenderTargetFlags
@@ -788,10 +788,10 @@ HRESULT
 CSlaveHWndRenderTarget::UpdateRenderTargetFlags()
 {
     // We want to update the render flags to possibly include software
-    // based upon RenderOptions and the requested flags. We don't want to 
-    // overwrite the current flags requested by the client so we don't call 
+    // based upon RenderOptions and the requested flags. We don't want to
+    // overwrite the current flags requested by the client so we don't call
     // SetNewUCETargetFlags().
-    RRETURN(UpdateRenderTargetFlags(m_UCETargetFlags));   
+    RRETURN(UpdateRenderTargetFlags(m_UCETargetFlags));
 }
 
 //-----------------------------------------------------------------------------
@@ -891,7 +891,7 @@ CSlaveHWndRenderTarget::EnsureRenderTargetInternal()
         EventWriteWClientDesktopRTCreateEnd((UINT64)m_hWnd);
 
         m_fNeedsFullRender = true;
-        m_fTransparencyDirty = true;        
+        m_fTransparencyDirty = true;
     }
 
     Assert(m_pRenderTarget != NULL);
@@ -924,7 +924,7 @@ CSlaveHWndRenderTarget::UpdateWindowSettingsInternal()
     // commands to update their size and location.  So we have to query
     // it all the time.
     //
-    
+
     if (m_fChild)
     {
         IFC(CalculateWindowRect());
@@ -981,7 +981,7 @@ CSlaveHWndRenderTarget::InvalidateInternal(
     {
         IFC(m_invalidRegions.Add(*pRect));
     }
-    
+
     m_fHasInvalidRegions = true;
 
 Cleanup:
@@ -1054,10 +1054,10 @@ CSlaveHWndRenderTarget::HandleWindowErrors(HRESULT hr)
                 {
                     // Setting the flag will force us to create a software render target on the next render.
                     // This will never allow us to get back into hw mode. To enable resetting the render target
-                    // using the SetFlags command simply set 
+                    // using the SetFlags command simply set
                     //     m_UCETargetFlags = m_UCETargetFlags | MilRTInitialization::SoftwareOnly;
-                    // This feature intentionally not enabled becuase we do not have any API exposure for it and 
-                    // there is no test plan. 
+                    // This feature intentionally not enabled becuase we do not have any API exposure for it and
+                    // there is no test plan.
                     Assert((m_UCETargetFlags & MilRTInitialization::TypeMask) != MilRTInitialization::HardwareOnly);
                     Assert((m_RenderTargetFlags & MilRTInitialization::TypeMask) != MilRTInitialization::HardwareOnly);
                     m_fSoftwareFallback = true;
@@ -1072,11 +1072,11 @@ CSlaveHWndRenderTarget::HandleWindowErrors(HRESULT hr)
                 ReleaseResources();
                 SetScreenAccessDenied();
 
-                // If m_LastKnownDisplayDevicesAvailabilityChangedWParam == 0, it means that the 
-                // UI thread will eventually call InvalidateRect(HWND) when it receives an updated 
-                // m_DisplayDevicesAvailabilityChanged Window Message with wParam = 1. 
-                // Until then, we do not need to continue invalidating the window - doing so will 
-                // simply generate a series of WM_PAINT messages that would be handled and ignroed by 
+                // If m_LastKnownDisplayDevicesAvailabilityChangedWParam == 0, it means that the
+                // UI thread will eventually call InvalidateRect(HWND) when it receives an updated
+                // m_DisplayDevicesAvailabilityChanged Window Message with wParam = 1.
+                // Until then, we do not need to continue invalidating the window - doing so will
+                // simply generate a series of WM_PAINT messages that would be handled and ignroed by
                 // the UI thread
                 if ((hr == WGXERR_NEED_RECREATE_AND_PRESENT) ||
                     ((hr == WGXERR_DISPLAYSTATEINVALID) && (m_LastKnownDisplayDevicesAvailabilityChangedWParam != 0)))
@@ -1085,11 +1085,11 @@ CSlaveHWndRenderTarget::HandleWindowErrors(HRESULT hr)
                 }
 
                 // The composition object needs to know when the underlying render targets
-                // are being recreated; therefore we bubble WGXERR_DISPLAYSTATEINVALID 
-                // up. 
+                // are being recreated; therefore we bubble WGXERR_DISPLAYSTATEINVALID
+                // up.
                 hrReturn = WGXERR_DISPLAYSTATEINVALID;
                 break;
-                
+
             case WGXERR_SCREENACCESSDENIED:     // Display is locked right now
                 SetScreenAccessDenied();
                 __fallthrough;
@@ -1100,7 +1100,7 @@ CSlaveHWndRenderTarget::HandleWindowErrors(HRESULT hr)
 
                 hrReturn = S_OK;
                 break;
-                
+
             case __HRESULT_FROM_WIN32(ERROR_INVALID_WINDOW_HANDLE): // FALL THROUGH Window has been asynchronously destroyed
                 m_fIsZombie = TRUE;
                 __fallthrough;
@@ -1121,8 +1121,8 @@ CSlaveHWndRenderTarget::HandleWindowErrors(HRESULT hr)
     }
 
     //
-    // Somewhat special case for S_PRESENT_OCCLUDED.  In this case nothing is 
-    // wrong with the render target, we just need to do a full present when we 
+    // Somewhat special case for S_PRESENT_OCCLUDED.  In this case nothing is
+    // wrong with the render target, we just need to do a full present when we
     // become un-occluded.
     //
     if (hrReturn == S_PRESENT_OCCLUDED)
@@ -1150,7 +1150,7 @@ CSlaveHWndRenderTarget::SetScreenAccessDenied()
     // is locked for software render targets or for hardware
     // render targets that present to GDI. For hardware render
     // targets that  do not present to GDI we get
-    // WGXERR_DISPLAYSTATEINVALID.   
+    // WGXERR_DISPLAYSTATEINVALID.
     //
     // On Vista WDDM, D3D Presents return S_PRESENT_OCCLUDED,
     // but lower levels of the code eat this error. GDI
@@ -1182,7 +1182,7 @@ CSlaveHWndRenderTarget::SetScreenAccessDenied()
     // will come to us immediately. This *could* cause us to
     // loop, producing a WM_PAINT "storm", *if* we fail with
     // one of the above error codes in these cases when the
-    // screen is (still) locked. 
+    // screen is (still) locked.
     //
     // Fortunately for us, the cases
     // which do not hold back WM_PAINTs also do not return
@@ -1194,14 +1194,14 @@ CSlaveHWndRenderTarget::SetScreenAccessDenied()
     // through here.
     //
     // 2009/09/23 BedeJ - Unfortunately for us, this last paragraph
-    // is not entirely true. If the monitor is powered off, but the 
+    // is not entirely true. If the monitor is powered off, but the
     // display is not locked, a D3D present can fail with
     // S_PRESENT_OCCLUDED (see CD3DDeviceLevel1::PresentWithD3D). When
-    // I tried to work around this by invalidating the window before 
+    // I tried to work around this by invalidating the window before
     // silently eating the error, I ended up in the WM_PAINT storm
-    // situation described here. The fix I developed instead was to 
+    // situation described here. The fix I developed instead was to
     // continue to ignore the failure, but have the UI thread register
-    // for and listen to power broadcast events for monitor power on/off, 
+    // for and listen to power broadcast events for monitor power on/off,
     // and to invalidate the entire window when the monitor is powered
     // back on if a failure . To avoid unnecessary invalidation of windows that
     // haven't had a failed present, we send a window message to the UI
@@ -1209,8 +1209,8 @@ CSlaveHWndRenderTarget::SetScreenAccessDenied()
     // that the invalidation is necessary.
     //
 
-    m_fNoScreenAccess = true;  
-}               
+    m_fNoScreenAccess = true;
+}
 
 //+-----------------------------------------------------------------------
 //
@@ -1240,46 +1240,46 @@ HRESULT CSlaveHWndRenderTarget::WaitForVBlank()
     {
         MIL_THR(WGXERR_NO_HARDWARE_DEVICE);
     }
-    
+
     RRETURN(hr);
 }
 
 //------------------------------------------------------------------
 // CSlaveHWndRenderTarget::ReleaseResources
-// 
+//
 // Wrapper function for releasing all render targets and cleaning
 // up dependent member variables
 //------------------------------------------------------------------
 void
 CSlaveHWndRenderTarget::ReleaseResources()
-{      
+{
     ReleaseInterface(m_pRenderTarget);
     ReleaseDrawingContext();
 }
-    
+
 //+------------------------------------------------------------------------
 //
 //  Function:  CSlaveHWndRenderTarget::Advance
 //
 //  Synopsis:  Advances frame count and inserts a gpu marker.
-//             
+//
 //-------------------------------------------------------------------------
 void
 CSlaveHWndRenderTarget::AdvanceFrame(UINT uFrameNumber)
 {
-    if (m_fRenderingEnabled && !m_fIsZombie && m_pRenderTarget)        
+    if (m_fRenderingEnabled && !m_fIsZombie && m_pRenderTarget)
     {
         m_pRenderTarget->AdvanceFrame(uFrameNumber);
     }
 }
-    
+
 //+------------------------------------------------------------------------
 //
 //  Function:  CSlaveHWndRenderTarget::GetNumQueuedPresents
 //
-//  Synopsis:  Forwards to the rendertarget if it's valid, otherwise 
+//  Synopsis:  Forwards to the rendertarget if it's valid, otherwise
 //             returns 0.
-//             
+//
 //-------------------------------------------------------------------------
 HRESULT
 CSlaveHWndRenderTarget::GetNumQueuedPresents(
@@ -1288,8 +1288,8 @@ CSlaveHWndRenderTarget::GetNumQueuedPresents(
 {
     HRESULT hr = S_OK;
 
-    if (m_fRenderingEnabled 
-        && !m_fIsZombie 
+    if (m_fRenderingEnabled
+        && !m_fIsZombie
         &&  m_pRenderTarget
         )
     {
@@ -1311,7 +1311,7 @@ Cleanup:
 //  Synopsis:  Returns the underlying render target internal.
 //
 //------------------------------------------------------------------------
-HRESULT 
+HRESULT
 CSlaveHWndRenderTarget::GetBaseRenderTargetInternal(
     __deref_out_opt IRenderTargetInternal **ppIRT
     )

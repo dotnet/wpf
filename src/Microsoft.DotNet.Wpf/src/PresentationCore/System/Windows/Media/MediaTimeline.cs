@@ -20,7 +20,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {
@@ -139,7 +138,7 @@ namespace System.Windows.Media
         {
             if (Source == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Media_UriNotSpecified));
+                throw new InvalidOperationException(SR.Media_UriNotSpecified);
             }
 
             MediaClock mediaClock = new MediaClock(this);
@@ -260,7 +259,7 @@ namespace System.Windows.Media
         public override string ToString()
         {
             if (null == Source)
-                throw new InvalidOperationException(SR.Get(SRID.Media_UriNotSpecified));
+                throw new InvalidOperationException(SR.Media_UriNotSpecified);
 
             return Source.ToString();
         }

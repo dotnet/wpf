@@ -580,10 +580,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetIsPressAndHoldEnabled(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             object boolValue = element.GetValue(IsPressAndHoldEnabledProperty);
 
             if (boolValue == null)
@@ -600,10 +597,7 @@ namespace System.Windows.Input
         /// <seealso cref="Stylus.IsPressAndHoldEnabledProperty" />
         public static void SetIsPressAndHoldEnabled(DependencyObject element, bool enabled)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(IsPressAndHoldEnabledProperty, enabled);
         }
@@ -626,10 +620,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetIsFlicksEnabled(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             object boolValue = element.GetValue(IsFlicksEnabledProperty);
 
             if (boolValue == null)
@@ -646,10 +637,7 @@ namespace System.Windows.Input
         /// <seealso cref="Stylus.IsFlicksEnabledProperty" />
         public static void SetIsFlicksEnabled(DependencyObject element, bool enabled)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(IsFlicksEnabledProperty, enabled);
         }
@@ -672,10 +660,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetIsTapFeedbackEnabled(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             object boolValue = element.GetValue(IsTapFeedbackEnabledProperty);
 
             if (boolValue == null)
@@ -692,10 +677,7 @@ namespace System.Windows.Input
         /// <seealso cref="Stylus.IsTapFeedbackEnabledProperty" />
         public static void SetIsTapFeedbackEnabled(DependencyObject element, bool enabled)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(IsTapFeedbackEnabledProperty, enabled);
         }
@@ -717,10 +699,7 @@ namespace System.Windows.Input
         /// <seealso cref="Stylus.IsTouchFeedbackEnabledProperty" />
         public static bool GetIsTouchFeedbackEnabled(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             object boolValue = element.GetValue(IsTouchFeedbackEnabledProperty);
 
             if (boolValue == null)
@@ -737,10 +716,7 @@ namespace System.Windows.Input
         /// <seealso cref="Stylus.IsTouchFeedbackEnabledProperty" />
         public static void SetIsTouchFeedbackEnabled(DependencyObject element, bool enabled)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(IsTouchFeedbackEnabledProperty, enabled);
         }

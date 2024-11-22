@@ -1421,16 +1421,17 @@ CHwBitmapColorSource::ComputeRealizationParameters(
             &uLevels
             );
 
-        Assert(pDevice->GetMinimalTextureDesc(
-            &d3dsdRequired,
-            TRUE,
-            (GMTD_CHECK_ALL |
-             (TextureAddressingAllowsConditionalNonPower2Usage(
-                 oRealizationParams.dlU.d3dta,
-                 oRealizationParams.dlV.d3dta) ?
-              GMTD_NONPOW2CONDITIONAL_OK : 0)
-            )
-            ) == S_OK);
+        Assert(SUCCEEDED(pDevice->GetMinimalTextureDesc(
+        &d3dsdRequired,
+        TRUE,
+        (GMTD_CHECK_ALL |
+            (TextureAddressingAllowsConditionalNonPower2Usage(
+                oRealizationParams.dlU.d3dta,
+                oRealizationParams.dlV.d3dta) ?
+            GMTD_NONPOW2CONDITIONAL_OK : 0)
+        )
+        )));
+        
     }
     #endif
 

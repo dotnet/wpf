@@ -50,10 +50,7 @@ namespace System.Windows.Input
         public RoutedUICommand(string text, string name, Type ownerType, InputGestureCollection inputGestures)
             : base(name, ownerType, inputGestures)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException("text");
-            }
+            ArgumentNullException.ThrowIfNull(text);
             _text = text; 
         }
 
@@ -82,10 +79,7 @@ namespace System.Windows.Input
             }
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
                 _text = value;
             }
         }

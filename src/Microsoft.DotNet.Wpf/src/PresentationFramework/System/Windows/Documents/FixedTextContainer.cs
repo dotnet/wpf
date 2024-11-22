@@ -324,21 +324,18 @@ namespace System.Windows.Documents
         //---------------------------------------------------------------------
         internal FixedTextPointer VerifyPosition(ITextPointer position)
         {
-            if (position == null)
-            {
-                throw new ArgumentNullException("position");
-            }
+            ArgumentNullException.ThrowIfNull(position);
 
             if (position.TextContainer != this)
             {
-                throw new ArgumentException(SR.Get(SRID.NotInAssociatedContainer, "position"));
+                throw new ArgumentException(SR.Format(SR.NotInAssociatedContainer, "position"));
             }
 
             FixedTextPointer ftp = position as FixedTextPointer;
 
             if (ftp == null)
             {
-                throw new ArgumentException(SR.Get(SRID.BadFixedTextPosition, "position"));
+                throw new ArgumentException(SR.Format(SR.BadFixedTextPosition, "position"));
             }
 
             return ftp;

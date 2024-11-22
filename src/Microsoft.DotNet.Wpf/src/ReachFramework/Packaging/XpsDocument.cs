@@ -165,10 +165,7 @@ namespace System.Windows.Xps.Packaging
                                      )
                   )
         {
-            if( null == path )
-            {
-                throw new ArgumentNullException("path");
-            }
+            ArgumentNullException.ThrowIfNull(path);
             this.Uri = new Uri(path, UriKind.RelativeOrAbsolute);
             //
             //The URI has to be absolute
@@ -219,8 +216,8 @@ namespace System.Windows.Xps.Packaging
         /// This method returns the root (starting part) of the Metro package as a DocumentSequenceReader.
         /// </summary>
         /// <returns>A DocumentSequenceReader representing the root.</returns>
-        /// <exception cref="SRID.ReachPackaging_NotOpenForReading">Package not open for reading.</exception>
-        /// <exception cref="SRID.ReachPackaging_InvalidStartingPart">Package starting part is not a valid root.</exception>
+        /// <exception cref="SR.ReachPackaging_NotOpenForReading">Package not open for reading.</exception>
+        /// <exception cref="SR.ReachPackaging_InvalidStartingPart">Package starting part is not a valid root.</exception>
         public
         IXpsFixedDocumentSequenceReader
         FixedDocumentSequenceReader
@@ -255,12 +252,7 @@ namespace System.Windows.Xps.Packaging
                 // This list maintains a reference to _signatures so its enumerator will adapt
                 // as _signatures is updated.  Therefore, we need not regenerate it when _signatures
                 // is modified.
-                if (_reachSignatureList == null)
-                {
-                    _reachSignatureList = new ReadOnlyCollection<XpsDigitalSignature>(_reachSignatures);
-                }
-
-                return _reachSignatureList;
+                return _reachSignatureList ??= new ReadOnlyCollection<XpsDigitalSignature>(_reachSignatures);
            }
         }
 
@@ -484,11 +476,8 @@ namespace System.Windows.Xps.Packaging
             )
         {
             CheckDisposed();
-        
-            if (null == signature)
-            {
-                throw new ArgumentNullException("signature");
-            }
+
+            ArgumentNullException.ThrowIfNull(signature);
             if (null == signature.PackageSignature)
             {
                 throw new NullReferenceException("signature.PackageSignature");
@@ -499,7 +488,7 @@ namespace System.Windows.Xps.Packaging
             }
             if( CurrentXpsManager == null )
             {
-                throw new InvalidOperationException(SR.Get(SRID.ReachPackaging_DocumentWasClosed) );
+                throw new InvalidOperationException(SR.ReachPackaging_DocumentWasClosed);
             }
             PackageDigitalSignatureManager packageSignatures = new PackageDigitalSignatureManager(CurrentXpsManager.MetroPackage);
             packageSignatures.RemoveSignature(signature.PackageSignature.SignaturePart.Uri );
@@ -527,7 +516,7 @@ namespace System.Windows.Xps.Packaging
         
             if( CurrentXpsManager == null )
             {
-                throw new InvalidOperationException(SR.Get(SRID.ReachPackaging_DocumentWasClosed) );
+                throw new InvalidOperationException(SR.ReachPackaging_DocumentWasClosed);
             }
             _thumbnail = CurrentXpsManager.AddThumbnail(imageType, this, Thumbnail);
             Package metroPackage = CurrentXpsManager.MetroPackage;
@@ -548,7 +537,7 @@ namespace System.Windows.Xps.Packaging
         /// thrown.
         /// </summary>
         /// <returns>Returns a IXpsFixedDocumentSequenceWriter instance.</returns>
-        /// <exception cref="SRID.ReachPackaging_AlreadyHasRootSequenceOrDocument">Package already has a root DocumentSequence.</exception>
+        /// <exception cref="SR.ReachPackaging_AlreadyHasRootSequenceOrDocument">Package already has a root DocumentSequence.</exception>
         public
         IXpsFixedDocumentSequenceWriter
         AddFixedDocumentSequence(
@@ -558,15 +547,15 @@ namespace System.Windows.Xps.Packaging
         
             if( CurrentXpsManager == null )
             {
-                throw new InvalidOperationException(SR.Get(SRID.ReachPackaging_DocumentWasClosed) );
+                throw new InvalidOperationException(SR.ReachPackaging_DocumentWasClosed);
             }
             if (_isInDocumentStage)
             {
-                throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_AlreadyHasRootSequenceOrDocument));
+                throw new XpsPackagingException(SR.ReachPackaging_AlreadyHasRootSequenceOrDocument);
             }
             if ( !CurrentXpsManager.Streaming && null != CurrentXpsManager.StartingPart)
             {
-                throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_AlreadyHasRootSequenceOrDocument));
+                throw new XpsPackagingException(SR.ReachPackaging_AlreadyHasRootSequenceOrDocument);
             }
 
             //
@@ -591,9 +580,9 @@ namespace System.Windows.Xps.Packaging
         /// </summary>
         /// <returns>A XpsPartBase representing the root.</returns>
         /// <remarks>Method will be internal until reading/de-serialization is implemented.</remarks>
-        /// <exception cref="SRID.ReachPackaging_PackageUriNull">XpsPakage Uri is null.  Use XpsDocument constructor that takes Uri parameter.</exception>
-        /// <exception cref="SRID.ReachPackaging_InvalidStartingPart">Package starting part is not a valid root.</exception>
-        /// <exception cref="SRID.ReachPackaging_NotAFixedDocumentSequence">Part Uri does not corresepond to  a Fixed Document Sequence.</exception>
+        /// <exception cref="SR.ReachPackaging_PackageUriNull">XpsPakage Uri is null.  Use XpsDocument constructor that takes Uri parameter.</exception>
+        /// <exception cref="SR.ReachPackaging_InvalidStartingPart">Package starting part is not a valid root.</exception>
+        /// <exception cref="SR.ReachPackaging_NotAFixedDocumentSequence">Part Uri does not corresepond to  a Fixed Document Sequence.</exception>
         public
         FixedDocumentSequence
         GetFixedDocumentSequence(
@@ -603,16 +592,16 @@ namespace System.Windows.Xps.Packaging
         
             if( CurrentXpsManager == null )
             {
-                throw new InvalidOperationException(SR.Get(SRID.ReachPackaging_DocumentWasClosed) );
+                throw new InvalidOperationException(SR.ReachPackaging_DocumentWasClosed);
             }
             if (!IsReader)
             {
-                throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_NotOpenForReading));
+                throw new XpsPackagingException(SR.ReachPackaging_NotOpenForReading);
             }
 
             if (null == Uri)
             {
-                throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_PackageUriNull));
+                throw new XpsPackagingException(SR.ReachPackaging_PackageUriNull);
             }
 
             if (CurrentXpsManager.StartingPart == null)
@@ -623,7 +612,7 @@ namespace System.Windows.Xps.Packaging
             ContentType startPartType = CurrentXpsManager.StartingPart.ValidatedContentType();
             if (!startPartType.AreTypeAndSubTypeEqual(XpsS0Markup.DocumentSequenceContentType))
             {
-                 throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_InvalidStartingPart));
+                 throw new XpsPackagingException(SR.ReachPackaging_InvalidStartingPart);
             }
             ParserContext parserContext = new ParserContext();
 
@@ -632,7 +621,7 @@ namespace System.Windows.Xps.Packaging
             object fixedObject = XamlReader.Load(CurrentXpsManager.StartingPart.GetStream(), parserContext, useRestrictiveXamlReader: true);
             if (!(fixedObject is FixedDocumentSequence) )
             {
-                 throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_NotAFixedDocumentSequence));
+                 throw new XpsPackagingException(SR.ReachPackaging_NotAFixedDocumentSequence);
             }
             return fixedObject as FixedDocumentSequence;
         }
@@ -650,7 +639,7 @@ namespace System.Windows.Xps.Packaging
         {
             if( CurrentXpsManager == null )
             {
-                throw new InvalidOperationException(SR.Get(SRID.ReachPackaging_DocumentWasClosed) );
+                throw new InvalidOperationException(SR.ReachPackaging_DocumentWasClosed);
             }
             base.CommitInternal();
         }
@@ -851,18 +840,15 @@ namespace System.Windows.Xps.Packaging
             bool                                    testIsSignable
             )
         {
-            if (null == certificate)
-            {
-                throw new ArgumentNullException("certificate");
-            }
-            
+            ArgumentNullException.ThrowIfNull(certificate);
+
             if( CurrentXpsManager == null )
             {
-                throw new InvalidOperationException(SR.Get(SRID.ReachPackaging_DocumentWasClosed) );
+                throw new InvalidOperationException(SR.ReachPackaging_DocumentWasClosed);
             }
             if( testIsSignable && !IsSignable )
             {
-                throw new InvalidOperationException(SR.Get(SRID.ReachPackaging_SigningDoesNotMeetPolicy) );              
+                throw new InvalidOperationException(SR.ReachPackaging_SigningDoesNotMeetPolicy);              
             }
             EnsureSignatures();
             //
@@ -886,7 +872,6 @@ namespace System.Windows.Xps.Packaging
                                          );
            return AddSignature(packSignature);
         }
-        [MS.Internal.ReachFramework.FriendAccessAllowed]
         internal
         static
         XpsDocument
@@ -908,7 +893,6 @@ namespace System.Windows.Xps.Packaging
             return document;
         }
 
-        [MS.Internal.ReachFramework.FriendAccessAllowed]
         internal
         void
         DisposeXpsDocument(
@@ -976,10 +960,7 @@ namespace System.Windows.Xps.Packaging
 
         private void CheckDisposed()
         {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("XpsDocument");
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(XpsDocument));
         }
 
         #region INode implementation
@@ -1014,7 +995,6 @@ namespace System.Windows.Xps.Packaging
         /// Creates and returns the appropriate <c>PackageSerializationManager</c>.
         /// </summary>
         /// <returns><c>PackageSerializationManager</c></returns>
-        [MS.Internal.ReachFramework.FriendAccessAllowed]
         internal
         PackageSerializationManager
         CreateSerializationManager(
@@ -1036,7 +1016,6 @@ namespace System.Windows.Xps.Packaging
         /// Creates and returns the appropriate <c>MetroAsyncSerializationManager</c>.
         /// </summary>
         /// <returns><c>AsyncPackageSerializationManager</c></returns>
-        [MS.Internal.ReachFramework.FriendAccessAllowed]
         internal
         PackageSerializationManager
         CreateAsyncSerializationManager(
@@ -1055,7 +1034,6 @@ namespace System.Windows.Xps.Packaging
         /// <summary>
         /// Dispose a serializaiton manager
         /// </summary>
-        [MS.Internal.ReachFramework.FriendAccessAllowed]
         internal
         void
         DisposeSerializationManager(

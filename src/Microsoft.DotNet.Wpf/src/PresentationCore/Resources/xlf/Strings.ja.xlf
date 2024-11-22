@@ -1908,8 +1908,8 @@
         <note />
       </trans-unit>
       <trans-unit id="Invalid_IInputElement">
-        <source>'{0}' is not a valid type for IInputElement. UIElement or ContentElement expected.</source>
-        <target state="translated">'{0}' は、IInputElement に対して有効な型ではありません。UIElement または ContentElement を使用してください。</target>
+        <source>'{0}' is not a valid type for IInputElement. UIElement, ContentElement or UIElement3D expected.</source>
+        <target state="translated">'{0}' は、IInputElement に対して有効な型ではありません。UIElement、ContentElement、または UIElement3D を使用してください。</target>
         <note />
       </trans-unit>
       <trans-unit id="Invalid_URI">
@@ -2520,51 +2520,6 @@
       <trans-unit id="PaginatorNegativePageNumber">
         <source>Page number cannot be negative.</source>
         <target state="translated">ページ番号は負の数にできません。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterCannotBeGreaterThan">
-        <source>The parameter value cannot be greater than '{0}'.</source>
-        <target state="translated">パラメーター値は、'{0}' より大きくできません。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterCannotBeLessThan">
-        <source>The parameter value cannot be less than '{0}'.</source>
-        <target state="translated">パラメーター値は、'{0}' 未満にできません。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">パラメーターは 0 以上でなければなりません。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterMustBeBetween">
-        <source>The parameter value must be between '{0}' and '{1}'.</source>
-        <target state="translated">パラメーター値は、'{0}' と '{1}' の間である必要があります。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterMustBeGreaterThanZero">
-        <source>The parameter value must be greater than zero.</source>
-        <target state="translated">パラメーター値は、0 より大きい必要があります。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueCannotBeInfinity">
-        <source>The parameter value must be finite.</source>
-        <target state="translated">パラメーター値は、有限である必要があります。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueCannotBeNaN">
-        <source>The parameter value must be a number.</source>
-        <target state="translated">パラメーター値は、数値である必要があります。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueCannotBeNegative">
-        <source>'{0}' parameter value cannot be negative.</source>
-        <target state="translated">'{0}' パラメーター値を負の値にすることはできません。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueMustBeGreaterThanZero">
-        <source>'{0}' parameter value must be greater than zero.</source>
-        <target state="translated">'{0}' パラメーター値は、0 より大きい必要があります。</target>
         <note />
       </trans-unit>
       <trans-unit id="Parser_BadForm">

@@ -1184,6 +1184,8 @@ namespace System.Windows.Controls.Ribbon
         protected override void OnMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs e) { }
         protected override void OnMouseLeftButtonUp(System.Windows.Input.MouseButtonEventArgs e) { }
         protected override void OnMouseMove(System.Windows.Input.MouseEventArgs e) { }
+        protected internal virtual void OnSelected(System.Windows.RoutedEventArgs e) { }
+        protected internal virtual void OnUnselected(System.Windows.RoutedEventArgs e) { }
     }
     [System.Windows.TemplatePartAttribute(Name="ItemsPresenter", Type=typeof(System.Windows.Controls.ItemsPresenter))]
     [System.Windows.TemplatePartAttribute(Name="PART_Header", Type=typeof(System.Windows.Controls.ContentPresenter))]

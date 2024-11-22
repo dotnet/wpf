@@ -47,13 +47,12 @@ namespace System.Windows
         {
             if (destinationType == typeof(InstanceDescriptor))
             {
-                if(value == null)
-                    throw new ArgumentNullException("value");
+                ArgumentNullException.ThrowIfNull(value);
 
                 TemplateBindingExtension templateBinding = value as TemplateBindingExtension;
 
                 if(templateBinding == null)
-                    throw new ArgumentException(SR.Get(SRID.MustBeOfType, "value", "TemplateBindingExtension"), "value");
+                    throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "TemplateBindingExtension"), "value");
 
                 return new InstanceDescriptor(typeof(TemplateBindingExtension).GetConstructor(new Type[] { typeof(DependencyProperty) }),
                     new object[] { templateBinding.Property });

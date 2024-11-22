@@ -66,10 +66,7 @@ namespace System.Windows.Media.Animation
         public SplineThicknessKeyFrame(Thickness value, KeyTime keyTime, KeySpline keySpline)
             : this()
         {
-            if (keySpline == null)
-            {
-                throw new ArgumentNullException("keySpline");
-            }
+            ArgumentNullException.ThrowIfNull(keySpline);
 
             Value = value;
             KeyTime = keyTime;
@@ -141,10 +138,7 @@ namespace System.Windows.Media.Animation
             }
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
                 SetValue(KeySplineProperty, value);
             }
         }

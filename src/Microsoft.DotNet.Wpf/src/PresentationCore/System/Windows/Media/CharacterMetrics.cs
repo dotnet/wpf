@@ -15,7 +15,6 @@ using StringBuilder = System.Text.StringBuilder;
 using CompositeFontParser = MS.Internal.FontFace.CompositeFontParser;
 using Constants = MS.Internal.TextFormatting.Constants;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -61,8 +60,7 @@ namespace System.Windows.Media
         /// <param name="metrics">Value of the Metrics property.</param>
         public CharacterMetrics(string metrics)
         {
-            if (metrics == null)
-                throw new ArgumentNullException("metrics");
+            ArgumentNullException.ThrowIfNull(metrics);
             Metrics = metrics;
         }
 
@@ -115,13 +113,13 @@ namespace System.Windows.Media
                     + metrics[(int)FieldIndex.LeftSideBearing]
                     + metrics[(int)FieldIndex.RightSideBearing];
                 if (horizontalAdvance < 0)
-                    throw new ArgumentException(SR.Get(SRID.CharacterMetrics_NegativeHorizontalAdvance));
+                    throw new ArgumentException(SR.CharacterMetrics_NegativeHorizontalAdvance);
 
                 double verticalAdvance = metrics[(int)FieldIndex.BlackBoxHeight]
                     + metrics[(int)FieldIndex.TopSideBearing]
                     + metrics[(int)FieldIndex.BottomSideBearing];
                 if (verticalAdvance < 0)
-                    throw new ArgumentException(SR.Get(SRID.CharacterMetrics_NegativeVerticalAdvance));
+                    throw new ArgumentException(SR.CharacterMetrics_NegativeVerticalAdvance);
 
                 // Set all the properties.
                 _blackBoxWidth = metrics[(int)FieldIndex.BlackBoxWidth];
@@ -168,7 +166,7 @@ namespace System.Windows.Media
                 if (k > i)
                 {
                     // Non-empty field; convert it to double.
-                    string field = s.Substring(i, k - i);
+                    ReadOnlySpan<char> field = s.AsSpan(i, k - i);
                     if (!double.TryParse(
                         field,
                         NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign,
@@ -176,13 +174,13 @@ namespace System.Windows.Media
                         out metrics[fieldIndex]
                         ))
                     {
-                        throw new ArgumentException(SR.Get(SRID.CannotConvertStringToType, field, "double"));
+                        throw new ArgumentException(SR.Format(SR.CannotConvertStringToType, field.ToString(), "double"));
                     }
                 }
                 else if (fieldIndex < NumRequiredFields)
                 {
                     // Empty field; make sure it's an optional one.
-                    throw new ArgumentException(SR.Get(SRID.CharacterMetrics_MissingRequiredField));
+                    throw new ArgumentException(SR.CharacterMetrics_MissingRequiredField);
                 }
 
                 ++fieldIndex;
@@ -191,7 +189,7 @@ namespace System.Windows.Media
                 {
                     // There's a comma so check if we've exceeded the number of fields.
                     if (fieldIndex == NumFields)
-                        throw new ArgumentException(SR.Get(SRID.CharacterMetrics_TooManyFields));
+                        throw new ArgumentException(SR.CharacterMetrics_TooManyFields);
 
                     // Initialize character index for next iteration.
                     i = j + 1;
@@ -201,7 +199,7 @@ namespace System.Windows.Media
                     // No more fields; check if we have all required fields.
                     if (fieldIndex < NumRequiredFields)
                     {
-                        throw new ArgumentException(SR.Get(SRID.CharacterMetrics_MissingRequiredField));
+                        throw new ArgumentException(SR.CharacterMetrics_MissingRequiredField);
                     }
 
                     break;

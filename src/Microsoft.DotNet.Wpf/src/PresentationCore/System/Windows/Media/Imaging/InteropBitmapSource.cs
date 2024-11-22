@@ -24,7 +24,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 using MS.Internal.PresentationCore;                        // SecurityHelper
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using System.Windows.Media.Imaging;
 
 namespace System.Windows.Interop
@@ -127,15 +126,8 @@ namespace System.Windows.Interop
         {
 
             _bitmapInit.BeginInit();
-            if (pixelWidth <= 0)
-            {
-                throw new ArgumentOutOfRangeException("pixelWidth", SR.Get(SRID.ParameterMustBeGreaterThanZero));
-            }
-
-            if (pixelHeight <= 0)
-            {
-                throw new ArgumentOutOfRangeException("pixelHeight", SR.Get(SRID.ParameterMustBeGreaterThanZero));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pixelWidth);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pixelHeight);
 
             Guid formatGuid = format.Guid;
 

@@ -93,7 +93,7 @@
   <Target Name="CreateNativeResourceFileWithVersionInformation"
           AfterTargets="CreateNativeVersionFile"
           BeforeTargets="ResourceCompile"
-          DependsOnTargets="_InitializeAssemblyVersion;InitializeSourceControlInformationFromSourceControlManager"
+          DependsOnTargets="_InitializeAssemblyVersion;InitializeSourceControlInformation"
           Outputs="$(NativeResourceFileWithVersionInformation)"
           Returns="@(ResourceCompile)"
           Condition="('$(ConfigurationType)' == 'DynamicLibrary' Or '$(ConfigurationType)' == 'Application') And '$(IsRedistProject)' != 'true'">
@@ -187,7 +187,7 @@ END
 
     <WriteLinesToFile Lines="@(_ExtendenNativeVersionFileLines)"
                       File="$(NativeResourceFileWithVersionInformation)"
-                      Overwrite="true" />
+                      Overwrite="true" WriteOnlyWhenDifferent="true" />
 
     <ItemGroup>
       <ResourceCompile Remove="$(NativeResourceFileWithVersionInformation)" />
@@ -267,7 +267,7 @@ using namespace System::Runtime::Versioning;
 
     <WriteLinesToFile Lines="@(AssemblyInfoFile->'%(Text)')"
                       File="$(TargetFrameworkMonikerAssemblyAttributesPath)"
-                      Overwrite="true" />
+                      Overwrite="true" WriteOnlyWhenDifferent="true" />
     <ItemGroup>
       <ClCompile Include="$(TargetFrameworkMonikerAssemblyAttributesPath)">
         <!-- The appropriate CompileAsManaged setting will automatically be set depending on the current CLRSupport value -->
@@ -353,6 +353,16 @@ using namespace System::Runtime::Versioning;
        <AdditionalNugetIds Remove="%40(AdditionalNugetIds)" />
        <AdditionalNugetIds Include="%24([System.String]::Copy('%25(_AdditionalPackages.Identity)').Split('+')[0])" />
      </ItemGroup>
+
+     <!-- 
+      Removing the Microsoft.NETCore.Platforms directly and then 
+      adding it again to remove the duplicate reference.
+     -->
+     <ItemGroup>
+        <PackageReference Remove="Microsoft.NETCore.Platforms" />   
+        <PackageReference Include="Microsoft.NETCore.Platforms" 
+                      Version="$(MicrosoftNETCorePlatformsVersion)" />
+     </ItemGroup> 
   </Target>
 
 <Target
@@ -387,7 +397,7 @@ using namespace System::Runtime::Versioning;
 
     <WriteLinesToFile Lines="%(CppClrSupportProject.Text)"
                       File="$(CppCliHelperProject)"
-                      Overwrite="false"/>
+                      Overwrite="false" WriteOnlyWhenDifferent="false" />
 
     <!--
     Do not build - just ask ResolveReferences + IdentifyNetCoreReferences for the information
@@ -541,7 +551,7 @@ using namespace System::Runtime::Versioning;
 
     <WriteLinesToFile Lines="%(CppSupportProject.Text)"
                       File="$(CppHelperProject)"
-                      Overwrite="false"/>
+                      Overwrite="false" WriteOnlyWhenDifferent="false" />
 
     <!--
     Do not build - just ask IdentifyNetCoreReferences for the information

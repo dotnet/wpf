@@ -12,7 +12,6 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Animation
 {
@@ -38,7 +37,7 @@ namespace System.Windows.Media.Animation
         {
             if (percent < 0.0 || percent > 1.0)
             {
-                throw new ArgumentOutOfRangeException("percent", SR.Get(SRID.Animation_KeyTime_InvalidPercentValue, percent));
+                throw new ArgumentOutOfRangeException("percent", SR.Format(SR.Animation_KeyTime_InvalidPercentValue, percent));
             }
 
             KeyTime keyTime = new KeyTime();
@@ -57,7 +56,7 @@ namespace System.Windows.Media.Animation
         {
             if (timeSpan < TimeSpan.Zero)
             {
-                throw new ArgumentOutOfRangeException("timeSpan", SR.Get(SRID.Animation_KeyTime_LessThanZero, timeSpan));
+                throw new ArgumentOutOfRangeException("timeSpan", SR.Format(SR.Animation_KeyTime_LessThanZero, timeSpan));
             }
 
             KeyTime keyTime = new KeyTime();

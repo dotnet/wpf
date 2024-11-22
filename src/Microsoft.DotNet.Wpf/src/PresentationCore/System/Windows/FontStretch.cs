@@ -14,7 +14,6 @@ using System.Diagnostics;
 using MS.Internal;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows 
 {
@@ -44,8 +43,8 @@ namespace System.Windows
         // Important note: when changing this method signature please make sure to update FontStretchConverter accordingly.
         public static FontStretch FromOpenTypeStretch(int stretchValue)
         {
-            if (stretchValue < 1 || stretchValue > 9)
-                throw new ArgumentOutOfRangeException("stretchValue", SR.Get(SRID.ParameterMustBeBetween, 1, 9));
+            ArgumentOutOfRangeException.ThrowIfLessThan(stretchValue, 1);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(stretchValue, 9);
             return new FontStretch(stretchValue);
         }
 

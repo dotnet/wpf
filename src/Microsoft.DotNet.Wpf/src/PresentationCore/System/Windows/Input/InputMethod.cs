@@ -25,7 +25,6 @@ using MS.Internal.PresentationCore;                        // SecurityHelper
 using System;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input 
 {
@@ -237,10 +236,7 @@ namespace System.Windows.Input
         /// </summary>
         public static void SetIsInputMethodEnabled(DependencyObject target, bool value)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             target.SetValue(IsInputMethodEnabledProperty, value);
         }
@@ -251,10 +247,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetIsInputMethodEnabled(DependencyObject target)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             return (bool)(target.GetValue(IsInputMethodEnabledProperty));
         }
@@ -276,10 +269,7 @@ namespace System.Windows.Input
         /// </summary>
         public static void SetIsInputMethodSuspended(DependencyObject target, bool value)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             target.SetValue(IsInputMethodSuspendedProperty, value);
         }
@@ -290,10 +280,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetIsInputMethodSuspended(DependencyObject target)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             return (bool)(target.GetValue(IsInputMethodSuspendedProperty));
         }
@@ -316,10 +303,7 @@ namespace System.Windows.Input
         /// </summary>
         public static void SetPreferredImeState(DependencyObject target, InputMethodState value)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             target.SetValue(PreferredImeStateProperty, value);
         }
@@ -330,10 +314,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static InputMethodState GetPreferredImeState(DependencyObject target)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             return (InputMethodState)(target.GetValue(PreferredImeStateProperty));
         }
@@ -355,10 +336,7 @@ namespace System.Windows.Input
         /// </summary>
         public static void SetPreferredImeConversionMode(DependencyObject target, ImeConversionModeValues value)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             target.SetValue(PreferredImeConversionModeProperty, value);
         }
@@ -369,10 +347,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static ImeConversionModeValues GetPreferredImeConversionMode(DependencyObject target)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             return (ImeConversionModeValues)(target.GetValue(PreferredImeConversionModeProperty));
         }
@@ -394,10 +369,7 @@ namespace System.Windows.Input
         /// </summary>
         public static void SetPreferredImeSentenceMode(DependencyObject target, ImeSentenceModeValues value)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             target.SetValue(PreferredImeSentenceModeProperty, value);
         }
@@ -408,10 +380,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static ImeSentenceModeValues GetPreferredImeSentenceMode(DependencyObject target)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             return (ImeSentenceModeValues)(target.GetValue(PreferredImeSentenceModeProperty));
         }
@@ -432,10 +401,7 @@ namespace System.Windows.Input
         /// </summary>
         public static void SetInputScope(DependencyObject target, InputScope value)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             target.SetValue(InputScopeProperty, value);
         }
@@ -446,10 +412,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static InputScope GetInputScope(DependencyObject target)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             return (InputScope)(target.GetValue(InputScopeProperty));
         }
@@ -860,7 +823,7 @@ namespace System.Windows.Input
             {
                 if (!IsValidConversionMode(value))
                 {
-                    throw new ArgumentException(SR.Get(SRID.InputMethod_InvalidConversionMode, value));
+                    throw new ArgumentException(SR.Format(SR.InputMethod_InvalidConversionMode, value));
                 }
 
                 Debug.Assert((value & ImeConversionModeValues.DoNotCare) == 0);
@@ -1111,7 +1074,7 @@ namespace System.Windows.Input
             {
                 if (!IsValidSentenceMode(value))
                 {
-                    throw new ArgumentException(SR.Get(SRID.InputMethod_InvalidSentenceMode, value));
+                    throw new ArgumentException(SR.Format(SR.InputMethod_InvalidSentenceMode, value));
                 }
 
                 Debug.Assert((value & ImeSentenceModeValues.DoNotCare) == 0);
@@ -1218,10 +1181,7 @@ namespace System.Windows.Input
         {
             add
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 // Advise compartment event sink to Win32 Cicero only when someone
                 // has StateChanged event handler.
@@ -1234,10 +1194,7 @@ namespace System.Windows.Input
             }
             remove
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 _StateChanged -= value;
                 if ((_StateChanged == null) && TextServicesLoader.ServicesInstalled)
@@ -1390,7 +1347,7 @@ namespace System.Windows.Input
                     //
                     if (DefaultImc != IntPtr.Zero)
                     {
-                        UnsafeNativeMethods.ImmAssociateContext(new HandleRef(this, hwnd), new HandleRef(this, _defaultImc.Value));
+                        UnsafeNativeMethods.ImmAssociateContext(new HandleRef(this, hwnd), new HandleRef(this, _defaultImc));
                     }
                 }
                 else 
@@ -1791,7 +1748,7 @@ namespace System.Windows.Input
         {
             get
             {
-                if (_defaultImc==null)
+                if (_defaultImc == 0)
                 {
                     // 
                     //  Get the default HIMC from default IME window.
@@ -1800,11 +1757,12 @@ namespace System.Windows.Input
                     IntPtr himc = UnsafeNativeMethods.ImmGetContext(new HandleRef(this, hwnd));
 
                     // Store the default imc to _defaultImc.
-                    _defaultImc = new SecurityCriticalDataClass<IntPtr>(himc);
+                    _defaultImc = himc;
 
                     UnsafeNativeMethods.ImmReleaseContext(new HandleRef(this, hwnd), new HandleRef(this, himc));
                 }
-                return _defaultImc.Value;
+
+                return _defaultImc;
             }
         }
 
@@ -1838,7 +1796,7 @@ namespace System.Windows.Input
 
         // the default imc. The default imc is per thread and we cache it in ThreadStatic.
         [ThreadStatic]
-        private static SecurityCriticalDataClass<IntPtr> _defaultImc;
+        private static IntPtr _defaultImc;
 
         #endregion Private Fields
     }

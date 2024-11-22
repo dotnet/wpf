@@ -19,10 +19,7 @@ namespace System.Windows.Controls.Primitives
     {
         private static void CheckArgument(FrameworkElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
         }
 
         /// <summary>
@@ -57,8 +54,7 @@ namespace System.Windows.Controls.Primitives
         /// <param name="dispatcher">The Dispatcher object that specifies the scope of operation. There is one Layout Engine per Dispatcher.</param>
         public static UIElement GetLayoutExceptionElement(Dispatcher dispatcher)
         {
-            if(dispatcher == null)
-                throw new ArgumentNullException("dispatcher");
+            ArgumentNullException.ThrowIfNull(dispatcher);
 
             UIElement e = null;
             ContextLayoutManager lm = ContextLayoutManager.From(dispatcher);

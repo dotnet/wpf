@@ -372,15 +372,9 @@ namespace System.Windows.Xps.Serialization
             //
             // Validate Input Arguments
             //
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
-            if(propertyCache == null)
-            {
-                throw new ArgumentNullException("propertyCache");
-            }
+            ArgumentNullException.ThrowIfNull(propertyCache);
 
             this._targetObject = target;
             this._propertyInfo = propertyCache;
@@ -399,15 +393,8 @@ namespace System.Windows.Xps.Serialization
             //
             // Validate Input Arguments
             //
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
-
-            if(propertyCache == null)
-            {
-                throw new ArgumentNullException("propertyCache");
-            }
+            ArgumentNullException.ThrowIfNull(target);
+            ArgumentNullException.ThrowIfNull(propertyCache);
 
             _targetObject   = target;
             _propertyInfo   = propertyCache;

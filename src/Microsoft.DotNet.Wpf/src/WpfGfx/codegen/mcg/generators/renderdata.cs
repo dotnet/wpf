@@ -1944,7 +1944,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 [[inline]]
                     if (_stackDepth <= 0)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.DrawingContext_TooManyPops));
+                        throw new InvalidOperationException(SR.DrawingContext_TooManyPops);
                     }
                 [[/inline]]
                 );

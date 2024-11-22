@@ -26,7 +26,6 @@ using MS.Internal;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {
@@ -50,10 +49,7 @@ namespace System.Windows.Media
         /// </summary>
         public PolyLineSegment(IEnumerable<Point> points, bool isStroked)
         {
-            if (points == null)
-            {
-                throw new System.ArgumentNullException("points");
-            }
+            ArgumentNullException.ThrowIfNull(points);
 
             Points = new PointCollection(points);
             IsStroked = isStroked;
@@ -64,10 +60,7 @@ namespace System.Windows.Media
         /// </summary>
         internal PolyLineSegment(IEnumerable<Point> points, bool isStroked, bool isSmoothJoin)
         {
-            if (points == null)
-            {
-                throw new System.ArgumentNullException("points");
-            }
+            ArgumentNullException.ThrowIfNull(points);
 
             Points = new PointCollection(points);
             IsStroked = isStroked;

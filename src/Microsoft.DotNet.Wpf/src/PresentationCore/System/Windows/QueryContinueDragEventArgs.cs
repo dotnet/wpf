@@ -13,7 +13,6 @@ using System;
 using System.Diagnostics;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows
 {
@@ -92,7 +91,7 @@ namespace System.Windows
             {
                 if (!DragDrop.IsValidDragAction(value))
                 {
-                    throw new ArgumentException(SR.Get(SRID.DragDrop_DragActionInvalid, "value"));
+                    throw new ArgumentException(SR.Format(SR.DragDrop_DragActionInvalid, "value"));
                 }
 
                 _action = value; 

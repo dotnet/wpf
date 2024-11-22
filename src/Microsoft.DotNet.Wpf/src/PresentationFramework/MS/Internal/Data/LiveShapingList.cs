@@ -732,9 +732,8 @@ namespace MS.Internal.Data
                     lock (s_Sync)
                     {
                         dp = DependencyProperty.RegisterAttached(
-                            String.Format(System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS,
-                                            "LiveSortingTargetProperty{0}",
-                                            s_dpList.Count),
+                            string.Create(System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS,
+                                            $"LiveSortingTargetProperty{s_dpList.Count}"),
                             typeof(object),
                             typeof(LiveShapingList));
 
@@ -799,7 +798,7 @@ namespace MS.Internal.Data
 
         static List<DependencyProperty> s_dpList = new List<DependencyProperty>();
         // static list of DPs, shared by all instances of lists
-        static object s_Sync = new object();  // lock for s_dpList
+        static readonly object s_Sync = new object();  // lock for s_dpList
 
         #endregion
     }

@@ -4,7 +4,6 @@
 
 using System;
 using MS.Internal;
-using MS.Internal.WindowsBase;
 using System.Security;
 using Microsoft.Win32;
 
@@ -13,23 +12,13 @@ using Microsoft.Win32;
 
 namespace MS.Internal
 {
-    [FriendAccessAllowed]
     internal static class RegistryKeys
     {
         internal const string
             WPF = @"Software\Microsoft\.NETFramework\Windows Presentation Foundation",
 
             WPF_Features = WPF+"\\Features",
-                value_MediaImageDisallow = "MediaImageDisallow",
-                value_MediaVideoDisallow = "MediaVideoDisallow",
-                value_MediaAudioDisallow = "MediaAudioDisallow",
-                value_WebBrowserDisallow = "WebBrowserDisallow",
-                value_ScriptInteropDisallow = "ScriptInteropDisallow",
                 value_AutomationWeakReferenceDisallow = "AutomationWeakReferenceDisallow",
-
-            WPF_Hosting = WPF+"\\Hosting",
-                value_DisableXbapErrorPage = "DisableXbapErrorPage",
-                value_UnblockWebBrowserControl = "UnblockWebBrowserControl",
 
             HKCU_XpsViewer = @"HKEY_CURRENT_USER\Software\Microsoft\XPSViewer",
                 value_IsolatedStorageUserQuota = "IsolatedStorageUserQuota",

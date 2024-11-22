@@ -232,10 +232,11 @@ GetMinimalTextureDesc(
         }
 
         // If format is ok, restore HR from width/height check
-        if (hr == S_OK)
+        if(SUCCEEDED(hr))
         {
             hr = hrWH;
         }
+        
     }
 
 #if DBG
@@ -315,8 +316,3 @@ GetSuperiorSurfaceFormat(
 
     return D3DFMT_UNKNOWN;
 }
-
-
-
-
-

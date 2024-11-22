@@ -162,10 +162,7 @@ namespace System.Windows.Controls
         /// <param name="stream">The stream that contains the content of a html document</param>
         public void NavigateToStream(Stream stream)
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
+            ArgumentNullException.ThrowIfNull(stream);
 
             DocumentStream = stream;            
             // We navigate to "about:blank" when Source is set to null. 
@@ -346,7 +343,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotInvokeScript));
+                throw new InvalidOperationException(SR.CannotInvokeScript);
             }
             return retVal;
         }
@@ -439,9 +436,9 @@ namespace System.Windows.Controls
                 {
                     Type t = value.GetType();
 
-                    if (!System.Runtime.InteropServices.MarshalLocal.IsTypeVisibleFromCom(t))
+                    if (!Marshal.IsTypeVisibleFromCom(t))
                     {
-                        throw new ArgumentException(SR.Get(SRID.NeedToBeComVisible));
+                        throw new ArgumentException(SR.NeedToBeComVisible);
                     }
                 }
 
@@ -655,22 +652,17 @@ namespace System.Windows.Controls
             {
                 if (_axIWebBrowser2 == null)
                 {
-                    if (!IsDisposed)
-                    {
-                        //This should call AttachInterfaces which will set this member variable
-                        //We don't want to force the state to InPlaceActive yet since we don't
-                        //have the parent handle yet.
-                        TransitionUpTo(ActiveXHelper.ActiveXState.Running);
-                    }
-                    else
-                    {
-                        throw new System.ObjectDisposedException(GetType().Name);
-                    }
+                    ObjectDisposedException.ThrowIf(IsDisposed, this);
+
+                    //This should call AttachInterfaces which will set this member variable
+                    //We don't want to force the state to InPlaceActive yet since we don't
+                    //have the parent handle yet.
+                    TransitionUpTo(ActiveXHelper.ActiveXState.Running);
                 }
                 // We still don't have _axIWebBrowser2. Throw an exception.
                 if (_axIWebBrowser2 == null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.WebBrowserNoCastToIWebBrowser2));
+                    throw new InvalidOperationException(SR.WebBrowserNoCastToIWebBrowser2);
                 }
                 return _axIWebBrowser2;
             }
@@ -696,11 +688,11 @@ namespace System.Windows.Controls
         {
             get
             {
-                return _navigatingToAboutBlank.Value;
+                return _navigatingToAboutBlank;
             }
             set
             {
-                _navigatingToAboutBlank.Value = value;
+                _navigatingToAboutBlank = value;
             }
         }
 
@@ -712,11 +704,11 @@ namespace System.Windows.Controls
         {
             get
             {
-                return _lastNavigation.Value;
+                return _lastNavigation;
             }
             set
             {
-                _lastNavigation.Value = value;
+                _lastNavigation = value;
             }
         }
 
@@ -756,7 +748,7 @@ namespace System.Windows.Controls
             
             if (pSource != null && pSource.RootVisual is PopupRoot)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotBeInsidePopup));
+                throw new InvalidOperationException(SR.CannotBeInsidePopup);
             }
         }
 
@@ -887,7 +879,7 @@ namespace System.Windows.Controls
 
             if (!source.IsAbsoluteUri)
             {
-                throw new ArgumentException(SR.Get(SRID.AbsoluteUriOnly), "source");
+                throw new ArgumentException(SR.AbsoluteUriOnly, "source");
             }
 
             // Resolve Pack://siteoforigin.
@@ -997,16 +989,16 @@ namespace System.Windows.Controls
         // Reference to the native ActiveX control's IWebBrowser2
         // Do not reference this directly. Use the AxIWebBrowser2 property instead since that
         // will cause the object to be instantiated if it is not already created.
-        private UnsafeNativeMethods.IWebBrowser2                 _axIWebBrowser2;
+        private UnsafeNativeMethods.IWebBrowser2  _axIWebBrowser2;
 
-        WebOCHostingAdaptor                                     _hostingAdaptor;
+        WebOCHostingAdaptor                       _hostingAdaptor;
 
         // To hook up events from the native WebBrowser
-        private ConnectionPointCookie                           _cookie;
-        private object                                           _objectForScripting;
-        private Stream                                           _documentStream;
+        private ConnectionPointCookie             _cookie;
+        private object                            _objectForScripting;
+        private Stream                            _documentStream;
 
-        private SecurityCriticalDataForSet<bool>                    _navigatingToAboutBlank;
+        private bool                              _navigatingToAboutBlank;
 
         /// <summary>
         /// TFS  - Launching a navigation from the Navigating event handler causes reentrancy.
@@ -1015,7 +1007,7 @@ namespace System.Windows.Controls
         /// we shouldn't clean up the shared state touched by the last navigation (see WebBrowserEvent's
         /// BeforeNavigate2 method), so that the newly started navigation can continue.
         /// </summary>
-        private SecurityCriticalDataForSet<Guid>                    _lastNavigation;
+        private Guid                              _lastNavigation;
 
         #endregion Private Fields
 

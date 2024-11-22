@@ -1521,10 +1521,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         internal static bool ExistsInQAT(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             Ribbon ribbon = (Ribbon)element.GetValue(RibbonControlService.RibbonProperty);
             object qatID = RibbonControlService.GetQuickAccessToolBarId(element);

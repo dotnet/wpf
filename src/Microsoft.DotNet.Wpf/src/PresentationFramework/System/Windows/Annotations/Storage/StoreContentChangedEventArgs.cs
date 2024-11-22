@@ -66,8 +66,7 @@ namespace System.Windows.Annotations.Storage
         /// <param name="annotation">the annotation that was updated</param>
         public StoreContentChangedEventArgs(StoreContentAction action, Annotation annotation)
         {
-            if (annotation == null)
-                throw new ArgumentNullException("annotation");
+            ArgumentNullException.ThrowIfNull(annotation);
 
             _action = action;
             _annotation = annotation;

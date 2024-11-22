@@ -515,7 +515,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     }
                     else
                     {
-                        throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.InvalidMenuButtonOrItemContainer, this.GetType().Name, itemContainer));
+                        throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Format(Microsoft.Windows.Controls.SR.InvalidMenuButtonOrItemContainer, this.GetType().Name, itemContainer));
                     }
                 }
             }
@@ -628,13 +628,13 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private int _galleryCount;
         private Popup _popup;
-        internal static string AddToQATText = Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.RibbonContextMenu_AddToQAT);
-        private static string _addGalleryToQATText = Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.RibbonContextMenu_AddGalleryToQAT);
-        internal static string RemoveFromQATText = Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.RibbonContextMenu_RemoveFromQAT);
-        internal static string ShowQATAboveText = Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.RibbonContextMenu_ShowQATAbove);
-        internal static string ShowQATBelowText = Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.RibbonContextMenu_ShowQATBelow);
-        internal static string MaximizeTheRibbonText = Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.RibbonContextMenu_MaximizeTheRibbon);
-        internal static string MinimizeTheRibbonText = Microsoft.Windows.Controls.SR.Get(Microsoft.Windows.Controls.SRID.RibbonContextMenu_MinimizeTheRibbon);
+        internal static string AddToQATText = Microsoft.Windows.Controls.SR.RibbonContextMenu_AddToQAT;
+        private static string _addGalleryToQATText = Microsoft.Windows.Controls.SR.RibbonContextMenu_AddGalleryToQAT;
+        internal static string RemoveFromQATText = Microsoft.Windows.Controls.SR.RibbonContextMenu_RemoveFromQAT;
+        internal static string ShowQATAboveText = Microsoft.Windows.Controls.SR.RibbonContextMenu_ShowQATAbove;
+        internal static string ShowQATBelowText = Microsoft.Windows.Controls.SR.RibbonContextMenu_ShowQATBelow;
+        internal static string MaximizeTheRibbonText = Microsoft.Windows.Controls.SR.RibbonContextMenu_MaximizeTheRibbon;
+        internal static string MinimizeTheRibbonText = Microsoft.Windows.Controls.SR.RibbonContextMenu_MinimizeTheRibbon;
 
         private bool _ignoreDismissPopupsOnNextClose = false;
         

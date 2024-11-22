@@ -302,8 +302,8 @@ namespace System.Windows.Controls.Primitives
                 else if (e.Property == DataGrid.FrozenColumnCountProperty ||
                     e.Property == DataGridColumn.VisibilityProperty ||
                     e.Property == DataGrid.CellsPanelHorizontalOffsetProperty ||
-                    string.Compare(propertyName, "ViewportWidth", StringComparison.Ordinal) == 0 ||
-                    string.Compare(propertyName, "DelayedColumnWidthComputation", StringComparison.Ordinal) == 0)
+                    string.Equals(propertyName, "ViewportWidth", StringComparison.Ordinal) ||
+                    string.Equals(propertyName, "DelayedColumnWidthComputation", StringComparison.Ordinal))
                 {
                     InvalidateDataGridCellsPanelMeasureAndArrange();
                 }
@@ -312,11 +312,11 @@ namespace System.Windows.Controls.Primitives
                     InvalidateArrange();
                     InvalidateDataGridCellsPanelMeasureAndArrange();
                 }
-                else if (string.Compare(propertyName, "RealizedColumnsBlockListForNonVirtualizedRows", StringComparison.Ordinal) == 0)
+                else if (string.Equals(propertyName, "RealizedColumnsBlockListForNonVirtualizedRows", StringComparison.Ordinal))
                 {
                     InvalidateDataGridCellsPanelMeasureAndArrange(/* withColumnVirtualization */ false);
                 }
-                else if (string.Compare(propertyName, "RealizedColumnsBlockListForVirtualizedRows", StringComparison.Ordinal) == 0)
+                else if (string.Equals(propertyName, "RealizedColumnsBlockListForVirtualizedRows", StringComparison.Ordinal))
                 {
                     InvalidateDataGridCellsPanelMeasureAndArrange(/* withColumnVirtualization */ true);
                 }
@@ -917,7 +917,7 @@ namespace System.Windows.Controls.Primitives
         private static double GetColumnEstimatedWidth(DataGridColumn column, double averageColumnWidth)
         {
             double columnEstimatedWidth = column.Width.DisplayValue;
-            if (DoubleUtil.IsNaN(columnEstimatedWidth))
+            if (double.IsNaN(columnEstimatedWidth))
             {
                 columnEstimatedWidth = Math.Max(averageColumnWidth, column.MinWidth);
                 columnEstimatedWidth = Math.Min(columnEstimatedWidth, column.MaxWidth);

@@ -103,21 +103,18 @@ namespace System.Windows
         {
             if (_sealed)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "ConditionCollection"));
+                throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "ConditionCollection"));
             }
         }
         
         private void ConditionValidation(object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
-            
+            ArgumentNullException.ThrowIfNull(value);
+
             Condition condition = value as Condition;
             if (condition == null)
             {
-                throw new ArgumentException(SR.Get(SRID.MustBeCondition));
+                throw new ArgumentException(SR.MustBeCondition);
             }
         }
 

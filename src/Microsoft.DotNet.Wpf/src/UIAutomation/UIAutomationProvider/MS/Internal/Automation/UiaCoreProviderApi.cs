@@ -68,6 +68,17 @@ namespace MS.Internal.Automation
             CheckError(RawUiaRaiseAsyncContentLoadedEvent(provider, asyncContentLoadedState, PercentComplete));
         }
 
+        internal static void UiaRaiseNotificationEvent(IRawElementProviderSimple provider,
+            AutomationNotificationKind notificationKind, AutomationNotificationProcessing notificationProcessing, string displayString, string activityId)
+        {
+            CheckError(RawUiaRaiseNotificationEvent(provider, notificationKind, notificationProcessing, displayString, activityId));
+        }
+
+        internal static void UiaRaiseActiveTextPositionChangedEvent(IRawElementProviderSimple provider, ITextRangeProvider textRange)
+        {
+            CheckError(RawUiaRaiseActiveTextPositionChangedEvent(provider, textRange));
+        }
+
         internal static bool UiaClientsAreListening()
         {
             return RawUiaClientsAreListening();
@@ -123,6 +134,13 @@ namespace MS.Internal.Automation
 
         [DllImport(DllImport.UIAutomationCore, EntryPoint = "UiaRaiseAsyncContentLoadedEvent", CharSet = CharSet.Unicode)]
         private static extern int RawUiaRaiseAsyncContentLoadedEvent(IRawElementProviderSimple provider, AsyncContentLoadedState asyncContentLoadedState, double PercentComplete);
+
+        [DllImport(DllImport.UIAutomationCore, EntryPoint = "UiaRaiseNotificationEvent", CharSet = CharSet.Unicode)]
+        private static extern int RawUiaRaiseNotificationEvent(IRawElementProviderSimple provider,
+            AutomationNotificationKind notificationKind, AutomationNotificationProcessing notificationProcessing, string displayString, string activityId);
+
+        [DllImport(DllImport.UIAutomationCore, EntryPoint = "UiaRaiseActiveTextPositionChangedEvent", CharSet = CharSet.Unicode)]
+        private static extern int RawUiaRaiseActiveTextPositionChangedEvent(IRawElementProviderSimple provider, ITextRangeProvider textRange);
 
         [DllImport(DllImport.UIAutomationCore, EntryPoint = "UiaClientsAreListening", CharSet = CharSet.Unicode)]
         private static extern bool RawUiaClientsAreListening();

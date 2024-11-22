@@ -39,10 +39,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static object GetToolTip(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return element.GetValue(ToolTipProperty);
         }
 
@@ -59,10 +56,7 @@ namespace System.Windows.Controls
         /// </param>
         public static void SetToolTip(DependencyObject element, object value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(ToolTipProperty, value);
         }
 
@@ -84,10 +78,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static double GetHorizontalOffset(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (double)element.GetValue(HorizontalOffsetProperty);
         }
 
@@ -98,10 +89,7 @@ namespace System.Windows.Controls
         /// <param name="value">The desired value of the property.</param>
         public static void SetHorizontalOffset(DependencyObject element, double value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(HorizontalOffsetProperty, value);
         }
 
@@ -123,10 +111,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static double GetVerticalOffset(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (double)element.GetValue(VerticalOffsetProperty);
         }
 
@@ -137,10 +122,7 @@ namespace System.Windows.Controls
         /// <param name="value">The desired value of the property.</param>
         public static void SetVerticalOffset(DependencyObject element, double value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(VerticalOffsetProperty, value);
         }
 
@@ -161,10 +143,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetHasDropShadow(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(HasDropShadowProperty);
         }
 
@@ -175,10 +154,7 @@ namespace System.Windows.Controls
         /// <param name="value">The desired value of the property.</param>
         public static void SetHasDropShadow(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(HasDropShadowProperty, BooleanBoxes.Box(value));
         }
 
@@ -199,10 +175,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static UIElement GetPlacementTarget(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (UIElement)element.GetValue(PlacementTargetProperty);
         }
 
@@ -213,10 +186,7 @@ namespace System.Windows.Controls
         /// <param name="value">The desired value of the property.</param>
         public static void SetPlacementTarget(DependencyObject element, UIElement value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(PlacementTargetProperty, value);
         }
 
@@ -237,10 +207,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static Rect GetPlacementRectangle(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (Rect)element.GetValue(PlacementRectangleProperty);
         }
 
@@ -251,10 +218,7 @@ namespace System.Windows.Controls
         /// <param name="value">The desired value of the property.</param>
         public static void SetPlacementRectangle(DependencyObject element, Rect value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(PlacementRectangleProperty, value);
         }
 
@@ -275,10 +239,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static PlacementMode GetPlacement(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (PlacementMode)element.GetValue(PlacementProperty);
         }
 
@@ -289,10 +250,7 @@ namespace System.Windows.Controls
         /// <param name="value">The desired value of the property.</param>
         public static void SetPlacement(DependencyObject element, PlacementMode value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(PlacementProperty, value);
         }
 
@@ -313,10 +271,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetShowOnDisabled(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(ShowOnDisabledProperty);
         }
 
@@ -327,10 +282,7 @@ namespace System.Windows.Controls
         /// <param name="value">The desired value of the property.</param>
         public static void SetShowOnDisabled(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(ShowOnDisabledProperty, BooleanBoxes.Box(value));
         }
 
@@ -356,10 +308,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetIsOpen(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(IsOpenProperty);
         }
 
@@ -370,10 +319,7 @@ namespace System.Windows.Controls
         /// <param name="value">The desired value of the property.</param>
         private static void SetIsOpen(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(IsOpenPropertyKey, BooleanBoxes.Box(value));
         }
 
@@ -394,10 +340,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetIsEnabled(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(IsEnabledProperty);
         }
 
@@ -408,10 +351,7 @@ namespace System.Windows.Controls
         /// <param name="value">The desired value of the property.</param>
         public static void SetIsEnabled(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(IsEnabledProperty, BooleanBoxes.Box(value));
         }
 
@@ -427,7 +367,7 @@ namespace System.Windows.Controls
             DependencyProperty.RegisterAttached("ShowDuration",         // Name
                                                 typeof(int),            // Type
                                                 typeof(ToolTipService), // Owner
-                                                new FrameworkPropertyMetadata(5000),    // Default Value
+                                                new FrameworkPropertyMetadata(Int32.MaxValue),          // Default Value
                                                 new ValidateValueCallback(PositiveValueValidation));    // Value validation
 
         /// <summary>
@@ -438,10 +378,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static int GetShowDuration(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (int)element.GetValue(ShowDurationProperty);
         }
 
@@ -452,10 +389,7 @@ namespace System.Windows.Controls
         /// <param name="value">The desired value of the property.</param>
         public static void SetShowDuration(DependencyObject element, int value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(ShowDurationProperty, value);
         }
 
@@ -466,7 +400,7 @@ namespace System.Windows.Controls
             DependencyProperty.RegisterAttached("InitialShowDelay",     // Name
                                                 typeof(int),            // Type
                                                 typeof(ToolTipService), // Owner
-                                                new FrameworkPropertyMetadata(SystemParameters.MouseHoverTimeMilliseconds), // Default Value
+                                                new FrameworkPropertyMetadata(1000), // Default Value
                                                 new ValidateValueCallback(PositiveValueValidation));    // Value validation
 
         /// <summary>
@@ -477,10 +411,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static int GetInitialShowDelay(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (int)element.GetValue(InitialShowDelayProperty);
         }
 
@@ -491,10 +422,7 @@ namespace System.Windows.Controls
         /// <param name="value">The desired value of the property.</param>
         public static void SetInitialShowDelay(DependencyObject element, int value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(InitialShowDelayProperty, value);
         }
 
@@ -516,10 +444,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static int GetBetweenShowDelay(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (int)element.GetValue(BetweenShowDelayProperty);
         }
 
@@ -530,17 +455,47 @@ namespace System.Windows.Controls
         /// <param name="value">The desired value of the property.</param>
         public static void SetBetweenShowDelay(DependencyObject element, int value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(BetweenShowDelayProperty, value);
+        }
+
+        /// <summary>
+        ///     The DependencyProperty for the ShowsToolTipOnKeyboardFocus property.
+        /// </summary>
+        public static readonly DependencyProperty ShowsToolTipOnKeyboardFocusProperty =
+            DependencyProperty.RegisterAttached("ShowsToolTipOnKeyboardFocus",     // Name
+                                                typeof(bool?),          // Type
+                                                typeof(ToolTipService), // Owner
+                                                new FrameworkPropertyMetadata(null));   // Default Value
+
+        /// <summary>
+        ///     Gets the value of the ShowsToolTipOnKeyboardFocus property.
+        /// </summary>
+        /// <param name="element">The object on which to query the property.</param>
+        /// <returns>The value of the property.</returns>
+        // Setting this property breaks accessibility, so don't expose it through the designer.  
+        //[AttachedPropertyBrowsableForType(typeof(DependencyObject))]      
+        public static bool? GetShowsToolTipOnKeyboardFocus(DependencyObject element)
+        {
+            ArgumentNullException.ThrowIfNull(element);
+            return (bool?)element.GetValue(ShowsToolTipOnKeyboardFocusProperty);
+        }
+
+        /// <summary>
+        ///     Sets the value of the ShowsToolTipOnKeyboardFocus property.
+        /// </summary>
+        /// <param name="element">The object on which to set the value.</param>
+        /// <param name="value">The desired value of the property.</param>
+        public static void SetShowsToolTipOnKeyboardFocus(DependencyObject element, bool? value)
+        {
+            ArgumentNullException.ThrowIfNull(element);
+            element.SetValue(ShowsToolTipOnKeyboardFocusProperty, BooleanBoxes.Box(value));
         }
 
         #endregion
 
         #region Events
-        
+
         /// <summary>
         ///     The event raised when a ToolTip is going to be shown on an element.
         /// 
@@ -631,39 +586,44 @@ namespace System.Windows.Controls
                 DependencyObject o = sender as DependencyObject;
                 if (o != null)
                 {
-                    // For keyboard shortcut we don't want to stop looking for the tooltip, even if it was the last one we showed, we still want to re-show it.
-                    if (e.TriggerAction != ToolTip.ToolTipTrigger.KeyboardShortcut && PopupControlService.Current.StopLookingForToolTip(o))
+                    if (ToolTipIsEnabled(o, e.TriggerAction))
                     {
-                        // Stop looking
+                        // Store for later
+                        e.TargetElement = o;
                         e.Handled = true;
-                        e.KeepCurrentActive = true;
-                    }
-                    else
-                    {
-                        if (ToolTipIsEnabled(o, e.TriggerAction))
-                        {
-                            // Store for later
-                            e.TargetElement = o;
-                            e.Handled = true;
-                        }
                     }
                 }
             }
         }
 
-        private static bool ToolTipIsEnabled(DependencyObject o, ToolTip.ToolTipTrigger triggerAction)
+        internal static bool ToolTipIsEnabled(DependencyObject o, TriggerAction triggerAction)
         {
             object tooltipObject = GetToolTip(o);
 
             if ((tooltipObject != null) && GetIsEnabled(o))
             {
-                // Some tooltips may choose not to show on Keyboard focus, get the ToolTip and query the property, 
-                // if we are unable to cast to a ToolTip that means a default ToolTip will be used, the default behavior is to show on focus.
-                ToolTip tooltip = tooltipObject as ToolTip;
-                bool enableOnKeyboardFocus = tooltip != null ? tooltip.ShouldShowOnKeyboardFocus : true;
+                // determine whether tooltip-on-keyboard-focus is enabled
+                bool enableOnKeyboardFocus = true;
+                if (triggerAction == TriggerAction.KeyboardFocus)
+                {
+                    // attached property on owner has first priority
+                    bool? propertyValue = GetShowsToolTipOnKeyboardFocus(o);
 
-                if ((PopupControlService.IsElementEnabled(o) || GetShowOnDisabled(o))
-                    && (triggerAction != ToolTip.ToolTipTrigger.KeyboardFocus || enableOnKeyboardFocus))
+                    // if that doesn't say, get the value from the ToolTip itself (if any)
+                    if (propertyValue == (bool?)null)
+                    {
+                        ToolTip tooltip = tooltipObject as ToolTip;
+                        if (tooltip != null)
+                        {
+                            propertyValue = tooltip.ShowsToolTipOnKeyboardFocus;
+                        }
+                    }
+
+                    // the behavior is enabled, unless explicitly told otherwise
+                    enableOnKeyboardFocus = (propertyValue != false);
+                }
+
+                if ((PopupControlService.IsElementEnabled(o) || GetShowOnDisabled(o)) && enableOnKeyboardFocus)
                 {
                     return true;
                 }
@@ -672,7 +632,22 @@ namespace System.Windows.Controls
             return false;
         }
 
+        internal static bool IsFromKeyboard(ToolTipService.TriggerAction triggerAction)
+        {
+            return (triggerAction == TriggerAction.KeyboardFocus ||
+                    triggerAction == TriggerAction.KeyboardShortcut);
+        }
+
         #endregion
+
+
+        internal enum TriggerAction
+        {
+            Mouse,
+            KeyboardFocus,
+            KeyboardShortcut
+        }
+
     }
 
     /// <summary>
@@ -717,7 +692,7 @@ namespace System.Windows.Controls
 
     internal sealed class FindToolTipEventArgs : RoutedEventArgs
     {
-        internal FindToolTipEventArgs(ToolTip.ToolTipTrigger triggerAction)
+        internal FindToolTipEventArgs(ToolTipService.TriggerAction triggerAction)
         {
             RoutedEvent = ToolTipService.FindToolTipEvent;
             _triggerAction = triggerAction;
@@ -729,13 +704,7 @@ namespace System.Windows.Controls
             set { _targetElement = value; }
         }
 
-        internal bool KeepCurrentActive
-        {
-            get { return _keepCurrentActive; }
-            set { _keepCurrentActive = value; }
-        }
-
-        internal ToolTip.ToolTipTrigger TriggerAction
+        internal ToolTipService.TriggerAction TriggerAction
         {
             get { return _triggerAction; }
         }
@@ -752,7 +721,6 @@ namespace System.Windows.Controls
         }
 
         private DependencyObject _targetElement;
-        private bool _keepCurrentActive;
-        private ToolTip.ToolTipTrigger _triggerAction;
+        private ToolTipService.TriggerAction _triggerAction;
     }
 }

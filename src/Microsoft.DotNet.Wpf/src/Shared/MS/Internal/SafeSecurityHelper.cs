@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 // Purpose:  Helper functions that require elevation but are safe to use.
 
 using System;
@@ -145,10 +147,10 @@ namespace System.Xaml
                 CultureInfo curCulture = curAsmName.CultureInfo;
                 byte[] curKeyToken = curAsmName.GetPublicKeyToken();
 
-                if ( (String.Compare(curAsmName.Name, assemblyName.Name, true, TypeConverterHelper.InvariantEnglishUS) == 0) &&
+                if (string.Equals(curAsmName.Name, assemblyName.Name, StringComparison.InvariantCultureIgnoreCase) &&
                      (reqVersion == null || reqVersion.Equals(curVersion)) &&
                      (reqCulture == null || reqCulture.Equals(curCulture)) &&
-                     (reqKeyToken == null || IsSameKeyToken(reqKeyToken, curKeyToken) ) )
+                     (reqKeyToken == null || IsSameKeyToken(reqKeyToken, curKeyToken)))
                 {
                     return assemblies[i];
                 }
@@ -279,85 +281,6 @@ namespace System.Xaml
            return isSame;
         }
 #endif //!REACHFRAMEWORK
-
-#if PRESENTATION_CORE || PRESENTATIONFRAMEWORK
-        // enum to choose between the various keys
-        internal enum KeyToRead
-        {
-             WebBrowserDisable = 0x01 ,
-             MediaAudioDisable = 0x02 ,
-             MediaVideoDisable = 0x04 ,
-             MediaImageDisable = 0x08 ,
-             MediaAudioOrVideoDisable = KeyToRead.MediaVideoDisable | KeyToRead.MediaAudioDisable  ,
-             ScriptInteropDisable = 0x10 ,
-        }
-
-        internal static bool IsFeatureDisabled(KeyToRead key)
-        {
-            string regValue = null;
-            bool fResult = false;
-
-            switch (key)
-            {
-                case KeyToRead.WebBrowserDisable:
-                    regValue = RegistryKeys.value_WebBrowserDisallow;
-                    break;
-                case KeyToRead.MediaAudioDisable:
-                    regValue = RegistryKeys.value_MediaAudioDisallow;
-                    break;
-                case KeyToRead.MediaVideoDisable:
-                    regValue = RegistryKeys.value_MediaVideoDisallow;
-                    break;
-                case KeyToRead.MediaImageDisable:
-                    regValue = RegistryKeys.value_MediaImageDisallow;
-                    break;
-                case KeyToRead.MediaAudioOrVideoDisable:
-                    regValue = RegistryKeys.value_MediaAudioDisallow;
-                    break;
-                case KeyToRead.ScriptInteropDisable:
-                    regValue = RegistryKeys.value_ScriptInteropDisallow;
-                    break;
-                default:// throw exception for invalid key
-                throw(new System.ArgumentException(key.ToString()));
-
-            }
-
-            RegistryKey featureKey;
-            object obj = null;
-            bool keyValue = false;
-            // open the key and read the value
-            featureKey = Registry.LocalMachine.OpenSubKey(RegistryKeys.WPF_Features);
-            if (featureKey != null)
-            {
-                // If key exists and value is 1 return true else false
-                obj = featureKey.GetValue(regValue);
-                keyValue = obj is int && ((int)obj == 1);
-                if (keyValue)
-                {
-                    fResult = true;
-                }
-
-                // special case for audio and video since they can be orred
-                // this is in the condition that audio is enabled since that is
-                // the path that MediaAudioVideoDisable defaults to
-                // This is purely to optimize perf on the number of calls to assert
-                // in the media or audio scenario.
-
-                if ((fResult == false) && (key == KeyToRead.MediaAudioOrVideoDisable))
-                {
-                    regValue = RegistryKeys.value_MediaVideoDisallow;
-                    // If key exists and value is 1 return true else false
-                    obj = featureKey.GetValue(regValue);
-                    keyValue = obj is int && ((int)obj == 1);
-                    if (keyValue)
-                    {
-                        fResult = true;
-                    }
-                }
-            }
-            return fResult;
-        }
-#endif //PRESENTATIONCORE||PRESENTATIONFRAMEWORK
 
 #if PRESENTATION_CORE
 

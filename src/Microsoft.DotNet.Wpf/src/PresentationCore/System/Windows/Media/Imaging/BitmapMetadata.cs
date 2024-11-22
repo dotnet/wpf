@@ -599,10 +599,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         public BitmapMetadata(String containerFormat)
         {
-            if (containerFormat == null)
-            {
-                throw new System.ArgumentNullException("containerFormat");
-            }
+            ArgumentNullException.ThrowIfNull(containerFormat);
 
             Guid guid = new Guid();
 
@@ -648,10 +645,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         internal BitmapMetadata(BitmapMetadata bitmapMetadata)
         {
-            if (bitmapMetadata == null)
-            {
-                throw new System.ArgumentNullException("bitmapMetadata");
-            }
+            ArgumentNullException.ThrowIfNull(bitmapMetadata);
 
             Init(bitmapMetadata.GuidFormat, false, bitmapMetadata._fixedSize);
         }
@@ -1036,19 +1030,13 @@ namespace System.Windows.Media.Imaging
         {
             WritePreamble();
 
-            if (query == null)
-            {
-                throw new System.ArgumentNullException("query");
-            }
+            ArgumentNullException.ThrowIfNull(query);
 
-            if (value == null)
-            {
-                throw new System.ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             if (_readOnly)
             {
-                throw new System.InvalidOperationException(SR.Get(SRID.Image_MetadataReadOnly));
+                throw new System.InvalidOperationException(SR.Image_MetadataReadOnly);
             }
 
             // Store these for debugging stress failures.
@@ -1111,10 +1099,7 @@ namespace System.Windows.Media.Imaging
         {
             int hr;
 
-            if (query == null)
-            {
-                throw new System.ArgumentNullException("query");
-            }
+            ArgumentNullException.ThrowIfNull(query);
 
             EnsureBitmapMetadata();
 
@@ -1169,14 +1154,11 @@ namespace System.Windows.Media.Imaging
 
             WritePreamble();
 
-            if (query == null)
-            {
-                throw new System.ArgumentNullException("query");
-            }
+            ArgumentNullException.ThrowIfNull(query);
 
             if (_readOnly)
             {
-                throw new System.InvalidOperationException(SR.Get(SRID.Image_MetadataReadOnly));
+                throw new System.InvalidOperationException(SR.Image_MetadataReadOnly);
             }
 
             EnsureBitmapMetadata();
@@ -1222,10 +1204,7 @@ namespace System.Windows.Media.Imaging
         {
             int hr;
 
-            if (query == null)
-            {
-                throw new System.ArgumentNullException("query");
-            }
+            ArgumentNullException.ThrowIfNull(query);
 
             EnsureBitmapMetadata();
 
@@ -1548,7 +1527,7 @@ namespace System.Windows.Media.Imaging
 
             if (_metadataHandle == null)
             {
-                throw new System.InvalidOperationException(SR.Get(SRID.Image_MetadataInitializationIncomplete));
+                throw new System.InvalidOperationException(SR.Image_MetadataInitializationIncomplete);
             }
         }
 

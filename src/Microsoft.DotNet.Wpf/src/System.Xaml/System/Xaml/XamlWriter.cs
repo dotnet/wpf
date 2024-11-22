@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 namespace System.Xaml
 {
     public abstract class XamlWriter : IDisposable
@@ -19,10 +21,7 @@ namespace System.Xaml
 
         public void WriteNode(XamlReader reader)
         {
-            if (reader == null)
-            {
-                throw new ArgumentNullException(nameof(reader));
-            }
+            ArgumentNullException.ThrowIfNull(reader);
 
             switch (reader.NodeType)
             {
@@ -58,7 +57,7 @@ namespace System.Xaml
                 break;
 
             default:
-                throw new NotImplementedException(SR.Get(SRID.MissingCaseXamlNodes));
+                throw new NotImplementedException(SR.MissingCaseXamlNodes);
             }
         }
 

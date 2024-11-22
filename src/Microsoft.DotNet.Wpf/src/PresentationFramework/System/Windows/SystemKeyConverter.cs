@@ -39,10 +39,7 @@ namespace System.Windows.Markup
         /// </returns>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
-            if (sourceType == null)
-            {
-                throw new ArgumentNullException("sourceType");
-            }
+            ArgumentNullException.ThrowIfNull(sourceType);
 
             return base.CanConvertFrom(context, sourceType);
         }
@@ -62,11 +59,9 @@ namespace System.Windows.Markup
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) 
         {
             // Validate Input Arguments
-            if (destinationType == null)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
-            else if( destinationType == typeof(MarkupExtension) && context is IValueSerializerContext  )
+            ArgumentNullException.ThrowIfNull(destinationType);
+
+            if ( destinationType == typeof(MarkupExtension) && context is IValueSerializerContext  )
             {
                 return true;
             }
@@ -114,15 +109,11 @@ namespace System.Windows.Markup
         /// </returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-                        
-            // Input validation
-            
-            if (destinationType == null)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
 
-            
+            // Input validation
+
+            ArgumentNullException.ThrowIfNull(destinationType);
+
             if (destinationType == typeof(MarkupExtension)
                 &&
                 CanConvertTo(context, destinationType) )
@@ -141,7 +132,7 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Get(SRID.MustBeOfType, "value", "SystemResourceKey or SystemThemeKey")); 
+                    throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "SystemResourceKey or SystemThemeKey")); 
                 }
 
                 // System resource keys can be converted into a MarkupExtension (StaticExtension)
@@ -160,7 +151,7 @@ namespace System.Windows.Markup
                         string systemClassName = typeSerializer.ConvertToString(keyType, valueSerializerContext);
 
                         // And finally create the StaticExtension.
-                        return new StaticExtension( systemClassName + "." + GetSystemKeyName(keyId) );
+                        return new StaticExtension($"{systemClassName}.{GetSystemKeyName(keyId)}");
                     }
                 }
             }
@@ -261,7 +252,7 @@ namespace System.Windows.Markup
                 ((SystemResourceKeyID.GridViewScrollViewerStyle <= id) &&
                  (id <= SystemResourceKeyID.GridViewItemContainerStyle)))
             {
-                return Enum.GetName(typeof(SystemResourceKeyID), id) + "Key";
+                return $"{Enum.GetName(id)}Key";
             }
             else if (SystemResourceKeyID.MenuItemSeparatorStyle == id ||
                      SystemResourceKeyID.StatusBarSeparatorStyle == id)
@@ -271,7 +262,7 @@ namespace System.Windows.Markup
             else if ((SystemResourceKeyID.ToolBarButtonStyle <= id) &&
                      (id <= SystemResourceKeyID.ToolBarMenuStyle))
             {
-                string propName = Enum.GetName(typeof(SystemResourceKeyID), id) + "Key";
+                string propName = $"{Enum.GetName(id)}Key";
                 return propName.Remove(0, 7); // Remove the "ToolBar" prefix
             }
 
@@ -283,7 +274,7 @@ namespace System.Windows.Markup
             if ((SystemResourceKeyID.InternalSystemColorsStart < id) &&
                 (id < SystemResourceKeyID.InternalSystemColorsExtendedEnd))
             {
-                return Enum.GetName(typeof(SystemResourceKeyID), id);
+                return Enum.GetName(id);
             }
 
             return String.Empty;

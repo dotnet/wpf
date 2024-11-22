@@ -2126,13 +2126,30 @@ namespace System.Windows.Automation
         Polite = 1,
         Assertive = 2,
     }
+
+    public enum AutomationHeadingLevel 
+    {
+        None = 0,
+        Level1,
+        Level2,
+        Level3,
+        Level4,
+        Level5,
+        Level6,
+        Level7,
+        Level8,
+        Level9,
+    }
+
     public static partial class AutomationProperties
     {
         public static readonly System.Windows.DependencyProperty AcceleratorKeyProperty;
         public static readonly System.Windows.DependencyProperty AccessKeyProperty;
         public static readonly System.Windows.DependencyProperty AutomationIdProperty;
+        public static readonly System.Windows.DependencyProperty HeadingLevelProperty;
         public static readonly System.Windows.DependencyProperty HelpTextProperty;
         public static readonly System.Windows.DependencyProperty IsColumnHeaderProperty;
+        public static readonly System.Windows.DependencyProperty IsDialogProperty;
         public static readonly System.Windows.DependencyProperty IsOffscreenBehaviorProperty;
         public static readonly System.Windows.DependencyProperty IsRequiredForFormProperty;
         public static readonly System.Windows.DependencyProperty IsRowHeaderProperty;
@@ -2146,8 +2163,10 @@ namespace System.Windows.Automation
         public static string GetAcceleratorKey(System.Windows.DependencyObject element) { throw null; }
         public static string GetAccessKey(System.Windows.DependencyObject element) { throw null; }
         public static string GetAutomationId(System.Windows.DependencyObject element) { throw null; }
+        public static System.Windows.Automation.AutomationHeadingLevel GetHeadingLevel(System.Windows.DependencyObject element) { throw null; }
         public static string GetHelpText(System.Windows.DependencyObject element) { throw null; }
         public static bool GetIsColumnHeader(System.Windows.DependencyObject element) { throw null; }
+        public static bool GetIsDialog(System.Windows.DependencyObject element) { throw null; }
         public static System.Windows.Automation.IsOffscreenBehavior GetIsOffscreenBehavior(System.Windows.DependencyObject element) { throw null; }
         public static bool GetIsRequiredForForm(System.Windows.DependencyObject element) { throw null; }
         public static bool GetIsRowHeader(System.Windows.DependencyObject element) { throw null; }
@@ -2161,8 +2180,10 @@ namespace System.Windows.Automation
         public static void SetAcceleratorKey(System.Windows.DependencyObject element, string value) { }
         public static void SetAccessKey(System.Windows.DependencyObject element, string value) { }
         public static void SetAutomationId(System.Windows.DependencyObject element, string value) { }
+        public static void SetHeadingLevel(System.Windows.DependencyObject element, System.Windows.Automation.AutomationHeadingLevel value) { }
         public static void SetHelpText(System.Windows.DependencyObject element, string value) { }
         public static void SetIsColumnHeader(System.Windows.DependencyObject element, bool value) { }
+        public static void SetIsDialog(System.Windows.DependencyObject element, bool value) { }
         public static void SetIsOffscreenBehavior(System.Windows.DependencyObject element, System.Windows.Automation.IsOffscreenBehavior value) { }
         public static void SetIsRequiredForForm(System.Windows.DependencyObject element, bool value) { }
         public static void SetIsRowHeader(System.Windows.DependencyObject element, bool value) { }
@@ -2247,6 +2268,8 @@ namespace System.Windows.Automation.Peers
         InputReachedOtherElement = 16,
         InputDiscarded = 17,
         LiveRegionChanged = 18,
+        Notification = 19,
+        ActiveTextPositionChanged = 20,
     }
     public enum AutomationOrientation
     {
@@ -2277,9 +2300,12 @@ namespace System.Windows.Automation.Peers
         protected abstract System.Windows.Point GetClickablePointCore();
         public System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetControlledPeers() { throw null; }
         protected virtual System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetControlledPeersCore() { throw null; }
+        public System.Windows.Automation.AutomationHeadingLevel GetHeadingLevel() { throw null; }
+        protected virtual System.Windows.Automation.AutomationHeadingLevel GetHeadingLevelCore() { throw null; }
         public string GetHelpText() { throw null; }
         protected abstract string GetHelpTextCore();
         protected virtual System.Windows.Automation.Peers.HostedWindowWrapper GetHostRawElementProviderCore() { throw null; }
+
         public string GetItemStatus() { throw null; }
         protected abstract string GetItemStatusCore();
         public string GetItemType() { throw null; }
@@ -2309,6 +2335,8 @@ namespace System.Windows.Automation.Peers
         protected abstract bool IsContentElementCore();
         public bool IsControlElement() { throw null; }
         protected abstract bool IsControlElementCore();
+        public bool IsDialog() { throw null; }
+        protected virtual bool IsDialogCore() { throw null; }
         public bool IsEnabled() { throw null; }
         protected abstract bool IsEnabledCore();
         public bool IsKeyboardFocusable() { throw null; }
@@ -2324,6 +2352,7 @@ namespace System.Windows.Automation.Peers
         protected internal System.Windows.Automation.Provider.IRawElementProviderSimple ProviderFromPeer(System.Windows.Automation.Peers.AutomationPeer peer) { throw null; }
         public void RaiseAsyncContentLoadedEvent(System.Windows.Automation.AsyncContentLoadedEventArgs args) { }
         public void RaiseAutomationEvent(System.Windows.Automation.Peers.AutomationEvents eventId) { }
+        public void RaiseNotificationEvent(System.Windows.Automation.AutomationNotificationKind notificationKind, System.Windows.Automation.AutomationNotificationProcessing notificationProcessing, string displayString, string activityId) { }
         public void RaisePropertyChangedEvent(System.Windows.Automation.AutomationProperty property, object oldValue, object newValue) { }
         public void ResetChildrenCache() { }
         public void SetFocus() { }
@@ -2343,6 +2372,7 @@ namespace System.Windows.Automation.Peers
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
         protected override System.Windows.Point GetClickablePointCore() { throw null; }
+        protected override System.Windows.Automation.AutomationHeadingLevel GetHeadingLevelCore() { throw null; }
         protected override string GetHelpTextCore() { throw null; }
         protected override string GetItemStatusCore() { throw null; }
         protected override string GetItemTypeCore() { throw null; }
@@ -2356,6 +2386,7 @@ namespace System.Windows.Automation.Peers
         protected override bool HasKeyboardFocusCore() { throw null; }
         protected override bool IsContentElementCore() { throw null; }
         protected override bool IsControlElementCore() { throw null; }
+        protected override bool IsDialogCore() { throw null; }
         protected override bool IsEnabledCore() { throw null; }
         protected override bool IsKeyboardFocusableCore() { throw null; }
         protected override bool IsOffscreenCore() { throw null; }
@@ -2413,6 +2444,7 @@ namespace System.Windows.Automation.Peers
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
         protected override System.Windows.Point GetClickablePointCore() { throw null; }
+        protected override System.Windows.Automation.AutomationHeadingLevel GetHeadingLevelCore() { throw null; }
         protected override string GetHelpTextCore() { throw null; }
         protected override string GetItemStatusCore() { throw null; }
         protected override string GetItemTypeCore() { throw null; }
@@ -2426,6 +2458,7 @@ namespace System.Windows.Automation.Peers
         protected override bool HasKeyboardFocusCore() { throw null; }
         protected override bool IsContentElementCore() { throw null; }
         protected override bool IsControlElementCore() { throw null; }
+        protected override bool IsDialogCore() { throw null; }
         protected override bool IsEnabledCore() { throw null; }
         protected override bool IsKeyboardFocusableCore() { throw null; }
         protected override bool IsOffscreenCore() { throw null; }
@@ -2447,6 +2480,7 @@ namespace System.Windows.Automation.Peers
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
         protected override System.Windows.Point GetClickablePointCore() { throw null; }
+        protected override System.Windows.Automation.AutomationHeadingLevel GetHeadingLevelCore() { throw null; }
         protected override string GetHelpTextCore() { throw null; }
         protected override string GetItemStatusCore() { throw null; }
         protected override string GetItemTypeCore() { throw null; }
@@ -2460,6 +2494,7 @@ namespace System.Windows.Automation.Peers
         protected override bool HasKeyboardFocusCore() { throw null; }
         protected override bool IsContentElementCore() { throw null; }
         protected override bool IsControlElementCore() { throw null; }
+        protected override bool IsDialogCore() { throw null; }
         protected override bool IsEnabledCore() { throw null; }
         protected override bool IsKeyboardFocusableCore() { throw null; }
         protected override bool IsOffscreenCore() { throw null; }

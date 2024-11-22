@@ -46,7 +46,6 @@ namespace MS.Internal.FontCache
     /// The purpose of the class is to protect the memory block from overruns.
     /// ArgumentOutOfRangeException is thrown when an overrun is detected.
     /// </summary>
-    [FriendAccessAllowed]
     internal struct CheckedPointer
     {
         internal unsafe CheckedPointer(void * pointer, int size)
@@ -60,8 +59,9 @@ namespace MS.Internal.FontCache
             Debug.Assert(stream.Position == 0);
             unsafe { _pointer = stream.PositionPointer; }
             long length = stream.Length;
-            if (length < 0 || length > int.MaxValue)
-                throw new ArgumentOutOfRangeException();
+            ArgumentOutOfRangeException.ThrowIfNegative(length);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(length, int.MaxValue);
+
             _size = (int)length;
         }
 
@@ -213,7 +213,6 @@ namespace MS.Internal.FontCache
     /// <summary>
     /// HashFn is a port of predefined hash functions from LKRHash
     /// </summary>
-    [FriendAccessAllowed]
     internal static class HashFn
     {
         // Small prime number used as a multiplier in the supplied hash functions
@@ -282,7 +281,6 @@ namespace MS.Internal.FontCache
     /// <summary>
     /// Utility functions for interaction with font cache service
     /// </summary>
-    [FriendAccessAllowed]
     internal static class Util
     {
         internal const int nullOffset = -1;
@@ -315,7 +313,7 @@ namespace MS.Internal.FontCache
         private const string EmptyFontFamilyReference = "#";
         private const string EmptyCanonicalName = "";
 
-        private static object _dpiLock = new object();
+        private static readonly object _dpiLock = new object();
         private static int    _dpi;
         private static bool   _dpiInitialized = false;
 
@@ -514,7 +512,7 @@ namespace MS.Internal.FontCache
                         out faceIndex
                     ))
                 {
-                    throw new ArgumentException(SR.Get(SRID.FaceIndexMustBePositiveOrZero), "fontUri");
+                    throw new ArgumentException(SR.FaceIndexMustBePositiveOrZero, "fontUri");
                 }
 
                 // face index was specified in a fragment, we need to strip off fragment from the source Uri
@@ -545,7 +543,7 @@ namespace MS.Internal.FontCache
             for (int i = 0; i < SupportedExtensions.Length; ++i)
             {
                 string supportedExtension = SupportedExtensions[i];
-                if (String.Compare(extension, supportedExtension, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(extension, supportedExtension, StringComparison.OrdinalIgnoreCase))
                 {
                     isComposite = (i == 0); // First array entry is *.CompositeFont
                     return true;
@@ -557,7 +555,7 @@ namespace MS.Internal.FontCache
 
         internal static bool IsCompositeFont(string extension)
         {
-            return (String.Compare(extension, CompositeFontExtension, StringComparison.OrdinalIgnoreCase) == 0);
+            return (string.Equals(extension, CompositeFontExtension, StringComparison.OrdinalIgnoreCase));
         }
 
         internal static bool IsEnumerableFontUriScheme(Uri fontLocation)
@@ -661,7 +659,7 @@ namespace MS.Internal.FontCache
             {
                 // No fragment separator. The entire string is a family name so convert to uppercase
                 // and add a fragment separator at the beginning.
-                return "#" + fontFamilyReference.Substring(startIndex, length).ToUpperInvariant();
+                return string.Concat("#", fontFamilyReference.AsSpan(startIndex, length)).ToUpperInvariant();
             }
             else if (fragmentIndex + 1 == startIndex + length)
             {
@@ -767,19 +765,19 @@ namespace MS.Internal.FontCache
             switch (errorCode)
             {
                 case NativeMethods.ERROR_FILE_NOT_FOUND:
-                    throw new FileNotFoundException(SR.Get(SRID.FileNotFoundExceptionWithFileName, fileName), fileName);
+                    throw new FileNotFoundException(SR.Format(SR.FileNotFoundExceptionWithFileName, fileName), fileName);
 
                 case NativeMethods.ERROR_PATH_NOT_FOUND:
-                    throw new DirectoryNotFoundException(SR.Get(SRID.DirectoryNotFoundExceptionWithFileName, fileName));
+                    throw new DirectoryNotFoundException(SR.Format(SR.DirectoryNotFoundExceptionWithFileName, fileName));
 
                 case NativeMethods.ERROR_ACCESS_DENIED:
-                    throw new UnauthorizedAccessException(SR.Get(SRID.UnauthorizedAccessExceptionWithFileName, fileName));
+                    throw new UnauthorizedAccessException(SR.Format(SR.UnauthorizedAccessExceptionWithFileName, fileName));
 
                 case NativeMethods.ERROR_FILENAME_EXCED_RANGE:
-                    throw new PathTooLongException(SR.Get(SRID.PathTooLongExceptionWithFileName, fileName));
+                    throw new PathTooLongException(SR.Format(SR.PathTooLongExceptionWithFileName, fileName));
 
                 default:
-                    throw new IOException(SR.Get(SRID.IOExceptionWithFileName, fileName), NativeMethods.MakeHRFromErrorCode(errorCode));
+                    throw new IOException(SR.Format(SR.IOExceptionWithFileName, fileName), NativeMethods.MakeHRFromErrorCode(errorCode));
             }
         }
 
@@ -795,14 +793,13 @@ namespace MS.Internal.FontCache
                 fileName = fontSource.GetUriString();
             }
 
-            return new IOException(SR.Get(SRID.IOExceptionWithFileName, fileName), e);
+            return new IOException(SR.Format(SR.IOExceptionWithFileName, fileName), e);
         }
     }
 
     /// <summary>
     /// A class that wraps operations with Win32 memory sections and file mappings
     /// </summary>
-    [FriendAccessAllowed]
     internal class FileMapping : UnmanagedMemoryStream
     {
         ~FileMapping()
@@ -861,7 +858,7 @@ namespace MS.Internal.FontCache
 
                         UnsafeNativeMethods.LARGE_INTEGER fileSize = new UnsafeNativeMethods.LARGE_INTEGER();
                         if (!UnsafeNativeMethods.GetFileSizeEx(fileHandle, ref fileSize))
-                            throw new IOException(SR.Get(SRID.IOExceptionWithFileName, fileName));
+                            throw new IOException(SR.Format(SR.IOExceptionWithFileName, fileName));
 
                         size = (long)fileSize.QuadPart;
                         if (size == 0)
@@ -877,11 +874,11 @@ namespace MS.Internal.FontCache
                     }
 
                     if (_mappingHandle.IsInvalid)
-                        throw new IOException(SR.Get(SRID.IOExceptionWithFileName, fileName));
+                        throw new IOException(SR.Format(SR.IOExceptionWithFileName, fileName));
 
                     _viewHandle = UnsafeNativeMethods.MapViewOfFileEx(_mappingHandle, UnsafeNativeMethods.FILE_MAP_READ, 0, 0, IntPtr.Zero, IntPtr.Zero);
                     if (_viewHandle.IsInvalid)
-                        throw new IOException(SR.Get(SRID.IOExceptionWithFileName, fileName));
+                        throw new IOException(SR.Format(SR.IOExceptionWithFileName, fileName));
 
 #pragma warning restore 6523
 
@@ -971,7 +968,7 @@ namespace MS.Internal.FontCache
 
             int IComparer<LocalizedName>.Compare(LocalizedName x, LocalizedName y)
             {
-                return String.Compare(x._language.IetfLanguageTag, y._language.IetfLanguageTag, StringComparison.OrdinalIgnoreCase);
+                return string.Compare(x._language.IetfLanguageTag, y._language.IetfLanguageTag, StringComparison.OrdinalIgnoreCase);
             }
 
             #endregion

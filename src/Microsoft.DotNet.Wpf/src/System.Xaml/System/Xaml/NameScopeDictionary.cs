@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -12,7 +14,7 @@ namespace System.Xaml
 {
     //
     // The implementation for this class is taken directly from the source of NameScope, including the use
-    // of HybridDictionary to match the performance semantics of 3.0 for the time being 
+    // of HybridDictionary to match the performance semantics of 3.0 for the time being
     // Note that the IEnumerable<T> uses KeyValuePair<string, object>
     // This means that we need to create KeyValuePairs on the fly
     // The other option would be to just use IEnumerable (or change the HybridDictionary to Dictionary<K,V>)
@@ -22,7 +24,7 @@ namespace System.Xaml
         private HybridDictionary _nameMap;
         private INameScope _underlyingNameScope;
         private FrugalObjectList<string> _names;
-        
+
         public NameScopeDictionary()
         {
         }
@@ -35,18 +37,16 @@ namespace System.Xaml
 
         public void RegisterName(string name, object scopedElement)
         {
-            if (name == null)
-                throw new ArgumentNullException(nameof(name));
+            ArgumentNullException.ThrowIfNull(name);
 
-            if (scopedElement == null)
-                throw new ArgumentNullException(nameof(scopedElement));
+            ArgumentNullException.ThrowIfNull(scopedElement);
 
             if (name.Length == 0)
-                throw new ArgumentException(SR.Get(SRID.NameScopeNameNotEmptyString));
+                throw new ArgumentException(SR.NameScopeNameNotEmptyString);
 
             if (!NameValidationHelper.IsValidIdentifierName(name))
             {
-                throw new ArgumentException(SR.Get(SRID.NameScopeInvalidIdentifierName, name));
+                throw new ArgumentException(SR.Format(SR.NameScopeInvalidIdentifierName, name));
             }
 
             if (_underlyingNameScope != null)
@@ -71,7 +71,7 @@ namespace System.Xaml
                     }
                     else if (scopedElement != nameContext)
                     {
-                        throw new ArgumentException(SR.Get(SRID.NameScopeDuplicateNamesNotAllowed, name));
+                        throw new ArgumentException(SR.Format(SR.NameScopeDuplicateNamesNotAllowed, name));
                     }
                 }
             }
@@ -79,11 +79,10 @@ namespace System.Xaml
 
         public void UnregisterName(string name)
         {
-            if (name == null)
-                throw new ArgumentNullException(nameof(name));
+            ArgumentNullException.ThrowIfNull(name);
 
             if (name.Length == 0)
-                throw new ArgumentException(SR.Get(SRID.NameScopeNameNotEmptyString));
+                throw new ArgumentException(SR.NameScopeNameNotEmptyString);
 
             if (_underlyingNameScope != null)
             {
@@ -98,18 +97,17 @@ namespace System.Xaml
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Get(SRID.NameScopeNameNotFound, name));
+                    throw new ArgumentException(SR.Format(SR.NameScopeNameNotFound, name));
                 }
             }
         }
 
         public object FindName(string name)
         {
-            if (name == null)
-                throw new ArgumentNullException(nameof(name));
+            ArgumentNullException.ThrowIfNull(name);
 
             if (name.Length == 0)
-                throw new ArgumentException(SR.Get(SRID.NameScopeNameNotEmptyString));
+                throw new ArgumentException(SR.NameScopeNameNotEmptyString);
 
             if (_underlyingNameScope != null)
             {
@@ -134,7 +132,7 @@ namespace System.Xaml
             HybridDictionary _nameMap;
             INameScope _underlyingNameScope;
             FrugalObjectList<string> _names;
-            
+
             public Enumerator(NameScopeDictionary nameScopeDictionary)
             {
                 _nameMap = nameScopeDictionary._nameMap;
@@ -289,7 +287,7 @@ namespace System.Xaml
 
         #region IDictionary<string, object> methods
         object IDictionary<string, object>.this[string key]
-        { 
+        {
             get
             {
                 throw new NotImplementedException();

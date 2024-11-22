@@ -53,10 +53,7 @@ namespace System.Windows.Documents
         internal string ConvertXamlToRtf(string xamlContent)
         {
             // Check the parameter validation
-            if (xamlContent == null)
-            {
-                throw new ArgumentNullException("xamlContent");
-            }
+            ArgumentNullException.ThrowIfNull(xamlContent);
 
             string rtfContent = string.Empty;
 
@@ -93,10 +90,7 @@ namespace System.Windows.Documents
         internal string ConvertRtfToXaml(string rtfContent)
         {
             // Check the parameter validation
-            if (rtfContent == null)
-            {
-                throw new ArgumentNullException("rtfContent");
-            }
+            ArgumentNullException.ThrowIfNull(rtfContent);
 
             // xaml content to be converted from rtf
             string xamlContent = string.Empty;

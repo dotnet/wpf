@@ -36,24 +36,17 @@ namespace System.Windows.Controls
             //
             // Parameter Validation
             //
-
-            Type doubleType = typeof(double);
-
             if (parameter == null ||
                 values == null ||
                 values.Length != 3 ||
-                values[0] == null ||
-                values[1] == null ||
-                values[2] == null ||
-                !doubleType.IsAssignableFrom(values[0].GetType()) ||
-                !doubleType.IsAssignableFrom(values[1].GetType()) ||
-                !doubleType.IsAssignableFrom(values[2].GetType()) )
+                values[0] is not double ||
+                values[1] is not double ||
+                values[2] is not double)
             {
                 return DependencyProperty.UnsetValue;
             }
 
-            Type paramType = parameter.GetType();
-            if (!(doubleType.IsAssignableFrom(paramType) || typeof(string).IsAssignableFrom(paramType)))
+            if (parameter is not double && parameter is not string)
             {
                 return DependencyProperty.UnsetValue;
             }

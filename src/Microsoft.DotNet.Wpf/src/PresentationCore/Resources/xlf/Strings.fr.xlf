@@ -1908,8 +1908,8 @@
         <note />
       </trans-unit>
       <trans-unit id="Invalid_IInputElement">
-        <source>'{0}' is not a valid type for IInputElement. UIElement or ContentElement expected.</source>
-        <target state="translated">'{0}' n'est pas un type valide pour IInputElement. UIElement ou ContentElement attendu.</target>
+        <source>'{0}' is not a valid type for IInputElement. UIElement, ContentElement or UIElement3D expected.</source>
+        <target state="translated">'{0}' n’est pas un type valide pour IInputElement. UIElement, ContentElement ou UIElement3D attendu.</target>
         <note />
       </trans-unit>
       <trans-unit id="Invalid_URI">
@@ -2520,51 +2520,6 @@
       <trans-unit id="PaginatorNegativePageNumber">
         <source>Page number cannot be negative.</source>
         <target state="translated">Le numéro de page ne peut pas être négatif.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterCannotBeGreaterThan">
-        <source>The parameter value cannot be greater than '{0}'.</source>
-        <target state="translated">Le paramètre ne peut pas avoir une valeur supérieure à '{0}'.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterCannotBeLessThan">
-        <source>The parameter value cannot be less than '{0}'.</source>
-        <target state="translated">Le paramètre ne peut pas avoir une valeur inférieure à '{0}'.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Le paramètre doit être supérieur ou égal à zéro.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterMustBeBetween">
-        <source>The parameter value must be between '{0}' and '{1}'.</source>
-        <target state="translated">La valeur du paramètre doit être comprise entre '{0}' et '{1}'.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterMustBeGreaterThanZero">
-        <source>The parameter value must be greater than zero.</source>
-        <target state="translated">La valeur du paramètre doit être supérieure à zéro.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueCannotBeInfinity">
-        <source>The parameter value must be finite.</source>
-        <target state="translated">La valeur du paramètre doit être finie.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueCannotBeNaN">
-        <source>The parameter value must be a number.</source>
-        <target state="translated">La valeur du paramètre doit être numérique.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueCannotBeNegative">
-        <source>'{0}' parameter value cannot be negative.</source>
-        <target state="translated">La valeur du paramètre '{0}' ne peut pas être négative.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueMustBeGreaterThanZero">
-        <source>'{0}' parameter value must be greater than zero.</source>
-        <target state="translated">La valeur du paramètre '{0}' doit être supérieure à zéro.</target>
         <note />
       </trans-unit>
       <trans-unit id="Parser_BadForm">

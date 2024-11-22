@@ -200,7 +200,7 @@ namespace MS.Internal.AutomationProxies
 
                 if (prevLocation <= -2)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
                 }
 
                 if (prevLocation >= 0)
@@ -366,12 +366,12 @@ namespace MS.Internal.AutomationProxies
 
             if (row < 0 || row >= maxRow)
             {
-                throw new ArgumentOutOfRangeException("row", row, SR.Get(SRID.GridRowOutOfRange));
+                throw new ArgumentOutOfRangeException("row", row, SR.GridRowOutOfRange);
             }
 
             if (column < 0 || column >= maxColumn)
             {
-                throw new ArgumentOutOfRangeException("column", column, SR.Get(SRID.GridColumnOutOfRange));
+                throw new ArgumentOutOfRangeException("column", column, SR.GridColumnOutOfRange);
             }
 
             if (WindowsListView.IsDetailMode (_hwnd))
@@ -571,7 +571,7 @@ namespace MS.Internal.AutomationProxies
                 // Microsoft - We may want to consider raising the event here
                 // The M7 work on checking if LE is valid however is the better way of going
                 //  RemoveGroupAndRaiseLogicalChangedEvent(_hwnd);
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             return groupInfo;
@@ -601,7 +601,7 @@ namespace MS.Internal.AutomationProxies
             bool isCollapsed = IsCollapsed();
             if ((!collapse && !isCollapsed) || (collapse && isCollapsed))
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             NativeMethods.LVGROUP group = new NativeMethods.LVGROUP();
@@ -614,7 +614,7 @@ namespace MS.Internal.AutomationProxies
             group.state = collapse ? NativeMethods.LVGS_COLLAPSED : 0;
             if (!XSendMessage.SetGroupInfo(_hwnd, group))
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
         }
 
@@ -672,7 +672,7 @@ namespace MS.Internal.AutomationProxies
                 // Microsoft - We may want to consider raising the event here
                 // The M7 work on checking if LE is valid however is the better way of going
                 // RemoveGroupAndRaiseLogicalChangedEvent(_hwnd);
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             return true;
@@ -710,7 +710,7 @@ namespace MS.Internal.AutomationProxies
                 // Microsoft - We may want to consider raising the event here
                 // The M7 work on checking if LE is valid however is the better way of going
                 // RemoveGroupAndRaiseLogicalChangedEvent(_hwnd);
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             return NewItemInDimension.Stop;

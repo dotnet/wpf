@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System;
 using System.Diagnostics;
 using System.Xaml;
@@ -94,7 +96,7 @@ namespace MS.Internal.Xaml.Parser
         }
 
 
-        // FxCop says this is not called 
+        // FxCop says this is not called
         //public bool IsXamlNsDefinition
         //{
         //    get { return (!String.IsNullOrEmpty(_xmlnsDefinitionUri)); }
@@ -124,7 +126,7 @@ namespace MS.Internal.Xaml.Parser
                 uri = Value;
                 definingPrefix = !Name.IsDotted
                     ? Name.Name
-                    : Name.OwnerName + "." + Name.Name;
+                    : $"{Name.OwnerName}.{Name.Name}";
                 return true;
             }
             // case where:  xmlns="ValueUri"

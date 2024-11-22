@@ -30,7 +30,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 using System.Security;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using System.Windows.Media.Imaging;
 // These types are aliased to match the unamanaged names used in interop
 using BOOL = System.UInt32;
@@ -141,7 +140,7 @@ namespace System.Windows.Media.Media3D
         {
             if (value == null)
             {
-                throw new System.ArgumentException(SR.Get(SRID.Collection_NoNull));
+                throw new System.ArgumentException(SR.Collection_NoNull);
             }
 
             WritePreamble();
@@ -249,7 +248,7 @@ namespace System.Windows.Media.Media3D
             {
                 if (value == null)
                 {
-                    throw new System.ArgumentException(SR.Get(SRID.Collection_NoNull));
+                    throw new System.ArgumentException(SR.Collection_NoNull);
                 }
 
                 WritePreamble();
@@ -292,18 +291,13 @@ namespace System.Windows.Media.Media3D
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
             // BCL Collection implementations. (Windows 1587365)
-            if (index < 0  || (index + _collection.Count) > array.Length)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, array.Length - _collection.Count);
 
             _collection.CopyTo(array, index);
         }
@@ -407,22 +401,17 @@ namespace System.Windows.Media.Media3D
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
             // BCL Collection implementations. (Windows 1587365)
-            if (index < 0  || (index + _collection.Count) > array.Length)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, array.Length - _collection.Count);
 
             if (array.Rank != 1)
             {
-                throw new ArgumentException(SR.Get(SRID.Collection_BadRank));
+                throw new ArgumentException(SR.Collection_BadRank);
             }
 
             // Elsewhere in the collection we throw an AE when the type is
@@ -437,7 +426,7 @@ namespace System.Windows.Media.Media3D
             }
             catch (InvalidCastException e)
             {
-                throw new ArgumentException(SR.Get(SRID.Collection_BadDestArray, this.GetType().Name), e);
+                throw new ArgumentException(SR.Format(SR.Collection_BadDestArray, this.GetType().Name), e);
             }
         }
 
@@ -522,14 +511,11 @@ namespace System.Windows.Media.Media3D
 
         private GeneralTransform3D Cast(object value)
         {
-            if( value == null )
-            {
-                throw new System.ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             if (!(value is GeneralTransform3D))
             {
-                throw new System.ArgumentException(SR.Get(SRID.Collection_BadType, this.GetType().Name, value.GetType().Name, "GeneralTransform3D"));
+                throw new System.ArgumentException(SR.Format(SR.Collection_BadType, this.GetType().Name, value.GetType().Name, "GeneralTransform3D"));
             }
 
             return (GeneralTransform3D) value;
@@ -555,7 +541,7 @@ namespace System.Windows.Media.Media3D
 
             if (value == null)
             {
-                throw new System.ArgumentException(SR.Get(SRID.Collection_NoNull));
+                throw new System.ArgumentException(SR.Collection_NoNull);
             }
             WritePreamble();
             GeneralTransform3D newValue = value;
@@ -811,7 +797,7 @@ namespace System.Windows.Media.Media3D
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Enumerator_CollectionChanged));
+                    throw new InvalidOperationException(SR.Enumerator_CollectionChanged);
                 }
             }
 
@@ -829,7 +815,7 @@ namespace System.Windows.Media.Media3D
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Enumerator_CollectionChanged));
+                    throw new InvalidOperationException(SR.Enumerator_CollectionChanged);
                 }
             }
 
@@ -863,12 +849,12 @@ namespace System.Windows.Media.Media3D
                     }
                     else if (_index == -1)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Enumerator_NotStarted));
+                        throw new InvalidOperationException(SR.Enumerator_NotStarted);
                     }
                     else
                     {
                         Debug.Assert(_index == -2, "expected -2, got " + _index + "\n");
-                        throw new InvalidOperationException(SR.Get(SRID.Enumerator_ReachedEnd));
+                        throw new InvalidOperationException(SR.Enumerator_ReachedEnd);
                     }
                 }
             }
@@ -921,61 +907,56 @@ namespace System.Windows.Media.Media3D
 
             WritePreamble();
 
-            if (collection != null)
+            ArgumentNullException.ThrowIfNull(collection);
+
+            bool needsItemValidation = true;
+            ICollection<GeneralTransform3D> icollectionOfT = collection as ICollection<GeneralTransform3D>;
+
+            if (icollectionOfT != null)
             {
-                bool needsItemValidation = true;
-                ICollection<GeneralTransform3D> icollectionOfT = collection as ICollection<GeneralTransform3D>;
+                _collection = new FrugalStructList<GeneralTransform3D>(icollectionOfT);
+            }
+            else
+            {
+                ICollection icollection = collection as ICollection;
 
-                if (icollectionOfT != null)
+                if (icollection != null) // an IC but not and IC<T>
                 {
-                    _collection = new FrugalStructList<GeneralTransform3D>(icollectionOfT);
+                    _collection = new FrugalStructList<GeneralTransform3D>(icollection);
                 }
-                else
-                {       
-                    ICollection icollection = collection as ICollection;
-
-                    if (icollection != null) // an IC but not and IC<T>
-                    {
-                        _collection = new FrugalStructList<GeneralTransform3D>(icollection);
-                    }
-                    else // not a IC or IC<T> so fall back to the slower Add
-                    {
-                        _collection = new FrugalStructList<GeneralTransform3D>();
-
-                        foreach (GeneralTransform3D item in collection)
-                        {
-                            if (item == null)
-                            {
-                                throw new System.ArgumentException(SR.Get(SRID.Collection_NoNull));
-                            }
-                            GeneralTransform3D newValue = item;
-                            OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
-                            _collection.Add(newValue);
-}
-
-                        needsItemValidation = false;
-                    }
-                }
-
-                if (needsItemValidation)
+                else // not a IC or IC<T> so fall back to the slower Add
                 {
+                    _collection = new FrugalStructList<GeneralTransform3D>();
+
                     foreach (GeneralTransform3D item in collection)
                     {
                         if (item == null)
                         {
-                            throw new System.ArgumentException(SR.Get(SRID.Collection_NoNull));
+                            throw new System.ArgumentException(SR.Collection_NoNull);
                         }
-                        OnFreezablePropertyChanged(/* oldValue = */ null, item);
-}
+                        GeneralTransform3D newValue = item;
+                        OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
+                        _collection.Add(newValue);
+                    }
+
+                    needsItemValidation = false;
                 }
-
-
-                WritePostscript();
             }
-            else
+
+            if (needsItemValidation)
             {
-                throw new ArgumentNullException("collection");
+                foreach (GeneralTransform3D item in collection)
+                {
+                    if (item == null)
+                    {
+                        throw new System.ArgumentException(SR.Collection_NoNull);
+                    }
+                    OnFreezablePropertyChanged(/* oldValue = */ null, item);
+                }
             }
+
+
+            WritePostscript();
         }
 
         #endregion Constructors

@@ -2,24 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//  Microsoft Windows Client Platform
-//
-//
-//  Contents: Namespace default prefix recommendation support 
-
-//  Created:   04/28/2005 Microsoft
-//
-
 using System.Runtime.CompilerServices;
 
 namespace System.Windows.Markup
 {
     /// <summary>
-    ///
     /// This attribute allows an assembly to recommend a prefix to be used when writing elements and
-    /// attributes in a xaml file. 
-    /// 
+    /// attributes in a xaml file.
+    ///
     /// For a WinFX assembly, it can set the attributes as follows:
     ///
     /// <code>
@@ -27,8 +17,8 @@ namespace System.Windows.Markup
     /// [assembly:XmlnsDefinition("http://schemas.fabrikam.com/mynamespace", "fabrikam.myproduct.mycategory2")]
     /// [assembly:XmlnsPrefix("http://schemas.fabrikam.com/mynamespace", "myns")]
     /// </code>
-    /// 
-    /// If fabrikam.myproduct.mycategory namespace in this assembly contains a UIElement such as "MyButton", the 
+    ///
+    /// If fabrikam.myproduct.mycategory namespace in this assembly contains a UIElement such as "MyButton", the
     /// xaml file could use it like below:
     ///   <code>
     ///   &lt;Page xmlns:myns="http://schemas.fabrikam.com/mynamespace" .... &gt;
@@ -62,4 +52,3 @@ namespace System.Windows.Markup
         public string Prefix { get; }
    }
 }
-

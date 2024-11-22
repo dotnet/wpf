@@ -251,7 +251,7 @@ namespace WinRT
             {
                 try
                 {
-                    (_IActivationFactory, _) = DllModule.Load(moduleName + ".dll").GetActivationFactory(runtimeClassId);
+                    (_IActivationFactory, _) = DllModule.Load($"{moduleName}.dll").GetActivationFactory(runtimeClassId);
                     if (_IActivationFactory != null) { return; }
                 }
                 catch (Exception) { }

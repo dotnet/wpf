@@ -30,7 +30,6 @@ namespace MS.Internal.IO.Packaging
     ///  class and we won't be using even half of the dictionary functionalities.
     ///  If this class becomes a public class which is strongly discouraged, this class
     ///  needs to implement IDictionary.</remarks>
-    [FriendAccessAllowed]
     internal static class PreloadedPackages 
     {
         //------------------------------------------------------
@@ -160,14 +159,11 @@ namespace MS.Internal.IO.Packaging
 
         private static void ValidateUriKey(Uri uri)
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException("uri");
-            }
+            ArgumentNullException.ThrowIfNull(uri);
 
             if (!uri.IsAbsoluteUri)
             {
-                throw new ArgumentException(SR.Get(SRID.UriMustBeAbsolute), "uri");
+                throw new ArgumentException(SR.UriMustBeAbsolute, "uri");
             }
         }
 
@@ -241,7 +237,7 @@ namespace MS.Internal.IO.Packaging
         // Hashtable. HybridDictionary already has functionality of switching between
         //  ListDictionary and Hashtable depending on the size of the collection
         static private HybridDictionary _packagePairs;
-        static private Object           _globalLock;
+        static private readonly Object  _globalLock;
 
         #endregion Private Fields
     }

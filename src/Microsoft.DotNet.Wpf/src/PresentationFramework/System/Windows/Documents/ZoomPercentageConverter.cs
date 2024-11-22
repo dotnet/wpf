@@ -21,8 +21,6 @@ namespace System.Windows.Documents
 /// </summary>
 public sealed class ZoomPercentageConverter : IValueConverter
 {
-    internal const string ZoomPercentageConverterStringFormat = "{0:0.##}%";
-    
     //------------------------------------------------------
     //
     //  Constructors
@@ -91,8 +89,7 @@ public sealed class ZoomPercentageConverter : IValueConverter
                 else
                 {
                     // Ensure output string is formatted to current globalization standards.
-                    return String.Format(CultureInfo.CurrentCulture,
-                        ZoomPercentageConverterStringFormat, percent);
+                    return $"{percent:0.##}%";
                 }
             }
 

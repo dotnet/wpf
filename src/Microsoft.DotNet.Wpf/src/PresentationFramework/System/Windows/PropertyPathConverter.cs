@@ -101,10 +101,7 @@ namespace System.Windows
                                            CultureInfo cultureInfo,
                                            object source)
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException("source");
-            }
+            ArgumentNullException.ThrowIfNull(source);
 
             if (source is string)
             {
@@ -112,7 +109,7 @@ namespace System.Windows
             }
 
             #pragma warning suppress 6506 // source is obviously not null
-            throw new ArgumentException(SR.Get(SRID.CannotConvertType, source.GetType().FullName, typeof(PropertyPath)));
+            throw new ArgumentException(SR.Format(SR.CannotConvertType, source.GetType().FullName, typeof(PropertyPath)));
         }
 
         /// <summary>
@@ -138,25 +135,18 @@ namespace System.Windows
                                          object value,
                                          Type destinationType)
         {
-            if (null == value)
-            {
-                throw new ArgumentNullException("value");
-            }
-
-            if (null == destinationType)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
+            ArgumentNullException.ThrowIfNull(value);
+            ArgumentNullException.ThrowIfNull(destinationType);
 
             if (destinationType != typeof(String))
             {
-                throw new ArgumentException(SR.Get(SRID.CannotConvertType, typeof(PropertyPath), destinationType.FullName));
+                throw new ArgumentException(SR.Format(SR.CannotConvertType, typeof(PropertyPath), destinationType.FullName));
             }
 
             PropertyPath path = value as PropertyPath;
             if (path == null)
             {
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(PropertyPath)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(PropertyPath)), "value");
             }
 
             if (path.PathParameters.Count == 0)
@@ -199,13 +189,13 @@ namespace System.Windows
                         }
 
                         int index;
-                        if (Int32.TryParse( originalPath.Substring(i+1, j-i-1),
+                        if (Int32.TryParse( originalPath.AsSpan(i+1, j-i-1),
                                             NumberStyles.Integer,
                                             TypeConverterHelper.InvariantEnglishUS.NumberFormat,
                                             out index))
                         {
                             // found (n). Write out the path so far, including the opening (
-                            builder.Append(originalPath.Substring(start, i-start+1));
+                            builder.Append(originalPath.AsSpan(start, i-start+1));
 
                             object pathPart = parameters[index];
 
@@ -306,7 +296,7 @@ namespace System.Windows
 
                 if (start < originalPath.Length)
                 {
-                    builder.Append(originalPath.Substring(start));
+                    builder.Append(originalPath.AsSpan(start));
                 }
 
                 return builder.ToString();

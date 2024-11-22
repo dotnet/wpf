@@ -4,10 +4,8 @@
 
 using System;
 using System.Diagnostics;
-using MS.Internal.PresentationCore;
 using MS.Utility;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows
 {
@@ -60,10 +58,7 @@ namespace System.Windows
             Type handlerType,
             Type ownerType)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name"); 
-            }
+            ArgumentNullException.ThrowIfNull(name);
 
             if (routingStrategy != RoutingStrategy.Tunnel && 
                 routingStrategy != RoutingStrategy.Bubble &&
@@ -72,19 +67,13 @@ namespace System.Windows
                 throw new System.ComponentModel.InvalidEnumArgumentException("routingStrategy", (int)routingStrategy, typeof(RoutingStrategy));
             }
 
-            if (handlerType == null)
-            {
-                throw new ArgumentNullException("handlerType"); 
-            }
+            ArgumentNullException.ThrowIfNull(handlerType);
 
-            if (ownerType == null)
-            {
-                throw new ArgumentNullException("ownerType"); 
-            }
+            ArgumentNullException.ThrowIfNull(ownerType);
 
             if (GlobalEventManager.GetRoutedEventFromName(name, ownerType, false) != null)
             {
-                throw new ArgumentException(SR.Get(SRID.DuplicateEventName, name, ownerType)); 
+                throw new ArgumentException(SR.Format(SR.DuplicateEventName, name, ownerType)); 
             }
 
             return GlobalEventManager.RegisterRoutedEvent(name, routingStrategy, handlerType, ownerType);
@@ -163,31 +152,22 @@ namespace System.Windows
             Delegate handler,
             bool handledEventsToo)
         {
-            if (classType == null)
-            {
-                throw new ArgumentNullException("classType"); 
-            }
-            
-            if (routedEvent == null)
-            {
-                throw new ArgumentNullException("routedEvent"); 
-            }
-            
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler"); 
-            }
+            ArgumentNullException.ThrowIfNull(classType);
+
+            ArgumentNullException.ThrowIfNull(routedEvent);
+
+            ArgumentNullException.ThrowIfNull(handler);
 
             if (!typeof(UIElement).IsAssignableFrom(classType) &&
                 !typeof(ContentElement).IsAssignableFrom(classType) &&
                 !typeof(UIElement3D).IsAssignableFrom(classType))
             {
-                throw new ArgumentException(SR.Get(SRID.ClassTypeIllegal));
+                throw new ArgumentException(SR.ClassTypeIllegal);
             }
             
             if (!routedEvent.IsLegalHandler(handler))
             {
-                throw new ArgumentException(SR.Get(SRID.HandlerTypeIllegal));
+                throw new ArgumentException(SR.HandlerTypeIllegal);
             }
             
             GlobalEventManager.RegisterClassHandler(classType, routedEvent, handler, handledEventsToo);
@@ -239,11 +219,8 @@ namespace System.Windows
         /// <ExternalAPI/>        
         public static RoutedEvent[] GetRoutedEventsForOwner(Type ownerType)
         {
-            if (ownerType == null)
-            {
-                throw new ArgumentNullException("ownerType"); 
-            }
-            
+            ArgumentNullException.ThrowIfNull(ownerType);
+
             return GlobalEventManager.GetRoutedEventsForOwner(ownerType);
         }
 
@@ -272,19 +249,12 @@ namespace System.Windows
         /// <returns>
         ///     Matching <see cref="RoutedEvent"/>
         /// </returns>
-        [FriendAccessAllowed]
         internal static RoutedEvent GetRoutedEventFromName(string name, Type ownerType)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name"); 
-            }
-            
-            if (ownerType == null)
-            {
-                throw new ArgumentNullException("ownerType"); 
-            }
-            
+            ArgumentNullException.ThrowIfNull(name);
+
+            ArgumentNullException.ThrowIfNull(ownerType);
+
             return GlobalEventManager.GetRoutedEventFromName(name, ownerType, true);
         }
 

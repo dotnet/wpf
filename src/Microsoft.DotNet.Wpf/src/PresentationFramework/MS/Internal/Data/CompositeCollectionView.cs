@@ -198,8 +198,7 @@ namespace MS.Internal.Data
         /// </exception>
         public override object GetItemAt(int index)
         {
-            if (index < 0)
-                throw new ArgumentOutOfRangeException("index");
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
 
             int positionX, positionY;
             object item = GetItem(index, out positionX, out positionY);
@@ -313,8 +312,7 @@ namespace MS.Internal.Data
         /// </exception>
         public override bool MoveCurrentToPosition(int position)
         {
-            if (position < -1)
-                throw new ArgumentOutOfRangeException("position");
+            ArgumentOutOfRangeException.ThrowIfLessThan(position, -1);
 
             int newPositionX, newPositionY;
             object item = GetItem(position, out newPositionX, out newPositionY);
@@ -325,10 +323,7 @@ namespace MS.Internal.Data
                 {
                     item = null;
                     // check upper-bound only after GetItem() to avoid unnecessary pre-counting
-                    if (position > Count)
-                    {
-                        throw new ArgumentOutOfRangeException("position");
-                    }
+                    ArgumentOutOfRangeException.ThrowIfGreaterThan(position, Count);
                 }
 
                 if (OKToChangeCurrent())
@@ -637,7 +632,7 @@ namespace MS.Internal.Data
                             //  the correct sub-collection, or to BeforeFirst or AfterLast.
                             //
 
-                            throw new InvalidOperationException(SR.Get(SRID.CompositeCollectionResetOnlyOnClear));
+                            throw new InvalidOperationException(SR.CompositeCollectionResetOnlyOnClear);
                         }
 
                         _count = 0; // OnCollectionChanged(arg) below will raise PropChange for Count
@@ -655,7 +650,7 @@ namespace MS.Internal.Data
                     break;
 
                 default:
-                    throw new NotSupportedException(SR.Get(SRID.UnexpectedCollectionChangeAction, args.Action));
+                    throw new NotSupportedException(SR.Format(SR.UnexpectedCollectionChangeAction, args.Action));
             }
 
             ++_version;
@@ -799,7 +794,7 @@ namespace MS.Internal.Data
                     break;
 
                 default:
-                    throw new NotSupportedException(SR.Get(SRID.UnexpectedCollectionChangeAction, args.Action));
+                    throw new NotSupportedException(SR.Format(SR.UnexpectedCollectionChangeAction, args.Action));
             }
 
             ++_version;
@@ -1452,31 +1447,31 @@ namespace MS.Internal.Data
             {
                 case NotifyCollectionChangedAction.Add:
                     if (e.NewItems.Count != 1)
-                        throw new NotSupportedException(SR.Get(SRID.RangeActionsNotSupported));
+                        throw new NotSupportedException(SR.RangeActionsNotSupported);
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
                     if (e.OldItems.Count != 1)
-                        throw new NotSupportedException(SR.Get(SRID.RangeActionsNotSupported));
+                        throw new NotSupportedException(SR.RangeActionsNotSupported);
                     break;
 
                 case NotifyCollectionChangedAction.Replace:
                     if (e.NewItems.Count != 1 || e.OldItems.Count != 1)
-                        throw new NotSupportedException(SR.Get(SRID.RangeActionsNotSupported));
+                        throw new NotSupportedException(SR.RangeActionsNotSupported);
                     break;
 
                 case NotifyCollectionChangedAction.Move:
                     if (e.NewItems.Count != 1)
-                        throw new NotSupportedException(SR.Get(SRID.RangeActionsNotSupported));
+                        throw new NotSupportedException(SR.RangeActionsNotSupported);
                     if (e.NewStartingIndex < 0)
-                        throw new InvalidOperationException(SR.Get(SRID.CannotMoveToUnknownPosition));
+                        throw new InvalidOperationException(SR.CannotMoveToUnknownPosition);
                     break;
 
                 case NotifyCollectionChangedAction.Reset:
                     break;
 
                 default:
-                    throw new NotSupportedException(SR.Get(SRID.UnexpectedCollectionChangeAction, e.Action));
+                    throw new NotSupportedException(SR.Format(SR.UnexpectedCollectionChangeAction, e.Action));
             }
         }
 
@@ -1572,12 +1567,12 @@ namespace MS.Internal.Data
                     if (_index < 0)
                     {
 #pragma warning suppress 6503 // ICollectionView.CurrentItem is documented to throw this exception
-                        throw new InvalidOperationException(SR.Get(SRID.EnumeratorNotStarted));
+                        throw new InvalidOperationException(SR.EnumeratorNotStarted);
                     }
                     if (_done)
                     {
 #pragma warning suppress 6503 // ICollectionView.CurrentItem is documented to throw this exception
-                        throw new InvalidOperationException(SR.Get(SRID.EnumeratorReachedEnd));
+                        throw new InvalidOperationException(SR.EnumeratorReachedEnd);
                     }
 
                     return _current;
@@ -1614,7 +1609,7 @@ namespace MS.Internal.Data
                 // note: there's a very unlikely possibility that the
                 // version number wraps around back to the same number
                 if (_isInvalidated || (_isInvalidated = (_version != _view._version)))
-                    throw new InvalidOperationException(SR.Get(SRID.EnumeratorVersionChanged));
+                    throw new InvalidOperationException(SR.EnumeratorVersionChanged);
             }
 
             private CompositeCollection _collection;

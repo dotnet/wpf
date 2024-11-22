@@ -23,10 +23,7 @@ namespace System.Windows
             Exception       errorException
             ) : base(routedEvent, sender)
         {
-            if (errorException == null)
-            {
-                throw new ArgumentNullException("errorException");
-            }
+            ArgumentNullException.ThrowIfNull(errorException);
 
             _errorException = errorException;
         }

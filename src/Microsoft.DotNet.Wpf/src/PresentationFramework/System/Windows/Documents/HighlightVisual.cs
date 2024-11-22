@@ -84,7 +84,7 @@ namespace System.Windows.Documents
         override protected void OnRender(DrawingContext dc)
         {
 #if DEBUG
-            DocumentsTrace.FixedTextOM.Highlight.Trace(string.Format("HightlightVisual Rendering"));
+            DocumentsTrace.FixedTextOM.Highlight.Trace("HightlightVisual Rendering");
 #endif
             if (_panel.Highlights.ContainsKey(_page))
             {

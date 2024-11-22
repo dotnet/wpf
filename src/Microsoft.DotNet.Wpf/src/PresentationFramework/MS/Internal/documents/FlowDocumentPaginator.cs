@@ -75,17 +75,17 @@ namespace MS.Internal.Documents
             // Page number cannot be negative.
             if (pageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException("pageNumber", SR.Get(SRID.IDPNegativePageNumber));
+                throw new ArgumentOutOfRangeException("pageNumber", SR.IDPNegativePageNumber);
             }
 
             // Reentrancy check.
             if (_document.StructuralCache.IsFormattingInProgress)
             {
-                throw new InvalidOperationException(SR.Get(SRID.FlowDocumentFormattingReentrancy));
+                throw new InvalidOperationException(SR.FlowDocumentFormattingReentrancy);
             }
             if (_document.StructuralCache.IsContentChangeInProgress)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextContainerChangingReentrancyInvalid));
+                throw new InvalidOperationException(SR.TextContainerChangingReentrancyInvalid);
             }
 
             DocumentPage page = null;
@@ -148,17 +148,17 @@ namespace MS.Internal.Documents
             // Page number cannot be negative.
             if (pageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException("pageNumber", SR.Get(SRID.IDPNegativePageNumber));
+                throw new ArgumentOutOfRangeException("pageNumber", SR.IDPNegativePageNumber);
             }
 
             // Reentrancy check.
             if (_document.StructuralCache.IsFormattingInProgress)
             {
-                throw new InvalidOperationException(SR.Get(SRID.FlowDocumentFormattingReentrancy));
+                throw new InvalidOperationException(SR.FlowDocumentFormattingReentrancy);
             }
             if (_document.StructuralCache.IsContentChangeInProgress)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextContainerChangingReentrancyInvalid));
+                throw new InvalidOperationException(SR.TextContainerChangingReentrancyInvalid);
             }
 
             // Disable processing of the queue during blocking operations to prevent unrelated reentrancy.
@@ -217,14 +217,11 @@ namespace MS.Internal.Documents
         public override void GetPageNumberAsync(ContentPosition contentPosition, object userState)
         {
             // Content position cannot be null.
-            if (contentPosition == null)
-            {
-                throw new ArgumentNullException("contentPosition");
-            }
+            ArgumentNullException.ThrowIfNull(contentPosition);
             // Content position cannot be Missing.
             if (contentPosition == ContentPosition.Missing)
             {
-                throw new ArgumentException(SR.Get(SRID.IDPInvalidContentPosition), "contentPosition");
+                throw new ArgumentException(SR.IDPInvalidContentPosition, "contentPosition");
             }
 
             // ContentPosition must be of appropriate type and must be part of
@@ -232,11 +229,11 @@ namespace MS.Internal.Documents
             TextPointer flowContentPosition = contentPosition as TextPointer;
             if (flowContentPosition == null)
             {
-                throw new ArgumentException(SR.Get(SRID.IDPInvalidContentPosition), "contentPosition");
+                throw new ArgumentException(SR.IDPInvalidContentPosition, "contentPosition");
             }
             if (flowContentPosition.TextContainer != _document.StructuralCache.TextContainer)
             {
-                throw new ArgumentException(SR.Get(SRID.IDPInvalidContentPosition), "contentPosition");
+                throw new ArgumentException(SR.IDPInvalidContentPosition, "contentPosition");
             }
 
             int pageNumber = 0;
@@ -283,31 +280,28 @@ namespace MS.Internal.Documents
             _dispatcherObject.VerifyAccess();
 
             // ContentPosition cannot be null.
-            if (contentPosition == null)
-            {
-                throw new ArgumentNullException("contentPosition");
-            }
+            ArgumentNullException.ThrowIfNull(contentPosition);
             // ContentPosition must be of appropriate type and must be part of
             // the content.
             flowContentPosition = contentPosition as TextPointer;
             if (flowContentPosition == null)
             {
-                throw new ArgumentException(SR.Get(SRID.IDPInvalidContentPosition), "contentPosition");
+                throw new ArgumentException(SR.IDPInvalidContentPosition, "contentPosition");
             }
             if (flowContentPosition.TextContainer != _document.StructuralCache.TextContainer)
             {
-                throw new ArgumentException(SR.Get(SRID.IDPInvalidContentPosition), "contentPosition");
+                throw new ArgumentException(SR.IDPInvalidContentPosition, "contentPosition");
             }
 
             // We are about to perform synchronous pagination, so need to check for
             // reentrancy.
             if (_document.StructuralCache.IsFormattingInProgress)
             {
-                throw new InvalidOperationException(SR.Get(SRID.FlowDocumentFormattingReentrancy));
+                throw new InvalidOperationException(SR.FlowDocumentFormattingReentrancy);
             }
             if (_document.StructuralCache.IsContentChangeInProgress)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextContainerChangingReentrancyInvalid));
+                throw new InvalidOperationException(SR.TextContainerChangingReentrancyInvalid);
             }
 
             // Disable processing of the queue during blocking operations to prevent unrelated reentrancy.
@@ -364,10 +358,7 @@ namespace MS.Internal.Documents
             _dispatcherObject.VerifyAccess();
 
             // ContentPosition cannot be null.
-            if (page == null)
-            {
-                throw new ArgumentNullException("page");
-            }
+            ArgumentNullException.ThrowIfNull(page);
             // DocumentPage must be of appropriate type.
             flowDocumentPage = page as FlowDocumentPage;
             if (flowDocumentPage == null || flowDocumentPage.IsDisposed)
@@ -426,10 +417,7 @@ namespace MS.Internal.Documents
             _dispatcherObject.VerifyAccess();
 
             // Object cannot be null.
-            if (o == null)
-            {
-                throw new ArgumentNullException("o");
-            }
+            ArgumentNullException.ThrowIfNull(o);
             return _document.GetObjectPosition(o);
         }
 
@@ -534,11 +522,11 @@ namespace MS.Internal.Documents
                 _dispatcherObject.VerifyAccess();
 
                 Size newPageSize = value;
-                if (DoubleUtil.IsNaN(newPageSize.Width))
+                if (double.IsNaN(newPageSize.Width))
                 {
                     newPageSize.Width = _defaultPageSize.Width;
                 }
-                if (DoubleUtil.IsNaN(newPageSize.Height))
+                if (double.IsNaN(newPageSize.Height))
                 {
                     newPageSize.Height = _defaultPageSize.Height;
                 }
@@ -551,7 +539,7 @@ namespace MS.Internal.Documents
                     if (_document.StructuralCache.IsFormattingInProgress)
                     {
                         _document.StructuralCache.OnInvalidOperationDetected();
-                        throw new InvalidOperationException(SR.Get(SRID.FlowDocumentInvalidContnetChange));
+                        throw new InvalidOperationException(SR.FlowDocumentInvalidContnetChange);
                     }
 
                     // Any change of page metrics invalidates entire break record table.
@@ -783,7 +771,7 @@ namespace MS.Internal.Documents
             // Detect reentrancy.
             if (_document.StructuralCache.IsFormattingInProgress)
             {
-                throw new InvalidOperationException(SR.Get(SRID.FlowDocumentFormattingReentrancy));
+                throw new InvalidOperationException(SR.FlowDocumentFormattingReentrancy);
             }
 
             // Ignore this formatting request, if the element was already disposed.
@@ -853,7 +841,7 @@ namespace MS.Internal.Documents
         {
             double max, min;
             Size pageSize = new Size(_document.PageWidth, _document.PageHeight);
-            if (DoubleUtil.IsNaN(pageSize.Width))
+            if (double.IsNaN(pageSize.Width))
             {
                 pageSize.Width = _pageSize.Width;
                 max = _document.MaxPageWidth;
@@ -867,7 +855,7 @@ namespace MS.Internal.Documents
                     pageSize.Width = min;
                 }
             }
-            if (DoubleUtil.IsNaN(pageSize.Height))
+            if (double.IsNaN(pageSize.Height))
             {
                 pageSize.Height = _pageSize.Height;
                 max = _document.MaxPageHeight;

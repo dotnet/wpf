@@ -19,7 +19,6 @@ using System.Windows.Automation.Provider;
 using System.Windows.Automation.Text;
 using System.Windows.Automation.Peers;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.Automation
 {
@@ -60,7 +59,7 @@ namespace MS.Internal.Automation
         {
             if (!(range is TextRangeProviderWrapper))
             {
-                throw new ArgumentException(SR.Get(SRID.TextRangeProvider_InvalidRangeProvider, "range"));
+                throw new ArgumentException(SR.Format(SR.TextRangeProvider_InvalidRangeProvider, "range"));
             }
 
             return (bool)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(Compare), range);
@@ -70,7 +69,7 @@ namespace MS.Internal.Automation
         {
             if (!(targetRange is TextRangeProviderWrapper))
             {
-                throw new ArgumentException(SR.Get(SRID.TextRangeProvider_InvalidRangeProvider, "targetRange"));
+                throw new ArgumentException(SR.Format(SR.TextRangeProvider_InvalidRangeProvider, "targetRange"));
             }
 
             object[] args = new object[] { endpoint, targetRange, targetEndpoint };
@@ -133,7 +132,7 @@ namespace MS.Internal.Automation
         {
             if (!(targetRange is TextRangeProviderWrapper))
             {
-                throw new ArgumentException(SR.Get(SRID.TextRangeProvider_InvalidRangeProvider, "targetRange"));
+                throw new ArgumentException(SR.Format(SR.TextRangeProvider_InvalidRangeProvider, "targetRange"));
             }
 
             object[] args = new object[] { endpoint, targetRange, targetEndpoint };

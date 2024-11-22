@@ -41,7 +41,6 @@ using WORD = System.UInt16;
 using Float = System.Single;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Media3D
 {
@@ -90,7 +89,7 @@ namespace System.Windows.Media.Media3D
             double angleInRadians = angleInDegrees * (Math.PI / 180.0);
             double length = axisOfRotation.Length;
             if (length == 0)
-                throw new System.InvalidOperationException(SR.Get(SRID.Quaternion_ZeroAxisSpecified));
+                throw new System.InvalidOperationException(SR.Quaternion_ZeroAxisSpecified);
             Vector3D v = (axisOfRotation / length) * Math.Sin(0.5 * angleInRadians);
             _x = v.X;
             _y = v.Y;

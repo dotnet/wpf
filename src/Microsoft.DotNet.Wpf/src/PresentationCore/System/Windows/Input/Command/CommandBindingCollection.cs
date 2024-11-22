@@ -21,7 +21,6 @@ using System.Windows;
 using System.Windows.Input;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -52,9 +51,9 @@ namespace System.Windows.Input
         /// <param name="commandBindings">CommandBinding array</param>
         public CommandBindingCollection(IList commandBindings)
         {
-            if (commandBindings != null && commandBindings.Count > 0)
+            if (commandBindings is { Count: > 0 })
             {
-                AddRange(commandBindings as ICollection);
+                AddRange(commandBindings);
             }
         }
 
@@ -76,12 +75,9 @@ namespace System.Windows.Input
         /// </summary>
         /// <param name="array">commandbinding array to copy into</param>
         /// <param name="index">start index in current list to copy</param>
-        void ICollection.CopyTo(System.Array array, int index) 
+        void ICollection.CopyTo(System.Array array, int index)
         {
-            if (_innerCBList != null)
-            {
-                ((ICollection)_innerCBList).CopyTo(array, index);
-            }
+            ((ICollection)_innerCBList)?.CopyTo(array, index);
         }
   
 #endregion Implementation of ICollection
@@ -92,7 +88,7 @@ namespace System.Windows.Input
         /// <returns>true - if found, false - otherwise</returns>
         bool IList.Contains(object key) 
         {
-             return this.Contains(key as CommandBinding) ;
+             return Contains(key as CommandBinding) ;
         }
 
         /// <summary>
@@ -102,8 +98,7 @@ namespace System.Windows.Input
         /// <returns></returns>
         int IList.IndexOf(object value)
         {
-            CommandBinding commandBinding = value as CommandBinding;
-            return ((commandBinding != null) ? this.IndexOf(commandBinding) : -1);
+            return ((value is CommandBinding commandBinding) ? IndexOf(commandBinding) : -1);
         }
 
         /// <summary>
@@ -113,7 +108,7 @@ namespace System.Windows.Input
         /// <param name="value">item to insert</param>
         void IList.Insert(int index, object value)
         {
-            this.Insert(index, value as CommandBinding);
+            Insert(index, value as CommandBinding);
         }
 
         /// <summary>
@@ -122,7 +117,7 @@ namespace System.Windows.Input
         /// <param name="commandBinding">CommandBinding object to add</param>
         int IList.Add(object commandBinding) 
         {
-            return this.Add(commandBinding as CommandBinding);
+            return Add(commandBinding as CommandBinding);
         }
         
         /// <summary>
@@ -131,7 +126,7 @@ namespace System.Windows.Input
         /// <param name="commandBinding">CommandBinding object to remove</param>
         void IList.Remove(object commandBinding)
         {
-            this.Remove(commandBinding as CommandBinding);
+            Remove(commandBinding as CommandBinding);
         }
 
         /// <summary>
@@ -145,9 +140,8 @@ namespace System.Windows.Input
             }
             set 
             {
-                CommandBinding commandBinding = value as CommandBinding;
-                if (commandBinding == null)
-                    throw new NotSupportedException(SR.Get(SRID.CollectionOnlyAcceptsCommandBindings));
+                if (value is not CommandBinding commandBinding)
+                    throw new NotSupportedException(SR.CollectionOnlyAcceptsCommandBindings);
 
                 this[index] = commandBinding;
             }
@@ -160,7 +154,7 @@ namespace System.Windows.Input
         {
             get
             {
-                return (_innerCBList != null ? _innerCBList[index] : null);
+                return (_innerCBList?[index]);
             }
             set
             {
@@ -179,15 +173,14 @@ namespace System.Windows.Input
         {
             if (commandBinding != null)
             {
-                if (_innerCBList == null)
-                    _innerCBList = new System.Collections.Generic.List<CommandBinding>(1);
+                _innerCBList ??= new Collections.Generic.List<CommandBinding>(1);
 
                 _innerCBList.Add(commandBinding);
                 return 0; // ICollection.Add no longer returns the indice
             }
             else
             {
-                throw new NotSupportedException(SR.Get(SRID.CollectionOnlyAcceptsCommandBindings));
+                throw new NotSupportedException(SR.CollectionOnlyAcceptsCommandBindings);
             }
         }
 
@@ -199,28 +192,23 @@ namespace System.Windows.Input
         /// <param name="collection">collection to append</param>
         public void AddRange(ICollection collection) 
         {
-            if (collection==null)
-                throw new ArgumentNullException("collection");
-            
-            if (collection.Count > 0) 
-            {
-                 if (_innerCBList == null)
-                    _innerCBList = new System.Collections.Generic.List<CommandBinding>(collection.Count);
+            ArgumentNullException.ThrowIfNull(collection);
 
-                IEnumerator collectionEnum = collection.GetEnumerator();
-                while(collectionEnum.MoveNext()) 
+            if (collection.Count <= 0) return;
+            _innerCBList ??= new System.Collections.Generic.List<CommandBinding>(collection.Count);
+
+            IEnumerator collectionEnum = collection.GetEnumerator();
+            while(collectionEnum.MoveNext()) 
+            {
+                if (collectionEnum.Current is CommandBinding cmdBinding)
                 {
-                    CommandBinding cmdBinding = collectionEnum.Current as CommandBinding;
-                    if (cmdBinding != null)
-                    {
-                        _innerCBList.Add(cmdBinding);
-                    }
-    	            else
-            	    {
-                    	throw new NotSupportedException(SR.Get(SRID.CollectionOnlyAcceptsCommandBindings));
-                    }
-                 }
-             }
+                    _innerCBList.Add(cmdBinding);
+                }
+                else
+                {
+                    throw new NotSupportedException(SR.CollectionOnlyAcceptsCommandBindings);
+                }
+            }
         }
 
         /// <summary>
@@ -232,12 +220,11 @@ namespace System.Windows.Input
         {
             if (commandBinding != null)
             {
-                if (_innerCBList != null)
-                    _innerCBList.Insert(index, commandBinding);
+                _innerCBList?.Insert(index, commandBinding);
             }
             else
             {
-                throw new NotSupportedException(SR.Get(SRID.CollectionOnlyAcceptsCommandBindings));
+                throw new NotSupportedException(SR.CollectionOnlyAcceptsCommandBindings);
             }
         }
                 
@@ -257,8 +244,7 @@ namespace System.Windows.Input
         /// <param name="index">index at which the item needs to be removed</param>
         public void RemoveAt(int index)
         {
-            if (_innerCBList != null)
-                _innerCBList.RemoveAt(index);
+            _innerCBList?.RemoveAt(index);
         }
 
         /// <summary>
@@ -276,11 +262,7 @@ namespace System.Windows.Input
         {
             get
             {
-                if (_innerCBList != null)
-                {
-                    return ((IList)_innerCBList).IsSynchronized;
-                }
-                return false;
+                return _innerCBList is not null && ((IList)_innerCBList).IsSynchronized;
             }
         }
 
@@ -310,7 +292,7 @@ namespace System.Windows.Input
         {
             get 
             {
-                return (_innerCBList != null ? _innerCBList.Count : 0);
+                return _innerCBList?.Count ?? 0;
             }
         }
 
@@ -319,11 +301,9 @@ namespace System.Windows.Input
         /// </summary>
         public void Clear()
         {
-            if (_innerCBList != null)
-            {
-                _innerCBList.Clear();
-                _innerCBList = null;
-            }
+            if (_innerCBList is null) return;
+            _innerCBList.Clear();
+            _innerCBList = null;
         }
 
         /// <summary>
@@ -333,7 +313,7 @@ namespace System.Windows.Input
         /// <returns></returns>
         public int IndexOf(CommandBinding value)
         {
-            return ((_innerCBList != null) ? _innerCBList.IndexOf(value) : -1);
+            return _innerCBList?.IndexOf(value) ?? -1;
         }
 
         /// <summary>
@@ -355,10 +335,9 @@ namespace System.Windows.Input
         /// </summary>
         /// <param name="commandBindings"> type-safe (CommandBinding) array</param>
         /// <param name="index">start index in current list to copy</param>
-        public void CopyTo(CommandBinding[] commandBindings, int index) 
+        public void CopyTo(CommandBinding[] commandBindings, int index)
         {
-            if (_innerCBList != null)
-                _innerCBList.CopyTo(commandBindings, index);
+            _innerCBList?.CopyTo(commandBindings, index);
         }
 
 #region Implementation of Enumerable
@@ -385,17 +364,11 @@ namespace System.Windows.Input
             for (int i = 0; i < Count; i++)
             {
                 CommandBinding commandBinding = this[i];
-                RoutedCommand routedCommand = commandBinding.Command as RoutedCommand;
-                if (routedCommand != null)
+                if (commandBinding.Command is not RoutedCommand routedCommand) continue;
+                InputGestureCollection inputGestures = routedCommand.InputGesturesInternal;
+                if (inputGestures?.FindMatch(targetElement, inputEventArgs) != null)
                 {
-                    InputGestureCollection inputGestures = routedCommand.InputGesturesInternal;
-                    if (inputGestures != null)
-                    {
-                        if (inputGestures.FindMatch(targetElement, inputEventArgs) != null)
-                        {
-                            return routedCommand;
-                        }
-                    }
+                    return routedCommand;
                 }
             }
 
@@ -423,7 +396,7 @@ namespace System.Windows.Input
         //
         //------------------------------------------------------
 #region Private Fields
-        private System.Collections.Generic.List<CommandBinding>  _innerCBList;
+        private Collections.Generic.List<CommandBinding>  _innerCBList;
 #endregion Private Fields
     }
 }

@@ -14,7 +14,6 @@
 
 using System;
 using System.Windows;
-using MS.Internal.WindowsBase;
 
 namespace MS.Internal
 {
@@ -28,7 +27,6 @@ namespace MS.Internal
         //
         //--------------------------------------------------------------------
 
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal static void ProvideContextForObject(
             DependencyObject context,
             DependencyObject newValue )
@@ -47,7 +45,6 @@ namespace MS.Internal
         //
         //--------------------------------------------------------------------
 
-        [FriendAccessAllowed] // Built into Base, also used by Framework.
         internal static void RemoveContextFromObject(
             DependencyObject context,
             DependencyObject oldValue )
@@ -68,7 +65,6 @@ namespace MS.Internal
         //
         //--------------------------------------------------------------------
 
-        [FriendAccessAllowed] // Built into Base, also used by Framework.
         internal static void AddInheritanceContext(DependencyObject newInheritanceContext,
                                                               DependencyObject value,
                                                               ref bool hasMultipleInheritanceContexts,
@@ -105,7 +101,6 @@ namespace MS.Internal
         //
         //--------------------------------------------------------------------
 
-        [FriendAccessAllowed] // Built into Base, also used by Framework.
         internal static void RemoveInheritanceContext(DependencyObject oldInheritanceContext,
                                                               DependencyObject value,
                                                               ref bool hasMultipleInheritanceContexts,

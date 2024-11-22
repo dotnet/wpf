@@ -15,6 +15,8 @@ public class SplashScreenTests
     public void Create()
     {
         SplashScreen splash = new(typeof(SplashScreenTests).Assembly, "Needle");
+        string resourceName = splash.TestAccessor().Dynamic._resourceName;
+        resourceName.Should().Be("needle");
         splash.Show(autoClose: true);
     }
 }

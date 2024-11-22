@@ -84,7 +84,7 @@
   </PropertyGroup>
   <!-- XUnit-related (not extensions) -->
   <PropertyGroup>
-    <XUnitVersion>2.9.0</XUnitVersion>
+    <XUnitVersion>2.9.2</XUnitVersion>
     <XUnitAssertVersion>$(XUnitVersion)</XUnitAssertVersion>
     <XUnitRunnerConsoleVersion>$(XUnitVersion)</XUnitRunnerConsoleVersion>
     <XUnitRunnerVisualStudioVersion>2.8.1</XUnitRunnerVisualStudioVersion>
@@ -99,6 +99,8 @@
     <SystemDrawingCommonTestDataVersion>8.0.0-beta.23107.1</SystemDrawingCommonTestDataVersion>
     <SystemWindowsExtensionsTestDataVersion>8.0.0-beta.23107.1</SystemWindowsExtensionsTestDataVersion>
     <VerifyXunitVersion>14.2.0</VerifyXunitVersion>
+    <!-- Shared test utilities with WinForms -->
+    <SystemPrivateWindowsCoreTestUtilitiesVersion>10.0.0-alpha.1.24571.3</SystemPrivateWindowsCoreTestUtilitiesVersion>
   </PropertyGroup>
   <!-- Code Coverage -->
   <PropertyGroup>

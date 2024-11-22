@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1142,7 +1142,12 @@ namespace System.Windows.Input.StylusPointer
             Matrix toDevice = _inputSource.CompositionTarget.TransformToDevice;
             toDevice.Invert();
             group.Children.Add(new MatrixTransform(PointerTabletDevice.TabletToScreen * toDevice));
-            group.Children.Add(StylusDevice.GetElementTransform(relativeTo));
+            // If the relativeTo is null, it will add the `Transform.Identity` to the group.
+            // So that we can only add the transform if the relativeTo is not null.
+            if (relativeTo is not null)
+            {
+                group.Children.Add(StylusDevice.GetElementTransform(relativeTo));
+            }
             return group;
         }
 

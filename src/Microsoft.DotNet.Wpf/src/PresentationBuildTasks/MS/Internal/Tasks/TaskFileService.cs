@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -121,9 +121,9 @@ namespace MS.Internal
         //
         public Stream GetContent(string srcFile)
         {
-            Stream fileStream = null;
+            Stream fileStream;
 
-            if (String.IsNullOrEmpty(srcFile))
+            if (string.IsNullOrEmpty(srcFile))
             {
                 throw new ArgumentNullException(nameof(srcFile));
             }
@@ -213,9 +213,9 @@ namespace MS.Internal
         //
         public DateTime GetLastChangeTime(string srcFile)
         {
-            DateTime lastChangeDT = new DateTime(0);
+            DateTime lastChangeDT;
 
-            if (String.IsNullOrEmpty(srcFile))
+            if (string.IsNullOrEmpty(srcFile))
             {
                 throw new ArgumentNullException(nameof(srcFile));
             }
@@ -239,7 +239,7 @@ namespace MS.Internal
         //
         public bool Exists(string fileName)
         {
-            bool fileExists = false;
+            bool fileExists;
 
             if (fileName == null)
             {
@@ -285,7 +285,7 @@ namespace MS.Internal
         //
         public void WriteFile(byte[] contentArray, string destinationFile)
         {
-            if (String.IsNullOrEmpty(destinationFile))
+            if (string.IsNullOrEmpty(destinationFile))
             {
                 throw new ArgumentNullException(nameof(destinationFile));
             }
@@ -329,7 +329,7 @@ namespace MS.Internal
         public void WriteGeneratedCodeFile(byte[] contentArray, string destinationFileBaseName,
             string generatedExtension, string intellisenseGeneratedExtension, string languageSourceExtension)
         {
-            if (String.IsNullOrEmpty(destinationFileBaseName))
+            if (string.IsNullOrEmpty(destinationFileBaseName))
             {
                 throw new ArgumentNullException(nameof(destinationFileBaseName));
             }
@@ -434,7 +434,7 @@ namespace MS.Internal
 
         private Task _buildTask;
         private IVsMSBuildTaskFileManager _hostFileManager;
-        private Nullable<bool> _isRealBuild;
+        private bool? _isRealBuild;
         private static Guid s_hashSHA256Guid = new Guid(0x8829d00f, 0x11b8, 0x4213, 0x87, 0x8b, 0x77, 0x0e, 0x85, 0x97, 0xac, 0x16);
         private static Guid s_hashSHA1Guid = new Guid(0xff1816ec, 0xaa5e, 0x4d10, 0x87, 0xf7, 0x6f, 0x49, 0x63, 0x83, 0x34, 0x60);
         private static Guid s_hashMD5Guid = new Guid(0x406ea660, 0x64cf, 0x4c82, 0xb6, 0xf0, 0x42, 0xd4, 0x81, 0x72, 0xa7, 0x99);

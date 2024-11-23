@@ -14,6 +14,9 @@ dotnet_diagnostic.CA1066.severity = none
 # CA1725: Parameter names should match base declaration
 dotnet_diagnostic.CA1725.severity = none
 
+# CA1812: Remove empty finalizers
+dotnet_diagnostic.CA1821.severity = none
+
 # CA1822: Mark members as static
 dotnet_diagnostic.CA1822.severity = none
 
@@ -37,3 +40,6 @@ dotnet_diagnostic.IDE0251.severity = none
 
 # IDE1006: Naming Styles
 dotnet_diagnostic.IDE1006.severity = suggestion
+
+# SA1206: Keyword ordering
+dotnet_diagnostic.SA1206.severity = suggestion

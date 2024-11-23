@@ -87,7 +87,7 @@ dotnet_diagnostic.CA1810.severity = suggestion
 # in the GlobalSuppressions file.
 
 # CA1815: Override equals and operator equals on value types
-dotnet_diagnostic.CA1815.severity = none
+dotnet_diagnostic.CA1815.severity = suggestion
 
 # CA1822: Mark members as static
 dotnet_diagnostic.CA1822.severity = suggestion
@@ -233,6 +233,9 @@ dotnet_diagnostic.IDE0052.severity = suggestion
 # IDE0057: Use range operator
 dotnet_diagnostic.IDE0057.severity = suggestion
 
+# IDE0059: Unnecessary assignment of a value
+dotnet_diagnostic.IDE0059.severity = suggestion
+
 # IDE0060: Remove unused parameter
 dotnet_diagnostic.IDE0060.severity = suggestion
 
@@ -317,8 +320,14 @@ dotnet_diagnostic.SA1129.severity = suggestion
 # SA1131: Constant values should appear on the right-hand side of comparisons
 dotnet_diagnostic.SA1131.severity = suggestion
 
+# SA1206: Keyword ordering
+dotnet_diagnostic.SA1206.severity = suggestion
+
 # SA1400: Member should declare an access modifier
 dotnet_diagnostic.SA1400.severity = suggestion
+
+# SA1404: Code analysis suppression should have justification
+dotnet_diagnostic.SA1404.severity = suggestion
 
 # SA1408: Conditional expressions should declare precedence
 dotnet_diagnostic.SA1408.severity = suggestion
@@ -343,3 +352,11 @@ dotnet_diagnostic.SA1518.severity = suggestion
 
 # SYSLIB1045: Convert to 'GeneratedRegexAttribute'.
 dotnet_diagnostic.SYSLIB1045.severity = suggestion
+
+# ---------------------
+# Ref specific C# files
+# ---------------------
+[*/ref/*.cs]
+
+# CA1812: Remove empty finalizers
+dotnet_diagnostic.CA1821.severity = none

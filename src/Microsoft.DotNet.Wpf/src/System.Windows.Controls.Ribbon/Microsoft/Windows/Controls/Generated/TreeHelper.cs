@@ -22,7 +22,7 @@ namespace Microsoft.Windows.Controls
             if (includeContentElements)
             {
                 ContentElement ce = element as ContentElement;
-                if (ce != null)
+                if (ce is not null)
                 {
                     return LogicalTreeHelper.GetParent(ce);
                 }
@@ -53,11 +53,11 @@ namespace Microsoft.Windows.Controls
         /// </summary>
         public static T FindTemplatedAncestor<T>(FrameworkElement element) where T : FrameworkElement
         {
-            while (element != null)
+            while (element is not null)
             {
                 element = element.TemplatedParent as FrameworkElement;
                 T correctlyTyped = element as T;
-                if (correctlyTyped != null)
+                if (correctlyTyped is not null)
                 {
                     return correctlyTyped;
                 }
@@ -74,11 +74,11 @@ namespace Microsoft.Windows.Controls
         {
             // Allows element to be ContentElement
             bool includeContentElements = true;
-            while (element != null)
+            while (element is not null)
             {
                 element = GetVisualParent(element, includeContentElements);
                 T correctlyTyped = element as T;
-                if (correctlyTyped != null)
+                if (correctlyTyped is not null)
                 {
                     return correctlyTyped;
                 }
@@ -97,10 +97,10 @@ namespace Microsoft.Windows.Controls
         {
             // Allows element to be ContentElement
             bool includeContentElements = true;
-            while (element != null)
+            while (element is not null)
             {
                 element = GetVisualParent(element, includeContentElements);
-                if (element != null && predicate(element))
+                if (element is not null && predicate(element))
                 {
                     return element;
                 }
@@ -114,11 +114,11 @@ namespace Microsoft.Windows.Controls
         /// </summary>
         public static T FindLogicalAncestor<T>(DependencyObject element) where T : DependencyObject
         {
-            while (element != null)
+            while (element is not null)
             {
                 element = LogicalTreeHelper.GetParent(element);
                 T correctlyTyped = element as T;
-                if (correctlyTyped != null)
+                if (correctlyTyped is not null)
                 {
                     return correctlyTyped;
                 }
@@ -134,10 +134,10 @@ namespace Microsoft.Windows.Controls
         public static DependencyObject FindAncestor(DependencyObject element,
             Predicate<DependencyObject> predicate)
         {
-            while (element != null)
+            while (element is not null)
             {
                 element = GetParent(element);
-                if (element != null && predicate(element))
+                if (element is not null && predicate(element))
                 {
                     return element;
                 }
@@ -151,7 +151,7 @@ namespace Microsoft.Windows.Controls
         /// </summary>
         public static DependencyObject FindRoot(DependencyObject element)
         {
-            while (element != null)
+            while (element is not null)
             {
                 DependencyObject parent = GetParent(element);
                 if (parent is null)
@@ -172,7 +172,7 @@ namespace Microsoft.Windows.Controls
         {
             // Allows element to be ContentElement
             bool includeContentElements = true;
-            while (element != null)
+            while (element is not null)
             {
                 DependencyObject parent = GetVisualParent(element, includeContentElements);
                 if (parent is null)
@@ -204,7 +204,7 @@ namespace Microsoft.Windows.Controls
         {
             // Allows element to be ContentElement
             bool includeContentElements = true;
-            while (pathStart != null)
+            while (pathStart is not null)
             {
                 bool isEndType = (pathStart is PathEndType);
                 if (!includePathEnd && isEndType)
@@ -212,7 +212,7 @@ namespace Microsoft.Windows.Controls
                     return;
                 }
                 UIElement element = pathStart as UIElement;
-                if (element != null)
+                if (element is not null)
                 {
                     element.InvalidateMeasure();
                 }
@@ -233,10 +233,10 @@ namespace Microsoft.Windows.Controls
         {
             // Allows element to be ContentElement
             bool includeContentElements = true;
-            while (pathStart != null)
+            while (pathStart is not null)
             {
                 UIElement element = pathStart as UIElement;
-                if (element != null)
+                if (element is not null)
                 {
                     element.InvalidateMeasure();
                 }
@@ -264,7 +264,7 @@ namespace Microsoft.Windows.Controls
             }
             // Allows element to be ContentElement
             bool includeContentElements = true;
-            while (descendant != null)
+            while (descendant is not null)
             {
                 if (descendant == ancestor)
                 {

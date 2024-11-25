@@ -32,7 +32,7 @@ namespace MS.Internal.Controls
 
         internal InkCanvasInnerCanvas(InkCanvas inkCanvas)
         {
-            Debug.Assert(inkCanvas != null);
+            Debug.Assert(inkCanvas is not null);
             _inkCanvas = inkCanvas;
         }
 
@@ -61,7 +61,7 @@ namespace MS.Internal.Controls
             UIElement removedElement = visualRemoved as UIElement;
 
             // If there is an element being removed, we should make sure to update our selected elements list..
-            if (removedElement != null)
+            if (removedElement is not null)
             {
                 InkCanvas.InkCanvasSelection.RemoveElement(removedElement);
             }
@@ -256,22 +256,22 @@ namespace MS.Internal.Controls
             HitTestResult hitTestResult = VisualTreeHelper.HitTest(this, point);
 
             // Now find out which element is hit if there is a result.
-            if (hitTestResult != null)
+            if (hitTestResult is not null)
             {
                 Visual visual = hitTestResult.VisualHit as Visual;
                 System.Windows.Media.Media3D.Visual3D visual3D = hitTestResult.VisualHit as System.Windows.Media.Media3D.Visual3D;
 
                 DependencyObject currentObject = null;
-                if (visual != null)
+                if (visual is not null)
                 {
                     currentObject = visual;
                 }
-                else if (visual3D != null)
+                else if (visual3D is not null)
                 {
                     currentObject = visual3D;
                 }
 
-                while (currentObject != null)
+                while (currentObject is not null)
                 {
                     DependencyObject parent = VisualTreeHelper.GetParent(currentObject);
                     if (parent == InkCanvas.InnerCanvas)

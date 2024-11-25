@@ -61,7 +61,7 @@ namespace System.Windows.Automation.Peers
             if (patternInterface == PatternInterface.Scroll)
             {
                 TextBox owner = (TextBox)Owner;
-                if (owner.ScrollViewer != null)
+                if (owner.ScrollViewer is not null)
                 {
                     returnValue = owner.ScrollViewer.CreateAutomationPeer();
                     ((AutomationPeer)returnValue).EventsSource = this;

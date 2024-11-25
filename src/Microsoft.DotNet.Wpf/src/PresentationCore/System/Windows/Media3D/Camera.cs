@@ -72,7 +72,7 @@ namespace System.Windows.Media.Media3D
 
         internal static void PrependInverseTransform(Transform3D transform, ref Matrix3D viewMatrix)
         {
-            if (transform != null && transform != Transform3D.Identity)
+            if (transform is not null && transform != Transform3D.Identity)
             {
                 PrependInverseTransform(transform.Value, ref viewMatrix);
             }

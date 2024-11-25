@@ -375,7 +375,7 @@ namespace System.Windows.Media.Imaging
                 _encodeState = EncodeState.EncoderInitialized;
 
                 // Save global thumbnail if any.
-                if (_thumbnail != null)
+                if (_thumbnail is not null)
                 {
                     Debug.Assert(_supportsGlobalThumbnail);
                     SafeMILHandle thumbnailBitmapSource = _thumbnail.WicSourceHandle;
@@ -393,7 +393,7 @@ namespace System.Windows.Media.Imaging
                 }
 
                 // Save global palette if any.
-                if (_palette != null && _palette.Colors.Count > 0)
+                if (_palette is not null && _palette.Colors.Count > 0)
                 {
                     SafeMILHandle paletteHandle = _palette.InternalPalette;
 
@@ -407,7 +407,7 @@ namespace System.Windows.Media.Imaging
                 }
 
                 // Save global metadata if any.
-                if (_metadata != null && _metadata.GuidFormat == ContainerFormat)
+                if (_metadata is not null && _metadata.GuidFormat == ContainerFormat)
                 {
                     Debug.Assert(_supportsGlobalMetadata);
 
@@ -554,7 +554,7 @@ namespace System.Windows.Media.Imaging
 
             if (createBitmapMetadata &&
                 _metadata is null &&
-                _metadataHandle != null)
+                _metadataHandle is not null)
             {
                 _metadata = new BitmapMetadata(_metadataHandle, false, IsMetadataFixedSize, _metadataHandle);
             }
@@ -633,7 +633,7 @@ namespace System.Windows.Media.Imaging
                 // Set the thumbnail.
                 BitmapSource thumbnail = frame.Thumbnail;
 
-                if (thumbnail != null)
+                if (thumbnail is not null)
                 {
                     SafeMILHandle thumbnailHandle = thumbnail.WicSourceHandle;
 
@@ -673,7 +673,7 @@ namespace System.Windows.Media.Imaging
             else
             {
                 IList<ColorContext> colorContexts = frame.ColorContexts;
-                if (colorContexts != null && colorContexts.Count > 0)
+                if (colorContexts is not null && colorContexts.Count > 0)
                 {             
                     int count = colorContexts.Count;
 
@@ -728,7 +728,7 @@ namespace System.Windows.Media.Imaging
                     BitmapMetadata metadata = frame.Metadata as BitmapMetadata;
 
                     // If the frame has metadata associated with a different container format, then we ignore it.
-                    if (metadata != null && metadata.GuidFormat == ContainerFormat)
+                    if (metadata is not null && metadata.GuidFormat == ContainerFormat)
                     {
                         SafeMILHandle /* IWICMetadataQueryWriter */ metadataHandle = new SafeMILHandle();
 

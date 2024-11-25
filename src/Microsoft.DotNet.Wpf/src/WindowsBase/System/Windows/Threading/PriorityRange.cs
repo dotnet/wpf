@@ -89,7 +89,7 @@ namespace System.Windows.Threading
         {
             get
             {
-                // return _min != null && _min.IsValid && _max != null && _max.IsValid;
+                // return _min is not null && _min.IsValid && _max is not null && _max.IsValid;
                 return (_min > DispatcherPriority.Invalid && _min <= DispatcherPriority.Send &&
                         _max > DispatcherPriority.Invalid && _max <= DispatcherPriority.Send);
             }

@@ -208,7 +208,7 @@ namespace System.Windows.Controls
         private void ClearLayoutUpdatedHandler()
         {
             // If queue is not empty - then we still need that handler to make sure queue is being processed.
-            if ((_layoutUpdatedHandler != null) && (_queue.IsEmpty()))
+            if ((_layoutUpdatedHandler is not null) && (_queue.IsEmpty()))
             {
                 LayoutUpdated -= _layoutUpdatedHandler;
                 _layoutUpdatedHandler = null;
@@ -926,7 +926,7 @@ namespace System.Windows.Controls
                 return;
 
             Control templatedParentControl = TemplatedParent as Control;
-            if (templatedParentControl != null && templatedParentControl.HandlesScrolling)
+            if (templatedParentControl is not null && templatedParentControl.HandlesScrolling)
                 return;
 
             // If the ScrollViewer has focus or other that arrow key is pressed
@@ -958,21 +958,21 @@ namespace System.Windows.Controls
                     {
                         // Navigate from current focused element
                         UIElement currentFocusUIElement = focusedElement as UIElement;
-                        if (currentFocusUIElement != null)
+                        if (currentFocusUIElement is not null)
                         {
                             predictedFocus = currentFocusUIElement.PredictFocus(direction);
                         }
                         else
                         {
                             ContentElement currentFocusContentElement = focusedElement as ContentElement;
-                            if (currentFocusContentElement != null)
+                            if (currentFocusContentElement is not null)
                             {
                                 predictedFocus = currentFocusContentElement.PredictFocus(direction);
                             }
                             else
                             {
                                 UIElement3D currentFocusUIElement3D = focusedElement as UIElement3D;
-                                if (currentFocusUIElement3D != null)
+                                if (currentFocusUIElement3D is not null)
                                 {
                                     predictedFocus = currentFocusUIElement3D.PredictFocus(direction);
                                 }
@@ -1116,7 +1116,7 @@ namespace System.Windows.Controls
                 return;
             }
 
-            if (ScrollInfo != null)
+            if (ScrollInfo is not null)
             {
                 if (e.Delta < 0) { ScrollInfo.MouseWheelDown(); }
                 else { ScrollInfo.MouseWheelUp(); }
@@ -1152,7 +1152,7 @@ namespace System.Windows.Controls
             ScrollBarVisibility hsbv = HorizontalScrollBarVisibility;
             Size desiredSize = new Size();
 
-            if (child != null)
+            if (child is not null)
             {
                 bool etwTracingEnabled = EventTrace.IsEnabled(EventTrace.Keyword.KeywordGeneral, EventTrace.Level.Info);
                 if (etwTracingEnabled)
@@ -1180,7 +1180,7 @@ namespace System.Windows.Controls
                         SetValue(ComputedHorizontalScrollBarVisibilityPropertyKey, _scrollVisibilityX);
                     }
 
-                    if (isi != null)
+                    if (isi is not null)
                     {
                         isi.CanHorizontallyScroll = !hDisableScroll;
                         isi.CanVerticallyScroll = !vDisableScroll;
@@ -1200,7 +1200,7 @@ namespace System.Windows.Controls
                     //it could now be here as a result of visual template expansion that happens during Measure
                     isi = this.ScrollInfo;
 
-                    if (isi != null && (hsbAuto || vsbAuto))
+                    if (isi is not null && (hsbAuto || vsbAuto))
                     {
                         bool makeHorizontalBarVisible = hsbAuto && DoubleUtil.GreaterThan(isi.ExtentWidth, isi.ViewportWidth);
                         bool makeVerticalBarVisible = vsbAuto && DoubleUtil.GreaterThan(isi.ExtentHeight, isi.ViewportHeight);
@@ -1353,7 +1353,7 @@ namespace System.Windows.Controls
         {
             base.OnPreApplyTemplate();
 
-            if (TemplatedParent != null)
+            if (TemplatedParent is not null)
             {
                 BindToTemplatedParent(HorizontalScrollBarVisibilityProperty);
                 BindToTemplatedParent(VerticalScrollBarVisibilityProperty);
@@ -1372,12 +1372,12 @@ namespace System.Windows.Controls
 
             ScrollBar scrollBar = GetTemplateChild(HorizontalScrollBarTemplateName) as ScrollBar;
 
-            if (scrollBar != null)
+            if (scrollBar is not null)
                 scrollBar.IsStandalone = false;
 
             scrollBar = GetTemplateChild(VerticalScrollBarTemplateName) as ScrollBar;
 
-            if (scrollBar != null)
+            if (scrollBar is not null)
                 scrollBar.IsStandalone = false;
 
             OnPanningModeChanged();
@@ -1404,7 +1404,7 @@ namespace System.Windows.Controls
             set
             {
                 _scrollInfo = value;
-                if (_scrollInfo != null)
+                if (_scrollInfo is not null)
                 {
                     _scrollInfo.CanHorizontallyScroll = (HorizontalScrollBarVisibility != ScrollBarVisibility.Disabled);
                     _scrollInfo.CanVerticallyScroll = (VerticalScrollBarVisibility != ScrollBarVisibility.Disabled);
@@ -1462,7 +1462,7 @@ namespace System.Windows.Controls
         private static void OnPanningModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ScrollViewer sv = d as ScrollViewer;
-            if (sv != null)
+            if (sv is not null)
             {
                 sv.OnPanningModeChanged();
             }
@@ -1622,7 +1622,7 @@ namespace System.Windows.Controls
 
                     double viewportWidth = ViewportWidth + 1d; // Using +1 to account for last partially visible item in viewport
                     double viewportHeight = ViewportHeight + 1d; // Using +1 to account for last partially visible item in viewport
-                    if (viewport != null)
+                    if (viewport is not null)
                     {
                         _panningInfo.DeltaPerHorizontalOffet = (DoubleUtil.AreClose(viewportWidth, 0) ? 0 : viewport.ActualWidth / viewportWidth);
                         _panningInfo.DeltaPerVerticalOffset = (DoubleUtil.AreClose(viewportHeight, 0) ? 0 : viewport.ActualHeight / viewportHeight);
@@ -1686,7 +1686,7 @@ namespace System.Windows.Controls
 
         protected override void OnManipulationDelta(ManipulationDeltaEventArgs e)
         {
-            if (_panningInfo != null)
+            if (_panningInfo is not null)
             {
                 if (e.IsInertial && CompleteScrollManipulation)
                 {
@@ -1732,7 +1732,7 @@ namespace System.Windows.Controls
 
         private void ManipulateScroll(ManipulationDeltaEventArgs e)
         {
-            Debug.Assert(_panningInfo != null);
+            Debug.Assert(_panningInfo is not null);
             PanningMode panningMode = _panningInfo.PanningMode;
             if (panningMode != PanningMode.VerticalOnly)
             {
@@ -1866,7 +1866,7 @@ namespace System.Windows.Controls
         /// </summary>
         private bool CanStartScrollManipulation(Vector translation, out bool cancelManipulation)
         {
-            Debug.Assert(_panningInfo != null);
+            Debug.Assert(_panningInfo is not null);
             cancelManipulation = false;
             PanningMode panningMode = _panningInfo.PanningMode;
             if (panningMode == PanningMode.None)
@@ -1916,7 +1916,7 @@ namespace System.Windows.Controls
 
         protected override void OnManipulationInertiaStarting(ManipulationInertiaStartingEventArgs e)
         {
-            if (_panningInfo != null)
+            if (_panningInfo is not null)
             {
                 if (!_panningInfo.IsPanning && !ForceNextManipulationComplete)
                 {
@@ -1934,7 +1934,7 @@ namespace System.Windows.Controls
 
         protected override void OnManipulationCompleted(ManipulationCompletedEventArgs e)
         {
-            if (_panningInfo != null)
+            if (_panningInfo is not null)
             {
                 if (!(e.IsInertial && CompleteScrollManipulation))
                 {
@@ -2237,8 +2237,8 @@ namespace System.Windows.Controls
                     Visual child = cmd.MakeVisibleParam.Child;
                     Visual visi = isi as Visual;
 
-                    if (    child != null
-                        &&  visi != null
+                    if (    child is not null
+                        &&  visi is not null
                         &&  (visi == child || visi.IsAncestorOf(child))
                         //  bug 1616807. ISI could be removed from visual tree,
                         //  but ScrollViewer.ScrollInfo may not reflect this yet.
@@ -2248,7 +2248,7 @@ namespace System.Windows.Controls
                         if(targetRect.IsEmpty)
                         {
                             UIElement uie = child as UIElement;
-                            if(uie != null)
+                            if(uie is not null)
                                 targetRect = new Rect(uie.RenderSize);
                             else
                                 targetRect = new Rect(); //not a good idea to invoke ISI with Empty rect
@@ -2274,7 +2274,7 @@ namespace System.Windows.Controls
                             // The ancestor's scroll should only depend on the visible
                             // portion of the new rect.
                             UIElement uie = visi as UIElement;
-                            if (uie != null)
+                            if (uie is not null)
                             {
                                 rcNew.Intersect(new Rect(uie.RenderSize));
                             }
@@ -2336,7 +2336,7 @@ namespace System.Windows.Controls
             //
             // Go through scrolling properties updating values.
             //
-            if (ScrollInfo != null && !DoubleUtil.AreClose(oldActualHorizontalOffset, ScrollInfo.HorizontalOffset))
+            if (ScrollInfo is not null && !DoubleUtil.AreClose(oldActualHorizontalOffset, ScrollInfo.HorizontalOffset))
             {
                 _xPositionISI = ScrollInfo.HorizontalOffset;
                 HorizontalOffset = _xPositionISI;
@@ -2344,7 +2344,7 @@ namespace System.Windows.Controls
                 changed = true;
             }
 
-            if (ScrollInfo != null && !DoubleUtil.AreClose(oldActualVerticalOffset, ScrollInfo.VerticalOffset))
+            if (ScrollInfo is not null && !DoubleUtil.AreClose(oldActualVerticalOffset, ScrollInfo.VerticalOffset))
             {
                 _yPositionISI = ScrollInfo.VerticalOffset;
                 VerticalOffset = _yPositionISI;
@@ -2352,28 +2352,28 @@ namespace System.Windows.Controls
                 changed = true;
             }
 
-            if (ScrollInfo != null && !DoubleUtil.AreClose(oldViewportWidth, ScrollInfo.ViewportWidth))
+            if (ScrollInfo is not null && !DoubleUtil.AreClose(oldViewportWidth, ScrollInfo.ViewportWidth))
             {
                 _xSize = ScrollInfo.ViewportWidth;
                 SetValue(ViewportWidthPropertyKey, _xSize);
                 changed = true;
             }
 
-            if (ScrollInfo != null && !DoubleUtil.AreClose(oldViewportHeight, ScrollInfo.ViewportHeight))
+            if (ScrollInfo is not null && !DoubleUtil.AreClose(oldViewportHeight, ScrollInfo.ViewportHeight))
             {
                 _ySize = ScrollInfo.ViewportHeight;
                 SetValue(ViewportHeightPropertyKey, _ySize);
                 changed = true;
             }
 
-            if (ScrollInfo != null && !DoubleUtil.AreClose(oldExtentWidth, ScrollInfo.ExtentWidth))
+            if (ScrollInfo is not null && !DoubleUtil.AreClose(oldExtentWidth, ScrollInfo.ExtentWidth))
             {
                 _xExtent = ScrollInfo.ExtentWidth;
                 SetValue(ExtentWidthPropertyKey, _xExtent);
                 changed = true;
             }
 
-            if (ScrollInfo != null && !DoubleUtil.AreClose(oldExtentHeight, ScrollInfo.ExtentHeight))
+            if (ScrollInfo is not null && !DoubleUtil.AreClose(oldExtentHeight, ScrollInfo.ExtentHeight))
             {
                 _yExtent = ScrollInfo.ExtentHeight;
                 SetValue(ExtentHeightPropertyKey, _yExtent);
@@ -2420,7 +2420,7 @@ namespace System.Windows.Controls
 
                     // Fire automation events if automation is active.
                     ScrollViewerAutomationPeer peer = UIElementAutomationPeer.FromElement(this) as ScrollViewerAutomationPeer;
-                    if(peer != null)
+                    if(peer is not null)
                     {
                         peer.RaiseAutomationEvents(oldExtentWidth,
                                                    oldExtentHeight,
@@ -2463,7 +2463,7 @@ namespace System.Windows.Controls
             ScrollViewer sv = sender as ScrollViewer;
             Visual child = e.TargetObject as Visual;
 
-            if (child != null)
+            if (child is not null)
             {
                 //the event starts from the elemetn itself, so if it is an SV.BringINtoView we would
                 //get an SV trying to bring into view itself  - this does not work obviously
@@ -2477,13 +2477,13 @@ namespace System.Windows.Controls
             else
             {
                 ContentElement contentElement = e.TargetObject as ContentElement;
-                if (contentElement != null)
+                if (contentElement is not null)
                 {
                     // We need to find the containing Visual and the bounding box for this element.
                     IContentHost contentHost = ContentHostHelper.FindContentHost(contentElement);
                     child = contentHost as Visual;
 
-                    if (child != null && child.IsDescendantOf(sv))
+                    if (child is not null && child.IsDescendantOf(sv))
                     {
                         ReadOnlyCollection<Rect> rects = contentHost.GetRectangles(contentElement);
                         if (rects.Count > 0)
@@ -2574,7 +2574,7 @@ namespace System.Windows.Controls
             }
 
             ScrollViewer sv = target as ScrollViewer;
-            if (sv != null)
+            if (sv is not null)
             {
                 // If any of the ScrollBar scroll commands are raised while
                 // scroll manipulation is in its inertia, then the manipualtion
@@ -2596,9 +2596,9 @@ namespace System.Windows.Controls
                 ||  args.Command == ComponentCommands.ScrollPageDown    )
             {
                 ScrollViewer scrollViewer = target as ScrollViewer;
-                Control templatedParentControl = scrollViewer != null ? scrollViewer.TemplatedParent as Control : null;
+                Control templatedParentControl = scrollViewer is not null ? scrollViewer.TemplatedParent as Control : null;
 
-                if (    templatedParentControl != null
+                if (    templatedParentControl is not null
                     &&  templatedParentControl.HandlesScrolling )
                 {
                     args.CanExecute = false;
@@ -2617,7 +2617,7 @@ namespace System.Windows.Controls
                 // not executable so that the scroll bar will fire the regular scroll
                 // command, and the scroll viewer will do live scrolling.
                 ScrollViewer scrollViewer = target as ScrollViewer;
-                if ((scrollViewer != null) && !scrollViewer.IsDeferredScrollingEnabled)
+                if ((scrollViewer is not null) && !scrollViewer.IsDeferredScrollingEnabled)
                 {
                     args.CanExecute = false;
 

@@ -34,7 +34,7 @@ namespace MS.Internal.Documents.Application
                 "Navigation delegate has not been assigned.");
 
             Invariant.Assert(
-                document != null,
+                document is not null,
                 "Target document has not been assigned.");
 
             _navigate(document.Uri);
@@ -55,7 +55,7 @@ namespace MS.Internal.Documents.Application
                 "Navigation delegate has not been assigned.");
 
             Invariant.Assert(
-                uri != null,
+                uri is not null,
                 "Target uri has not been assigned.");
 
             _navigate(uri);

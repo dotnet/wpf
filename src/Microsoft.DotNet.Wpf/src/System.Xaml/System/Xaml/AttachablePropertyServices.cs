@@ -22,7 +22,7 @@ namespace System.Xaml
             }
 
             IAttachedPropertyStore ap = instance as IAttachedPropertyStore;
-            if (ap != null)
+            if (ap is not null)
             {
                 return ap.PropertyCount;
             }
@@ -38,7 +38,7 @@ namespace System.Xaml
             }
 
             IAttachedPropertyStore ap = instance as IAttachedPropertyStore;
-            if (ap != null)
+            if (ap is not null)
             {
                 ap.CopyPropertiesTo(array, index);
             }
@@ -56,7 +56,7 @@ namespace System.Xaml
             }
 
             IAttachedPropertyStore ap = instance as IAttachedPropertyStore;
-            if (ap != null)
+            if (ap is not null)
             {
                 return ap.RemoveProperty(name);
             }
@@ -74,7 +74,7 @@ namespace System.Xaml
             ArgumentNullException.ThrowIfNull(name);
 
             IAttachedPropertyStore ap = instance as IAttachedPropertyStore;
-            if (ap != null)
+            if (ap is not null)
             {
                 ap.SetProperty(name, value);
                 return;
@@ -98,7 +98,7 @@ namespace System.Xaml
             }
 
             IAttachedPropertyStore ap = instance as IAttachedPropertyStore;
-            if (ap != null)
+            if (ap is not null)
             {
                 object obj;
                 bool result = ap.TryGetProperty(name, out obj);

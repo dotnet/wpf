@@ -29,8 +29,8 @@ namespace System.Windows.Documents
 
         private DPTypeDescriptorContext(DependencyProperty property, object propertyValue)
         {
-            Invariant.Assert(property != null, "property is null");
-            Invariant.Assert(propertyValue != null, "propertyValue is null");
+            Invariant.Assert(property is not null, "property is null");
+            Invariant.Assert(propertyValue is not null, "propertyValue is null");
             Invariant.Assert(property.IsValidValue(propertyValue), "propertyValue must be of suitable type for the given dependency property");
 
             _property = property;
@@ -73,7 +73,7 @@ namespace System.Windows.Documents
                 DPTypeDescriptorContext context = new DPTypeDescriptorContext(property, propertyValue);
 
                 System.ComponentModel.TypeConverter typeConverter = System.ComponentModel.TypeDescriptor.GetConverter(property.PropertyType);
-                Invariant.Assert(typeConverter != null);
+                Invariant.Assert(typeConverter is not null);
                 if (typeConverter.CanConvertTo(context, typeof(string)))
                 {
                     stringValue = (string)typeConverter.ConvertTo(

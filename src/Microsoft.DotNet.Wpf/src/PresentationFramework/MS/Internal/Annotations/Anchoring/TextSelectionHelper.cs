@@ -78,22 +78,22 @@ namespace MS.Internal.Annotations.Anchoring
             TextAnchor firstAnchor = anchor1 as TextAnchor;
             TextAnchor secondAnchor = anchor2 as TextAnchor;
 
-            if ((anchor1 != null) && (firstAnchor is null))
+            if ((anchor1 is not null) && (firstAnchor is null))
                 throw new ArgumentException(SR.WrongSelectionType, $"anchor1: type = {anchor1.GetType()}");
 
-            if ((anchor2 != null) && (secondAnchor is null))
+            if ((anchor2 is not null) && (secondAnchor is null))
                 throw new ArgumentException(SR.WrongSelectionType, $"Anchor2: type = {anchor2.GetType()}");
 
             if (firstAnchor is null)
             {
                 newAnchor = secondAnchor;
-                return newAnchor != null;
+                return newAnchor is not null;
             }
 
             if (secondAnchor is null)
             {
                 newAnchor = firstAnchor;
-                return newAnchor != null;
+                return newAnchor is not null;
             }
 
             newAnchor = TextAnchor.ExclusiveUnion(firstAnchor, secondAnchor);
@@ -182,7 +182,7 @@ namespace MS.Internal.Annotations.Anchoring
             DependencyObject parent = PathNode.GetParent(document);
 
             FlowDocumentScrollViewer scrollViewer = parent as FlowDocumentScrollViewer;
-            if (scrollViewer != null)
+            if (scrollViewer is not null)
             {
                 return (UIElement)scrollViewer.ScrollViewer.Content;
             }
@@ -190,7 +190,7 @@ namespace MS.Internal.Annotations.Anchoring
             // Special case - for paginated content we want the DocumentPageHost for the
             // specific page instead of the viewer.
             DocumentViewerBase documentViewerBase = parent as DocumentViewerBase;
-            if (documentViewerBase != null)
+            if (documentViewerBase is not null)
             {
                 int pageNumber;
 
@@ -311,7 +311,7 @@ namespace MS.Internal.Annotations.Anchoring
                 //the geometry calculating function does the same
                 extension = true;
             }
-            if (textView != null && textView.IsValid && TextDocumentView.Contains(pointer, textView.TextSegments))
+            if (textView is not null && textView.IsValid && TextDocumentView.Contains(pointer, textView.TextSegments))
             {
                 Rect rect = textView.GetRectangleFromTextPosition(pointer);               
                 if (extension && rect != Rect.Empty)
@@ -332,20 +332,20 @@ namespace MS.Internal.Annotations.Anchoring
         /// <returns>DocumentViewerBase</returns>
         public static IDocumentPaginatorSource GetPointerPage(ITextPointer pointer, out int pageNumber)
         {
-            Invariant.Assert(pointer != null, "unknown pointer");
+            Invariant.Assert(pointer is not null, "unknown pointer");
 
             IDocumentPaginatorSource idp = pointer.TextContainer.Parent as IDocumentPaginatorSource;
             FixedDocument fixedDoc = idp as FixedDocument;
-            if (fixedDoc != null)
+            if (fixedDoc is not null)
             {
                 FixedDocumentSequence sequence = fixedDoc.Parent as FixedDocumentSequence;
-                if (sequence != null)
+                if (sequence is not null)
                     idp = sequence;
             }
 
-            Invariant.Assert(idp != null);
+            Invariant.Assert(idp is not null);
             DynamicDocumentPaginator ddp = idp.DocumentPaginator as DynamicDocumentPaginator;
-            pageNumber = ddp != null ? ddp.GetPageNumber((ContentPosition)pointer) : -1;
+            pageNumber = ddp is not null ? ddp.GetPageNumber((ContentPosition)pointer) : -1;
 
             return idp;
         }
@@ -367,7 +367,7 @@ namespace MS.Internal.Annotations.Anchoring
         {
             ITextRange textRange = selection as ITextRange;
 
-            if (textRange != null)
+            if (textRange is not null)
             {
                 start = textRange.Start;
                 end = textRange.End;
@@ -395,23 +395,23 @@ namespace MS.Internal.Annotations.Anchoring
             int pageNumber;
 
             DependencyObject content = pointer.TextContainer.Parent as DependencyObject;
-            if (content != null)
+            if (content is not null)
             {
                 FlowDocumentScrollViewer scrollViewer = PathNode.GetParent(content) as FlowDocumentScrollViewer;
-                if (scrollViewer != null)
+                if (scrollViewer is not null)
                 {
                     IServiceProvider provider = scrollViewer.ScrollViewer.Content as IServiceProvider;
-                    Invariant.Assert(provider != null, "FlowDocumentScrollViewer should be an IServiceProvider.");
+                    Invariant.Assert(provider is not null, "FlowDocumentScrollViewer should be an IServiceProvider.");
                     return provider.GetService(typeof(ITextView)) as ITextView;
                 }
             }
 
             IDocumentPaginatorSource idp = GetPointerPage(pointer, out pageNumber);
-            if (idp != null && pageNumber >= 0)
+            if (idp is not null && pageNumber >= 0)
             {
                 DocumentPage docPage = idp.DocumentPaginator.GetPage(pageNumber);
                 IServiceProvider isp = docPage as IServiceProvider;
-                if (isp != null)
+                if (isp is not null)
                     return isp.GetService(typeof(ITextView)) as ITextView;
             }
 
@@ -433,13 +433,13 @@ namespace MS.Internal.Annotations.Anchoring
             ITextPointer end = segment.End.CreatePointer(LogicalDirection.Backward);
 
             DependencyObject content = start.TextContainer.Parent as DependencyObject;
-            if (content != null)
+            if (content is not null)
             {
                 FlowDocumentScrollViewer scrollViewer = PathNode.GetParent(content) as FlowDocumentScrollViewer;
-                if (scrollViewer != null)
+                if (scrollViewer is not null)
                 {
                     IServiceProvider provider = scrollViewer.ScrollViewer.Content as IServiceProvider;
-                    Invariant.Assert(provider != null, "FlowDocumentScrollViewer should be an IServiceProvider.");
+                    Invariant.Assert(provider is not null, "FlowDocumentScrollViewer should be an IServiceProvider.");
                     res = new List<ITextView>(1);
                     res.Add(provider.GetService(typeof(ITextView)) as ITextView);
                     return res;
@@ -448,7 +448,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             IDocumentPaginatorSource idp = GetPointerPage(start, out startPageNumber);
             DynamicDocumentPaginator ddp = idp.DocumentPaginator as DynamicDocumentPaginator;
-            endPageNumber = ddp != null ? ddp.GetPageNumber((ContentPosition)end) : -1;
+            endPageNumber = ddp is not null ? ddp.GetPageNumber((ContentPosition)end) : -1;
 
             if (startPageNumber == -1 || endPageNumber == -1)
             {
@@ -486,16 +486,16 @@ namespace MS.Internal.Annotations.Anchoring
         /// <returns>returns a list of one view</returns>
         private static List<ITextView> ProcessSinglePage(IDocumentPaginatorSource idp, int pageNumber)
         {
-            Invariant.Assert(idp != null, "IDocumentPaginatorSource is null");
+            Invariant.Assert(idp is not null, "IDocumentPaginatorSource is null");
 
             DocumentPage docPage = idp.DocumentPaginator.GetPage(pageNumber);
             IServiceProvider isp = docPage as IServiceProvider;
             List<ITextView> res = null;
-            if (isp != null)
+            if (isp is not null)
             {
                 res = new List<ITextView>(1);
                 ITextView view = isp.GetService(typeof(ITextView)) as ITextView;
-                if (view != null)
+                if (view is not null)
                     res.Add(view);
             }
 
@@ -512,11 +512,11 @@ namespace MS.Internal.Annotations.Anchoring
         /// <returns>returns a list of text views</returns>
         private static List<ITextView> ProcessMultiplePages(IDocumentPaginatorSource idp, int startPageNumber, int endPageNumber)
         {
-            Invariant.Assert(idp != null, "IDocumentPaginatorSource is null");
+            Invariant.Assert(idp is not null, "IDocumentPaginatorSource is null");
 
             //now get available views
             DocumentViewerBase viewer = PathNode.GetParent(idp as DependencyObject) as DocumentViewerBase;
-            Invariant.Assert(viewer != null, "DocumentViewer not found");
+            Invariant.Assert(viewer is not null, "DocumentViewer not found");
 
             // If the pages for the text segment are reversed (possibly a floater where the floater
             // reflow on to a page that comes after its anchor) we just swap them
@@ -528,19 +528,19 @@ namespace MS.Internal.Annotations.Anchoring
             }
 
             List<ITextView> res = null;
-            if (idp != null && startPageNumber >= 0 && endPageNumber >= startPageNumber)
+            if (idp is not null && startPageNumber >= 0 && endPageNumber >= startPageNumber)
             {
                 res = new List<ITextView>(endPageNumber - startPageNumber + 1);
                 for (int pageNb = startPageNumber; pageNb <= endPageNumber; pageNb++)
                 {
                     DocumentPageView view = AnnotationHelper.FindView(viewer, pageNb);
-                    if (view != null)
+                    if (view is not null)
                     {
                         IServiceProvider serviceProvider = view.DocumentPage as IServiceProvider;
-                        if (serviceProvider != null)
+                        if (serviceProvider is not null)
                         {
                             ITextView textView = serviceProvider.GetService(typeof(ITextView)) as ITextView;
-                            if (textView != null)
+                            if (textView is not null)
                                 res.Add(textView);
                         }
                     }

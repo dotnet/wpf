@@ -38,10 +38,10 @@ namespace System.Windows.Automation.Peers
             if(patternInterface == PatternInterface.Scroll)
             {
                 ItemsControl owner = (ItemsControl)Owner;
-                if(owner.ScrollHost != null)
+                if(owner.ScrollHost is not null)
                 {
                     AutomationPeer scrollPeer = UIElementAutomationPeer.CreatePeerForElement(owner.ScrollHost);
-                    if(scrollPeer != null && scrollPeer is IScrollProvider)
+                    if(scrollPeer is not null && scrollPeer is IScrollProvider)
                     {
                         scrollPeer.EventsSource = this;
                         return (IScrollProvider)scrollPeer;
@@ -50,7 +50,7 @@ namespace System.Windows.Automation.Peers
             }
             else if (patternInterface == PatternInterface.ItemContainer)
             {
-                if(Owner as ItemsControl != null)
+                if(Owner as ItemsControl is not null)
                     return this;
                 return null;
             }
@@ -91,7 +91,7 @@ namespace System.Windows.Automation.Peers
                 foreach (UIElement child in childItems)
                 {
                     UIElementAutomationPeer peer = child.CreateAutomationPeer() as UIElementAutomationPeer;
-                    if (peer != null)
+                    if (peer is not null)
                     {
                         children.Add(peer);
 
@@ -103,10 +103,10 @@ namespace System.Windows.Automation.Peers
                             // UpdateSubtree call because that call does not otherwise descend into parts of the tree
                             // that have their children invalid as an optimization.
                             //
-                            if (_recentlyRealizedPeers != null && _recentlyRealizedPeers.Count > 0 && this.AncestorsInvalid)
+                            if (_recentlyRealizedPeers is not null && _recentlyRealizedPeers.Count > 0 && this.AncestorsInvalid)
                             {
                                 GroupItemAutomationPeer groupItemPeer = peer as GroupItemAutomationPeer;
-                                if (groupItemPeer != null)
+                                if (groupItemPeer is not null)
                                 {
                                     groupItemPeer.InvalidateGroupItemPeersContainingRecentlyRealizedPeers(_recentlyRealizedPeers);
                                 }
@@ -123,7 +123,7 @@ namespace System.Windows.Automation.Peers
                             if (this.AncestorsInvalid)
                             {
                                 GroupItemAutomationPeer groupItemPeer = peer as GroupItemAutomationPeer;
-                                if (groupItemPeer != null)
+                                if (groupItemPeer is not null)
                                 {
                                     // invalidate all GroupItemAP children, so
                                     // that the top-level ItemsControlAP's
@@ -162,7 +162,7 @@ namespace System.Windows.Automation.Peers
                     {
                         // 'item' is a container - get the corresponding data item
                         DependencyObject d = item as DependencyObject;
-                        dataItem = (d != null) ? owner.ItemContainerGenerator.ItemFromContainer(d) : null;
+                        dataItem = (d is not null) ? owner.ItemContainerGenerator.ItemFromContainer(d) : null;
 
                         // ItemFromContainer can return {UnsetValue} if we're in a re-entrant
                         // call while the generator is in the midst of unhooking the container.
@@ -188,10 +188,10 @@ namespace System.Windows.Automation.Peers
                     }
 
                     // perform hookup so the events sourced from wrapper peer are fired as if from the data item
-                    if (peer != null)
+                    if (peer is not null)
                     {
                         AutomationPeer wrapperPeer = peer.GetWrapperPeer();
-                        if (wrapperPeer != null)
+                        if (wrapperPeer is not null)
                         {
                             wrapperPeer.EventsSource = peer;
                         }
@@ -199,7 +199,7 @@ namespace System.Windows.Automation.Peers
 
                     // protection from indistinguishable items - for example, 2 strings with same value
                     // this scenario does not work in ItemsControl however is not checked for.
-                    if (peer != null && _dataChildren[dataItem] is null)
+                    if (peer is not null && _dataChildren[dataItem] is null)
                     {
                         children.Add(peer);
                         _dataChildren[dataItem] = peer;
@@ -217,7 +217,7 @@ namespace System.Windows.Automation.Peers
             if (peer is null)
             {
                 peer = GetPeerFromWeakRefStorage(item);
-                if (peer != null)
+                if (peer is not null)
                 {
                     // As cached peer is getting used it must be invalidated.
                     peer.AncestorsInvalid = false;
@@ -225,7 +225,7 @@ namespace System.Windows.Automation.Peers
                 }
             }
 
-            if (peer != null)
+            if (peer is not null)
             {
                 peer.ReuseForItem(item);
             }
@@ -238,7 +238,7 @@ namespace System.Windows.Automation.Peers
         {
             ItemsControl owner = this.Owner as ItemsControl;
             ItemCollection items = owner.Items;
-            if(items != null)
+            if(items is not null)
             {
                 if(GetPeerFromWeakRefStorage(itemPeer.Item) is null)
                     WeakRefElementProxyStorage[itemPeer.Item] = wr;
@@ -261,13 +261,13 @@ namespace System.Windows.Automation.Peers
             ItemsControl owner = (ItemsControl)Owner;
 
             ItemCollection items = null;
-            if(owner != null)
+            if(owner is not null)
                 items = owner.Items;
 
-            if (items != null && items.Count > 0)
+            if (items is not null && items.Count > 0)
             {
                 ItemAutomationPeer startAfterItem = null;
-                if (startAfter != null)
+                if (startAfter is not null)
                 {
                     // get the peer corresponding to this provider
                     startAfterItem = PeerFromProvider(startAfter) as ItemAutomationPeer;
@@ -277,7 +277,7 @@ namespace System.Windows.Automation.Peers
 
                 // startIndex refers to the index of the item just after startAfterItem
                 int startIndex = 0;
-                if (startAfterItem != null)
+                if (startAfterItem is not null)
                 {
                     if (startAfterItem.Item is null)
                     {
@@ -392,17 +392,17 @@ namespace System.Windows.Automation.Peers
             {
                 peer = CreateItemAutomationPeer(item);
 
-                if (peer != null)
+                if (peer is not null)
                 {
                     peer.TrySetParentInfo(this);
                 }
             }
 
-            if (peer != null)
+            if (peer is not null)
             {
                 //perform hookup so the events sourced from wrapper peer are fired as if from the data item
                 AutomationPeer wrapperPeer = peer.GetWrapperPeer();
-                if (wrapperPeer != null)
+                if (wrapperPeer is not null)
                 {
                     wrapperPeer.EventsSource = peer;
                 }
@@ -452,10 +452,10 @@ namespace System.Windows.Automation.Peers
         {
             ItemAutomationPeer returnPeer = null;
             WeakReference weakRefEP = WeakRefElementProxyStorage[item];
-            if(weakRefEP != null)
+            if(weakRefEP is not null)
             {
                 ElementProxy provider = weakRefEP.Target as ElementProxy;
-                if(provider != null)
+                if(provider is not null)
                 {
                     returnPeer = PeerFromProvider(provider as IRawElementProviderSimple) as ItemAutomationPeer;
                     if(returnPeer is null)
@@ -486,7 +486,7 @@ namespace System.Windows.Automation.Peers
 
         internal ItemAutomationPeer ReusablePeerFor(object item)
         {
-            if (_reusablePeers != null)
+            if (_reusablePeers is not null)
             {
                 return _reusablePeers[item];
             }
@@ -506,7 +506,7 @@ namespace System.Windows.Automation.Peers
 
         protected virtual bool IsVirtualized
         {
-            get { return ItemContainerPatternIdentifiers.Pattern != null; }
+            get { return ItemContainerPatternIdentifiers.Pattern is not null; }
         }
 
         // Derived classes should be able to access peers cache
@@ -561,7 +561,7 @@ namespace System.Windows.Automation.Peers
 
             void IDisposable.Dispose()
             {
-                if (_peer != null)
+                if (_peer is not null)
                 {
                     _peer.ClearReusablePeers(_oldChildren);
                     _peer = null;
@@ -584,10 +584,10 @@ namespace System.Windows.Automation.Peers
             _usesHashCode = false;
             _count = 0;
 
-            if (_hashtable != null)
+            if (_hashtable is not null)
                 _hashtable.Clear();
 
-            if (_list != null)
+            if (_list is not null)
                 _list.Clear();
         }
 
@@ -629,7 +629,7 @@ namespace System.Windows.Automation.Peers
                 // When we add the first item we need to determine whether to use hashtable or list
                 if (_count == 0)
                 {
-                    _usesHashCode = item != null && HashHelper.HasReliableHashCode(item);
+                    _usesHashCode = item is not null && HashHelper.HasReliableHashCode(item);
                 }
 
                 if (_usesHashCode)
@@ -658,7 +658,7 @@ namespace System.Windows.Automation.Peers
         {
             if(_usesHashCode)
             {
-                if(item != null && _hashtable.ContainsKey(item))
+                if(item is not null && _hashtable.ContainsKey(item))
                 {
                     _hashtable.Remove(item);
                     if(!_hashtable.ContainsKey(item))
@@ -667,7 +667,7 @@ namespace System.Windows.Automation.Peers
             }
             else
             {
-                if (_list != null)
+                if (_list is not null)
                 {
                     int i =0;
                     for (i = 0; i < _list.Count; i++)
@@ -778,7 +778,7 @@ namespace System.Windows.Automation.Peers
 
         private void UnlinkItem()
         {
-            if (_item != null)
+            if (_item is not null)
             {
                 ItemContainerGenerator.UnlinkContainerFromItem(_container, _item, _itemsControl);
                 _item = null;

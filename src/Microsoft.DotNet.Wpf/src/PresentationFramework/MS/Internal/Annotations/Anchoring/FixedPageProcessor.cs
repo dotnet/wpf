@@ -84,7 +84,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             DocumentPageView dpv = node as DocumentPageView;
 
-            if (dpv != null && (dpv.DocumentPage is FixedDocumentPage || dpv.DocumentPage is FixedDocumentSequenceDocumentPage))
+            if (dpv is not null && (dpv.DocumentPage is FixedDocumentPage || dpv.DocumentPage is FixedDocumentSequenceDocumentPage))
             {
                 calledProcessAnnotations = true;
                 return Manager.ProcessAnnotations(dpv);
@@ -122,7 +122,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             int pageNb = -1;
 
-            if (dpv != null)
+            if (dpv is not null)
             {
                 // Only produce locator parts for FixedDocumentPages
                 if (dpv.DocumentPage is FixedDocumentPage || dpv.DocumentPage is FixedDocumentSequenceDocumentPage)
@@ -133,7 +133,7 @@ namespace MS.Internal.Annotations.Anchoring
             else
             {
                 FixedTextSelectionProcessor.FixedPageProxy fPage = node.Node as FixedTextSelectionProcessor.FixedPageProxy;
-                if (fPage != null)
+                if (fPage is not null)
                 {
                     pageNb = fPage.Page;
                 }
@@ -183,7 +183,7 @@ namespace MS.Internal.Annotations.Anchoring
             int pageNumber = 0;
             string pageNumberString = locatorPart.NameValuePairs[ValueAttributeName];
 
-            if (pageNumberString != null)
+            if (pageNumberString is not null)
                 pageNumber = Int32.Parse(pageNumberString, NumberFormatInfo.InvariantInfo);
             else
                 throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), "locatorPart");
@@ -198,17 +198,17 @@ namespace MS.Internal.Annotations.Anchoring
             if (_useLogicalTree)
             {
                 document = startNode as FixedDocument;
-                if (document != null)
+                if (document is not null)
                 {
                     page = document.DocumentPaginator.GetPage(pageNumber) as FixedDocumentPage;
                 }
                 else
                 {
                     document = startNode as FixedDocumentSequence;
-                    if (document != null)
+                    if (document is not null)
                     {
                         FixedDocumentSequenceDocumentPage sequencePage = document.DocumentPaginator.GetPage(pageNumber) as FixedDocumentSequenceDocumentPage;
-                        if (sequencePage != null)
+                        if (sequencePage is not null)
                         {
                             page = sequencePage.ChildDocumentPage as FixedDocumentPage;
                         }
@@ -218,20 +218,20 @@ namespace MS.Internal.Annotations.Anchoring
             else
             {
                 dpv = startNode as DocumentPageView;
-                if (dpv != null)
+                if (dpv is not null)
                 {
                     page = dpv.DocumentPage as FixedDocumentPage;
                     if (page is null)
                     {
                         FixedDocumentSequenceDocumentPage sequencePage = dpv.DocumentPage as FixedDocumentSequenceDocumentPage;
-                        if (sequencePage != null)
+                        if (sequencePage is not null)
                         {
                             page = sequencePage.ChildDocumentPage as FixedDocumentPage;
                         }
                     }
 
                     // If this was the wrong fixed page we want to stop searching this subtree
-                    if (page != null && dpv.PageNumber != pageNumber)
+                    if (page is not null && dpv.PageNumber != pageNumber)
                     {
                         continueResolving = false;
                         page = null;
@@ -239,7 +239,7 @@ namespace MS.Internal.Annotations.Anchoring
                 }
             }
 
-            if (page != null)
+            if (page is not null)
             {
                 return page.FixedPage;
             }

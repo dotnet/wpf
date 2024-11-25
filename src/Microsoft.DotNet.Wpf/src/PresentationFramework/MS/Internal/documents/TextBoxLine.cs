@@ -62,7 +62,7 @@ namespace System.Windows.Controls
         public void Dispose()
         {
             // Dispose text line
-            if (_line != null)
+            if (_line is not null)
             {
                 _line.Dispose();
                 _line = null;
@@ -95,9 +95,9 @@ namespace System.Windows.Controls
                     Invariant.Assert(false, "Unsupported position type.");
                     break;
             }
-            Invariant.Assert(run != null, "TextRun has not been created.");
+            Invariant.Assert(run is not null, "TextRun has not been created.");
             Invariant.Assert(run.Length > 0, "TextRun has to have positive length.");
-            if (run.Properties != null)
+            if (run.Properties is not null)
             {
                 run.Properties.PixelsPerDip = this.PixelsPerDip;
             }
@@ -208,15 +208,15 @@ namespace System.Windows.Controls
             double delta = CalculateXOffsetShift();
             DrawingContext ctx = visual.RenderOpen();
 
-            if (selectionGeometry != null)
+            if (selectionGeometry is not null)
             {
                 var uiScope = _owner?.Host?.TextContainer?.TextSelection?.TextEditor?.UiScope;
 
-                if (uiScope != null)
+                if (uiScope is not null)
                 {
                     Brush selectionBrush = uiScope.GetValue(TextBoxBase.SelectionBrushProperty) as Brush;
 
-                    if (selectionBrush != null)
+                    if (selectionBrush is not null)
                     {
                         double selectionBrushOpacity = (double)uiScope.GetValue(TextBoxBase.SelectionOpacityProperty);
 
@@ -444,7 +444,7 @@ namespace System.Windows.Controls
 
             TextRunProperties properties = _lineProperties.DefaultTextRunProperties;
 
-            if (highlightDecorations != null)
+            if (highlightDecorations is not null)
             {
                 if (_spellerErrorProperties is null)
                 {
@@ -466,14 +466,14 @@ namespace System.Windows.Controls
                 // The UiScope that owns this line should be the source for text/highlight properties
                 var uiScope = textEditor?.UiScope;
 
-                if (uiScope != null)
+                if (uiScope is not null)
                 {
                     // Background should not be drawn since the selection is drawn below us
                     selectionProps.SetBackgroundBrush(null);
 
                     Brush selectionTextBrush = uiScope.GetValue(TextBoxBase.SelectionTextBrushProperty) as Brush;
 
-                    if (selectionTextBrush != null)
+                    if (selectionTextBrush is not null)
                     {
                         selectionProps.SetForegroundBrush(selectionTextBrush);
                     }
@@ -508,10 +508,10 @@ namespace System.Windows.Controls
             // Adjust x offset for trailing spaces
             double delta = CalculateXOffsetShift();
             IList<TextBounds> textBounds = _line.GetTextBounds(cp, cch);
-            Invariant.Assert(textBounds != null && textBounds.Count == 1, "Expecting exactly one TextBounds for a single text position.");
+            Invariant.Assert(textBounds is not null && textBounds.Count == 1, "Expecting exactly one TextBounds for a single text position.");
 
             IList<TextRunBounds> runBounds = textBounds[0].TextRunBounds;
-            if (runBounds != null)
+            if (runBounds is not null)
             {
                 Invariant.Assert(runBounds.Count == 1, "Expecting exactly one TextRunBounds for a single text position.");
                 rect = runBounds[0].Rectangle;

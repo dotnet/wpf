@@ -101,7 +101,7 @@ namespace MS.Internal.Documents.Application
         internal void Enforce()
         {
             Invariant.Assert(
-                _docViewer != null,
+                _docViewer is not null,
                 "CommandEnforcer has no reference to the parent DocumentApplicationDocumentViewer.");
 
             // Get the current policy from the parent DocumentApplicationDocumentViewer

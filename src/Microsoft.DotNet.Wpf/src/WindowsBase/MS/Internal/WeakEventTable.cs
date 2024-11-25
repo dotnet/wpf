@@ -306,7 +306,7 @@ namespace MS.Internal
                         object data = _dataTable[keys[i]];
                         // a purge earlier in the loop may have removed keys[i],
                         // in which case there's nothing more to do
-                        if (data != null)
+                        if (data is not null)
                         {
                             object source = keys[i].Source;
                             foundDirt |= keys[i].Manager.PurgeInternal(source, data, purgeAll);
@@ -529,8 +529,8 @@ namespace MS.Internal
             {
 #if DEBUG
                 WeakReference wr = _source as WeakReference;
-                object source = (wr != null) ? wr.Target : _source;
-                if (source != null)
+                object source = (wr is not null) ? wr.Target : _source;
+                if (source is not null)
                 {
                     int hashcode = unchecked(_manager.GetHashCode() + RuntimeHelpers.GetHashCode(source));
                     Debug.Assert(hashcode == _hashcode, "hashcodes disagree");
@@ -551,9 +551,9 @@ namespace MS.Internal
                         return false;
 
                     wr = this._source as WeakReference;
-                    object s1 = (wr != null) ? wr.Target : this._source;
+                    object s1 = (wr is not null) ? wr.Target : this._source;
                     wr = ek._source as WeakReference;
-                    object s2 = (wr != null) ? wr.Target : ek._source;
+                    object s2 = (wr is not null) ? wr.Target : ek._source;
 
                     if (s1!=null && s2!=null)
                         return (s1 == s2);

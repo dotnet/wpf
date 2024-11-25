@@ -27,14 +27,14 @@ namespace System.Windows.Input.Manipulations
         /// </remarks>
         internal void ProtectedChangeProperty(Func<bool> isEqual, Action setNewValue, string paramName)
         {
-            Debug.Assert(isEqual != null);
-            Debug.Assert(setNewValue != null);
-            Debug.Assert(paramName != null);
+            Debug.Assert(isEqual is not null);
+            Debug.Assert(setNewValue is not null);
+            Debug.Assert(paramName is not null);
 
             if (!isEqual())
             {
                 setNewValue();
-                if (Changed != null)
+                if (Changed is not null)
                 {
                     Changed(this, paramName);
                 }

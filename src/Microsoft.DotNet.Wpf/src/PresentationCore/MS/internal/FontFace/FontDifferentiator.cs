@@ -59,12 +59,12 @@ namespace MS.Internal.FontFace
             // Set the initial capacity to be able to hold the word "Regular".
             StringBuilder faceNameBuilder = new StringBuilder(7);
 
-            if (parsedStretchName != null)
+            if (parsedStretchName is not null)
             {
                 faceNameBuilder.Append(parsedStretchName);
             }
 
-            if (parsedWeightName != null)
+            if (parsedWeightName is not null)
             {
                 if (faceNameBuilder.Length > 0)
                 {
@@ -73,7 +73,7 @@ namespace MS.Internal.FontFace
                 faceNameBuilder.Append(parsedWeightName);
             }
 
-            if (parsedStyleName != null)
+            if (parsedStyleName is not null)
             {
                 if (faceNameBuilder.Length > 0)
                 {

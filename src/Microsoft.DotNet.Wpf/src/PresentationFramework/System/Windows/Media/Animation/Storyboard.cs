@@ -198,7 +198,7 @@ public class Storyboard : ParallelTimeline
 
         public override bool Equals(object o)
         {
-            if ((o != null) && (o is ObjectPropertyPair))
+            if ((o is not null) && (o is ObjectPropertyPair))
             {
                 return Equals((ObjectPropertyPair)o);
             }
@@ -248,9 +248,9 @@ public class Storyboard : ParallelTimeline
         FrameworkElement fe = element as FrameworkElement;
         FrameworkContentElement fce = element as FrameworkContentElement;
 
-        if( fe != null )
+        if( fe is not null )
         {
-            if( nameScope != null )
+            if( nameScope is not null )
             {
                 namedObject = ((FrameworkTemplate)nameScope).FindName(targetName, fe);
                 nameScopeUsed = nameScope;
@@ -261,7 +261,7 @@ public class Storyboard : ParallelTimeline
                 nameScopeUsed = fe;
             }
         }
-        else if( fce != null )
+        else if( fce is not null )
         {
             Debug.Assert( nameScope is null );
             namedObject = fce.FindName(targetName);
@@ -312,7 +312,7 @@ public class Storyboard : ParallelTimeline
         object          namedObject = null;
         BeginStoryboard beginStoryboard = null;
 
-        if( nameScope != null )
+        if( nameScope is not null )
         {
             namedObject = nameScope.FindName(targetName);
             if( namedObject is null )
@@ -321,7 +321,7 @@ public class Storyboard : ParallelTimeline
                     SR.Format(SR.Storyboard_NameNotFound, targetName, nameScope.GetType().ToString()));
             }
         }
-        else if( fe != null )
+        else if( fe is not null )
         {
             namedObject = fe.FindName(targetName);
             if( namedObject is null )
@@ -330,7 +330,7 @@ public class Storyboard : ParallelTimeline
                     SR.Format(SR.Storyboard_NameNotFound, targetName, fe.GetType().ToString()));
             }
         }
-        else if( fce != null )
+        else if( fce is not null )
         {
             namedObject = fce.FindName(targetName);
             if( namedObject is null )
@@ -389,7 +389,7 @@ public class Storyboard : ParallelTimeline
         // If we have target object/property information, use it instead of the
         //  parent's information.
         string nameString = (string)currentTimeline.GetValue(TargetNameProperty);
-        if( nameString != null )
+        if( nameString is not null )
         {
             if( nameScope is Style )
             {
@@ -403,14 +403,14 @@ public class Storyboard : ParallelTimeline
 
         // The TargetProperty trumps the TargetName property.
         DependencyObject localTargetObject = (DependencyObject) currentTimeline.GetValue(TargetProperty);
-        if( localTargetObject != null )
+        if( localTargetObject is not null )
         {
             targetObject = localTargetObject;
             currentObjectName = null;
         }
 
         PropertyPath propertyPath = (PropertyPath)currentTimeline.GetValue(TargetPropertyProperty);
-        if( propertyPath != null )
+        if( propertyPath is not null )
         {
             currentPropertyPath = propertyPath;
         }
@@ -425,7 +425,7 @@ public class Storyboard : ParallelTimeline
             {
                 // Resolve the target object name.  If no name specified, use the
                 //  containing object.
-                if( currentObjectName != null )
+                if( currentObjectName is not null )
                 {
                     DependencyObject mentor = Helper.FindMentor(containingObject);
 
@@ -503,7 +503,7 @@ public class Storyboard : ParallelTimeline
             //  recursively process child clocks.
             ClockGroup currentClockGroup = currentClock as ClockGroup;
 
-            if (currentClockGroup != null)
+            if (currentClockGroup is not null)
             {
                 ClockCollection childrenClocks = currentClockGroup.Children;
 
@@ -533,7 +533,7 @@ public class Storyboard : ParallelTimeline
     {
         MediaElement targetMediaElement = null;
 
-        if( currentObjectName != null )
+        if( currentObjectName is not null )
         {
             // Find the object named as the current target name.
             DependencyObject mentor = Helper.FindMentor(containingObject);
@@ -544,7 +544,7 @@ public class Storyboard : ParallelTimeline
                 throw new InvalidOperationException(SR.Format(SR.Storyboard_MediaElementNotFound, currentObjectName ));
             }
         }
-        else if( currentObject != null )
+        else if( currentObject is not null )
         {
             targetMediaElement = currentObject as MediaElement;
         }
@@ -709,7 +709,7 @@ public class Storyboard : ParallelTimeline
             if( i == 1 )
             {
                 intermediateFreezable = intermediateObject as Freezable;
-                if( intermediateFreezable != null && intermediateFreezable.IsFrozen )
+                if( intermediateFreezable is not null && intermediateFreezable.IsFrozen )
                 {
                     checkingFrozenState = false;
                 }
@@ -719,7 +719,7 @@ public class Storyboard : ParallelTimeline
             else if( checkingFrozenState )
             {
                 intermediateFreezable = intermediateObject as Freezable;
-                if( intermediateFreezable != null && intermediateFreezable.IsFrozen )
+                if( intermediateFreezable is not null && intermediateFreezable.IsFrozen )
                 {
                     if( i > 0 )
                     {
@@ -960,7 +960,7 @@ public class Storyboard : ParallelTimeline
     {
         CloneCacheEntry cacheEntry = GetComplexPathClone(targetObject, targetProperty);
 
-        if (cacheEntry != null)
+        if (cacheEntry is not null)
         {
             object baseValue = entry.Value;
             if (baseValue == DependencyProperty.UnsetValue)
@@ -1005,7 +1005,7 @@ public class Storyboard : ParallelTimeline
             // If the incoming baseValue is a deferred object, we need to get the
             //  real value to make a valid comparison against the cache entry source.
             DeferredReference deferredBaseValue = baseValue as DeferredReference;
-            if (deferredBaseValue != null)
+            if (deferredBaseValue is not null)
             {
                 baseValue = deferredBaseValue.GetValue(entry.BaseValueSourceInternal);
                 entry.Value = baseValue;
@@ -1323,7 +1323,7 @@ public class Storyboard : ParallelTimeline
     {
         Clock clock = GetStoryboardClock(containingObject);
 
-        if (clock != null)
+        if (clock is not null)
         {
             return clock.CurrentGlobalSpeed;
         }
@@ -1372,7 +1372,7 @@ public class Storyboard : ParallelTimeline
     {
         Clock clock = GetStoryboardClock(containingObject);
 
-        if (clock != null)
+        if (clock is not null)
         {
             return clock.CurrentIteration;
         }
@@ -1420,7 +1420,7 @@ public class Storyboard : ParallelTimeline
     {
         Clock clock = GetStoryboardClock(containingObject);
 
-        if (clock != null)
+        if (clock is not null)
         {
             return clock.CurrentProgress;
         }
@@ -1459,7 +1459,7 @@ public class Storyboard : ParallelTimeline
     {
         Clock clock = GetStoryboardClock(containingObject);
 
-        if (clock != null)
+        if (clock is not null)
         {
             return clock.CurrentState;
         }
@@ -1508,7 +1508,7 @@ public class Storyboard : ParallelTimeline
     {
         Clock clock = GetStoryboardClock(containingObject);
 
-        if (clock != null)
+        if (clock is not null)
         {
             return clock.CurrentTime;
         }
@@ -1548,7 +1548,7 @@ public class Storyboard : ParallelTimeline
     {
         Clock clock = GetStoryboardClock(containingObject);
 
-        if (clock != null)
+        if (clock is not null)
         {
             return clock.IsPaused;
         }
@@ -1588,7 +1588,7 @@ public class Storyboard : ParallelTimeline
     {
         Clock clock = GetStoryboardClock(containingObject, false, InteractiveOperation.Pause);
 
-        if (clock != null)
+        if (clock is not null)
         {
             clock.Controller.Pause();
         }
@@ -1631,11 +1631,11 @@ public class Storyboard : ParallelTimeline
     {
         Clock clock = GetStoryboardClock(containingObject, false, InteractiveOperation.Remove);
 
-        if (clock != null)
+        if (clock is not null)
         {
             clock.Controller.Remove();
             HybridDictionary clocks = StoryboardClockTreesField.GetValue(containingObject);
-            if (clocks != null)
+            if (clocks is not null)
             {
                 clocks.Remove(this);
             }
@@ -1682,7 +1682,7 @@ public class Storyboard : ParallelTimeline
     {
         Clock clock = GetStoryboardClock(containingObject, false, InteractiveOperation.Resume);
 
-        if (clock != null)
+        if (clock is not null)
         {
             clock.Controller.Resume();
         }
@@ -1741,7 +1741,7 @@ public class Storyboard : ParallelTimeline
     {
         Clock clock = GetStoryboardClock(containingObject, false, InteractiveOperation.Seek);
 
-        if (clock != null)
+        if (clock is not null)
         {
             // Seek is a public API as well, so its parameters should get validated there.
             clock.Controller.Seek(offset, origin);
@@ -1792,7 +1792,7 @@ public class Storyboard : ParallelTimeline
     {
         Clock clock = GetStoryboardClock(containingObject, false, InteractiveOperation.SeekAlignedToLastTick);
 
-        if (clock != null)
+        if (clock is not null)
         {
             // SeekAlignedToLastTick is a public API as well, so its parameters should get validated there.
             clock.Controller.SeekAlignedToLastTick(offset, origin);
@@ -1833,7 +1833,7 @@ public class Storyboard : ParallelTimeline
     {
         Clock clock = GetStoryboardClock(containingObject, false, InteractiveOperation.SetSpeedRatio);
 
-        if (clock != null)
+        if (clock is not null)
         {
             clock.Controller.SpeedRatio = speedRatio;
         }
@@ -1870,7 +1870,7 @@ public class Storyboard : ParallelTimeline
     {
         Clock clock = GetStoryboardClock(containingObject, false, InteractiveOperation.SkipToFill);
 
-        if (clock != null)
+        if (clock is not null)
         {
             clock.Controller.SkipToFill();
         }
@@ -1907,7 +1907,7 @@ public class Storyboard : ParallelTimeline
     {
         Clock clock = GetStoryboardClock(containingObject, false, InteractiveOperation.Stop);
 
-        if (clock != null)
+        if (clock is not null)
         {
             clock.Controller.Stop();
         }
@@ -1958,7 +1958,7 @@ public class Storyboard : ParallelTimeline
 
         HybridDictionary clocks = StoryboardClockTreesField.GetValue(o);
 
-        if (clocks != null)
+        if (clocks is not null)
         {
             clockReference = clocks[this] as WeakReference;
         }
@@ -1985,7 +1985,7 @@ public class Storyboard : ParallelTimeline
 
 
 
-        if (clockReference != null)
+        if (clockReference is not null)
         {
             clock = clockReference.Target as Clock;
 
@@ -2115,7 +2115,7 @@ public class Storyboard : ParallelTimeline
         //  with the property on the target object.
         internal ChangeListener( DependencyObject target, Freezable clone, DependencyProperty property, Freezable original )
         {
-            Debug.Assert( target != null && clone != null && property != null && original != null,
+            Debug.Assert( target is not null && clone is not null && property is not null && original is not null,
                 "Internal utility class requires non-null arguments.  Check the caller of this method for an error.");
             _target = target;
             _property = property;
@@ -2133,7 +2133,7 @@ public class Storyboard : ParallelTimeline
 
             // If the changed freezable is the currently outstanding instance
             //  then we need to trigger a sub-property invalidation.
-            if( cacheEntry != null && cacheEntry.Clone == _clone )
+            if( cacheEntry is not null && cacheEntry.Clone == _clone )
             {
                 _target.InvalidateSubProperty(_property);
             }
@@ -2203,7 +2203,7 @@ public class Storyboard : ParallelTimeline
 
             // If we're listening on the original, remove ourselves from there too.
             //  (In Setup() _original was nulled out if we aren't listening.)
-            if( _original != null )
+            if( _original is not null )
             {
                 changeEventHandler = new EventHandler(InvalidatePropertyOnOriginalChange);
 

@@ -255,7 +255,7 @@ namespace System.Windows.Media
 
             // Adjust to internal transformation
             Transform transform = Transform;
-            if (transform != null && !transform.IsIdentity)
+            if (transform is not null && !transform.IsIdentity)
             {
                 area *= Math.Abs(transform.Value.Determinant);
             }

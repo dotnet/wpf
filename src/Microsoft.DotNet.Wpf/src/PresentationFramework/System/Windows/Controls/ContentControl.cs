@@ -76,13 +76,13 @@ namespace System.Windows.Controls
                 // the content for the container then that content shows up as the logical child
                 // for the container and not for the current ContentControl.
                 DependencyObject templatedParent = this.TemplatedParent;
-                if (templatedParent != null)
+                if (templatedParent is not null)
                 {
                    DependencyObject d = content as DependencyObject;
-                   if (d != null)
+                   if (d is not null)
                    {
                        DependencyObject logicalParent =  LogicalTreeHelper.GetParent(d);
-                       if (logicalParent != null && logicalParent != this)
+                       if (logicalParent is not null && logicalParent != this)
                        {
                            return EmptyEnumerator.Instance;
                        }
@@ -108,10 +108,10 @@ namespace System.Windows.Controls
 
         internal static string ContentObjectToString(object content)
         {
-            if (content != null)
+            if (content is not null)
             {
                 FrameworkElement feContent = content as FrameworkElement;
-                if (feContent != null)
+                if (feContent is not null)
                 {
                     return feContent.GetPlainText();
                 }
@@ -141,11 +141,11 @@ namespace System.Windows.Controls
                     Content = item;
                     ContentIsItem = true;
                 }
-                if (itemTemplate != null)
+                if (itemTemplate is not null)
                     SetValue(ContentTemplateProperty, itemTemplate);
-                if (itemTemplateSelector != null)
+                if (itemTemplateSelector is not null)
                     SetValue(ContentTemplateSelectorProperty, itemTemplateSelector);
-                if (itemStringFormat != null)
+                if (itemStringFormat is not null)
                     SetValue(ContentStringFormatProperty, itemStringFormat);
             }
             else
@@ -256,7 +256,7 @@ namespace System.Windows.Controls
         private static void OnContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ContentControl ctrl = (ContentControl) d;
-            ctrl.SetValue(HasContentPropertyKey, (e.NewValue != null) ? BooleanBoxes.TrueBox : BooleanBoxes.FalseBox);
+            ctrl.SetValue(HasContentPropertyKey, (e.NewValue is not null) ? BooleanBoxes.TrueBox : BooleanBoxes.FalseBox);
 
             ctrl.OnContentChanged(e.OldValue, e.NewValue);
         }
@@ -277,12 +277,12 @@ namespace System.Windows.Controls
                 return;
 
             DependencyObject d = newContent as DependencyObject;
-            if (d != null)
+            if (d is not null)
             {
                 DependencyObject logicalParent = LogicalTreeHelper.GetParent(d);
-                if (logicalParent != null)
+                if (logicalParent is not null)
                 {
-                    if (TemplatedParent != null && FrameworkObject.IsEffectiveAncestor(logicalParent, this))
+                    if (TemplatedParent is not null && FrameworkObject.IsEffectiveAncestor(logicalParent, this))
                     {
                         // In the case that this ContentControl belongs in a parent template 
                         // and represents the content of a parent, we do not wish to change 

@@ -30,7 +30,7 @@ namespace MS.Internal.Ink
         /// <param name="buffer">Buffer of bytes</param>
         internal BitStreamReader(byte[] buffer)
         {
-            Debug.Assert(buffer != null);
+            Debug.Assert(buffer is not null);
 
             _byteArray = buffer;
             _bufferLengthInBits = (uint)buffer.Length * (uint)Native.BitsPerByte;
@@ -43,7 +43,7 @@ namespace MS.Internal.Ink
         /// <param name="startIndex">The index to start reading at</param>
         internal BitStreamReader(byte[] buffer, int startIndex)
         {
-            Debug.Assert(buffer != null);
+            Debug.Assert(buffer is not null);
 
             ArgumentOutOfRangeException.ThrowIfNegative(startIndex);
             ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(startIndex, buffer.Length);

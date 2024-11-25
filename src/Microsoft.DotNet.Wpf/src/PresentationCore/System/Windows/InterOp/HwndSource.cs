@@ -487,7 +487,7 @@ namespace System.Windows.Interop
         /// </remarks>
         private void OnDpiChangedAfterParent(HwndDpiChangedAfterParentEventArgs e)
         {
-            if (_hwndTarget != null)
+            if (_hwndTarget is not null)
             {
                 var dpiChangedEventArgs = (HwndDpiChangedEventArgs)e;
                 DpiChanged?.Invoke(this, dpiChangedEventArgs);
@@ -574,7 +574,7 @@ namespace System.Windows.Interop
                 {
                     Visual oldRoot = _rootVisual;
 
-                    if(value != null)
+                    if(value is not null)
                     {
                         _rootVisual = value;
 
@@ -583,7 +583,7 @@ namespace System.Windows.Interop
                             ((UIElement)(_rootVisual)).LayoutUpdated += new EventHandler(OnLayoutUpdated);
                         }
 
-                        if (_hwndTarget != null && _hwndTarget.IsDisposed == false)
+                        if (_hwndTarget is not null && _hwndTarget.IsDisposed == false)
                         {
                             _hwndTarget.RootVisual = _rootVisual;
                         }
@@ -593,13 +593,13 @@ namespace System.Windows.Interop
                     else
                     {
                         _rootVisual = null;
-                        if (_hwndTarget != null && !_hwndTarget.IsDisposed)
+                        if (_hwndTarget is not null && !_hwndTarget.IsDisposed)
                         {
                             _hwndTarget.RootVisual = null;
                         }
                     }
 
-                    if(oldRoot != null)
+                    if(oldRoot is not null)
                     {
                         if(oldRoot is UIElement)
                         {
@@ -637,7 +637,7 @@ namespace System.Windows.Interop
                 // when automation listeners are present, ensure that the top-level
                 // peer is on the layout manager's AutomationEvents list.
                 // [See <see cref="EventMap.NotifySources"/> for full discussion.  This is part (a)]
-                if (value != null && _hwndTarget != null && !_hwndTarget.IsDisposed &&
+                if (value is not null && _hwndTarget is not null && !_hwndTarget.IsDisposed &&
                     MS.Internal.Automation.EventMap.HasListeners)
                 {
                     _hwndTarget.EnsureAutomationPeer(value);
@@ -652,7 +652,7 @@ namespace System.Windows.Interop
         {
             get
             {
-                if (_keyboardInputSinkChildren != null)
+                if (_keyboardInputSinkChildren is not null)
                 {
                     foreach (IKeyboardInputSite site in _keyboardInputSinkChildren)
                         yield return site.Sink;
@@ -683,7 +683,7 @@ namespace System.Windows.Interop
             foreach (PresentationSource source in PresentationSource.CriticalCurrentSources)
             {
                 HwndSource test = source as HwndSource;
-                if (test != null && test.CriticalHandle == hwnd)
+                if (test is not null && test.CriticalHandle == hwnd)
                 {
                     // Don't hand out a disposed source.
                     if (!test.IsDisposed)
@@ -766,7 +766,7 @@ namespace System.Windows.Interop
         {
             if(IsInExclusiveMenuMode)
             {
-                Debug.Assert(_weakMenuModeMessageHandler != null);
+                Debug.Assert(_weakMenuModeMessageHandler is not null);
 
                 // Unsubscribe the special menu-mode handler since we don't need to go first anymore.
                 _weakMenuModeMessageHandler.Dispose();
@@ -793,7 +793,7 @@ namespace System.Windows.Interop
         {
             UIElement root = _rootVisual as UIElement;
 
-            if(root != null)
+            if(root is not null)
             {
                 Size newSize = root.RenderSize;
                 if (   _previousSize is null
@@ -841,7 +841,7 @@ namespace System.Windows.Interop
                                                    0, 0, newWidth, newHeight,
                                                    NativeMethods.SWP_NOMOVE | NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
 
-                    if (AutoResized != null)
+                    if (AutoResized is not null)
                     {
                         AutoResized(this, new AutoResizedEventArgs(newSize));
                     }
@@ -908,7 +908,7 @@ namespace System.Windows.Interop
         private void RoundDeviceSize(ref Point size)
         {
             UIElement root = _rootVisual as UIElement;
-            if (root != null && root.SnapsToDevicePixels)
+            if (root is not null && root.SnapsToDevicePixels)
             {
                 size = new Point(DoubleUtil.DoubleToInt(size.X), DoubleUtil.DoubleToInt(size.Y));
             }
@@ -1141,7 +1141,7 @@ namespace System.Windows.Interop
                 CheckDisposed(true);
 
                 HwndTarget hwndTarget = CompositionTarget; // checks for disposed
-                if(_hwndTarget != null)
+                if(_hwndTarget is not null)
                 {
                     return _hwndTarget.UsesPerPixelOpacity;
                 }
@@ -1177,7 +1177,7 @@ namespace System.Windows.Interop
             if (IsUsable)
             {
                 HwndTarget hwndTarget = _hwndTarget;
-                if (hwndTarget != null)
+                if (hwndTarget is not null)
                 {
                     result = hwndTarget.HandleMessage((WindowMessage)msg, wParam, lParam);
                     if (result != IntPtr.Zero)
@@ -1201,7 +1201,7 @@ namespace System.Windows.Interop
             // invalidate our checks.
             UIElement rootUIElement=null;
             rootUIElement = _rootVisual as UIElement;
-            if (IsUsable && rootUIElement != null)
+            if (IsUsable && rootUIElement is not null)
             {
                 switch (message)
                 {
@@ -1253,10 +1253,10 @@ namespace System.Windows.Interop
 
             // Certain messages need to be processed while we are in the middle
             // of construction - and thus an HwndTarget is not available.
-            if(!handled && (_constructionParameters != null || IsUsable))
+            if(!handled && (_constructionParameters is not null || IsUsable))
             {
                 // Get the usesPerPixelOpacity from either the constructor parameters or the HwndTarget.
-                bool usesPerPixelOpacity = _constructionParameters != null ? ((HwndSourceParameters)_constructionParameters).EffectivePerPixelOpacity : _hwndTarget.UsesPerPixelOpacity;
+                bool usesPerPixelOpacity = _constructionParameters is not null ? ((HwndSourceParameters)_constructionParameters).EffectivePerPixelOpacity : _hwndTarget.UsesPerPixelOpacity;
 
                 switch(message)
                 {
@@ -1525,7 +1525,7 @@ namespace System.Windows.Interop
                 rootUIElement.UpdateLayout(); //finalizes layout
 
 
-                if (SizeToContentChanged != null)
+                if (SizeToContentChanged is not null)
                 {
                     SizeToContentChanged(this, EventArgs.Empty);
                 }
@@ -1577,17 +1577,17 @@ namespace System.Windows.Interop
 
             // NOTE (alexz): invoke _stylus.FilterMessage before _mouse.FilterMessage
             // to give _stylus a chance to eat mouse message generated by stylus
-            if (!_isDisposed && _stylus != null && !handled)
+            if (!_isDisposed && _stylus is not null && !handled)
             {
                 result = _stylus.FilterMessage(hwnd, message, wParam, lParam, ref handled);
             }
 
-            if (!_isDisposed && _mouse != null && !handled)
+            if (!_isDisposed && _mouse is not null && !handled)
             {
                 result = _mouse.FilterMessage(hwnd, message, wParam, lParam, ref handled);
             }
 
-            if (!_isDisposed && _keyboard != null && !handled)
+            if (!_isDisposed && _keyboard is not null && !handled)
             {
                 // Sometimes WPF receives keyboard messages through both
                 // IKeyboardInputSink and the WndProc.  Note that the WndProc
@@ -1622,7 +1622,7 @@ namespace System.Windows.Interop
                 }
             }
 
-            if (!_isDisposed && _appCommand != null && !handled)
+            if (!_isDisposed && _appCommand is not null && !handled)
             {
                 result = _appCommand.FilterMessage(hwnd, message, wParam, lParam, ref handled);
             }
@@ -1643,7 +1643,7 @@ namespace System.Windows.Interop
             // Call all of the public hooks
             // We do this even if we are disposed because otherwise the hooks
             // would never see the WM_DESTROY etc. message.
-            if (_hooks != null)
+            if (_hooks is not null)
             {
                 Delegate[] handlers = _hooks.Item2;
                 for (int i = handlers.Length -1; i >= 0; --i)
@@ -1771,7 +1771,7 @@ namespace System.Windows.Interop
                     new DispatcherOperationCallback(OnPreprocessMessage),
                     msgdata);
 
-                if (result != null)
+                if (result is not null)
                 {
                     handled = (bool)result;
                 }
@@ -1924,7 +1924,7 @@ namespace System.Windows.Interop
 
             ArgumentNullException.ThrowIfNull(sink);
 
-            if (sink.KeyboardInputSite != null)
+            if (sink.KeyboardInputSite is not null)
             {
                 throw new ArgumentException(SR.KeyboardSinkAlreadyOwned);
             }
@@ -1979,7 +1979,7 @@ namespace System.Windows.Interop
             ArgumentNullException.ThrowIfNull(request);
 
             UIElement root =_rootVisual as UIElement;
-            if(root != null)
+            if(root is not null)
             {
                 // atanask:
                 // request.Mode == FocusNavigationDirection.First will navigate to the fist tabstop including root
@@ -2055,7 +2055,7 @@ namespace System.Windows.Interop
                 case WindowMessage.WM_SYSCHAR:
                 case WindowMessage.WM_SYSDEADCHAR:
                     string text = new string((char)msg.wParam, 1);
-                    if ((text != null) && (text.Length > 0))
+                    if ((text is not null) && (text.Length > 0))
                     {
                         // We have to work around an ordering issue with mnemonic processing.
                         //
@@ -2081,7 +2081,7 @@ namespace System.Windows.Interop
                         // is true to force the user to opt-in.
                         DependencyObject focusObject = Keyboard.FocusedElement as DependencyObject;
                         HwndSource mnemonicScope = (focusObject is null ? null : PresentationSource.CriticalFromVisual(focusObject) as HwndSource);
-                        if (mnemonicScope != null &&
+                        if (mnemonicScope is not null &&
                             mnemonicScope != this &&
                             IsInExclusiveMenuMode)
                         {
@@ -2114,7 +2114,7 @@ namespace System.Windows.Interop
 
             // The bubble will take care of access key processing for this HWND.  Call
             // the IKIS children unless we are in menu mode.
-            if (_keyboardInputSinkChildren != null && !IsInExclusiveMenuMode)
+            if (_keyboardInputSinkChildren is not null && !IsInExclusiveMenuMode)
             {
                 foreach ( HwndSourceKeyboardInputSite childSite in _keyboardInputSinkChildren )
                 {
@@ -2387,7 +2387,7 @@ namespace System.Windows.Interop
                 if (focusElement is null && hasFocus)
                 {
                     focusElement = Keyboard.PrimaryDevice.FocusedElement;
-                    if (focusElement != null &&
+                    if (focusElement is not null &&
                         PresentationSource.CriticalFromVisual((DependencyObject)focusElement) != this)
                     {
                         focusElement = null;
@@ -2397,7 +2397,7 @@ namespace System.Windows.Interop
                 try {
                     Keyboard.PrimaryDevice.ForceTarget = focusSink as IInputElement;
 
-                    if (focusElement != null)
+                    if (focusElement is not null)
                     {
                         KeyEventArgs tunnelArgs = new KeyEventArgs(Keyboard.PrimaryDevice, this, msg.time, key);
                         tunnelArgs.ScanCode = scanCode;
@@ -2413,7 +2413,7 @@ namespace System.Windows.Interop
                         bubbleArgs.ScanCode = scanCode;
                         bubbleArgs.IsExtendedKey = isExtendedKey;
                         bubbleArgs.RoutedEvent=keyEvent;
-                        if(focusElement != null)
+                        if(focusElement is not null)
                         {
                             focusElement.RaiseEvent(bubbleArgs);
                             handled = bubbleArgs.Handled;
@@ -2520,7 +2520,7 @@ namespace System.Windows.Interop
                     // Notify listeners that we are being disposed.  We do this
                     // before we dispose our internal stuff, in case the event
                     // listener needs to access something.
-                    if(Disposed != null)
+                    if(Disposed is not null)
                     {
                         try
                         {
@@ -2547,7 +2547,7 @@ namespace System.Windows.Interop
                     // Unregister ourselves if we are a registered KeyboardInputSink.
                     // Use the property instead of the backing field in case a subclass has overridden it.
                     IKeyboardInputSite keyboardInputSite = ((IKeyboardInputSink)this).KeyboardInputSite;
-                    if (keyboardInputSite != null)
+                    if (keyboardInputSite is not null)
                     {
                         keyboardInputSite.Unregister();
                         ((IKeyboardInputSink)this).KeyboardInputSite = null;
@@ -2576,13 +2576,13 @@ namespace System.Windows.Interop
                     // (see comment above about disposing the HwndStylusInputProvider)
                     //
                     {
-                        if (_hwndTarget != null)
+                        if (_hwndTarget is not null)
                         {
                             _hwndTarget.Dispose();
                             _hwndTarget = null;
                         }
 
-                        if (_hwndWrapper != null)
+                        if (_hwndWrapper is not null)
                         {
                             // Revoke the drop target.
                             if (_hwndWrapper.Handle != IntPtr.Zero && _registeredDropTargetCount > 0)
@@ -2653,7 +2653,7 @@ namespace System.Windows.Interop
             get
             {
                 return _isDisposed == false &&
-                       _hwndTarget != null &&
+                       _hwndTarget is not null &&
                        _hwndTarget.IsDisposed == false;
             }
         }

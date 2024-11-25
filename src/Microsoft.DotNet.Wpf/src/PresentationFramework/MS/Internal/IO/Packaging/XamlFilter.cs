@@ -173,7 +173,7 @@ namespace MS.Internal.IO.Packaging
 
             _filterContents = true;
 
-            if (aAttributes != null && aAttributes.Length > 0)
+            if (aAttributes is not null && aAttributes.Length > 0)
             {
                 _filterContents = false;
 
@@ -342,7 +342,7 @@ namespace MS.Internal.IO.Packaging
                 // If we have a content extractor delivering content units for us, use it.
                 if (_filterState == FilterState.UseContentExtractor)
                 {
-                    Debug.Assert(_fixedPageContentExtractor != null);
+                    Debug.Assert(_fixedPageContentExtractor is not null);
 
                     // If we've consumed all the glyph run info, switch to a mode in which only the flow content
                     // of the fixed page just scanned will be returned.
@@ -383,7 +383,7 @@ namespace MS.Internal.IO.Packaging
 
                             // If processing a fixed page, revert to top-level XML reader.
                         case FilterState.FindNextFlowUnit:
-                            Debug.Assert(_topLevelReader != null);
+                            Debug.Assert(_topLevelReader is not null);
                             _xamlReader.Close();
                             _xamlReader = _topLevelReader;
                             _filterState = FilterState.FindNextUnit;
@@ -490,7 +490,7 @@ namespace MS.Internal.IO.Packaging
         {
             ContentDescriptor topOfStack = TopOfStack();
 
-            if (topOfStack != null)
+            if (topOfStack is not null)
             {
                 // The descendants of elements with HasIndexableContent set to false get skipped.
                 Debug.Assert(topOfStack.HasIndexableContent);
@@ -603,11 +603,11 @@ namespace MS.Internal.IO.Packaging
 
             // If appropriate, retrieve title from an attribute.
             string  title = null;
-            if (   elementDescriptor.TitleProp != null
+            if (   elementDescriptor.TitleProp is not null
                 && (_attributesToIgnore & AttributesToIgnore.Title) == 0 )
             {
                 title = GetPropertyAsAttribute(elementDescriptor.TitleProp);
-                if (title != null && title.Length > 0)
+                if (title is not null && title.Length > 0)
                 {
                     // Leave the reader in its present state, but return the title as a block chunk,
                     // and mark this attribute as processed.
@@ -621,11 +621,11 @@ namespace MS.Internal.IO.Packaging
 
             // If appropriate, retrieve content from an attribute.
             string  content = null;
-            if (   elementDescriptor.ContentProp != null
+            if (   elementDescriptor.ContentProp is not null
                 && (_attributesToIgnore & AttributesToIgnore.Content) == 0 )
             {
                 content = GetPropertyAsAttribute(elementDescriptor.ContentProp);
-                if (content != null && content.Length > 0)
+                if (content is not null && content.Length > 0)
                 {
                     // Leave the reader in its present state, but mark the content attribute
                     // as processed.
@@ -727,7 +727,7 @@ namespace MS.Internal.IO.Packaging
             {
                 // If the element has a Source attribute, any inlined content should be ignored.
                 string sourceUri = _xamlReader.GetAttribute(_pageContentSourceAttribute);
-                if (sourceUri != null)
+                if (sourceUri is not null)
                 {
                     SkipCurrentElement();
                     return null;
@@ -755,7 +755,7 @@ namespace MS.Internal.IO.Packaging
         /// </remarks>
         private IndexingContentUnit ProcessGlyphRun()
         {
-            Debug.Assert(_xamlReader != null);
+            Debug.Assert(_xamlReader is not null);
 
             string textContent = _xamlReader.GetAttribute(_unicodeStringAttribute);
             if (textContent is null || textContent.Length == 0)
@@ -814,7 +814,7 @@ namespace MS.Internal.IO.Packaging
         ///</summary>
         private void CreateXmlReader()
         {
-            if (_xamlReader != null)
+            if (_xamlReader is not null)
             {
                 _xamlReader.Close();
             }
@@ -828,7 +828,7 @@ namespace MS.Internal.IO.Packaging
 
         private void EnsureXmlReaderIsClosed()
         {
-            if (_xamlReader != null)
+            if (_xamlReader is not null)
             {
                 _xamlReader.Close();
             }
@@ -864,7 +864,7 @@ namespace MS.Internal.IO.Packaging
             if (languageString.Length == 0)
             {
                 // Check whether there is a parent XAML reader.
-                if (_topLevelReader != null)
+                if (_topLevelReader is not null)
                 {
                     languageString = _topLevelReader.XmlLang;
                 }
@@ -910,7 +910,7 @@ namespace MS.Internal.IO.Packaging
         private string GetPropertyAsAttribute(string propertyName)
         {
             string value = _xamlReader.GetAttribute(propertyName);
-            if (value != null)
+            if (value is not null)
             {
                 return value;
             }

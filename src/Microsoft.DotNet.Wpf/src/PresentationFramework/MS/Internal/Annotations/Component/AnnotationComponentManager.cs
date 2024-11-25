@@ -37,7 +37,7 @@ namespace MS.Internal.Annotations.Component
         {
             // Only register if a service was passed in. If no service was passed in, we will not receive events.
             // This means a client will be calling us directly.
-            if (service != null)
+            if (service is not null)
             {
                 service.AttachedAnnotationChanged += new AttachedAnnotationChangedEventHandler(AttachedAnnotationUpdateEventHandler);
             }
@@ -57,7 +57,7 @@ namespace MS.Internal.Annotations.Component
         /// <param name="reorder">If true - update components ZOrder after adding the component</param>
         internal void AddAttachedAnnotation(IAttachedAnnotation attachedAnnotation, bool reorder)
         {
-            Debug.Assert(attachedAnnotation != null, "AttachedAnnotation should not be null");
+            Debug.Assert(attachedAnnotation is not null, "AttachedAnnotation should not be null");
 
             IAnnotationComponent component = FindComponent(attachedAnnotation);
             if (component is null) return;
@@ -74,7 +74,7 @@ namespace MS.Internal.Annotations.Component
         /// <param name="reorder">If true - update components ZOrder after removing the component</param>
         internal void RemoveAttachedAnnotation(IAttachedAnnotation attachedAnnotation, bool reorder)
         {
-            Debug.Assert(attachedAnnotation != null, "AttachedAnnotation should not be null");
+            Debug.Assert(attachedAnnotation is not null, "AttachedAnnotation should not be null");
 
             if (!_attachedAnnotations.ContainsKey(attachedAnnotation))
             {
@@ -92,7 +92,7 @@ namespace MS.Internal.Annotations.Component
                 component.RemoveAttachedAnnotation(attachedAnnotation);  // let the annotation component know
                 if (component.AttachedAnnotations.Count == 0)
                 { // if it has no more attached annotations, remove it
-                    if (component.PresentationContext != null)
+                    if (component.PresentationContext is not null)
                         component.PresentationContext.RemoveFromHost(component, reorder);
                 }
             }
@@ -142,10 +142,10 @@ namespace MS.Internal.Annotations.Component
         /// <returns>an IAnnotationComponent that can handle the attachedAnnotation (or null)</returns>
         private IAnnotationComponent FindComponent(IAttachedAnnotation attachedAnnotation)
         {
-            Debug.Assert(attachedAnnotation != null, "AttachedAnnotation should not be null");
+            Debug.Assert(attachedAnnotation is not null, "AttachedAnnotation should not be null");
 
             UIElement annotatedElement = attachedAnnotation.Parent as UIElement; // casted from DependencyObject
-            Debug.Assert(annotatedElement != null, "the annotatedElement should inherit from UIElement");
+            Debug.Assert(annotatedElement is not null, "the annotatedElement should inherit from UIElement");
 
             AnnotationComponentChooser chooser = AnnotationService.GetChooser(annotatedElement);
 
@@ -165,10 +165,10 @@ namespace MS.Internal.Annotations.Component
         private void AddComponent(IAttachedAnnotation attachedAnnotation, IAnnotationComponent component, bool reorder)
         {
             UIElement annotatedElement = attachedAnnotation.Parent as UIElement; // casted from DependencyObject
-            Debug.Assert(annotatedElement != null, "the annotatedElement should inherit from UIElement");
+            Debug.Assert(annotatedElement is not null, "the annotatedElement should inherit from UIElement");
 
             // if annotation component is already in presentation context, nothing else to do
-            if (component.PresentationContext != null) return;
+            if (component.PresentationContext is not null) return;
 
             // otherwise host in the appropriate adorner layer
             AdornerLayer layer = AdornerLayer.GetAdornerLayer(annotatedElement); // note, GetAdornerLayer requires UIElement
@@ -208,8 +208,8 @@ namespace MS.Internal.Annotations.Component
         /// <param name="previousAttachmentLevel">The previous attachment level for the attached annotation</param>
         private void ModifyAttachedAnnotation(IAttachedAnnotation attachedAnnotation, object previousAttachedAnchor, AttachmentLevel previousAttachmentLevel)
         {
-            Debug.Assert(attachedAnnotation != null, "attachedAnnotation should not be null");
-            Debug.Assert(previousAttachedAnchor != null, "previousAttachedAnchor should not be null");
+            Debug.Assert(attachedAnnotation is not null, "attachedAnnotation should not be null");
+            Debug.Assert(previousAttachedAnchor is not null, "previousAttachedAnchor should not be null");
 
             // if there was no component found for this attached annotation
             // then we treat the modify case as an add 
@@ -269,8 +269,8 @@ namespace MS.Internal.Annotations.Component
         /// <param name="component">The component to add to list</param>
         private void AddToAttachedAnnotations(IAttachedAnnotation attachedAnnotation, IAnnotationComponent component)
         {
-            Debug.Assert(attachedAnnotation != null, "attachedAnnotation should not be null");
-            Debug.Assert(component != null, "component should not be null");
+            Debug.Assert(attachedAnnotation is not null, "attachedAnnotation should not be null");
+            Debug.Assert(component is not null, "component should not be null");
 
             IList<IAnnotationComponent> currentList;
 

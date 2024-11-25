@@ -407,7 +407,7 @@ namespace Microsoft.Windows.Themes
                         chrome.InnerFill.GradientStops[1].BeginAnimation(GradientStop.ColorProperty, ca);
                     }
 
-                    if (chrome.IsChecked != null)
+                    if (chrome.IsChecked is not null)
                     {
                         DoubleAnimation da = new DoubleAnimation(1.0, duration);
 
@@ -635,12 +635,12 @@ namespace Microsoft.Windows.Themes
                                                    bounds.Width - 2.0,
                                                    bounds.Height - 2.0);
                     // Draw Background
-                    if (fill != null)
+                    if (fill is not null)
                         dc.DrawRectangle(fill, null, backgroundRect);
 
                     // Draw BackgroundOverlay
                     fill = BackgroundOverlay;
-                    if (fill != null)
+                    if (fill is not null)
                         dc.DrawRectangle(fill, null, backgroundRect);
                 }
                 else
@@ -649,12 +649,12 @@ namespace Microsoft.Windows.Themes
                     double centerY = bounds.Height * 0.5;
 
                     // Draw Background
-                    if (fill != null)
+                    if (fill is not null)
                         dc.DrawEllipse(fill, null, new Point(centerX, centerY), centerX - 1, centerY - 1);
 
                     // Draw BackgroundOverlay
                     fill = BackgroundOverlay;
-                    if (fill != null)
+                    if (fill is not null)
                         dc.DrawEllipse(fill, null, new Point(centerX, centerY), centerX - 1, centerY - 1);
                 }
             }
@@ -670,14 +670,14 @@ namespace Microsoft.Windows.Themes
 
                 if (!IsRound)
                 {
-                    if (innerFill != null)
+                    if (innerFill is not null)
                     {
                         dc.DrawRectangle(innerFill, null, new Rect(bounds.Left + 3.0, bounds.Top + 3.0, bounds.Width - 6.0, bounds.Height - 6.0));
                     }
 
                     Pen innerBorder = InnerBorderPen;
 
-                    if (innerBorder != null)
+                    if (innerBorder is not null)
                     {
                         dc.DrawRectangle(null, innerBorder, new Rect(bounds.Left + 2.5, bounds.Top + 2.5, bounds.Width - 5.0, bounds.Height - 5.0));
                     }
@@ -687,14 +687,14 @@ namespace Microsoft.Windows.Themes
                     double centerX = bounds.Width * 0.5;
                     double centerY = bounds.Height * 0.5;
 
-                    if (innerFill != null)
+                    if (innerFill is not null)
                     {
                         dc.DrawEllipse(innerFill, null, new Point(centerX, centerY), centerX - 3.0, centerY - 3.0);
                     }
 
                     Pen innerBorder = InnerBorderPen;
 
-                    if (innerBorder != null)
+                    if (innerBorder is not null)
                     {
                         dc.DrawEllipse(null, innerBorder, new Point(centerX, centerY), centerX - 2.5, centerY - 2.5);
                     }
@@ -741,7 +741,7 @@ namespace Microsoft.Windows.Themes
                 Pen pen = GetBorderPen(BorderBrush);
                 Pen overlayPen = BorderOverlayPen;
 
-                if (pen != null || overlayPen != null)
+                if (pen is not null || overlayPen is not null)
                 {
                     if (!IsRound)
                     {
@@ -750,10 +750,10 @@ namespace Microsoft.Windows.Themes
                                             bounds.Width - 1.0,
                                             bounds.Height - 1.0);
 
-                        if (pen != null)
+                        if (pen is not null)
                             dc.DrawRectangle(null, pen, rect);
 
-                        if (overlayPen != null)
+                        if (overlayPen is not null)
                             dc.DrawRectangle(null, overlayPen, rect);
                     }
                     else
@@ -761,10 +761,10 @@ namespace Microsoft.Windows.Themes
                         double centerX = bounds.Width * 0.5;
                         double centerY = bounds.Height * 0.5;
 
-                        if (pen != null)
+                        if (pen is not null)
                             dc.DrawEllipse(null, pen, new Point(centerX, centerY), centerX - 0.5, centerY - 0.5);
 
-                        if (overlayPen != null)
+                        if (overlayPen is not null)
                             dc.DrawEllipse(null, overlayPen, new Point(centerX, centerY), centerX - 0.5, centerY - 0.5);
                     }
                 }
@@ -776,7 +776,7 @@ namespace Microsoft.Windows.Themes
         {
             Pen pen = null;
 
-            if (border != null)
+            if (border is not null)
             {
                 if (_commonBorderPen is null)   // Common case, if non-null, avoid the lock
                 {
@@ -813,7 +813,7 @@ namespace Microsoft.Windows.Themes
                     }
                 }
 
-                if (_commonBorderPen != null && border == _commonBorderPen.Brush)
+                if (_commonBorderPen is not null && border == _commonBorderPen.Brush)
                 {
 
                     pen = _commonBorderPen;
@@ -1089,7 +1089,7 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                if (_localResources != null)
+                if (_localResources is not null)
                 {
                     if (_localResources.HighlightStroke is null)
                     {
@@ -1806,7 +1806,7 @@ namespace Microsoft.Windows.Themes
                     }
                 }
 
-                if (_localResources != null)
+                if (_localResources is not null)
                 {
                     if (_localResources.BackgroundOverlay is null)
                     {
@@ -2025,7 +2025,7 @@ namespace Microsoft.Windows.Themes
                     }
                 }
 
-                if (_localResources != null)
+                if (_localResources is not null)
                 {
                     if (_localResources.InnerFill is null)
                     {
@@ -2082,7 +2082,7 @@ namespace Microsoft.Windows.Themes
                     }
                 }
 
-                if (_localResources != null)
+                if (_localResources is not null)
                 {
                     if (_localResources.GlyphStroke is null)
                     {
@@ -2161,7 +2161,7 @@ namespace Microsoft.Windows.Themes
                     }
                 }
 
-                if (_localResources != null)
+                if (_localResources is not null)
                 {
                     if (_localResources.GlyphFill is null)
                     {
@@ -2240,7 +2240,7 @@ namespace Microsoft.Windows.Themes
                     return CommonDisabledBorderOverlay;
                 }
 
-                if (_localResources != null)
+                if (_localResources is not null)
                 {
                     if (_localResources.BorderOverlayPen is null)
                     {
@@ -2284,7 +2284,7 @@ namespace Microsoft.Windows.Themes
                     }
                 }
 
-                if (_localResources != null)
+                if (_localResources is not null)
                 {
                     if (_localResources.InnerBorderPen is null)
                     {

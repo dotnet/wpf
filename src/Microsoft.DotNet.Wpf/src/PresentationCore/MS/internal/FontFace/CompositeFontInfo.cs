@@ -63,7 +63,7 @@ namespace MS.Internal.FontFace
                 throw new ArgumentException(SR.FamilyMap_TargetNotSet);
 
             // If it's culture-specific make sure it's in the hash table.
-            if (familyMap.Language != null)
+            if (familyMap.Language is not null)
             {
                 if (_familyMapRangesByLanguage is null)
                 {
@@ -156,7 +156,7 @@ namespace MS.Internal.FontFace
         {
             _defaultFamilyMapRanges = EmptyFamilyMapRanges;
 
-            if (_familyMapRangesByLanguage != null)
+            if (_familyMapRangesByLanguage is not null)
             {
                 Dictionary<XmlLanguage, ushort[]> table = new Dictionary<XmlLanguage, ushort[]>(_familyMapRangesByLanguage.Count);
                 foreach (XmlLanguage language in _familyMapRangesByLanguage.Keys)
@@ -176,7 +176,7 @@ namespace MS.Internal.FontFace
             ushort[] ranges = null;
 
             // Look for a family map range for the specified language or one of its matching languages
-            if (_familyMapRangesByLanguage != null && language != null)
+            if (_familyMapRangesByLanguage is not null && language is not null)
             {
                 foreach (XmlLanguage matchingLanguage in language.MatchingLanguages)
                 {
@@ -229,7 +229,7 @@ namespace MS.Internal.FontFace
                 for (int j = begin; j < end; ++j)
                 {
                     FontFamilyMap familyMap = _familyMaps[j];
-                    Invariant.Assert(familyMap != null);
+                    Invariant.Assert(familyMap is not null);
                     if (familyMap.InRange(ch))
                         return familyMap;
                 }
@@ -365,7 +365,7 @@ namespace MS.Internal.FontFace
         {
             get
             {
-                if (_familyMapRangesByLanguage != null)
+                if (_familyMapRangesByLanguage is not null)
                     return _familyMapRangesByLanguage.Keys;
                 else
                     return null;

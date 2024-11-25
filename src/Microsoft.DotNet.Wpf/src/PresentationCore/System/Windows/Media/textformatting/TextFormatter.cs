@@ -156,7 +156,7 @@ namespace System.Windows.Media.TextFormatting
                 }
             }
 
-            Invariant.Assert(defaultTextFormatter != null);
+            Invariant.Assert(defaultTextFormatter is not null);
             return defaultTextFormatter;
         }
 

@@ -144,7 +144,7 @@ namespace System.Windows
         protected internal override void OnVisualParentChanged(DependencyObject oldParent)
         {
             // Synchronize ForceInherit properties
-            if (InternalVisualParent != null)
+            if (InternalVisualParent is not null)
             {
                 DependencyObject parent = InternalVisualParent;
 
@@ -152,7 +152,7 @@ namespace System.Windows
                 {
                     Visual parentAsVisual = parent as Visual;
 
-                    if (parentAsVisual != null)
+                    if (parentAsVisual is not null)
                     {
                         // We are being plugged into a non-UIElement visual. This
                         // means that our parent doesn't play by the same rules we
@@ -164,7 +164,7 @@ namespace System.Windows
                     {
                         Visual3D parentAsVisual3D = parent as Visual3D;
 
-                        if (parentAsVisual3D != null)
+                        if (parentAsVisual3D is not null)
                         {
                             // We are being plugged into a non-UIElement visual. This
                             // means that our parent doesn't play by the same rules we
@@ -178,7 +178,7 @@ namespace System.Windows
                     parent = InputElement.GetContainingUIElement(parentAsVisual);
                 }
 
-                if (parent != null)
+                if (parent is not null)
                 {
                     UIElement.SynchronizeForceInheritProperties(null, null, this, parent);
                 }
@@ -211,7 +211,7 @@ namespace System.Windows
                     parent = InputElement.GetContainingUIElement(oldParent);
                 }
 
-                if (parent != null)
+                if (parent is not null)
                 {
                     UIElement.SynchronizeForceInheritProperties(null, null, this, parent);
                 }
@@ -251,7 +251,7 @@ namespace System.Windows
 
                 // See if this parent is a child of the ancestor who's parent changed.
                 // If so, we don't care about changes that happen above us.
-                if (parent != null && VisualTreeHelper.IsAncestorOf(e.Ancestor, parent))
+                if (parent is not null && VisualTreeHelper.IsAncestorOf(e.Ancestor, parent))
                 {
                     parent = null;
                 }
@@ -263,7 +263,7 @@ namespace System.Windows
                 // Find our nearest UIElement parent.
                 parent = InputElement.GetContainingUIElement(InternalVisualParent);
 
-                if (parent != null)
+                if (parent is not null)
                 {
                     // If we found a UIElement parent in our subtree, the
                     // break in the visual tree must have been above it,
@@ -279,7 +279,7 @@ namespace System.Windows
                 }
             }
 
-            if (parent != null)
+            if (parent is not null)
             {
                 UIElement.SynchronizeForceInheritProperties(null, null, this, parent);
             }
@@ -321,7 +321,7 @@ namespace System.Windows
         internal virtual void OnPresentationSourceChanged(bool attached)
         {
             // Reset the FocusedElementProperty in order to get LostFocus event
-            if (!attached && FocusManager.GetFocusedElement(this) != null)
+            if (!attached && FocusManager.GetFocusedElement(this) is not null)
                 FocusManager.SetFocusedElement(this, null);
         }
 
@@ -917,7 +917,7 @@ namespace System.Windows
 
             //Notify Automation in case it is interested.
             AutomationPeer peer = uie.GetAutomationPeer();
-            if (peer != null)
+            if (peer is not null)
                 peer.InvalidatePeer();
 
         }
@@ -1087,7 +1087,7 @@ namespace System.Windows
                 //
                 DependencyObject parent = InputElement.GetContainingUIElement(InternalVisualParent);
 
-                if (parent != null)
+                if (parent is not null)
                 {
                     constraintAllowsVisible = UIElementHelper.IsVisible(parent);
                 }
@@ -1096,7 +1096,7 @@ namespace System.Windows
                     // We cannot be visible if we have no visual parent, unless:
                     // 1) We are the root, connected to a PresentationHost.
                     PresentationSource presentationSource = PresentationSource.CriticalFromVisual(this);
-                    if (presentationSource != null)
+                    if (presentationSource is not null)
                     {
                         constraintAllowsVisible = true;
                     }
@@ -1215,7 +1215,7 @@ namespace System.Windows
             {
                 ap = OnCreateAutomationPeer();
 
-                if (ap != null)
+                if (ap is not null)
                 {
                     AutomationPeerField.SetValue(this, ap);
                     HasAutomationPeer = true;
@@ -1314,10 +1314,10 @@ namespace System.Windows
         private void RaiseDependencyPropertyChanged(EventPrivateKey key, DependencyPropertyChangedEventArgs args)
         {
             EventHandlersStore store = EventHandlersStore;
-            if (store != null)
+            if (store is not null)
             {
                 Delegate handler = store.Get(key);
-                if (handler != null)
+                if (handler is not null)
                 {
                     ((DependencyPropertyChangedEventHandler)handler)(this, args);
                 }
@@ -1375,12 +1375,12 @@ namespace System.Windows
             for (int iChild = 0; iChild < cChildren; iChild++)
             {
                 DependencyObject vChild = v.InternalGet2DOr3DVisualChild(iChild);
-                if (vChild != null)
+                if (vChild is not null)
                 {
                     UIElement element = vChild as UIElement;
                     UIElement3D element3D = vChild as UIElement3D;
 
-                    if (element3D != null)
+                    if (element3D is not null)
                     {
                         if (property == IsVisibleProperty)
                         {
@@ -1395,7 +1395,7 @@ namespace System.Windows
                             element3D.CoerceValue(property);
                         }
                     }
-                    else if (element != null)
+                    else if (element is not null)
                     {
                         if (property == IsVisibleProperty)
                         {

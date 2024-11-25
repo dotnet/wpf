@@ -86,8 +86,8 @@ namespace MS.Internal.Documents
             ITextPointer startPointer = null;
             ITextRange findResult = null;
 
-            Invariant.Assert(findToolBar != null);
-            Invariant.Assert(textEditor != null);
+            Invariant.Assert(findToolBar is not null);
+            Invariant.Assert(textEditor is not null);
 
             // Set up our FindOptions from the options in the Find Toolbar.
             findFlags = FindFlags.None;
@@ -112,13 +112,13 @@ namespace MS.Internal.Documents
             // Determine if we have a starting selection
             if (textSelection.IsEmpty)
             {
-                if (textView != null && !textView.IsValid)
+                if (textView is not null && !textView.IsValid)
                 {
                     textView = null;
                 }
 
                 // Determine if the IP/Selection is in view.
-                if (textView != null && textView.Contains(textSelection.Start))
+                if (textView is not null && textView.Contains(textSelection.Start))
                 {
                     // Case 1: Selection is empty and IP is currently visible.
                     // Search from this IP to the start/end of the document.
@@ -133,7 +133,7 @@ namespace MS.Internal.Documents
                     // Search from the top of the current TextView to the end of the document,
                     // if searching down. If searchind up, search from the start of the document
                     // to the end position of the current TextView.
-                    if (masterPageTextView != null && masterPageTextView.IsValid)
+                    if (masterPageTextView is not null && masterPageTextView.IsValid)
                     {
                         foreach (TextSegment textSegment in masterPageTextView.TextSegments)
                         {
@@ -169,7 +169,7 @@ namespace MS.Internal.Documents
                         }
                     }
 
-                    if (startPointer != null)
+                    if (startPointer is not null)
                     {
                         // Now build the content range from that pointer to the start/end of the document.
                         // Set content start/end pointer to the content of the find document
@@ -192,8 +192,8 @@ namespace MS.Internal.Documents
 
                 // To see if our Text ranges are the same, we will verify that
                 // their start and end points are the same.
-                if ((findResult != null) &&
-                    (findResult.Start != null) &&
+                if ((findResult is not null) &&
+                    (findResult.Start is not null) &&
                     (findResult.Start.CompareTo(textSelection.Start) == 0) &&
                     (findResult.End.CompareTo(textSelection.End) == 0))
                 {
@@ -215,7 +215,7 @@ namespace MS.Internal.Documents
 
             // We should have content. Try to find something.
             findResult = null;
-            if (contentStart != null && contentEnd != null && contentStart.CompareTo(contentEnd) != 0)
+            if (contentStart is not null && contentEnd is not null && contentStart.CompareTo(contentEnd) != 0)
             {
                 // We might legimately have crossed start/end given our logic above.
                 // It's easier to untangle the range here.
@@ -227,7 +227,7 @@ namespace MS.Internal.Documents
                 }
 
                 findResult = TextFindEngine.Find(contentStart, contentEnd, searchText, findFlags, cultureInfo);
-                if ((findResult != null) && (!findResult.IsEmpty))
+                if ((findResult is not null) && (!findResult.IsEmpty))
                 {
                     textSelection.Select(findResult.Start, findResult.End);
                 }
@@ -243,10 +243,10 @@ namespace MS.Internal.Documents
         {
             CultureInfo cultureInfo = null;
 
-            if (textContainer.Parent != null)
+            if (textContainer.Parent is not null)
             {
                 XmlLanguage language = (XmlLanguage)textContainer.Parent.GetValue(FrameworkElement.LanguageProperty);
-                if (language != null)
+                if (language is not null)
                 {
                     try
                     {
@@ -283,7 +283,7 @@ namespace MS.Internal.Documents
             messageString = String.Format(System.Globalization.CultureInfo.CurrentCulture, messageString, findToolBar.SearchText);
 
             HwndSource hwndSource = PresentationSource.CriticalFromVisual(findToolBar) as HwndSource;
-            IntPtr hwnd = (hwndSource != null) ? hwndSource.CriticalHandle : IntPtr.Zero;
+            IntPtr hwnd = (hwndSource is not null) ? hwndSource.CriticalHandle : IntPtr.Zero;
 
             PresentationFramework.SecurityHelper.ShowMessageBoxHelper(
                 hwnd,
@@ -316,7 +316,7 @@ namespace MS.Internal.Documents
         /// </summary>
         internal static bool IsLogicalDescendent(DependencyObject child, DependencyObject parent)
         {
-            while (child != null)
+            while (child is not null)
             {
                 if (child == parent)
                 {
@@ -333,14 +333,14 @@ namespace MS.Internal.Documents
         internal static void KeyDownHelper(KeyEventArgs e, DependencyObject findToolBarHost)
         {
             // Only process key events if they haven't been handled.
-            if (!e.Handled && findToolBarHost != null)
+            if (!e.Handled && findToolBarHost is not null)
             {
                 // If arrow key is pressed, check if KeyboardNavigation is moving focus within
                 // FindToolBar. In such case move the focus and mark the event as handled.
                 if (e.Key == Key.Left || e.Key == Key.Right || e.Key == Key.Up || e.Key == Key.Down)
                 {
                     DependencyObject focusedElement = Keyboard.FocusedElement as DependencyObject;
-                    if (focusedElement != null && focusedElement is Visual &&
+                    if (focusedElement is not null && focusedElement is Visual &&
                         VisualTreeHelper.IsAncestorOf(findToolBarHost, focusedElement))
                     {
                         FocusNavigationDirection direction = KeyboardNavigation.KeyToTraversalDirection(e.Key);
@@ -348,7 +348,7 @@ namespace MS.Internal.Documents
                         // If PredictedFocus is within FindToolBar, move the focus to PredictedFocus and handle
                         // the event. Otherwise do not handle the event and let the viewer to do 
                         // its default logic.
-                        if (predictedFocus != null && predictedFocus is IInputElement &&
+                        if (predictedFocus is not null && predictedFocus is IInputElement &&
                             VisualTreeHelper.IsAncestorOf(findToolBarHost, focusedElement))
                         {
                             ((IInputElement)predictedFocus).Focus();
@@ -366,7 +366,7 @@ namespace MS.Internal.Documents
         {
             // Get ContextMenu from TargetElement, if exests. Otherwise get ContextMenu from the viewer.
             ContextMenu cm = null;
-            if (e.TargetElement != null)
+            if (e.TargetElement is not null)
             {
                 cm = e.TargetElement.GetValue(FrameworkElement.ContextMenuProperty) as ContextMenu;
             }
@@ -376,9 +376,9 @@ namespace MS.Internal.Documents
             }
 
             // Add special handling for ContextMenu, if invoked through a hotkey.
-            if (cm != null)
+            if (cm is not null)
             {
-                if (document != null)
+                if (document is not null)
                 {
                     // A negative offset for e.CursorLeft means the user invoked
                     // the menu with a hotkey (shift-F10).
@@ -390,7 +390,7 @@ namespace MS.Internal.Documents
                         // use selection start position. Otherwise prefer TargetElements's start, if provided.
                         ITextContainer textContainer = (ITextContainer)((IServiceProvider)document).GetService(typeof(ITextContainer));
                         ITextPointer contextMenuPosition = null;
-                        if (textContainer.TextSelection != null)
+                        if (textContainer.TextSelection is not null)
                         {
                             if ((textContainer.TextSelection.IsEmpty || !textContainer.TextSelection.TextEditor.UiScope.IsFocused) &&
                                 e.TargetElement is TextElement)
@@ -412,7 +412,7 @@ namespace MS.Internal.Documents
                         // If ContextMenu position has been found and it is visible, show ContextMenu there.
                         // Otherwise let default ContextMenu handling logic handle this event.
                         ITextView textView = textContainer.TextView;
-                        if (contextMenuPosition != null && textView != null && textView.IsValid && textView.Contains(contextMenuPosition))
+                        if (contextMenuPosition is not null && textView is not null && textView.IsValid && textView.Contains(contextMenuPosition))
                         {
                             Rect positionRect = textView.GetRectangleFromTextPosition(contextMenuPosition);
                             if (positionRect != Rect.Empty)
@@ -454,14 +454,14 @@ namespace MS.Internal.Documents
         internal static Rect CalculateVisibleRect(Rect visibleRect, Visual originalVisual)
         {
             Visual visual = VisualTreeHelper.GetParent(originalVisual) as Visual;
-            while (visual != null && visibleRect != Rect.Empty)
+            while (visual is not null && visibleRect != Rect.Empty)
             {
-                if (VisualTreeHelper.GetClip(visual) != null)
+                if (VisualTreeHelper.GetClip(visual) is not null)
                 {
                     GeneralTransform transform = originalVisual.TransformToAncestor(visual).Inverse;
                     // Safer version of transform to descendent (doing the inverse ourself), 
                     // we want the rect inside of our space. (Which is always rectangular and much nicer to work with)
-                    if (transform != null)
+                    if (transform is not null)
                     {
                         Rect rectBounds = VisualTreeHelper.GetClip(visual).Bounds;
                         rectBounds = transform.TransformBounds(rectBounds);

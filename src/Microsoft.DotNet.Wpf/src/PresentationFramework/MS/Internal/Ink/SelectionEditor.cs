@@ -180,7 +180,7 @@ namespace MS.Internal.Ink
                 // If the current captured device is Stylus, we should activate the LassoSelectionBehavior with
                 // the Stylus. Otherwise, use mouse.
                 EditingCoordinator.ActivateDynamicBehavior(EditingCoordinator.LassoSelectionBehavior,
-                    args.StylusDevice != null ? args.StylusDevice : args.Device);
+                    args.StylusDevice is not null ? args.StylusDevice : args.Device);
             }
         }
 

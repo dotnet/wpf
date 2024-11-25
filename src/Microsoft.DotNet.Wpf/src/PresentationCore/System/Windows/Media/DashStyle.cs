@@ -59,7 +59,7 @@ namespace System.Windows.Media
         {
             Offset = offset;
 
-            if (dashes != null)
+            if (dashes is not null)
             {
                 Dashes = new DoubleCollection(dashes);
             }
@@ -78,7 +78,7 @@ namespace System.Windows.Media
             DoubleCollection vDashes = Dashes;
             int count = 0;
                                          
-            if (vDashes != null)
+            if (vDashes is not null)
             {
                 count = vDashes.Count;
             }

@@ -103,7 +103,7 @@ namespace System.Windows.Input
         /// <returns>true if this TouchPoint and the other TouchPoint are equivalent.</returns>
         bool IEquatable<TouchPoint>.Equals(TouchPoint other)
         {
-            if (other != null)
+            if (other is not null)
             {
                 return (other.TouchDevice == TouchDevice) &&
                     (other.Position == Position) &&

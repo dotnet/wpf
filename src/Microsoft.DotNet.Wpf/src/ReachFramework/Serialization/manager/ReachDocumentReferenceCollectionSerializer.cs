@@ -77,7 +77,7 @@ namespace System.Windows.Xps.Serialization
             //
             foreach (object documentReference in (System.Collections.Generic.IEnumerable<DocumentReference>)serializableObjectContext.TargetObject)
             {
-                if (documentReference != null)
+                if (documentReference is not null)
                 {
                     // Serialize the current item
                     SerializeDocumentReference(documentReference);

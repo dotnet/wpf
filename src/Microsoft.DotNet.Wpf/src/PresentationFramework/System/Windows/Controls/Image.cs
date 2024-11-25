@@ -446,7 +446,7 @@ namespace System.Windows.Controls
 
         private void DetachBitmapSourceEvents()
         {
-            if (_bitmapSource != null)
+            if (_bitmapSource is not null)
             {
                 DownloadCompletedEventManager.RemoveHandler(_bitmapSource, OnSourceDownloaded);
                 DownloadFailedEventManager.RemoveHandler(_bitmapSource, OnSourceFailed);
@@ -468,7 +468,7 @@ namespace System.Windows.Controls
                 image.DetachBitmapSourceEvents();
 
                 BitmapSource newBitmapSource = newValue as BitmapSource;
-                if (newBitmapSource != null && newBitmapSource.CheckAccess() && !newBitmapSource.IsFrozen)
+                if (newBitmapSource is not null && newBitmapSource.CheckAccess() && !newBitmapSource.IsFrozen)
                 {
                     image.AttachBitmapSourceEvents(newBitmapSource);
                 }
@@ -480,7 +480,7 @@ namespace System.Windows.Controls
             if ((source is IUriContext) && (!source.IsFrozen) && (((IUriContext)source).BaseUri is null))
             {
                 Uri baseUri = BaseUriHelper.GetBaseUriCore(d);
-                if (baseUri != null)
+                if (baseUri is not null)
                 {
                     ((IUriContext)source).BaseUri = BaseUriHelper.GetBaseUriCore(d);
                 }

@@ -27,7 +27,7 @@ namespace MS.Internal.Xaml.Context
             _creationDelegate = creationDelegate;
             Grow();
             _depth = 0;
-            Debug.Assert(CurrentFrame != null);
+            Debug.Assert(CurrentFrame is not null);
             Debug.Assert(CurrentFrame.Depth == Depth);
         }
 
@@ -43,14 +43,14 @@ namespace MS.Internal.Xaml.Context
             {
                 T iteratorFrame = source.CurrentFrame;
                 T lastFrameInNewStack = null;
-                while (iteratorFrame != null)
+                while (iteratorFrame is not null)
                 {
                     T newFrame = (T)iteratorFrame.Clone();
                     if (_currentFrame is null)
                     {
                         _currentFrame = newFrame;
                     }
-                    if (lastFrameInNewStack != null)
+                    if (lastFrameInNewStack is not null)
                     {
                         lastFrameInNewStack.Previous = newFrame;
                     }
@@ -86,7 +86,7 @@ namespace MS.Internal.Xaml.Context
         public T GetFrame(int depth)
         {
             T iteratorFrame = _currentFrame;
-            Debug.Assert(iteratorFrame != null);
+            Debug.Assert(iteratorFrame is not null);
             while (iteratorFrame.Depth > depth)
             {
                 iteratorFrame = (T)iteratorFrame.Previous;
@@ -154,7 +154,7 @@ namespace MS.Internal.Xaml.Context
         {
             if (iteratorFrame is null)
                 return;
-            if (iteratorFrame.Previous != null)
+            if (iteratorFrame.Previous is not null)
                 ShowFrame(sb, (T)iteratorFrame.Previous);
             sb.AppendLine($"  {iteratorFrame.Depth} {iteratorFrame}");
         }

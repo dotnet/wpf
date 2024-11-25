@@ -114,7 +114,7 @@ namespace System.Windows.Media
             out Matrix currentTransformValue
             )
         {
-            if (transform != null)
+            if (transform is not null)
             {
                 currentTransformValue = transform.Value;
             }

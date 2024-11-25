@@ -160,7 +160,7 @@ namespace MS.Internal
                 Interlocked.Exchange<NonPumpingSynchronizationContext>(ref _defaultSynchronizationContext, null);
 
             // if the default non-pumping context is in use, allocate a new one
-            bool usingDefaultContext = (nonPumpingSynchronizationContext != null);
+            bool usingDefaultContext = (nonPumpingSynchronizationContext is not null);
             if (!usingDefaultContext)
             {
                 nonPumpingSynchronizationContext = new NonPumpingSynchronizationContext();

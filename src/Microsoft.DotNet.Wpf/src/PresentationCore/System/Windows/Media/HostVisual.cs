@@ -148,7 +148,7 @@ namespace System.Windows.Media
             // This method is executed on the visual target thread.
             //
 
-            Debug.Assert(target != null);
+            Debug.Assert(target is not null);
             Debug.Assert(target.Dispatcher.Thread == Thread.CurrentThread);
 
             using (CompositionEngineLock.Acquire())
@@ -157,7 +157,7 @@ namespace System.Windows.Media
                 // Check if another target is already hosted by this
                 // visual and throw exception if this is the case.
                 //
-                if (_target != null)
+                if (_target is not null)
                 {
                     throw new InvalidOperationException(
                         SR.VisualTarget_AnotherTargetAlreadyConnected
@@ -201,7 +201,7 @@ namespace System.Windows.Media
 
             using (CompositionEngineLock.Acquire())
             {
-                Debug.Assert(_target != null);
+                Debug.Assert(_target is not null);
                 Debug.Assert(_target.Dispatcher.Thread == Thread.CurrentThread);
 
                 DisconnectHostedVisualOnAllChannels();
@@ -257,7 +257,7 @@ namespace System.Windows.Media
             // 3. They should not be already connected.
             //
             if (!(channel.IsSynchronous)
-                && _target != null
+                && _target is not null
                 && !_connectedChannels.ContainsKey(channel))
             {
                 Debug.Assert(IsOnChannel(channel));
@@ -305,7 +305,7 @@ namespace System.Windows.Media
                     // Duplication and flush is complete, we can resume processing
                     // Only if the Invoke succeeded will we have a handle returned.
                     //
-                    if (returnValue != null)
+                    if (returnValue is not null)
                     {
                         targetsHandle = (DUCE.ResourceHandle)returnValue;
                     }
@@ -398,12 +398,12 @@ namespace System.Windows.Media
             bool removeChannelFromCollection)
         {
             Dispatcher channelDispatcher;
-            if (_target != null && _connectedChannels.TryGetValue(channel, out channelDispatcher))
+            if (_target is not null && _connectedChannels.TryGetValue(channel, out channelDispatcher))
             {
                 // Adding commands to a channel is not thread-safe,
                 // we must do the actual work on the same dispatcher thread
                 // where the connection happened.
-                if (channelDispatcher != null && channelDispatcher.CheckAccess())
+                if (channelDispatcher is not null && channelDispatcher.CheckAccess())
                 {
                     Disconnect(channel,
                                channelDispatcher,
@@ -414,7 +414,7 @@ namespace System.Windows.Media
                 else
                 {
                     // marshal to the right thread
-                    if (channelDispatcher != null)
+                    if (channelDispatcher is not null)
                     {
                         DispatcherOperation op = channelDispatcher.BeginInvoke(
                             DispatcherPriority.Normal,
@@ -469,7 +469,7 @@ namespace System.Windows.Media
             DisconnectData previous = null;
 
             // search the list for an entry matching the given channel
-            while (disconnectData != null && (disconnectData.HostVisual != this || disconnectData.Channel != channel))
+            while (disconnectData is not null && (disconnectData.HostVisual != this || disconnectData.Channel != channel))
             {
                 previous = disconnectData;
                 disconnectData = disconnectData.Next;

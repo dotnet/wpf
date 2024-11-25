@@ -281,10 +281,10 @@ namespace System.Windows.Controls
                     EditingCoordinator.InvalidateTransform();
 
                     Transform transform = e.NewValue as Transform;
-                    if (transform != null && !transform.HasAnimatedProperties)
+                    if (transform is not null && !transform.HasAnimatedProperties)
                     {
                         TransformGroup transformGroup = transform as TransformGroup;
-                        if ( transformGroup != null )
+                        if ( transformGroup is not null )
                         {
                             //walk down the tree looking for animated transforms
                             Stack<Transform> transforms = new Stack<Transform>();
@@ -297,7 +297,7 @@ namespace System.Windows.Controls
                                     return;
                                 }
                                 transformGroup = transform as TransformGroup;
-                                if ( transformGroup != null )
+                                if ( transformGroup is not null )
                                 {
                                     for ( int i = 0; i < transformGroup.Children.Count; i++ )
                                     {
@@ -561,11 +561,11 @@ namespace System.Windows.Controls
         private static void OnPositioningChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             UIElement uie = d as UIElement;
-            if ( uie != null )
+            if ( uie is not null )
             {
                 // Make sure the UIElement is a child of InkCanvasInnerCanvas.
                 InkCanvasInnerCanvas p = VisualTreeHelper.GetParent(uie) as InkCanvasInnerCanvas;
-                if ( p != null )
+                if ( p is not null )
                 {
                     if ( e.Property == InkCanvas.LeftProperty
                         || e.Property == InkCanvas.TopProperty )
@@ -714,7 +714,7 @@ namespace System.Windows.Controls
                                 new DrawingAttributesDefaultValueFactory(),
                                 new PropertyChangedCallback(OnDefaultDrawingAttributesChanged)),
                         (ValidateValueCallback)delegate(object value)
-                            { return value != null; });
+                            { return value is not null; });
 
         /// <summary>
         /// Gets/Sets the DefaultDrawingAttributes property.
@@ -1039,7 +1039,7 @@ namespace System.Windows.Controls
         /// came from eventargs with the UserInitiated flag set to true</param>
         internal void RaiseGestureOrStrokeCollected(InkCanvasStrokeCollectedEventArgs e, bool userInitiated)
         {
-            Debug.Assert(e != null, "EventArg can not be null");
+            Debug.Assert(e is not null, "EventArg can not be null");
             bool addStrokeToInkCanvas = true; // Initialize our flag.
 
             // The follow code raises Gesture event
@@ -1258,7 +1258,7 @@ namespace System.Windows.Controls
         /// <param name="e">EventArgs to raise the event with</param>
         internal void RaiseActiveEditingModeChanged(RoutedEventArgs e)
         {
-            Debug.Assert(e != null, "EventArg can not be null");
+            Debug.Assert(e is not null, "EventArg can not be null");
 
             InkCanvasEditingMode mode = this.ActiveEditingMode;
             if (mode != _editingCoordinator.ActiveEditingMode)
@@ -1315,7 +1315,7 @@ namespace System.Windows.Controls
         /// <param name="e">EventArgs to raise the event with</param>
         private void RaiseEditingModeChanged(RoutedEventArgs e)
         {
-            Debug.Assert(e != null, "EventArg can not be null");
+            Debug.Assert(e is not null, "EventArg can not be null");
 
             _editingCoordinator.UpdateEditingState(false /* EditingMode */);
 
@@ -1369,7 +1369,7 @@ namespace System.Windows.Controls
         /// <param name="e">EventArgs to raise the event with</param>
         private void RaiseEditingModeInvertedChanged(RoutedEventArgs e)
         {
-            Debug.Assert(e != null, "EventArg can not be null");
+            Debug.Assert(e is not null, "EventArg can not be null");
 
             _editingCoordinator.UpdateEditingState(true /* EditingModeInverted */);
 
@@ -1403,7 +1403,7 @@ namespace System.Windows.Controls
         /// <param name="e"> InkCanvasSelectionEditingEventArgs to raise the event with</param>
         internal void RaiseSelectionMoving( InkCanvasSelectionEditingEventArgs e)
         {
-            Debug.Assert(e != null, "EventArg can not be null");
+            Debug.Assert(e is not null, "EventArg can not be null");
             this.OnSelectionMoving(e);
         }
 
@@ -1434,7 +1434,7 @@ namespace System.Windows.Controls
         /// <param name="e">EventArgs to raise the event with</param>
         internal void RaiseSelectionMoved(EventArgs e)
         {
-            Debug.Assert(e != null, "EventArg can not be null");
+            Debug.Assert(e is not null, "EventArg can not be null");
 
             this.OnSelectionMoved(e);
             // Update the cursor of SelectionEditor behavior.
@@ -1470,7 +1470,7 @@ namespace System.Windows.Controls
         /// <param name="e">InkCanvasStrokeErasingEventArgs to raise the event with</param>
         internal void RaiseStrokeErasing(InkCanvasStrokeErasingEventArgs e)
         {
-            Debug.Assert(e != null, "EventArg can not be null");
+            Debug.Assert(e is not null, "EventArg can not be null");
             this.OnStrokeErasing(e);
         }
 
@@ -1546,7 +1546,7 @@ namespace System.Windows.Controls
         /// <param name="e"> InkCanvasSelectionEditingEventArgs to raise the event with</param>
         internal void RaiseSelectionResizing( InkCanvasSelectionEditingEventArgs e)
         {
-            Debug.Assert(e != null, "EventArg can not be null");
+            Debug.Assert(e is not null, "EventArg can not be null");
             this.OnSelectionResizing(e);
         }
 
@@ -1576,7 +1576,7 @@ namespace System.Windows.Controls
         /// <param name="e">EventArgs to raise the event with</param>
         internal void RaiseSelectionResized(EventArgs e)
         {
-            Debug.Assert(e != null, "EventArg can not be null");
+            Debug.Assert(e is not null, "EventArg can not be null");
 
             this.OnSelectionResized(e);
             // Update the cursor of SelectionEditor behavior.
@@ -1610,7 +1610,7 @@ namespace System.Windows.Controls
         /// <param name="e">InkCanvasSelectionChangingEventArgs to raise the event with</param>
         private void RaiseSelectionChanging(InkCanvasSelectionChangingEventArgs e)
         {
-            Debug.Assert(e != null, "EventArg can not be null");
+            Debug.Assert(e is not null, "EventArg can not be null");
             this.OnSelectionChanging(e);
         }
 
@@ -1640,7 +1640,7 @@ namespace System.Windows.Controls
         /// <param name="e">EventArgs to raise the event with</param>
         internal void RaiseSelectionChanged(EventArgs e)
         {
-            Debug.Assert(e != null, "EventArg can not be null");
+            Debug.Assert(e is not null, "EventArg can not be null");
 
             this.OnSelectionChanged(e);
             // Update the cursor of SelectionEditor behavior.
@@ -1860,7 +1860,7 @@ namespace System.Windows.Controls
                     //harden against ExternalException
                     return;
                 }
-                if (dataObj != null)
+                if (dataObj is not null)
                 {
                     PasteFromDataObject(dataObj, point);
                 }
@@ -1968,7 +1968,7 @@ namespace System.Windows.Controls
                 {
                     int previousIndex = -1;
                     //remove the existing plugin
-                    if (_dynamicRenderer != null)
+                    if (_dynamicRenderer is not null)
                     {
                         //remove the plugin from the collection
                         previousIndex = this.StylusPlugIns.IndexOf(_dynamicRenderer);
@@ -1986,7 +1986,7 @@ namespace System.Windows.Controls
 
                     _dynamicRenderer = value;
 
-                    if (_dynamicRenderer != null) //null is acceptable
+                    if (_dynamicRenderer is not null) //null is acceptable
                     {
                         //remove the plugin from the collection
                         if (!this.StylusPlugIns.Contains(_dynamicRenderer))
@@ -2008,7 +2008,7 @@ namespace System.Windows.Controls
                         //attach the DynamicRenderer if it is not already
                         if (!(this.InkPresenter.ContainsAttachedVisual(_dynamicRenderer.RootVisual)) &&
                             _dynamicRenderer.Enabled &&
-                            _dynamicRenderer.RootVisual != null)
+                            _dynamicRenderer.RootVisual is not null)
                         {
                             this.InkPresenter.AttachVisuals(_dynamicRenderer.RootVisual, this.DefaultDrawingAttributes);
                         }
@@ -2076,7 +2076,7 @@ namespace System.Windows.Controls
                 //harden against ExternalException
                 return false;
             }
-            if ( dataObj != null )
+            if ( dataObj is not null )
             {
                 canPaste = ClipboardProcessor.CheckDataFormats(dataObj);
             }
@@ -2115,7 +2115,7 @@ namespace System.Windows.Controls
                 children.Add(element);
             }
 
-            if ( newStrokes != null )
+            if ( newStrokes is not null )
             {
                 Strokes.Add(newStrokes);
             }
@@ -2249,7 +2249,7 @@ namespace System.Windows.Controls
             //
             // update our internal stroke collections used by dynamic selection
             //
-            if (strokesToDynamicallySelect != null)
+            if (strokesToDynamicallySelect is not null)
             {
                 foreach (Stroke s in strokesToDynamicallySelect)
                 {
@@ -2258,7 +2258,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            if (strokesToDynamicallyUnselect != null)
+            if (strokesToDynamicallyUnselect is not null)
             {
                 foreach (Stroke s in strokesToDynamicallyUnselect)
                 {
@@ -2333,8 +2333,8 @@ namespace System.Windows.Controls
         internal void ChangeInkCanvasSelection(StrokeCollection strokes, UIElement[] elements)
         {
             //validate in debug only for this internal static
-            Debug.Assert(strokes != null
-                        && elements != null,
+            Debug.Assert(strokes is not null
+                        && elements is not null,
                         "Invalid arguments in ChangeInkCanvasSelection");
 
             bool strokesAreDifferent;
@@ -2585,7 +2585,7 @@ namespace System.Windows.Controls
         {
             ApplyTemplate();
 
-            if (this.DynamicRenderer != null)
+            if (this.DynamicRenderer is not null)
             {
                 this.DynamicRenderer.DrawingAttributes = newDrawingAttributes;
 
@@ -2598,7 +2598,7 @@ namespace System.Windows.Controls
 
                     // Only hook up if we are enabled.  As we change editing modes this routine will be called
                     // to clean up things.
-                    if (this.DynamicRenderer.Enabled && this.DynamicRenderer.RootVisual != null)
+                    if (this.DynamicRenderer.Enabled && this.DynamicRenderer.RootVisual is not null)
                     {
                         this.InkPresenter.AttachVisuals(this.DynamicRenderer.RootVisual, newDrawingAttributes);
                     }
@@ -2673,7 +2673,7 @@ namespace System.Windows.Controls
                 true);
 
             // Remove the ink.
-            if ( removeSelectedStrokes && strokes != null && strokes.Count != 0 )
+            if ( removeSelectedStrokes && strokes is not null && strokes.Count != 0 )
             {
                 Strokes.Remove(strokes);
             }
@@ -2699,7 +2699,7 @@ namespace System.Windows.Controls
             ICommand command = args.Command;
             InkCanvas inkCanvas = sender as InkCanvas;
 
-            Debug.Assert(inkCanvas != null);
+            Debug.Assert(inkCanvas is not null);
 
             if ( inkCanvas.IsEnabled && !inkCanvas.EditingCoordinator.UserIsEditing )
             {
@@ -2772,7 +2772,7 @@ namespace System.Windows.Controls
             RoutedCommand command = (RoutedCommand)(args.Command);
             InkCanvas inkCanvas = sender as InkCanvas;
 
-            Debug.Assert(inkCanvas != null);
+            Debug.Assert(inkCanvas is not null);
 
             if ( inkCanvas.IsEnabled
                 //
@@ -2883,7 +2883,7 @@ namespace System.Windows.Controls
                 Cursor cursor = inkCanvas.EditingCoordinator.GetActiveBehaviorCursor();
 
                 // If cursor is null, we don't handle the event and leave it as whatever the default is.
-                if ( cursor != null )
+                if ( cursor is not null )
                 {
                     e.Cursor = cursor;
                     e.Handled = true;

@@ -116,7 +116,7 @@ namespace System.Windows.Input
             Debug.Assert(!_contexts._inputSource.CheckAccess());
 
             // We should always have a valid IPimcContext3 interface pointer.
-            Debug.Assert(_pimcContext != null);
+            Debug.Assert(_pimcContext is not null);
             
             _pimcContext.GetPacketDescriptionInfo(out cProps, out cButtons); // Calls Unmanaged code - SecurityCritical with SUC.
 
@@ -147,7 +147,7 @@ namespace System.Windows.Input
             Debug.Assert(_statusPropertyIndex != -1);  // We should always see this.
             
             // Make sure we actually created propertyInfos OK
-            if (propertyInfos != null)
+            if (propertyInfos is not null)
             {
                 for (int i = 0; i < cButtons; i++)
                 {
@@ -207,7 +207,7 @@ namespace System.Windows.Input
             
             // There was a prior assumption here that this would always be called under Dispatcher.DisableProcessing.
             // This assumption has not been valid for some time, leading to re-entrancy.
-            if (_penThreadPenContext != null)
+            if (_penThreadPenContext is not null)
             {
                 if (_penThreadPenContext.RemovePenContext(this))
                 {
@@ -244,9 +244,9 @@ namespace System.Windows.Input
         {
             // zero is a special case where we want to know if any stylus devices are in range.
             if (stylusPointerId == 0)
-                return _stylusDevicesInRange != null && _stylusDevicesInRange.Count > 0;
+                return _stylusDevicesInRange is not null && _stylusDevicesInRange.Count > 0;
             else
-                return (_stylusDevicesInRange != null && _stylusDevicesInRange.Contains(stylusPointerId));
+                return (_stylusDevicesInRange is not null && _stylusDevicesInRange.Contains(stylusPointerId));
         }
 
         /////////////////////////////////////////////////////////////////////
@@ -374,7 +374,7 @@ namespace System.Windows.Input
                     }
                 }
             }
-            else if (_stylusDevicesInRange != null)
+            else if (_stylusDevicesInRange is not null)
             {
                 timestamp = EnsureTimestampUnique(timestamp);
                 _lastInRangeTime = timestamp;
@@ -437,7 +437,7 @@ namespace System.Windows.Input
             }
 
             Debug.Assert(numPackets != 0);
-            Debug.Assert(data != null);
+            Debug.Assert(data is not null);
             
             if (_stylusPointDescription is null)
             {

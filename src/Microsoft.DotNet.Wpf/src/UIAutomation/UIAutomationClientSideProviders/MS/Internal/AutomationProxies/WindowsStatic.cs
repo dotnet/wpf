@@ -114,7 +114,7 @@ namespace MS.Internal.AutomationProxies
                 WindowsStatic wtv = (WindowsStatic) Create (hwnd, 0);
                 // If wtv is null the window handle is invalid or no longer available (or something,
                 // Create eats the problem).
-                if (wtv != null)
+                if (wtv is not null)
                     wtv.DispatchEvents (eventId, idProp, idObject, idChild);
             }
         }
@@ -175,7 +175,7 @@ namespace MS.Internal.AutomationProxies
             // could be a label or a linklabel
             // we differentiate based on whether the item has children or not
             Accessible acc = null;
-            return Accessible.AccessibleObjectFromWindow(hwnd, NativeMethods.OBJID_CLIENT, ref acc) == NativeMethods.S_OK && acc != null && acc.ChildCount > 0;
+            return Accessible.AccessibleObjectFromWindow(hwnd, NativeMethods.OBJID_CLIENT, ref acc) == NativeMethods.S_OK && acc is not null && acc.ChildCount > 0;
         }
 
         private static StaticType GetStaticTypeFromStyle(int style)

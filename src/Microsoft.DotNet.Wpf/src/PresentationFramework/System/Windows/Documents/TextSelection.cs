@@ -44,7 +44,7 @@ namespace System.Windows.Documents
         {
             ITextSelection thisSelection = (ITextSelection)this;
 
-            Invariant.Assert(textEditor.UiScope != null);
+            Invariant.Assert(textEditor.UiScope is not null);
 
             // Attach the selection to its editor
             _textEditor = textEditor;
@@ -210,11 +210,11 @@ namespace System.Windows.Documents
                 // from false to true.
                 if (!_IsChanged && value)
                 {
-                    if (this.TextStore != null)
+                    if (this.TextStore is not null)
                     {
                         this.TextStore.OnSelectionChange();
                     }
-                    if (this.ImmComposition != null)
+                    if (this.ImmComposition is not null)
                     {
                         this.ImmComposition.OnSelectionChange();
                     }
@@ -229,12 +229,12 @@ namespace System.Windows.Documents
         void ITextRange.NotifyChanged(bool disableScroll, bool skipEvents)
         {
             // Notify text store about selection movement.
-            if (this.TextStore != null)
+            if (this.TextStore is not null)
             {
                 this.TextStore.OnSelectionChanged();
             }
             // Notify ImmComposition about selection movement.
-            if (this.ImmComposition != null)
+            if (this.ImmComposition is not null)
             {
                 this.ImmComposition.OnSelectionChanged();
             }
@@ -254,7 +254,7 @@ namespace System.Windows.Documents
                 // while listening to a change event just raised, but in that case the following
                 // code should be harmless.
                 ITextPointer movingPosition = ((ITextSelection)this).MovingPosition;
-                if (this.TextView != null && this.TextView.IsValid &&
+                if (this.TextView is not null && this.TextView.IsValid &&
                     !this.TextView.Contains(movingPosition))
                 {
                     movingPosition.ValidateLayout();
@@ -331,7 +331,7 @@ namespace System.Windows.Documents
             bool isBlinkEnabled = false;
             bool isSelectionActive = false;
 
-            if (uiScope.IsEnabled && this.TextView != null)
+            if (uiScope.IsEnabled && this.TextView is not null)
             {
                 if (uiScope.IsKeyboardFocused)
                 {
@@ -395,7 +395,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                Invariant.Assert(this.IsEmpty || _anchorPosition != null);
+                Invariant.Assert(this.IsEmpty || _anchorPosition is not null);
                 Invariant.Assert(_anchorPosition is null || _anchorPosition.IsFrozen);
                 return this.IsEmpty ? ((ITextSelection)this).Start : _anchorPosition;
             }
@@ -627,7 +627,7 @@ namespace System.Windows.Documents
                 }
 
                 // Now that new movingPosition is prepared, build the new selection
-                if (newMovingPosition != null)
+                if (newMovingPosition is not null)
                 {
                     moved = true;
 
@@ -680,14 +680,14 @@ namespace System.Windows.Documents
             ITextPointer position = this.TextView.GetTextPositionFromPoint(point, /*snapToText:*/false);
 
             // Did we hit any text?
-            if (position != null && thisSelection.Contains(position))
+            if (position is not null && thisSelection.Contains(position))
             {
                 // If we did, make sure the range covers at least one full character.
                 // Check both character edges.
 
                 position = position.GetNextInsertionPosition(position.LogicalDirection);
 
-                if (position != null && thisSelection.Contains(position))
+                if (position is not null && thisSelection.Contains(position))
                 {
                     contains = true;
                 }
@@ -697,7 +697,7 @@ namespace System.Windows.Documents
             // to hit selection - in inter-paragraph or end-of-paragraph areas - highlighted by selection
             if (!contains)
             {
-                if (_caretElement != null && _caretElement.SelectionGeometry != null &&
+                if (_caretElement is not null && _caretElement.SelectionGeometry is not null &&
                     _caretElement.SelectionGeometry.FillContains(point))
                 {
                     contains = true;
@@ -725,7 +725,7 @@ namespace System.Windows.Documents
             thisSelection.UpdateCaretAndHighlight();
 
             // Delete highlight layer created for this selection (if any)
-            if (_highlightLayer != null && thisSelection.Start.TextContainer.Highlights.GetLayer(typeof(TextSelection)) == _highlightLayer)
+            if (_highlightLayer is not null && thisSelection.Start.TextContainer.Highlights.GetLayer(typeof(TextSelection)) == _highlightLayer)
             {
                 thisSelection.Start.TextContainer.Highlights.RemoveLayer(_highlightLayer);
             }
@@ -746,7 +746,7 @@ namespace System.Windows.Documents
                 // Stress bug#1583327 indicate that _caretElement can be set to null by
                 // detaching. So the below code is caching the caret element instance locally.
                 CaretElement caretElement = _caretElement;
-                if (caretElement != null)
+                if (caretElement is not null)
                 {
                     caretElement.OnTextViewUpdated();
                 }
@@ -813,7 +813,7 @@ namespace System.Windows.Documents
             ITextSelection thisSelection = (ITextSelection)this;
 
             // Check whether the cursor has been actually moved - compare with the previous position
-            if (forceParagraphSelection || _previousCursorPosition != null && cursorPosition.CompareTo(_previousCursorPosition) == 0)
+            if (forceParagraphSelection || _previousCursorPosition is not null && cursorPosition.CompareTo(_previousCursorPosition) == 0)
             {
                 // Mouse was not actually moved. Ignore the event.
                 return;
@@ -880,7 +880,7 @@ namespace System.Windows.Documents
                 _allowWordExpansionOnAnchorEnd = true;
                 _reenterPosition = null;
 
-                if (this.GetUIElementSelected() != null)
+                if (this.GetUIElementSelected() is not null)
                 {
                     // This means that we have just received mousedown event and selected embedded element in this event.
                     // MoveMove event is sent immediately, but we don't want to loose UIElement selection,
@@ -928,7 +928,7 @@ namespace System.Windows.Documents
 
                     // Check if we re-entering selection or moving outside
                     // and set autoexpansion flags accordingly
-                    if (_previousCursorPosition != null &&
+                    if (_previousCursorPosition is not null &&
                         (anchorPosition.CompareTo(cursorPosition) < 0 && cursorPosition.CompareTo(_previousCursorPosition) < 0 ||
                         _previousCursorPosition.CompareTo(cursorPosition) < 0 && cursorPosition.CompareTo(anchorPosition) < 0))
                     {
@@ -948,7 +948,7 @@ namespace System.Windows.Documents
                         // Extending the selection.
 
                         // Check if we are crossing a boundary of last reentered word to re-enable word expansion on moving end
-                        if (_reenterPosition != null)
+                        if (_reenterPosition is not null)
                         {
                             TextSegment lastReenteredWordRange = TextPointerBase.GetWordRange(_reenterPosition);
                             if (!lastReenteredWordRange.Contains(cursorPosition))
@@ -1038,7 +1038,7 @@ namespace System.Windows.Documents
             }
 
             Invariant.Assert(!this.IsEmpty);
-            Invariant.Assert(_anchorPosition != null);
+            Invariant.Assert(_anchorPosition is not null);
             Invariant.Assert(_movingPositionEdge != MovingEdge.None);
 
             if (!TextRangeEditTables.IsTableCellRange((TextPointer)_anchorPosition, (TextPointer)((ITextSelection)this).MovingPosition, /*includeCellAtMovingPosition:*/false, out anchorCell, out movingCell))
@@ -1046,7 +1046,7 @@ namespace System.Windows.Documents
                 return false;
             }
 
-            Invariant.Assert(anchorCell != null && movingCell != null);
+            Invariant.Assert(anchorCell is not null && movingCell is not null);
 
             rowGroup = movingCell.Row.RowGroup;
 
@@ -1069,7 +1069,7 @@ namespace System.Windows.Documents
                 while (nextRowIndex >= 0)
                 {
                     nextCell = FindCellAtColumnIndex(rowGroup.Rows[nextRowIndex].Cells, movingCell.ColumnIndex);
-                    if (nextCell != null)
+                    if (nextCell is not null)
                     {
                         break;
                     }
@@ -1077,7 +1077,7 @@ namespace System.Windows.Documents
                 }
             }
 
-            if (nextCell != null)
+            if (nextCell is not null)
             {
                 // This check for cell start position is not safe. It gives wrong result on elements nested in Cells
                 ITextPointer movingPosition = nextCell.ContentEnd.CreatePointer();
@@ -1108,7 +1108,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (this.TextStore != null)
+                if (this.TextStore is not null)
                 {
                     return TextStore.IsInterimSelection;
                 }
@@ -1223,7 +1223,7 @@ namespace System.Windows.Documents
             }
 
             // Update caret on focused text editor
-            if (threadLocalStore.FocusedTextSelection != null)
+            if (threadLocalStore.FocusedTextSelection is not null)
             {
                 ((ITextSelection)threadLocalStore.FocusedTextSelection).RefreshCaret();
             }
@@ -1382,7 +1382,7 @@ namespace System.Windows.Documents
             {
                 Table table = base.InsertTableVirtual(rowCount, columnCount);
 
-                if (table != null)
+                if (table is not null)
                 {
                     TextPointer cellStart = table.RowGroups[0].Rows[0].Cells[0].ContentStart;
 
@@ -1418,7 +1418,7 @@ namespace System.Windows.Documents
 
             if (thisSelection.Start is TextPointer)
             {
-                if (_springloadFormatting != null && this.IsEmpty)
+                if (_springloadFormatting is not null && this.IsEmpty)
                 {
                     // Get springload value
                     propertyValue = _springloadFormatting.ReadLocalValue(formattingProperty);
@@ -1449,7 +1449,7 @@ namespace System.Windows.Documents
                 TextPointer start = this.Start;
 
                 Inline ancestor = start.GetNonMergeableInlineAncestor();
-                if (ancestor != null)
+                if (ancestor is not null)
                 {
                     // Unless the selection is wholly contained within a Hyperlink, we don't
                     // want to springload its character properties.
@@ -1548,7 +1548,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            if (_springloadFormatting != null)
+            if (_springloadFormatting is not null)
             {
                 Invariant.Assert(this.Start.LogicalDirection == LogicalDirection.Backward);
                 Invariant.Assert(this.End.LogicalDirection == LogicalDirection.Forward);
@@ -1600,7 +1600,7 @@ namespace System.Windows.Documents
                 // Operations at Loaded priority are processed when layout and render is
                 // done but just before items at input priority are serviced.
                 // We want the update caret worker to run after layout is clean.
-                if (_textEditor.TextView != null && _textEditor.TextView.IsValid)
+                if (_textEditor.TextView is not null && _textEditor.TextView.IsValid)
                 {
                     UpdateCaretStateWorker(null);
                 }
@@ -1624,14 +1624,14 @@ namespace System.Windows.Documents
 
             // If TextBoxBase.CaretBrush has been set, use that instead of the default inverting behavior.
             Brush caretBrush = (Brush)textEditor.UiScope.GetValue(TextBoxBase.CaretBrushProperty);
-            if (caretBrush != null)
+            if (caretBrush is not null)
             {
                 return caretBrush;
             }
 
             // Get the default background from the system color or UiScope's background
             backgroundPropertyValue = textEditor.UiScope.GetValue(System.Windows.Controls.Panel.BackgroundProperty);
-            if (backgroundPropertyValue != null && backgroundPropertyValue != DependencyProperty.UnsetValue &&
+            if (backgroundPropertyValue is not null && backgroundPropertyValue != DependencyProperty.UnsetValue &&
                 backgroundPropertyValue is SolidColorBrush)
             {
                 backgroundColor = ((SolidColorBrush)backgroundPropertyValue).Color;
@@ -1646,7 +1646,7 @@ namespace System.Windows.Documents
             if (focusedTextSelection is TextSelection)
             {
                 backgroundPropertyValue = ((TextSelection)focusedTextSelection).GetCurrentValue(TextElement.BackgroundProperty);
-                if (backgroundPropertyValue != null && backgroundPropertyValue != DependencyProperty.UnsetValue)
+                if (backgroundPropertyValue is not null && backgroundPropertyValue != DependencyProperty.UnsetValue)
                 {
                     if (backgroundPropertyValue is SolidColorBrush)
                     {
@@ -1824,7 +1824,7 @@ namespace System.Windows.Documents
         {
             ITextContainer textContainer = ((ITextSelection)this).Start.TextContainer;
             TextSelectionHighlightLayer highlightLayer = textContainer.Highlights.GetLayer(typeof(TextSelection)) as TextSelectionHighlightLayer;
-            if (highlightLayer != null)
+            if (highlightLayer is not null)
             {
                 textContainer.Highlights.RemoveLayer(highlightLayer);
                 Invariant.Assert(textContainer.Highlights.GetLayer(typeof(TextSelection)) is null);
@@ -1864,7 +1864,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            Invariant.Assert(anchorPosition != null);
+            Invariant.Assert(anchorPosition is not null);
 
             ITextSelection thisSelection = (ITextSelection)this;
 
@@ -2394,7 +2394,7 @@ namespace System.Windows.Documents
 
                         // Get the flow direction of the current paragraph and compare it with uiScope's flow direction.
                         Block paragraphOrBlockUIContainer = (caretPosition is TextPointer) ? ((TextPointer)caretPosition).ParagraphOrBlockUIContainer : null;
-                        if (paragraphOrBlockUIContainer != null)
+                        if (paragraphOrBlockUIContainer is not null)
                         {
                             FlowDirection pagraphFlowDirection = paragraphOrBlockUIContainer.FlowDirection;
 
@@ -2459,7 +2459,7 @@ namespace System.Windows.Documents
         private bool VerifyAdornerLayerExists()
         {
             DependencyObject element = TextView.RenderScope;
-            while (element != _textEditor.UiScope && element != null)
+            while (element != _textEditor.UiScope && element is not null)
             {
                 if (element is AdornerDecorator || element is System.Windows.Controls.ScrollContentPresenter)
                 {
@@ -2552,7 +2552,7 @@ namespace System.Windows.Documents
             DependencyObject element = this.UiScope;
             DependencyObject parent = this.UiScope;
 
-            while (parent != null)
+            while (parent is not null)
             {
                 element = parent;
                 parent = GetParentElement(element);
@@ -2602,7 +2602,7 @@ namespace System.Windows.Documents
         // Removes the caret from the visual tree.
         private void DetachCaretFromVisualTree()
         {
-            if (_caretElement != null)
+            if (_caretElement is not null)
             {
                 _caretElement.DetachFromView();
                 _caretElement = null;

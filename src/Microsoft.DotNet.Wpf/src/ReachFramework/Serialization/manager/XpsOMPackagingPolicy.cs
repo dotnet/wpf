@@ -68,7 +68,7 @@ namespace System.Windows.Xps.Packaging
                     IOpcPartUri partUri = GenerateIOpcPartUri(XpsS0Markup.DocumentSequenceContentType);
                     IOpcPartUri discardControlPartUri = GenerateIOpcPartUri(XpsS0Markup.DiscardContentType);
                     _currentFixedDocumentSequenceWriter = _packageTarget.GetXpsOMPackageWriter(partUri, discardControlPartUri);
-                    if (_printQueue != null)
+                    if (_printQueue is not null)
                     {
                         ((PrintQueue)_printQueue).XpsOMPackageWriter = _currentFixedDocumentSequenceWriter;
                     }
@@ -89,7 +89,7 @@ namespace System.Windows.Xps.Packaging
         CloseXpsOMPackageWriter(
             )
         {
-            if (_currentFixedDocumentSequenceWriter != null &&
+            if (_currentFixedDocumentSequenceWriter is not null &&
                _currentDocumentSequenceWriterRef > 0)
             {
                 _currentDocumentSequenceWriterRef--;
@@ -270,7 +270,7 @@ namespace System.Windows.Xps.Packaging
         void
         ReleaseXmlWriterForFixedPage()
         {
-            if (_currentFixedPageXmlWriter != null &&
+            if (_currentFixedPageXmlWriter is not null &&
                _currentFixedPageWriterRef > 0)
             {
                 _currentFixedPageWriterRef--;
@@ -407,7 +407,7 @@ namespace System.Windows.Xps.Packaging
             // document, otherwise we assume it is a page print ticket
             // We don't support setting FixedDocumentSequence print ticket via serialization,
             // since it can only be set when starting the print job
-            if (_currentFixedDocumentSequenceWriter != null)
+            if (_currentFixedDocumentSequenceWriter is not null)
             {
                 if (_currentFixedDocumentWriterRef == 0)
                 {
@@ -451,7 +451,7 @@ namespace System.Windows.Xps.Packaging
                 // We need to create the corresponding part in the Xps package
                 // and then acquire the Stream
                 //
-                if (_currentFixedPageXmlWriter != null)
+                if (_currentFixedPageXmlWriter is not null)
                 {
                     try
                     {
@@ -514,7 +514,7 @@ namespace System.Windows.Xps.Packaging
         {
             ResourceStreamCacheItem resourceStreamCacheItem = (ResourceStreamCacheItem)_fontsCache[resourceId];
 
-            if (resourceStreamCacheItem != null)
+            if (resourceStreamCacheItem is not null)
             {
                 if (resourceStreamCacheItem.Release() == 0)
                 {
@@ -541,7 +541,7 @@ namespace System.Windows.Xps.Packaging
             IOpcPartUri partUri = GenerateIOpcPartUri(uri);
             IXpsOMFontResource fontResourceToRemove = fontCollection.GetByPartName(partUri);
             _discardableResourceParts.Append(partUri);
-            if (fontResourceToRemove != null)
+            if (fontResourceToRemove is not null)
             {
                 for (uint i = 0, n = fontCollection.GetCount(); i < n; ++i)
                 {
@@ -606,7 +606,7 @@ namespace System.Windows.Xps.Packaging
         void
         ReleaseResourceStreamForXpsImage()
         {
-            if (_imageResourceStream != null &&
+            if (_imageResourceStream is not null &&
                 _currentXpsImageRef > 0)
             {
                 _currentXpsImageRef--;
@@ -660,7 +660,7 @@ namespace System.Windows.Xps.Packaging
         void
         ReleaseResourceStreamForXpsColorContext()
         {
-            if (_colorContextResourceStream != null &&
+            if (_colorContextResourceStream is not null &&
                 _currentXpsColorContextRef > 0)
             {
                 _currentXpsColorContextRef--;
@@ -735,14 +735,14 @@ namespace System.Windows.Xps.Packaging
             _currentFixedPageUri = null;
 
             _currentXpsImageRef = 0;
-            if (_imageResourceStream != null)
+            if (_imageResourceStream is not null)
             {
                 _imageResourceStream.Stream.Dispose();
             }
             _imageResourceStream = null;
 
             _currentXpsColorContextRef = 0;
-            if (_colorContextResourceStream != null)
+            if (_colorContextResourceStream is not null)
             {
                 _colorContextResourceStream.Stream.Dispose();
             }
@@ -751,7 +751,7 @@ namespace System.Windows.Xps.Packaging
             _currentPageContentStream = null;
             _currentResourceStream = null;
 
-            if (_currentFixedPagePrintStream != null)
+            if (_currentFixedPagePrintStream is not null)
             {
                 _currentFixedPagePrintStream.Dispose();
             }

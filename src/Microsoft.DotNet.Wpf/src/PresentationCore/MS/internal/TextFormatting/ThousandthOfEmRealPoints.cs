@@ -47,7 +47,7 @@ namespace MS.Internal.TextFormatting
             IList<Point> pointValues
             )
         {
-            Debug.Assert(pointValues != null);            
+            Debug.Assert(pointValues is not null);            
             InitArrays(emSize, pointValues.Count);            
 
             // do the setting

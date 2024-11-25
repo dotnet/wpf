@@ -56,12 +56,12 @@ namespace System.Windows.Input
         private void PreProcessInput( object sender, PreProcessInputEventArgs e )
         {
             InputReportEventArgs input = e.StagingItem.Input as InputReportEventArgs;
-            if (input != null)
+            if (input is not null)
             {
                 if (input.Report.Type == InputType.Command)
                 {
                     RawAppCommandInputReport rawAppCommandInputReport = input.Report as RawAppCommandInputReport;
-                    if (rawAppCommandInputReport != null)
+                    if (rawAppCommandInputReport is not null)
                     {
                         // Claim the input for the Command.
                         input.Device = this;
@@ -87,16 +87,16 @@ namespace System.Windows.Input
                 if (!e.StagingItem.Input.Handled)
                 {
                     InputReportEventArgs inputReportEventArgs = e.StagingItem.Input as InputReportEventArgs;
-                    if (inputReportEventArgs != null)
+                    if (inputReportEventArgs is not null)
                     {
                         RawAppCommandInputReport rawAppCommandInputReport = inputReportEventArgs.Report as RawAppCommandInputReport;
-                        if (rawAppCommandInputReport != null)
+                        if (rawAppCommandInputReport is not null)
                         {
                             IInputElement commandTarget = e.StagingItem.Input.OriginalSource as IInputElement;
-                            if (commandTarget != null)
+                            if (commandTarget is not null)
                             {
                                 RoutedCommand command = GetRoutedCommand(rawAppCommandInputReport.AppCommand);
-                                if (command != null)
+                                if (command is not null)
                                 {
                                     // Send the app command to the tree to be handled by UIElements and ContentElements
                                     // that will forward the event to CommandManager.

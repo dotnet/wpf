@@ -50,7 +50,7 @@ namespace System.Windows.Media
         /// <param name="isDynamic">Usage flag: when true then rendering machine will detect animation state and apply subpixel animation behavior.</param>
         internal GuidelineSet(double[] guidelinesX, double[] guidelinesY, bool isDynamic)
         {
-            if (guidelinesX != null)
+            if (guidelinesX is not null)
             {
                 // Dynamic guideline is defined by a pair of numbers: (coordinate, shift),
                 // so the legnth of array should be even.
@@ -59,7 +59,7 @@ namespace System.Windows.Media
                 GuidelinesX = new DoubleCollection(guidelinesX);
             }
 
-            if (guidelinesY != null)
+            if (guidelinesY is not null)
             {
                 // Dynamic guideline is defined by a pair of numbers: (coordinate, shift),
                 // so the legnth of array should be even.
@@ -78,12 +78,12 @@ namespace System.Windows.Media
         /// <param name="guidelinesY">Array of Y coordinates that defines a set of horizontal guidelines.</param>
         public GuidelineSet(double[] guidelinesX, double[] guidelinesY)
         {
-            if (guidelinesX != null)
+            if (guidelinesX is not null)
             {
                 GuidelinesX = new DoubleCollection(guidelinesX);
             }
 
-            if (guidelinesY != null)
+            if (guidelinesY is not null)
             {
                 GuidelinesY = new DoubleCollection(guidelinesY);
             }

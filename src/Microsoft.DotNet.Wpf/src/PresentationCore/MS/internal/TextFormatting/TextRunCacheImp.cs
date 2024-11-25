@@ -180,14 +180,14 @@ namespace MS.Internal.TextFormatting
 
             // If the TextRun was obtained from the cache, make sure it has the right PixelsPerDip set on its properties.
 
-            if (textRun.Properties != null)
+            if (textRun.Properties is not null)
             {
                 textRun.Properties.PixelsPerDip = settings.TextSource.PixelsPerDip;
             }
 
             offsetToFirstCp = textRunSpanRider.CurrentPosition - textRunSpanRider.CurrentSpanStart;
             runLength = textRunSpanRider.Length;
-            Debug.Assert(textRun != null && runLength > 0, "Invalid run!");
+            Debug.Assert(textRun is not null && runLength > 0, "Invalid run!");
 
             bool isText = textRun is ITextSymbols;
 
@@ -270,7 +270,7 @@ namespace MS.Internal.TextFormatting
                     || textRunSpanRider.CurrentSpanStart - textRunSpanRider.CurrentPosition == 0)
 
                 // span rider of both text and format point to valid position
-                &&  (textRunSpanRider.Length > 0 && textRunSpanRider.CurrentElement != null),
+                &&  (textRunSpanRider.Length > 0 && textRunSpanRider.CurrentElement is not null),
 
                 "Text run fetching error!"
                 );
@@ -294,11 +294,11 @@ namespace MS.Internal.TextFormatting
                     
                     TextRun run = textRunSpanRider.CurrentElement as TextRun;
 
-                    if (run != null)
+                    if (run is not null)
                     {
                         // Only TextRun containing text would have non-empty Character buffer range.
                         if ( TextRunInfo.GetRunType(run) == Plsrun.Text
-                          && run.CharacterBufferReference.CharacterBuffer != null)
+                          && run.CharacterBufferReference.CharacterBuffer is not null)
                         {   
                             charString = new CharacterBufferRange(
                                 run.CharacterBufferReference,

@@ -167,7 +167,7 @@ namespace System.Windows
                 if (manager is null)
                 {
                     serializerContext = typeDescriptorContext as IValueSerializerContext;
-                    if (serializerContext != null)
+                    if (serializerContext is not null)
                     {
                         typeSerializer = ValueSerializer.GetSerializerFor(typeof(Type), serializerContext);
                     }
@@ -209,22 +209,22 @@ namespace System.Windows
                             Type type;         // the accessor's ownerType, or type of indexer parameter
                             string name;        // the accessor's propertyName, or string value of indexer parameter
 
-                            if (dp != null)
+                            if (dp is not null)
                             {
                                 type = dp.OwnerType;
                                 name = dp.Name;
                             }
-                            else if (pi != null)
+                            else if (pi is not null)
                             {
                                 type = pi.DeclaringType;
                                 name = pi.Name;
                             }
-                            else if (pd != null)
+                            else if (pd is not null)
                             {
                                 type = pd.ComponentType;
                                 name = pd.Name;
                             }
-                            else if (doa != null)
+                            else if (doa is not null)
                             {
                                 type = doa.OwnerType;
                                 name = doa.PropertyName;
@@ -237,7 +237,7 @@ namespace System.Windows
                             }
 
                             // write out the type of the accessor or index parameter
-                            if (typeSerializer != null)
+                            if (typeSerializer is not null)
                             {
                                 builder.Append(typeSerializer.ConvertToString(type, serializerContext));
                             }
@@ -245,7 +245,7 @@ namespace System.Windows
                             {
                                 // Need the prefix here
                                 string prefix = null;
-                                if (prefix != null && prefix != string.Empty)
+                                if (prefix is not null && prefix != string.Empty)
                                 {
                                     builder.Append(prefix);
                                     builder.Append(':');
@@ -253,7 +253,7 @@ namespace System.Windows
                                 builder.Append(type.Name);
                             }
 
-                            if (name != null)
+                            if (name is not null)
                             {
                                 // write out the accessor name
                                 builder.Append('.');

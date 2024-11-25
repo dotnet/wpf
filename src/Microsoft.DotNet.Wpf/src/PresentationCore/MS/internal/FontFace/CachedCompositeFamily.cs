@@ -205,8 +205,8 @@ namespace MS.Internal.FontFace
             out double              scaleInEm
             )
         {
-            Invariant.Assert(unicodeString.CharacterBuffer != null && unicodeString.Length > 0);
-            Invariant.Assert(culture != null);
+            Invariant.Assert(unicodeString.CharacterBuffer is not null && unicodeString.Length > 0);
+            Invariant.Assert(culture is not null);
 
             // Get the family map. This will find the first family map that matches
             // the specified culture, an ancestor neutral culture, or "any" culture.
@@ -248,7 +248,7 @@ namespace MS.Internal.FontFace
                 culture,
                 out lengthOfRanges
                 );
-            Debug.Assert(ranges != null);
+            Debug.Assert(ranges is not null);
 
             int sizeofChar = 0;
             int ch = 0;
@@ -386,7 +386,7 @@ namespace MS.Internal.FontFace
             if(_firstFontFamily is null)
             {
                 _firstFontFamily = FontFamily.FindFontFamilyFromFriendlyNameList(GetFirstTargetFamilyName());
-                Debug.Assert(_firstFontFamily != null);
+                Debug.Assert(_firstFontFamily is not null);
             }
             return _firstFontFamily;
         }
@@ -431,7 +431,7 @@ namespace MS.Internal.FontFace
             {
                 unsafe
                 {
-                    return LookupMetrics(unicodeScalar) != null;
+                    return LookupMetrics(unicodeScalar) is not null;
                 }
             }
 
@@ -447,7 +447,7 @@ namespace MS.Internal.FontFace
                     for (int i = 0; i < characterLength; ++i)
                     {
                         FamilyCollection.CachedCharacterMetrics* metrics = LookupMetrics(characterString[i]);
-                        if (metrics != null)
+                        if (metrics is not null)
                         {
                             // Side bearings are included in the advance width but are not used as offsets for glyph positioning.
                             pAdvances[i] = Math.Max(0, (int)((metrics->blackBoxWidth + metrics->leftSideBearing + metrics->rightSideBearing) * emSize));

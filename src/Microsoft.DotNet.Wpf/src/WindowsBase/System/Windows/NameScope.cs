@@ -91,7 +91,7 @@ namespace System.Windows
             if (name.Length == 0)
                 throw new ArgumentException(SR.NameScopeNameNotEmptyString);
 
-            if (_nameMap != null && _nameMap[name] != null)
+            if (_nameMap is not null && _nameMap[name] is not null)
             {
                 _nameMap.Remove(name);
             }
@@ -130,7 +130,7 @@ namespace System.Windows
             if (nameScope is null)
             {
                 DependencyObject objAsDO = obj as DependencyObject;
-                if (objAsDO != null)
+                if (objAsDO is not null)
                 {
                     nameScope = GetNameScope(objAsDO);
                 }
@@ -314,7 +314,7 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(key);
 
             object value = FindName(key);
-            return (value != null);
+            return (value is not null);
         }
 
         public bool Remove(string key)
@@ -384,7 +384,7 @@ namespace System.Windows
             {
                 _enumerator = null;
 
-                if (nameMap != null)
+                if (nameMap is not null)
                 {
                     _enumerator = nameMap.GetEnumerator();
                 }
@@ -426,7 +426,7 @@ namespace System.Windows
 
             void IEnumerator.Reset()
             {
-                if (_enumerator != null)
+                if (_enumerator is not null)
                 {
                     _enumerator.Reset();
                 }

@@ -53,7 +53,7 @@ namespace MS.Internal.AppModel
 
         internal void _Detach(PageFunctionBase pf)
         {
-            if (pf._Return != null && pf._Saver is null)
+            if (pf._Return is not null && pf._Saver is null)
             {
                 ReturnEventSaverInfo[] list = null;
 
@@ -109,9 +109,9 @@ namespace MS.Internal.AppModel
 
             list = _returnList;
 
-            if (list != null)
+            if (list is not null)
             {
-                Debug.Assert(caller != null, "Caller should not be null");
+                Debug.Assert(caller is not null, "Caller should not be null");
                 for (int i = 0; i < list.Length; i++)
                 {
                     //

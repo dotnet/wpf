@@ -253,7 +253,7 @@ namespace MS.Internal.Documents
 
             // Key.Return also covers Key.Enter
             if ((FindEnabled) &&
-                (e != null) &&
+                (e is not null) &&
                 (e.Key == Key.Return || e.Key == Key.Execute))
             {
                 e.Handled = true;
@@ -269,12 +269,12 @@ namespace MS.Internal.Documents
         /// </summary>
         private void UpdateButtonState()
         {
-            if (FindNextButton != null)
+            if (FindNextButton is not null)
             {
                 FindNextButton.IsEnabled = FindEnabled;
             }
 
-            if (FindPreviousButton != null)
+            if (FindPreviousButton is not null)
             {
                 FindPreviousButton.IsEnabled = FindEnabled;
             }

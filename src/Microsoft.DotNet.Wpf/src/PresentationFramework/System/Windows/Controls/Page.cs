@@ -69,7 +69,7 @@ namespace System.Windows.Controls
             // If the default value is non-null then wire it to the current instance.
             PropertyMetadata metadata = TemplateProperty.GetMetadata(DependencyObjectType);
             ControlTemplate defaultValue = (ControlTemplate) metadata.DefaultValue;
-            if (defaultValue != null)
+            if (defaultValue is not null)
             {
                 OnTemplateChanged(this, new DependencyPropertyChangedEventArgs(TemplateProperty, metadata, null, defaultValue));
             }
@@ -384,7 +384,7 @@ namespace System.Windows.Controls
 
                 // Return false if it is not NavigationWindow.
                 NavigationWindow navWin = WindowService as NavigationWindow;
-                if (navWin != null)
+                if (navWin is not null)
                 {
                     return navWin.ShowsNavigationUI;
                 }
@@ -596,7 +596,7 @@ namespace System.Windows.Controls
             {
                 UIElement child = this.GetVisualChild(0) as UIElement;
 
-                if (child != null)
+                if (child is not null)
                 {
                     child.Measure(constraint);
                     return child.DesiredSize;
@@ -621,7 +621,7 @@ namespace System.Windows.Controls
             {
                 UIElement child = this.GetVisualChild(0) as UIElement;
 
-                if (child != null)
+                if (child is not null)
                 {
                     child.Arrange(new Rect(new Point(), arrangeBounds));
                 }
@@ -659,7 +659,7 @@ namespace System.Windows.Controls
 
             if ((visualParent is null) || 
                 (Parent is Window) || 
-                ((NavigationService != null) && (NavigationService.Content == this)))
+                ((NavigationService is not null) && (NavigationService.Content == this)))
             {
                 return;
             }
@@ -685,12 +685,12 @@ namespace System.Windows.Controls
             bool isParentValid = false;
             // Don't worry about FCE since FCE is not a visual
             FrameworkElement feParent = visualParent as FrameworkElement;
-            if (feParent != null)
+            if (feParent is not null)
             {
                 DependencyObject parent = feParent as DependencyObject;
 
                 // walk the StyledParent chain
-                while ((feParent != null) && (feParent.TemplatedParent != null))
+                while ((feParent is not null) && (feParent.TemplatedParent is not null))
                 {
                     parent = feParent.TemplatedParent;
                     // don't care if this cast fails to null b/c StyledParent
@@ -746,7 +746,7 @@ namespace System.Windows.Controls
         private static void _OnWindowServiceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Page p = d as Page;
-            Debug.Assert( p != null, "DependencyObject must be of type Page." );
+            Debug.Assert( p is not null, "DependencyObject must be of type Page." );
 
             p.OnWindowServiceChanged(e.NewValue as IWindowService);
         }
@@ -766,7 +766,7 @@ namespace System.Windows.Controls
             _currentIws = iws;
             DetermineTopLevel();
 
-            if (_currentIws != null)
+            if (_currentIws is not null)
             {
                 if (_isTopLevel == true)
                 {
@@ -779,7 +779,7 @@ namespace System.Windows.Controls
         {
             FrameworkElement feParent = this.Parent as FrameworkElement;
 
-            if ((feParent != null) && (feParent.InheritanceBehavior == InheritanceBehavior.Default))
+            if ((feParent is not null) && (feParent.InheritanceBehavior == InheritanceBehavior.Default))
             {
                 _isTopLevel = true;
             }
@@ -791,7 +791,7 @@ namespace System.Windows.Controls
                
         private void PropagateProperties()
         {
-            Debug.Assert(_currentIws != null, "_currentIws cannot be null here. Caller should always verify it");
+            Debug.Assert(_currentIws is not null, "_currentIws cannot be null here. Caller should always verify it");
 
             if (_pho is null)
             {
@@ -822,7 +822,7 @@ namespace System.Windows.Controls
         {
             get 
             {
-                Invariant.Assert(_currentIws != null, "_currentIws cannot be null here.");
+                Invariant.Assert(_currentIws is not null, "_currentIws cannot be null here.");
                 return _currentIws.UserResized; 
             }
         }
@@ -830,7 +830,7 @@ namespace System.Windows.Controls
         private void SetShowsNavigationUI(bool showsNavigationUI)
         {
             NavigationWindow navWin = _currentIws as NavigationWindow;
-            if (navWin != null)
+            if (navWin is not null)
             {
                 navWin.ShowsNavigationUI = showsNavigationUI;
             }

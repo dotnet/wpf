@@ -511,7 +511,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (UsesItemContainerTemplate)
             {
                 DataTemplate itemContainerTemplate = ItemContainerTemplateSelector.SelectTemplate(currentItem, this);
-                if (itemContainerTemplate != null)
+                if (itemContainerTemplate is not null)
                 {
                     object itemContainer = itemContainerTemplate.LoadContent();
                     if (itemContainer is RibbonMenuItem || itemContainer is RibbonGallery || itemContainer is RibbonSeparator)
@@ -552,7 +552,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             else
             {
                 RibbonSeparator separator = element as RibbonSeparator;
-                if (separator != null)
+                if (separator is not null)
                 {
                     ValueSource vs = DependencyPropertyHelper.GetValueSource(separator, StyleProperty);
                     if (vs.BaseValueSource <= BaseValueSource.ImplicitStyleReference)
@@ -615,21 +615,21 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             // If a new template has just been generated then 
             // be sure to clear any stale ItemsHost references
-            if (InternalItemsHost != null && !this.IsAncestorOf(InternalItemsHost))
+            if (InternalItemsHost is not null && !this.IsAncestorOf(InternalItemsHost))
             {
                 InternalItemsHost = null;
             }
             
             base.OnApplyTemplate();
 
-            if (_resizeThumb != null)
+            if (_resizeThumb is not null)
             {
                 _resizeThumb.DragStarted -= new DragStartedEventHandler(OnPopupResizeStarted);
                 _resizeThumb.DragDelta -= new DragDeltaEventHandler(OnPopupResize);
             }
 
             _resizeThumb = GetTemplateChild(ResizeThumbTemplatePartName) as Thumb;
-            if (_resizeThumb != null)
+            if (_resizeThumb is not null)
             {
                 _resizeThumb.DragStarted += new DragStartedEventHandler(OnPopupResizeStarted);
                 _resizeThumb.DragDelta += new DragDeltaEventHandler(OnPopupResize);
@@ -637,7 +637,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             _itemsPresenter = GetTemplateChild(ItemsPresenterTemplatePartName) as ItemsPresenter;
 
-            if (_popup != null)
+            if (_popup is not null)
             {
                 _popup.Opened -= new EventHandler(OnPopupOpened);
                 _popup.CustomPopupPlacementCallback -= new CustomPopupPlacementCallback(PlacePopup);
@@ -645,7 +645,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             
             _popup = GetTemplateChild(PopupTemplatePartName) as Popup;
             
-            if (_popup != null)
+            if (_popup is not null)
             {
                 _popup.Opened += new EventHandler(OnPopupOpened);
                 _popup.CustomPopupPlacementCallback += new CustomPopupPlacementCallback(PlacePopup);
@@ -659,7 +659,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             ItemContainerGenerator.StatusChanged += new EventHandler(OnItemContainerGeneratorStatusChanged);
 
             _submenuScrollViewer = GetTemplateChild(SubMenuScrollViewerTemplatePartName) as ScrollViewer;
-            if (_submenuScrollViewer != null)
+            if (_submenuScrollViewer is not null)
             {
                 KeyTipService.SetCanClipKeyTip(_submenuScrollViewer, false);
             }
@@ -678,7 +678,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private void OnPopupOpened(object sender, EventArgs e)
         {
             RibbonToolTip toolTip = ToolTip as RibbonToolTip;
-            if (toolTip != null)
+            if (toolTip is not null)
             {
                 toolTip.IsOpen = false;
             }
@@ -726,7 +726,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 if (IsKeyboardFocusWithin)
                 {
                     ItemsControl parent = ItemsControl.ItemsControlFromItemContainer(this);
-                    if (parent != null)
+                    if (parent is not null)
                     {
                         parent.Focus();
                     }
@@ -783,8 +783,8 @@ namespace Microsoft.Windows.Controls.Ribbon
         internal bool HandleLeftKeyDown(DependencyObject originalSource)
         {
             UIElement popupChild = _popup.TryGetChild();
-            if (popupChild != null &&
-                originalSource != null &&
+            if (popupChild is not null &&
+                originalSource is not null &&
                 (!popupChild.IsKeyboardFocusWithin || TreeHelper.IsVisualAncestorOf(popupChild, originalSource)))
             {
                 if (IsSubmenuOpen)
@@ -835,7 +835,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 if (focusedIndex < 0)
                 {
                     UIElement popupChild = _popup.TryGetChild();
-                    if (popupChild != null &&
+                    if (popupChild is not null &&
                         popupChild.IsKeyboardFocusWithin)
                     {
                         // If the popup already has focus within,
@@ -910,7 +910,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         }
                         break;
                     case Key.Tab:
-                        if (IsSubmenuOpen && _popup != null && !_popup.IsKeyboardFocusWithin)
+                        if (IsSubmenuOpen && _popup is not null && !_popup.IsKeyboardFocusWithin)
                         {
                             if ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
                             {
@@ -988,11 +988,11 @@ namespace Microsoft.Windows.Controls.Ribbon
             // base.OnGotKeyboardFocus(e);
 
             FrameworkElement ribbonCurrentSelection = RibbonCurrentSelection;
-            if (ribbonCurrentSelection != null &&
+            if (ribbonCurrentSelection is not null &&
                 IsSubmenuOpen)
             {
                 UIElement popupChild = _popup.TryGetChild();
-                if (popupChild != null &&
+                if (popupChild is not null &&
                     !popupChild.IsKeyboardFocusWithin)
                 {
                     // If the drop down is open and the ribbonCurrentSelection is valid
@@ -1050,11 +1050,11 @@ namespace Microsoft.Windows.Controls.Ribbon
             RibbonDropDownHelper.OnPopupResizeStarted(_itemsPresenter);
             
             // Clear selection and close submenus when resizing.
-            if (RibbonCurrentSelection != null)
+            if (RibbonCurrentSelection is not null)
             {
                 RibbonMenuItem selectedMenuItem = RibbonCurrentSelection as RibbonMenuItem;
                 RibbonCurrentSelection = null;
-                if (selectedMenuItem != null)
+                if (selectedMenuItem is not null)
                 {
                     selectedMenuItem.IsSubmenuOpen = false;
                 }
@@ -1165,7 +1165,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private static void StopTimer(ref DispatcherTimer timer)
         {
-            if (timer != null)
+            if (timer is not null)
             {
                 timer.Stop();
                 timer = null;
@@ -1174,7 +1174,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private void StartTimer(DispatcherTimer timer)
         {
-            Debug.Assert(timer != null, "timer should not be null.");
+            Debug.Assert(timer is not null, "timer should not be null.");
             Debug.Assert(!timer.IsEnabled, "timer should not be running.");
 
             if (timer == _closeSubmenuTimer)
@@ -1232,7 +1232,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         internal void BringIndexIntoView(int index)
         {
-            if (_itemsHost != null)
+            if (_itemsHost is not null)
             {
                 _itemsHost.BringIndexIntoViewInternal(index);
             }
@@ -1240,13 +1240,13 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private static bool IsContainerFocusable(FrameworkElement container)
         {
-            return container != null && container.Focusable;
+            return container is not null && container.Focusable;
         }
 
         private static void OnIsCheckedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             RibbonMenuItemAutomationPeer peer = UIElementAutomationPeer.FromElement((RibbonMenuItem)d) as RibbonMenuItemAutomationPeer;
-            if (peer != null)
+            if (peer is not null)
             {
                 peer.RaiseToggleStatePropertyChangedEvent((bool)e.OldValue, (bool)e.NewValue);
             }
@@ -1281,7 +1281,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 
                 // Clear local values 
                 // so that when DropDown opens it shows in it original size and PlacementMode
-                if (menuItem._itemsPresenter != null)
+                if (menuItem._itemsPresenter is not null)
                 {
                     menuItem._itemsPresenter.ClearValue(FrameworkElement.HeightProperty);
                     menuItem._itemsPresenter.ClearValue(FrameworkElement.WidthProperty);
@@ -1290,7 +1290,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
                 // DropDownHeight refers to the initial Height of the popup
                 // The size of the popup can change dynamically by resizing.
-                if (menuItem._itemsPresenter != null && menuItem.HasGallery )
+                if (menuItem._itemsPresenter is not null && menuItem.HasGallery )
                 {
                     menuItem._itemsPresenter.Height = menuItem.DropDownHeight;
                 }
@@ -1303,7 +1303,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             menuItem.RibbonCurrentSelection = null;
 
             RibbonMenuItemAutomationPeer peer = UIElementAutomationPeer.FromElement(menuItem) as RibbonMenuItemAutomationPeer;
-            if (peer != null)
+            if (peer is not null)
             {
                 peer.RaiseExpandCollapseAutomationEvent((bool)e.OldValue, (bool)e.NewValue);
             }
@@ -1311,10 +1311,10 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private object UpdateDropDownPosition(object arg)
         {
-            if (_popup != null)
+            if (_popup is not null)
             {
                 UIElement popupChild = _popup.TryGetChild();
-                if (popupChild != null)
+                if (popupChild is not null)
                 {
                     Point targetTopLeftCorner = this.PointToScreen(new Point());
                     Point popupTopLeftCorner = popupChild.PointToScreen(new Point());
@@ -1333,7 +1333,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             _screenBounds = RibbonDropDownHelper.GetScreenBounds(_itemsPresenter, _popup);
 
             // Also cache the PopupRoot if opened for the first time
-            if (_popupRoot is null && _itemsPresenter != null)
+            if (_popupRoot is null && _itemsPresenter is not null)
             {
                 _popupRoot = TreeHelper.FindVisualRoot(_itemsPresenter) as UIElement;
             }
@@ -1345,7 +1345,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             double popupChildMargin = 0.0;
             FrameworkElement popupChild;
-            if ((popupChild = _popup.Child as FrameworkElement) != null)
+            if ((popupChild = _popup.Child as FrameworkElement) is not null)
             {
                 popupChildMargin = (FlowDirection == FlowDirection.LeftToRight) ?  popupChild.Margin.Left : popupChild.Margin.Right ;
             }
@@ -1430,14 +1430,14 @@ namespace Microsoft.Windows.Controls.Ribbon
                 RibbonMenuItem menuItemParent = parent as RibbonMenuItem;
                 FrameworkElement sibling = null;
 
-                if (menuItemParent != null)
+                if (menuItemParent is not null)
                 {
                     sibling = menuItemParent.RibbonCurrentSelection;
                 }
                 else
                 {
                     RibbonMenuButton menuButtonParent = parent as RibbonMenuButton;
-                    if (menuButtonParent != null)
+                    if (menuButtonParent is not null)
                     {
                         sibling = menuButtonParent.RibbonCurrentSelection;
                     }
@@ -1506,7 +1506,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 FrameworkElement selectionItem = e.OriginalSource as FrameworkElement;
                 if (e.NewValue)
                 {
-                    if (selectionItem != null)
+                    if (selectionItem is not null)
                     {
                         ItemsControl parentItemsControl = ItemsControl.ItemsControlFromItemContainer(selectionItem);
                         if (menuItem == parentItemsControl)
@@ -1547,14 +1547,14 @@ namespace Microsoft.Windows.Controls.Ribbon
                 if (_ribbonCurrentSelection != value)
                 {
                     RibbonMenuItem selectedMenuItem = _ribbonCurrentSelection as RibbonMenuItem;
-                    if (selectedMenuItem != null)
+                    if (selectedMenuItem is not null)
                     {
                         selectedMenuItem.RibbonIsSelected = false;
                     }
                     else
                     {
                         RibbonGallery selectedGallery = _ribbonCurrentSelection as RibbonGallery;
-                        if (selectedGallery != null)
+                        if (selectedGallery is not null)
                         {
                             selectedGallery.RibbonIsSelected = false;
                         }
@@ -1563,14 +1563,14 @@ namespace Microsoft.Windows.Controls.Ribbon
                     _ribbonCurrentSelection = value;
 
                     selectedMenuItem = _ribbonCurrentSelection as RibbonMenuItem;
-                    if (selectedMenuItem != null)
+                    if (selectedMenuItem is not null)
                     {
                         selectedMenuItem.RibbonIsSelected = true;
                     }
                     else
                     {
                         RibbonGallery selectedGallery = _ribbonCurrentSelection as RibbonGallery;
-                        if (selectedGallery != null)
+                        if (selectedGallery is not null)
                         {
                             selectedGallery.RibbonIsSelected = true;
                         }
@@ -1830,7 +1830,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     IsSubmenuOpen = true;
                     RibbonHelper.NavigateToNextMenuItemOrGallery(this, -1, BringIndexIntoView);
                     UIElement popupChild = _popup.TryGetChild();
-                    if (popupChild != null)
+                    if (popupChild is not null)
                     {
                         KeyTipService.SetIsKeyTipScope(popupChild, true);
                         e.TargetKeyTipScope = popupChild;

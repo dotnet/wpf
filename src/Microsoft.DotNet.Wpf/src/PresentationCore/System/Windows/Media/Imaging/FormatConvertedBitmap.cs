@@ -120,7 +120,7 @@ namespace System.Windows.Media.Imaging
                             out wicFormatter));
 
                     SafeMILHandle internalPalette;
-                    if (DestinationPalette != null)
+                    if (DestinationPalette is not null)
                         internalPalette = DestinationPalette.InternalPalette;
                     else
                         internalPalette = new SafeMILHandle();
@@ -158,7 +158,7 @@ namespace System.Windows.Media.Imaging
                 }
                 finally
                 {
-                    if (wicFormatter != null)
+                    if (wicFormatter is not null)
                     {
                         wicFormatter.Close();
                     }
@@ -179,7 +179,7 @@ namespace System.Windows.Media.Imaging
                 BitmapSource newSource = e.NewValue as BitmapSource;
                 _source = newSource;
                 RegisterDownloadEventSource(_source);
-                _syncObject = (newSource != null) ? newSource.SyncObject : _bitmapInit;
+                _syncObject = (newSource is not null) ? newSource.SyncObject : _bitmapInit;
             }
         }
 
@@ -285,7 +285,7 @@ namespace System.Windows.Media.Imaging
                 //
                 if (((PixelFormat)value).Format == PixelFormatEnum.Default)
                 {
-                    if (bitmap.Source != null)
+                    if (bitmap.Source is not null)
                     {
                         return bitmap.Source.Format;
                     }

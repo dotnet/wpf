@@ -357,7 +357,7 @@ namespace System.Windows.Media
                 // Return a transformed copy of the figure collection
                 result = new PathFigureCollection();
                 PathFigureCollection figures = Figures;
-                int count = figures != null ? figures.Count : 0;
+                int count = figures is not null ? figures.Count : 0;
                 for (int i = 0; i < count; ++i)
                 {
                     PathFigure figure = figures.Internal_GetItem(i);
@@ -365,7 +365,7 @@ namespace System.Windows.Media
                 }
             }
 
-            Debug.Assert(result != null);
+            Debug.Assert(result is not null);
             return result;
         }
         #endregion
@@ -384,7 +384,7 @@ namespace System.Windows.Media
             }
 
             PathFigureCollection figureCollection = geometry.GetPathFigureCollection();
-            Debug.Assert(figureCollection != null);
+            Debug.Assert(figureCollection is not null);
 
             PathFigureCollection figures = Figures;
 
@@ -687,7 +687,7 @@ namespace System.Windows.Media
         {
             PathFigureCollection figures = Figures;
 
-            if (figures != null)
+            if (figures is not null)
             {
                 figures.Clear();
             }
@@ -782,7 +782,7 @@ namespace System.Windows.Media
                 double[] dashArray = null;
 
                 // If we have a pen, populate the CMD struct
-                if (pen != null)
+                if (pen is not null)
                 {
                     pen.GetBasicPenData(&penData, out dashArray);
                 }
@@ -908,7 +908,7 @@ namespace System.Windows.Media
         {
             PathFigureCollection figures = Figures;
 
-            int count = (figures != null) ? figures.Count : 0;
+            int count = (figures is not null) ? figures.Count : 0;
 
             for (int i=0; i<count; i++)
             {
@@ -947,7 +947,7 @@ namespace System.Windows.Media
 
             string figuresString = String.Empty;
             
-            if (figures != null)
+            if (figures is not null)
             {
                 figuresString = figures.ConvertToString(format, provider);
             }

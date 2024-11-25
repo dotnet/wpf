@@ -127,7 +127,7 @@ namespace System.Windows.Documents
 
             TextElementType element;
 
-            for (element = this.FirstChild; element != null; element = (TextElementType)element.NextElement)
+            for (element = this.FirstChild; element is not null; element = (TextElementType)element.NextElement)
             {
                 if (element == item)
                     break;
@@ -167,7 +167,7 @@ namespace System.Windows.Documents
                     element = this.FirstChild;
                 }
 
-                while (element != null)
+                while (element is not null)
                 {
                     count++;
                     element = element.NextElement;
@@ -251,7 +251,7 @@ namespace System.Windows.Documents
                 throw new InvalidOperationException(SR.Format(SR.TextElementCollection_PreviousSiblingDoesNotBelongToThisCollection, previousSibling.GetType().Name));
             }
 
-            if (newItem.Parent != null)
+            if (newItem.Parent is not null)
             {
                 throw new ArgumentException(SR.Format(SR.TextSchema_TheChildElementBelongsToAnotherTreeAlready, this.GetType().Name));
             }
@@ -290,7 +290,7 @@ namespace System.Windows.Documents
                 throw new InvalidOperationException(SR.Format(SR.TextElementCollection_NextSiblingDoesNotBelongToThisCollection, nextSibling.GetType().Name));
             }
 
-            if (newItem.Parent != null)
+            if (newItem.Parent is not null)
             {
                 throw new ArgumentException(SR.Format(SR.TextSchema_TheChildElementBelongsToAnotherTreeAlready, this.GetType().Name));
             }
@@ -461,7 +461,7 @@ namespace System.Windows.Documents
                 throw new IndexOutOfRangeException(SR.TextElementCollection_IndexOutOfRange);
             }
 
-            if (newItem.Parent != null)
+            if (newItem.Parent is not null)
             {
                 throw new ArgumentException(SR.Format(SR.TextSchema_TheChildElementBelongsToAnotherTreeAlready, this.GetType().Name));
             }
@@ -617,7 +617,7 @@ namespace System.Windows.Documents
                 throw new ArgumentException(SR.Format(SR.TextElementCollection_CannotCopyToArrayNotSufficientMemory, count, arrayIndex, array.Length));
             }
 
-            for (TextElementType element = (TextElementType)this.FirstChild; element != null; element = (TextElementType)element.NextElement)
+            for (TextElementType element = (TextElementType)this.FirstChild; element is not null; element = (TextElementType)element.NextElement)
             {
                 array.SetValue(element, arrayIndex++);
             }
@@ -802,7 +802,7 @@ namespace System.Windows.Documents
                 element.RepositionWithContent(null);
 
                 // Reset the cache.
-                if (newElementCache != null)
+                if (newElementCache is not null)
                 {
                     SetCache(index, newElementCache);
                 }
@@ -854,7 +854,7 @@ namespace System.Windows.Documents
                 element = this.FirstChild;
             }
 
-            while (index > 0 && element != null)
+            while (index > 0 && element is not null)
             {
                 element = (TextElementType)(forward ? element.NextElement : element.PreviousElement);
                 index--;
@@ -909,7 +909,7 @@ namespace System.Windows.Documents
                 element = this.FirstChild;
             }
 
-            while (element != null)
+            while (element is not null)
             {
                 if (element == item)
                 {
@@ -993,7 +993,7 @@ namespace System.Windows.Documents
             internal ElementIndexCache(int index, TextElementType element)
             {
                 // index == -1/element is null means "empty".
-                Invariant.Assert(index == -1 || element != null);
+                Invariant.Assert(index == -1 || element is not null);
 
                 _index = index;
                 _element = element;

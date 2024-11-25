@@ -54,7 +54,7 @@ namespace MS.Win32
 
             // First, add the set of hooks.  This allows the hooks to receive the
             // messages sent to the window very early in the process.
-            if(hooks != null)
+            if(hooks is not null)
             {
                 for(int i = 0, iEnd = hooks.Length; i < iEnd; i++)
                 {
@@ -191,7 +191,7 @@ namespace MS.Win32
                 // finalizable - thus don't call the Disposed callback.
 
                 // Notify listeners that we are being disposed.
-                if(Disposed != null)
+                if(Disposed is not null)
                 {
                     Disposed(this, EventArgs.Empty);
                 }

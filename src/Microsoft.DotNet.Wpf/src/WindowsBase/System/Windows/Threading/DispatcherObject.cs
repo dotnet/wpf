@@ -89,7 +89,7 @@ namespace System.Windows.Threading
 
             // Note: a DispatcherObject that is not associated with a
             // dispatcher is considered to be free-threaded.
-            if(dispatcher != null)
+            if(dispatcher is not null)
             {
                 accessAllowed = dispatcher.CheckAccess();
             }
@@ -115,7 +115,7 @@ namespace System.Windows.Threading
 
             // Note: a DispatcherObject that is not associated with a
             // dispatcher is considered to be free-threaded.
-            if(dispatcher != null)
+            if(dispatcher is not null)
             {
                 dispatcher.VerifyAccess();
             }

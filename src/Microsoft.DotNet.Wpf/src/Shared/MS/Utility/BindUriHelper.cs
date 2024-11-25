@@ -156,7 +156,7 @@ namespace MS.Internal.Utility
             string referer = null;
 
             Uri sourceUri = MS.Internal.AppModel.SiteOfOriginContainer.BrowserSource;
-            if (sourceUri != null)
+            if (sourceUri is not null)
             {
                 int sourceZone = MS.Internal.AppModel.CustomCredentialPolicy.MapUrlToZone(sourceUri);
                 int targetZone = MS.Internal.AppModel.CustomCredentialPolicy.MapUrlToZone(destinationUri);

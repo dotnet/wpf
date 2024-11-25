@@ -53,7 +53,7 @@ namespace System.Windows.Forms.Integration
         private static void BackgroundPropertyTranslator(object host, string propertyName, object value)
         {
             ElementHost elementHost = host as ElementHost;
-            if (elementHost != null)
+            if (elementHost is not null)
             {
                 UpdateBackgroundImage(elementHost);
             }
@@ -64,12 +64,12 @@ namespace System.Windows.Forms.Integration
         [ResourceConsumption(ResourceScope.Machine, ResourceScope.Machine)]
         private static void UpdateBackgroundImage(ElementHost host)
         {
-            if (host != null && host.HostContainerInternal != null)
+            if (host is not null && host.HostContainerInternal is not null)
             {
                 if (host.BackColorTransparent)
                 {
                     Control parent = host.Parent;
-                    if (parent != null && parent.Visible)
+                    if (parent is not null && parent.Visible)
                     {
                         using (SD.Bitmap parentBitmap = HostUtils.GetCoveredPortionOfBitmap(parent, host))
                         {
@@ -93,10 +93,10 @@ namespace System.Windows.Forms.Integration
         private static void CursorPropertyTranslator(object host, string propertyName, object value)
         {
             ElementHost elementHost = host as ElementHost;
-            if (elementHost != null)
+            if (elementHost is not null)
             {
                 AvalonAdapter adapter = elementHost.HostContainerInternal;
-                if (adapter != null)
+                if (adapter is not null)
                 {
                     //Note: Allow nulls to propagate
                     SWF.Cursor fromCursor = value as SWF.Cursor;
@@ -112,10 +112,10 @@ namespace System.Windows.Forms.Integration
         private static void EnabledPropertyTranslator(object host, string propertyName, object value)
         {
             ElementHost elementHost = host as ElementHost;
-            if (elementHost != null)
+            if (elementHost is not null)
             {
                 AvalonAdapter adapter = elementHost.HostContainerInternal;
-                if (adapter != null && value is bool)
+                if (adapter is not null && value is bool)
                 {
                     adapter.IsEnabled = (bool)value;
                 }
@@ -130,10 +130,10 @@ namespace System.Windows.Forms.Integration
             ElementHost elementHost = host as ElementHost;
             SD.Font wfFont = value as SD.Font;
 
-            if (elementHost != null && wfFont != null)
+            if (elementHost is not null && wfFont is not null)
             {
                 AvalonAdapter adapter = elementHost.HostContainerInternal;
-                if (adapter != null)
+                if (adapter is not null)
                 {
                     adapter.SetValue(SWC.Control.FontSizeProperty, Convert.SystemDrawingFontToSystemWindowsFontSize(wfFont));
                     adapter.SetValue(SWC.Control.FontFamilyProperty, Convert.ToSystemWindowsFontFamily(wfFont.FontFamily));
@@ -141,7 +141,7 @@ namespace System.Windows.Forms.Integration
                     adapter.SetValue(SWC.Control.FontStyleProperty, Convert.ToSystemWindowsFontStyle(wfFont));
 
                     SWC.TextBlock childTextBlock = elementHost.Child as SWC.TextBlock;
-                    if (childTextBlock != null)
+                    if (childTextBlock is not null)
                     {
                         TextDecorationCollection decorations = new TextDecorationCollection();
                         if (wfFont.Underline) { decorations.Add(TextDecorations.Underline); };
@@ -158,7 +158,7 @@ namespace System.Windows.Forms.Integration
         private static void ImeModePropertyTranslator(object host, string propertyName, object value)
         {
             ElementHost elementHost = host as ElementHost;
-            if (elementHost != null && elementHost.HwndSource != null)
+            if (elementHost is not null && elementHost.HwndSource is not null)
             {
                 elementHost.SyncHwndSrcImeStatus();
             }
@@ -170,10 +170,10 @@ namespace System.Windows.Forms.Integration
         private static void RightToLeftPropertyTranslator(object host, string propertyName, object value)
         {
             ElementHost elementHost = host as ElementHost;
-            if (elementHost != null)
+            if (elementHost is not null)
             {
                 AvalonAdapter adapter = elementHost.HostContainerInternal;
-                if (adapter != null && value is SWF.RightToLeft)
+                if (adapter is not null && value is SWF.RightToLeft)
                 {
                     SWF.RightToLeft fromRTL = (SWF.RightToLeft)value;
                     SW.FlowDirection toFlowDirection = ((fromRTL == SWF.RightToLeft.Yes) ? SW.FlowDirection.RightToLeft : SW.FlowDirection.LeftToRight);
@@ -188,10 +188,10 @@ namespace System.Windows.Forms.Integration
         private static void VisiblePropertyTranslator(object host, string propertyName, object value)
         {
             ElementHost elementHost = host as ElementHost;
-            if (elementHost != null)
+            if (elementHost is not null)
             {
                 AvalonAdapter adapter = elementHost.HostContainerInternal;
-                if (value is bool && adapter != null)
+                if (value is bool && adapter is not null)
                 {
                     bool fromVisible = (bool)value;
                     SW.Visibility toVisibility = ((fromVisible) ? SW.Visibility.Visible : SW.Visibility.Hidden);

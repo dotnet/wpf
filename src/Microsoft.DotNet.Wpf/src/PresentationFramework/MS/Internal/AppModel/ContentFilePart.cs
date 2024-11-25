@@ -37,7 +37,7 @@ namespace MS.Internal.AppModel
         internal ContentFilePart(Package container, Uri uri) :
                 base(container, uri)
         {
-            Invariant.Assert(Application.ResourceAssembly != null, "If the entry assembly is null no ContentFileParts should be created");
+            Invariant.Assert(Application.ResourceAssembly is not null, "If the entry assembly is null no ContentFileParts should be created");
             _fullPath = null;
         }
 

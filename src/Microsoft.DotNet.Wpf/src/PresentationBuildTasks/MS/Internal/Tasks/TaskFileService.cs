@@ -128,7 +128,7 @@ namespace MS.Internal
                 throw new ArgumentNullException(nameof(srcFile));
             }
 
-            if (HostFileManager != null)
+            if (HostFileManager is not null)
             {
                 //
                 // Build Host environment has a FileManager, use it to get
@@ -160,11 +160,11 @@ namespace MS.Internal
         {
             byte[] hashData=null;
 
-            if (HostFileManager != null)
+            if (HostFileManager is not null)
             {
                 object docData = HostFileManager.GetFileDocData(fileName);
                 IPersistFileCheckSum fileChecksummer = docData as IPersistFileCheckSum;
-                if (fileChecksummer != null)
+                if (fileChecksummer is not null)
                 {
                     byte[] tempBytes = new byte[1024];
                     int actualSize;
@@ -197,7 +197,7 @@ namespace MS.Internal
                     hashAlgorithm = null;
                 }
 
-                if (hashAlgorithm != null)
+                if (hashAlgorithm is not null)
                 {
                     using (Stream fileStream = File.OpenRead(fileName))
                     {
@@ -246,7 +246,7 @@ namespace MS.Internal
                 throw new ArgumentNullException(nameof(fileName));
             }
 
-            if (HostFileManager != null)
+            if (HostFileManager is not null)
             {
                 fileExists = HostFileManager.Exists(fileName, IsRealBuild);
             }
@@ -372,7 +372,7 @@ namespace MS.Internal
                 {
                     bool isRealBuild = true;
 
-                    if (HostFileManager != null)
+                    if (HostFileManager is not null)
                     {
                         isRealBuild = HostFileManager.IsRealBuildOperation();
                     }
@@ -389,8 +389,8 @@ namespace MS.Internal
             get
             {
                 MarkupCompilePass1 pass1;
-                return (HostFileManager != null) ||
-                    (   (pass1 = _buildTask as MarkupCompilePass1) != null &&
+                return (HostFileManager is not null) ||
+                    (   (pass1 = _buildTask as MarkupCompilePass1) is not null &&
                         pass1.IsRunningInVisualStudio);
             }
         }
@@ -408,7 +408,7 @@ namespace MS.Internal
             {
                 if (_hostFileManager is null)
                 {
-                    if (_buildTask != null && _buildTask.HostObject != null)
+                    if (_buildTask is not null && _buildTask.HostObject is not null)
                     {
                         _hostFileManager = _buildTask.HostObject as IVsMSBuildTaskFileManager;
                     }
@@ -420,7 +420,7 @@ namespace MS.Internal
 
         private bool IsFileInHostManager(string destinationFile)
         {
-            if (HostFileManager != null && null != HostFileManager.GetFileDocData(destinationFile))
+            if (HostFileManager is not null && null != HostFileManager.GetFileDocData(destinationFile))
             {
                 return true;
             }

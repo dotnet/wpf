@@ -55,13 +55,13 @@ namespace System.Windows.Automation.Peers
             if (string.IsNullOrEmpty(result))
             {
                 object toolTip = ((FrameworkContentElement)Owner).ToolTip;
-                if (toolTip != null)
+                if (toolTip is not null)
                 {
                     result = toolTip as string;
                     if (string.IsNullOrEmpty(result))
                     {
                         FrameworkElement toolTipElement = toolTip as FrameworkElement;
-                        if (toolTipElement != null)
+                        if (toolTipElement is not null)
                             result = toolTipElement.GetPlainText();
                     }
                 }
@@ -76,7 +76,7 @@ namespace System.Windows.Automation.Peers
             if (labelPeer is null)
             {
                 Label label = Label.GetLabeledBy(Owner);
-                if (label != null)
+                if (label is not null)
                     return label.GetAutomationPeer();
             }
 

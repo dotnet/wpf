@@ -55,7 +55,7 @@ namespace System.Windows.Documents
             value = DependencyProperty.UnsetValue;
 
             attributeRange = GetRangeAtPosition(textPosition, direction);
-            if (attributeRange != null)
+            if (attributeRange is not null)
             {
                 value = attributeRange.TextDecorations;
             }
@@ -66,7 +66,7 @@ namespace System.Windows.Documents
         // Returns true iff the indicated content has scoping highlights.
         internal override bool IsContentHighlighted(StaticTextPointer textPosition, LogicalDirection direction)
         {
-            return (GetRangeAtPosition(textPosition, direction) != null);
+            return (GetRangeAtPosition(textPosition, direction) is not null);
         }
 
         // Returns the position of the next highlight start or end in an

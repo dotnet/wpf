@@ -472,7 +472,7 @@ namespace System.Windows.Controls
         /// <param name="e">event arguments with name of the changed property</param>
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if (_propertyChanged != null)
+            if (_propertyChanged is not null)
             {
                 _propertyChanged(this, e);
             }
@@ -491,17 +491,17 @@ namespace System.Windows.Controls
         // Propagate theme changes to contained headers
         internal void OnThemeChanged()
         {
-            if (Header != null)
+            if (Header is not null)
             {
                 DependencyObject d = Header as DependencyObject;
 
-                if (d != null)
+                if (d is not null)
                 {
                     FrameworkElement fe;
                     FrameworkContentElement fce;
                     Helper.DowncastToFEorFCE(d, out fe, out fce, false);
 
-                    if (fe != null || fce != null)
+                    if (fe is not null || fce is not null)
                     {
                         TreeWalkHelper.InvalidateOnResourcesChange(fe, fce, ResourcesChangeInfo.ThemeChangeInfo);
                     }
@@ -695,7 +695,7 @@ namespace System.Windows.Controls
         internal override void AddInheritanceContext(DependencyObject context, DependencyProperty property)
         {
             // reinforce that no one can compete to be mentor of this element.
-            if (_inheritanceContext is null && context != null)
+            if (_inheritanceContext is null && context is not null)
             {
                 // Pick up the new context
                 _inheritanceContext = context;

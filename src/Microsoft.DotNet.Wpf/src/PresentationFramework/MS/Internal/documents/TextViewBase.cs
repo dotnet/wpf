@@ -48,7 +48,7 @@ namespace MS.Internal.Documents
             Transform transform;
             Rect rect = GetRawRectangleFromTextPosition(position, out transform);
             // Transform must not be null. TextViews returning no transform should return identity
-            Invariant.Assert(transform != null);
+            Invariant.Assert(transform is not null);
             if (rect != Rect.Empty)
             {
                 rect = transform.TransformBounds(rect);
@@ -136,7 +136,7 @@ namespace MS.Internal.Documents
         internal static void BringRectIntoViewMinimally(ITextView textView, Rect rect)
         {
             IScrollInfo isi = textView.RenderScope as IScrollInfo;
-            if (isi != null)
+            if (isi is not null)
             {
                 // Initialize the viewport
                 Rect viewport = new Rect(isi.HorizontalOffset, isi.VerticalOffset, isi.ViewportWidth, isi.ViewportHeight);
@@ -153,7 +153,7 @@ namespace MS.Internal.Documents
 
                 // Adjust rect to reflect changes and allow outer IScrollInfos to react
                 FrameworkElement frameworkParent = FrameworkElement.GetFrameworkParent(textView.RenderScope) as FrameworkElement;
-                if (frameworkParent != null)
+                if (frameworkParent is not null)
                 {
                     if (isi.ViewportWidth > 0)
                     {
@@ -198,7 +198,7 @@ namespace MS.Internal.Documents
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
             position = GetTextPositionFromPoint(point, true);
-            OnBringPointIntoViewCompleted(new BringPointIntoViewCompletedEventArgs(point, position, position != null, null, false, userState));
+            OnBringPointIntoViewCompleted(new BringPointIntoViewCompletedEventArgs(point, position, position is not null, null, false, userState));
         }
 
         /// <summary>
@@ -369,7 +369,7 @@ namespace MS.Internal.Documents
         /// <param name="e">Event arguments for the BringPositionIntoViewCompleted event.</param>
         protected virtual void OnBringPositionIntoViewCompleted(BringPositionIntoViewCompletedEventArgs e)
         {
-            if (this.BringPositionIntoViewCompleted != null)
+            if (this.BringPositionIntoViewCompleted is not null)
             {
                 this.BringPositionIntoViewCompleted(this, e);
             }
@@ -381,7 +381,7 @@ namespace MS.Internal.Documents
         /// <param name="e">Event arguments for the BringPointIntoViewCompleted event.</param>
         protected virtual void OnBringPointIntoViewCompleted(BringPointIntoViewCompletedEventArgs e)
         {
-            if (this.BringPointIntoViewCompleted != null)
+            if (this.BringPointIntoViewCompleted is not null)
             {
                 this.BringPointIntoViewCompleted(this, e);
             }
@@ -393,7 +393,7 @@ namespace MS.Internal.Documents
         /// <param name="e">Event arguments for the BringLineIntoViewCompleted event.</param>
         protected virtual void OnBringLineIntoViewCompleted(BringLineIntoViewCompletedEventArgs e)
         {
-            if (this.BringLineIntoViewCompleted != null)
+            if (this.BringLineIntoViewCompleted is not null)
             {
                 this.BringLineIntoViewCompleted(this, e);
             }
@@ -405,7 +405,7 @@ namespace MS.Internal.Documents
         /// <param name="e">Event arguments for the BringPageIntoViewCompleted event.</param>
         protected virtual void OnBringPageIntoViewCompleted(BringPageIntoViewCompletedEventArgs e)
         {
-            if (this.BringPageIntoViewCompleted != null)
+            if (this.BringPageIntoViewCompleted is not null)
             {
                 this.BringPageIntoViewCompleted(this, e);
             }
@@ -417,7 +417,7 @@ namespace MS.Internal.Documents
         /// <param name="e">Event arguments for the Updated event.</param>
         protected virtual void OnUpdated(EventArgs e)
         {
-            if (this.Updated != null)
+            if (this.Updated is not null)
             {
                 this.Updated(this, e);
             }
@@ -432,8 +432,8 @@ namespace MS.Internal.Documents
         /// </remarks>
         protected virtual Transform GetAggregateTransform(Transform firstTransform, Transform secondTransform)
         {
-            Invariant.Assert(firstTransform != null);
-            Invariant.Assert(secondTransform != null);
+            Invariant.Assert(firstTransform is not null);
+            Invariant.Assert(secondTransform is not null);
 
             if (firstTransform.IsIdentity)
             {

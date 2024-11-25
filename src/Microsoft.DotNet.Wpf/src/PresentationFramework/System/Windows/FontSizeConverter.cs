@@ -81,7 +81,7 @@ namespace System.Windows
             //     Do we care about usage in other circumstances?
             string text = value as string;
 
-            if (text != null)
+            if (text is not null)
             {
                 double       amount;
 

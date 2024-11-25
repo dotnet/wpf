@@ -81,7 +81,7 @@ namespace System.Windows
         #pragma warning restore 56506
             }
 
-            if (clock != null
+            if (clock is not null
                 && !AnimationStorage.IsAnimationValid(dp, clock.Timeline))
             {
         #pragma warning disable 56506 // Suppress presharp warning: Parameter 'dp' to this public method must be validated:  A null-dereference can occur here.
@@ -150,7 +150,7 @@ namespace System.Windows
         #pragma warning restore 56506
             }
 
-            if (   animation != null
+            if (   animation is not null
                 && !AnimationStorage.IsAnimationValid(dp, animation))
             {
                 throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, animation.GetType(), dp.Name, dp.PropertyType), "animation");
@@ -225,7 +225,7 @@ namespace System.Windows
             {
                 AnimationStorage storage = AnimationStorage.GetStorage(this, dp);
 
-                if (storage != null)
+                if (storage is not null)
                 {
                     storage.EvaluateAnimatedValue(metadata, ref entry);                      
                 }
@@ -277,7 +277,7 @@ namespace System.Windows
         public bool ShouldSerializeInputBindings()
         {
             InputBindingCollection bindingCollection = InputBindingCollectionField.GetValue(this);
-            if (bindingCollection != null && bindingCollection.Count > 0)
+            if (bindingCollection is not null && bindingCollection.Count > 0)
             {
                 return true;
             }
@@ -327,7 +327,7 @@ namespace System.Windows
         public bool ShouldSerializeCommandBindings()
         {
             CommandBindingCollection bindingCollection = CommandBindingCollectionField.GetValue(this);
-            if (bindingCollection != null && bindingCollection.Count > 0)
+            if (bindingCollection is not null && bindingCollection.Count > 0)
             {
                 return true;
             }
@@ -594,7 +594,7 @@ namespace System.Windows
             }
 
             EventHandlersStore store = EventHandlersStore;
-            if (store != null)
+            if (store is not null)
             {
                 store.RemoveRoutedEventHandler(routedEvent, handler);
 
@@ -627,7 +627,7 @@ namespace System.Windows
         private void EventHandlersStoreRemove(EventPrivateKey key, Delegate handler)
         {
             EventHandlersStore store = EventHandlersStore;
-            if (store != null)
+            if (store is not null)
             {
                 store.Remove(key, handler);
                 if (store.Count == 0)
@@ -652,7 +652,7 @@ namespace System.Windows
                 GlobalEventManager.GetDTypedClassListeners(this.DependencyObjectType, e.RoutedEvent);
 
             // Add all class listeners for this UIElement
-            while (classListeners != null)
+            while (classListeners is not null)
             {
                 for(int i = 0; i < classListeners.Handlers.Length; i++)
                 {
@@ -665,12 +665,12 @@ namespace System.Windows
             // Get instance listeners for this UIElement
             FrugalObjectList<RoutedEventHandlerInfo> instanceListeners = null;
             EventHandlersStore store = EventHandlersStore;
-            if (store != null)
+            if (store is not null)
             {
                 instanceListeners = store[e.RoutedEvent];
 
                 // Add all instance listeners for this UIElement
-                if (instanceListeners != null)
+                if (instanceListeners is not null)
                 {
                     for (int i = 0; i < instanceListeners.Count; i++)
                     {
@@ -827,7 +827,7 @@ namespace System.Windows
             {
                 UIElement uie = sender as UIElement;
 
-                if (uie != null)
+                if (uie is not null)
                 {
                     uie.OnPreviewMouseDown(e);
                 }
@@ -835,7 +835,7 @@ namespace System.Windows
                 {
                     ContentElement ce = sender as ContentElement;
 
-                    if (ce != null)
+                    if (ce is not null)
                     {
                         ce.OnPreviewMouseDown(e);
                     }
@@ -861,7 +861,7 @@ namespace System.Windows
             {
                 UIElement uie = sender as UIElement;
 
-                if (uie != null)
+                if (uie is not null)
                 {
                     uie.OnMouseDown(e);
                 }
@@ -869,7 +869,7 @@ namespace System.Windows
                 {
                     ContentElement ce = sender as ContentElement;
 
-                    if (ce != null)
+                    if (ce is not null)
                     {
                         ce.OnMouseDown(e);
                     }
@@ -890,7 +890,7 @@ namespace System.Windows
             {
                 UIElement uie = sender as UIElement;
 
-                if (uie != null)
+                if (uie is not null)
                 {
                     uie.OnPreviewMouseUp(e);
                 }
@@ -898,7 +898,7 @@ namespace System.Windows
                 {
                     ContentElement ce = sender as ContentElement;
 
-                    if (ce != null)
+                    if (ce is not null)
                     {
                         ce.OnPreviewMouseUp(e);
                     }
@@ -919,7 +919,7 @@ namespace System.Windows
             {
                 UIElement uie = sender as UIElement;
 
-                if (uie != null)
+                if (uie is not null)
                 {
                     uie.OnMouseUp(e);
                 }
@@ -927,7 +927,7 @@ namespace System.Windows
                 {
                     ContentElement ce = sender as ContentElement;
 
-                    if (ce != null)
+                    if (ce is not null)
                     {
                         ce.OnMouseUp(e);
                     }
@@ -948,7 +948,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewMouseLeftButtonDown(e);
             }
@@ -956,7 +956,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewMouseLeftButtonDown(e);
                 }
@@ -973,7 +973,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnMouseLeftButtonDown(e);
             }
@@ -981,7 +981,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnMouseLeftButtonDown(e);
                 }
@@ -998,7 +998,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewMouseLeftButtonUp(e);
             }
@@ -1006,7 +1006,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewMouseLeftButtonUp(e);
                 }
@@ -1023,7 +1023,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnMouseLeftButtonUp(e);
             }
@@ -1031,7 +1031,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnMouseLeftButtonUp(e);
                 }
@@ -1048,7 +1048,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewMouseRightButtonDown(e);
             }
@@ -1056,7 +1056,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewMouseRightButtonDown(e);
                 }
@@ -1073,7 +1073,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnMouseRightButtonDown(e);
             }
@@ -1081,7 +1081,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnMouseRightButtonDown(e);
                 }
@@ -1098,7 +1098,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewMouseRightButtonUp(e);
             }
@@ -1106,7 +1106,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewMouseRightButtonUp(e);
                 }
@@ -1123,7 +1123,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnMouseRightButtonUp(e);
             }
@@ -1131,7 +1131,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnMouseRightButtonUp(e);
                 }
@@ -1148,7 +1148,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewMouseMove(e);
             }
@@ -1156,7 +1156,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewMouseMove(e);
                 }
@@ -1173,7 +1173,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnMouseMove(e);
             }
@@ -1181,7 +1181,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnMouseMove(e);
                 }
@@ -1198,7 +1198,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewMouseWheel(e);
             }
@@ -1206,7 +1206,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewMouseWheel(e);
                 }
@@ -1227,7 +1227,7 @@ namespace System.Windows
             {
                 UIElement uie = sender as UIElement;
 
-                if (uie != null)
+                if (uie is not null)
                 {
                     uie.OnMouseWheel(e);
                 }
@@ -1235,7 +1235,7 @@ namespace System.Windows
                 {
                     ContentElement ce = sender as ContentElement;
 
-                    if (ce != null)
+                    if (ce is not null)
                     {
                         ce.OnMouseWheel(e);
                     }
@@ -1253,7 +1253,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnMouseEnter(e);
             }
@@ -1261,7 +1261,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnMouseEnter(e);
                 }
@@ -1278,7 +1278,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnMouseLeave(e);
             }
@@ -1286,7 +1286,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnMouseLeave(e);
                 }
@@ -1303,7 +1303,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnGotMouseCapture(e);
             }
@@ -1311,7 +1311,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnGotMouseCapture(e);
                 }
@@ -1328,7 +1328,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnLostMouseCapture(e);
             }
@@ -1336,7 +1336,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnLostMouseCapture(e);
                 }
@@ -1353,7 +1353,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnQueryCursor(e);
             }
@@ -1361,7 +1361,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnQueryCursor(e);
                 }
@@ -1378,7 +1378,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewStylusDown(e);
             }
@@ -1386,7 +1386,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewStylusDown(e);
                 }
@@ -1403,7 +1403,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnStylusDown(e);
             }
@@ -1411,7 +1411,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnStylusDown(e);
                 }
@@ -1428,7 +1428,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewStylusUp(e);
             }
@@ -1436,7 +1436,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewStylusUp(e);
                 }
@@ -1453,7 +1453,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnStylusUp(e);
             }
@@ -1461,7 +1461,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnStylusUp(e);
                 }
@@ -1478,7 +1478,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewStylusMove(e);
             }
@@ -1486,7 +1486,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewStylusMove(e);
                 }
@@ -1503,7 +1503,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnStylusMove(e);
             }
@@ -1511,7 +1511,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnStylusMove(e);
                 }
@@ -1528,7 +1528,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewStylusInAirMove(e);
             }
@@ -1536,7 +1536,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewStylusInAirMove(e);
                 }
@@ -1553,7 +1553,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnStylusInAirMove(e);
             }
@@ -1561,7 +1561,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnStylusInAirMove(e);
                 }
@@ -1578,7 +1578,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnStylusEnter(e);
             }
@@ -1586,7 +1586,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnStylusEnter(e);
                 }
@@ -1603,7 +1603,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnStylusLeave(e);
             }
@@ -1611,7 +1611,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnStylusLeave(e);
                 }
@@ -1628,7 +1628,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewStylusInRange(e);
             }
@@ -1636,7 +1636,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewStylusInRange(e);
                 }
@@ -1653,7 +1653,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnStylusInRange(e);
             }
@@ -1661,7 +1661,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnStylusInRange(e);
                 }
@@ -1678,7 +1678,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewStylusOutOfRange(e);
             }
@@ -1686,7 +1686,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewStylusOutOfRange(e);
                 }
@@ -1703,7 +1703,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnStylusOutOfRange(e);
             }
@@ -1711,7 +1711,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnStylusOutOfRange(e);
                 }
@@ -1728,7 +1728,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewStylusSystemGesture(e);
             }
@@ -1736,7 +1736,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewStylusSystemGesture(e);
                 }
@@ -1753,7 +1753,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnStylusSystemGesture(e);
             }
@@ -1761,7 +1761,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnStylusSystemGesture(e);
                 }
@@ -1778,7 +1778,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnGotStylusCapture(e);
             }
@@ -1786,7 +1786,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnGotStylusCapture(e);
                 }
@@ -1803,7 +1803,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnLostStylusCapture(e);
             }
@@ -1811,7 +1811,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnLostStylusCapture(e);
                 }
@@ -1828,7 +1828,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnStylusButtonDown(e);
             }
@@ -1836,7 +1836,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnStylusButtonDown(e);
                 }
@@ -1853,7 +1853,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnStylusButtonUp(e);
             }
@@ -1861,7 +1861,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnStylusButtonUp(e);
                 }
@@ -1878,7 +1878,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewStylusButtonDown(e);
             }
@@ -1886,7 +1886,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewStylusButtonDown(e);
                 }
@@ -1903,7 +1903,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewStylusButtonUp(e);
             }
@@ -1911,7 +1911,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewStylusButtonUp(e);
                 }
@@ -1928,7 +1928,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewKeyDown(e);
             }
@@ -1936,7 +1936,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewKeyDown(e);
                 }
@@ -1957,7 +1957,7 @@ namespace System.Windows
             {
                 UIElement uie = sender as UIElement;
 
-                if (uie != null)
+                if (uie is not null)
                 {
                     uie.OnKeyDown(e);
                 }
@@ -1965,7 +1965,7 @@ namespace System.Windows
                 {
                     ContentElement ce = sender as ContentElement;
 
-                    if (ce != null)
+                    if (ce is not null)
                     {
                         ce.OnKeyDown(e);
                     }
@@ -1983,7 +1983,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewKeyUp(e);
             }
@@ -1991,7 +1991,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewKeyUp(e);
                 }
@@ -2008,7 +2008,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnKeyUp(e);
             }
@@ -2016,7 +2016,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnKeyUp(e);
                 }
@@ -2033,7 +2033,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewGotKeyboardFocus(e);
             }
@@ -2041,7 +2041,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewGotKeyboardFocus(e);
                 }
@@ -2058,7 +2058,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnGotKeyboardFocus(e);
             }
@@ -2066,7 +2066,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnGotKeyboardFocus(e);
                 }
@@ -2083,7 +2083,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewLostKeyboardFocus(e);
             }
@@ -2091,7 +2091,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewLostKeyboardFocus(e);
                 }
@@ -2108,7 +2108,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnLostKeyboardFocus(e);
             }
@@ -2116,7 +2116,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnLostKeyboardFocus(e);
                 }
@@ -2133,7 +2133,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewTextInput(e);
             }
@@ -2141,7 +2141,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewTextInput(e);
                 }
@@ -2158,7 +2158,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnTextInput(e);
             }
@@ -2166,7 +2166,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnTextInput(e);
                 }
@@ -2223,7 +2223,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewQueryContinueDrag(e);
             }
@@ -2231,7 +2231,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewQueryContinueDrag(e);
                 }
@@ -2248,7 +2248,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnQueryContinueDrag(e);
             }
@@ -2256,7 +2256,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnQueryContinueDrag(e);
                 }
@@ -2273,7 +2273,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewGiveFeedback(e);
             }
@@ -2281,7 +2281,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewGiveFeedback(e);
                 }
@@ -2298,7 +2298,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnGiveFeedback(e);
             }
@@ -2306,7 +2306,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnGiveFeedback(e);
                 }
@@ -2323,7 +2323,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewDragEnter(e);
             }
@@ -2331,7 +2331,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewDragEnter(e);
                 }
@@ -2348,7 +2348,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnDragEnter(e);
             }
@@ -2356,7 +2356,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnDragEnter(e);
                 }
@@ -2373,7 +2373,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewDragOver(e);
             }
@@ -2381,7 +2381,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewDragOver(e);
                 }
@@ -2398,7 +2398,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnDragOver(e);
             }
@@ -2406,7 +2406,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnDragOver(e);
                 }
@@ -2423,7 +2423,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewDragLeave(e);
             }
@@ -2431,7 +2431,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewDragLeave(e);
                 }
@@ -2448,7 +2448,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnDragLeave(e);
             }
@@ -2456,7 +2456,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnDragLeave(e);
                 }
@@ -2473,7 +2473,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewDrop(e);
             }
@@ -2481,7 +2481,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewDrop(e);
                 }
@@ -2498,7 +2498,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnDrop(e);
             }
@@ -2506,7 +2506,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnDrop(e);
                 }
@@ -2523,7 +2523,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewTouchDown(e);
             }
@@ -2531,7 +2531,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewTouchDown(e);
                 }
@@ -2548,7 +2548,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnTouchDown(e);
             }
@@ -2556,7 +2556,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnTouchDown(e);
                 }
@@ -2573,7 +2573,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewTouchMove(e);
             }
@@ -2581,7 +2581,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewTouchMove(e);
                 }
@@ -2598,7 +2598,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnTouchMove(e);
             }
@@ -2606,7 +2606,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnTouchMove(e);
                 }
@@ -2623,7 +2623,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnPreviewTouchUp(e);
             }
@@ -2631,7 +2631,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnPreviewTouchUp(e);
                 }
@@ -2648,7 +2648,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnTouchUp(e);
             }
@@ -2656,7 +2656,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnTouchUp(e);
                 }
@@ -2673,7 +2673,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnGotTouchCapture(e);
             }
@@ -2681,7 +2681,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnGotTouchCapture(e);
                 }
@@ -2698,7 +2698,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnLostTouchCapture(e);
             }
@@ -2706,7 +2706,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnLostTouchCapture(e);
                 }
@@ -2723,7 +2723,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnTouchEnter(e);
             }
@@ -2731,7 +2731,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnTouchEnter(e);
                 }
@@ -2748,7 +2748,7 @@ namespace System.Windows
 
             UIElement uie = sender as UIElement;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.OnTouchLeave(e);
             }
@@ -2756,7 +2756,7 @@ namespace System.Windows
             {
                 ContentElement ce = sender as ContentElement;
 
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.OnTouchLeave(e);
                 }

@@ -22,7 +22,7 @@ namespace MS.Internal
             DispatcherOperationCallback callback,
             DependencyObject target)
         {
-            Debug.Assert(callback != null && target != null);
+            Debug.Assert(callback is not null && target is not null);
             _callback = callback;
             _target = target;
         }

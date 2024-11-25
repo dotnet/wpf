@@ -119,7 +119,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         private void OnRibbonGroupItemsPanelUnloaded(object sender, RoutedEventArgs e)
         {
             IContainsStarLayoutManager iContainsStarLayoutManager = (IContainsStarLayoutManager)this;
-            if (iContainsStarLayoutManager.StarLayoutManager != null)
+            if (iContainsStarLayoutManager.StarLayoutManager is not null)
             {
                 iContainsStarLayoutManager.StarLayoutManager.UnregisterStarLayoutProvider(this);
                 iContainsStarLayoutManager.StarLayoutManager = null;
@@ -155,7 +155,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         {
             weight = 0;
             RibbonControlSizeDefinition controlDef = RibbonControlService.GetControlSizeDefinition(child);
-            if (controlDef != null)
+            if (controlDef is not null)
             {
                 weight = controlDef.Width.Value;
                 return controlDef.Width.IsStar;
@@ -343,7 +343,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         /// </summary>
         private void AdjustDesiredWidthForStarColumn(UIElementCollection children, List<int> columnStarChildren, int starLayoutIndex, ref double desiredWidth)
         {
-            if (columnStarChildren != null && columnStarChildren.Count > 0 && starLayoutIndex >= 0)
+            if (columnStarChildren is not null && columnStarChildren.Count > 0 && starLayoutIndex >= 0)
             {
                 bool foundStretchableStar = false;
                 double columnDesiredWidth = 0;
@@ -387,10 +387,10 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             // center or stretch. It is considered to be so
             // by default.
             RibbonControl ribbonControl = child as RibbonControl;
-            if (ribbonControl != null)
+            if (ribbonControl is not null)
             {
                 UIElement contentChild = ribbonControl.ContentChild;
-                if (contentChild != null)
+                if (contentChild is not null)
                 {
                     HorizontalAlignment childAlignment = (HorizontalAlignment)contentChild.GetValue(HorizontalAlignmentProperty);
                     if (childAlignment == HorizontalAlignment.Left ||
@@ -435,7 +435,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             get
             {
                 FrameworkElement itemsPresenter = TemplatedParent as FrameworkElement;
-                if (itemsPresenter != null)
+                if (itemsPresenter is not null)
                 {
                     return itemsPresenter.TemplatedParent as UIElement;
                 }
@@ -447,7 +447,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         public void OnInitializeLayout()
         {
             IContainsStarLayoutManager iContainsStarLayoutManager = (IContainsStarLayoutManager)this;
-            if (iContainsStarLayoutManager.StarLayoutManager != null && !iContainsStarLayoutManager.StarLayoutManager.IsStarLayoutPass)
+            if (iContainsStarLayoutManager.StarLayoutManager is not null && !iContainsStarLayoutManager.StarLayoutManager.IsStarLayoutPass)
             {
                 TreeHelper.InvalidateMeasureForVisualAncestorPath(this, RibbonHelper.IsISupportStarLayout);
             }

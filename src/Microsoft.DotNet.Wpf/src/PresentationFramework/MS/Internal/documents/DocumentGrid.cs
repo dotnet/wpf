@@ -84,7 +84,7 @@ namespace MS.Internal.Documents
             DocumentPageView dp = GetDocumentPageViewFromPoint(point);
 
             // if we hit a DocumentPageView we can return its DocumentPage.
-            if (dp != null)
+            if (dp is not null)
             {
                 return dp.DocumentPage;
             }
@@ -264,7 +264,7 @@ namespace MS.Internal.Documents
         /// </returns>
         public Rect MakeVisible(Visual v, Rect r)
         {
-            if (Content != null && v != null)
+            if (Content is not null && v is not null)
             {
                 ContentPosition cp = Content.GetObjectPosition(v);
                 MakeContentPositionVisibleAsync(new MakeVisibleData(v, cp, r));
@@ -296,7 +296,7 @@ namespace MS.Internal.Documents
         public void MakeSelectionVisible()
         {
             //We can only continue if we have a TextEditor attached...
-            if (TextEditor != null && TextEditor.Selection != null)
+            if (TextEditor is not null && TextEditor.Selection is not null)
             {
                 //Get the TextPointer for the start of our selection.
                 ITextPointer tp = TextEditor.Selection.Start;
@@ -684,13 +684,13 @@ namespace MS.Internal.Documents
                     _textContainer = null;
 
                     //Remove our old events from the content
-                    if (_pageCache.Content != null)
+                    if (_pageCache.Content is not null)
                     {
                         _pageCache.Content.GetPageNumberCompleted -= new GetPageNumberCompletedEventHandler(OnGetPageNumberCompleted);
                     }
 
                     //Remove our ScrollChanged events from our ScrollViewer
-                    if (ScrollOwner != null)
+                    if (ScrollOwner is not null)
                     {
                         ScrollOwner.ScrollChanged -= new ScrollChangedEventHandler(OnScrollChanged);
                         _scrollChangedEventAttached = false;
@@ -699,7 +699,7 @@ namespace MS.Internal.Documents
                     //Assign the new content
                     _pageCache.Content = value;
 
-                    if (_pageCache.Content != null)
+                    if (_pageCache.Content is not null)
                     {
                         //Add our new events to the content
                         _pageCache.Content.GetPageNumberCompleted += new GetPageNumberCompletedEventHandler(OnGetPageNumberCompleted);
@@ -861,7 +861,7 @@ namespace MS.Internal.Documents
                     {
                         DocumentGridPage dp = _childrenCollection[i] as DocumentGridPage;
 
-                        if (dp != null)
+                        if (dp is not null)
                         {
                             dp.ShowPageBorders = _showPageBorders;
                         }
@@ -898,10 +898,10 @@ namespace MS.Internal.Documents
             {
                 if (_textContainer is null)
                 {
-                    if (Content != null)
+                    if (Content is not null)
                     {
                         IServiceProvider isp = Content as IServiceProvider;
-                        if (isp != null)
+                        if (isp is not null)
                         {
                             _textContainer = (ITextContainer)isp.GetService(typeof(ITextContainer));
                         }
@@ -920,7 +920,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (TextEditor != null)
+                if (TextEditor is not null)
                 {
                     return TextEditor.TextView;
                 }
@@ -1215,7 +1215,7 @@ namespace MS.Internal.Documents
 
                     //Arrange the page if necessary
                     UIElement uiPage = _childrenCollection[visualChild] as UIElement;
-                    if (uiPage != null)
+                    if (uiPage is not null)
                     {
                         Point pageOffset;
                         //Move the page to the right place based on the FlowDirection of the content.
@@ -1245,7 +1245,7 @@ namespace MS.Internal.Documents
             // As we scroll we need to keep the AdornerLayer up-to-date.
             // This ensures that annotation components scroll with the content.
             AdornerLayer layer = AdornerLayer.GetAdornerLayer(this);
-            if (layer != null && layer.GetAdorners(this) != null)
+            if (layer is not null && layer.GetAdorners(this) is not null)
                 layer.Update(this);
 
             return arrangeSize;
@@ -1271,12 +1271,12 @@ namespace MS.Internal.Documents
             {
                 //See if our content implements IServiceProvider.
                 IServiceProvider serviceProvider = Content as IServiceProvider;
-                if (serviceProvider != null)
+                if (serviceProvider is not null)
                 {
                     //See if our content supports rubber band selection.
                     _rubberBandSelector = serviceProvider.GetService(typeof(RubberbandSelector)) as RubberbandSelector;
 
-                    if (_rubberBandSelector != null)
+                    if (_rubberBandSelector is not null)
                     {
                         DocumentViewerOwner.Focus(); // text editor needs to be focused when cleared
                         ITextRange textRange = TextEditor.Selection;
@@ -1289,10 +1289,10 @@ namespace MS.Internal.Documents
             }
             //We got a mouse-down event and the Alt key is not being held, so we revert back
             //to normal selection mode now.
-            else if (!altKeyDown && _rubberBandSelector != null)
+            else if (!altKeyDown && _rubberBandSelector is not null)
             {
                 //Detach the Rubberband Selector
-                if (_rubberBandSelector != null)
+                if (_rubberBandSelector is not null)
                 {
                     _rubberBandSelector.DetachRubberbandSelector();
                     _rubberBandSelector = null;
@@ -1315,7 +1315,7 @@ namespace MS.Internal.Documents
 
             // No need for a reset if we don't have a parent since there is no AdornerLayer
             // to add HighlightVisuals back to.
-            if (VisualTreeHelper.GetParent(this) != null)
+            if (VisualTreeHelper.GetParent(this) is not null)
             {
                 // Do a full reset, we want to ensure even visible pages are reset.
                 ResetVisualTree(pruneOnly: false);
@@ -1394,10 +1394,10 @@ namespace MS.Internal.Documents
             if (_childrenCollection.Count > _firstPageVisualIndex)
             {
                 DocumentGridPage firstDp = _childrenCollection[1] as DocumentGridPage;
-                firstPage = firstDp != null ? firstDp.PageNumber : -1;
+                firstPage = firstDp is not null ? firstDp.PageNumber : -1;
 
                 DocumentGridPage lastDp = _childrenCollection[_childrenCollection.Count - 1] as DocumentGridPage;
-                lastPage = lastDp != null ? lastDp.PageNumber : -1;
+                lastPage = lastDp is not null ? lastDp.PageNumber : -1;
             }
 
 
@@ -1564,7 +1564,7 @@ namespace MS.Internal.Documents
         private void OnPageLoaded(object sender, EventArgs args)
         {
             DocumentGridPage page = sender as DocumentGridPage;
-            Invariant.Assert(page != null, "Invalid sender for OnPageLoaded event.");
+            Invariant.Assert(page is not null, "Invalid sender for OnPageLoaded event.");
 
             //Detach the event handler, we don't need this event any longer.
             page.PageLoaded -= new EventHandler(OnPageLoaded);
@@ -1654,7 +1654,7 @@ namespace MS.Internal.Documents
             for (int i = _childrenCollection.Count - 1; i >= _firstPageVisualIndex; i--)
             {
                 DocumentGridPage dp = _childrenCollection[i] as DocumentGridPage;
-                if (dp != null &&
+                if (dp is not null &&
                         (!pruneOnly ||
                         _rowCache.RowCount == 0 ||
                         dp.PageNumber < _firstVisiblePageNumber ||
@@ -1805,7 +1805,7 @@ namespace MS.Internal.Documents
         /// <param name="data"></param>
         private void MakeVisibleImpl(MakeVisibleData data)
         {
-            if (data.Visual != null)
+            if (data.Visual is not null)
             {
                 //Ensure that the passed-in visual is a descendant of DocumentGrid.
                 if (((Visual)this).IsAncestorOf(data.Visual))
@@ -1819,7 +1819,7 @@ namespace MS.Internal.Documents
                     MakeRectVisible(offsetRect, false /* alwaysCenter */);
                 }
             }
-            else if (data.ContentPosition != null)
+            else if (data.ContentPosition is not null)
             {
                 ITextPointer tp = data.ContentPosition as ITextPointer;
 
@@ -1872,7 +1872,7 @@ namespace MS.Internal.Documents
         /// an IP (Insertion Point)</param>
         private void MakeIPVisible(Rect r)
         {
-            if (r != Rect.Empty && TextEditor != null)
+            if (r != Rect.Empty && TextEditor is not null)
             {
                 Rect viewportRect = new Rect(HorizontalOffset, VerticalOffset,
                                              ViewportWidth,
@@ -1913,7 +1913,7 @@ namespace MS.Internal.Documents
         private void MakeContentPositionVisibleAsync(MakeVisibleData data)
         {
             //If the ContentPosition is valid, we can make it visible now.
-            if (data.ContentPosition != null && data.ContentPosition != ContentPosition.Missing)
+            if (data.ContentPosition is not null && data.ContentPosition != ContentPosition.Missing)
             {
                 Content.GetPageNumberAsync(data.ContentPosition, data);
             }
@@ -1930,7 +1930,7 @@ namespace MS.Internal.Documents
         {
             //If there's a SetScale operation in the Pending state, then we'll
             //abort it (we only care that the last operation invoked completes.)
-            if (_setScaleOperation != null &&
+            if (_setScaleOperation is not null &&
                 _setScaleOperation.Status == DispatcherOperationStatus.Pending)
             {
                 _setScaleOperation.Abort();
@@ -1955,7 +1955,7 @@ namespace MS.Internal.Documents
             //zoom operation.
             ITextPointer selection = GetVisibleSelection();
 
-            if (selection != null)
+            if (selection is not null)
             {
                 //The visible-IP case:
                 //First, we find out what page the IP is on:
@@ -2182,7 +2182,7 @@ namespace MS.Internal.Documents
         private void UpdateTextView()
         {
             MultiPageTextView tv = TextView as MultiPageTextView;
-            if (tv != null)
+            if (tv is not null)
             {
                 tv.OnPageLayoutChanged();
             }
@@ -2283,7 +2283,7 @@ namespace MS.Internal.Documents
             {
                 UIElement page = _childrenCollection[i] as UIElement;
 
-                if (page != null)
+                if (page is not null)
                 {
                     page.InvalidateMeasure();
                 }
@@ -2504,12 +2504,12 @@ namespace MS.Internal.Documents
         /// </summary>
         private void InvalidateDocumentScrollInfo()
         {
-            if (ScrollOwner != null)
+            if (ScrollOwner is not null)
             {
                 ScrollOwner.InvalidateScrollInfo();
             }
 
-            if (DocumentViewerOwner != null)
+            if (DocumentViewerOwner is not null)
             {
                 DocumentViewerOwner.InvalidateDocumentScrollInfo();
             }
@@ -2521,9 +2521,9 @@ namespace MS.Internal.Documents
         /// </summary>
         private void InvalidatePageViews()
         {
-            Invariant.Assert(DocumentViewerOwner != null, "DocumentViewerOwner cannot be null.");
+            Invariant.Assert(DocumentViewerOwner is not null, "DocumentViewerOwner cannot be null.");
 
-            if (DocumentViewerOwner != null)
+            if (DocumentViewerOwner is not null)
             {
                 DocumentViewerOwner.InvalidatePageViewsInternal();
                 DocumentViewerOwner.ApplyTemplate();
@@ -2562,7 +2562,7 @@ namespace MS.Internal.Documents
         /// <returns>true if a selection has been made, false otherwise.</returns>
         private bool HasSelection()
         {
-            return (TextEditor != null && TextEditor.Selection != null);
+            return (TextEditor is not null && TextEditor.Selection is not null);
         }
 
         /// <summary>
@@ -2583,7 +2583,7 @@ namespace MS.Internal.Documents
                     ((IServiceProvider)pageView).GetService(typeof(ITextView)) as DocumentPageTextView;
 
                 //If this TextView contains the selection, return the page's number.
-                if (textView != null &&
+                if (textView is not null &&
                     textView.IsValid &&
                     textView.Contains(selection))
                 {
@@ -2605,7 +2605,7 @@ namespace MS.Internal.Documents
         {
             ITextPointer tp = GetVisibleSelection();
 
-            if (tp != null && tp.HasValidLayout)
+            if (tp is not null && tp.HasValidLayout)
             {
                 Rect selectionRect = TextView.GetRectangleFromTextPosition(tp);
 
@@ -2630,7 +2630,7 @@ namespace MS.Internal.Documents
         {
             DocumentPageView dp = GetDocumentPageViewFromPoint(GetActiveFocusPoint());
 
-            if (dp != null)
+            if (dp is not null)
             {
                 return dp.PageNumber;
             }
@@ -2649,15 +2649,15 @@ namespace MS.Internal.Documents
         {
             //Hit test to find the DocumentPageView
             HitTestResult result = VisualTreeHelper.HitTest(this, point);
-            DependencyObject currentVisual = (result != null) ? result.VisualHit : null;
+            DependencyObject currentVisual = (result is not null) ? result.VisualHit : null;
 
             DocumentPageView page = null;
 
             // Traverse the visual parent chain until we encounter a DocumentPageView.
-            while (currentVisual != null)
+            while (currentVisual is not null)
             {
                 page = currentVisual as DocumentPageView;
-                if (page != null)
+                if (page is not null)
                 {
                     //We found the DocumentPageView.
                     return page;
@@ -2676,7 +2676,7 @@ namespace MS.Internal.Documents
         /// <returns></returns>
         private bool TextViewContains(ITextPointer tp)
         {
-            return (TextView != null &&
+            return (TextView is not null &&
                 TextView.IsValid &&
                 TextView.Contains(tp));
         }
@@ -2744,7 +2744,7 @@ namespace MS.Internal.Documents
         {
             DocumentGridPage page = GetDocumentGridPageForPageNumber(pageNumber);
 
-            if (page != null)
+            if (page is not null)
             {
                 return page.IsPageLoaded;
             }
@@ -2767,7 +2767,7 @@ namespace MS.Internal.Documents
                 DocumentGridPage dp = _childrenCollection[i] as DocumentGridPage;
 
                 // Check that this page has been loaded; break if not.
-                if (dp != null && !dp.IsPageLoaded)
+                if (dp is not null && !dp.IsPageLoaded)
                 {
                     viewIsLoaded = false;
                     break;
@@ -2788,7 +2788,7 @@ namespace MS.Internal.Documents
             {
                 DocumentGridPage dp = _childrenCollection[i] as DocumentGridPage;
 
-                if (dp != null && dp.PageNumber == pageNumber)
+                if (dp is not null && dp.PageNumber == pageNumber)
                 {
                     return dp;
                 }
@@ -2813,7 +2813,7 @@ namespace MS.Internal.Documents
             //DocumentGrid.
             DocumentGrid senderGrid = sender as DocumentGrid;
             DocumentGrid targetGrid = args.TargetObject as DocumentGrid;
-            if (senderGrid != null && targetGrid != null && senderGrid == targetGrid)
+            if (senderGrid is not null && targetGrid is not null && senderGrid == targetGrid)
             {
                 //Bring the IP into view and mark the event as handled.
                 args.Handled = true;
@@ -2836,7 +2836,7 @@ namespace MS.Internal.Documents
         private void OnScrollChanged(object sender, EventArgs args)
         {
             //Remove our handler.
-            if (ScrollOwner != null)
+            if (ScrollOwner is not null)
             {
                 _scrollChangedEventAttached = false;
                 ScrollOwner.ScrollChanged -= new ScrollChangedEventHandler(OnScrollChanged);
@@ -2862,7 +2862,7 @@ namespace MS.Internal.Documents
 
             ITextPointer selection = GetVisibleSelection();
 
-            if (selection != null)
+            if (selection is not null)
             {
                 //Now we make the selection visible.
                 MakeRectVisible(TextView.GetRectangleFromTextPosition(
@@ -2888,7 +2888,7 @@ namespace MS.Internal.Documents
             //   on the row and we aren't just guessing)
             //Then we can now officially calculate the scale needed in order to fit the given row in the manner
             //chosen.
-            if (_savedPivotRow != null &&
+            if (_savedPivotRow is not null &&
                 RowIsClean(_savedPivotRow))
             {
                 if (_documentLayout.ViewMode != ViewMode.Zoom &&
@@ -3032,7 +3032,7 @@ namespace MS.Internal.Documents
             //This is "Step 2" of the two-pass layout necessary to do fit properly inside of a
             //ScrollViewer.
             if (!_scrollChangedEventAttached &&
-                ScrollOwner != null &&
+                ScrollOwner is not null &&
                 _documentLayout.ViewMode != ViewMode.Zoom &&
                 _documentLayout.ViewMode != ViewMode.SetColumns)
             {
@@ -3071,7 +3071,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (DocumentViewerOwner != null)
+                if (DocumentViewerOwner is not null)
                 {
                     return DocumentViewerOwner.TextEditor;
                 }

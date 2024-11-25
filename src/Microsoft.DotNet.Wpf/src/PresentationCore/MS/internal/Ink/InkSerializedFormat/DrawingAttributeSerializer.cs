@@ -191,7 +191,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     byte[] data = new byte[ropSize];
                     stream.ReadExactly(data);
 
-                    if (data != null && data.Length > 0)
+                    if (data is not null && data.Length > 0)
                     {
                         //data[0] holds the allowable values of 0-255
                         rasterOperation = Convert.ToUInt32(data[0]);
@@ -460,7 +460,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             System.Diagnostics.Debug.Assert(compressionAlgorithm == 0);
             System.Diagnostics.Debug.Assert(fTag == true);
 #endif
-            Debug.Assert(stream != null);
+            Debug.Assert(stream is not null);
             uint cbData = 0;
             BinaryWriter bw = new BinaryWriter(stream);
 
@@ -486,13 +486,13 @@ namespace MS.Internal.Ink.InkSerializedFormat
             // always serialize DrawingFlags, even when it is the default of AntiAliased.  V1 loaders 
             // expect it.
             //
-            Debug.Assert(bw != null);
+            Debug.Assert(bw is not null);
             cbData += SerializationHelper.Encode(stream, (uint)guidList.FindTag(KnownIds.DrawingFlags, true));
             cbData += SerializationHelper.Encode(stream, (uint)(int)da.DrawingFlags);
 
             if (da.ContainsPropertyData(KnownIds.CurveFittingError))
             {
-                Debug.Assert(bw != null);
+                Debug.Assert(bw is not null);
                 cbData += SerializationHelper.Encode(stream, (uint)guidList.FindTag(KnownIds.CurveFittingError, true));
                 cbData += SerializationHelper.Encode(stream, (uint)(int)da.GetPropertyData(KnownIds.CurveFittingError));
             }
@@ -512,7 +512,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 uint r = (uint)daColor.R, g = (uint)daColor.G, b = (uint)(daColor.B);
                 uint colorVal = r + (g << Native.BitsPerByte) + (b << (Native.BitsPerByte * 2));
 
-                Debug.Assert(bw != null);
+                Debug.Assert(bw is not null);
                 cbData += SerializationHelper.Encode(stream, (uint)guidList.FindTag(KnownIds.Color, true));
                 cbData += SerializationHelper.Encode(stream, colorVal);
             }
@@ -525,7 +525,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 //transparency is just the opposite - 0 means fully opaque so 
                 //we need to flip the values
                 int transparency = MathHelper.AbsNoThrow(( (int)alphaChannel ) - 255);
-                Debug.Assert(bw != null);
+                Debug.Assert(bw is not null);
                 cbData += SerializationHelper.Encode(stream, (uint)guidList.FindTag(KnownIds.Transparency, true));
                 cbData += SerializationHelper.Encode(stream, Convert.ToUInt32(transparency));
             }
@@ -543,7 +543,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     throw new InvalidOperationException(StrokeCollectionSerializer.ISFDebugMessage("ROP data size was not found"));
                 }
 
-                Debug.Assert(bw != null);
+                Debug.Assert(bw is not null);
                 cbData += SerializationHelper.Encode(stream, (uint)guidList.FindTag(KnownIds.RasterOperation, true));
                 long currentPosition = stream.Position;
                 bw.Write(da.RasterOperation);
@@ -612,7 +612,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 //
                 // persist PenTip.Rectangle for V1 ISF
                 //
-                Debug.Assert(bw != null);
+                Debug.Assert(bw is not null);
                 cbData += SerializationHelper.Encode(stream, (uint)guidList.FindTag(KnownIds.PenTip, true));
                 cbData += SerializationHelper.Encode(stream, (uint)PenTip.Rectangle);
 
@@ -666,7 +666,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 {
                     uint uIntegral = (uint)(size + 0.5f);
 
-                    Debug.Assert(bw != null);
+                    Debug.Assert(bw is not null);
                     cbData += SerializationHelper.Encode(stream, (uint)guidList.FindTag(guid, true));
                     cbData += SerializationHelper.Encode(stream, uIntegral);
 
@@ -677,7 +677,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     {
                         uint cb = Native.SizeOfUShort; // For header NO_COMPRESS
 
-                        Debug.Assert(bw != null);
+                        Debug.Assert(bw is not null);
                         cbData += SerializationHelper.Encode(stream, (uint)MS.Internal.Ink.InkSerializedFormat.KnownTagCache.KnownTagIndex.Mantissa);
                         cbData += SerializationHelper.Encode(stream, cb);
                         bw.Write((byte)0x00);

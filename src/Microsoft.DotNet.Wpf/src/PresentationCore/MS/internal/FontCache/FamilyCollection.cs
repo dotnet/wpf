@@ -352,7 +352,7 @@ namespace MS.Internal.FontCache
             if (UseSystemFonts)
             {
                 CompositeFontFamily compositeFamily = SystemCompositeFonts.FindFamily(familyName);
-                if (compositeFamily != null)
+                if (compositeFamily is not null)
                 {
                     return compositeFamily;
                 }
@@ -370,7 +370,7 @@ namespace MS.Internal.FontCache
                     // The family name was not found in DWrite's font collection. It may possibly be the name of a composite font
                     // since DWrite does not recognize composite fonts.
                     CompositeFontFamily compositeFamily = LookUpUserCompositeFamily(familyName);
-                    if (compositeFamily != null)
+                    if (compositeFamily is not null)
                     {
                         return compositeFamily;
                     }
@@ -414,7 +414,7 @@ namespace MS.Internal.FontCache
                     ReadOnlySpan<char> faceName = originalFamilyName.AsSpan(faceNameIndex);
                     Text.TextInterface.Font font = GetFontFromFamily(fontFamilyDWrite, faceName);
 
-                    if (font != null)
+                    if (font is not null)
                     {
                         fontStyle = new FontStyle((int)font.Style);
                         fontWeight = new FontWeight((int)font.Weight);
@@ -440,7 +440,7 @@ namespace MS.Internal.FontCache
 
         private CompositeFontFamily LookUpUserCompositeFamily(string familyName)
         {
-            if (UserCompositeFonts != null)
+            if (UserCompositeFonts is not null)
             {
                 foreach (CompositeFontFamily compositeFamily in UserCompositeFonts)
                 {
@@ -639,7 +639,7 @@ namespace MS.Internal.FontCache
                 for (int j = 0; j < SystemCompositeFonts.NumOfSystemCompositeFonts; ++j)
                 {
                     fontFamily = CreateFontFamily(SystemCompositeFonts.GetCompositeFontFamilyAtIndex(j), fontFamilyBaseUri, fontFamilyLocationReference);
-                    if (fontFamily != null)
+                    if (fontFamily is not null)
                     {
                         fontFamilyList[i++] = fontFamily;
                     }
@@ -650,7 +650,7 @@ namespace MS.Internal.FontCache
                 foreach (CompositeFontFamily compositeFontFamily in UserCompositeFonts)
                 {
                     fontFamily = CreateFontFamily(compositeFontFamily, fontFamilyBaseUri, fontFamilyLocationReference);
-                    if (fontFamily != null)
+                    if (fontFamily is not null)
                     {
                         fontFamilyList[i++] = fontFamily;
                     }

@@ -38,7 +38,7 @@ namespace System.Windows.Controls.Primitives
         {
             return SR.Format(SR.ToStringFormatString_GridViewRowPresenterBase,
                 this.GetType(),
-                (Columns != null) ? Columns.Count : 0);
+                (Columns is not null) ? Columns.Count : 0);
         }
 
         #endregion
@@ -147,7 +147,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         internal virtual void OnColumnCollectionChanged(GridViewColumnCollectionChangedEventArgs e)
         {
-            if (DesiredWidthList != null)
+            if (DesiredWidthList is not null)
             {
                 if (e.Action == NotifyCollectionChangedAction.Remove
                     || e.Action == NotifyCollectionChangedAction.Replace)
@@ -185,7 +185,7 @@ namespace System.Windows.Controls.Primitives
         {
             GridViewColumnCollection columns = Columns;
 
-            if (columns != null)
+            if (columns is not null)
             {
                 int count = columns.Count;
 
@@ -256,7 +256,7 @@ namespace System.Windows.Controls.Primitives
 
             GridViewColumnCollection oldCollection = (GridViewColumnCollection)e.OldValue;
 
-            if (oldCollection != null)
+            if (oldCollection is not null)
             {
                 InternalCollectionChangedEventManager.RemoveHandler(oldCollection, c.ColumnCollectionChanged);
 
@@ -272,7 +272,7 @@ namespace System.Windows.Controls.Primitives
 
             GridViewColumnCollection newCollection = (GridViewColumnCollection)e.NewValue;
 
-            if (newCollection != null)
+            if (newCollection is not null)
             {
                 InternalCollectionChangedEventManager.AddHandler(newCollection, c.ColumnCollectionChanged);
 
@@ -308,7 +308,7 @@ namespace System.Windows.Controls.Primitives
         {
             ItemsControl ic = ItemsControl.ItemsControlFromItemContainer(TemplatedParent);
 
-            return (ic != null) ? ic : (FrameworkElement)this;
+            return (ic is not null) ? ic : (FrameworkElement)this;
         }
 
         // if and only if both conditions below are satisfied, row presenter visual is ready.
@@ -334,11 +334,11 @@ namespace System.Windows.Controls.Primitives
         {
             GridViewColumnCollectionChangedEventArgs e = arg as GridViewColumnCollectionChangedEventArgs;
 
-            if (e != null
+            if (e is not null
                 && IsPresenterVisualReady)// if and only if rowpresenter's visual is ready, shall rowpresenter go ahead process the event.
             {
                 // Property of one column changed
-                if (e.Column != null)
+                if (e.Column is not null)
                 {
                     OnColumnPropertyChanged(e.Column, e.PropertyName);
                 }

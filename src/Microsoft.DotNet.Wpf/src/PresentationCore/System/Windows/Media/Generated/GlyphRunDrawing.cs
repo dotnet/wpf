@@ -90,7 +90,7 @@ namespace System.Windows.Media
             GlyphRun newV = (GlyphRun) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 DUCE.IResource targetResource = (DUCE.IResource)target;
                 using (CompositionEngineLock.Acquire())
@@ -134,7 +134,7 @@ namespace System.Windows.Media
             Brush newV = (Brush) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 DUCE.IResource targetResource = (DUCE.IResource)target;
                 using (CompositionEngineLock.Acquire())
@@ -233,8 +233,8 @@ namespace System.Windows.Media
                 Brush vForegroundBrush = ForegroundBrush;
 
                 // Obtain handles for properties that implement DUCE.IResource
-                DUCE.ResourceHandle hGlyphRun = vGlyphRun != null ? ((DUCE.IResource)vGlyphRun).GetHandle(channel) : DUCE.ResourceHandle.Null;
-                DUCE.ResourceHandle hForegroundBrush = vForegroundBrush != null ? ((DUCE.IResource)vForegroundBrush).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                DUCE.ResourceHandle hGlyphRun = vGlyphRun is not null ? ((DUCE.IResource)vGlyphRun).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                DUCE.ResourceHandle hForegroundBrush = vForegroundBrush is not null ? ((DUCE.IResource)vForegroundBrush).GetHandle(channel) : DUCE.ResourceHandle.Null;
 
                 // Pack & send command packet
                 DUCE.MILCMD_GLYPHRUNDRAWING data;
@@ -257,9 +257,9 @@ namespace System.Windows.Media
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_GLYPHRUNDRAWING))
                 {
                     GlyphRun vGlyphRun = GlyphRun;
-                    if (vGlyphRun != null) ((DUCE.IResource)vGlyphRun).AddRefOnChannel(channel);
+                    if (vGlyphRun is not null) ((DUCE.IResource)vGlyphRun).AddRefOnChannel(channel);
                     Brush vForegroundBrush = ForegroundBrush;
-                    if (vForegroundBrush != null) ((DUCE.IResource)vForegroundBrush).AddRefOnChannel(channel);
+                    if (vForegroundBrush is not null) ((DUCE.IResource)vForegroundBrush).AddRefOnChannel(channel);
 
                     AddRefOnChannelAnimations(channel);
 
@@ -276,9 +276,9 @@ namespace System.Windows.Media
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
                     GlyphRun vGlyphRun = GlyphRun;
-                    if (vGlyphRun != null) ((DUCE.IResource)vGlyphRun).ReleaseOnChannel(channel);
+                    if (vGlyphRun is not null) ((DUCE.IResource)vGlyphRun).ReleaseOnChannel(channel);
                     Brush vForegroundBrush = ForegroundBrush;
-                    if (vForegroundBrush != null) ((DUCE.IResource)vForegroundBrush).ReleaseOnChannel(channel);
+                    if (vForegroundBrush is not null) ((DUCE.IResource)vForegroundBrush).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
 }

@@ -31,7 +31,7 @@ namespace MS.Internal
             DependencyObject context,
             DependencyObject newValue )
         {
-            if (context != null)
+            if (context is not null)
             {
                 context.ProvideSelfAsInheritanceContext(newValue, null);
             }
@@ -49,7 +49,7 @@ namespace MS.Internal
             DependencyObject context,
             DependencyObject oldValue )
         {
-            if (context != null && oldValue.InheritanceContext == context)
+            if (context is not null && oldValue.InheritanceContext == context)
             {
                 context.RemoveSelfAsInheritanceContext(oldValue, null);
             }

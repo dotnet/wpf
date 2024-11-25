@@ -298,7 +298,7 @@ public class StorageInfo
         DataSpaceManager manager = Root.GetDataSpaceManager();
         string dataSpaceLabel = null;
             
-        if (manager != null)
+        if (manager is not null)
         {
             //case : Compression option is set. Stream need to be compressed. Define compression transform.
             //At this time, we only treat CompressionOption - Normal and None. The rest are treated as Normal
@@ -537,9 +537,9 @@ public class StorageInfo
         ArrayList streamArray = 
             (ArrayList)core.validEnumerators[EnumeratorTypes.OnlyStreams];
 
-        Invariant.Assert(streamArray  != null);
+        Invariant.Assert(streamArray  is not null);
 
-        #pragma warning suppress 6506 // Invariant.Assert(streamArray  != null)
+        #pragma warning suppress 6506 // Invariant.Assert(streamArray  is not null)
         return (StreamInfo[])streamArray.ToArray(typeof(StreamInfo));
     }
 
@@ -567,9 +567,9 @@ public class StorageInfo
         ArrayList storageArray = 
             (ArrayList)core.validEnumerators[EnumeratorTypes.OnlyStorages];
 
-        Invariant.Assert(storageArray != null);
+        Invariant.Assert(storageArray is not null);
 
-        #pragma warning suppress 6506 // Invariant.Assert(streamArray  != null)
+        #pragma warning suppress 6506 // Invariant.Assert(streamArray  is not null)
         return (StorageInfo[])storageArray.ToArray(typeof(StorageInfo));
     }
 
@@ -1310,7 +1310,7 @@ public class StorageInfo
             }
             else
             {
-                Debug.Assert(rootStorage != null, "Root storage cannot be null if StorageInfo and empty parentStorage");
+                Debug.Assert(rootStorage is not null, "Root storage cannot be null if StorageInfo and empty parentStorage");
                 return rootStorage.RootDisposed;
             }
         }

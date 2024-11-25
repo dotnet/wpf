@@ -59,7 +59,7 @@ class RightsController : IDocumentController, IDisposable
                 encryptedPackage =
                     _provider.EncryptPackage(ciphered);
 
-                if (encryptedPackage != null)
+                if (encryptedPackage is not null)
                 {
                     clear = DecryptEnvelopeAndSuppressStream(
                         encryptedPackage,
@@ -78,7 +78,7 @@ class RightsController : IDocumentController, IDisposable
                 return true;
             }
 
-            if (encryptedPackage != null)
+            if (encryptedPackage is not null)
             {
                 Trace.SafeWrite(
                     Trace.Rights,
@@ -146,7 +146,7 @@ class RightsController : IDocumentController, IDisposable
             {
                 clear = DocumentRightsManagementManager.Current.DecryptPackage();
 
-                if (clear != null)
+                if (clear is not null)
                 {
                     clear = new RightsManagementSuppressedStream(
                         clear,
@@ -175,7 +175,7 @@ class RightsController : IDocumentController, IDisposable
             throw;
         }
 
-        if (clear != null)
+        if (clear is not null)
         {
             doc.SourceProxy = new StreamProxy(clear);
         }
@@ -201,7 +201,7 @@ class RightsController : IDocumentController, IDisposable
 
         if (doc.IsRebindNeeded)
         {
-            if (doc.SourcePackage != null)
+            if (doc.SourcePackage is not null)
             {
                 CloseEnvelope(doc.SourcePackage);
                 doc.SourcePackage = null;
@@ -226,7 +226,7 @@ class RightsController : IDocumentController, IDisposable
             {
                 clear = DocumentRightsManagementManager.Current.DecryptPackage();
 
-                if (clear != null)
+                if (clear is not null)
                 {
                     clear = new RightsManagementSuppressedStream(
                         clear,
@@ -275,7 +275,7 @@ class RightsController : IDocumentController, IDisposable
     {
         RightsDocument doc = (RightsDocument)document; // see class remarks on why this is ok
 
-        if (doc.DestinationPackage != null)
+        if (doc.DestinationPackage is not null)
         {
             CloseEnvelope(doc.DestinationPackage);
             doc.DestinationPackage = null;
@@ -361,7 +361,7 @@ class RightsController : IDocumentController, IDisposable
             // the destination is intended to be encrypted when a non-null
             // value is returned
 
-            if (encryptedPackage != null)
+            if (encryptedPackage is not null)
             {
                 clear = DecryptEnvelopeAndSuppressStream(
                     encryptedPackage,
@@ -425,7 +425,7 @@ class RightsController : IDocumentController, IDisposable
     {
         IDisposable provider = _provider as IDisposable;
 
-        if (provider != null)
+        if (provider is not null)
         {
             provider.Dispose();
         }

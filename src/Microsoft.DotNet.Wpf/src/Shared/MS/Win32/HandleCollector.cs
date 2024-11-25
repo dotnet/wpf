@@ -43,7 +43,7 @@ namespace MS.Win32
                 if (handleTypeCount == 0 || handleTypeCount == handleTypes.Length)
                 {
                     HandleType[] newTypes = new HandleType[handleTypeCount + 10];
-                    if (handleTypes != null) {
+                    if (handleTypes is not null) {
                         Array.Copy(handleTypes, 0, newTypes, 0, handleTypeCount);
                     }
                     handleTypes = newTypes;

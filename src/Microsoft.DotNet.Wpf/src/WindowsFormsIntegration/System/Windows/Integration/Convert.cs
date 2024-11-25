@@ -126,7 +126,7 @@ namespace System.Windows.Forms.Integration
         internal static SWF.Cursor ToSystemWindowsFormsCursor(SWI.Cursor swiCursor)
         {
             SWF.Cursor swfCursor;
-            if (swiCursor != null && ToSystemWindowsFormsCursorDictionary.TryGetValue(swiCursor, out swfCursor))
+            if (swiCursor is not null && ToSystemWindowsFormsCursorDictionary.TryGetValue(swiCursor, out swfCursor))
             {
                 return swfCursor;
             }

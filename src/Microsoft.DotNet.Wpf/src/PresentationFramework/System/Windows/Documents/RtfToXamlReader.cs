@@ -385,8 +385,8 @@ namespace System.Windows.Documents
             // Shading
             else
             {
-                Color cCB = entryCB != null ? entryCB.Color : Color.FromArgb(0xFF, 0, 0, 0);
-                Color cCF = entryCF != null ? entryCF.Color : Color.FromArgb(0xFF, 255, 255, 255);
+                Color cCB = entryCB is not null ? entryCB.Color : Color.FromArgb(0xFF, 0, 0, 0);
+                Color cCF = entryCF is not null ? entryCF.Color : Color.FromArgb(0xFF, 255, 255, 255);
 
                 // No color specifies means shading is treated as a grey intensity.
                 if (entryCF is null && entryCB is null)
@@ -1606,7 +1606,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _rowFormat != null;
+                return _rowFormat is not null;
             }
         }
 
@@ -1626,7 +1626,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _pb != null && !_pb.IsNone;
+                return _pb is not null && !_pb.IsNone;
             }
         }
 
@@ -2159,7 +2159,7 @@ namespace System.Windows.Documents
                 entry = converterState.ColorTable.EntryAt((int)CF);
             }
 
-            if (entry != null)
+            if (entry is not null)
             {
                 sb.Append(" BorderBrush=\"");
                 sb.Append(entry.Color.ToString());
@@ -2730,7 +2730,7 @@ namespace System.Windows.Documents
                 entry = converterState.ColorTable.EntryAt((int)BorderLeft.CF);
             }
 
-            if (entry != null)
+            if (entry is not null)
             {
                 sb.Append(" BorderBrush=\"");
                 sb.Append(entry.Color.ToString(CultureInfo.InvariantCulture));
@@ -3381,7 +3381,7 @@ namespace System.Windows.Documents
             CodePage = 1252;
             CharSet = 0;
 
-            if (Name != null && Name.Length > 0)
+            if (Name is not null && Name.Length > 0)
             {
                 byte[] rgBytes = new byte[Name.Length * 6];
                 char[] rgChars = new char[Name.Length * 6];
@@ -3486,11 +3486,11 @@ namespace System.Windows.Documents
 
             Typeface typeface = new Typeface(typefaceName);
 
-            if (typeface != null)
+            if (typeface is not null)
             {
                 GlyphTypeface glyphTypeface = typeface.TryGetGlyphTypeface();
 
-                if (glyphTypeface != null && glyphTypeface.Symbol)
+                if (glyphTypeface is not null && glyphTypeface.Symbol)
                 {
                     isSymbolFont = true;
                 }
@@ -3553,7 +3553,7 @@ namespace System.Windows.Documents
             // Might happen with bad input
             FontTableEntry entry = FindEntryByIndex(index);
 
-            if (entry != null)
+            if (entry is not null)
             {
                 // Re-open it
                 entry.IsPending = true;
@@ -3639,10 +3639,10 @@ namespace System.Windows.Documents
             {
                 FontTableEntry entry = EntryAt(i);
 
-                if (entry.Name != null)
+                if (entry.Name is not null)
                 {
                     string mappedName = (string)map[entry.Name.ToLower(CultureInfo.InvariantCulture)];
-                    if (mappedName != null)
+                    if (mappedName is not null)
                     {
                         entry.Name = mappedName;
                     }
@@ -3702,7 +3702,7 @@ namespace System.Windows.Documents
                 {
                     _fontMappings = new Hashtable();
                     RegistryKey rk = Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Windows NT\\CurrentVersion\\FontSubstitutes");
-                    if (rk != null)
+                    if (rk is not null)
                     {
                         string[] names = rk.GetValueNames();
                         foreach (string name in names)
@@ -3989,7 +3989,7 @@ namespace System.Windows.Documents
             set
             {
                 ColorTableEntry entry = GetInProgressEntry();
-                if (entry != null)
+                if (entry is not null)
                 {
                     entry.Red = value;
                 }
@@ -4001,7 +4001,7 @@ namespace System.Windows.Documents
             set
             {
                 ColorTableEntry entry = GetInProgressEntry();
-                if (entry != null)
+                if (entry is not null)
                 {
                     entry.Green = value;
                 }
@@ -4013,7 +4013,7 @@ namespace System.Windows.Documents
             set
             {
                 ColorTableEntry entry = GetInProgressEntry();
-                if (entry != null)
+                if (entry is not null)
                 {
                     entry.Blue = value;
                 }
@@ -4684,7 +4684,7 @@ namespace System.Windows.Documents
         {
             DocumentNode dn = Parent;
 
-            while (dn != null && dn.Type != parentType)
+            while (dn is not null && dn.Type != parentType)
             {
                 dn = dn.Parent;
             }
@@ -4697,7 +4697,7 @@ namespace System.Windows.Documents
             DocumentNode dn = Parent;
             int nDepth = 0;
 
-            while (dn != null)
+            while (dn is not null)
             {
                 if (dn.Type == DocumentNodeType.dnTable)
                 {
@@ -4715,7 +4715,7 @@ namespace System.Windows.Documents
             DocumentNode dn = Parent;
             int nDepth = 0;
 
-            while (dn != null)
+            while (dn is not null)
             {
                 if (dn.Type == DocumentNodeType.dnList)
                 {
@@ -4811,7 +4811,7 @@ namespace System.Windows.Documents
             {
                 FontTableEntry entry = converterState.FontTable.FindEntryByIndex((int)fsThis.Font);
 
-                if (entry != null && entry.Name != null && !(entry.Name.Equals(string.Empty)))
+                if (entry is not null && entry.Name is not null && !(entry.Name.Equals(string.Empty)))
                 {
                     sb.Append(" FontFamily=\"");
 
@@ -4871,7 +4871,7 @@ namespace System.Windows.Documents
             {
                 ColorTableEntry entry = converterState.ColorTable.EntryAt((int)fsThis.CF);
 
-                if (entry != null && !entry.IsAuto)
+                if (entry is not null && !entry.IsAuto)
                 {
                     sb.Append(" Foreground=\"");
                     sb.Append(entry.Color.ToString());
@@ -4940,7 +4940,7 @@ namespace System.Windows.Documents
                 }
             }
 
-            if (sb != null)
+            if (sb is not null)
             {
                 return sb.ToString();
             }
@@ -5139,11 +5139,11 @@ namespace System.Windows.Documents
 
             // Row stores cell properties.
             DocumentNode dnRow = GetParentOfType(DocumentNodeType.dnRow);
-            Debug.Assert(dnRow != null);                        // Need row
-            Debug.Assert(dnRow != null && !dnRow.IsPending);   // Row props attached when row is closed
-            Debug.Assert(dnRow != null && dnRow.FormatState.RowFormat != null);
+            Debug.Assert(dnRow is not null);                        // Need row
+            Debug.Assert(dnRow is not null && !dnRow.IsPending);   // Row props attached when row is closed
+            Debug.Assert(dnRow is not null && dnRow.FormatState.RowFormat is not null);
 
-            if (dnRow != null && dnRow.FormatState.HasRowFormat)
+            if (dnRow is not null && dnRow.FormatState.HasRowFormat)
             {
                 int nCol = GetCellColumn();
                 CellFormat cf = dnRow.FormatState.RowFormat.NthCellFormat(nCol);
@@ -5270,7 +5270,7 @@ namespace System.Windows.Documents
             {
                 DocumentNode dnList = Parent;
 
-                if (dnList != null && dnList.FormatState.Marker != MarkerStyle.MarkerHidden)
+                if (dnList is not null && dnList.FormatState.Marker != MarkerStyle.MarkerHidden)
                 {
                     lMargin = 360;
                 }
@@ -5308,7 +5308,7 @@ namespace System.Windows.Documents
 
         private void AppendXamlPrefixHyperlinkProperties(StringBuilder xamlStringBuilder)
         {
-            if (NavigateUri != null && NavigateUri.Length > 0)
+            if (NavigateUri is not null && NavigateUri.Length > 0)
             {
                 xamlStringBuilder.Append(" NavigateUri=\"");
                 xamlStringBuilder.Append(Converters.StringToXMLAttribute(NavigateUri));
@@ -5318,7 +5318,7 @@ namespace System.Windows.Documents
 
         private void AppendXamlTableColumnsAfterStartTag(StringBuilder xamlStringBuilder)
         {
-            if (ColumnStateArray != null && ColumnStateArray.Count > 0)
+            if (ColumnStateArray is not null && ColumnStateArray.Count > 0)
             {
                 xamlStringBuilder.Append("<Table.Columns>");
                 long prevX = 0;
@@ -5391,7 +5391,7 @@ namespace System.Windows.Documents
             {
                 ColorTableEntry entry = converterState.ColorTable.EntryAt((int)fsThis.CB);
 
-                if (entry != null && !entry.IsAuto)
+                if (entry is not null && !entry.IsAuto)
                 {
                     xamlStringBuilder.Append(" Background=\"");
                     xamlStringBuilder.Append(entry.Color.ToString());
@@ -5542,7 +5542,7 @@ namespace System.Windows.Documents
             {
                 DocumentNode dnRow = this.GetParentOfType(DocumentNodeType.dnRow);
 
-                if (dnRow != null)
+                if (dnRow is not null)
                 {
                     int nStart = dnRow.Index + 1;
                     int nLast = dnRow.Index + dnRow.ChildCount;
@@ -5810,7 +5810,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return ChildCount > 0 || Xaml != null;
+                return ChildCount > 0 || Xaml is not null;
             }
         }
 
@@ -5877,7 +5877,7 @@ namespace System.Windows.Documents
                 DocumentNode dnPa = Parent;
 
                 // Hyperlink doesn't record relevant font info
-                if (dnPa != null && dnPa.Type == DocumentNodeType.dnHyperlink)
+                if (dnPa is not null && dnPa.Type == DocumentNodeType.dnHyperlink)
                 {
                     dnPa = dnPa.Parent;
                 }
@@ -5952,7 +5952,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_parent is null && DNA != null)
+                if (_parent is null && DNA is not null)
                 {
                     return DNA.GetOpenParentWhileParsing(this);
                 }
@@ -6048,7 +6048,7 @@ namespace System.Windows.Documents
                 }
                 else
                 {
-                    for (DocumentNode dnPa = Parent; dnPa != null; dnPa = dnPa.Parent)
+                    for (DocumentNode dnPa = Parent; dnPa is not null; dnPa = dnPa.Parent)
                     {
                         switch (dnPa.Type)
                         {
@@ -6344,7 +6344,7 @@ namespace System.Windows.Documents
                 DocumentNode dn = EntryAt(nAt);
 
                 // Inline direction merging
-                if (dn.IsInline && dn.RequiresXamlDir && dn.ClosedParent != null)
+                if (dn.IsInline && dn.RequiresXamlDir && dn.ClosedParent is not null)
                 {
                     int nnAt = nAt + 1;
                     for (; nnAt <= nEnd; nnAt++)
@@ -6606,12 +6606,12 @@ namespace System.Windows.Documents
 
                     for (int i = nAt + 1; i <= dn.LastChildIndex; i++)
                     {
-                        Debug.Assert(EntryAt(i).ClosedParent != null);
+                        Debug.Assert(EntryAt(i).ClosedParent is not null);
                     }
 
                     Debug.Assert(nAt + dn.ChildCount < Count);
 
-                    for (DocumentNode dnPa = dn.Parent; dnPa != null; dnPa = dnPa.Parent)
+                    for (DocumentNode dnPa = dn.Parent; dnPa is not null; dnPa = dnPa.Parent)
                     {
                         Debug.Assert(dnPa.IsPending || (nAt > dnPa.Index && nAt <= dnPa.Index + dnPa.ChildCount));
                     }
@@ -6631,16 +6631,16 @@ namespace System.Windows.Documents
                     switch (dn.Type)
                     {
                         case DocumentNodeType.dnTableBody:
-                            Debug.Assert(dnPa != null && dnPa.Type == DocumentNodeType.dnTable);
+                            Debug.Assert(dnPa is not null && dnPa.Type == DocumentNodeType.dnTable);
                             break;
                         case DocumentNodeType.dnRow:
-                            Debug.Assert(dnPa != null && dnPa.Type == DocumentNodeType.dnTableBody);
+                            Debug.Assert(dnPa is not null && dnPa.Type == DocumentNodeType.dnTableBody);
                             break;
                         case DocumentNodeType.dnCell:
-                            Debug.Assert(dnPa != null && dnPa.Type == DocumentNodeType.dnRow);
+                            Debug.Assert(dnPa is not null && dnPa.Type == DocumentNodeType.dnRow);
                             break;
                         case DocumentNodeType.dnListItem:
-                            Debug.Assert(dnPa != null && dnPa.Type == DocumentNodeType.dnList);
+                            Debug.Assert(dnPa is not null && dnPa.Type == DocumentNodeType.dnList);
                             break;
                     }
                 }
@@ -6663,7 +6663,7 @@ namespace System.Windows.Documents
         {
             int nOpen = 0;
 
-            if (_dnaOpen != null)
+            if (_dnaOpen is not null)
             {
                 _dnaOpen.CullOpen();
                 for (int i = _dnaOpen.Count - 1; i >= 0; i--)
@@ -6696,7 +6696,7 @@ namespace System.Windows.Documents
 
         internal DocumentNode GetOpenParentWhileParsing(DocumentNode dn)
         {
-            if (_dnaOpen != null)
+            if (_dnaOpen is not null)
             {
                 _dnaOpen.CullOpen();
                 for (int i = _dnaOpen.Count - 1; i >= 0; i--)
@@ -6715,7 +6715,7 @@ namespace System.Windows.Documents
 
         internal DocumentNodeType GetTableScope()
         {
-            if (_dnaOpen != null)
+            if (_dnaOpen is not null)
             {
                 _dnaOpen.CullOpen();
                 for (int i = _dnaOpen.Count - 1; i >= 0; i--)
@@ -6748,7 +6748,7 @@ namespace System.Windows.Documents
         {
             MarkerList ml = new MarkerList();
 
-            if (_dnaOpen != null)
+            if (_dnaOpen is not null)
             {
                 _dnaOpen.CullOpen();
                 int nShape = 0;
@@ -6801,20 +6801,20 @@ namespace System.Windows.Documents
                 {
                     // Don't open a list item in a closed table.
                     DocumentNode dnCell = dn.GetParentOfType(DocumentNodeType.dnCell);
-                    if (dnCell != null && !dnCell.IsPending)
+                    if (dnCell is not null && !dnCell.IsPending)
                     {
                         break;
                     }
 
                     // Ignore list items in shapes - note the continue since these didn't effect list continuation.
                     DocumentNode dnShape = dn.GetParentOfType(DocumentNodeType.dnShape);
-                    if (dnShape != null && !dnShape.IsPending)
+                    if (dnShape is not null && !dnShape.IsPending)
                     {
                         continue;
                     }
 
                     // OK, gather up the list structure that I'm potentially reopening.
-                    for (DocumentNode dnList = dn.Parent; dnList != null; dnList = dnList.Parent)
+                    for (DocumentNode dnList = dn.Parent; dnList is not null; dnList = dnList.Parent)
                     {
                         // Note that I'm building this list up in the reverse order of GetOpenMarkerStyles
                         if (dnList.Type == DocumentNodeType.dnList)
@@ -6858,13 +6858,13 @@ namespace System.Windows.Documents
                 {
                     // Don't do this for lists in shapes.
                     DocumentNode dnShape = dn.GetParentOfType(DocumentNodeType.dnShape);
-                    if (dnShape != null && !dnShape.IsPending)
+                    if (dnShape is not null && !dnShape.IsPending)
                     {
                         continue;
                     }
 
                     // Make all this pending.
-                    for (DocumentNode dnPa = dn; dnPa != null; dnPa = dnPa.Parent)
+                    for (DocumentNode dnPa = dn; dnPa is not null; dnPa = dnPa.Parent)
                     {
                         if (dnPa.Type == DocumentNodeType.dnList || dnPa.Type == DocumentNodeType.dnListItem)
                         {
@@ -6912,7 +6912,7 @@ namespace System.Windows.Documents
 
                             if (ddn.Type == DocumentNodeType.dnCell && ddn.GetParentOfType(dn.Type) == dn)
                             {
-                                for (DocumentNode dnPa = ddn; dnPa != null && dnPa != dn; dnPa = dnPa.Parent)
+                                for (DocumentNode dnPa = ddn; dnPa is not null && dnPa != dn; dnPa = dnPa.Parent)
                                 {
                                     dnPa.IsPending = true;
                                     _dnaOpen.InsertOpenNode(dnPa);
@@ -6928,7 +6928,7 @@ namespace System.Windows.Documents
 
         internal int FindPendingFrom(DocumentNodeType documentNodeType, int nStart, int nLow)
         {
-            if (_dnaOpen != null)
+            if (_dnaOpen is not null)
             {
                 _dnaOpen.CullOpen();
                 for (int i = _dnaOpen.Count - 1; i >= 0; i--)
@@ -6975,7 +6975,7 @@ namespace System.Windows.Documents
 
         internal int FindUnmatched(DocumentNodeType dnType)
         {
-            if (_dnaOpen != null)
+            if (_dnaOpen is not null)
             {
                 for (int i = _dnaOpen.Count - 1; i >= 0; i--)
                 {
@@ -7008,7 +7008,7 @@ namespace System.Windows.Documents
                 // If prev isn't my parent, walk up its parent chain to find my parent
                 if (dnPrev.ChildCount == 0)
                 {
-                    for (dnPrev = dnPrev.Parent; dnPrev != null; dnPrev = dnPrev.Parent)
+                    for (dnPrev = dnPrev.Parent; dnPrev is not null; dnPrev = dnPrev.Parent)
                     {
                         if (dnPrev.IsAncestorOf(dnThis))
                         {
@@ -7089,14 +7089,14 @@ namespace System.Windows.Documents
             CloseAtHelper(nInsertAt, nChild);
 
             // Parent's parent shouldn't be the child document node
-            if (dnParent != null && dnParent.Parent == dnNew)
+            if (dnParent is not null && dnParent.Parent == dnNew)
             {
                 Invariant.Assert(false, "Parent's Parent node shouldn't be the child node!");
             }
 
             // Patch the child count of the ancestors
             dnNew.Parent = dnParent;
-            for (; dnParent != null; dnParent = dnParent.ClosedParent)
+            for (; dnParent is not null; dnParent = dnParent.ClosedParent)
             {
                 dnParent.ChildCount += 1;
             }
@@ -7126,7 +7126,7 @@ namespace System.Windows.Documents
             if (_fMain)
             {
                 // Patch the child count of the ancestors
-                for (DocumentNode dnPa = dn.Parent; dnPa != null; dnPa = dnPa.Parent)
+                for (DocumentNode dnPa = dn.Parent; dnPa is not null; dnPa = dnPa.Parent)
                 {
                     if (!dnPa.IsPending)
                     {
@@ -7304,7 +7304,7 @@ namespace System.Windows.Documents
                 // Adjust parent pointers
                 dnNewTableBody.Parent = dnNewTable;
                 dnNewTable.Parent = dn.ClosedParent;
-                for (DocumentNode dnPa = dnNewTable.ClosedParent; dnPa != null; dnPa = dnPa.ClosedParent)
+                for (DocumentNode dnPa = dnNewTable.ClosedParent; dnPa is not null; dnPa = dnPa.ClosedParent)
                 {
                     dnPa.ChildCount = dnPa.ChildCount + 2;
                 }
@@ -7328,7 +7328,7 @@ namespace System.Windows.Documents
             DocumentNodeArray dnaCells = dn.GetRowsCells();
             RowFormat rf = dn.FormatState.RowFormat;
             DocumentNode dnTable = dn.GetParentOfType(DocumentNodeType.dnTable);
-            ColumnStateArray csa = (dnTable != null) ? dnTable.ColumnStateArray : null;
+            ColumnStateArray csa = (dnTable is not null) ? dnTable.ColumnStateArray : null;
 
             // Normally number of cells and cell definitions are equal, but be careful.
             int nCount = dnaCells.Count < rf.CellCount ? dnaCells.Count : rf.CellCount;
@@ -7374,7 +7374,7 @@ namespace System.Windows.Documents
                 }
 
                 // Determine actual colspan based on cellx value
-                if (csa != null)
+                if (csa is not null)
                 {
                     int nColStart = nColsSeen;
 
@@ -7453,7 +7453,7 @@ namespace System.Windows.Documents
                         if (cf.IsVMerge)
                         {
                             DocumentNode dnSpanningCell = dnaSpanCells.EntryAt(kCSA);
-                            if (dnSpanningCell != null)
+                            if (dnSpanningCell is not null)
                             {
                                 dnSpanningCell.RowSpan = dnSpanningCell.RowSpan + 1;
                             }
@@ -7821,7 +7821,7 @@ namespace System.Windows.Documents
                         {
                             RtfControlWordInfo controlWordInfo = token.RtfControlWordInfo;
 
-                            if (controlWordInfo != null && !findUnknownDestinationToken)
+                            if (controlWordInfo is not null && !findUnknownDestinationToken)
                             {
                                 if ((controlWordInfo.Flags & RtfControls.RTK_DESTINATION) != 0)
                                 {
@@ -7833,7 +7833,7 @@ namespace System.Windows.Documents
                             {
                                 // Ignore unknown control on the current field result destination.
                                 // Otherwise, the field result content will be ignoreed by the unknown rtf destination.
-                                if (controlWordInfo != null &&
+                                if (controlWordInfo is not null &&
                                     controlWordInfo.Control == RtfControlWord.Ctrl_Unknown &&
                                     _converterState.TopFormatState.RtfDestination == RtfDestination.DestFieldResult)
                                 {
@@ -7846,7 +7846,7 @@ namespace System.Windows.Documents
                                 findUnknownDestinationToken = false;
                             }
 
-                            if (controlWordInfo != null)
+                            if (controlWordInfo is not null)
                             {
                                 HandleControl(token, controlWordInfo);
                             }
@@ -7983,7 +7983,7 @@ namespace System.Windows.Documents
                     if (dnLast.IsInline)
                     {
                         FormatState formatState = _converterState.TopFormatState;
-                        if (formatState != null)
+                        if (formatState is not null)
                         {
                             HandlePara(null, formatState);
                         }
@@ -8088,7 +8088,7 @@ namespace System.Windows.Documents
             DocumentNode dnInstruction = null;
             string pictureUri = null;
 
-            if (dnFieldInstBegin != null && dnFieldInstEnd != null)
+            if (dnFieldInstBegin is not null && dnFieldInstEnd is not null)
             {
                 if (dnFieldInstEnd.Index > dnFieldInstBegin.Index + 1)
                 {
@@ -8129,14 +8129,14 @@ namespace System.Windows.Documents
             }
 
             // Get rid of everything but field result contents
-            if (dnFieldInstBegin != null && dnFieldInstEnd != null)
+            if (dnFieldInstBegin is not null && dnFieldInstEnd is not null)
             {
                 int nInst = dnFieldInstEnd.Index - dnFieldInstBegin.Index + 1;
                 dna.Excise(dnFieldInstBegin.Index, nInst);
             }
-            if (dnFieldResultBegin != null)
+            if (dnFieldResultBegin is not null)
                 dna.Excise(dnFieldResultBegin.Index, 1);
-            if (dnFieldResultEnd != null)
+            if (dnFieldResultEnd is not null)
                 dna.Excise(dnFieldResultEnd.Index, 1);
 
             // Record the region that is going to be spanned by the new field node.
@@ -8148,7 +8148,7 @@ namespace System.Windows.Documents
             dna.Excise(dnFieldBegin.Index, 1);
             dna.Excise(dnFieldEnd.Index, 1);
 
-            if (pictureUri != null && nChildCount != 0)
+            if (pictureUri is not null && nChildCount != 0)
             {
                 DocumentNode dnImage = dna.EntryAt(nInsertAt);
 
@@ -8170,7 +8170,7 @@ namespace System.Windows.Documents
             }
 
             // Now insert the node around the results.
-            if (dnInstruction != null)
+            if (dnInstruction is not null)
             {
                 // Never insert an inline node around block content.  For example, Word/HTML allows hyperlinks
                 // around any content, but in XAML hyperlinks are only inline.
@@ -8422,11 +8422,11 @@ namespace System.Windows.Documents
             }
 
             StringBuilder sb = new StringBuilder();
-            if (sUri != null)
+            if (sUri is not null)
             {
                 sb.Append(sUri);
             }
-            if (sBookmark != null)
+            if (sBookmark is not null)
             {
                 sb.Append('#');
                 sb.Append(sBookmark);
@@ -8517,7 +8517,7 @@ namespace System.Windows.Documents
             // Otherwise, convert it to text
             ConvertSymbolCharValueToText(dn, nChar, encodeType);
 
-            return (dn.Xaml != null && dn.Xaml.Length > 0) ? dn : null;
+            return (dn.Xaml is not null && dn.Xaml.Length > 0) ? dn : null;
         }
 
         private void ProcessSymbolFieldInstruction(DocumentNode dn, string instr, ref int i, ref EncodeType encodeType)
@@ -8589,7 +8589,7 @@ namespace System.Windows.Documents
                     string name = instr.Substring(iStart, i - iStart);
                     // Move past trailing double-quote
                     i++;
-                    if (name != null && name.Length > 0)
+                    if (name is not null && name.Length > 0)
                     {
                         dn.FormatState.Font = _converterState.FontTable.DefineEntryByName(name);
                     }
@@ -8623,7 +8623,7 @@ namespace System.Windows.Documents
 
             bool skipImage = (formatState.ImageScaleWidth < 0) || (formatState.ImageScaleHeight < 0);
 
-            if (_wpfPayload != null && contentType != string.Empty && !skipImage)
+            if (_wpfPayload is not null && contentType != string.Empty && !skipImage)
             {
                 // Get image part URI string and image binary steam to write Rtf image data
                 // into the container of WpfPayload
@@ -8832,7 +8832,7 @@ namespace System.Windows.Documents
             {
                 // Make sure any pending inlines are wrapped.
                 FormatState formatState = _converterState.TopFormatState;
-                if (formatState != null)
+                if (formatState is not null)
                 {
                     WrapPendingInlineInParagraph(null, formatState);
                 }
@@ -8891,7 +8891,7 @@ namespace System.Windows.Documents
                 case RtfDestination.DestListLevel:
                     {
                         ListTableEntry listTableEntry = _converterState.ListTable.CurrentEntry;
-                        if (listTableEntry != null)
+                        if (listTableEntry is not null)
                         {
                             ListLevel listLevel = listTableEntry.Levels.CurrentEntry;
                             listLevel.FormatState = new FormatState(fsCur);
@@ -8907,7 +8907,7 @@ namespace System.Windows.Documents
 
                 case RtfDestination.DestFontName:
                     FontTableEntry entry = _converterState.FontTable.CurrentEntry;
-                    if (entry != null)
+                    if (entry is not null)
                     {
                         entry.IsNameSealed = true;
                         entry.IsPending = false;
@@ -8937,7 +8937,7 @@ namespace System.Windows.Documents
                 else if (fsNew.RtfDestination == RtfDestination.DestFontTable)
                 {
                     FontTableEntry entry = _converterState.FontTable.CurrentEntry;
-                    if (entry != null)
+                    if (entry is not null)
                     {
                         entry.IsPending = false;
                     }
@@ -8979,7 +8979,7 @@ namespace System.Windows.Documents
 
             formatState.Font = nFont;
             FontTableEntry entry = _converterState.FontTable.FindEntryByIndex((int)formatState.Font);
-            if (entry != null)
+            if (entry is not null)
             {
                 if (entry.CodePage == -1)
                 {
@@ -9104,7 +9104,7 @@ namespace System.Windows.Documents
                         {
                             formatState.RtfDestination = RtfDestination.DestFontName;
                             FontTableEntry entry = _converterState.FontTable.CurrentEntry;
-                            if (entry != null)
+                            if (entry is not null)
                             {
                                 entry.Name = null;
                             }
@@ -9806,7 +9806,7 @@ namespace System.Windows.Documents
             for (; nInsertAt > 0; nInsertAt--)
             {
                 dn = dna.EntryAt(nInsertAt - 1);
-                if (!dn.IsInline || dn.ClosedParent != null || !dn.IsMatched)
+                if (!dn.IsInline || dn.ClosedParent is not null || !dn.IsMatched)
                 {
                     break;
                 }
@@ -9845,7 +9845,7 @@ namespace System.Windows.Documents
             {
                 dn = dna.EntryAt(nInsertAt - 1);
                 if (!dn.IsInline
-                    || (dn.ClosedParent != null && !dn.ClosedParent.IsInline)
+                    || (dn.ClosedParent is not null && !dn.ClosedParent.IsInline)
                     || !dn.IsMatched)
                 {
                     break;
@@ -9877,7 +9877,7 @@ namespace System.Windows.Documents
 
             // Parent shouldn't be the child of new inserted document node
             // to avoid the infinite loop on InsertChildAt()
-            if (dnChild.ClosedParent != null
+            if (dnChild.ClosedParent is not null
                 && dnChild.ClosedParent.Index < nInsertAt
                 && dnChild.ClosedParent.Index > (nInsertAt + nChildren - 1))
             {
@@ -10004,7 +10004,7 @@ namespace System.Windows.Documents
                     if (nRowAt >= 0)
                     {
                         DocumentNode dnRow = dna.EntryAt(nRowAt);
-                        if (formatState.RowFormat != null)
+                        if (formatState.RowFormat is not null)
                         {
                             dnRow.FormatState.RowFormat = new RowFormat(formatState.RowFormat);
                             dnRow.FormatState.RowFormat.CanonicalizeWidthsFromRTF();
@@ -10085,7 +10085,7 @@ namespace System.Windows.Documents
                 {
                     ListTableEntry lte = lt.CurrentEntry;
 
-                    if (lte != null)
+                    if (lte is not null)
                     {
                         return lte.Levels;
                     }
@@ -10119,7 +10119,7 @@ namespace System.Windows.Documents
                 case RtfControlWord.Ctrl_LISTTEMPLATEID:
                     {
                         ListTableEntry listTableEntry = listTable.CurrentEntry;
-                        if (listTableEntry != null)
+                        if (listTableEntry is not null)
                         {
                             listTableEntry.TemplateID = token.Parameter;
                         }
@@ -10130,7 +10130,7 @@ namespace System.Windows.Documents
                 case RtfControlWord.Ctrl_LISTSIMPLE:
                     {
                         ListTableEntry listTableEntry = listTable.CurrentEntry;
-                        if (listTableEntry != null)
+                        if (listTableEntry is not null)
                         {
                             listTableEntry.Simple = token.RtfControlWordInfo.Control == RtfControlWord.Ctrl_LISTSIMPLE;
                         }
@@ -10141,7 +10141,7 @@ namespace System.Windows.Documents
                     {
                         formatState.RtfDestination = RtfDestination.DestListLevel;
                         ListLevelTable levels = GetControllingLevelTable();
-                        if (levels != null)
+                        if (levels is not null)
                         {
                             ListLevel listLevel = levels.AddEntry();
                         }
@@ -10164,10 +10164,10 @@ namespace System.Windows.Documents
                 case RtfControlWord.Ctrl_LEVELNFCN:
                     {
                         ListLevelTable levels = GetControllingLevelTable();
-                        if (levels != null)
+                        if (levels is not null)
                         {
                             ListLevel listLevel = levels.CurrentEntry;
-                            if (listLevel != null)
+                            if (listLevel is not null)
                             {
                                 listLevel.Marker = (MarkerStyle)token.Parameter;
                             }
@@ -10185,10 +10185,10 @@ namespace System.Windows.Documents
                 case RtfControlWord.Ctrl_LEVELSTARTAT:
                     {
                         ListLevelTable levels = GetControllingLevelTable();
-                        if (levels != null)
+                        if (levels is not null)
                         {
                             ListLevel listLevel = levels.CurrentEntry;
-                            if (listLevel != null)
+                            if (listLevel is not null)
                             {
                                 listLevel.StartIndex = token.Parameter;
                             }
@@ -10197,7 +10197,7 @@ namespace System.Windows.Documents
                                 // This is the case where the list override *only* specifies startat override.
                                 ListOverride lo = GetControllingListOverride();
 
-                                if (lo != null)
+                                if (lo is not null)
                                 {
                                     lo.StartIndex = token.Parameter;
                                 }
@@ -10220,7 +10220,7 @@ namespace System.Windows.Documents
                         if (formatState.RtfDestination == RtfDestination.DestListOverride)
                         {
                             ListOverride listOverride = listOverrideTable.CurrentEntry;
-                            if (listOverride != null)
+                            if (listOverride is not null)
                             {
                                 listOverride.ID = token.Parameter;
                             }
@@ -10228,7 +10228,7 @@ namespace System.Windows.Documents
                         else
                         {
                             ListTableEntry listTableEntry = listTable.CurrentEntry;
-                            if (listTableEntry != null)
+                            if (listTableEntry is not null)
                             {
                                 listTableEntry.ID = token.Parameter;
                             }
@@ -10256,7 +10256,7 @@ namespace System.Windows.Documents
                     if (formatState.RtfDestination == RtfDestination.DestListOverride)
                     {
                         ListOverride listOverride = listOverrideTable.CurrentEntry;
-                        if (listOverride != null)
+                        if (listOverride is not null)
                         {
                             listOverride.Index = token.Parameter;
                         }
@@ -10717,14 +10717,14 @@ namespace System.Windows.Documents
                     break;
                 case RtfControlWord.Ctrl_BRDRTBL:
                     // No cell borders
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderNone;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDRART:
                     // Art border
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
                     }
@@ -10735,194 +10735,194 @@ namespace System.Windows.Documents
                 case RtfControlWord.Ctrl_BRDRBTW:
                     break;
                 case RtfControlWord.Ctrl_BRDRCF:
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.CF = token.Parameter;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDRDASH:
                     // Dashed border
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDRDASHD:
                     // Dash dot border
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDRDASHDD:
                     // Dot dot dash border
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDRDASHDOTSTR:
                     // Dash-dot border
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDRDASHSM:
                     // Small dash border
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDRDB:
                     // Double border
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderDouble;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDRDOT:
                     // Dotted border
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDREMBOSS:
                     // Emboss-style border
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDRENGRAVE:
                     // Engrave-style border
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDRFRAME:
                     // Frame-style border
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDRHAIR:
                     // Hairline border
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDRINSET:
                     // Inset border
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDROUTSET:
                     // Outset border
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDRS:
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDRSH:
                     // Shadow border
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDRTH:
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderDouble;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDRTHTNLG:
                     // Thick-thin (large) border
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDRTHTNMG:
                     // Thick-thin (medium) border
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDRTHTNSG:
                     // Thick-thin-thin (thin) border
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDRTNTHLG:
                     // Thin-thick (large) border
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDRTNTHMG:
                     // Thick-thin-thin (medium) border
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDRTNTHSG:
                     // Thick-thin-thin (small) border
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDRTNTHTNLG:
                     // Thick-thin-thin (large) border
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDRTNTHTNMG:
                     // Thin-thick-thin (medium) border
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDRTNTHTNSG:
                     // Thick-thin-thin (small) border
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDRTRIPLE:
                     // Triple border
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDRW:
                     // Border thickness
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         // Note that propset does validation
                         ConverterState.CurrentBorder.Width = token.Parameter;
@@ -10930,7 +10930,7 @@ namespace System.Windows.Documents
                     break;
                 case RtfControlWord.Ctrl_BRDRNONE:
                     // No borders
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         // Note that propset does validation
                         ConverterState.CurrentBorder.SetDefaults();
@@ -10938,14 +10938,14 @@ namespace System.Windows.Documents
                     break;
                 case RtfControlWord.Ctrl_BRDRWAVY:
                     // Wavy border
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
                     }
                     break;
                 case RtfControlWord.Ctrl_BRDRWAVYDB:
                     // Double border
-                    if (ConverterState.CurrentBorder != null)
+                    if (ConverterState.CurrentBorder is not null)
                     {
                         ConverterState.CurrentBorder.Type = BorderType.BorderDouble;
                     }
@@ -11152,13 +11152,13 @@ namespace System.Windows.Documents
             // Now determine the list style for the list level I'm going to add.
             ListOverrideTable lot = _converterState.ListOverrideTable;
             ListOverride lo = lot.FindEntry((int)fs.ILS);
-            if (lo != null)
+            if (lo is not null)
             {
                 ListLevelTable levels = lo.Levels;
                 if (levels is null || levels.Count == 0)
                 {
                     ListTableEntry lte = _converterState.ListTable.FindEntry(lo.ID);
-                    if (lte != null)
+                    if (lte is not null)
                     {
                         levels = lte.Levels;
                     }
@@ -11170,10 +11170,10 @@ namespace System.Windows.Documents
                     }
                 }
 
-                if (levels != null)
+                if (levels is not null)
                 {
                     ListLevel listLevel = levels.EntryAt((int)nVirtualListLevel - 1);
-                    if (listLevel != null)
+                    if (listLevel is not null)
                     {
                         // If there was a marker present, we ignore the "Hidden" style in the list table.
                         MarkerStyle ms = listLevel.Marker;
@@ -11334,7 +11334,7 @@ namespace System.Windows.Documents
                         // Now that we encountered the \ud destination, lets push back the original destination.
                         FormatState previous = _converterState.PreviousTopFormatState(1);
                         FormatState previousPrevious = _converterState.PreviousTopFormatState(2);
-                        if (previous != null && previousPrevious != null)
+                        if (previous is not null && previousPrevious is not null)
                         {
                             if (formatState.RtfDestination == RtfDestination.DestUPR && previous.RtfDestination == RtfDestination.DestUnknown)
                             {
@@ -11379,7 +11379,7 @@ namespace System.Windows.Documents
 
             FontTableEntry entry = _converterState.FontTable.CurrentEntry;
 
-            if (entry != null && tokenName.Length > 0 && !entry.IsNameSealed)
+            if (entry is not null && tokenName.Length > 0 && !entry.IsNameSealed)
             {
                 // If name not yet specified, just set it
                 if (entry.Name is null)
@@ -11398,7 +11398,7 @@ namespace System.Windows.Documents
             FontTableEntry entry = _converterState.FontTable.CurrentEntry;
             FormatState formatState = _converterState.TopFormatState;
 
-            if (entry != null)
+            if (entry is not null)
             {
                 switch (token.RtfControlWordInfo.Control)
                 {
@@ -11490,7 +11490,7 @@ namespace System.Windows.Documents
             DocumentNode dnTop = dna.Top;
 
             // See if I can just append the text content if the format is the same.
-            if (dnTop != null && (dnTop.Type == DocumentNodeType.dnText))
+            if (dnTop is not null && (dnTop.Type == DocumentNodeType.dnText))
             {
                 // If the format is not equal, close this text element and we'll open a new one.
                 if (!dnTop.FormatState.IsEqual(formatState))

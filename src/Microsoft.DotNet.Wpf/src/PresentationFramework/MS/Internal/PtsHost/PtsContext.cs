@@ -113,7 +113,7 @@ namespace MS.Internal.PtsHost
                     _pages = null;
                 }
 
-                if (Invariant.Strict && _unmanagedHandles != null)
+                if (Invariant.Strict && _unmanagedHandles is not null)
                 {
                     // Verify that PtsContext does not contain any reference to objects.
                     // Because order of finalizers is not deterministic, only objects
@@ -121,7 +121,7 @@ namespace MS.Internal.PtsHost
                     for (index = 0; index < _unmanagedHandles.Length; ++index)
                     {
                         Object obj = _unmanagedHandles[index].Obj;
-                        if (obj != null)
+                        if (obj is not null)
                         {
                             Invariant.Assert(
                                 obj is BaseParagraph ||
@@ -141,7 +141,7 @@ namespace MS.Internal.PtsHost
                                     if (objDbg is TextParagraph)
                                     {
                                         List<AttachedObject> attachedObjects = ((TextParagraph)objDbg).AttachedObjectDbg;
-                                        if (attachedObjects != null)
+                                        if (attachedObjects is not null)
                                         {
                                             foreach (AttachedObject attachedObject in attachedObjects)
                                             {
@@ -178,7 +178,7 @@ namespace MS.Internal.PtsHost
         /// </remarks>
         internal IntPtr CreateHandle(object obj)
         {
-            Invariant.Assert(obj != null, "Cannot create handle for non-existing object.");
+            Invariant.Assert(obj is not null, "Cannot create handle for non-existing object.");
             Invariant.Assert(!this.Disposed, "PtsContext is already disposed.");
 
             // Ensure the size of handle array. The first item of the
@@ -480,7 +480,7 @@ namespace MS.Internal.PtsHost
             // disposed.
             if (!this.Disposed)
             {
-                Invariant.Assert(_pages != null, "Collection of pages does not exist.");
+                Invariant.Assert(_pages is not null, "Collection of pages does not exist.");
                 Invariant.Assert(_pages.Contains(ptsPage), "Page does not exist.");
 
                 // Destroy given page.
@@ -517,7 +517,7 @@ namespace MS.Internal.PtsHost
             // disposed.
             if (!this.Disposed)
             {
-                Invariant.Assert(_pageBreakRecords != null, "Collection of break records does not exist.");
+                Invariant.Assert(_pageBreakRecords is not null, "Collection of break records does not exist.");
                 Invariant.Assert(_pageBreakRecords.Contains(br), "Break record does not exist.");
 
                 // Destroy given page break record.
@@ -648,7 +648,7 @@ namespace MS.Internal.PtsHost
             internal object Obj;
             internal bool IsHandle()
             {
-                return (Obj != null && Index == 0);
+                return (Obj is not null && Index == 0);
             }
         }
 

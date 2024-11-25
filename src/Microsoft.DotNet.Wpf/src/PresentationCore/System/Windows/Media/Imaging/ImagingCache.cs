@@ -90,7 +90,7 @@ namespace System.Windows.Media.Imaging
                     {
                         // if the value is a WeakReference that has been GC'd, remove it
                         WeakReference weakRef = de.Value as WeakReference;
-                        if ((weakRef != null) && (weakRef.Target is null))
+                        if ((weakRef is not null) && (weakRef.Target is null))
                         {
                             al.Add(de.Key);
                         }

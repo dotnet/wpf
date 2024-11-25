@@ -40,7 +40,7 @@ namespace MS.Internal.Text
         public void Dispose()
         {
             // Dispose text line
-            if (_line != null)
+            if (_line is not null)
             {
                 _line.Dispose();
                 _line = null;
@@ -113,7 +113,7 @@ namespace MS.Internal.Text
         // ------------------------------------------------------------------
         internal void Render(DrawingContext ctx, Point lineOffset)
         {
-            Debug.Assert(_line != null, "Rendering line that has not been measured yet.");
+            Debug.Assert(_line is not null, "Rendering line that has not been measured yet.");
 
             // Handle text trimming.
             System.Windows.Media.TextFormatting.TextLine line = _line;
@@ -315,7 +315,7 @@ namespace MS.Internal.Text
             System.Windows.Media.TextFormatting.TextLine collapsedLine = _line.Collapse(GetCollapsingProps(_wrappingWidth, _owner.ParagraphProperties));
             Debug.Assert(collapsedLine.HasCollapsed, "Line has not been collapsed");
             IList<TextCollapsedRange> collapsedRanges = collapsedLine.GetTextCollapsedRanges();
-            if (collapsedRanges != null)
+            if (collapsedRanges is not null)
             {
                 Debug.Assert(collapsedRanges.Count == 1, "Multiple collapsed ranges are not supported.");
                 TextCollapsedRange collapsedRange = collapsedRanges[0];
@@ -475,10 +475,10 @@ namespace MS.Internal.Text
             {
                 textBounds = _line.GetTextBounds(cp, cch);
             }
-            Invariant.Assert(textBounds != null && textBounds.Count == 1, "Expecting exactly one TextBounds for a single text position.");
+            Invariant.Assert(textBounds is not null && textBounds.Count == 1, "Expecting exactly one TextBounds for a single text position.");
             
             IList<TextRunBounds> runBounds = textBounds[0].TextRunBounds;            
-            if (runBounds != null)
+            if (runBounds is not null)
             {
                 Debug.Assert(runBounds.Count == 1, "Expecting exactly one TextRunBounds for a single text position.");
                 rect = runBounds[0].Rectangle;

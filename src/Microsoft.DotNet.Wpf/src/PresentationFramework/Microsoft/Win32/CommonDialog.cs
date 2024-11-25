@@ -86,7 +86,7 @@ namespace Microsoft.Win32
             {
                 // No active window, so we'll use the parking window as the owner, 
                 // if its available.
-                if (Application.Current != null)
+                if (Application.Current is not null)
                 {
                     hwndOwner = Application.Current.ParkingHwnd;
                 }
@@ -122,7 +122,7 @@ namespace Microsoft.Win32
             }
             finally
             {
-                if (tempParentHwnd != null)
+                if (tempParentHwnd is not null)
                 {
                     tempParentHwnd.Dispose();
                 }

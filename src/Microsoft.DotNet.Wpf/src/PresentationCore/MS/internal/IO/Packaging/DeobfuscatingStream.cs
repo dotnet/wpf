@@ -149,7 +149,7 @@ namespace MS.Internal.IO.Packaging
             get
             {
                 // cannot read from a close stream, but don't throw if asked
-                return (_obfuscatedStream != null) && _obfuscatedStream.CanRead;
+                return (_obfuscatedStream is not null) && _obfuscatedStream.CanRead;
             }
         }
 
@@ -162,7 +162,7 @@ namespace MS.Internal.IO.Packaging
             get
             {
                 // cannot seek on a close stream, but don't throw if asked
-                return (_obfuscatedStream != null) && _obfuscatedStream.CanSeek;
+                return (_obfuscatedStream is not null) && _obfuscatedStream.CanSeek;
             }
         }
 
@@ -238,7 +238,7 @@ namespace MS.Internal.IO.Packaging
                 if (disposing)
                 {
                     // If this class owns the underlying steam, close it
-                    if (_obfuscatedStream != null && _ownObfuscatedStream)
+                    if (_obfuscatedStream is not null && _ownObfuscatedStream)
                     {
                         _obfuscatedStream.Close();
                     }

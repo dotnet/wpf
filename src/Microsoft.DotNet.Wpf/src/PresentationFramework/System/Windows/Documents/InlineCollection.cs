@@ -57,7 +57,7 @@ namespace System.Windows.Documents
 
             string text = value as string;
 
-            if (text != null)
+            if (text is not null)
             {
                 index = AddText(text, true /* returnIndex */);
             }
@@ -68,7 +68,7 @@ namespace System.Windows.Documents
                 {
                     UIElement uiElement = value as UIElement;
 
-                    if (uiElement != null)
+                    if (uiElement is not null)
                     {
                         index = AddUIElement(uiElement, true /* returnIndex */);
                     }

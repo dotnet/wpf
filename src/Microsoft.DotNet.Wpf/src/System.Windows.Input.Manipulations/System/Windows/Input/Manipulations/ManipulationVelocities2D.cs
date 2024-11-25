@@ -107,10 +107,10 @@ namespace System.Windows.Input.Manipulations
             Func<float> getAngularVelocity,
             Func<float> getExpansionVelocity)
         {
-            Debug.Assert(getLinearVelocityX != null, "getLinearVelocityX should not be null");
-            Debug.Assert(getLinearVelocityY != null, "getLinearVelocityX should not be null");
-            Debug.Assert(getAngularVelocity != null, "getLinearVelocityX should not be null");
-            Debug.Assert(getExpansionVelocity != null, "getLinearVelocityX should not be null");
+            Debug.Assert(getLinearVelocityX is not null, "getLinearVelocityX should not be null");
+            Debug.Assert(getLinearVelocityY is not null, "getLinearVelocityX should not be null");
+            Debug.Assert(getAngularVelocity is not null, "getLinearVelocityX should not be null");
+            Debug.Assert(getExpansionVelocity is not null, "getLinearVelocityX should not be null");
 
             this.linearVelocityX = new Lazy<float>(getLinearVelocityX);
             this.linearVelocityY = new Lazy<float>(getLinearVelocityY);

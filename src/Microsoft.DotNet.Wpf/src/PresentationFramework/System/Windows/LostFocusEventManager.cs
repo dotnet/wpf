@@ -105,9 +105,9 @@ namespace System.Windows
             FrameworkContentElement fce;
             Helper.DowncastToFEorFCE(typedSource, out fe, out fce, true);
 
-            if (fe != null)
+            if (fe is not null)
                 fe.LostFocus += new RoutedEventHandler(OnLostFocus);
-            else if (fce != null)
+            else if (fce is not null)
                 fce.LostFocus += new RoutedEventHandler(OnLostFocus);
         }
 
@@ -121,9 +121,9 @@ namespace System.Windows
             FrameworkContentElement fce;
             Helper.DowncastToFEorFCE(typedSource, out fe, out fce, true);
 
-            if (fe != null)
+            if (fe is not null)
                 fe.LostFocus -= new RoutedEventHandler(OnLostFocus);
-            else if (fce != null)
+            else if (fce is not null)
                 fce.LostFocus -= new RoutedEventHandler(OnLostFocus);
         }
 

@@ -30,7 +30,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
 
             DependencyObject element = syncElement as DependencyObject;
-            Debug.Assert(element != null);
+            Debug.Assert(element is not null);
             try
             {
                 syncElement.SyncingKeyTipAndContent = true;
@@ -39,7 +39,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     string keyTip = KeyTipService.GetKeyTip(element);
                     bool isKeyTipSet = !string.IsNullOrEmpty(keyTip);
                     string stringContent = element.GetValue(contentProperty) as string;
-                    if (stringContent != null)
+                    if (stringContent is not null)
                     {
                         int accessKeyIndex = RibbonHelper.FindAccessKeyMarker(stringContent);
                         if (isKeyTipSet)
@@ -73,7 +73,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         public static void OnKeyTipChanged(ISyncKeyTipAndContent syncElement, DependencyProperty contentProperty)
         {
             DependencyObject element = syncElement as DependencyObject;
-            Debug.Assert(element != null);
+            Debug.Assert(element is not null);
             if (!syncElement.SyncingKeyTipAndContent)
             {
                 if (syncElement.KeepKeyTipAndContentInSync)
@@ -93,7 +93,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             DependencyProperty contentProperty)
         {
             DependencyObject element = syncElement as DependencyObject;
-            Debug.Assert(element != null);
+            Debug.Assert(element is not null);
             if (syncElement.KeepKeyTipAndContentInSync &&
                 !syncElement.IsKeyTipSyncSource)
             {
@@ -101,7 +101,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 if (string.IsNullOrEmpty((string)baseValue))
                 {
                     string stringContent = element.GetValue(contentProperty) as string;
-                    if (stringContent != null)
+                    if (stringContent is not null)
                     {
                         int accessIndex = RibbonHelper.FindAccessKeyMarker(stringContent);
                         if (accessIndex >= 0 && accessIndex < stringContent.Length - 1)
@@ -118,7 +118,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         public static void OnContentPropertyChanged(ISyncKeyTipAndContent syncElement, DependencyProperty contentProperty)
         {
             DependencyObject element = syncElement as DependencyObject;
-            Debug.Assert(element != null);
+            Debug.Assert(element is not null);
             if (!syncElement.SyncingKeyTipAndContent)
             {
                 if (syncElement.KeepKeyTipAndContentInSync)
@@ -137,13 +137,13 @@ namespace Microsoft.Windows.Controls.Ribbon
             object baseValue)
         {
             DependencyObject element = syncElement as DependencyObject;
-            Debug.Assert(element != null);
+            Debug.Assert(element is not null);
             if (syncElement.KeepKeyTipAndContentInSync &&
                 syncElement.IsKeyTipSyncSource)
             {
                 syncElement.KeepKeyTipAndContentInSync = false;
                 string stringContent = baseValue as string;
-                if (stringContent != null)
+                if (stringContent is not null)
                 {
                     if (RibbonHelper.FindAccessKeyMarker(stringContent) < 0)
                     {

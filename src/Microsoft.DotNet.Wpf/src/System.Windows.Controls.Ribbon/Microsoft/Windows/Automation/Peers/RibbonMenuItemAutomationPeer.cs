@@ -72,7 +72,7 @@ namespace Microsoft.Windows.Automation.Peers
             if (String.IsNullOrEmpty(helpText))
             {
                 RibbonToolTip toolTip = ((RibbonMenuItem)Owner).ToolTip as RibbonToolTip;
-                if (toolTip != null)
+                if (toolTip is not null)
                 {
                     helpText = toolTip.Description;
                 }
@@ -100,7 +100,7 @@ namespace Microsoft.Windows.Automation.Peers
         {
             AutomationPeer dataPeer = EventsSource;
 
-            if (dataPeer != null)
+            if (dataPeer is not null)
             {
                 dataPeer.RaisePropertyChangedEvent(
                     ExpandCollapsePatternIdentifiers.ExpandCollapseStateProperty,
@@ -114,7 +114,7 @@ namespace Microsoft.Windows.Automation.Peers
         {
             AutomationPeer dataPeer = EventsSource;
 
-            if (dataPeer != null)
+            if (dataPeer is not null)
             {
                 dataPeer.RaisePropertyChangedEvent(TogglePatternIdentifiers.ToggleStateProperty, ConvertToToggleState(oldValue), ConvertToToggleState(newValue));
             }

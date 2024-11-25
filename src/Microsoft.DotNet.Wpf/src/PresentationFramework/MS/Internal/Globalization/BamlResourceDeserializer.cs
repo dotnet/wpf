@@ -309,7 +309,7 @@ namespace MS.Internal.Globalization
 
         private void PushNodeToStack(BamlTreeNode node)
         {
-            if (_currentParent != null)
+            if (_currentParent is not null)
                 _currentParent.AddChild(node);
 
             _bamlTreeStack.Push(node);
@@ -331,13 +331,13 @@ namespace MS.Internal.Globalization
         private void PopStack()
         {
             BamlTreeNode node = _bamlTreeStack.Pop();
-            if (node.Children != null)
+            if (node.Children is not null)
             {
                 // pop properties from property inheritance stack as well
                 foreach (BamlTreeNode child in node.Children)
                 {
                     BamlStartComplexPropertyNode propertyNode = child as BamlStartComplexPropertyNode;
-                    if (propertyNode != null)
+                    if (propertyNode is not null)
                     {
                         PopPropertyFromStack(propertyNode.PropertyName);
                     }

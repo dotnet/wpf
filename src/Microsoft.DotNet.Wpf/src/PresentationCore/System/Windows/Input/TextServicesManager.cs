@@ -150,7 +150,7 @@ namespace System.Windows.Input
             {
                 context = TextServicesContext.DispatcherCurrent;
 
-                if (context != null)
+                if (context is not null)
                 {
                     if (TextServicesKeystroke(context, keyArgs, true /* test */))
                     {
@@ -193,7 +193,7 @@ namespace System.Windows.Input
                 {
                     context = TextServicesContext.DispatcherCurrent;
 
-                    if (context != null)
+                    if (context is not null)
                     {
                         if (TextServicesKeystroke(context, keyArgs, false /* test */))
                         {

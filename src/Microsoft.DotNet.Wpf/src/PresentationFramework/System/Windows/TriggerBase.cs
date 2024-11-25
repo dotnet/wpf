@@ -69,7 +69,7 @@ namespace System.Windows
         }
 
         // Internal way to check without triggering a pointless allocation
-        internal bool HasEnterActions { get { return _enterActions != null && _enterActions.Count > 0; } }
+        internal bool HasEnterActions { get { return _enterActions is not null && _enterActions.Count > 0; } }
 
         /// <summary>
         ///     A collection of trigger actions to perform when this trigger
@@ -98,7 +98,7 @@ namespace System.Windows
         }
 
         // Internal way to check without triggering a pointless allocation
-        internal bool HasExitActions { get { return _exitActions != null && _exitActions.Count > 0; } }
+        internal bool HasExitActions { get { return _exitActions is not null && _exitActions.Count > 0; } }
 
 //  Here's the internal version that does what Robby thinks it should do.
         internal bool ExecuteEnterActionsOnApply
@@ -253,11 +253,11 @@ namespace System.Windows
                 }
             }
 
-            if( _enterActions != null )
+            if( _enterActions is not null )
             {
                 _enterActions.Seal(this);
             }
-            if( _exitActions != null )
+            if( _exitActions is not null )
             {
                 _exitActions.Seal(this);
             }
@@ -270,7 +270,7 @@ namespace System.Windows
         internal void ProcessSettersCollection(SetterBaseCollection setters)
         {
             // Add information in Setters collection to PropertyValues array.
-            if( setters != null )
+            if( setters is not null )
             {
                 // Seal Setters
                 setters.Seal();
@@ -278,7 +278,7 @@ namespace System.Windows
                 for (int i = 0; i < setters.Count; i++ )
                 {
                     Setter setter = setters[i] as Setter;
-                    if( setter != null )
+                    if( setter is not null )
                     {
                         DependencyProperty dp = setter.Property;
                         object value          = setter.ValueInternal;

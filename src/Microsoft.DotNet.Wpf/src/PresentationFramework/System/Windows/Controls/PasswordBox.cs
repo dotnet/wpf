@@ -485,10 +485,10 @@ namespace System.Windows.Controls
             //  always call base.OnPropertyChanged, otherwise Property Engine will not work.
             base.OnPropertyChanged(e);
 
-            if (this.RenderScope != null)
+            if (this.RenderScope is not null)
             {
                 FrameworkPropertyMetadata fmetadata = e.Property.GetMetadata(typeof(PasswordBox)) as FrameworkPropertyMetadata;
-                if (fmetadata != null)
+                if (fmetadata is not null)
                 {
                     if (e.IsAValueChange || e.IsASubPropertyChange)
                     {
@@ -801,7 +801,7 @@ namespace System.Windows.Controls
             {
                 if (_scrollViewer is null)
                 {
-                    if (_textEditor != null)
+                    if (_textEditor is not null)
                     {
                         _scrollViewer = _textEditor._Scroller as ScrollViewer;
                     }
@@ -861,12 +861,12 @@ namespace System.Windows.Controls
         // Attaches this control to a new TextContainer.
         private void InitializeTextContainer(PasswordTextContainer textContainer)
         {
-            Invariant.Assert(textContainer != null);
+            Invariant.Assert(textContainer is not null);
 
             // Uninitialize previous TextEditor
-            if (_textContainer != null)
+            if (_textContainer is not null)
             {
-                Invariant.Assert(_textEditor != null);
+                Invariant.Assert(_textEditor is not null);
                 Invariant.Assert(_textEditor.TextContainer == _textContainer);
 
                 // Detach existing editor from VisualTree
@@ -906,7 +906,7 @@ namespace System.Windows.Controls
             PasswordBox passwordBox = (PasswordBox)d;
 
             // Force a layout refresh to display the new char.
-            if (passwordBox._renderScope != null)
+            if (passwordBox._renderScope is not null)
             {
                 passwordBox._renderScope.InvalidateMeasure();
             }
@@ -955,7 +955,7 @@ namespace System.Windows.Controls
             if (_passwordBoxContentHost is ScrollViewer)
             {
                 ScrollViewer scrollViewer = (ScrollViewer)_passwordBoxContentHost;
-                if (scrollViewer.Content != null)
+                if (scrollViewer.Content is not null)
                 {
                     throw new NotSupportedException(SR.TextBoxScrollViewerMarkedAsTextBoxContentMustHaveNoContent);
                 }
@@ -967,7 +967,7 @@ namespace System.Windows.Controls
             else if (_passwordBoxContentHost is Decorator)
             {
                 Decorator decorator = (Decorator)_passwordBoxContentHost;
-                if (decorator.Child != null)
+                if (decorator.Child is not null)
                 {
                     throw new NotSupportedException(SR.TextBoxDecoratorMarkedAsTextBoxContentMustHaveNoContent);
                 }
@@ -984,7 +984,7 @@ namespace System.Windows.Controls
 
                 // Explicitly not throwing an exception here when content host = null
                 // -- designers need us to support no content scenarios
-                if (_passwordBoxContentHost != null)
+                if (_passwordBoxContentHost is not null)
                 {
                     _passwordBoxContentHost = null;
                     //  Remove the exception
@@ -996,7 +996,7 @@ namespace System.Windows.Controls
             InitializeRenderScope();
 
             FrameworkElement element = _renderScope;
-            while (element != this && element != null)  // checking both just to be safe
+            while (element != this && element is not null)  // checking both just to be safe
             {
                 if (element is Border)
                 {
@@ -1042,7 +1042,7 @@ namespace System.Windows.Controls
             _textEditor.TextView = textview;
             this.TextContainer.TextView = textview;
 
-            if (this.ScrollViewer != null)
+            if (this.ScrollViewer is not null)
             {
                 this.ScrollViewer.CanContentScroll = true;
             }
@@ -1062,7 +1062,7 @@ namespace System.Windows.Controls
         {
             Select(0, 0);
 
-            if (this.ScrollViewer != null)
+            if (this.ScrollViewer is not null)
             {
                 this.ScrollViewer.ScrollToHome();
             }
@@ -1106,7 +1106,7 @@ namespace System.Windows.Controls
         {
             PasswordBox passwordBox = (PasswordBox)d;
 
-            if (passwordBox.ScrollViewer != null)
+            if (passwordBox.ScrollViewer is not null)
             {
                 // translate this change into inner property set on ScrollViewer
                 object padding = passwordBox.GetValue(Control.PaddingProperty);
@@ -1126,11 +1126,11 @@ namespace System.Windows.Controls
         {
             PasswordBox passwordBox = (PasswordBox)o;
             NavigationService navService = NavigationService.GetNavigationService(o);
-            if (passwordBox._navigationService != null)
+            if (passwordBox._navigationService is not null)
             {
                 passwordBox._navigationService.Navigating -= new NavigatingCancelEventHandler(passwordBox.OnNavigating);
             }
-            if (navService != null)
+            if (navService is not null)
             {
                 navService.Navigating += new NavigatingCancelEventHandler(passwordBox.OnNavigating);
                 passwordBox._navigationService = navService;
@@ -1159,7 +1159,7 @@ namespace System.Windows.Controls
 
             // Attach scroll handler to the new scroll viewer
             // Note that this.ScrollViewer will walk the tree from current TextEditor's render scope up to its ui scope.
-            if (this.ScrollViewer != null)
+            if (this.ScrollViewer is not null)
             {
                 this.ScrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
                 this.ScrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
@@ -1174,7 +1174,7 @@ namespace System.Windows.Controls
             }
 
             // Set border properties
-            if (_border != null)
+            if (_border is not null)
             {
                 _border.Style = null;
             }
@@ -1185,7 +1185,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void DetachFromVisualTree()
         {
-            if (_textEditor != null)
+            if (_textEditor is not null)
             {
                 _textEditor.Selection.DetachFromVisualTree();
             }
@@ -1221,10 +1221,10 @@ namespace System.Windows.Controls
         {
             PasswordBox passwordBox = (PasswordBox)d;
 
-            if (passwordBox.Selection != null)
+            if (passwordBox.Selection is not null)
             {
                 CaretElement caretElement = passwordBox.Selection.CaretElement;
-                if (caretElement != null)
+                if (caretElement is not null)
                 {
                     if (e.Property == CaretBrushProperty)
                     {

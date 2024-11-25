@@ -46,7 +46,7 @@ namespace Microsoft.Windows.Automation.Peers
         {
             List<AutomationPeer> children = base.GetChildrenCore();
             RibbonMenuButton customizeMenuButton = OwningToolBar.CustomizeMenuButton;
-            if (customizeMenuButton != null)
+            if (customizeMenuButton is not null)
             {
                 if (children is null)
                 {

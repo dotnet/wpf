@@ -37,8 +37,8 @@ namespace Microsoft.Windows.Controls
         private static void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             KeyTipControl keyTipControl = sender as KeyTipControl;
-            if (keyTipControl != null &&
-                keyTipControl.KeyTipAdorner != null)
+            if (keyTipControl is not null &&
+                keyTipControl.KeyTipAdorner is not null)
             {
                 keyTipControl.KeyTipAdorner.OnKeyTipControlSizeChanged(e);
             }

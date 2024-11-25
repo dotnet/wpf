@@ -81,7 +81,7 @@ namespace MS.Internal.PtsHost
             // If we have a brush with which to draw the border, do so.
             // NB: We double draw corners right now.  Corner handling is tricky (bevelling, &c...) and
             //     we need a firm spec before doing "the right thing."  (greglett, ffortes)
-            if (_borderBrush != null)
+            if (_borderBrush is not null)
             {
                 // Initialize the first pen.  Note that each pen is created via new()
                 // and frozen if possible.  Doing this avoids the overhead of
@@ -144,7 +144,7 @@ namespace MS.Internal.PtsHost
 
 
             // Draw background in rectangle inside border.
-            if (_backgroundBrush != null)
+            if (_backgroundBrush is not null)
             {
                 dc.DrawRectangle(_backgroundBrush, null,
                     new Rect(

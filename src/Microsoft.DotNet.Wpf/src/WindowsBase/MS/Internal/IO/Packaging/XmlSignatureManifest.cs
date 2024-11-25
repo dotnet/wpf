@@ -116,8 +116,8 @@ namespace MS.Internal.IO.Packaging
             out List<PartManifestEntry> partEntryManifest,
             out List<PackageRelationshipSelector> relationshipManifest)
         {
-            Invariant.Assert(manager != null);
-            Invariant.Assert(reader != null);
+            Invariant.Assert(manager is not null);
+            Invariant.Assert(reader is not null);
 
             // these are empty (non-null) when nothing is found
             partManifest = new List<Uri>();
@@ -191,7 +191,7 @@ namespace MS.Internal.IO.Packaging
         /// <param name="reader"></param>
         private static string ParseDigestValueTag(XmlReader reader)
         {
-            Debug.Assert(reader != null);
+            Debug.Assert(reader is not null);
 
             // verify namespace and lack of attributes
             if (PackagingUtilities.GetNonXmlnsAttributeCount(reader) > 0
@@ -223,7 +223,7 @@ namespace MS.Internal.IO.Packaging
             if (PackagingUtilities.GetNonXmlnsAttributeCount(reader) == 1)
             {
                 string uriAttrValue = reader.GetAttribute(XTable.Get(XTable.ID.UriAttrName));
-                if (uriAttrValue != null)
+                if (uriAttrValue is not null)
                 {
                     partUri = ParsePartUriAttribute(uriAttrValue, out contentType);
                 }
@@ -243,7 +243,7 @@ namespace MS.Internal.IO.Packaging
         /// <returns>partManifestEntry that represents the state of the tag</returns>
         private static PartManifestEntry ParseReference(XmlReader reader)
         {
-            Debug.Assert(reader != null);
+            Debug.Assert(reader is not null);
 
             // <Reference> found - get part Uri from the tag
             ContentType contentType = null;
@@ -354,7 +354,7 @@ namespace MS.Internal.IO.Packaging
                 }
 
                 // legal transform name?
-                if ((transformName != null) && (transformName.Length > 0))
+                if ((transformName is not null) && (transformName.Length > 0))
                 {
                     // what type of transform?
                     if (string.Equals(transformName, XTable.Get(XTable.ID.RelationshipsTransformName), StringComparison.Ordinal))
@@ -438,7 +438,7 @@ namespace MS.Internal.IO.Packaging
                         // RelationshipReference tags are legal and these must be empty with a single SourceId attribute
                         // get the SourceId attribute 
                         string id = reader.GetAttribute(XTable.Get(XTable.ID.SourceIdAttrName));
-                        if (id != null && id.Length > 0)
+                        if (id is not null && id.Length > 0)
                         {
                             if (relationshipSelectors is null)
                                 relationshipSelectors = new List<PackageRelationshipSelector>();
@@ -452,7 +452,7 @@ namespace MS.Internal.IO.Packaging
                     {
                         // RelationshipsGroupReference tags must be empty with a single SourceType attribute
                         string type = reader.GetAttribute(XTable.Get(XTable.ID.SourceTypeAttrName));
-                        if (type != null && type.Length > 0)
+                        if (type is not null && type.Length > 0)
                         {
                             // lazy init
                             if (relationshipSelectors is null)
@@ -487,9 +487,9 @@ namespace MS.Internal.IO.Packaging
             IEnumerable<Uri> parts,
             IEnumerable<PackageRelationshipSelector> relationshipSelectors)
         {
-            Debug.Assert(manager != null);
-            Debug.Assert(xDoc != null);
-            Debug.Assert(hashAlgorithm != null);
+            Debug.Assert(manager is not null);
+            Debug.Assert(xDoc is not null);
+            Debug.Assert(hashAlgorithm is not null);
 
             // check args
             if (!hashAlgorithm.CanReuseTransform)
@@ -501,7 +501,7 @@ namespace MS.Internal.IO.Packaging
                 SignedXml.XmlDsigNamespaceUrl);
 
             // add part references
-            if (parts != null)
+            if (parts is not null)
             {
                 // loop and write - may still be empty
                 foreach (Uri partUri in parts)
@@ -513,7 +513,7 @@ namespace MS.Internal.IO.Packaging
 
             // any relationship references?
             int relationshipCount = 0;
-            if (relationshipSelectors != null)
+            if (relationshipSelectors is not null)
             {
                 relationshipCount = GenerateRelationshipSigningReferences(manager, xDoc, hashAlgorithm, relationshipSelectors, manifest);
             }

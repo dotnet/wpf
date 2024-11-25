@@ -137,10 +137,10 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 return;
             }
-            while (current != null)
+            while (current is not null)
             {
                 UIElement uie = current as UIElement;
-                if (uie != null && uie.Focusable)
+                if (uie is not null && uie.Focusable)
                 {
                     uie.Dispatcher.BeginInvoke(
                         (Action)delegate()
@@ -409,10 +409,10 @@ namespace Microsoft.Windows.Controls.Ribbon
             public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
             {
                 DependencyObject d = value as DependencyObject;
-                if (d != null)
+                if (d is not null)
                 {
                     Ribbon ribbon = RibbonControlService.GetRibbon(d);
-                    if (ribbon != null &&
+                    if (ribbon is not null &&
                         !ribbon.ShowQuickAccessToolBarOnTop)
                     {
                         if (_mode == ConverterMode.Header)
@@ -506,7 +506,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (UsesItemContainerTemplate)
             {
                 DataTemplate itemContainerTemplate = ItemContainerTemplateSelector.SelectTemplate(currentItem, this);
-                if (itemContainerTemplate != null)
+                if (itemContainerTemplate is not null)
                 {
                     object itemContainer = itemContainerTemplate.LoadContent();
                     if (itemContainer is RibbonMenuItem || itemContainer is RibbonGallery || itemContainer is RibbonSeparator)
@@ -547,7 +547,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             else
             {
                 RibbonSeparator separator = element as RibbonSeparator;
-                if (separator != null)
+                if (separator is not null)
                 {
                     ValueSource vs = DependencyPropertyHelper.GetValueSource(separator, StyleProperty);
                     if (vs.BaseValueSource <= BaseValueSource.ImplicitStyleReference)

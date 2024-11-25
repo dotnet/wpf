@@ -91,10 +91,10 @@ namespace System.Windows.Automation.Peers
         {
             List<AutomationPeer> children = base.GetChildrenCore();
             
-            if (OwningDatePicker.IsDropDownOpen && OwningDatePicker.Calendar != null)
+            if (OwningDatePicker.IsDropDownOpen && OwningDatePicker.Calendar is not null)
             {
                 CalendarAutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(OwningDatePicker.Calendar) as CalendarAutomationPeer;
-                if (peer != null)
+                if (peer is not null)
                 {
                     children.Add(peer);
                 }

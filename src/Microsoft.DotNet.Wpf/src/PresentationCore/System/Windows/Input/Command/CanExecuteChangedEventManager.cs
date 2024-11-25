@@ -112,7 +112,7 @@ namespace System.Windows.Input
                         toRemove.Add(sink);
                     }
                 }
-                removeList = (toRemove != null && toRemove.Count == list.Count);
+                removeList = (toRemove is not null && toRemove.Count == list.Count);
             }
 
             if (removeList)
@@ -120,11 +120,11 @@ namespace System.Windows.Input
                 toRemove = list;
             }
 
-            foundDirt = (toRemove != null);
+            foundDirt = (toRemove is not null);
 
             // if the whole list is going away, remove the data (unless parent table
             // is already doing that for us - purgeAll=true)
-            if (removeList && !purgeAll && source != null)
+            if (removeList && !purgeAll && source is not null)
             {
                 Remove(source);
             }
@@ -142,7 +142,7 @@ namespace System.Windows.Input
                         list.Remove(sink);
                     }
 
-                    if (handler != null)
+                    if (handler is not null)
                     {
                         RemoveHandlerFromCWT(handler, _cwt);
                     }
@@ -209,7 +209,7 @@ namespace System.Windows.Input
         {
             // get the list of sinks for this source
             List<HandlerSink> list = (List<HandlerSink>)this[source];
-            if (list != null)
+            if (list is not null)
             {
                 HandlerSink sinkToRemove = null;
                 bool foundDirt = false;
@@ -229,7 +229,7 @@ namespace System.Windows.Input
                 }
 
                 // remove the sink (outside the loop, to avoid re-entrancy issues)
-                if (sinkToRemove != null)
+                if (sinkToRemove is not null)
                 {
                     list.Remove(sinkToRemove);
                     sinkToRemove.Detach(isOnOriginalThread:true);
@@ -411,21 +411,21 @@ namespace System.Windows.Input
 
             public EventHandler<EventArgs> Handler
             {
-                get { return (_originalHandler != null) ? (EventHandler<EventArgs>)_originalHandler.Target : null; }
+                get { return (_originalHandler is not null) ? (EventHandler<EventArgs>)_originalHandler.Target : null; }
             }
 
             public bool Matches(ICommand source, EventHandler<EventArgs> handler)
             {
-                return (_source != null && (ICommand)_source.Target == source) &&
-                        (_originalHandler != null && (EventHandler<EventArgs>)_originalHandler.Target == handler);
+                return (_source is not null && (ICommand)_source.Target == source) &&
+                        (_originalHandler is not null && (EventHandler<EventArgs>)_originalHandler.Target == handler);
             }
 
             public void Detach(bool isOnOriginalThread)
             {
-                if (_source != null)
+                if (_source is not null)
                 {
                     ICommand source = (ICommand)_source.Target;
-                    if (source != null && isOnOriginalThread)
+                    if (source is not null && isOnOriginalThread)
                     {
                         // some sources delegate the event to another weak-event
                         // manager, using thread-static information (CurrentManager)
@@ -462,7 +462,7 @@ namespace System.Windows.Input
 
                 // pass the event along to the original listener
                 EventHandler<EventArgs> handler = (EventHandler<EventArgs>)_originalHandler.Target;
-                if (handler != null)
+                if (handler is not null)
                 {
                     handler(sender, e);
                 }

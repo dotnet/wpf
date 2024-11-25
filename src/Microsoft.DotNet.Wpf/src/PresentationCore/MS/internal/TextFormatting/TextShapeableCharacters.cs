@@ -133,15 +133,15 @@ namespace System.Windows.Media.TextFormatting
             bool                     sideways
             )
         {
-            Invariant.Assert(_shapeTypeface != null);
-            Invariant.Assert(glyphIndices   != null);
+            Invariant.Assert(_shapeTypeface is not null);
+            Invariant.Assert(glyphIndices   is not null);
             // Device fonts are only used through the LS non-glyphed code path. Only when a DigitCulture is set
             // will a potential device font be ignored and come through shaping.
-            Invariant.Assert(_shapeTypeface.DeviceFont is null  || _textItem.DigitCulture != null);
+            Invariant.Assert(_shapeTypeface.DeviceFont is null  || _textItem.DigitCulture is not null);
 
             bool[] caretStops = null;
 
-            if (    clusterMap != null
+            if (    clusterMap is not null
                 &&  (HasExtendedCharacter || NeedsCaretInfo)
                 )
             {
@@ -211,7 +211,7 @@ namespace System.Windows.Media.TextFormatting
                 nullFont = _nullShape;
             }
 
-            Invariant.Assert(glyphTypeface != null);
+            Invariant.Assert(glyphTypeface is not null);
             return glyphTypeface;
         }
 
@@ -226,7 +226,7 @@ namespace System.Windows.Media.TextFormatting
         {
             bool nullFont;
             GlyphTypeface glyphTypeface = GetGlyphTypeface(out nullFont);
-            Invariant.Assert(glyphTypeface != null);
+            Invariant.Assert(glyphTypeface is not null);
 
             return glyphTypeface.ComputeUnshapedGlyphRun(
                 origin,
@@ -261,7 +261,7 @@ namespace System.Windows.Media.TextFormatting
             glyphRun.EmitBackground(drawingContext, _properties.BackgroundBrush);
 
             drawingContext.DrawGlyphRun(
-                foregroundBrush != null ? foregroundBrush : _properties.ForegroundBrush,
+                foregroundBrush is not null ? foregroundBrush : _properties.ForegroundBrush,
                 glyphRun
                 );
         }
@@ -294,8 +294,8 @@ namespace System.Windows.Media.TextFormatting
         {
             if (!IsShapingRequired)
             {
-                if (    (_shapeTypeface            != null)
-                    &&  (_shapeTypeface.DeviceFont != null))
+                if (    (_shapeTypeface            is not null)
+                    &&  (_shapeTypeface.DeviceFont is not null))
                 {
                     // Use device font to compute advance widths
                     _shapeTypeface.DeviceFont.GetAdvanceWidths(
@@ -309,7 +309,7 @@ namespace System.Windows.Media.TextFormatting
                 {
                     bool nullFont;
                     GlyphTypeface glyphTypeface = GetGlyphTypeface(out nullFont);
-                    Invariant.Assert(glyphTypeface != null);
+                    Invariant.Assert(glyphTypeface is not null);
 
                     glyphTypeface.GetAdvanceWidthsUnshaped(
                         characterString,
@@ -328,7 +328,7 @@ namespace System.Windows.Media.TextFormatting
             {
                 GlyphTypeface glyphTypeface = _shapeTypeface.GlyphTypeface;
 
-                Invariant.Assert(glyphTypeface != null);
+                Invariant.Assert(glyphTypeface is not null);
                 Invariant.Assert(characterLength > 0);
 
                 CharacterBufferRange newBuffer = new CharacterBufferRange(characterString, characterLength);
@@ -447,9 +447,9 @@ namespace System.Windows.Media.TextFormatting
             get
             {
                 return
-                        (_shapeTypeface != null)                 // Can't use shaping without a shape typeface
+                        (_shapeTypeface is not null)                 // Can't use shaping without a shape typeface
                     &&  (    (_shapeTypeface.DeviceFont is null) // Can't use shaping when rendering with a device font
-                         ||  (_textItem.DigitCulture != null))   //   -- unless substituting digits
+                         ||  (_textItem.DigitCulture is not null))   //   -- unless substituting digits
                     &&  (!IsSymbol);                             // Can't use shaping for symbol (non-Unicode) fonts
             }
         }
@@ -561,7 +561,7 @@ namespace System.Windows.Media.TextFormatting
         {
             get
             {
-                if (_shapeTypeface != null)
+                if (_shapeTypeface is not null)
                     return _shapeTypeface.GlyphTypeface.Symbol;
 
                 return _properties.Typeface.Symbol;
@@ -572,7 +572,7 @@ namespace System.Windows.Media.TextFormatting
         {
             get
             {
-                if (_shapeTypeface != null)
+                if (_shapeTypeface is not null)
                     return _shapeTypeface.GlyphTypeface;
 
                 return _properties.Typeface.TryGetGlyphTypeface();

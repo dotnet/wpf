@@ -89,7 +89,7 @@ namespace System.Windows.Automation.Peers
         {
             bool done = false;
 
-            if(parent != null)
+            if(parent is not null)
             {
                 AutomationPeer peer = null;
                 int count = VisualTreeHelper.GetChildrenCount(parent);
@@ -97,15 +97,15 @@ namespace System.Windows.Automation.Peers
                 {
                     DependencyObject child = VisualTreeHelper.GetChild(parent, i);
                     
-                    if(     child != null
+                    if(     child is not null
                         &&  child is UIElement 
-                        &&  (peer = UIElementAutomationPeer.CreatePeerForElement((UIElement)child)) != null  )
+                        &&  (peer = UIElementAutomationPeer.CreatePeerForElement((UIElement)child)) is not null  )
                     {
                         done = callback(peer);
                     }
-                    else if ( child != null
+                    else if ( child is not null
                         &&    child is UIElement3D
-                        &&    (peer = CreatePeerForElement(((UIElement3D)child))) != null )
+                        &&    (peer = CreatePeerForElement(((UIElement3D)child))) is not null )
                     {
                         done = callback(peer);
                     }
@@ -222,7 +222,7 @@ namespace System.Windows.Automation.Peers
                         if (!isOffscreen)
                         {
                             UIElement containingUIElement = GetContainingUIElement(_owner);
-                            if (containingUIElement != null)
+                            if (containingUIElement is not null)
                             {
                                 Rect boundingRect = UIElementAutomationPeer.CalculateVisibleBoundingRect(containingUIElement);
                                 
@@ -247,11 +247,11 @@ namespace System.Windows.Automation.Peers
         {
             UIElement element = null;
 
-            while (reference != null)
+            while (reference is not null)
             {
                 element = reference as UIElement;
 
-                if (element != null) break;
+                if (element is not null) break;
 
                 reference = VisualTreeHelper.GetParent(reference);
             }
@@ -338,7 +338,7 @@ namespace System.Windows.Automation.Peers
         override protected AutomationPeer GetLabeledByCore()
         {          
             UIElement element = AutomationProperties.GetLabeledBy(_owner);
-            if (element != null)
+            if (element is not null)
                 return element.GetAutomationPeer();
 
             return null;                        

@@ -160,7 +160,7 @@ namespace MS.Internal.Printing.Configuration
             if (!string.IsNullOrEmpty(psfPrefix) && !string.IsNullOrEmpty(oemDriverPrefix))
             {
                 XPathNavigator docNavigator = ticket.XmlDoc.DocumentElement.CreateNavigator();
-                if (docNavigator != null)
+                if (docNavigator is not null)
                 {
                     string xPathString = string.Format(
                         System.Globalization.CultureInfo.InvariantCulture,
@@ -170,7 +170,7 @@ namespace MS.Internal.Printing.Configuration
                     );
 
                     XPathNavigator node = docNavigator.SelectSingleNode(xPathString, ticket.NamespaceManager);
-                    if (node != null)
+                    if (node is not null)
                     {
                         // Embedded DEVMODE found
                         return new DevMode(Convert.FromBase64String(node.Value));
@@ -471,7 +471,7 @@ namespace MS.Internal.Printing.Configuration
 
         public static IList<DC_PAPER_SIZE> TenthOfMillimeterToMicrons(IList<DC_PAPER_SIZE> points)
         {
-            if (points != null)
+            if (points is not null)
             {
                 for (int i = 0; i < points.Count; i++)
                 {
@@ -665,7 +665,7 @@ namespace MS.Internal.Printing.Configuration
                 }
             }
 
-            if (setting != null)
+            if (setting is not null)
             {
                 TrySet(dmPaperSourceToInputBin, devModePaperSouceCode, (inputBin) => setting.Value = inputBin);
             }

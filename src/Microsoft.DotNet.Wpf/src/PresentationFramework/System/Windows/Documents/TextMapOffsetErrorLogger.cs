@@ -82,7 +82,7 @@ namespace System.Windows.Documents
                 for (int i = 0; i < segments.Count; i++)
                 {
                     var textSegment = segments[i] as SpellerInteropBase.ITextRange;
-                    if (textSegment != null)
+                    if (textSegment is not null)
                     {
                         _debugInfo.SegmentStartsAndLengths[i] = new SegmentInfo
                         {

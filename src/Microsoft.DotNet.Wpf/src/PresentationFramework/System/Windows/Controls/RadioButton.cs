@@ -108,7 +108,7 @@ namespace System.Windows.Controls
                 // Get all elements bound to this key and remove this element
                 ArrayList elements = (ArrayList)_groupNameToElements[groupName];
 
-                if (elements != null)
+                if (elements is not null)
                 {
                     PurgeDead(elements, radioButton);
                     if (elements.Count == 0)
@@ -161,7 +161,7 @@ namespace System.Windows.Controls
                         else
                         {
                             // Uncheck all checked RadioButtons different from the current one
-                            if (rb != this && (rb.IsChecked == true) && rootScope == KeyboardNavigation.GetVisualRoot(rb) && rootScope != null)
+                            if (rb != this && (rb.IsChecked == true) && rootScope == KeyboardNavigation.GetVisualRoot(rb) && rootScope is not null)
                                 rb.UncheckRadioButton();
                             i++;
                         }
@@ -171,7 +171,7 @@ namespace System.Windows.Controls
             else // Logical parent should be the group
             {
                 DependencyObject parent = this.Parent;
-                if (parent != null)
+                if (parent is not null)
                 {
                     // Traverse logical children
                     IEnumerable children = LogicalTreeHelper.GetChildren(parent);
@@ -179,7 +179,7 @@ namespace System.Windows.Controls
                     while (itor.MoveNext())
                     {
                         RadioButton rb = itor.Current as RadioButton;
-                        if (rb != null && rb != this && string.IsNullOrEmpty(rb.GroupName) && (rb.IsChecked == true))
+                        if (rb is not null && rb != this && string.IsNullOrEmpty(rb.GroupName) && (rb.IsChecked == true))
                             rb.UncheckRadioButton();
                     }
                 }

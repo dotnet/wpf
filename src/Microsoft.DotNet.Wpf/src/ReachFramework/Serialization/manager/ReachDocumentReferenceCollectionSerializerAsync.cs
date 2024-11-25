@@ -59,7 +59,7 @@ namespace System.Windows.Xps.Serialization
                     DocumentReferenceCollectionSerializerContext thisContext = 
                     context as DocumentReferenceCollectionSerializerContext;
 
-                    if(thisContext != null)
+                    if(thisContext is not null)
                     {
                         SerializeNextDocumentReference(thisContext.Enumerator,
                                                        thisContext.ObjectContext);

@@ -124,7 +124,7 @@ namespace System.Windows.Media
 
         object SC.ICollection.SyncRoot
         {
-            get { return (_fontInfo != null) ? (object)_fontInfo : (object)this; }
+            get { return (_fontInfo is not null) ? (object)_fontInfo : (object)this; }
         }
 
         /// <summary>
@@ -348,7 +348,7 @@ namespace System.Windows.Media
 
         private int FindItem(FontFamilyMap item)
         {
-            if (_count != 0 && item != null)
+            if (_count != 0 && item is not null)
             {
                 for (int i = 0; i < _count; ++i)
                 {

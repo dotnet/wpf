@@ -143,7 +143,7 @@ namespace System.Windows.Media
         /// </summary>
         public bool IsReadOnly
         {
-            get { return _innerList != null; }
+            get { return _innerList is not null; }
         }
 
         #endregion
@@ -283,7 +283,7 @@ namespace System.Windows.Media
 
         private void InitializeItemsFromInnerList()
         {
-            if (_innerList != null && _items is null)
+            if (_innerList is not null && _items is null)
             {
                 // Create the array.
                 FamilyTypeface[] items = new FamilyTypeface[_count];
@@ -341,7 +341,7 @@ namespace System.Windows.Media
         private int FindItem(FamilyTypeface item)
         {
             InitializeItemsFromInnerList();
-            if (_count != 0 && item != null)
+            if (_count != 0 && item is not null)
             {
                 for (int i = 0; i < _count; ++i)
                 {
@@ -360,7 +360,7 @@ namespace System.Windows.Media
 
         private void VerifyChangeable()
         {
-            if (_innerList != null)
+            if (_innerList is not null)
                 throw new NotSupportedException(SR.General_ObjectIsReadOnly);
         }
 

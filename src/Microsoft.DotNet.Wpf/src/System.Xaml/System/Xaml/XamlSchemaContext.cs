@@ -53,13 +53,13 @@ namespace System.Xaml
 
         public XamlSchemaContext(IEnumerable<Assembly> referenceAssemblies, XamlSchemaContextSettings settings)
         {
-            if (referenceAssemblies != null)
+            if (referenceAssemblies is not null)
             {
                 // ReadOnlyCollection wants an IList but we have an IEnumerable.
                 List<Assembly> listOfAssemblies = new List<Assembly>(referenceAssemblies);
                 _referenceAssemblies = new ReadOnlyCollection<Assembly>(listOfAssemblies);
             }
-            _settings = (settings != null)
+            _settings = (settings is not null)
                 ? new XamlSchemaContextSettings(settings)
                 : new XamlSchemaContextSettings();
             _syncExaminingAssemblies = new Object();
@@ -75,7 +75,7 @@ namespace System.Xaml
         {
             try
             {
-                if (_assemblyLoadHandler != null && !Environment.HasShutdownStarted)
+                if (_assemblyLoadHandler is not null && !Environment.HasShutdownStarted)
                 {
                     _assemblyLoadHandler.Unhook();
                 }
@@ -297,7 +297,7 @@ namespace System.Xaml
         {
             ArgumentNullException.ThrowIfNull(xamlNamespace);
             ArgumentNullException.ThrowIfNull(name);
-            if (typeArguments != null)
+            if (typeArguments is not null)
             {
                 foreach (XamlType typeArg in typeArguments)
                 {
@@ -316,7 +316,7 @@ namespace System.Xaml
             if (typeArguments is null || typeArguments.Length == 0)
             {
                 result = XamlLanguage.LookupXamlType(xamlNamespace, name);
-                if (result != null)
+                if (result is not null)
                 {
                     if (FullyQualifyAssemblyNamesInClrNamespaces)
                     {
@@ -446,7 +446,7 @@ namespace System.Xaml
                     string newNs;
                     if (oldToNewNs.TryGetValue(oldNs, out newNs))
                     {
-                        if (result != null && result != newNs)
+                        if (result is not null && result != newNs)
                         {
                             throw new XamlSchemaException(SR.Format(SR.DuplicateXmlnsCompatAcrossAssemblies,
                                 resultAssembly.FullName, curAssembly.FullName, oldNs));
@@ -573,10 +573,10 @@ namespace System.Xaml
                 string constructorArgumentName = member.ConstructorArgument;
                 string propertyName = member.Name;
                 IReadOnlyDictionary<char,char> markupExtensionBracketCharactersList = member.MarkupExtensionBracketCharacters;
-                SpecialBracketCharacters splBracketCharacters = markupExtensionBracketCharactersList != null && markupExtensionBracketCharactersList.Count > 0
+                SpecialBracketCharacters splBracketCharacters = markupExtensionBracketCharactersList is not null && markupExtensionBracketCharactersList.Count > 0
                     ? new SpecialBracketCharacters(markupExtensionBracketCharactersList)
                     : null;
-                if (splBracketCharacters != null)
+                if (splBracketCharacters is not null)
                 {
                     splBracketCharacters.EndInit();
                     map.Add(propertyName, splBracketCharacters);
@@ -784,7 +784,7 @@ namespace System.Xaml
         {
             WeakReference weakRef = (WeakReference)schemaContextWeakRef;
             XamlSchemaContext schemaContext = weakRef.Target as XamlSchemaContext;
-            if (schemaContext != null)
+            if (schemaContext is not null)
             {
                 schemaContext.CleanupCollectedAssemblies();
             }
@@ -819,7 +819,7 @@ namespace System.Xaml
             }
             lock (_syncExaminingAssemblies)
             {
-                if (_xmlnsInfoForDynamicAssemblies != null)
+                if (_xmlnsInfoForDynamicAssemblies is not null)
                 {
                     foreach (WeakRefKey weakRefKey in _xmlnsInfoForDynamicAssemblies.Keys)
                     {
@@ -939,9 +939,9 @@ namespace System.Xaml
             XmlNsInfo result;
 
             if (XmlnsInfo.TryGetValue(assembly, out result) ||
-                (_xmlnsInfoForDynamicAssemblies != null && assembly.IsDynamic &&
+                (_xmlnsInfoForDynamicAssemblies is not null && assembly.IsDynamic &&
                  _xmlnsInfoForDynamicAssemblies.TryGetValue(new WeakRefKey(assembly), out result)) ||
-                (_xmlnsInfoForUnreferencedAssemblies != null && _xmlnsInfoForUnreferencedAssemblies.TryGetValue(assembly, out result)))
+                (_xmlnsInfoForUnreferencedAssemblies is not null && _xmlnsInfoForUnreferencedAssemblies.TryGetValue(assembly, out result)))
             {
                 return result;
             }
@@ -960,7 +960,7 @@ namespace System.Xaml
             // 3. ReflectionOnly assemblies and custom derivations of System.Assembly are in
             //    XmlnsInfoForUnreferencedAssemblies, so that they don't pollute the 'real' cache.
             bool isReferenced = false;
-            if (_referenceAssemblies != null)
+            if (_referenceAssemblies is not null)
             {
                 foreach (var asm in _referenceAssemblies)
                 {
@@ -1088,7 +1088,7 @@ namespace System.Xaml
 
                 // If we're trawling thorugh all assemblies in the AppDomain, then we'll ignore
                 //  any exceptions from invalid attributes
-                bool throwOnError = (ReferenceAssemblies != null);
+                bool throwOnError = (ReferenceAssemblies is not null);
                 for (int i = 0; i < unexaminedAssembliesCopy.Count; i++)
                 {
                     var assembly = unexaminedAssembliesCopy[i];
@@ -1126,7 +1126,7 @@ namespace System.Xaml
                     }
                 }
 
-                if (foundNew && _nonClrNamespaces != null)
+                if (foundNew && _nonClrNamespaces is not null)
                 {
                     // invalidate this and force it to be re-evaluated
                     _nonClrNamespaces = null;
@@ -1138,7 +1138,7 @@ namespace System.Xaml
         private bool UpdateXmlNsInfo(XmlNsInfo nsInfo)
         {
             bool foundNew = UpdateNamespaceByUriList(nsInfo);
-            if (_preferredPrefixes != null)
+            if (_preferredPrefixes is not null)
             {
                 UpdatePreferredPrefixes(nsInfo, _preferredPrefixes);
             }
@@ -1221,7 +1221,7 @@ namespace System.Xaml
             {
                 return null;
             }
-            if (_referenceAssemblies != null)
+            if (_referenceAssemblies is not null)
             {
                 return ResolveReferenceAssembly(assemblyName);
             }
@@ -1262,16 +1262,16 @@ namespace System.Xaml
             {
                 return false;
             }
-            if (reference.Version != null && !reference.Version.Equals(assemblyName.Version))
+            if (reference.Version is not null && !reference.Version.Equals(assemblyName.Version))
             {
                 return false;
             }
-            if (reference.CultureInfo != null && !reference.CultureInfo.Equals(assemblyName.CultureInfo))
+            if (reference.CultureInfo is not null && !reference.CultureInfo.Equals(assemblyName.CultureInfo))
             {
                 return false;
             }
             byte[] requiredToken = reference.GetPublicKeyToken();
-            if (requiredToken != null)
+            if (requiredToken is not null)
             {
                 byte[] actualToken = assemblyName.GetPublicKeyToken();
                 if (!SafeSecurityHelper.IsSameKeyToken(requiredToken, actualToken))
@@ -1290,7 +1290,7 @@ namespace System.Xaml
             // below, using Assembly.Load.
             AssemblyName parsedAsmName = new AssemblyName(assemblyName);
             Assembly result = SafeSecurityHelper.GetLoadedAssembly(parsedAsmName);
-            if (result != null)
+            if (result is not null)
             {
                 return result;
             }
@@ -1298,7 +1298,7 @@ namespace System.Xaml
             try
             {
                 byte[] publicKeyToken = parsedAsmName.GetPublicKeyToken();
-                if (parsedAsmName.Version != null || parsedAsmName.CultureInfo != null || publicKeyToken != null)
+                if (parsedAsmName.Version is not null || parsedAsmName.CultureInfo is not null || publicKeyToken is not null)
                 {
                     try
                     {
@@ -1314,7 +1314,7 @@ namespace System.Xaml
                         }
                         // Version tolerance: fall back to the short name (+ public key, if specified)
                         AssemblyName shortName = new AssemblyName(parsedAsmName.Name);
-                        if (publicKeyToken != null)
+                        if (publicKeyToken is not null)
                         {
                             shortName.SetPublicKeyToken(publicKeyToken);
                         }
@@ -1353,7 +1353,7 @@ namespace System.Xaml
             private void OnAssemblyLoad(object sender, AssemblyLoadEventArgs args)
             {
                 XamlSchemaContext schemaContext = (XamlSchemaContext)schemaContextRef.Target;
-                if (schemaContext != null)
+                if (schemaContext is not null)
                 {
                     schemaContext.SchemaContextAssemblyLoadEventHandler(sender, args);
                 }

@@ -104,7 +104,7 @@ namespace System.Windows.Documents
                 return Color.FromArgb((byte)((argb & 0xff000000) >> 24), (byte)((argb & 0x00ff0000) >> 16), (byte)((argb & 0x0000ff00) >> 8), (byte)(argb & 0x000000ff));
             }
 
-            Invariant.Assert(position != null, "position can't be null");
+            Invariant.Assert(position is not null, "position can't be null");
             return ((SolidColorBrush)position.GetValue(TextElement.ForegroundProperty)).Color;
         }
 

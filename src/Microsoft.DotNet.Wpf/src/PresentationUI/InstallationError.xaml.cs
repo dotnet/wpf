@@ -95,7 +95,7 @@ namespace Microsoft.Internal.DeploymentUI
                 {
                     RetryButton.Visibility = Visibility.Collapsed;
                     ShowLogFileButton();
-                    if (GetWinFxCallback != null)
+                    if (GetWinFxCallback is not null)
                     {
                         GetWinFXButton.Visibility = Visibility.Visible;
                     }
@@ -131,7 +131,7 @@ namespace Microsoft.Internal.DeploymentUI
         {
             set
             {
-                if (value != null)
+                if (value is not null)
                 {
                     _supportUri = value;
                     SupportUriText.Visibility = Visibility.Visible;
@@ -188,7 +188,7 @@ namespace Microsoft.Internal.DeploymentUI
         static void OnCommandRefresh(object sender, RoutedEventArgs e)
         {
             InstallationErrorPage page = sender as InstallationErrorPage;
-            if (page != null && page.RefreshCallback != null)
+            if (page is not null && page.RefreshCallback is not null)
             {
                 page.RefreshCallback(null);
             }
@@ -197,7 +197,7 @@ namespace Microsoft.Internal.DeploymentUI
         static void OnCanRefresh(object sender, CanExecuteRoutedEventArgs e)
         {
             InstallationErrorPage page = sender as InstallationErrorPage;
-            if (page != null)
+            if (page is not null)
             {
                 e.CanExecute = true;
                 e.Handled = true;
@@ -206,7 +206,7 @@ namespace Microsoft.Internal.DeploymentUI
 
         internal void OnRetry(object sender, RoutedEventArgs e)
         {
-            if (RefreshCallback != null)
+            if (RefreshCallback is not null)
             {
                 RefreshCallback(null);
             }
@@ -222,7 +222,7 @@ namespace Microsoft.Internal.DeploymentUI
 
         internal void OnGetWinFX(object sender, RoutedEventArgs e)
         {
-            if (GetWinFxCallback != null)
+            if (GetWinFxCallback is not null)
             {
                 GetWinFxCallback(null);
             }

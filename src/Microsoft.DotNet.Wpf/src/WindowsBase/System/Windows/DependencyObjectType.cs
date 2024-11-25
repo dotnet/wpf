@@ -62,7 +62,7 @@ namespace System.Windows
         /// </summary>
         internal static DependencyObjectType FromSystemTypeInternal(Type systemType)
         {
-            Debug.Assert(systemType != null && typeof(DependencyObject).IsAssignableFrom(systemType), "Invalid systemType argument");
+            Debug.Assert(systemType is not null && typeof(DependencyObject).IsAssignableFrom(systemType), "Invalid systemType argument");
 
             DependencyObjectType retVal;
 
@@ -149,7 +149,7 @@ namespace System.Windows
         /// </returns>
         public bool IsInstanceOfType(DependencyObject dependencyObject)
         {
-            if (dependencyObject != null)
+            if (dependencyObject is not null)
             {
                 DependencyObjectType dType = dependencyObject.DependencyObjectType;
 
@@ -162,7 +162,7 @@ namespace System.Windows
 
                     dType = dType._baseDType;
                 }
-                while (dType != null);
+                while (dType is not null);
             }
             return false;
         }
@@ -183,12 +183,12 @@ namespace System.Windows
         public bool IsSubclassOf(DependencyObjectType dependencyObjectType)
         {
             // Check for null and return false, since this type is never a subclass of null.
-            if (dependencyObjectType != null)
+            if (dependencyObjectType is not null)
             {
                 // A DependencyObjectType isn't considered a subclass of itself, so start with base type
                 DependencyObjectType dType = _baseDType;
 
-                while (dType != null)
+                while (dType is not null)
                 {
                     if (dType.Id == dependencyObjectType.Id)
                     {

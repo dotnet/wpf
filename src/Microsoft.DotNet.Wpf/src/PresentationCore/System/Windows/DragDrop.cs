@@ -570,8 +570,8 @@ namespace System.Windows
             int[] dwEffect;
             OleDragSource oleDragSource;
 
-            Debug.Assert(dragSource != null, "Invalid dragSource");
-            Debug.Assert(dataObject != null, "Invalid dataObject");
+            Debug.Assert(dragSource is not null, "Invalid dragSource");
+            Debug.Assert(dataObject is not null, "Invalid dataObject");
 
             // Create the int array for passing parameter of OLE DoDragDrop
             dwEffect = new int[1];
@@ -938,7 +938,7 @@ namespace System.Windows
             // Set the last target element with the current target.
             _lastTarget = target;
 
-            if (target != null)
+            if (target is not null)
             {
                 // Create DragEvent argument and then raise DragEnter event for Tunnel or Bubble event.
                 RaiseDragEvent(
@@ -965,13 +965,13 @@ namespace System.Windows
             DependencyObject target;
             Point targetPoint;
 
-            Invariant.Assert(_dataObject != null);
+            Invariant.Assert(_dataObject is not null);
 
             // Get the current target from the mouse drag point that is based on screen.
             target = GetCurrentTarget(point, out targetPoint);
 
             // Raise DragOver event to the target to get DragDrop effect status from the target.
-            if (target != null)
+            if (target is not null)
             {
                 // Avalon apps can have only one window handle, so we need to generate DragLeave and 
                 // DragEnter event to target when target is changed by the mouse dragging.
@@ -980,7 +980,7 @@ namespace System.Windows
                 {
                     try
                     {
-                        if (_lastTarget != null)
+                        if (_lastTarget is not null)
                         {
                             // Raise DragLeave event to the last target.
                             RaiseDragEvent(
@@ -1020,7 +1020,7 @@ namespace System.Windows
             {
                 try
                 {
-                    if (_lastTarget != null)
+                    if (_lastTarget is not null)
                     {
                         // Raise DragLeave event to the last target.
                         RaiseDragEvent(
@@ -1047,7 +1047,7 @@ namespace System.Windows
         /// </summary>
         int UnsafeNativeMethods.IOleDropTarget.OleDragLeave()
         {
-            if (_lastTarget != null)
+            if (_lastTarget is not null)
             {
                 int effects;
 
@@ -1100,7 +1100,7 @@ namespace System.Windows
             target = GetCurrentTarget(point, out targetPoint);
 
             // Raise Drop event to the target element.
-            if (target != null)
+            if (target is not null)
             {
                 // Raise Drop event to the drop target.
                 RaiseDragEvent(
@@ -1129,8 +1129,8 @@ namespace System.Windows
         {
             DragEventArgs dragEventArgs;
 
-            Invariant.Assert(_dataObject != null);
-            Invariant.Assert(target != null);
+            Invariant.Assert(_dataObject is not null);
+            Invariant.Assert(target is not null);
 
             // Create DragEvent argument to raise DragEnter events to the target.
             dragEventArgs = new DragEventArgs(
@@ -1307,7 +1307,7 @@ namespace System.Windows
             // Get the client point from the screen point.
             targetPoint = GetClientPointFromScreenPoint(dragPoint, source);
 
-            if (source != null)
+            if (source is not null)
             {
                 UIElement targetUIElement;
 
@@ -1317,7 +1317,7 @@ namespace System.Windows
                 target = MouseDevice.LocalHitTest(targetPoint, source) as DependencyObject;
 
                 targetUIElement = target as UIElement;
-                if (targetUIElement != null)
+                if (targetUIElement is not null)
                 {
                     if (targetUIElement.AllowDrop)
                     {
@@ -1334,7 +1334,7 @@ namespace System.Windows
                     ContentElement targetContentElement;
 
                     targetContentElement = target as ContentElement;
-                    if (targetContentElement != null)
+                    if (targetContentElement is not null)
                     {
                         if (targetContentElement.AllowDrop)
                         {
@@ -1351,7 +1351,7 @@ namespace System.Windows
                         UIElement3D targetUIElement3D;
 
                         targetUIElement3D = target as UIElement3D;
-                        if (targetUIElement3D != null)
+                        if (targetUIElement3D is not null)
                         {
                             if (targetUIElement3D.AllowDrop)
                             {
@@ -1365,7 +1365,7 @@ namespace System.Windows
                     }
                 }
 
-                if (target != null)
+                if (target is not null)
                 {
                     // Translate the client point to the root point and then translate it to target point.
                     targetPoint = PointUtil.ClientToRoot(targetPoint, source);
@@ -1386,7 +1386,7 @@ namespace System.Windows
             dataObject = null;
 
             // We see if data is available on the data object.
-            if (data != null)
+            if (data is not null)
             {
                 if (data is DataObject)
                 {
@@ -1410,7 +1410,7 @@ namespace System.Windows
 
             dataAvailable = false;
 
-            if (dataObject != null)
+            if (dataObject is not null)
             {
                 string[] formats;
 

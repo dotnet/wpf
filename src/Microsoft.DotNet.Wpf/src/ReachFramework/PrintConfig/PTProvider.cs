@@ -520,7 +520,7 @@ namespace MS.Internal.Printing.Configuration
 
         public override void Release()
         {
-            if (_providerHandle != null)
+            if (_providerHandle is not null)
             {
                 _providerHandle.Dispose();
                 _providerHandle = null;
@@ -544,7 +544,7 @@ namespace MS.Internal.Printing.Configuration
 
             if (disposing)
             {
-                if (_providerHandle != null)
+                if (_providerHandle is not null)
                 {
                     _providerHandle.Dispose();
                     _providerHandle = null;
@@ -809,7 +809,7 @@ namespace MS.Internal.Printing.Configuration
         
         private static void DeleteIStream(ref IStream stream)
         {
-            if (stream != null)
+            if (stream is not null)
             {
                 Marshal.ReleaseComObject(stream);
                 stream = null;

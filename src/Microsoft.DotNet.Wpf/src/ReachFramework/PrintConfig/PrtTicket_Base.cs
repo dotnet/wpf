@@ -69,10 +69,10 @@ namespace MS.Internal.Printing.Configuration
             XmlElement parentElement = null;
 
             // Find the feature XML element's parent element.
-            if (_parentFeature != null)
+            if (_parentFeature is not null)
             {
                 // If this feature has a parent feature, we need to find the XML element of the parent feature.
-                if (_parentFeature.FeatureNode != null)
+                if (_parentFeature.FeatureNode is not null)
                 {
                     parentElement = _parentFeature.FeatureNode.FeatureElement;
                 }
@@ -83,7 +83,7 @@ namespace MS.Internal.Printing.Configuration
                 parentElement = _ownerPrintTicket.XmlDoc.DocumentElement;
             }
 
-            if (parentElement != null)
+            if (parentElement is not null)
             {
                 // Delete current feature's XML element (and the whole subtree under that XML element).
                 PrintTicketEditor.RemoveAllSchemaElementsWithNameAttr(_ownerPrintTicket,
@@ -116,11 +116,11 @@ namespace MS.Internal.Printing.Configuration
             {
                 PTFeatureNode featureNode = null;
 
-                if (_parentFeature != null)
+                if (_parentFeature is not null)
                 {
                     // If this is a sub-feature, we need to get the feature node relative
                     // to the parent feature node.
-                    if (_parentFeature.FeatureNode != null)
+                    if (_parentFeature.FeatureNode is not null)
                     {
                         featureNode = PTFeatureNode.GetFeatureNode(this,
                                                     _parentFeature.FeatureNode.FeatureElement);
@@ -170,7 +170,7 @@ namespace MS.Internal.Printing.Configuration
                 }
 
                 // We have property value to read only when the feature's XML element is in the Print Ticket XML.
-                if (FeatureNode != null)
+                if (FeatureNode is not null)
                 {
                     if (map.PropType == PTPropValueTypes.PositiveIntValue)
                     {
@@ -201,7 +201,7 @@ namespace MS.Internal.Printing.Configuration
                                               out bInPrivateNamespace);
                         }
 
-                        if (stringValue != null)
+                        if (stringValue is not null)
                         {
                             // non-Null stringValue must be in standard namespace already.
 
@@ -267,7 +267,7 @@ namespace MS.Internal.Printing.Configuration
                     // The PrintTicket doesn't have the feature element, so we need to create one.
                     XmlElement parentElement = null;
 
-                    if (_parentFeature != null)
+                    if (_parentFeature is not null)
                     {
                         // This is a sub-feature, so if the parent feature element is NOT in XML,
                         // we need to create the parent element in XML PrintTicket first.
@@ -279,7 +279,7 @@ namespace MS.Internal.Printing.Configuration
 
                         PTFeatureNode parentFeatureNode = _parentFeature.FeatureNode;
 
-                        if (parentFeatureNode != null)
+                        if (parentFeatureNode is not null)
                         {
                             parentElement = parentFeatureNode.FeatureElement;
                         }
@@ -290,7 +290,7 @@ namespace MS.Internal.Printing.Configuration
                         parentElement = this._ownerPrintTicket.XmlDoc.DocumentElement;
                     }
 
-                    if (parentElement != null)
+                    if (parentElement is not null)
                     {
                         PTFeatureNode.CreateFeatureNode(this, parentElement);
                     }
@@ -415,7 +415,7 @@ namespace MS.Internal.Printing.Configuration
                                                             PrintSchemaTags.Framework.Feature,
                                                             ptFeature._featureName);
 
-            if (featureElement != null)
+            if (featureElement is not null)
             {
                 featureNode = new PTFeatureNode(ptFeature, featureElement);
             }
@@ -452,14 +452,14 @@ namespace MS.Internal.Printing.Configuration
             // Gets the feature's first option child element
             XmlElement optionNode = GetFirstOption();
 
-            if (optionNode != null)
+            if (optionNode is not null)
             {
                 string optionName = optionNode.GetAttribute(PrintSchemaTags.Framework.NameAttr,
                                                             PrintSchemaNamespaces.FrameworkAttrForXmlDOM);
 
                 // XmlElement.GetAttribute returns empty string when the attribute is not found.
                 // The option name must be a QName in our standard keyword namespace.
-                if (optionName != null)
+                if (optionName is not null)
                 {
                     if (XmlDocQName.GetURI(pt.XmlDoc, optionName) == PrintSchemaNamespaces.StandardKeywordSet)
                     {
@@ -615,7 +615,7 @@ namespace MS.Internal.Printing.Configuration
             string valueText = GetOptionPropertyValueText(optionNode, propertyName);
 
             // ScoredProperty's standard string value must be in our standard keyword namespace
-            if (valueText != null)
+            if (valueText is not null)
             {
                 if (XmlDocQName.GetURI(pt.XmlDoc, valueText) == PrintSchemaNamespaces.StandardKeywordSet)
                 {
@@ -713,7 +713,7 @@ namespace MS.Internal.Printing.Configuration
                                                       PrintSchemaNamespaces.FrameworkAttrForXmlDOM);
 
             // XmlElement.GetAttribute returns empty string when the attribute is not found.
-            if ((fullRefName != null) &&
+            if ((fullRefName is not null) &&
                 (fullRefName.Length != 0) &&
                 (XmlDocQName.GetURI(pt.XmlDoc, fullRefName) == PrintSchemaNamespaces.StandardKeywordSet))
             {
@@ -1081,7 +1081,7 @@ namespace MS.Internal.Printing.Configuration
                 int intValue = PrintSchema.UnspecifiedIntValue;
 
                 // Must use the property here to invoke the code that locates the XML element
-                if (ParameterNode != null)
+                if (ParameterNode is not null)
                 {
                     int paramValue;
 
@@ -1116,7 +1116,7 @@ namespace MS.Internal.Printing.Configuration
                     PrintTicketParameterNode.CreateParameterNode(this);
                 }
 
-                if (ParameterNode != null)
+                if (ParameterNode is not null)
                 {
                     ParameterNode.SetIntValue(value);
                 }
@@ -1145,7 +1145,7 @@ namespace MS.Internal.Printing.Configuration
                 string stringValue = "";
 
                 // Must use the property here to invoke the code that locates the XML element
-                if (ParameterNode != null)
+                if (ParameterNode is not null)
                 {
                     string paramValue;
 
@@ -1172,7 +1172,7 @@ namespace MS.Internal.Printing.Configuration
                     PrintTicketParameterNode.CreateParameterNode(this);
                 }
 
-                if (ParameterNode != null)
+                if (ParameterNode is not null)
                 {
                     ParameterNode.SetStringValue(value, PrintSchemaXsiTypes.String);
                 }
@@ -1223,7 +1223,7 @@ namespace MS.Internal.Printing.Configuration
                                                             ptParameter._parameterNodeTagName,
                                                             ptParameter._parameterName);
 
-            if (parameterElement != null)
+            if (parameterElement is not null)
             {
                 parameterNode = new PrintTicketParameterNode(ptParameter, parameterElement);
             }

@@ -225,7 +225,7 @@ namespace System.Windows.Media.Animation
         {
             // Deallocate ONLY if we have previously expanded beyond default length to avoid redundant
             // reallocation.  If we called Clear, we are likely to reuse the collection soon.
-            if (_nodeTime != null && _nodeTime.Length > _minimumCapacity)
+            if (_nodeTime is not null && _nodeTime.Length > _minimumCapacity)
             {
                 _nodeTime = null;
                 _nodeIsPoint = null;
@@ -1785,8 +1785,8 @@ namespace System.Windows.Media.Animation
             }
             else if (_nodeTime.Length < requiredCapacity)  // We may need to grow by up to 2 units
             {
-                Debug.Assert(_nodeIsPoint != null);
-                Debug.Assert(_nodeIsInterval != null);
+                Debug.Assert(_nodeIsPoint is not null);
+                Debug.Assert(_nodeIsInterval is not null);
 
                 int newCapacity = _nodeTime.Length << 1;  // Dynamically grow by a factor of 2
 

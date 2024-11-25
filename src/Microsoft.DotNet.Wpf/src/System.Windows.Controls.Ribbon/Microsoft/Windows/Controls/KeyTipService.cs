@@ -148,19 +148,19 @@ namespace Microsoft.Windows.Controls
             DependencyObject newScope = e.NewValue as DependencyObject;
             KeyTipService current = Current;
 
-            if (oldScope != null)
+            if (oldScope is not null)
             {
                 // Remove the element from the old scope data sets.
                 WeakHashSet<DependencyObject> oldElementSet = null;
                 if (current._scopeToElementMap.TryGetValue(oldScope, out oldElementSet))
                 {
-                    if (oldElementSet != null)
+                    if (oldElementSet is not null)
                     {
                         oldElementSet.Remove(d);
                     }
                 }
             }
-            if (newScope != null)
+            if (newScope is not null)
             {
                 // Add the element to the new scope data sets.
                 if (!current._scopeToElementMap.ContainsKey(newScope) ||
@@ -178,7 +178,7 @@ namespace Microsoft.Windows.Controls
             if (fe is null)
             {
                 FrameworkContentElement fce = element as FrameworkContentElement;
-                if (fce != null)
+                if (fce is not null)
                 {
                     fce.Loaded += new RoutedEventHandler(OnKeyTipElementLoaded);
                     fce.Unloaded += new RoutedEventHandler(OnKeyTipElementUnLoaded);
@@ -197,7 +197,7 @@ namespace Microsoft.Windows.Controls
             if (fe is null)
             {
                 FrameworkContentElement fce = element as FrameworkContentElement;
-                if (fce != null)
+                if (fce is not null)
                 {
                     fce.Loaded -= new RoutedEventHandler(OnKeyTipElementLoaded);
                     fce.Unloaded -= new RoutedEventHandler(OnKeyTipElementUnLoaded);
@@ -243,7 +243,7 @@ namespace Microsoft.Windows.Controls
 
         private static void AddElementForKeyTipScoping(DependencyObject element)
         {
-            Debug.Assert(element != null);
+            Debug.Assert(element is not null);
             KeyTipService current = Current;
             if (!current._toBeScopedElements.Contains(element))
             {
@@ -332,7 +332,7 @@ namespace Microsoft.Windows.Controls
             if (_scopeToElementMap.ContainsKey(scopedParent))
             {
                 WeakHashSet<DependencyObject> elementSet = _scopeToElementMap[scopedParent];
-                if (elementSet != null && elementSet.Count > 0)
+                if (elementSet is not null && elementSet.Count > 0)
                 {
                     Dictionary<DependencyObject, DependencyObject> elementToScopeMap = null;
                     foreach (DependencyObject element in elementSet)
@@ -351,7 +351,7 @@ namespace Microsoft.Windows.Controls
                             processedElements[element] = true;
                         }
                     }
-                    if (elementToScopeMap != null)
+                    if (elementToScopeMap is not null)
                     {
                         foreach (DependencyObject element in elementToScopeMap.Keys)
                         {
@@ -434,7 +434,7 @@ namespace Microsoft.Windows.Controls
 
         private static void OnCustomSiblingKeyTipElementsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (e.NewValue != null)
+            if (e.NewValue is not null)
             {
                 RegisterKeyTipElement(d);
             }
@@ -470,7 +470,7 @@ namespace Microsoft.Windows.Controls
 
         private static void OnKeyTipAutoGenerationElementsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (e.NewValue != null)
+            if (e.NewValue is not null)
             {
                 // Register for scoping
                 RegisterKeyTipElement(d);
@@ -511,7 +511,7 @@ namespace Microsoft.Windows.Controls
             else
             {
                 string keyTipEnd = keyTip.TrimStart('0');
-                if (keyTipEnd != null && keyTipEnd.Length == 1)
+                if (keyTipEnd is not null && keyTipEnd.Length == 1)
                 {
                     return true;
                 }
@@ -571,13 +571,13 @@ namespace Microsoft.Windows.Controls
         /// </summary>
         private void AutoGenerateKeyTips(WeakHashSet<DependencyObject> currentScopeElements)
         {
-            if (currentScopeElements != null && currentScopeElements.Count > 0)
+            if (currentScopeElements is not null && currentScopeElements.Count > 0)
             {
                 bool reprocessScoping = false;
                 foreach (DependencyObject element in currentScopeElements)
                 {
                     IEnumerable<DependencyObject> keyTipAutoGenerationElements = GetKeyTipAutoGenerationElements(element);
-                    if (keyTipAutoGenerationElements != null)
+                    if (keyTipAutoGenerationElements is not null)
                     {
                         foreach (DependencyObject autoGenerationElement in keyTipAutoGenerationElements)
                         {
@@ -599,7 +599,7 @@ namespace Microsoft.Windows.Controls
 
         private void ResetAutoGeneratedKeyTips()
         {
-            if (_keyTipAutoGeneratedElements != null && _keyTipAutoGeneratedElements.Count > 0)
+            if (_keyTipAutoGeneratedElements is not null && _keyTipAutoGeneratedElements.Count > 0)
             {
                 foreach (DependencyObject d in _keyTipAutoGeneratedElements)
                 {
@@ -756,7 +756,7 @@ namespace Microsoft.Windows.Controls
             // Tries to enter keytip mode and set various
             // members accordingly.
             DependencyObject globalScope = GetGlobalScopeForElement(keyArgs.OriginalSource as DependencyObject);
-            if (globalScope != null)
+            if (globalScope is not null)
             {
                 if (EnterKeyTipMode(globalScope, (keyArgs.SystemKey == Key.F10 ? false : true), true))
                 {
@@ -802,7 +802,7 @@ namespace Microsoft.Windows.Controls
                 if (State == KeyTipState.Enabled)
                 {
                     PresentationSource targetSource = RibbonHelper.GetPresentationSourceFromVisual(_currentGlobalScope as Visual);
-                    if (targetSource != null)
+                    if (targetSource is not null)
                     {
                         RaiseKeyTipFocusEvent(targetSource, EventArgs.Empty, _keyTipEnterFocusHandlers);
                     }
@@ -866,7 +866,7 @@ namespace Microsoft.Windows.Controls
 
                     DependencyObject exactMatchElement = null;
                     List<DependencyObject> activeKeyTipElements = FindKeyTipMatches(text, out exactMatchElement);
-                    if (exactMatchElement != null)
+                    if (exactMatchElement is not null)
                     {
                         OnKeyTipExactMatch(exactMatchElement);
                     }
@@ -909,17 +909,17 @@ namespace Microsoft.Windows.Controls
             if (DependencyPropertyHelper.GetValueSource(element, FrameworkElement.LanguageProperty).BaseValueSource != BaseValueSource.Default)
             {
                 XmlLanguage language = (XmlLanguage)element.GetValue(FrameworkElement.LanguageProperty);
-                if (language != null && language != XmlLanguage.Empty)
+                if (language is not null && language != XmlLanguage.Empty)
                 {
                     Dictionary<XmlLanguage, CultureInfo> cultureCache = Current._cultureCache;
-                    if (cultureCache != null && cultureCache.ContainsKey(language))
+                    if (cultureCache is not null && cultureCache.ContainsKey(language))
                     {
                         culture = cultureCache[language];
                     }
                     else
                     {
                         CultureInfo computedCulture = RibbonHelper.GetCultureInfo(element);
-                        if (computedCulture != null)
+                        if (computedCulture is not null)
                         {
                             culture = computedCulture;
                             if (cultureCache is null)
@@ -948,7 +948,7 @@ namespace Microsoft.Windows.Controls
             eventArgs.RoutedEvent = PreviewKeyTipAccessedEvent;
             object oldFocusedElement = Keyboard.FocusedElement;
             IInputElement inputElement = exactMatchElement as IInputElement;
-            if (inputElement != null)
+            if (inputElement is not null)
             {
                 inputElement.RaiseEvent(eventArgs);
                 eventArgs.RoutedEvent = KeyTipAccessedEvent;
@@ -961,7 +961,7 @@ namespace Microsoft.Windows.Controls
             {
                 object newFocusedElement = Keyboard.FocusedElement;
                 DependencyObject newScope = eventArgs.TargetKeyTipScope;
-                if (newScope != null &&
+                if (newScope is not null &&
                     !KeyTipService.GetIsKeyTipScope(newScope) &&
                     newScope != _currentGlobalScope)
                 {
@@ -973,7 +973,7 @@ namespace Microsoft.Windows.Controls
                     newScope = exactMatchElement;
                 }
 
-                if (newScope != null)
+                if (newScope is not null)
                 {
                     // Show keytips for new scope in a dispatcher operation.
                     Dispatcher.CurrentDispatcher.BeginInvoke(
@@ -1071,7 +1071,7 @@ namespace Microsoft.Windows.Controls
 
             _currentGlobalScope = scope;
             _currentWindow = Window.GetWindow(scope);
-            if (_currentWindow != null)
+            if (_currentWindow is not null)
             {
                 _currentWindow.Deactivated += new EventHandler(OnWindowDeactivated);
                 _currentWindow.SizeChanged += new SizeChangedEventHandler(OnWindowSizeChanged);
@@ -1107,13 +1107,13 @@ namespace Microsoft.Windows.Controls
 
         private void ShowKeyTips()
         {
-            if (_showKeyTipsTimer != null)
+            if (_showKeyTipsTimer is not null)
             {
                 _showKeyTipsTimer.Stop();
             }
             if (State == KeyTipState.Pending)
             {
-                Debug.Assert(_currentGlobalScope != null);
+                Debug.Assert(_currentGlobalScope is not null);
                 if (ShowKeyTipsForScope(_currentGlobalScope))
                 {
                     // KeyTips might have been dismissed during
@@ -1143,7 +1143,7 @@ namespace Microsoft.Windows.Controls
             {
                 WeakHashSet<DependencyObject> elementSet = _scopeToElementMap[scopeElement];
                 AutoGenerateKeyTips(elementSet);
-                if (elementSet != null && elementSet.Count > 0)
+                if (elementSet is not null && elementSet.Count > 0)
                 {
                     foreach (DependencyObject element in elementSet)
                     {
@@ -1181,8 +1181,8 @@ namespace Microsoft.Windows.Controls
             DependencyObject currentScope = _scopeStack.Pop();
             DependencyObject parentScope = FindScope(currentScope, false);
             DependencyObject stackParentScope = (_scopeStack.Count > 0 ? _scopeStack.Peek() : null);
-            if (stackParentScope != null &&
-                parentScope != null &&
+            if (stackParentScope is not null &&
+                parentScope is not null &&
                 RibbonHelper.IsAncestorOf(stackParentScope, parentScope))
             {
                 // If there is any intermediate ancestral scope between current scope
@@ -1229,14 +1229,14 @@ namespace Microsoft.Windows.Controls
             _cultureCache = null;
             _cachedKeyTipControls = null;
             _currentGlobalScope = null;
-            if (_currentWindow != null)
+            if (_currentWindow is not null)
             {
                 _currentWindow.Deactivated -= new EventHandler(OnWindowDeactivated);
                 _currentWindow.SizeChanged -= new SizeChangedEventHandler(OnWindowSizeChanged);
                 _currentWindow.LocationChanged -= new EventHandler(OnWindowLocationChanged);
             }
             _currentWindow = null;
-            if (_showKeyTipsTimer != null)
+            if (_showKeyTipsTimer is not null)
             {
                 _showKeyTipsTimer.Stop();
             }
@@ -1261,7 +1261,7 @@ namespace Microsoft.Windows.Controls
             if (restoreFocus)
             {
                 PresentationSource targetSource = RibbonHelper.GetPresentationSourceFromVisual(_currentGlobalScope as Visual);
-                if (targetSource != null)
+                if (targetSource is not null)
                 {
                     RaiseKeyTipFocusEvent(targetSource, EventArgs.Empty, _keyTipExitRestoreFocusHandlers);
                 }
@@ -1312,22 +1312,22 @@ namespace Microsoft.Windows.Controls
             Visual parent = VisualTreeHelper.GetParent(visual) as Visual;
             ScrollContentPresenter lastScp = null;
 
-            while (parent != null)
+            while (parent is not null)
             {
                 AdornerDecorator adornerDecorator = parent as AdornerDecorator;
-                if (adornerDecorator != null)
+                if (adornerDecorator is not null)
                 {
                     return adornerDecorator.AdornerLayer;
                 }
 
                 ScrollContentPresenter scp = parent as ScrollContentPresenter;
-                if (scp != null)
+                if (scp is not null)
                 {
                     lastScp = scp;
                 }
 
                 ScrollViewer sv = parent as ScrollViewer;
-                if (sv != null && lastScp != null)
+                if (sv is not null && lastScp is not null)
                 {
                     if (GetCanClipKeyTip(sv))
                     {
@@ -1358,7 +1358,7 @@ namespace Microsoft.Windows.Controls
             if ((bool)e.NewValue)
             {
                 UIElement uie = RibbonHelper.GetContainingUIElement(element);
-                if (uie != null &&
+                if (uie is not null &&
                     uie.Visibility != Visibility.Visible)
                 {
                     // revert the value if the element is not visible
@@ -1369,7 +1369,7 @@ namespace Microsoft.Windows.Controls
                 // Raise the ActivatingKeyTip event.
                 ActivatingKeyTipEventArgs activatingEventArgs = new ActivatingKeyTipEventArgs();
                 IInputElement inputElement = element as IInputElement;
-                if (inputElement != null)
+                if (inputElement is not null)
                 {
                     inputElement.RaiseEvent(activatingEventArgs);
                 }
@@ -1383,11 +1383,11 @@ namespace Microsoft.Windows.Controls
                     {
                         // Create the keytip and add it as the adorner.
                         UIElement adornedElement = RibbonHelper.GetContainingUIElement(activatingEventArgs.PlacementTarget is null ? element : activatingEventArgs.PlacementTarget);
-                        if (adornedElement != null && adornedElement.IsVisible)
+                        if (adornedElement is not null && adornedElement.IsVisible)
                         {
                             bool isScrollAdornerLayer = false;
                             AdornerLayer adornerLayer = GetAdornerLayer(adornedElement, out isScrollAdornerLayer);
-                            if (adornerLayer != null)
+                            if (adornerLayer is not null)
                             {
                                 KeyTipAdorner adorner = new KeyTipAdorner(adornedElement,
                                     activatingEventArgs.PlacementTarget,
@@ -1434,12 +1434,12 @@ namespace Microsoft.Windows.Controls
                 // Remove keytip from adorner.
                 KeyTipAdorner adorner = (KeyTipAdorner)element.GetValue(KeyTipAdornerProperty);
                 UIElement adornedElement = (UIElement)element.GetValue(KeyTipAdornerHolderProperty);
-                if (adornedElement != null && adorner != null)
+                if (adornedElement is not null && adorner is not null)
                 {
                     UnlinkKeyTipControlFromAdorner(adorner);
                     bool isScrollAdornerLayer = false;
                     AdornerLayer adornerLayer = GetAdornerLayer(adornedElement, out isScrollAdornerLayer);
-                    if (adornerLayer != null)
+                    if (adornerLayer is not null)
                     {
                         adornerLayer.Remove(adorner);
                     }
@@ -1469,7 +1469,7 @@ namespace Microsoft.Windows.Controls
                             foreach (object child in LogicalTreeHelper.GetChildren(currentAdornerLayer))
                             {
                                 KeyTipAdorner keyTipAdorner = child as KeyTipAdorner;
-                                if (keyTipAdorner != null)
+                                if (keyTipAdorner is not null)
                                 {
                                     keyTipAdorner.NudgeIntoAdornerLayerBoundary(currentAdornerLayer);
                                 }
@@ -1501,7 +1501,7 @@ namespace Microsoft.Windows.Controls
             // If the element can provide custome keytip siblings
             // then show keytips on all such siblings.
             IEnumerable<DependencyObject> customSiblings = GetCustomSiblingKeyTipElements(element);
-            if (customSiblings != null)
+            if (customSiblings is not null)
             {
                 foreach (DependencyObject siblingElement in customSiblings)
                 {
@@ -1520,7 +1520,7 @@ namespace Microsoft.Windows.Controls
         {
             KeyTipService current = Current;
             KeyTipControl keyTipControl = null;
-            if (current._cachedKeyTipControls != null &&
+            if (current._cachedKeyTipControls is not null &&
                 current._cachedKeyTipControls.Count > 0)
             {
                 // Retrieve a KeyTipControl from cache for reuse.
@@ -1539,7 +1539,7 @@ namespace Microsoft.Windows.Controls
         {
             KeyTipControl keyTipControl = adorner.KeyTipControl;
             adorner.UnlinkKeyTipControl();
-            if (keyTipControl != null)
+            if (keyTipControl is not null)
             {
                 // Save the unlinked KeyTipControl to cache for reuse.
                 KeyTipService current = Current;
@@ -1657,7 +1657,7 @@ namespace Microsoft.Windows.Controls
         /// </summary>
         private static void RemoveKeyTipFocusEventHandler(KeyTipFocusEventHandler handler, List<WeakReference> handlerList)
         {
-            if (handlerList != null)
+            if (handlerList is not null)
             {
                 lock (handlerList)
                 {
@@ -1682,7 +1682,7 @@ namespace Microsoft.Windows.Controls
         /// </summary>
         private static void RaiseKeyTipFocusEvent(object sender, EventArgs e, List<WeakReference> handlerList)
         {
-            if (handlerList != null)
+            if (handlerList is not null)
             {
                 lock (handlerList)
                 {

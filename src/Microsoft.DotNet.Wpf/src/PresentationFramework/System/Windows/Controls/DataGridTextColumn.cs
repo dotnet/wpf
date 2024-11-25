@@ -123,11 +123,11 @@ namespace System.Windows.Controls
         {
             DataGridCell cell = element as DataGridCell;
 
-            if (cell != null)
+            if (cell is not null)
             {
                 FrameworkElement textElement = cell.Content as FrameworkElement;
 
-                if (textElement != null)
+                if (textElement is not null)
                 {
                     switch (propertyName)
                     {
@@ -166,14 +166,14 @@ namespace System.Windows.Controls
         protected override object PrepareCellForEdit(FrameworkElement editingElement, RoutedEventArgs editingEventArgs)
         {
             TextBox textBox = editingElement as TextBox;
-            if (textBox != null)
+            if (textBox is not null)
             {
                 textBox.Focus();
 
                 string originalValue = textBox.Text;
 
                 TextCompositionEventArgs textArgs = editingEventArgs as TextCompositionEventArgs;
-                if (textArgs != null)
+                if (textArgs is not null)
                 {
                     // If text input started the edit, then replace the text with what was typed.
                     string inputText = ConvertTextForEdit(textArgs.Text);
@@ -219,7 +219,7 @@ namespace System.Windows.Controls
         /// <param name="uneditedValue">The original, unedited value of the cell.</param>
         protected override void CancelCellEdit(FrameworkElement editingElement, object uneditedValue)
         {
-            DataGridHelper.CacheFlowDirection(editingElement, editingElement != null ? editingElement.Parent as DataGridCell : null);
+            DataGridHelper.CacheFlowDirection(editingElement, editingElement is not null ? editingElement.Parent as DataGridCell : null);
 
             base.CancelCellEdit(editingElement, uneditedValue);
         }
@@ -231,7 +231,7 @@ namespace System.Windows.Controls
         /// <returns>false if there is a validation error. true otherwise.</returns>
         protected override bool CommitCellEdit(FrameworkElement editingElement)
         {
-            DataGridHelper.CacheFlowDirection(editingElement, editingElement != null ? editingElement.Parent as DataGridCell : null);
+            DataGridHelper.CacheFlowDirection(editingElement, editingElement is not null ? editingElement.Parent as DataGridCell : null);
 
             return base.CommitCellEdit(editingElement);
         }
@@ -264,10 +264,10 @@ namespace System.Windows.Controls
             }
             else if (DataGridHelper.IsImeProcessed(e as KeyEventArgs))
             {
-                if (DataGridOwner != null)
+                if (DataGridOwner is not null)
                 {
                     DataGridCell cell = DataGridOwner.CurrentCellContainer;
-                    if (cell != null && !cell.IsEditing)
+                    if (cell is not null && !cell.IsEditing)
                     {
                         Debug.Assert(e.RoutedEvent == Keyboard.PreviewKeyDownEvent, "We should only reach here on the PreviewKeyDown event because the TextBox within is expected to handle the preview event and hence trump the successive KeyDown event.");
 

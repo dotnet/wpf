@@ -130,7 +130,7 @@ namespace System.Collections.ObjectModel
             get {
                 if( _syncRoot is null) {
                     ICollection c = list as ICollection;
-                    if( c != null) {
+                    if( c is not null) {
                         _syncRoot = c.SyncRoot;
                     }
                     else {
@@ -166,7 +166,7 @@ namespace System.Collections.ObjectModel
 
             IList<T> dlist = CreateDereferencedList();
             T[] items = array as T[];
-            if (items != null) {
+            if (items is not null) {
                 dlist.CopyTo(items, index);
             }
             else {
@@ -296,7 +296,7 @@ namespace System.Collections.ObjectModel
             public T Current {
                 get {
                     WeakReference wr = ie.Current as WeakReference;
-                    if (wr != null)
+                    if (wr is not null)
                         return (T)wr.Target;
                     else
                         return default(T);

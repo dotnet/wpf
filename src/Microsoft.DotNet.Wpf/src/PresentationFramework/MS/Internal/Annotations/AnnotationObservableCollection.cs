@@ -210,7 +210,7 @@ namespace MS.Internal.Annotations
         // returns whether this item already belongs to a parent object
         private bool ItemOwned(Object item)
         {
-            if (item != null)
+            if (item is not null)
             {
                 IOwnedObject obj = item as IOwnedObject;
                 return obj.Owned;
@@ -221,7 +221,7 @@ namespace MS.Internal.Annotations
         // sets whether this object belongs to a parent object
         private void SetOwned(Object item, bool owned)
         {
-            if (item != null)
+            if (item is not null)
             {
                 IOwnedObject obj = item as IOwnedObject;
                 obj.Owned = owned;

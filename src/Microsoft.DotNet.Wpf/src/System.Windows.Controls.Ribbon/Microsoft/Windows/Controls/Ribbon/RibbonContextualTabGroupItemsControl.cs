@@ -141,7 +141,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             // If a new template has just been generated then 
             // be sure to clear any stale ItemsHost references
-            if (InternalItemsHost != null && !this.IsAncestorOf(InternalItemsHost))
+            if (InternalItemsHost is not null && !this.IsAncestorOf(InternalItemsHost))
             {
                 InternalItemsHost = null;
             }
@@ -154,7 +154,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             base.PrepareContainerForItemOverride(element, item);
             RibbonContextualTabGroup tabGroupHeader = element as RibbonContextualTabGroup;
-            if (tabGroupHeader != null)
+            if (tabGroupHeader is not null)
             {
                 tabGroupHeader.PrepareTabGroupHeader(item, ItemTemplate, ItemTemplateSelector, ItemStringFormat);
             }
@@ -164,7 +164,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             base.ClearContainerForItemOverride(element, item);
             RibbonContextualTabGroup tabGroupHeader = element as RibbonContextualTabGroup;
-            if (tabGroupHeader != null)
+            if (tabGroupHeader is not null)
             {
                 tabGroupHeader.ClearTabGroupHeader();
             }
@@ -188,7 +188,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 // DDVSO: 170997 - ContextualTabGroupHeader isn't shown when the WPF Ribbon is hidden.
                 // RibbonTab.Visibility shall be used to determine its visibility instead of RibbonTab.IsVisible.
                 // When a RibbonTab is collapsed, its IsVisible is false to hide the content of the tab, while its Visibility is still Visible to show the header.
-                if (tab != null && tab.Visibility == Visibility.Visible)
+                if (tab is not null && tab.Visibility == Visibility.Visible)
                 {
                     return true;
                 }
@@ -259,7 +259,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             for (int i = 0; i < count; i++)
             {
                 RibbonContextualTabGroup tabGroup = this.ItemContainerGenerator.ContainerFromIndex(i) as RibbonContextualTabGroup;
-                if (tabGroup != null && Object.Equals(tabGroup.Header, content))
+                if (tabGroup is not null && Object.Equals(tabGroup.Header, content))
                     return tabGroup;
             }
             return null;

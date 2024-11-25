@@ -29,7 +29,7 @@ namespace System.Windows.Controls
 
         internal MultipleCopiesCollection(object item, int count)
         {
-            Debug.Assert(item != null, "item should not be null.");
+            Debug.Assert(item is not null, "item should not be null.");
             Debug.Assert(count >= 0, "count should not be negative.");
 
             CopiedItem = item;
@@ -285,7 +285,7 @@ namespace System.Windows.Controls
                 ArgumentOutOfRangeException.ThrowIfNegative(index);
                 ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, RepeatCount);
 
-                Debug.Assert(_item != null, "_item should be non-null.");
+                Debug.Assert(_item is not null, "_item should be non-null.");
                 return _item;
             }
 
@@ -437,7 +437,7 @@ namespace System.Windows.Controls
 
         private void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
-            if (CollectionChanged != null)
+            if (CollectionChanged is not null)
             {
                 CollectionChanged(this, e);
             }
@@ -459,7 +459,7 @@ namespace System.Windows.Controls
 
         private void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if (PropertyChanged != null)
+            if (PropertyChanged is not null)
             {
                 PropertyChanged(this, e);
             }

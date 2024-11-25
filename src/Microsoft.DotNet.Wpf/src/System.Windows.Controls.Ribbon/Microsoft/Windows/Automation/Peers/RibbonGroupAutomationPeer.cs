@@ -42,7 +42,7 @@ namespace Microsoft.Windows.Automation.Peers
             List<AutomationPeer> children = base.GetChildrenCore();
             
             AutomationPeer headerPeer = HeaderPeer;
-            if (headerPeer != null)
+            if (headerPeer is not null)
             {
                 if (children is null)
                 {
@@ -109,7 +109,7 @@ namespace Microsoft.Windows.Automation.Peers
                     {
                         // It is possible that the owing RibbonGroup's template hasn't been expanded 
                         // and hence the template parts aren't available yet. Hence the null check.
-                        if (OwningGroup.CollapsedDropDownButton != null)
+                        if (OwningGroup.CollapsedDropDownButton is not null)
                         {
                             _headerPeer = new RibbonGroupHeaderAutomationPeer(OwningGroup.CollapsedDropDownButton);
                         }
@@ -118,7 +118,7 @@ namespace Microsoft.Windows.Automation.Peers
                     {
                         // It is possible that the owing RibbonGroup's template hasn't been expanded 
                         // and hence the template parts aren't available yet. Hence the null check.
-                        if (OwningGroup.HeaderContentPresenter != null)
+                        if (OwningGroup.HeaderContentPresenter is not null)
                         {
                             _headerPeer = new RibbonGroupHeaderAutomationPeer(OwningGroup.HeaderContentPresenter);
                         }
@@ -134,7 +134,7 @@ namespace Microsoft.Windows.Automation.Peers
         internal void RaiseExpandCollapseAutomationEvent(bool oldValue, bool newValue)
         {
             AutomationPeer dataPeer = EventsSource;
-            if (dataPeer != null)
+            if (dataPeer is not null)
             {
                 dataPeer.RaisePropertyChangedEvent(
                 ExpandCollapsePatternIdentifiers.ExpandCollapseStateProperty,

@@ -184,7 +184,7 @@ namespace System.Windows.Documents.MsSpellCheckLib
             {
                 try
                 {
-                    if (func != null)
+                    if (func is not null)
                     {
                         result = func.Invoke();
                     }
@@ -246,7 +246,7 @@ namespace System.Windows.Documents.MsSpellCheckLib
             {
                 try
                 {
-                    if (func != null)
+                    if (func is not null)
                     {
                         result = func.Invoke();
                     }
@@ -290,7 +290,7 @@ namespace System.Windows.Documents.MsSpellCheckLib
             Type exceptionType = exception.GetType();
 
             Type match = exceptions.Find((e) => e.IsAssignableFrom(exceptionType));
-            return (match != null);
+            return (match is not null);
         }
 
         /// <summary>

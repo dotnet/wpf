@@ -193,7 +193,7 @@ namespace System.Windows.Forms.Integration
                 _child = value;
 #pragma warning restore 1634, 1691, 56526
                 HostContainerInternal.Children.Clear();
-                if (_child != null)
+                if (_child is not null)
                 {
                     HostContainerInternal.Children.Add(_child);
                     _propertyMap.ApplyAll();
@@ -226,7 +226,7 @@ namespace System.Windows.Forms.Integration
                 {
                     // observe that the EH.Child may be null and still it has an HwndSource.
                     IntPtr focusHandle = UnsafeNativeMethods.GetFocus();
-                    return (focusHandle == this.Handle || (this.HwndSource != null && focusHandle == this.HwndSource.Handle));
+                    return (focusHandle == this.Handle || (this.HwndSource is not null && focusHandle == this.HwndSource.Handle));
                 }
 
                 return false;
@@ -260,7 +260,7 @@ namespace System.Windows.Forms.Integration
         {
             base.OnEnabledChanged(e);
 
-            if (this.HwndSource != null && this.HwndSource.Handle != IntPtr.Zero)
+            if (this.HwndSource is not null && this.HwndSource.Handle != IntPtr.Zero)
             {
                 NativeMethodsSetLastError.EnableWindow(this.HwndSource.Handle, this.Enabled);
             }
@@ -268,12 +268,12 @@ namespace System.Windows.Forms.Integration
 
         private void OnChildChanged(UIElement oldChild)
         {
-            if (this.Child != null)
+            if (this.Child is not null)
             {
                 SyncHwndSrcImeStatus();
             }
 
-            if (ChildChanged != null)
+            if (ChildChanged is not null)
             {
                 ChildChanged(this, new ChildChangedEventArgs(oldChild));
             }
@@ -303,7 +303,7 @@ namespace System.Windows.Forms.Integration
         private void InitializeChildProperties()
         {
             FrameworkElement childFrameworkElement = Child as FrameworkElement;
-            if (childFrameworkElement != null)
+            if (childFrameworkElement is not null)
             {
                 childFrameworkElement.SizeChanged += new SizeChangedEventHandler(childFrameworkElement_SizeChanged);
                 childFrameworkElement.Height = double.NaN;
@@ -414,7 +414,7 @@ namespace System.Windows.Forms.Integration
         protected override void OnPrint(PaintEventArgs e)
         {
             SWMI.RenderTargetBitmap renderBitmap = HostUtils.GetBitmapForFrameworkElement(_decorator);
-            if (renderBitmap != null)
+            if (renderBitmap is not null)
             {
                 using (SD.Bitmap bitmap = HostUtils.GetBitmapFromRenderTargetBitmap(this, renderBitmap, new Point(0, 0)))
                 {
@@ -442,7 +442,7 @@ namespace System.Windows.Forms.Integration
             }
             else
             {
-                if (Child != null)
+                if (Child is not null)
                 {
                     Child.Focus();
                 }
@@ -465,14 +465,14 @@ namespace System.Windows.Forms.Integration
             SWI.ModifierKeys modifiers = Convert.ToSystemWindowsInputModifierKeys(keyData);
 
             // Let the AvalonAdapter know that ElementHost is currently processing a TabKey
-            if (_hostContainerInternal != null) {
+            if (_hostContainerInternal is not null) {
                 _hostContainerInternal.ProcessingTabKeyFromElementHost = (keyData & SWF.Keys.Tab) == SWF.Keys.Tab;
             }
 
             bool result = (_hwndSource as IKeyboardInputSink).TranslateAccelerator(ref msg2, modifiers);
 
             // _hostContainerInternal can be disposed if the control is closed using keyboard.
-            if (_hostContainerInternal != null && _hostContainerInternal.ProcessingTabKeyFromElementHost) {
+            if (_hostContainerInternal is not null && _hostContainerInternal.ProcessingTabKeyFromElementHost) {
                 _hostContainerInternal.ProcessingTabKeyFromElementHost = false;
             }
 
@@ -567,7 +567,7 @@ namespace System.Windows.Forms.Integration
             // do it the normal way through Invoke.
             SWT.Dispatcher.CurrentDispatcher.Invoke(()=>
             {
-                if (_hwndSource != null)
+                if (_hwndSource is not null)
                 {
                     DisposeHWndSource();
                 }
@@ -630,7 +630,7 @@ namespace System.Windows.Forms.Integration
 
         private void SetHWndSourceWindowPos()
         {
-            if (_hwndSource != null)
+            if (_hwndSource is not null)
             {
                 SafeNativeMethods.SetWindowPos(_hwndSource.Handle, NativeMethods.HWND_TOP, 0, 0, this.Width, this.Height, 0);
             }
@@ -646,7 +646,7 @@ namespace System.Windows.Forms.Integration
 
             bool handled = false;
 
-            if (this.HwndSource != null)
+            if (this.HwndSource is not null)
             {
                 ImeMode ehImeMode = this.ImeMode != ImeMode.NoControl ? this.ImeMode : SWF.Control.PropagatingImeMode;
                 ImeMode hsImeMode = SWF.ImeContext.GetImeMode(this.HwndSource.Handle);
@@ -832,7 +832,7 @@ namespace System.Windows.Forms.Integration
             {
                 try
                 {
-                    if (_hostContainerInternal != null)
+                    if (_hostContainerInternal is not null)
                     {
                         _hostContainerInternal.Dispose();
                         _hostContainerInternal = null;
@@ -842,7 +842,7 @@ namespace System.Windows.Forms.Integration
                 {
                     try
                     {
-                        if (_hwndSource != null)
+                        if (_hwndSource is not null)
                         {
                             DisposeHWndSource();
                         }
@@ -852,7 +852,7 @@ namespace System.Windows.Forms.Integration
                         SWI.InputManager.Current.PostProcessInput -= InputManager_PostProcessInput;
 
                         IDisposable disposableChild = Child as IDisposable;
-                        if (disposableChild != null)
+                        if (disposableChild is not null)
                         {
                             disposableChild.Dispose();
                         }
@@ -1030,7 +1030,7 @@ namespace System.Windows.Forms.Integration
         /// <param name="value">the new value of the property</param>
         public virtual void OnPropertyChanged(string propertyName, object value)
         {
-            if (PropertyMap != null)
+            if (PropertyMap is not null)
             {
                 PropertyMap.OnPropertyChanged(this, propertyName, value);
             }
@@ -1545,7 +1545,7 @@ namespace System.Windows.Forms.Integration
         private static SD.Color FindSolidColorParent(Control whichControl)
         {
             Control control = whichControl;
-            while (control.Parent != null)
+            while (control.Parent is not null)
             {
                 control = control.Parent;
                 if (control.BackColor != SD.Color.Empty && control.BackColor.A == 255)
@@ -1593,8 +1593,8 @@ namespace System.Windows.Forms.Integration
 
             //Select the next control
             bool forward = true;
-            Debug.Assert(request != null, "request was null!");
-            if (request != null)
+            Debug.Assert(request is not null, "request was null!");
+            if (request is not null)
             {
                 switch (request.FocusNavigationDirection)
                 {
@@ -1617,7 +1617,7 @@ namespace System.Windows.Forms.Integration
                 }
             }
 
-            if (_hostControl != null)
+            if (_hostControl is not null)
             {
                 Control topMostParent = null;
 
@@ -1625,7 +1625,7 @@ namespace System.Windows.Forms.Integration
                 {
                     // Get _hostControl's top-most parent.
                     topMostParent = _hostControl;
-                    while (topMostParent.Parent != null)
+                    while (topMostParent.Parent is not null)
                     {
                         topMostParent = topMostParent.Parent;
                     }
@@ -1649,7 +1649,7 @@ namespace System.Windows.Forms.Integration
                     Control currentControl = _hostControl;
                     Control parentControl = _hostControl.Parent;
 
-                    while (parentControl != null)
+                    while (parentControl is not null)
                     {
                         bool shouldWrap = ShouldSearchWrapForParentControl(parentControl);
 
@@ -1672,7 +1672,7 @@ namespace System.Windows.Forms.Integration
                     // OnNoMoreTabStops call to the adapter's host.
                     WinFormsAdapter adapter = topMostParent as WinFormsAdapter;
 
-                    if (adapter != null)
+                    if (adapter is not null)
                     {
                         return adapter.HostKeyboardInputSite?.OnNoMoreTabStops(request) == true;
                     }

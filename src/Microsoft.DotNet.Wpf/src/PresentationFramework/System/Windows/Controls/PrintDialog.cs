@@ -428,7 +428,7 @@ namespace System.Windows.Controls
 
             try
             {
-                if (printQueue != null)
+                if (printQueue is not null)
                 {
                     printTicket = printQueue.UserPrintTicket;
                     if (printTicket is null)
@@ -471,15 +471,15 @@ namespace System.Windows.Controls
             PickCorrectPrintingEnvironment(ref printQueue, ref printTicket);
 
             PrintCapabilities printCap = null;
-            if (printQueue != null)
+            if (printQueue is not null)
             {
                 printCap = printQueue.GetPrintCapabilities(printTicket);
             }
 
             // PrintCapabilities OrientedPageMediaWidth/Height are Nullable
-            if ((printCap != null) &&
-                (printCap.OrientedPageMediaWidth != null) &&
-                (printCap.OrientedPageMediaHeight != null))
+            if ((printCap is not null) &&
+                (printCap.OrientedPageMediaWidth is not null) &&
+                (printCap.OrientedPageMediaHeight is not null))
             {
                 _printableAreaWidth  = (double)printCap.OrientedPageMediaWidth;
                 _printableAreaHeight = (double)printCap.OrientedPageMediaHeight;
@@ -493,9 +493,9 @@ namespace System.Windows.Controls
 
                 // PrintTicket's PageMediaSize could be null and PageMediaSize Width/Height are Nullable
 
-                if ((printTicket.PageMediaSize != null) &&
-                    (printTicket.PageMediaSize.Width != null) &&
-                    (printTicket.PageMediaSize.Height != null))
+                if ((printTicket.PageMediaSize is not null) &&
+                    (printTicket.PageMediaSize.Width is not null) &&
+                    (printTicket.PageMediaSize.Height is not null))
                 {
                     _printableAreaWidth  = (double)printTicket.PageMediaSize.Width;
                     _printableAreaHeight = (double)printTicket.PageMediaSize.Height;
@@ -503,7 +503,7 @@ namespace System.Windows.Controls
 
                 // If we are using PrintTicket's PageMediaSize dimensions to populate the widht/height values,
                 // we need to adjust them based on current orientation. PrintTicket's PageOrientation is Nullable.
-                if (printTicket.PageOrientation != null)
+                if (printTicket.PageOrientation is not null)
                 {
                     PageOrientation orientation = (PageOrientation)printTicket.PageOrientation;
 
@@ -531,7 +531,7 @@ namespace System.Windows.Controls
 
             PickCorrectPrintingEnvironment(ref printQueue, ref printTicket);
 
-            if(printQueue != null)
+            if(printQueue is not null)
             {
                 printQueue.CurrentJobSettings.Description = description;
             }

@@ -96,7 +96,7 @@ namespace MS.Internal.Printing.Configuration
 
             // It's recommended that traversing the node in forward-only movement by using NextSibling
             // is best for XmlDocument performance. This is because the list is not double-linked.
-            while (rootChild != null)
+            while (rootChild is not null)
             {
                 // If the root child doesn't live in our standard namespace, we should ignore it
                 // rather than rejecting it since it's acceptable to have private elements under
@@ -250,7 +250,7 @@ namespace MS.Internal.Printing.Configuration
 
             // It's recommended that traversing the node in forward-only movement by using NextSibling
             // is best for XmlDocument performance. This is because the list is not double-linked.
-            while (child != null)
+            while (child is not null)
             {
                 // We are looking for a standard namespace schema element node
                 if ((child.NodeType != XmlNodeType.Element) ||
@@ -274,7 +274,7 @@ namespace MS.Internal.Printing.Configuration
                                                       PrintSchemaTags.Framework.NameAttr,
                                                       PrintSchemaNamespaces.FrameworkAttrForXmlDOM);
 
-                    if ((childName != null) &&
+                    if ((childName is not null) &&
                         (childName.Length != 0) &&
                         (XmlDocQName.GetURI(pt.XmlDoc, childName) == PrintSchemaNamespaces.StandardKeywordSet) &&
                         (XmlDocQName.GetLocalName(childName) == nameAttrWanted))
@@ -312,7 +312,7 @@ namespace MS.Internal.Printing.Configuration
 
             // It's recommended that traversing the node in forward-only movement by using NextSibling
             // is best for XmlDocument performance. This is because the list is not double-linked.
-            while (child != null)
+            while (child is not null)
             {
                 childMatched = null;
 
@@ -338,7 +338,7 @@ namespace MS.Internal.Printing.Configuration
                                                       PrintSchemaTags.Framework.NameAttr,
                                                       PrintSchemaNamespaces.FrameworkAttrForXmlDOM);
 
-                    if ((childName != null) &&
+                    if ((childName is not null) &&
                         (childName.Length != 0) &&
                         (XmlDocQName.GetURI(pt.XmlDoc, childName) == PrintSchemaNamespaces.StandardKeywordSet) &&
                         (XmlDocQName.GetLocalName(childName) == nameAttrToDelete))
@@ -349,7 +349,7 @@ namespace MS.Internal.Printing.Configuration
 
                 child = child.NextSibling;
 
-                if (childMatched != null)
+                if (childMatched is not null)
                 {
                     parent.RemoveChild(childMatched);
                 }
@@ -365,7 +365,7 @@ namespace MS.Internal.Printing.Configuration
 
             XmlElement newNode = pt.XmlDoc.CreateElement(prefix, schemaTag, PrintSchemaNamespaces.Framework);
 
-            if (nameAttr != null)
+            if (nameAttr is not null)
             {
                 newNode.SetAttribute(PrintSchemaTags.Framework.NameAttr,
                                      PrintSchemaNamespaces.FrameworkAttrForXmlDOM,

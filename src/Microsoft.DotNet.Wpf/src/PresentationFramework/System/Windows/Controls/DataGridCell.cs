@@ -99,7 +99,7 @@ namespace System.Windows.Controls
             _owner = ownerRow;
 
             DataGrid dataGrid = _owner.DataGridOwner;
-            if (dataGrid != null)
+            if (dataGrid is not null)
             {
                 // The index of the container should correspond to the index of the column
                 if ((index >= 0) && (index < dataGrid.Columns.Count))
@@ -185,7 +185,7 @@ namespace System.Windows.Controls
         private static void OnColumnChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             DataGridCell cell = sender as DataGridCell;
-            if (cell != null)
+            if (cell is not null)
             {
                 cell.OnColumnChanged((DataGridColumn)e.OldValue, (DataGridColumn)e.NewValue);
             }
@@ -227,7 +227,7 @@ namespace System.Windows.Controls
         {
             var cell = (DataGridCell)d;
             var dataGrid = cell.DataGridOwner;
-            if ((bool)e.NewValue && dataGrid != null)
+            if ((bool)e.NewValue && dataGrid is not null)
             {
                 dataGrid.CancelEdit(cell);
             }
@@ -244,7 +244,7 @@ namespace System.Windows.Controls
         internal void NotifyPropertyChanged(DependencyObject d, string propertyName, DependencyPropertyChangedEventArgs e, DataGridNotificationTarget target)
         {
             DataGridColumn column = d as DataGridColumn;
-            if ((column != null) && (column != Column))
+            if ((column is not null) && (column != Column))
             {
                 // This notification does not apply to this cell
                 return;
@@ -278,13 +278,13 @@ namespace System.Windows.Controls
             // All the notifications which needs forward to columns
             if (DataGridHelper.ShouldRefreshCellContent(target))
             {
-                if (column != null && NeedsVisualTree)
+                if (column is not null && NeedsVisualTree)
                 {
                     if (!string.IsNullOrEmpty(propertyName))
                     {
                         column.RefreshCellContent(this, propertyName);
                     }
-                    else if (e.Property != null)
+                    else if (e.Property is not null)
                     {
                         column.RefreshCellContent(this, e.Property.Name);
                     }
@@ -381,14 +381,14 @@ namespace System.Windows.Controls
             if (NeedsVisualTree)
             {
                 var column = Column;
-                if (column != null)
+                if (column is not null)
                 {
                     // Work around a problem with BindingGroup not removing BindingExpressions.
                     var row = RowOwner;
-                    if (row != null)
+                    if (row is not null)
                     {
                         var bindingGroup = row.BindingGroup;
-                        if (bindingGroup != null)
+                        if (bindingGroup is not null)
                         {
                             RemoveBindingExpressions(bindingGroup, Content as DependencyObject);
                         }
@@ -401,7 +401,7 @@ namespace System.Windows.Controls
                     // bindings, as in ItemContainerGenerator.UnlinkContainerFromItem.
                     // This prevents aliasing that can arise in recycling mode
                     FrameworkElement oldContent = Content as FrameworkElement;
-                    if (oldContent != null && oldContent != newContent)
+                    if (oldContent is not null && oldContent != newContent)
                     {
                         ContentPresenter cp = oldContent as ContentPresenter;
                         if (cp is null)
@@ -504,10 +504,10 @@ namespace System.Windows.Controls
             {
                 var row = RowOwner;
                 var column = Column;
-                if (row != null && column != null)
+                if (row is not null && column is not null)
                 {
                     var dataGrid = row.DataGridOwner;
-                    if (dataGrid != null)
+                    if (dataGrid is not null)
                     {
                         return dataGrid.IsCurrent(row, column);
                     }
@@ -556,10 +556,10 @@ namespace System.Windows.Controls
             // Set DataGrid.FocusedCell to null, if the cell doesn't
             // have keyboard focus.
             DataGridCell cell = DataGridHelper.FindVisualParent<DataGridCell>(e.OriginalSource as UIElement);
-            if (cell != null && cell == sender)
+            if (cell is not null && cell == sender)
             {
                 DataGrid owner = cell.DataGridOwner;
-                if (owner != null && !cell.IsKeyboardFocusWithin && owner.FocusedCell == cell)
+                if (owner is not null && !cell.IsKeyboardFocusWithin && owner.FocusedCell == cell)
                 {
                     owner.FocusedCell = null;
                 }
@@ -569,10 +569,10 @@ namespace System.Windows.Controls
         private static void OnAnyGotFocus(object sender, RoutedEventArgs e)
         {
             DataGridCell cell = DataGridHelper.FindVisualParent<DataGridCell>(e.OriginalSource as UIElement);
-            if (cell != null && cell == sender)
+            if (cell is not null && cell == sender)
             {
                 DataGrid owner = cell.DataGridOwner;
-                if (owner != null)
+                if (owner is not null)
                 {
                     owner.FocusedCell = cell;
                 }
@@ -586,7 +586,7 @@ namespace System.Windows.Controls
             IsEditing = true;
 
             DataGridColumn column = Column;
-            if (column != null)
+            if (column is not null)
             {
                 // Ask the column to store the original value
                 column.BeginEdit(Content as FrameworkElement, e);
@@ -600,7 +600,7 @@ namespace System.Windows.Controls
             Debug.Assert(IsEditing, "Should not call CancelEdit when IsEditing is false.");
 
             DataGridColumn column = Column;
-            if (column != null)
+            if (column is not null)
             {
                 // Ask the column to restore the original value
                 column.CancelEdit(Content as FrameworkElement);
@@ -615,7 +615,7 @@ namespace System.Windows.Controls
 
             bool validationPassed = true;
             DataGridColumn column = Column;
-            if (column != null)
+            if (column is not null)
             {
                 // Ask the column to access the binding and update the data source
                 // If validation fails, then remain in editing mode
@@ -633,7 +633,7 @@ namespace System.Windows.Controls
         private void RaisePreparingCellForEdit(RoutedEventArgs editingEventArgs)
         {
             DataGrid dataGridOwner = DataGridOwner;
-            if (dataGridOwner != null)
+            if (dataGridOwner is not null)
             {
                 FrameworkElement currentEditingElement = EditingElement;
                 DataGridPreparingCellForEditEventArgs preparingCellForEditEventArgs = new DataGridPreparingCellForEditEventArgs(Column, RowOwner, editingEventArgs, currentEditingElement);
@@ -678,7 +678,7 @@ namespace System.Windows.Controls
             if (!cell._syncingIsSelected)
             {
                 DataGrid dataGrid = cell.DataGridOwner;
-                if (dataGrid != null)
+                if (dataGrid is not null)
                 {
                     // Notify the DataGrid that a cell's IsSelected property changed
                     // in case it was done programmatically instead of by the
@@ -909,7 +909,7 @@ namespace System.Windows.Controls
                 // The cell is focused and there are no other special selection gestures,
                 // enter edit mode.
                 DataGrid dataGridOwner = DataGridOwner;
-                if (dataGridOwner != null)
+                if (dataGridOwner is not null)
                 {
                     // The cell was clicked, which means that other cells may
                     // need to be de-selected, let the DataGrid handle that.
@@ -936,7 +936,7 @@ namespace System.Windows.Controls
                 }
 
                 DataGrid dataGridOwner = DataGridOwner;
-                if (dataGridOwner != null)
+                if (dataGridOwner is not null)
                 {
                     // Let the DataGrid process selection
                     dataGridOwner.HandleSelectionForCellInput(this, /* startDragging = */ Mouse.Captured is null, /* allowsExtendSelect = */ true, /* allowsMinimalSelect = */ true);
@@ -988,7 +988,7 @@ namespace System.Windows.Controls
                             updatedWidth = new DataGridLength(Column.ActualWidth - ColumnWidthStepSize);
                         }
 
-                        if (Column != null)
+                        if (Column is not null)
                         {
                             if (Column.CanColumnResize(updatedWidth))
                             {
@@ -1002,7 +1002,7 @@ namespace System.Windows.Controls
 
                 if (!IsDataGridKeyboardSortDisabled)
                 {
-                    if (e.Key == Key.F3 && Column != null && Column.CanUserSort)
+                    if (e.Key == Key.F3 && Column is not null && Column.CanUserSort)
                     {
                         Column.DataGridOwner.PerformSort(Column);
                         e.Handled = true;
@@ -1038,7 +1038,7 @@ namespace System.Windows.Controls
         private void SendInputToColumn(InputEventArgs e)
         {
             var column = Column;
-            if (column != null)
+            if (column is not null)
             {
                 column.OnInput(e);
             }
@@ -1060,7 +1060,7 @@ namespace System.Windows.Controls
             DataGridCell cell = (DataGridCell)d;
             Geometry geometry = baseValue as Geometry;
             Geometry frozenGeometry = DataGridHelper.GetFrozenClipForCell(cell);
-            if (frozenGeometry != null)
+            if (frozenGeometry is not null)
             {
                 if (geometry is null)
                 {
@@ -1081,7 +1081,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_owner != null)
+                if (_owner is not null)
                 {
                     DataGrid dataGridOwner = _owner.DataGridOwner;
                     if (dataGridOwner is null)
@@ -1114,7 +1114,7 @@ namespace System.Windows.Controls
             get
             {
                 DataGridRow row = RowOwner;
-                if (row != null)
+                if (row is not null)
                 {
                     return row.Item;
                 }

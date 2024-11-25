@@ -451,7 +451,7 @@ namespace System.Windows.Input
                         else 
                         {
                             // alt numpad entry was reset so composition needs to be finalized.
-                            if (_altNumpadcomposition != null)
+                            if (_altNumpadcomposition is not null)
                             {
                                 _altNumpadcomposition.ClearTexts();
                                 _altNumpadcomposition.Complete();
@@ -469,7 +469,7 @@ namespace System.Windows.Input
                 //As a result they are unhandled KeyDown events that are sent to translate input.
                 //
                 if (!keyArgs.Handled
-                    && (_deadCharTextComposition != null)
+                    && (_deadCharTextComposition is not null)
                     && (_deadCharTextComposition.Stage == TextCompositionStage.Started))
                 {
                     keyArgs.MarkDeadCharProcessed();
@@ -602,7 +602,7 @@ namespace System.Windows.Input
             
             // Raw to StartComposition.
             InputReportEventArgs input = e.StagingItem.Input as InputReportEventArgs;
-            if(input != null)
+            if(input is not null)
             {
                 if(input.Report.Type == InputType.Text && input.RoutedEvent == InputManager.InputReportEvent)
                 {
@@ -617,7 +617,7 @@ namespace System.Windows.Input
                     string inputText = new string(textInput.CharacterCode, 1);
                     bool fDoneAltNumpadComposition = false;
 
-                    if (_altNumpadcomposition != null)
+                    if (_altNumpadcomposition is not null)
                     {
                         // Generate TextInput event from WM_CHAR handler.
                         if (inputText.Equals(_altNumpadcomposition.Text))
@@ -653,7 +653,7 @@ namespace System.Windows.Input
                         }
                         else
                         {
-                            if (_deadCharTextComposition != null)
+                            if (_deadCharTextComposition is not null)
                             {
                                 input.Handled = CompleteDeadCharComposition(inputText,
                                                                             textInput.IsSystemCharacter,
@@ -688,7 +688,7 @@ namespace System.Windows.Input
                                                               bool isSystemCharacter,
                                                               bool isControlCharacter)
         {
-            if (_deadCharTextComposition != null)
+            if (_deadCharTextComposition is not null)
             {
                 _deadCharTextComposition.ClearTexts();
                 _deadCharTextComposition.SetText(inputText);
@@ -902,7 +902,7 @@ namespace System.Windows.Input
                     RegistryKey key;
 
                     key = Registry.CurrentUser.OpenSubKey("Control Panel\\Input Method");
-                    if (key != null)
+                    if (key is not null)
                     {
                         obj = key.GetValue("EnableHexNumpad");
 

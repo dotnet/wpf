@@ -194,7 +194,7 @@ namespace System.Windows
                                 {
                                     _fallbackState = FallbackState.Generic;
                                     Uri classicResourceUri = ThemeDictionaryExtension.GenerateFallbackUri(this, SystemResources.ClassicResourceName);
-                                    Debug.Assert(classicResourceUri != null);
+                                    Debug.Assert(classicResourceUri is not null);
 
                                     Source = classicResourceUri;
                                     // After this recursive call has returned we are sure
@@ -208,7 +208,7 @@ namespace System.Windows
                                     _fallbackState = FallbackState.None;
                                     Uri genericResourceUri = ThemeDictionaryExtension.GenerateFallbackUri(this, SystemResources.GenericResourceName);
 
-                                    Debug.Assert(genericResourceUri != null);
+                                    Debug.Assert(genericResourceUri is not null);
                                     Source = genericResourceUri;
 
                                 }
@@ -256,13 +256,13 @@ namespace System.Windows
                 InvalidatesImplicitDataTemplateResources = loadedRD.InvalidatesImplicitDataTemplateResources;
 
                 // Set inheritance context on the copied values
-                if (InheritanceContext != null)
+                if (InheritanceContext is not null)
                 {
                     AddInheritanceContextToValues();
                 }
 
                 // Propagate parent owners to each of the acquired merged dictionaries
-                if (_mergedDictionaries != null)
+                if (_mergedDictionaries is not null)
                 {
                     for (int i = 0; i < _mergedDictionaries.Count; i++)
                     {
@@ -360,7 +360,7 @@ namespace System.Windows
                 }
 
                 // Set all the merged resource dictionaries as ReadOnly
-                if (_mergedDictionaries != null)
+                if (_mergedDictionaries is not null)
                 {
                     for (int i = 0; i < _mergedDictionaries.Count; i++)
                     {
@@ -503,7 +503,7 @@ namespace System.Windows
         private object GetValueWithoutLock(object key, out bool canCache)
         {
             object value = _baseDictionary[key];
-            if (value != null)
+            if (value is not null)
             {
                 OnGettingValuePrivate(key, ref value, out canCache);
             }
@@ -512,16 +512,16 @@ namespace System.Windows
                 canCache = true;
 
                 //Search for the value in the Merged Dictionaries
-                if (_mergedDictionaries != null)
+                if (_mergedDictionaries is not null)
                 {
                     for (int i = MergedDictionaries.Count - 1; (i > -1); i--)
                     {
                         // Note that MergedDictionaries collection can also contain null values
                         ResourceDictionary mergedDictionary = MergedDictionaries[i];
-                        if (mergedDictionary != null)
+                        if (mergedDictionary is not null)
                         {
                             value = mergedDictionary.GetValue(key, out canCache);
-                            if (value != null)
+                            if (value is not null)
                             {
                                 break;
                             }
@@ -540,12 +540,12 @@ namespace System.Windows
             Type valueType = null;
 
             object value = _baseDictionary[key];
-            if (value != null)
+            if (value is not null)
             {
                 found = true;
 
                 KeyRecord keyRecord = value as KeyRecord;
-                if (keyRecord != null)
+                if (keyRecord is not null)
                 {
                     Debug.Assert(_numDefer > 0, "The stream was closed before all deferred content was loaded.");
                     valueType = GetTypeOfFirstObject(keyRecord);
@@ -559,13 +559,13 @@ namespace System.Windows
             else
             {
                 // Search for the value in the Merged Dictionaries
-                if (_mergedDictionaries != null)
+                if (_mergedDictionaries is not null)
                 {
                     for (int i = MergedDictionaries.Count - 1; (i > -1); i--)
                     {
                         // Note that MergedDictionaries collection can also contain null values
                         ResourceDictionary mergedDictionary = MergedDictionaries[i];
-                        if (mergedDictionary != null)
+                        if (mergedDictionary is not null)
                         {
                             valueType = mergedDictionary.GetValueType(key, out found);
                             if (found)
@@ -728,20 +728,20 @@ namespace System.Windows
             if (result)
             {
                 KeyRecord keyRecord = _baseDictionary[key] as KeyRecord;
-                if (keyRecord != null && _deferredLocationList.Contains(keyRecord))
+                if (keyRecord is not null && _deferredLocationList.Contains(keyRecord))
                 {
                     return false;
                 }
             }
 
             //Search for the value in the Merged Dictionaries
-            if (_mergedDictionaries != null)
+            if (_mergedDictionaries is not null)
             {
                 for (int i = MergedDictionaries.Count - 1; (i > -1) && !result; i--)
                 {
                     // Note that MergedDictionaries collection can also contain null values
                     ResourceDictionary mergedDictionary = MergedDictionaries[i];
-                    if (mergedDictionary != null)
+                    if (mergedDictionary is not null)
                     {
                         result = mergedDictionary.Contains(key);
                     }
@@ -756,7 +756,7 @@ namespace System.Windows
         /// </summary>
         private bool ContainsBamlObjectFactory(object key)
         {
-            return GetBamlObjectFactory(key) != null;
+            return GetBamlObjectFactory(key) is not null;
         }
 
         /// <summary>
@@ -771,16 +771,16 @@ namespace System.Windows
             }
 
             //Search for the value in the Merged Dictionaries
-            if (_mergedDictionaries != null)
+            if (_mergedDictionaries is not null)
             {
                 for (int i = MergedDictionaries.Count - 1; i > -1; i--)
                 {
                     // Note that MergedDictionaries collection can also contain null values
                     ResourceDictionary mergedDictionary = MergedDictionaries[i];
-                    if (mergedDictionary != null)
+                    if (mergedDictionary is not null)
                     {
                         KeyRecord keyRecord = mergedDictionary.GetBamlObjectFactory(key);
-                        if (keyRecord != null)
+                        if (keyRecord is not null)
                         {
                             return keyRecord;
                         }
@@ -994,12 +994,12 @@ namespace System.Windows
 
             OnGettingValue(key, ref value, out canCache);
 
-            if (key != null && canCache)
+            if (key is not null && canCache)
             {
                 if (!Object.Equals(_baseDictionary[key], value))
                 {
                     // cache the revised value, after setting its InheritanceContext
-                    if (InheritanceContext != null)
+                    if (InheritanceContext is not null)
                     {
                         AddInheritanceContext(InheritanceContext, value);
                     }
@@ -1065,7 +1065,7 @@ namespace System.Windows
 
             _deferredLocationList.Remove(keyRecord);
 
-            if (key != null)
+            if (key is not null)
             {
                 canCache = CanCache(keyRecord, value);
                 if (canCache)
@@ -1092,11 +1092,11 @@ namespace System.Windows
         /// </summary>
         private void SetDeferrableContent(DeferrableContent deferrableContent)
         {
-            Debug.Assert(deferrableContent.Stream != null);
-            Debug.Assert(deferrableContent.SchemaContext != null);
-            Debug.Assert(deferrableContent.ObjectWriterFactory != null);
-            Debug.Assert(deferrableContent.ServiceProvider != null);
-            Debug.Assert(deferrableContent.RootObject != null);
+            Debug.Assert(deferrableContent.Stream is not null);
+            Debug.Assert(deferrableContent.SchemaContext is not null);
+            Debug.Assert(deferrableContent.ObjectWriterFactory is not null);
+            Debug.Assert(deferrableContent.ServiceProvider is not null);
+            Debug.Assert(deferrableContent.RootObject is not null);
 
             Baml2006ReaderSettings settings = new Baml2006ReaderSettings(deferrableContent.SchemaContext.Settings);
             settings.IsBamlFragment = true;
@@ -1134,11 +1134,11 @@ namespace System.Windows
 
         private object GetKeyValue(KeyRecord key, IServiceProvider serviceProvider)
         {
-            if (key.KeyString != null)
+            if (key.KeyString is not null)
             {
                 return key.KeyString;
             }
-            else if (key.KeyType != null)
+            else if (key.KeyType is not null)
             {
                 return key.KeyType;
             }
@@ -1158,7 +1158,7 @@ namespace System.Windows
 
             object value = writer.Result;
             MarkupExtension me = value as MarkupExtension;
-            if (me != null)
+            if (me is not null)
             {
                 value = me.ProvideValue(serviceProvider);
             }
@@ -1213,7 +1213,7 @@ namespace System.Windows
             for (int i = 0; i < keyCollection.Count; i++)
             {
                 KeyRecord keyRecord = keyCollection[i];
-                if (keyRecord != null)
+                if (keyRecord is not null)
                 {
                     object value = GetKeyValue(keyRecord, serviceProvider);
 
@@ -1223,7 +1223,7 @@ namespace System.Windows
                     // Update the HasImplicitDataTemplates flag
                     UpdateHasImplicitDataTemplates(value);
 
-                    if (keyRecord != null && keyRecord.HasStaticResources)
+                    if (keyRecord is not null && keyRecord.HasStaticResources)
                     {
                         SetOptimizedStaticResources(keyRecord.StaticResources, serviceProvider, staticResourceWorker);
                     }
@@ -1273,14 +1273,14 @@ namespace System.Windows
         // a worker when calling TryProvideValueInternal, which saves us having to allocate on every call.
         private void SetOptimizedStaticResources(IList<object> staticResources, IServiceProvider serviceProvider, StaticResourceExtension staticResourceWorker)
         {
-            Debug.Assert(staticResources != null && staticResources.Count > 0);
+            Debug.Assert(staticResources is not null && staticResources.Count > 0);
             for (int i = 0; i < staticResources.Count; i++)
             {
                 object keyValue = null;
 
                 // Process OptimizedStaticResource
                 var optimizedStaticResource = staticResources[i] as OptimizedStaticResource;
-                if (optimizedStaticResource != null)
+                if (optimizedStaticResource is not null)
                 {
                     keyValue = optimizedStaticResource.KeyValue;
                 }
@@ -1288,11 +1288,11 @@ namespace System.Windows
                 {
                     // Process StaticResource  (it holds the NodeList of the StaticResourceExtension)
                     var staticResource = staticResources[i] as StaticResource;
-                    if (staticResource != null)
+                    if (staticResource is not null)
                     {
                         // find and evaluate the Key value of the SR in the SR's node stream.
                         keyValue = GetStaticResourceKeyValue(staticResource, serviceProvider);
-                        Debug.Assert(keyValue != null, "Didn't find the ResourceKey property or x:PositionalParameters directive");
+                        Debug.Assert(keyValue is not null, "Didn't find the ResourceKey property or x:PositionalParameters directive");
                     }
                     else
                     {
@@ -1321,7 +1321,7 @@ namespace System.Windows
 
         private void SetStaticResources(object[] staticResourceValues, ParserContext context)
         {
-            if (staticResourceValues != null && staticResourceValues.Length > 0)
+            if (staticResourceValues is not null && staticResourceValues.Length > 0)
             {
                 bool inDeferredSection = context.InDeferredSection;
 
@@ -1422,7 +1422,7 @@ namespace System.Windows
                 // all the values in the dictionary that want one.
                 DependencyObject inheritanceContext = owner as DependencyObject;
 
-                if (inheritanceContext != null)
+                if (inheritanceContext is not null)
                 {
                     _inheritanceContext = new WeakReference(inheritanceContext);
 
@@ -1443,7 +1443,7 @@ namespace System.Windows
             }
 
             FrameworkElement fe = owner as FrameworkElement;
-            if (fe != null)
+            if (fe is not null)
             {
                 if (_ownerFEs is null)
                 {
@@ -1465,7 +1465,7 @@ namespace System.Windows
             else
             {
                 FrameworkContentElement fce = owner as FrameworkContentElement;
-                if (fce != null)
+                if (fce is not null)
                 {
                     if (_ownerFCEs is null)
                     {
@@ -1487,7 +1487,7 @@ namespace System.Windows
                 else
                 {
                     Application app = owner as Application;
-                    if (app != null)
+                    if (app is not null)
                     {
                         if (_ownerApps is null)
                         {
@@ -1526,9 +1526,9 @@ namespace System.Windows
         internal void RemoveOwner(DispatcherObject owner)
         {
             FrameworkElement fe = owner as FrameworkElement;
-            if (fe != null)
+            if (fe is not null)
             {
-                if (_ownerFEs != null)
+                if (_ownerFEs is not null)
                 {
                     _ownerFEs.Remove(fe);
 
@@ -1541,9 +1541,9 @@ namespace System.Windows
             else
             {
                 FrameworkContentElement fce = owner as FrameworkContentElement;
-                if (fce != null)
+                if (fce is not null)
                 {
-                    if (_ownerFCEs != null)
+                    if (_ownerFCEs is not null)
                     {
                         _ownerFCEs.Remove(fce);
 
@@ -1556,9 +1556,9 @@ namespace System.Windows
                 else
                 {
                     Application app = owner as Application;
-                    if (app != null)
+                    if (app is not null)
                     {
-                        if (_ownerApps != null)
+                        if (_ownerApps is not null)
                         {
                             _ownerApps.Remove(app);
 
@@ -1584,23 +1584,23 @@ namespace System.Windows
         internal bool ContainsOwner(DispatcherObject owner)
         {
             FrameworkElement fe = owner as FrameworkElement;
-            if (fe != null)
+            if (fe is not null)
             {
-                return (_ownerFEs != null && _ownerFEs.Contains(fe));
+                return (_ownerFEs is not null && _ownerFEs.Contains(fe));
             }
             else
             {
                 FrameworkContentElement fce = owner as FrameworkContentElement;
-                if (fce != null)
+                if (fce is not null)
                 {
-                    return (_ownerFCEs != null && _ownerFCEs.Contains(fce));
+                    return (_ownerFCEs is not null && _ownerFCEs.Contains(fce));
                 }
                 else
                 {
                     Application app = owner as Application;
-                    if (app != null)
+                    if (app is not null)
                     {
-                        return (_ownerApps != null && _ownerApps.Contains(app));
+                        return (_ownerApps is not null && _ownerApps.Contains(app));
                     }
                 }
             }
@@ -1633,12 +1633,12 @@ namespace System.Windows
             if (shouldInvalidate || hasImplicitStyles)
             {
                 // Invalidate all FE owners
-                if (_ownerFEs != null)
+                if (_ownerFEs is not null)
                 {
                     foreach (Object o in _ownerFEs)
                     {
                         FrameworkElement fe = o as FrameworkElement;
-                        if (fe != null)
+                        if (fe is not null)
                         {
                             // Set the HasImplicitStyles flag on the owner
                             if (hasImplicitStyles)
@@ -1653,12 +1653,12 @@ namespace System.Windows
                 }
 
                 // Invalidate all FCE owners
-                if (_ownerFCEs != null)
+                if (_ownerFCEs is not null)
                 {
                     foreach (Object o in _ownerFCEs)
                     {
                         FrameworkContentElement fce = o as FrameworkContentElement;
-                        if (fce != null)
+                        if (fce is not null)
                         {
                             // Set the HasImplicitStyles flag on the owner
                             if (hasImplicitStyles)
@@ -1673,12 +1673,12 @@ namespace System.Windows
                 }
 
                 // Invalidate all App owners
-                if (_ownerApps != null)
+                if (_ownerApps is not null)
                 {
                     foreach (Object o in _ownerApps)
                     {
                         Application app = o as Application;
-                        if (app != null)
+                        if (app is not null)
                         {
                             // Set the HasImplicitStyles flag on the owner
                             if (hasImplicitStyles)
@@ -1723,7 +1723,7 @@ namespace System.Windows
             bool        canCacheAsThemeResource,
             out bool    canCache)
         {
-            Debug.Assert(resourceKey != null, "ResourceKey cannot be null");
+            Debug.Assert(resourceKey is not null, "ResourceKey cannot be null");
 
             if (allowDeferredResourceReference)
             {
@@ -1796,12 +1796,12 @@ namespace System.Windows
         {
             if (FrameworkAppContextSwitches.DisableDynamicResourceOptimization)
             {
-                if (_weakDeferredResourceReferences != null)
+                if (_weakDeferredResourceReferences is not null)
                 {
                     foreach (Object o in _weakDeferredResourceReferences)
                     {
                         DeferredResourceReference deferredResourceReference = o as DeferredResourceReference;
-                        if (deferredResourceReference != null && (resourceKey is null || Object.Equals(resourceKey, deferredResourceReference.Key)))
+                        if (deferredResourceReference is not null && (resourceKey is null || Object.Equals(resourceKey, deferredResourceReference.Key)))
                         {
                             // This will inflate the deferred reference, causing it
                             // to be removed from the list.  The list may also be
@@ -1862,8 +1862,8 @@ namespace System.Windows
             if (e.Action != NotifyCollectionChangedAction.Reset)
             {
                 Invariant.Assert(
-                    (e.NewItems != null && e.NewItems.Count > 0) ||
-                    (e.OldItems != null && e.OldItems.Count > 0),
+                    (e.NewItems is not null && e.NewItems.Count > 0) ||
+                    (e.OldItems is not null && e.OldItems.Count > 0),
                     "The NotifyCollectionChanged event fired when no dictionaries were added or removed");
 
 
@@ -1941,7 +1941,7 @@ namespace System.Windows
         /// <param name="owner"></param>
         private void AddOwnerToAllMergedDictionaries(DispatcherObject owner)
         {
-            if (_mergedDictionaries != null)
+            if (_mergedDictionaries is not null)
             {
                 for (int i = 0; i < _mergedDictionaries.Count; i++)
                 {
@@ -1956,7 +1956,7 @@ namespace System.Windows
         /// <param name="owner"></param>
         private void RemoveOwnerFromAllMergedDictionaries(DispatcherObject owner)
         {
-            if (_mergedDictionaries != null)
+            if (_mergedDictionaries is not null)
             {
                 for (int i = 0; i < _mergedDictionaries.Count; i++)
                 {
@@ -1978,7 +1978,7 @@ namespace System.Windows
         /// <param name="mergedDictionary"></param>
         private void PropagateParentOwners(ResourceDictionary mergedDictionary)
         {
-            if (_ownerFEs != null)
+            if (_ownerFEs is not null)
             {
                 Invariant.Assert(_ownerFEs.Count > 0);
 
@@ -1990,12 +1990,12 @@ namespace System.Windows
                 foreach (object o in _ownerFEs)
                 {
                     FrameworkElement fe = o as FrameworkElement;
-                    if (fe != null)
+                    if (fe is not null)
                         mergedDictionary.AddOwner(fe);
                 }
             }
 
-            if (_ownerFCEs != null)
+            if (_ownerFCEs is not null)
             {
                 Invariant.Assert(_ownerFCEs.Count > 0);
 
@@ -2007,12 +2007,12 @@ namespace System.Windows
                 foreach (object o in _ownerFCEs)
                 {
                     FrameworkContentElement fce = o as FrameworkContentElement;
-                    if (fce != null)
+                    if (fce is not null)
                         mergedDictionary.AddOwner(fce);
                 }
             }
 
-            if (_ownerApps != null)
+            if (_ownerApps is not null)
             {
                 Invariant.Assert(_ownerApps.Count > 0);
 
@@ -2024,7 +2024,7 @@ namespace System.Windows
                 foreach (object o in _ownerApps)
                 {
                     Application app = o as Application;
-                    if (app != null)
+                    if (app is not null)
                         mergedDictionary.AddOwner(app);
                 }
             }
@@ -2039,7 +2039,7 @@ namespace System.Windows
         /// <param name="mergedDictionary"></param>
         internal void RemoveParentOwners(ResourceDictionary mergedDictionary)
         {
-            if (_ownerFEs != null)
+            if (_ownerFEs is not null)
             {
                 foreach (Object o in _ownerFEs)
                 {
@@ -2049,7 +2049,7 @@ namespace System.Windows
                 }
             }
 
-            if (_ownerFCEs != null)
+            if (_ownerFCEs is not null)
             {
                 Invariant.Assert(_ownerFCEs.Count > 0);
 
@@ -2061,7 +2061,7 @@ namespace System.Windows
                 }
             }
 
-            if (_ownerApps != null)
+            if (_ownerApps is not null)
             {
                 Invariant.Assert(_ownerApps.Count > 0);
 
@@ -2303,7 +2303,7 @@ namespace System.Windows
         //
         private void SealValues()
         {
-            Debug.Assert(IsThemeDictionary || _ownerApps != null || IsReadOnly, "This must be an App/Theme/Style/Template ResourceDictionary");
+            Debug.Assert(IsThemeDictionary || _ownerApps is not null || IsReadOnly, "This must be an App/Theme/Style/Template ResourceDictionary");
 
             // sealing can cause DeferredResourceReferences to be replaced by the
             // inflated values.  This changes the Values collection,
@@ -2329,12 +2329,12 @@ namespace System.Windows
         private void SealValue(object value)
         {
             DependencyObject inheritanceContext = InheritanceContext;
-            if (inheritanceContext != null)
+            if (inheritanceContext is not null)
             {
                 AddInheritanceContext(inheritanceContext, value);
             }
 
-            if (IsThemeDictionary || _ownerApps != null || IsReadOnly)
+            if (IsThemeDictionary || _ownerApps is not null || IsReadOnly)
             {
                 // If the value is a ISealable then seal it
                 StyleHelper.SealIfSealable(value);
@@ -2357,7 +2357,7 @@ namespace System.Windows
                 // This makes sure the resource always gets inheritance-related information
                 // from its point of definition, not from its point of use.
                 DependencyObject doValue = value as DependencyObject;
-                if (doValue != null)
+                if (doValue is not null)
                 {
                     doValue.IsInheritanceContextSealed = true;
                 }
@@ -2391,7 +2391,7 @@ namespace System.Windows
             DependencyObject doValue = value as DependencyObject;
             DependencyObject inheritanceContext = InheritanceContext;
 
-            if (doValue != null && inheritanceContext != null &&
+            if (doValue is not null && inheritanceContext is not null &&
                 doValue.IsInheritanceContextSealed &&
                 doValue.InheritanceContext == inheritanceContext)
             {
@@ -2416,7 +2416,7 @@ namespace System.Windows
             // Update the HasImplicitStyles flag
             if (!HasImplicitStyles)
             {
-                HasImplicitStyles = ((key as Type) != null);
+                HasImplicitStyles = ((key as Type) is not null);
             }
         }
 
@@ -2434,7 +2434,7 @@ namespace System.Windows
         {
             get
             {
-                return (_inheritanceContext != null)
+                return (_inheritanceContext is not null)
                     ? (DependencyObject)_inheritanceContext.Target
                     : null;
             }
@@ -2464,7 +2464,7 @@ namespace System.Windows
                     {
                         SealValues();
                     }
-                    if (_mergedDictionaries != null)
+                    if (_mergedDictionaries is not null)
                     {
                         for (int i=0; i<_mergedDictionaries.Count; i++)
                         {
@@ -2539,7 +2539,7 @@ namespace System.Windows
                 _weakDeferredResourceReferences = loadedRD._weakDeferredResourceReferences;
 
                 // redirect each entry toward its new owner
-                if (_weakDeferredResourceReferences != null)
+                if (_weakDeferredResourceReferences is not null)
                 {
                     foreach (DeferredResourceReference drr in _weakDeferredResourceReferences)
                     {
@@ -2553,7 +2553,7 @@ namespace System.Windows
                 _deferredResourceReferencesList = loadedRD._deferredResourceReferencesList;
 
                 // redirect each entry toward its new owner
-                if (_deferredResourceReferencesList != null)
+                if (_deferredResourceReferencesList is not null)
                 {
                     _deferredResourceReferencesList.ChangeDictionary(this);
                 }

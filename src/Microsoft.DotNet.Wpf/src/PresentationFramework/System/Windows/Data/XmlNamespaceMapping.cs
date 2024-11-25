@@ -46,7 +46,7 @@ namespace System.Windows.Data
             {
                 if (!_initializing)
                     throw new InvalidOperationException(SR.Format(SR.PropertyIsInitializeOnly, "Prefix", this.GetType().Name));
-                if (_prefix != null && _prefix != value)
+                if (_prefix is not null && _prefix != value)
                     throw new InvalidOperationException(SR.Format(SR.PropertyIsImmutable, "Prefix", this.GetType().Name));
 
                 _prefix = value;
@@ -65,7 +65,7 @@ namespace System.Windows.Data
             {
                 if (!_initializing)
                     throw new InvalidOperationException(SR.Format(SR.PropertyIsInitializeOnly, "Uri", this.GetType().Name));
-                if (_uri != null && _uri != value)
+                if (_uri is not null && _uri != value)
                     throw new InvalidOperationException(SR.Format(SR.PropertyIsImmutable, "Uri", this.GetType().Name));
 
                 _uri = value;
@@ -121,9 +121,9 @@ namespace System.Windows.Data
             // will put an XmlNamespaceMapping into a hashtable before it is initialized.
 
             int hash = 0;
-            if (_prefix != null)
+            if (_prefix is not null)
                 hash = _prefix.GetHashCode();
-            if (_uri != null)
+            if (_uri is not null)
                 return unchecked(hash + _uri.GetHashCode());
             else
                 return hash;

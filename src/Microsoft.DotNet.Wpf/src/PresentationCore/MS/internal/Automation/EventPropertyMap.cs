@@ -52,7 +52,7 @@ namespace MS.Internal.Automation
         {
             using (_propertyLock.ReadLock)
             {
-                if (_propertyTable != null && _propertyTable.ContainsKey(dp))
+                if (_propertyTable is not null && _propertyTable.ContainsKey(dp))
                 {
                     return true;
                 }
@@ -112,13 +112,13 @@ namespace MS.Internal.Automation
         // Returns: true if the property table is empty after this operation.
         internal static bool RemovePropertyNotify(DependencyProperty [] properties)
         {
-            Debug.Assert(properties != null);
+            Debug.Assert(properties is not null);
 
             bool isEmpty = false;
 
             using (_propertyLock.WriteLock)
             {
-                if (_propertyTable != null)
+                if (_propertyTable is not null)
                 {
                     int cDPStart = _propertyTable.Count;
 

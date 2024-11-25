@@ -42,7 +42,7 @@ namespace MS.Internal
         public static Point TryClientToRoot(Point point, PresentationSource presentationSource, bool throwOnError, out bool success)
         {
             // Only do if we allow throwing on error or have a valid PresentationSource and CompositionTarget.
-            if (throwOnError || (presentationSource != null && presentationSource.CompositionTarget != null && !presentationSource.CompositionTarget.IsDisposed))
+            if (throwOnError || (presentationSource is not null && presentationSource.CompositionTarget is not null && !presentationSource.CompositionTarget.IsDisposed))
             {
                 // Convert from pixels into measure units.
                 point = presentationSource.CompositionTarget.TransformFromDevice.Transform(point);
@@ -110,7 +110,7 @@ namespace MS.Internal
             // The following code was copied from the MIL's TransformToAncestor
             // method on 12/16/2005.
             //
-            if(v != null)
+            if(v is not null)
             {
                 Matrix m = GetVisualTransform(v);
 
@@ -140,12 +140,12 @@ namespace MS.Internal
         /// </summary>
         internal static Matrix GetVisualTransform(Visual v)
         {
-            if (v != null)
+            if (v is not null)
             {
                 Matrix m = Matrix.Identity;
 
                 Transform transform = VisualTreeHelper.GetTransform(v);
-                if (transform != null)
+                if (transform is not null)
                 {
                     Matrix cm = transform.Value;
                     m = Matrix.Multiply(m, cm);

@@ -82,7 +82,7 @@ namespace System.Windows.Documents
 
             ImmComposition immComposition = null;
 
-            if (source != null)
+            if (source is not null)
             {
                 lock (_list)
                 {
@@ -111,7 +111,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            if (_editor != null)
+            if (_editor is not null)
             {
                 PresentationSource.RemoveSourceChangedHandler(UiScope, new SourceChangedEventHandler(OnSourceChanged));
                 _editor.TextContainer.Change -= new TextContainerChangeEventHandler(OnTextContainerChange);
@@ -134,7 +134,7 @@ namespace System.Windows.Documents
             }
 
             // remove source changed handler for previous editor.
-            if (_editor != null)
+            if (_editor is not null)
             {
                 PresentationSource.RemoveSourceChangedHandler(UiScope, new SourceChangedEventHandler(OnSourceChanged));
                 _editor.TextContainer.Change -= new TextContainerChangeEventHandler(OnTextContainerChange);
@@ -211,7 +211,7 @@ namespace System.Windows.Documents
                 UnsafeNativeMethods.ImmReleaseContext(new HandleRef(this, hwnd), new HandleRef(this, himc));
             }
 
-            if (_compositionAdorner != null)
+            if (_compositionAdorner is not null)
             {
                 _compositionAdorner.Uninitialize();
                 _compositionAdorner = null;
@@ -253,7 +253,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _startComposition != null;
+                return _startComposition is not null;
             }
         }
 
@@ -278,7 +278,7 @@ namespace System.Windows.Documents
             UpdateSource(oldSource, newSource);
 
             // Clean up the old source changed event handler that was connected with UiScope.
-            if (oldSource != null && UiScope != null)
+            if (oldSource is not null && UiScope is not null)
             {
                 // Remove the source changed event handler here.
                 // Ohterwise, we'll get the leak of the SourceChangedEventHandler.
@@ -307,7 +307,7 @@ namespace System.Windows.Documents
             // Detach the TextEditor.  This avoids leaks and crashes (DevDiv2 1162020, 1201925).
             OnDetach(_editor);
 
-            if (_source != null)
+            if (_source is not null)
             {
                 Debug.Assert((oldSource is null) || (oldSource == _source));
 
@@ -320,7 +320,7 @@ namespace System.Windows.Documents
                 _source = null;
             }
 
-            if (newSource != null)
+            if (newSource is not null)
             {
                 _list[newSource] = this;
                 _source = newSource;
@@ -625,7 +625,7 @@ namespace System.Windows.Documents
 
                         compositionTarget = _source.CompositionTarget;
 
-                        if (_startComposition != null)
+                        if (_startComposition is not null)
                         {
                             startNavigator = _startComposition.CreatePointer();
                         }
@@ -634,7 +634,7 @@ namespace System.Windows.Documents
                             startNavigator = _editor.Selection.Start.CreatePointer();
                         }
 
-                        if (_endComposition != null)
+                        if (_endComposition is not null)
                         {
                             endNavigator = _endComposition.CreatePointer();
                         }
@@ -643,7 +643,7 @@ namespace System.Windows.Documents
                             endNavigator = _editor.Selection.End.CreatePointer();
                         }
 
-                        if (_startComposition != null)
+                        if (_startComposition is not null)
                         {
                             caretNavigator = _caretOffset > 0 ? _startComposition.CreatePointer(_caretOffset, LogicalDirection.Forward) : _endComposition;
                         }
@@ -842,7 +842,7 @@ namespace System.Windows.Documents
                 //
                 // Remove any existing composition adorner for display attribute.
                 //
-                if (_compositionAdorner != null)
+                if (_compositionAdorner is not null)
                 {
                     _compositionAdorner.Uninitialize();
                     _compositionAdorner = null;
@@ -883,7 +883,7 @@ namespace System.Windows.Documents
                         return;
                     }
                 }
-                else if (compositionChars != null)
+                else if (compositionChars is not null)
                 {
                     //
                     // Raise TextInputUpdate.
@@ -911,7 +911,7 @@ namespace System.Windows.Documents
                     }
                 }
 
-                if (_startComposition != null)
+                if (_startComposition is not null)
                 {
                     SetCompositionAdorner(attributes);
                 }
@@ -963,7 +963,7 @@ namespace System.Windows.Documents
         {
             // Use the suggested value if it is on ATTR_INPUT, otherwise set the caret at the end of
             // composition string. So it always stays where the new char is inserted.
-            if ((attributes != null) &&
+            if ((attributes is not null) &&
                 // If the next char of the cursorPos is INPUTATTR.
                 (((caretOffset >= 0) &&
                   (caretOffset < attributes.Length) &&
@@ -1111,7 +1111,7 @@ namespace System.Windows.Documents
                     // DevDiv.1106868 We need to set ignoreTextUnitBoundaries to true in the TextRange constructor in case we are dealing with
                     // a supplementary character (a pair of surrogate characters that together form a single character), otherwise TextRange
                     // will break us out of the compound sequence
-                    if (composition._ResultStart != null)
+                    if (composition._ResultStart is not null)
                     {
                         //
                         // If we're here it means composition is being finalized
@@ -1173,7 +1173,7 @@ namespace System.Windows.Documents
         // Decorates the composition with IME specified underlining.
         private void SetCompositionAdorner(byte[] attributes)
         {
-            if (attributes != null)
+            if (attributes is not null)
             {
                 int startOffset = 0;
                 for (int i = 0; i < attributes.Length; i++)
@@ -1250,13 +1250,13 @@ namespace System.Windows.Documents
                 }
 
 #if UNUSED_IME_HIGHLIGHT_LAYER
-                            if (_highlightLayer != null)
+                            if (_highlightLayer is not null)
                             {
                                 _editor.TextContainer.Highlights.AddLayer(_highlightLayer);
                             }
 #endif
 
-                if (_compositionAdorner != null)
+                if (_compositionAdorner is not null)
                 {
                     // Update the layout to get the acurated rectangle from calling GetRectangleFromTextPosition
                     _editor.TextView.RenderScope.UpdateLayout();
@@ -1280,7 +1280,7 @@ namespace System.Windows.Documents
         // Stop listening mouse event for MSIME mouse operation.
         private void UnregisterMouseListeners()
         {
-            if (this.UiScope != null)
+            if (this.UiScope is not null)
             {
                 UiScope.PreviewMouseLeftButtonDown -= new MouseButtonEventHandler(OnMouseButtonEvent);
                 UiScope.PreviewMouseLeftButtonUp -= new MouseButtonEventHandler(OnMouseButtonEvent);
@@ -1338,7 +1338,7 @@ namespace System.Windows.Documents
             //
             // If there is the composition string, we use it. Otherwise we use the current selection.
             //
-            if (fDocFeed && (_startComposition != null) && (_endComposition != null))
+            if (fDocFeed && (_startComposition is not null) && (_endComposition is not null))
             {
                 range = new TextRange(_startComposition, _endComposition);
             }
@@ -1774,9 +1774,9 @@ namespace System.Windows.Documents
             parent = _editor.TextContainer.Parent;
             undoManager = UndoManager.GetUndoManager(parent);
 
-            if (undoManager != null && undoManager.IsEnabled && undoManager.OpenedUnit is null)
+            if (undoManager is not null && undoManager.IsEnabled && undoManager.OpenedUnit is null)
             {
-                if (_compositionUndoUnit != null && _compositionUndoUnit == undoManager.LastUnit && !_compositionUndoUnit.Locked)
+                if (_compositionUndoUnit is not null && _compositionUndoUnit == undoManager.LastUnit && !_compositionUndoUnit.Locked)
                 {
                     // Opens a closed composition undo unit on the top of the stack.
                     undoManager.Reopen(_compositionUndoUnit);
@@ -1805,9 +1805,9 @@ namespace System.Windows.Documents
             parent = _editor.TextContainer.Parent;
             undoManager = UndoManager.GetUndoManager(parent);
 
-            if (undoManager != null && undoManager.IsEnabled && undoManager.OpenedUnit != null)
+            if (undoManager is not null && undoManager.IsEnabled && undoManager.OpenedUnit is not null)
             {
-                if (_compositionUndoUnit != null)
+                if (_compositionUndoUnit is not null)
                 {
                     // Closes an opened composition unit and commit it to add the composition
                     // undo unit into the containing unit's undo stack.

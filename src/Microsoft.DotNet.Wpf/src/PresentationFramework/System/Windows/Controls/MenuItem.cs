@@ -348,7 +348,7 @@ namespace System.Windows.Controls
             if (value is null && !menuItem.HasNonDefaultValue(HeaderProperty))
             {
                 uiCommand = menuItem.Command as RoutedUICommand;
-                if (uiCommand != null)
+                if (uiCommand is not null)
                 {
                     value = uiCommand.Text;
                 }
@@ -358,13 +358,13 @@ namespace System.Windows.Controls
             // If the header had been set to a UICommand by the ItemsControl, replace it with the command's text
             uiCommand = value as RoutedUICommand;
 
-            if (uiCommand != null)
+            if (uiCommand is not null)
             {
                 // The header is equal to the command.
                 // If this MenuItem was generated for the command, then go ahead and overwrite the header
                 // since the generator automatically set the header.
                 ItemsControl parent = ItemsControl.ItemsControlFromItemContainer(menuItem);
-                if (parent != null)
+                if (parent is not null)
                 {
                     object originalItem = parent.ItemContainerGenerator.ItemFromContainer(menuItem);
 
@@ -409,11 +409,11 @@ namespace System.Windows.Controls
 
         private void OnCommandChanged(ICommand oldCommand, ICommand newCommand)
         {
-            if (oldCommand != null)
+            if (oldCommand is not null)
             {
                 UnhookCommand(oldCommand);
             }
-            if (newCommand != null)
+            if (newCommand is not null)
             {
                 HookCommand(newCommand);
             }
@@ -442,7 +442,7 @@ namespace System.Windows.Controls
         private void UpdateCanExecute()
         {
             MenuItem.SetBoolField(this, BoolField.CanExecuteInvalid, false);
-            if (Command != null)
+            if (Command is not null)
             {
                 // Perf optimization - only raise CanExecute event if the menu is open
                 MenuItem parent = ItemsControl.ItemsControlFromItemContainer(this) as MenuItem;
@@ -606,7 +606,7 @@ namespace System.Windows.Controls
             menuItem.StopTimer(ref menuItem._closeHierarchyTimer);
 
             MenuItemAutomationPeer peer = UIElementAutomationPeer.FromElement(menuItem) as MenuItemAutomationPeer;
-            if (peer != null)
+            if (peer is not null)
             {
                 peer.ResetChildrenCache();
                 peer.RaiseExpandCollapseAutomationEvent(oldValue, newValue);
@@ -633,7 +633,7 @@ namespace System.Windows.Controls
                 for (int i = 0; i < menuItem.Items.Count; i++)
                 {
                     MenuItem subItem = menuItem.ItemContainerGenerator.ContainerFromIndex(i) as MenuItem;
-                    if (subItem != null && MenuItem.GetBoolField(subItem, BoolField.CanExecuteInvalid))
+                    if (subItem is not null && MenuItem.GetBoolField(subItem, BoolField.CanExecuteInvalid))
                     {
                         subItem.UpdateCanExecute();
                     }
@@ -658,7 +658,7 @@ namespace System.Windows.Controls
             else
             {
                 // Our submenu is closing, so close our submenu's submenu
-                if (menuItem.CurrentSelection != null)
+                if (menuItem.CurrentSelection is not null)
                 {
                     // We're about to close the submenu -- if focus is within
                     // the subtree, we need to take it back so that Focus isn't
@@ -967,7 +967,7 @@ namespace System.Windows.Controls
             }
             
             MenuItemAutomationPeer peer = UIElementAutomationPeer.FromElement(menuItem) as MenuItemAutomationPeer;
-            if (peer != null)
+            if (peer is not null)
             {
                 peer.RaiseToggleStatePropertyChangedEvent(oldValue, newValue);
             }
@@ -1057,7 +1057,7 @@ namespace System.Windows.Controls
                 MenuItem menuItem = (MenuItem)sender;
                 MenuItem source = e.OriginalSource as MenuItem;
 
-                if (source != null)
+                if (source is not null)
                 {
                     if (e.NewValue)
                     {
@@ -1073,7 +1073,7 @@ namespace System.Windows.Controls
                         // change the CurrentSelection.
                         if (menuItem.CurrentSelection != source && source.LogicalParent == menuItem)
                         {
-                            if (menuItem.CurrentSelection != null && menuItem.CurrentSelection.IsSubmenuOpen)
+                            if (menuItem.CurrentSelection is not null && menuItem.CurrentSelection.IsSubmenuOpen)
                             {
                                 menuItem.CurrentSelection.SetCurrentValueInternal(IsSubmenuOpenProperty, BooleanBoxes.FalseBox);
                             }
@@ -1136,16 +1136,16 @@ namespace System.Windows.Controls
             RoutedCommand routedCommand;
 
             if (String.IsNullOrEmpty((string)value) && !menuItem.HasNonDefaultValue(InputGestureTextProperty)
-                && (routedCommand = menuItem.Command as RoutedCommand) != null )
+                && (routedCommand = menuItem.Command as RoutedCommand) is not null )
             {
                 InputGestureCollection col = routedCommand.InputGestures;
-                if ((col != null) && (col.Count >= 1))
+                if ((col is not null) && (col.Count >= 1))
                 {
                     // Search for the first key gesture
                     for (int i = 0; i < col.Count; i++)
                     {
                         KeyGesture keyGesture = ((IList)col)[i] as KeyGesture;
-                        if (keyGesture != null)
+                        if (keyGesture is not null)
                         {
                             return keyGesture.GetDisplayStringForCulture(CultureInfo.CurrentCulture);
                         }
@@ -1323,10 +1323,10 @@ namespace System.Windows.Controls
         internal static void PrepareMenuItem(DependencyObject element, object item)
         {
             MenuItem menuItem = element as MenuItem;
-            if (menuItem != null)
+            if (menuItem is not null)
             {
                 ICommand command = item as ICommand;
-                if (command != null)
+                if (command is not null)
                 {
                     if (!menuItem.HasNonDefaultValue(CommandProperty))
                     {
@@ -1342,7 +1342,7 @@ namespace System.Windows.Controls
             else
             {
                 Separator separator = item as Separator;
-                if (separator != null)
+                if (separator is not null)
                 {
                     bool hasModifiers;
                     BaseValueSourceInternal vs = separator.GetValueSource(StyleProperty, null, out hasModifiers);
@@ -1393,7 +1393,7 @@ namespace System.Windows.Controls
             if (AutomationPeer.ListenerExists(AutomationEvents.InvokePatternOnInvoked))
             {
                 AutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(this);
-                if (peer != null)
+                if (peer is not null)
                     peer.RaiseAutomationEvent(AutomationEvents.InvokePatternOnInvoked);
             }
 
@@ -1597,7 +1597,7 @@ namespace System.Windows.Controls
 
                     DependencyObject source = e.Source as DependencyObject;
 
-                    while (source != null)
+                    while (source is not null)
                     {
                         // If we walk up to this Menuitem, we are not the scope.
                         if (source == menuItem)
@@ -1608,7 +1608,7 @@ namespace System.Windows.Controls
                         UIElement uiElement = source as UIElement;
 
                         // If we walk up to an item which is one of our children, we are their scope.
-                        if ((uiElement != null) && (ItemsControlFromItemContainer(uiElement) == menuItem))
+                        if ((uiElement is not null) && (ItemsControlFromItemContainer(uiElement) == menuItem))
                         {
                             isScope = true;
                             break;
@@ -1664,7 +1664,7 @@ namespace System.Windows.Controls
         {
             // Ignore any mouse moves on ourselves while the popup is opening.
             MenuItem parent = ItemsControl.ItemsControlFromItemContainer(this) as MenuItem;
-            if (parent != null &&
+            if (parent is not null &&
                 MenuItem.GetBoolField(parent, BoolField.MouseEnterOnMouseMove))
             {
                 MenuItem.SetBoolField(parent, BoolField.MouseEnterOnMouseMove, false);
@@ -1815,7 +1815,7 @@ namespace System.Windows.Controls
                         if (IsKeyboardFocusWithin)
                         {
                             ItemsControl parent = ItemsControl.ItemsControlFromItemContainer(this);
-                            if (parent != null)
+                            if (parent is not null)
                             {
                                 parent.Focus();
                             }
@@ -2001,7 +2001,7 @@ namespace System.Windows.Controls
                  * The IgnoreFlag could be set if multiple KeyPresses happen before the key ups.  There only needs to be one dispatcher
                  * on the queue.
                  * */
-                if ((parent != null) && (!MenuItem.GetBoolField(parent, BoolField.IgnoreMouseEvents)))
+                if ((parent is not null) && (!MenuItem.GetBoolField(parent, BoolField.IgnoreMouseEvents)))
                 {
                     //Ignore Mouse Events
                     MenuItem.SetBoolField(parent, BoolField.IgnoreMouseEvents, true);
@@ -2107,7 +2107,7 @@ namespace System.Windows.Controls
             if (UsesItemContainerTemplate)
             {
                 DataTemplate itemContainerTemplate = ItemContainerTemplateSelector.SelectTemplate(currentItem, this);
-                if (itemContainerTemplate != null)
+                if (itemContainerTemplate is not null)
                 {
                     object itemContainer = itemContainerTemplate.LoadContent();
                     if (itemContainer is MenuItem || itemContainer is Separator)
@@ -2140,15 +2140,15 @@ namespace System.Windows.Controls
 
             DependencyObject newParent = VisualTreeHelper.GetParentInternal(this);
 
-            // logical parent != null
-            // visual parent != null
+            // logical parent is not null
+            // visual parent is not null
             // logical parent != visual parent <-- we are in the MenuItem is a logical child of a MenuItem case, not a data container case
             // --- Set one-way binding with visual parent for DefinitionBase.PrivateSharedSizeScopeProperty
             // NOTE: It seems impossible to get shared size scope to work in this hierarchical scenario
             // under normal conditions, so putting this binding here without respecting an author's desire for
             // shared size scope on the MenuItem container should be OK, since they wouldn't be able to
             // get it to work anyway.
-            if (Parent != null && newParent != null && Parent != newParent)
+            if (Parent is not null && newParent is not null && Parent != newParent)
             {
                 Binding binding = new Binding();
                 binding.Path = new PropertyPath(DefinitionBase.PrivateSharedSizeScopeProperty);
@@ -2172,14 +2172,14 @@ namespace System.Windows.Controls
         {
             base.OnApplyTemplate();
 
-            if (_submenuPopup != null)
+            if (_submenuPopup is not null)
             {
                 _submenuPopup.Closed -= OnPopupClosed;
             }
 
             _submenuPopup = GetTemplateChild(PopupTemplateName) as Popup;
 
-            if (_submenuPopup != null)
+            if (_submenuPopup is not null)
             {
                 _submenuPopup.Closed += OnPopupClosed;
             }
@@ -2201,7 +2201,7 @@ namespace System.Windows.Controls
 
             MenuBase parentMenu = LogicalParent as MenuBase;
 
-            if (parentMenu != null)
+            if (parentMenu is not null)
             {
                 if (parentMenu.IsMenuMode != menuMode)
                 {
@@ -2218,7 +2218,7 @@ namespace System.Windows.Controls
             get
             {
                 MenuBase parentMenu = LogicalParent as MenuBase;
-                if (parentMenu != null)
+                if (parentMenu is not null)
                 {
                     return parentMenu.IsMenuMode;
                 }
@@ -2235,7 +2235,7 @@ namespace System.Windows.Controls
             get
             {
                 MenuBase parentMenu = LogicalParent as MenuBase;
-                if (parentMenu != null)
+                if (parentMenu is not null)
                 {
                     Debug.Assert(!parentMenu.OpenOnMouseEnter || parentMenu.IsMenuMode, "OpenOnMouseEnter can only be true when IsMenuMode is true");
                     return parentMenu.OpenOnMouseEnter;
@@ -2319,7 +2319,7 @@ namespace System.Windows.Controls
                     owner = VisualTreeHelper.GetParent(this) as ItemsControl;
                 }
 
-                if ((owner != null) && ((owner is MenuItem) || (owner is MenuBase)))
+                if ((owner is not null) && ((owner is MenuItem) || (owner is MenuBase)))
                 {
                     // Parent must be MenuItem or MenuBase in order for menus to open.
                     // Otherwise, odd behavior will occur.
@@ -2354,7 +2354,7 @@ namespace System.Windows.Controls
             if (key == Key.Left || key == Key.Right || key == Key.Up || key == Key.Down)
             {
                 ItemsControl parent = ItemsControlFromItemContainer(this);
-                if (parent != null)
+                if (parent is not null)
                 {
                     if (!parent.HasItems)
                     {
@@ -2395,7 +2395,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (Parent != null)
+                if (Parent is not null)
                 {
                     return Parent;
                 }
@@ -2416,7 +2416,7 @@ namespace System.Windows.Controls
                 MenuItem menuItemParent = parent as MenuItem;
                 MenuItem sibling = null;
 
-                if (menuItemParent != null)
+                if (menuItemParent is not null)
                 {
                     sibling = menuItemParent.CurrentSelection;
                 }
@@ -2424,7 +2424,7 @@ namespace System.Windows.Controls
                 {
                     MenuBase menuParent = parent as MenuBase;
 
-                    if (menuParent != null)
+                    if (menuParent is not null)
                     {
                         sibling = menuParent.CurrentSelection;
                     }
@@ -2460,7 +2460,7 @@ namespace System.Windows.Controls
                 //       of the start menu, where a menu doesn't close unless
                 //       you have settled on another hierarchy.  Here we will
                 //       close unless you are settled on this item's hierarchy.
-                if (parent != null && IsMouseReallyOver(parent) && !IsMouseOver)
+                if (parent is not null && IsMouseReallyOver(parent) && !IsMouseOver)
                 {
                     return true;
                 }
@@ -2577,7 +2577,7 @@ namespace System.Windows.Controls
 
         private void StopTimer(ref DispatcherTimer timer)
         {
-            if (timer != null)
+            if (timer is not null)
             {
                 timer.Stop();
                 timer = null;
@@ -2586,7 +2586,7 @@ namespace System.Windows.Controls
 
         private void StartTimer(DispatcherTimer timer)
         {
-            Debug.Assert(timer != null, "timer should not be null.");
+            Debug.Assert(timer is not null, "timer should not be null.");
             Debug.Assert(!timer.IsEnabled, "timer should not be running.");
 
             timer.Interval = TimeSpan.FromMilliseconds(SystemParameters.MenuShowDelay);
@@ -2630,14 +2630,14 @@ namespace System.Windows.Controls
 
             set
             {
-                if (_currentSelection != null)
+                if (_currentSelection is not null)
                 {
                     _currentSelection.SetCurrentValueInternal(IsSelectedProperty, BooleanBoxes.FalseBox);
                 }
 
                 _currentSelection = value;
 
-                if (_currentSelection != null)
+                if (_currentSelection is not null)
                 {
                     _currentSelection.SetCurrentValueInternal(IsSelectedProperty, BooleanBoxes.TrueBox);
                 }

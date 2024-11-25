@@ -205,7 +205,7 @@ namespace MS.Internal.Ink
         internal void Select(StrokeCollection strokes, IList<UIElement> elements, bool raiseSelectionChanged)
         {
             // Can't be null.
-            Debug.Assert(strokes != null && elements != null);
+            Debug.Assert(strokes is not null && elements is not null);
 
             //
             // check to see if we're different.  If not, there is no need to raise the changed event
@@ -622,7 +622,7 @@ namespace MS.Internal.Ink
         /// </summary>
         private void QuitListeningToStrokeChanges()
         {
-            if ( _inkCanvas.Strokes != null )
+            if ( _inkCanvas.Strokes is not null )
             {
                 _inkCanvas.Strokes.StrokesChanged -= new StrokeCollectionChangedEventHandler(this.OnStrokeCollectionChanged);
             }
@@ -638,7 +638,7 @@ namespace MS.Internal.Ink
         /// </summary>
         private void ListenToStrokeChanges()
         {
-            if ( _inkCanvas.Strokes != null )
+            if ( _inkCanvas.Strokes is not null )
             {
                 _inkCanvas.Strokes.StrokesChanged += new StrokeCollectionChangedEventHandler(this.OnStrokeCollectionChanged);
             }
@@ -975,7 +975,7 @@ namespace MS.Internal.Ink
             else
             {
                 // Remove the handler if there is one.
-                if ( _layoutUpdatedHandler != null )
+                if ( _layoutUpdatedHandler is not null )
                 {
                     _inkCanvas.InnerCanvas.LayoutUpdated -= _layoutUpdatedHandler;
                     _layoutUpdatedHandler = null;

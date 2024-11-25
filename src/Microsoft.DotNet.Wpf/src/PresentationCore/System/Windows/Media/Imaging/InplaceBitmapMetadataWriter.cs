@@ -59,7 +59,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         static internal InPlaceBitmapMetadataWriter CreateFromFrameDecode(BitmapSourceSafeMILHandle frameHandle, object syncObject)
         {
-            Invariant.Assert(frameHandle != null);
+            Invariant.Assert(frameHandle is not null);
 
             SafeMILHandle /* IWICFastMetadataEncoder */ fmeHandle = null;
             SafeMILHandle /* IWICMetadataQueryWriter */ metadataHandle = null;
@@ -87,7 +87,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         static internal InPlaceBitmapMetadataWriter CreateFromDecoder(SafeMILHandle decoderHandle, object syncObject)
         {
-            Invariant.Assert(decoderHandle != null);
+            Invariant.Assert(decoderHandle is not null);
 
             SafeMILHandle /* IWICFastMetadataEncoder */ fmeHandle = null;
             SafeMILHandle /* IWICMetadataQueryWriter */ metadataHandle = null;
@@ -117,7 +117,7 @@ namespace System.Windows.Media.Imaging
         {
             int hr;
 
-            Invariant.Assert(_fmeHandle != null);
+            Invariant.Assert(_fmeHandle is not null);
 
             lock (SyncObject)
             {

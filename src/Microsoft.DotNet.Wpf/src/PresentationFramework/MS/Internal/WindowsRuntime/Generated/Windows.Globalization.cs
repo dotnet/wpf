@@ -322,7 +322,7 @@ namespace ABI.Windows.Globalization
         }
         public static ObjectReference<Vftbl> FromAbi(IntPtr thisPtr) => ObjectReference<Vftbl>.FromAbi(thisPtr);
 
-        public static implicit operator ILanguage(IObjectReference obj) => (obj != null) ? new ILanguage(obj) : null;
+        public static implicit operator ILanguage(IObjectReference obj) => (obj is not null) ? new ILanguage(obj) : null;
         protected readonly ObjectReference<Vftbl> _obj;
         public IObjectReference ObjRef { get => _obj; }
         public IntPtr ThisPtr => _obj.ThisPtr;
@@ -449,7 +449,7 @@ namespace ABI.Windows.Globalization
         }
         public static ObjectReference<Vftbl> FromAbi(IntPtr thisPtr) => ObjectReference<Vftbl>.FromAbi(thisPtr);
 
-        public static implicit operator ILanguage2(IObjectReference obj) => (obj != null) ? new ILanguage2(obj) : null;
+        public static implicit operator ILanguage2(IObjectReference obj) => (obj is not null) ? new ILanguage2(obj) : null;
         protected readonly ObjectReference<Vftbl> _obj;
         public IObjectReference ObjRef { get => _obj; }
         public IntPtr ThisPtr => _obj.ThisPtr;
@@ -523,7 +523,7 @@ namespace ABI.Windows.Globalization
         }
         public static ObjectReference<Vftbl> FromAbi(IntPtr thisPtr) => ObjectReference<Vftbl>.FromAbi(thisPtr);
 
-        public static implicit operator ILanguageExtensionSubtags(IObjectReference obj) => (obj != null) ? new ILanguageExtensionSubtags(obj) : null;
+        public static implicit operator ILanguageExtensionSubtags(IObjectReference obj) => (obj is not null) ? new ILanguageExtensionSubtags(obj) : null;
         protected readonly ObjectReference<Vftbl> _obj;
         public IObjectReference ObjRef { get => _obj; }
         public IntPtr ThisPtr => _obj.ThisPtr;
@@ -604,7 +604,7 @@ namespace ABI.Windows.Globalization
         }
         public static ObjectReference<Vftbl> FromAbi(IntPtr thisPtr) => ObjectReference<Vftbl>.FromAbi(thisPtr);
 
-        public static implicit operator ILanguageFactory(IObjectReference obj) => (obj != null) ? new ILanguageFactory(obj) : null;
+        public static implicit operator ILanguageFactory(IObjectReference obj) => (obj is not null) ? new ILanguageFactory(obj) : null;
         protected readonly ObjectReference<Vftbl> _obj;
         public IObjectReference ObjRef { get => _obj; }
         public IntPtr ThisPtr => _obj.ThisPtr;
@@ -706,7 +706,7 @@ namespace ABI.Windows.Globalization
         }
         public static ObjectReference<Vftbl> FromAbi(IntPtr thisPtr) => ObjectReference<Vftbl>.FromAbi(thisPtr);
 
-        public static implicit operator ILanguageStatics(IObjectReference obj) => (obj != null) ? new ILanguageStatics(obj) : null;
+        public static implicit operator ILanguageStatics(IObjectReference obj) => (obj is not null) ? new ILanguageStatics(obj) : null;
         protected readonly ObjectReference<Vftbl> _obj;
         public IObjectReference ObjRef { get => _obj; }
         public IntPtr ThisPtr => _obj.ThisPtr;
@@ -803,7 +803,7 @@ namespace ABI.Windows.Globalization
         }
         public static ObjectReference<Vftbl> FromAbi(IntPtr thisPtr) => ObjectReference<Vftbl>.FromAbi(thisPtr);
 
-        public static implicit operator ILanguageStatics2(IObjectReference obj) => (obj != null) ? new ILanguageStatics2(obj) : null;
+        public static implicit operator ILanguageStatics2(IObjectReference obj) => (obj is not null) ? new ILanguageStatics2(obj) : null;
         protected readonly ObjectReference<Vftbl> _obj;
         public IObjectReference ObjRef { get => _obj; }
         public IntPtr ThisPtr => _obj.ThisPtr;

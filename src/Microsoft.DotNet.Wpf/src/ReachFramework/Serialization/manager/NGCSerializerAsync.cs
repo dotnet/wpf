@@ -672,7 +672,7 @@ namespace System.Windows.Xps.Serialization
 
 
 
-            if (paginator != null)
+            if (paginator is not null)
             {
                 NGCDocumentPaginatorSerializerContext
                 paginatorContext = new NGCDocumentPaginatorSerializerContext(this,
@@ -717,7 +717,7 @@ namespace System.Windows.Xps.Serialization
 
             NGCDocumentPaginatorSerializerContext paginatorContext = context as NGCDocumentPaginatorSerializerContext;
 
-            if(paginatorContext != null)
+            if(paginatorContext is not null)
             {
                 DocumentPaginator  paginator = paginatorContext.Paginator;
                 int                index     = paginatorContext.Index;
@@ -741,7 +741,7 @@ namespace System.Windows.Xps.Serialization
                     
                     ReachSerializer serializer = SerializationManager.GetSerializer(page);
 
-                    if (serializer != null)
+                    if (serializer is not null)
                     {
                         serializer.SerializeObject(page);
                     }
@@ -833,7 +833,7 @@ namespace System.Windows.Xps.Serialization
             Size pageSize = new Size(fp.Width, fp.Height);
             NgcSerializationManager.PageSize = pageSize;
             
-            if (visual != null)
+            if (visual is not null)
             {
                 NgcSerializationManager.WalkVisual(visual);
             }
@@ -927,7 +927,7 @@ namespace System.Windows.Xps.Serialization
             )
         {
             DocumentPage dp = serializedObject as DocumentPage;
-            if (dp != null)
+            if (dp is not null)
             {
                 Visual pageRootVisual = dp.Visual;
 
@@ -1031,7 +1031,7 @@ namespace System.Windows.Xps.Serialization
         {
             Visual visual = serializedObject as Visual;
 
-            if (visual != null)
+            if (visual is not null)
             {
                 NgcSerializationManager.WalkVisual(visual);
             }
@@ -1050,7 +1050,7 @@ namespace System.Windows.Xps.Serialization
 
             Visual visual = (Visual)serializableObjectContext.TargetObject as Visual;
 
-            if (visual != null)
+            if (visual is not null)
             {
                 NgcSerializationManager.WalkVisual(visual);
             }
@@ -1210,7 +1210,7 @@ namespace System.Windows.Xps.Serialization
                     NgcDocumentReferenceCollectionSerializerContext thisContext =
                     context as NgcDocumentReferenceCollectionSerializerContext;
 
-                    if(thisContext != null)
+                    if(thisContext is not null)
                     {
                         SerializeNextDocumentReference(thisContext.Enumerator,
                                                        thisContext.ObjectContext);
@@ -1313,14 +1313,14 @@ namespace System.Windows.Xps.Serialization
         {
             IDocumentPaginatorSource idp = ((DocumentReference)documentReference).GetDocument(false);
             
-            if (idp != null)
+            if (idp is not null)
             {
                 FixedDocument fixedDoc = idp as FixedDocument;
 
-                if (fixedDoc != null)
+                if (fixedDoc is not null)
                 {
                     ReachSerializer serializer = NgcSerializationManager.GetSerializer(fixedDoc);
-                    if (serializer != null)
+                    if (serializer is not null)
                     {
                         serializer.SerializeObject(fixedDoc);
                     }
@@ -1328,7 +1328,7 @@ namespace System.Windows.Xps.Serialization
                 else
                 {
                     ReachSerializer serializer = NgcSerializationManager.GetSerializer(idp.DocumentPaginator);
-                    if (serializer != null)
+                    if (serializer is not null)
                     {
                         serializer.SerializeObject(idp);
                     }

@@ -251,7 +251,7 @@ namespace System.Windows.Controls
             double constraintHeight = constraint.Height;
             bool desiredWidthListEnsured = false;
 
-            if (columns != null)
+            if (columns is not null)
             {
                 // Measure working headers
                 for (int i = 0; i < columns.Count; ++i)
@@ -301,7 +301,7 @@ namespace System.Windows.Controls
             }
 
             // Measure padding header
-            Debug.Assert(_paddingHeader != null, "padding header is null");
+            Debug.Assert(_paddingHeader is not null, "padding header is null");
             _paddingHeader.Measure(new Size(0.0, constraintHeight));
             maxHeight = Math.Max(maxHeight, _paddingHeader.DesiredSize.Height);
 
@@ -311,8 +311,8 @@ namespace System.Windows.Controls
             // Measure indicator & floating header in re-ordering
             if (_isHeaderDragging)
             {
-                Debug.Assert(_indicator != null, "_indicator is null");
-                Debug.Assert(_floatingHeader != null, "_floatingHeader is null");
+                Debug.Assert(_indicator is not null, "_indicator is null");
+                Debug.Assert(_floatingHeader is not null, "_floatingHeader is null");
 
                 // Measure indicator
                 _indicator.Measure(constraint);
@@ -341,7 +341,7 @@ namespace System.Windows.Controls
 
             HeadersPositionList.Clear();
 
-            if (columns != null)
+            if (columns is not null)
             {
                 // Arrange working headers
                 for (int i = 0; i < columns.Count; ++i)
@@ -385,7 +385,7 @@ namespace System.Windows.Controls
             }
 
             // Arrange padding header
-            Debug.Assert(_paddingHeader != null, "padding header is null");
+            Debug.Assert(_paddingHeader is not null, "padding header is null");
             rect = new Rect(accumulatedWidth, 0.0, Math.Max(remainingWidth, 0.0), arrangeSize.Height);
             _paddingHeader.Arrange(rect);
             HeadersPositionList.Add(rect);
@@ -410,7 +410,7 @@ namespace System.Windows.Controls
         {
             GridViewColumnHeader header = e.Source as GridViewColumnHeader;
 
-            if (header != null && AllowsColumnReorder)
+            if (header is not null && AllowsColumnReorder)
             {
                 PrepareHeaderDrag(header, e.GetPosition(this), e.GetPosition(header), false);
 
@@ -454,7 +454,7 @@ namespace System.Windows.Controls
                 // if prepare re-order or already re-order
                 if (_prepareDragging)
                 {
-                    Debug.Assert(_draggingSrcHeader != null, "_draggingSrcHeader is null");
+                    Debug.Assert(_draggingSrcHeader is not null, "_draggingSrcHeader is null");
 
                     _currentPos = e.GetPosition(this);
                     _desColumnIndex = FindIndexByPosition(_currentPos, true);
@@ -609,7 +609,7 @@ namespace System.Windows.Controls
                 // The interesting thing is headers must be built from right to left,
                 // in order to make the left header's gripper overlay the right header
                 //
-                if (columns != null)
+                if (columns is not null)
                 {
                     int visualIndex = 1;
 
@@ -637,11 +637,11 @@ namespace System.Windows.Controls
         /// </summary>
         internal override void OnColumnPropertyChanged(GridViewColumn column, string propertyName)
         {
-            Debug.Assert(column != null);
+            Debug.Assert(column is not null);
             if (column.ActualIndex >= 0)
             {
                 GridViewColumnHeader header = FindHeaderByColumn(column);
-                if (header != null)
+                if (header is not null)
                 {
                     if (GridViewColumn.WidthProperty.Name.Equals(propertyName)
                         || GridViewColumn.c_ActualWidthName.Equals(propertyName))
@@ -674,7 +674,7 @@ namespace System.Windows.Controls
                     {
                         DependencyProperty columnDP = GetColumnDPFromName(propertyName);
 
-                        if (columnDP != null)
+                        if (columnDP is not null)
                         {
                             UpdateHeaderProperty(header, columnDP);
                         }
@@ -745,11 +745,11 @@ namespace System.Windows.Controls
         // make this method internal, so GVCH can call it when header is invoked through access key
         internal void MakeParentItemsControlGotFocus()
         {
-            if (_itemsControl != null && !_itemsControl.IsKeyboardFocusWithin)
+            if (_itemsControl is not null && !_itemsControl.IsKeyboardFocusWithin)
             {
                 // send focus to item.
                 ListBox parent = _itemsControl as ListBox;
-                if (parent != null && parent.LastActionItem != null)
+                if (parent is not null && parent.LastActionItem is not null)
                 {
                     parent.LastActionItem.Focus();
                 }
@@ -806,7 +806,7 @@ namespace System.Windows.Controls
             bool desiredWidthChanged = false; // whether the shared minimum width has been changed since last layout
 
             GridViewColumnCollection columns = Columns;
-            if (columns != null)
+            if (columns is not null)
             {
                 foreach (GridViewColumn column in columns)
                 {
@@ -865,7 +865,7 @@ namespace System.Windows.Controls
         {
             GridViewColumnHeader lastHeader = null;
 
-            if (Columns != null)
+            if (Columns is not null)
             {
                 // link working headers.
                 for (int i = 0; i < Columns.Count; i++)
@@ -877,7 +877,7 @@ namespace System.Windows.Controls
             }
 
             // link padding header to last header
-            if (_paddingHeader != null)
+            if (_paddingHeader is not null)
             {
                 _paddingHeader.PreviousVisualHeader = lastHeader;
             }
@@ -913,26 +913,26 @@ namespace System.Windows.Controls
             // In both cases, we need to diconnect them from the visual and logical tree before
             // they got inserted into the new tree.
             //
-            if (header != null)
+            if (header is not null)
             {
                 DependencyObject d = header as DependencyObject;
 
-                if (d != null)
+                if (d is not null)
                 {
                     // disconnect from visual tree
                     Visual headerAsVisual = d as Visual;
 
-                    if (headerAsVisual != null)
+                    if (headerAsVisual is not null)
                     {
                         Visual parent = VisualTreeHelper.GetParent(headerAsVisual) as Visual;
 
-                        if (parent != null)
+                        if (parent is not null)
                         {
-                            if (headerContainer != null)
+                            if (headerContainer is not null)
                             {
                                 // case 1
                                 GridViewHeaderRowPresenter parentAsGVHRP = parent as GridViewHeaderRowPresenter;
-                                if (parentAsGVHRP != null)
+                                if (parentAsGVHRP is not null)
                                 {
                                     parentAsGVHRP.InternalChildren.RemoveNoVerify(headerContainer);
                                 }
@@ -945,7 +945,7 @@ namespace System.Windows.Controls
                             {
                                 // case 2
                                 GridViewColumnHeader parentAsGVCH = parent as GridViewColumnHeader;
-                                if (parentAsGVCH != null)
+                                if (parentAsGVCH is not null)
                                 {
                                     parentAsGVCH.ClearValue(ContentControl.ContentProperty);
                                 }
@@ -956,7 +956,7 @@ namespace System.Windows.Controls
                     // disconnect from logical tree
                     DependencyObject logicalParent = LogicalTreeHelper.GetParent(d);
 
-                    if (logicalParent != null)
+                    if (logicalParent is not null)
                     {
                         LogicalTreeHelper.RemoveLogicalChild(logicalParent, header);
                     }
@@ -988,11 +988,11 @@ namespace System.Windows.Controls
 
         private void RemoveHeader(GridViewColumnHeader header, int index)
         {
-            Debug.Assert(header != null || index != -1);
+            Debug.Assert(header is not null || index != -1);
 
             _gvHeadersValid = false;
 
-            if (header != null)
+            if (header is not null)
             {
                 InternalChildren.Remove(header);
             }
@@ -1012,11 +1012,11 @@ namespace System.Windows.Controls
             _headerSV = Parent as ScrollViewer;
             if (oldHeaderSV != _headerSV)
             {
-                if (oldHeaderSV != null)
+                if (oldHeaderSV is not null)
                 {
                     oldHeaderSV.ScrollChanged -= new ScrollChangedEventHandler(OnHeaderScrollChanged);
                 }
-                if (_headerSV != null)
+                if (_headerSV is not null)
                 {
                     _headerSV.ScrollChanged += new ScrollChangedEventHandler(OnHeaderScrollChanged);
                 }
@@ -1027,12 +1027,12 @@ namespace System.Windows.Controls
 
             if (oldSV != _mainSV)
             {
-                if (oldSV != null)
+                if (oldSV is not null)
                 {
                     oldSV.ScrollChanged -= new ScrollChangedEventHandler(OnMasterScrollChanged);
                 }
 
-                if (_mainSV != null)
+                if (_mainSV is not null)
                 {
                     _mainSV.ScrollChanged += new ScrollChangedEventHandler(OnMasterScrollChanged);
                 }
@@ -1045,14 +1045,14 @@ namespace System.Windows.Controls
 
             if (oldIC != _itemsControl)
             {
-                if (oldIC != null)
+                if (oldIC is not null)
                 {
                     // NOTE: headers have unhooked the KeyDown event in RemoveHeader.
 
                     oldIC.KeyDown -= new KeyEventHandler(OnColumnHeadersPresenterKeyDown);
                 }
 
-                if (_itemsControl != null)
+                if (_itemsControl is not null)
                 {
                     // register to HeadersPresenter to cancel dragging
                     _itemsControl.KeyDown += new KeyEventHandler(OnColumnHeadersPresenterKeyDown);
@@ -1063,7 +1063,7 @@ namespace System.Windows.Controls
 
             //Set GridViewHeaderRowPresenter to ListView
             ListView lv = _itemsControl as ListView;
-            if (lv != null && lv.View != null && lv.View is GridView)
+            if (lv is not null && lv.View is not null && lv.View is GridView)
             {
                 ((GridView)lv.View).HeaderRowPresenter = this;
             }
@@ -1071,8 +1071,8 @@ namespace System.Windows.Controls
 
         private void UnhookItemsControlKeyboardEvent(GridViewColumnHeader header)
         {
-            Debug.Assert(header != null);
-            if (_itemsControl != null)
+            Debug.Assert(header is not null);
+            if (_itemsControl is not null)
             {
                 _itemsControl.KeyDown -= new KeyEventHandler(header.OnColumnHeaderKeyDown);
             }
@@ -1080,8 +1080,8 @@ namespace System.Windows.Controls
 
         private void HookupItemsControlKeyboardEvent(GridViewColumnHeader header)
         {
-            Debug.Assert(header != null);
-            if (_itemsControl != null)
+            Debug.Assert(header is not null);
+            if (_itemsControl is not null)
             {
                 _itemsControl.KeyDown += new KeyEventHandler(header.OnColumnHeaderKeyDown);
             }
@@ -1095,7 +1095,7 @@ namespace System.Windows.Controls
         // When master scroll viewer changed its offset, change header scroll viewer accordingly
         private void OnMasterScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            if (_headerSV != null && _mainSV == e.OriginalSource)
+            if (_headerSV is not null && _mainSV == e.OriginalSource)
             {
                 _headerSV.ScrollToHorizontalOffset(e.HorizontalOffset);
             }
@@ -1104,7 +1104,7 @@ namespace System.Windows.Controls
         // When header scroll viewer changed its offset, change master scroll viewer accordingly
         private void OnHeaderScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            if (_mainSV != null && _headerSV == e.OriginalSource)
+            if (_mainSV is not null && _headerSV == e.OriginalSource)
             {
                 _mainSV.ScrollToHorizontalOffset(e.HorizontalOffset);
             }
@@ -1177,7 +1177,7 @@ namespace System.Windows.Controls
             // #1426973: Because users may put subclassed header as the column header,
             //           we need to create the same type per source header as the floating one
             // Get source header's type
-            Type headerType = (srcHeader != null ? srcHeader.GetType() : typeof(GridViewColumnHeader));
+            Type headerType = (srcHeader is not null ? srcHeader.GetType() : typeof(GridViewColumnHeader));
 
             try
             {
@@ -1189,7 +1189,7 @@ namespace System.Windows.Controls
                 throw new ArgumentException(SR.Format(SR.ListView_MissingParameterlessConstructor, headerType), e);
             }
 
-            Debug.Assert(header != null, "Cannot instantiate GridViewColumnHeader in AddFloatingHeader");
+            Debug.Assert(header is not null, "Cannot instantiate GridViewColumnHeader in AddFloatingHeader");
 
             header.IsInternalGenerated = true;
             header.SetValue(GridViewColumnHeader.RolePropertyKey, GridViewColumnHeaderRole.Floating);
@@ -1202,8 +1202,8 @@ namespace System.Windows.Controls
         // Fill necessary properties in floating header
         private void UpdateFloatingHeader(GridViewColumnHeader srcHeader)
         {
-            Debug.Assert(srcHeader != null, "srcHeader is null");
-            Debug.Assert(_floatingHeader != null, "floating header is null");
+            Debug.Assert(srcHeader is not null, "srcHeader is null");
+            Debug.Assert(_floatingHeader is not null, "floating header is null");
 
             _floatingHeader.Style = srcHeader.Style;
 
@@ -1218,13 +1218,13 @@ namespace System.Windows.Controls
             _floatingHeader.MinHeight = srcHeader.MinHeight;
 
             object template = srcHeader.ReadLocalValue(GridViewColumnHeader.ContentTemplateProperty);
-            if ((template != DependencyProperty.UnsetValue) && (template != null))
+            if ((template != DependencyProperty.UnsetValue) && (template is not null))
             {
                 _floatingHeader.ContentTemplate = srcHeader.ContentTemplate;
             }
 
             object selector = srcHeader.ReadLocalValue(GridViewColumnHeader.ContentTemplateSelectorProperty);
-            if ((selector != DependencyProperty.UnsetValue) && (selector != null))
+            if ((selector != DependencyProperty.UnsetValue) && (selector is not null))
             {
                 _floatingHeader.ContentTemplateSelector = srcHeader.ContentTemplateSelector;
             }
@@ -1253,10 +1253,10 @@ namespace System.Windows.Controls
             FrameworkElement fe = presenter.TemplatedParent as FrameworkElement;
             ItemsControl itemsControl = null;
 
-            while (fe != null)
+            while (fe is not null)
             {
                 itemsControl = fe as ItemsControl;
-                if (itemsControl != null)
+                if (itemsControl is not null)
                 {
                     break;
                 }
@@ -1286,7 +1286,7 @@ namespace System.Windows.Controls
             GridViewColumnCollection columns = Columns;
             UIElementCollection children = InternalChildren;
 
-            if (columns != null && children.Count > columns.Count)
+            if (columns is not null && children.Count > columns.Count)
             {
                 int index = columns.IndexOf(column);
 
@@ -1308,7 +1308,7 @@ namespace System.Windows.Controls
                         {
                             header = children[i] as GridViewColumnHeader;
 
-                            if (header != null && header.Column == column)
+                            if (header is not null && header.Column == column)
                             {
                                 return header;
                             }
@@ -1388,10 +1388,10 @@ namespace System.Windows.Controls
         // Update Content of GridViewColumnHeader
         private void UpdateHeaderContent(GridViewColumnHeader header)
         {
-            if (header != null && header.IsInternalGenerated)
+            if (header is not null && header.IsInternalGenerated)
             {
                 GridViewColumn column = header.Column;
-                if (column != null)
+                if (column is not null)
                 {
                     if (column.Header is null)
                     {
@@ -1429,7 +1429,7 @@ namespace System.Windows.Controls
             for (int i = iStart; i <= iEnd; i++)
             {
                 GridViewColumnHeader header = children[i] as GridViewColumnHeader;
-                if (header != null)
+                if (header is not null)
                 {
                     UpdateHeaderProperty(header, headerDP, columnDP, gvDP);
                 }
@@ -1467,7 +1467,7 @@ namespace System.Windows.Controls
                 // we ignore GridView.ColumnHeaderContainerStyle silently if its TargetType is not GridViewColumnHeader (or parent)
                 // I.e. for padding header, only accept the GridViewColumnHeader as TargetType
                 Style style = ColumnHeaderContainerStyle;
-                if (style != null && !style.TargetType.IsAssignableFrom(typeof(GridViewColumnHeader)))
+                if (style is not null && !style.TargetType.IsAssignableFrom(typeof(GridViewColumnHeader)))
                 {
                     // use default style for padding header in this case
                     header.Style = null;
@@ -1479,8 +1479,8 @@ namespace System.Windows.Controls
 
             object value = null;
 
-            if (column != null /* not the padding one */
-                && columnDP != null /* Column doesn't has ContextMenu property*/)
+            if (column is not null /* not the padding one */
+                && columnDP is not null /* Column doesn't has ContextMenu property*/)
             {
                 value = column.GetValue(columnDP);
             }
@@ -1522,7 +1522,7 @@ namespace System.Windows.Controls
             _draggingSrcHeader.SuppressClickEvent = true;
 
             // lock Columns during header dragging
-            if (Columns != null)
+            if (Columns is not null)
             {
                 Columns.BlockWrite();
             }
@@ -1551,7 +1551,7 @@ namespace System.Windows.Controls
             _indicator.Visibility = Visibility.Hidden;
 
             // unlock Columns during header dragging
-            if (Columns != null)
+            if (Columns is not null)
             {
                 Columns.UnblockWrite();
             }
@@ -1562,7 +1562,7 @@ namespace System.Windows.Controls
                 // Display floating header if vertical move not exceeds header.Height * 2
                 bool isMoveHeader = IsMousePositionValid(_floatingHeader, _currentPos, 2.0);
 
-                Debug.Assert(Columns != null, "Columns is null in OnHeaderDragCompleted");
+                Debug.Assert(Columns is not null, "Columns is null in OnHeaderDragCompleted");
 
                 // Revise the destinate column index
                 int newColumnIndex = (_startColumnIndex >= _desColumnIndex) ? _desColumnIndex : _desColumnIndex - 1;
@@ -1601,14 +1601,14 @@ namespace System.Windows.Controls
                 {
                     _gvHeadersValid = true;
                     _gvHeaders = new List<GridViewColumnHeader>();
-                    if (Columns != null)
+                    if (Columns is not null)
                     {
                         UIElementCollection children = InternalChildren;
 
                         for (int i = 0, count = Columns.Count; i < count; ++i)
                         {
                             GridViewColumnHeader header = children[GetVisualIndex(i)] as GridViewColumnHeader;
-                            if (header != null)
+                            if (header is not null)
                             {
                                 _gvHeaders.Add(header);
                             }
@@ -1688,7 +1688,7 @@ namespace System.Windows.Controls
         {
             foreach (DependencyProperty dp in s_DPList[1])
             {
-                if ((dp != null) && dpName.Equals(dp.Name))
+                if ((dp is not null) && dpName.Equals(dp.Name))
                 {
                     return dp;
                 }

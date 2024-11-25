@@ -75,7 +75,7 @@ namespace System.Windows.Input
                 if (null != context.Instance && context.Instance is DependencyObject)
                 {
                     InputScope inputscope = (InputScope)((DependencyObject)context.Instance).GetValue(InputMethod.InputScopeProperty);
-                    if (inputscope != null && inputscope.Names.Count == 1)
+                    if (inputscope is not null && inputscope.Names.Count == 1)
                     {
                         return true;
                     }

@@ -101,7 +101,7 @@ namespace MS.Internal.Documents
             }
 
             pageTextView = GetTextViewFromPoint(point, false);
-            if (pageTextView != null)
+            if (pageTextView is not null)
             {
                 // Transform to DocumentPageView coordinates and query inner TextView
                 point = TransformToDescendant(pageTextView.RenderScope, point);
@@ -128,7 +128,7 @@ namespace MS.Internal.Documents
             }
 
             pageTextView = GetTextViewFromPosition(position);
-            if (pageTextView != null)
+            if (pageTextView is not null)
             {
                 // Query nested TextView and transform from DocumentPageView coordinates.
                 Transform pageTextViewTransform, ancestorTransform;
@@ -169,7 +169,7 @@ namespace MS.Internal.Documents
                     }
 
                     Geometry pageGeometry = _pageTextViews[i].GetTightBoundingGeometryFromTextPositions(startPositionInTextSegment, endPositionInTextSegment);
-                    if (pageGeometry != null)
+                    if (pageGeometry is not null)
                     {
                         Transform transform = _pageTextViews[i].RenderScope.TransformToAncestor(_renderScope).AffineTransform;
                         CaretElement.AddTransformToGeometry(pageGeometry, transform);
@@ -225,7 +225,7 @@ namespace MS.Internal.Documents
             }
 
             pageTextView = GetTextViewFromPosition(position);
-            if (pageTextView != null)
+            if (pageTextView is not null)
             {
                 atCaretUnitBoundary = pageTextView.IsAtCaretUnitBoundary(position);
             }
@@ -247,7 +247,7 @@ namespace MS.Internal.Documents
             }
 
             pageTextView = GetTextViewFromPosition(position);
-            if (pageTextView != null)
+            if (pageTextView is not null)
             {
                 positionOut = pageTextView.GetNextCaretUnitPosition(position, direction);
             }
@@ -269,7 +269,7 @@ namespace MS.Internal.Documents
             }
 
             pageTextView = GetTextViewFromPosition(position);
-            if (pageTextView != null)
+            if (pageTextView is not null)
             {
                 positionOut = pageTextView.GetBackspaceCaretUnitPosition(position);
             }
@@ -291,7 +291,7 @@ namespace MS.Internal.Documents
             }
 
             pageTextView = GetTextViewFromPosition(position);
-            if (pageTextView != null)
+            if (pageTextView is not null)
             {
                 textSegment = pageTextView.GetLineRange(position);
             }
@@ -308,7 +308,7 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            return (GetTextViewFromPosition(position) != null);
+            return (GetTextViewFromPosition(position) is not null);
         }
 
         /// <summary>
@@ -325,7 +325,7 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            if (_pendingRequest != null)
+            if (_pendingRequest is not null)
             {
                 // Ignore new request if the previous is not completed yet.
                 OnBringPositionIntoViewCompleted(new BringPositionIntoViewCompletedEventArgs(
@@ -338,7 +338,7 @@ namespace MS.Internal.Documents
             pageTextView = GetTextViewFromPosition(position);
             // If the position is currently in the view, do nothing.
             // Otherwise, let the viewer handle the request.
-            if (pageTextView != null)
+            if (pageTextView is not null)
             {
                 pendingRequest.Succeeded = true;
                 OnBringPositionIntoViewCompleted(pendingRequest);
@@ -348,7 +348,7 @@ namespace MS.Internal.Documents
                 if (position is ContentPosition)
                 {
                     DynamicDocumentPaginator documentPaginator = _viewer.Document.DocumentPaginator as DynamicDocumentPaginator;
-                    if (documentPaginator != null)
+                    if (documentPaginator is not null)
                     {
                         pageNumber = documentPaginator.GetPageNumber((ContentPosition)position) + 1;
                         if (_viewer.CanGoToPage(pageNumber))
@@ -387,7 +387,7 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            if (_pendingRequest != null)
+            if (_pendingRequest is not null)
             {
                 // Ignore new request if the previous is not completed yet.
                 OnBringPointIntoViewCompleted(new BringPointIntoViewCompletedEventArgs(
@@ -401,7 +401,7 @@ namespace MS.Internal.Documents
                 pageTextView = GetTextViewFromPoint(point, false);
                 // If the point is currently in the view, use existing TextView to retrieve the position.
                 // Otherwise, let the viewer handle the request.
-                if (pageTextView != null)
+                if (pageTextView is not null)
                 {
                     // Transform to DocumentPageView coordinates and query inner TextView
                     point = TransformToDescendant(pageTextView.RenderScope, point);
@@ -484,7 +484,7 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            if (_pendingRequest != null)
+            if (_pendingRequest is not null)
             {
                 // Ignore new request if the previous is not completed yet.
                 OnBringLineIntoViewCompleted(new BringLineIntoViewCompletedEventArgs(
@@ -507,7 +507,7 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            if (_pendingRequest != null)
+            if (_pendingRequest is not null)
             {
                 // Ignore new request if the previous is not completed yet.
                 OnBringPageIntoViewCompleted(new BringPageIntoViewCompletedEventArgs(
@@ -531,7 +531,7 @@ namespace MS.Internal.Documents
             BringPointIntoViewRequest pointRequest;
             BringPositionIntoViewRequest positionRequest;
 
-            if (_pendingRequest != null)
+            if (_pendingRequest is not null)
             {
                 if (_pendingRequest is BringLineIntoViewRequest)
                 {
@@ -644,7 +644,7 @@ namespace MS.Internal.Documents
             get
             {
                 bool valid = false;
-                if (_pageTextViews != null)
+                if (_pageTextViews is not null)
                 {
                     valid = true;
                     for (int i = 0; i < _pageTextViews.Count; i++)
@@ -668,7 +668,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_pageTextViews != null && _pageTextViews.Count > 0)
+                if (_pageTextViews is not null && _pageTextViews.Count > 0)
                 {
                     return _pageTextViews[0].RendersOwnSelection;
                 }
@@ -725,12 +725,12 @@ namespace MS.Internal.Documents
 
             _pageTextViews.Clear();
             pageViews = _viewer.PageViews;
-            if (pageViews != null)
+            if (pageViews is not null)
             {
                 for (index = 0; index < pageViews.Count; index++)
                 {
                     pageTextView = ((IServiceProvider)pageViews[index]).GetService(typeof(ITextView)) as DocumentPageTextView;
-                    if (pageTextView != null)
+                    if (pageTextView is not null)
                     {
                         _pageTextViews.Add(pageTextView);
                         pageTextView.Updated += new EventHandler(HandlePageTextViewUpdated);
@@ -872,7 +872,7 @@ namespace MS.Internal.Documents
             ReadOnlyCollection<TextSegment> segments;
 
             pageTextView = GetTextViewFromPosition(position);
-            if (pageTextView != null)
+            if (pageTextView is not null)
             {
                 originalCount = count;
 
@@ -898,7 +898,7 @@ namespace MS.Internal.Documents
                     // Try to find TextView for DocumentPageView with the next/previous page number.
                     pageNumber += (count > 0) ? 1 : -1;
                     pageTextView = GetTextViewFromPageNumber(pageNumber);
-                    if (pageTextView != null)
+                    if (pageTextView is not null)
                     {
                         // All positions have to be in the TextView boundary.
                         // Since we are quering another TextView, move requested position to its range.
@@ -907,7 +907,7 @@ namespace MS.Internal.Documents
                         if (count > 0)
                         {
                             position = pageTextView.GetTextPositionFromPoint(new Point(suggestedX, 0), true);
-                            if (position != null)
+                            if (position is not null)
                             {
                                 --count;
                                 ++linesMoved;
@@ -916,14 +916,14 @@ namespace MS.Internal.Documents
                         else
                         {
                             position = pageTextView.GetTextPositionFromPoint(new Point(suggestedX, pageTextView.RenderScope.RenderSize.Height), true);
-                            if (position != null)
+                            if (position is not null)
                             {
                                 ++count;
                                 --linesMoved;
                             }
                         }
 
-                        if (position != null)
+                        if (position is not null)
                         {
                             // If moving to the first/last line of the next/previous TextView, there is
                             // special handling needed to position at the right suggestedX. Otherwise, TextView
@@ -974,21 +974,21 @@ namespace MS.Internal.Documents
             pageNumber = -1;
 
             DocumentPageTextView pageTextView = GetTextViewFromPosition(position);
-            if (pageTextView != null)
+            if (pageTextView is not null)
             {
                 int currentPageNumber = ((DocumentPageView)pageTextView.RenderScope).PageNumber;
                 DocumentPageTextView newPageTextView = GetTextViewForNextPage(currentPageNumber, count, out pageNumber);
                 pagesMoved = pageNumber - currentPageNumber;
                 Invariant.Assert(Math.Abs(pagesMoved) <= Math.Abs(count));
 
-                if (pageNumber != currentPageNumber && newPageTextView != null)
+                if (pageNumber != currentPageNumber && newPageTextView is not null)
                 {
                     // Transform suggested offset to to DocumentPageView coordinates to use as X-coordinate
                     Point point = TransformToDescendant(pageTextView.RenderScope, suggestedOffset);
 
                     // Query inner TextView for requested page to find position at that point. 
                     positionOut = newPageTextView.GetTextPositionFromPoint(point, /*snapToText*/true);
-                    if (positionOut != null)
+                    if (positionOut is not null)
                     {
                         Rect rect = newPageTextView.GetRectangleFromTextPosition(positionOut);
                         point = TransformToAncestor(pageTextView.RenderScope, new Point(rect.X, rect.Y));
@@ -1228,7 +1228,7 @@ namespace MS.Internal.Documents
                 }
             }
 
-            if (textView != null)
+            if (textView is not null)
             {
                 newPageNumber = closestPageNumber;
             }
@@ -1265,7 +1265,7 @@ namespace MS.Internal.Documents
             {
                 // NOTE: TransformToAncestor is safe (will never throw an exception).
                 GeneralTransform transform = innerScope.TransformToAncestor(_renderScope);
-                if (transform != null)
+                if (transform is not null)
                 {
                     rect = transform.TransformBounds(rect);
                 }
@@ -1280,7 +1280,7 @@ namespace MS.Internal.Documents
         {
             // NOTE: TransformToAncestor is safe (will never throw an exception).
             GeneralTransform transform = innerScope.TransformToAncestor(_renderScope);
-            if (transform != null)
+            if (transform is not null)
             {
                 point = transform.Transform(point);
             }
@@ -1294,10 +1294,10 @@ namespace MS.Internal.Documents
         {
             // NOTE: TransformToAncestor is safe (will never throw an exception).
             GeneralTransform transform = innerScope.TransformToAncestor(_renderScope);
-            if (transform != null)
+            if (transform is not null)
             {
                 transform = transform.Inverse;
-                if (transform != null)
+                if (transform is not null)
                 {
                     point = transform.Transform(point);
                 }
@@ -1323,7 +1323,7 @@ namespace MS.Internal.Documents
             _pendingRequest = null;
             OnBringPointIntoViewCompleted(new BringPointIntoViewCompletedEventArgs(
                 request.Point, request.Position,
-                request.Position != null, null, false, request.UserState));
+                request.Position is not null, null, false, request.UserState));
         }
 
         /// <summary>
@@ -1364,7 +1364,7 @@ namespace MS.Internal.Documents
             Point point;
             double suggestedX;
 
-            if (this.IsValid && _pendingRequest != null)
+            if (this.IsValid && _pendingRequest is not null)
             {
                 if (_pendingRequest is BringLineIntoViewRequest)
                 {
@@ -1372,7 +1372,7 @@ namespace MS.Internal.Documents
 
                     // Try to find TextView for DocumentPageView with stored page number.
                     pageTextView = GetTextViewFromPageNumber(lineRequest.NewPageNumber);
-                    if (pageTextView != null)
+                    if (pageTextView is not null)
                     {
                         // Transform to DocumentPageView coordinates
                         point = TransformToDescendant(pageTextView.RenderScope, new Point(lineRequest.NewSuggestedX, 0));
@@ -1385,7 +1385,7 @@ namespace MS.Internal.Documents
                             // Search for a point just outside the limits so that GetTextView.GetTextPositionFromPoint will not hit test
                             // inside anchored blocks unless they are offset out of the page.
                             newPosition = pageTextView.GetTextPositionFromPoint(new Point(-1, -1), true);
-                            if (newPosition != null)
+                            if (newPosition is not null)
                             {
                                 lineRequest.NewCount = lineRequest.NewCount - 1;
                             }
@@ -1393,7 +1393,7 @@ namespace MS.Internal.Documents
                         else
                         {
                             newPosition = pageTextView.GetTextPositionFromPoint((Point)pageTextView.RenderScope.RenderSize, true);
-                            if (newPosition != null)
+                            if (newPosition is not null)
                             {
                                 lineRequest.NewCount = lineRequest.NewCount + 1;
                             }
@@ -1433,7 +1433,7 @@ namespace MS.Internal.Documents
 
                     // Try to find TextView for DocumentPageView with stored page number.
                     pageTextView = GetTextViewFromPageNumber(pageRequest.NewPageNumber);
-                    if (pageTextView != null)
+                    if (pageTextView is not null)
                     {
                         // Transform to DocumentPageView coordinates
                         point = TransformToDescendant(pageTextView.RenderScope, pageRequest.NewSuggestedOffset);
@@ -1441,7 +1441,7 @@ namespace MS.Internal.Documents
 
                         Invariant.Assert(pageRequest.NewCount != 0);
                         newPosition = pageTextView.GetTextPositionFromPoint(suggestedOffset, true);
-                        if (newPosition != null)
+                        if (newPosition is not null)
                         {
                             pageRequest.NewCount = (pageRequest.Count > 0) ? pageRequest.NewCount - 1 : pageRequest.NewCount + 1;
                         }
@@ -1479,7 +1479,7 @@ namespace MS.Internal.Documents
                     pointRequest = (BringPointIntoViewRequest)_pendingRequest;
 
                     pageTextView = GetTextViewFromPoint(pointRequest.Point, true);
-                    if (pageTextView != null)
+                    if (pageTextView is not null)
                     {
                         // Transform to DocumentPageView coordinates and query inner TextView
                         point = TransformToDescendant(pageTextView.RenderScope, pointRequest.Point);

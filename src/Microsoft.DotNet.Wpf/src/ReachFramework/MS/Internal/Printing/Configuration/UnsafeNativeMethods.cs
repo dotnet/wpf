@@ -54,7 +54,7 @@ namespace MS.Internal.Printing.Configuration
                 uint result = PTOpenProviderExImpl(deviceName, maxVersion, prefVersion, out handle, out usedVersion);
                 if (result != 0)
                 {
-                    if (handle != null && !handle.IsInvalid)
+                    if (handle is not null && !handle.IsInvalid)
                     {
                         handle.Dispose();
                         handle = null;

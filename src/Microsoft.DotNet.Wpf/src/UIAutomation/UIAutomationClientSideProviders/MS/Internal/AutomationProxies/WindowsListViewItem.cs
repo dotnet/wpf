@@ -111,7 +111,7 @@ namespace MS.Internal.AutomationProxies
                     itemRectangle.left = NativeMethods.LVIR_BOUNDS;
 
                     WindowsListViewGroup windowsListViewGroup = _parent as WindowsListViewGroup;
-                    if (windowsListViewGroup != null)
+                    if (windowsListViewGroup is not null)
                     {
                         // The group might have been destroyed by an event 
                         WindowsListView._groupsCollection.EnsureCreation (_hwnd);
@@ -171,11 +171,11 @@ namespace MS.Internal.AutomationProxies
                     // port the msaa impl for this from .\oleacc\listview.cpp
                     // failed to get HelpText from tooltips so try MSAA accHelp
                     IAccessible acc = AccessibleObject;
-                    if (acc != null)
+                    if (acc is not null)
                     {
                         // in ListViewItem class _item is idChild - 1
                         Accessible accItem = Accessible.Wrap(acc, _item + 1);
-                        if (accItem != null)
+                        if (accItem is not null)
                         {
                             helpText = accItem.HelpText;
                         }
@@ -195,11 +195,11 @@ namespace MS.Internal.AutomationProxies
                 if (string.IsNullOrEmpty(text))
                 {
                     IAccessible acc = AccessibleObject;
-                    if (acc != null)
+                    if (acc is not null)
                     {
                         // in ListViewItem class _item is idChild - 1
                         Accessible accItem = Accessible.Wrap(acc, _item + 1);
-                        if (accItem != null)
+                        if (accItem is not null)
                         {
                             text = accItem.Name;
                         }
@@ -238,7 +238,7 @@ namespace MS.Internal.AutomationProxies
             {
                 IToggleProvider listViewItemCheckbox =
                     (IToggleProvider)CreateListViewItemCheckbox();
-                if (listViewItemCheckbox != null)
+                if (listViewItemCheckbox is not null)
                 {
                     return listViewItemCheckbox.ToggleState;
                 }
@@ -425,7 +425,7 @@ namespace MS.Internal.AutomationProxies
             if (!WindowsListView.MultiSelected(_hwnd))
             {
                 IRawElementProviderSimple container = ((ISelectionItemProvider)this).SelectionContainer;
-                bool selectionRequired = container != null ? ((ISelectionProvider)container).IsSelectionRequired : true;
+                bool selectionRequired = container is not null ? ((ISelectionProvider)container).IsSelectionRequired : true;
 
                 // For single selection containers that IsSelectionRequired == false and nothing is selected
                 // an AddToSelection is valid.
@@ -463,7 +463,7 @@ namespace MS.Internal.AutomationProxies
             if (!WindowsListView.MultiSelected (_hwnd))
             {
                 IRawElementProviderSimple container = ((ISelectionItemProvider)this).SelectionContainer;
-                bool selectionRequired = container != null ? ((ISelectionProvider)container).IsSelectionRequired : true;
+                bool selectionRequired = container is not null ? ((ISelectionProvider)container).IsSelectionRequired : true;
 
                 // For single selection containers that IsSelectionRequired == false a
                 // RemoveFromSelection is valid.
@@ -501,7 +501,7 @@ namespace MS.Internal.AutomationProxies
 
                 while (!(parent is WindowsListView))
                 {
-                    System.Diagnostics.Debug.Assert (parent != null, "Hit null while looking for the SelectionContainer");
+                    System.Diagnostics.Debug.Assert (parent is not null, "Hit null while looking for the SelectionContainer");
                     parent = parent._parent;
                 }
 

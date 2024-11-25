@@ -234,7 +234,7 @@ namespace MS.Internal.AutomationProxies
                     }
 
                     // Sanity check
-                    if (hookParams != null && hookParams._alHwnd != null)
+                    if (hookParams is not null && hookParams._alHwnd is not null)
                     {
                         ArrayList eventCreateParams = hookParams._alHwnd;
 
@@ -287,7 +287,7 @@ namespace MS.Internal.AutomationProxies
                     // where the hwnd is not there until it is shown.  So we need to raise these event all the time.
                     // Office command bars use this.
                     hookParams = (EventHookParams)_ahp[evt][_globalEventKey];
-                    if (hookParams != null && hookParams._alHwnd != null)
+                    if (hookParams is not null && hookParams._alHwnd is not null)
                     {
                         ArrayList eventCreateParams = hookParams._alHwnd;
 
@@ -505,7 +505,7 @@ namespace MS.Internal.AutomationProxies
                 if (_CSRSSProcessId == 0)
                 {
                     Process[] localByName = Process.GetProcessesByName("csrss");
-                    if (localByName[0] != null)
+                    if (localByName[0] is not null)
                     {
                         _CSRSSProcessId = (uint)localByName[0].Id;
                     }

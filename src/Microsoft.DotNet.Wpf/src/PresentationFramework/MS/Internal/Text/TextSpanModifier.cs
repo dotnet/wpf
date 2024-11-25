@@ -152,7 +152,7 @@ namespace MS.Internal.Text
 
             foreach (TextDecoration td in textDecorations)
             {
-                if (td.Pen is null && brush != null)
+                if (td.Pen is null && brush is not null)
                 {
                     if (pen is null)
                         pen = new Pen(brush, 1);

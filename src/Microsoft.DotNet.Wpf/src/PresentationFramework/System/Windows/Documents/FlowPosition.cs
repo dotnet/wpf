@@ -128,7 +128,7 @@ namespace System.Windows.Documents
         // Returns the count of symbols between pos1 and pos2
         internal int GetDistance(FlowPosition flow)
         {
-            Debug.Assert(flow != null);
+            Debug.Assert(flow is not null);
             // if both clings to the same flow node, simply
             // compare the offset
             if (_flowNode.Equals(flow._flowNode))
@@ -251,14 +251,14 @@ namespace System.Windows.Documents
             {
                 Object obj = ((FixedElement)flow._flowNode.Cookie).GetObject();
                 Image image = obj as Image;
-                if (type == FlowNodeType.Object && image != null)
+                if (type == FlowNodeType.Object && image is not null)
                 {
                     //Set width and height properties by looking at corresponding SOMImage
                     FixedSOMElement[] elements = flow._flowNode.FixedSOMElements;
-                    if (elements != null && elements.Length > 0)
+                    if (elements is not null && elements.Length > 0)
                     {
                         FixedSOMImage somImage = elements[0] as FixedSOMImage;
-                        if (somImage != null)
+                        if (somImage is not null)
                         {
                             image.Width = somImage.BoundingRect.Width;
                             image.Height = somImage.BoundingRect.Height;
@@ -723,7 +723,7 @@ namespace System.Windows.Documents
         // intelligent compare routine that understands position overlap
         private int _OverlapAwareCompare(FlowPosition flow)
         {
-            Debug.Assert(flow != null);
+            Debug.Assert(flow is not null);
             if ((object)this == (object)flow)
             {
                 return 0;

@@ -128,7 +128,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             _itemsPresenter = GetTemplateChild(ItemsPresenterTemplatePartName) as ItemsPresenter;
             _collapsedGroupPopup = GetTemplateChild(PopupTemplatePartName) as Popup;
 
-            if (_hotBackgroundBorder != null)
+            if (_hotBackgroundBorder is not null)
             {
                 _mouseEnterStoryboard = null;
                 _mouseLeaveStoryboard = null;
@@ -136,7 +136,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             _hotBackgroundBorder = GetTemplateChild(HotBackgroundBorderTemplatePartName) as Border;
 
-            if (_hotBackgroundBorder != null)
+            if (_hotBackgroundBorder is not null)
             {
                 _mouseEnterStoryboard = new Storyboard();
                 _mouseEnterStoryboard.Children.Add(CreateOpacityAnimation(true, _hotBackgroundBorder));
@@ -144,7 +144,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 _mouseLeaveStoryboard.Children.Add(CreateOpacityAnimation(false, _hotBackgroundBorder));
 
                 Grid popupGrid = this.GetTemplateChild(PopupGridTemplatePartName) as Grid;
-                if (popupGrid != null)
+                if (popupGrid is not null)
                 {
                     popupGrid.MouseEnter += (s, e) =>
                         {
@@ -167,7 +167,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             PropertyHelper.TransferProperty(this, RibbonControlService.CanAddToQuickAccessToolBarDirectlyProperty);
 
             RibbonGroupSizeDefinitionBaseCollection groupSizeDefinitions = GroupSizeDefinitions;
-            if (groupSizeDefinitions != null &&
+            if (groupSizeDefinitions is not null &&
                 _sizeDefinitionIndex >= 0 &&
                 _sizeDefinitionIndex < groupSizeDefinitions.Count)
             {
@@ -179,7 +179,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             base.OnMouseEnter(e);
 
-            if (_mouseEnterStoryboard != null &&
+            if (_mouseEnterStoryboard is not null &&
                 !IsCollapsed)
             {
                 _mouseEnterStoryboard.Stop();
@@ -191,7 +191,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             base.OnMouseLeave(e);
 
-            if (_mouseLeaveStoryboard != null &&
+            if (_mouseLeaveStoryboard is not null &&
                 !IsCollapsed)
             {
                 _mouseLeaveStoryboard.Stop();
@@ -209,7 +209,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (info.WidthChanged)
             {
                 RibbonGroupsPanel groupsPanel = VisualTreeHelper.GetParent(this) as RibbonGroupsPanel;
-                if (groupsPanel != null)
+                if (groupsPanel is not null)
                 {
                     groupsPanel.OnChildGroupRenderSizeChanged(this, info.PreviousSize.Width);
                 }
@@ -581,7 +581,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void OnForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             RibbonGroup ribbonGroup = (RibbonGroup)d;
-            if (ribbonGroup._headerContentPresenter != null)
+            if (ribbonGroup._headerContentPresenter is not null)
             {
                 BaseValueSource newValueSource = DependencyPropertyHelper.GetValueSource(ribbonGroup, ForegroundProperty).BaseValueSource;
                 if (newValueSource > BaseValueSource.Inherited && !SystemParameters.HighContrast)
@@ -620,7 +620,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             // Hence reset the flag.
             group.InContextMenu = false;
 
-            if (group._collapsedGroupPopup != null)
+            if (group._collapsedGroupPopup is not null)
             {
                 UIElement popupChild = group._collapsedGroupPopup.TryGetChild();
                 RibbonHelper.HandleIsDropDownChanged(group,
@@ -638,7 +638,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             RibbonHelper.SetContentAsToolTip(group, group.VisualChild, group.Header, (group.IsCollapsed && !group.IsDropDownOpen));
 
             RibbonGroupAutomationPeer peer = UIElementAutomationPeer.FromElement(group) as RibbonGroupAutomationPeer;
-            if (peer != null)
+            if (peer is not null)
             {
                 peer.RaiseExpandCollapseAutomationEvent((bool)e.OldValue, (bool)e.NewValue);
             }
@@ -848,7 +848,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             RibbonGroupSizeDefinition largeGroupSizeDefinition = new RibbonGroupSizeDefinition();
 
-            if (IsCollapsed && _itemsPresenter != null)
+            if (IsCollapsed && _itemsPresenter is not null)
             {
                 if (_itemsPresenter.ApplyTemplate())
                 {
@@ -862,10 +862,10 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 RibbonControl ribbonControl = ItemContainerGenerator.ContainerFromIndex(i) as RibbonControl;
                 RibbonControlSizeDefinition controlSizeDefinition = null;
-                if (ribbonControl != null)
+                if (ribbonControl is not null)
                 {
                     UIElement contentChild = ribbonControl.ContentChild;
-                    if (contentChild != null)
+                    if (contentChild is not null)
                     {
                         controlSizeDefinition = RibbonControlService.GetDefaultControlSizeDefinition(contentChild);
                         if (controlSizeDefinition is null)
@@ -984,7 +984,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             CoerceValue(GroupSizeDefinitionsProperty);
 
             RibbonGroupSizeDefinitionBaseCollection collection = GroupSizeDefinitions;
-            if (collection != null && collection.Count > 0 && GroupPrepared)
+            if (collection is not null && collection.Count > 0 && GroupPrepared)
             {
                 if (_sizeDefinitionIndex < 0)
                 {
@@ -999,7 +999,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 SetAppropriatePresenterVisibility(GroupSizeDefinitions[_sizeDefinitionIndex] is RibbonGroupSizeDefinition ? Visibility.Visible : Visibility.Collapsed);
 
                 RibbonGroupsPanel panel = TreeHelper.FindVisualAncestor<RibbonGroupsPanel>(this);
-                if (panel != null)
+                if (panel is not null)
                 {
                     panel.InvalidateCachedMeasure();
                 }
@@ -1069,11 +1069,11 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (_sizeDefinitionIndex >= 0 && _sizeDefinitionIndex < groupSizeDefinitionsCount)
             {
                 RibbonGroupSizeDefinition groupDefinition = groupSizeDefinitions[_sizeDefinitionIndex] as RibbonGroupSizeDefinition;
-                if (groupDefinition != null)
+                if (groupDefinition is not null)
                 {
                     RibbonControlSizeDefinition controlSizeDefinition = null;
                     RibbonControlSizeDefinitionCollection controlSizeDefinitions = groupDefinition.ControlSizeDefinitions;
-                    if (controlSizeDefinitions != null &&
+                    if (controlSizeDefinitions is not null &&
                         index < controlSizeDefinitions.Count)
                     {
                         controlSizeDefinition = controlSizeDefinitions[index];
@@ -1085,12 +1085,12 @@ namespace Microsoft.Windows.Controls.Ribbon
                         (controlSizeDefinitions is null || controlSizeDefinitions.Count == 0))
                     {
                         RibbonControlSizeDefinitionCollection targetControlSizeDefinitions = GetControlDefinitionsForCollapsedGroup(groupDefinition);
-                        if (targetControlSizeDefinitions != null && index < targetControlSizeDefinitions.Count)
+                        if (targetControlSizeDefinitions is not null && index < targetControlSizeDefinitions.Count)
                         {
                             controlSizeDefinition = targetControlSizeDefinitions[index];
                         }
                     }
-                    if (controlSizeDefinition != null)
+                    if (controlSizeDefinition is not null)
                     {
                         RibbonControlService.SetControlSizeDefinition(element, controlSizeDefinition);
                     }
@@ -1120,7 +1120,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
 
             RibbonGroupSizeDefinition groupSizeDefinition = definition as RibbonGroupSizeDefinition;
-            if (groupSizeDefinition != null)
+            if (groupSizeDefinition is not null)
             {
                 // Apply RibbonGroupSizeDefinition
                 if (SetAppropriatePresenterVisibility(Visibility.Visible))
@@ -1137,7 +1137,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             else
             {
                 RibbonGroupTemplateSizeDefinition groupTemplateSizeDefinition = definition as RibbonGroupTemplateSizeDefinition;
-                if (groupTemplateSizeDefinition != null)
+                if (groupTemplateSizeDefinition is not null)
                 {
                     // Apply RibbonGroupTemplateSizeDefinition
                     SetAppropriatePresenterVisibility(Visibility.Collapsed);
@@ -1153,7 +1153,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private bool SetAppropriatePresenterVisibility(Visibility itemsPresenterVisibility)
         {
             bool remeasure = false;
-            if (_itemsPresenter != null && _itemsPresenter.Visibility != itemsPresenterVisibility)
+            if (_itemsPresenter is not null && _itemsPresenter.Visibility != itemsPresenterVisibility)
             {
                 _itemsPresenter.Visibility = itemsPresenterVisibility;
                 if (itemsPresenterVisibility == Visibility.Visible)
@@ -1162,7 +1162,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 }
             }
 
-            if (_templateContentControl != null)
+            if (_templateContentControl is not null)
             {
                 _templateContentControl.Visibility = (itemsPresenterVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible);
             }
@@ -1176,7 +1176,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         private RibbonControlSizeDefinitionCollection GetControlDefinitionsForCollapsedGroup(RibbonGroupSizeDefinition groupSizeDefinition)
         {
-            Debug.Assert(groupSizeDefinition != null && groupSizeDefinition.IsCollapsed);
+            Debug.Assert(groupSizeDefinition is not null && groupSizeDefinition.IsCollapsed);
             RibbonGroupSizeDefinitionBaseCollection groupSizeDefinitions = GroupSizeDefinitions;
             int groupSizeDefCount = groupSizeDefinitions.Count;
             for (int i = 0; i < groupSizeDefCount; i++)
@@ -1187,10 +1187,10 @@ namespace Microsoft.Windows.Controls.Ribbon
                     return null;
                 }
                 RibbonGroupSizeDefinition currentGroupSizeDefinition = currentGroupSizeDefinitionBase as RibbonGroupSizeDefinition;
-                if (currentGroupSizeDefinition != null)
+                if (currentGroupSizeDefinition is not null)
                 {
                     RibbonControlSizeDefinitionCollection currentControlSizeDefinitions = currentGroupSizeDefinition.ControlSizeDefinitions;
-                    if (currentControlSizeDefinitions != null &&
+                    if (currentControlSizeDefinitions is not null &&
                         currentControlSizeDefinitions.Count > 0)
                     {
                         return currentGroupSizeDefinition.ControlSizeDefinitions;
@@ -1211,7 +1211,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 controlSizeDefinitions = GetControlDefinitionsForCollapsedGroup(groupSizeDefinition);
             }
             int numDefinedSizes = 0;
-            if (controlSizeDefinitions != null)
+            if (controlSizeDefinitions is not null)
             {
                 numDefinedSizes = controlSizeDefinitions.Count;
             }
@@ -1220,7 +1220,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             for (int i = 0; i < itemCount; i++)
             {
                 DependencyObject d = ItemContainerGenerator.ContainerFromIndex(i);
-                if (d != null)
+                if (d is not null)
                 {
                     if (i < numDefinedSizes)
                     {
@@ -1256,7 +1256,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         break;
                     }
                     RibbonGroupTemplateSizeDefinition currentGroupSizeDefinition = currentGroupSizeDefinitionBase as RibbonGroupTemplateSizeDefinition;
-                    if (currentGroupSizeDefinition != null && currentGroupSizeDefinition.ContentTemplate != null)
+                    if (currentGroupSizeDefinition is not null && currentGroupSizeDefinition.ContentTemplate is not null)
                     {
                         contentTemplate = currentGroupSizeDefinition.ContentTemplate;
                         break;
@@ -1264,7 +1264,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 }
             }
 
-            if (contentTemplate != null && _templateContentControl != null)
+            if (contentTemplate is not null && _templateContentControl is not null)
             {
                 _templateContentControl.ContentTemplate = contentTemplate;
                 if (!IsCollapsed)
@@ -1284,7 +1284,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             RibbonGroup ribbonGroup = (RibbonGroup)d;
             RibbonGroupSizeDefinitionBaseCollection collection = ribbonGroup.GroupSizeDefinitions;
-            if (collection != null)
+            if (collection is not null)
             {
                 if (ribbonGroup._sizeDefinitionIndex >= collection.Count)
                 {
@@ -1578,7 +1578,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     foreach (object item in RibbonGroup.Items)
                     {
                         DependencyObject element = item as DependencyObject;
-                        if (element != null)
+                        if (element is not null)
                         {
                             if (!string.IsNullOrEmpty(KeyTipService.GetKeyTip(element)))
                             {
@@ -1586,13 +1586,13 @@ namespace Microsoft.Windows.Controls.Ribbon
                             }
 
                             RibbonControlGroup controlGroup = element as RibbonControlGroup;
-                            if (controlGroup != null &&
+                            if (controlGroup is not null &&
                                 !KeyTipService.GetIsKeyTipScope(controlGroup))
                             {
                                 foreach (object controlGroupItem in controlGroup.Items)
                                 {
                                     DependencyObject controlGroupElement = controlGroupItem as DependencyObject;
-                                    if (controlGroupItem != null &&
+                                    if (controlGroupItem is not null &&
                                         !string.IsNullOrEmpty(KeyTipService.GetKeyTip(controlGroupElement)))
                                     {
                                         yield return controlGroupElement;
@@ -1660,7 +1660,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     else
                     {
                         Ribbon ribbon = Ribbon;
-                        if (ribbon != null)
+                        if (ribbon is not null)
                         {
                             if (ribbon.IsMinimized)
                             {
@@ -1674,14 +1674,14 @@ namespace Microsoft.Windows.Controls.Ribbon
                     }
                 }
             }
-            else if (_itemsPresenter != null)
+            else if (_itemsPresenter is not null)
             {
                 UIElement placementTarget = e.PlacementTarget;
                 if (placementTarget is null)
                 {
                     placementTarget = RibbonHelper.GetContainingUIElement(e.OriginalSource as DependencyObject);
                 }
-                if (placementTarget != null &&
+                if (placementTarget is not null &&
                     TreeHelper.IsVisualAncestorOf(_itemsPresenter, placementTarget))
                 {
                     // For all the visual descendant set this property,
@@ -1695,7 +1695,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private void SetUnminimizedRibbonKeyTipPlacement(Ribbon ribbon, ActivatingKeyTipEventArgs e)
         {
             GeneralTransform groupToRibbon = TransformToAncestor(ribbon);
-            if (groupToRibbon != null)
+            if (groupToRibbon is not null)
             {
                 Point groupOrigin = groupToRibbon.Transform(new Point());
                 double horizontalOffset = groupOrigin.X + (ActualWidth / 2);
@@ -1722,11 +1722,11 @@ namespace Microsoft.Windows.Controls.Ribbon
         private void SetMinimizedRibbonKeyTipPlacement(Ribbon ribbon, ActivatingKeyTipEventArgs e)
         {
             UIElement ribbonPopupChild = ribbon.ItemsPresenterPopup.TryGetChild();
-            if (ribbonPopupChild != null)
+            if (ribbonPopupChild is not null)
             {
                 Point popupChildOrigin = ribbon.PointFromScreen(ribbonPopupChild.PointToScreen(new Point()));
                 GeneralTransform groupToPopup = TransformToAncestor(ribbonPopupChild);
-                if (groupToPopup != null)
+                if (groupToPopup is not null)
                 {
                     double horizontalOffset = groupToPopup.Transform(new Point()).X + (ActualWidth / 2);
                     if (DoubleUtil.GreaterThanOrClose(horizontalOffset, 0) &&
@@ -1764,7 +1764,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     // Open the dropdown.
                     IsDropDownOpen = true;
                     UIElement popupChild = _collapsedGroupPopup.TryGetChild();
-                    if (popupChild != null)
+                    if (popupChild is not null)
                     {
                         KeyTipService.SetIsKeyTipScope(popupChild, true);
                         e.TargetKeyTipScope = popupChild;
@@ -1773,7 +1773,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 else
                 {
                     RibbonTab tab = ItemsControl.ItemsControlFromItemContainer(this) as RibbonTab;
-                    if (tab != null &&
+                    if (tab is not null &&
                         KeyTipService.GetIsKeyTipScope(tab))
                     {
                         e.TargetKeyTipScope = tab;

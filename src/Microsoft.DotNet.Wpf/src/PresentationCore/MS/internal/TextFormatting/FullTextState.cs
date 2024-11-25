@@ -87,8 +87,8 @@ namespace MS.Internal.TextFormatting
             TextStore markerStore = null;
 
             if(     pap.FirstLineInParagraph
-                &&  pap.TextMarkerProperties != null
-                &&  pap.TextMarkerProperties.TextSource != null)
+                &&  pap.TextMarkerProperties is not null
+                &&  pap.TextMarkerProperties.TextSource is not null)
             {
                 // create text store specifically for marker
                 markerStore = new TextStore(
@@ -187,12 +187,12 @@ namespace MS.Internal.TextFormatting
 
                 // set up appropriate tab stops
                 int incrementalTab = TextFormatterImp.RealToIdeal(pap.DefaultIncrementalTab);
-                int lsTbdCount = pap.Tabs != null ? pap.Tabs.Count : 0;
+                int lsTbdCount = pap.Tabs is not null ? pap.Tabs.Count : 0;
                 LsTbd[] lsTbds;
 
-                if (_markerStore != null)
+                if (_markerStore is not null)
                 {
-                    if (pap.Tabs != null && pap.Tabs.Count > 0)
+                    if (pap.Tabs is not null && pap.Tabs.Count > 0)
                     {
                         lsTbdCount = pap.Tabs.Count + 1;
                         lsTbds = new LsTbd[lsTbdCount];
@@ -212,7 +212,7 @@ namespace MS.Internal.TextFormatting
                 }
                 else
                 {
-                    if (pap.Tabs != null && pap.Tabs.Count > 0)
+                    if (pap.Tabs is not null && pap.Tabs.Count > 0)
                     {
                         lsTbds = new LsTbd[lsTbdCount];
                         fixed (LsTbd* plsTbds = &lsTbds[0])
@@ -267,7 +267,7 @@ namespace MS.Internal.TextFormatting
         /// </remarks>
         internal int GetMainTextToMarkerIdealDistance()
         {
-            if (_markerStore != null)
+            if (_markerStore is not null)
             {
                 return Math.Min(0, TextFormatterImp.RealToIdeal(_markerStore.Pap.TextMarkerProperties.Offset) - _store.Settings.TextIndent);
             }
@@ -428,7 +428,7 @@ namespace MS.Internal.TextFormatting
         {
             lshyph = new LsHyph();  // no additional hyphen properties for now
 
-            if (_store.Pap.Hyphenator != null)
+            if (_store.Pap.Hyphenator is not null)
             {
                 int lscpChunk;
                 int lscchChunk;
@@ -519,11 +519,11 @@ namespace MS.Internal.TextFormatting
                 out textVector
                 );
 
-            if (    rawText != null
+            if (    rawText is not null
                 &&  cchWordMax >= MinCchWordToHyphenate
                 &&  lscpLim < lscpChunk + lscchChunk
-                &&  textCulture != null 
-                &&  lexicalService != null
+                &&  textCulture is not null 
+                &&  lexicalService is not null
                 &&  lexicalService.IsCultureSupported(textCulture)
                 )
             {
@@ -534,7 +534,7 @@ namespace MS.Internal.TextFormatting
                     textCulture
                     );
 
-                if (breaks != null)
+                if (breaks is not null)
                 {
                     chunk = new LexicalChunk(breaks, textVector);
                 }

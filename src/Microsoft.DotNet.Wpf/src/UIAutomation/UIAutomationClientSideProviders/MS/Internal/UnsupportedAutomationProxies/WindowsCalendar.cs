@@ -319,7 +319,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
                     {
                         CalendarBits el = elDates.FromPoint (x, y, hitTestInfo.uHit);
 
-                        if (el != null)
+                        if (el is not null)
                             return el;
                     }
                 }
@@ -1128,7 +1128,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
             // Prefer 'string.IsNullOrEmpty(valString)' over checks for null and/or emptiness.
             // Null and Empty string mean different things here.
 #pragma warning suppress 6507
-            else if (valString != null)
+            else if (valString is not null)
             {
                 systemTime = CreateSystemTimeFromDateTime(
                                 System.DateTime.Parse(valString, CultureInfo.InvariantCulture));
@@ -2560,7 +2560,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
                     {
                         CalendarWeekNum calendarWeekNum =
                             CreateCalendarWeekNum(item + FIRST_WEEKNUM);
-                        if (calendarWeekNum != null)
+                        if (calendarWeekNum is not null)
                         {
                             count++;
                             weekNumList.Add(calendarWeekNum);
@@ -2571,7 +2571,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
                     int arrayIndex = 0;
                     foreach (CalendarWeekNum calendarWeekNum in weekNumList)
                     {
-                        if (calendarWeekNum != null)
+                        if (calendarWeekNum is not null)
                         {
                             aWeekNum[arrayIndex++] = calendarWeekNum;
                         }

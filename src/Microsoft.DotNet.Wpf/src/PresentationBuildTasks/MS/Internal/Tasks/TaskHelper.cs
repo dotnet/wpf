@@ -127,7 +127,7 @@ namespace MS.Internal.Tasks
         {
             bool  isBoolean = false;
 
-            if (str != null && str.Length > 0)
+            if (str is not null && str.Length > 0)
             {
                 str = str.ToLower(CultureInfo.InvariantCulture);
 
@@ -150,7 +150,7 @@ namespace MS.Internal.Tasks
         {
             string lowerStr = null;
 
-            if (str != null && str.Length > 0)
+            if (str is not null && str.Length > 0)
             {
                 lowerStr = str.ToLower(CultureInfo.InvariantCulture);
             }
@@ -174,7 +174,7 @@ namespace MS.Internal.Tasks
                 // It means no satellite assembly will be generated, all the
                 // resource images will go to the main assembly.
                 //
-                if (name != null && name.Length > 0)
+                if (name is not null && name.Length > 0)
                 {
                     CultureInfo   cl;
 
@@ -200,7 +200,7 @@ namespace MS.Internal.Tasks
             Exception e = exception;
             string message = e.Message;
 
-            while (e.InnerException != null)
+            while (e.InnerException is not null)
             {
                 Exception eInner = e.InnerException;
                 if (e.Message.IndexOf(eInner.Message, StringComparison.Ordinal) == -1)
@@ -211,7 +211,7 @@ namespace MS.Internal.Tasks
                 e = eInner;
             }
 
-            if (message != null && message.EndsWith(".", StringComparison.Ordinal) == false)
+            if (message is not null && message.EndsWith(".", StringComparison.Ordinal) == false)
             {
                 message += ".";
             }

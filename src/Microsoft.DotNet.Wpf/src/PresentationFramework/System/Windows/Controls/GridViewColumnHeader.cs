@@ -365,7 +365,7 @@ namespace System.Windows.Controls
         // cancel resizing if Escape key down.
         internal void OnColumnHeaderKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Escape && _headerGripper != null && _headerGripper.IsDragging)
+            if (e.Key == Key.Escape && _headerGripper is not null && _headerGripper.IsDragging)
             {
                 // NOTE: this will cause Thumb to complete the dragging and fire drag
                 // complete event with the Canceled property as 'True'. Handler
@@ -380,14 +380,14 @@ namespace System.Windows.Controls
         {
             bool hideGripperRightHalf = false;
 
-            if (_headerGripper != null)
+            if (_headerGripper is not null)
             {
                 // when header's width is less than gripper's width,
                 // hide the right half of the left header's gripper
                 hideGripperRightHalf = DoubleUtil.LessThan(ActualWidth, _headerGripper.Width);
             }
 
-            if (_previousHeader != null)
+            if (_previousHeader is not null)
             {
                 _previousHeader.HideGripperRightHalf(hideGripperRightHalf);
             }
@@ -402,7 +402,7 @@ namespace System.Windows.Controls
         // frame, causing high CPU consumption when a large realization tree is present.
         internal void ResetFloatingHeaderCanvasBackground()
         {
-            if (_floatingHeaderCanvas != null)
+            if (_floatingHeaderCanvas is not null)
             {
                 _floatingHeaderCanvas.Background = null;
             }
@@ -440,7 +440,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            if (value != null)
+            if (value is not null)
             {
                 SetValue(dp, value);
             }
@@ -455,7 +455,7 @@ namespace System.Windows.Controls
         // Set column header width and associated column width
         internal void UpdateColumnHeaderWidth(double width)
         {
-            if (Column != null)
+            if (Column is not null)
             {
                 Column.Width = width;
             }
@@ -575,7 +575,7 @@ namespace System.Windows.Controls
                         header.SetFlag(flag, false);
 
                         GridViewHeaderRowPresenter headerRowPresenter = header.Parent as GridViewHeaderRowPresenter;
-                        if (headerRowPresenter != null)
+                        if (headerRowPresenter is not null)
                         {
                             headerRowPresenter.UpdateHeaderProperty(header, e.Property);
                         }
@@ -634,11 +634,11 @@ namespace System.Windows.Controls
         /// <param name="hide"></param>
         private void HideGripperRightHalf(bool hide)
         {
-            if (_headerGripper != null)
+            if (_headerGripper is not null)
             {
                 // hide gripper's right half by setting Parent.ClipToBounds=true
                 FrameworkElement gripperContainer = _headerGripper.Parent as FrameworkElement;
-                if (gripperContainer != null)
+                if (gripperContainer is not null)
                 {
                     gripperContainer.ClipToBounds = hide;
                 }
@@ -657,7 +657,7 @@ namespace System.Windows.Controls
         private void MakeParentGotFocus()
         {
             GridViewHeaderRowPresenter headerRP = this.Parent as GridViewHeaderRowPresenter;
-            if (headerRP != null)
+            if (headerRP is not null)
             {
                 headerRP.MakeParentItemsControlGotFocus();
             }
@@ -705,7 +705,7 @@ namespace System.Windows.Controls
 
             _headerGripper = GetTemplateChild(HeaderGripperTemplateName) as Thumb;
 
-            if (_headerGripper != null)
+            if (_headerGripper is not null)
             {
                 _headerGripper.DragStarted += new DragStartedEventHandler(OnColumnHeaderGripperDragStarted);
                 _headerGripper.DragDelta += new DragDeltaEventHandler(OnColumnHeaderResize);
@@ -720,7 +720,7 @@ namespace System.Windows.Controls
 
         private void OnGripperDoubleClicked(object sender, MouseButtonEventArgs e)
         {
-            if (Column != null)
+            if (Column is not null)
             {
                 if (Double.IsNaN(Column.Width))
                 {
@@ -739,7 +739,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void UnhookGripperEvents()
         {
-            if (_headerGripper != null)
+            if (_headerGripper is not null)
             {
                 _headerGripper.DragStarted -= new DragStartedEventHandler(OnColumnHeaderGripperDragStarted);
                 _headerGripper.DragDelta -= new DragDeltaEventHandler(OnColumnHeaderResize);
@@ -769,8 +769,8 @@ namespace System.Windows.Controls
                 stream = assembly.GetManifestResourceStream("splitopen.cur"); 
             }
 
-            Debug.Assert(stream != null, "stream is null");
-            if (stream != null)
+            Debug.Assert(stream is not null, "stream is null");
+            if (stream is not null)
             {
                 cursor = new Cursor(stream);
             }
@@ -780,7 +780,7 @@ namespace System.Windows.Controls
 
         private void UpdateGripperCursor()
         {
-            if (_headerGripper != null && !_headerGripper.IsDragging)
+            if (_headerGripper is not null && !_headerGripper.IsDragging)
             {
                 Cursor gripperCursor;
 
@@ -793,8 +793,8 @@ namespace System.Windows.Controls
                     gripperCursor = SplitCursor;
                 }
 
-                Debug.Assert(gripperCursor != null, "gripper cursor is null");
-                if (gripperCursor != null)
+                Debug.Assert(gripperCursor is not null, "gripper cursor is null");
+                if (gripperCursor is not null)
                 {
                     _headerGripper.Cursor = gripperCursor;
                 }
@@ -813,7 +813,7 @@ namespace System.Windows.Controls
             if (AutomationPeer.ListenerExists(AutomationEvents.InvokePatternOnInvoked))
             {
                 AutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(this);
-                if (peer != null)
+                if (peer is not null)
                     peer.RaiseAutomationEvent(AutomationEvents.InvokePatternOnInvoked);
             }
 
@@ -840,8 +840,8 @@ namespace System.Windows.Controls
         // update the background visual brush
         private void UpdateFloatingHeaderCanvas()
         {
-            if (_floatingHeaderCanvas != null
-                && FloatSourceHeader != null)
+            if (_floatingHeaderCanvas is not null
+                && FloatSourceHeader is not null)
             {
                 // because the gripper is partially positioned out of the header, we need to
                 // map the appropriate area(viewbox) in the source header to visual brush
@@ -949,7 +949,7 @@ namespace System.Windows.Controls
 
         private double ColumnActualWidth
         {
-            get { return (Column != null ? Column.ActualWidth : ActualWidth); }
+            get { return (Column is not null ? Column.ActualWidth : ActualWidth); }
         }
 
         #endregion Private Properties

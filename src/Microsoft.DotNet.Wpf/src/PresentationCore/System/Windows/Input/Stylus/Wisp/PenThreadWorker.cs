@@ -522,7 +522,7 @@ namespace System.Windows.Input
                 throw new ObjectDisposedException(null, SR.Penservice_Disposed);
             }
 
-            Debug.Assert(penContext != null);
+            Debug.Assert(penContext is not null);
             
             WorkerOperationAddContext addContextOperation = new WorkerOperationAddContext(penContext, this);
 
@@ -549,7 +549,7 @@ namespace System.Windows.Input
                 return true;
             }
 
-            Debug.Assert(penContext != null);
+            Debug.Assert(penContext is not null);
             
             WorkerOperationRemoveContext removeContextOperation = new WorkerOperationRemoveContext(penContext, this);
 
@@ -723,7 +723,7 @@ namespace System.Windows.Input
         void FlushCache(bool goingOutOfRange)
         {
             // Force any cached move/inairmove data to be flushed if we have any.
-            if (_cachedMoveData != null)
+            if (_cachedMoveData is not null)
             {
                 // If we are going out of range and this stylus id is not currently in range
                 // then eat these cached events (keeps from going in and out of range quickly)
@@ -1016,7 +1016,7 @@ namespace System.Windows.Input
                 {
                     PenContext pc = _penContexts[i].Target as PenContext;
                     // We only need to ref if we have a penContext.
-                    if (pc != null)
+                    if (pc is not null)
                     {
                         penContextRefs.Add(pc);
                     }
@@ -1042,7 +1042,7 @@ namespace System.Windows.Input
                 {
                     PenContext pc = penContextRefs[i];
                     // We'd have hole in our array if this ever happened.
-                    Debug.Assert(pc != null && pc.CommHandle != IntPtr.Zero);
+                    Debug.Assert(pc is not null && pc.CommHandle != IntPtr.Zero);
                     _handles[i] = pc.CommHandle; // Add to array.
                     _pimcContexts[i] = pc._pimcContext;
                     _penContexts[i] = new WeakReference(pc);
@@ -1077,7 +1077,7 @@ namespace System.Windows.Input
                     // See if we should keep this PenContext.  
                     // We keep if not GC'd and not the removing one (except if it is 
                     // in range where we need to wait till it goes out of range).
-                    if (pc != null && (pc != penContext || pc.IsInRange(0)))
+                    if (pc is not null && (pc != penContext || pc.IsInRange(0)))
                     {
                         penContextRefs.Add(pc);
                     }
@@ -1096,7 +1096,7 @@ namespace System.Windows.Input
             {
                 PenContext pc = penContextRefs[i];
                 // We'd have hole in our array if this ever happened.
-                Debug.Assert(pc != null && pc.CommHandle != IntPtr.Zero);
+                Debug.Assert(pc is not null && pc.CommHandle != IntPtr.Zero);
                 _handles[i] = pc.CommHandle; // Add to array.
                 _pimcContexts[i] = pc._pimcContext;
                 _penContexts[i] = new WeakReference(pc);
@@ -1179,7 +1179,7 @@ namespace System.Windows.Input
                         }
                     }
 
-                    if (workerOps != null)
+                    if (workerOps is not null)
                     {
                         for (int j=0; j<workerOps.Length; j++)
                         {
@@ -1239,7 +1239,7 @@ namespace System.Windows.Input
                             // is not corrupted (it has appropriate wait handles and does not point to invalid memory).
                             PenContext penContext = _penContexts[iHandleEvt].Target as PenContext;
                             // If we get an event from a GC'd PenContext then just ignore.
-                            if (penContext != null)
+                            if (penContext is not null)
                             {
                                 FireEvent(penContext, evt, stylusPointerId, cPackets, cbPacket, pPackets);
                                 penContext = null;
@@ -1257,7 +1257,7 @@ namespace System.Windows.Input
                             for (int i = 0; i < _penContexts.Length; i++)
                             {
                                 PenContext penContext = _penContexts[i].Target as PenContext;
-                                if (penContext != null)
+                                if (penContext is not null)
                                 {
                                     // we send 0 as the stulyspointerId to trigger code in PenContext::FirePenOutOfRange
                                     penContext.FirePenOutOfRange(0, Environment.TickCount);

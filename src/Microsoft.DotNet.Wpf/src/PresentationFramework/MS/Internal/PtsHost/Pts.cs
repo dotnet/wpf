@@ -59,8 +59,8 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
                     throw new OutOfMemoryException();
 
                 case fserrCallbackException:
-                    Debug.Assert(ptsContext != null, "Null argument 'ptsContext' - required for return value validation.");
-                    if (ptsContext != null)
+                    Debug.Assert(ptsContext is not null, "Null argument 'ptsContext' - required for return value validation.");
+                    if (ptsContext is not null)
                     {
                         SecondaryException se = new SecondaryException(ptsContext.CallbackException);
                         ptsContext.CallbackException = null;
@@ -94,8 +94,8 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
                     throw new OutOfMemoryException();
 
                 default:
-                    Debug.Assert(ptsContext != null, "Null argument 'ptsContext' - required for return value validation."); 
-                    if (ptsContext != null)
+                    Debug.Assert(ptsContext is not null, "Null argument 'ptsContext' - required for return value validation."); 
+                    if (ptsContext is not null)
                     {
                         Exception innerException = GetInnermostException(ptsContext);
                         if (innerException is null || innerException is SecondaryException || innerException is PtsException)
@@ -134,13 +134,13 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         }
         private static Exception GetInnermostException(PtsContext ptsContext)
         {
-            Invariant.Assert(ptsContext != null);
+            Invariant.Assert(ptsContext is not null);
             Exception exception = ptsContext.CallbackException;
             Exception innerException = exception;
-            while (innerException != null)
+            while (innerException is not null)
             {
                 innerException = exception.InnerException;
-                if (innerException != null)
+                if (innerException is not null)
                 {
                     exception = innerException;
                 }

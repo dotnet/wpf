@@ -30,7 +30,7 @@ namespace MS.Internal.Automation
         /// <param name="owner">UIElement or ContentElement or UIElement3D this adaptor is associated with.</param>
         internal SynchronizedInputAdaptor(DependencyObject owner)
         {
-            Invariant.Assert(owner != null);
+            Invariant.Assert(owner is not null);
             _owner = owner;
         }
         /// <summary>
@@ -50,7 +50,7 @@ namespace MS.Internal.Automation
             }
             
             UIElement e = _owner as UIElement;
-            if (e != null)
+            if (e is not null)
             {
                 if (!e.StartListeningSynchronizedInput(inputType))
                 {
@@ -60,7 +60,7 @@ namespace MS.Internal.Automation
             else
             {
                 ContentElement ce = _owner as ContentElement;
-                if (ce != null)
+                if (ce is not null)
                 {
                     if (!ce.StartListeningSynchronizedInput(inputType))
                     {
@@ -84,14 +84,14 @@ namespace MS.Internal.Automation
         void ISynchronizedInputProvider.Cancel()
         {
             UIElement e = _owner as UIElement;
-            if (e != null)
+            if (e is not null)
             {
                 e.CancelSynchronizedInput();
             }
             else
             {
                 ContentElement ce = _owner as ContentElement;
-                if (ce != null)
+                if (ce is not null)
                 {
                     ce.CancelSynchronizedInput();
                 }

@@ -97,12 +97,12 @@ namespace MS.Internal.TextFormatting
             if(    pap.RightToLeft
                 || pap.Justify
                 || (   pap.FirstLineInParagraph
-                    && pap.TextMarkerProperties != null)
+                    && pap.TextMarkerProperties is not null)
                 || settings.TextIndent != 0
                 || pap.ParagraphIndent != 0
                 || pap.LineHeight > 0
                 || pap.AlwaysCollapsible
-                || (pap.TextDecorations != null && pap.TextDecorations.Count != 0)
+                || (pap.TextDecorations is not null && pap.TextDecorations.Count != 0)
                 )
             {
                 // unsupported paragraph properties
@@ -162,7 +162,7 @@ namespace MS.Internal.TextFormatting
             int trailing = 0;
             ArrayList runs = new ArrayList(2);
 
-            if(prev != null)
+            if(prev is not null)
             {
                 AddRun(runs, prev, ref nonHiddenLength);
             }
@@ -210,9 +210,9 @@ namespace MS.Internal.TextFormatting
                     );
 
                 if(    run is null
-                    || (   run.Underline != null
-                        && prev != null
-                        && prev.Underline != null
+                    || (   run.Underline is not null
+                        && prev is not null
+                        && prev.Underline is not null
                         && !prev.IsUnderlineCompatible(run))
                     )
                 {
@@ -407,7 +407,7 @@ namespace MS.Internal.TextFormatting
             ref int             trailingSpaceWidth
             )
         {
-            int left = runs != null ? runs.Count : 0;
+            int left = runs is not null ? runs.Count : 0;
 
             SimpleRun run = null;
             bool continueCollecting = true;
@@ -527,7 +527,7 @@ namespace MS.Internal.TextFormatting
             if (!HasOverflowed)
                 return this;
 
-            Invariant.Assert(_settings != null);
+            Invariant.Assert(_settings is not null);
 
             // instantiate a collapsible full text line, collapse it and return the collapsed line
             TextMetrics.FullTextLine textLine = new TextMetrics.FullTextLine(
@@ -594,7 +594,7 @@ namespace MS.Internal.TextFormatting
             int idealXRelativeToOrigin = _idealOffsetUnRounded;
             double y = origin.Y + Baseline;
 
-            if (drawingContext != null)
+            if (drawingContext is not null)
             {
                 drawingContext.PushGuidelineY1(y);
             }
@@ -619,7 +619,7 @@ namespace MS.Internal.TextFormatting
             }
             finally
             {
-                if (drawingContext != null)
+                if (drawingContext is not null)
                 {
                     drawingContext.Pop();
                 }
@@ -945,7 +945,7 @@ namespace MS.Internal.TextFormatting
 
 
                     GlyphTypeface glyphTypeface = run.Typeface.TryGetGlyphTypeface();
-                    Invariant.Assert(glyphTypeface != null);
+                    Invariant.Assert(glyphTypeface is not null);
 
                     // this simple run has GlyphRun
                     GlyphRun glyphRun = glyphTypeface.ComputeUnshapedGlyphRun(
@@ -961,7 +961,7 @@ namespace MS.Internal.TextFormatting
                         _settings.TextFormattingMode
                         );
 
-                    if (glyphRun != null)
+                    if (glyphRun is not null)
                     {
                         indexedGlyphRuns.Add(
                             new IndexedGlyphRun(
@@ -1462,7 +1462,7 @@ namespace MS.Internal.TextFormatting
             if (textRun is TextCharacters)
             {
                 if (    textRun.Properties.BaselineAlignment != BaselineAlignment.Baseline
-                    ||  (textRun.Properties.TextEffects != null && textRun.Properties.TextEffects.Count != 0)
+                    ||  (textRun.Properties.TextEffects is not null && textRun.Properties.TextEffects.Count != 0)
                     )
                 {
                     // fast path does not handle the following conditions
@@ -1473,7 +1473,7 @@ namespace MS.Internal.TextFormatting
 
                 TextDecorationCollection textDecorations = textRun.Properties.TextDecorations;
 
-                if (    textDecorations != null
+                if (    textDecorations is not null
                     &&  textDecorations.Count != 0
                     &&  !textDecorations.ValueEquals(TextDecorations.Underline))
                 {
@@ -1563,7 +1563,7 @@ namespace MS.Internal.TextFormatting
                 }
 
                 // Check for underline condition
-                if (textDecorations != null && textDecorations.Count == 1 )
+                if (textDecorations is not null && textDecorations.Count == 1 )
                 {
                     run.Underline = textDecorations[0];
                 }
@@ -1787,7 +1787,7 @@ namespace MS.Internal.TextFormatting
             CharacterBufferRange charBufferRange = new CharacterBufferRange(CharBufferReference, Length);
 
             GlyphTypeface glyphTypeface = Typeface.TryGetGlyphTypeface();
-            Invariant.Assert(glyphTypeface != null);
+            Invariant.Assert(glyphTypeface is not null);
 
             GlyphRun glyphRun = glyphTypeface.ComputeUnshapedGlyphRun(
                 new Point(x, y),
@@ -1802,7 +1802,7 @@ namespace MS.Internal.TextFormatting
                 _textFormatterImp.TextFormattingMode
               );
 
-            if (glyphRun != null)
+            if (glyphRun is not null)
             {
                 inkBoundingBox = glyphRun.ComputeInkBoundingBox();
             }
@@ -1818,9 +1818,9 @@ namespace MS.Internal.TextFormatting
                 inkBoundingBox.Y += glyphRun.BaselineOrigin.Y;
             }
 
-            if (drawingContext != null)
+            if (drawingContext is not null)
             {
-                if (glyphRun != null)
+                if (glyphRun is not null)
                 {
                     glyphRun.EmitBackground(drawingContext, TextRun.Properties.BackgroundBrush);
                     drawingContext.DrawGlyphRun(foregroundBrush, glyphRun);
@@ -1828,7 +1828,7 @@ namespace MS.Internal.TextFormatting
 
 
                 // draw underline here
-                if (Underline != null)
+                if (Underline is not null)
                 {
                     // Determine number of characters to underline. We don't underline trailing spaces
                     // if the TrimTrailingUnderline flag is set.

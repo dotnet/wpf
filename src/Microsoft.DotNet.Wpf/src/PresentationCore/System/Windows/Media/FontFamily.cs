@@ -90,7 +90,7 @@ namespace System.Windows.Media
         {
             ArgumentNullException.ThrowIfNull(familyName);
 
-            if (baseUri != null && !baseUri.IsAbsoluteUri)
+            if (baseUri is not null && !baseUri.IsAbsoluteUri)
                 throw new ArgumentException(SR.UriNotAbsolute, "baseUri");
 
             _familyIdentifier = new FontFamilyIdentifier(familyName, baseUri);
@@ -120,7 +120,7 @@ namespace System.Windows.Media
             get
             {
                 CompositeFontFamily compositeFont = FirstFontFamily as CompositeFontFamily;
-                if (compositeFont != null)
+                if (compositeFont is not null)
                 {
                     // Return the read/write dictionary of family names.
                     return compositeFont.FamilyNames;
@@ -142,7 +142,7 @@ namespace System.Windows.Media
             get
             {
                 CompositeFontFamily compositeFont = FirstFontFamily as CompositeFontFamily;
-                if (compositeFont != null)
+                if (compositeFont is not null)
                 {
                     // Return the read/write list of typefaces for the font.
                     return compositeFont.FamilyTypefaces;
@@ -165,7 +165,7 @@ namespace System.Windows.Media
             get
             {
                 CompositeFontFamily compositeFont = FirstFontFamily as CompositeFontFamily;
-                if (compositeFont != null)
+                if (compositeFont is not null)
                 {
                     // Read the read/write list of family maps for the font.
                     return compositeFont.FamilyMaps;
@@ -210,7 +210,7 @@ namespace System.Windows.Media
         public override string ToString()
         {
             string source = _familyIdentifier.Source;
-            return source != null ? source : string.Empty;
+            return source is not null ? source : string.Empty;
         }
 
 
@@ -275,7 +275,7 @@ namespace System.Windows.Media
         /// <returns>object hash code</returns>
         public override int GetHashCode()
         {
-            if (_familyIdentifier.Source != null)
+            if (_familyIdentifier.Source is not null)
             {
                 // named font family: hash based on canonical name
                 return _familyIdentifier.GetHashCode();
@@ -299,7 +299,7 @@ namespace System.Windows.Media
                 // different types or o is null
                 return false;
             }
-            else if (_familyIdentifier.Source != null)
+            else if (_familyIdentifier.Source is not null)
             {
                 // named font family; compare canonical names
                 return _familyIdentifier.Equals(f._familyIdentifier);
@@ -356,7 +356,7 @@ namespace System.Windows.Media
                         {
                             // fall back to null font
                             family = LookupFontFamily(NullFontFamilyCanonicalName);
-                            Invariant.Assert(family != null);
+                            Invariant.Assert(family is not null);
                         }
 
                         TypefaceMetricsCache.Add(FamilyIdentifier, family);
@@ -392,7 +392,7 @@ namespace System.Windows.Media
                 firstFontFamily = LookupFontFamily(NullFontFamilyCanonicalName);
 
                 // null font family should always exist
-                Invariant.Assert(firstFontFamily != null);
+                Invariant.Assert(firstFontFamily is not null);
 }
 
             return firstFontFamily;
@@ -416,7 +416,7 @@ namespace System.Windows.Media
             {
                 nullFont = true;
                 fontFamily = LookupFontFamily(NullFontFamilyCanonicalName);
-                Invariant.Assert(fontFamily != null, "Unable to create null font family");
+                Invariant.Assert(fontFamily is not null, "Unable to create null font family");
             }
             
             return fontFamily;
@@ -465,7 +465,7 @@ namespace System.Windows.Media
         {
             if (_familyIdentifier.Source is null)
             {
-                Invariant.Assert(_firstFontFamily != null, "Unnamed FontFamily should have a non-null first font family");
+                Invariant.Assert(_firstFontFamily is not null, "Unnamed FontFamily should have a non-null first font family");
                 return _firstFontFamily;
             }
 
@@ -517,12 +517,12 @@ namespace System.Windows.Media
                     // No explicit location; use the default family collection.
                     familyCollection = _defaultFamilyCollection;
                 }
-                else if (canonicalFamilyReference.LocationUri != null)
+                else if (canonicalFamilyReference.LocationUri is not null)
                 {
                     // Look in the location specified by the font family reference.
                     familyCollection = FamilyCollection.FromUri(canonicalFamilyReference.LocationUri);
                 }
-                else // canonicalFamilyReference.EscapedFileName != null
+                else // canonicalFamilyReference.EscapedFileName is not null
                 {
                     // Look in the specified file in the Windows Fonts folder
                     // Note: CanonicalFamilyReference.EscapedFileName is safe to combine with Util.WindowsFontsUriObject because CanonicalFamilyReference guarantees that it will be a simple filename

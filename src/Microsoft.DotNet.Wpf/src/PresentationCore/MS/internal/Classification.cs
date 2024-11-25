@@ -280,7 +280,7 @@ namespace MS.Internal
             out int              sizeofChar
             )
         {
-            Invariant.Assert(unicodeString.CharacterBuffer != null && unicodeString.Length > 0);
+            Invariant.Assert(unicodeString.CharacterBuffer is not null && unicodeString.Length > 0);
 
             int ch = unicodeString[0];
             sizeofChar = 1;

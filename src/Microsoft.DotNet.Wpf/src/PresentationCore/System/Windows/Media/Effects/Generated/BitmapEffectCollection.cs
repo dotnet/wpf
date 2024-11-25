@@ -438,7 +438,7 @@ namespace System.Windows.Media.Effects
             {
                 ReadPreamble();
 
-                return IsFrozen || Dispatcher != null;
+                return IsFrozen || Dispatcher is not null;
             }
         }
 
@@ -757,7 +757,7 @@ namespace System.Windows.Media.Effects
 
             internal Enumerator(BitmapEffectCollection list)
             {
-                Debug.Assert(list != null, "list may not be null.");
+                Debug.Assert(list is not null, "list may not be null.");
 
                 _list = list;
                 _version = list._version;
@@ -914,7 +914,7 @@ namespace System.Windows.Media.Effects
             bool needsItemValidation = true;
             ICollection<BitmapEffect> icollectionOfT = collection as ICollection<BitmapEffect>;
 
-            if (icollectionOfT != null)
+            if (icollectionOfT is not null)
             {
                 _collection = new FrugalStructList<BitmapEffect>(icollectionOfT);
             }
@@ -922,7 +922,7 @@ namespace System.Windows.Media.Effects
             {
                 ICollection icollection = collection as ICollection;
 
-                if (icollection != null) // an IC but not and IC<T>
+                if (icollection is not null) // an IC but not and IC<T>
                 {
                     _collection = new FrugalStructList<BitmapEffect>(icollection);
                 }

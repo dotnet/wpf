@@ -127,7 +127,7 @@ namespace System.Windows.Media
         /// </summary>
         private void EnsureCorrectNesting()
         {
-            if (_renderData != null && _stackDepth > 0)
+            if (_renderData is not null && _stackDepth > 0)
             {
                 int stackDepth = _stackDepth;
                 for (int i = 0; i < stackDepth; i++)

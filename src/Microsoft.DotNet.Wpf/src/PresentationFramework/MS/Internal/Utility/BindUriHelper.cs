@@ -105,7 +105,7 @@ namespace MS.Internal.Utility
                 baseUri = null;
             }
 
-            if (baseUri != null)
+            if (baseUri is not null)
             {
                 if (baseUri.IsAbsoluteUri == false)
                 {
@@ -123,10 +123,10 @@ namespace MS.Internal.Utility
                 // if the it is an INavigator (Frame, NavWin), we should use its CurrentSource property.
                 // Otherwise we need to get NavigationService of the container that this element is hosted in,
                 // and use its CurrentSource.
-                if (element != null)
+                if (element is not null)
                 {
                     INavigator navigator = element as INavigator;
-                    if (navigator != null)
+                    if (navigator is not null)
                     {
                         currentSource = navigator.CurrentSource;
                     }
@@ -138,7 +138,7 @@ namespace MS.Internal.Utility
                     }
                 }
 
-                if (currentSource != null)
+                if (currentSource is not null)
                 {
                     if (currentSource.IsAbsoluteUri)
                     {
@@ -179,7 +179,7 @@ namespace MS.Internal.Utility
             }
 
             frag = workuri.Fragment;
-            if (frag != null && frag.Length > 0)
+            if (frag is not null && frag.Length > 0)
             {
                 // take off the pound
                 fragment = frag.Substring(1);

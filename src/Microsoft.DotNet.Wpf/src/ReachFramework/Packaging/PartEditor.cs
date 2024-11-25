@@ -235,7 +235,7 @@ namespace System.Windows.Xps.Packaging
         OpenDocumentForRead(
             )
         {
-            if (_xmlReader != null)
+            if (_xmlReader is not null)
             {
                 throw new XpsPackagingException(SR.ReachPackaging_OpenDocOrElementAlreadyCalled);
             }
@@ -253,7 +253,7 @@ namespace System.Windows.Xps.Packaging
         OpenDocumentForWrite(
             )
         {
-            if (_xmlWriter != null)
+            if (_xmlWriter is not null)
             {
                 throw new XpsPackagingException(SR.ReachPackaging_OpenDocOrElementAlreadyCalled);
             }

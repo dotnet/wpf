@@ -26,7 +26,7 @@ namespace System.Windows.Automation
 
         internal BasePattern( AutomationElement el, SafePatternHandle hPattern )
         {
-            Debug.Assert(el != null);
+            Debug.Assert(el is not null);
 
             _el = el;
             _hPattern = hPattern;

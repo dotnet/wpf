@@ -37,7 +37,7 @@ namespace MS.Internal.Data
         {
             _hostWorker = worker;
             _xpath = ParentBinding.XPath;
-            Debug.Assert(_xpath != null);
+            Debug.Assert(_xpath is not null);
 
             // when collectionMode is true, we update the XmlDataCollection for XmlNodeChanges,
             // otherwise, any XmlNodeChange counts as a disastrous change that requires reset.
@@ -74,7 +74,7 @@ namespace MS.Internal.Data
                 }
             }
 
-            if (CollectionView != null)
+            if (CollectionView is not null)
             {
                 CurrentChangedEventManager.AddHandler(CollectionView, ParentBindingExpression.OnCurrentChanged);
 
@@ -91,7 +91,7 @@ namespace MS.Internal.Data
         internal override void DetachDataItem()
         {
             //UnHook Collection Manager Currency notifications
-            if (CollectionView != null)
+            if (CollectionView is not null)
             {
                 CurrentChangedEventManager.RemoveHandler(CollectionView, ParentBindingExpression.OnCurrentChanged);
 
@@ -216,7 +216,7 @@ namespace MS.Internal.Data
 
                 if (nsMgr is null)
                 {
-                    if (XmlDataProvider != null)
+                    if (XmlDataProvider is not null)
                     {
                         nsMgr = XmlDataProvider.XmlNamespaceManager;
                     }
@@ -239,20 +239,20 @@ namespace MS.Internal.Data
                     ItemsControl ic;
 
                     // if the binding knows its data source and it's the right kind, use it
-                    if ((_xmlDataProvider = ParentBindingExpression.DataSource as XmlDataProvider) != null)
+                    if ((_xmlDataProvider = ParentBindingExpression.DataSource as XmlDataProvider) is not null)
                     {
                         // nothing more to do
                     }
 
                     // if the data is an XmlDataCollection, use its provider
-                    else if ((xdc = DataItem as XmlDataCollection) != null)
+                    else if ((xdc = DataItem as XmlDataCollection) is not null)
                     {
                         _xmlDataProvider = xdc.ParentXmlDataProvider;
                     }
 
                     // if the data is a view over an XmlDataCollection, use its provider
-                    else if (CollectionView != null &&
-                            (xdc = CollectionView.SourceCollection as XmlDataCollection) != null)
+                    else if (CollectionView is not null &&
+                            (xdc = CollectionView.SourceCollection as XmlDataCollection) is not null)
                     {
                         _xmlDataProvider = xdc.ParentXmlDataProvider;
                     }
@@ -261,16 +261,16 @@ namespace MS.Internal.Data
                     // use the provider for the ItemsSource.  This arises for the "Primary
                     // Text" binding for a ComboBox.
                     else if (TargetProperty == BindingExpressionBase.NoTargetProperty &&
-                            (ic = TargetElement as ItemsControl) != null)
+                            (ic = TargetElement as ItemsControl) is not null)
                     {
                         object itemsSource = ic.ItemsSource;
                         if ((xdc = itemsSource as XmlDataCollection) is null)
                         {
                             ICollectionView icv = itemsSource as ICollectionView;
-                            xdc = ((icv != null) ? icv.SourceCollection : null) as XmlDataCollection;
+                            xdc = ((icv is not null) ? icv.SourceCollection : null) as XmlDataCollection;
                         }
 
-                        if (xdc != null)
+                        if (xdc is not null)
                         {
                             _xmlDataProvider = xdc.ParentXmlDataProvider;
                         }
@@ -308,7 +308,7 @@ namespace MS.Internal.Data
                 return;
             }
 
-            if (CollectionView != null)
+            if (CollectionView is not null)
             {
                 ContextNode = CollectionView.CurrentItem as XmlNode;
 
@@ -345,10 +345,10 @@ namespace MS.Internal.Data
             {
                 // Check the node on which we would run XPath queries.
                 // We can only hook if there is a node.
-                if (ContextNode != null)
+                if (ContextNode is not null)
                 {
                     XmlDocument doc = DocumentFor(ContextNode);
-                    if (doc != null)
+                    if (doc is not null)
                     {
                         XmlNodeChangedEventManager.AddHandler(doc, OnXmlNodeChanged);
                     }
@@ -366,10 +366,10 @@ namespace MS.Internal.Data
                 //this worker might not be hooked, either because
                 //the query is empty or because of an invalid query.
                 //Only unhook if we were hooked in the first place.
-                if (ContextNode != null)
+                if (ContextNode is not null)
                 {
                     XmlDocument doc = DocumentFor(ContextNode);
-                    if (doc != null)
+                    if (doc is not null)
                     {
                         XmlNodeChangedEventManager.RemoveHandler(doc, OnXmlNodeChanged);
                     }
@@ -443,7 +443,7 @@ namespace MS.Internal.Data
             // There should never be a change notification when there's no ContextNode.
             // If this Assert ever hits, something is wrong with the logic or ordering of
             // UpdateContextNode(), HookNotifications() and UnHookNotifications().
-            Debug.Assert(ContextNode != null);
+            Debug.Assert(ContextNode is not null);
 
             // ignore changes that cannot possibly affect the value of this XPath
             if (!IsChangeRelevant(args))
@@ -512,7 +512,7 @@ namespace MS.Internal.Data
             XmlNodeList nodes = null;
             try
             {
-                if (nsMgr != null)
+                if (nsMgr is not null)
                 {
                     nodes = ContextNode.SelectNodes(XPath, nsMgr);
                 }
@@ -527,7 +527,7 @@ namespace MS.Internal.Data
                 if (TraceData.IsEnabled)
                 {
                     TraceData.TraceAndNotify(TraceEventType.Error, TraceData.CannotGetXmlNodeCollection, ParentBindingExpression,
-                        traceParameters: new object[] { (ContextNode != null) ? ContextNode.Name : null, XPath, ParentBindingExpression, xe },
+                        traceParameters: new object[] { (ContextNode is not null) ? ContextNode.Name : null, XPath, ParentBindingExpression, xe },
                         eventParameters: new object[] { xe });
                 }
             }
@@ -642,10 +642,10 @@ namespace MS.Internal.Data
                 if (resultNode is null)
                     return false;
 
-                if (valueNode != null)
+                if (valueNode is not null)
                     parent = valueNode;
 
-                while (parent != null)
+                while (parent is not null)
                 {
                     if (parent == resultNode)
                         return true;

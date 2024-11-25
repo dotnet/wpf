@@ -194,7 +194,7 @@ namespace System.Windows.Controls
             if (!this.IsExpanded)
             {
                 Button button = GetIconButton();
-                if (button != null)
+                if (button is not null)
                 {
                     button.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
                 }
@@ -202,20 +202,20 @@ namespace System.Windows.Controls
             else
             {
                 Button closeButton = GetCloseButton();
-                if (closeButton != null)
+                if (closeButton is not null)
                 {
                     closeButton.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
                 }
 
                 Thumb titleThumb = GetTitleThumb();
-                if (titleThumb != null)
+                if (titleThumb is not null)
                 {
                     titleThumb.AddHandler(Thumb.DragDeltaEvent, new DragDeltaEventHandler(OnDragDelta));
                     titleThumb.AddHandler(Thumb.DragCompletedEvent, new DragCompletedEventHandler(OnDragCompleted));
                 }
 
                 Thumb resizeThumb = GetResizeThumb();
-                if (resizeThumb != null)
+                if (resizeThumb is not null)
                 {
                     resizeThumb.AddHandler(Thumb.DragDeltaEvent, new DragDeltaEventHandler(OnDragDelta));
                     resizeThumb.AddHandler(Thumb.DragCompletedEvent, new DragCompletedEventHandler(OnDragCompleted));
@@ -501,7 +501,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_attachedAnnotation != null)
+                if (_attachedAnnotation is not null)
                     return _attachedAnnotation;
                 return null;
             }
@@ -564,9 +564,9 @@ namespace System.Windows.Controls
             // If we lost focus due to a context menu on some element within us,
             // we don't consider that a loss of focus.  We simply exit early.
             ContextMenu menu = Keyboard.FocusedElement as ContextMenu;
-            if (menu != null)
+            if (menu is not null)
             {
-                if (menu.PlacementTarget != null && menu.PlacementTarget.IsDescendantOf(this))
+                if (menu.PlacementTarget is not null && menu.PlacementTarget.IsDescendantOf(this))
                 {
                         return;
                 }
@@ -593,14 +593,14 @@ namespace System.Windows.Controls
             // We are interested in the expanded note.
             if ( IsExpanded == true )
             {
-                Invariant.Assert(Content != null);
+                Invariant.Assert(Content is not null);
 
                 BringToFront();
                 // If focus was set on us, we should set the focus on our inner control
                 if ( args.NewFocus == this )
                 {
                     UIElement innerControl = this.Content.InnerControl as UIElement;
-                    Invariant.Assert(innerControl != null, "InnerControl is null or not a UIElement.");
+                    Invariant.Assert(innerControl is not null, "InnerControl is null or not a UIElement.");
 
                     // Don't mess with focus if its already on our inner control
                     if ( innerControl.IsKeyboardFocused == false )
@@ -633,7 +633,7 @@ namespace System.Windows.Controls
             UIElement contentContainer = GetContentContainer();
 
             // Check whether we need to recreate a content control based on the new type.
-            if (_contentControl != null)
+            if (_contentControl is not null)
             {
                 // Check if the type has been changed
                 if (_contentControl.Type != _stickyNoteType)
@@ -657,7 +657,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void DisconnectContent()
         {
-            Invariant.Assert(Content != null, "Content is null.");
+            Invariant.Assert(Content is not null, "Content is null.");
 
             // Unregister for all events and clear bindings
             StopListenToContentControlEvent();
@@ -672,11 +672,11 @@ namespace System.Windows.Controls
         /// </summary>
         private void ConnectContent()
         {
-            Invariant.Assert(Content != null);
+            Invariant.Assert(Content is not null);
 
             // Set the default inking mode and attributes
             InkCanvas innerInkCanvas = Content.InnerControl as InkCanvas;
-            if (innerInkCanvas != null)
+            if (innerInkCanvas is not null)
             {
                 // Create the event handlers we'll use for ink notes
                 InitializeEventHandlers();
@@ -807,10 +807,10 @@ namespace System.Windows.Controls
         private static void OnFontPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             StickyNoteControl stickyNoteControl = (StickyNoteControl)d;
-            if (stickyNoteControl.Content != null && stickyNoteControl.Content.Type != StickyNoteType.Ink)
+            if (stickyNoteControl.Content is not null && stickyNoteControl.Content.Type != StickyNoteType.Ink)
             {
                 FrameworkElement innerControl = stickyNoteControl.Content.InnerControl;
-                if (innerControl != null)
+                if (innerControl is not null)
                     innerControl.SetValue(e.Property, e.NewValue);
             }
         }
@@ -824,10 +824,10 @@ namespace System.Windows.Controls
             StickyNoteControl stickyNoteControl = (StickyNoteControl)d;
             stickyNoteControl.UpdateInkDrawingAttributes();
 
-            if (e.Property == ForegroundProperty && stickyNoteControl.Content != null && stickyNoteControl.Content.Type != StickyNoteType.Ink)
+            if (e.Property == ForegroundProperty && stickyNoteControl.Content is not null && stickyNoteControl.Content.Type != StickyNoteType.Ink)
             {
                 FrameworkElement innerControl = stickyNoteControl.Content.InnerControl;
-                if (innerControl != null)
+                if (innerControl is not null)
                     innerControl.SetValue(ForegroundProperty, e.NewValue);
             }
         }
@@ -889,7 +889,7 @@ namespace System.Windows.Controls
 
             // Check whether Stylus or Mouse has been captured.
             stylusDevice = args.Device as StylusDevice;
-            if ( stylusDevice != null )
+            if ( stylusDevice is not null )
             {
                 captured = stylusDevice.Captured;
             }
@@ -897,7 +897,7 @@ namespace System.Windows.Controls
             {
                 mouseDevice = args.Device as MouseDevice;
 
-                if (mouseDevice != null)
+                if (mouseDevice is not null)
                 {
                     captured = mouseDevice.Captured;
                 }
@@ -905,7 +905,7 @@ namespace System.Windows.Controls
 
             // ContextMenu may capture the inputdevice in front.
             // If the device is captured by an element other than StickyNote, we should not try to bring note to front.
-            if ( snc != null && ( captured == snc || captured is null ) )
+            if ( snc is not null && ( captured == snc || captured is null ) )
             {
                 snc.OnPreviewDeviceDown(sender, args);
             }
@@ -989,10 +989,10 @@ namespace System.Windows.Controls
 
             if (args.Removed.Count > 0 || args.Added.Count > 0)
             {
-                Invariant.Assert(Content != null && Content.InnerControl is InkCanvas);
+                Invariant.Assert(Content is not null && Content.InnerControl is InkCanvas);
                 FrameworkElement parent = VisualTreeHelper.GetParent(Content.InnerControl) as FrameworkElement;
 
-                if (parent != null)
+                if (parent is not null)
                 {
                     // Invalidate ContentArea's measure so that scrollbar could be updated correctly.
                     parent.InvalidateMeasure();
@@ -1058,8 +1058,8 @@ namespace System.Windows.Controls
         /// </summary>
         private void DeleteStickyNote()
         {
-            Invariant.Assert(_attachedAnnotation != null, "AttachedAnnotation is null.");
-            Invariant.Assert(_attachedAnnotation.Store != null, "AttachedAnnotation's Store is null.");
+            Invariant.Assert(_attachedAnnotation is not null, "AttachedAnnotation is null.");
+            Invariant.Assert(_attachedAnnotation.Store is not null, "AttachedAnnotation's Store is null.");
 
             _attachedAnnotation.Store.DeleteAnnotation(_attachedAnnotation.Annotation.Id);
         }
@@ -1238,9 +1238,9 @@ namespace System.Windows.Controls
                     // Only event we want to `swallow here is a click on the InkCanvas
                     // when the StickyNote isn't focused because RTI isn't set up yet
                     Visual source = args.OriginalSource as Visual;
-                    if (source != null)
+                    if (source is not null)
                     {
-                        Invariant.Assert(Content.InnerControl != null, "InnerControl is null.");
+                        Invariant.Assert(Content.InnerControl is not null, "InnerControl is null.");
                         eatEvent = source.IsDescendantOf(this.Content.InnerControl);
                     }
                 }
@@ -1292,7 +1292,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void ClearCachedControls()
         {
-            if (Content != null)
+            if (Content is not null)
             {
                 // Disconnect the content control which will be re-connected to the new ContentControl
                 // in ApplyTemplate when the new visual tree is populated from the new control template.
@@ -1300,26 +1300,26 @@ namespace System.Windows.Controls
             }
 
             Button closeButton = GetCloseButton();
-            if (closeButton != null)
+            if (closeButton is not null)
             {
                 closeButton.RemoveHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
             }
 
             Button iconButton = GetIconButton();
-            if (iconButton != null)
+            if (iconButton is not null)
             {
                 iconButton.RemoveHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
             }
 
             Thumb titleThumb = GetTitleThumb();
-            if (titleThumb != null)
+            if (titleThumb is not null)
             {
                 titleThumb.RemoveHandler(Thumb.DragDeltaEvent, new DragDeltaEventHandler(OnDragDelta));
                 titleThumb.RemoveHandler(Thumb.DragCompletedEvent, new DragCompletedEventHandler(OnDragCompleted));
             }
 
             Thumb resizeThumb = GetResizeThumb();
-            if (resizeThumb != null)
+            if (resizeThumb is not null)
             {
                 resizeThumb.RemoveHandler(Thumb.DragDeltaEvent, new DragDeltaEventHandler(OnDragDelta));
                 resizeThumb.RemoveHandler(Thumb.DragCompletedEvent, new DragCompletedEventHandler(OnDragCompleted));
@@ -1380,10 +1380,10 @@ namespace System.Windows.Controls
                 DependencyObject parent = _attachedAnnotation.Parent;
                 IInputElement newFocus = null;
 
-                while (parent != null && !transferred)
+                while (parent is not null && !transferred)
                 {
                     newFocus = parent as IInputElement;
-                    if (newFocus != null)
+                    if (newFocus is not null)
                     {
                         transferred = newFocus.Focus();
                     }
@@ -1411,7 +1411,7 @@ namespace System.Windows.Controls
         private void BringToFront()
         {
             PresentationContext pc = ((IAnnotationComponent)this).PresentationContext;
-            if ( pc != null )
+            if ( pc is not null )
             {
                 pc.BringToFront(this);
             }
@@ -1425,7 +1425,7 @@ namespace System.Windows.Controls
         private void SendToBack()
         {
             PresentationContext pc = ((IAnnotationComponent)this).PresentationContext;
-            if (pc != null)
+            if (pc is not null)
             {
                 pc.SendToBack(this);
             }
@@ -1437,7 +1437,7 @@ namespace System.Windows.Controls
         private void InvalidateTransform()
         {
             PresentationContext pc = ((IAnnotationComponent)this).PresentationContext;
-            if ( pc != null )
+            if ( pc is not null )
             {
                 pc.InvalidateTransform(this);
             }
@@ -1461,7 +1461,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void BindContentControlProperties()
         {
-            Invariant.Assert(Content != null);
+            Invariant.Assert(Content is not null);
 
             // ISSUE-2005/03/23/WAYNEZEN,
             // Somehow, the bound font family can't be loaded again by Parser once the attribute persists in XAML.
@@ -1510,7 +1510,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void UnbindContentControlProperties()
         {
-            Invariant.Assert(Content != null);
+            Invariant.Assert(Content is not null);
 
             FrameworkElement innerControl = (FrameworkElement)Content.InnerControl;
             if (Content.Type != StickyNoteType.Ink)
@@ -1535,12 +1535,12 @@ namespace System.Windows.Controls
         /// </summary>
         private void StartListenToContentControlEvent()
         {
-            Invariant.Assert(Content != null);
+            Invariant.Assert(Content is not null);
 
             if (Content.Type == StickyNoteType.Ink)
             {
                 InkCanvas inkCanvas = Content.InnerControl as InkCanvas;
-                Invariant.Assert(inkCanvas != null, "InnerControl is not an InkCanvas for note of type Ink.");
+                Invariant.Assert(inkCanvas is not null, "InnerControl is not an InkCanvas for note of type Ink.");
                 inkCanvas.StrokesReplaced += new InkCanvasStrokesReplacedEventHandler(OnInkCanvasStrokesReplacedEventHandler);
                 inkCanvas.SelectionMoving += new InkCanvasSelectionEditingEventHandler(OnInkCanvasSelectionMovingEventHandler);
                 inkCanvas.SelectionResizing += new InkCanvasSelectionEditingEventHandler(OnInkCanvasSelectionResizingEventHandler);
@@ -1549,7 +1549,7 @@ namespace System.Windows.Controls
             else
             {
                 TextBoxBase textBoxBase = Content.InnerControl as TextBoxBase;
-                Invariant.Assert(textBoxBase != null, "InnerControl is not a TextBoxBase for note of type Text.");
+                Invariant.Assert(textBoxBase is not null, "InnerControl is not a TextBoxBase for note of type Text.");
                 textBoxBase.TextChanged += new TextChangedEventHandler(OnTextChanged);
             }
         }
@@ -1560,12 +1560,12 @@ namespace System.Windows.Controls
         /// </summary>
         private void StopListenToContentControlEvent()
         {
-            Invariant.Assert(Content != null);
+            Invariant.Assert(Content is not null);
 
             if (Content.Type == StickyNoteType.Ink)
             {
                 InkCanvas inkCanvas = Content.InnerControl as InkCanvas;
-                Invariant.Assert(inkCanvas != null, "InnerControl is not an InkCanvas for note of type Ink.");
+                Invariant.Assert(inkCanvas is not null, "InnerControl is not an InkCanvas for note of type Ink.");
                 inkCanvas.StrokesReplaced -= new InkCanvasStrokesReplacedEventHandler(OnInkCanvasStrokesReplacedEventHandler);
                 inkCanvas.SelectionMoving -= new InkCanvasSelectionEditingEventHandler(OnInkCanvasSelectionMovingEventHandler);
                 inkCanvas.SelectionResizing -= new InkCanvasSelectionEditingEventHandler(OnInkCanvasSelectionResizingEventHandler);
@@ -1574,7 +1574,7 @@ namespace System.Windows.Controls
             else
             {
                 TextBoxBase textBoxBase = Content.InnerControl as TextBoxBase;
-                Invariant.Assert(textBoxBase != null, "InnerControl is not a TextBoxBase for note of type Text.");
+                Invariant.Assert(textBoxBase is not null, "InnerControl is not a TextBoxBase for note of type Text.");
                 textBoxBase.TextChanged -= new TextChangedEventHandler(OnTextChanged);
             }
         }
@@ -1646,7 +1646,7 @@ namespace System.Windows.Controls
         private void SetupMenu()
         {
             MenuItem inkMenuItem = GetInkMenuItem();
-            if (inkMenuItem != null)
+            if (inkMenuItem is not null)
             {
                 // Bind the EditingMode to item's IsChecked DP.
                 Binding checkedBind = new Binding("InkEditingMode");
@@ -1658,7 +1658,7 @@ namespace System.Windows.Controls
             }
 
             MenuItem selectMenuItem = GetSelectMenuItem();
-            if (selectMenuItem != null)
+            if (selectMenuItem is not null)
             {
                 // Bind the EditingMode to item's IsChecked DP.
                 Binding checkedBind = new Binding("InkEditingMode");
@@ -1670,7 +1670,7 @@ namespace System.Windows.Controls
             }
 
             MenuItem eraseMenuItem = GetEraseMenuItem();
-            if (eraseMenuItem != null)
+            if (eraseMenuItem is not null)
             {
                 // Bind the EditingMode to item's IsChecked DP.
                 Binding checkedBind = new Binding("InkEditingMode");
@@ -1683,13 +1683,13 @@ namespace System.Windows.Controls
 
             // Set the target for the Copy/Paste commands to our inner control
             MenuItem copyMenuItem = GetCopyMenuItem();
-            if (copyMenuItem != null)
+            if (copyMenuItem is not null)
             {
                 copyMenuItem.CommandTarget = Content.InnerControl;
             }
 
             MenuItem pasteMenuItem = GetPasteMenuItem();
-            if (pasteMenuItem != null)
+            if (pasteMenuItem is not null)
             {
                 pasteMenuItem.CommandTarget = Content.InnerControl;
             }
@@ -1709,7 +1709,7 @@ namespace System.Windows.Controls
             RoutedCommand command = (RoutedCommand)(args.Command);
             StickyNoteControl snc = sender as StickyNoteControl;
 
-            Invariant.Assert(snc != null, "Unexpected Commands");
+            Invariant.Assert(snc is not null, "Unexpected Commands");
             Invariant.Assert(command == StickyNoteControl.DeleteNoteCommand
                 || command == StickyNoteControl.InkCommand, "Unknown Commands");
 
@@ -1745,21 +1745,21 @@ namespace System.Windows.Controls
             RoutedCommand command = (RoutedCommand)( args.Command );
             StickyNoteControl snc = sender as StickyNoteControl;
 
-            Invariant.Assert(snc != null, "Unexpected Commands");
+            Invariant.Assert(snc is not null, "Unexpected Commands");
             Invariant.Assert(command == StickyNoteControl.DeleteNoteCommand
                 || command == StickyNoteControl.InkCommand, "Unknown Commands");
 
             if ( command == StickyNoteControl.DeleteNoteCommand )
             {
                 // Enable/Disable DeleteNote Command based on the Attached Annotation.
-                args.CanExecute = snc._attachedAnnotation != null;
+                args.CanExecute = snc._attachedAnnotation is not null;
             }
             else if (command == StickyNoteControl.InkCommand)
             {
                 StickyNoteContentControl content = snc.Content;
 
                 // Enabled/Disable InkCommand based on the StickyNote type
-                args.CanExecute = (content != null && content.Type == StickyNoteType.Ink);
+                args.CanExecute = (content is not null && content.Type == StickyNoteType.Ink);
             }
             else
             {
@@ -1966,7 +1966,7 @@ namespace System.Windows.Controls
         {
             public StrokeChangedHandler(StickyNoteControl snc)
             {
-                Invariant.Assert(snc != null);
+                Invariant.Assert(snc is not null);
                 _snc = snc;
             }
 

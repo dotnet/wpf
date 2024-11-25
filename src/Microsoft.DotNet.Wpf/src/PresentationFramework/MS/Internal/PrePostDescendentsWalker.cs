@@ -68,7 +68,7 @@ namespace MS.Internal
             {
                 if (!skipStartNode)
                 {
-                    if (_postCallback != null)
+                    if (_postCallback is not null)
                     {
                         // This type checking is done in DescendentsWalker.  Doing it here
                         // keeps us consistent.
@@ -105,7 +105,7 @@ namespace MS.Internal
             }
             finally
             {
-                if (_postCallback != null)
+                if (_postCallback is not null)
                 {
                     _postCallback(d, this.Data, visitedViaVisualTree);
                 }

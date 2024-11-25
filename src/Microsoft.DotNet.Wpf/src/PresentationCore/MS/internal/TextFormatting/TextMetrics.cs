@@ -149,7 +149,7 @@ namespace MS.Internal.TextFormatting
             _textWidth = lineWidths.upLimLine;
 
             // append line end collapsing symbol if any
-            if (collapsingSymbol != null)
+            if (collapsingSymbol is not null)
             {
                 AppendCollapsingSymbolWidth(TextFormatterImp.RealToIdeal(collapsingSymbol.Width));
             }
@@ -312,8 +312,8 @@ namespace MS.Internal.TextFormatting
                 }
             }
 
-            if (    _lastRun != null 
-                &&  _lastRun.TextModifierScope != null 
+            if (    _lastRun is not null 
+                &&  _lastRun.TextModifierScope is not null 
                 &&  !(_lastRun.TextRun is TextEndOfParagraph))
             {
                 return new TextLineBreak(

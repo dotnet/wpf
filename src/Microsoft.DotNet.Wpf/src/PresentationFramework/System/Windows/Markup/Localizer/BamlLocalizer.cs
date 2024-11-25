@@ -130,7 +130,7 @@ namespace System.Windows.Markup.Localizer
         protected virtual void OnErrorNotify(BamlLocalizerErrorNotifyEventArgs e)
         {
             BamlLocalizerErrorNotifyEventHandler handler = ErrorNotify;
-            if (handler != null) 
+            if (handler is not null) 
             {
                 handler(this, e);
             }

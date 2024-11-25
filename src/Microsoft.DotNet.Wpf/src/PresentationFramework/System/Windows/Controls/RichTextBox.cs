@@ -120,8 +120,8 @@ namespace System.Windows.Controls
 
             // Values that must be set as a side effect of Document assignment,
             // that are required for the RichTextBox instance functioning.
-            Invariant.Assert(this.TextContainer != null);
-            Invariant.Assert(this.TextEditor != null);
+            Invariant.Assert(this.TextContainer is not null);
+            Invariant.Assert(this.TextEditor is not null);
             Invariant.Assert(this.TextEditor.TextContainer == this.TextContainer);
         }
 
@@ -348,7 +348,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                Invariant.Assert(_document != null);
+                Invariant.Assert(_document is not null);
                 return _document;
             }
 
@@ -357,13 +357,13 @@ namespace System.Windows.Controls
                 ArgumentNullException.ThrowIfNull(value);
 
                 if (value != _document &&
-                    value.StructuralCache != null && value.StructuralCache.TextContainer != null && 
-                    value.StructuralCache.TextContainer.TextSelection != null)
+                    value.StructuralCache is not null && value.StructuralCache.TextContainer is not null && 
+                    value.StructuralCache.TextContainer.TextSelection is not null)
                 {
                     throw new ArgumentException(SR.RichTextBox_DocumentBelongsToAnotherRichTextBoxAlready);
                 }
 
-                if (_document != null && this.TextSelectionInternal.ChangeBlockLevel > 0)
+                if (_document is not null && this.TextSelectionInternal.ChangeBlockLevel > 0)
                 {
                     throw new InvalidOperationException(SR.RichTextBox_CantSetDocumentInsideChangeBlock);
                 }
@@ -378,7 +378,7 @@ namespace System.Windows.Controls
                 bool initialSetting = _document is null;
                 
                 // Detach existing FlowDocument
-                if (_document != null)
+                if (_document is not null)
                 {
                     // Detach PageSize change listener
                     _document.PageSizeChanged -= new EventHandler(this.OnPageSizeChangedHandler);
@@ -424,7 +424,7 @@ namespace System.Windows.Controls
                 this.AddLogicalChild(_document);
 
                 // Re-attach to visual tree
-                if (renderScope != null)
+                if (renderScope is not null)
                 {
                     // Re-atach to visual tree if we have a new TextContainer.
                     this.AttachToVisualTree();
@@ -765,7 +765,7 @@ namespace System.Windows.Controls
             }
 
             // Make sure that the TextWrapping property is set correctly
-            if (this.Document != null)
+            if (this.Document is not null)
             {
                 this.Document.TextWrapping = TextWrapping.Wrap;
             }
@@ -802,7 +802,7 @@ namespace System.Windows.Controls
         {
             RichTextBox richTextBox = (RichTextBox)d;
 
-            if (richTextBox.Document != null)
+            if (richTextBox.Document is not null)
             {
                 richTextBox.Document.CoerceValue(IsEnabledProperty);
             }

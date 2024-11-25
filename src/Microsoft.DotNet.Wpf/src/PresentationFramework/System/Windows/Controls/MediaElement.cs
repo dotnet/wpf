@@ -807,7 +807,7 @@ namespace System.Windows.Controls
 
             MediaElement target = ((MediaElement) d);
 
-            if (target != null)
+            if (target is not null)
             {
                 target._helper.SetVolume((double)e.NewValue);
             }
@@ -822,7 +822,7 @@ namespace System.Windows.Controls
 
             MediaElement target = ((MediaElement) d);
 
-            if (target != null)
+            if (target is not null)
             {
                 target._helper.SetBalance((double)e.NewValue);
             }
@@ -837,7 +837,7 @@ namespace System.Windows.Controls
 
             MediaElement target = ((MediaElement) d);
 
-            if (target != null)
+            if (target is not null)
             {
                 target._helper.SetIsMuted((bool)e.NewValue);
             }
@@ -852,7 +852,7 @@ namespace System.Windows.Controls
 
             MediaElement target = ((MediaElement) d);
 
-            if (target != null)
+            if (target is not null)
             {
                 target._helper.SetScrubbingEnabled((bool)e.NewValue);
             }
@@ -872,7 +872,7 @@ namespace System.Windows.Controls
 
             MediaElement target = (MediaElement)d;
 
-            if (target != null)
+            if (target is not null)
             {
                 target._helper.SetUnloadedBehavior((MediaState)e.NewValue);
             }
@@ -892,7 +892,7 @@ namespace System.Windows.Controls
 
             MediaElement target = (MediaElement)d;
 
-            if (target != null)
+            if (target is not null)
             {
                 target._helper.SetLoadedBehavior((MediaState)e.NewValue);
             }

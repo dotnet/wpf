@@ -212,7 +212,7 @@ namespace System.Windows.Controls.Primitives
             // (Visual state "Today" doesn't take effect when select and unselect today)
             // Force refresh to have matching Today foreground and background colors.
             VisualStateManager.GoToState(this, VisualStates.StateRegularDay, useTransitions);
-            if (IsToday && this.Owner != null && this.Owner.IsTodayHighlighted)
+            if (IsToday && this.Owner is not null && this.Owner.IsTodayHighlighted)
             {
                 VisualStates.GoToState(this, useTransitions, VisualStates.StateToday, VisualStates.StateRegularDay);
             }

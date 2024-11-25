@@ -62,7 +62,7 @@ namespace MS.Internal.Data
             }
             else
             {   // go down
-                for (parent = RightChild, node = parent.LeftChild; node != null; parent = node, node = parent.LeftChild)
+                for (parent = RightChild, node = parent.LeftChild; node is not null; parent = node, node = parent.LeftChild)
                     ;
                 return parent;
             }
@@ -73,13 +73,13 @@ namespace MS.Internal.Data
             RBNode<T> node, parent;
             if (LeftChild is null)
             {   // go up
-                for (node = this, parent = node.Parent; parent != null && parent.LeftChild == node; node = parent, parent = node.Parent)
+                for (node = this, parent = node.Parent; parent is not null && parent.LeftChild == node; node = parent, parent = node.Parent)
                     ;
                 return parent;
             }
             else
             {   // go down
-                for (parent = LeftChild, node = parent.RightChild; node != null; parent = node, node = parent.RightChild)
+                for (parent = LeftChild, node = parent.RightChild; node is not null; parent = node, node = parent.RightChild)
                     ;
                 return parent;
             }
@@ -118,7 +118,7 @@ namespace MS.Internal.Data
         protected RBFinger<T> Find(T x, Comparison<T> comparison)
         {
             RBFinger<T> result;
-            int compL = (_data != null) ? comparison(x, GetItemAt(0)) : -1;
+            int compL = (_data is not null) ? comparison(x, GetItemAt(0)) : -1;
             int compR;
             if (compL <= 0)
             {
@@ -270,9 +270,9 @@ namespace MS.Internal.Data
 
             // next locate x between a node and its left-parent
             RBNode<T> node = startingNode, parent = node.Parent;
-            while (parent != null)
+            while (parent is not null)
             {
-                while (parent != null && node == parent.LeftChild)
+                while (parent is not null && node == parent.LeftChild)
                 { node = parent; parent = node.Parent; }    // find left-parent
 
                 if (parent is null || comparison(x, parent.GetItemAt(parent.Size - 1)) >= 0)
@@ -292,7 +292,7 @@ namespace MS.Internal.Data
             }
 
             // now we know x belongs in startingNode's left subtree, if any
-            if (startingNode.LeftChild != null)
+            if (startingNode.LeftChild is not null)
             {
                 RBFinger<T> newFinger = startingNode.LeftChild.Find(x, comparison);
                 if (newFinger.Offset == newFinger.Node.Size)
@@ -392,7 +392,7 @@ namespace MS.Internal.Data
 
         protected RBTree<T> GetRoot(RBNode<T> node)
         {
-            for (RBNode<T> parent = node.Parent; parent != null; node = parent, parent = node.Parent)
+            for (RBNode<T> parent = node.Parent; parent is not null; node = parent, parent = node.Parent)
             {
             }
             return (RBTree<T>)node;
@@ -401,7 +401,7 @@ namespace MS.Internal.Data
         protected RBTree<T> GetRootAndIndex(RBNode<T> node, out int index)
         {
             index = node.LeftSize;
-            for (RBNode<T> parent = node.Parent; parent != null; node = parent, parent = node.Parent)
+            for (RBNode<T> parent = node.Parent; parent is not null; node = parent, parent = node.Parent)
             {
                 if (node == parent.RightChild)
                     index += parent.LeftSize + parent.Size;
@@ -420,7 +420,7 @@ namespace MS.Internal.Data
             }
             else
             {
-                Debug.Assert(successor != null && successor.Size < MaxSize, "InsertAt: successor should have room");
+                Debug.Assert(successor is not null && successor.Size < MaxSize, "InsertAt: successor should have room");
                 if (successor.Size == 0)
                 {
                     if (succsucc is null)
@@ -538,7 +538,7 @@ namespace MS.Internal.Data
 
             Size += delta;
             RBNode<T> node, parent;
-            for (node = this, parent = node.Parent; parent != null; node = parent, parent = node.Parent)
+            for (node = this, parent = node.Parent; parent is not null; node = parent, parent = node.Parent)
             {
                 if (parent.LeftChild == node)
                     parent.LeftSize += delta;
@@ -553,8 +553,8 @@ namespace MS.Internal.Data
             sub.Parent = node.Parent;
             sub.IsRed = node.IsRed;
 
-            if (sub.LeftChild != null) sub.LeftChild.Parent = sub;
-            if (sub.RightChild != null) sub.RightChild.Parent = sub;
+            if (sub.LeftChild is not null) sub.LeftChild.Parent = sub;
+            if (sub.RightChild is not null) sub.RightChild.Parent = sub;
             return sub;
         }
 
@@ -619,7 +619,7 @@ namespace MS.Internal.Data
 
         bool IsNodeRed(RBNode<T> node)
         {
-            return node != null && node.IsRed;
+            return node is not null && node.IsRed;
         }
 
         RBNode<T> RotateLeft()
@@ -629,7 +629,7 @@ namespace MS.Internal.Data
             node.IsRed = this.IsRed;
             node.Parent = this.Parent;
             this.RightChild = node.LeftChild;
-            if (this.RightChild != null) this.RightChild.Parent = this;
+            if (this.RightChild is not null) this.RightChild.Parent = this;
             node.LeftChild = this;
             this.IsRed = true;
             this.Parent = node;
@@ -643,7 +643,7 @@ namespace MS.Internal.Data
             node.IsRed = this.IsRed;
             node.Parent = this.Parent;
             this.LeftChild = node.RightChild;
-            if (this.LeftChild != null) this.LeftChild.Parent = this;
+            if (this.LeftChild is not null) this.LeftChild.Parent = this;
             node.RightChild = this;
             this.IsRed = true;
             this.Parent = node;
@@ -694,7 +694,7 @@ namespace MS.Internal.Data
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string name)
         {
-            if (PropertyChanged != null)
+            if (PropertyChanged is not null)
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
 
@@ -741,7 +741,7 @@ namespace MS.Internal.Data
             if (node.Parent.LeftChild != node && node != node.Parent.RightChild)
                 result = false;     // Parent is wrong
 
-            if (comparison != null)
+            if (comparison is not null)
             {
                 if (index > 0 && comparison(maxItem, node.GetItemAt(0)) > 0)
                     result = false;     // first item is out of order
@@ -841,8 +841,8 @@ namespace MS.Internal.Data
 
             node.LeftChild = LoadTree(ref s);   // read subtrees
             node.RightChild = LoadTree(ref s);
-            if (node.LeftChild != null) node.LeftChild.Parent = node;
-            if (node.RightChild != null) node.RightChild.Parent = node;
+            if (node.LeftChild is not null) node.LeftChild.Parent = node;
+            if (node.RightChild is not null) node.RightChild.Parent = node;
 
             s = s.Substring(1);             // skip ')'
 

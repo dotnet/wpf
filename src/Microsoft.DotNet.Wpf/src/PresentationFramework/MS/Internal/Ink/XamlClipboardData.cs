@@ -63,7 +63,7 @@ namespace MS.Internal.Ink
         // Check if we have data to be copied
         protected override bool CanCopy()
         {
-            return Elements != null && Elements.Count != 0;
+            return Elements is not null && Elements.Count != 0;
         }
 
         // Convert the elements to the Xaml and copy the Xaml to the IDataObject
@@ -101,7 +101,7 @@ namespace MS.Internal.Ink
             if ( !String.IsNullOrEmpty(xml) )
             {
                 UIElement element = XamlReader.Load(new System.Xml.XmlTextReader(new System.IO.StringReader(xml)), useRestrictiveXamlReader: true) as UIElement;
-                if (element != null)
+                if (element is not null)
                 {
                     ElementList.Add(element);
                 }

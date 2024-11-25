@@ -21,10 +21,10 @@ namespace System.Xaml.Replacements
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            if (context != null && value is string typeName)
+            if (context is not null && value is string typeName)
             {
                 IXamlTypeResolver typeResolver = GetService<IXamlTypeResolver>(context);
-                if (typeResolver != null)
+                if (typeResolver is not null)
                 {
                     return typeResolver.Resolve(typeName);
                 }
@@ -38,10 +38,10 @@ namespace System.Xaml.Replacements
 
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (context != null && value is Type type && destinationType == typeof(string))
+            if (context is not null && value is Type type && destinationType == typeof(string))
             {
                 string result = ConvertTypeToString(context, type);
-                if (result != null)
+                if (result is not null)
                 {
                     return result;
                 }

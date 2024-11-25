@@ -49,7 +49,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static bool IsGridLineVisible(DataGrid dataGrid, bool isHorizontal)
         {
-            if (dataGrid != null)
+            if (dataGrid is not null)
             {
                 DataGridGridLinesVisibility visibility = dataGrid.GridLinesVisibility;
 
@@ -157,10 +157,10 @@ namespace System.Windows.Controls
         {
             FrameworkElement parent = element.TemplatedParent as FrameworkElement;
 
-            while (parent != null)
+            while (parent is not null)
             {
                 T correctlyTyped = parent as T;
-                if (correctlyTyped != null)
+                if (correctlyTyped is not null)
                 {
                     return correctlyTyped;
                 }
@@ -174,10 +174,10 @@ namespace System.Windows.Controls
         public static T FindVisualParent<T>(UIElement element) where T : UIElement
         {
             UIElement parent = element;
-            while (parent != null)
+            while (parent is not null)
             {
                 T correctlyTyped = parent as T;
-                if (correctlyTyped != null)
+                if (correctlyTyped is not null)
                 {
                     return correctlyTyped;
                 }
@@ -200,7 +200,7 @@ namespace System.Windows.Controls
             }
 
             UIElement uielement = element as UIElement;
-            if (uielement != null)
+            if (uielement is not null)
             {
                 if (uielement.Focusable && KeyboardNavigation.GetIsTabStop(uielement))
                 {
@@ -210,7 +210,7 @@ namespace System.Windows.Controls
             else
             {
                 ContentElement contentElement = element as ContentElement;
-                if (contentElement != null && contentElement.Focusable && KeyboardNavigation.GetIsTabStop(contentElement))
+                if (contentElement is not null && contentElement.Focusable && KeyboardNavigation.GetIsTabStop(contentElement))
                 {
                     return true;
                 }
@@ -246,7 +246,7 @@ namespace System.Windows.Controls
             DataGridColumn column = cell.Column;
             bool isColumnHeader = (cell is DataGridColumnHeader);
 
-            if (column != null)
+            if (column is not null)
             {
                 // determine the desired value of width for auto kind columns
                 DataGridLength width = column.Width;
@@ -289,7 +289,7 @@ namespace System.Windows.Controls
         public static Geometry GetFrozenClipForCell(IProvideDataGridColumn cell)
         {
             DataGridCellsPanel panel = GetParentPanelForCell(cell);
-            if (panel != null)
+            if (panel is not null)
             {
                 return panel.GetFrozenClipForChild((UIElement)cell);
             }
@@ -319,7 +319,7 @@ namespace System.Windows.Controls
         public static double GetParentCellsPanelHorizontalOffset(IProvideDataGridColumn cell)
         {
             DataGridCellsPanel panel = GetParentPanelForCell(cell);
-            if (panel != null)
+            if (panel is not null)
             {
                 return panel.ComputeCellsPanelHorizontalOffset();
             }
@@ -391,7 +391,7 @@ namespace System.Windows.Controls
                 var propertySource = DependencyPropertyHelper.GetValueSource(baseObject, baseProperty);
                 var maxBaseValueSource = propertySource.BaseValueSource;
 
-                if (parentObject != null)
+                if (parentObject is not null)
                 {
                     var parentPropertySource = DependencyPropertyHelper.GetValueSource(parentObject, parentProperty);
 
@@ -402,7 +402,7 @@ namespace System.Windows.Controls
                     }
                 }
 
-                if (grandParentObject != null)
+                if (grandParentObject is not null)
                 {
                     var grandParentPropertySource = DependencyPropertyHelper.GetValueSource(grandParentObject, grandParentProperty);
 
@@ -485,21 +485,21 @@ namespace System.Windows.Controls
 
             // If it is a standard Binding, then check if it's Mode is OneWay
             Binding binding = bindingBase as Binding;
-            if (binding != null)
+            if (binding is not null)
             {
                 return binding.Mode == BindingMode.OneWay;
             }
 
             // A multi-binding can be OneWay as well
             MultiBinding multiBinding = bindingBase as MultiBinding;
-            if (multiBinding != null)
+            if (multiBinding is not null)
             {
                 return multiBinding.Mode == BindingMode.OneWay;
             }
 
             // A priority binding is a list of bindings, if any are OneWay, we'll call it OneWay
             PriorityBinding priBinding = bindingBase as PriorityBinding;
-            if (priBinding != null)
+            if (priBinding is not null)
             {
                 Collection<BindingBase> subBindings = priBinding.Bindings;
                 int count = subBindings.Count;
@@ -517,7 +517,7 @@ namespace System.Windows.Controls
 
         internal static BindingExpression GetBindingExpression(FrameworkElement element, DependencyProperty dp)
         {
-            if (element != null)
+            if (element is not null)
             {
                 return element.GetBindingExpression(dp);
             }
@@ -529,9 +529,9 @@ namespace System.Windows.Controls
         {
             bool result = true;
             BindingGroup bindingGroup = element.BindingGroup;
-            DataGridCell cell = (element != null) ? element.Parent as DataGridCell : null;
+            DataGridCell cell = (element is not null) ? element.Parent as DataGridCell : null;
 
-            if (bindingGroup != null && cell != null)
+            if (bindingGroup is not null && cell is not null)
             {
                 Collection<BindingExpressionBase> expressions = bindingGroup.BindingExpressions;
                 BindingExpressionBase[] bindingExpressionsCopy = new BindingExpressionBase[expressions.Count];
@@ -561,7 +561,7 @@ namespace System.Windows.Controls
         internal static bool BindingExpressionBelongsToElement<T>(BindingExpressionBase beb, T element) where T : FrameworkElement
         {
             DependencyObject targetElement = beb.TargetElement;
-            if (targetElement != null)
+            if (targetElement is not null)
             {
                 DependencyObject contextElement = FindContextElement(beb);
                 if (contextElement is null)
@@ -584,7 +584,7 @@ namespace System.Windows.Controls
             MultiBindingExpression mbe;
             PriorityBindingExpression pbe;
 
-            if ((be = beb as BindingExpression) != null)
+            if ((be = beb as BindingExpression) is not null)
             {
                 // leaf binding - return its context element
                 return be.ContextElement;
@@ -592,21 +592,21 @@ namespace System.Windows.Controls
 
             // otherwise, depth-first search through tree of bindings
             ReadOnlyCollection<BindingExpressionBase> childBindings = null;
-            if ((mbe = beb as MultiBindingExpression) != null)
+            if ((mbe = beb as MultiBindingExpression) is not null)
             {
                 childBindings = mbe.BindingExpressions;
             }
-            else if ((pbe = beb as PriorityBindingExpression) != null)
+            else if ((pbe = beb as PriorityBindingExpression) is not null)
             {
                 childBindings = pbe.BindingExpressions;
             }
 
-            if (childBindings != null)
+            if (childBindings is not null)
             {
                 foreach (BindingExpressionBase childBEB in childBindings)
                 {
                     DependencyObject result = FindContextElement(childBEB);
-                    if (result != null)
+                    if (result is not null)
                     {
                         return result;
                     }
@@ -620,7 +620,7 @@ namespace System.Windows.Controls
 
         internal static void CacheFlowDirection(FrameworkElement element, DataGridCell cell)
         {
-            if (element != null && cell != null)
+            if (element is not null && cell is not null)
             {
                 object flowDirectionObj = element.ReadLocalValue(FrameworkElement.FlowDirectionProperty);
                 if (flowDirectionObj != DependencyProperty.UnsetValue)
@@ -632,7 +632,7 @@ namespace System.Windows.Controls
 
         internal static void RestoreFlowDirection(FrameworkElement element, DataGridCell cell)
         {
-            if (element != null && cell != null)
+            if (element is not null && cell is not null)
             {
                 object flowDirectionObj = cell.ReadLocalValue(DataGridHelper.FlowDirectionCacheProperty);
                 if (flowDirectionObj != DependencyProperty.UnsetValue)
@@ -645,9 +645,9 @@ namespace System.Windows.Controls
         internal static void UpdateTarget(FrameworkElement element)
         {
             BindingGroup bindingGroup = element.BindingGroup;
-            DataGridCell cell = (element != null) ? element.Parent as DataGridCell : null;
+            DataGridCell cell = (element is not null) ? element.Parent as DataGridCell : null;
 
-            if (bindingGroup != null && cell != null)
+            if (bindingGroup is not null && cell is not null)
             {
                 Collection<BindingExpressionBase> expressions = bindingGroup.BindingExpressions;
                 BindingExpressionBase[] bindingExpressionsCopy = new BindingExpressionBase[expressions.Count];
@@ -663,7 +663,7 @@ namespace System.Windows.Controls
                     // on i to be a valid index into the original collection.
                     BindingExpressionBase beb = bindingExpressionsCopy[i];
                     DependencyObject targetElement = beb.TargetElement;
-                    if (targetElement != null &&
+                    if (targetElement is not null &&
                         VisualTreeHelper.IsAncestorOf(cell, targetElement, typeof(DataGridCell)))
                     {
                         beb.UpdateTarget();
@@ -686,13 +686,13 @@ namespace System.Windows.Controls
 
         internal static string GetPathFromBinding(Binding binding)
         {
-            if (binding != null)
+            if (binding is not null)
             {
                 if (!string.IsNullOrEmpty(binding.XPath))
                 {
                     return binding.XPath;
                 }
-                else if (binding.Path != null)
+                else if (binding.Path is not null)
                 {
                     return binding.Path.Path;
                 }
@@ -730,7 +730,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static bool HasNonEscapeCharacters(TextCompositionEventArgs textArgs)
         {
-            if (textArgs != null)
+            if (textArgs is not null)
             {
                 string text = textArgs.Text;
                 for (int i = 0, count = text.Length; i < count; i++)
@@ -750,7 +750,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static bool IsImeProcessed(KeyEventArgs keyArgs)
         {
-            if (keyArgs != null)
+            if (keyArgs is not null)
             {
                 return keyArgs.Key == Key.ImeProcessed;
             }

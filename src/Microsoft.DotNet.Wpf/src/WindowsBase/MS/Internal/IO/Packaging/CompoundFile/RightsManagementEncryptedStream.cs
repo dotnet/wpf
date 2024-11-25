@@ -46,7 +46,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             get
             {
                 // always return false if disposed
-                return (_baseStream != null) && 
+                return (_baseStream is not null) && 
                             _baseStream.CanRead && 
                             _baseStream.CanSeek &&
                             _cryptoProvider.CanDecrypt;
@@ -61,7 +61,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             get
             {
                 // always return false if disposed
-                return (_baseStream != null) && 
+                return (_baseStream is not null) && 
                             _baseStream.CanSeek;
             }
         }
@@ -74,7 +74,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             get
             {
                 // always return false if disposed
-                return (_baseStream != null) && 
+                return (_baseStream is not null) && 
                             _baseStream.CanWrite && 
                             _baseStream.CanRead && 
                             _baseStream.CanSeek &&
@@ -265,7 +265,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 if (disposing)
                 {
                     // multiple calls are fine - just ignore them
-                    if (_baseStream != null)
+                    if (_baseStream is not null)
                     {
                         FlushCache();
 
@@ -294,8 +294,8 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                                         Stream baseStream,
                                         CryptoProvider cryptoProvider)
         {
-            Debug.Assert(baseStream != null);
-            Debug.Assert(cryptoProvider != null);
+            Debug.Assert(baseStream is not null);
+            Debug.Assert(cryptoProvider is not null);
 
             if (!cryptoProvider.CanDecrypt )
             {
@@ -460,7 +460,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             // debug only check for valid parameters, as we generally expect callers to verify them 
             PackagingUtilities.VerifyStreamReadArgs(this, buffer, bufferOffset, count);
 #endif
-            Debug.Assert(cache != null);
+            Debug.Assert(cache is not null);
             Debug.Assert(start >=0);
             IList<MemoryStreamBlock> collection = cache.MemoryBlockCollection;
 
@@ -549,7 +549,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         private long FindOffsetOfNextAvailableBlockAfter(SparseMemoryStream cache, long start)
         {
             Debug.Assert(start >= 0);
-            Debug.Assert(cache != null);
+            Debug.Assert(cache is not null);
 
             // Find the index where a new block with offset start would be placed
             bool match;
@@ -832,7 +832,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         private int InternalReliableRead(long streamPosition, byte[] buffer, int offset, int count)
         {
             Debug.Assert(streamPosition >= 0);        
-            Debug.Assert(buffer != null);
+            Debug.Assert(buffer is not null);
             Debug.Assert(count >= 0);
             Debug.Assert(checked(offset + count <= buffer.Length));
             
@@ -861,7 +861,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     
         private void RandomFillUp(Byte[] buffer, int offset, int count)
         {
-            Debug.Assert(buffer != null);
+            Debug.Assert(buffer is not null);
             Debug.Assert(buffer.Length > 0);
             Debug.Assert(count >= 0);
             Debug.Assert(checked(offset + count <= buffer.Length));

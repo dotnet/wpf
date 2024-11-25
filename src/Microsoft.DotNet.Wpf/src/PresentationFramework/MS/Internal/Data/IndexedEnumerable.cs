@@ -63,7 +63,7 @@ namespace MS.Internal.Data
             if (List is null)
             {
                 INotifyCollectionChanged icc = collection as INotifyCollectionChanged;
-                if (icc != null)
+                if (icc is not null)
                 {
                     CollectionChangedEventManager.AddHandler(icc, OnCollectionChanged);
                 }
@@ -188,7 +188,7 @@ namespace MS.Internal.Data
                 _cachedIsEmpty = !ie.MoveNext();
 
                 IDisposable d = ie as IDisposable;
-                if (d != null)
+                if (d is not null)
                 {
                     d.Dispose();
                 }
@@ -304,13 +304,13 @@ namespace MS.Internal.Data
         ///</summary>
         internal static void CopyTo(IEnumerable collection, Array array, int index)
         {
-            Invariant.Assert(collection != null, "collection is null");
-            Invariant.Assert(array != null, "target array is null");
+            Invariant.Assert(collection is not null, "collection is null");
+            Invariant.Assert(array is not null, "target array is null");
             Invariant.Assert(array.Rank == 1, "expected array of rank=1");
             Invariant.Assert(index >= 0, "index must be positive");
 
             ICollection ic = collection as ICollection;
-            if (ic != null)
+            if (ic is not null)
             {
                 ic.CopyTo(array, index);
             }
@@ -344,7 +344,7 @@ namespace MS.Internal.Data
             if (List is null)
             {
                 INotifyCollectionChanged icc = Enumerable as INotifyCollectionChanged;
-                if (icc != null)
+                if (icc is not null)
                 {
                     CollectionChangedEventManager.RemoveHandler(icc, OnCollectionChanged);
                 }
@@ -462,7 +462,7 @@ namespace MS.Internal.Data
         private void DisposeEnumerator(ref IEnumerator ie)
         {
             IDisposable d = ie as IDisposable;
-            if (d != null)
+            if (d is not null)
             {
                 d.Dispose();
             }
@@ -479,7 +479,7 @@ namespace MS.Internal.Data
 
         private void SetCollection(IEnumerable collection)
         {
-            Invariant.Assert(collection != null);
+            Invariant.Assert(collection is not null);
             _enumerable = collection;
             _collection = collection as ICollection;
             _list = collection as IList;
@@ -491,7 +491,7 @@ namespace MS.Internal.Data
                 Type srcType = collection.GetType();
                 // try reflection for IndexOf(object)
                 MethodInfo mi = srcType.GetMethod("IndexOf", new Type[] { typeof(object) });
-                if ((mi != null) && (mi.ReturnType == typeof(int)))
+                if ((mi is not null) && (mi.ReturnType == typeof(int)))
                 {
                     _reflectedIndexOf = mi;
                 }
@@ -501,7 +501,7 @@ namespace MS.Internal.Data
                 for (int i = 0; i <= defaultMembers.Length - 1; i++)
                 {
                     PropertyInfo pi = defaultMembers[i] as PropertyInfo;
-                    if (pi != null)
+                    if (pi is not null)
                     {
                         ParameterInfo[] indexerParameters = pi.GetIndexParameters();
                         if (indexerParameters.Length == 1)
@@ -519,7 +519,7 @@ namespace MS.Internal.Data
                 {
                     // try reflection for Count property
                     PropertyInfo pi = srcType.GetProperty("Count", typeof(int));
-                    if (pi != null)
+                    if (pi is not null)
                     {
                         _reflectedCount = pi;
                     }
@@ -534,17 +534,17 @@ namespace MS.Internal.Data
         {
             bool isNativeValue = false;
             value = -1;
-            if (Collection != null)
+            if (Collection is not null)
             {
                 value = Collection.Count;
                 isNativeValue = true;
             }
-            else if (CollectionView != null)
+            else if (CollectionView is not null)
             {
                 value = CollectionView.Count;
                 isNativeValue = true;
             }
-            else if (_reflectedCount != null)
+            else if (_reflectedCount is not null)
             {
                 try
                 {
@@ -567,17 +567,17 @@ namespace MS.Internal.Data
         {
             bool isNativeValue = false;
             isEmpty = true;
-            if (Collection != null)
+            if (Collection is not null)
             {
                 isEmpty = (Collection.Count == 0);
                 isNativeValue = true;
             }
-            else if (CollectionView != null)
+            else if (CollectionView is not null)
             {
                 isEmpty = CollectionView.IsEmpty;
                 isNativeValue = true;
             }
-            else if (_reflectedCount != null)
+            else if (_reflectedCount is not null)
             {
                 try
                 {
@@ -600,17 +600,17 @@ namespace MS.Internal.Data
         {
             bool isNativeValue = false;
             value = -1;
-            if ((List != null) && (FilterCallback is null))
+            if ((List is not null) && (FilterCallback is null))
             {
                 value = List.IndexOf(item);
                 isNativeValue = true;
             }
-            else if (CollectionView != null)
+            else if (CollectionView is not null)
             {
                 value = CollectionView.IndexOf(item);
                 isNativeValue = true;
             }
-            else if (_reflectedIndexOf != null)
+            else if (_reflectedIndexOf is not null)
             {
                 try
                 {
@@ -633,17 +633,17 @@ namespace MS.Internal.Data
         {
             bool isNativeValue = false;
             value = null;
-            if (List != null)
+            if (List is not null)
             {
                 value = List[index];
                 isNativeValue = true;
             }
-            else if (CollectionView != null)
+            else if (CollectionView is not null)
             {
                 value = CollectionView.GetItemAt(index);
                 isNativeValue = true;
             }
-            else if (_reflectedItemAt != null)
+            else if (_reflectedItemAt is not null)
             {
                 try
                 {
@@ -770,7 +770,7 @@ namespace MS.Internal.Data
             public void Dispose()
             {
                 IDisposable d = _enumerator as IDisposable;
-                if (d != null)
+                if (d is not null)
                 {
                     d.Dispose();
                 }

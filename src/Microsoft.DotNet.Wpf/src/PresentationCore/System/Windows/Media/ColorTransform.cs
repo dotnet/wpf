@@ -77,10 +77,10 @@ namespace System.Windows.Media
             _outputColorType = dstContext.ColorType;
 
             //if this failed or the handle is invalid, we can't continue
-            if (srcContext.ProfileHandle != null && !srcContext.ProfileHandle.IsInvalid)
+            if (srcContext.ProfileHandle is not null && !srcContext.ProfileHandle.IsInvalid)
             {
                 //if this failed or the handle is invalid, we can't continue
-                if (dstContext.ProfileHandle != null && !dstContext.ProfileHandle.IsInvalid)
+                if (dstContext.ProfileHandle is not null && !dstContext.ProfileHandle.IsInvalid)
                 {
                     _colorTransformHelper.CreateTransform(srcContext.ProfileHandle, dstContext.ProfileHandle);
                 }

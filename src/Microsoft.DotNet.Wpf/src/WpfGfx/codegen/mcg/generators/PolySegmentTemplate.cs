@@ -144,7 +144,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     {            
                                         PointCollection points = Points;
                                         
-                                        if (points != null  && points.Count >= [[instance.VerifyCount]])
+                                        if (points is not null  && points.Count >= [[instance.VerifyCount]])
                                         {
                                             if (matrix.IsIdentity)
                                             {

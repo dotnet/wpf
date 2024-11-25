@@ -97,7 +97,7 @@ namespace System.Windows
                 }
             }
 
-            public bool HasNamespaces { get { return _namespaces != null && _namespaces.Count > 0; } }
+            public bool HasNamespaces { get { return _namespaces is not null && _namespaces.Count > 0; } }
 
             public override string ToString()
             {
@@ -120,14 +120,14 @@ namespace System.Windows
 
                 if (Depth > 0)
                 {
-                    isInNameScope = CurrentFrame.IsInNameScope || (CurrentFrame.Type != null && FrameworkTemplate.IsNameScope(CurrentFrame.Type));
+                    isInNameScope = CurrentFrame.IsInNameScope || (CurrentFrame.Type is not null && FrameworkTemplate.IsNameScope(CurrentFrame.Type));
                     isInStyleOrTemplate = CurrentFrame.IsInStyleOrTemplate ||
-                        (CurrentFrame.Type != null &&
+                        (CurrentFrame.Type is not null &&
                             (typeof(FrameworkTemplate).IsAssignableFrom(CurrentFrame.Type.UnderlyingType) ||
                              typeof(Style).IsAssignableFrom(CurrentFrame.Type.UnderlyingType)));
                 }
 
-                if (Depth == 0 || CurrentFrame.Type != null)
+                if (Depth == 0 || CurrentFrame.Type is not null)
                 {
                     base.PushScope();
                 }
@@ -145,14 +145,14 @@ namespace System.Windows
 
                 if (Depth > 0)
                 {
-                    isInNameScope = CurrentFrame.IsInNameScope || (CurrentFrame.Type != null && FrameworkTemplate.IsNameScope(CurrentFrame.Type));
+                    isInNameScope = CurrentFrame.IsInNameScope || (CurrentFrame.Type is not null && FrameworkTemplate.IsNameScope(CurrentFrame.Type));
                     isInStyleOrTemplate = CurrentFrame.IsInStyleOrTemplate ||
-                        (CurrentFrame.Type != null &&
+                        (CurrentFrame.Type is not null &&
                             (typeof(FrameworkTemplate).IsAssignableFrom(CurrentFrame.Type.UnderlyingType) ||
                              typeof(Style).IsAssignableFrom(CurrentFrame.Type.UnderlyingType)));
                 }
 
-                if (Depth == 0 || CurrentFrame.Type != null)
+                if (Depth == 0 || CurrentFrame.Type is not null)
                 {
                     base.PushScope();
                 }
@@ -169,7 +169,7 @@ namespace System.Windows
                     FrugalObjectList<System.Xaml.NamespaceDeclaration> allNamespaces = null;
                     Frame iteratorFrame = this.CurrentFrame;
 
-                    while (iteratorFrame != null)
+                    while (iteratorFrame is not null)
                     {
                         if (iteratorFrame.HasNamespaces)
                         {
@@ -211,7 +211,7 @@ namespace System.Windows
             {
                 //In several situations this even will happen with Stack is null.
                 //If this event was on the XOW, perhaps we could stop listening in some circumstances?
-                if (Stack != null && Stack.Depth > 0)
+                if (Stack is not null && Stack.Depth > 0)
                 {
                     Stack.CurrentFrame.Instance = args.Instance;
                 }
@@ -221,7 +221,7 @@ namespace System.Windows
             TemplateLoadData.ServiceProviderWrapper = new ServiceProviderWrapper(context, SchemaContext);
 
             IRootObjectProvider irop = context.GetService(typeof(IRootObjectProvider)) as IRootObjectProvider;
-            if (irop != null)
+            if (irop is not null)
             {
                 TemplateLoadData.RootObject = irop.RootObject;
             }
@@ -233,7 +233,7 @@ namespace System.Windows
         // Shared values need to be stored into the shared value tables.
         internal void ParseXaml()
         {
-            Debug.Assert(TemplateLoadData.Reader != null);
+            Debug.Assert(TemplateLoadData.Reader is not null);
             StackOfFrames stack = new StackOfFrames();
 
             TemplateLoadData.ServiceProviderWrapper.Frames = stack;
@@ -365,7 +365,7 @@ namespace System.Windows
             if (XamlSourceInfoHelper.IsXamlSourceInfoEnabled)
             {
                 lineInfo = reader as IXamlLineInfo;
-                if (lineInfo != null)
+                if (lineInfo is not null)
                 {
                     lineInfoConsumer = writer as IXamlLineInfoConsumer;
                 }
@@ -373,7 +373,7 @@ namespace System.Windows
 
             while (reader.Read())
             {
-                if (lineInfoConsumer != null)
+                if (lineInfoConsumer is not null)
                 {
                     lineInfoConsumer.SetLineInfo(lineInfo.LineNumber, lineInfo.LinePosition);
                 }
@@ -428,7 +428,7 @@ namespace System.Windows
                         // Check to see if the parent object needs to have the name set
                         if (stack.Depth > 0 &&
                             stack.CurrentFrame.NameSet == false &&
-                            stack.CurrentFrame.Type != null &&
+                            stack.CurrentFrame.Type is not null &&
                             !stack.CurrentFrame.IsInNameScope &&
                             !stack.CurrentFrame.IsInStyleOrTemplate)
                         {
@@ -456,7 +456,7 @@ namespace System.Windows
                         // Check to see if the parent object needs to have the name set
                         if (stack.Depth > 0 &&
                             stack.CurrentFrame.NameSet == false &&
-                            stack.CurrentFrame.Type != null &&
+                            stack.CurrentFrame.Type is not null &&
                             !stack.CurrentFrame.IsInNameScope &&
                             !stack.CurrentFrame.IsInStyleOrTemplate)
                         {
@@ -581,7 +581,7 @@ namespace System.Windows
                             // Try to see if the property is shareable
                             PropertyValue? sharedValue;
                             var iReader = xamlReader as IXamlIndexingReader;
-                            Debug.Assert(iReader != null, "Template's Reader is not a Indexing Reader");
+                            Debug.Assert(iReader is not null, "Template's Reader is not a Indexing Reader");
 
                             bool sharable = false;
                             int savedIdx = iReader.CurrentIndex;
@@ -612,7 +612,7 @@ namespace System.Windows
                                 // Value can be shared.
                                 // Add it to the shared properties list
 
-                                Debug.Assert(sharedValue != null);
+                                Debug.Assert(sharedValue is not null);
                                 sharedProperties.Add(sharedValue.Value);
 
                                 if (typeof(GridViewRowPresenter).
@@ -630,7 +630,7 @@ namespace System.Windows
                                         // else, we should fall back to the default by pretending
                                         // the property was never set.
                                         if (!(sharedValue.Value.ValueInternal is String) &&
-                                            sharedValue.Value.ValueInternal != null)
+                                            sharedValue.Value.ValueInternal is not null)
                                         {
                                             stack.CurrentFrame.ContentSourceSet = false;
                                         }
@@ -690,7 +690,7 @@ namespace System.Windows
                     // If the template was in a Resource Dictionary, the RD would have already replaced the
                     // StaticResource with a StaticResourceHolder and we need to do a "live stack only" walk
                     // to look for RD's that might be closer, for better values.
-                    if (staticResource != null)
+                    if (staticResource is not null)
                     {
                         object obj = null;
 
@@ -709,7 +709,7 @@ namespace System.Windows
                                 obj = null;  // value is only interesting if it improves the previous value.
                             }
                         }
-                        if (obj != null)
+                        if (obj is not null)
                         {
                             var deferredResourceReference = obj as DeferredResourceReference;
 
@@ -727,7 +727,7 @@ namespace System.Windows
                     if (!stack.CurrentFrame.IsInStyleOrTemplate)
                     {
                         // Check to see if the parent object needs to have the name set
-                        if (stack.Depth > 0 && stack.CurrentFrame.NameSet == false && stack.CurrentFrame.Type != null && !stack.CurrentFrame.IsInNameScope)
+                        if (stack.Depth > 0 && stack.CurrentFrame.NameSet == false && stack.CurrentFrame.Type is not null && !stack.CurrentFrame.IsInNameScope)
                         {
                             // FEs and FCEs need to be added to the name to index map
                             if (typeof(FrameworkElement).IsAssignableFrom(stack.CurrentFrame.Type.UnderlyingType) ||
@@ -775,7 +775,7 @@ namespace System.Windows
             while (elementDepth > 0 && xamlReader.Read());
 
             StaticResourceExtension resource = writer.Result as StaticResourceExtension;
-            Debug.Assert(resource != null);
+            Debug.Assert(resource is not null);
 
             // If the StaicResource was in NodeList form then it would not have been pre-resolved.
             // So do a full walk now, not a Live-Stack only.
@@ -862,16 +862,16 @@ namespace System.Windows
                     object value = xamlReader.Value;
 
                     TypeConverter converter = null;
-                    if (xamlProperty.TypeConverter != null)
+                    if (xamlProperty.TypeConverter is not null)
                     {
                         converter = xamlProperty.TypeConverter.ConverterInstance;
                     }
-                    else if (xamlProperty.Type.TypeConverter != null)
+                    else if (xamlProperty.Type.TypeConverter is not null)
                     {
                         converter = xamlProperty.Type.TypeConverter.ConverterInstance;
                     }
 
-                    if (converter != null)
+                    if (converter is not null)
                     {
                         value = converter.ConvertFrom(TemplateLoadData.ServiceProviderWrapper, CultureInfo.InvariantCulture, value);
                     }
@@ -978,7 +978,7 @@ namespace System.Windows
                                     break;
 
                                 case System.Xaml.XamlNodeType.Value:
-                                    if (xamlReader.Value != null && typeof(StaticResourceExtension).IsAssignableFrom(xamlReader.Value.GetType()))
+                                    if (xamlReader.Value is not null && typeof(StaticResourceExtension).IsAssignableFrom(xamlReader.Value.GetType()))
                                     {
                                         sharedValue = null;
                                         return false;
@@ -987,7 +987,7 @@ namespace System.Windows
                                     // events inside of a FramewokrTemplate
                                     if (!insideTemplate && frames.CurrentFrame.Property == XamlLanguage.ConnectionId)
                                     {
-                                        if (OwnerTemplate.StyleConnector != null)
+                                        if (OwnerTemplate.StyleConnector is not null)
                                         {
                                             OwnerTemplate.StyleConnector.Connect((int)xamlReader.Value, frames.CurrentFrame.Instance);
                                         }
@@ -1075,7 +1075,7 @@ namespace System.Windows
             sharedValue = null;
 
             // Null is sharable.
-            if (value != null && !IsTypeShareable(value.GetType()))
+            if (value is not null && !IsTypeShareable(value.GetType()))
             {
                 return false;
             }
@@ -1086,7 +1086,7 @@ namespace System.Windows
             {
                 // Check if it's a freezable and we can freeze it
                 Freezable freezable = value as Freezable;
-                if (freezable != null)
+                if (freezable is not null)
                 {
                     if (freezable.CanFreeze)
                     {
@@ -1103,7 +1103,7 @@ namespace System.Windows
             else if (value is CollectionViewSource)
             {
                 CollectionViewSource viewSource = value as CollectionViewSource;
-                if (viewSource != null)
+                if (viewSource is not null)
                 {
                     isValueShareable = viewSource.IsShareableInTemplate();
                 }
@@ -1182,7 +1182,7 @@ namespace System.Windows
                 typeof(System.Windows.Data.CollectionViewSource).IsAssignableFrom(type)
                 ||
                 // Value types are immutable by nature
-                (type != null && type.IsValueType))
+                (type is not null && type.IsValueType))
                 return true;
 
             return false;
@@ -1192,14 +1192,14 @@ namespace System.Windows
                                      FrugalObjectList<System.Xaml.NamespaceDeclaration> previousNamespaces,
                                      FrugalObjectList<System.Xaml.NamespaceDeclaration> localNamespaces)
         {
-            if (previousNamespaces != null)
+            if (previousNamespaces is not null)
             {
                 for (int idx = 0; idx < previousNamespaces.Count; idx++)
                 {
                     writer.WriteNamespace(previousNamespaces[idx]);
                 }
             }
-            if (localNamespaces != null)
+            if (localNamespaces is not null)
             {
                 for (int idx = 0; idx < localNamespaces.Count; idx++)
                 {
@@ -1231,7 +1231,7 @@ namespace System.Windows
 
             if (!String.IsNullOrEmpty(contentSource) && !isContentPropertyDefined)
             {
-                Debug.Assert(templateChildName != null);
+                Debug.Assert(templateChildName is not null);
 
                 DependencyProperty dpContent = DependencyProperty.FromName(contentSource, targetType);
                 DependencyProperty dpContentTemplate = DependencyProperty.FromName($"{contentSource}Template", targetType);
@@ -1244,7 +1244,7 @@ namespace System.Windows
                     throw new InvalidOperationException(SR.Format(SR.MissingContentSource, contentSource, targetType));
                 }
 
-                if (dpContent != null)
+                if (dpContent is not null)
                 {
                     PropertyValue pv = new PropertyValue();
                     pv.ValueType = PropertyValueType.TemplateBinding;
@@ -1265,7 +1265,7 @@ namespace System.Windows
                     !isContentTemplateSelectorPropertyDefined &&
                     !isContentStringFormatPropertyDefined)
                 {
-                    if (dpContentTemplate != null)
+                    if (dpContentTemplate is not null)
                     {
                         PropertyValue pv = new PropertyValue();
                         pv.ValueType = PropertyValueType.TemplateBinding;
@@ -1281,7 +1281,7 @@ namespace System.Windows
                                ref hasInstanceValues);
                     }
 
-                    if (dpContentTemplateSelector != null)
+                    if (dpContentTemplateSelector is not null)
                     {
                         PropertyValue pv = new PropertyValue();
                         pv.ValueType = PropertyValueType.TemplateBinding;
@@ -1297,7 +1297,7 @@ namespace System.Windows
                                ref hasInstanceValues);
                     }
 
-                    if (dpContentStringFormat != null)
+                    if (dpContentStringFormat is not null)
                     {
                         PropertyValue pv = new PropertyValue();
                         pv.ValueType = PropertyValueType.TemplateBinding;
@@ -1337,7 +1337,7 @@ namespace System.Windows
             {
                 DependencyProperty dpContent = DependencyProperty.FromName("Content", targetType);
 
-                if (dpContent != null)
+                if (dpContent is not null)
                 {
                     PropertyValue propertyValue = new PropertyValue();
                     propertyValue.ValueType = PropertyValueType.TemplateBinding;
@@ -1458,7 +1458,7 @@ namespace System.Windows
             string IXamlNamespaceResolver.GetNamespace(string prefix)
             {
                 FrugalObjectList<NamespaceDeclaration> namespaces = Frames.InScopeNamespaces;
-                if (namespaces != null)
+                if (namespaces is not null)
                 {
                     for (int idx = 0; idx < namespaces.Count; idx++)
                     {

@@ -124,7 +124,7 @@ namespace System.Windows.Baml2006
             {
                 return CallGetMember(_runtimeNamePropertyName);
             }
-            else if (directive == XamlLanguage.Key && _dictionaryKeyPropertyName != null)
+            else if (directive == XamlLanguage.Key && _dictionaryKeyPropertyName is not null)
             {
                 return LookupMember(_dictionaryKeyPropertyName, true);
             }
@@ -216,7 +216,7 @@ namespace System.Windows.Baml2006
         {
             WpfSharedBamlSchemaContext schema = System.Windows.Markup.XamlReader.BamlSharedSchemaContext;
 
-            if (_typeConverterType != null)
+            if (_typeConverterType is not null)
             {
                 return schema.GetTypeConverter(_typeConverterType);
             }
@@ -253,7 +253,7 @@ namespace System.Windows.Baml2006
 
         protected override XamlValueConverter<XamlDeferringLoader> LookupDeferringLoader()
         {
-            if (_deferringLoader != null)
+            if (_deferringLoader is not null)
             {
                 WpfSharedBamlSchemaContext schema = System.Windows.Markup.XamlReader.BamlSharedSchemaContext;
                 return schema.GetDeferringLoader(_deferringLoader);
@@ -307,7 +307,7 @@ namespace System.Windows.Baml2006
 
         private XamlMember CallGetMember(string name)
         {
-            if (name != null)
+            if (name is not null)
             {
                 return GetMember(name);
             }
@@ -368,7 +368,7 @@ namespace System.Windows.Baml2006
             Attribute result;
             if (TryGetCustomAttribute(attributeType, out result))
             {
-                if (result != null)
+                if (result is not null)
                 {
                     return new Attribute[] { result };
                 }

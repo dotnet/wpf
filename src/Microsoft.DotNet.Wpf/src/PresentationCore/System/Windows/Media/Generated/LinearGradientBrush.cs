@@ -170,9 +170,9 @@ namespace System.Windows.Media
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_LINEARGRADIENTBRUSH))
                 {
                     Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
+                    if (vTransform is not null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
                     Transform vRelativeTransform = RelativeTransform;
-                    if (vRelativeTransform != null) ((DUCE.IResource)vRelativeTransform).AddRefOnChannel(channel);
+                    if (vRelativeTransform is not null) ((DUCE.IResource)vRelativeTransform).AddRefOnChannel(channel);
 
                     AddRefOnChannelAnimations(channel);
 
@@ -189,9 +189,9 @@ namespace System.Windows.Media
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
                     Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
+                    if (vTransform is not null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
                     Transform vRelativeTransform = RelativeTransform;
-                    if (vRelativeTransform != null) ((DUCE.IResource)vRelativeTransform).ReleaseOnChannel(channel);
+                    if (vRelativeTransform is not null) ((DUCE.IResource)vRelativeTransform).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
 }

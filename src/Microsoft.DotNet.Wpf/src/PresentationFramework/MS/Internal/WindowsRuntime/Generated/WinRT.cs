@@ -244,7 +244,7 @@ namespace WinRT
             // Prefer the RoGetActivationFactory HRESULT failure over the LoadLibrary/etc. failure
             int hr;
             (_IActivationFactory, hr) = WinrtModule.GetActivationFactory(runtimeClassId);
-            if (_IActivationFactory != null) { return; }
+            if (_IActivationFactory is not null) { return; }
 
             var moduleName = typeNamespace;
             while (true)
@@ -252,7 +252,7 @@ namespace WinRT
                 try
                 {
                     (_IActivationFactory, _) = DllModule.Load($"{moduleName}.dll").GetActivationFactory(runtimeClassId);
-                    if (_IActivationFactory != null) { return; }
+                    if (_IActivationFactory is not null) { return; }
                 }
                 catch (Exception) { }
 

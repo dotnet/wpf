@@ -119,12 +119,12 @@ namespace System.Windows.Media
                 );
 
             // Add animations to the geometry
-            if (point0Animations != null)
+            if (point0Animations is not null)
             {
                 geometry.ApplyAnimationClock(LineGeometry.StartPointProperty, point0Animations);
             }
 
-            if(point1Animations != null)
+            if(point1Animations is not null)
             {
                 geometry.ApplyAnimationClock(LineGeometry.EndPointProperty, point1Animations);
             }
@@ -219,7 +219,7 @@ namespace System.Windows.Media
                 );
 
             // Add animations to the geometry
-            if (rectangleAnimations != null)
+            if (rectangleAnimations is not null)
             {
                 geometry.ApplyAnimationClock(RectangleGeometry.RectProperty, rectangleAnimations);
             }
@@ -341,17 +341,17 @@ namespace System.Windows.Media
                 );
 
             // Add animations to the geometry
-            if (rectangleAnimations != null)
+            if (rectangleAnimations is not null)
             {
                 geometry.ApplyAnimationClock(RectangleGeometry.RectProperty, rectangleAnimations);
             }
 
-            if (radiusXAnimations != null)
+            if (radiusXAnimations is not null)
             {
                 geometry.ApplyAnimationClock(RectangleGeometry.RadiusXProperty, radiusXAnimations);
             }
 
-            if (radiusYAnimations != null)
+            if (radiusYAnimations is not null)
             {
                 geometry.ApplyAnimationClock(RectangleGeometry.RadiusYProperty, radiusYAnimations);
             }
@@ -477,17 +477,17 @@ namespace System.Windows.Media
                 );
 
             // Add animations to the geometry
-            if (centerAnimations != null)
+            if (centerAnimations is not null)
             {
                 geometry.ApplyAnimationClock(EllipseGeometry.CenterProperty, centerAnimations);
             }
 
-            if (radiusXAnimations != null)
+            if (radiusXAnimations is not null)
             {
                 geometry.ApplyAnimationClock(EllipseGeometry.RadiusXProperty, radiusXAnimations);
             }
 
-            if (radiusYAnimations != null)
+            if (radiusYAnimations is not null)
             {
                 geometry.ApplyAnimationClock(EllipseGeometry.RadiusYProperty, radiusYAnimations);
             }
@@ -612,7 +612,7 @@ namespace System.Windows.Media
                 imageSource.IsFrozen            // and the bitmap source is frozen
                 );
 
-            if (rectangleAnimations != null)
+            if (rectangleAnimations is not null)
             {
                 imageDrawing.ApplyAnimationClock(ImageDrawing.RectProperty, rectangleAnimations);
             }
@@ -728,7 +728,7 @@ namespace System.Windows.Media
                         // lose it's MediaPlayer
                 );
 
-            if (rectangleAnimations != null)
+            if (rectangleAnimations is not null)
             {
                 videoDrawing.ApplyAnimationClock(VideoDrawing.RectProperty, rectangleAnimations);
             }
@@ -1044,7 +1044,7 @@ namespace System.Windows.Media
             // NOTE:Disabling this API for now
             
             _currentDrawingGroup.BitmapEffect = effect;
-            _currentDrawingGroup.BitmapEffectInput = (effectInput != null) ?
+            _currentDrawingGroup.BitmapEffectInput = (effectInput is not null) ?
                                                         effectInput : new BitmapEffectInput();
 }
 
@@ -1159,7 +1159,7 @@ namespace System.Windows.Media
                 // Match any outstanding Push calls with a Pop
                 //
 
-                if (_previousDrawingGroupStack != null)
+                if (_previousDrawingGroupStack is not null)
                 {
                     int stackCount = _previousDrawingGroupStack.Count;
                     for (int i = 0; i < stackCount; i++)
@@ -1174,7 +1174,7 @@ namespace System.Windows.Media
 
                 DrawingCollection rootChildren;
 
-                if (_currentDrawingGroup != null)
+                if (_currentDrawingGroup is not null)
                  {
                     // If we created a root DrawingGroup because multiple elements
                     // exist at the root level, provide it's Children collection
@@ -1201,7 +1201,7 @@ namespace System.Windows.Media
 
                     rootChildren.CanBeInheritanceContext = CanBeInheritanceContext;
 
-                    if (_rootDrawing != null)
+                    if (_rootDrawing is not null)
                     {
                         rootChildren.Add(_rootDrawing);
                     }
@@ -1297,7 +1297,7 @@ namespace System.Windows.Media
         /// </summary>
         private void AddNewGeometryDrawing(Brush brush, Pen pen, Geometry geometry)
         {
-            Debug.Assert(geometry != null);
+            Debug.Assert(geometry is not null);
 
             // Instantiate the GeometryDrawing
             GeometryDrawing geometryDrawing = new GeometryDrawing();
@@ -1383,7 +1383,7 @@ namespace System.Windows.Media
         /// </summary>
         private void AddDrawing(Drawing newDrawing)
         {
-            Debug.Assert(newDrawing != null);
+            Debug.Assert(newDrawing is not null);
 
             if (_rootDrawing is null)
             {

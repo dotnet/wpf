@@ -143,7 +143,7 @@ namespace MS.Internal.AutomationProxies
         internal static void ExcludeChildren(ProxyFragment fragment, ArrayList alIn, ArrayList alOut)
         {
             // First go through all the children to exclude whatever is on top
-            for (ProxySimple simple = fragment.GetFirstChild(); simple != null; simple = fragment.GetNextSibling(simple))
+            for (ProxySimple simple = fragment.GetFirstChild(); simple is not null; simple = fragment.GetNextSibling(simple))
             {
                 // The exclusion for hwnd children is done by the GetPoint routine
                 if (simple is ProxyHwnd)

@@ -112,7 +112,7 @@ namespace System.Windows.Media
             Geometry newV = (Geometry) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 DUCE.IResource targetResource = (DUCE.IResource)target;
                 using (CompositionEngineLock.Acquire())
@@ -156,7 +156,7 @@ namespace System.Windows.Media
             Geometry newV = (Geometry) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 DUCE.IResource targetResource = (DUCE.IResource)target;
                 using (CompositionEngineLock.Acquire())
@@ -282,8 +282,8 @@ namespace System.Windows.Media
                 {
                     hTransform = ((DUCE.IResource)vTransform).GetHandle(channel);
                 }
-                DUCE.ResourceHandle hGeometry1 = vGeometry1 != null ? ((DUCE.IResource)vGeometry1).GetHandle(channel) : DUCE.ResourceHandle.Null;
-                DUCE.ResourceHandle hGeometry2 = vGeometry2 != null ? ((DUCE.IResource)vGeometry2).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                DUCE.ResourceHandle hGeometry1 = vGeometry1 is not null ? ((DUCE.IResource)vGeometry1).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                DUCE.ResourceHandle hGeometry2 = vGeometry2 is not null ? ((DUCE.IResource)vGeometry2).GetHandle(channel) : DUCE.ResourceHandle.Null;
 
                 // Pack & send command packet
                 DUCE.MILCMD_COMBINEDGEOMETRY data;
@@ -308,11 +308,11 @@ namespace System.Windows.Media
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_COMBINEDGEOMETRY))
                 {
                     Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
+                    if (vTransform is not null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
                     Geometry vGeometry1 = Geometry1;
-                    if (vGeometry1 != null) ((DUCE.IResource)vGeometry1).AddRefOnChannel(channel);
+                    if (vGeometry1 is not null) ((DUCE.IResource)vGeometry1).AddRefOnChannel(channel);
                     Geometry vGeometry2 = Geometry2;
-                    if (vGeometry2 != null) ((DUCE.IResource)vGeometry2).AddRefOnChannel(channel);
+                    if (vGeometry2 is not null) ((DUCE.IResource)vGeometry2).AddRefOnChannel(channel);
 
                     AddRefOnChannelAnimations(channel);
 
@@ -329,11 +329,11 @@ namespace System.Windows.Media
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
                     Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
+                    if (vTransform is not null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
                     Geometry vGeometry1 = Geometry1;
-                    if (vGeometry1 != null) ((DUCE.IResource)vGeometry1).ReleaseOnChannel(channel);
+                    if (vGeometry1 is not null) ((DUCE.IResource)vGeometry1).ReleaseOnChannel(channel);
                     Geometry vGeometry2 = Geometry2;
-                    if (vGeometry2 != null) ((DUCE.IResource)vGeometry2).ReleaseOnChannel(channel);
+                    if (vGeometry2 is not null) ((DUCE.IResource)vGeometry2).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
 }

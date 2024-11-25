@@ -35,7 +35,7 @@ namespace MS.Internal.Printing.Configuration
             }
 
             SafeModuleHandle handle = EnsureModuleHandle();
-            if (handle != null && !handle.IsInvalid)
+            if (handle is not null && !handle.IsInvalid)
             {
                 StringBuilder resString = new StringBuilder(MaxSRLength, MaxSRLength);
                 int charCount = UnsafeNativeMethods.LoadStringW(handle, srid, resString, resString.Capacity);
@@ -64,7 +64,7 @@ namespace MS.Internal.Printing.Configuration
         public void Release()
         {
             SafeModuleHandle handle = this._compstuiHandle;            
-            if (this._compstuiHandle != null)
+            if (this._compstuiHandle is not null)
             {
                 this._compstuiHandle.Dispose();
                 this._compstuiHandle = null;

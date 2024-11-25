@@ -287,7 +287,7 @@ namespace System.Windows.Media
             // Suppress PRESharp warning that other can be null; apparently PRESharp
             // doesn't understand short circuit evaluation of operator &&.
             #pragma warning disable 6506
-            return other != null &&
+            return other is not null &&
                 other._blackBoxWidth == _blackBoxWidth &&
                 other._blackBoxHeight == _blackBoxHeight &&
                 other._leftSideBearing == _leftSideBearing &&

@@ -32,7 +32,7 @@ namespace MS.Internal
         internal override bool IsSqlNull(object value)
         {
             INullable nullable = value as INullable;
-            return (nullable != null && nullable.IsNull);
+            return (nullable is not null && nullable.IsNull);
         }
 
         // return true if the type is nullable in the SqlTypes sense
@@ -122,7 +122,7 @@ namespace MS.Internal
                 {
                     // the "suitable ADO object" is the corresponding DataTable
                     DataTable dataTable = (value as DataView)?.Table;
-                    if (dataTable != null)
+                    if (dataTable is not null)
                     {
                         new DataTableToDataViewLink(dataTable, value);
                     }
@@ -131,7 +131,7 @@ namespace MS.Internal
                 {
                     // the "suitable ADO object" is the parent DataRowView
                     DataRowView dataRowView = item as DataRowView;
-                    if (dataRowView != null)
+                    if (dataRowView is not null)
                     {
                         new DataRowViewToRelatedViewLink(dataRowView, value);
                     }
@@ -181,12 +181,12 @@ namespace MS.Internal
             }
 
             // this code was provided by the ADO team
-            DataTable table = (drv != null) ? drv.DataView.Table : dr.Table;
+            DataTable table = (drv is not null) ? drv.DataView.Table : dr.Table;
 
             DataColumn column = null;
-            if (arg != null)
+            if (arg is not null)
             {
-                if ((columnName = arg as String) != null)
+                if ((columnName = arg as String) is not null)
                 {
                     column = table.Columns[columnName];
                 }
@@ -199,12 +199,12 @@ namespace MS.Internal
                     }
                 }
             }
-            else if (columnName != null)
+            else if (columnName is not null)
             {
                 column = table.Columns[columnName];
             }
 
-            return (column != null) && column.AllowDBNull;
+            return (column is not null) && column.AllowDBNull;
         }
 
         private class DataTableToDataViewLink

@@ -128,7 +128,7 @@ namespace System.Windows.Documents
                 if (_uiElementCollection.Count != 0)
                 {
                     Path path = _uiElementCollection[0] as Path;
-                    if (path != null)
+                    if (path is not null)
                     {
                         if (_drawDebugVisual == 0)
                         {
@@ -151,7 +151,7 @@ namespace System.Windows.Documents
         {
             // Draw background in rectangle inside border.
             Brush background = this.Background;
-            if (background != null)
+            if (background is not null)
             {
                 dc.DrawRectangle(background,
                                  null,
@@ -161,10 +161,10 @@ namespace System.Windows.Documents
 
             AdornerLayer al = AdornerLayer.GetAdornerLayer(this);
 
-            if (al != null)
+            if (al is not null)
             {
                 Adorner[] adorners = al.GetAdorners(this);
-                if (adorners != null && adorners.Length > 0)
+                if (adorners is not null && adorners.Length > 0)
                 {
                     al.Update(this);
                 }
@@ -571,17 +571,17 @@ namespace System.Windows.Documents
 
                 AdornerLayer al = AdornerLayer.GetAdornerLayer(this);
 
-                if (highlightVisual is null && al != null)
+                if (highlightVisual is null && al is not null)
                 {
                     //Get Page Content
                     PageContent pc = LogicalTreeHelper.GetParent(this) as PageContent;
-                    if (pc != null)
+                    if (pc is not null)
                     {
                         //Get FixedDocument
                         FixedDocument doc = LogicalTreeHelper.GetParent(pc) as FixedDocument;
-                        if (doc != null)
+                        if (doc is not null)
                         {
-                            if (al != null)
+                            if (al is not null)
                             {
                                 //The Text Selection adorner must have predefined ZOrder MaxInt/2,
                                 //we assign the ZOrder to annotation adorners respectively
@@ -593,7 +593,7 @@ namespace System.Windows.Documents
                 }
 #if DEBUG
                 DebugVisualAdorner debugVisualAd = DebugVisualAdorner.GetDebugVisual(this);
-                if (debugVisualAd is null && al != null)
+                if (debugVisualAd is null && al is not null)
                 {
                     al.Add(new DebugVisualAdorner(this), System.Int32.MaxValue / 4);
                 }
@@ -609,9 +609,9 @@ namespace System.Windows.Documents
         internal static Uri GetLinkUri(IInputElement element, Uri inputUri)
         {
             DependencyObject dpo = element as DependencyObject;
-            Debug.Assert(dpo != null, "GetLinkUri shouldn't be called for non-DependencyObjects.");
+            Debug.Assert(dpo is not null, "GetLinkUri shouldn't be called for non-DependencyObjects.");
 
-            if (inputUri != null)
+            if (inputUri is not null)
             {
                 //
                 // First remove the fragment, this is to prevent escape in file URI case, for example,
@@ -651,7 +651,7 @@ namespace System.Windows.Documents
                     if (inputUri.IsAbsoluteUri == false)
                     {
                         String startPartUriString = GetStartPartUriString(dpo);
-                        if (startPartUriString != null)
+                        if (startPartUriString is not null)
                         {
                             inputUri = new Uri(startPartUriString, UriKind.RelativeOrAbsolute);
                         }
@@ -846,7 +846,7 @@ namespace System.Windows.Documents
                 uiElement = elementCollection[i];
 
                 node = LogicalTreeHelper.FindLogicalNode(uiElement, elementID);
-                if (node != null)
+                if (node is not null)
                 {
                     uiElementRet = node as UIElement;
                     break;
@@ -860,7 +860,7 @@ namespace System.Windows.Documents
         internal FixedNode CreateFixedNode(int pageIndex, UIElement e)
         {
             // Should we check here to make sure this is a selectable element?
-            Debug.Assert(e != null);
+            Debug.Assert(e is not null);
             return _CreateFixedNode(pageIndex, e);
         }
 
@@ -1027,7 +1027,7 @@ namespace System.Windows.Documents
                 else
                 {
                     IEnumerable currentChildrens = LogicalTreeHelper.GetChildren(parent);
-                    Debug.Assert(currentChildrens != null);
+                    Debug.Assert(currentChildrens is not null);
 
                     // We have no uniform way to do random access for this element.
                     // This should never happen for S0 conforming document.
@@ -1069,7 +1069,7 @@ namespace System.Windows.Documents
 
             DependencyObject obj = current;
             FixedPage fixedPage = current as FixedPage;
-            while (fixedPage is null && obj != null)
+            while (fixedPage is null && obj is not null)
             {
                 obj = obj.InheritanceParent;
                 fixedPage = obj as FixedPage;
@@ -1085,14 +1085,14 @@ namespace System.Windows.Documents
             {
                 //3) Walk Logical Tree to the FixedDocumentSequence
                 DependencyObject parent = LogicalTreeHelper.GetParent(current);
-                while (parent != null)
+                while (parent is not null)
                 {
                     FixedDocumentSequence docSequence = parent as FixedDocumentSequence;
-                    if (docSequence != null)
+                    if (docSequence is not null)
                     {
                         //4) Retrieve DocumentSequence Uri
                         Uri startPartUri = ((IUriContext)docSequence).BaseUri;
-                        if (startPartUri != null)
+                        if (startPartUri is not null)
                         {
                             String startPartUriString = startPartUri.ToString();
 
@@ -1169,11 +1169,11 @@ namespace System.Windows.Documents
             }
 
             FixedPageStructure pageStructure = _fixedPage.FixedPageStructure;
-            Debug.Assert(pageStructure != null);
+            Debug.Assert(pageStructure is not null);
 
             if (_fixedPage.DrawDebugVisualSelection == (int) DrawDebugVisual.Glyphs)
             {
-                if (pageStructure.FixedNodes != null)
+                if (pageStructure.FixedNodes is not null)
                 {
                     _RenderMarkupOrder(dc, pageStructure.FixedNodes);
                 }
@@ -1184,7 +1184,7 @@ namespace System.Windows.Documents
             }
             else
             {
-                if (pageStructure.FixedSOMPage != null)
+                if (pageStructure.FixedSOMPage is not null)
                 {
                     pageStructure.FixedSOMPage.Render(dc, null, (DrawDebugVisual) _fixedPage.DrawDebugVisualSelection);
                 }
@@ -1196,7 +1196,7 @@ namespace System.Windows.Documents
 
                     foreach (FlowNode node in pageNodes)
                     {
-                        if (node != null && node.FixedSOMElements != null)
+                        if (node is not null && node.FixedSOMElements is not null)
                         {
                             foreach (FixedSOMElement somElement in node.FixedSOMElements)
                             {
@@ -1221,12 +1221,12 @@ namespace System.Windows.Documents
 
             Adorner[] adorners = al.GetAdorners(page);
 
-            if (adorners != null)
+            if (adorners is not null)
             {
                 foreach (Adorner ad in adorners)
                 {
                     debugVisualAd = ad as DebugVisualAdorner;
-                    if (debugVisualAd != null)
+                    if (debugVisualAd is not null)
                     {
                         return debugVisualAd;
                     }
@@ -1244,7 +1244,7 @@ namespace System.Windows.Documents
                 DependencyObject ob = _fixedPage.GetElement(node);
                 Glyphs glyphs = ob as Glyphs;
                 Path path = ob as Path;
-                if (glyphs != null)
+                if (glyphs is not null)
                 {
                     GlyphRun glyphRun = glyphs.ToGlyphRun();
                     Rect alignmentBox = glyphRun.ComputeAlignmentBox();
@@ -1258,7 +1258,7 @@ namespace System.Windows.Documents
 
                     ++order;
                 }
-                else if (path != null)
+                else if (path is not null)
                 {
                     Geometry renderGeom = path.RenderedGeometry;
                     Pen backgroundPen = new Pen(Brushes.Black,1);

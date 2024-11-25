@@ -15,21 +15,21 @@ namespace System.Windows.Markup
     {
         public override bool CanConvertToString(object value, IValueSerializerContext context)
         {
-            return ValueSerializer.GetSerializerFor(typeof(Type), context) != null;
+            return ValueSerializer.GetSerializerFor(typeof(Type), context) is not null;
         }
 
         public override bool CanConvertFromString(string value, IValueSerializerContext context)
         {
-            return ValueSerializer.GetSerializerFor(typeof(Type), context) != null;
+            return ValueSerializer.GetSerializerFor(typeof(Type), context) is not null;
         }
 
         public override string ConvertToString(object value, IValueSerializerContext context)
         {
             RoutedEvent routedEvent = value as RoutedEvent;
-            if (routedEvent != null)
+            if (routedEvent is not null)
             {
                 ValueSerializer typeSerializer = ValueSerializer.GetSerializerFor(typeof(Type), context);
-                if (typeSerializer != null)
+                if (typeSerializer is not null)
                 {
                     return $"{typeSerializer.ConvertToString(routedEvent.OwnerType, context)}.{routedEvent.Name}";
                 }
@@ -42,7 +42,7 @@ namespace System.Windows.Markup
         static void ForceTypeConstructors(Type currentType)
         {
             // Force load the Statics by walking up the hierarchy and running class constructors
-            while (currentType != null && !initializedTypes.ContainsKey(currentType))
+            while (currentType is not null && !initializedTypes.ContainsKey(currentType))
             {
                 RuntimeHelpers.RunClassConstructor(currentType.TypeHandle);
                 initializedTypes[currentType] = currentType;
@@ -53,7 +53,7 @@ namespace System.Windows.Markup
         public override object ConvertFromString(string value, IValueSerializerContext context)
         {
             ValueSerializer typeSerializer = ValueSerializer.GetSerializerFor(typeof(Type), context);
-            if (typeSerializer != null)
+            if (typeSerializer is not null)
             {
                 int index = value.IndexOf('.');
                 if (index > 0)

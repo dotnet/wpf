@@ -63,7 +63,7 @@ namespace System.Windows.Input
 
         internal void Disable(bool shutdownWorkerThread)
         {
-            if (_contexts != null)
+            if (_contexts is not null)
             {
                 foreach(PenContext context in _contexts)
                 {
@@ -175,7 +175,7 @@ namespace System.Windows.Input
 
         internal PenContext GetTabletDeviceIDPenContext(int tabletDeviceId)
         {
-            if (_contexts != null)
+            if (_contexts is not null)
             {
                 for (int i = 0; i < _contexts.Length; i++)
                 {
@@ -191,7 +191,7 @@ namespace System.Windows.Input
 
         internal bool ConsiderInRange(int timestamp)
         {
-            if (_contexts != null)
+            if (_contexts is not null)
             {
                 for (int i = 0; i < _contexts.Length; i++)
                 {
@@ -249,7 +249,7 @@ namespace System.Windows.Input
         {
             // We only tear down the old context when PenContexts are enabled without being
             // dispose and we have a valid index. Otherwise, no-op here.
-            if (_contexts != null && index < _contexts.Length)
+            if (_contexts is not null && index < _contexts.Length)
             {
                 PenContext removeCtx = _contexts[index];
 
@@ -361,17 +361,17 @@ namespace System.Windows.Input
                 //             inputReport.Actions == RawStylusActions.Move);
                 
                 // Find new target plugin collection
-                if (directlyOver != null)
+                if (directlyOver is not null)
                 {
                     UIElement uiElement = InputElement.GetContainingUIElement(directlyOver as DependencyObject) as UIElement;
-                    if (uiElement != null)
+                    if (uiElement is not null)
                     {
                         newPlugInCollection = FindPlugInCollection(uiElement);
                     }
                 }                
 
                 // Fire Leave event to old pluginCollection if we need to.
-                if (currentPlugInCollection != null && currentPlugInCollection != newPlugInCollection)
+                if (currentPlugInCollection is not null && currentPlugInCollection != newPlugInCollection)
                 {
                     // NOTE: input report points for mouse are in avalon measured units and not device!
                     RawStylusInput tempRawStylusInput = new RawStylusInput(inputReport, currentPlugInCollection.ViewToElement, currentPlugInCollection);
@@ -381,7 +381,7 @@ namespace System.Windows.Input
                     // Indicate we've used a stylus plugin
                     _stylusLogic.Statistics.FeaturesUsed |= Tracing.StylusTraceLogger.FeatureFlags.StylusPluginsUsed;
                 }
-                if (newPlugInCollection != null)
+                if (newPlugInCollection is not null)
                 {
                     // NOTE: input report points for mouse are in avalon measured units and not device!
                     RawStylusInput rawStylusInput = new RawStylusInput(inputReport, newPlugInCollection.ViewToElement, newPlugInCollection);
@@ -435,7 +435,7 @@ namespace System.Windows.Input
                 StylusPlugInCollection currentPic = stylusDevice.CurrentNonVerifiedTarget;
                 
                 // Fire Leave event if we need to.
-                if (currentPic != null && currentPic != pic)
+                if (currentPic is not null && currentPic != pic)
                 {
                     // Create new RawStylusInput to send
                     GeneralTransformGroup transformTabletToView = new GeneralTransformGroup();
@@ -452,7 +452,7 @@ namespace System.Windows.Input
                     stylusDevice.CurrentNonVerifiedTarget = null;
                 }
 
-                if (pic != null)
+                if (pic is not null)
                 {
                     // NOTE: PenContext info will not change (it gets rebuilt instead so keeping ref is fine)
                     //    The transformTabletToView matrix and plugincollection rects though can change based 
@@ -502,7 +502,7 @@ namespace System.Windows.Input
                 elementHasCapture = false;  // force true hittesting to be done!
             }
             
-            if (!elementHasCapture && inputReport.Data != null && inputReport.Data.Length >= pointLength)
+            if (!elementHasCapture && inputReport.Data is not null && inputReport.Data.Length >= pointLength)
             {
                 int[] data = inputReport.Data;
                 System.Diagnostics.Debug.Assert(data.Length % pointLength == 0);

@@ -250,7 +250,7 @@ namespace MS.Internal
                 EnsureLanguageSourceExtension();
             }
 
-            if (cu.ApplicationFile.Path != null && cu.ApplicationFile.Path.Length > 0)
+            if (cu.ApplicationFile.Path is not null && cu.ApplicationFile.Path.Length > 0)
             {
                 Initialize(cu.ApplicationFile);
                 ApplicationFile = SourceFileInfo.RelativeSourceFilePath;
@@ -261,7 +261,7 @@ namespace MS.Internal
                     _Compile(cu.ApplicationFile.Path, cu.Pass2);
                     IsCompilingEntryPointClass = false;
 
-                    if (_pendingLocalFiles != null && _pendingLocalFiles.Count == 1)
+                    if (_pendingLocalFiles is not null && _pendingLocalFiles.Count == 1)
                     {
                         Debug.Assert(!cu.Pass2);
                         _localXamlApplication = (string)_pendingLocalFiles[0];
@@ -270,7 +270,7 @@ namespace MS.Internal
                 }
             }
 
-            if (cu.FileList != null)
+            if (cu.FileList is not null)
             {
                 for (int i = 0; i < cu.FileList.Length; i++)
                 {
@@ -283,7 +283,7 @@ namespace MS.Internal
                     }
                 }
 
-                if (_pendingLocalFiles != null && _pendingLocalFiles.Count > 0)
+                if (_pendingLocalFiles is not null && _pendingLocalFiles.Count > 0)
                 {
                     Debug.Assert(!cu.Pass2);
                     _localXamlPages = (string[])_pendingLocalFiles.ToArray(typeof(string));
@@ -291,7 +291,7 @@ namespace MS.Internal
                 }
             }
 
-            if (!cu.Pass2 && ContentList != null && ContentList.Length > 0)
+            if (!cu.Pass2 && ContentList is not null && ContentList.Length > 0)
             {
                 GenerateLooseContentAttributes();
             }
@@ -359,7 +359,7 @@ namespace MS.Internal
 
         internal bool IsRootPublic
         {
-            get { return _ccRoot != null && _ccRoot.CodeClass.TypeAttributes == TypeAttributes.Public; }
+            get { return _ccRoot is not null && _ccRoot.CodeClass.TypeAttributes == TypeAttributes.Public; }
         }
 
         internal bool ProcessingRootContext
@@ -393,7 +393,7 @@ namespace MS.Internal
             {
                 if (_localAssembly is null)
                 {
-                    if (LocalAssemblyFile != null)
+                    if (LocalAssemblyFile is not null)
                     {
                         _localAssembly = ReflectionHelper.LoadAssembly(LocalAssemblyFile.AssemblyName, LocalAssemblyFile.Path);
                     }
@@ -562,19 +562,19 @@ namespace MS.Internal
                     _pendingLocalFiles.Add(relativeSourceFile);
                 }
 
-                if (_codeContexts != null)
+                if (_codeContexts is not null)
                 {
                     _codeContexts.Clear();
                     _codeContexts = null;
                 }
 
 
-                if (SourceFileInfo != null)
+                if (SourceFileInfo is not null)
                 {
                     SourceFileInfo.CloseStream();
                 }
 
-                if (bamlStream != null)
+                if (bamlStream is not null)
                 {
                     bamlStream.Close();
                     bamlStream = null;
@@ -592,7 +592,7 @@ namespace MS.Internal
             {
                 cnsImports.Imports.Add(new CodeNamespaceImport("System"));
 
-                if (_usingNS != null)
+                if (_usingNS is not null)
                 {
                     foreach (string u in _usingNS)
                     {
@@ -604,7 +604,7 @@ namespace MS.Internal
                 _ccRoot.CodeNS.Types.Add(_ccRoot.CodeClass);
             }
 
-            if (_usingNS != null)
+            if (_usingNS is not null)
             {
                 _usingNS.Clear();
                 _usingNS = null;
@@ -679,7 +679,7 @@ namespace MS.Internal
         {
             SourceFileInfo sourceFileInfo;
 
-            if (SourceFileResolve != null)
+            if (SourceFileResolve is not null)
             {
                 //
                 // If SourceFileResolve event handler is registered,  the handler
@@ -761,11 +761,11 @@ namespace MS.Internal
                 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(e).Throw();
             }
 
-            if (Error != null)
+            if (Error is not null)
             {
                 XamlParseException xe = e as XamlParseException;
-                int lineNum = xe != null ? xe.LineNumber : 0;
-                int linePos = xe != null ? xe.LinePosition : 0;
+                int lineNum = xe is not null ? xe.LineNumber : 0;
+                int linePos = xe is not null ? xe.LinePosition : 0;
                 string filename = SourceFileInfo.OriginalFilePath;
 
                 MarkupErrorEventArgs eea = new MarkupErrorEventArgs(e, lineNum, linePos, filename);
@@ -958,7 +958,7 @@ namespace MS.Internal
                 // at the start of the scope
                 Debug.Assert(_ccRoot.StyleConnectorFn.Statements.Count > 0);
                 ccsConnector = _ccRoot.StyleConnectorFn.Statements[_ccRoot.StyleConnectorFn.Statements.Count - 1] as CodeConditionStatement;
-                Debug.Assert(ccsConnector != null);
+                Debug.Assert(ccsConnector is not null);
             }
 
             CodeArgumentReferenceExpression careTarget = new CodeArgumentReferenceExpression(TARGET);
@@ -1086,7 +1086,7 @@ namespace MS.Internal
 
         private void EndStyleEventConnection()
         {
-            if (_ccRoot.StyleConnectorFn != null)
+            if (_ccRoot.StyleConnectorFn is not null)
             {
                 _ccRoot.CodeClass.BaseTypes.Add(KnownTypes.Types[(int)KnownElements.IStyleConnector].FullName);
 
@@ -1189,7 +1189,7 @@ namespace MS.Internal
             CodeExpression ceEvent = cceTarget;
 
             // Names in nested Name scopes not be hooked up via ICC.Connect() as no fields are generated in this case.
-            if (elementName != null && isAllowedNameScope)
+            if (elementName is not null && isAllowedNameScope)
             {
                 // this.fooId = (System.Windows.Controls.Footype)target;
                 //
@@ -1205,7 +1205,7 @@ namespace MS.Internal
                 }
             }
 
-            if (events != null)
+            if (events is not null)
             {
                 foreach (MarkupEventInfo mei in events)
                 {
@@ -1244,7 +1244,7 @@ namespace MS.Internal
 
         private void EndHookups()
         {
-            if (_ccRoot.HookupFn != null)
+            if (_ccRoot.HookupFn is not null)
             {
                 var iComponentConnector = new CodeTypeReference(KnownTypes.Types[(int)KnownElements.IComponentConnector]);
                 _ccRoot.CodeClass.BaseTypes.Add(iComponentConnector);
@@ -1306,12 +1306,12 @@ namespace MS.Internal
         private void InitializeReflectionHelper()
         {
             var paths = new List<string>(ReferenceAssemblyList?.Count ?? 0);
-            if (ReferenceAssemblyList != null && ReferenceAssemblyList.Count > 0)
+            if (ReferenceAssemblyList is not null && ReferenceAssemblyList.Count > 0)
             {
                 for (int i = 0; i < ReferenceAssemblyList.Count; i++)
                 {
                     ReferenceAssembly refasm = ReferenceAssemblyList[i] as ReferenceAssembly;
-                    if (refasm != null && refasm.Path.Length > 0)
+                    if (refasm is not null && refasm.Path.Length > 0)
                     {
                         paths.Add(refasm.Path);
                     }
@@ -1324,13 +1324,13 @@ namespace MS.Internal
             _typeMapper = XamlTypeMapper.DefaultMapper;
             ReflectionHelper.LocalAssemblyName = AssemblyName;
 
-            if (ReferenceAssemblyList != null && ReferenceAssemblyList.Count > 0)
+            if (ReferenceAssemblyList is not null && ReferenceAssemblyList.Count > 0)
             {
                 for (int i = 0; i < ReferenceAssemblyList.Count; i++)
                 {
                     ReferenceAssembly refasm = ReferenceAssemblyList[i] as ReferenceAssembly;
 
-                    if (refasm != null && refasm.Path.Length > 0)
+                    if (refasm is not null && refasm.Path.Length > 0)
                     {
                         _typeMapper.SetAssemblyPath(refasm.AssemblyName, refasm.Path);
                     }
@@ -1364,7 +1364,7 @@ namespace MS.Internal
 
         private bool SwitchStatementSupported()
         {
-            return IsLanguageCSharp || (CompilerInfo != null && string.Equals(CompilerInfo.GetLanguages()[0], JSCRIPT, StringComparison.OrdinalIgnoreCase));
+            return IsLanguageCSharp || (CompilerInfo is not null && string.Equals(CompilerInfo.GetLanguages()[0], JSCRIPT, StringComparison.OrdinalIgnoreCase));
         }
 
         private bool IsInternalAccessSupported
@@ -1396,7 +1396,7 @@ namespace MS.Internal
         {
             string fullClass = className;
 
-            if (ns != null && ns.Length > 0)
+            if (ns is not null && ns.Length > 0)
             {
                 fullClass = ns + DOT + className;
             }
@@ -1652,7 +1652,7 @@ namespace MS.Internal
                 bool converted = false;
                 CodeDomProvider codeProvider = EnsureCodeProvider();
                 TypeConverter converter = codeProvider.GetConverter(typeof(MemberAttributes));
-                if (converter != null)
+                if (converter is not null)
                 {
                     if (converter.CanConvertTo(typeof(string)))
                     {
@@ -1720,7 +1720,7 @@ namespace MS.Internal
                     bool converted = false;
                     CodeDomProvider codeProvider = EnsureCodeProvider();
                     TypeConverter converter = codeProvider.GetConverter(typeof(TypeAttributes));
-                    if (converter != null)
+                    if (converter is not null)
                     {
                         if (converter.CanConvertTo(typeof(string)))
                         {
@@ -1786,7 +1786,7 @@ namespace MS.Internal
             InstanceDescriptor desc = null;
             TypeConverter converter = null;
 
-            if (value != null && (typeToConvertTo == typeof(String) || typeToConvertTo.IsPrimitive))
+            if (value is not null && (typeToConvertTo == typeof(String) || typeToConvertTo.IsPrimitive))
             {
                 ce = new CodePrimitiveExpression(value);
             }
@@ -1803,11 +1803,11 @@ namespace MS.Internal
                 converter = new EnumConverter(typeToConvertTo);
             }
 
-            if (converter != null)
+            if (converter is not null)
             {
                 if (value is null)
                 {
-                    if (attributeValue != null)
+                    if (attributeValue is not null)
                     {
                         value = converter.ConvertFromString(ctx, TypeConverterHelper.InvariantEnglishUS, attributeValue);
 
@@ -1827,7 +1827,7 @@ namespace MS.Internal
                 {
                     desc = (InstanceDescriptor)converter.ConvertTo(ctx, TypeConverterHelper.InvariantEnglishUS, value, typeof(InstanceDescriptor));
 
-                    Debug.Assert(desc != null);
+                    Debug.Assert(desc is not null);
 
                     // static field ref...
                     if (desc.MemberInfo is FieldInfo || desc.MemberInfo is PropertyInfo)
@@ -1902,7 +1902,7 @@ namespace MS.Internal
             {
                 MethodInfo mi = (MethodInfo)memberInfo;
                 ParameterInfo[] pis = mi.GetParameters();
-                Debug.Assert(pis != null && pis.Length == 2 && KnownTypes.Types[(int)KnownElements.DependencyObject].IsAssignableFrom(pis[0].ParameterType));
+                Debug.Assert(pis is not null && pis.Length == 2 && KnownTypes.Types[(int)KnownElements.DependencyObject].IsAssignableFrom(pis[0].ParameterType));
                 eventHandlerType = pis[1].ParameterType;
             }
 
@@ -1925,8 +1925,8 @@ namespace MS.Internal
 
         private CodeExpression GetEventDelegate(CodeContext cc, MemberInfo miEvent, string eventName, string eventHandler)
         {
-            Type eventTarget = cc != null ? cc.ElementType : miEvent.DeclaringType;
-            string eventTargetName = eventTarget != null ? eventTarget.FullName : cc.LocalElementFullName;
+            Type eventTarget = cc is not null ? cc.ElementType : miEvent.DeclaringType;
+            string eventTargetName = eventTarget is not null ? eventTarget.FullName : cc.LocalElementFullName;
 
             bool subClassed = _ccRoot.SubClass.Length > 0;
             CodeDelegateCreateExpression cdce = new CodeDelegateCreateExpression();
@@ -1934,7 +1934,7 @@ namespace MS.Internal
             // Fetch the EventHandlerType from either the EventInfo or the MethodInfo
             // for the Add{Propertyname}Handler method's MethodInfo
             Type eventHandlerType = GetEventHandlerType(miEvent);
-            string [] typeArgsList = cc != null ? cc.GenericTypeArgs : null;
+            string [] typeArgsList = cc is not null ? cc.GenericTypeArgs : null;
 
             cdce.DelegateType = GenerateConstructedTypeReference(eventHandlerType, typeArgsList, eventTarget, eventTargetName, eventName);
             cdce.MethodName = eventHandler.Trim() + (subClassed ? HELPER : string.Empty);
@@ -1994,7 +1994,7 @@ namespace MS.Internal
             }
             else
             {
-                string eventTargetName = eventTarget != null ? eventTarget.FullName : cc.LocalElementFullName;
+                string eventTargetName = eventTarget is not null ? eventTarget.FullName : cc.LocalElementFullName;
                 ThrowCompilerException(nameof(SR.UnknownEventAttribute), mei.eventName, mei.eventHandler, eventTargetName);
             }
 
@@ -2029,7 +2029,7 @@ namespace MS.Internal
 
         private void GenerateProtectedEventHandlerMethod(MarkupEventInfo mei)
         {
-            Debug.Assert(_ccRoot != null && _ccRoot.SubClass.Length > 0);
+            Debug.Assert(_ccRoot is not null && _ccRoot.SubClass.Length > 0);
 
             // Fetch the EventHandlerType from either the EventInfo or the MethodInfo
             // for the Add{Propertyname}Handler method's MethodInfo
@@ -2102,7 +2102,7 @@ namespace MS.Internal
         {
             if (_codeProvider is null)
             {
-                Debug.Assert(CompilerInfo != null && CompilerInfo.IsCodeDomProviderTypeValid);
+                Debug.Assert(CompilerInfo is not null && CompilerInfo.IsCodeDomProviderTypeValid);
                 _codeProvider = CompilerInfo.CreateProvider();
             }
 
@@ -2132,7 +2132,7 @@ namespace MS.Internal
             if (CodeDomProvider.IsDefinedLanguage(language))
             {
                 CompilerInfo = CodeDomProvider.GetCompilerInfo(language);
-                return (CompilerInfo != null);
+                return (CompilerInfo is not null);
             }
 
             return false;
@@ -2143,7 +2143,7 @@ namespace MS.Internal
             // If empty string is passed, use the default language source extension.
             if (String.IsNullOrEmpty(LanguageSourceExtension))
             {
-                if (CompilerInfo != null)
+                if (CompilerInfo is not null)
                 {
                     string[] listExtensions = CompilerInfo.GetExtensions();
                     LanguageSourceExtension = listExtensions[0];
@@ -2166,7 +2166,7 @@ namespace MS.Internal
         internal CodeMemberField AddNameField(string name, int lineNumber, int linePosition)
         {
             CodeMemberField cmField = NameField(name, lineNumber, linePosition);
-            if (cmField != null)
+            if (cmField is not null)
             {
                 AddLinePragma(cmField, lineNumber);
             }
@@ -2245,7 +2245,7 @@ namespace MS.Internal
 
         internal void AddGenericArguments(ParserContext parserContext, string typeArgs)
         {
-            if (_typeArgsList != null)
+            if (_typeArgsList is not null)
             {
                 string localTypeArgNamespace = string.Empty;
                 string localTypeArgClassName = string.Empty;
@@ -2304,9 +2304,9 @@ namespace MS.Internal
             {
                 Debug.Assert(genericName.Length > 0 || t.IsGenericTypeDefinition);
 
-                if (t != null)
+                if (t is not null)
                 {
-                    Debug.Assert(genericName.Length == 0 && typeArgsList != null);
+                    Debug.Assert(genericName.Length == 0 && typeArgsList is not null);
 
                     // NOTE: Remove when CodeDom is fixed to understand mangled generic names.
                     genericName = t.FullName;
@@ -2319,7 +2319,7 @@ namespace MS.Internal
                     Type[] typeParams = t.GetGenericArguments();
 
                     // TypeArgument count must match TypeParameter count on generic type.
-                    Debug.Assert(typeArgsList != null && typeArgsList.Length == typeParams.Length);
+                    Debug.Assert(typeArgsList is not null && typeArgsList.Length == typeParams.Length);
 
                     // for each generic param in this Type ...
                     for (int i = 0; i < typeArgsList.Length; i++)
@@ -2392,7 +2392,7 @@ namespace MS.Internal
                             {
                                 // The TypeArgumentList must have already been populated with full Type names &
                                 // the TypeArgument count must match TypeParameter count on generic reference type.
-                                Debug.Assert(typeArgsList != null && typeArgsList.Length == refTypeParams.Length);
+                                Debug.Assert(typeArgsList is not null && typeArgsList.Length == refTypeParams.Length);
 
                                 // Find the Type argument from the list that is in the same position as generic Type param
                                 string currTypeArg = typeArgsList[i];
@@ -2454,11 +2454,11 @@ namespace MS.Internal
             CodeTypeReference ctrBaseClass = null;
             CodeTypeDeclaration ctdClass = new CodeTypeDeclaration();
             ctdClass.Name = className;
-            if (baseClass != null)
+            if (baseClass is not null)
             {
                 // At this point, we should only have fully open generic types if there is a typeargs list.
                 Debug.Assert(_typeArgsList is null || (baseClass.IsGenericType && baseClass.IsGenericTypeDefinition));
-                Debug.Assert(_typeArgsList != null || !baseClass.IsGenericType);
+                Debug.Assert(_typeArgsList is not null || !baseClass.IsGenericType);
 
                 ctrBaseClass = GenerateConstructedTypeReference(baseClass, _typeArgsList, string.Empty);
 
@@ -2523,7 +2523,7 @@ namespace MS.Internal
             }
             else if (IsCompilingEntryPointClass && className.Length == 0)
             {
-                string baseName = baseClass != null ? baseClass.Name : baseClassName;
+                string baseName = baseClass is not null ? baseClass.Name : baseClassName;
                 className = ANONYMOUS_ENTRYCLASS_PREFIX + baseName;
                 Debug.Assert(!string.IsNullOrEmpty(baseName));
                 ns = XamlTypeMapper.GeneratedNamespace;
@@ -2982,14 +2982,14 @@ namespace MS.Internal
                 {
                     ThrowCompilerException(nameof(SR.MissingClassWithModifier), DefinitionNSPrefix);
                 }
-                else if (_typeArgsList != null)
+                else if (_typeArgsList is not null)
                 {
-                    string rootClassName = elementType != null ? elementType.Name : baseClassFullName.Substring(baseClassFullName.LastIndexOf(DOT, StringComparison.Ordinal)+1);
+                    string rootClassName = elementType is not null ? elementType.Name : baseClassFullName.Substring(baseClassFullName.LastIndexOf(DOT, StringComparison.Ordinal)+1);
                     ThrowCompilerException(nameof(SR.MissingClassDefinitionForTypeArgs), rootClassName, DefinitionNSPrefix);
                 }
 
                 // Don't allow subclassing further from markup-subclasses with content
-                if (elementType != null && KnownTypes.Types[(int)KnownElements.IComponentConnector].IsAssignableFrom(elementType))
+                if (elementType is not null && KnownTypes.Types[(int)KnownElements.IComponentConnector].IsAssignableFrom(elementType))
                 {
                     ThrowCompilerException(nameof(SR.SubSubClassingNotAllowed), elementType.FullName);
                 }
@@ -2997,7 +2997,7 @@ namespace MS.Internal
                 cc = GenerateSubClass(ref className, ref modifier, elementType, baseClassFullName);
                 Debug.Assert(_codeContexts.Count == 0, "mismatched codecontext");
                 _ccRoot = cc as CodeContextRoot;
-                Debug.Assert(_ccRoot != null);
+                Debug.Assert(_ccRoot is not null);
 
                 if (IsCodeNeeded)
                 {
@@ -3046,12 +3046,12 @@ namespace MS.Internal
         internal void EndElement(bool pass2)
         {
             CodeContext cc = (CodeContext)_codeContexts.Pop();
-            Debug.Assert(cc != null);
+            Debug.Assert(cc is not null);
 
             if (_codeContexts.Count == 0)
             {
                 Debug.Assert(_ccRoot == (cc as CodeContextRoot));
-                Debug.Assert(_ccRoot.CodeClass != null);
+                Debug.Assert(_ccRoot.CodeClass is not null);
 
                 if (!pass2)
                 {
@@ -3192,7 +3192,7 @@ namespace MS.Internal
                 //
                 CodeMemberMethod cmmMain = GenerateEntryPointMethod();
 
-                if (cmmMain != null)
+                if (cmmMain is not null)
                 {
                     CodeVariableReferenceExpression cvreSplashScreen = null;
                     if (!string.IsNullOrEmpty(_splashImage) && !HostInBrowser)
@@ -3204,7 +3204,7 @@ namespace MS.Internal
                     //
                     CodeVariableReferenceExpression cvreApp = GenerateAppInstance(cmmMain);
 
-                    if (_ccRoot.InitializeComponentFn != null)
+                    if (_ccRoot.InitializeComponentFn is not null)
                     {
                         //   app.InitializeComponent();
                         //
@@ -3348,7 +3348,7 @@ namespace MS.Internal
 
             internal string ElementName
             {
-                get { return _elementType != null ? _elementType.Name : _localElementFullName.Substring(_localElementFullName.LastIndexOf(DOT, StringComparison.Ordinal) + 1); }
+                get { return _elementType is not null ? _elementType.Name : _localElementFullName.Substring(_localElementFullName.LastIndexOf(DOT, StringComparison.Ordinal) + 1); }
             }
 
             internal string [] GenericTypeArgs

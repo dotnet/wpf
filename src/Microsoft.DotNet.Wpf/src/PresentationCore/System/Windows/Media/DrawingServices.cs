@@ -29,7 +29,7 @@ namespace System.Windows.Media
         /// </returns>
         internal static bool HitTestPoint(Drawing drawing, Point point)
         {
-            if (drawing != null)
+            if (drawing is not null)
             {
                 HitTestDrawingContextWalker ctx = new HitTestWithPointDrawingContextWalker(point);
 
@@ -53,7 +53,7 @@ namespace System.Windows.Media
         /// </returns>
         internal static IntersectionDetail HitTestGeometry(Drawing drawing, PathGeometry geometry)
         {
-            if (drawing != null)
+            if (drawing is not null)
             {
                 HitTestDrawingContextWalker ctx =
                     new HitTestWithGeometryDrawingContextWalker(geometry);
@@ -103,7 +103,7 @@ namespace System.Windows.Media
 
             DrawingDrawingContext ddc = dc as DrawingDrawingContext;
 
-            if (ddc != null)
+            if (ddc is not null)
             {
                 ddc.CanBeInheritanceContext = false;
             }

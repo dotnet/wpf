@@ -58,7 +58,7 @@ namespace System.Windows.Documents
         internal TextEditor(ITextContainer textContainer, FrameworkElement uiScope, bool isUndoEnabled)
         {
             // Validate parameters
-            Invariant.Assert(uiScope != null);
+            Invariant.Assert(uiScope is not null);
 
             // Set non-zero property defaults.
             _acceptsRichContent = true;
@@ -153,14 +153,14 @@ namespace System.Windows.Documents
         /// </remarks>
         internal void OnDetach()
         {
-            Invariant.Assert(_textContainer != null);
+            Invariant.Assert(_textContainer is not null);
 
             // Make sure the speller is shut down.
             SetSpellCheckEnabled(false);
 
             // Delete UndoManager
             UndoManager undoManager = UndoManager.GetUndoManager(_uiScope);
-            if(undoManager != null)
+            if(undoManager is not null)
             {
                 if (_textContainer is TextContainer)
                 {
@@ -192,7 +192,7 @@ namespace System.Windows.Documents
             DetachTextStore(false /* finalizer */);
 
             // Shut down IMM32.
-            if (_immCompositionForDetach != null)
+            if (_immCompositionForDetach is not null)
             {
                 ImmComposition immComposition;
                 if (_immCompositionForDetach.TryGetTarget(out immComposition))
@@ -229,13 +229,13 @@ namespace System.Windows.Documents
             // We don't need this TextStore any more.
             // TextStore needs to be unregisted from Cicero so clean all reference
             // of the native resources.
-            if (_textstore != null)
+            if (_textstore is not null)
             {
                 _textstore.OnDetach(finalizer);
                 _textstore = null;
             }
 
-            if (_weakThis != null)
+            if (_weakThis is not null)
             {
                 _weakThis.StopListening();
                 _weakThis = null;
@@ -261,7 +261,7 @@ namespace System.Windows.Documents
                 // Start up the speller.
                 _speller = new Speller(this);
             }
-            else if (!value && _speller != null)
+            else if (!value && _speller is not null)
             {
                 // Shut down the speller.
                 _speller.Detach();
@@ -284,7 +284,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            if (_speller != null)
+            if (_speller is not null)
             {
                 CustomDictionarySources dictionarySources = (CustomDictionarySources)SpellCheck.GetCustomDictionaries(textBoxBase);
                 _speller.SetCustomDictionaries(dictionarySources, add);
@@ -294,7 +294,7 @@ namespace System.Windows.Documents
         // Forwards a spelling reform property change off to the speller.
         internal void SetSpellingReform(SpellingReform spellingReform)
         {
-            if (_speller != null)
+            if (_speller is not null)
             {
                 _speller.SetSpellingReform(spellingReform);
             }
@@ -305,7 +305,7 @@ namespace System.Windows.Documents
         {
             IServiceProvider serviceProvider = scope as IServiceProvider;
 
-            return (serviceProvider != null) ? serviceProvider.GetService(typeof(ITextView)) as ITextView : null;
+            return (serviceProvider is not null) ? serviceProvider.GetService(typeof(ITextView)) as ITextView : null;
         }
 
         // Maps a FrameworkElement to its TextSelection, if any.
@@ -327,7 +327,7 @@ namespace System.Windows.Documents
         internal static void RegisterCommandHandlers(Type controlType, bool acceptsRichContent, bool readOnly, bool registerEventListeners)
         {
             // Check if we already registered handlers for this type
-            Invariant.Assert(_registeredEditingTypes != null);
+            Invariant.Assert(_registeredEditingTypes is not null);
             lock (_registeredEditingTypes)
             {
                 for (int i = 0; i < _registeredEditingTypes.Count; i++)
@@ -471,7 +471,7 @@ namespace System.Windows.Documents
         internal void MarkCultureProperty(TextRange range, CultureInfo inputCultureInfo)
         {
             //  This method needs some clean-up. It may be perf problem because of repeated element applying - markup fragmentation etc.
-            Invariant.Assert(this.UiScope != null);
+            Invariant.Assert(this.UiScope is not null);
 
             if (!this.AcceptsRichContent)
             {
@@ -481,7 +481,7 @@ namespace System.Windows.Documents
             // Get the current culture infomation to mark the input culture information
             XmlLanguage language = (XmlLanguage)((ITextPointer)range.Start).GetValue(FrameworkElement.LanguageProperty);
 
-            Invariant.Assert(language != null);
+            Invariant.Assert(language is not null);
 
             // Compare the culture info between the current position and the input culture.
             // Set the input culture info if the current has the different culture info with input.
@@ -535,7 +535,7 @@ namespace System.Windows.Documents
 
         internal void CancelExtendSelection()
         {
-            if (_mouseSelectionState != null)
+            if (_mouseSelectionState is not null)
             {
                 _mouseSelectionState.Timer.Stop();
                 _mouseSelectionState.Timer.Tick -= new EventHandler(HandleMouseSelectionTick);
@@ -580,7 +580,7 @@ namespace System.Windows.Documents
                 try
                 {
                     UndoManager undoManager = _GetUndoManager();
-                    if (undoManager != null && undoManager.UndoCount > undoManager.MinUndoStackCount)
+                    if (undoManager is not null && undoManager.UndoCount > undoManager.MinUndoStackCount)
                     {
                         undoManager.Undo(1);
                     }
@@ -633,7 +633,7 @@ namespace System.Windows.Documents
                 try
                 {
                     UndoManager undoManager = _GetUndoManager();
-                    if (undoManager != null && undoManager.RedoCount > 0)
+                    if (undoManager is not null && undoManager.RedoCount > 0)
                     {
                         undoManager.Redo(1);
                     }
@@ -862,7 +862,7 @@ namespace System.Windows.Documents
             {
                 if (value != _textView)
                 {
-                    if (_textView != null)
+                    if (_textView is not null)
                     {
                         // Remove layout updated handler.
                         _textView.Updated -= new EventHandler(OnTextViewUpdated);
@@ -874,7 +874,7 @@ namespace System.Windows.Documents
                         _selection.UpdateCaretAndHighlight();
                     }
 
-                    if (value != null)
+                    if (value is not null)
                     {
                         _textView = value;
 
@@ -948,7 +948,7 @@ namespace System.Windows.Documents
             }
             set
             {
-                Invariant.Assert(_uiScope != null);
+                Invariant.Assert(_uiScope is not null);
                 if (AcceptsTab != value)
                 {
                     _uiScope.SetValue(TextBoxBase.AcceptsTabProperty, value);
@@ -1001,7 +1001,7 @@ namespace System.Windows.Documents
             }
             set
             {
-                Invariant.Assert(_uiScope != null);
+                Invariant.Assert(_uiScope is not null);
                 _uiScope.SetValue(SpellCheck.IsEnabledProperty, value);
             }
         }
@@ -1287,12 +1287,12 @@ namespace System.Windows.Documents
         /// </summary>
         internal void CompleteComposition()
         {
-            if (TextStore != null)
+            if (TextStore is not null)
             {
                 TextStore.CompleteComposition();
             }
 
-            if (ImmComposition != null)
+            if (ImmComposition is not null)
             {
                 ImmComposition.CompleteComposition();
             }
@@ -1338,7 +1338,7 @@ namespace System.Windows.Documents
             {
                 FrameworkElement scroller = this.TextView is null ? null : (this.TextView.RenderScope as FrameworkElement);
 
-                while (scroller != null && scroller != this.UiScope)
+                while (scroller is not null && scroller != this.UiScope)
                 {
                     scroller = FrameworkElement.GetFrameworkParent(scroller) as FrameworkElement;
 
@@ -1473,8 +1473,8 @@ namespace System.Windows.Documents
 
         private void HandleMouseSelectionTick(object sender, EventArgs e)
         {
-            if (_mouseSelectionState != null && !_mouseSelectionState.BringIntoViewInProgress &&
-                this.TextView != null && this.TextView.IsValid && TextEditorSelection.IsPaginated(this.TextView))
+            if (_mouseSelectionState is not null && !_mouseSelectionState.BringIntoViewInProgress &&
+                this.TextView is not null && this.TextView.IsValid && TextEditorSelection.IsPaginated(this.TextView))
             {
                 _mouseSelectionState.BringIntoViewInProgress = true;
                 this.TextView.BringPointIntoViewCompleted += new BringPointIntoViewCompletedEventHandler(HandleBringPointIntoViewCompleted);
@@ -1503,17 +1503,17 @@ namespace System.Windows.Documents
             }
             _mouseSelectionState.BringIntoViewInProgress = false;
 
-            if (e != null && !e.Cancelled && e.Error is null)
+            if (e is not null && !e.Cancelled && e.Error is null)
             {
                 Invariant.Assert(e.UserState == this && this.TextView == sender);
 
                 cursorPosition = e.Position;
 
-                if (cursorPosition != null)
+                if (cursorPosition is not null)
                 {
                     // Check end-of-container condition
                     if (cursorPosition.GetNextInsertionPosition(LogicalDirection.Forward) is null &&
-                        cursorPosition.ParentType != null) //  This check is a work around of bug that Parent can be null for some text boxes.
+                        cursorPosition.ParentType is not null) //  This check is a work around of bug that Parent can be null for some text boxes.
                     {
                         // We are at the end of text container. Check whether mouse is farther than a last character
                         lastCharacterRect = cursorPosition.GetCharacterRect(LogicalDirection.Backward);
@@ -1547,12 +1547,12 @@ namespace System.Windows.Documents
             }
 
             // Init a TSF TextStore if any TIPs/IMEs are installed.
-            if (_textContainer is TextContainer && TextServicesHost.Current != null)
+            if (_textContainer is TextContainer && TextServicesHost.Current is not null)
             {
                 // We need to make sure we get back a valid thread manager first since it's possible for
                 // TextServicesLoader.ServicesInstalled to return true without TSF being usable.
                 UnsafeNativeMethods.ITfThreadMgr threadManager = TextServicesLoader.Load();
-                if (threadManager != null)
+                if (threadManager is not null)
                 {
                     // Demand create the TextStore.
                     if (_textstore is null)
@@ -1618,7 +1618,7 @@ namespace System.Windows.Documents
                 return null;
             }
 
-            if (_textstore != null)
+            if (_textstore is not null)
             {
                 _textstore.OnLayoutUpdated();
             }
@@ -1626,7 +1626,7 @@ namespace System.Windows.Documents
             // IMM32's OnLostFocus handler. Clean the composition string if it exists.
             if (_immEnabled)
             {
-                if (_immComposition != null)
+                if (_immComposition is not null)
                 {
                     _immComposition.OnLayoutUpdated();
                 }
@@ -1671,7 +1671,7 @@ namespace System.Windows.Documents
             This.SetSpellCheckEnabled(This.IsSpellCheckEnabled);
 
             // Finalize any active IME composition when transitioning to true.
-            if ((bool)e.NewValue == true && This._textstore != null)
+            if ((bool)e.NewValue == true && This._textstore is not null)
             {
                 This._textstore.CompleteCompositionAsync();
             }
@@ -1707,7 +1707,7 @@ namespace System.Windows.Documents
             }
 
             // Cicero's OnGotKeyboardFocus handler. It updates the focus DIM.
-            if (This._textstore != null)
+            if (This._textstore is not null)
             {
                 This._textstore.OnGotFocus();
             }
@@ -1717,7 +1717,7 @@ namespace System.Windows.Documents
             {
                 This._immComposition = ImmComposition.GetImmComposition(This._uiScope);
 
-                if (This._immComposition != null)
+                if (This._immComposition is not null)
                 {
                     This._immCompositionForDetach = new WeakReference<ImmComposition>(This._immComposition);
                     This._immComposition.OnGotFocus(This);
@@ -1765,7 +1765,7 @@ namespace System.Windows.Documents
             This._selection.UpdateCaretAndHighlight();
 
             // Call the TextStore's OnLostfocus handler.  Finalizes the curernt composition, if any.
-            if (This._textstore != null)
+            if (This._textstore is not null)
             {
                 This._textstore.OnLostFocus();
             }
@@ -1773,7 +1773,7 @@ namespace System.Windows.Documents
             // IMM32's OnLostFocus handler. Clean the composition string if it exists.
             if (_immEnabled)
             {
-                if (This._immComposition != null)
+                if (This._immComposition is not null)
                 {
                     // Call ImmComposition OnLostFocus to clean up the event handler(SelectionChanged).
                     This._immComposition.OnLostFocus();
@@ -1809,7 +1809,7 @@ namespace System.Windows.Documents
             TextEditorTyping._BreakTypingSequence(This);
 
             // Release column resizing adorner, and interrupt table resising process (if any)
-            if (This._tableColResizeInfo != null)
+            if (This._tableColResizeInfo is not null)
             {
                 This._tableColResizeInfo.DisposeAdorner();
                 This._tableColResizeInfo = null;
@@ -1891,7 +1891,7 @@ namespace System.Windows.Documents
 
             UndoManager undoManager = This._GetUndoManager();
 
-            if (undoManager != null && undoManager.UndoCount > undoManager.MinUndoStackCount)
+            if (undoManager is not null && undoManager.UndoCount > undoManager.MinUndoStackCount)
             {
                 args.CanExecute = true;
             }
@@ -1911,7 +1911,7 @@ namespace System.Windows.Documents
 
             UndoManager undoManager = This._GetUndoManager();
 
-            if (undoManager != null && undoManager.RedoCount > 0)
+            if (undoManager is not null && undoManager.RedoCount > 0)
             {
                 args.CanExecute = true;
             }

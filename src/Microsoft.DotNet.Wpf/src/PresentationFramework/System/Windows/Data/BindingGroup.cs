@@ -313,7 +313,7 @@ namespace System.Windows.Data
             BindingExpressionBase bb;
             return (error.BindingInError == this ||
                     _proposedValueTable.HasValidationError(error) ||
-                    (  (bb = error.BindingInError as BindingExpressionBase) != null &&
+                    (  (bb = error.BindingInError as BindingExpressionBase) is not null &&
                         bb.BindingGroup == this)
                     );
         }
@@ -343,7 +343,7 @@ namespace System.Windows.Data
                 for (int i=items.Count-1; i>=0; --i)
                 {
                     IEditableObject ieo = items[i] as IEditableObject;
-                    if (ieo != null)
+                    if (ieo is not null)
                     {
                         ieo.BeginEdit();
                     }
@@ -387,7 +387,7 @@ namespace System.Windows.Data
             for (int i=items.Count-1; i>=0; --i)
             {
                 IEditableObject ieo = items[i] as IEditableObject;
-                if (ieo != null)
+                if (ieo is not null)
                 {
                     ieo.CancelEdit();
                 }
@@ -504,7 +504,7 @@ namespace System.Windows.Data
             if (entry is null)
             {
                 ProposedValueEntry proposedValueEntry = _proposedValueTable[item, propertyName];
-                if (proposedValueEntry != null)
+                if (proposedValueEntry is not null)
                 {
                     // return the proposed value (raw or converted, depending on step)
                     switch (_validationStep)
@@ -577,10 +577,10 @@ namespace System.Windows.Data
         // Receive a new inheritance context (this will be a FE/FCE)
         internal override void AddInheritanceContext(DependencyObject context, DependencyProperty property)
         {
-            if (property != null && property.PropertyType != typeof(BindingGroup) &&
+            if (property is not null && property.PropertyType != typeof(BindingGroup) &&
                 TraceData.IsEnabled)
             {
-                string name = (property != null) ? property.Name : "(null)";
+                string name = (property is not null) ? property.Name : "(null)";
                 TraceData.TraceAndNotify(TraceEventType.Warning,
                         TraceData.BindingGroupWrongProperty(name, context.GetType().FullName));
             }
@@ -600,7 +600,7 @@ namespace System.Windows.Data
                 (ValidatesOnDataTransfer || ValidatesOnNotifyDataError))
             {
                 UIElement layoutElement = Helper.FindMentor(this) as UIElement;
-                if (layoutElement != null)
+                if (layoutElement is not null)
                 {
                     // do the validation at the end of the current layout pass, to allow
                     // bindings to join the group
@@ -642,7 +642,7 @@ namespace System.Windows.Data
         // check whether we've been detached from the owner
         void CheckDetach(DependencyObject newOwner)
         {
-            if (newOwner != null || _inheritanceContext == NullInheritanceContext)
+            if (newOwner is not null || _inheritanceContext == NullInheritanceContext)
                 return;
 
             // if so, remove references to this binding group from global tables
@@ -730,7 +730,7 @@ namespace System.Windows.Data
         internal void AddBindingForProposedValue(BindingExpressionBase dependent, object item, string propertyName)
         {
             ProposedValueEntry entry = _proposedValueTable[item, propertyName];
-            if (entry != null)
+            if (entry is not null)
             {
                 entry.AddDependent(dependent);
             }
@@ -818,10 +818,10 @@ namespace System.Windows.Data
             // but no edits pending on the item and no two-way bindings.  This
             // arises in DataGrid.
             DependencyObject mentor = Helper.FindMentor(this);
-            if (mentor != null)
+            if (mentor is not null)
             {
                 object dataContextItem = mentor.GetValue(FrameworkElement.DataContextProperty);
-                if (dataContextItem != null &&
+                if (dataContextItem is not null &&
                     dataContextItem != CollectionView.NewItemPlaceholder &&
                     dataContextItem != BindingExpressionBase.DisconnectedItem)
                 {
@@ -857,7 +857,7 @@ namespace System.Windows.Data
                     if (ValidatesOnNotifyDataError)
                     {
                         indei = _itemsRW[i].Target as INotifyDataErrorInfo;
-                        if (indei != null)
+                        if (indei is not null)
                             ErrorsChangedEventManager.RemoveHandler(indei, OnErrorsChanged);
                     }
 
@@ -874,7 +874,7 @@ namespace System.Windows.Data
                 if (IsEditing)
                 {
                     IEditableObject ieo = newItems[i].Target as IEditableObject;
-                    if (ieo != null)
+                    if (ieo is not null)
                     {
                         ieo.BeginEdit();
                     }
@@ -884,7 +884,7 @@ namespace System.Windows.Data
                 if (ValidatesOnNotifyDataError)
                 {
                     indei = newItems[i].Target as INotifyDataErrorInfo;
-                    if (indei != null)
+                    if (indei is not null)
                     {
                         ErrorsChangedEventManager.AddHandler(indei, OnErrorsChanged);
                         UpdateNotifyDataErrors(indei, newItems[i]);
@@ -900,7 +900,7 @@ namespace System.Windows.Data
         {
             get
             {
-                if (ValidationRules != null)
+                if (ValidationRules is not null)
                 {
                     for (int i=ValidationRules.Count-1; i>=0; --i)
                     {
@@ -920,7 +920,7 @@ namespace System.Windows.Data
 
             // only do this once
             UIElement layoutElement = mentor as UIElement;
-            if (layoutElement != null)
+            if (layoutElement is not null)
             {
                 layoutElement.LayoutUpdated -= new EventHandler(OnLayoutUpdated);
             }
@@ -929,11 +929,11 @@ namespace System.Windows.Data
             FrameworkElement fe;
             FrameworkContentElement fce;
             Helper.DowncastToFEorFCE(mentor, out fe, out fce, false);
-            if (fe != null)
+            if (fe is not null)
             {
                 fe.DataContextChanged += new DependencyPropertyChangedEventHandler(OnDataContextChanged);
             }
-            else if (fce != null)
+            else if (fce is not null)
             {
                 fce.DataContextChanged += new DependencyPropertyChangedEventHandler(OnDataContextChanged);
             }
@@ -1007,7 +1007,7 @@ namespace System.Windows.Data
 
             // remove the old errors (do this last to avoid passing through a transient
             // "no error" state)
-            if (oldErrors != null)
+            if (oldErrors is not null)
             {
                 for (int i=0, n=oldErrors.Count; i<n; ++i)
                 {
@@ -1023,7 +1023,7 @@ namespace System.Windows.Data
             // NewItemPlaceholder, don't do anything.  Bindings and validation
             // rules aren't usually relevant in this case.
             DependencyObject mentor = Helper.FindMentor(this);
-            if (mentor != null &&
+            if (mentor is not null &&
                 mentor.GetValue(FrameworkElement.DataContextProperty) == CollectionView.NewItemPlaceholder)
             {
                 return true;
@@ -1113,7 +1113,7 @@ namespace System.Windows.Data
 
             // add the new errors, then remove the old ones - this avoid a transient
             // "no error" state
-            if (toAdd != null && toAdd.Count > 0)
+            if (toAdd is not null && toAdd.Count > 0)
             {
                 ValidationRule rule = NotifyDataErrorValidationRule.Instance;
 
@@ -1128,7 +1128,7 @@ namespace System.Windows.Data
                 }
             }
 
-            if (toRemove != null && toRemove.Count > 0)
+            if (toRemove is not null && toRemove.Count > 0)
             {
                 foreach (ValidationError veRemove in toRemove)
                 {
@@ -1173,7 +1173,7 @@ namespace System.Windows.Data
                 result = _bindingExpressions[i].UpdateSource(this) && result;
             }
 
-            if (_proposedValueBindingExpressions != null)
+            if (_proposedValueBindingExpressions is not null)
             {
                 for (int i=_proposedValueBindingExpressions.Length-1; i>=0; --i)
                 {
@@ -1206,7 +1206,7 @@ namespace System.Windows.Data
 
             // include the bindings for proposed values, for the last two steps
             if (_validationStep >= ValidationStep.UpdatedValue &&
-                _proposedValueBindingExpressions != null)
+                _proposedValueBindingExpressions is not null)
             {
                 for (int i=_proposedValueBindingExpressions.Length-1; i>=0; --i)
                 {
@@ -1252,7 +1252,7 @@ namespace System.Windows.Data
             for (int i=items.Count-1; i>=0; --i)
             {
                 IEditableObject ieo = items[i] as IEditableObject;
-                if (ieo != null)
+                if (ieo is not null)
                 {
                     // PreSharp uses message numbers that the C# compiler doesn't know about.
                     // Disable the C# complaints, per the PreSharp documentation.
@@ -1312,7 +1312,7 @@ namespace System.Windows.Data
             if (_culture is null)
             {
                 DependencyObject mentor = Helper.FindMentor(this);
-                if (mentor != null)
+                if (mentor is not null)
                 {
                     _culture = ((System.Windows.Markup.XmlLanguage) mentor.GetValue(FrameworkElement.LanguageProperty)).GetSpecificCulture();
                 }
@@ -1398,7 +1398,7 @@ namespace System.Windows.Data
             // been cleared.  Instead, find the expressions that need work by
             // looking in the GetValue table.
             GetValueTableEntry entry;
-            while ((entry = _getValueTable.GetFirstEntry()) != null)
+            while ((entry = _getValueTable.GetFirstEntry()) is not null)
             {
                 RemoveBindingExpression(entry.BindingExpressionBase);
             }
@@ -1443,7 +1443,7 @@ namespace System.Windows.Data
                     binding.ValidatesOnExceptions = originalBinding.ValidatesOnExceptions;
 
                     Collection<ValidationRule> rules = originalBinding.ValidationRulesInternal;
-                    if (rules != null)
+                    if (rules is not null)
                     {
                         for (int j=0, n=rules.Count; j<n; ++j)
                         {
@@ -1463,7 +1463,7 @@ namespace System.Windows.Data
         // after a validate/update pass, reset the proposed values and related state
         void ResetProposedValuesAfterUpdate(DependencyObject mentor, bool isFullUpdate)
         {
-            if (_proposedValueBindingExpressions != null)
+            if (_proposedValueBindingExpressions is not null)
             {
                 for (int i=0, n=_proposedValueBindingExpressions.Length; i<n; ++i)
                 {
@@ -1473,7 +1473,7 @@ namespace System.Windows.Data
                     bindExpr.Detach();
 
                     // reattach the validation error (Detach removes it)
-                    if (validationError != null)
+                    if (validationError is not null)
                     {
                         // reassign error's owner to this BindingGroup
                         ValidationError newError = new ValidationError(
@@ -1503,7 +1503,7 @@ namespace System.Windows.Data
             if (Engine.IsShutDown)
                 return;
 
-            bool shouldStore = Owner != null && (IsDirty || HasValidationError);
+            bool shouldStore = Owner is not null && (IsDirty || HasValidationError);
 
             if (shouldStore)
             {
@@ -1679,7 +1679,7 @@ namespace System.Windows.Data
                         continue;
 
                     WeakReference itemWR = _table[i].ItemReference;
-                    if (itemWR != null && BindingGroup.FindIndexOf(itemWR, list) < 0)
+                    if (itemWR is not null && BindingGroup.FindIndexOf(itemWR, list) < 0)
                     {
                         list.Add(itemWR);
                     }
@@ -1690,14 +1690,14 @@ namespace System.Windows.Data
             public object GetValue(BindingExpressionBase bindingExpressionBase)
             {
                 GetValueTableEntry entry = this[bindingExpressionBase];
-                return (entry != null) ? entry.Value : DependencyProperty.UnsetValue;
+                return (entry is not null) ? entry.Value : DependencyProperty.UnsetValue;
             }
 
             // set the value for a binding expression
             public void SetValue(BindingExpressionBase bindingExpressionBase, object value)
             {
                 GetValueTableEntry entry = this[bindingExpressionBase];
-                if (entry != null)
+                if (entry is not null)
                 {
                     entry.Value = value;
                 }
@@ -1791,8 +1791,8 @@ namespace System.Windows.Data
                     else if (_value == BindingGroup.DeferredSourceValue)
                     {
                         BindingExpression bindingExpression = _bindingExpressionBase as BindingExpression;
-                        Debug.Assert(bindingExpression != null, "do not ask for source value from a [Multi,Priority]Binding");
-                        _value = (bindingExpression != null) ? bindingExpression.SourceValue : DependencyProperty.UnsetValue;
+                        Debug.Assert(bindingExpression is not null, "do not ask for source value from a [Multi,Priority]Binding");
+                        _value = (bindingExpression is not null) ? bindingExpression.SourceValue : DependencyProperty.UnsetValue;
                     }
 
                     return _value;
@@ -1888,7 +1888,7 @@ namespace System.Windows.Data
                 for (int i=_table.Count-1; i >= 0; --i)
                 {
                     WeakReference itemWR = _table[i].ItemReference;
-                    if (itemWR != null && BindingGroup.FindIndexOf(itemWR, list) < 0)
+                    if (itemWR is not null && BindingGroup.FindIndexOf(itemWR, list) < 0)
                     {
                         list.Add(itemWR);
                     }
@@ -1901,7 +1901,7 @@ namespace System.Windows.Data
                 for (int i=_table.Count-1; i>=0; --i)
                 {
                     Collection<BindingExpressionBase> dependents = _table[i].Dependents;
-                    if (dependents != null)
+                    if (dependents is not null)
                     {
                         for (int j=dependents.Count-1; j>=0; --j)
                         {

@@ -625,7 +625,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 {
                     return (element is RibbonGroupsPanel);
                 });
-            if (ancestor != null)
+            if (ancestor is not null)
             {
                 TreeHelper.InvalidateMeasureForVisualAncestorPath(d, delegate(DependencyObject element)
                 {
@@ -671,10 +671,10 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (GetControlSizeDefinition(d) == e.OldValue)
             {
                 RibbonGroupItemsPanel ribbonGroupItemsPanel = TreeHelper.FindVisualAncestor<RibbonGroupItemsPanel>(d);
-                if (ribbonGroupItemsPanel != null)
+                if (ribbonGroupItemsPanel is not null)
                 {
                     RibbonGroup ribbonGroup = TreeHelper.FindVisualAncestor<RibbonGroup>(ribbonGroupItemsPanel);
-                    if (ribbonGroup != null)
+                    if (ribbonGroup is not null)
                     {
                         ribbonGroup.UpdateGroupSizeDefinitionsAsync();
                     }
@@ -689,11 +689,11 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (baseValue is null)
             {
                 RibbonImageSize imageSize = RibbonImageSize.Collapsed;
-                if (RibbonControlService.GetLargeImageSource(d) != null)
+                if (RibbonControlService.GetLargeImageSource(d) is not null)
                 {
                     imageSize = RibbonImageSize.Large;
                 }
-                else if (RibbonControlService.GetSmallImageSource(d) != null)
+                else if (RibbonControlService.GetSmallImageSource(d) is not null)
                 {
                     imageSize = RibbonImageSize.Small;
                 }
@@ -713,7 +713,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (RibbonControlService.GetIsInControlGroup(d))
             {
                 RibbonControlGroup controlGroup = TreeHelper.FindVisualAncestor<RibbonControlGroup>(d);
-                if (controlGroup != null)
+                if (controlGroup is not null)
                 {
                     controlGroup.CoerceValue(DefaultControlSizeDefinitionProperty);
                 }

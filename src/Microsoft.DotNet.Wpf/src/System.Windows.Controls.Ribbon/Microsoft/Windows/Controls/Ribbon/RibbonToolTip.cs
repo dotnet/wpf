@@ -174,7 +174,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             ribbonToolTip.HasHeader =
                 (!string.IsNullOrEmpty(ribbonToolTip.Title) ||
                 !string.IsNullOrEmpty(ribbonToolTip.Description) ||
-                ribbonToolTip.ImageSource != null);
+                ribbonToolTip.ImageSource is not null);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             ribbonToolTip.HasFooter =
                 (!string.IsNullOrEmpty(ribbonToolTip.FooterTitle) ||
                 !string.IsNullOrEmpty(ribbonToolTip.FooterDescription) ||
-                ribbonToolTip.FooterImageSource != null);
+                ribbonToolTip.FooterImageSource is not null);
         }
 
         /// <summary>
@@ -289,10 +289,10 @@ namespace Microsoft.Windows.Controls.Ribbon
                 // Walk up the visual tree from the PlacementTarget to see if 
                 // it belongs to a RibbonGroup.
                 DependencyObject element = placementTarget;
-                while (element != null)
+                while (element is not null)
                 {
                     ribbonGroup = element as RibbonGroup;
-                    if (ribbonGroup != null)
+                    if (ribbonGroup is not null)
                     {
                         break;
                     }
@@ -303,7 +303,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         // This special check is for the case that the PlacementTarget is 
                         // within the Popup of a Collapsed RibbonGroup
                         Popup popupParent = LogicalTreeHelper.GetParent(element) as Popup;
-                        if (popupParent != null)
+                        if (popupParent is not null)
                         {
                             ribbonGroup = popupParent.TemplatedParent as RibbonGroup;
                         }
@@ -318,11 +318,11 @@ namespace Microsoft.Windows.Controls.Ribbon
                 // are automatically taken care of because they will not be recognized as 
                 // belonging to a RibbonGroup.
 
-                bool isToolTipForRibbonGroup = ribbonGroup != null && 
+                bool isToolTipForRibbonGroup = ribbonGroup is not null && 
                     (toolTip.PlacementTarget == ribbonGroup || 
                     (VisualTreeHelper.GetChildrenCount(ribbonGroup) > 0 && toolTip.PlacementTarget == VisualTreeHelper.GetChild(ribbonGroup, 0)));
 
-                toolTip.IsPlacementTargetInRibbonGroup = (ribbonGroup != null && (!isToolTipForRibbonGroup || !ribbonGroup.IsInQuickAccessToolBar));
+                toolTip.IsPlacementTargetInRibbonGroup = (ribbonGroup is not null && (!isToolTipForRibbonGroup || !ribbonGroup.IsInQuickAccessToolBar));
             }
 
             return value;
@@ -353,10 +353,10 @@ namespace Microsoft.Windows.Controls.Ribbon
                 Ribbon ribbon = null;
                 DependencyObject rootElement = null;
                 DependencyObject element = placementTarget;
-                while (element != null)
+                while (element is not null)
                 {
                     ribbon = element as Ribbon;
-                    if (ribbon != null)
+                    if (ribbon is not null)
                     {
                         break;
                     }
@@ -368,27 +368,27 @@ namespace Microsoft.Windows.Controls.Ribbon
                 double additionalOffset = 1.0;
                 FrameworkElement referenceFE = null;
 
-                if (ribbon != null)
+                if (ribbon is not null)
                 {
                     additionalOffset = 0.0;
                     referenceFE = ribbon;
                 }
                 else
                 {
-                    if (rootElement != null)
+                    if (rootElement is not null)
                     {
                         referenceFE = rootElement as FrameworkElement;
                     }
                 }
 
-                if (referenceFE != null)
+                if (referenceFE is not null)
                 {
                     // When RibbonControl (PlacementTarget) is within a collapsed group RibbonToolTip is 
                     // placed just below the Popup or just above the Popup (in case there is not enough 
                     // screen space left below the Popup).
 
                     MatrixTransform transform = referenceFE.TransformToDescendant(placementTarget) as MatrixTransform;
-                    if (transform != null)
+                    if (transform is not null)
                     {
                         MatrixTransform deviceTransform = new MatrixTransform(RibbonHelper.GetTransformToDevice(referenceFE));
                         GeneralTransformGroup transformGroup = new GeneralTransformGroup();
@@ -410,7 +410,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 // gotten here in the first place. But now that we are we will make 
                 // the best attempt at emulating PlacementMode.Bottom.
                 FrameworkElement placementTargetAsFE = placementTarget as FrameworkElement;
-                if (placementTargetAsFE != null)
+                if (placementTargetAsFE is not null)
                 {
                     belowOffsetY = targetSize.Height;
                     aboveOffsetY = -popupSize.Height;

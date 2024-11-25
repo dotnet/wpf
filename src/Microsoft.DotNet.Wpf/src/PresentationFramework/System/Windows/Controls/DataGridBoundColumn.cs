@@ -103,7 +103,7 @@ namespace System.Windows.Controls
         internal void ApplyBinding(DependencyObject target, DependencyProperty property)
         {
             BindingBase binding = Binding;
-            if (binding != null)
+            if (binding is not null)
             {
                 BindingOperations.SetBinding(target, property, binding);
             }
@@ -163,7 +163,7 @@ namespace System.Windows.Controls
         internal void ApplyStyle(bool isEditing, bool defaultToElementStyle, FrameworkElement element)
         {
             Style style = PickStyle(isEditing, defaultToElementStyle);
-            if (style != null)
+            if (style is not null)
             {
                 element.Style = style;
             }

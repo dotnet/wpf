@@ -74,7 +74,7 @@ namespace System.Windows
         public bool ShouldSerializeInputBindings()
         {
             InputBindingCollection bindingCollection = InputBindingCollectionField.GetValue(this);
-            if (bindingCollection != null && bindingCollection.Count > 0)
+            if (bindingCollection is not null && bindingCollection.Count > 0)
             {
                 return true;
             }
@@ -124,7 +124,7 @@ namespace System.Windows
         public bool ShouldSerializeCommandBindings()
         {
             CommandBindingCollection bindingCollection = CommandBindingCollectionField.GetValue(this);
-            if (bindingCollection != null && bindingCollection.Count > 0)
+            if (bindingCollection is not null && bindingCollection.Count > 0)
             {
                 return true;
             }
@@ -391,7 +391,7 @@ namespace System.Windows
             }
 
             EventHandlersStore store = EventHandlersStore;
-            if (store != null)
+            if (store is not null)
             {
                 store.RemoveRoutedEventHandler(routedEvent, handler);
 
@@ -424,7 +424,7 @@ namespace System.Windows
         private void EventHandlersStoreRemove(EventPrivateKey key, Delegate handler)
         {
             EventHandlersStore store = EventHandlersStore;
-            if (store != null)
+            if (store is not null)
             {
                 store.Remove(key, handler);
                 if (store.Count == 0)
@@ -449,7 +449,7 @@ namespace System.Windows
                 GlobalEventManager.GetDTypedClassListeners(this.DependencyObjectType, e.RoutedEvent);
 
             // Add all class listeners for this UIElement3D
-            while (classListeners != null)
+            while (classListeners is not null)
             {
                 for(int i = 0; i < classListeners.Handlers.Length; i++)
                 {
@@ -462,12 +462,12 @@ namespace System.Windows
             // Get instance listeners for this UIElement3D
             FrugalObjectList<RoutedEventHandlerInfo> instanceListeners = null;
             EventHandlersStore store = EventHandlersStore;
-            if (store != null)
+            if (store is not null)
             {
                 instanceListeners = store[e.RoutedEvent];
 
                 // Add all instance listeners for this UIElement3D
-                if (instanceListeners != null)
+                if (instanceListeners is not null)
                 {
                     for (int i = 0; i < instanceListeners.Count; i++)
                     {

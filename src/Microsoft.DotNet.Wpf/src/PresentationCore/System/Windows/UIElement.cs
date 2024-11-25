@@ -359,7 +359,7 @@ namespace System.Windows
             {
                 LayoutEventList.ListItem item = getLayoutUpdatedHandler(value);
 
-                if(item != null)
+                if(item is not null)
                 {
                     removeLayoutUpdatedHandler(value);
                     //remove a weak ref from LM
@@ -381,7 +381,7 @@ namespace System.Windows
             else
             {
                 EventHandler cachedLayoutUpdatedHandler = LayoutUpdatedHandlersField.GetValue(this);
-                if(cachedLayoutUpdatedHandler != null)
+                if(cachedLayoutUpdatedHandler is not null)
                 {
                     //second unique handler is coming in.
                     //allocate a datastructure
@@ -415,7 +415,7 @@ namespace System.Windows
             else
             {
                 EventHandler cachedLayoutUpdatedHandler = LayoutUpdatedHandlersField.GetValue(this);
-                if(cachedLayoutUpdatedHandler != null)
+                if(cachedLayoutUpdatedHandler is not null)
                 {
                     if(cachedLayoutUpdatedHandler == d) return (LayoutEventList.ListItem)cachedLayoutUpdatedItems;
                 }
@@ -434,7 +434,7 @@ namespace System.Windows
             object cachedLayoutUpdatedItems = LayoutUpdatedListItemsField.GetValue(this);
             EventHandler cachedLayoutUpdatedHandler = LayoutUpdatedHandlersField.GetValue(this);
 
-            if(cachedLayoutUpdatedHandler != null) //single handler
+            if(cachedLayoutUpdatedHandler is not null) //single handler
             {
                 if(cachedLayoutUpdatedHandler == d)
                 {
@@ -477,7 +477,7 @@ namespace System.Windows
             for (int i = 0; i < count; i++)
             {
                 Visual cv = v.InternalGetVisualChild(i);
-                if (cv != null)
+                if (cv is not null)
                 {
                     PropagateSuspendLayout(cv);
                 }
@@ -536,7 +536,7 @@ namespace System.Windows
             for (int i = 0; i < count; i++)
             {
                 Visual cv = v.InternalGetVisualChild(i);
-                if (cv != null)
+                if (cv is not null)
                 {
                     PropagateResumeLayout(v, cv);
                 }
@@ -606,7 +606,7 @@ namespace System.Windows
                         || ((Visual)this).CheckFlagsAnd(VisualFlags.IsLayoutSuspended))
                     {
                         //reset measure request.
-                        if (MeasureRequest != null)
+                        if (MeasureRequest is not null)
                             ContextLayoutManager.From(Dispatcher).MeasureQueue.Remove(this);
 
                         //  remember though that parent tried to measure at this size
@@ -689,7 +689,7 @@ namespace System.Windows
 
                     MeasureDirty = false;
                     //reset measure request.
-                    if (MeasureRequest != null)
+                    if (MeasureRequest is not null)
                         ContextLayoutManager.From(Dispatcher).MeasureQueue.Remove(this);
 
                     //cache desired size
@@ -702,9 +702,9 @@ namespace System.Windows
                         UIElement p;
                         IContentHost ich;
                         GetUIParentOrICH(out p, out ich); //only one will be returned
-                        if (p != null && !p.MeasureInProgress) //this is what differs this code from signalDesiredSizeChange()
+                        if (p is not null && !p.MeasureInProgress) //this is what differs this code from signalDesiredSizeChange()
                             p.OnChildDesiredSizeChanged(this);
-                        else if (ich != null)
+                        else if (ich is not null)
                             ich.OnChildDesiredSizeChanged(this);
                     }
                 }
@@ -724,10 +724,10 @@ namespace System.Windows
             ich = null;
             uiParent = null;
 
-            for(Visual v = VisualTreeHelper.GetParent(this) as Visual; v != null; v = VisualTreeHelper.GetParent(v) as Visual)
+            for(Visual v = VisualTreeHelper.GetParent(this) as Visual; v is not null; v = VisualTreeHelper.GetParent(v) as Visual)
             {
                 ich = v as IContentHost;
-                if (ich != null) break;
+                if (ich is not null) break;
 
                 if(v.CheckFlagsAnd(VisualFlags.IsUIElement))
                 {
@@ -742,7 +742,7 @@ namespace System.Windows
         {
             UIElement uiParent = null;
 
-            for(Visual v = VisualTreeHelper.GetParent(this) as Visual; v != null; v = VisualTreeHelper.GetParent(v) as Visual)
+            for(Visual v = VisualTreeHelper.GetParent(this) as Visual; v is not null; v = VisualTreeHelper.GetParent(v) as Visual)
             {
                 if (v.CheckFlagsAnd(VisualFlags.IsLayoutIslandRoot))
                 {
@@ -819,7 +819,7 @@ namespace System.Windows
                         || ((Visual)this).CheckFlagsAnd(VisualFlags.IsLayoutSuspended))
                     {
                         //reset arrange request.
-                        if (ArrangeRequest != null)
+                        if (ArrangeRequest is not null)
                             ContextLayoutManager.From(Dispatcher).ArrangeQueue.Remove(this);
 
                         //  remember though that parent tried to arrange at this rect
@@ -919,7 +919,7 @@ namespace System.Windows
                         ArrangeDirty = false;
 
                         //reset request.
-                        if (ArrangeRequest != null)
+                        if (ArrangeRequest is not null)
                             ContextLayoutManager.From(Dispatcher).ArrangeQueue.Remove(this);
 
                         if ((sizeChanged || RenderingInvalidated || firstArrange) && IsRenderable())
@@ -1033,7 +1033,7 @@ namespace System.Windows
 
             SizeChangedInfo info = sizeChangedInfo;
 
-            if(info != null)
+            if(info is not null)
             {
                 info.Update(widthChanged, heightChanged);
                 return true;
@@ -1275,7 +1275,7 @@ namespace System.Windows
                 VisualOffset = new Vector(finalRect.X, finalRect.Y);
             }
 
-            if (renderTransform != null)
+            if (renderTransform is not null)
             {
                 //render transform + layout offset, create a collection
                 TransformGroup t = new TransformGroup();
@@ -1327,7 +1327,7 @@ namespace System.Windows
         {
             Rect hitBounds = new Rect(_size);
 
-            if (_drawingContent != null)
+            if (_drawingContent is not null)
             {
                 MediaContext mediaContext = MediaContext.From(Dispatcher);
                 BoundsDrawingContextWalker ctx = mediaContext.AcquireBoundsDrawingContextWalker();
@@ -1439,7 +1439,7 @@ namespace System.Windows
         protected internal override void OnVisualParentChanged(DependencyObject oldParent)
         {
             // Synchronize ForceInherit properties
-            if (_parent != null)
+            if (_parent is not null)
             {
                 DependencyObject parent = _parent;
 
@@ -1447,7 +1447,7 @@ namespace System.Windows
                 {
                     Visual parentAsVisual = parent as Visual;
 
-                    if (parentAsVisual != null)
+                    if (parentAsVisual is not null)
                     {
                         // We are being plugged into a non-UIElement visual. This
                         // means that our parent doesn't play by the same rules we
@@ -1462,7 +1462,7 @@ namespace System.Windows
                     {
                         Visual3D parentAsVisual3D = parent as Visual3D;
 
-                        if (parentAsVisual3D != null)
+                        if (parentAsVisual3D is not null)
                         {
                             // We are being plugged into a non-UIElement visual. This
                             // means that our parent doesn't play by the same rules we
@@ -1476,7 +1476,7 @@ namespace System.Windows
                     }
                 }
 
-                if (parent != null)
+                if (parent is not null)
                 {
                     SynchronizeForceInheritProperties(this, null, null, parent);
                 }
@@ -1509,7 +1509,7 @@ namespace System.Windows
                     parent = InputElement.GetContainingUIElement(oldParent);
                 }
 
-                if (parent != null)
+                if (parent is not null)
                 {
                     SynchronizeForceInheritProperties(this, null, null, parent);
                 }
@@ -1549,7 +1549,7 @@ namespace System.Windows
 
                 // See if this parent is a child of the ancestor who's parent changed.
                 // If so, we don't care about changes that happen above us.
-                if(parent != null && VisualTreeHelper.IsAncestorOf(e.Ancestor, parent))
+                if(parent is not null && VisualTreeHelper.IsAncestorOf(e.Ancestor, parent))
                 {
                     parent = null;
                 }
@@ -1561,7 +1561,7 @@ namespace System.Windows
                 // Find our nearest UIElement parent.
                 parent = InputElement.GetContainingUIElement(_parent);
 
-                if(parent != null)
+                if(parent is not null)
                 {
                     // If we found a UIElement parent in our subtree, the
                     // break in the visual tree must have been above it,
@@ -1577,7 +1577,7 @@ namespace System.Windows
                 }
             }
 
-            if(parent != null)
+            if(parent is not null)
             {
                 SynchronizeForceInheritProperties(this, null, null, parent);
             }
@@ -1681,15 +1681,15 @@ namespace System.Windows
                 }
 
                 // Add this element to route
-                if (uiElement != null)
+                if (uiElement is not null)
                 {
                     uiElement.AddToEventRoute(route, args);
                 }
-                else if (contentElement != null)
+                else if (contentElement is not null)
                 {
                     contentElement.AddToEventRoute(route, args);
                 }
-                else if (uiElement3D != null)
+                else if (uiElement3D is not null)
                 {
                     uiElement3D.AddToEventRoute(route, args);
                 }
@@ -1698,7 +1698,7 @@ namespace System.Windows
             {
                 int cElements = 0;
 
-                while (e != null)
+                while (e is not null)
                 {
                     UIElement uiElement = e as UIElement;
                     ContentElement contentElement = null;
@@ -1723,28 +1723,28 @@ namespace System.Windows
 
                     // Allow the element to adjust source
                     object newSource = null;
-                    if (uiElement != null)
+                    if (uiElement is not null)
                     {
                         newSource = uiElement.AdjustEventSource(args);
                     }
-                    else if (contentElement != null)
+                    else if (contentElement is not null)
                     {
                         newSource = contentElement.AdjustEventSource(args);
                     }
-                    else if (uiElement3D != null)
+                    else if (uiElement3D is not null)
                     {
                         newSource = uiElement3D.AdjustEventSource(args);
                     }
 
                     // Add changed source information to the route
-                    if (newSource != null)
+                    if (newSource is not null)
                     {
                         route.AddSource(newSource);
                     }
 
                     // Invoke BuildRouteCore
                     bool continuePastVisualTree = false;
-                                        if (uiElement != null)
+                                        if (uiElement is not null)
                     {
                         //Add a Synchronized input pre-opportunity handler just before the class and instance handlers
                         uiElement.AddSynchronizedInputPreOpportunityHandler(route, args);
@@ -1760,7 +1760,7 @@ namespace System.Windows
                         // Get element's visual parent
                         e = uiElement.GetUIParent(continuePastVisualTree);
                     }
-                    else if (contentElement != null)
+                    else if (contentElement is not null)
                     {
                         //Add a Synchronized input pre-opportunity handler just before the class and instance handlers
                         contentElement.AddSynchronizedInputPreOpportunityHandler(route, args);
@@ -1776,7 +1776,7 @@ namespace System.Windows
                         // Get element's visual parent
                         e = (DependencyObject)contentElement.GetUIParent(continuePastVisualTree);
                     }
-                    else if (uiElement3D != null)
+                    else if (uiElement3D is not null)
                     {
                         //Add a Synchronized input pre-opportunity handler just before the class and instance handlers
                         uiElement3D.AddSynchronizedInputPreOpportunityHandler(route, args);
@@ -1889,24 +1889,24 @@ namespace System.Windows
         {
             ArgumentNullException.ThrowIfNull(d);
 
-            Debug.Assert(routedEvent != null, "RoutedEvent must not be null");
+            Debug.Assert(routedEvent is not null, "RoutedEvent must not be null");
 
             UIElement uiElement = d as UIElement;
-            if (uiElement != null)
+            if (uiElement is not null)
             {
                 uiElement.AddHandler(routedEvent, handler);
             }
             else
             {
                 ContentElement contentElement = d as ContentElement;
-                if (contentElement != null)
+                if (contentElement is not null)
                 {
                     contentElement.AddHandler(routedEvent, handler);
                 }
                 else
                 {
                     UIElement3D uiElement3D = d as UIElement3D;
-                    if (uiElement3D != null)
+                    if (uiElement3D is not null)
                     {
                         uiElement3D.AddHandler(routedEvent, handler);
                     }
@@ -1925,24 +1925,24 @@ namespace System.Windows
         {
             ArgumentNullException.ThrowIfNull(d);
 
-            Debug.Assert(routedEvent != null, "RoutedEvent must not be null");
+            Debug.Assert(routedEvent is not null, "RoutedEvent must not be null");
 
             UIElement uiElement = d as UIElement;
-            if (uiElement != null)
+            if (uiElement is not null)
             {
                 uiElement.RemoveHandler(routedEvent, handler);
             }
             else
             {
                 ContentElement contentElement = d as ContentElement;
-                if (contentElement != null)
+                if (contentElement is not null)
                 {
                     contentElement.RemoveHandler(routedEvent, handler);
                 }
                 else
                 {
                     UIElement3D uiElement3D = d as UIElement3D;
-                    if (uiElement3D != null)
+                    if (uiElement3D is not null)
                     {
                         uiElement3D.RemoveHandler(routedEvent, handler);
                     }
@@ -2052,10 +2052,10 @@ namespace System.Windows
             rawHit = candidate as IInputElement;
             rawHitResult = result.HitTestResult;
             enabledHit = null;
-            while (candidate != null)
+            while (candidate is not null)
             {
                 IContentHost contentHost = candidate as IContentHost;
-                if (contentHost != null)
+                if (contentHost is not null)
                 {
                     // Do not call IContentHost.InputHitTest if the containing UIElement
                     // is not enabled.
@@ -2066,7 +2066,7 @@ namespace System.Windows
                         pt = InputElement.TranslatePoint(pt, this, candidate);
                         enabledHit = rawHit = contentHost.InputHitTest(pt);
                         rawHitResult = null;
-                        if (enabledHit != null)
+                        if (enabledHit is not null)
                         {
                             break;
                         }
@@ -2074,7 +2074,7 @@ namespace System.Windows
                 }
 
                 UIElement element = candidate as UIElement;
-                if (element != null)
+                if (element is not null)
                 {
                     if (rawHit is null)
                     {
@@ -2091,7 +2091,7 @@ namespace System.Windows
                 }
 
                 UIElement3D element3D = candidate as UIElement3D;
-                if (element3D != null)
+                if (element3D is not null)
                 {
                     if (rawHit is null)
                     {
@@ -2167,7 +2167,7 @@ namespace System.Windows
             {
                 get
                 {
-                    return _result != null ? _result.VisualHit : null;
+                    return _result is not null ? _result.VisualHit : null;
                 }
             }
 
@@ -2223,7 +2223,7 @@ namespace System.Windows
         {
             RoutedEvent newEvent = CrackMouseButtonEvent(e);
 
-            if (newEvent != null)
+            if (newEvent is not null)
             {
                 ReRaiseEventAs(sender, e, newEvent);
             }
@@ -3061,9 +3061,9 @@ namespace System.Windows
 
             GetUIParentOrICH(out p, out ich); //only one will be returned
 
-            if(p != null)
+            if(p is not null)
                 p.OnChildDesiredSizeChanged(this);
-            else if(ich != null)
+            else if(ich is not null)
                 ich.OnChildDesiredSizeChanged(this);
         }
 
@@ -3071,7 +3071,7 @@ namespace System.Windows
         {
             Geometry clipGeometry = GetLayoutClip(layoutSlotSize);
 
-            if(Clip != null)
+            if(Clip is not null)
             {
                 if(clipGeometry is null)
                     clipGeometry = Clip;
@@ -3094,7 +3094,7 @@ namespace System.Windows
         /// </summary>
         protected override HitTestResult HitTestCore(PointHitTestParameters hitTestParameters)
         {
-            if (_drawingContent != null)
+            if (_drawingContent is not null)
             {
                 if (_drawingContent.HitTestPoint(hitTestParameters.HitPoint))
                 {
@@ -3110,7 +3110,7 @@ namespace System.Windows
         /// </summary>
         protected override GeometryHitTestResult HitTestCore(GeometryHitTestParameters hitTestParameters)
         {
-            if ((_drawingContent != null) && GetHitTestBounds().IntersectsWith(hitTestParameters.Bounds))
+            if ((_drawingContent is not null) && GetHitTestBounds().IntersectsWith(hitTestParameters.Bounds))
             {
                 IntersectionDetail intersectionDetail;
 
@@ -3153,7 +3153,7 @@ namespace System.Windows
 
             _drawingContent = null;
 
-            if (oldContent != null)
+            if (oldContent is not null)
             {
                 //
                 // Remove the notification handlers.
@@ -3176,7 +3176,7 @@ namespace System.Windows
             // Prepare the new content.
             //
 
-            if (newContent != null)
+            if (newContent is not null)
             {
                 // Propagate notification handlers.
                 newContent.PropagateChangedHandler(ContentsChangedHandler, true /* adding */);
@@ -3205,7 +3205,7 @@ namespace System.Windows
         {
             Debug.Assert(_proxy.IsOnChannel(channel));
 
-            if (_drawingContent != null)
+            if (_drawingContent is not null)
             {
                 if (CheckFlagsAnd(channel, VisualProxyFlags.IsContentConnected))
                 {
@@ -3229,7 +3229,7 @@ namespace System.Windows
         /// </summary>
         internal override Rect GetContentBounds()
         {
-            if (_drawingContent != null)
+            if (_drawingContent is not null)
             {
                 Rect resultRect = Rect.Empty;
                 MediaContext mediaContext = MediaContext.From(Dispatcher);
@@ -3258,7 +3258,7 @@ namespace System.Windows
         {
             VerifyAPIReadOnly();
 
-            if (_drawingContent != null)
+            if (_drawingContent is not null)
             {
                 _drawingContent.WalkContent(walker);
             }
@@ -3281,7 +3281,7 @@ namespace System.Windows
             // Create the content on the channel.
             //
 
-            if (_drawingContent != null)
+            if (_drawingContent is not null)
             {
                 DUCE.IResource drawingContent = (DUCE.IResource)_drawingContent;
 
@@ -3324,7 +3324,7 @@ namespace System.Windows
             DrawingGroup drawingGroupContent = null;
 
             // Convert our content to a DrawingGroup, if content exists
-            if (_drawingContent != null)
+            if (_drawingContent is not null)
             {
                 drawingGroupContent = DrawingServices.DrawingGroupFromRenderData((RenderData) _drawingContent);
             }
@@ -3685,7 +3685,7 @@ namespace System.Windows
 
             //Notify Automation in case it is interested.
             AutomationPeer peer = uie.GetAutomationPeer();
-            if(peer != null)
+            if(peer is not null)
                 peer.InvalidatePeer();
 
         }
@@ -3866,7 +3866,7 @@ namespace System.Windows
                 //
                 DependencyObject parent = InputElement.GetContainingUIElement(_parent);
 
-                if(parent != null)
+                if(parent is not null)
                 {
                     constraintAllowsVisible = UIElementHelper.IsVisible(parent);
                 }
@@ -3875,7 +3875,7 @@ namespace System.Windows
                     // We cannot be visible if we have no visual parent, unless:
                     // 1) We are the root, connected to a PresentationHost.
                     PresentationSource presentationSource = PresentationSource.CriticalFromVisual(this);
-                    if(presentationSource != null)
+                    if(presentationSource is not null)
                     {
                         constraintAllowsVisible = true;
                     }
@@ -4026,7 +4026,7 @@ namespace System.Windows
                     ap = OnCreateAutomationPeer();
                 }
 
-                if(ap != null)
+                if(ap is not null)
                 {
                     AutomationPeerField.SetValue(this, ap);
                     HasAutomationPeer = true;
@@ -4110,10 +4110,10 @@ namespace System.Windows
         private void RaiseDependencyPropertyChanged(EventPrivateKey key, DependencyPropertyChangedEventArgs args)
         {
             EventHandlersStore store = EventHandlersStore;
-            if (store != null)
+            if (store is not null)
             {
                 Delegate handler = store.Get(key);
-                if (handler != null)
+                if (handler is not null)
                 {
                     ((DependencyPropertyChangedEventHandler)handler)(this, args);
                 }
@@ -4180,7 +4180,7 @@ namespace System.Windows
             UIElement3D      uiElement3D,
             DependencyObject parent)
         {
-            if(uiElement != null || uiElement3D != null)
+            if(uiElement is not null || uiElement3D is not null)
             {
                 bool parentValue = (bool) parent.GetValue(IsEnabledProperty);
                 if(!parentValue)
@@ -4188,7 +4188,7 @@ namespace System.Windows
                     // For Read/Write force-inherited properties, use the standard coersion pattern.
                     //
                     // The IsEnabled property must be coerced false if the parent is false.
-                    if (uiElement != null)
+                    if (uiElement is not null)
                     {
                         uiElement.CoerceValue(IsEnabledProperty);
                     }
@@ -4204,7 +4204,7 @@ namespace System.Windows
                     // For Read/Write force-inherited properties, use the standard coersion pattern.
                     //
                     // The IsHitTestVisible property must be coerced false if the parent is false.
-                    if (uiElement != null)
+                    if (uiElement is not null)
                     {
                         uiElement.CoerceValue(IsHitTestVisibleProperty);
                     }
@@ -4220,7 +4220,7 @@ namespace System.Windows
                     // For Read-Only force-inherited properties, use a private update method.
                     //
                     // The IsVisible property can only be true if the parent is true.
-                    if (uiElement != null)
+                    if (uiElement is not null)
                     {
                         uiElement.UpdateIsVisibleCache();
                     }
@@ -4230,7 +4230,7 @@ namespace System.Windows
                     }
                 }
             }
-            else if(contentElement != null)
+            else if(contentElement is not null)
             {
                 bool parentValue = (bool) parent.GetValue(IsEnabledProperty);
                 if(!parentValue)
@@ -4250,11 +4250,11 @@ namespace System.Windows
                 DependencyObject child = v.InternalGet2DOr3DVisualChild(iChild);
 
                 Visual vChild = child as Visual;
-                if (vChild != null)
+                if (vChild is not null)
                 {
                     UIElement element = vChild as UIElement;
 
-                    if (element != null)
+                    if (element is not null)
                     {
                         if(property == IsVisibleProperty)
                         {
@@ -4279,11 +4279,11 @@ namespace System.Windows
                 {
                     Visual3D v3DChild = child as Visual3D;
 
-                    if (v3DChild != null)
+                    if (v3DChild is not null)
                     {
                         UIElement3D element3D = v3DChild as UIElement3D;
 
-                        if(element3D != null)
+                        if(element3D is not null)
                         {
                             if(property == IsVisibleProperty)
                             {
@@ -4706,7 +4706,7 @@ namespace System.Windows
             }
             set
             {
-                if (value != null)
+                if (value is not null)
                 {
                     _positionAndSizeOfSetController.SetValue(this, new WeakReference<UIElement>(value));
                 }

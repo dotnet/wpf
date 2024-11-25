@@ -130,7 +130,7 @@ namespace System.Xaml
         internal static bool IsInternalType(Type type)
         {
             Type origType = type;
-            Debug.Assert(null != type, "Type passed to IsInternalType is null");
+            Debug.Assert(type is not null, "Type passed to IsInternalType is null");
 
             // If this is an internal nested type or a parent nested public type, walk up the declaring types.
             while (type.IsNestedAssembly || type.IsNestedFamORAssem || (origType != type && type.IsNestedPublic))
@@ -151,7 +151,7 @@ namespace System.Xaml
         /// <returns>True if type is public</returns>
         internal static bool IsPublicType(Type type)
         {
-            Debug.Assert(null != type, "Type passed to IsPublicType is null");
+            Debug.Assert(type is not null, "Type passed to IsPublicType is null");
 
             // If this is a nested internal type, walk up the declaring types.
             while (type.IsNestedPublic)
@@ -171,7 +171,7 @@ namespace System.Xaml
 #if PBTCOMPILER
             Assembly reflectionAssembly = LoadAssembly(assemblyName, null);
 
-            if (reflectionAssembly != null)
+            if (reflectionAssembly is not null)
             {
                 type = reflectionAssembly.GetType(type.FullName);
             }
@@ -260,7 +260,7 @@ namespace System.Xaml
             for (int j = 0; j < list.Count; j++)
             {
                 attrValue = GetCustomAttributeData(list[j], attrType, out typeValue, allowTypeAlso, false, allowZeroArgs);
-                if (attrValue != null)
+                if (attrValue is not null)
                 {
                     break;
                 }
@@ -286,7 +286,7 @@ namespace System.Xaml
             string attributeDataString = null;
             CustomAttributeData cad;
 
-            while (currentType != null && !attributeDataFound)
+            while (currentType is not null && !attributeDataFound)
             {
                 IList<CustomAttributeData> list = CustomAttributeData.GetCustomAttributes(currentType);
 
@@ -419,9 +419,9 @@ namespace System.Xaml
             // Check if the assembly has already been loaded.
             Assembly retassem = (Assembly)_loadedAssembliesHash[assemblyShortName];
 
-            if (retassem != null)
+            if (retassem is not null)
             {
-                if (assemblyName.Version != null)
+                if (assemblyName.Version is not null)
                 {
                     AssemblyName cachedName = new AssemblyName(retassem.FullName);
                     if (!AssemblyName.ReferenceMatchesDefinition(assemblyName, cachedName))
@@ -472,7 +472,7 @@ namespace System.Xaml
                 }
 
                 // Cache the assembly
-                if (retassem != null)
+                if (retassem is not null)
                 {
                     _loadedAssembliesHash[assemblyShortName] = retassem;
                 }
@@ -495,7 +495,7 @@ namespace System.Xaml
             for (int j = 0; j < list.Count; j++)
             {
                 friendAssemblyName = GetCustomAttributeData(list[j], GetMscorlibType(typeof(InternalsVisibleToAttribute)), out typeValue, false, false, false);
-                if (friendAssemblyName != null && friendAssemblyName == LocalAssemblyName)
+                if (friendAssemblyName is not null && friendAssemblyName == LocalAssemblyName)
                 {
                     isFriend = true;
                     break;
@@ -521,7 +521,7 @@ namespace System.Xaml
 
         internal static bool HasAlreadyReflectionOnlyLoaded(string assemblyNameLookup)
         {
-            return GetAlreadyReflectionOnlyLoadedAssembly(assemblyNameLookup) != null;
+            return GetAlreadyReflectionOnlyLoadedAssembly(assemblyNameLookup) is not null;
         }
 
         internal static Assembly GetAlreadyReflectionOnlyLoadedAssembly(string assemblyNameLookup)
@@ -563,7 +563,7 @@ namespace System.Xaml
 
             // Add the assembly to the cache. ReflectionHelper.ReflectionOnlyLoadAssembly
             // receives frequent calls requesting the same assembly.
-            if (assembly != null && fullPathToAssembly != null)
+            if (assembly is not null && fullPathToAssembly is not null)
             {
                 _cachedMetadataLoadContextAssemblies.Add(fullPathToAssembly, assembly);
                 _cachedMetadataLoadContextAssembliesByNameNoExtension.Add(Path.GetFileNameWithoutExtension(fullPathToAssembly), assembly);

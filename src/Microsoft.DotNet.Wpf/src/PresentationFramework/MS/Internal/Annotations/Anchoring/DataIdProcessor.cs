@@ -131,14 +131,14 @@ namespace MS.Internal.Annotations.Anchoring
             {
                 FrameworkElement nodeParent = null;
                 FrameworkElement feNode = node as FrameworkElement;
-                if (feNode != null)
+                if (feNode is not null)
                 {
                     nodeParent = feNode.Parent as FrameworkElement;
                 }
                 AnnotationService service = AnnotationService.GetService(node);
-                if (service != null &&
+                if (service is not null &&
                     (service.Root == node ||
-                    (nodeParent != null && service.Root == nodeParent.TemplatedParent)))
+                    (nodeParent is not null && service.Root == nodeParent.TemplatedParent)))
                 {
                     calledProcessAnnotations = true;
                     return Manager.ProcessAnnotations(node);
@@ -169,7 +169,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             ContentLocator locator = null;
             ContentLocatorPart newLocatorPart = CreateLocatorPart(node.Node);
-            if (newLocatorPart != null)
+            if (newLocatorPart is not null)
             {
                 locator = new ContentLocator();
                 locator.Parts.Add(newLocatorPart);
@@ -214,7 +214,7 @@ namespace MS.Internal.Annotations.Anchoring
             // and from the node to examine.
             string nodeId = GetNodeId(startNode);
 
-            if (nodeId != null)
+            if (nodeId is not null)
             {
                 if (nodeId.Equals(id))
                 {
@@ -380,7 +380,7 @@ namespace MS.Internal.Annotations.Anchoring
             {
                 // If we get here the value has changed so we reload annotations
                 AnnotationService service = AnnotationService.GetService(d);
-                if (service != null && service.IsEnabled)
+                if (service is not null && service.IsEnabled)
                 {
                     service.UnloadAnnotations(d);
                     service.LoadAnnotations(d);
@@ -392,7 +392,7 @@ namespace MS.Internal.Annotations.Anchoring
         {
             string newValue = (string)value;
 
-            return (newValue != null && newValue.Length == 0) ? null : value;
+            return (newValue is not null && newValue.Length == 0) ? null : value;
         }
 
 
@@ -405,7 +405,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentNullException">node is null</exception>
         private ContentLocatorPart CreateLocatorPart(DependencyObject node)
         {
-            Debug.Assert(node != null, "DependencyObject can not be null");
+            Debug.Assert(node is not null, "DependencyObject can not be null");
 
             // Get values from the node
             string nodeId = GetNodeId(node);
@@ -426,7 +426,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <returns>the object's DataId, if it is set, null otherwise</returns>
         internal String GetNodeId(DependencyObject d)
         {
-            Debug.Assert(d != null, "DependencyObject can not be null");
+            Debug.Assert(d is not null, "DependencyObject can not be null");
 
             String id = d.GetValue(DataIdProperty) as string;
 

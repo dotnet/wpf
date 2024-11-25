@@ -54,7 +54,7 @@ namespace System.Windows.Baml2006
             ArgumentOutOfRangeException.ThrowIfNegative(length);
 
             SharedStream subStream = baseStream as SharedStream;
-            if (subStream != null)
+            if (subStream is not null)
             {
                 _baseStream = subStream.BaseStream;
                 _offset = offset + subStream._offset;
@@ -257,7 +257,7 @@ namespace System.Windows.Baml2006
         {
             if (disposing)
             {
-                if (_baseStream != null)
+                if (_baseStream is not null)
                 {
                     _refCount.Value--;
                     if (_refCount.Value < 1)
@@ -287,7 +287,7 @@ namespace System.Windows.Baml2006
 
         private bool Sync()
         {
-            System.Diagnostics.Debug.Assert(_baseStream != null, "Stream has already been disposed");
+            System.Diagnostics.Debug.Assert(_baseStream is not null, "Stream has already been disposed");
 
             if (_position >= 0 && _position < _length)
             {

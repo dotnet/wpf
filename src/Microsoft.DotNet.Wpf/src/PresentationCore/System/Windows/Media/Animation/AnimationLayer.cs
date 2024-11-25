@@ -18,7 +18,7 @@ namespace System.Windows.Media.Animation
 
         internal AnimationLayer(AnimationStorage ownerStorage)
         {
-            Debug.Assert(ownerStorage != null);
+            Debug.Assert(ownerStorage is not null);
 
             _ownerStorage = ownerStorage;
             _removeRequestedHandler = new EventHandler(OnRemoveRequested);
@@ -52,7 +52,7 @@ namespace System.Windows.Media.Animation
                 }
                 // Otherwise if we have at least one clock take a new snapshot
                 // value.
-                else if (_animationClocks != null)
+                else if (_animationClocks is not null)
                 {
                     _snapshotValue = GetCurrentValue(defaultDestinationValue);
 
@@ -67,7 +67,7 @@ namespace System.Windows.Media.Animation
 
                 // If we have a new clock in a stopped state, then the snapshot 
                 // value will be sticky.
-                if (newAnimationClocks != null
+                if (newAnimationClocks is not null
                     && newAnimationClocks[0].CurrentState == ClockState.Stopped)
                 {
                     _hasStickySnapshotValue = true;
@@ -105,7 +105,7 @@ namespace System.Windows.Media.Animation
 
         private void DetachAnimationClocks()
         {
-            Debug.Assert(_animationClocks != null);
+            Debug.Assert(_animationClocks is not null);
 
             int count = _animationClocks.Count;
 
@@ -120,7 +120,7 @@ namespace System.Windows.Media.Animation
         private void SetAnimationClocks(
             IList<AnimationClock> animationClocks)
         {
-            Debug.Assert(animationClocks != null);
+            Debug.Assert(animationClocks is not null);
             Debug.Assert(animationClocks.Count > 0);
             Debug.Assert(!animationClocks.Contains(null));
             Debug.Assert(_animationClocks is null);
@@ -147,7 +147,7 @@ namespace System.Windows.Media.Animation
 
         private void OnRemoveRequested(object sender, EventArgs args)
         {
-            Debug.Assert(_animationClocks != null
+            Debug.Assert(_animationClocks is not null
                          && _animationClocks.Count > 0,
                 "An AnimationClock no longer associated with a property should not have a RemoveRequested event handler.");
 
@@ -187,7 +187,7 @@ namespace System.Windows.Media.Animation
         private void AppendAnimationClocks(
             IList<AnimationClock> newAnimationClocks)
         {
-            Debug.Assert(newAnimationClocks != null);
+            Debug.Assert(newAnimationClocks is not null);
             Debug.Assert(newAnimationClocks.Count > 0);
             Debug.Assert(!newAnimationClocks.Contains(null));
             // _animationClocks may be null or non-null here.

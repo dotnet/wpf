@@ -66,10 +66,10 @@ namespace Microsoft.Windows.Automation.Peers
             if (patternInterface == PatternInterface.Scroll)
             {
                 ItemsControl tabHeadersItemsControl = OwningRibbon.RibbonTabHeaderItemsControl;
-                if (tabHeadersItemsControl != null)
+                if (tabHeadersItemsControl is not null)
                 {
                     AutomationPeer tabHeadersItemsControlPeer = UIElementAutomationPeer.CreatePeerForElement(tabHeadersItemsControl);
-                    if (tabHeadersItemsControlPeer != null)
+                    if (tabHeadersItemsControlPeer is not null)
                     {
                         return tabHeadersItemsControlPeer.GetPattern(patternInterface);
                     }
@@ -89,22 +89,22 @@ namespace Microsoft.Windows.Automation.Peers
             List<AutomationPeer> children = new List<AutomationPeer>();
 
             // Step1: Add QAT + Title + ContextualTabGroupHeaderItemsControl
-            if (OwningRibbon.QuickAccessToolBar != null)
+            if (OwningRibbon.QuickAccessToolBar is not null)
             {
                 AutomationPeer peer = CreatePeerForElement(OwningRibbon.QuickAccessToolBar);
-                if (peer != null)
+                if (peer is not null)
                 {
                     children.Add(peer);
                 }
             }
             
-            if (OwningRibbon.TitleHost != null)
+            if (OwningRibbon.TitleHost is not null)
             {
                 AutomationPeer peer = CreatePeerForElement(OwningRibbon.TitleHost);
                 if (peer is null)
                 {
                     FrameworkElement titleHost = OwningRibbon.TitleHost as FrameworkElement;
-                    if (titleHost != null)
+                    if (titleHost is not null)
                         peer = new RibbonTitleAutomationPeer(titleHost);
                     else
                         peer = new UIElementAutomationPeer(OwningRibbon.TitleHost);
@@ -112,20 +112,20 @@ namespace Microsoft.Windows.Automation.Peers
                 children.Add(peer);
             }
             
-            if (OwningRibbon.ContextualTabGroupItemsControl != null)
+            if (OwningRibbon.ContextualTabGroupItemsControl is not null)
             {
                 AutomationPeer peer = CreatePeerForElement(OwningRibbon.ContextualTabGroupItemsControl);
-                if (peer != null)
+                if (peer is not null)
                 {
                     children.Add(peer);
                 }
             }
 
             // Step2: Add ApplicationMenu
-            if (OwningRibbon.ApplicationMenu != null)
+            if (OwningRibbon.ApplicationMenu is not null)
             {
                 AutomationPeer peer = CreatePeerForElement(OwningRibbon.ApplicationMenu);
-                if (peer != null)
+                if (peer is not null)
                 {
                     children.Add(peer);
                 }
@@ -134,11 +134,11 @@ namespace Microsoft.Windows.Automation.Peers
             // Step3: Refresh RibbonTabHeaders
             // RibbonTabHeaderItemsControl doesnt appear in the UIA Tree, but its children RibbonTabHeader appear as children of RibbonTab
             // We need to ensure that RibbonTabHeader peers are created and refreshed manually here
-            if (OwningRibbon.RibbonTabHeaderItemsControl != null)
+            if (OwningRibbon.RibbonTabHeaderItemsControl is not null)
             {
 #if RIBBON_IN_FRAMEWORK
                 AutomationPeer peer = CreatePeerForElement(OwningRibbon.RibbonTabHeaderItemsControl);
-                if (peer != null)
+                if (peer is not null)
                 {
                     peer.ForceEnsureChildren();
                 }
@@ -167,7 +167,7 @@ namespace Microsoft.Windows.Automation.Peers
                 
                 // -----------------------------------------------------------------------------------------
                 // AutomationPeer peer = CreatePeerForElement(OwningRibbon.RibbonTabHeaderItemsControl);
-                // if (peer != null)
+                // if (peer is not null)
                 // {
                 //     peer.ForceEnsureChildren();
                 // }
@@ -188,7 +188,7 @@ namespace Microsoft.Windows.Automation.Peers
 
             // Step4: Add RibbonTabs
             List<AutomationPeer> ribbonTabs = base.GetChildrenCore();
-            if (ribbonTabs != null && ribbonTabs.Count > 0)
+            if (ribbonTabs is not null && ribbonTabs.Count > 0)
             {
                 children.AddRange(ribbonTabs);
 
@@ -206,13 +206,13 @@ namespace Microsoft.Windows.Automation.Peers
 
             // Step5: Add HelpPane that appears next to TabPanel
             UIElement helpPaneHost = OwningRibbon.HelpPaneHost;
-            if (helpPaneHost != null)
+            if (helpPaneHost is not null)
             {
                 AutomationPeer peer = CreatePeerForElement(helpPaneHost);
                 if (peer is null)
                 {
                     FrameworkElement helpPaneHostFE = helpPaneHost as FrameworkElement;
-                    if (helpPaneHostFE != null)
+                    if (helpPaneHostFE is not null)
                         peer = new FrameworkElementAutomationPeer(helpPaneHostFE);
                     else
                         peer = new UIElementAutomationPeer(helpPaneHost);

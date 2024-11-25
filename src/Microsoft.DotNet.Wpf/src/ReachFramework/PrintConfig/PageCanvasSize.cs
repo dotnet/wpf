@@ -177,7 +177,7 @@ namespace MS.Internal.Printing.Configuration
         public override string ToString()
         {
             return "ImageableSizeWidth=" + ImageableSizeWidth + ", ImageableSizeHeight=" + ImageableSizeHeight + " " +
-                   ((ImageableArea != null) ? ImageableArea.ToString() : "[ImageableArea: null]");
+                   ((ImageableArea is not null) ? ImageableArea.ToString() : "[ImageableArea: null]");
         }
 
         #endregion Public Methods
@@ -356,7 +356,7 @@ namespace MS.Internal.Printing.Configuration
                 isValid = true;
 
                 // If ImageableArea is present, then its ExtentWidth/Height values must be non-negative.
-                if (this.ImageableArea != null)
+                if (this.ImageableArea is not null)
                 {
                     isValid = false;
 

@@ -112,7 +112,7 @@ namespace MS.Internal.Printing.Configuration
         {
             get
             {
-                return (PresentationDirectionCapability != null);
+                return (PresentationDirectionCapability is not null);
             }
         }
 
@@ -220,7 +220,7 @@ namespace MS.Internal.Printing.Configuration
                 {
                     valid = true;
 
-                    if (this.PresentationDirectionCapability != null)
+                    if (this.PresentationDirectionCapability is not null)
                     {
                         valid = false;
 
@@ -391,7 +391,7 @@ namespace MS.Internal.Printing.Configuration
             NUpPresentationDirectionOption option = baseOption as NUpPresentationDirectionOption;
 
             // validate the option is complete before adding it to the collection
-            if (option._optionName != null)
+            if (option._optionName is not null)
             {
                 int enumValue = PrintSchemaMapper.SchemaNameToEnumValueWithArray(
                                     PrintSchemaTags.Keywords.NUpKeys.DirectionNames,

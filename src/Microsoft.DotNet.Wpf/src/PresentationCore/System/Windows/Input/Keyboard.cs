@@ -387,7 +387,7 @@ namespace System.Windows.Input
             }
 
             UIElement uie = element as UIElement;
-            if(uie != null)
+            if(uie is not null)
             {
                 if(uie.IsVisible == false)
                 {
@@ -420,10 +420,10 @@ namespace System.Windows.Input
                     // the Focusable property is false.
                     return true;
                 }
-                else if(uie != null && uie.InternalVisualParent is null)
+                else if(uie is not null && uie.InternalVisualParent is null)
                 {
                     PresentationSource presentationSource = PresentationSource.CriticalFromVisual(uie);
-                    if(presentationSource != null)
+                    if(presentationSource is not null)
                     {
                         // A UIElements that is the root of a PresentationSource is considered focusable.
                         return true;

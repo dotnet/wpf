@@ -120,7 +120,7 @@ namespace System.Windows.Xps.Serialization
             {
                 ReachSerializer reachSerializer = GetSerializer(serializedObject);
 
-                if(reachSerializer != null)
+                if(reachSerializer is not null)
                 {
                     //
                     // Prepare the context that is going to be pushed on the stack
@@ -252,7 +252,7 @@ namespace System.Windows.Xps.Serialization
 
                             ReachSerializer reachSerializer = GetSerializer(batchOperationWorkItem.SerializedObject);
 
-                            if(reachSerializer != null)
+                            if(reachSerializer is not null)
                             {
                                 //
                                 // Prepare the context that is going to be pushed on the stack
@@ -801,7 +801,7 @@ namespace System.Windows.Xps.Serialization
         {
             XpsSerializationPrintTicketRequiredEventArgs e = operationState as XpsSerializationPrintTicketRequiredEventArgs;
 
-            if(XpsSerializationPrintTicketRequired != null)
+            if(XpsSerializationPrintTicketRequired is not null)
             {
                 e.Modified = true;
 
@@ -824,7 +824,7 @@ namespace System.Windows.Xps.Serialization
         {
             XpsSerializationProgressChangedEventArgs e = operationState as XpsSerializationProgressChangedEventArgs;
 
-            if(XpsSerializationProgressChanged != null)
+            if(XpsSerializationProgressChanged is not null)
             {
                 XpsSerializationProgressChanged(this,e);
             }
@@ -982,7 +982,7 @@ namespace System.Windows.Xps.Serialization
         {
             XpsSerializationCompletedEventArgs e = operationState as XpsSerializationCompletedEventArgs;
 
-            if (XpsSerializationCompleted != null)
+            if (XpsSerializationCompleted is not null)
             {
                 XpsSerializationCompleted(this, e);
             }

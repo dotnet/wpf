@@ -195,7 +195,7 @@ namespace System.Windows.Controls
             string result = string.Empty;
             DateTimeFormatInfo format = GetDateFormat(culture);
 
-            if (date.HasValue && format != null)
+            if (date.HasValue && format is not null)
             {
                 result = date.Value.Day.ToString(format);
             }
@@ -209,7 +209,7 @@ namespace System.Windows.Controls
             string result = string.Empty;
             DateTimeFormatInfo format = DateTimeHelper.GetDateFormat(DateTimeHelper.GetCulture(fe));
 
-            if (format != null)
+            if (format is not null)
             {
                 bool isRightToLeft = fe.FlowDirection==FlowDirection.RightToLeft;
                 int decadeRight = isRightToLeft?decade:(decade+9);
@@ -225,7 +225,7 @@ namespace System.Windows.Controls
             string result = string.Empty;
             DateTimeFormatInfo format = GetDateFormat(culture);
 
-            if (date.HasValue && format != null)
+            if (date.HasValue && format is not null)
             {
                 result = date.Value.ToString(format.YearMonthPattern, format);
             }
@@ -238,7 +238,7 @@ namespace System.Windows.Controls
             string result = string.Empty;
             DateTimeFormatInfo format = GetDateFormat(culture);
 
-            if (date.HasValue && format != null)
+            if (date.HasValue && format is not null)
             {
                 result = date.Value.Year.ToString(format);
             }
@@ -251,10 +251,10 @@ namespace System.Windows.Controls
             string result = string.Empty;
             DateTimeFormatInfo format = GetDateFormat(culture);
 
-            if (date.HasValue && format != null)
+            if (date.HasValue && format is not null)
             {
                 string[] monthNames = format.AbbreviatedMonthNames;
-                if (monthNames != null && monthNames.Length > 0)
+                if (monthNames is not null && monthNames.Length > 0)
                 {
                     result = monthNames[(date.Value.Month - 1) % monthNames.Length];
                 }
@@ -268,7 +268,7 @@ namespace System.Windows.Controls
             string result = string.Empty;
             DateTimeFormatInfo format = GetDateFormat(culture);
 
-            if (date.HasValue && format != null)
+            if (date.HasValue && format is not null)
             {
                 result = date.Value.Date.ToString(format.LongDatePattern, format);
             }

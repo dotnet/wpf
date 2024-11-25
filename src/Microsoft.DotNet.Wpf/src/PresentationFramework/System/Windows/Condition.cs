@@ -89,7 +89,7 @@ namespace System.Windows
                     throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "Condition"));
                 }
 
-                if (_binding != null)
+                if (_binding is not null)
                 {
                     throw new InvalidOperationException(SR.ConditionCannotUseBothPropertyAndBinding);
                 }
@@ -112,7 +112,7 @@ namespace System.Windows
                     throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "Condition"));
                 }
 
-                if(_property != null)
+                if(_property is not null)
                 {
                     throw new InvalidOperationException(SR.ConditionCannotUseBothPropertyAndBinding);
                 }
@@ -187,7 +187,7 @@ namespace System.Windows
             _sealed = true;
 
             // Ensure valid condition
-            if (_property != null && _binding != null)
+            if (_property is not null && _binding is not null)
                 throw new InvalidOperationException(SR.ConditionCannotUseBothPropertyAndBinding);
 
             switch (type)
@@ -231,7 +231,7 @@ namespace System.Windows
         void ISupportInitialize.EndInit()
         {
             // Resolve all properties here
-            if (_unresolvedProperty != null)
+            if (_unresolvedProperty is not null)
             {
                 try
                 {
@@ -243,7 +243,7 @@ namespace System.Windows
                     _unresolvedProperty = null;
                 }
             }
-            if (_unresolvedValue != null)
+            if (_unresolvedValue is not null)
             {
                 try
                 {
@@ -267,7 +267,7 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(eventArgs);
 
             Condition condition = targetObject as Condition;
-            if (condition != null && eventArgs.Member.Name == "Binding" && eventArgs.MarkupExtension is BindingBase)
+            if (condition is not null && eventArgs.Member.Name == "Binding" && eventArgs.MarkupExtension is BindingBase)
             {
                 condition.Binding = eventArgs.MarkupExtension as BindingBase;
 

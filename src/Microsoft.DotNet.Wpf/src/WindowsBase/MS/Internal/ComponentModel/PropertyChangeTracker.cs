@@ -21,7 +21,7 @@ namespace MS.Internal.ComponentModel
         internal PropertyChangeTracker(DependencyObject obj, DependencyProperty property)
             : base(ExpressionMode.NonSharable | ExpressionMode.ForwardsInvalidations) 
         {
-            Debug.Assert(obj != null && property != null);
+            Debug.Assert(obj is not null && property is not null);
             _object = obj;
             _property = property;
             ChangeSources(_object, _property, new DependencySource[] { new DependencySource(obj, property) });
@@ -30,7 +30,7 @@ namespace MS.Internal.ComponentModel
         internal override void OnPropertyInvalidation(DependencyObject d, DependencyPropertyChangedEventArgs args) 
         {
             DependencyProperty dp = args.Property;
-            if (_object == d && _property == dp && Changed != null) 
+            if (_object == d && _property == dp && Changed is not null) 
             {
                 Changed(_object, EventArgs.Empty);
             }

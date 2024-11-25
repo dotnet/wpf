@@ -102,7 +102,7 @@ namespace System.Windows
         /// <returns>converted value</returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType != null && value is FontStyle)
+            if (destinationType is not null && value is FontStyle)
             {
                 if (destinationType == typeof(InstanceDescriptor))
                 {

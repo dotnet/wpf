@@ -423,7 +423,7 @@ namespace Microsoft.Build.Tasks.Windows
             {
                 string localizationDirectives = value;
 
-                if (localizationDirectives != null)
+                if (localizationDirectives is not null)
                 {
                     localizationDirectives = localizationDirectives.ToLower(CultureInfo.InvariantCulture);
                 }
@@ -503,7 +503,7 @@ namespace Microsoft.Build.Tasks.Windows
                 _localApplicationFile = _compilerLocalRefCache.LocalApplicationFile;
                 _localMarkupPages = _compilerLocalRefCache.LocalMarkupPages;
 
-                if (_localApplicationFile != null || (_localMarkupPages != null && _localMarkupPages.Length > 0))
+                if (_localApplicationFile is not null || (_localMarkupPages is not null && _localMarkupPages.Length > 0))
                 {
                     hasLocalFiles = true;
 
@@ -577,7 +577,7 @@ namespace Microsoft.Build.Tasks.Windows
             localApplicationFile = FileUnit.Empty;
             referenceList = new ArrayList();
 
-            if (_localApplicationFile != null)
+            if (_localApplicationFile is not null)
             {
                 // We don't want to support multiple application definition file per project.
                 localApplicationFile = new FileUnit(_localApplicationFile.FilePath, _localApplicationFile.LinkAlias, _localApplicationFile.LogicalName);
@@ -587,7 +587,7 @@ namespace Microsoft.Build.Tasks.Windows
             }
 
             // Generate the Xaml Markup file list
-            if (_localMarkupPages != null && _localMarkupPages.Length > 0)
+            if (_localMarkupPages is not null && _localMarkupPages.Length > 0)
             {
                 int localFileNum = _localMarkupPages.Length;
                 localXamlPageFileList = new FileUnit[localFileNum];
@@ -605,7 +605,7 @@ namespace Microsoft.Build.Tasks.Windows
             // Generate the assembly reference list.
             // The temporary target assembly should have been added into Reference list from target file.
             //
-            if (References != null && References.Length > 0)
+            if (References is not null && References.Length > 0)
             {
                 ReferenceAssembly asmReference;
                 string refpath, asmname;
@@ -641,7 +641,7 @@ namespace Microsoft.Build.Tasks.Windows
             {
                 compilerWrapper = TaskHelper.CreateCompilerWrapper();
 
-                if (compilerWrapper != null)
+                if (compilerWrapper is not null)
                 {
 
                     compilerWrapper.OutputPath = OutputPath;
@@ -695,12 +695,12 @@ namespace Microsoft.Build.Tasks.Windows
             }
             finally
             {
-                if (compilerWrapper != null && compilerWrapper.ErrorTimes > 0)
+                if (compilerWrapper is not null && compilerWrapper.ErrorTimes > 0)
                 {
                     _nErrors += compilerWrapper.ErrorTimes;
                 }
 
-                if (appDomain != null)
+                if (appDomain is not null)
                 {
                     // AppDomains are not supported on .NET Core.  'AppDomain.Unload' will always throw `CannotUnloadAppDomainException`.  
                     #pragma warning disable SYSLIB0024
@@ -723,7 +723,7 @@ namespace Microsoft.Build.Tasks.Windows
             string    newSourceDir = SourceDir;  // Just for calling GetResolvedFilePath
             string    relativeFile;
 
-            if (_localApplicationFile != null)
+            if (_localApplicationFile is not null)
             {
                 TaskItem bamlItem;
 
@@ -731,7 +731,7 @@ namespace Microsoft.Build.Tasks.Windows
 
                 bamlItem = GenerateBamlItem(relativeFile, _localApplicationFile.Localizable, _localApplicationFile.LinkAlias, _localApplicationFile.LogicalName);
 
-                if (bamlItem != null)
+                if (bamlItem is not null)
                 {
                     bamlFileList.Add(bamlItem);
 
@@ -739,7 +739,7 @@ namespace Microsoft.Build.Tasks.Windows
                 }
             }
 
-            if (_localMarkupPages != null && _localMarkupPages.Length > 0)
+            if (_localMarkupPages is not null && _localMarkupPages.Length > 0)
             {
 
                 for (int i = 0; i < _localMarkupPages.Length; i++)
@@ -751,7 +751,7 @@ namespace Microsoft.Build.Tasks.Windows
 
                     TaskItem bamlItem = GenerateBamlItem(relativeFile, localRefFile.Localizable, localRefFile.LinkAlias, localRefFile.LogicalName);
 
-                    if (bamlItem != null)
+                    if (bamlItem is not null)
                     {
                         bamlFileList.Add(bamlItem);
                         Log.LogMessageFromResources(MessageImportance.Low, nameof(SR.LocalRefGeneratedBamlFile), bamlItem.ItemSpec);

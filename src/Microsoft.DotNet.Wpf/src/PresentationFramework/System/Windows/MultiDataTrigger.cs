@@ -110,7 +110,7 @@ namespace System.Windows
 
             for (int i = 0; i < TriggerConditions.Length; ++i)
             {
-                if (_conditions[i].SourceName != null && _conditions[i].SourceName.Length > 0)
+                if (_conditions[i].SourceName is not null && _conditions[i].SourceName.Length > 0)
                 {
                     throw new InvalidOperationException(SR.SourceNameNotSupportedForDataTriggers);
                 }

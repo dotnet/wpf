@@ -339,7 +339,7 @@ namespace System.Windows.Xps.Packaging
 
             //Spot ID, Signer Name and xml:lang are attributes of SignatureDefinition
             //Spot ID is required.  If it is not specified, then we throw.
-            if (SpotId != null)
+            if (SpotId is not null)
             {
                 writer.WriteAttributeString(XpsS0Markup.SpotId, XmlConvert.EncodeName(SpotId.ToString()));
             }
@@ -348,19 +348,19 @@ namespace System.Windows.Xps.Packaging
                 throw new XpsPackagingException(SR.ReachPackaging_SpotIDRequiredAttribute);
             }
 
-            if (RequestedSigner != null)
+            if (RequestedSigner is not null)
             {
                 writer.WriteAttributeString(XpsS0Markup.RequestedSigner, RequestedSigner);
             }
 
-            if (Culture != null)
+            if (Culture is not null)
             {
                 XmlLanguage language = XmlLanguage.GetLanguage(Culture.Name);
                 writer.WriteAttributeString(XpsS0Markup.XmlLang, language.ToString());
             }
 
             //SpotLocation, Intent, Signby, and Signing Location are elements of SignatureDefinition
-            if (SpotLocation != null)
+            if (SpotLocation is not null)
             {
                 writer.WriteStartElement(XpsS0Markup.SpotLocation);
 
@@ -373,21 +373,21 @@ namespace System.Windows.Xps.Packaging
                 writer.WriteEndElement();
             }
 
-            if (Intent != null)
+            if (Intent is not null)
             {
                 writer.WriteStartElement(XpsS0Markup.Intent);
                 writer.WriteString(Intent);
                 writer.WriteEndElement();
             }
 
-            if (SignBy != null)
+            if (SignBy is not null)
             {
                 writer.WriteStartElement(XpsS0Markup.SignBy);
                 writer.WriteString(((DateTime)SignBy).ToUniversalTime().ToString("s", DateTimeFormatInfo.InvariantInfo) + "Z");
                 writer.WriteEndElement();
             }
 
-            if (SigningLocale != null)
+            if (SigningLocale is not null)
             {
                 writer.WriteStartElement(XpsS0Markup.SigningLocale);
                 writer.WriteString(SigningLocale);

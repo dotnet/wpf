@@ -55,7 +55,7 @@ namespace MS.Internal.Utility
 
             public void Dispose()
             {
-                if (_monitorWrapper != null)
+                if (_monitorWrapper is not null)
                 {
                     _monitorWrapper.Exit();
                     _monitorWrapper = null;

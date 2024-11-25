@@ -124,7 +124,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 ItemsControl tabHeaderItemsControl = ItemsControl.ItemsControlFromItemContainer(this);
                 Ribbon ribbon = Ribbon;
-                if (tabHeaderItemsControl != null && ribbon != null)
+                if (tabHeaderItemsControl is not null && ribbon is not null)
                 {
                     int index = tabHeaderItemsControl.ItemContainerGenerator.IndexFromContainer(this);
                     return ribbon.ItemContainerGenerator.ContainerFromIndex(index) as RibbonTab;
@@ -289,12 +289,12 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             Ribbon ribbon = Ribbon;
             RibbonTab ribbonTab = RibbonTab;
-            if (ribbon != null &&
-                ribbonTab != null &&
+            if (ribbon is not null &&
+                ribbonTab is not null &&
                 ribbon.IsAncestorOf(ribbonTab))
             {
-                Thickness margin = _outerBorder != null ? _outerBorder.Margin : new Thickness();
-                Thickness borderThickness = _outerBorder != null ? _outerBorder.BorderThickness : new Thickness();
+                Thickness margin = _outerBorder is not null ? _outerBorder.Margin : new Thickness();
+                Thickness borderThickness = _outerBorder is not null ? _outerBorder.BorderThickness : new Thickness();
                 
                 Point leftBottom = new Point(margin.Left + borderThickness.Left, ActualHeight);
                 Point rightBottom = new Point(ActualWidth - margin.Right - borderThickness.Right, ActualHeight);
@@ -323,7 +323,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             Ribbon ribbon = Ribbon;
-            if (ribbon != null)
+            if (ribbon is not null)
             {
                 ribbon.NotifyMouseClickedOnTabHeader(this, e);
                 e.Handled = true;
@@ -336,7 +336,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             base.OnGotKeyboardFocus(e);
             RibbonTab ribbonTab = RibbonTab;
-            if (ribbonTab != null)
+            if (ribbonTab is not null)
             {
                 ribbonTab.IsSelected = true;
             }
@@ -353,7 +353,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     // On arrow down key press on TabHeader, try to move
                     // the focus to first element of the corresponding tab.
                     RibbonTab tab = RibbonTab;
-                    if (tab != null)
+                    if (tab is not null)
                     {
                         if (tab.MoveFocus(new TraversalRequest(FocusNavigationDirection.First)))
                         {
@@ -365,7 +365,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     e.Key == Key.Enter)
                 {
                     Ribbon ribbon = Ribbon;
-                    if (ribbon != null)
+                    if (ribbon is not null)
                     {
                         if (ribbon.IsMinimized)
                         {
@@ -456,7 +456,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             RibbonTabHeader tabHeader = (RibbonTabHeader)d;
             RibbonTab tab = tabHeader.RibbonTab;
-            if (tab != null)
+            if (tab is not null)
             {
                 return tab.ContextualTabGroup;
             }
@@ -468,9 +468,9 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             RibbonTabHeader tabHeader = (RibbonTabHeader)d;
             RibbonTab tab = tabHeader.RibbonTab;
-            if (tab != null)
+            if (tab is not null)
             {
-                return tab.ContextualTabGroupHeader != null;
+                return tab.ContextualTabGroupHeader is not null;
             }
 
             return baseValue;
@@ -486,7 +486,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             RibbonTabHeader header = (RibbonTabHeader)d;
             RibbonTab tab = header.RibbonTab;
-            if (tab != null)
+            if (tab is not null)
             {
                 return tab.IsSelected;
             }
@@ -503,7 +503,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             RibbonTabHeader header = (RibbonTabHeader)d;
             RibbonTab tab = header.RibbonTab;
-            if (tab != null)
+            if (tab is not null)
             {
                 return tab.IsEnabled;
             }
@@ -514,7 +514,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             RibbonTabHeader header = (RibbonTabHeader)d;
             RibbonTab tab = header.RibbonTab;
-            if (tab != null)
+            if (tab is not null)
             {
                 return tab.Visibility;
             }
@@ -524,7 +524,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             Panel parentPanel = VisualTreeHelper.GetParent(this) as Panel;
-            if (parentPanel != null)
+            if (parentPanel is not null)
             {
                 parentPanel.InvalidateMeasure();
             }
@@ -622,7 +622,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             RibbonTabHeader tabHeader = (RibbonTabHeader)d;
             RibbonTab tab = tabHeader.RibbonTab;
-            if (tab != null)
+            if (tab is not null)
             {
                 return tab.KeyTip;
             }
@@ -643,14 +643,14 @@ namespace Microsoft.Windows.Controls.Ribbon
                 e.KeyTipHorizontalOffset = e.KeyTipVerticalOffset = 0;
 
                 Ribbon ribbon = Ribbon;
-                if (ribbon != null)
+                if (ribbon is not null)
                 {
                     RibbonTabHeaderItemsControl tabHeaderItemsControl = ribbon.RibbonTabHeaderItemsControl;
-                    if (tabHeaderItemsControl != null &&
+                    if (tabHeaderItemsControl is not null &&
                         tabHeaderItemsControl.IsVisible)
                     {
                         GeneralTransform headerToItemsControl = TransformToAncestor(tabHeaderItemsControl);
-                        if (headerToItemsControl != null)
+                        if (headerToItemsControl is not null)
                         {
                             Point tabHeaderOrigin = headerToItemsControl.Transform(new Point());
                             double tabHeaderCenterX = tabHeaderOrigin.X + (ActualWidth / 2);
@@ -662,7 +662,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                             else
                             {
                                 GeneralTransform itemsControlToRibbon = tabHeaderItemsControl.TransformToAncestor(ribbon);
-                                if (itemsControlToRibbon != null)
+                                if (itemsControlToRibbon is not null)
                                 {
                                     Point tabHeaderItemsControlOrigin = itemsControlToRibbon.Transform(new Point());
                                     double horizontalOffset = tabHeaderCenterX + tabHeaderItemsControlOrigin.X;
@@ -707,7 +707,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (e.OriginalSource == this)
             {
                 RibbonTab tab = RibbonTab;
-                if (tab != null)
+                if (tab is not null)
                 {
                     // Select the tab and make it next keytip scope.
                     tab.IsSelected = true;
@@ -719,7 +719,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 // Focus self.
                 this.Focus();
                 Ribbon ribbon = Ribbon;
-                if (ribbon != null)
+                if (ribbon is not null)
                 {
                     if (ribbon.IsMinimized && !ribbon.IsDropDownOpen)
                     {

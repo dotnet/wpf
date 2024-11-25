@@ -50,7 +50,7 @@ namespace System.Windows.Media.TextFormatting
             int     removal
             )
         {
-            if(_imp != null)
+            if(_imp is not null)
             {
                 _imp.Change(
                     textSourceCharacterIndex,
@@ -68,7 +68,7 @@ namespace System.Windows.Media.TextFormatting
         /// </summary>
         public void Invalidate()
         {
-            if(_imp != null)
+            if(_imp is not null)
             {
                 _imp = null;
             }
@@ -85,7 +85,7 @@ namespace System.Windows.Media.TextFormatting
         internal IList<TextSpan<TextRun>> GetTextRunSpans()
 #endif               
         {
-            if (_imp != null)
+            if (_imp is not null)
             {                
                 return _imp.GetTextRunSpans();
             }

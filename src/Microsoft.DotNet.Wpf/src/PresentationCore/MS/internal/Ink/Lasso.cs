@@ -50,7 +50,7 @@ namespace MS.Internal.Ink
         {
             get
             {
-                System.Diagnostics.Debug.Assert(_points != null);
+                System.Diagnostics.Debug.Assert(_points is not null);
                 // The value is based on the assumption that the lasso is normalized
                 // i.e. it has no duplicate points or collinear sibling segments.
                 return (_points.Count < 3);
@@ -64,7 +64,7 @@ namespace MS.Internal.Ink
         {
             get
             {
-                System.Diagnostics.Debug.Assert(_points != null);
+                System.Diagnostics.Debug.Assert(_points is not null);
                 return _points.Count;
             }
         }
@@ -78,7 +78,7 @@ namespace MS.Internal.Ink
         {
             get
             {
-                System.Diagnostics.Debug.Assert(_points != null);
+                System.Diagnostics.Debug.Assert(_points is not null);
                 System.Diagnostics.Debug.Assert((0 <= index) && (index < _points.Count));
 
                 return _points[index];
@@ -105,7 +105,7 @@ namespace MS.Internal.Ink
         /// <param name="point">new lasso point</param>
         internal void AddPoint(Point point)
         {
-            System.Diagnostics.Debug.Assert(_points != null);
+            System.Diagnostics.Debug.Assert(_points is not null);
             if (!Filter(point))
             {
                 // The point is not filtered, add it to the lasso
@@ -121,7 +121,7 @@ namespace MS.Internal.Ink
         /// <returns>true if the point is contained within the lasso; false otherwise </returns>
         internal bool Contains(Point point)
         {
-            System.Diagnostics.Debug.Assert(_points != null);
+            System.Diagnostics.Debug.Assert(_points is not null);
 
             if (false == _bounds.Contains(point))
             {
@@ -187,8 +187,8 @@ namespace MS.Internal.Ink
 
         internal StrokeIntersection[] HitTest(StrokeNodeIterator iterator)
         {
-            System.Diagnostics.Debug.Assert(_points != null);
-            System.Diagnostics.Debug.Assert(iterator != null);
+            System.Diagnostics.Debug.Assert(_points is not null);
+            System.Diagnostics.Debug.Assert(iterator is not null);
 
             if (_points.Count < 3)
             {

@@ -38,7 +38,7 @@ namespace System.Windows
 
         void OnDispatcherShutdown(object sender, EventArgs e)
         {
-            if(_shutdownHandler != null)
+            if(_shutdownHandler is not null)
                 Dispatcher.ShutdownFinished -= _shutdownHandler;
 
             _shutdownHandler = null;
@@ -95,7 +95,7 @@ namespace System.Windows
         private void markTreeDirtyHelper(Visual v)
         {
             //now walk down and mark all UIElements dirty
-            if(v != null)
+            if(v is not null)
             {
                 if(v.CheckFlagsAnd(VisualFlags.IsUIElement))
                 {
@@ -111,7 +111,7 @@ namespace System.Windows
                 for(int i=0; i<cnt; i++)
                 {
                     Visual child = v.InternalGetVisualChild(i);
-                    if (child != null) markTreeDirtyHelper(child);
+                    if (child is not null) markTreeDirtyHelper(child);
                 }
             }
         }
@@ -491,9 +491,9 @@ namespace System.Windows
 
         private void invalidateTreeIfRecovering()
         {
-            if((_forceLayoutElement != null) || _gotException)
+            if((_forceLayoutElement is not null) || _gotException)
             {
-                if(_forceLayoutElement != null)
+                if(_forceLayoutElement is not null)
                 {
                     markTreeDirty(_forceLayoutElement);
                 }
@@ -577,7 +577,7 @@ namespace System.Windows
         private static object UpdateLayoutCallback(object arg)
         {
             ContextLayoutManager ContextLayoutManager = arg as ContextLayoutManager;
-            if(ContextLayoutManager != null)
+            if(ContextLayoutManager is not null)
                 ContextLayoutManager.UpdateLayout();
             return null;
         }
@@ -611,7 +611,7 @@ namespace System.Windows
                         e = null;
                     }
 
-                    if(e != null)
+                    if(e is not null)
                     {
                         e(null, EventArgs.Empty);
                         // if handler dirtied the tree, go clean it again before calling other handlers
@@ -665,7 +665,7 @@ namespace System.Windows
                 _inFireSizeChanged = true;
 
                 //loop for SizeChanged
-                while(_sizeChangedChain != null)
+                while(_sizeChangedChain is not null)
                 {
                     SizeChangedInfo info = _sizeChangedChain;
                     _sizeChangedChain = info.Next;
@@ -714,7 +714,7 @@ namespace System.Windows
                         peer = null;
                     }
 
-                    if(peer != null)
+                    if(peer is not null)
                     {
                         peer.FireAutomationEvents();
                         // if handler dirtied the tree, go clean it again before calling other handlers
@@ -768,7 +768,7 @@ namespace System.Windows
                     peer = null;
                 }
 
-                if(peer != null)
+                if(peer is not null)
                 {
                     peers[freeSlot++] = peer;
                 }
@@ -873,10 +873,10 @@ namespace System.Windows
             {
                 Request r = _getNewRequest(e);
 
-                if(r != null)
+                if(r is not null)
                 {
                     r.Next = _head;
-                    if(_head != null) _head.Prev = r;
+                    if(_head is not null) _head.Prev = r;
                     _head = r;
 
                     setRequest(e, r);
@@ -885,13 +885,13 @@ namespace System.Windows
 
             internal void Add(UIElement e)
             {
-                if(getRequest(e) != null) return;
+                if(getRequest(e) is not null) return;
                 if(e.CheckFlagsAnd(VisualFlags.IsLayoutSuspended)) return;
 
                 RemoveOrphans(e);
 
                 UIElement parent = e.GetUIParentWithinLayoutIsland();
-                if(parent != null && canRelyOnParentRecalc(parent)) return;
+                if(parent is not null && canRelyOnParentRecalc(parent)) return;
 
                 ContextLayoutManager layoutManager = ContextLayoutManager.From(e.Dispatcher);
 
@@ -911,13 +911,13 @@ namespace System.Windows
                     //walk up until we are the topmost UIElement in the tree.
                     //on each step, mark the parent dirty and remove it from the queues
                     //only leave a single node in the queue - the root of visual tree
-                    while(e != null)
+                    while(e is not null)
                     {
                         UIElement p = e.GetUIParentWithinLayoutIsland();
 
                         invalidate(e); //invalidate in any case
 
-                        if (p != null && p.Visibility != Visibility.Collapsed) //not yet a root or a collapsed node
+                        if (p is not null && p.Visibility != Visibility.Collapsed) //not yet a root or a collapsed node
                         {
                             Remove(e);
                         }
@@ -947,7 +947,7 @@ namespace System.Windows
             internal void RemoveOrphans(UIElement parent)
             {
                 Request r = _head;
-                while(r != null)
+                while(r is not null)
                 {
                     UIElement child = r.Target;
                     Request next = r.Next;
@@ -971,7 +971,7 @@ namespace System.Windows
                 UIElement found = null;
                 ulong treeLevel = ulong.MaxValue;
 
-                for(Request r = _head; r != null; r = r.Next)
+                for(Request r = _head; r is not null; r = r.Next)
                 {
                     UIElement t = r.Target;
                     ulong l = t.TreeLevel;
@@ -991,7 +991,7 @@ namespace System.Windows
                 if(entry.Prev is null) _head = entry.Next;
                 else entry.Prev.Next = entry.Next;
 
-                if(entry.Next != null) entry.Next.Prev = entry.Prev;
+                if(entry.Next is not null) entry.Next.Prev = entry.Prev;
 
                 ReuseRequest(entry);
             }
@@ -999,7 +999,7 @@ namespace System.Windows
             private Request _getNewRequest(UIElement e)
             {
                 Request r;
-                if(_pocket != null)
+                if(_pocket is not null)
                 {
                     r = _pocket;
                     _pocket = r.Next;
@@ -1015,7 +1015,7 @@ namespace System.Windows
                     }
                     catch(System.OutOfMemoryException)
                     {
-                        if(lm != null)
+                        if(lm is not null)
                             lm.setForceLayout(e);
                         throw;
                     }
@@ -1073,7 +1073,7 @@ namespace System.Windows
             ListItem t = getNewListItem(target);
 
             t.Next = _head;
-            if(_head != null) _head.Prev = t;
+            if(_head is not null) _head.Prev = t;
             _head = t;
 
            _count++;
@@ -1089,7 +1089,7 @@ namespace System.Windows
             if(t.Prev is null) _head = t.Next;
             else t.Prev.Next = t.Next;
 
-            if(t.Next != null) t.Next.Prev = t.Prev;
+            if(t.Next is not null) t.Next.Prev = t.Prev;
 
             reuseListItem(t);
             _count--;
@@ -1098,7 +1098,7 @@ namespace System.Windows
         private ListItem getNewListItem(object target)
         {
             ListItem t;
-            if(_pocket != null)
+            if(_pocket is not null)
             {
                 t = _pocket;
                 _pocket = t.Next;
@@ -1134,7 +1134,7 @@ namespace System.Windows
             ListItem [] copy = new ListItem[_count];
             ListItem t = _head;
             int cnt = 0;
-            while(t != null)
+            while(t is not null)
             {
                 copy[cnt++] = t;
                 t = t.Next;

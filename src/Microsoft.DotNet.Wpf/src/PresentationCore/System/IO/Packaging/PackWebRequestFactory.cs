@@ -75,7 +75,7 @@ namespace System.IO.Packaging
             Uri packageUri = System.IO.Packaging.PackUriHelper.GetPackageUri(uri);
             Uri partUri = System.IO.Packaging.PackUriHelper.GetPartUri(uri);
 
-            if (partUri != null)
+            if (partUri is not null)
             {
                 // Note: we look at PreloadedPackages first before we examine the PackageStore
                 //  This is to make sure that an app cannot override any predefine packages
@@ -100,7 +100,7 @@ namespace System.IO.Packaging
                 }
                 
                 // do we have a package?
-                if (c != null)
+                if (c is not null)
                 {
 #if DEBUG
                     if (_traceSwitch.Enabled)

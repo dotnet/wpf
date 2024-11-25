@@ -443,7 +443,7 @@ namespace System.Windows.Xps.Serialization
 
         private void xsw_WritingPrintTicketRequired(object sender, WritingPrintTicketRequiredEventArgs e)
         {
-            if (WritingPrintTicketRequired != null)
+            if (WritingPrintTicketRequired is not null)
             {
                 WritingPrintTicketRequired.Invoke(sender, e);
             }
@@ -451,7 +451,7 @@ namespace System.Windows.Xps.Serialization
 
         private void xsw_WritingProgressChanged(object sender, WritingProgressChangedEventArgs e)
         {
-            if ( WritingProgressChanged != null)
+            if ( WritingProgressChanged is not null)
             {
                 WritingProgressChanged.Invoke(sender, e);
             }
@@ -459,7 +459,7 @@ namespace System.Windows.Xps.Serialization
 
         private void xsw_WritingCompleted(object sender, WritingCompletedEventArgs e)
         {
-            if ( WritingCompleted != null)
+            if ( WritingCompleted is not null)
             {
                 FinalizeWriter();
                 WritingCompleted.Invoke(sender, e);
@@ -468,7 +468,7 @@ namespace System.Windows.Xps.Serialization
 
         private void xsw_WritingCancelled(object sender, WritingCancelledEventArgs e)
         {
-            if ( WritingCancelled != null)
+            if ( WritingCancelled is not null)
             {
                 FinalizeWriter();
                 WritingCancelled.Invoke(sender, e);

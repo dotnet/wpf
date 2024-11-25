@@ -246,7 +246,7 @@ namespace System.Windows.Media
         {
             int hash = HashFn.HashMultiply((int)_source) + (int)_substitution;
 
-            if (_cultureOverride != null)
+            if (_cultureOverride is not null)
                 hash = HashFn.HashMultiply(hash) + _cultureOverride.GetHashCode();
 
             return HashFn.HashScramble(hash);
@@ -265,7 +265,7 @@ namespace System.Windows.Media
             // Suppress PRESharp warning that sub can be null; apparently PRESharp
             // doesn't understand short circuit evaluation of operator &&.
             #pragma warning disable 6506
-            return sub != null &&
+            return sub is not null &&
                 _source == sub._source &&
                 _substitution == sub._substitution &&
                 (_cultureOverride is null ? (sub._cultureOverride is null) : (_cultureOverride.Equals(sub._cultureOverride)));

@@ -40,7 +40,7 @@ namespace MS.Internal
         {
             _compiler = compiler;
             _pass2 = pass2;
-            Debug.Assert(bamlWriter != null, "Need a BamlRecordWriter for compiling to Baml");
+            Debug.Assert(bamlWriter is not null, "Need a BamlRecordWriter for compiling to Baml");
         }
 
         #endregion Constructor
@@ -59,7 +59,7 @@ namespace MS.Internal
             //        it is done with the subtree and leave everything in the correct
             //        state.  We may want to limit how much the called serializer can
             //        read so that it is forced to return at the end of the subtree.
-            if (xamlObjectNode.SerializerType != null)
+            if (xamlObjectNode.SerializerType is not null)
             {
                  XamlSerializer serializer;
                  if (xamlObjectNode.SerializerType == typeof(XamlStyleSerializer))
@@ -94,9 +94,9 @@ namespace MS.Internal
                     _compiler.EndElement(_pass2);
                 }
             }
-            else if (BamlRecordWriter != null)
+            else if (BamlRecordWriter is not null)
             {
-                if (classFullName != null)
+                if (classFullName is not null)
                 {
                     bool isRootPublic = _pass2 ? !_isInternalRoot : _compiler.IsRootPublic;
                     Type rootType = isRootPublic ? xamlObjectNode.ElementType : typeof(ParserExtension);
@@ -132,7 +132,7 @@ namespace MS.Internal
             MemberInfo memberInfo = xamlPropertyNode.PropInfo;
 
             if (xamlPropertyNode.AttributeUsage == BamlAttributeUsage.RuntimeName &&
-                memberInfo != null)
+                memberInfo is not null)
             {
                 // NOTE: Error if local element has runtime Name specified. Change this to
                 // a warning in the future when that feature is available.
@@ -154,13 +154,13 @@ namespace MS.Internal
                     _name = attributeValue;
                  }
 
-                 if (_nameField != null || _compiler.IsRootNameScope)
+                 if (_nameField is not null || _compiler.IsRootNameScope)
                  {
                      WriteConnectionId();
                  }
             }
 
-            if (memberInfo != null &&
+            if (memberInfo is not null &&
                 memberInfo.Name.Equals(STARTUPURI) &&
                 KnownTypes.Types[(int)KnownElements.Application].IsAssignableFrom(memberInfo.DeclaringType))
             {
@@ -185,7 +185,7 @@ namespace MS.Internal
             string localElementFullName = string.Empty;
             NamespaceMapEntry[] namespaceMaps = XamlTypeMapper.GetNamespaceMapEntries(xamlUnknownTagStartNode.XmlNamespace);
 
-            if (namespaceMaps != null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly)
+            if (namespaceMaps is not null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly)
             {
                 string ns = namespaceMaps[0].ClrNamespace;
                 if (!string.IsNullOrEmpty(ns))
@@ -217,7 +217,7 @@ namespace MS.Internal
         public override void WriteUnknownTagEnd(XamlUnknownTagEndNode xamlUnknownTagEndNode)
         {
             NamespaceMapEntry[] namespaceMaps = XamlTypeMapper.GetNamespaceMapEntries(xamlUnknownTagEndNode.XmlNamespace);
-            bool localTag = namespaceMaps != null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly;
+            bool localTag = namespaceMaps is not null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly;
 
             if (localTag && !_pass2)
             {
@@ -252,7 +252,7 @@ namespace MS.Internal
             {
                 //  These are attributes on a non-local tag ...
                 namespaceMaps = XamlTypeMapper.GetNamespaceMapEntries(xamlUnknownAttributeNode.XmlNamespace);
-                localAttrib = namespaceMaps != null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly;
+                localAttrib = namespaceMaps is not null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly;
             }
 
             if (localAttrib && !_pass2)
@@ -268,7 +268,7 @@ namespace MS.Internal
                     TypeAndSerializer typeAndSerializer = null;
                     string ownerTagName = localAttribName.Substring(0, lastIndex);
 
-                    if (namespaceMaps != null)
+                    if (namespaceMaps is not null)
                     {
                         if (namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly)
                         {
@@ -281,7 +281,7 @@ namespace MS.Internal
                         typeAndSerializer = XamlTypeMapper.GetTypeOnly(xamlUnknownAttributeNode.XmlNamespace,
                                                                ownerTagName);
 
-                        if (typeAndSerializer != null)
+                        if (typeAndSerializer is not null)
                         {
                             // known local attribute on a local tag
 
@@ -301,7 +301,7 @@ namespace MS.Internal
                                     BindingFlags.Instance | BindingFlags.Public | BindingFlags.FlattenHierarchy);
                             }
 
-                            if (miKnownEvent != null)
+                            if (miKnownEvent is not null)
                             {
                                 if (_events is null)
                                     _events = new ArrayList();
@@ -317,7 +317,7 @@ namespace MS.Internal
                         else
                         {
                             namespaceMaps = XamlTypeMapper.GetNamespaceMapEntries(xamlUnknownAttributeNode.XmlNamespace);
-                            if (namespaceMaps != null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly)
+                            if (namespaceMaps is not null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly)
                             {
                                 // local prop on local tag
                                 localTagFullName = namespaceMaps[0].ClrNamespace + MarkupCompiler.DOT + ownerTagName;
@@ -348,7 +348,7 @@ namespace MS.Internal
                     _nameField = _compiler.AddNameField(attributeValue, xamlUnknownAttributeNode.LineNumber, xamlUnknownAttributeNode.LinePosition);
                     _name = attributeValue;
 
-                    if (_nameField != null)
+                    if (_nameField is not null)
                     {
                         WriteConnectionId();
                     }
@@ -429,7 +429,7 @@ namespace MS.Internal
                 {
                     string attribNamespaceURI = xmlReader.LookupNamespace(xmlReader.Prefix);
 
-                    if (attribNamespaceURI != null &&
+                    if (attribNamespaceURI is not null &&
                         attribNamespaceURI.Equals(XamlReaderHelper.DefinitionNamespaceURI))
                     {
                         MarkupCompiler.DefinitionNSPrefix = xmlReader.Prefix;
@@ -459,7 +459,7 @@ namespace MS.Internal
                             if (!foundElement)
                             {
                                 NamespaceMapEntry[] namespaceMaps = XamlTypeMapper.GetNamespaceMapEntries(namespaceUri);
-                                bool isLocal = namespaceMaps != null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly;
+                                bool isLocal = namespaceMaps is not null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly;
                                 if (!isLocal)
                                 {
                                     MarkupCompiler.ThrowCompilerException(nameof(SR.UnknownGenericType),
@@ -680,7 +680,7 @@ namespace MS.Internal
 
                 _name = null;
 
-                if (_events != null)
+                if (_events is not null)
                 {
                     _events.Clear();
                     _events = null;
@@ -732,7 +732,7 @@ namespace MS.Internal
             if (!_pass2)
             {
                 List<ClrNamespaceAssemblyPair> cnap = XamlTypeMapper.GetClrNamespacePairFromCache(xamlXmlnsPropertyNode.XmlNamespace);
-                if (cnap != null)
+                if (cnap is not null)
                 {
                     foreach (ClrNamespaceAssemblyPair u in cnap)
                     {
@@ -769,7 +769,7 @@ namespace MS.Internal
                     namespaceMapping.LocalAssembly = true;
                     XamlTypeMapper.PITable[xamlPIMappingNode.XmlNamespace] = namespaceMapping;
                     XamlTypeMapper.InvalidateMappingCache(xamlPIMappingNode.XmlNamespace);
-                    if (!_pass2 && BamlRecordWriter != null)
+                    if (!_pass2 && BamlRecordWriter is not null)
                     {
                         BamlRecordWriter = null;
                     }
@@ -795,7 +795,7 @@ namespace MS.Internal
                     _name = attributeValue;
                 }
 
-                if (_nameField != null || _compiler.IsRootNameScope)
+                if (_nameField is not null || _compiler.IsRootNameScope)
                 {
                     WriteConnectionId();
 
@@ -901,10 +901,10 @@ namespace MS.Internal
         /// </summary>
         public override void WriteDocumentEnd(XamlDocumentEndNode xamlEndDocumentNode)
         {
-            if (BamlRecordWriter != null)
+            if (BamlRecordWriter is not null)
             {
                 MemoryStream bamlMemStream = BamlRecordWriter.BamlStream as MemoryStream;
-                Debug.Assert(bamlMemStream != null);
+                Debug.Assert(bamlMemStream is not null);
                 base.WriteDocumentEnd(xamlEndDocumentNode);
                 _compiler.GenerateBamlFile(bamlMemStream);
             }

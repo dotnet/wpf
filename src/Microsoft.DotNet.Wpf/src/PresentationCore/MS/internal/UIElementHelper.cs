@@ -16,10 +16,10 @@ namespace MS.Internal
     {
         internal static bool IsHitTestVisible(DependencyObject o)
         {
-            Debug.Assert(o != null, "UIElementHelper.IsHitTestVisible called with null argument");
+            Debug.Assert(o is not null, "UIElementHelper.IsHitTestVisible called with null argument");
 
             UIElement oAsUIElement = o as UIElement;
-            if (oAsUIElement != null)
+            if (oAsUIElement is not null)
             {
                 return oAsUIElement.IsHitTestVisible;
             }
@@ -31,10 +31,10 @@ namespace MS.Internal
 
         internal static bool IsVisible(DependencyObject o)
         {
-            Debug.Assert(o != null, "UIElementHelper.IsVisible called with null argument");
+            Debug.Assert(o is not null, "UIElementHelper.IsVisible called with null argument");
 
             UIElement oAsUIElement = o as UIElement;
-            if (oAsUIElement != null)
+            if (oAsUIElement is not null)
             {
                 return oAsUIElement.IsVisible;
             }
@@ -46,21 +46,21 @@ namespace MS.Internal
 
         internal static DependencyObject PredictFocus(DependencyObject o, FocusNavigationDirection direction)
         {
-            Debug.Assert(o != null, "UIElementHelper.PredictFocus called with null argument");
+            Debug.Assert(o is not null, "UIElementHelper.PredictFocus called with null argument");
 
             UIElement uie;
             ContentElement ce;
             UIElement3D uie3d;
 
-            if ((uie = o as UIElement) != null)
+            if ((uie = o as UIElement) is not null)
             {
                 return uie.PredictFocus(direction);
             }
-            else if ((ce = o as ContentElement) != null)
+            else if ((ce = o as ContentElement) is not null)
             {
                 return ce.PredictFocus(direction);
             }
-            else if ((uie3d = o as UIElement3D) != null)
+            else if ((uie3d = o as UIElement3D) is not null)
             {
                 return uie3d.PredictFocus(direction);
             }
@@ -72,11 +72,11 @@ namespace MS.Internal
         {
             UIElement element = null;
 
-            while (reference != null)
+            while (reference is not null)
             {
                 element = reference as UIElement;
 
-                if (element != null) break;
+                if (element is not null) break;
 
                 reference = VisualTreeHelper.GetParent(reference);
             }
@@ -113,14 +113,14 @@ namespace MS.Internal
             if(parent is null && continuePastVisualTree)
             {
                 UIElement childAsUIElement = child as UIElement;
-                if (childAsUIElement != null)
+                if (childAsUIElement is not null)
                 {
                     parent = InputElement.GetContainingInputElement(childAsUIElement.GetUIParentCore()) as DependencyObject;
                 }
                 else
                 {
                     UIElement3D childAsUIElement3D = child as UIElement3D;
-                    if (childAsUIElement3D != null)
+                    if (childAsUIElement3D is not null)
                     {
                         parent = InputElement.GetContainingInputElement(childAsUIElement3D.GetUIParentCore()) as DependencyObject;
                     }
@@ -144,7 +144,7 @@ namespace MS.Internal
             Stack<DependencyObject> branchNodeStack = new Stack<DependencyObject>();
             bool continueInvalidation = true;
 
-            while (o != null && continueInvalidation)
+            while (o is not null && continueInvalidation)
             {
                 continueInvalidation &= InvalidateAutomationPeer(o, out e, out ce, out e3d);
 
@@ -152,21 +152,21 @@ namespace MS.Internal
                 // Invoke InvalidateAutomationAncestorsCore
                 //
                 bool continuePastVisualTree = false;
-                if (e != null)
+                if (e is not null)
                 {
                     continueInvalidation &= e.InvalidateAutomationAncestorsCore(branchNodeStack, out continuePastVisualTree);
 
                     // Get element's visual parent
                     o = e.GetUIParent(continuePastVisualTree);
                 }
-                else if (ce != null)
+                else if (ce is not null)
                 {
                     continueInvalidation &= ce.InvalidateAutomationAncestorsCore(branchNodeStack, out continuePastVisualTree);
 
                     // Get element's visual parent
                     o = (DependencyObject)ce.GetUIParent(continuePastVisualTree);
                 }
-                else if (e3d != null)
+                else if (e3d is not null)
                 {
                     continueInvalidation &= e3d.InvalidateAutomationAncestorsCore(branchNodeStack, out continuePastVisualTree);
 
@@ -189,7 +189,7 @@ namespace MS.Internal
             AutomationPeer ap = null;
 
             e = o as UIElement;
-            if (e != null)
+            if (e is not null)
             {
                 if (e.HasAutomationPeer == true)
                     ap = e.GetAutomationPeer();
@@ -197,7 +197,7 @@ namespace MS.Internal
             else
             {
                 ce = o as ContentElement;
-                if (ce != null)
+                if (ce is not null)
                 {
                     if (ce.HasAutomationPeer == true)
                         ap = ce.GetAutomationPeer();
@@ -205,7 +205,7 @@ namespace MS.Internal
                 else
                 {
                     e3d = o as UIElement3D;
-                    if (e3d != null)
+                    if (e3d is not null)
                     {
                         if (e3d.HasAutomationPeer == true)
                             ap = e3d.GetAutomationPeer();
@@ -213,14 +213,14 @@ namespace MS.Internal
                 }
             }
 
-            if (ap != null)
+            if (ap is not null)
             {
                 ap.InvalidateAncestorsRecursive();
 
                 // Check for parent being non-null while stopping as we don't want to stop in between due to peers not connected to AT
                 // those peers sometimes gets created to serve for various patterns.
                 // e.g: ScrollViewAutomationPeer for Scroll Pattern in case of ListBox.
-                if (ap.GetParent() != null)
+                if (ap.GetParent() is not null)
                     return false;
             }
 

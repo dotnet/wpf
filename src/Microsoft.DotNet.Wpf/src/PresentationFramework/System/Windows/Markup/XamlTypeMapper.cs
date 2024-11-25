@@ -121,7 +121,7 @@ namespace System.Windows.Markup
             TypeAndSerializer typeAndSerializer =
                 GetTypeOnly(xmlNamespace,localName);
 
-            return typeAndSerializer != null ? typeAndSerializer.ObjectType : null;
+            return typeAndSerializer is not null ? typeAndSerializer.ObjectType : null;
         }
 
 #if !PBTCOMPILER
@@ -170,7 +170,7 @@ namespace System.Windows.Markup
             _piReverseTable[fullName] = xmlNamespace;
 
             // Add mapping to the SchemaContext
-            if (_schemaContext != null)
+            if (_schemaContext is not null)
             {
                 _schemaContext.SetMappingProcessingInstruction(xmlNamespace, pair);
             }
@@ -221,7 +221,7 @@ namespace System.Windows.Markup
             // so they can be loaded again.   The is the Dev build/load/build/load
             // Designer scenario.  (Don't mess with GACed assemblies)
             Assembly assem = ReflectionHelper.GetAlreadyLoadedAssembly(asmName);
-            if (assem != null
+            if (assem is not null
 #if NETFX
                  && !assem.GlobalAssemblyCache
 #endif
@@ -229,7 +229,7 @@ namespace System.Windows.Markup
             {
                 ReflectionHelper.ResetCacheForAssembly(asmName);
                 // No way to reset SchemaContext at assembly granularity, so just reset the whole context
-                if (_schemaContext != null)
+                if (_schemaContext is not null)
                 {
                     _schemaContext = null;
                 }
@@ -337,7 +337,7 @@ namespace System.Windows.Markup
         internal string AssemblyPathFor(string assemblyName)
         {
             string path = null;
-            if (assemblyName != null)
+            if (assemblyName is not null)
             {
                 // This method is used by SchemaContext, which needs to be thread-safe, so lock around it
                 lock (_assemblyPathTable)
@@ -461,7 +461,7 @@ namespace System.Windows.Markup
             {
                 throw new ArgumentNullException( "xmlNamespace" );
             }
-            if (owner != null && !ReflectionHelper.IsPublicType(owner))
+            if (owner is not null && !ReflectionHelper.IsPublicType(owner))
             {
                 _lineNumber = 0;  // Public API, so we don't know the line number.
                 ThrowException(nameof(SR.ParserOwnerEventMustBePublic), owner.FullName );
@@ -510,8 +510,8 @@ namespace System.Windows.Markup
             string                 value,
             short                  converterTypeId)
         {
-            _lineNumber = parserContext != null ? parserContext.LineNumber : 0;
-            _linePosition = parserContext != null ? parserContext.LinePosition : 0;
+            _lineNumber = parserContext is not null ? parserContext.LineNumber : 0;
+            _linePosition = parserContext is not null ? parserContext.LinePosition : 0;
 
             // If value is to be converted to a string, just return the string itself instead of
             // going needlessly through the TC. But check that the target prop Type can accept strings.
@@ -581,7 +581,7 @@ namespace System.Windows.Markup
                 // If the targetObject can provide a fallback value for this property then use that instead
 
                 IProvidePropertyFallback iProvidePropertyFallback = targetObject as IProvidePropertyFallback;
-                if (iProvidePropertyFallback != null && iProvidePropertyFallback.CanProvidePropertyFallback(propName))
+                if (iProvidePropertyFallback is not null && iProvidePropertyFallback.CanProvidePropertyFallback(propName))
                 {
                     obj = iProvidePropertyFallback.ProvidePropertyFallback(propName, e);
 
@@ -623,7 +623,7 @@ namespace System.Windows.Markup
 #endif
 
             // Verify that the type converter actually gave us an instance of the correct object type.
-            if( obj != null )
+            if( obj is not null )
             {
                 if(!propType.IsAssignableFrom(obj.GetType()))
                 {
@@ -781,13 +781,13 @@ namespace System.Windows.Markup
            out BamlAttributeInfoRecord infoRecord)
         {
             infoRecord = null;
-            if (MapTable != null)
+            if (MapTable is not null)
             {
                 string fullName = owner.IsGenericType ? $"{owner.Namespace}.{owner.Name}" : owner.FullName;
                 object key = MapTable.GetAttributeInfoKey(fullName, propName);
                 infoRecord = MapTable.GetHashTableData(key) as BamlAttributeInfoRecord;
 
-                if (infoRecord != null)
+                if (infoRecord is not null)
                 {
                     return infoRecord.GetPropertyMember(onlyPropInfo) as MemberInfo;
                 }
@@ -803,7 +803,7 @@ namespace System.Windows.Markup
                Type                    ownerType,
                BamlAttributeInfoRecord infoRecord)
         {
-            if (MapTable != null)
+            if (MapTable is not null)
             {
                 object key = MapTable.GetAttributeInfoKey(ownerType.FullName, infoRecord.Name);
                 MapTable.AddHashTableData(key, infoRecord);
@@ -840,10 +840,10 @@ namespace System.Windows.Markup
                 // the property info.
                 attribInfo.PropInfo = PropertyInfoFromName(propName, currentParentType, !ReflectionHelper.IsPublicType(currentParentType), false, out isInternal);
                 attribInfo.IsInternal = isInternal;
-                if (attribInfo.PropInfo != null)
+                if (attribInfo.PropInfo is not null)
                 {
                     // If we successfully find a property info via reflection, cache it.
-                    if (cachedInfoRecord != null)
+                    if (cachedInfoRecord is not null)
                     {
                         cachedInfoRecord.SetPropertyMember(attribInfo.PropInfo);
                         cachedInfoRecord.IsInternal = attribInfo.IsInternal;
@@ -864,7 +864,7 @@ namespace System.Windows.Markup
         {
             MethodInfo attachedPropertyInfo = null;
             Type propertyOwnerType = attributeInfo.OwnerType;
-            Debug.Assert(propertyOwnerType != null);
+            Debug.Assert(propertyOwnerType is not null);
             bool tryInternal = !ReflectionHelper.IsPublicType(propertyOwnerType);
             string propName = (isSetter ? "Set" : "Get") + attributeInfo.Name;
             BindingFlags flags = BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy;
@@ -890,7 +890,7 @@ namespace System.Windows.Markup
             }
 
             int paramCount = isSetter ? 2 : 1;
-            if (attachedPropertyInfo != null && attachedPropertyInfo.GetParameters().Length == paramCount)
+            if (attachedPropertyInfo is not null && attachedPropertyInfo.GetParameters().Length == paramCount)
             {
                 // the MethodInfo has to be public or internal.
                 Debug.Assert(attachedPropertyInfo.IsPublic ||
@@ -1014,7 +1014,7 @@ namespace System.Windows.Markup
             bool allowed = false;
 
             // No field, so not allowed
-            if (fi != null)
+            if (fi is not null)
             {
                 // field is public -- always allow.
                 allowed = fi.IsPublic;
@@ -1056,7 +1056,7 @@ namespace System.Windows.Markup
             bool allowed = false;
 
             // No method, so not allowed
-            if (mi != null)
+            if (mi is not null)
             {
                 // method is public -- always allow.
                 allowed = mi.IsPublic;
@@ -1112,7 +1112,7 @@ namespace System.Windows.Markup
         internal bool IsAllowedPropertySet(PropertyInfo pi)
         {
             MethodInfo mi = pi.GetSetMethod(true);
-            return (mi != null && mi.IsPublic);
+            return (mi is not null && mi.IsPublic);
         }
 
         // Checks to see if a given property's get method is public.
@@ -1120,7 +1120,7 @@ namespace System.Windows.Markup
         internal bool IsAllowedPropertyGet(PropertyInfo pi)
         {
             MethodInfo mi = pi.GetGetMethod(true);
-            return (mi != null && mi.IsPublic);
+            return (mi is not null && mi.IsPublic);
         }
 
         // Checks to see if a given property's set method is accessible.
@@ -1128,12 +1128,12 @@ namespace System.Windows.Markup
         static internal bool IsAllowedPropertySet(PropertyInfo pi, bool allowProtected, out bool isPublic)
         {
             MethodInfo mi = pi.GetSetMethod(true);
-            bool isProtected = allowProtected && mi != null && mi.IsFamily;
+            bool isProtected = allowProtected && mi is not null && mi.IsFamily;
             // return isPublic == true only if the property is public on a base declaring Type.
             // if the property is public on the reflected internal type itself, then we still
             // need to call the generated helper to set the property.
-            isPublic = mi != null && mi.IsPublic && ReflectionHelper.IsPublicType(mi.DeclaringType);
-            return (mi != null && (mi.IsPublic || mi.IsAssembly || mi.IsFamilyOrAssembly || isProtected));
+            isPublic = mi is not null && mi.IsPublic && ReflectionHelper.IsPublicType(mi.DeclaringType);
+            return (mi is not null && (mi.IsPublic || mi.IsAssembly || mi.IsFamilyOrAssembly || isProtected));
         }
 
         // Checks to see if a given property's get method is accessible.
@@ -1141,12 +1141,12 @@ namespace System.Windows.Markup
         static private bool IsAllowedPropertyGet(PropertyInfo pi, bool allowProtected, out bool isPublic)
         {
             MethodInfo mi = pi.GetGetMethod(true);
-            bool isProtected = allowProtected && mi != null && mi.IsFamily;
+            bool isProtected = allowProtected && mi is not null && mi.IsFamily;
             // return isPublic == true only if the property is public on a base declaring Type.
             // if the property is public on the reflected internal type itself, then we still
             // need to call the generated helper to get the property.
-            isPublic = mi != null && mi.IsPublic && ReflectionHelper.IsPublicType(mi.DeclaringType);
-            return (mi != null && (mi.IsPublic || mi.IsAssembly || mi.IsFamilyOrAssembly || isProtected));
+            isPublic = mi is not null && mi.IsPublic && ReflectionHelper.IsPublicType(mi.DeclaringType);
+            return (mi is not null && (mi.IsPublic || mi.IsAssembly || mi.IsFamilyOrAssembly || isProtected));
         }
 
         // Checks to see if a given event's add method is accessible.
@@ -1154,12 +1154,12 @@ namespace System.Windows.Markup
         static private bool IsAllowedEvent(EventInfo ei, bool allowProtected, out bool isPublic)
         {
             MethodInfo mi = ei.GetAddMethod(true);
-            bool isProtected = allowProtected && mi != null && mi.IsFamily;
+            bool isProtected = allowProtected && mi is not null && mi.IsFamily;
             // return isPublic == true only if the event is public on a base declaring Type.
             // if the event is public on the reflected internal type itself, then we still
             // need to call the generated helper to hook up the event.
-            isPublic = mi != null && mi.IsPublic && ReflectionHelper.IsPublicType(mi.DeclaringType);
-            return (mi != null && (mi.IsPublic || mi.IsAssembly || mi.IsFamilyOrAssembly || isProtected));
+            isPublic = mi is not null && mi.IsPublic && ReflectionHelper.IsPublicType(mi.DeclaringType);
+            return (mi is not null && (mi.IsPublic || mi.IsAssembly || mi.IsFamilyOrAssembly || isProtected));
         }
 #endif
 
@@ -1168,7 +1168,7 @@ namespace System.Windows.Markup
         static private bool IsPublicEvent(EventInfo ei)
         {
             MethodInfo mi = ei.GetAddMethod(true);
-            return (mi != null && mi.IsPublic);
+            return (mi is not null && mi.IsPublic);
         }
 
 #if !PBTCOMPILER
@@ -1229,7 +1229,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
             }
 
-            if (mi is null && owner != null)
+            if (mi is null && owner is not null)
             {
                 // if lookup on internal type or if public property or event lookup failed,
                 // try internal ones as well, or protected if the type happens to be a
@@ -1270,7 +1270,7 @@ namespace System.Windows.Markup
                 TypeAndSerializer typeAndSerializer =
                     GetTypeOnly(xmlNamespace, globalClassName);
 
-                if (typeAndSerializer != null && typeAndSerializer.ObjectType != null)
+                if (typeAndSerializer is not null && typeAndSerializer.ObjectType is not null)
                 {
                     BamlAttributeInfoRecord infoRecord;
                     Type objectType = typeAndSerializer.ObjectType;
@@ -1288,10 +1288,10 @@ namespace System.Windows.Markup
 
                             // Make sure that we found a method of the right signature.
                             // Otherwise discard what you found.
-                            if (memberInfo != null)
+                            if (memberInfo is not null)
                             {
                                 MethodInfo mi = memberInfo as MethodInfo;
-                                if (mi != null)
+                                if (mi is not null)
                                 {
                                     pis = mi.GetParameters();
                                     Type dependencyObjectType = KnownTypes.Types[(int)KnownElements.DependencyObject];
@@ -1300,7 +1300,7 @@ namespace System.Windows.Markup
                                         memberInfo = null;
                                     }
 #if PBTCOMPILER
-                                    if (tryInternal && memberInfo != null && !IsAllowedMethod(mi, false))
+                                    if (tryInternal && memberInfo is not null && !IsAllowedMethod(mi, false))
                                     {
                                         ThrowException(nameof(SR.ParserCantSetAttribute), "bubbling event", $"{objectType.Name}.{localName}", "Add Handler method");
                                     }
@@ -1316,7 +1316,7 @@ namespace System.Windows.Markup
                                     BindingFlags.Instance |
                                     BindingFlags.FlattenHierarchy);
 
-                                if (memberInfo != null)
+                                if (memberInfo is not null)
                                 {
                                     EventInfo ei = memberInfo as EventInfo;
 #if PBTCOMPILER
@@ -1364,7 +1364,7 @@ namespace System.Windows.Markup
                                 defaultBinding |
                                 BindingFlags.Static |
                                 BindingFlags.FlattenHierarchy);
-                            if (memberInfo != null && ((MethodInfo)memberInfo).GetParameters().Length != 2)
+                            if (memberInfo is not null && ((MethodInfo)memberInfo).GetParameters().Length != 2)
                             {
                                 memberInfo = null;
                             }
@@ -1375,14 +1375,14 @@ namespace System.Windows.Markup
                                     defaultBinding |
                                     BindingFlags.Static |
                                     BindingFlags.FlattenHierarchy);
-                                if (memberInfo != null && ((MethodInfo)memberInfo).GetParameters().Length != 1)
+                                if (memberInfo is not null && ((MethodInfo)memberInfo).GetParameters().Length != 1)
                                 {
                                     memberInfo = null;
                                 }
                             }
 
 #if PBTCOMPILER
-                            if (tryInternal && memberInfo != null && !IsAllowedMethod(memberInfo as MethodInfo, false))
+                            if (tryInternal && memberInfo is not null && !IsAllowedMethod(memberInfo as MethodInfo, false))
                             {
                                 ThrowException(nameof(SR.ParserCantSetAttribute), "attached property", $"{objectType.Name}.{localName}", "Set method");
                             }
@@ -1396,9 +1396,9 @@ namespace System.Windows.Markup
                                 // If we've found a property info, then the owner had better
                                 // be the same type as or a subclass of the objectType, or
                                 // they are in different inheritance hierarchies.
-                                if (memberInfo != null)
+                                if (memberInfo is not null)
                                 {
-                                    if (owner != null &&
+                                    if (owner is not null &&
                                         !objectType.IsAssignableFrom(owner))
                                     {
                                         ThrowException(nameof(SR.ParserAttachedPropInheritError),
@@ -1410,7 +1410,7 @@ namespace System.Windows.Markup
 
                             if (null != memberInfo)
                             {
-                                if (infoRecord != null)
+                                if (infoRecord is not null)
                                 {
 #if !PBTCOMPILER
                                     // DP's aren't present in the PBT case
@@ -1447,10 +1447,10 @@ namespace System.Windows.Markup
 
                             // Make sure that we found a method of the right signature.
                             // Otherwise discard what you found.
-                            if (memberInfo != null)
+                            if (memberInfo is not null)
                             {
                                 MethodInfo mi = memberInfo as MethodInfo;
-                                if (mi != null)
+                                if (mi is not null)
                                 {
                                     pis = mi.GetParameters();
                                     Type dependencyObjectType = KnownTypes.Types[(int)KnownElements.DependencyObject];
@@ -1459,7 +1459,7 @@ namespace System.Windows.Markup
                                         memberInfo = null;
                                     }
 #if PBTCOMPILER
-                                    if (tryInternal && memberInfo != null && !IsAllowedMethod(mi, true))
+                                    if (tryInternal && memberInfo is not null && !IsAllowedMethod(mi, true))
                                     {
                                         ThrowException(nameof(SR.ParserCantSetAttribute), "bubbling event", $"{owner.Name}.{localName}", "Add Handler method");
                                     }
@@ -1473,7 +1473,7 @@ namespace System.Windows.Markup
                                 memberInfo = baseType.GetEvent(localName,
                                     BindingFlags.Instance | BindingFlags.FlattenHierarchy | defaultBinding);
 
-                                if (memberInfo != null)
+                                if (memberInfo is not null)
                                 {
                                     EventInfo ei = memberInfo as EventInfo;
 #if PBTCOMPILER
@@ -1522,7 +1522,7 @@ namespace System.Windows.Markup
                                 defaultBinding |
                                 BindingFlags.Static |
                                 BindingFlags.FlattenHierarchy);
-                            if (memberInfo != null && ((MethodInfo)memberInfo).GetParameters().Length != 2)
+                            if (memberInfo is not null && ((MethodInfo)memberInfo).GetParameters().Length != 2)
                             {
                                 memberInfo = null;
                             }
@@ -1533,14 +1533,14 @@ namespace System.Windows.Markup
                                     defaultBinding |
                                     BindingFlags.Static |
                                     BindingFlags.FlattenHierarchy);
-                                if (memberInfo != null && ((MethodInfo)memberInfo).GetParameters().Length != 1)
+                                if (memberInfo is not null && ((MethodInfo)memberInfo).GetParameters().Length != 1)
                                 {
                                     memberInfo = null;
                                 }
                             }
 
 #if PBTCOMPILER
-                            if (tryInternal && memberInfo != null && !IsAllowedMethod(memberInfo as MethodInfo, true))
+                            if (tryInternal && memberInfo is not null && !IsAllowedMethod(memberInfo as MethodInfo, true))
                             {
                                 ThrowException(nameof(SR.ParserCantSetAttribute), "attached property", $"{owner.Name}.{localName}", "Set method");
                             }
@@ -1554,7 +1554,7 @@ namespace System.Windows.Markup
 
                             if (null != memberInfo)
                             {
-                                if (infoRecord != null)
+                                if (infoRecord is not null)
                                 {
 #if !PBTCOMPILER
                                     // DP's aren't present in the PBT case
@@ -1598,10 +1598,10 @@ namespace System.Windows.Markup
 
             // Look up the parent chain until we find a match or fail by
             // going off the top of the chain.
-            while (owner != null)
+            while (owner is not null)
             {
                 eventInfo = owner.GetEvent(eventName, BindingFlags.Instance | BindingFlags.Public);
-                if (eventInfo != null)
+                if (eventInfo is not null)
                 {
                     break;
                 }
@@ -1660,7 +1660,7 @@ namespace System.Windows.Markup
                 TypeAndSerializer typeAndSerializer =
                     GetTypeOnly(xmlNamespace,globalClassName);
 
-                if (typeAndSerializer != null && typeAndSerializer.ObjectType != null)
+                if (typeAndSerializer is not null && typeAndSerializer.ObjectType is not null)
                 {
                     baseType = typeAndSerializer.ObjectType;
                     if (isEvent)
@@ -1835,10 +1835,10 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
                     AttributeCollection attributes = TypeDescriptor.GetAttributes(typeAndSerializer.ObjectType);
 
-                    if (attributes != null)
+                    if (attributes is not null)
                     {
                         XmlLangPropertyAttribute xlpa = attributes[typeof(XmlLangPropertyAttribute)] as XmlLangPropertyAttribute;
-                        if (xlpa != null)
+                        if (xlpa is not null)
                         {
                             xmlLangPropertyFound = true;
                             xmlLangPropertyName = xlpa.Name;
@@ -1855,7 +1855,7 @@ namespace System.Windows.Markup
 
                     if ( xmlLangPropertyFound )
                     {
-                        if( xmlLangPropertyName != null && xmlLangPropertyName.Length > 0)
+                        if( xmlLangPropertyName is not null && xmlLangPropertyName.Length > 0)
                         {
                             typeAndSerializer.XmlLangProperty = typeAndSerializer.ObjectType.GetProperty(
                                 xmlLangPropertyName,
@@ -1910,7 +1910,7 @@ namespace System.Windows.Markup
             PropertyInfo info = null;
             isInternal = false;
             TypeInformationCacheData typeInfo = GetCachedInformationForType(ownerType);
-            Debug.Assert(typeInfo != null, "Must have cached type info at this point");
+            Debug.Assert(typeInfo is not null, "Must have cached type info at this point");
             PropertyAndType propAndType = typeInfo.GetPropertyAndType(localName);
 
             // peterost - This is a TEMPORARY workaround to
@@ -1940,7 +1940,7 @@ namespace System.Windows.Markup
                     if (info is null && !tryPublicOnly)
                     {
                         info = ownerType.GetProperty(localName, flags | BindingFlags.NonPublic);
-                        if (info != null)
+                        if (info is not null)
                         {
                             isInternal = true;
                         }
@@ -1961,7 +1961,7 @@ namespace System.Windows.Markup
                     }
                 }
 #if PBTCOMPILER
-                if (tryInternal || info != null)
+                if (tryInternal || info is not null)
                 {
 #endif
                     typeInfo.SetPropertyAndType(localName, info, ownerType, isInternal);
@@ -2042,7 +2042,7 @@ namespace System.Windows.Markup
         {
 #if !PBTCOMPILER
             DependencyProperty dp = propertyMember as DependencyProperty;
-            if (dp != null)
+            if (dp is not null)
             {
                 propertyType = dp.PropertyType;
                 propertyCanWrite = !dp.ReadOnly;
@@ -2051,7 +2051,7 @@ namespace System.Windows.Markup
             {
 #endif
                 PropertyInfo propertyInfo = propertyMember as PropertyInfo;
-                if (propertyInfo != null)
+                if (propertyInfo is not null)
                 {
                     propertyType = propertyInfo.PropertyType;
                     propertyCanWrite = propertyInfo.CanWrite;
@@ -2059,7 +2059,7 @@ namespace System.Windows.Markup
                 else
                 {
                     MethodInfo methodInfo = propertyMember as MethodInfo;
-                    if (methodInfo != null)
+                    if (methodInfo is not null)
                     {
                         ParameterInfo[] parameters = methodInfo.GetParameters();
                         propertyType = parameters.Length == 1 ? methodInfo.ReturnType : parameters[1].ParameterType;
@@ -2088,21 +2088,21 @@ namespace System.Windows.Markup
         {
 #if !PBTCOMPILER
             DependencyProperty dp = propertyMember as DependencyProperty;
-            if (dp != null)
+            if (dp is not null)
             {
                 return dp.Name;
             }
 #endif
 
             PropertyInfo propertyInfo = propertyMember as PropertyInfo;
-            if (propertyInfo != null)
+            if (propertyInfo is not null)
             {
                 return propertyInfo.Name;
             }
             else
             {
                 MethodInfo methodInfo = propertyMember as MethodInfo;
-                if (methodInfo != null)
+                if (methodInfo is not null)
                 {
                     return methodInfo.Name.Substring("Get".Length);
                 }
@@ -2120,7 +2120,7 @@ namespace System.Windows.Markup
         {
             Type validType = null;
             MemberInfo memInfo = propertyMember as MemberInfo;
-            if (memInfo != null)
+            if (memInfo is not null)
             {
                 validType = memInfo.DeclaringType;
             }
@@ -2179,7 +2179,7 @@ namespace System.Windows.Markup
             XmlnsDictionary prefixDictionary = element.GetValue(XmlAttributeProperties.XmlnsDictionaryProperty)
                                                as XmlnsDictionary;
 
-            object xmlNamespaceObject = (prefixDictionary != null) ? prefixDictionary[prefix] : null;
+            object xmlNamespaceObject = (prefixDictionary is not null) ? prefixDictionary[prefix] : null;
 
             // Then get the list of NamespaceMapEntry objects that maps the xml namespace uri to one
             // or more clr namespace / assembly pairs.  This should be stored on the root element
@@ -2187,7 +2187,7 @@ namespace System.Windows.Markup
             Hashtable namespaceMaps = element.GetValue(XmlAttributeProperties.XmlNamespaceMapsProperty)
                                                as Hashtable;
 
-            NamespaceMapEntry[] namespaces = (namespaceMaps != null && xmlNamespaceObject != null) ? namespaceMaps[xmlNamespaceObject] as NamespaceMapEntry[] : null;
+            NamespaceMapEntry[] namespaces = (namespaceMaps is not null && xmlNamespaceObject is not null) ? namespaceMaps[xmlNamespaceObject] as NamespaceMapEntry[] : null;
 
             if (namespaces is null)
             {
@@ -2201,14 +2201,14 @@ namespace System.Windows.Markup
                     List<ClrNamespaceAssemblyPair> namespaceAssemblyPair = GetClrNamespacePairFromCache(XamlReaderHelper.DefaultNamespaceURI);
                     foreach (ClrNamespaceAssemblyPair usd in namespaceAssemblyPair)
                     {
-                        if (usd.AssemblyName != null)
+                        if (usd.AssemblyName is not null)
                         {
                             Assembly assy = ReflectionHelper.LoadAssembly(usd.AssemblyName, null);
-                            if (assy != null)
+                            if (assy is not null)
                             {
                                 string fullTypeName = $"{usd.ClrNamespace}.{typeName}";
                                 Type t = assy.GetType(fullTypeName);
-                                if (t != null)
+                                if (t is not null)
                                     return t;
                             }
                         }
@@ -2224,11 +2224,11 @@ namespace System.Windows.Markup
             for (int i = 0; i < namespaces.Length; i++)
             {
                 Assembly assy = namespaces[i].Assembly;
-                if (assy != null)
+                if (assy is not null)
                 {
                     string fullTypeName = $"{namespaces[i].ClrNamespace}.{typeName}";
                     Type t = assy.GetType(fullTypeName);
-                    if (t != null)
+                    if (t is not null)
                     {
                         return t;
                     }
@@ -2265,7 +2265,7 @@ namespace System.Windows.Markup
                 typeName = typeName.Substring(0, typeIndex);
                 string namespaceUri = context.XmlnsDictionary[prefix];
                 TypeAndSerializer tas = GetTypeOnly(namespaceUri, typeName);
-                if (tas != null)
+                if (tas is not null)
                 {
                     targetType = tas.ObjectType;
                 }
@@ -2308,10 +2308,10 @@ namespace System.Windows.Markup
                 }
             }
 
-            Debug.Assert(memberName != null);
+            Debug.Assert(memberName is not null);
             string fieldName = $"{memberName}Property";
             MemberInfo memberInfo = GetStaticMemberInfo(targetType, fieldName, true);
-            Debug.Assert(memberInfo != null);
+            Debug.Assert(memberInfo is not null);
 
             // Need to get the actual type that declares the DP in order to
             // correctly find a possible hit in the KnownProperties table.
@@ -2326,7 +2326,7 @@ namespace System.Windows.Markup
         // Gets the PropertyInfo or FieldInfo of a member.
         internal MemberInfo GetStaticMemberInfo(Type targetType, string memberName, bool fieldInfoOnly)
         {
-            Debug.Assert(targetType != null);
+            Debug.Assert(targetType is not null);
             // first try public members only.
             MemberInfo mi = GetStaticMemberInfo(targetType, memberName, fieldInfoOnly, false);
 
@@ -2335,12 +2335,12 @@ namespace System.Windows.Markup
             {
                 // If not found, then try non-public members next.
                 mi = GetStaticMemberInfo(targetType, memberName, fieldInfoOnly, true);
-                if (mi != null)
+                if (mi is not null)
                 {
                     // if found, check access levels to see if it should really be allowed.
                     bool isAllowed = false;
                     PropertyInfo pi = mi as PropertyInfo;
-                    if (pi != null)
+                    if (pi is not null)
                     {
                         isAllowed = IsAllowedPropertyGet(pi, false);
                     }
@@ -2461,7 +2461,7 @@ namespace System.Windows.Markup
 
             // If we've found a TypeAndSerializer, check whether we have reflected for the
             // serializer information yet.  If not, then do it now.
-            if (typeAndSerializer != null && !typeAndSerializer.IsSerializerTypeSet)
+            if (typeAndSerializer is not null && !typeAndSerializer.IsSerializerTypeSet)
             {
                 // Check for SerializerAttribute on the type. The serializer for the type is evaluated
                 // the very first time we create a new data strcuture for the given type.
@@ -2527,7 +2527,7 @@ namespace System.Windows.Markup
             TypeAndSerializer typeAndSerializer = null;
             NamespaceMapEntry[] namespaceMaps = GetNamespaceMapEntries(xmlNamespace);
 
-            if (namespaceMaps != null)
+            if (namespaceMaps is not null)
             {
                 // We'll do a first pass with only known types
                 // and then do a second pass with full reflection
@@ -2592,8 +2592,8 @@ namespace System.Windows.Markup
             string            localName,
             bool              knownTypesOnly)
         {
-            Debug.Assert(namespaceMap.ClrNamespace != null,"Null CLR Namespace");
-            Debug.Assert(localName != null,"Null localName");
+            Debug.Assert(namespaceMap.ClrNamespace is not null,"Null CLR Namespace");
+            Debug.Assert(localName is not null,"Null localName");
 
             Type type = null;
 
@@ -2735,7 +2735,7 @@ namespace System.Windows.Markup
                 // This would be the case for assemblies built with VB that had a RootNamespace
                 // property specified in the project file.
                 RootNamespaceAttribute rnsa = (RootNamespaceAttribute)Attribute.GetCustomAttribute(a, typeof(RootNamespaceAttribute));
-                if (rnsa != null)
+                if (rnsa is not null)
                 {
                     string rootNamespace = rnsa.Namespace;
                     ithType = a.GetType($"{rootNamespace}.{GeneratedNamespace}.{GeneratedInternalTypeHelperClassName}");
@@ -2749,7 +2749,7 @@ namespace System.Windows.Markup
         {
             InternalTypeHelper ith = null;
             Type ithType = GetInternalTypeHelperTypeFromAssembly(pc);
-            if (ithType != null)
+            if (ithType is not null)
             {
                 ith = (InternalTypeHelper)Activator.CreateInstance(ithType);
             }
@@ -2835,7 +2835,7 @@ namespace System.Windows.Markup
             bool localAssembly = false;
 #if PBTCOMPILER
             NamespaceMapEntry[] namespaceMaps = GetNamespaceMapEntries(namespaceUri);
-            localAssembly = (namespaceMaps != null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly);
+            localAssembly = (namespaceMaps is not null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly);
 #endif
             return localAssembly;
         }
@@ -2909,8 +2909,8 @@ namespace System.Windows.Markup
                 // to throw as appropriate in Pass2 if the type is still not found.
                 if (!IsLocalAssembly(xmlns))
                 {
-                    _lineNumber = context != null ? context.LineNumber : 0;
-                    _linePosition = context != null ? context.LinePosition : 0;
+                    _lineNumber = context is not null ? context.LineNumber : 0;
+                    _linePosition = context is not null ? context.LinePosition : 0;
 
                     ThrowException(nameof(SR.ParserResourceKeyType), typeString);
                 }
@@ -2957,7 +2957,7 @@ namespace System.Windows.Markup
                 {
                     NamespaceMapEntry[] namespaceMaps = GetNamespaceMapEntries(xmlns);
                     typeString = typeString.Substring(colonIndex + 1);
-                    bool isLocalArg = namespaceMaps != null &&
+                    bool isLocalArg = namespaceMaps is not null &&
                                       namespaceMaps.Length == 1 &&
                                       namespaceMaps[0].LocalAssembly;
 
@@ -3158,7 +3158,7 @@ namespace System.Windows.Markup
                 newXmlNamespace = _xmlnsCache.GetNewXmlnamespace(xmlNamespace);
 
                 // if the xmlNamespace has valid entries or is mapped to another namespace, then it is known.
-                result = (namespaceMaps != null && namespaceMaps.Length > 0) ||
+                result = (namespaceMaps is not null && namespaceMaps.Length > 0) ||
                               !String.IsNullOrEmpty(newXmlNamespace);
             }
 
@@ -3190,7 +3190,7 @@ namespace System.Windows.Markup
 
             string[] asmNameList = null;
 
-            if (assemblyIds != null && assemblyIds.Length > 0)
+            if (assemblyIds is not null && assemblyIds.Length > 0)
             {
                 asmNameList = new string[assemblyIds.Length];
 
@@ -3383,7 +3383,7 @@ namespace System.Windows.Markup
 
             String ret;
 
-            if (_piReverseTable.TryGetValue(fullName, out ret) && ret != null)
+            if (_piReverseTable.TryGetValue(fullName, out ret) && ret is not null)
             {
                 return ret;
             }
@@ -3535,7 +3535,7 @@ namespace System.Windows.Markup
                 {
                     // Get the memberInfo from the DP, PropertyInfo(CLR) or MethodInfo(Attached) for the property
                     MemberInfo memberInfo = TypeConverterHelper.GetMemberInfoForPropertyConverter(dpOrPiOrMi);
-                    if (memberInfo != null)
+                    if (memberInfo is not null)
                     {
                         // If not found, next try looking for the TypeConverter on the property itself using reflection.
                         converterType = TypeConverterHelper.GetConverterType(memberInfo);
@@ -3577,11 +3577,11 @@ namespace System.Windows.Markup
 
                 // Get the memberInfo from the DP, PropertyInfo(CLR) or MethodInfo(Attached) for the property
                 MemberInfo memberInfo = TypeConverterHelper.GetMemberInfoForPropertyConverter(dpOrPiOrMi);
-                if (memberInfo != null)
+                if (memberInfo is not null)
                 {
                     // If not found, next try looking for the TypeConverter on the property itself using reflection.
                     Type converterType = TypeConverterHelper.GetConverterType(memberInfo);
-                    if (converterType != null)
+                    if (converterType is not null)
                     {
                         // create an instance of the TypeConverter if found
                         typeConverter = CreateInstance(converterType) as TypeConverter;
@@ -3596,7 +3596,7 @@ namespace System.Windows.Markup
             }
 
             // Cache the per property TypeConverter
-            if (dpOrPiOrMi != null)
+            if (dpOrPiOrMi is not null)
                 typeData.SetPropertyConverter(dpOrPiOrMi, typeConverter);
 
             return typeConverter;
@@ -3678,7 +3678,7 @@ namespace System.Windows.Markup
                 // Create a parameters Cache if it does not already exist
                 if (_parameters is null)
                 {
-                    Debug.Assert(_constructors != null, "This operation is legal only after the constructors have been fetched");
+                    Debug.Assert(_constructors is not null, "This operation is legal only after the constructors have been fetched");
                     _parameters = new ParameterInfo[_constructors.Length][];
                 }
 
@@ -4010,7 +4010,7 @@ namespace System.Windows.Markup
                 Type            ownerType,
                 bool            isInternal)
             {
-                Debug.Assert(_dpLookupHashtable != null,
+                Debug.Assert(_dpLookupHashtable is not null,
                     "GetPropertyAndType must always be called before SetPropertyAndType");
 
                 // add the type taking a lock

@@ -194,11 +194,11 @@ namespace System.Windows.Controls
         {
             TextBoxBase textBoxBase = d as TextBoxBase;
 
-            if (textBoxBase != null)
+            if (textBoxBase is not null)
             {
                 TextEditor textEditor = TextEditor._GetTextEditor(textBoxBase);
 
-                if (textEditor != null)
+                if (textEditor is not null)
                 {
                     textEditor.SetSpellCheckEnabled((bool)e.NewValue);
                     if ((bool)e.NewValue != (bool)e.OldValue)
@@ -214,11 +214,11 @@ namespace System.Windows.Controls
         {
             TextBoxBase textBoxBase = d as TextBoxBase;
 
-            if (textBoxBase != null)
+            if (textBoxBase is not null)
             {
                 TextEditor textEditor = TextEditor._GetTextEditor(textBoxBase);
 
-                if (textEditor != null)
+                if (textEditor is not null)
                 {
                     textEditor.SetSpellingReform((SpellingReform)e.NewValue);
                 }

@@ -39,7 +39,7 @@ namespace MS.Internal.Documents
                                             DocumentRightsManagementManager docRightsManagementManager
                                         )
         {
-            Invariant.Assert(docRightsManagementManager != null);
+            Invariant.Assert(docRightsManagementManager is not null);
             _docRightsManagementManager = docRightsManagementManager;
 
             //Set the data source for the listbox
@@ -69,7 +69,7 @@ namespace MS.Internal.Documents
             //Set the data source
             _credListBox.DataSource = accountList;
 
-            if (defaultAccount != null)
+            if (defaultAccount is not null)
             {
                 //Now we need to get and select the default.
                 _credListBox.SelectedIndex = _credListBox.Items.IndexOf(defaultAccount);

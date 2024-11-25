@@ -88,7 +88,7 @@ namespace MS.Internal.FontFace
         {
             _friendlyName = friendlyName;
             _baseUri = baseUri;
-            _tokenCount = (friendlyName != null) ? -1 : 0;
+            _tokenCount = (friendlyName is not null) ? -1 : 0;
             _canonicalReferences = null;
         }
 
@@ -206,7 +206,7 @@ namespace MS.Internal.FontFace
                 ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(tokenIndex, Count);
 
                 // Have we already been canonicalized?
-                if (_canonicalReferences != null)
+                if (_canonicalReferences is not null)
                 {
                     // We have already canonicalized. This is typically the case for longer-lived
                     // identifiers such as belong to FontFamily objects.
@@ -234,7 +234,7 @@ namespace MS.Internal.FontFace
 
         internal void Canonicalize()
         {
-            if (_canonicalReferences != null)
+            if (_canonicalReferences is not null)
                 return;
                 
             int count = this.Count;
@@ -456,10 +456,10 @@ namespace MS.Internal.FontFace
             {
                 int hash = seed;
 
-                if (_baseUri != null)
+                if (_baseUri is not null)
                     hash += HashFn.HashMultiply(_baseUri.GetHashCode());
 
-                if (_name != null)
+                if (_name is not null)
                     hash = HashFn.HashMultiply(hash) + _name.GetHashCode();
 
                 return HashFn.HashScramble(hash);
@@ -467,7 +467,7 @@ namespace MS.Internal.FontFace
 
             protected bool InternalEquals(BasedName other)
             {
-                return other != null &&
+                return other is not null &&
                     other._baseUri == _baseUri &&
                     other._name == _name;
             }

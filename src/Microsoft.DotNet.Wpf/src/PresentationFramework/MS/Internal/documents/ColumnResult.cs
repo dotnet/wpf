@@ -151,7 +151,7 @@ namespace MS.Internal.Documents
                 {
                     // Set _hasTextContent to true when getting paragraph collections if any paragraph has text content.
                     _hasTextContent = false;
-                    if (_page != null)
+                    if (_page is not null)
                     {
                         _paragraphs = _page.GetParagraphResultsFromColumn(_columnHandle, _columnOffset, out _hasTextContent);
                     }
@@ -174,7 +174,7 @@ namespace MS.Internal.Documents
                             Invariant.Assert(false, "Expecting Subpage, Figure or Floater ParaClient");
                         }
                     }
-                    Debug.Assert(_paragraphs != null && _paragraphs.Count > 0);
+                    Debug.Assert(_paragraphs is not null && _paragraphs.Count > 0);
                 }
                 return _paragraphs;
             }
@@ -228,7 +228,7 @@ namespace MS.Internal.Documents
         {
             if (_contentRange is null)
             {
-                if (_page != null)
+                if (_page is not null)
                 {
                     _contentRange = _page.GetTextContentRangeFromColumn(_columnHandle);
                 }
@@ -251,7 +251,7 @@ namespace MS.Internal.Documents
                         Invariant.Assert(false, "Expecting Subpage, Figure or Floater ParaClient");
                     }
                 }
-                Invariant.Assert(_contentRange != null);
+                Invariant.Assert(_contentRange is not null);
             }
         }
 

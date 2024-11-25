@@ -83,10 +83,10 @@ namespace MS.Internal.IO.Packaging
 #endif
 
             // check parms
-            Invariant.Assert(uri != null);
-            Invariant.Assert(responseStream != null);
-            Invariant.Assert(originalRequest != null);
-            Invariant.Assert(originalResponse != null);
+            Invariant.Assert(uri is not null);
+            Invariant.Assert(responseStream is not null);
+            Invariant.Assert(originalRequest is not null);
+            Invariant.Assert(originalResponse is not null);
 
             // use this to resolve random requests
             _uri = uri;         // uri we are reading from
@@ -402,28 +402,28 @@ namespace MS.Internal.IO.Packaging
                             _disposed = true;
 
                             // release any blocked threads - Set() does not throw any exceptions
-                            if (_readEventHandles[(int)ReadEvent.FullDownloadReadEvent] != null)
+                            if (_readEventHandles[(int)ReadEvent.FullDownloadReadEvent] is not null)
                                 _readEventHandles[(int)ReadEvent.FullDownloadReadEvent].Set();
-                            if (_readEventHandles[(int)ReadEvent.ByteRangeReadEvent] != null)
+                            if (_readEventHandles[(int)ReadEvent.ByteRangeReadEvent] is not null)
                                 _readEventHandles[(int)ReadEvent.ByteRangeReadEvent].Set();
 
                             // Free ByteRangeDownloader
                             FreeByteRangeDownloader();
 
                             // Free Event Handles - should not throw
-                            if (_readEventHandles[(int)ReadEvent.FullDownloadReadEvent] != null)
+                            if (_readEventHandles[(int)ReadEvent.FullDownloadReadEvent] is not null)
                             {
                                 _readEventHandles[(int)ReadEvent.FullDownloadReadEvent].Close();
                                 _readEventHandles[(int)ReadEvent.FullDownloadReadEvent] = null;
                             }
-                            if (_readEventHandles[(int)ReadEvent.ByteRangeReadEvent] != null)
+                            if (_readEventHandles[(int)ReadEvent.ByteRangeReadEvent] is not null)
                             {
                                 _readEventHandles[(int)ReadEvent.ByteRangeReadEvent].Close();
                                 _readEventHandles[(int)ReadEvent.ByteRangeReadEvent] = null;
                             }
 
                             // Free Full Download
-                            if (_responseStream != null)
+                            if (_responseStream is not null)
                             {
                                 _responseStream.Close();
                             }
@@ -577,7 +577,7 @@ namespace MS.Internal.IO.Packaging
                 finally
                 {
                     // Set the ManualResetEvent
-                    if (!_disposed && _readEventHandles[(int)ReadEvent.FullDownloadReadEvent] != null)
+                    if (!_disposed && _readEventHandles[(int)ReadEvent.FullDownloadReadEvent] is not null)
                         _readEventHandles[(int)ReadEvent.FullDownloadReadEvent].Set();
                 }
             }
@@ -723,7 +723,7 @@ namespace MS.Internal.IO.Packaging
             int bytesAvailable = 0;
 
             // we can be called even if the byteRangeDownloader is not in use
-            if (_byteRangesAvailable != null)
+            if (_byteRangesAvailable is not null)
             {
                 checked
                 {
@@ -762,7 +762,7 @@ namespace MS.Internal.IO.Packaging
             int bytesAvailable = 0;
 
             // we can be called even if the byteRangeDownloader is not in use
-            if (_byteRangesAvailable != null)
+            if (_byteRangesAvailable is not null)
             {
                 checked
                 {
@@ -1165,7 +1165,7 @@ namespace MS.Internal.IO.Packaging
             Debug.Assert(_fullDownloadComplete, "Do not call this unless full download is complete.");
 
             // ignore logic errors - only do this once
-            if (_readBuf != null)
+            if (_readBuf is not null)
             {
                 // don't need these anymore
                 _byteRangesAvailable = null;
@@ -1178,7 +1178,7 @@ namespace MS.Internal.IO.Packaging
                         FreeByteRangeDownloader();
 
                         // release the full download read event as it is no longer needed
-                        if (_readEventHandles[(int)ReadEvent.FullDownloadReadEvent] != null)
+                        if (_readEventHandles[(int)ReadEvent.FullDownloadReadEvent] is not null)
                         {
                             _readEventHandles[(int)ReadEvent.FullDownloadReadEvent].Close();
                             _readEventHandles[(int)ReadEvent.FullDownloadReadEvent] = null;
@@ -1187,7 +1187,7 @@ namespace MS.Internal.IO.Packaging
                     finally
                     {
                         // FreeFullDownload
-                        if (_responseStream != null)
+                        if (_responseStream is not null)
                         {
                             _responseStream.Close();
                         }
@@ -1205,13 +1205,13 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         private void FreeByteRangeDownloader()
         {
-            if (_byteRangeDownloader != null)
+            if (_byteRangeDownloader is not null)
             {
                 try
                 {
                     ((IDisposable)_byteRangeDownloader).Dispose();
 
-                    if (_readEventHandles[(int)ReadEvent.ByteRangeReadEvent] != null)
+                    if (_readEventHandles[(int)ReadEvent.ByteRangeReadEvent] is not null)
                     {
                         _readEventHandles[(int)ReadEvent.ByteRangeReadEvent].Close();
                         _readEventHandles[(int)ReadEvent.ByteRangeReadEvent] = null;
@@ -1231,7 +1231,7 @@ namespace MS.Internal.IO.Packaging
         {
             // Stream and Mutex
             bool mutexObtained = false;
-            Invariant.Assert(_tempFileStream != null);
+            Invariant.Assert(_tempFileStream is not null);
 
             try
             {

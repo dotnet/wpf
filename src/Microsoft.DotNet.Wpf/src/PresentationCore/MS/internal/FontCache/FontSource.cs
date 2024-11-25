@@ -204,7 +204,7 @@ namespace MS.Internal.FontCache
 
                 UnmanagedMemoryStream unmanagedStream = fontStream as UnmanagedMemoryStream;
 
-                if (unmanagedStream != null)
+                if (unmanagedStream is not null)
                     return unmanagedStream;
 
                 bits = StreamToByteArray(fontStream);
@@ -254,7 +254,7 @@ namespace MS.Internal.FontCache
                 bits = _resourceCache.Get(_fontUri);
             }
 
-            if (bits != null)
+            if (bits is not null)
                 return new MemoryStream(bits);
 
             Stream fontStream;

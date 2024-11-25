@@ -44,7 +44,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             // Dismiss ToolTips on KeyDown
 
-            if (CurrentToolTip != null)
+            if (CurrentToolTip is not null)
             {
                 CurrentToolTip.IsOpen = false;
             }

@@ -66,7 +66,7 @@ namespace System.Windows.Media.Imaging
             )
         {
             // Create a decoder and return the first frame
-            if (uri != null)
+            if (uri is not null)
             {
                 Debug.Assert((stream is null), "Both stream and uri are non-null");
 
@@ -89,7 +89,7 @@ namespace System.Windows.Media.Imaging
             }
             else
             {
-                Debug.Assert((stream != null), "Both stream and uri are null");
+                Debug.Assert((stream is not null), "Both stream and uri are null");
 
                 BitmapDecoder decoder = BitmapDecoder.Create(
                     stream,
@@ -252,7 +252,7 @@ namespace System.Windows.Media.Imaging
                 //just pass null
             }
 
-            if (metadata != null)
+            if (metadata is not null)
             {
                 metadata = metadata.Clone();
             }
@@ -285,7 +285,7 @@ namespace System.Windows.Media.Imaging
             }
 
 
-            if (metadata != null)
+            if (metadata is not null)
             {
                 metadata = metadata.Clone();
             }

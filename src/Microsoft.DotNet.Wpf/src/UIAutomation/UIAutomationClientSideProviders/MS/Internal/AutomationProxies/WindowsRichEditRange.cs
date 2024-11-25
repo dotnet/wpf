@@ -25,8 +25,8 @@ namespace MS.Internal.AutomationProxies
     {
         internal WindowsRichEditRange(ITextRange range, WindowsRichEdit pattern)
         {
-            Debug.Assert(range != null);
-            Debug.Assert(pattern != null);
+            Debug.Assert(range is not null);
+            Debug.Assert(pattern is not null);
 
             _range = range;
             _pattern = pattern;
@@ -404,7 +404,7 @@ namespace MS.Internal.AutomationProxies
             Array a1 = v1 as Array;
             Array a2 = v2 as Array;
 
-            if( a1 != null && a2 != null)
+            if( a1 is not null && a2 is not null)
             {
                 // System.Array has reference equality not value equality so we manually check
                 // whether two arrays have the same contents.

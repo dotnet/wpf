@@ -55,7 +55,7 @@ namespace System.Windows.Documents
 
         internal static TextPointer SplitFormattingElement(TextPointer splitPosition, bool keepEmptyFormatting)
         {
-            Invariant.Assert(splitPosition.Parent != null && TextSchema.IsMergeableInline(splitPosition.Parent.GetType()));
+            Invariant.Assert(splitPosition.Parent is not null && TextSchema.IsMergeableInline(splitPosition.Parent.GetType()));
 
             Inline inline = (Inline)splitPosition.Parent;
 
@@ -88,8 +88,8 @@ namespace System.Windows.Documents
         // Compares a set of inheritable properties taken from two objects
         private static bool InheritablePropertiesAreEqual(Inline firstInline, Inline secondInline)
         {
-            Invariant.Assert(firstInline != null, "null check: firstInline");
-            Invariant.Assert(secondInline != null, "null check: secondInline");
+            Invariant.Assert(firstInline is not null, "null check: firstInline");
+            Invariant.Assert(secondInline is not null, "null check: secondInline");
 
             // Compare inheritable properties
             DependencyProperty[] inheritableProperties = TextSchema.GetInheritableProperties(typeof(Inline));
@@ -126,7 +126,7 @@ namespace System.Windows.Documents
         // Ignorance means deletion, which is considered as safer approach.
         private static bool CharacterPropertiesAreEqual(Inline firstElement, Inline secondElement)
         {
-            Invariant.Assert(firstElement != null, "null check: firstElement");
+            Invariant.Assert(firstElement is not null, "null check: firstElement");
 
             if (secondElement is null)
             {
@@ -167,11 +167,11 @@ namespace System.Windows.Documents
 
             Inline inline = position.Parent as Inline;
 
-            if (inline != null && inline.IsEmpty)
+            if (inline is not null && inline.IsEmpty)
             {
                 // Delete any empty non-formatting element.
                 // We can get here if an IME deletes the UIElement from inside an InlineUIContainer.
-                while (inline != null && inline.IsEmpty && !TextSchema.IsFormattingType(inline.GetType()))
+                while (inline is not null && inline.IsEmpty && !TextSchema.IsFormattingType(inline.GetType()))
                 {
                     inline.Reposition(null, null);
                     elementsWereExtracted = true;
@@ -183,7 +183,7 @@ namespace System.Windows.Documents
                 // It does not have any formatting or any other meaning, while it can be implicitely
                 // re-inserted when necessary. So remove it to minimize resulting xaml.
                 while (
-                    inline != null && inline.IsEmpty &&
+                    inline is not null && inline.IsEmpty &&
                     (inline.GetType() == typeof(Run) || inline.GetType() == typeof(Span)) &&
                     !HasWriteableLocalPropertyValues(inline))
                 {
@@ -194,9 +194,9 @@ namespace System.Windows.Documents
 
                 // Continue deleting empty inlines that are neighbored by other formatting elements,
                 // that make them inaccessible for caret position
-                while (inline != null && inline.IsEmpty &&
-                    ((inline.NextInline != null && TextSchema.IsFormattingType(inline.NextInline.GetType())) ||
-                    (inline.PreviousInline != null && TextSchema.IsFormattingType(inline.PreviousInline.GetType()))))
+                while (inline is not null && inline.IsEmpty &&
+                    ((inline.NextInline is not null && TextSchema.IsFormattingType(inline.NextInline.GetType())) ||
+                    (inline.PreviousInline is not null && TextSchema.IsFormattingType(inline.PreviousInline.GetType()))))
                 {
                     inline.Reposition(null, null);
                     elementsWereExtracted = true;
@@ -279,8 +279,8 @@ namespace System.Windows.Documents
             while (
                 position.GetPointerContext(LogicalDirection.Backward) == TextPointerContext.ElementEnd && 
                 position.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.ElementStart &&
-                (firstInline = position.GetAdjacentElement(LogicalDirection.Backward) as Inline) != null &&
-                (secondInline = position.GetAdjacentElement(LogicalDirection.Forward) as Inline) != null)
+                (firstInline = position.GetAdjacentElement(LogicalDirection.Backward) as Inline) is not null &&
+                (secondInline = position.GetAdjacentElement(LogicalDirection.Forward) as Inline) is not null)
             {
                 if (TextSchema.IsFormattingType(firstInline.GetType()) && firstInline.TextRange.IsEmpty)
                 {
@@ -324,9 +324,9 @@ namespace System.Windows.Documents
         {
             Inline inline = position.Parent as Inline;
 
-            while (inline != null)
+            while (inline is not null)
             {
-                if (inline.Parent != null &&
+                if (inline.Parent is not null &&
                     TextSchema.IsMergeableInline(inline.Parent.GetType()) &&
                     TextSchema.IsKnownType(inline.Parent.GetType()) &&
                     inline.ElementStart.GetPointerContext(LogicalDirection.Backward) == TextPointerContext.ElementStart &&
@@ -438,7 +438,7 @@ namespace System.Windows.Documents
 
                             // Preserve only non-formatting properties of original span element.
                             Span newSpan = TransferNonFormattingInlineProperties((Span)parent);
-                            if (newSpan != null)
+                            if (newSpan is not null)
                             {
                                 newSpan.Reposition(parent.ElementStart, parent.ElementEnd);
                                 mergePosition = newSpan.ElementStart;
@@ -604,7 +604,7 @@ namespace System.Windows.Documents
             }
 
             Inline ancestor = position.GetNonMergeableInlineAncestor();
-            if (ancestor != null)
+            if (ancestor is not null)
             {
                 Invariant.Assert(TextPointerBase.IsPositionAtNonMergeableInlineBoundary(position), "Position must be at hyperlink boundary!");
 
@@ -641,7 +641,7 @@ namespace System.Windows.Documents
             // Decide whether we need to split ListItem around this paragraph (if any).
             // We are splitting a list item if this paragraph is the only paragraph in a list item.
             // Otherwise we simply produce new paragraphs within the same list item.
-            bool needToSplitListItem = TextPointerBase.GetImmediateListItem(paragraph.ContentStart) != null;
+            bool needToSplitListItem = TextPointerBase.GetImmediateListItem(paragraph.ContentStart) is not null;
 
             breakPosition = SplitElement(breakPosition);
 
@@ -741,17 +741,17 @@ namespace System.Windows.Documents
         /// </param>
         internal static void SetParagraphProperty(TextPointer start, TextPointer end, DependencyProperty property, object value, PropertyValueAction propertyValueAction)
         {
-            Invariant.Assert(start != null, "null check: start");
-            Invariant.Assert(end != null, "null check: end");
+            Invariant.Assert(start is not null, "null check: start");
+            Invariant.Assert(end is not null, "null check: end");
             Invariant.Assert(start.CompareTo(end) <= 0, "expecting: start <= end");
-            Invariant.Assert(property != null, "null check: property");
+            Invariant.Assert(property is not null, "null check: property");
 
             // Exclude last opening tag to avoid affecting a paragraph following the selection
             end = (TextPointer)TextRangeEdit.GetAdjustedRangeEnd(start, end);
 
             // Expand start pointer to the beginning of the first paragraph/blockuicontainer
             Block startParagraphOrBlockUIContainer = start.ParagraphOrBlockUIContainer;
-            if (startParagraphOrBlockUIContainer != null)
+            if (startParagraphOrBlockUIContainer is not null)
             {
                 start = startParagraphOrBlockUIContainer.ContentStart;
             }
@@ -772,7 +772,7 @@ namespace System.Windows.Documents
 
                 // And expand range start to the beginning of the containing list
                 ListItem listItem = start.GetListAncestor();
-                if (listItem != null && listItem.List != null)
+                if (listItem is not null && listItem.List is not null)
                 {
                     start = listItem.List.ElementStart;
                 }
@@ -787,7 +787,7 @@ namespace System.Windows.Documents
         {
             Block block = GetNextBlock(start, end);
 
-            while (block != null)
+            while (block is not null)
             {
                 if (TextSchema.IsParagraphOrBlockUIContainer(block.GetType()))
                 {
@@ -838,7 +838,7 @@ namespace System.Windows.Documents
             // Get the parent flow direction
             FlowDirection parentFlowDirection;
 
-            if (parent != null)
+            if (parent is not null)
             {
                 parentFlowDirection = (FlowDirection)parent.GetValue(FrameworkElement.FlowDirectionProperty);
             }
@@ -878,7 +878,7 @@ namespace System.Windows.Documents
                 if (block is BlockUIContainer)
                 {
                     UIElement embeddedElement = ((BlockUIContainer)block).Child;
-                    if (embeddedElement != null)
+                    if (embeddedElement is not null)
                     {
                         HorizontalAlignment horizontalAlignment = GetHorizontalAlignmentFromTextAlignment((TextAlignment)newValue);
 
@@ -919,7 +919,7 @@ namespace System.Windows.Documents
         {
             Paragraph paragraph = block as Paragraph;
 
-            if (paragraph != null &&
+            if (paragraph is not null &&
                 TextSchema.IsStructuralCharacterProperty(property) &&
                 !TextSchema.ValuesAreEqual(currentValue, newValue))
             {
@@ -928,7 +928,7 @@ namespace System.Windows.Documents
                 Inline firstChild = paragraph.Inlines.FirstInline;
                 Inline lastChild = paragraph.Inlines.LastInline;
 
-                while (firstChild != null &&
+                while (firstChild is not null &&
                        firstChild == lastChild &&
                        firstChild is Span &&
                        !HasLocalPropertyValue(firstChild, property))
@@ -998,7 +998,7 @@ namespace System.Windows.Documents
 
                         firstChild = nextChild;
                     }
-                    while (firstChild != null);
+                    while (firstChild is not null);
                 }
                 else
                 {
@@ -1028,7 +1028,7 @@ namespace System.Windows.Documents
         {
             Block block = null;
 
-            while (pointer != null && pointer.CompareTo(limit) <= 0)
+            while (pointer is not null && pointer.CompareTo(limit) <= 0)
             {
                 if (pointer.GetPointerContext(LogicalDirection.Backward) == TextPointerContext.ElementStart)
                 {
@@ -1043,7 +1043,7 @@ namespace System.Windows.Documents
                 {
                     pointer = TextRangeEditTables.EnsureInsertionPosition(pointer);
                     block = pointer.Paragraph;
-                    Invariant.Assert(block != null);
+                    Invariant.Assert(block is not null);
                     break;
                 }
 
@@ -1410,8 +1410,8 @@ namespace System.Windows.Documents
         internal static void DeleteParagraphContent(ITextPointer start, ITextPointer end)
         {
             // Parameters validation
-            Invariant.Assert(start != null, "null check: start");
-            Invariant.Assert(end != null, "null check: end");
+            Invariant.Assert(start is not null, "null check: start");
+            Invariant.Assert(end is not null, "null check: end");
             Invariant.Assert(start.CompareTo(end) <= 0, "expecting: start <= end");
 
             if (!(start is TextPointer))
@@ -1465,16 +1465,16 @@ namespace System.Windows.Documents
                     {
                         startPosition = TextRangeEditTables.EnsureInsertionPosition(startPosition);
                         firstParagraphOrBlockUIContainer = startPosition.Paragraph;
-                        Invariant.Assert(firstParagraphOrBlockUIContainer != null, "EnsureInsertionPosition must create a paragraph inside list item - 1");
+                        Invariant.Assert(firstParagraphOrBlockUIContainer is not null, "EnsureInsertionPosition must create a paragraph inside list item - 1");
                     }
                     if (secondParagraphOrBlockUIContainer is null && TextPointerBase.IsInEmptyListItem(endPosition))
                     {
                         endPosition = TextRangeEditTables.EnsureInsertionPosition(endPosition);
                         secondParagraphOrBlockUIContainer = endPosition.Paragraph;
-                        Invariant.Assert(secondParagraphOrBlockUIContainer != null, "EnsureInsertionPosition must create a paragraph inside list item - 2");
+                        Invariant.Assert(secondParagraphOrBlockUIContainer is not null, "EnsureInsertionPosition must create a paragraph inside list item - 2");
                     }
 
-                    if (firstParagraphOrBlockUIContainer != null && secondParagraphOrBlockUIContainer != null)
+                    if (firstParagraphOrBlockUIContainer is not null && secondParagraphOrBlockUIContainer is not null)
                     {
                         TextRangeEditLists.MergeParagraphs(firstParagraphOrBlockUIContainer, secondParagraphOrBlockUIContainer);
                     }
@@ -1562,8 +1562,8 @@ namespace System.Windows.Documents
         private static void DeleteEquiScopedContent(TextPointer start, TextPointer end)
         {
             // Validate parameters
-            Invariant.Assert(start != null, "null check: start");
-            Invariant.Assert(end != null, "null check: end");
+            Invariant.Assert(start is not null, "null check: start");
+            Invariant.Assert(end is not null, "null check: end");
 
             if (start.CompareTo(end) == 0)
             {
@@ -1750,8 +1750,8 @@ namespace System.Windows.Documents
             if (preserveStructuralFormatting)
             {
                 Run run = splitPosition.Parent as Run;
-                if (run != null && run != limitingAncestor && 
-                    ((run.Parent != null && HasLocalInheritableStructuralPropertyValue(run)) || 
+                if (run is not null && run != limitingAncestor && 
+                    ((run.Parent is not null && HasLocalInheritableStructuralPropertyValue(run)) || 
                     (run.Parent is null && HasLocalStructuralPropertyValue(run))))
                 {
                     // This Run has a structural property set on it (eg, FlowDirection) which cannot simply be split
@@ -1765,9 +1765,9 @@ namespace System.Windows.Documents
 
             // Splitting loop: cutting a parent element until we reach the non-inline,
             // never crossing ancestor boundary.
-            while (splitPosition.Parent != null && TextSchema.IsMergeableInline(splitPosition.Parent.GetType()) && splitPosition.Parent != limitingAncestor && 
+            while (splitPosition.Parent is not null && TextSchema.IsMergeableInline(splitPosition.Parent.GetType()) && splitPosition.Parent != limitingAncestor && 
                 (!preserveStructuralFormatting || 
-                   ((((Inline)splitPosition.Parent).Parent != null && !HasLocalInheritableStructuralPropertyValue((Inline)splitPosition.Parent)) ||
+                   ((((Inline)splitPosition.Parent).Parent is not null && !HasLocalInheritableStructuralPropertyValue((Inline)splitPosition.Parent)) ||
                    (((Inline)splitPosition.Parent).Parent is null && !HasLocalStructuralPropertyValue((Inline)splitPosition.Parent)))))
             {
                 splitPosition = SplitFormattingElement(splitPosition, keepEmptyFormatting);
@@ -1876,7 +1876,7 @@ namespace System.Windows.Documents
 
             Run run = TextRangeEdit.GetNextRun(start, end);
 
-            while (run != null)
+            while (run is not null)
             {
                 object currentValue = run.GetValue(formattingProperty);
                 object newValue = value;
@@ -1976,11 +1976,11 @@ namespace System.Windows.Documents
             ClearParentStructuralPropertyValue(inline, property);
 
             // Flatten property on previous Inlines.
-            for (Inline searchInline = inline; searchInline != null; searchInline = searchInline.Parent as Span)
+            for (Inline searchInline = inline; searchInline is not null; searchInline = searchInline.Parent as Span)
             {
                 Inline previousSibling = (Inline)searchInline.PreviousElement;
 
-                if (previousSibling != null)
+                if (previousSibling is not null)
                 {
                     FlattenStructuralProperties(previousSibling);
                     break;
@@ -1988,11 +1988,11 @@ namespace System.Windows.Documents
             }
 
             // Flatten property on following Inlines.
-            for (Inline searchInline = inline; searchInline != null; searchInline = searchInline.Parent as Span)
+            for (Inline searchInline = inline; searchInline is not null; searchInline = searchInline.Parent as Span)
             {
                 Inline nextSibling = (Inline)searchInline.NextElement;
 
-                if (nextSibling != null)
+                if (nextSibling is not null)
                 {
                     FlattenStructuralProperties(nextSibling);
                     break;
@@ -2006,7 +2006,7 @@ namespace System.Windows.Documents
             Span topmostSpan = inline as Span;
             Span parent = inline.Parent as Span;
 
-            while (parent != null &&
+            while (parent is not null &&
                    parent.Inlines.FirstInline == parent.Inlines.LastInline)
             {
                 topmostSpan = parent;
@@ -2014,7 +2014,7 @@ namespace System.Windows.Documents
             }
 
             // Push structural properties downward.
-            while (topmostSpan != null && topmostSpan.Inlines.FirstInline == topmostSpan.Inlines.LastInline)
+            while (topmostSpan is not null && topmostSpan.Inlines.FirstInline == topmostSpan.Inlines.LastInline)
             {
                 Inline child = (Inline)topmostSpan.Inlines.FirstInline;
 
@@ -2036,7 +2036,7 @@ namespace System.Windows.Documents
             Span conflictingParent = null;
 
             for (Span parent = child.Parent as Span;
-                 parent != null && TextSchema.IsMergeableInline(parent.GetType());
+                 parent is not null && TextSchema.IsMergeableInline(parent.GetType());
                  parent = parent.Parent as Span)
             {
                 if (HasLocalPropertyValue(parent, property))
@@ -2046,7 +2046,7 @@ namespace System.Windows.Documents
             }
 
             // Split down from conflictingParent, clearing property values along the way.
-            if (conflictingParent != null)
+            if (conflictingParent is not null)
             {
                 TextElement limit = (TextElement)conflictingParent.Parent;
                 SplitFormattingElements(child.ElementStart, /*keepEmptyFormatting*/false, limit);
@@ -2054,7 +2054,7 @@ namespace System.Windows.Documents
 
                 Span parent = (Span)end.GetAdjacentElement(LogicalDirection.Backward);
 
-                while (parent != null && parent != child)
+                while (parent is not null && parent != child)
                 {
                     parent.ClearValue(property);
 
@@ -2080,10 +2080,10 @@ namespace System.Windows.Documents
         {
             Run run = null;
 
-            while (pointer != null && pointer.CompareTo(limit) < 0)
+            while (pointer is not null && pointer.CompareTo(limit) < 0)
             {
                 if (pointer.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.ElementStart &&
-                    (run = pointer.GetAdjacentElement(LogicalDirection.Forward) as Run) != null)
+                    (run = pointer.GetAdjacentElement(LogicalDirection.Forward) as Run) is not null)
                 {
                     break;
                 }
@@ -2115,7 +2115,7 @@ namespace System.Windows.Documents
             // since in the loop we look backward.
             start = start.GetNextContextPosition(LogicalDirection.Forward);
 
-            while (start != null && start.CompareTo(end) < 0)
+            while (start is not null && start.CompareTo(end) < 0)
             {
                 if (start.GetPointerContext(LogicalDirection.Backward) == TextPointerContext.ElementStart &&
                     TextSchema.IsFormattingType(start.Parent.GetType())) // look for Run/Span elements
@@ -2216,7 +2216,7 @@ namespace System.Windows.Documents
         private static void ApplyStructuralInlinePropertyAcrossParagraphs(TextPointer start, TextPointer end, DependencyProperty formattingProperty, object value)
         {
             // We assume to call this method only for paragraph crossing case
-            Invariant.Assert(start.Paragraph != null);
+            Invariant.Assert(start.Paragraph is not null);
             Invariant.Assert(start.Paragraph.ContentEnd.CompareTo(end) < 0);
 
             // Apply to first Paragraph
@@ -2224,14 +2224,14 @@ namespace System.Windows.Documents
             start = start.Paragraph.ElementEnd;
 
             // Apply to last paragraph
-            if (end.Paragraph != null)
+            if (end.Paragraph is not null)
             {
                 SetStructuralInlineProperty(end.Paragraph.ContentStart, end, formattingProperty, value);
                 end = end.Paragraph.ElementStart;
             }
 
             // Now, loop through paragraphs between start and end positions
-            while (start != null && start.CompareTo(end) < 0)
+            while (start is not null && start.CompareTo(end) < 0)
             {
                 if (start.GetPointerContext(LogicalDirection.Backward) == TextPointerContext.ElementStart &&
                     start.Parent is Paragraph)
@@ -2252,7 +2252,7 @@ namespace System.Windows.Documents
         // Returns false if calling ApplyStructuralInlineProperty will throw an InvalidOperationException with the
         // same input parameters.
         //
-        // If property != null, this method will throw an InvalidOperation exception instead of returning false.
+        // If property is not null, this method will throw an InvalidOperation exception instead of returning false.
         private static bool ValidateApplyStructuralInlineProperty(TextPointer start, TextPointer end, DependencyObject commonAncestor, DependencyProperty property)
         {
             if (!(commonAncestor is Inline))
@@ -2284,7 +2284,7 @@ namespace System.Windows.Documents
                 }
             }
 
-            if (property != null && parent != commonAncestor)
+            if (property is not null && parent != commonAncestor)
             {
                 throw new InvalidOperationException(SR.Format(SR.TextRangeEdit_InvalidStructuralPropertyApply, property, nonMergeableAncestor));
             }

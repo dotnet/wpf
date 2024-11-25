@@ -46,7 +46,7 @@ namespace System.Windows.Diagnostics
 
         internal static bool IsXamlSourceInfoEnabled
         {
-            get { return (s_sourceInfoTable != null); }
+            get { return (s_sourceInfoTable is not null); }
         }
 
         static XamlSourceInfoHelper()
@@ -96,7 +96,7 @@ namespace System.Windows.Diagnostics
 
         internal static void SetXamlSourceInfo(object obj, XamlObjectEventArgs args, Uri overrideSourceUri)
         {
-            if (s_sourceInfoTable != null && args != null)
+            if (s_sourceInfoTable is not null && args is not null)
             {
                 Uri sourceUri = overrideSourceUri ?? (Uri)s_sourceBamlUriProperty.GetValue(args);
                 int elementLineNumber = (int)s_elementLineNumberProperty.GetValue(args);
@@ -109,7 +109,7 @@ namespace System.Windows.Diagnostics
         internal static void SetXamlSourceInfo(object obj, Uri sourceUri, int elementLineNumber, int elementLinePosition)
         {
             // Some BAML content - like system resources or Release builds - contains fake source info of line=0, pos=0. Ignore it.
-            if (s_sourceInfoTable != null && obj != null && !(elementLineNumber == 0 && elementLinePosition == 0))
+            if (s_sourceInfoTable is not null && obj is not null && !(elementLineNumber == 0 && elementLinePosition == 0))
             {
                 // We should not store basic values like strings, enums, numbers, etc.
                 if (obj is string || obj.GetType().IsValueType)
@@ -136,7 +136,7 @@ namespace System.Windows.Diagnostics
         {
             // ConditionalWeakTable is thread safe
             XamlSourceInfo info = null;
-            if (s_sourceInfoTable != null && obj != null && s_sourceInfoTable.TryGetValue(obj, out info))
+            if (s_sourceInfoTable is not null && obj is not null && s_sourceInfoTable.TryGetValue(obj, out info))
             {
                 return info;
             }

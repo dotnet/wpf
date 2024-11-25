@@ -37,8 +37,8 @@ namespace System.Windows.Input.Manipulations
         {
             Debug.Assert(Validations.IsFinite(originX), "originX should be finite");
             Debug.Assert(Validations.IsFinite(originY), "originY should be finite");
-            Debug.Assert(velocities != null, "velocities should not be null");
-            Debug.Assert(total != null, "total should not be null");
+            Debug.Assert(velocities is not null, "velocities should not be null");
+            Debug.Assert(total is not null, "total should not be null");
             this.originX = originX;
             this.originY = originY;
             this.velocities = velocities;

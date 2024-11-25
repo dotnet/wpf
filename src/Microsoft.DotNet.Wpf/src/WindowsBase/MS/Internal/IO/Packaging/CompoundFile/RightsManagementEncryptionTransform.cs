@@ -70,15 +70,15 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             TransformEnvironment transformEnvironment
             )
         {
-            Debug.Assert(transformEnvironment != null);
+            Debug.Assert(transformEnvironment is not null);
             
             Stream instanceDataStream = transformEnvironment.GetPrimaryInstanceData();
 
-            Debug.Assert(instanceDataStream != null, SR.NoPublishLicenseStream);
+            Debug.Assert(instanceDataStream is not null, SR.NoPublishLicenseStream);
 
             _useLicenseStorage = transformEnvironment.GetInstanceDataStorage();
 
-            Debug.Assert(_useLicenseStorage != null, SR.NoUseLicenseStorage);
+            Debug.Assert(_useLicenseStorage is not null, SR.NoUseLicenseStorage);
 
             // Create a wrapper that manages persistence and comparison of FormatVersion
             // in our InstanceData stream.  We can read/write to this stream as needed (though CompressionTransform
@@ -255,13 +255,13 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             // (and include them in the header length).
             //
             Int32 headerLen = CU.Int32Size;
-            if (_publishLicenseHeaderExtraBytes != null)
+            if (_publishLicenseHeaderExtraBytes is not null)
             {
                 checked { headerLen += _publishLicenseHeaderExtraBytes.Length; }
             }
             utf8Writer.Write(headerLen);
 
-            if (_publishLicenseHeaderExtraBytes != null)
+            if (_publishLicenseHeaderExtraBytes is not null)
             {
                 _publishLicenseStream.Write(
                     _publishLicenseHeaderExtraBytes,
@@ -431,7 +431,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             get
             {
-                return      (_cryptoProvider != null) 
+                return      (_cryptoProvider is not null) 
                             && 
                                 (_cryptoProvider.CanDecrypt ||_cryptoProvider.CanEncrypt);
             }
@@ -779,7 +779,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             }
 
             ContentUser userDesired = lulfup.User;
-            Debug.Assert(userDesired != null);
+            Debug.Assert(userDesired is not null);
 
             ContentUser userFromStream = null;
             using (Stream stream = si.GetStream(FileMode.Open, FileAccess.Read))

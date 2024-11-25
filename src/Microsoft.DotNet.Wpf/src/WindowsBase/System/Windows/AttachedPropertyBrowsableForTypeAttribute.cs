@@ -135,7 +135,7 @@ namespace System.Windows
             }
 
 
-            if (_dTargetType != null && _dTargetType.IsInstanceOfType(d)) 
+            if (_dTargetType is not null && _dTargetType.IsInstanceOfType(d)) 
             {
                 return true;
             }

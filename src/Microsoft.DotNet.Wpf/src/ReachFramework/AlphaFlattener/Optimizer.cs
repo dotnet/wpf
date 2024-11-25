@@ -85,7 +85,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                             // clip cluster to this clipped primitive. we must have geometry information,
                             // otherwise the primitive will be clipped away.
-                            Debug.Assert(geometry != null, "No geometry available for primitive");
+                            Debug.Assert(geometry is not null, "No geometry available for primitive");
 
                             if (clip is null)
                             {
@@ -174,7 +174,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 //
                 for (int primIndex = 0; primIndex < addedPrimitives.Length; primIndex++)
                 {
-                    if (!addedPrimitives[primIndex] && commands[primIndex] != null)
+                    if (!addedPrimitives[primIndex] && commands[primIndex] is not null)
                     {
                         PrimitiveInfo primitive = commands[primIndex];
 
@@ -271,11 +271,11 @@ namespace Microsoft.Internal.AlphaFlattener
             }
 
             // Add all primitives covered by i recursively
-            if ((underlay != null) && (underlay[i] != null))
+            if ((underlay is not null) && (underlay[i] is not null))
             {
                 foreach (int j in underlay[i])
                 {
-                    if ((commands[j] != null) && m_primitives.IndexOf(j) < 0)
+                    if ((commands[j] is not null) && m_primitives.IndexOf(j) < 0)
                     {
                         Add(j, underlay, commands, addedPrimitives);
                     }
@@ -322,13 +322,13 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 bool rasterize = true;
 
-                if (gp != null)
+                if (gp is not null)
                 {
                     double complexity = 1;
 
                     Geometry geo = gp.Geometry;
 
-                    if (geo != null)
+                    if (geo is not null)
                     {
                         complexity = Utility.GetGeometryPointCount(geo);
 
@@ -356,11 +356,11 @@ namespace Microsoft.Internal.AlphaFlattener
                         }
                     }
 
-                    if (bp != null)
+                    if (bp is not null)
                     {
                         Brush b = bp.Brush;
 
-                        if ((b != null) && ((b is SolidColorBrush) || (b is LinearGradientBrush)))
+                        if ((b is not null) && ((b is SolidColorBrush) || (b is LinearGradientBrush)))
                         {
                             // SolidColorBrush does not need full rasterization
                             // Vertical/Horizontal linear gradient brush does not need full rasterization
@@ -403,7 +403,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 PrimitiveInfo pi = commands[i];
 
                 // When disjoint is true (flattening a subtree), add all primitives to a single cluster
-                if ((pi != null) && (disjoint || !pi.primitive.IsOpaque) && !addedPrimitives[i])
+                if ((pi is not null) && (disjoint || !pi.primitive.IsOpaque) && !addedPrimitives[i])
                 {
                     Rect bounds = pi.GetClippedBounds();
 

@@ -510,14 +510,14 @@ namespace System.IO.Packaging
             catch (IOException ex)
             {
                 COMException comException = ex.InnerException as COMException;
-                if (comException != null && comException.ErrorCode == STG_E_FILEALREADYEXISTS)
+                if (comException is not null && comException.ErrorCode == STG_E_FILEALREADYEXISTS)
                     return false;
 
                 throw;  // Any other kind of IOException is a real error.
             }
             finally
             {
-                if (root != null)
+                if (root is not null)
                 {
                     root.Close();
                 }
@@ -567,14 +567,14 @@ namespace System.IO.Packaging
             catch (IOException ex)
             {
                 COMException comException = ex.InnerException as COMException;
-                if (comException != null && comException.ErrorCode == STG_E_FILEALREADYEXISTS)
+                if (comException is not null && comException.ErrorCode == STG_E_FILEALREADYEXISTS)
                     return false;
 
                 throw;  // Any other kind of IOException is a real error.
             }
             finally
             {
-                if (root != null)
+                if (root is not null)
                 {
                     root.Close();
                 }
@@ -594,17 +594,17 @@ namespace System.IO.Packaging
             // Since _package is only initialized when the client calls GetPackage, it might
             // not be set when the client calls Flush, so we have to check.
             //
-            if (_package != null)
+            if (_package is not null)
             {
                 _package.Flush();
             }
 
-            if (_packageStream != null)
+            if (_packageStream is not null)
             {
                 _packageStream.Flush();
             }
 
-            Invariant.Assert(_root != null, "The envelope cannot be null");
+            Invariant.Assert(_root is not null, "The envelope cannot be null");
 
             _root.Flush();
         }
@@ -780,7 +780,7 @@ namespace System.IO.Packaging
             EnsurePackageStream();
             _handedOutPackageStream = true;
 
-            if (_package != null)
+            if (_package is not null)
             {
                 try
                 {
@@ -884,7 +884,7 @@ namespace System.IO.Packaging
             // We just defined this transform, so it must exist.
             //
             Debug.Assert(
-                rmet != null,
+                rmet is not null,
                 "RightsManagementEncryptionTransform not found"
                 );
 
@@ -924,11 +924,11 @@ namespace System.IO.Packaging
             foreach (IDataTransform dataTransform in transforms)
             {
                 string id = dataTransform.TransformIdentifier as string;
-                if (id != null &&
+                if (id is not null &&
                     string.Equals(id, RightsManagementEncryptionTransform.ClassTransformIdentifier, StringComparison.OrdinalIgnoreCase))
                 {
                     // Do not allow more than one RM Transform
-                    if (rmet != null)
+                    if (rmet is not null)
                     {
                         throw new FileFormatException(SR.MultipleRightsManagementEncryptionTransformFound);
                     }
@@ -1036,7 +1036,7 @@ namespace System.IO.Packaging
                         // might have opened the compound file just to look at the properties, and
                         // never even opened the package.
                         //
-                        if (_package != null)
+                        if (_package is not null)
                         {
                             _package.Close();
                         }
@@ -1047,7 +1047,7 @@ namespace System.IO.Packaging
 
                         try
                         {
-                            if (_packageStream != null)
+                            if (_packageStream is not null)
                             {
                                 _packageStream.Close();
                             }
@@ -1058,7 +1058,7 @@ namespace System.IO.Packaging
 
                             try
                             {
-                                if (_packageProperties != null)
+                                if (_packageProperties is not null)
                                 {
                                     _packageProperties.Dispose();
                                 }
@@ -1069,7 +1069,7 @@ namespace System.IO.Packaging
 
                                 try
                                 {
-                                    if (_root != null)
+                                    if (_root is not null)
                                     {
                                         _root.Close();
                                     }
@@ -1139,7 +1139,7 @@ namespace System.IO.Packaging
                                                 _dataSpaceName
                                                 );
 
-            if (packageStream != null)
+            if (packageStream is not null)
             {
                 //copy the stream
 

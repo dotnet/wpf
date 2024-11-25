@@ -61,7 +61,7 @@ namespace MS.Internal
         public object UnwrapKey(object key)
         {
             EqualityWeakReference keyRef = key as EqualityWeakReference;
-            return (keyRef != null) ? keyRef.Target : null;
+            return (keyRef is not null) ? keyRef.Target : null;
         }
 
         /// <devdoc>
@@ -110,7 +110,7 @@ namespace MS.Internal
                 foreach (object o in Keys)
                 {
                     EqualityWeakReference wr = o as EqualityWeakReference;
-                    if (wr != null && !wr.IsAlive)
+                    if (wr is not null && !wr.IsAlive)
                     {
                         if (cleanupList is null)
                         {
@@ -121,7 +121,7 @@ namespace MS.Internal
                     }
                 }
 
-                if (cleanupList != null)
+                if (cleanupList is not null)
                 {
                     foreach (object o in cleanupList)
                     {
@@ -143,24 +143,24 @@ namespace MS.Internal
                     return y is null;
                 }
 
-                if (y != null && x.GetHashCode() == y.GetHashCode())
+                if (y is not null && x.GetHashCode() == y.GetHashCode())
                 {
                     EqualityWeakReference wX = x as EqualityWeakReference;
                     EqualityWeakReference wY = y as EqualityWeakReference;
 
                     //Both WeakReferences are gc'd and they both had the same hash
                     //Since this is only used in Weak Hash table races are not really an issue.
-                    if (wX!= null && wY != null && !wY.IsAlive && !wX.IsAlive)
+                    if (wX!= null && wY is not null && !wY.IsAlive && !wX.IsAlive)
                     {
                         return true;
                     }
 
-                    if (wX != null)
+                    if (wX is not null)
                     {
                         x = wX.Target;
                     }
 
-                    if (wY != null)
+                    if (wY is not null)
                     {
                         y = wY.Target;
                     }

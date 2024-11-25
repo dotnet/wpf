@@ -98,7 +98,7 @@ internal class StreamDocument<T> : Document where T : StreamProxy
         try
         {
             // closing in revers order of creation
-            if (DestinationProxy != null)
+            if (DestinationProxy is not null)
             {
                 if (DestinationProxy == SourceProxy)
                 {
@@ -112,7 +112,7 @@ internal class StreamDocument<T> : Document where T : StreamProxy
         {
             try
             {
-                if (WorkspaceProxy != null)
+                if (WorkspaceProxy is not null)
                 {
                     WorkspaceProxy.Close();
                     WorkspaceProxy = null;
@@ -120,7 +120,7 @@ internal class StreamDocument<T> : Document where T : StreamProxy
             }
             finally
             {
-                if (SourceProxy != null)
+                if (SourceProxy is not null)
                 {
                     SourceProxy.Close();
                     SourceProxy = null;

@@ -77,7 +77,7 @@ namespace System.Windows.Input
                 // Get all elements bound to this key and remove this element
                 ArrayList elements = (ArrayList)akm._keyToElements[key];
 
-                if (elements != null)
+                if (elements is not null)
                 {
                     PurgeDead(elements, element);
                     if (elements.Count == 0)
@@ -100,7 +100,7 @@ namespace System.Windows.Input
 
             AccessKeyManager akm = AccessKeyManager.Current;
             List<IInputElement> targets = akm.GetTargetsForScope(scope, key, null, AccessKeyInformation.Empty);
-            return (targets != null && targets.Count > 0);
+            return (targets is not null && targets.Count > 0);
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace System.Windows.Input
 
         private ProcessKeyResult ProcessKey(List<IInputElement> targets, string key, bool existsElsewhere, bool userInitiated)
         {
-            if (targets != null)
+            if (targets is not null)
             {
                 bool oneUIElement = true;
                 UIElement invokeUIElement = null;
@@ -250,7 +250,7 @@ namespace System.Windows.Input
                 for (int i = 0; i < targets.Count; i++)
                 {
                     UIElement target = targets[i] as UIElement;
-                    Debug.Assert(target != null, "Targets should only be UIElements");
+                    Debug.Assert(target is not null, "Targets should only be UIElements");
                     if (!target.IsEnabled)
                         continue;
 
@@ -274,7 +274,7 @@ namespace System.Windows.Input
                     lastWasAccessed = target.HasEffectiveKeyboardFocus;
                 }
 
-                if (invokeUIElement != null)
+                if (invokeUIElement is not null)
                 {
                     AccessKeyEventArgs args = new AccessKeyEventArgs(key, !oneUIElement || existsElsewhere /* == isMultiple */,userInitiated);
                     try
@@ -302,7 +302,7 @@ namespace System.Windows.Input
                 text = e.SystemText;
             }
 
-            if ((text != null) && (text.Length > 0))
+            if ((text is not null) && (text.Length > 0))
             {
                 if (ProcessKeyForSender(e.OriginalSource, text, false /* existsElsewhere */,e.UserInitiated) != ProcessKeyResult.NoMatch)
                 {
@@ -327,7 +327,7 @@ namespace System.Windows.Input
                      break;
             }
 
-            if (text != null)
+            if (text is not null)
             {
                 if (ProcessKeyForSender(e.OriginalSource, text, false /* existsElsewhere */,e.UserInitiated) != ProcessKeyResult.NoMatch)
                 {
@@ -411,7 +411,7 @@ namespace System.Windows.Input
                 {
                     // This is the same element that sent the event so it must be in the same scope.  
                     // Just add it to the final targets
-                    if (senderInfo.target != null)
+                    if (senderInfo.target is not null)
                     {
                         finalTargets.Add(senderInfo.target);
                     }
@@ -430,7 +430,7 @@ namespace System.Windows.Input
         private AccessKeyInformation GetInfoForElement(IInputElement element, string key)
         {
             AccessKeyInformation info = new AccessKeyInformation();
-            if (element != null)
+            if (element is not null)
             {
                 AccessKeyPressedEventArgs args = new AccessKeyPressedEventArgs(key);
 
@@ -457,11 +457,11 @@ namespace System.Windows.Input
             // Use internal helpers to try to find the source of the element.
             // Because IInputElements can move around without notification we need to
             // look up the source every time.
-            if (elementDO != null)
+            if (elementDO is not null)
             {
                 DependencyObject containingVisual = InputElement.GetContainingVisual(elementDO);
 
-                if (containingVisual != null)
+                if (containingVisual is not null)
                 {
                     source = PresentationSource.CriticalFromVisual(containingVisual);
                 }
@@ -496,7 +496,7 @@ namespace System.Windows.Input
             DependencyObject uielement = InputElement.GetContainingUIElement((DependencyObject)element);
 
             // For an element to be a valid target it must be visible and enabled
-            if (uielement != null 
+            if (uielement is not null 
                 && IsVisible(uielement)
                 && IsEnabled(uielement))
             {
@@ -508,13 +508,13 @@ namespace System.Windows.Input
 
         private static bool IsVisible(DependencyObject element)
         {
-            while (element != null)
+            while (element is not null)
             {
                 Visibility visibility;
                 UIElement uiElem = element as UIElement;
                 UIElement3D uiElem3D = element as UIElement3D;
                 
-                if (uiElem != null)
+                if (uiElem is not null)
 
                 {
                     visibility = uiElem.Visibility;
@@ -667,9 +667,9 @@ namespace System.Windows.Input
         {
             // See what the local value for AccessKeyElement is first and start with that.
             WeakReference cachedElementWeakRef = (WeakReference)d.GetValue(AccessKeyElementProperty);
-            IInputElement accessKeyElement = (cachedElementWeakRef != null) ? (IInputElement)cachedElementWeakRef.Target : null;
+            IInputElement accessKeyElement = (cachedElementWeakRef is not null) ? (IInputElement)cachedElementWeakRef.Target : null;
 
-            if (accessKeyElement != null)
+            if (accessKeyElement is not null)
             {
                 // First figure out if the target of accessKeyElement is still "d", then go find
                 // the "primary" character for the accessKeyElement.  
@@ -713,14 +713,14 @@ namespace System.Windows.Input
                     WeakReference currentElementWeakRef = (WeakReference)elements[i];
                     IInputElement currentElement = (IInputElement)currentElementWeakRef.Target;
 
-                    if (currentElement != null)
+                    if (currentElement is not null)
                     {
                         AccessKeyPressedEventArgs accessKeyPressedEventArgs = new AccessKeyPressedEventArgs();
                         currentElement.RaiseEvent(accessKeyPressedEventArgs);
 
                         // If the target was non-null, cache the access key element on the target.
                         // if the target matches "d", return the current character.
-                        if (accessKeyPressedEventArgs.Target != null)
+                        if (accessKeyPressedEventArgs.Target is not null)
                         {
                             accessKeyPressedEventArgs.Target.SetValue(AccessKeyElementProperty, currentElementWeakRef);
 

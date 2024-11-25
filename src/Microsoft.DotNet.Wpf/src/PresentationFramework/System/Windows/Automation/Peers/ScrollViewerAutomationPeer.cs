@@ -273,7 +273,7 @@ namespace System.Windows.Automation.Peers
             get 
             { 
                 ScrollViewer owner = (ScrollViewer)Owner;
-                return owner.ScrollInfo != null && DoubleUtil.GreaterThan(owner.ExtentWidth, owner.ViewportWidth); 
+                return owner.ScrollInfo is not null && DoubleUtil.GreaterThan(owner.ExtentWidth, owner.ViewportWidth); 
             }
         }
         private bool VerticallyScrollable
@@ -281,7 +281,7 @@ namespace System.Windows.Automation.Peers
             get 
             { 
                 ScrollViewer owner = (ScrollViewer)Owner;
-                return owner.ScrollInfo != null && DoubleUtil.GreaterThan(owner.ExtentHeight, owner.ViewportHeight); 
+                return owner.ScrollInfo is not null && DoubleUtil.GreaterThan(owner.ExtentHeight, owner.ViewportHeight); 
             }
         }
 

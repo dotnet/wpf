@@ -70,7 +70,7 @@ namespace MS.Internal.IO.Packaging
             {
                 // Attributes count and array should match.
                 // This has already been checked for by XpsFilter.
-                Invariant.Assert(aAttributes != null);
+                Invariant.Assert(aAttributes is not null);
 
                 ManagedFullPropSpec[] initAttributes = new ManagedFullPropSpec[checked((int)cAttributes)];
 

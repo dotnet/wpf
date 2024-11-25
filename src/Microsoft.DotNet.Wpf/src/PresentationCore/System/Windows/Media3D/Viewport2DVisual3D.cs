@@ -63,7 +63,7 @@ namespace System.Windows.Media.Media3D
             Point3D[] p = new Point3D[3];
             Point[] uv = new Point[3];
 
-            if (positions != null && textureCoords != null)
+            if (positions is not null && textureCoords is not null)
             {
                 if (triIndices is null || triIndices.Count == 0)
                 {
@@ -185,7 +185,7 @@ namespace System.Windows.Media.Media3D
 
             // try to cast to a RaymeshGeometry3DHitTestResult
             RayMeshGeometry3DHitTestResult rayMeshResult = rayHitResult as RayMeshGeometry3DHitTestResult;
-            if (rayMeshResult != null)
+            if (rayMeshResult is not null)
             {
                 // we can now extract the mesh and visual for the object we hit
                 MeshGeometry3D geom = rayMeshResult.MeshHit;
@@ -205,7 +205,7 @@ namespace System.Windows.Media.Media3D
                 // texture coordinates of the three vertices hit
                 // in the case that no texture coordinates are supplied we will simply
                 // treat it as if no intersection occurred
-                if (textureCoordinates != null &&
+                if (textureCoordinates is not null &&
                     index1 < textureCoordinates.Count &&
                     index2 < textureCoordinates.Count &&
                     index3 < textureCoordinates.Count)
@@ -262,14 +262,14 @@ namespace System.Windows.Media.Media3D
 
             // We clone the material so that we can modify parts of it without affecting the
             // original material that it came from.
-            if (material != null)
+            if (material is not null)
             {
                 material = material.CloneCurrentValue();
             }
 
             ((GeometryModel3D)Visual3DModel).Material = material;
             
-            if (material != null)
+            if (material is not null)
             {
                 SwapInCyclicBrush(material);
             }       
@@ -337,7 +337,7 @@ namespace System.Windows.Media.Media3D
                 // will set us as the IC.
                 //
 
-                if (viewport2DVisual3D.CacheMode as BitmapCache != null)
+                if (viewport2DVisual3D.CacheMode as BitmapCache is not null)
                 {
                     viewport2DVisual3D.InternalBitmapCacheBrush.Target = newValue;
                     Debug.Assert((newValue is null || newValue.InheritanceContext is null), 
@@ -375,7 +375,7 @@ namespace System.Windows.Media.Media3D
                 return;
             }
 
-            if (child._parent != null)
+            if (child._parent is not null)
             {
                 throw new ArgumentException(SR.Visual_HasParent);
             }
@@ -479,7 +479,7 @@ namespace System.Windows.Media.Media3D
             Stack<Material> materialStack = new Stack<Material>();
             materialStack.Push(material);
 
-            Brush internalBrush = (CacheMode as BitmapCache != null) ? (Brush)InternalBitmapCacheBrush : (Brush)InternalVisualBrush;
+            Brush internalBrush = (CacheMode as BitmapCache is not null) ? (Brush)InternalBitmapCacheBrush : (Brush)InternalVisualBrush;
             
             while (materialStack.Count > 0)
             {
@@ -525,7 +525,7 @@ namespace System.Windows.Media.Media3D
                     // iterate over the children and put them on the stack of materials to modify
                     MaterialCollection children = matGroup.Children;
                     
-                    if (children != null)
+                    if (children is not null)
                     {
                         for (int i=0, count = children.Count; i < count; i++)
                         {
@@ -595,10 +595,10 @@ namespace System.Windows.Media.Media3D
                     Debug.Assert(Geometry is null || Geometry is MeshGeometry3D);
                     
                     MeshGeometry3D geometry = Geometry as MeshGeometry3D;
-                    if (geometry != null)
+                    if (geometry is not null)
                     {
                         _positionsCache = geometry.Positions;
-                        if (_positionsCache != null)
+                        if (_positionsCache is not null)
                         {
                             _positionsCache = (Point3DCollection)_positionsCache.GetCurrentValueAsFrozen();
                         }
@@ -623,10 +623,10 @@ namespace System.Windows.Media.Media3D
                     Debug.Assert(Geometry is null || Geometry is MeshGeometry3D);
                     
                     MeshGeometry3D geometry = Geometry as MeshGeometry3D;
-                    if (geometry != null)
+                    if (geometry is not null)
                     {
                         _textureCoordinatesCache= geometry.TextureCoordinates;
-                        if (_textureCoordinatesCache != null)
+                        if (_textureCoordinatesCache is not null)
                         {
                             _textureCoordinatesCache = (PointCollection)_textureCoordinatesCache.GetCurrentValueAsFrozen();
                         }
@@ -651,10 +651,10 @@ namespace System.Windows.Media.Media3D
                     Debug.Assert(Geometry is null || Geometry is MeshGeometry3D);
                     
                     MeshGeometry3D geometry = Geometry as MeshGeometry3D;
-                    if (geometry != null)
+                    if (geometry is not null)
                     {
                         _triangleIndicesCache = geometry.TriangleIndices;
-                        if (_triangleIndicesCache != null)
+                        if (_triangleIndicesCache is not null)
                         {
                             _triangleIndicesCache = (Int32Collection)_triangleIndicesCache.GetCurrentValueAsFrozen();
                         }
@@ -859,7 +859,7 @@ namespace System.Windows.Media.Media3D
             get
             {
                 // Call the right virtual method.
-                return (Visual != null ? 1 : 0);
+                return (Visual is not null ? 1 : 0);
             }
         }
 

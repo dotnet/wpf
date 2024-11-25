@@ -136,7 +136,7 @@ namespace System.Windows.Baml2006
                 if(bamlType is null)
                 {
                     bamlType = CreateKnownBamlType(typeId, true, true);
-                    Debug.Assert(bamlType != null);
+                    Debug.Assert(bamlType is not null);
                     _knownBamlTypes[typeId] = bamlType;
                     
                     _masterTypeTable.Add(bamlType.UnderlyingType, bamlType);
@@ -166,7 +166,7 @@ namespace System.Windows.Baml2006
                 if (bamlMember is null)
                 {
                     bamlMember = CreateKnownMember(memberId);
-                    Debug.Assert(bamlMember != null);
+                    Debug.Assert(bamlMember is not null);
                     _knownBamlMembers[memberId] = bamlMember;
 
                     //_masterTypeTable.Add(bamlType.UnderlyingType, bamlType);
@@ -219,21 +219,21 @@ namespace System.Windows.Baml2006
                     // Then check if it is one of the Known Types.
                     // KnowTypes created by name need to be checked for an exact match.
                     xamlType = CreateKnownBamlType(type.Name, true, true);
-                    if (xamlType is null && _themeHelpers != null)
+                    if (xamlType is null && _themeHelpers is not null)
                     {
                         foreach (ThemeKnownTypeHelper helper in _themeHelpers)
                         {
                             xamlType = helper.GetKnownXamlType(type.Name);
-                            if (xamlType != null && xamlType.UnderlyingType == type)
+                            if (xamlType is not null && xamlType.UnderlyingType == type)
                             {
                                 break;
                             }
                         }
                     }
-                    if (xamlType != null && xamlType.UnderlyingType == type)
+                    if (xamlType is not null && xamlType.UnderlyingType == type)
                     {
                         WpfKnownType bamlType = xamlType as WpfKnownType;
-                        if (bamlType != null)
+                        if (bamlType is not null)
                         {
                             _knownBamlTypes[bamlType.BamlNumber] = bamlType;
                         }
@@ -298,11 +298,11 @@ namespace System.Windows.Baml2006
             }
             else
             {
-                if (namespaceMaps != null && namespaceMaps.Count > 0)
+                if (namespaceMaps is not null && namespaceMaps.Count > 0)
                 {
                     // This DO was loaded with a custom XamlTypeMapper. Try the custom mappings first.
                     Type result = System.Windows.Markup.XamlTypeMapper.GetTypeFromName(prefixedName, element);
-                    if (result != null)
+                    if (result is not null)
                     {
                         return result;
                     }
@@ -312,7 +312,7 @@ namespace System.Windows.Baml2006
             if (XamlTypeName.TryParse(prefixedName, prefixDictionary, out xamlTypeName))
             {
                 XamlType xamlType = GetXamlType(xamlTypeName);
-                if (xamlType != null)
+                if (xamlType is not null)
                 {
                     return xamlType.UnderlyingType;
                 }

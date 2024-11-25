@@ -68,7 +68,7 @@ namespace MS.Internal.Printing.Configuration
                 this._deviceName = info.pPrinterName;
                 this._driverName = info.pDriverName;
                 this._portName = info.pPortName;
-                if (info.pDevMode != null)
+                if (info.pDevMode is not null)
                 {
                     this._driverVersion = info.pDevMode.DriverVersion;
                 }
@@ -106,7 +106,7 @@ namespace MS.Internal.Printing.Configuration
             InternalPrintTicket internalTicket = null;
             try
             {
-                internalTicket = (printTicket != null) ? new InternalPrintTicket(printTicket) : null;
+                internalTicket = (printTicket is not null) ? new InternalPrintTicket(printTicket) : null;
             }
             catch (XmlException xmlException)
             {
@@ -267,11 +267,11 @@ namespace MS.Internal.Printing.Configuration
             DevModeFields supportedFields = DevModeFields.All;
             DevMode defaultDevMode = GetDEVMODE(BaseDevModeType.PrinterDefault);
 
-            InternalPrintTicket baseTicket = (basePrintTicket != null) ? new InternalPrintTicket(basePrintTicket) : null;
+            InternalPrintTicket baseTicket = (basePrintTicket is not null) ? new InternalPrintTicket(basePrintTicket) : null;
             DevMode baseDevMode = defaultDevMode.Clone();
             PrintTicketToDevMode(baseDevMode, baseTicket, scope, supportedFields);
 
-            InternalPrintTicket deltaTicket = (deltaPrintTicket != null) ? new InternalPrintTicket(deltaPrintTicket) : null;
+            InternalPrintTicket deltaTicket = (deltaPrintTicket is not null) ? new InternalPrintTicket(deltaPrintTicket) : null;
             DevMode deltaDevMode = defaultDevMode.Clone();
             PrintTicketToDevMode(deltaDevMode, deltaTicket, scope, supportedFields);
 
@@ -332,7 +332,7 @@ namespace MS.Internal.Printing.Configuration
         {
             VerifyAccess();
 
-            InternalPrintTicket ticket = (printTicket != null) ? new InternalPrintTicket(printTicket) : null;
+            InternalPrintTicket ticket = (printTicket is not null) ? new InternalPrintTicket(printTicket) : null;
 
             DevMode result = GetDEVMODE(baseType);
 
@@ -354,7 +354,7 @@ namespace MS.Internal.Printing.Configuration
 
         public override void Release()
         {
-            if (_deviceHandle != null)
+            if (_deviceHandle is not null)
             {
                 _deviceHandle.Dispose();
             }
@@ -468,11 +468,11 @@ namespace MS.Internal.Printing.Configuration
 
         private void PrintTicketToDevMode(DevMode devMode, InternalPrintTicket ticket, PrintTicketScope scope, DevModeFields supportedFields)
         {
-            if (ticket != null)
+            if (ticket is not null)
             {
                 // Apply the DEVMODE snapshot from the print ticket to our starting DEVMODE, if supported.
                 DevMode ticketDevMode = PrintSchemaShim.TryGetEmbeddedDevMode(ticket, this.OemDriverNamespace);
-                if (ticketDevMode != null)
+                if (ticketDevMode is not null)
                 {
                     devMode.CompatibleCopy(ticketDevMode);
                 }
@@ -552,7 +552,7 @@ namespace MS.Internal.Printing.Configuration
                 case BaseDevModeType.UserDefault:
                 {
                     PRINTER_INFO_8_AND_9 info = GetPrinterInfo8Or9W(true);
-                    if (info.pDevMode != null)
+                    if (info.pDevMode is not null)
                     {
                         result = info.pDevMode;
                     }
@@ -664,7 +664,7 @@ namespace MS.Internal.Printing.Configuration
 
             if (disposing)
             {
-                if (_deviceHandle != null)
+                if (_deviceHandle is not null)
                 {
                     _deviceHandle.Dispose();
                     _deviceHandle = null;

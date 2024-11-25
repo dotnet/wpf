@@ -107,7 +107,7 @@ namespace System.Xaml.Schema
         {
             bool hasMoreThanOneICollection = false;
             Type genericICollection = GetGenericInterface(type, typeof(ICollection<>), out hasMoreThanOneICollection);
-            if (genericICollection != null)
+            if (genericICollection is not null)
             {
                 addMethod = genericICollection.GetMethod(KnownStrings.Add);
                 return true;
@@ -129,7 +129,7 @@ namespace System.Xaml.Schema
                 // Look for ICollection<T> implementation
                 if (TryGetICollectionAdder(type, out addMethod))
                 {
-                    if (addMethod != null)
+                    if (addMethod is not null)
                     {
                         return true;
                     }
@@ -148,7 +148,7 @@ namespace System.Xaml.Schema
             {
                 addMethod = IListAddMethod;
             }
-            if (addMethod != null)
+            if (addMethod is not null)
             {
                 return true;
             }
@@ -171,7 +171,7 @@ namespace System.Xaml.Schema
         {
             bool hasMoreThanOneIDictionary = false;
             Type genericIDictionary = GetGenericInterface(type, typeof(IDictionary<,>), out hasMoreThanOneIDictionary);
-            if (genericIDictionary != null)
+            if (genericIDictionary is not null)
             {
                 addMethod = GetPublicMethod(genericIDictionary, KnownStrings.Add, 2);
                 return true;
@@ -193,7 +193,7 @@ namespace System.Xaml.Schema
                 // Look for IDictionary<K,V> implementation
                 if (TryGetIDictionaryAdder(type, out addMethod))
                 {
-                    if (addMethod != null)
+                    if (addMethod is not null)
                     {
                         return true;
                     }
@@ -212,7 +212,7 @@ namespace System.Xaml.Schema
             {
                 addMethod = IDictionaryAddMethod;
             }
-            if (addMethod != null)
+            if (addMethod is not null)
             {
                 return true;
             }
@@ -260,7 +260,7 @@ namespace System.Xaml.Schema
         private static MethodInfo LookupEnumeratorMethod(Type type)
         {
             MethodInfo result = GetMethod(type, KnownStrings.GetEnumerator, Type.EmptyTypes);
-            if ((result != null) && !typeof(IEnumerator).IsAssignableFrom(result.ReturnType))
+            if ((result is not null) && !typeof(IEnumerator).IsAssignableFrom(result.ReturnType))
             {
                 result = null;
             }
@@ -279,7 +279,7 @@ namespace System.Xaml.Schema
             {
                 if (currentInterface.IsGenericType && currentInterface.GetGenericTypeDefinition() == interfaceType)
                 {
-                    if (result != null)
+                    if (result is not null)
                     {
                         // More than one genericType<T> implemented
                         hasMultiple = true;
@@ -295,7 +295,7 @@ namespace System.Xaml.Schema
         {
             MethodInfo result = null;
             MemberInfo[] addMembers = type.GetMember(KnownStrings.Add, MemberTypes.Method, GetBindingFlags(type));
-            if (addMembers != null)
+            if (addMembers is not null)
             {
                 foreach (MemberInfo mi in addMembers)
                 {
@@ -309,7 +309,7 @@ namespace System.Xaml.Schema
                     {
                         continue;
                     }
-                    if (result != null)
+                    if (result is not null)
                     {
                         // More than one Add method
                         hasMoreThanOne = true;
@@ -337,7 +337,7 @@ namespace System.Xaml.Schema
         private static MethodInfo GetMethod(Type type, string name, Type[] argTypes)
         {
             MethodInfo result = type.GetMethod(name, GetBindingFlags(type), null, argTypes, null);
-            if (result != null && !TypeReflector.IsPublicOrInternal(result))
+            if (result is not null && !TypeReflector.IsPublicOrInternal(result))
             {
                 result = null;
             }

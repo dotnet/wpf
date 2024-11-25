@@ -43,7 +43,7 @@ namespace System.Windows.Ink
             /// <param name="renderer">a renderer associated to this visual</param>
             internal StrokeVisual(Stroke stroke, Renderer renderer) : base()
             {
-                Debug.Assert(renderer != null);
+                Debug.Assert(renderer is not null);
 
                 ArgumentNullException.ThrowIfNull(stroke);
 
@@ -288,7 +288,7 @@ namespace System.Windows.Ink
             bool exceptionRaised = false;
 
             // Verify that the visual hasn't been attached already
-            if (_attachedVisuals != null)
+            if (_attachedVisuals is not null)
             {
                 foreach(Visual alreadyAttachedVisual in _attachedVisuals)
                 {
@@ -531,7 +531,7 @@ namespace System.Windows.Ink
         /// </summary>
         private void AttachVisual(StrokeVisual visual, bool buildingStrokeCollection)
         {
-            System.Diagnostics.Debug.Assert(_strokes != null);
+            System.Diagnostics.Debug.Assert(_strokes is not null);
 
             if (visual.Stroke.DrawingAttributes.IsHighlighter)
             {
@@ -583,7 +583,7 @@ namespace System.Windows.Ink
                     Stroke stroke = _strokes[i];
                     if ((stroke.DrawingAttributes.IsHighlighter == false)
                         && (_visuals.TryGetValue(stroke, out precedingVisual) == true)
-                        && (VisualTreeHelper.GetParent(precedingVisual) != null))
+                        && (VisualTreeHelper.GetParent(precedingVisual) is not null))
                     {
                         VisualCollection children = ((ContainerVisual)(VisualTreeHelper.GetParent(precedingVisual))).Children;
                         int index = children.IndexOf(precedingVisual);
@@ -608,16 +608,16 @@ namespace System.Windows.Ink
         private void DetachVisual(Visual visual)
         {
             ContainerVisual parent = (ContainerVisual)(VisualTreeHelper.GetParent(visual));
-            if (parent != null)
+            if (parent is not null)
             {
                 VisualCollection children = parent.Children;
                 children.Remove(visual);
 
                 // If the parent is a childless highlighter, detach it too.
                 HighlighterContainerVisual hcVisual = parent as HighlighterContainerVisual;
-                if (hcVisual != null &&
+                if (hcVisual is not null &&
                     hcVisual.Children.Count == 0 &&
-                    _highlighters != null &&
+                    _highlighters is not null &&
                     _highlighters.ContainsValue(hcVisual))
                 {
                     DetachVisual(hcVisual);
@@ -631,7 +631,7 @@ namespace System.Windows.Ink
         /// </summary>
         private void StartListeningOnStrokeEvents(Stroke stroke)
         {
-            System.Diagnostics.Debug.Assert(stroke != null);
+            System.Diagnostics.Debug.Assert(stroke is not null);
             stroke.Invalidated += new EventHandler(OnStrokeInvalidated);
         }
 
@@ -640,7 +640,7 @@ namespace System.Windows.Ink
         /// </summary>
         private void StopListeningOnStrokeEvents(Stroke stroke)
         {
-            System.Diagnostics.Debug.Assert(stroke != null);
+            System.Diagnostics.Debug.Assert(stroke is not null);
             stroke.Invalidated -= new EventHandler(OnStrokeInvalidated);
         }
 
@@ -652,7 +652,7 @@ namespace System.Windows.Ink
         /// <returns>visual</returns>
         private ContainerVisual GetContainerVisual(DrawingAttributes drawingAttributes)
         {
-            System.Diagnostics.Debug.Assert(drawingAttributes != null);
+            System.Diagnostics.Debug.Assert(drawingAttributes is not null);
 
             HighlighterContainerVisual hcVisual;
             if (drawingAttributes.IsHighlighter)

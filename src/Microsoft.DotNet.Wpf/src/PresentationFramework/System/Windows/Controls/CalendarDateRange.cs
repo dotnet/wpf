@@ -134,7 +134,7 @@ namespace System.Windows.Controls
         private void OnChanging(CalendarDateRangeChangingEventArgs e)
         {
             EventHandler<CalendarDateRangeChangingEventArgs> handler = this.Changing;
-            if (handler != null)
+            if (handler is not null)
             {
                 handler(this, e);
             }
@@ -143,7 +143,7 @@ namespace System.Windows.Controls
         private void OnPropertyChanged(PropertyChangedEventArgs e)
         {
             PropertyChangedEventHandler handler = this.PropertyChanged;
-            if (handler != null)
+            if (handler is not null)
             {
                 handler(this, e);
             }

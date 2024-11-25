@@ -41,7 +41,7 @@ namespace System.Windows.Documents
             /// </summary>
             internal AdornerInfo(Adorner adorner)
             {
-                Invariant.Assert(adorner != null);
+                Invariant.Assert(adorner is not null);
 
                 _adorner = adorner;
             }
@@ -214,7 +214,7 @@ namespace System.Windows.Documents
                 ArrayList adornerInfos = (ArrayList)ElementMap[key];
                 int i = 0;
 
-                if (adornerInfos != null)
+                if (adornerInfos is not null)
                 {
                     while (i < adornerInfos.Count)
                     {
@@ -282,7 +282,7 @@ namespace System.Windows.Documents
         {
             PointHitTestResult result = VisualTreeUtils.AsNearestPointHitTestResult(VisualTreeHelper.HitTest(this, point, false));
 
-            if (result != null && result.VisualHit != null)
+            if (result is not null && result.VisualHit is not null)
             {
                 Visual visual = result.VisualHit;
 
@@ -315,7 +315,7 @@ namespace System.Windows.Documents
 
             Visual parent = VisualTreeHelper.GetParent(visual) as Visual;
 
-            while (parent != null)
+            while (parent is not null)
             {
                 if (parent is AdornerDecorator)
                     return ((AdornerDecorator)parent).AdornerLayer;
@@ -421,7 +421,7 @@ namespace System.Windows.Documents
             for (int i = 0; i < zOrderMapEntries.Length; i++)
             {
                 ArrayList adornerInfos = (ArrayList)zOrderMapEntries[i].Value;
-                Debug.Assert(adornerInfos != null, "No adorners found for element in AdornerLayer._zOrderMap");
+                Debug.Assert(adornerInfos is not null, "No adorners found for element in AdornerLayer._zOrderMap");
 
                 int j = 0;
                 while (j < adornerInfos.Count)
@@ -456,7 +456,7 @@ namespace System.Windows.Documents
             {
                 ArrayList adornerInfos = (ArrayList)zOrderMapEntries[i].Value;
 
-                Debug.Assert(adornerInfos != null, "No adorners found for element in AdornerLayer._zOrderMap");
+                Debug.Assert(adornerInfos is not null, "No adorners found for element in AdornerLayer._zOrderMap");
 
                 int j = 0;
                 while (j < adornerInfos.Count)
@@ -476,7 +476,7 @@ namespace System.Windows.Documents
                         if (index >= 0)
                         {
                             // Get the matrix transform out, skip all non affine transforms
-                            Transform transform = (adornerTransform != null) ? adornerTransform.AffineTransform : null;
+                            Transform transform = (adornerTransform is not null) ? adornerTransform.AffineTransform : null;
                             
                             ((Adorner)(_children[index])).AdornerTransform = transform;
                         }
@@ -485,7 +485,7 @@ namespace System.Windows.Documents
                     {
                         adornerInfo.Adorner.AdornerClip = adornerInfo.Clip;
                     }
-                    else if (adornerInfo.Adorner.AdornerClip != null)
+                    else if (adornerInfo.Adorner.AdornerClip is not null)
                     {
                         adornerInfo.Adorner.AdornerClip = null;
                     }
@@ -532,7 +532,7 @@ namespace System.Windows.Documents
         /// <param name="adornerInfo">AdornerInfo to scrub</param>
         internal void InvalidateAdorner(AdornerInfo adornerInfo)
         {
-            Debug.Assert(adornerInfo != null, "Adorner should not be null");
+            Debug.Assert(adornerInfo is not null, "Adorner should not be null");
             adornerInfo.Adorner.InvalidateMeasure();
             adornerInfo.Adorner.InvalidateVisual();
             adornerInfo.RenderSize = new Size(Double.NaN, Double.NaN);
@@ -637,7 +637,7 @@ namespace System.Windows.Documents
         private void AddAdornerToVisualTree(AdornerInfo adornerInfo, int zOrder)
         {
             Adorner adorner = adornerInfo.Adorner;
-            Debug.Assert(adorner != null);
+            Debug.Assert(adorner is not null);
 
             AddAdornerInfo(_zOrderMap, adornerInfo, zOrder);
 
@@ -709,7 +709,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            Debug.Assert(element != null);
+            Debug.Assert(element is not null);
             ArrayList adornerInfos = ElementMap[element] as ArrayList;
             if (adornerInfos is null)
             {
@@ -732,8 +732,8 @@ namespace System.Windows.Documents
                 if (adornerInfo.Adorner.IsClipEnabled)
                 {
                     clip = GetClipGeometry(adornerInfo.Adorner.AdornedElement, adornerInfo.Adorner);
-                    if (adornerInfo.Clip is null && clip != null || adornerInfo.Clip != null && clip is null ||
-                     (adornerInfo.Clip != null && clip != null && adornerInfo.Clip.Bounds != clip.Bounds))
+                    if (adornerInfo.Clip is null && clip is not null || adornerInfo.Clip is not null && clip is null ||
+                     (adornerInfo.Clip is not null && clip is not null && adornerInfo.Clip.Bounds != clip.Bounds))
                     {
                         clipChanged = true;
                     }
@@ -775,7 +775,7 @@ namespace System.Windows.Documents
             // We only expect one to have been removed on any one call.
             ArrayList removeList = new ArrayList(1);
 
-            if (element != null)
+            if (element is not null)
             {
                 // Make sure element is still beneath the adorner decorator
                 if (!element.IsDescendantOf(adornerLayerParent))
@@ -840,10 +840,10 @@ namespace System.Windows.Documents
                 return null;
             }
 
-            while (element != adornerLayerParent && element != null)
+            while (element != adornerLayerParent && element is not null)
             {
                 Geometry geometry = VisualTreeHelper.GetClip(element);
-                if (geometry != null)
+                if (geometry is not null)
                 {
                     if (combinedGeometry is null)
                     {
@@ -863,7 +863,7 @@ namespace System.Windows.Documents
                 // and if the parent is ever 3D there was a mistake
                 element = (Visual)VisualTreeHelper.GetParent(element);
             }
-            if (combinedGeometry != null)
+            if (combinedGeometry is not null)
             {
                 // transform the last combined geometry up to the top
                 GeneralTransform transform = oldElement.TransformToAncestor(adornerLayerParent);
@@ -904,10 +904,10 @@ namespace System.Windows.Documents
         {
             ArrayList adornerInfos = infoMap[key] as ArrayList;
 
-            if (adornerInfos != null)
+            if (adornerInfos is not null)
             {
                 AdornerInfo adornerInfo = GetAdornerInfo(adornerInfos, adorner);
-                if (adornerInfo != null)
+                if (adornerInfo is not null)
                 {
                     adornerInfos.Remove(adornerInfo);
                     if (adornerInfos.Count == 0)
@@ -922,7 +922,7 @@ namespace System.Windows.Documents
 
         private AdornerInfo GetAdornerInfo(ArrayList adornerInfos, Adorner adorner)
         {
-            if (adornerInfos != null)
+            if (adornerInfos is not null)
             {
                 int i = 0;
 
@@ -979,7 +979,7 @@ namespace System.Windows.Documents
                 matrixTransform = new MatrixTransform(matrix);
                 group.Children.Add(matrixTransform);
 
-                if (sourceTransform != null && sourceTransform != Transform.Identity)
+                if (sourceTransform is not null && sourceTransform != Transform.Identity)
                 {
                     group.Children.Add(sourceTransform);
                 }

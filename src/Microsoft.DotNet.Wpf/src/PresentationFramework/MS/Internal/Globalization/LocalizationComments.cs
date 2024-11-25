@@ -64,7 +64,7 @@ namespace MS.Internal.Globalization
         {
             PropertyComment[] pairs = ParsePropertyComments(input);
 
-            if (pairs != null)
+            if (pairs is not null)
             {
                 for (int i = 0; i < pairs.Length; i++)
                 {
@@ -195,7 +195,7 @@ namespace MS.Internal.Globalization
                 }
             }
 
-            if (currentPair.PropertyName != null || tokenBuffer.Length != 0)
+            if (currentPair.PropertyName is not null || tokenBuffer.Length != 0)
             {
                 // unmatched PropertyName and Value pair
                 throw new FormatException(SR.Format(SR.UnmatchedLocComment, input));
@@ -352,7 +352,7 @@ namespace MS.Internal.Globalization
                 string[] enumNames
                 )
             {
-                Debug.Assert(enumPrefix != null && enumNames != null);
+                Debug.Assert(enumPrefix is not null && enumNames is not null);
                 _enumPrefix = enumPrefix;
                 _enumNames = enumNames;
             }

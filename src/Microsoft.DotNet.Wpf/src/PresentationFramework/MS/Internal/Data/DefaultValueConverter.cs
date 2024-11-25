@@ -83,7 +83,7 @@ namespace MS.Internal.Data
                 // The sourceType here might be a Nullable type: consider using
                 // NullableConverter when appropriate. (uncomment following lines)
                 //Type innerType = Nullable.GetUnderlyingType(sourceType);
-                //if (innerType != null)
+                //if (innerType is not null)
                 //{
                 //    return new NullableConverter(new ObjectTargetConverter(innerType),
                 //                                 innerType, targetType, true, false);
@@ -97,7 +97,7 @@ namespace MS.Internal.Data
                 // The targetType here might be a Nullable type: consider using
                 // NullableConverter when appropriate. (uncomment following lines)
                 //Type innerType = Nullable.GetUnderlyingType(targetType);
-                // if (innerType != null)
+                // if (innerType is not null)
                 // {
                 //     return new NullableConverter(new ObjectSourceConverter(innerType),
                 //                                  sourceType, innerType, false, true);
@@ -118,13 +118,13 @@ namespace MS.Internal.Data
             // but it ends up doing a different conversion than the TypeConverter for the
             // generic's inner type, e.g. bug 1361977
             innerType = Nullable.GetUnderlyingType(sourceType);
-            if (innerType != null)
+            if (innerType is not null)
             {
                 sourceType = innerType;
                 sourceIsNullable = true;
             }
             innerType = Nullable.GetUnderlyingType(targetType);
-            if (innerType != null)
+            if (innerType is not null)
             {
                 targetType = innerType;
                 targetIsNullable = true;
@@ -151,8 +151,8 @@ namespace MS.Internal.Data
 
             // try using the source's type converter
             typeConverter = GetConverter(sourceType);
-            canConvertTo = (typeConverter != null) ? typeConverter.CanConvertTo(targetType) : false;
-            canConvertFrom = (typeConverter != null) ? typeConverter.CanConvertFrom(targetType) : false;
+            canConvertTo = (typeConverter is not null) ? typeConverter.CanConvertTo(targetType) : false;
+            canConvertFrom = (typeConverter is not null) ? typeConverter.CanConvertFrom(targetType) : false;
 
             if ((canConvertTo || targetType.IsAssignableFrom(sourceType)) &&
                 (!targetToSource || canConvertFrom || sourceType.IsAssignableFrom(targetType)))
@@ -163,8 +163,8 @@ namespace MS.Internal.Data
 
             // if that doesn't work, try using the target's type converter
             typeConverter = GetConverter(targetType);
-            canConvertTo = (typeConverter != null) ? typeConverter.CanConvertTo(sourceType) : false;
-            canConvertFrom = (typeConverter != null) ? typeConverter.CanConvertFrom(sourceType) : false;
+            canConvertTo = (typeConverter is not null) ? typeConverter.CanConvertTo(sourceType) : false;
+            canConvertFrom = (typeConverter is not null) ? typeConverter.CanConvertFrom(sourceType) : false;
 
             if ((canConvertFrom || targetType.IsAssignableFrom(sourceType)) &&
                 (!targetToSource || canConvertTo || sourceType.IsAssignableFrom(targetType)))
@@ -181,7 +181,7 @@ namespace MS.Internal.Data
         {
             TypeConverter typeConverter = null;
             WpfKnownType knownType = XamlReader.BamlSharedSchemaContext.GetKnownXamlType(type) as WpfKnownType;
-            if (knownType != null && knownType.TypeConverter != null)
+            if (knownType is not null && knownType.TypeConverter is not null)
             {
                 typeConverter = knownType.TypeConverter.ConverterInstance;
             }
@@ -201,27 +201,27 @@ namespace MS.Internal.Data
             object result = DependencyProperty.UnsetValue;
             string stringValue = o as String;
 
-            if (stringValue != null)
+            if (stringValue is not null)
             {
                 try
                 {
                     MethodInfo mi;
 
-                    if (culture != null && (mi = targetType.GetMethod("Parse",
+                    if (culture is not null && (mi = targetType.GetMethod("Parse",
                                             BindingFlags.Public | BindingFlags.Static,
                                             null,
                                             new Type[] { StringType, typeof(System.Globalization.NumberStyles), typeof(System.IFormatProvider) },
                                             null))
-                                != null)
+                                is not null)
                     {
                         result = mi.Invoke(null, new object[] { stringValue, NumberStyles.Any, culture });
                     }
-                    else if (culture != null && (mi = targetType.GetMethod("Parse",
+                    else if (culture is not null && (mi = targetType.GetMethod("Parse",
                                             BindingFlags.Public | BindingFlags.Static,
                                             null,
                                             new Type[] { StringType, typeof(System.IFormatProvider) },
                                             null))
-                                != null)
+                                is not null)
                     {
                         result = mi.Invoke(null, new object[] { stringValue, culture });
                     }
@@ -230,7 +230,7 @@ namespace MS.Internal.Data
                                             null,
                                             new Type[] { StringType },
                                             null))
-                                != null)
+                                is not null)
                     {
                         result = mi.Invoke(null, new object[] { stringValue });
                     }
@@ -324,7 +324,7 @@ namespace MS.Internal.Data
             }
 
             if (needAssignment &&
-                ((o != null && destinationType.IsAssignableFrom(o.GetType())) ||
+                ((o is not null && destinationType.IsAssignableFrom(o.GetType())) ||
                   (o is null && !destinationType.IsValueType)))
             {
                 value = o;
@@ -333,7 +333,7 @@ namespace MS.Internal.Data
 
             if (TraceData.IsEnabled)
             {
-                if ((culture != null) && (savedEx != null))
+                if ((culture is not null) && (savedEx is not null))
                 {
                     TraceData.TraceAndNotify(TraceEventType.Error,
                         TraceData.DefaultValueConverterFailedForCulture(
@@ -354,7 +354,7 @@ namespace MS.Internal.Data
                 }
             }
 
-            if (needAssignment && savedEx != null)
+            if (needAssignment && savedEx is not null)
                 throw savedEx;
 
             return value;
@@ -582,7 +582,7 @@ namespace MS.Internal.Data
             if (o is null && !_sourceType.IsValueType)
                 return o;
 
-            if (o != null && _sourceType.IsAssignableFrom(o.GetType()))
+            if (o is not null && _sourceType.IsAssignableFrom(o.GetType()))
                 return o;
 
             // if source type is string, use String.Format (string's type converter doesn't
@@ -620,7 +620,7 @@ namespace MS.Internal.Data
         public object Convert(object o, Type type, object parameter, CultureInfo culture)
         {
             // if types are compatible, just pass the value through
-            if ((o != null && _targetType.IsAssignableFrom(o.GetType())) ||
+            if ((o is not null && _targetType.IsAssignableFrom(o.GetType())) ||
                 (o is null && !_targetType.IsValueType))
                 return o;
 
@@ -665,7 +665,7 @@ namespace MS.Internal.Data
             IList il = null;
             IListSource ils = o as IListSource;
 
-            if (ils != null)
+            if (ils is not null)
             {
                 il = ils.GetList();
             }
@@ -748,7 +748,7 @@ namespace MS.Internal.Data
             {
                 if (_cachedBaseUri is null)
                 {
-                    if (_targetElement != null)
+                    if (_targetElement is not null)
                     {
                         // GetBaseUri looks for a optional BaseUriProperty attached DP.
                         // This can cause a re-entrancy if that BaseUri is also data bound.
@@ -774,7 +774,7 @@ namespace MS.Internal.Data
 
         internal void SetTargetElement(DependencyObject target)
         {
-            if (target != null)
+            if (target is not null)
                 _nestingLevel++;
             else
             {

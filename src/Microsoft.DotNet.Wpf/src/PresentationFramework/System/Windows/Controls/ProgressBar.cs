@@ -108,7 +108,7 @@ namespace System.Windows.Controls
 
             // Invalidate automation peer
             ProgressBarAutomationPeer peer = UIElementAutomationPeer.FromElement(progressBar) as ProgressBarAutomationPeer;
-            if (peer != null)
+            if (peer is not null)
             {
                 peer.InvalidatePeer();
             }
@@ -169,7 +169,7 @@ namespace System.Windows.Controls
         // Set the width/height of the contract parts
         private void SetProgressBarIndicatorLength()
         {
-            if (_track != null && _indicator != null)
+            if (_track is not null && _indicator is not null)
             {
                 double min = Minimum;
                 double max = Maximum;
@@ -227,7 +227,7 @@ namespace System.Windows.Controls
         //This creates the repeating animation
         private void UpdateAnimation()
         {
-            if (_glow != null) 
+            if (_glow is not null) 
             {
                 if(IsVisible && (_glow.Width > 0) && (_indicator.Width > 0 ))
                 {                
@@ -342,7 +342,7 @@ namespace System.Windows.Controls
         {
             base.OnApplyTemplate();
 
-            if (_track != null)
+            if (_track is not null)
             {
                 _track.SizeChanged -= OnTrackSizeChanged;
             }
@@ -351,7 +351,7 @@ namespace System.Windows.Controls
             _indicator = GetTemplateChild(IndicatorTemplateName) as FrameworkElement;
             _glow = GetTemplateChild(GlowingRectTemplateName) as FrameworkElement;
             
-            if (_track != null)
+            if (_track is not null)
             {
                 _track.SizeChanged += OnTrackSizeChanged;
             }

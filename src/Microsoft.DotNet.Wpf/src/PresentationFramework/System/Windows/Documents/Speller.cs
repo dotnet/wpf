@@ -51,7 +51,7 @@ namespace System.Windows.Documents
                 ScheduleIdleCallback();
             }
 
-            _defaultCulture = InputLanguageManager.Current != null ? InputLanguageManager.Current.CurrentInputLanguage :
+            _defaultCulture = InputLanguageManager.Current is not null ? InputLanguageManager.Current.CurrentInputLanguage :
                                                                      Thread.CurrentThread.CurrentCulture;
             _defaultComparer = StringComparer.Create(_defaultCulture, true);
         }
@@ -69,7 +69,7 @@ namespace System.Windows.Documents
         // Called by TextEditor to disable spelling.
         internal void Detach()
         {
-            Invariant.Assert(_textEditor != null);
+            Invariant.Assert(_textEditor is not null);
 
             _textEditor.TextContainer.Change -= new TextContainerChangeEventHandler(OnTextContainerChange);
 
@@ -81,7 +81,7 @@ namespace System.Windows.Documents
             }
 
             // Shutdown the highlight layer.
-            if (_highlightLayer != null)
+            if (_highlightLayer is not null)
             {
                 _textEditor.TextContainer.Highlights.RemoveLayer(_highlightLayer);
                 _highlightLayer = null;
@@ -91,7 +91,7 @@ namespace System.Windows.Documents
             _statusTable = null;
 
             // Release our nl6 objects.
-            if (_spellerInterop != null)
+            if (_spellerInterop is not null)
             {
                 _spellerInterop.Dispose();
                 _spellerInterop = null;
@@ -123,7 +123,7 @@ namespace System.Windows.Documents
             }
 
             // Get the error result.
-            if (_statusTable != null &&
+            if (_statusTable is not null &&
                 _statusTable.GetError(position.CreateStaticPointer(), direction, out start, out end))
             {
                 error = new SpellingError(this, start, end);
@@ -228,7 +228,7 @@ namespace System.Windows.Documents
                 // Then search through the error list, clearing any matching
                 // errors.
 
-                if (_statusTable != null)
+                if (_statusTable is not null)
                 {
                     StaticTextPointer pointer = _textEditor.TextContainer.CreateStaticPointerAtOffset(0);
                     ITextPointer errorStart;
@@ -292,7 +292,7 @@ namespace System.Windows.Documents
         // Called when a global state change invalidates all cached errors.
         internal void ResetErrors()
         {
-            if (_statusTable != null)
+            if (_statusTable is not null)
             {
                 _statusTable.MarkDirtyRange(_textEditor.TextContainer.Start, _textEditor.TextContainer.End);
 
@@ -443,7 +443,7 @@ namespace System.Windows.Documents
         // Delayed until the first text change event, or first idle callback.
         private bool EnsureInitialized()
         {
-            if (_spellerInterop != null)
+            if (_spellerInterop is not null)
                 return true;
 
             if (_failedToInit)
@@ -515,7 +515,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            if (_statusTable != null)
+            if (_statusTable is not null)
             {
                 _statusTable.OnTextChange(e);
             }
@@ -540,7 +540,7 @@ namespace System.Windows.Documents
             _pendingIdleCallback = false;
 
             // _textEditor will be null if we've been detached since requesting the callback.
-            if (_textEditor != null &&
+            if (_textEditor is not null &&
                 EnsureInitialized())
             {
                 ITextPointer start;
@@ -565,7 +565,7 @@ namespace System.Windows.Documents
                 while (!status.HasExceededTimeLimit);
 
                 // Schedule any pending work before we yield.
-                if (status != null)
+                if (status is not null)
                 {
                     if (status.HasExceededTimeLimit)
                     {
@@ -634,20 +634,20 @@ namespace System.Windows.Documents
             // Grab the first dirty range.
             GetNextScanRangeRaw(searchStart, out rawStart, out rawEnd);
 
-            if (rawStart != null)
+            if (rawStart is not null)
             {
                 // Skip over the caret and/or IME composition.
                 AdjustScanRangeAroundComposition(rawStart, rawEnd, out start, out end);
             }
 
-            return start != null;
+            return start is not null;
         }
 
         // Finds the next dirty range following searchStart, without considering
         // the current caret or IME composition.
         private void GetNextScanRangeRaw(ITextPointer searchStart, out ITextPointer start, out ITextPointer end)
         {
-            Invariant.Assert(searchStart != null);
+            Invariant.Assert(searchStart is not null);
 
             start = null;
             end = null;
@@ -655,7 +655,7 @@ namespace System.Windows.Documents
             // Grab the first dirty range.
             _statusTable.GetFirstDirtyRange(searchStart, out start, out end);
 
-            if (start != null)
+            if (start is not null)
             {
                 Invariant.Assert(start.CompareTo(end) < 0);
 
@@ -826,7 +826,7 @@ namespace System.Windows.Documents
                     _spellerInterop.EnumTextSegments(textMap.Text, textMap.TextLength, new SpellerInteropBase.EnumSentencesCallback(ScanRangeCheckTimeLimitCallback),
                         new SpellerInteropBase.EnumTextSegmentsCallback(ScanTextSegment), new TextMapCallbackData(textMap, status));
 
-                    if (status.TimeoutPosition != null)
+                    if (status.TimeoutPosition is not null)
                     {
                         if (status.TimeoutPosition.CompareTo(end) < 0)
                         {
@@ -1345,7 +1345,7 @@ namespace System.Windows.Documents
                 searchPosition.MoveByOffset(direction == LogicalDirection.Backward ? -ContextBlockSize : +ContextBlockSize);
 
                 // Don't go past closestErrorPosition.
-                if (closestErrorPosition != null)
+                if (closestErrorPosition is not null)
                 {
                     if (direction == LogicalDirection.Backward && closestErrorPosition.CompareTo(searchPosition) > 0 ||
                         direction == LogicalDirection.Forward && closestErrorPosition.CompareTo(searchPosition) < 0)
@@ -1585,7 +1585,7 @@ namespace System.Windows.Documents
         /// <param name="tempLocationUri"></param>
         private void CleanupDictionaryTempFile(Uri tempLocationUri)
         {
-            if (tempLocationUri != null)
+            if (tempLocationUri is not null)
             {
                 try
                 {

@@ -92,13 +92,13 @@ namespace System.Windows.Media.Animation
 
             ClockGroup clockGroup = clock as ClockGroup;
 
-            if (clockGroup != null)
+            if (clockGroup is not null)
             {
                 List<Clock> children = clockGroup.InternalChildren;
 
                 // The container ends when all of its children have ended at least
                 // one of their active periods.
-                if (children != null)
+                if (children is not null)
                 {
                     bool hasChildWithUnresolvedDuration = false;
 

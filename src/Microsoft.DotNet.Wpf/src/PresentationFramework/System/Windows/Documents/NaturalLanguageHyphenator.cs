@@ -109,7 +109,7 @@ namespace System.Windows.Documents
             )
         {
             Invariant.Assert(
-                    characterSource != null
+                    characterSource is not null
                 &&  characterSource.Length > 0
                 &&  length > 0
                 &&  length <= characterSource.Length
@@ -132,7 +132,7 @@ namespace System.Windows.Documents
                 _hyphenatorResource,
                 characterSource,
                 length,
-                ((textCulture != null && textCulture != CultureInfo.InvariantCulture) ? textCulture.LCID : 0),
+                ((textCulture is not null && textCulture != CultureInfo.InvariantCulture) ? textCulture.LCID : 0),
                 isHyphenPositions,
                 isHyphenPositions.Length
                 );
@@ -177,7 +177,7 @@ namespace System.Windows.Documents
 
             public override int GetNextBreak(int currentIndex)
             {
-                if (_isHyphenPositions != null && currentIndex >= 0)
+                if (_isHyphenPositions is not null && currentIndex >= 0)
                 {
                     int ich = currentIndex + 1;
                     while (ich < _numPositions && !this[ich])
@@ -193,7 +193,7 @@ namespace System.Windows.Documents
 
             public override int GetPreviousBreak(int currentIndex)
             {
-                if (_isHyphenPositions != null && currentIndex < _numPositions)
+                if (_isHyphenPositions is not null && currentIndex < _numPositions)
                 {
                     int ich = currentIndex;
                     while (ich > 0 && !this[ich])

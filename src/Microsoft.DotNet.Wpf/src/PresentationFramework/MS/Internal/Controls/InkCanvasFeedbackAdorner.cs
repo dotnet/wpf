@@ -30,7 +30,7 @@ namespace MS.Internal.Controls
         /// </summary>
         /// <param name="inkCanvas">The adorned InkCanvas</param>
         internal InkCanvasFeedbackAdorner(InkCanvas inkCanvas)
-            : base((inkCanvas != null ? inkCanvas.InnerCanvas : null))
+            : base((inkCanvas is not null ? inkCanvas.InnerCanvas : null))
         {
             ArgumentNullException.ThrowIfNull(inkCanvas);
 
@@ -117,7 +117,7 @@ namespace MS.Internal.Controls
                     InvalidateVisual(); //ensure re-rendering
                     UIElement parent = ((UIElement)VisualTreeHelper.GetParent(this)) as UIElement;
 
-                    if (parent != null)
+                    if (parent is not null)
                     {
                         ((UIElement)VisualTreeHelper.GetParent(this)).InvalidateArrange();
                     }

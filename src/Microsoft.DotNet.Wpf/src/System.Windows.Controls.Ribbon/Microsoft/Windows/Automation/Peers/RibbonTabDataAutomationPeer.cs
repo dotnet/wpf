@@ -47,8 +47,8 @@ namespace Microsoft.Windows.Automation.Peers
             RibbonTab wrapperTab = GetWrapper() as RibbonTab;
 
             if (patternInterface == PatternInterface.ExpandCollapse &&
-                wrapperTab != null &&
-                wrapperTab.Ribbon != null &&
+                wrapperTab is not null &&
+                wrapperTab.Ribbon is not null &&
                 wrapperTab.Ribbon.IsMinimized)
             {
                 peer = this;
@@ -62,7 +62,7 @@ namespace Microsoft.Windows.Automation.Peers
             if (peer is null)
             {
                 AutomationPeer wrapperPeer = GetWrapperPeer();
-                if (wrapperPeer != null)
+                if (wrapperPeer is not null)
                 {
                     peer = wrapperPeer.GetPattern(patternInterface);
                 }
@@ -78,10 +78,10 @@ namespace Microsoft.Windows.Automation.Peers
         void IExpandCollapseProvider.Collapse()
         {
             RibbonTab wrapperTab = GetWrapper() as RibbonTab;
-            if (wrapperTab != null)
+            if (wrapperTab is not null)
             {
                 Ribbon ribbon = wrapperTab.Ribbon;
-                if (ribbon != null &&
+                if (ribbon is not null &&
                     ribbon.IsMinimized)
                 {
                     ribbon.IsDropDownOpen = false;
@@ -96,10 +96,10 @@ namespace Microsoft.Windows.Automation.Peers
         {
             RibbonTab wrapperTab = GetWrapper() as RibbonTab;
             // Select the tab and display popup
-            if (wrapperTab != null)
+            if (wrapperTab is not null)
             {
                 Ribbon ribbon = wrapperTab.Ribbon;
-                if (ribbon != null &&
+                if (ribbon is not null &&
                     ribbon.IsMinimized)
                 {
                     wrapperTab.IsSelected = true;
@@ -116,10 +116,10 @@ namespace Microsoft.Windows.Automation.Peers
             get 
             {
                 RibbonTab wrapperTab = GetWrapper() as RibbonTab;
-                if (wrapperTab != null)
+                if (wrapperTab is not null)
                 {
                     Ribbon ribbon = wrapperTab.Ribbon;
-                    if (ribbon != null &&
+                    if (ribbon is not null &&
                         ribbon.IsMinimized)
                     {
                         if (wrapperTab.IsSelected && ribbon.IsDropDownOpen)
@@ -148,7 +148,7 @@ namespace Microsoft.Windows.Automation.Peers
         void ISelectionItemProvider.RemoveFromSelection()
         {
             RibbonTab tab = GetWrapper() as RibbonTab;
-            if (tab != null && tab.IsSelected)
+            if (tab is not null && tab.IsSelected)
             {
                 throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
             }
@@ -163,7 +163,7 @@ namespace Microsoft.Windows.Automation.Peers
                 throw new ElementNotEnabledException();
 
             Selector parentSelector = (Selector)(ItemsControlAutomationPeer.Owner);
-            if ((parentSelector is null) || (parentSelector.SelectedItem != null && parentSelector.SelectedItem != Item))
+            if ((parentSelector is null) || (parentSelector.SelectedItem is not null && parentSelector.SelectedItem != Item))
             {
                 throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
             }
@@ -176,7 +176,7 @@ namespace Microsoft.Windows.Automation.Peers
         void IScrollItemProvider.ScrollIntoView()
         {
             RibbonTab wrapperTab = GetWrapper() as RibbonTab;
-            if (wrapperTab != null && wrapperTab.RibbonTabHeader != null )
+            if (wrapperTab is not null && wrapperTab.RibbonTabHeader is not null )
             {
                 wrapperTab.RibbonTabHeader.BringIntoView();
             }
@@ -192,7 +192,7 @@ namespace Microsoft.Windows.Automation.Peers
         protected override string GetClassNameCore()
         {
             RibbonTabAutomationPeer wrapperPeer = GetWrapperPeer() as RibbonTabAutomationPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.GetClassName();
             }
@@ -206,10 +206,10 @@ namespace Microsoft.Windows.Automation.Peers
         {
             UIElement wrapper = null;
             ItemsControlAutomationPeer itemsControlAutomationPeer = ItemsControlAutomationPeer;
-            if (itemsControlAutomationPeer != null)
+            if (itemsControlAutomationPeer is not null)
             {
                 ItemsControl owner = (ItemsControl)(itemsControlAutomationPeer.Owner);
-                if (owner != null)
+                if (owner is not null)
                 {
                     wrapper = owner.ItemContainerGenerator.ContainerFromItem(Item) as UIElement;
                 }
@@ -221,7 +221,7 @@ namespace Microsoft.Windows.Automation.Peers
         {
             AutomationPeer wrapperPeer = null;
             UIElement wrapper = GetWrapper();
-            if (wrapper != null)
+            if (wrapper is not null)
             {
                 wrapperPeer = UIElementAutomationPeer.CreatePeerForElement(wrapper);
                 if (wrapperPeer is null)

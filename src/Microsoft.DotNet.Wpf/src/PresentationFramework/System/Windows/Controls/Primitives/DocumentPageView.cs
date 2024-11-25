@@ -77,7 +77,7 @@ namespace System.Windows.Controls.Primitives
                 if (_documentPaginator != value)
                 {
                     // Cleanup all state associated with old Paginator.
-                    if (_documentPaginator != null)
+                    if (_documentPaginator is not null)
                     {
                         _documentPaginator.GetPageCompleted -= new GetPageCompletedEventHandler(HandleGetPageCompleted);
                         _documentPaginator.PagesChanged -= new PagesChangedEventHandler(HandlePagesChanged);
@@ -92,7 +92,7 @@ namespace System.Windows.Controls.Primitives
 
                     // Register for events on new Paginator and invalidate 
                     // measure to force content update.
-                    if (_documentPaginator != null)
+                    if (_documentPaginator is not null)
                     {
                         _documentPaginator.GetPageCompleted += new GetPageCompletedEventHandler(HandleGetPageCompleted);
                         _documentPaginator.PagesChanged += new PagesChangedEventHandler(HandlePagesChanged);
@@ -228,7 +228,7 @@ namespace System.Windows.Controls.Primitives
             {
                 desiredSize = this.DesiredSize;
             }
-            else if (_documentPaginator != null)
+            else if (_documentPaginator is not null)
             {
                 // Reflow content if needed.
                 if (ShouldReflowContent())
@@ -289,7 +289,7 @@ namespace System.Windows.Controls.Primitives
 
                 // If pending async page is available, discard the main page and
                 // set _documentPage to _documentPageAsync. 
-                if (_documentPageAsync != null)
+                if (_documentPageAsync is not null)
                 {
                     // Do cleanup for currently used page, because it gets replaced.
                     DisposeCurrentPage();
@@ -300,7 +300,7 @@ namespace System.Windows.Controls.Primitives
                     {
                         _documentPageAsync = DocumentPage.Missing;
                     }
-                    if (_pageVisualClone != null)
+                    if (_pageVisualClone is not null)
                     {
                         RemoveDuplicateVisual();
                     }
@@ -320,14 +320,14 @@ namespace System.Windows.Controls.Primitives
                 }
 
                 // If page is available, return its size as desired size.
-                if (_documentPage != null && _documentPage != DocumentPage.Missing)
+                if (_documentPage is not null && _documentPage != DocumentPage.Missing)
                 {
                     pageSize = new Size(_documentPage.Size.Width * _pageZoom, _documentPage.Size.Height * _pageZoom);
                     pageZoom = Viewbox.ComputeScaleFactor(availableSize, pageSize, this.Stretch, this.StretchDirection);
                     desiredSize = new Size(pageSize.Width * pageZoom.Width, pageSize.Height * pageZoom.Height);
                 }
 
-                if (_pageVisualClone != null)
+                if (_pageVisualClone is not null)
                 {
                     desiredSize = _visualCloneSize;
                 }
@@ -356,7 +356,7 @@ namespace System.Windows.Controls.Primitives
                     _pageHost = new DocumentPageHost();
                     this.AddVisualChild(_pageHost);
                 }
-                Invariant.Assert(_pageHost != null);
+                Invariant.Assert(_pageHost is not null);
 
                 pageVisual = (_documentPage is null) ? null : _documentPage.Visual;
                 if (pageVisual is null)
@@ -485,7 +485,7 @@ namespace System.Windows.Controls.Primitives
                 _disposed = true;
 
                 // Cleanup all state associated with Paginator.
-                if (_documentPaginator != null)
+                if (_documentPaginator is not null)
                 {
                     _documentPaginator.GetPageCompleted -= new GetPageCompletedEventHandler(HandleGetPageCompleted);
                     _documentPaginator.PagesChanged -= new PagesChangedEventHandler(HandlePagesChanged);
@@ -514,7 +514,7 @@ namespace System.Windows.Controls.Primitives
 
             // No service is available if the Content does not provide
             // any services.
-            if (_documentPaginator != null && _documentPaginator is IServiceProvider)
+            if (_documentPaginator is not null && _documentPaginator is IServiceProvider)
             {
                 // Following services are available:
                 // (1) TextView - wrapper for TextView exposed by the current page.
@@ -524,7 +524,7 @@ namespace System.Windows.Controls.Primitives
                     if (_textView is null)
                     {
                         ITextContainer tc = ((IServiceProvider)_documentPaginator).GetService(typeof(ITextContainer)) as ITextContainer;
-                        if (tc != null)
+                        if (tc is not null)
                         {
                             _textView = new DocumentPageTextView(this, tc);
                         }
@@ -572,7 +572,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>        
         protected override int VisualChildrenCount
         {
-            get { return _pageHost != null ? 1 : 0; }
+            get { return _pageHost is not null ? 1 : 0; }
         }
 
         #endregion Protected Properties
@@ -626,7 +626,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         internal void DuplicateVisual()
         {
-            if (_documentPage != null && _pageVisualClone is null)
+            if (_documentPage is not null && _pageVisualClone is null)
             {
                 _pageVisualClone = DuplicatePageVisual();
                 _visualCloneSize = this.DesiredSize;
@@ -639,7 +639,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         internal void RemoveDuplicateVisual()
         {
-            if (_pageVisualClone != null)
+            if (_pageVisualClone is not null)
             {
                 _pageVisualClone = null;
                 InvalidateArrange();
@@ -719,11 +719,11 @@ namespace System.Windows.Controls.Primitives
         /// <param name="e">Details about this event.</param>
         private void HandleGetPageCompleted(object sender, GetPageCompletedEventArgs e)
         {
-            if (!_disposed && (e != null) && !e.Cancelled && e.Error is null)
+            if (!_disposed && (e is not null) && !e.Cancelled && e.Error is null)
             {
                 if (e.PageNumber == this.PageNumber && e.UserState == this)
                 {
-                    if (_documentPageAsync != null && _documentPageAsync != DocumentPage.Missing)
+                    if (_documentPageAsync is not null && _documentPageAsync != DocumentPage.Missing)
                     {
                         _documentPageAsync.PageDestroyed -= new EventHandler(HandleAsyncPageDestroyed);
                     }
@@ -749,7 +749,7 @@ namespace System.Windows.Controls.Primitives
         /// <param name="e">Details about this event.</param>
         private void HandlePagesChanged(object sender, PagesChangedEventArgs e)
         {
-            if (!_disposed && (e != null))
+            if (!_disposed && (e is not null))
             {
                 if (this.PageNumber >= e.Start && 
                     (e.Count == int.MaxValue || this.PageNumber <= e.Start + e.Count))
@@ -775,7 +775,7 @@ namespace System.Windows.Controls.Primitives
         /// <returns>Not used.</returns>
         private object OnTransformChanged(object arg)
         {
-            if (_textView != null && _documentPage != null)
+            if (_textView is not null && _documentPage is not null)
             {
                 _textView.OnTransformChanged();
             }
@@ -788,11 +788,11 @@ namespace System.Windows.Controls.Primitives
         private void OnPageConnected()
         {
             _newPageConnected = false;
-            if (_textView != null)
+            if (_textView is not null)
             {
                 _textView.OnPageConnected();
             }
-            if (this.PageConnected != null && _documentPage != null)
+            if (this.PageConnected is not null && _documentPage is not null)
             {
                 this.PageConnected(this, EventArgs.Empty);
             }
@@ -803,11 +803,11 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         private void OnPageDisconnected()
         {
-            if (_textView != null)
+            if (_textView is not null)
             {
                 _textView.OnPageDisconnected();
             }
-            if (this.PageDisconnected != null)
+            if (this.PageDisconnected is not null)
             {
                 this.PageDisconnected(this, EventArgs.Empty);
             }
@@ -831,10 +831,10 @@ namespace System.Windows.Controls.Primitives
         private void DisposeCurrentPage()
         {
             // Do cleanup for currently used page, because it gets replaced.
-            if (_documentPage != null)
+            if (_documentPage is not null)
             {
                 // Remove visual for currently used page.
-                if (_pageHost != null)
+                if (_pageHost is not null)
                 {
                     _pageHost.PageVisual = null;
                 }
@@ -860,7 +860,7 @@ namespace System.Windows.Controls.Primitives
         private void DisposeAsyncPage()
         {
             // Do cleanup for cached async page.
-            if (_documentPageAsync != null)
+            if (_documentPageAsync is not null)
             {
                 if (_documentPageAsync != DocumentPage.Missing)
                 {
@@ -894,7 +894,7 @@ namespace System.Windows.Controls.Primitives
             if (DocumentViewerBase.GetIsMasterPage(this))
             {
                 hostViewer = GetHostViewer();
-                if (hostViewer != null)
+                if (hostViewer is not null)
                 {
                     shouldReflow = hostViewer.IsMasterPageView(this);
                 }
@@ -923,7 +923,7 @@ namespace System.Windows.Controls.Primitives
             {
                 // Check if hosted by DocumentViewerBase.
                 visualParent = VisualTreeHelper.GetParent(this) as Visual;
-                while (visualParent != null)
+                while (visualParent is not null)
                 {
                     if (visualParent is DocumentViewerBase)
                     {
@@ -942,7 +942,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         private static void OnPageNumberChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Invariant.Assert(d != null && d is DocumentPageView);
+            Invariant.Assert(d is not null && d is DocumentPageView);
             ((DocumentPageView)d).OnPageContentChanged();
         }
 
@@ -952,7 +952,7 @@ namespace System.Windows.Controls.Primitives
         private DrawingVisual DuplicatePageVisual()
         {
             DrawingVisual drawingVisual = null;
-            if (_pageHost != null && _pageHost.PageVisual != null && _documentPage.Size != Size.Empty)
+            if (_pageHost is not null && _pageHost.PageVisual is not null && _documentPage.Size != Size.Empty)
             {
                 const double maxWidth = 4096.0;
                 const double maxHeight = maxWidth;

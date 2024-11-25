@@ -27,7 +27,7 @@ namespace System.Windows.Markup.Primitives
     {
         internal FrameworkElementFactoryMarkupObject(FrameworkElementFactory factory, XamlDesignerSerializationManager manager)
         {
-            Debug.Assert(factory != null);
+            Debug.Assert(factory is not null);
             _factory = factory;
             _manager = manager;
         }
@@ -48,7 +48,7 @@ namespace System.Windows.Markup.Primitives
         public override Type ObjectType
         {
             get {
-                if (_factory.Type != null)
+                if (_factory.Type is not null)
                     return _factory.Type;
                 else
                     return typeof(string);
@@ -67,7 +67,7 @@ namespace System.Windows.Markup.Primitives
             // are accessed that cannot be easily copied by the host.
             if (_factory.Type is null)
             {
-                if (_factory.Text != null)
+                if (_factory.Text is not null)
                 {
                     yield return new FrameworkElementFactoryStringContent(_factory, this);
                 }
@@ -91,7 +91,7 @@ namespace System.Windows.Markup.Primitives
                     }
                 }
 
-                if (_factory.FirstChild != null)
+                if (_factory.FirstChild is not null)
                 {
                     if (_factory.FirstChild.Type is null)
                     {
@@ -152,7 +152,7 @@ namespace System.Windows.Markup.Primitives
             get
             {
                 DependencyPropertyDescriptor pdp = PropertyDescriptor as DependencyPropertyDescriptor;
-                return (pdp != null) && pdp.IsAttached;
+                return (pdp is not null) && pdp.IsAttached;
             }
         }
 
@@ -160,7 +160,7 @@ namespace System.Windows.Markup.Primitives
         {
             get 
             {
-                if (_descriptor != null)
+                if (_descriptor is not null)
                 {
                     return _descriptor.Attributes;
                 }
@@ -254,7 +254,7 @@ namespace System.Windows.Markup.Primitives
             get 
             {
                 FrameworkElementFactory child = _factory.FirstChild;
-                while (child != null)
+                while (child is not null)
                 {
                     yield return new FrameworkElementFactoryMarkupObject(child, Manager);
                     child = child.NextSibling;

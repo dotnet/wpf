@@ -78,7 +78,7 @@ namespace System.Windows.Input
 
             // Create a Rect with respect to root and transform it to element coordinate space
             Rect rectBounds = new Rect(rootPoint.X - width * 0.5, rootPoint.Y - height * 0.5, width, height);
-            if (rootToElement != null)
+            if (rootToElement is not null)
             {
                 rectBounds = rootToElement.TransformBounds(rectBounds);
             }
@@ -122,12 +122,12 @@ namespace System.Windows.Input
             elementToRoot = rootToElement = null;
 
             DependencyObject containingVisual = InputElement.GetContainingVisual(relativeTo as DependencyObject);
-            if (containingVisual != null)
+            if (containingVisual is not null)
             {
                 PresentationSource relativePresentationSource = PresentationSource.CriticalFromVisual(containingVisual);
-                Visual rootVisual = (relativePresentationSource != null) ? relativePresentationSource.RootVisual : null;
+                Visual rootVisual = (relativePresentationSource is not null) ? relativePresentationSource.RootVisual : null;
                 Visual containingVisual2D = VisualTreeHelper.GetContainingVisual2D(containingVisual);
-                if ((rootVisual != null) && (containingVisual2D != null))
+                if ((rootVisual is not null) && (containingVisual2D is not null))
                 {
                     elementToRoot = containingVisual2D.TransformToAncestor(rootVisual);
                     rootToElement = rootVisual.TransformToDescendant(containingVisual2D);

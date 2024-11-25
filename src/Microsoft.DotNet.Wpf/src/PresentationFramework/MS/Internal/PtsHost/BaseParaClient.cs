@@ -106,7 +106,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal void TransferDisplayInfo(BaseParaClient oldParaClient)
         {
-            Debug.Assert(oldParaClient._visual != null);
+            Debug.Assert(oldParaClient._visual is not null);
 
             // Transfer visual node ownership
             _visual = oldParaClient._visual;

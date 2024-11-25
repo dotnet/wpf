@@ -25,7 +25,7 @@ namespace MS.Internal.Printing.Configuration
             this._deviceName = deviceName;
             this._driverName = driverName;
             this._portName = portName;
-            if (devMode != null)
+            if (devMode is not null)
             {
                 SafeMemoryHandle buffer = SafeMemoryHandle.Create(devMode.ByteData.Length);
                 buffer.CopyFromArray(devMode.ByteData, 0, devMode.ByteData.Length);
@@ -39,7 +39,7 @@ namespace MS.Internal.Printing.Configuration
 
         public void Release()
         {
-            if (this._devMode != null)
+            if (this._devMode is not null)
             {
                 this._devMode.Dispose();
                 this._devMode = null;

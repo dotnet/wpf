@@ -49,7 +49,7 @@ namespace MS.Internal
 
         private void WrapKey(ref object key)
         {
-            if (key != null && !key.GetType().IsValueType)
+            if (key is not null && !key.GetType().IsValueType)
             {
                 key = new EqualityWeakReference(key);
             }
@@ -58,7 +58,7 @@ namespace MS.Internal
         public object UnwrapKey(object key)
         {
             EqualityWeakReference keyRef = key as EqualityWeakReference;
-            return (keyRef != null) ? keyRef.Target : key;
+            return (keyRef is not null) ? keyRef.Target : key;
         }
 
         /// <devdoc>
@@ -107,7 +107,7 @@ namespace MS.Internal
                 foreach (object o in Keys)
                 {
                     EqualityWeakReference wr = o as EqualityWeakReference;
-                    if (wr != null && !wr.IsAlive)
+                    if (wr is not null && !wr.IsAlive)
                     {
                         if (cleanupList is null)
                         {
@@ -118,7 +118,7 @@ namespace MS.Internal
                     }
                 }
 
-                if (cleanupList != null)
+                if (cleanupList is not null)
                 {
                     foreach (object o in cleanupList)
                     {
@@ -152,7 +152,7 @@ namespace MS.Internal
 
                 EqualityWeakReference wX, wY;
 
-                if ((wX = x as EqualityWeakReference) != null)
+                if ((wX = x as EqualityWeakReference) is not null)
                 {
                     x = wX.Target;
                     if (x is null)
@@ -164,7 +164,7 @@ namespace MS.Internal
                     }
                 }
 
-                if ((wY = y as EqualityWeakReference) != null)
+                if ((wY = y as EqualityWeakReference) is not null)
                 {
                     y = wY.Target;
                     if (y is null)

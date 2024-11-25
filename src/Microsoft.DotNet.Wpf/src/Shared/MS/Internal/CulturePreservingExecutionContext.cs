@@ -92,7 +92,7 @@ namespace MS.Internal
 
             var culturePreservingContext = new CulturePreservingExecutionContext();
 
-            if (culturePreservingContext._context != null)
+            if (culturePreservingContext._context is not null)
             {
                 return culturePreservingContext;
             }

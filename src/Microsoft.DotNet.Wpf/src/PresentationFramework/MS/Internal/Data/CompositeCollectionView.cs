@@ -227,7 +227,7 @@ namespace MS.Internal.Data
             if (ItemsControl.EqualsEx(CurrentItem, item))
             {
                 // also check that we're not fooled by a false null CurrentItem
-                if (item != null || IsCurrentInView)
+                if (item is not null || IsCurrentInView)
                     return IsCurrentInView;
             }
 
@@ -416,7 +416,7 @@ namespace MS.Internal.Data
                         Debug.Assert(startingIndex >= 0, "Source composite collection failed to supply an index");
                         int index = startingIndex;
 
-                        if (_traceLog != null)
+                        if (_traceLog is not null)
                             _traceLog.Add("ProcessCollectionChanged  action = {0}  item = {1}",
                                         args.Action, TraceLog.IdFor(item));
 
@@ -427,7 +427,7 @@ namespace MS.Internal.Data
                             for (int k = index - 1; k >= 0; --k)
                             {
                                 cc = _collection[k] as CollectionContainer;
-                                if (cc != null)
+                                if (cc is not null)
                                 {
                                     // count members of cc's view but not the cc itself
                                     index += cc.ViewCount - 1;
@@ -504,7 +504,7 @@ namespace MS.Internal.Data
                             for (int k = startingIndex - 1; k >= 0; --k)
                             {
                                 CollectionContainer cc = _collection[k] as CollectionContainer;
-                                if (cc != null)
+                                if (cc is not null)
                                 {
                                     // count members of cc's view but not the cc itself
                                     startingIndex += cc.ViewCount - 1;
@@ -553,7 +553,7 @@ namespace MS.Internal.Data
                             for (int k = oldStartingIndex - 1; k >= 0; --k)
                             {
                                 CollectionContainer cc = _collection[k] as CollectionContainer;
-                                if (cc != null)
+                                if (cc is not null)
                                 {
                                     // count members of cc's view but not the cc itself
                                     oldStartingIndex += cc.ViewCount - 1;
@@ -564,7 +564,7 @@ namespace MS.Internal.Data
                             for (int k = newStartingIndex - 1; k >= 0; --k)
                             {
                                 CollectionContainer cc = _collection[k] as CollectionContainer;
-                                if (cc != null)
+                                if (cc is not null)
                                 {
                                     // count members of cc's view but not the cc itself
                                     newStartingIndex += cc.ViewCount - 1;
@@ -618,7 +618,7 @@ namespace MS.Internal.Data
 
                 case NotifyCollectionChangedAction.Reset:
                     {
-                        if (_traceLog != null)
+                        if (_traceLog is not null)
                             _traceLog.Add("ProcessCollectionChanged  action = {0}", args.Action);
 
                         if (_collection.Count != 0)
@@ -697,7 +697,7 @@ namespace MS.Internal.Data
             for (x = 0; x < _collection.Count; ++x)
             {
                 CollectionContainer cc = _collection[x] as CollectionContainer;
-                if (cc != null)
+                if (cc is not null)
                 {
                     if (sender == cc)
                     {
@@ -719,7 +719,7 @@ namespace MS.Internal.Data
 
             if (x >= _collection.Count)
             {
-                if (_traceLog != null)
+                if (_traceLog is not null)
                 {
                     _traceLog.Add("Received ContainerCollectionChange from unknown sender {0}  action = {1} old item = {2}, new item = {3}",
                                     TraceLog.IdFor(sender), args.Action, TraceLog.IdFor(args.OldItems[0]), TraceLog.IdFor(args.NewItems[0]));
@@ -785,7 +785,7 @@ namespace MS.Internal.Data
 
                 case NotifyCollectionChangedAction.Reset:
                     {
-                        if (_traceLog != null)
+                        if (_traceLog is not null)
                             _traceLog.Add("ContainerCollectionChange from {0}  action = {1}",
                                             TraceLog.IdFor(sender), args.Action);
 
@@ -810,10 +810,10 @@ namespace MS.Internal.Data
             {
                 CollectionContainer cc = _collection[k] as CollectionContainer;
 
-                if (cc != null)
+                if (cc is not null)
                 {
                     CollectionView cv = cc.View as CollectionView;
-                    if (cv != null && !cv.HasReliableHashCodes())
+                    if (cv is not null && !cv.HasReliableHashCodes())
                     {
                         return false;
                     }
@@ -833,7 +833,7 @@ namespace MS.Internal.Data
         internal override void GetCollectionChangedSources(int level, Action<int, object, bool?, List<string>> format, List<string> sources)
         {
             format(level, this, false, sources);
-            if (_collection != null)
+            if (_collection is not null)
             {
                 _collection.GetCollectionChangedSources(level + 1, format, sources);
             }
@@ -976,7 +976,7 @@ namespace MS.Internal.Data
 
                     ++searchIndex;
                 }
-                else if (cc.Collection != null) // CollContainer
+                else if (cc.Collection is not null) // CollContainer
                 {
                     // see if flatIndex falls within this collection:
                     int localIndex = flatIndex - searchIndex;
@@ -1436,7 +1436,7 @@ namespace MS.Internal.Data
 
         private void TraceContainerCollectionChange(object sender, NotifyCollectionChangedAction action, object oldItem, object newItem)
         {
-            if (_traceLog != null)
+            if (_traceLog is not null)
                 _traceLog.Add("ContainerCollectionChange from {0}  action = {1} oldItem = {2} newItem = {3}",
                                 TraceLog.IdFor(sender), action, TraceLog.IdFor(oldItem), TraceLog.IdFor(newItem));
         }
@@ -1502,7 +1502,7 @@ namespace MS.Internal.Data
         {
             internal FlatteningEnumerator(CompositeCollection collection, CompositeCollectionView view)
             {
-                Invariant.Assert(collection != null && view != null);
+                Invariant.Assert(collection is not null && view is not null);
                 _collection = collection;
                 _view = view;
                 _version = view._version;
@@ -1517,7 +1517,7 @@ namespace MS.Internal.Data
                 while (true)
                 {
                     // advance within a collection container
-                    if (_containerEnumerator != null)
+                    if (_containerEnumerator is not null)
                     {
                         if (_containerEnumerator.MoveNext())
                         {
@@ -1535,10 +1535,10 @@ namespace MS.Internal.Data
                         CollectionContainer cc = item as CollectionContainer;
 
                         // item is a container,  move into it
-                        if (cc != null)
+                        if (cc is not null)
                         {
                             IEnumerable ie = cc.View;   // View is null when Collection is null
-                            _containerEnumerator = (ie != null) ? ie.GetEnumerator() : null;
+                            _containerEnumerator = (ie is not null) ? ie.GetEnumerator() : null;
                             continue;
                         }
 
@@ -1596,7 +1596,7 @@ namespace MS.Internal.Data
             private void DisposeContainerEnumerator()
             {
                 IDisposable d = _containerEnumerator as IDisposable;
-                if (d != null)
+                if (d is not null)
                 {
                     d.Dispose();
                 }
@@ -1673,7 +1673,7 @@ namespace MS.Internal.Data
             }
             else
             {
-                if ((CurrentItem != null) && !_collection.HasRepeatedCollection())
+                if ((CurrentItem is not null) && !_collection.HasRepeatedCollection())
                     Debug.Assert(false, "CurrentItem is not consistent with CurrentPosition");
             }
         }

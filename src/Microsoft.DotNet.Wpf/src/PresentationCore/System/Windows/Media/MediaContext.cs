@@ -312,7 +312,7 @@ namespace System.Windows.Media
             // disconnect, we need to check that we actually have a channel
             // when we receive this notification. If not, there's no harm;
             // just skip the operation
-            if (Channel != null)
+            if (Channel is not null)
             {
                 DUCE.MilMessage.Message message;
                 while (Channel.PeekNextMessage(out message))
@@ -369,7 +369,7 @@ namespace System.Windows.Media
             {
                 HwndTarget hwndTarget = target as HwndTarget;
 
-                if (hwndTarget != null)
+                if (hwndTarget is not null)
                 {
                     hwndTarget.InvalidateRenderMode();
                 }
@@ -396,7 +396,7 @@ namespace System.Windows.Media
             {
                 _tier = tier;
 
-                if (TierChanged != null)
+                if (TierChanged is not null)
                 {
                     TierChanged(null, null);
                 }
@@ -416,7 +416,7 @@ namespace System.Windows.Media
         /// </summary>
         private void NotifyBadPixelShader()
         {
-            if (InvalidPixelShaderEncountered != null)
+            if (InvalidPixelShaderEncountered is not null)
             {
                 InvalidPixelShaderEncountered(null, null);
             }
@@ -991,7 +991,7 @@ namespace System.Windows.Media
 
                     _interlockState = InterlockState.Idle;
 
-                    if (Channel != null)
+                    if (Channel is not null)
                     {
                         // SyncFlush will Commit()
 
@@ -1256,7 +1256,7 @@ namespace System.Windows.Media
             // on shutdown which can happen in a disconnected state. We can replace this
             // test with an assert by moving
             // the management of transport connectedness state to the media system.
-            if (Channel != null)
+            if (Channel is not null)
             {
                 _uceEtwEvent.ReleaseOnChannel(Channel);
 
@@ -1367,7 +1367,7 @@ namespace System.Windows.Media
         /// </summary>
         private void HookNotifications()
         {
-            Debug.Assert(Channel != null);
+            Debug.Assert(Channel is not null);
 
             //
             // This associates this channel with the given notification
@@ -1388,7 +1388,7 @@ namespace System.Windows.Media
         /// </summary>
         internal static MediaContext From(Dispatcher dispatcher)
         {
-            Debug.Assert(dispatcher != null, "Dispatcher required");
+            Debug.Assert(dispatcher is not null, "Dispatcher required");
             MediaContext cm = (MediaContext)dispatcher.Reserved0;
             if (cm is null)
             {
@@ -1456,7 +1456,7 @@ namespace System.Windows.Media
                 _destroyHandler = null;
 
                 // Dispose the time manager ----------------------------------
-                Debug.Assert(_timeManager != null);
+                Debug.Assert(_timeManager is not null);
                 _timeManager.NeedTickSooner -= new EventHandler(OnNeedTickSooner);
                 _timeManager.Stop();
 
@@ -1485,8 +1485,8 @@ namespace System.Windows.Media
         /// <param name="iv">The ICompositionTarget to register with the MediaSystem.</param>
         internal static void RegisterICompositionTarget(Dispatcher dispatcher, ICompositionTarget iv)
         {
-            Debug.Assert(dispatcher != null);
-            Debug.Assert(iv != null);
+            Debug.Assert(dispatcher is not null);
+            Debug.Assert(iv is not null);
 
             MediaContext current = From(dispatcher);
             current.RegisterICompositionTargetInternal(iv);
@@ -1499,13 +1499,13 @@ namespace System.Windows.Media
         private void RegisterICompositionTargetInternal(ICompositionTarget iv)
         {
             Debug.Assert(!_isDisposed);
-            Debug.Assert(iv != null);
+            Debug.Assert(iv is not null);
 
             // If channel is not available, we are in a disconnected state.
             // When connect handler is invoked for this media context, all
             // registered targets will be visited and AddRefChannel will be
             // called for them, so here we just skip the operation.
-            if (Channel != null)
+            if (Channel is not null)
             {
                 // if _currentRenderingChannel is nonempty, we're registering this ICompositionTarget
                 // from within a render walk and it is thus a visualbrush, we need to add it to the
@@ -1526,8 +1526,8 @@ namespace System.Windows.Media
         /// <param name="iv"></param>
         internal static void UnregisterICompositionTarget(Dispatcher dispatcher, ICompositionTarget iv)
         {
-            Debug.Assert(dispatcher != null);
-            Debug.Assert(iv != null);
+            Debug.Assert(dispatcher is not null);
+            Debug.Assert(iv is not null);
 
             MediaContext.From(dispatcher).UnregisterICompositionTargetInternal(iv);
         }
@@ -1538,7 +1538,7 @@ namespace System.Windows.Media
         /// <param name="iv">ICompositionTarget to unregister.</param>
         private void UnregisterICompositionTargetInternal(ICompositionTarget iv)
         {
-            Debug.Assert(iv != null);
+            Debug.Assert(iv is not null);
 
             // this test is needed because we always unregister the target when the ReleaseUCEResources
             // is called on the target and Dispose is called from both the media context and the
@@ -1551,7 +1551,7 @@ namespace System.Windows.Media
 
             // If channel is not available, we are in a disconnected state, which means
             // that all resources have been released and we can just skip the operation.
-            if (Channel != null)
+            if (Channel is not null)
             {
                 // if _currentRenderingChannel is nonempty, we're unregistering this ICompositionTarget
                 // from within a render walk and it is thus a visualbrush, we need to remove it from the
@@ -1588,12 +1588,12 @@ namespace System.Windows.Media
             DispatcherOperationCallback callback,
             object arg)
         {
-            Debug.Assert(callback != null);
+            Debug.Assert(callback is not null);
 
             // While technically it could be OK for the arg to be null, for now
             // I know that arg represents the this reference for the layout
             // process and should never be null.
-            Debug.Assert(arg != null);
+            Debug.Assert(arg is not null);
 
             if (_invokeOnRenderCallbacks is null)
             {
@@ -1632,13 +1632,13 @@ namespace System.Windows.Media
         /// </summary>
         internal void RemoveLoadedOrUnloadedCallback(LoadedOrUnloadedOperation op)
         {
-            Debug.Assert(op != null);
+            Debug.Assert(op is not null);
 
             // cancel the operation - this prevents it from running even if it has
             // already been copied into the local array in FireLoadedPendingCallbacks
             op.Cancel();
 
-            if (_loadedOrUnloadedPendingOperations != null)
+            if (_loadedOrUnloadedPendingOperations is not null)
             {
                 for (int i=0; i<_loadedOrUnloadedPendingOperations.Count; i++)
                 {
@@ -1677,7 +1677,7 @@ namespace System.Windows.Media
             {
                 EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Event.WClientPostRender);
 
-                if (_currentRenderOp != null)
+                if (_currentRenderOp is not null)
                 {
                     // If we already have a render operation in the queue, we should
                     // change its priority to render priority so it happens sooner.
@@ -1706,7 +1706,7 @@ namespace System.Windows.Media
             // Cancel pending render queue items so that we don't dispatch them later
             // causing a double render during Resize. (Note that RenderMessage will schedule a
             // new RenderQueueItem).
-            if (_currentRenderOp != null)
+            if (_currentRenderOp is not null)
             {
                 _currentRenderOp.Abort();
                 _currentRenderOp = null;
@@ -1837,7 +1837,7 @@ namespace System.Windows.Media
 
                     // signal that the frame has been updated and we are ready to render.
                     // only fire on the first iteration
-                    if (Rendering != null && tickLoopCount==1)
+                    if (Rendering is not null && tickLoopCount==1)
                     {
                         // The RenderingEventArgs class stores the next estimated presentation time.
                         // Since the TimeManager has just ticked, LastTickTime is exactly this time.
@@ -1884,7 +1884,7 @@ namespace System.Windows.Media
                 // We've processed the currentRenderOp so clear it
                 //
 
-                if (_currentRenderOp != null)
+                if (_currentRenderOp is not null)
                 {
                     _currentRenderOp.Abort();
                     _currentRenderOp = null;
@@ -1920,7 +1920,7 @@ namespace System.Windows.Media
                 // and it unwinds from the stack. If we don't clean this field here, the subsequent
                 // PostRender won't queue new render operation and the window gets stuck.
                 if (gotException
-                    && _currentRenderOp != null)
+                    && _currentRenderOp is not null)
                 {
                     _currentRenderOp.Abort();
                     _currentRenderOp = null;
@@ -1934,7 +1934,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return _invokeOnRenderCallbacks != null ? _invokeOnRenderCallbacks.Count : 0;
+                return _invokeOnRenderCallbacks is not null ? _invokeOnRenderCallbacks.Count : 0;
             }
         }
 
@@ -1985,7 +1985,7 @@ namespace System.Windows.Media
         private void FireLoadedPendingCallbacks()
         {
             // Fire all the pending Loaded events before Render happens but after layout
-            if (_loadedOrUnloadedPendingOperations != null)
+            if (_loadedOrUnloadedPendingOperations is not null)
             {
                 var count = _loadedOrUnloadedPendingOperations.Count;
                 if (count == 0)
@@ -2039,7 +2039,7 @@ namespace System.Windows.Media
                 Debug.Assert(CheckAccess());
 
                 Debug.Assert(!_isDisposed);
-                Debug.Assert(_registeredICompositionTargets != null);
+                Debug.Assert(_registeredICompositionTargets is not null);
 
                 // ETW event tracing
                 bool etwTracingEnabled = false;
@@ -2089,7 +2089,7 @@ namespace System.Windows.Media
                 // will wait until we have presented before committing this channel
                 //
 
-                if (Channel != null)
+                if (Channel is not null)
                 {
                     Channel.CloseBatch();
                 }
@@ -2143,7 +2143,7 @@ namespace System.Windows.Media
         private void CommitChannel()
         {
             // if we get render messages posted while we are disconnected we don't have a channel.
-            if (Channel != null)
+            if (Channel is not null)
             {
                 Debug.Assert(_needToCommitChannel, "CommitChannel called with nothing on the channel");
 
@@ -2190,7 +2190,7 @@ namespace System.Windows.Media
                     // Raise Render Complete event since a Render happened and
                     // the commit for that render happened.
                     //
-                    if (_renderCompleteHandlers != null)
+                    if (_renderCompleteHandlers is not null)
                     {
                         _renderCompleteHandlers(this, null);
                     }
@@ -2240,7 +2240,7 @@ namespace System.Windows.Media
         internal void CompleteRender()
         {
             // for now just bail if we are not connected.
-            if (Channel != null)
+            if (Channel is not null)
             {
                 //
                 // In intelocked mode in order to make sure that frames are
@@ -2427,7 +2427,7 @@ namespace System.Windows.Media
 
         private void RaiseResourcesUpdated()
         {
-            if (_resourcesUpdatedHandlers != null)
+            if (_resourcesUpdatedHandlers is not null)
             {
                 DUCE.ChannelSet channelSet = GetChannels();
                 _resourcesUpdatedHandlers(channelSet.Channel, false /* do not skip the "on channel" check */);
@@ -2518,7 +2518,7 @@ namespace System.Windows.Media
 
         private void PromoteRenderOpToInput(object sender, EventArgs e)
         {
-            if(_currentRenderOp != null)
+            if(_currentRenderOp is not null)
             {
                 _currentRenderOp.Priority = DispatcherPriority.Input;
             }
@@ -2528,7 +2528,7 @@ namespace System.Windows.Media
 
         private void PromoteRenderOpToRender(object sender, EventArgs e)
         {
-            if(_currentRenderOp != null)
+            if(_currentRenderOp is not null)
             {
                 _currentRenderOp.Priority = DispatcherPriority.Render;
             }
@@ -2561,7 +2561,7 @@ namespace System.Windows.Media
             long currentTicks = CurrentTicks;
             DispatcherTimer timer = ((DispatcherTimer)sender);
             long earliestWakeupTicks = 0;
-            if(timer.Tag != null)
+            if(timer.Tag is not null)
                 earliestWakeupTicks = (long)timer.Tag;
             if (earliestWakeupTicks > currentTicks)
             {

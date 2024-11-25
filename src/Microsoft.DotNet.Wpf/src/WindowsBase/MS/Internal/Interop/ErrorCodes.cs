@@ -381,7 +381,7 @@ namespace MS.Internal.Interop
         {
             Exception e = GetException(message);
 
-            if (e != null)
+            if (e is not null)
             {
                 throw e;
             }
@@ -410,7 +410,7 @@ namespace MS.Internal.Interop
             // implementations of IErrorInfo available and I don't think it's worth the maintenance
             // overhead of doing it, nor would it have significant value over this approach.
             Exception e = Marshal.GetExceptionForHR((int)_value, new IntPtr(-1));
-            Debug.Assert(e != null);
+            Debug.Assert(e is not null);
             // ArgumentNullException doesn't have the right constructor parameters,
             // (nor does Win32Exception...)
             // but E_POINTER gets mapped to NullReferenceException,
@@ -450,7 +450,7 @@ namespace MS.Internal.Interop
                     if (null != cons)
                     {
                         e = cons.Invoke(new object[] { message }) as Exception;
-                        Debug.Assert(e != null);
+                        Debug.Assert(e is not null);
                     }
                 }
             }

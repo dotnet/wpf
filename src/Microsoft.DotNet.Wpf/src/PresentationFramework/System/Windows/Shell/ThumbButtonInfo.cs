@@ -109,7 +109,7 @@ namespace System.Windows.Shell
         {
             var text = (string)value;
 
-            if (text != null && text.Length >= 260)
+            if (text is not null && text.Length >= 260)
             {
                 // Account for the NULL in native LPWSTRs
                 text = text.Substring(0, 259);
@@ -188,11 +188,11 @@ namespace System.Windows.Shell
                 return;
             }
 
-            if (oldCommand != null)
+            if (oldCommand is not null)
             {
                 UnhookCommand(oldCommand);
             }
-            if (newCommand != null)
+            if (newCommand is not null)
             {
                 HookCommand(newCommand);
             }
@@ -245,7 +245,7 @@ namespace System.Windows.Shell
         internal void InvokeClick()
         {
             EventHandler local = Click;
-            if (local != null)
+            if (local is not null)
             {
                 local(this, EventArgs.Empty);
             }
@@ -256,13 +256,13 @@ namespace System.Windows.Shell
         private void _InvokeCommand()
         {
             ICommand command = Command;
-            if (command != null)
+            if (command is not null)
             {
                 object parameter = CommandParameter;
                 IInputElement target = CommandTarget;
 
                 RoutedCommand routedCommand = command as RoutedCommand;
-                if (routedCommand != null)
+                if (routedCommand is not null)
                 {
                     if (routedCommand.CanExecute(parameter, target))
                     {
@@ -278,7 +278,7 @@ namespace System.Windows.Shell
 
         private void UnhookCommand(ICommand command)
         {
-            Debug.Assert(command != null);
+            Debug.Assert(command is not null);
             CanExecuteChangedEventManager.RemoveHandler(command, OnCanExecuteChanged);
             UpdateCanExecute();
         }
@@ -296,13 +296,13 @@ namespace System.Windows.Shell
 
         private void UpdateCanExecute()
         {
-            if (Command != null)
+            if (Command is not null)
             {
                 object parameter = CommandParameter;
                 IInputElement target = CommandTarget;
 
                 RoutedCommand routed = Command as RoutedCommand;
-                if (routed != null)
+                if (routed is not null)
                 {
                     CanExecute = routed.CanExecute(parameter, target);
                 }

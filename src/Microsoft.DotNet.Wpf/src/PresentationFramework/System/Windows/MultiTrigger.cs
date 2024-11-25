@@ -109,7 +109,7 @@ namespace System.Windows
                     _conditions[i].Property,
                     LogicalOp.Equals,
                     _conditions[i].Value,
-                    (_conditions[i].SourceName != null) ? _conditions[i].SourceName : StyleHelper.SelfName);
+                    (_conditions[i].SourceName is not null) ? _conditions[i].SourceName : StyleHelper.SelfName);
             }
 
             // Set conditions array for all property triggers

@@ -54,7 +54,7 @@ namespace mcwpf
             using (StreamWriter writer = new StreamWriter(args["out"], false))
             {
                 string line;
-                while ((line = template.ReadLine()) != null)
+                while ((line = template.ReadLine()) is not null)
                 {
                     if (line.Contains("[[MCWPF_GENERATE_CODE_HERE]]"))
                     {

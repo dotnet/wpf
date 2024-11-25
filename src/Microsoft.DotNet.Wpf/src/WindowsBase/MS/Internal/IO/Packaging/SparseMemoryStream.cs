@@ -417,7 +417,7 @@ namespace MS.Internal.IO.Packaging
                         }
 
                         // clean up isolated storage resources if in use
-                        if (_isolatedStorageStream != null)
+                        if (_isolatedStorageStream is not null)
                         {
                             // can only rely on _isolatedStorageStream behaving correctly if we are not in our finalizer
                             _isolatedStorageStream.Close();
@@ -595,7 +595,7 @@ namespace MS.Internal.IO.Packaging
                 if (blockOffset <= 0)   // No overlapping
                 {
                     // Check if we should collapse the block
-                    if (memStreamBlock != null
+                    if (memStreamBlock is not null
                         && (CanCollapseWithPreviousBlock(prevMemStreamBlock, memStreamBlock.Offset, memStreamBlock.Stream.Length)))
                     {
                         // remove the following block  memStreamBlock
@@ -790,7 +790,7 @@ namespace MS.Internal.IO.Packaging
 #if DEBUG
         private void DebugAssertConsistentArrayStructure()
         {
-            if (_memoryStreamList != null)
+            if (_memoryStreamList is not null)
             {
                 long testTrackingPosition = 0;
                 foreach(MemoryStreamBlock memStreamBlock in _memoryStreamList)

@@ -132,7 +132,7 @@ namespace MS.Internal.Documents.Application
             }
 
             // Display the current Image if one is set.
-            if (DocumentProperties.Current.Image != null)
+            if (DocumentProperties.Current.Image is not null)
             {
                 _iconPictureBox.Image = DocumentProperties.Current.Image;
             }
@@ -147,7 +147,7 @@ namespace MS.Internal.Documents.Application
         private void SetTextProperty(Control control, string text)
         {
             // Check if control exists
-            if (control != null)
+            if (control is not null)
             {
                 // Check if text is a valid string, otherwise use String.Empty
                 control.Text = String.IsNullOrEmpty(text) ? 
@@ -164,7 +164,7 @@ namespace MS.Internal.Documents.Application
         private void SetTextProperty(Control control, DateTime? date)
         {
             // Check if control exists
-            if (control != null)
+            if (control is not null)
             {
                 // Check if date is valid, and format string.
                 control.Text = (!date.HasValue) ? 

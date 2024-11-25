@@ -45,7 +45,7 @@ namespace System.Windows.Controls
             BindingGroup bindingGroup;
             BindingExpression bindingExpr;
 
-            if ((bindingGroup = value as BindingGroup) != null)
+            if ((bindingGroup = value as BindingGroup) is not null)
             {
                 // in a BindingGroup, check the item-level IDataErrorInfo for each
                 // source item in the group
@@ -53,7 +53,7 @@ namespace System.Windows.Controls
                 for (int i=items.Count-1; i>=0; --i)
                 {
                     IDataErrorInfo idei = items[i] as IDataErrorInfo;
-                    if (idei != null)
+                    if (idei is not null)
                     {
                         string error = idei.Error;
                         if (!String.IsNullOrEmpty(error))
@@ -63,12 +63,12 @@ namespace System.Windows.Controls
                     }
                 }
             }
-            else if ((bindingExpr = value as BindingExpression) != null)
+            else if ((bindingExpr = value as BindingExpression) is not null)
             {
                 // in a binding, check the error info for the binding's source
                 // property
                 IDataErrorInfo idei = bindingExpr.SourceItem as IDataErrorInfo;
-                string name = (idei != null) ? bindingExpr.SourcePropertyName : null;
+                string name = (idei is not null) ? bindingExpr.SourcePropertyName : null;
 
                 if (!String.IsNullOrEmpty(name))
                 {

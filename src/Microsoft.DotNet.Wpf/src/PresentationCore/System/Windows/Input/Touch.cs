@@ -40,7 +40,7 @@ namespace System.Windows.Input
 
         internal static void ReportFrame()
         {
-            if (FrameReported != null)
+            if (FrameReported is not null)
             {
                 TouchFrameEventArgs args = new TouchFrameEventArgs(Environment.TickCount);
                 FrameReported(null, args);

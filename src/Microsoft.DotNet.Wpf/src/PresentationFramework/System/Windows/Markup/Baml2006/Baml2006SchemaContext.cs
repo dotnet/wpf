@@ -71,7 +71,7 @@ namespace System.Windows.Baml2006
         {
             EnsureXmlnsAssembliesLoaded(xamlNamespace);
             XamlTypeName fullTypeName = new XamlTypeName { Namespace = xamlNamespace, Name = name };
-            if (typeArguments != null)
+            if (typeArguments is not null)
             {
                 foreach (XamlType typeArg in typeArguments)
                 {
@@ -160,7 +160,7 @@ namespace System.Windows.Baml2006
 
             if (TryGetBamlType(typeId, out bamlType, out xamlType))
             {
-                if (xamlType != null)
+                if (xamlType is not null)
                 {
                     return xamlType.UnderlyingType;
                 }
@@ -177,7 +177,7 @@ namespace System.Windows.Baml2006
 
             if (TryGetBamlType(typeId, out bamlType, out xamlType))
             {
-                if (xamlType != null)
+                if (xamlType is not null)
                 {
                     return xamlType;
                 }
@@ -191,9 +191,9 @@ namespace System.Windows.Baml2006
         {
             XamlMember member = GetProperty(propertyId, false);
             WpfXamlMember wpfMember = member as WpfXamlMember;
-            if (wpfMember != null)
+            if (wpfMember is not null)
             {
-                Debug.Assert(wpfMember.DependencyProperty != null);
+                Debug.Assert(wpfMember.DependencyProperty is not null);
                 return wpfMember.DependencyProperty;
             }
 
@@ -207,7 +207,7 @@ namespace System.Windows.Baml2006
 
             if (TryGetBamlProperty(propertyId, out bamlProperty, out xamlMember))
             {
-                if (xamlMember != null)
+                if (xamlMember is not null)
                 {
                     return xamlMember;
                 }
@@ -247,7 +247,7 @@ namespace System.Windows.Baml2006
             if (TryGetBamlProperty(propertyId, out bamlProperty, out xamlMember))
             {
                 XamlType declaringType;
-                if (xamlMember != null)
+                if (xamlMember is not null)
                 {
                     // If we ask for the Attachable member and we cached the non-Attachable
                     // member, look for the correct member
@@ -292,7 +292,7 @@ namespace System.Windows.Baml2006
             // IsAttachable doesn't matter since we're only looking for the DeclaringType
             if (TryGetBamlProperty(propertyId, out bamlProperty, out xamlMember))
             {
-                if (xamlMember != null)
+                if (xamlMember is not null)
                 {
                     return xamlMember.DeclaringType;
                 }
@@ -310,7 +310,7 @@ namespace System.Windows.Baml2006
             // IsAttachable doesn't matter since we're only looking for the name
             if (TryGetBamlProperty(propertyId, out bamlProperty, out xamlMember))
             {
-                if (xamlMember != null)
+                if (xamlMember is not null)
                 {
                     return xamlMember.Name;
                 }
@@ -454,7 +454,7 @@ namespace System.Windows.Baml2006
             {
                 _bamlXmlnsMappings.TryGetValue(xamlNamespace, out assemblies);
             }
-            if (assemblies != null)
+            if (assemblies is not null)
             {
                 foreach (short assembly in assemblies)
                 {
@@ -466,7 +466,7 @@ namespace System.Windows.Baml2006
 
         private Assembly ResolveAssembly(BamlAssembly bamlAssembly)
         {
-            if (bamlAssembly.Assembly != null)
+            if (bamlAssembly.Assembly is not null)
             {
                 return bamlAssembly.Assembly;
             }
@@ -476,7 +476,7 @@ namespace System.Windows.Baml2006
             if (bamlAssembly.Assembly is null)
             {
                 byte[] publicKeyToken = assemblyName.GetPublicKeyToken();
-                if (assemblyName.Version != null || assemblyName.CultureInfo != null || publicKeyToken != null)
+                if (assemblyName.Version is not null || assemblyName.CultureInfo is not null || publicKeyToken is not null)
                 {
                     try
                     {
@@ -496,7 +496,7 @@ namespace System.Windows.Baml2006
                             else
                             {
                                 AssemblyName shortName = new AssemblyName(assemblyName.Name);
-                                if (publicKeyToken != null)
+                                if (publicKeyToken is not null)
                                 {
                                     shortName.SetPublicKeyToken(publicKeyToken);
                                 }
@@ -541,7 +541,7 @@ namespace System.Windows.Baml2006
                 if (TryGetBamlAssembly(bamlType.AssemblyId, out bamlAssembly))
                 {
                     Assembly assembly = ResolveAssembly(bamlAssembly);
-                    if (assembly != null)
+                    if (assembly is not null)
                     {
                         return assembly.GetType(bamlType.Name, false);
                     }
@@ -553,7 +553,7 @@ namespace System.Windows.Baml2006
         private XamlType ResolveBamlType(BamlType bamlType, Int16 typeId)
         {
             Type type = ResolveBamlTypeToType(bamlType);
-            if (type != null)
+            if (type is not null)
             {
                 bamlType.ClrNamespace = type.Namespace;
                 XamlType xType = _parentSchemaContext.GetXamlType(type);
@@ -582,7 +582,7 @@ namespace System.Windows.Baml2006
             }
 
             Assembly assembly = KnownTypes.GetKnownAssembly(assemblyId);
-            if (assembly != null)
+            if (assembly is not null)
             {
                 bamlAssembly = new BamlAssembly(assembly);
                 return true;
@@ -603,7 +603,7 @@ namespace System.Windows.Baml2006
                     object type = _bamlType[typeId];
                     bamlType = type as BamlType;
                     xamlType = type as XamlType;
-                    return (type != null);
+                    return (type is not null);
                 }
             }
             if (typeId < 0)
@@ -620,7 +620,7 @@ namespace System.Windows.Baml2006
                 return true;
             }
 
-            return (bamlType != null);
+            return (bamlType is not null);
         }
 
         private bool TryGetBamlProperty(Int16 propertyId, out BamlProperty bamlProperty, out XamlMember xamlMember)

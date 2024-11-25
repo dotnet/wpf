@@ -111,7 +111,7 @@ namespace MS.Internal.AutomationProxies
                     {
                         // Test for spinner - Create checks if the element is a spinner
                         ProxySimple spinner = (ProxySimple)WinformsSpinner.Create(hwndParent, 0);
-                        if (spinner != null)
+                        if (spinner is not null)
                         {
                             el = spinner;
                         }
@@ -915,7 +915,7 @@ namespace MS.Internal.AutomationProxies
             if (hwndParent != IntPtr.Zero)
             {
                 // Test for spinner - Create checks if the element is a spinner
-                if (WinformsSpinner.Create(hwndParent, 0) != null)
+                if (WinformsSpinner.Create(hwndParent, 0) is not null)
                 {
                     return true;
                 }

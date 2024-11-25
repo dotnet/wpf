@@ -403,8 +403,8 @@ namespace MS.Internal.Printing.Configuration
                     string optionName;
                     bool bIsPrivate;
 
-                    if ((this.FeatureNode != null) &&
-                        ((optionName = this.FeatureNode.GetOptionName(out bIsPrivate)) != null) &&
+                    if ((this.FeatureNode is not null) &&
+                        ((optionName = this.FeatureNode.GetOptionName(out bIsPrivate)) is not null) &&
                         (optionName == PrintSchemaTags.Keywords.PageMediaSizeKeys.CustomMediaSize))
                     {
                         micronValue = this[PrintSchemaTags.Keywords.PageMediaSizeKeys.CustomMediaSizeWidth];
@@ -438,8 +438,8 @@ namespace MS.Internal.Printing.Configuration
                     string optionName;
                     bool bIsPrivate;
 
-                    if ((this.FeatureNode != null) &&
-                        ((optionName = this.FeatureNode.GetOptionName(out bIsPrivate)) != null) &&
+                    if ((this.FeatureNode is not null) &&
+                        ((optionName = this.FeatureNode.GetOptionName(out bIsPrivate)) is not null) &&
                         (optionName == PrintSchemaTags.Keywords.PageMediaSizeKeys.CustomMediaSize))
                     {
                         micronValue = this[PrintSchemaTags.Keywords.PageMediaSizeKeys.CustomMediaSizeHeight];

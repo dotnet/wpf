@@ -126,7 +126,7 @@ namespace System.Windows.Documents
             _visitedArray[index] = true;
 
             FixedSOMElement somElement = FixedSOMElement.CreateFixedSOMElement(_fixedPage, e, fn, -1, -1);
-            if (somElement != null)
+            if (somElement is not null)
             {
                 _flowBuilder.AddElement(somElement);
             }
@@ -144,7 +144,7 @@ namespace System.Windows.Documents
             // Break element is ignored for now.
             //
             NamedElement ne = be as NamedElement;
-            if (ne != null)
+            if (ne is not null)
             {
                 //
                 // That is the NamedElement, it might use namedReference or HierachyReference, 
@@ -155,7 +155,7 @@ namespace System.Windows.Documents
             else
             {
                 SemanticBasicElement sbe = be as SemanticBasicElement;
-                if (sbe != null)
+                if (sbe is not null)
                 {
                     //
                     // Add the start node in the flow array.
@@ -220,7 +220,7 @@ namespace System.Windows.Documents
         private void SpecialProcessing(SemanticBasicElement sbe)
         {
             Ds.ListItemStructure listItem = sbe as Ds.ListItemStructure;
-            if (listItem != null && listItem.Marker != null)
+            if (listItem is not null && listItem.Marker is not null)
             {
                 NameHashFixedNode fen;
                 if (_nameHashTable.TryGetValue(listItem.Marker, out fen) == true)

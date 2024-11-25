@@ -91,7 +91,7 @@ namespace MS.Internal.Data
         /// </remarks>
         public object DoWork()
         {
-            if (DoBeginWork() && _workCallback != null)
+            if (DoBeginWork() && _workCallback is not null)
                 return _workCallback(this);
             else
                 return null;
@@ -126,7 +126,7 @@ namespace MS.Internal.Data
             if (ChangeStatus(AsyncRequestStatus.Completed))
             {
                 _result = result;
-                if (_completedCallback != null)
+                if (_completedCallback is not null)
                     _completedCallback(this);
             }
         }
@@ -151,7 +151,7 @@ namespace MS.Internal.Data
             if (ChangeStatus(AsyncRequestStatus.Failed))
             {
                 _exception = exception;
-                if (_completedCallback != null)
+                if (_completedCallback is not null)
                     _completedCallback(this);
             }
         }

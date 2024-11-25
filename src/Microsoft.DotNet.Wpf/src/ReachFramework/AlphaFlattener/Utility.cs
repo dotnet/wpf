@@ -469,7 +469,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
         static public bool IsRectangle(Geometry geometry)
         {
-            if (geometry.Transform != null && !IsScaleTranslate(geometry.Transform.Value))
+            if (geometry.Transform is not null && !IsScaleTranslate(geometry.Transform.Value))
             {
                 // assume the transformation distorts the geometry, thus it can't be rectangle
                 return false;
@@ -481,7 +481,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 StreamGeometry streamGeometry = geometry as StreamGeometry;
 
-                if (streamGeometry != null)
+                if (streamGeometry is not null)
                 {
                     rect = IsRectangle(streamGeometry);
                 }
@@ -491,7 +491,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 PathGeometry pathGeometry = geometry as PathGeometry;
 
-                if (pathGeometry != null)
+                if (pathGeometry is not null)
                 {
                     rect = IsRectangle(pathGeometry);
                 }
@@ -528,7 +528,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             PathFigure figure = geometry.Figures[0];
 
-            if ((figure != null) && figure.IsClosed)
+            if ((figure is not null) && figure.IsClosed)
             {
                 Point p = figure.StartPoint;
 
@@ -538,7 +538,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 {
                     PathSegment segment = figure.Segments[s];
 
-                    if (segment != null)
+                    if (segment is not null)
                     {
                         LineSegment seg = segment as LineSegment;
                         PolyLineSegment pseg = null;
@@ -561,7 +561,7 @@ namespace Microsoft.Internal.AlphaFlattener
                         {
                             Point q;
 
-                            if (seg != null)
+                            if (seg is not null)
                             {
                                 q = seg.Point;
                             }
@@ -600,7 +600,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             StreamGeometry streamGeometry = geometry as StreamGeometry;
 
-            if (streamGeometry != null)
+            if (streamGeometry is not null)
             {
                 int estimatedPointCount;    // unused
                 bool isRectangle;           // unused
@@ -619,13 +619,13 @@ namespace Microsoft.Internal.AlphaFlattener
 
             PathGeometry pathGeometry = geometry as PathGeometry;
 
-            if (pathGeometry != null &&
-                pathGeometry.Figures != null &&
+            if (pathGeometry is not null &&
+                pathGeometry.Figures is not null &&
                 pathGeometry.Figures.Count == 1)
             {
                 PathFigure figure = pathGeometry.Figures[0];
 
-                if (figure.Segments != null &&
+                if (figure.Segments is not null &&
                     figure.Segments.Count == 1 &&
                     figure.Segments[0] is LineSegment)
                 {
@@ -641,7 +641,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             StreamGeometry sg = g as StreamGeometry;
 
-            if (sg != null)
+            if (sg is not null)
             {
                 int  pointCount;
                 bool isRectangle;
@@ -660,18 +660,18 @@ namespace Microsoft.Internal.AlphaFlattener
 
             PathGeometry pg = g as PathGeometry;
 
-            if (pg != null)
+            if (pg is not null)
             {
                 return GetPathPointCount(pg);
             }
 
             GeometryGroup gg = g as GeometryGroup;
 
-            if (gg != null)
+            if (gg is not null)
             {
                 double sum = 0;
 
-                if (gg.Children != null)
+                if (gg.Children is not null)
                 {
                     foreach (Geometry c in gg.Children)
                     {
@@ -901,7 +901,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 PathFigure figure = geometry.Figures[i];
 
-                if (figure != null)
+                if (figure is not null)
                 {
                     size += GetPathPointCount(figure);
                 }
@@ -918,7 +918,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 PathSegment segment = figure.Segments[s];
 
-                if (segment != null)
+                if (segment is not null)
                 {
                     size += GetPathPointCount(segment);
                 }
@@ -1111,7 +1111,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 SolidColorBrush sb = brush as SolidColorBrush;
 
-                if (sb != null)
+                if (sb is not null)
                 {
                     return Utility.IsOpaque(sb.Color.ScA);
                 }
@@ -1434,7 +1434,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <returns></returns>
         internal static bool NeedPremultiplyAlpha(BitmapSource bitmapSource)
         {
-            if ((bitmapSource != null) && (bitmapSource.Format ==  PixelFormats.Pbgra32))
+            if ((bitmapSource is not null) && (bitmapSource.Format ==  PixelFormats.Pbgra32))
             {
                 int width  = bitmapSource.PixelWidth;
                 int height = bitmapSource.PixelHeight;
@@ -1482,15 +1482,15 @@ namespace Microsoft.Internal.AlphaFlattener
 
             opacity = 1;
 
-            if ((ib != null) && (ib.ImageSource != null))
+            if ((ib is not null) && (ib.ImageSource is not null))
             {
                 BitmapSource bs = ib.ImageSource as BitmapSource;
 
-                if ((bs != null) && (ImageProxy.HasAlpha(bs) == 0))
+                if ((bs is not null) && (ImageProxy.HasAlpha(bs) == 0))
                 {
                     BrushProxy bp = BrushProxy.CreateBrush(ib, maskBounds);
 
-                    if (bp != null)
+                    if (bp is not null)
                     {
                         // Bug 1699447: BrushProxy.IsOpaque just checks if viewbox fills up viewport,
                         // Here we need to check if the brush fills the maskBounds. We need to add a
@@ -1553,9 +1553,9 @@ namespace Microsoft.Internal.AlphaFlattener
 
             ImageBrush imageBrush = brush as ImageBrush;
 
-            if (imageBrush != null)
+            if (imageBrush is not null)
             {
-                if (imageBrush.ImageSource != null)
+                if (imageBrush.ImageSource is not null)
                 {
                     bounds = new Rect(0, 0, imageBrush.ImageSource.Width, imageBrush.ImageSource.Height);
                 }
@@ -1565,9 +1565,9 @@ namespace Microsoft.Internal.AlphaFlattener
 
             DrawingBrush drawingBrush = brush as DrawingBrush;
 
-            if (drawingBrush != null)
+            if (drawingBrush is not null)
             {
-                if (drawingBrush.Drawing != null)
+                if (drawingBrush.Drawing is not null)
                 {
                     bounds = drawingBrush.Drawing.Bounds;
                 }
@@ -1577,12 +1577,12 @@ namespace Microsoft.Internal.AlphaFlattener
 
             VisualBrush visualBrush = brush as VisualBrush;
 
-            if (visualBrush != null)
+            if (visualBrush is not null)
             {
-                if (visualBrush.Visual != null)
+                if (visualBrush.Visual is not null)
                 {
                     UIElement uiElement = visualBrush.Visual as UIElement;
-                    if (uiElement != null)
+                    if (uiElement is not null)
 	            {
                         if ((!uiElement.IsArrangeValid || uiElement.NeverMeasured) && visualBrush.AutoLayoutContent)
                         {
@@ -1596,7 +1596,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                     Geometry clip = VisualTreeHelper.GetClip(visualBrush.Visual);
 
-                    if (clip != null)
+                    if (clip is not null)
                     {
                         bounds.Intersect(clip.Bounds);
                     }
@@ -2133,10 +2133,10 @@ namespace Microsoft.Internal.AlphaFlattener
             if (drawing.Children is null || drawing.Children.Count == 0)
                 return false;
 
-            if (drawing.ClipGeometry != null && !Utility.IsRenderVisible(drawing.ClipGeometry.Bounds))
+            if (drawing.ClipGeometry is not null && !Utility.IsRenderVisible(drawing.ClipGeometry.Bounds))
                 return false;
 
-            if (drawing.Transform != null && !Utility.IsValid(drawing.Transform.Value))
+            if (drawing.Transform is not null && !Utility.IsValid(drawing.Transform.Value))
                 return false;
 
             if (BrushProxy.IsEmpty(drawing.OpacityMask))

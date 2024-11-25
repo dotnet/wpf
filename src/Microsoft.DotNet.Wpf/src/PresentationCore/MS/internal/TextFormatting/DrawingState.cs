@@ -54,7 +54,7 @@ namespace MS.Internal.TextFormatting
                 _vectorToLineOrigin = lineOrigin;
             }
 
-            if (_drawingContext != null)
+            if (_drawingContext is not null)
             {
                 // LineServices draws GlyphRun and TextDecorations in multiple 
                 // callbacks and GlyphRuns may have different baselines. Pushing guideline
@@ -107,7 +107,7 @@ namespace MS.Internal.TextFormatting
         public void Dispose()
         {
             // clear the guideline at line's baseline
-            if (_drawingContext != null)
+            if (_drawingContext is not null)
             {
                 _drawingContext.Pop();
             }

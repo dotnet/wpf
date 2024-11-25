@@ -22,7 +22,8 @@ namespace System.Windows.Media.Media3D
     {
         internal GeneralTransform3DTo2D()
         {
-            _transformBetween2D = null;        }
+            _transformBetween2D = null;
+        }
         
         internal GeneralTransform3DTo2D(Matrix3D projectionTransform, GeneralTransform transformBetween2D)
         {
@@ -44,7 +45,7 @@ namespace System.Windows.Media.Media3D
             // project the point
             Point3D projectedPoint = _projectionTransform.Transform(inPoint);
 
-            if (_transformBetween2D != null)
+            if (_transformBetween2D is not null)
             {
                 result = _transformBetween2D.Transform(new Point(projectedPoint.X, projectedPoint.Y));
                 success = true;
@@ -82,7 +83,7 @@ namespace System.Windows.Media.Media3D
         /// <returns>The 2D bounding box of the projection of these points</returns>
         public Rect TransformBounds(Rect3D rect3D)
         {
-            if (_transformBetween2D != null)
+            if (_transformBetween2D is not null)
             {
                 return _transformBetween2D.TransformBounds(MILUtilities.ProjectBounds(ref _projectionTransform, ref rect3D));            
             }

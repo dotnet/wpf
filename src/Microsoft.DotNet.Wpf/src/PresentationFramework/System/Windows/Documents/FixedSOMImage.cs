@@ -95,7 +95,7 @@ namespace System.Windows.Documents
             rect.Inflate(5,5);
             dc.DrawRectangle(null, pen , rect);
 
-            if (label != null && debugVisual == DrawDebugVisual.Paragraphs)
+            if (label is not null && debugVisual == DrawDebugVisual.Paragraphs)
             {
                 base.RenderLabel(dc, label);
             }

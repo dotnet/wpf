@@ -348,7 +348,7 @@ namespace System.Windows.Media
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
                 
-                Invariant.Assert(runProps != null);
+                Invariant.Assert(runProps is not null);
                 
                 if (runProps.ForegroundBrush == foregroundBrush)
                     continue;
@@ -422,7 +422,7 @@ namespace System.Windows.Media
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
                 
-                Invariant.Assert(runProps != null);
+                Invariant.Assert(runProps is not null);
                 
                 Typeface oldTypeface = runProps.Typeface;
                 if (fontFamily.Equals(oldTypeface.FontFamily))
@@ -477,7 +477,7 @@ namespace System.Windows.Media
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
                 
-                Invariant.Assert(runProps != null);
+                Invariant.Assert(runProps is not null);
                 
                 if (runProps.FontRenderingEmSize == emSize)
                     continue;
@@ -530,7 +530,7 @@ namespace System.Windows.Media
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
                 
-                Invariant.Assert(runProps != null);
+                Invariant.Assert(runProps is not null);
                 
                 if (runProps.CultureInfo.Equals(culture))
                     continue;
@@ -589,9 +589,9 @@ namespace System.Windows.Media
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
 
-                Invariant.Assert(runProps != null);
+                Invariant.Assert(runProps is not null);
 
-                if (numberSubstitution != null)
+                if (numberSubstitution is not null)
                 {
                     if (numberSubstitution.Equals(runProps.NumberSubstitution))
                         continue;
@@ -648,7 +648,7 @@ namespace System.Windows.Media
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
                 
-                Invariant.Assert(runProps != null);
+                Invariant.Assert(runProps is not null);
                 
                 Typeface oldTypeface = runProps.Typeface;
                 if (oldTypeface.Weight == weight)
@@ -700,7 +700,7 @@ namespace System.Windows.Media
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
                 
-                Invariant.Assert(runProps != null);
+                Invariant.Assert(runProps is not null);
                 
                 Typeface oldTypeface = runProps.Typeface;
                 if (oldTypeface.Style == style)
@@ -753,7 +753,7 @@ namespace System.Windows.Media
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
                 
-                Invariant.Assert(runProps != null);
+                Invariant.Assert(runProps is not null);
                 
                 Typeface oldTypeface = runProps.Typeface;
                 if (oldTypeface.Stretch == stretch)
@@ -806,7 +806,7 @@ namespace System.Windows.Media
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
                 
-                Invariant.Assert(runProps != null);
+                Invariant.Assert(runProps is not null);
                 
                 if (runProps.Typeface == typeface)
                     continue;
@@ -858,7 +858,7 @@ namespace System.Windows.Media
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
 
-                Invariant.Assert(runProps != null);
+                Invariant.Assert(runProps is not null);
                 
                 if (runProps.TextDecorations == textDecorations)
                     continue;
@@ -926,13 +926,13 @@ namespace System.Windows.Media
 
             public void Dispose()
             {
-                if (_currentLine != null)
+                if (_currentLine is not null)
                 {
                     _currentLine.Dispose();
                     _currentLine = null;
                 }
 
-                if (_nextLine != null)
+                if (_nextLine is not null)
                 {
                     _nextLine.Dispose();
                     _nextLine = null;
@@ -1070,7 +1070,7 @@ namespace System.Windows.Media
                     if (!nextLineFits)
                     {
                         // next line doesn't fit
-                        if (_nextLine != null)
+                        if (_nextLine is not null)
                         {
                             _nextLine.Dispose();
                             _nextLine = null;
@@ -1084,7 +1084,7 @@ namespace System.Windows.Media
                             TextWrapping currentWrap = _that._defaultParaProps.TextWrapping;
                             _that._defaultParaProps.SetTextWrapping(TextWrapping.NoWrap);
 
-                            if (currentLineBreak != null)
+                            if (currentLineBreak is not null)
                                 currentLineBreak.Dispose();
 
                             _currentLine.Dispose();
@@ -1104,7 +1104,7 @@ namespace System.Windows.Media
                 _previousHeight = _currentLine.Height;
                 _previousLength = _currentLine.Length;
 
-                if (_previousLineBreak != null)
+                if (_previousLineBreak is not null)
                     _previousLineBreak.Dispose();
 
                 _previousLineBreak = currentLineBreak;
@@ -1658,7 +1658,7 @@ namespace System.Windows.Media
                                 x1 - x0
                                 );
 
-                            if (highlightBounds != null)
+                            if (highlightBounds is not null)
                             {
                                 foreach (TextBounds bound in highlightBounds)
                                 {
@@ -1712,7 +1712,7 @@ namespace System.Windows.Media
         {
             Point lineOrigin = origin;
 
-            if (_metrics != null && !double.IsNaN(_metrics.Extent))
+            if (_metrics is not null && !double.IsNaN(_metrics.Extent))
             {
                 // we can't use foreach because it requires GetEnumerator and associated classes to be public
                 // foreach (TextLine currentLine in this)
@@ -1783,7 +1783,7 @@ namespace System.Windows.Media
                     using (TextLine currentLine = enumerator.Current)
                     {
                         // if we're drawing, do it first as this will compute black box metrics as a side-effect
-                        if (dc != null)
+                        if (dc is not null)
                         {
                             currentLine.Draw(
                                 dc,
@@ -1935,7 +1935,7 @@ namespace System.Windows.Media
         private void CombineGeometryRecursive(Drawing drawing, ref GeometryGroup accumulatedGeometry)
         {
             DrawingGroup group = drawing as DrawingGroup;
-            if (group != null)
+            if (group is not null)
             {
                 // recursively go down for DrawingGroup
                 foreach (Drawing child in group.Children)
@@ -1946,11 +1946,11 @@ namespace System.Windows.Media
             else 
             {
                 GlyphRunDrawing glyphRunDrawing = drawing as GlyphRunDrawing;
-                if (glyphRunDrawing != null)
+                if (glyphRunDrawing is not null)
                 {
                     // process glyph run
                     GlyphRun glyphRun = glyphRunDrawing.GlyphRun;
-                    if (glyphRun != null)
+                    if (glyphRun is not null)
                     {
                         Geometry glyphRunGeometry = glyphRun.BuildGeometry();
                         
@@ -1968,15 +1968,15 @@ namespace System.Windows.Media
                 else
                 {
                     GeometryDrawing geometryDrawing = drawing as GeometryDrawing;
-                    if (geometryDrawing != null)
+                    if (geometryDrawing is not null)
                     {
                         // process geometry (i.e. TextDecoration on the line)
                         Geometry geometry = geometryDrawing.Geometry;
                          
-                        if (geometry != null)
+                        if (geometry is not null)
                         {              
                             LineGeometry lineGeometry = geometry as LineGeometry;
-                            if (lineGeometry != null)
+                            if (lineGeometry is not null)
                             {
                                 // For TextDecoration drawn by DrawLine(), the geometry is a LineGeometry which has no 
                                 // bounding area. So this line won't show up. Work aroud it by increase the Bounding rect 

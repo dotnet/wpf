@@ -79,10 +79,10 @@ namespace System.Windows.Input
         internal void Uninitialize(bool appDomainShutdown)
         {
             // Unregister DefaultTextStore.
-            if (_defaultTextStore != null)
+            if (_defaultTextStore is not null)
             {
                 StopTransitoryExtension();
-                if (_defaultTextStore.DocumentManager != null)
+                if (_defaultTextStore.DocumentManager is not null)
                 {
                     _defaultTextStore.DocumentManager.Pop(UnsafeNativeMethods.PopFlags.TF_POPF_ALL);
                     Marshal.ReleaseComObject(_defaultTextStore.DocumentManager);
@@ -199,7 +199,7 @@ namespace System.Windows.Input
 
             UnsafeNativeMethods.ITfThreadMgr threadManager = ThreadManager;
 
-            if (threadManager != null)
+            if (threadManager is not null)
             {
                 UnsafeNativeMethods.ITfDocumentMgr doc;
                 UnsafeNativeMethods.ITfContext context;
@@ -331,7 +331,7 @@ namespace System.Windows.Input
         {
             UnsafeNativeMethods.ITfThreadMgr threadmgr = ThreadManager;
 
-            if (threadmgr != null)
+            if (threadmgr is not null)
             {
                 threadmgr.SetFocus(dim);
             }
@@ -359,7 +359,7 @@ namespace System.Windows.Input
             // Advise TransitoryExtension Sink and store the cookie.
             guid = UnsafeNativeMethods.IID_ITfTransitoryExtensionSink;
             source = _defaultTextStore.DocumentManager as UnsafeNativeMethods.ITfSource;
-            if (source != null)
+            if (source is not null)
             {
                 // DocumentManager only supports ITfSource on Longhorn, XP does not support it
                 source.AdviseSink(ref guid, _defaultTextStore, out transitoryExtensionSinkCookie);
@@ -377,7 +377,7 @@ namespace System.Windows.Input
             {
                 UnsafeNativeMethods.ITfSource source;
                 source = _defaultTextStore.DocumentManager as UnsafeNativeMethods.ITfSource;
-                if (source != null)
+                if (source is not null)
                 {
                     // DocumentManager only supports ITfSource on Longhorn, XP does not support it
                     source.UnadviseSink(_defaultTextStore.TransitoryExtensionSinkCookie);
@@ -389,7 +389,7 @@ namespace System.Windows.Input
             UnsafeNativeMethods.ITfCompartmentMgr compmgr;
             compmgr = _defaultTextStore.DocumentManager as UnsafeNativeMethods.ITfCompartmentMgr;
 
-            if (compmgr != null)
+            if (compmgr is not null)
             {
                 Guid guid;
                 Object var;
@@ -397,7 +397,7 @@ namespace System.Windows.Input
                 guid = UnsafeNativeMethods.GUID_COMPARTMENT_TRANSITORYEXTENSION;
                 compmgr.GetCompartment(ref guid, out comp);
 
-                if (comp != null)
+                if (comp is not null)
                 {
                     var = (int)0;
                     comp.SetValue(0, ref var);

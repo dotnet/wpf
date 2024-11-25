@@ -64,7 +64,7 @@ namespace System.Windows.Media
             if (destinationType == typeof(string))
             {
                 // When invoked by the serialization engine we can convert to string only for some instances
-                if (context != null && context.Instance != null)
+                if (context is not null && context.Instance is not null)
                 {
                     if (!(context.Instance is ImageSource))
                     {
@@ -122,7 +122,7 @@ namespace System.Windows.Media
                 {
                     byte[] bytes = (byte[])value;
 
-                    if (bytes != null)
+                    if (bytes is not null)
                     {
                         Stream memStream = null;
 
@@ -169,7 +169,7 @@ namespace System.Windows.Media
                     }
 
                     IProvideValueTarget ipvt = context?.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
-                    if (ipvt != null)
+                    if (ipvt is not null)
                     {
                         IProvidePropertyFallback ippf = ipvt.TargetObject as IProvidePropertyFallback;
                         DependencyProperty dp = ipvt.TargetProperty as DependencyProperty;
@@ -177,7 +177,7 @@ namespace System.Windows.Media
                         // We need to check for non DP scenarios (This is currently an internal interface used
                         //             only by Image so it's okay for now)
 
-                        if (ippf != null && dp != null && ippf.CanProvidePropertyFallback(dp.Name))
+                        if (ippf is not null && dp is not null && ippf.CanProvidePropertyFallback(dp.Name))
                         {
                             return ippf.ProvidePropertyFallback(dp.Name, e);
                         }
@@ -205,14 +205,14 @@ namespace System.Windows.Media
         /// <param name="destinationType"> The type to which this will convert the ImageSource instance. </param>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType != null && value is ImageSource)
+            if (destinationType is not null && value is ImageSource)
             {
                 ImageSource instance = (ImageSource)value;
 
                 if (destinationType == typeof(string))
                 {
                     // When invoked by the serialization engine we can convert to string only for some instances
-                    if (context != null && context.Instance != null)
+                    if (context is not null && context.Instance is not null)
                     {
                         #pragma warning disable 6506
                         if (!instance.CanSerializeToString())
@@ -235,7 +235,7 @@ namespace System.Windows.Media
         /// this fails very quickly so we can try this first without a big perf hit.
         private unsafe Stream GetBitmapStream(byte[] rawData)
         {
-            Debug.Assert(rawData != null, "rawData is null.");
+            Debug.Assert(rawData is not null, "rawData is null.");
             fixed (byte* pByte = rawData)
             {
                 IntPtr addr = (IntPtr)pByte;

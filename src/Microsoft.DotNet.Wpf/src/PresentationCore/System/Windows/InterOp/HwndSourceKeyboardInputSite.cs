@@ -51,7 +51,7 @@ namespace System.Windows.Interop
         /// </summary>
         internal void CriticalUnregister()
         {
-            if(_source != null && _sink != null)
+            if(_source is not null && _sink is not null)
             {
                 _source.CriticalUnregisterKeyboardInputSink(this);
                 _sink.KeyboardInputSite = null;
@@ -83,7 +83,7 @@ namespace System.Windows.Interop
         {
             bool traversed = false;
 
-            if(_sinkElement != null)
+            if(_sinkElement is not null)
             {
                 traversed = _sinkElement.MoveFocus(request);
             }

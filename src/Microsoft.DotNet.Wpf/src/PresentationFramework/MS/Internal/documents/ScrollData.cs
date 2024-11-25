@@ -137,7 +137,7 @@ namespace MS.Internal.Documents
             {
                 _offset.X = offset;
                 owner.InvalidateArrange();
-                if (_scrollOwner != null)
+                if (_scrollOwner is not null)
                 {
                     _scrollOwner.InvalidateScrollInfo();
                 }
@@ -159,7 +159,7 @@ namespace MS.Internal.Documents
             {
                 _offset.Y = offset;
                 owner.InvalidateArrange();
-                if (_scrollOwner != null)
+                if (_scrollOwner is not null)
                 {
                     _scrollOwner.InvalidateScrollInfo();
                 }

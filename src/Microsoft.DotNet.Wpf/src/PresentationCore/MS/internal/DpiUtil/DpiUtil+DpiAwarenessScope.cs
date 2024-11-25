@@ -155,7 +155,7 @@ namespace MS.Internal
             /// </summary>
             public void Dispose()
             {
-                if (this.OldDpiAwarenessContext != null)
+                if (this.OldDpiAwarenessContext is not null)
                 {
                     UnsafeNativeMethods.SetThreadDpiAwarenessContext(this.OldDpiAwarenessContext);
                     this.OldDpiAwarenessContext = null;

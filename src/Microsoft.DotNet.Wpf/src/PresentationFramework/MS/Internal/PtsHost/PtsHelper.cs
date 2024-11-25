@@ -271,10 +271,10 @@ namespace MS.Internal.PtsHost
                 {
                     // Disconnect visual from its old parent, if necessary.
                     Visual currentParent = VisualTreeHelper.GetParent(paraClient.Visual) as Visual;
-                    if(currentParent != null)
+                    if(currentParent is not null)
                     {
                         ContainerVisual parent = currentParent as ContainerVisual;
-                        Invariant.Assert(parent != null, "parent should always derives from ContainerVisual");
+                        Invariant.Assert(parent is not null, "parent should always derives from ContainerVisual");
                         parent.Children.Remove(paraClient.Visual);                         
                     }                                          
 
@@ -500,7 +500,7 @@ namespace MS.Internal.PtsHost
                     rectangles = paraClient.GetRectangles(e, start, length);
 
                     // Rectangles collection should not be null for consistency
-                    Invariant.Assert(rectangles != null);
+                    Invariant.Assert(rectangles is not null);
                     if (rectangles.Count != 0)
                     {
                         // Element cannot span more than one para client in the same track, so we stop

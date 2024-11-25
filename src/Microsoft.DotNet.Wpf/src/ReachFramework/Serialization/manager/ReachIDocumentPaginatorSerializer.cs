@@ -104,7 +104,7 @@ namespace System.Windows.Xps.Serialization
                 //
                 if(e.Modified)
                 {
-                    if(e.PrintTicket != null)
+                    if(e.PrintTicket is not null)
                     {
                         PrintTicketSerializer serializer = new PrintTicketSerializer(SerializationManager);
                         serializer.SerializeObject(e.PrintTicket);
@@ -116,7 +116,7 @@ namespace System.Windows.Xps.Serialization
                 XmlLanguage language = null;
 
                 DependencyObject dependencyObject = paginator.Source as DependencyObject;
-                if (dependencyObject != null)
+                if (dependencyObject is not null)
                 {
                     language = (XmlLanguage)dependencyObject.GetValue(FrameworkContentElement.LanguageProperty);
                 }
@@ -135,7 +135,7 @@ namespace System.Windows.Xps.Serialization
 
                     ReachSerializer serializer = SerializationManager.GetSerializer(page);
 
-                    if (serializer != null)
+                    if (serializer is not null)
                     {
                         serializer.SerializeObject(page);
                     }

@@ -35,7 +35,7 @@ namespace System.Windows.Media
         {
             ArgumentNullException.ThrowIfNull(hitTestParameters);
 
-            if (_content != null)
+            if (_content is not null)
             {                
                 if (_content.HitTestPoint(hitTestParameters.HitPoint))
                 {
@@ -53,7 +53,7 @@ namespace System.Windows.Media
         {
             ArgumentNullException.ThrowIfNull(hitTestParameters);
 
-            if ((_content != null) && GetHitTestBounds().IntersectsWith(hitTestParameters.Bounds))
+            if ((_content is not null) && GetHitTestBounds().IntersectsWith(hitTestParameters.Bounds))
             {                 
                 IntersectionDetail intersectionDetail;
 
@@ -96,7 +96,7 @@ namespace System.Windows.Media
             oldContent = _content;
             _content = null;
 
-            if (oldContent != null)
+            if (oldContent is not null)
             {
                 //
                 // Remove the notification handlers.
@@ -119,7 +119,7 @@ namespace System.Windows.Media
             // Prepare the new content.
             // 
 
-            if (newContent != null)
+            if (newContent is not null)
             {
                 // Propagate notification handlers.
                 newContent.PropagateChangedHandler(ContentsChangedHandler, true /* adding */);                
@@ -148,7 +148,7 @@ namespace System.Windows.Media
         {
             Debug.Assert(_proxy.IsOnChannel(channel));
             
-            if (_content != null)
+            if (_content is not null)
             {
                 if (CheckFlagsAnd(channel, VisualProxyFlags.IsContentConnected))
                 {
@@ -175,7 +175,7 @@ namespace System.Windows.Media
         /// </summary>
         internal override Rect GetContentBounds()
         {            
-            if (_content != null)
+            if (_content is not null)
             {
                 Rect resultRect = Rect.Empty;
                 MediaContext mediaContext = MediaContext.From(Dispatcher);                
@@ -204,7 +204,7 @@ namespace System.Windows.Media
         {
             VerifyAPIReadOnly();
 
-            if (_content != null)
+            if (_content is not null)
             {
                 _content.WalkContent(walker);
             }
@@ -227,7 +227,7 @@ namespace System.Windows.Media
             // Create the content on the channel.
             //
 
-            if (_content != null)
+            if (_content is not null)
             {
                 DUCE.CompositionNode.SetContent(
                     _proxy.GetHandle(channel),
@@ -264,7 +264,7 @@ namespace System.Windows.Media
             DrawingGroup drawingGroupContent = null;                  
 
             // Convert our content to a DrawingGroup, if content exists
-            if (_content != null)
+            if (_content is not null)
             {
                 drawingGroupContent = DrawingServices.DrawingGroupFromRenderData((RenderData) _content);
             }

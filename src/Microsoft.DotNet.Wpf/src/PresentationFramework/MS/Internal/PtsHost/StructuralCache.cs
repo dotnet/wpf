@@ -41,9 +41,9 @@ namespace MS.Internal.PtsHost
         /// <param name="textContainer">TextContainer representing content</param>
         internal StructuralCache(FlowDocument owner, TextContainer textContainer)
         {
-            Invariant.Assert(owner != null);
-            Invariant.Assert(textContainer != null);
-            Invariant.Assert(textContainer.Parent != null);
+            Invariant.Assert(owner is not null);
+            Invariant.Assert(textContainer is not null);
+            Invariant.Assert(textContainer.Parent is not null);
 
             _owner = owner;
             _textContainer = textContainer;
@@ -58,7 +58,7 @@ namespace MS.Internal.PtsHost
             // Notify the PtsCache about the fact that PtsContext needs to be destroyed.
             // NOTE: It is safe to access PtsContext, because the PtsContext
             //       does not have a finalizer.
-            if (_ptsContext != null)
+            if (_ptsContext is not null)
             {
                 PtsCache.ReleaseContext(_ptsContext);
             }
@@ -126,7 +126,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal void OnInvalidOperationDetected()
         {
-            if (_currentPage != null)
+            if (_currentPage is not null)
             {
                 _illegalTreeChangeDetected = true;
             }
@@ -137,7 +137,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal void InvalidateFormatCache(bool destroyStructure)
         {
-            if (_section != null)
+            if (_section is not null)
             {
                 _section.InvalidateFormatCache();
                 _destroyStructure = _destroyStructure || destroyStructure;
@@ -170,7 +170,7 @@ namespace MS.Internal.PtsHost
         /// <returns>List of DRTs for specified range.</returns>
         internal DtrList DtrsFromRange(int dcpNew, int cchOld)
         {
-            return (_dtrs != null) ? _dtrs.DtrsFromRange(dcpNew, cchOld) : null;
+            return (_dtrs is not null) ? _dtrs.DtrsFromRange(dcpNew, cchOld) : null;
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace MS.Internal.PtsHost
             * This is possible when the dispatcher.Shutdown event fires before
             * the Visibility changed event fires.
             **/
-            if (_section != null && !_ptsContext.Disposed)
+            if (_section is not null && !_ptsContext.Disposed)
             {
                 if (destroyStructureCache)
                 {
@@ -215,7 +215,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal bool HasPtsContext()
         {
-            return _ptsContext != null;
+            return _ptsContext is not null;
         }
 
         #endregion Internal Methods 
@@ -381,7 +381,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal bool IsDeferredVisualCreationSupported
         {
-            get { return _currentPage != null && !_currentPage.FinitePage; }
+            get { return _currentPage is not null && !_currentPage.FinitePage; }
         }
 
         /// <summary>
@@ -627,8 +627,8 @@ namespace MS.Internal.PtsHost
             /// <param name="page">Document page to set</param>
             internal DocumentOperationContext(StructuralCache owner, FlowDocumentPage page)
             {
-                Invariant.Assert(owner != null, "Invalid owner object.");
-                Invariant.Assert(page != null, "Invalid page object.");
+                Invariant.Assert(owner is not null, "Invalid owner object.");
+                Invariant.Assert(page is not null, "Invalid page object.");
                 Invariant.Assert(owner._currentPage is null, "Page formatting reentrancy detected. Trying to create second _DocumentPageContext for the same StructuralCache.");
 
                 _owner = owner;
@@ -642,7 +642,7 @@ namespace MS.Internal.PtsHost
             /// </summary>
             protected void Dispose()
             {
-                Invariant.Assert(_owner._currentPage != null, "DocumentPageContext is already disposed.");
+                Invariant.Assert(_owner._currentPage is not null, "DocumentPageContext is already disposed.");
 
                 try
                 {

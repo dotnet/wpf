@@ -262,7 +262,7 @@ namespace System.Windows.Input
                     ReadOnlyCollection<StylusPointProperty> properties = SupportedStylusPointProperties;
 
                     // InitializeSupportStylusPointProperties must be called first!
-                    Debug.Assert(properties != null);
+                    Debug.Assert(properties is not null);
 
                     List<StylusPointPropertyInfo> propertyInfos = new List<StylusPointPropertyInfo>();
 

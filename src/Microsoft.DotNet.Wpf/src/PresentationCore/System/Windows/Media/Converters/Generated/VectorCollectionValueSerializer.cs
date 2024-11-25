@@ -73,7 +73,7 @@ namespace System.Windows.Media.Converters
         /// </summary>
         public override object ConvertFromString(string value, IValueSerializerContext context)
         {
-            if (value != null)
+            if (value is not null)
             {
                 return VectorCollection.Parse(value );
             }

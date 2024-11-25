@@ -223,7 +223,7 @@ namespace MS.Internal.Shaping
         {
             FamilyTypeface bestFace = FindExactFamilyTypeface(style, weight, stretch);
 
-            if (bestFace != null && bestFace.DeviceFontName != null)
+            if (bestFace is not null && bestFace.DeviceFontName is not null)
                 return bestFace;
             else
                 return null;
@@ -243,8 +243,8 @@ namespace MS.Internal.Shaping
             out double scaleInEm
             )
         {
-            Invariant.Assert(unicodeString.CharacterBuffer != null && unicodeString.Length > 0);
-            Invariant.Assert(culture != null);
+            Invariant.Assert(unicodeString.CharacterBuffer is not null && unicodeString.Length > 0);
+            Invariant.Assert(culture is not null);
 
             // Get the family map. This will find the first family map that matches
             // the specified culture, an ancestor neutral culture, or "any" culture.
@@ -330,7 +330,7 @@ namespace MS.Internal.Shaping
             ch = digitMap[ch];            
             FontFamilyMap familyMap = _fontInfo.GetFamilyMapOfChar(familyMaps, ch);
                 
-            Invariant.Assert(familyMap != null);
+            Invariant.Assert(familyMap is not null);
             
             for (cchAdvance += sizeofChar; cchAdvance < unicodeString.Length; cchAdvance += sizeofChar)
             {
@@ -377,7 +377,7 @@ namespace MS.Internal.Shaping
                     _firstFontFamily = FontFamily.LookupFontFamily(FontFamily.NullFontFamilyCanonicalName);
                 }
 
-                Invariant.Assert(_firstFontFamily != null);
+                Invariant.Assert(_firstFontFamily is not null);
             }
 
             return _firstFontFamily;

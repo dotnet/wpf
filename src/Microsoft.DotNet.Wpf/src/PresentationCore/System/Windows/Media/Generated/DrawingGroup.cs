@@ -108,7 +108,7 @@ namespace System.Windows.Media
             if ((e.OldValueSource != BaseValueSourceInternal.Default) || e.IsOldValueModified)
             {
                 oldCollection = (DrawingCollection) e.OldValue;
-                if ((oldCollection != null) && !oldCollection.IsFrozen)
+                if ((oldCollection is not null) && !oldCollection.IsFrozen)
                 {
                     oldCollection.ItemRemoved -= target.ChildrenItemRemoved;
                     oldCollection.ItemInserted -= target.ChildrenItemInserted;
@@ -119,13 +119,13 @@ namespace System.Windows.Media
             if ((e.NewValueSource != BaseValueSourceInternal.Default) || e.IsNewValueModified)
             {
                 newCollection = (DrawingCollection) e.NewValue;
-                if ((newCollection != null) && !newCollection.IsFrozen)
+                if ((newCollection is not null) && !newCollection.IsFrozen)
                 {
                     newCollection.ItemInserted += target.ChildrenItemInserted;
                     newCollection.ItemRemoved += target.ChildrenItemRemoved;
                 }
             }
-            if (oldCollection != newCollection && target.Dispatcher != null)
+            if (oldCollection != newCollection && target.Dispatcher is not null)
             {
                 using (CompositionEngineLock.Acquire())
                 {
@@ -142,24 +142,24 @@ namespace System.Windows.Media
                         // 2) Codegen already made sure the collection contains DUCE.IResources
                         // ... so we'll Assert it
 
-                        if (newCollection != null)
+                        if (newCollection is not null)
                         {
                             int count = newCollection.Count;
                             for (int i = 0; i < count; i++)
                             {
                                 DUCE.IResource resource = newCollection.Internal_GetItem(i) as DUCE.IResource;
-                                Debug.Assert(resource != null);
+                                Debug.Assert(resource is not null);
                                 resource.AddRefOnChannel(channel);
                             }
                         }
 
-                        if (oldCollection != null)
+                        if (oldCollection is not null)
                         {
                             int count = oldCollection.Count;
                             for (int i = 0; i < count; i++)
                             {
                                 DUCE.IResource resource = oldCollection.Internal_GetItem(i) as DUCE.IResource;
-                                Debug.Assert(resource != null);
+                                Debug.Assert(resource is not null);
                                 resource.ReleaseOnChannel(channel);
                             }
                         }
@@ -192,7 +192,7 @@ namespace System.Windows.Media
             Geometry newV = (Geometry) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 DUCE.IResource targetResource = (DUCE.IResource)target;
                 using (CompositionEngineLock.Acquire())
@@ -243,7 +243,7 @@ namespace System.Windows.Media
             Brush newV = (Brush) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 DUCE.IResource targetResource = (DUCE.IResource)target;
                 using (CompositionEngineLock.Acquire())
@@ -287,7 +287,7 @@ namespace System.Windows.Media
             Transform newV = (Transform) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 DUCE.IResource targetResource = (DUCE.IResource)target;
                 using (CompositionEngineLock.Acquire())
@@ -331,7 +331,7 @@ namespace System.Windows.Media
             GuidelineSet newV = (GuidelineSet) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 DUCE.IResource targetResource = (DUCE.IResource)target;
                 using (CompositionEngineLock.Acquire())
@@ -558,8 +558,8 @@ namespace System.Windows.Media
                 GuidelineSet vGuidelineSet = GuidelineSet;
 
                 // Obtain handles for properties that implement DUCE.IResource
-                DUCE.ResourceHandle hClipGeometry = vClipGeometry != null ? ((DUCE.IResource)vClipGeometry).GetHandle(channel) : DUCE.ResourceHandle.Null;
-                DUCE.ResourceHandle hOpacityMask = vOpacityMask != null ? ((DUCE.IResource)vOpacityMask).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                DUCE.ResourceHandle hClipGeometry = vClipGeometry is not null ? ((DUCE.IResource)vClipGeometry).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                DUCE.ResourceHandle hOpacityMask = vOpacityMask is not null ? ((DUCE.IResource)vOpacityMask).GetHandle(channel) : DUCE.ResourceHandle.Null;
                 DUCE.ResourceHandle hTransform;
                 if (vTransform is null ||
                     Object.ReferenceEquals(vTransform, Transform.Identity)
@@ -571,7 +571,7 @@ namespace System.Windows.Media
                 {
                     hTransform = ((DUCE.IResource)vTransform).GetHandle(channel);
                 }
-                DUCE.ResourceHandle hGuidelineSet = vGuidelineSet != null ? ((DUCE.IResource)vGuidelineSet).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                DUCE.ResourceHandle hGuidelineSet = vGuidelineSet is not null ? ((DUCE.IResource)vGuidelineSet).GetHandle(channel) : DUCE.ResourceHandle.Null;
 
                 // Obtain handles for animated properties
                 DUCE.ResourceHandle hOpacityAnimations = GetAnimationResourceHandle(OpacityProperty, channel);
@@ -625,17 +625,17 @@ namespace System.Windows.Media
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_DRAWINGGROUP))
                 {
                     Geometry vClipGeometry = ClipGeometry;
-                    if (vClipGeometry != null) ((DUCE.IResource)vClipGeometry).AddRefOnChannel(channel);
+                    if (vClipGeometry is not null) ((DUCE.IResource)vClipGeometry).AddRefOnChannel(channel);
                     Brush vOpacityMask = OpacityMask;
-                    if (vOpacityMask != null) ((DUCE.IResource)vOpacityMask).AddRefOnChannel(channel);
+                    if (vOpacityMask is not null) ((DUCE.IResource)vOpacityMask).AddRefOnChannel(channel);
                     Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
+                    if (vTransform is not null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
                     GuidelineSet vGuidelineSet = GuidelineSet;
-                    if (vGuidelineSet != null) ((DUCE.IResource)vGuidelineSet).AddRefOnChannel(channel);
+                    if (vGuidelineSet is not null) ((DUCE.IResource)vGuidelineSet).AddRefOnChannel(channel);
 
                     DrawingCollection vChildren = Children;
 
-                    if (vChildren != null)
+                    if (vChildren is not null)
                     {
                         int count = vChildren.Count;
                         for (int i = 0; i < count; i++)
@@ -658,17 +658,17 @@ namespace System.Windows.Media
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
                     Geometry vClipGeometry = ClipGeometry;
-                    if (vClipGeometry != null) ((DUCE.IResource)vClipGeometry).ReleaseOnChannel(channel);
+                    if (vClipGeometry is not null) ((DUCE.IResource)vClipGeometry).ReleaseOnChannel(channel);
                     Brush vOpacityMask = OpacityMask;
-                    if (vOpacityMask != null) ((DUCE.IResource)vOpacityMask).ReleaseOnChannel(channel);
+                    if (vOpacityMask is not null) ((DUCE.IResource)vOpacityMask).ReleaseOnChannel(channel);
                     Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
+                    if (vTransform is not null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
                     GuidelineSet vGuidelineSet = GuidelineSet;
-                    if (vGuidelineSet != null) ((DUCE.IResource)vGuidelineSet).ReleaseOnChannel(channel);
+                    if (vGuidelineSet is not null) ((DUCE.IResource)vGuidelineSet).ReleaseOnChannel(channel);
 
                     DrawingCollection vChildren = Children;
 
-                    if (vChildren != null)
+                    if (vChildren is not null)
                     {
                         int count = vChildren.Count;
                         for (int i = 0; i < count; i++)
@@ -697,7 +697,7 @@ namespace System.Windows.Media
 
         private void ChildrenItemInserted(object sender, object item)
         {
-            if (this.Dispatcher != null)
+            if (this.Dispatcher is not null)
             {
                 DUCE.IResource thisResource = (DUCE.IResource)this;
                 using (CompositionEngineLock.Acquire())
@@ -712,7 +712,7 @@ namespace System.Windows.Media
 
                         // We're on a channel, which means our dependents are also on the channel.
                         DUCE.IResource addResource = item as DUCE.IResource;
-                        if (addResource != null)
+                        if (addResource is not null)
                         {
                             addResource.AddRefOnChannel(channel);
                         }
@@ -725,7 +725,7 @@ namespace System.Windows.Media
 
         private void ChildrenItemRemoved(object sender, object item)
         {
-            if (this.Dispatcher != null)
+            if (this.Dispatcher is not null)
             {
                 DUCE.IResource thisResource = (DUCE.IResource)this;
                 using (CompositionEngineLock.Acquire())
@@ -742,7 +742,7 @@ namespace System.Windows.Media
 
                         // We're on a channel, which means our dependents are also on the channel.
                         DUCE.IResource releaseResource = item as DUCE.IResource;
-                        if (releaseResource != null)
+                        if (releaseResource is not null)
                         {
                             releaseResource.ReleaseOnChannel(channel);
                         }

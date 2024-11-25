@@ -323,7 +323,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         {
             uint cbWrite = 0;
             uint cbSize = GuidList.GetDataSizeIfKnownGuid(id);
-            Debug.Assert(strm != null);
+            Debug.Assert(strm is not null);
 
             if (fTag)
             {

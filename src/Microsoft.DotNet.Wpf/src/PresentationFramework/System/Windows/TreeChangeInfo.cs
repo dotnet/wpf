@@ -56,7 +56,7 @@ namespace System.Windows
             DependencyObject                         parent,
             bool                                     isAddOperation)
         {
-            Debug.Assert(d != null, "Must have non-null current node");
+            Debug.Assert(d is not null, "Must have non-null current node");
             
             if (parent is null)
             {
@@ -76,7 +76,7 @@ namespace System.Windows
             if (!parent.IsSelfInheritanceParent)
             {
                 DependencyObject inheritanceParent = parent.InheritanceParent;
-                if (inheritanceParent != null)
+                if (inheritanceParent is not null)
                 {
                     parentEffectiveValues = inheritanceParent.EffectiveValues;
                     parentEffectiveValuesCount = inheritanceParent.EffectiveValuesCount;
@@ -110,10 +110,10 @@ namespace System.Windows
                 DependencyProperty dp = DependencyProperty.RegisteredPropertyList.List[entry.PropertyIndex];
 
                 // There are UncommonFields also stored in the EffectiveValues cache. We need to exclude those.
-                if ((dp != null) && dp.IsPotentiallyInherited)
+                if ((dp is not null) && dp.IsPotentiallyInherited)
                 {
                     PropertyMetadata metadata = dp.GetMetadata(parent.DependencyObjectType);
-                    if (metadata != null && metadata.IsInherited)
+                    if (metadata is not null && metadata.IsInherited)
                     {
                         Debug.Assert(!inheritableProperties.Contains(dp), "EffectiveValues cache must not contains duplicate entries for the same DP");
 

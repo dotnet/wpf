@@ -136,7 +136,7 @@ namespace MS.Internal.Ink
                 case InkCanvasEditingMode.Select:
                     {
                         // Make a copy of the current cached points.
-                        StylusPointCollection cachedPoints = _stylusPoints != null ? 
+                        StylusPointCollection cachedPoints = _stylusPoints is not null ? 
                                                                 _stylusPoints.Clone() : null;
 
                         // Discard the collected ink.
@@ -145,12 +145,12 @@ namespace MS.Internal.Ink
                         // Change the Select mode
                         IStylusEditing newBehavior = EditingCoordinator.ChangeStylusEditingMode(this, mode);
 
-                        if ( cachedPoints != null 
+                        if ( cachedPoints is not null 
                             // NOTICE-2006/04/27-WAYNEZEN,
                             // EditingCoordinator.ChangeStylusEditingMode raises external event.
                             // The user code could take any arbitrary action for instance calling InkCanvas.ReleaseMouseCapture()
                             // So there is no guarantee that we could receive the newBehavior.
-                            && newBehavior != null)
+                            && newBehavior is not null)
                         {
                             // Now add the previous points to the lasso behavior
                             // The SelectionBehavior doesn't check userInitiated, pass false
@@ -183,7 +183,7 @@ namespace MS.Internal.Ink
             base.OnActivate();
 
             // Enable RealTimeInking.
-            if (InkCanvas.InternalDynamicRenderer != null)
+            if (InkCanvas.InternalDynamicRenderer is not null)
             {
                 InkCanvas.InternalDynamicRenderer.Enabled = true;
                 InkCanvas.UpdateDynamicRenderer(); // Kick DynamicRenderer to be hooked up to renderer.
@@ -202,7 +202,7 @@ namespace MS.Internal.Ink
             base.OnDeactivate();
 
             // Disable RealTimeInking.
-            if (InkCanvas.InternalDynamicRenderer != null)
+            if (InkCanvas.InternalDynamicRenderer is not null)
             {
                 InkCanvas.InternalDynamicRenderer.Enabled = false;
                 InkCanvas.UpdateDynamicRenderer();  // Kick DynamicRenderer to be removed from renderer.
@@ -250,7 +250,7 @@ namespace MS.Internal.Ink
             if ( _resetDynamicRenderer )
             {
                 InputDevice inputDevice = EditingCoordinator.GetInputDeviceForReset();
-                if ( InkCanvas.InternalDynamicRenderer != null && inputDevice != null )
+                if ( InkCanvas.InternalDynamicRenderer is not null && inputDevice is not null )
                 {
                     StylusDevice stylusDevice = inputDevice as StylusDevice;
                     // If the input device is MouseDevice, null will be passed in Reset Method.
@@ -296,9 +296,9 @@ namespace MS.Internal.Ink
                     // 
                     // It's possible that the input may end up without any StylusPoint being collected since the behavior can be deactivated by
                     // the user code in the any event handler.
-                    if ( _stylusPoints != null )
+                    if ( _stylusPoints is not null )
                     {
-                        Debug.Assert(_strokeDrawingAttributes != null, "_strokeDrawingAttributes can not be null, did we not see a down?");
+                        Debug.Assert(_strokeDrawingAttributes is not null, "_strokeDrawingAttributes can not be null, did we not see a down?");
 
                         Stroke stroke =
                             new Stroke(_stylusPoints, _strokeDrawingAttributes);

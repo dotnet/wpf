@@ -124,7 +124,7 @@ namespace System.Windows.Input
 
         void Dispose(bool disposing)
         {
-            if ( _cursorHandle != null )
+            if ( _cursorHandle is not null )
             {
                 _cursorHandle.Dispose();
                 _cursorHandle = null;

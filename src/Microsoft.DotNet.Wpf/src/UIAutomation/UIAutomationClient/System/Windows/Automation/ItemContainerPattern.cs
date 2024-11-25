@@ -90,21 +90,21 @@ namespace System.Windows.Automation
            
            // Invalidate the "value" passed against the "property" before passing it to UIACore, Don't invalidate if search is being done for "null" property
            // FindItemByProperty supports find for null property.
-           if (property != null)
+           if (property is not null)
            {
                value = PropertyValueValidateAndMap(property, value);
            }
            
-           if (startAfter != null)
+           if (startAfter is not null)
            {
-               if (property != null)
+               if (property is not null)
                    hNode = UiaCoreApi.ItemContainerPattern_FindItemByProperty(_hPattern, startAfter.RawNode, property.Id, value);
                else
                    hNode = UiaCoreApi.ItemContainerPattern_FindItemByProperty(_hPattern, startAfter.RawNode, 0, null);
            }
            else
            {
-               if (property != null)
+               if (property is not null)
                    hNode = UiaCoreApi.ItemContainerPattern_FindItemByProperty(_hPattern, new SafeNodeHandle(), property.Id, value);
                else
                    hNode = UiaCoreApi.ItemContainerPattern_FindItemByProperty(_hPattern, new SafeNodeHandle(), 0, null);
@@ -139,7 +139,7 @@ namespace System.Windows.Automation
             Type expectedType = info.Type;
             if (value != AutomationElement.NotSupported &&
                 ((value is null && expectedType.IsValueType)
-                || (value != null && !expectedType.IsAssignableFrom(value.GetType()))))
+                || (value is not null && !expectedType.IsAssignableFrom(value.GetType()))))
             {
                 throw new ArgumentException(SR.Format(SR.PropertyConditionIncorrectType, property.ProgrammaticName, expectedType.Name));
             }

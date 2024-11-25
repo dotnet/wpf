@@ -49,7 +49,7 @@ namespace System.Windows.Controls.Primitives
             if (newIsItemsHost)
             {
                 DataGrid dataGrid = Owner;
-                if (dataGrid != null)
+                if (dataGrid is not null)
                 {
                     // ItemsHost should be the "root" element which has
                     // IsItemsHost = true on it.  In the case of grouping,
@@ -57,7 +57,7 @@ namespace System.Windows.Controls.Primitives
                     // content.  Thus, we care only about the panel which
                     // is generating content for the ItemsControl.
                     IItemContainerGenerator generator = dataGrid.ItemContainerGenerator as IItemContainerGenerator;
-                    if (generator != null && generator == generator.GetItemContainerGeneratorForPanel(this))
+                    if (generator is not null && generator == generator.GetItemContainerGeneratorForPanel(this))
                     {
                         dataGrid.InternalItemsHost = this;
                     }
@@ -66,7 +66,7 @@ namespace System.Windows.Controls.Primitives
             else
             {
                 // No longer the items host, clear out the property on the DataGrid
-                if ((_owner != null) && (_owner.InternalItemsHost == this))
+                if ((_owner is not null) && (_owner.InternalItemsHost == this))
                 {
                     _owner.InternalItemsHost = null;
                 }
@@ -84,7 +84,7 @@ namespace System.Windows.Controls.Primitives
         protected override void OnViewportSizeChanged(Size oldViewportSize, Size newViewportSize)
         {
             DataGrid dataGrid = Owner;
-            if (dataGrid != null)
+            if (dataGrid is not null)
             {
                 ScrollContentPresenter scrollContentPresenter = dataGrid.InternalScrollContentPresenter;
                 if (scrollContentPresenter is null || scrollContentPresenter.CanContentScroll)
@@ -131,7 +131,7 @@ namespace System.Windows.Controls.Primitives
         {
             base.OnCleanUpVirtualizedItem(e);
 
-            if (e.UIElement != null &&
+            if (e.UIElement is not null &&
                 Validation.GetHasError(e.UIElement))
             {
                 e.Cancel = true;

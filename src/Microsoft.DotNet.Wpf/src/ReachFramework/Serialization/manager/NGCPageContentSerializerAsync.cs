@@ -127,7 +127,7 @@ namespace System.Windows.Xps.Serialization
         {
             FixedPage fixedPage = Toolbox.GetPageRoot(serializableObjectContext.TargetObject);
 
-            if(fixedPage != null)
+            if(fixedPage is not null)
             {
                 ReachSerializer serializer = SerializationManager.GetSerializer(fixedPage);
 

@@ -134,7 +134,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     public void RegisterName(string name, object scopedElement)
                                     {
                                         INameScope nameScope = FrameworkElement.FindScope(this);
-                                        if (nameScope != null)
+                                        if (nameScope is not null)
                                         {
                                             nameScope.RegisterName(name, scopedElement);
                                         }
@@ -152,7 +152,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     public void UnregisterName(string name)
                                     {
                                         INameScope nameScope = FrameworkElement.FindScope(this);
-                                        if (nameScope != null)
+                                        if (nameScope is not null)
                                         {
                                             nameScope.UnregisterName(name);
                                         }
@@ -178,7 +178,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     internal object FindName(string name, out DependencyObject scopeOwner)
                                     {
                                         INameScope nameScope = FrameworkElement.FindScope(this, out scopeOwner);
-                                        if (nameScope != null)
+                                        if (nameScope is not null)
                                         {
                                             return nameScope.FindName(name);
                                         }
@@ -233,7 +233,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     internal object FindResourceOnSelf(object resourceKey, bool allowDeferredResourceReference, bool mustReturnDeferredResourceReference)
                                     {
                                         ResourceDictionary resources = ResourcesField.GetValue(this);
-                                        if ((resources != null) && resources.Contains(resourceKey))
+                                        if ((resources is not null) && resources.Contains(resourceKey))
                                         {
                                             bool canCache;
                                             return resources.FetchResource(resourceKey, allowDeferredResourceReference, mustReturnDeferredResourceReference, out canCache);
@@ -255,7 +255,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     protected internal void AddLogicalChild(object child)
                                     {
-                                        if (child != null)
+                                        if (child is not null)
                                         {
                                             // It is invalid to modify the children collection that we
                                             // might be iterating during a property invalidation tree walk.
@@ -303,7 +303,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     protected internal void RemoveLogicalChild(object child)
                                     {
-                                        if (child != null)
+                                        if (child is not null)
                                         {
                                             // It is invalid to modify the children collection that we
                                             // might be iterating during a property invalidation tree walk.
@@ -363,14 +363,14 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         // to the dispatchers that the elements belong to.
                                         //
                                         this.VerifyAccess();
-                                        if(newParent != null)
+                                        if(newParent is not null)
                                         {
                                             newParent.VerifyAccess();
                                         }
 
                                         // Logical Parent must first be dropped before you are attached to a newParent
                                         // This mitigates illegal tree state caused by logical child stealing
-                                        if (_parent != null && newParent != null && _parent != newParent)
+                                        if (_parent is not null && newParent is not null && _parent != newParent)
                                         {
                                             throw new System.InvalidOperationException(SR.HasLogicalParent);
                                         }
@@ -385,7 +385,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         VisualDiagnostics.VerifyVisualTreeChange(this);
 
                                         // Logical Parent implies no InheritanceContext
-                                        if (newParent != null)
+                                        if (newParent is not null)
                                         {
                                             ClearInheritanceContext();
                                         }
@@ -408,8 +408,8 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         ///////////////////
 
                                         // Invalidate relevant properties for this subtree
-                                        DependencyObject parent = (newParent != null) ? newParent : oldParent;
-                                        TreeWalkHelper.InvalidateOnTreeChange([[instance.ThisString]], parent, (newParent != null));
+                                        DependencyObject parent = (newParent is not null) ? newParent : oldParent;
+                                        TreeWalkHelper.InvalidateOnTreeChange([[instance.ThisString]], parent, (newParent is not null));
 
                                         // If no one has called BeginInit then mark the element initialized and fire Initialized event
                                         // (non-parser programmatic tree building scenario)
@@ -432,7 +432,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
                                         [[conditional(instance.ClassName == "FrameworkContentElement")]]
                                         // Synchronize ForceInherit properties
-                                        if(_parent != null)
+                                        if(_parent is not null)
                                         {
                                             UIElement.SynchronizeForceInheritProperties(null, this, null, _parent);
                                         }
@@ -443,7 +443,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         [[/conditional]]
                                         [[conditional(instance.ClassName == "FrameworkElement")]]
                                         // Synchronize ForceInherit properties
-                                        if(_parent != null && _parent is ContentElement)
+                                        if(_parent is not null && _parent is ContentElement)
                                         {
                                             UIElement.SynchronizeForceInheritProperties(this, null, null, _parent);
                                         }
@@ -597,7 +597,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                             InheritanceBehavior parentInheritanceBehavior = InheritanceBehavior.Default;
                                             if (hasParent)
                                             {
-                                                if (parentFE != null)
+                                                if (parentFE is not null)
                                                 {
                                                     parent = parentFE;
                                                     parentInheritanceBehavior = parentFE.InheritanceBehavior;
@@ -746,7 +746,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                                                 ContextMenuProperty,
                                                                 null,
                                                                 RequestFlags.DeferredReferences).Value as ContextMenu;
-                                                if (contextMenu != null)
+                                                if (contextMenu is not null)
                                                 {
                                                     TreeWalkHelper.InvalidateOnResourcesChange(contextMenu, null, ResourcesChangeInfo.ThemeChangeInfo);
                                                 }
@@ -758,7 +758,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                                                 null,
                                                                 RequestFlags.DeferredReferences).Value as DependencyObject;
 
-                                                if (toolTip != null)
+                                                if (toolTip is not null)
                                                 {
                                                     FrameworkObject toolTipFO = new FrameworkObject(toolTip);
                                                     if (toolTipFO.IsValid)
@@ -903,7 +903,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                                 InheritanceContextField.SetValue(this, context);
                                                 OnInheritanceContextChanged(EventArgs.Empty);
                                             }
-                                            else if (InheritanceContext != null)
+                                            else if (InheritanceContext is not null)
                                             {
                                                 // second request - remove all context and enter "shared" mode
                                                 InheritanceContextField.ClearValue(this);
@@ -931,7 +931,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     // gets a real parent
                                     private void ClearInheritanceContext()
                                     {
-                                        if (InheritanceContext != null)
+                                        if (InheritanceContext is not null)
                                         {
                                             InheritanceContextField.ClearValue(this);
                                             OnInheritanceContextChanged(EventArgs.Empty);
@@ -952,11 +952,11 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         {
                                             MentorField.SetValue(this, newMentor);
 
-                                            if (oldMentor != null)
+                                            if (oldMentor is not null)
                                             {
                                                 DisconnectMentor(oldMentor);
                                             }
-                                            if (newMentor != null)
+                                            if (newMentor is not null)
                                             {
                                                 ConnectMentor(newMentor);
                                             }
@@ -1127,10 +1127,10 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     internal void RaiseInheritedPropertyChangedEvent(ref InheritablePropertyChangeInfo info)
                                     {
                                         EventHandlersStore store = EventHandlersStore;
-                                        if (store != null)
+                                        if (store is not null)
                                         {
                                             Delegate handler = store.Get(FrameworkElement.InheritedPropertyChangedKey);
-                                            if (handler != null)
+                                            if (handler is not null)
                                             {
                                                 InheritedPropertyChangedEventArgs args = new InheritedPropertyChangedEventArgs(ref info);
                                                 ((InheritedPropertyChangedEventHandler)handler)(this, args);

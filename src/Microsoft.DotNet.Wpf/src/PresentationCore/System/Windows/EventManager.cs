@@ -71,7 +71,7 @@ namespace System.Windows
 
             ArgumentNullException.ThrowIfNull(ownerType);
 
-            if (GlobalEventManager.GetRoutedEventFromName(name, ownerType, false) != null)
+            if (GlobalEventManager.GetRoutedEventFromName(name, ownerType, false) is not null)
             {
                 throw new ArgumentException(SR.Format(SR.DuplicateEventName, name, ownerType)); 
             }

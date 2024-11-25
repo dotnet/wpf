@@ -141,7 +141,7 @@ namespace System.Windows
             {
                 ap = OnCreateAutomationPeer();
 
-                if (ap != null)
+                if (ap is not null)
                 {
                     AutomationPeerField.SetValue(this, ap);
                     HasAutomationPeer = true;
@@ -764,10 +764,10 @@ namespace System.Windows
         private void RaiseMouseButtonEvent(EventPrivateKey key, MouseButtonEventArgs e)
         {
             EventHandlersStore store = EventHandlersStore;
-            if (store != null)
+            if (store is not null)
             {
                 Delegate handler = store.Get(key);
-                if (handler != null)
+                if (handler is not null)
                 {
                     ((MouseButtonEventHandler)handler)(this, e);
                 }
@@ -778,10 +778,10 @@ namespace System.Windows
         private void RaiseDependencyPropertyChanged(EventPrivateKey key, DependencyPropertyChangedEventArgs args)
         {
             EventHandlersStore store = EventHandlersStore;
-            if (store != null)
+            if (store is not null)
             {
                 Delegate handler = store.Get(key);
-                if (handler != null)
+                if (handler is not null)
                 {
                     ((DependencyPropertyChangedEventHandler)handler)(this, args);
                 }

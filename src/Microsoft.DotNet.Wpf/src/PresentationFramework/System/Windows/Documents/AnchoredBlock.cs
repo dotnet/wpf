@@ -46,26 +46,26 @@ namespace System.Windows.Documents
         /// </param>
         protected AnchoredBlock(Block block, TextPointer insertionPosition)
         {
-            if (insertionPosition != null)
+            if (insertionPosition is not null)
             {
                 insertionPosition.TextContainer.BeginChange();
             }
             try
             {
-                if (insertionPosition != null)
+                if (insertionPosition is not null)
                 {
                     // This will throw InvalidOperationException if schema validity is violated.
                     insertionPosition.InsertInline(this);
                 }
 
-                if (block != null)
+                if (block is not null)
                 {
                     this.Blocks.Add(block);
                 }
             }
             finally
             {
-                if (insertionPosition != null)
+                if (insertionPosition is not null)
                 {
                     insertionPosition.TextContainer.EndChange();
                 }
@@ -227,7 +227,7 @@ namespace System.Windows.Documents
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool ShouldSerializeBlocks(XamlDesignerSerializationManager manager)
         {
-            return manager != null && manager.XmlWriter is null;
+            return manager is not null && manager.XmlWriter is null;
         }
         
         #endregion

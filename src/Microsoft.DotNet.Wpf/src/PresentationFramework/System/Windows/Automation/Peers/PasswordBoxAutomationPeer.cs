@@ -80,7 +80,7 @@ namespace System.Windows.Automation.Peers
             else if (patternInterface == PatternInterface.Scroll)
             {
                 PasswordBox owner = (PasswordBox)Owner;
-                if (owner.ScrollViewer != null)
+                if (owner.ScrollViewer is not null)
                 {
                     returnValue = owner.ScrollViewer.CreateAutomationPeer();
                     ((AutomationPeer)returnValue).EventsSource = this;

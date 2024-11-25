@@ -41,7 +41,7 @@ namespace Microsoft.Windows.Themes
             bool isHovered = isClickable && IsHovered;
             bool isPressed = isClickable && IsPressed;
             ListSortDirection? sortDirection = SortDirection;
-            bool isSorted = sortDirection != null;
+            bool isSorted = sortDirection is not null;
             bool isSelected = IsSelected;
             bool hasBevel = (!isHovered && !isPressed && !isSorted && !isSelected);
 
@@ -166,7 +166,7 @@ namespace Microsoft.Windows.Themes
                 if (SeparatorVisibility == Visibility.Visible)
                 {
                     Brush sideBrush;
-                    if (SeparatorBrush != null)
+                    if (SeparatorBrush is not null)
                     {
                         sideBrush = SeparatorBrush;
                     }

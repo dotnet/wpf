@@ -73,12 +73,12 @@ namespace MS.Internal.Annotations.Component
         /// <param name="highlightRange">the highlight range owner</param>
         internal void AddRange(IHighlightRange highlightRange)
         {
-            Invariant.Assert(highlightRange != null, "the owner is null");
+            Invariant.Assert(highlightRange is not null, "the owner is null");
             ITextPointer start = highlightRange.Range.Start;
             ITextPointer end = highlightRange.Range.End;
             //check input data
-            Debug.Assert(start != null, "start pointer is null");
-            Debug.Assert(end != null, "end pointer is null");
+            Debug.Assert(start is not null, "start pointer is null");
+            Debug.Assert(end is not null, "end pointer is null");
             Debug.Assert(start.CompareTo(end) <= 0, "end pointer before start");
 
             if (start.CompareTo(end) == 0)
@@ -100,7 +100,7 @@ namespace MS.Internal.Annotations.Component
             ProcessOverlapingSegments(highlightRange, out invalidateStart, out invalidateEnd);
 
             //fire event - do it only for fixed to avoid disposing of the page in flow. Needs to be changed in V2.
-            if ((Changed != null) && IsFixedContainer)
+            if ((Changed is not null) && IsFixedContainer)
             {
                 Changed(this, new AnnotationHighlightChangedEventArgs(invalidateStart, invalidateEnd));
             }
@@ -115,7 +115,7 @@ namespace MS.Internal.Annotations.Component
         /// <returns>true if the range is successfuly removed</returns>
         internal void RemoveRange(IHighlightRange highlightRange)
         {
-            Debug.Assert(highlightRange != null, "null range data");
+            Debug.Assert(highlightRange is not null, "null range data");
 
             //if range is 0 length do nothing
             if (highlightRange.Range.Start.CompareTo(highlightRange.Range.End) == 0)
@@ -146,7 +146,7 @@ namespace MS.Internal.Annotations.Component
             //TBD:Should do something against fragmentation
 
             //fire event - do it only for fixed to avoid disposing of the page in flow. Needs to be changed in V2.
-            if ((Changed != null) && IsFixedContainer)
+            if ((Changed is not null) && IsFixedContainer)
             {
                 Changed(this, new AnnotationHighlightChangedEventArgs(invalidateStart, invalidateEnd));
             }
@@ -159,7 +159,7 @@ namespace MS.Internal.Annotations.Component
         /// <returns>true if successfuly modified</returns>
         internal void ModifiedRange(IHighlightRange highlightRange)
         {
-            Invariant.Assert(highlightRange != null, "null range data");
+            Invariant.Assert(highlightRange is not null, "null range data");
 
             //if range is 0 length do nothing
             if (highlightRange.Range.Start.CompareTo(highlightRange.Range.End) == 0)
@@ -181,7 +181,7 @@ namespace MS.Internal.Annotations.Component
             ITextPointer invalidateEnd = _segments[endSeg].Segment.End;
 
             //fire event - do it only for fixed to avoid disposing of the page in flow. Needs to be changed in V2.
-            if ((Changed != null) && IsFixedContainer)
+            if ((Changed is not null) && IsFixedContainer)
             {
                 Changed(this, new AnnotationHighlightChangedEventArgs(invalidateStart, invalidateEnd));
             }
@@ -194,7 +194,7 @@ namespace MS.Internal.Annotations.Component
         /// <param name="activate">true - activate, false - deactivate</param>
         internal void ActivateRange(IHighlightRange highlightRange, bool activate)
         {
-            Invariant.Assert(highlightRange != null, "null range data");
+            Invariant.Assert(highlightRange is not null, "null range data");
 
             //if range is 0 length do nothing
             if (highlightRange.Range.Start.CompareTo(highlightRange.Range.End) == 0)
@@ -218,7 +218,7 @@ namespace MS.Internal.Annotations.Component
             }
 
             //fire event - do it only for fixed to avoid disposing of the page in flow. Needs to be changed in V2.
-            if ((Changed != null) && IsFixedContainer)
+            if ((Changed is not null) && IsFixedContainer)
             {
                 Changed(this, new AnnotationHighlightChangedEventArgs(invalidateStart, invalidateEnd));
             }
@@ -345,9 +345,9 @@ namespace MS.Internal.Annotations.Component
         /// <remarks>This method requires ordered nonoverlaped input segments. Otherwise it will assert.</remarks>
         private void ProcessOverlapingSegments(IHighlightRange highlightRange, out ITextPointer invalidateStart, out ITextPointer invalidateEnd)
         {
-            Debug.Assert(highlightRange != null, " null highlight range");
+            Debug.Assert(highlightRange is not null, " null highlight range");
             ReadOnlyCollection<TextSegment> rangeSegments = highlightRange.Range.TextSegments;
-            Debug.Assert((rangeSegments != null) && (rangeSegments.Count > 0), "invalid rangeSegments");
+            Debug.Assert((rangeSegments is not null) && (rangeSegments.Count > 0), "invalid rangeSegments");
 
 
             invalidateStart = null;
@@ -358,7 +358,7 @@ namespace MS.Internal.Annotations.Component
             while ((ind < _segments.Count) && (!rangeSegment.IsNull))
             {
                 HighlightSegment highlightSegment = _segments[ind];
-                Debug.Assert(highlightSegment != null, "null highlight segment");
+                Debug.Assert(highlightSegment is not null, "null highlight segment");
 
                 if (highlightSegment.Segment.Start.CompareTo(rangeSegment.Start) <= 0)
                 {
@@ -444,7 +444,7 @@ namespace MS.Internal.Annotations.Component
             }
 
             //set invalidateEnd
-            if (invalidateStart != null)
+            if (invalidateStart is not null)
             {
                 if (ind == _segments.Count) ind--;
                 invalidateEnd = _segments[ind].Segment.End;
@@ -640,12 +640,12 @@ namespace MS.Internal.Annotations.Component
             /// <param name="owners">owners list</param>
             private void Init(ITextPointer start, ITextPointer end, IList<IHighlightRange> owners)
             {
-                Debug.Assert(start != null, "start pointer is null");
-                Debug.Assert(end != null, "end pointer is null");
-                Debug.Assert(owners != null, "null owners list");
+                Debug.Assert(start is not null, "start pointer is null");
+                Debug.Assert(end is not null, "end pointer is null");
+                Debug.Assert(owners is not null, "null owners list");
                 Debug.Assert(owners.Count > 0, "empty owners list");
                 for (int i = 0; i < owners.Count; i++)
-                    Debug.Assert(owners[i] != null, "null owner");
+                    Debug.Assert(owners[i] is not null, "null owner");
 
                 _segment = new TextSegment(start, end);
                 IsHitTestVisible = false;
@@ -796,7 +796,7 @@ namespace MS.Internal.Annotations.Component
             /// <returns>A list of resulting HighlightSegments. They have same list of owners as this</returns>
             internal IList<HighlightSegment> Split(ITextPointer ps1, ITextPointer ps2, IHighlightRange newOwner)
             {
-                Debug.Assert((ps1 != null) && (ps2 != null) && (ps1.CompareTo(ps2) <= 0), "invalid splitting points");
+                Debug.Assert((ps1 is not null) && (ps2 is not null) && (ps1.CompareTo(ps2) <= 0), "invalid splitting points");
 
                 IList<HighlightSegment> res = new List<HighlightSegment>();
 
@@ -852,7 +852,7 @@ namespace MS.Internal.Annotations.Component
                     res = Split(ps2, LogicalDirection.Backward);
                 }
 
-                if ((res != null) && (res.Count > 0) && (newOwner != null))
+                if ((res is not null) && (res.Count > 0) && (newOwner is not null))
                 {
                     //add owner
                     if (res.Count == 3)
@@ -883,12 +883,12 @@ namespace MS.Internal.Annotations.Component
                 if (_cachedTopOwner != TopOwner)
                 {
                     //remove it from the old owner children
-                    if (_cachedTopOwner != null)
+                    if (_cachedTopOwner is not null)
                         _cachedTopOwner.RemoveChild(this);
                     _cachedTopOwner = TopOwner;
 
                     //add it to the new owner children
-                    if (_cachedTopOwner != null)
+                    if (_cachedTopOwner is not null)
                         _cachedTopOwner.AddChild(this);
                 }
                 Fill = OwnerColor;
@@ -901,7 +901,7 @@ namespace MS.Internal.Annotations.Component
             /// </summary>
             internal void Discard()
             {
-                if (TopOwner != null)
+                if (TopOwner is not null)
                     TopOwner.RemoveChild(this);
                 _activeOwners.Clear();
                 _owners.Clear();
@@ -926,12 +926,12 @@ namespace MS.Internal.Annotations.Component
             private void GetSegmentGeometry(GeometryGroup geometry, TextSegment segment, ITextView parentView)
             {
                 List<ITextView> textViews = TextSelectionHelper.GetDocumentPageTextViews(segment);
-                Debug.Assert(textViews != null, "geometry text view not found");
+                Debug.Assert(textViews is not null, "geometry text view not found");
 
                 foreach (ITextView view in textViews)
                 {
                     Geometry viewGeometry = GetPageGeometry(segment, view, parentView);
-                    if (viewGeometry != null)
+                    if (viewGeometry is not null)
                         geometry.Children.Add(viewGeometry);
                 }
             }
@@ -945,25 +945,25 @@ namespace MS.Internal.Annotations.Component
             /// <returns></returns>
             private Geometry GetPageGeometry(TextSegment segment, ITextView view, ITextView parentView)
             {
-                Debug.Assert((view != null) && (parentView != null), "null text view");
+                Debug.Assert((view is not null) && (parentView is not null), "null text view");
                 //in the initial layout update the TextViews might be invalid. This is OK
                 //since there will be a second pass
                 if (!view.IsValid || !parentView.IsValid)
                     return null;
 
-                //Debug.Assert((view.RenderScope != null) && (parentView.RenderScope != null), "null text view render scope");
+                //Debug.Assert((view.RenderScope is not null) && (parentView.RenderScope is not null), "null text view render scope");
                 if ((view.RenderScope is null) || (parentView.RenderScope is null))
                     return null;
 
                 Geometry pageGeometry = null;
                 pageGeometry = view.GetTightBoundingGeometryFromTextPositions(segment.Start, segment.End);
 
-                if (pageGeometry != null)
+                if (pageGeometry is not null)
                 {
-                    if (parentView != null)
+                    if (parentView is not null)
                     {
                         Transform additionalTransform = (Transform)view.RenderScope.TransformToVisual(parentView.RenderScope);
-                        if (pageGeometry.Transform != null)
+                        if (pageGeometry.Transform is not null)
                         {
                             //we need to create geometry group in this case
                             TransformGroup group = new TransformGroup();
@@ -1068,7 +1068,7 @@ namespace MS.Internal.Annotations.Component
             // Adds individual segment to a collection
             private void CloseSegment(ref ITextPointer segmentStart, ITextPointer cursor, ITextPointer end)
             {
-                if (segmentStart != null)
+                if (segmentStart is not null)
                 {
                     // Check for going beyond the end
                     if (cursor.CompareTo(end) > 0)
@@ -1106,9 +1106,9 @@ namespace MS.Internal.Annotations.Component
                     if (_isFixedContainer)
                         return Geometry.Empty;
 
-                    Debug.Assert(TopOwner != null, "invalid TopOwner");
+                    Debug.Assert(TopOwner is not null, "invalid TopOwner");
                     ITextView parentView = TextSelectionHelper.GetDocumentPageTextView(TopOwner.Range.Start.CreatePointer(LogicalDirection.Forward));
-                    Debug.Assert(parentView != null, "geometry parent text view not found");
+                    Debug.Assert(parentView is not null, "geometry parent text view not found");
                     GeometryGroup geometry = new GeometryGroup();
 
                     if (TopOwner.HighlightContent)
@@ -1125,7 +1125,7 @@ namespace MS.Internal.Annotations.Component
 
                     //reset render transformation of the TopOwner
                     UIElement uie = TopOwner as UIElement;
-                    if (uie != null)
+                    if (uie is not null)
                         uie.RenderTransform = Transform.Identity;
 
                     return geometry;

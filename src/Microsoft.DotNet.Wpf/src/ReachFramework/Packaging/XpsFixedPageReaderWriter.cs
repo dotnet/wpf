@@ -509,7 +509,7 @@ namespace System.Windows.Xps.Packaging
             }
             set
             {
-                if(value != null)
+                if(value is not null)
                 {
                     if (_isPrintTicketCommitted)
                     {
@@ -792,7 +792,7 @@ namespace System.Windows.Xps.Packaging
             // Create the part and writer
             //
             PackagePart metroPart = null;
-            if( resourceUri != null )
+            if( resourceUri is not null )
             {
                 metroPart = this.CurrentXpsManager.GetPart(resourceUri);
                 if (metroPart is null)
@@ -854,7 +854,7 @@ namespace System.Windows.Xps.Packaging
         AddStoryFragment(
             )
         {
-            if (this.StoryFragment != null)
+            if (this.StoryFragment is not null)
             {
                 // StoryFragments already available for this FixedPage
                 throw new XpsPackagingException(SR.ReachPackaging_MoreThanOneStoryFragment);
@@ -1320,7 +1320,7 @@ namespace System.Windows.Xps.Packaging
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXCommitPageBegin);
 
             CommitPrintTicket();
-            if (_partEditor != null)
+            if (_partEditor is not null)
             {
                 _parentNode.CurrentPageCommitted();
                 ((INode)this).Flush();
@@ -1341,7 +1341,7 @@ namespace System.Windows.Xps.Packaging
                 _currentChildren = null;
             }
 #if !RESOURCESTREAM_USING_PART
-            if (_pageStream != null)
+            if (_pageStream is not null)
             {
                 _pageStream.Close();
             }
@@ -1397,7 +1397,7 @@ namespace System.Windows.Xps.Packaging
             {
                 xmlPartList.Add(((INode)resourceDictionary).GetPart());
             }
-            if (_storyFragment != null)
+            if (_storyFragment is not null)
             {
                 xmlPartList.Add(((INode)_storyFragment).GetPart());
             }
@@ -1451,7 +1451,7 @@ namespace System.Windows.Xps.Packaging
                 dependents[uri] = uri;
             }
 
-            if (_storyFragment != null)
+            if (_storyFragment is not null)
             {
                 dependents[_storyFragment.Uri] = _storyFragment.Uri;
              }
@@ -1461,7 +1461,7 @@ namespace System.Windows.Xps.Packaging
             // Add thumbnail
             //
             EnsureThumbnail();
-            if( _thumbnail != null )
+            if( _thumbnail is not null )
             {
                 dependents[_thumbnail.Uri] = _thumbnail.Uri;
             }
@@ -1584,7 +1584,7 @@ namespace System.Windows.Xps.Packaging
                 else if (part.ValidatedContentType().AreTypeAndSubTypeEqual(XpsS0Markup.StoryFragmentsContentType)
                         && rel.RelationshipType == XpsS0Markup.StoryFragmentsRelationshipName)
                 {
-                    if (_storyFragment != null)
+                    if (_storyFragment is not null)
                     {
                         throw new InvalidDataException(SR.ReachPackaging_MoreThanOneStoryFragment);
                     }
@@ -1608,7 +1608,7 @@ namespace System.Windows.Xps.Packaging
             if( _thumbnail is null )
             {
                 _thumbnail = CurrentXpsManager.EnsureThumbnail( this, _metroPart );
-                if( _thumbnail != null )
+                if( _thumbnail is not null )
                 {
                       _currentChildren.Add( _thumbnail );
                 }

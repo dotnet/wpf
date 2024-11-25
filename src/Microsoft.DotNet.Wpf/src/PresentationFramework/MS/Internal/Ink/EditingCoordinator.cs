@@ -256,7 +256,7 @@ namespace MS.Internal.Ink
         internal void InvalidateBehaviorCursor(EditingBehavior behavior)
         {
             // Should never be null
-            Debug.Assert(behavior != null);
+            Debug.Assert(behavior is not null);
 
             // InvalidateCursor first
             SetCursorValid(behavior, false);
@@ -322,7 +322,7 @@ namespace MS.Internal.Ink
                 // Get the new behavior
                 EditingBehavior newBehavior = GetBehavior(ActiveEditingMode);
 
-                if ( newBehavior != null )
+                if ( newBehavior is not null )
                 {
                     // Push the new behavior
                     PushEditingBehavior(newBehavior);
@@ -428,7 +428,7 @@ namespace MS.Internal.Ink
             {
                 bool stylusDown = false;
                 StylusDevice stylusDevice = Stylus.CurrentStylusDevice;
-                if (stylusDevice != null && _inkCanvas.IsStylusOver && !stylusDevice.InAir)
+                if (stylusDevice is not null && _inkCanvas.IsStylusOver && !stylusDevice.InAir)
                 {
                     stylusDown = true;
                 }
@@ -450,15 +450,15 @@ namespace MS.Internal.Ink
         /// <returns></returns>
         internal InputDevice GetInputDeviceForReset()
         {
-            Debug.Assert((_capturedStylus != null && _capturedMouse is null) 
-                            || (_capturedStylus is null && _capturedMouse != null),
+            Debug.Assert((_capturedStylus is not null && _capturedMouse is null) 
+                            || (_capturedStylus is null && _capturedMouse is not null),
                             "There must be one and at most one device being captured.");
             
-            if ( _capturedStylus != null && !_capturedStylus.InAir )
+            if ( _capturedStylus is not null && !_capturedStylus.InAir )
             {
                 return _capturedStylus;
             }
-            else if ( _capturedMouse != null && _capturedMouse.LeftButton == MouseButtonState.Pressed )
+            else if ( _capturedMouse is not null && _capturedMouse.LeftButton == MouseButtonState.Pressed )
             {
                 return _capturedMouse;
             }
@@ -544,7 +544,7 @@ namespace MS.Internal.Ink
         {
             get
             {
-                return _capturedStylus != null || _capturedMouse != null;
+                return _capturedStylus is not null || _capturedMouse is not null;
             }
         }
 
@@ -608,12 +608,12 @@ namespace MS.Internal.Ink
         /// <param name="newEditingBehavior">The EditingBehavior to activate</param>
         private void PushEditingBehavior(EditingBehavior newEditingBehavior)
         {
-            Debug.Assert(newEditingBehavior != null);
+            Debug.Assert(newEditingBehavior is not null);
             
             EditingBehavior behavior = ActiveEditingBehavior;
 
             // Deactivate the previous behavior
-            if ( behavior != null )
+            if ( behavior is not null )
             {
                 behavior.Deactivate();
             }
@@ -630,13 +630,13 @@ namespace MS.Internal.Ink
         {
             EditingBehavior behavior = ActiveEditingBehavior;
 
-            if ( behavior != null )
+            if ( behavior is not null )
             {
                 behavior.Deactivate();
                 _activationStack.Pop();
 
                 behavior = ActiveEditingBehavior;
-                if ( ActiveEditingBehavior != null )
+                if ( ActiveEditingBehavior is not null )
                 {
                     behavior.Activate();
                 }
@@ -651,9 +651,9 @@ namespace MS.Internal.Ink
         private void OnInkCanvasStylusInAirOrInRangeMove(object sender, StylusEventArgs args)
         {
             // If the current capture is mouse, we should reset the capture.
-            if ( _capturedMouse != null )
+            if ( _capturedMouse is not null )
             {
-                if (ActiveEditingBehavior == InkCollectionBehavior && _inkCanvas.InternalDynamicRenderer != null)
+                if (ActiveEditingBehavior == InkCollectionBehavior && _inkCanvas.InternalDynamicRenderer is not null)
                 {
                     // 
                     // When InkCanvas loses the current capture, we should stop the RTI since the App thread are no longer collecting ink.
@@ -693,7 +693,7 @@ namespace MS.Internal.Ink
         {
             MouseButtonEventArgs mouseButtonEventArgs = args as MouseButtonEventArgs;
             bool resetDynamicRenderer = false;
-            if ( mouseButtonEventArgs != null )
+            if ( mouseButtonEventArgs is not null )
             {
                 // NTRADI:WINDOWSOS#1563896-2006/03/20-WAYNEZEN,
                 // Note we don't mark Handled for the None EditingMode.
@@ -713,7 +713,7 @@ namespace MS.Internal.Ink
 
                 // 
                 // If the mouse down event is from a Stylus, make sure we have a correct inverted state.
-                if ( mouseButtonEventArgs.StylusDevice != null )
+                if ( mouseButtonEventArgs.StylusDevice is not null )
                 {
                     UpdateInvertedState(mouseButtonEventArgs.StylusDevice, mouseButtonEventArgs.StylusDevice.Inverted);
                 }
@@ -733,7 +733,7 @@ namespace MS.Internal.Ink
             
             // We might receive StylusDown from a different device meanwhile we have already captured one. 
             // Make sure that we are starting from a fresh state.
-            if ( !IsInMidStroke && stylusEditingBehavior != null )
+            if ( !IsInMidStroke && stylusEditingBehavior is not null )
             {
                 bool fSucceeded = false;
 
@@ -741,7 +741,7 @@ namespace MS.Internal.Ink
                 {
                     InputDevice capturedDevice = null;
                     // Capture the stylus (if mouse event make sure to use stylus if generated by a stylus)
-                    if ( mouseButtonEventArgs != null && mouseButtonEventArgs.StylusDevice != null )
+                    if ( mouseButtonEventArgs is not null && mouseButtonEventArgs.StylusDevice is not null )
                     {
                         capturedDevice = mouseButtonEventArgs.StylusDevice;
                         resetDynamicRenderer = true;
@@ -784,13 +784,13 @@ namespace MS.Internal.Ink
             if ( IsInputDeviceCaptured(args.Device) )
             {
                 IStylusEditing stylusEditingBehavior = ActiveEditingBehavior as IStylusEditing;
-                Debug.Assert(stylusEditingBehavior != null || ActiveEditingBehavior is null,
+                Debug.Assert(stylusEditingBehavior is not null || ActiveEditingBehavior is null,
                     "The ActiveEditingBehavior should be either null (The None mode) or type of IStylusEditing.");
 
-                if ( stylusEditingBehavior != null )
+                if ( stylusEditingBehavior is not null )
                 {
                     StylusPointCollection stylusPoints;
-                    if ( _capturedStylus != null )
+                    if ( _capturedStylus is not null )
                     {
                         stylusPoints = _capturedStylus.GetStylusPoints(_inkCanvas, _commonDescription);
                     }
@@ -798,7 +798,7 @@ namespace MS.Internal.Ink
                     {
                         // Make sure we ignore stylus generated mouse events.
                         MouseEventArgs mouseEventArgs = args as MouseEventArgs;
-                        if ( mouseEventArgs != null && mouseEventArgs.StylusDevice != null )
+                        if ( mouseEventArgs is not null && mouseEventArgs.StylusDevice is not null )
                         {
                             return;
                         }
@@ -843,7 +843,7 @@ namespace MS.Internal.Ink
             StylusDevice stylusDevice = null;
 
             // If this is a mouse event, store the StylusDevice
-            if(mouseButtonEventArgs != null)
+            if(mouseButtonEventArgs is not null)
             {
                 stylusDevice = mouseButtonEventArgs.StylusDevice;
             }
@@ -865,15 +865,15 @@ namespace MS.Internal.Ink
 
             // Make sure that the stylus is the one we captured previously.
             if (IsInputDeviceCaptured(args.Device) 
-                || (stylusDevice != null && IsInputDeviceCaptured(stylusDevice)))
+                || (stylusDevice is not null && IsInputDeviceCaptured(stylusDevice)))
             {
                 Debug.Assert(ActiveEditingBehavior is null || ActiveEditingBehavior is IStylusEditing,
                     "The ActiveEditingBehavior should be either null (The None mode) or type of IStylusEditing.");
 
                 // Make sure we only look at mouse left button events if watching mouse events. 
-                if ( _capturedMouse != null )
+                if ( _capturedMouse is not null )
                 {
-                    if ( mouseButtonEventArgs != null )
+                    if ( mouseButtonEventArgs is not null )
                     {
                         if ( mouseButtonEventArgs.ChangedButton != MouseButton.Left )
                         {
@@ -886,7 +886,7 @@ namespace MS.Internal.Ink
                 {
                     // The follow code raises variety editing events.
                     // The out-side code could throw exception in the their handlers. We use try/finally block to protect our status.
-                    if ( ActiveEditingBehavior != null )
+                    if ( ActiveEditingBehavior is not null )
                     {
                         // Commit the current editing.
                         ActiveEditingBehavior.Commit(true);
@@ -915,7 +915,7 @@ namespace MS.Internal.Ink
                 // Note ReleaseCapture(false) won't raise any external events. It only reset the internal states.
                 ReleaseCapture(false);
 
-                if ( ActiveEditingBehavior == InkCollectionBehavior && _inkCanvas.InternalDynamicRenderer != null )
+                if ( ActiveEditingBehavior == InkCollectionBehavior && _inkCanvas.InternalDynamicRenderer is not null )
                 {
                     // 
                     // When InkCanvas loses the current capture, we should stop the RTI since the App thread are no longer collecting ink.
@@ -939,8 +939,8 @@ namespace MS.Internal.Ink
         /// <param name="resetDynamicRenderer"></param>
         private void InitializeCapture(InputDevice inputDevice, IStylusEditing stylusEditingBehavior, bool userInitiated, bool resetDynamicRenderer)
         {
-            Debug.Assert(inputDevice != null, "A null device is passed in.");
-            Debug.Assert(stylusEditingBehavior != null, "stylusEditingBehavior cannot be null.");
+            Debug.Assert(inputDevice is not null, "A null device is passed in.");
+            Debug.Assert(stylusEditingBehavior is not null, "stylusEditingBehavior cannot be null.");
             Debug.Assert(!IsInMidStroke, "The previous device hasn't been released yet.");
 
             StylusPointCollection stylusPoints;
@@ -951,7 +951,7 @@ namespace MS.Internal.Ink
             // NOTICE-2005/09/15-WAYNEZEN,
             // We assume that the StylusDown always happens before the MouseDown. So, we could safely add the listeners of
             // XXXMove and XXXUp as the below which branchs out the coming mouse or stylus events.
-            if ( _capturedStylus != null )
+            if ( _capturedStylus is not null )
             {
                 StylusPointCollection newPoints = _capturedStylus.GetStylusPoints(_inkCanvas);
 
@@ -964,7 +964,7 @@ namespace MS.Internal.Ink
                 {
                     // Reset the dynamic renderer for InkCollectionBehavior
                     InkCollectionBehavior inkCollectionBehavior = stylusEditingBehavior as InkCollectionBehavior;
-                    if ( inkCollectionBehavior != null )
+                    if ( inkCollectionBehavior is not null )
                     {
                         inkCollectionBehavior.ResetDynamicRenderer();
                     }
@@ -1027,7 +1027,7 @@ namespace MS.Internal.Ink
         {
             Debug.Assert(IsInMidStroke || !releaseDevice, "The captured device has been release unexpectly.");
 
-            if ( _capturedStylus != null )
+            if ( _capturedStylus is not null )
             {
                 // The Stylus was captured. Remove the stylus listeners.
                 _commonDescription = null;
@@ -1044,7 +1044,7 @@ namespace MS.Internal.Ink
                     _inkCanvas.ReleaseStylusCapture();
                 }
             }
-            else if ( _capturedMouse != null )
+            else if ( _capturedMouse is not null )
             {
                 // The Mouse was captured. Remove the mouse listeners.
                 _inkCanvas.RemoveHandler(Mouse.MouseMoveEvent, new MouseEventHandler(OnInkCanvasDeviceMove<MouseEventArgs>));
@@ -1254,14 +1254,14 @@ namespace MS.Internal.Ink
             }
             finally
             {
-                if ( ActiveEditingBehavior != null )
+                if ( ActiveEditingBehavior is not null )
                 {
                     // Pop the old behavior.
                     PopEditingBehavior();
                 }
 
                 // Push the new behavior
-                if ( newBehavior != null )
+                if ( newBehavior is not null )
                 {
                     PushEditingBehavior(newBehavior);
                 }

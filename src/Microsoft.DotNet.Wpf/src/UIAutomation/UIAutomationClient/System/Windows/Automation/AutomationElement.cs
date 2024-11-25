@@ -388,7 +388,7 @@ namespace System.Windows.Automation
         /// </summary>
         public int[] GetRuntimeId()
         {
-            if (_runtimeId != null)
+            if (_runtimeId is not null)
                 return _runtimeId;
 
             //Not true - some AE's from properties and event args (eg. SelectionItem.SelectionContainer,
@@ -397,7 +397,7 @@ namespace System.Windows.Automation
 
             // false -> return null (instead of throwing) if not available; true->wrap
             int [] val = LookupCachedValue(AutomationElement.RuntimeIdProperty, false, true) as int[];
-            if (val != null)
+            if (val is not null)
             {
                 _runtimeId = val;
                 return _runtimeId;
@@ -521,7 +521,7 @@ namespace System.Windows.Automation
                 // we need to verify that we've got the expected basic variant type before casting/returning?
                 // We've got a variant - but that collapses all enums to ints, for example.
                 // Convert back to a more appropriate managed type if necessary...
-                if (value != null && pi.ObjectConverter != null)
+                if (value is not null && pi.ObjectConverter is not null)
                 {
                     value = pi.ObjectConverter(value);
                 }
@@ -608,7 +608,7 @@ namespace System.Windows.Automation
             }
 
             patternObject = Misc.WrapInterfaceOnClientSide(this, hpatternobj, pattern);
-            return patternObject != null;
+            return patternObject is not null;
         }
 
 
@@ -722,7 +722,7 @@ namespace System.Windows.Automation
 
             patternObject = pi.ClientSideWrapper(this, hPattern, true);
 
-            return patternObject != null;
+            return patternObject is not null;
         }
 
         /// <summary>
@@ -812,14 +812,14 @@ namespace System.Windows.Automation
             propArrays.Add(Schema.GetBasicProperties());
 
             AutomationPattern[] patterns = GetSupportedPatterns();
-            if (patterns != null && patterns.Length > 0)
+            if (patterns is not null && patterns.Length > 0)
             {
                 foreach (AutomationPattern pattern in patterns)
                 {
                     AutomationPatternInfo pi;
                     if (Schema.GetPatternInfo(pattern, out pi))
                     {
-                        if (pi.Properties != null)
+                        if (pi.Properties is not null)
                         {
                             propArrays.Add(pi.Properties);
                         }
@@ -842,7 +842,7 @@ namespace System.Windows.Automation
             object patternObject;
             foreach (AutomationPatternInfo pi in Schema.GetPatternInfoTable())
             {
-                if (pi.ID != null && TryGetCurrentPattern(pi.ID, out patternObject))
+                if (pi.ID is not null && TryGetCurrentPattern(pi.ID, out patternObject))
                 {
                     interfaces.Add(pi.ID);
                 }
@@ -899,7 +899,7 @@ namespace System.Windows.Automation
 
                 // Allow the object if it is the element or a descentant...
                 AutomationElement scan = AutomationElement.FromPoint((Point)ptClickable);
-                while (scan != null)
+                while (scan is not null)
                 {
                     if (scan == this)
                     {
@@ -1086,7 +1086,7 @@ namespace System.Windows.Automation
                 int childCount = 0;
                 AutomationElement scan = _cachedFirstChild;
 
-                for (; scan != null; scan = scan._cachedNextSibling)
+                for (; scan is not null; scan = scan._cachedNextSibling)
                 {
                     childCount++;
                 }
@@ -1232,7 +1232,7 @@ namespace System.Windows.Automation
 
             AutomationProperty automationProperty = id as AutomationProperty;
 
-            bool isProperty = automationProperty != null;
+            bool isProperty = automationProperty is not null;
             AutomationIdentifier[] refTable = isProperty ? (AutomationIdentifier[])_request.Properties
                                                            : (AutomationIdentifier[])_request.Patterns;
             bool found = false;
@@ -1272,7 +1272,7 @@ namespace System.Windows.Automation
 
             // Cached values are internally stored as unwrapped, direct-from-provider values, so
             // need to be wrapped as appropriate before handing back to client...
-            if (automationPattern != null)
+            if (automationPattern is not null)
             {
                 SafePatternHandle hpatternobj = (SafePatternHandle)val;
                 val = Misc.WrapInterfaceOnClientSide(this, hpatternobj, automationPattern);

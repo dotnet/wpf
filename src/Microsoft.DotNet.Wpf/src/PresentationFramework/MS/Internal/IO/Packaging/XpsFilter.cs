@@ -605,17 +605,17 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         private void ReleaseResources()
         {
-            if (_encryptedPackage != null)
+            if (_encryptedPackage is not null)
             {
                 _encryptedPackage.Close();
                 _encryptedPackage = null;
             }
-            else if (_package != null)
+            else if (_package is not null)
             {
                 _package.Close();
                 _package = null;
             }
-            if (_packageStream != null)
+            if (_packageStream is not null)
             {
                 _packageStream.Close();
                 _packageStream = null;

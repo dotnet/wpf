@@ -45,8 +45,8 @@ namespace System.Windows.Controls
 
         internal SelectedCellsChangedEventArgs(DataGrid owner, VirtualizedCellInfoCollection addedCells, VirtualizedCellInfoCollection removedCells)
         {
-            _addedCells = (addedCells != null) ? addedCells : VirtualizedCellInfoCollection.MakeEmptyCollection(owner);
-            _removedCells = (removedCells != null) ? removedCells : VirtualizedCellInfoCollection.MakeEmptyCollection(owner);
+            _addedCells = (addedCells is not null) ? addedCells : VirtualizedCellInfoCollection.MakeEmptyCollection(owner);
+            _removedCells = (removedCells is not null) ? removedCells : VirtualizedCellInfoCollection.MakeEmptyCollection(owner);
 
             Debug.Assert(_addedCells.IsReadOnly, "_addedCells should have ended up as read-only.");
             Debug.Assert(_removedCells.IsReadOnly, "_removedCells should have ended up as read-only.");

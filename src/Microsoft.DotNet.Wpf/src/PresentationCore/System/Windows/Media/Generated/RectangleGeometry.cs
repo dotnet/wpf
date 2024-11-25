@@ -247,7 +247,7 @@ namespace System.Windows.Media
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_RECTANGLEGEOMETRY))
                 {
                     Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
+                    if (vTransform is not null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
 
                     AddRefOnChannelAnimations(channel);
 
@@ -264,7 +264,7 @@ namespace System.Windows.Media
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
                     Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
+                    if (vTransform is not null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
 }

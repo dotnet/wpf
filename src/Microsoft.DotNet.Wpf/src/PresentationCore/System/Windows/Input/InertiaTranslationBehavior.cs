@@ -92,7 +92,7 @@ namespace System.Windows.Input
 
         internal static void ApplyParameters(InertiaTranslationBehavior behavior, InertiaProcessor2D processor, Vector initialVelocity)
         {
-            if (behavior != null && behavior.CanUseForInertia())
+            if (behavior is not null && behavior.CanUseForInertia())
             {
                 InertiaTranslationBehavior2D behavior2D = new InertiaTranslationBehavior2D();
                 if (behavior._isInitialVelocitySet)

@@ -364,7 +364,7 @@ namespace MS.Internal
         /// Returns true if the path ends in a directory separator.
         /// </summary>
         public static bool DoesEndInDirectorySeparator(string path)
-              => path != null && path.Length > 0 && PathInternal.IsDirectorySeparator(path[path.Length - 1]);
+              => path is not null && path.Length > 0 && PathInternal.IsDirectorySeparator(path[path.Length - 1]);
         
         internal const char VolumeSeparatorChar = ':';
           // \\?\UNC\, \\.\UNC\

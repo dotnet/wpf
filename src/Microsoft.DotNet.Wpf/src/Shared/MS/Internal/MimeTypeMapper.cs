@@ -25,7 +25,7 @@ namespace MS.Internal
         {
             ContentType mimeType = ContentType.Empty;
 
-            if (uriSource != null)
+            if (uriSource is not null)
             {
                 Uri uri = uriSource;
                 if (uri.IsAbsoluteUri == false)
@@ -81,7 +81,7 @@ namespace MS.Internal
         {
             ContentType mimeType = ContentType.Empty;
 
-            if (uriSource != null)
+            if (uriSource is not null)
             {
                 int retValue;
                 string mimeTypeString;
@@ -99,7 +99,7 @@ namespace MS.Internal
                 // This return value must be checked as the function 
                 // will not throw an exception on failure.
                 // the expected return value is S_OK.
-                if (retValue == 0 && mimeTypeString != null)
+                if (retValue == 0 && mimeTypeString is not null)
                 {
                     mimeType = new ContentType(mimeTypeString);
                 }

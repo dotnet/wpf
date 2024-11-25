@@ -531,7 +531,7 @@ namespace System.Windows
             {
                 ReadPreamble();
 
-                return IsFrozen || Dispatcher != null;
+                return IsFrozen || Dispatcher is not null;
             }
         }
 
@@ -586,7 +586,7 @@ namespace System.Windows
         /// </summary>
         private void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
-            if (CollectionChanged != null)
+            if (CollectionChanged is not null)
             {
                 using (BlockReentrancy())
                 {
@@ -626,7 +626,7 @@ namespace System.Windows
         /// </summary>
         private void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if (PrivatePropertyChanged != null)
+            if (PrivatePropertyChanged is not null)
             {
                 PrivatePropertyChanged(this, e);
             }
@@ -677,14 +677,14 @@ namespace System.Windows
         {
             ICollection collectionAsICollection = enumerable as ICollection;
 
-            if (collectionAsICollection != null)
+            if (collectionAsICollection is not null)
             {
                 return collectionAsICollection.Count;
             }
 
             ICollection<T> enumerableAsICollectionT = enumerable as ICollection<T>;
 
-            if (enumerableAsICollectionT != null)
+            if (enumerableAsICollectionT is not null)
             {
                 return enumerableAsICollectionT.Count;
             }
@@ -750,7 +750,7 @@ namespace System.Windows
             {
                 // most collection changes imply a change in the Count and indexer
                 // properties
-                if (PrivatePropertyChanged != null)
+                if (PrivatePropertyChanged is not null)
                 {
                     if (action != NotifyCollectionChangedAction.Replace &&
                         action != NotifyCollectionChangedAction.Move)
@@ -760,7 +760,7 @@ namespace System.Windows
                     OnPropertyChanged(new PropertyChangedEventArgs(IndexerPropertyName));
                 }
 
-                if (CollectionChanged != null)
+                if (CollectionChanged is not null)
                 {
                     NotifyCollectionChangedEventArgs args;
 
@@ -828,7 +828,7 @@ namespace System.Windows
 
                 Freezable itemAsFreezable = newValue as Freezable;
 
-                if (itemAsFreezable != null)
+                if (itemAsFreezable is not null)
                 {
                     switch (cloneType)
                     {
@@ -919,7 +919,7 @@ namespace System.Windows
                 T item = _collection[i];
                 Freezable itemAsFreezable = item as Freezable;
 
-                if (itemAsFreezable != null)
+                if (itemAsFreezable is not null)
                 {
                     canFreeze &= Freezable.Freeze(itemAsFreezable, isChecking);
                 }
@@ -1005,7 +1005,7 @@ namespace System.Windows
 
             internal Enumerator(FreezableCollection<T> list)
             {
-                Debug.Assert(list != null, "list may not be null.");
+                Debug.Assert(list is not null, "list may not be null.");
 
                 _list = list;
                 _version = list._version;

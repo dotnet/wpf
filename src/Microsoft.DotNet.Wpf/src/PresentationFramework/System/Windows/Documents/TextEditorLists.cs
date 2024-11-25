@@ -80,7 +80,7 @@ namespace System.Windows.Documents
         private static TextEditor IsEnabledNotReadOnlyIsTextSegment(object sender)
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
-            if (This != null && This._IsEnabled && !This.IsReadOnly && !This.Selection.IsTableCellRange)
+            if (This is not null && This._IsEnabled && !This.IsReadOnly && !This.Selection.IsTableCellRange)
             {
                 return This;
             }
@@ -94,7 +94,7 @@ namespace System.Windows.Documents
         private static void OnQueryStatusTab(object sender, CanExecuteRoutedEventArgs args)
         {
             TextEditor This = IsEnabledNotReadOnlyIsTextSegment(sender);
-            if (This != null && This.AcceptsTab)
+            if (This is not null && This.AcceptsTab)
             {
                 //  Checking for AcceptsTab does not reasonable here,
                 // but because this command is tied to Tab/Shift+Tab we have to do that
@@ -176,7 +176,7 @@ namespace System.Windows.Documents
 
         private static void ToggleBullets(TextSelection thisSelection, ListItem parentListItem, ListItem immediateListItem, List list)
         {
-            if (immediateListItem != null && HasBulletMarker(list))
+            if (immediateListItem is not null && HasBulletMarker(list))
             {
                 if (list.Parent is ListItem)
                 {
@@ -188,11 +188,11 @@ namespace System.Windows.Documents
                     TextRangeEditLists.UnindentListItems(thisSelection);
                 }
             }
-            else if (immediateListItem != null)
+            else if (immediateListItem is not null)
             {
                 list.MarkerStyle = TextMarkerStyle.Disc;
             }
-            else if (parentListItem != null)
+            else if (parentListItem is not null)
             {
                 TextRangeEditLists.ConvertParagraphsToListItems(thisSelection, TextMarkerStyle.Disc);
                 TextRangeEditLists.IndentListItems(thisSelection);
@@ -205,7 +205,7 @@ namespace System.Windows.Documents
 
         private static void ToggleNumbering(TextSelection thisSelection, ListItem parentListItem, ListItem immediateListItem, List list)
         {
-            if (immediateListItem != null && HasNumericMarker(list))
+            if (immediateListItem is not null && HasNumericMarker(list))
             {
                 if (list.Parent is ListItem)
                 {
@@ -217,11 +217,11 @@ namespace System.Windows.Documents
                     TextRangeEditLists.UnindentListItems(thisSelection);
                 }
             }
-            else if (immediateListItem != null)
+            else if (immediateListItem is not null)
             {
                 list.MarkerStyle = TextMarkerStyle.Decimal;
             }
-            else if (parentListItem != null)
+            else if (parentListItem is not null)
             {
                 TextRangeEditLists.ConvertParagraphsToListItems(thisSelection, TextMarkerStyle.Decimal);
                 TextRangeEditLists.IndentListItems(thisSelection);
@@ -234,11 +234,11 @@ namespace System.Windows.Documents
 
         private static void IncreaseIndentation(TextSelection thisSelection, ListItem parentListItem, ListItem immediateListItem)
         {
-            if (immediateListItem != null)
+            if (immediateListItem is not null)
             {
                 TextRangeEditLists.IndentListItems(thisSelection);
             }
-            else if (parentListItem != null)
+            else if (parentListItem is not null)
             {
                 TextRangeEditLists.ConvertParagraphsToListItems(thisSelection, TextMarkerStyle.Decimal);
                 TextRangeEditLists.IndentListItems(thisSelection);
@@ -260,7 +260,7 @@ namespace System.Windows.Documents
                         CreateImplicitParagraphIfNeededAndUpdateSelection(thisSelection);
 
                         Paragraph paragraph = thisSelection.Start.Paragraph;
-                        Invariant.Assert(paragraph != null, "EnsureInsertionPosition must guarantee a position in text content");
+                        Invariant.Assert(paragraph is not null, "EnsureInsertionPosition must guarantee a position in text content");
 
                         if (paragraph.TextIndent < 0)
                         {
@@ -289,11 +289,11 @@ namespace System.Windows.Documents
 
         private static void DecreaseIndentation(TextSelection thisSelection, ListItem parentListItem, ListItem immediateListItem)
         {
-            if (immediateListItem != null)
+            if (immediateListItem is not null)
             {
                 TextRangeEditLists.UnindentListItems(thisSelection);
             }
-            else if (parentListItem != null)
+            else if (parentListItem is not null)
             {
                 TextRangeEditLists.ConvertParagraphsToListItems(thisSelection, TextMarkerStyle.Disc);
                 TextRangeEditLists.UnindentListItems(thisSelection);
@@ -315,7 +315,7 @@ namespace System.Windows.Documents
                         CreateImplicitParagraphIfNeededAndUpdateSelection(thisSelection);
 
                         Paragraph paragraph = thisSelection.Start.Paragraph;
-                        Invariant.Assert(paragraph != null, "EnsureInsertionPosition must guarantee a position in text content");
+                        Invariant.Assert(paragraph is not null, "EnsureInsertionPosition must guarantee a position in text content");
 
                         // When selection is empty, handle indentation based on current TextIndent property of the paragraph.
                         if (paragraph.TextIndent > 20)

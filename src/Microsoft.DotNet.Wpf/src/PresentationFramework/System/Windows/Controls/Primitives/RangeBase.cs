@@ -103,7 +103,7 @@ namespace System.Windows.Controls.Primitives
             RangeBase ctrl = (RangeBase) d;
 
             RangeBaseAutomationPeer peer = UIElementAutomationPeer.FromElement(ctrl) as RangeBaseAutomationPeer;
-            if (peer != null)
+            if (peer is not null)
             {
                 peer.RaiseMinimumPropertyChangedEvent((double)e.OldValue, (double)e.NewValue);
             }
@@ -167,7 +167,7 @@ namespace System.Windows.Controls.Primitives
             RangeBase ctrl = (RangeBase) d;
 
             RangeBaseAutomationPeer peer = UIElementAutomationPeer.FromElement(ctrl) as RangeBaseAutomationPeer;
-            if (peer != null)
+            if (peer is not null)
             {
                 peer.RaiseMaximumPropertyChangedEvent((double)e.OldValue, (double)e.NewValue);
             }
@@ -240,7 +240,7 @@ namespace System.Windows.Controls.Primitives
             RangeBase ctrl = (RangeBase)d;
 
             RangeBaseAutomationPeer peer = UIElementAutomationPeer.FromElement(ctrl) as RangeBaseAutomationPeer;
-            if (peer != null)
+            if (peer is not null)
             {
                 peer.RaiseValuePropertyChangedEvent((double)e.OldValue, (double)e.NewValue);
             }

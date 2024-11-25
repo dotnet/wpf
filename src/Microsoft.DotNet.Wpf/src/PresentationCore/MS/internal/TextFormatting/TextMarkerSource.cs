@@ -134,12 +134,12 @@ namespace MS.Internal.TextFormatting
                 Debug.Assert(false, "Invalid marker style");
             }
 
-            if(symbolString != null)
+            if(symbolString is not null)
             {
                 _characterArray = symbolString.ToCharArray();
             }
 
-            Debug.Assert(_characterArray != null);
+            Debug.Assert(_characterArray is not null);
         }
 
         #region TextSource implementation

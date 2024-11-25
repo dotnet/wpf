@@ -35,7 +35,7 @@ namespace MS.Internal.IO.Packaging
         //
         //------------------------------------------------------
         // is this a relationship entry?
-        internal bool IsRelationshipEntry { get { return _relationshipSelectors != null; } }
+        internal bool IsRelationshipEntry { get { return _relationshipSelectors is not null; } }
 
         internal Uri Uri { get { return _uri; } }
         internal ContentType ContentType { get { return _contentType; } }
@@ -47,7 +47,7 @@ namespace MS.Internal.IO.Packaging
         { 
             get 
             { 
-                Debug.Assert(_owningPartUri != null, "Logic error: OwningPart is null on a non-Relationship entry"); 
+                Debug.Assert(_owningPartUri is not null, "Logic error: OwningPart is null on a non-Relationship entry"); 
                 return _owningPartUri; 
             } 
         }
@@ -69,9 +69,9 @@ namespace MS.Internal.IO.Packaging
         internal PartManifestEntry(Uri uri, ContentType contentType, String hashAlgorithm,
             String hashValue, List<String> transforms, List<PackageRelationshipSelector> relationshipSelectors)
         {
-            Invariant.Assert(uri != null);
-            Invariant.Assert(contentType != null);
-            Invariant.Assert(hashAlgorithm != null);
+            Invariant.Assert(uri is not null);
+            Invariant.Assert(contentType is not null);
+            Invariant.Assert(hashAlgorithm is not null);
 
             _uri = uri;
             _contentType = contentType;
@@ -81,7 +81,7 @@ namespace MS.Internal.IO.Packaging
             _relationshipSelectors = relationshipSelectors;
             _owningPartUri = null;
 
-            if (_relationshipSelectors != null)
+            if (_relationshipSelectors is not null)
             {
                 Invariant.Assert(relationshipSelectors.Count > 0);
 #if DEBUG

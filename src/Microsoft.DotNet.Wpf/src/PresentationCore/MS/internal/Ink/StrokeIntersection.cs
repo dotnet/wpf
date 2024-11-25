@@ -188,7 +188,7 @@ namespace System.Windows.Ink
         /// </summary>
         internal static StrokeFIndices[] GetInSegments(StrokeIntersection[] intersections)
         {
-            System.Diagnostics.Debug.Assert(intersections != null);
+            System.Diagnostics.Debug.Assert(intersections is not null);
             System.Diagnostics.Debug.Assert(intersections.Length > 0);
 
             List<StrokeFIndices> inFIndices = new List<StrokeFIndices>(intersections.Length);
@@ -220,7 +220,7 @@ namespace System.Windows.Ink
         /// </summary>
         internal static StrokeFIndices[] GetHitSegments(StrokeIntersection[] intersections)
         {
-            System.Diagnostics.Debug.Assert(intersections != null);
+            System.Diagnostics.Debug.Assert(intersections is not null);
             System.Diagnostics.Debug.Assert(intersections.Length > 0);
 
             List<StrokeFIndices> hitFIndices = new List<StrokeFIndices>(intersections.Length);

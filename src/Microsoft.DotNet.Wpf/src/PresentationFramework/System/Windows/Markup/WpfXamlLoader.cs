@@ -84,7 +84,7 @@ namespace System.Windows.Markup
                     int lineNumber = -1;
                     int linePosition = -1;
 
-                    if (ixli != null && ixli.HasLineInfo)
+                    if (ixli is not null && ixli.HasLineInfo)
                     {
                         lineNumber = ixli.LineNumber;
                         linePosition = ixli.LinePosition;
@@ -99,7 +99,7 @@ namespace System.Windows.Markup
                 }
 
                 UIElement uiElement = args.Instance as UIElement;
-                if (uiElement != null)
+                if (uiElement is not null)
                 {
                     uiElement.SetPersistId(persistId++);
                 }
@@ -107,7 +107,7 @@ namespace System.Windows.Markup
                 XamlSourceInfoHelper.SetXamlSourceInfo(args.Instance, args, baseUri);
 
                 DependencyObject dObject = args.Instance as DependencyObject;
-                if (dObject != null && stack.CurrentFrame.XmlnsDictionary != null)
+                if (dObject is not null && stack.CurrentFrame.XmlnsDictionary is not null)
                 {
                     XmlnsDictionary dictionary = stack.CurrentFrame.XmlnsDictionary;
                     dictionary.Seal();
@@ -117,7 +117,7 @@ namespace System.Windows.Markup
 
                 stack.CurrentFrame.Instance = args.Instance;
                 
-                if (xamlReader is RestrictiveXamlXmlReader && args != null)
+                if (xamlReader is RestrictiveXamlXmlReader && args is not null)
                 {
                     if (args.Instance is System.Windows.ResourceDictionary rd)
                     {
@@ -134,7 +134,7 @@ namespace System.Windows.Markup
                 }
 
             };
-            if (writerFactory != null)
+            if (writerFactory is not null)
             {
                 xamlWriter = writerFactory.GetXamlObjectWriter(settings);
             }
@@ -150,8 +150,8 @@ namespace System.Windows.Markup
                 xamlLineInfo = xamlReader as IXamlLineInfo;
                 IXamlLineInfoConsumer xamlLineInfoConsumer = xamlWriter as IXamlLineInfoConsumer;
                 bool shouldPassLineNumberInfo = false;
-                if ((xamlLineInfo != null && xamlLineInfo.HasLineInfo)
-                    && (xamlLineInfoConsumer != null && xamlLineInfoConsumer.ShouldProvideLineInfo))
+                if ((xamlLineInfo is not null && xamlLineInfo.HasLineInfo)
+                    && (xamlLineInfoConsumer is not null && xamlLineInfoConsumer.ShouldProvideLineInfo))
                 {
                     shouldPassLineNumberInfo = true;
                 }
@@ -198,16 +198,16 @@ namespace System.Windows.Markup
                 {
                     case System.Xaml.XamlNodeType.NamespaceDeclaration:
                         xamlWriter.WriteNode(xamlReader);
-                        if (stack.Depth == 0 || stack.CurrentFrame.Type != null)
+                        if (stack.Depth == 0 || stack.CurrentFrame.Type is not null)
                         {
                             stack.PushScope();
                             // Need to create an XmlnsDictionary.  
                             // Look up stack to see if we have one earlier
                             //  If so, use that.  Otherwise new a xmlnsDictionary                        
                             WpfXamlFrame iteratorFrame = stack.CurrentFrame;
-                            while (iteratorFrame != null)
+                            while (iteratorFrame is not null)
                             {
-                                if (iteratorFrame.XmlnsDictionary != null)
+                                if (iteratorFrame.XmlnsDictionary is not null)
                                 {
                                     stack.CurrentFrame.XmlnsDictionary =
                                         new XmlnsDictionary(iteratorFrame.XmlnsDictionary);
@@ -229,7 +229,7 @@ namespace System.Windows.Markup
                     case System.Xaml.XamlNodeType.GetObject:
                         xamlWriter.WriteNode(xamlReader);
                         // If there wasn't a namespace node before this get object, need to pushScope.
-                        if (stack.CurrentFrame.Type != null)
+                        if (stack.CurrentFrame.Type is not null)
                         {
                             stack.PushScope();
                         }
@@ -241,13 +241,13 @@ namespace System.Windows.Markup
                         if (stack.CurrentFrame.FreezeFreezable)
                         {
                             Freezable freezable = xamlWriter.Result as Freezable;
-                            if (freezable != null && freezable.CanFreeze)
+                            if (freezable is not null && freezable.CanFreeze)
                             {
                                 freezable.Freeze();
                             }
                         }
                         DependencyObject dependencyObject = xamlWriter.Result as DependencyObject;
-                        if (dependencyObject != null && stack.CurrentFrame.XmlSpace.HasValue)
+                        if (dependencyObject is not null && stack.CurrentFrame.XmlSpace.HasValue)
                         {
                             XmlAttributeProperties.SetXmlSpace(dependencyObject, stack.CurrentFrame.XmlSpace.Value ? "default" : "preserve");
                         }
@@ -270,14 +270,14 @@ namespace System.Windows.Markup
                             if (!stack.CurrentFrame.Property.IsDirective)
                             {
                                 System.Windows.Baml2006.WpfXamlMember wpfMember = stack.CurrentFrame.Property as System.Windows.Baml2006.WpfXamlMember;
-                                if (wpfMember != null)
+                                if (wpfMember is not null)
                                 {
                                     DependencyProperty prop = wpfMember.DependencyProperty;
 
-                                    if (prop != null)
+                                    if (prop is not null)
                                     {
                                         FrameworkPropertyMetadata metadata = prop.GetMetadata(stack.CurrentFrame.Type.UnderlyingType) as FrameworkPropertyMetadata;
-                                        if (metadata != null && metadata.Journal == true)
+                                        if (metadata is not null && metadata.Journal == true)
                                         {
                                             // Ignore the BAML for this member, unless it declares a value that wasn't journaled - namely a binding or a dynamic resource
                                             int count = 1;
@@ -308,7 +308,7 @@ namespace System.Windows.Markup
                                                         break;
                                                     case System.Xaml.XamlNodeType.Value:
                                                         DynamicResourceExtension value = xamlReader.Value as DynamicResourceExtension;
-                                                        if (value != null)
+                                                        if (value is not null)
                                                         {
                                                             WriteValue(xamlReader, xamlWriter, stack, styleConnector);
                                                         }
@@ -377,7 +377,7 @@ namespace System.Windows.Markup
                 bool freeze = Convert.ToBoolean(xamlReader.Value, TypeConverterHelper.InvariantEnglishUS);
                 stack.CurrentFrame.FreezeFreezable = freeze;
                 var bamlReader = xamlReader as System.Windows.Baml2006.Baml2006Reader;
-                if (bamlReader != null)
+                if (bamlReader is not null)
                 {
                     bamlReader.FreezeFreezables = freeze;
                 }
@@ -396,8 +396,8 @@ namespace System.Windows.Markup
             {
                 // Ideally we should check if we're inside FrameworkTemplate's Content and not register those.
                 // However, checking if the instance is null accomplishes the same with a much smaller perf impact.
-                if (styleConnector != null &&
-                    stack.CurrentFrame.Instance != null &&
+                if (styleConnector is not null &&
+                    stack.CurrentFrame.Instance is not null &&
                     stack.CurrentFrame.Property == XamlLanguage.ConnectionId &&
                     typeof(Style).IsAssignableFrom(stack.CurrentFrame.Type.UnderlyingType))
                 {

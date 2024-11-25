@@ -475,12 +475,12 @@ namespace MS.Internal.MilCodeGen.Helpers
 
                         WritePreamble();
                 
-                        if (collection != null)
+                        if (collection is not null)
                         {
                             [[resource.CollectionType.IsFreezable ? "bool needsItemValidation = true;" : string.Empty]]
                             ICollection<[[type]]> icollectionOfT = collection as ICollection<[[type]]>;
 
-                            if (icollectionOfT != null)
+                            if (icollectionOfT is not null)
                             {
                                 _collection = new FrugalStructList<[[type]]>(icollectionOfT);
                             }
@@ -488,7 +488,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                             {       
                                 ICollection icollection = collection as ICollection;
 
-                                if (icollection != null) // an IC but not and IC<T>
+                                if (icollection is not null) // an IC but not and IC<T>
                                 {
                                     _collection = new FrugalStructList<[[type]]>(icollection);
                                 }
@@ -538,7 +538,7 @@ namespace MS.Internal.MilCodeGen.Helpers
 
                         private void OnInsert(object item)
                         {
-                            if (ItemInserted != null)
+                            if (ItemInserted is not null)
                             {
                                 ItemInserted(this, item);
                             }
@@ -546,7 +546,7 @@ namespace MS.Internal.MilCodeGen.Helpers
 
                         private void OnRemove(object oldValue)
                         {
-                            if (ItemRemoved != null)
+                            if (ItemRemoved is not null)
                             {
                                 ItemRemoved(this, oldValue);
                             }
@@ -681,7 +681,7 @@ namespace MS.Internal.MilCodeGen.Helpers
 
                         internal Enumerator([[resource.Name]] list)
                         {
-                            Debug.Assert(list != null, "list may not be null.");
+                            Debug.Assert(list is not null, "list may not be null.");
 
                             _list = list;
                             _version = list._version;
@@ -1113,7 +1113,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                         {
                             ReadPreamble();
 
-                            return IsFrozen || Dispatcher != null;
+                            return IsFrozen || Dispatcher is not null;
                         }
                     }
 

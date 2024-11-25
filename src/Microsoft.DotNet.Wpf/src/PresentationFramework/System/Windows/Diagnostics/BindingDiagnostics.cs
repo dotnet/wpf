@@ -67,7 +67,7 @@ namespace System.Windows.Diagnostics
         /// </summary>
         private static void FlushPendingBindingFailedEvents()
         {
-            if (s_pendingEvents != null)
+            if (s_pendingEvents is not null)
             {
                 List<BindingFailedEventArgs> pendingEvents = null;
 
@@ -79,7 +79,7 @@ namespace System.Windows.Diagnostics
                     s_pendingEvents = null;
                 }
 
-                if (pendingEvents != null)
+                if (pendingEvents is not null)
                 {
                     foreach (BindingFailedEventArgs args in pendingEvents)
                     {
@@ -99,11 +99,11 @@ namespace System.Windows.Diagnostics
                 return;
             }
 
-            if (s_pendingEvents != null)
+            if (s_pendingEvents is not null)
             {
                 lock (s_pendingEventsLock)
                 {
-                    if (s_pendingEvents != null)
+                    if (s_pendingEvents is not null)
                     {
                         // Limit the pending event count so that memory doesn't grow unbounded if no event handler is ever added
                         if (s_pendingEvents.Count < MaxPendingEvents)

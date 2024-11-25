@@ -118,7 +118,7 @@ namespace MS.Internal.Markup
             using ( context )
             {
                 // Check to ensure that there's something to parse
-                if (pathString != null)
+                if (pathString is not null)
                 {
                     int curIndex = 0;
 

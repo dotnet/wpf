@@ -90,7 +90,7 @@ namespace MS.Internal.Data
             }
             set
             {
-                if (type != null && name != null)
+                if (type is not null && name is not null)
                 {
                     value.Generation = _generation;
                     _table[new AccessorTableKey(sourceValueType, type, name)] = value;
@@ -186,7 +186,7 @@ namespace MS.Internal.Data
         {
             public AccessorTableKey(SourceValueType sourceValueType, Type type, string name)
             {
-                Invariant.Assert(type != null);
+                Invariant.Assert(type is not null);
 
                 _sourceValueType = sourceValueType;
                 _type = type;

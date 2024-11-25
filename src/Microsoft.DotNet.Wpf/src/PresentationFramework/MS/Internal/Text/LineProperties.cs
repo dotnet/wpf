@@ -124,7 +124,7 @@ namespace MS.Internal.Text
             TextAlignment textAlignment)
         {
             _defaultTextProperties = defaultTextProperties;
-            _markerProperties = (markerProperties != null) ? markerProperties.GetTextMarkerProperties(this) : null;
+            _markerProperties = (markerProperties is not null) ? markerProperties.GetTextMarkerProperties(this) : null;
 
             _flowDirection = (FlowDirection)element.GetValue(Block.FlowDirectionProperty);
             _textAlignment = textAlignment;
@@ -274,7 +274,7 @@ namespace MS.Internal.Text
         /// </summary>
         internal bool HasFirstLineProperties
         {
-            get { return (_markerProperties != null || !DoubleUtil.IsZero(_textIndent)); }
+            get { return (_markerProperties is not null || !DoubleUtil.IsZero(_textIndent)); }
         }
 
         /// <summary>

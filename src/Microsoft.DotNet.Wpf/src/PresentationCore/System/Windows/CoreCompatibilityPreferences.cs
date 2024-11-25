@@ -26,7 +26,7 @@ namespace System.Windows
             {
             }
 
-            if (appSettings != null)
+            if (appSettings is not null)
             {
                 SetIncludeAllInkInBoundingBoxFromAppSettings(appSettings);
                 SetEnableMultiMonitorDisplayClippingFromAppSettings(appSettings);

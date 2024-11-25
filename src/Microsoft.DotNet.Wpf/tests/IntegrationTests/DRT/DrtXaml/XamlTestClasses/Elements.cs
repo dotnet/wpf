@@ -312,7 +312,7 @@ namespace Test.Elements
 
         public void RaiseTapEvent()
         {
-            if (Tap != null)
+            if (Tap is not null)
             {
                 EventArgs args = new EventArgs();
                 Tap(this, args);
@@ -323,7 +323,7 @@ namespace Test.Elements
 
         public void RaiseTapInternal()
         {
-            if (TapInternal != null)
+            if (TapInternal is not null)
             {
                 EventArgs args = new EventArgs();
                 TapInternal(this, args);

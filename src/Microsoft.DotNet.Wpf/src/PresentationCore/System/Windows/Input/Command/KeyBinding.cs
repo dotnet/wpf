@@ -87,7 +87,7 @@ namespace System.Windows.Input
             set
             {
                 KeyGesture keyGesture = value as KeyGesture;
-                if (keyGesture != null)
+                if (keyGesture is not null)
                 {
                     base.Gesture = value;
                     SynchronizePropertiesFromGesture(keyGesture);

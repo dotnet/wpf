@@ -108,7 +108,7 @@ namespace System.Windows.Media.Media3D
             Brush newV = (Brush) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 DUCE.IResource targetResource = (DUCE.IResource)target;
                 using (CompositionEngineLock.Acquire())
@@ -206,7 +206,7 @@ namespace System.Windows.Media.Media3D
                 Brush vBrush = Brush;
 
                 // Obtain handles for properties that implement DUCE.IResource
-                DUCE.ResourceHandle hBrush = vBrush != null ? ((DUCE.IResource)vBrush).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                DUCE.ResourceHandle hBrush = vBrush is not null ? ((DUCE.IResource)vBrush).GetHandle(channel) : DUCE.ResourceHandle.Null;
 
                 // Pack & send command packet
                 DUCE.MILCMD_EMISSIVEMATERIAL data;
@@ -229,7 +229,7 @@ namespace System.Windows.Media.Media3D
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_EMISSIVEMATERIAL))
                 {
                     Brush vBrush = Brush;
-                    if (vBrush != null) ((DUCE.IResource)vBrush).AddRefOnChannel(channel);
+                    if (vBrush is not null) ((DUCE.IResource)vBrush).AddRefOnChannel(channel);
 
                     AddRefOnChannelAnimations(channel);
 
@@ -246,7 +246,7 @@ namespace System.Windows.Media.Media3D
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
                     Brush vBrush = Brush;
-                    if (vBrush != null) ((DUCE.IResource)vBrush).ReleaseOnChannel(channel);
+                    if (vBrush is not null) ((DUCE.IResource)vBrush).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
 }

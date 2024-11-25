@@ -152,7 +152,7 @@ namespace System.Windows.Controls
 
         private void CleanupMainMenu()
         {
-            if (_enterMenuModeHandler != null)
+            if (_enterMenuModeHandler is not null)
             {
                 KeyboardNavigation.Current.EnterMenuMode -= _enterMenuModeHandler;
             }
@@ -196,11 +196,11 @@ namespace System.Windows.Controls
             {
                 case Key.Down:
                 case Key.Up:
-                    if (CurrentSelection != null)
+                    if (CurrentSelection is not null)
                     {
                         // Only for non vertical layout Up/Down open the submenu
                         Panel itemsHost = ItemsHost;
-                        bool isVertical = itemsHost != null && itemsHost.HasLogicalOrientation && itemsHost.LogicalOrientation == Orientation.Vertical;
+                        bool isVertical = itemsHost is not null && itemsHost.HasLogicalOrientation && itemsHost.LogicalOrientation == Orientation.Vertical;
                         if (!isVertical)
                         {
                             CurrentSelection.OpenSubmenuWithKeyboard();
@@ -210,11 +210,11 @@ namespace System.Windows.Controls
                     break;
                 case Key.Left:
                 case Key.Right:
-                    if (CurrentSelection != null)
+                    if (CurrentSelection is not null)
                     {
                         // Only for vertical layout Left/Right open the submenu
                         Panel itemsHost = ItemsHost;
-                        bool isVertical = itemsHost != null && itemsHost.HasLogicalOrientation && itemsHost.LogicalOrientation == Orientation.Vertical;
+                        bool isVertical = itemsHost is not null && itemsHost.HasLogicalOrientation && itemsHost.LogicalOrientation == Orientation.Vertical;
                         if (isVertical)
                         {
                             CurrentSelection.OpenSubmenuWithKeyboard();
@@ -249,7 +249,7 @@ namespace System.Windows.Controls
                 // the system menu from showing.
                 IsMenuMode = false;
                 System.Windows.Interop.HwndSource source = PresentationSource.CriticalFromVisual(this) as System.Windows.Interop.HwndSource;
-                if (source != null)
+                if (source is not null)
                 {
                     source.ShowSystemMenu();
                     e.Handled = true;
@@ -282,7 +282,7 @@ namespace System.Windows.Controls
             {
                 FrameworkElement element = e.OriginalSource as FrameworkElement;
 
-                if ((element != null && (element == this || element.TemplatedParent == this)))
+                if ((element is not null && (element == this || element.TemplatedParent == this)))
                 {
                     IsMenuMode = false;
                     e.Handled = true;
@@ -305,7 +305,7 @@ namespace System.Windows.Controls
                 // Assume that KeyboardNavigation.Current.Navigate moved focus onto the element onto which
                 // it navigated.
                 MenuItem newSelection = info.Container as MenuItem;
-                if (newSelection != null
+                if (newSelection is not null
                     && newSelection.Role == MenuItemRole.TopLevelHeader
                     && newSelection.IsSubmenuOpen)
                 {
@@ -338,7 +338,7 @@ namespace System.Windows.Controls
         private bool OnEnterMenuMode(object sender, EventArgs e)
         {
             // Don't enter menu mode if someone has capture
-            if (Mouse.Captured != null)
+            if (Mouse.Captured is not null)
                 return false;
 
             // Need to check that ALT/F10 happened in our source.
@@ -353,7 +353,7 @@ namespace System.Windows.Controls
                 {
                     MenuItem menuItem = ItemContainerGenerator.ContainerFromIndex(i) as MenuItem;
 
-                    if (menuItem != null && !(Items[i] is Separator))
+                    if (menuItem is not null && !(Items[i] is Separator))
                     {
                         if (menuItem.Focus())
                         {

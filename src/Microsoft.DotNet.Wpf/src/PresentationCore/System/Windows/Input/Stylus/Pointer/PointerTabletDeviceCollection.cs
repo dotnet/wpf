@@ -61,7 +61,7 @@ namespace System.Windows.Input.StylusPointer
 
             foreach (var tablet in _tabletDeviceMap.Values)
             {
-                if ((stylus = tablet.GetStylusByCursorId(cursorId)) != null)
+                if ((stylus = tablet.GetStylusByCursorId(cursorId)) is not null)
                 {
                     break;
                 }

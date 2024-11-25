@@ -171,7 +171,7 @@ namespace MS.Internal.Automation
             Point               pointClient = PointUtil.ScreenToClient( pointScreen, hwndSource );
             Point               pointRoot   = PointUtil.ClientToRoot(pointClient, hwndSource);
             PointHitTestResult  result      = VisualTreeUtils.AsNearestPointHitTestResult(VisualTreeHelper.HitTest(root, pointRoot));
-            Visual              visual      = (result != null) ? result.VisualHit : null;
+            Visual              visual      = (result is not null) ? result.VisualHit : null;
 
 
             return visual;
@@ -182,7 +182,7 @@ namespace MS.Internal.Automation
         {
             UIElement el = visual as UIElement;
             
-            if( el != null && ! el.IsEnabled )
+            if( el is not null && ! el.IsEnabled )
             {
                 throw new ElementNotEnabledException();
             }
@@ -229,7 +229,7 @@ namespace MS.Internal.Automation
                 
             if(completed)
             {
-                if(remoteException != null)
+                if(remoteException is not null)
                 {
                     throw remoteException;
                 }

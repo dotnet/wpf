@@ -65,7 +65,7 @@ namespace System.Windows.Controls
         protected override void OnRender(DrawingContext dc)
         {
             Brush background = Background;
-            if (background != null)
+            if (background is not null)
             {
                 // Using the Background brush, draw a rectangle that fills the
                 // render bounds of the panel.
@@ -196,7 +196,7 @@ namespace System.Windows.Controls
         {
             if (!IsItemsHost)
             {
-                if (Children != null && Children.Count > 0)
+                if (Children is not null && Children.Count > 0)
                 {
                     return true;
                 }
@@ -253,7 +253,7 @@ namespace System.Windows.Controls
             ItemsControl itemsControl = parent as ItemsControl;
             Panel oldItemsHost = null;
 
-            if (itemsControl != null)
+            if (itemsControl is not null)
             {
                 // ItemsHost should be the "root" element which has
                 // IsItemsHost = true on it.  In the case of grouping,
@@ -261,7 +261,7 @@ namespace System.Windows.Controls
                 // content.  Thus, we care only about the panel which
                 // is generating content for the ItemsControl.
                 IItemContainerGenerator generator = itemsControl.ItemContainerGenerator as IItemContainerGenerator;
-                if (generator != null && generator == generator.GetItemContainerGeneratorForPanel(this))
+                if (generator is not null && generator == generator.GetItemContainerGeneratorForPanel(this))
                 {
                     oldItemsHost = itemsControl.ItemsHost;
                     itemsControl.ItemsHost = this;
@@ -270,10 +270,10 @@ namespace System.Windows.Controls
             else
             {
                 GroupItem groupItem = parent as GroupItem;
-                if (groupItem != null)
+                if (groupItem is not null)
                 {
                     IItemContainerGenerator generator = groupItem.Generator as IItemContainerGenerator;
-                    if (generator != null && generator == generator.GetItemContainerGeneratorForPanel(this))
+                    if (generator is not null && generator == generator.GetItemContainerGeneratorForPanel(this))
                     {
                         oldItemsHost = groupItem.ItemsHost;
                         groupItem.ItemsHost = this;
@@ -281,7 +281,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            if (oldItemsHost != null && oldItemsHost != this)
+            if (oldItemsHost is not null && oldItemsHost != this)
             {
                 // when changing ItemsHost panels, disconnect the old one
                 oldItemsHost.VerifyBoundState();
@@ -384,7 +384,7 @@ namespace System.Windows.Controls
             }
 
             if (IsZStateDirty) { RecomputeZState(); }
-            int visualIndex = _zLut != null ? _zLut[index] : index;
+            int visualIndex = _zLut is not null ? _zLut[index] : index;
             return _uiElementCollection[visualIndex];
         }
 
@@ -525,7 +525,7 @@ namespace System.Windows.Controls
             // needs to release resources (an event handler) when it is "out of the tree."
             // Currently, there is no good notification for when this happens.
 
-            bool isItemsHost = (ItemsControl.GetItemsOwnerInternal(this) != null);
+            bool isItemsHost = (ItemsControl.GetItemsOwnerInternal(this) is not null);
 
             if (isItemsHost)
             {
@@ -535,11 +535,11 @@ namespace System.Windows.Controls
                     ClearChildren();
                 }
 
-                return (_itemContainerGenerator != null);
+                return (_itemContainerGenerator is not null);
             }
             else
             {
-                if (_itemContainerGenerator != null)
+                if (_itemContainerGenerator is not null)
                 {
                     // Transitioning from being bound to unbound
                     DisconnectFromGenerator();
@@ -561,7 +561,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return IsItemsHost && _itemContainerGenerator != null;
+                return IsItemsHost && _itemContainerGenerator is not null;
             }
         }
 
@@ -583,10 +583,10 @@ namespace System.Windows.Controls
             }
 
             IItemContainerGenerator itemsOwnerGenerator = itemsOwner.ItemContainerGenerator;
-            if (itemsOwnerGenerator != null)
+            if (itemsOwnerGenerator is not null)
             {
                 _itemContainerGenerator = itemsOwnerGenerator.GetItemContainerGeneratorForPanel(this);
-                if (_itemContainerGenerator != null)
+                if (_itemContainerGenerator is not null)
                 {
                     _itemContainerGenerator.ItemsChanged += new ItemsChangedEventHandler(OnItemsChanged);
                     ((IItemContainerGenerator)_itemContainerGenerator).RemoveAll();
@@ -596,7 +596,7 @@ namespace System.Windows.Controls
 
         private void DisconnectFromGenerator()
         {
-            Debug.Assert(_itemContainerGenerator != null, "Attempted to disconnect from a generator when Panel._itemContainerGenerator is null.");
+            Debug.Assert(_itemContainerGenerator is not null, "Attempted to disconnect from a generator when Panel._itemContainerGenerator is null.");
 
             _itemContainerGenerator.ItemsChanged -= new ItemsChangedEventHandler(OnItemsChanged);
             ((IItemContainerGenerator)_itemContainerGenerator).RemoveAll();
@@ -634,12 +634,12 @@ namespace System.Windows.Controls
 
         private void ClearChildren()
         {
-            if (_itemContainerGenerator != null)
+            if (_itemContainerGenerator is not null)
             {
                 ((IItemContainerGenerator)_itemContainerGenerator).RemoveAll();
             }
 
-            if ((_uiElementCollection != null) && (_uiElementCollection.Count > 0))
+            if ((_uiElementCollection is not null) && (_uiElementCollection.Count > 0))
             {
                 _uiElementCollection.ClearInternal();
                 OnClearChildrenInternal();
@@ -656,15 +656,15 @@ namespace System.Windows.Controls
             // Firing an assert causes an exception "Dispatcher processing has been suspended, but messages are still being processed."
             // Besides, the asserted condition can actually arise in practice, and the
             // code responds harmlessly.
-            //Debug.Assert(_itemContainerGenerator != null, "Encountered a null _itemContainerGenerator while being asked to generate children.");
+            //Debug.Assert(_itemContainerGenerator is not null, "Encountered a null _itemContainerGenerator while being asked to generate children.");
 
             IItemContainerGenerator generator = (IItemContainerGenerator)_itemContainerGenerator;
-            if (generator != null)
+            if (generator is not null)
             {
                 using (generator.StartAt(new GeneratorPosition(-1, 0), GeneratorDirection.Forward))
                 {
                     UIElement child;
-                    while ((child = generator.GenerateNext() as UIElement) != null)
+                    while ((child = generator.GenerateNext() as UIElement) is not null)
                     {
                         _uiElementCollection.AddInternal(child);
                         generator.PrepareItemContainer(child);
@@ -677,7 +677,7 @@ namespace System.Windows.Controls
         {
             if (VerifyBoundState())
             {
-                Debug.Assert(_itemContainerGenerator != null, "Encountered a null _itemContainerGenerator while receiving an ItemsChanged from a generator.");
+                Debug.Assert(_itemContainerGenerator is not null, "Encountered a null _itemContainerGenerator while receiving an ItemsChanged from a generator.");
 
                 bool affectsLayout = OnItemsChangedInternal(sender, args);
 
@@ -716,7 +716,7 @@ namespace System.Windows.Controls
 
         private void AddChildren(GeneratorPosition pos, int itemCount)
         {
-            Debug.Assert(_itemContainerGenerator != null, "Encountered a null _itemContainerGenerator while receiving an Add action from a generator.");
+            Debug.Assert(_itemContainerGenerator is not null, "Encountered a null _itemContainerGenerator while receiving an Add action from a generator.");
 
             IItemContainerGenerator generator = (IItemContainerGenerator)_itemContainerGenerator;
             using (generator.StartAt(pos, GeneratorDirection.Forward))
@@ -724,7 +724,7 @@ namespace System.Windows.Controls
                 for (int i = 0; i < itemCount; i++)
                 {
                     UIElement e = generator.GenerateNext() as UIElement;
-                    if(e != null)
+                    if(e is not null)
                     {
                         _uiElementCollection.InsertInternal(pos.Index + 1 + i, e);
                         generator.PrepareItemContainer(e);
@@ -746,7 +746,7 @@ namespace System.Windows.Controls
         private void ReplaceChildren(GeneratorPosition pos, int itemCount, int containerCount)
         {
             Debug.Assert(itemCount == containerCount, "Panel expects Replace to affect only realized containers");
-            Debug.Assert(_itemContainerGenerator != null, "Encountered a null _itemContainerGenerator while receiving an Replace action from a generator.");
+            Debug.Assert(_itemContainerGenerator is not null, "Encountered a null _itemContainerGenerator while receiving an Replace action from a generator.");
 
             IItemContainerGenerator generator = (IItemContainerGenerator)_itemContainerGenerator;
             using (generator.StartAt(pos, GeneratorDirection.Forward, true))
@@ -756,8 +756,8 @@ namespace System.Windows.Controls
                     bool isNewlyRealized;
                     UIElement e = generator.GenerateNext(out isNewlyRealized) as UIElement;
 
-                    Debug.Assert(e != null && !isNewlyRealized, "Panel expects Replace to affect only realized containers");
-                    if(e != null && !isNewlyRealized)
+                    Debug.Assert(e is not null && !isNewlyRealized, "Panel expects Replace to affect only realized containers");
+                    if(e is not null && !isNewlyRealized)
                     {
                         _uiElementCollection.SetInternal(pos.Index + i, e);
                         generator.PrepareItemContainer(e);
@@ -775,7 +775,7 @@ namespace System.Windows.Controls
             if (fromPos == toPos)
                 return;
 
-            Debug.Assert(_itemContainerGenerator != null, "Encountered a null _itemContainerGenerator while receiving an Move action from a generator.");
+            Debug.Assert(_itemContainerGenerator is not null, "Encountered a null _itemContainerGenerator while receiving an Move action from a generator.");
 
             IItemContainerGenerator generator = (IItemContainerGenerator)_itemContainerGenerator;
             int toIndex = generator.IndexFromGeneratorPosition(toPos);
@@ -876,7 +876,7 @@ namespace System.Windows.Controls
                     //  then _zLut have to be recomputed
                     IsZStateDirty = true;
                 }
-                else if (visualAdded != null)
+                else if (visualAdded is not null)
                 {
                     //  if current children have consonant ZIndex values,
                     //  then _zLut have to be recomputed, only if the new
@@ -967,7 +967,7 @@ namespace System.Windows.Controls
         internal void InvalidateZState()
         {
             if (!IsZStateDirty
-             && _uiElementCollection != null)
+             && _uiElementCollection is not null)
             {
                 InvalidateZOrder();
             }
@@ -990,7 +990,7 @@ namespace System.Windows.Controls
         //  Helper method to update this panel's state related to children rendering order handling
         private void RecomputeZState()
         {
-            int count = (_uiElementCollection != null) ? _uiElementCollection.Count : 0;
+            int count = (_uiElementCollection is not null) ? _uiElementCollection.Count : 0;
             bool isDiverse = false;
             bool lutRequired = false;
             int zIndexDefaultValue = (int)ZIndexProperty.GetDefaultValue(DependencyObjectType);
@@ -999,7 +999,7 @@ namespace System.Windows.Controls
 
             if (count > 0)
             {
-                if (_uiElementCollection[0] != null)
+                if (_uiElementCollection[0] is not null)
                 {
                     consonant = (int)_uiElementCollection[0].GetValue(ZIndexProperty);
                 }
@@ -1014,7 +1014,7 @@ namespace System.Windows.Controls
                     int i = 1;
                     do
                     {
-                        int z = _uiElementCollection[i] != null
+                        int z = _uiElementCollection[i] is not null
                             ? (int)_uiElementCollection[i].GetValue(ZIndexProperty)
                             : zIndexDefaultValue;
 

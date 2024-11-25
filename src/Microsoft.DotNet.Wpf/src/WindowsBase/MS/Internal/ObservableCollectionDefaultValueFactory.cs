@@ -42,7 +42,7 @@ namespace MS.Internal
         /// </summary>
         internal override object CreateDefaultValue(DependencyObject owner, DependencyProperty property)
         {
-            Debug.Assert(owner != null && property != null,
+            Debug.Assert(owner is not null && property is not null,
                 "It is the caller responsibility to ensure that owner and property are non-null.");
             
             var result = new ObservableCollection<T>();
@@ -67,7 +67,7 @@ namespace MS.Internal
         {
             internal ObservableCollectionDefaultPromoter(DependencyObject owner, DependencyProperty property, ObservableCollection<T> collection)
             {
-                Debug.Assert(owner != null && property != null,
+                Debug.Assert(owner is not null && property is not null,
                     "Caller is responsible for ensuring that owner and property are non-null.");
                 Debug.Assert(property.GetMetadata(owner.DependencyObjectType).UsingDefaultValueFactory,
                     "How did we end up observing a mutable if we were not registered for the factory pattern?");

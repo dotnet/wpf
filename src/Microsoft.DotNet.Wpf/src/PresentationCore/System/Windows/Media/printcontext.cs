@@ -143,7 +143,7 @@ namespace System.Windows.Media
         // Add a stream to the container for resource embedding
         override public System.IO.Stream GetResourceStream(string name, out string uri)
         {
-            if (_eDocJob != null)
+            if (_eDocJob is not null)
             {
                 _lastImage = _eDocJob.AddImage(name);
                 uri = _lastImage.RelativeUri(_pageUri);
@@ -157,7 +157,7 @@ namespace System.Windows.Media
 
         override public void CommitLastStream()
         {
-            if ((_eDocJob != null) && (_lastImage != null))
+            if ((_eDocJob is not null) && (_lastImage is not null))
             {
                 _lastImage.Commit();
                 _lastImage = null;
@@ -212,7 +212,7 @@ namespace System.Windows.Media
 
                 Visual visual = getPage(this);
 
-                while (!_cancel && (visual != null))
+                while (!_cancel && (visual is not null))
                 {
                     string uri = this.StartPage(pageNo);
 
@@ -283,7 +283,7 @@ namespace System.Windows.Media
             }
 
             // Temp solution to allow premium printing on normal print queue
-            if ((_queue.Comment != null) && (_queue.Comment.Length >= 4))
+            if ((_queue.Comment is not null) && (_queue.Comment.Length >= 4))
             {
                 return (_queue.Comment[0] == 'x') || (_queue.Comment[0] == 'e');
             }
@@ -300,7 +300,7 @@ namespace System.Windows.Media
 
             // Temp solution to allow premium printing on normal print queue, using edoc spool file
             // If IsPremium is true and SpoolEdoc is false, xaml file will be generated
-            if ((_queue.Comment != null) && (_queue.Comment.Length >= 4))
+            if ((_queue.Comment is not null) && (_queue.Comment.Length >= 4))
             {
                 return _queue.Comment[0] == 'e';
             }
@@ -314,7 +314,7 @@ namespace System.Windows.Media
             // gdi#<filename>
             // xaml#<filename>
             // edoc#<filename>
-            if (_queue.Comment != null)
+            if (_queue.Comment is not null)
             {
                 int index = _queue.Comment.LastIndexOf('#');
 
@@ -393,7 +393,7 @@ namespace System.Windows.Media
             {
                 if (SpoolEdoc())
                 {
-                    if (_eDocRendition != null)
+                    if (_eDocRendition is not null)
                     {
                         _eDocRendition.Commit();
                         _eDocRendition = null;
@@ -424,7 +424,7 @@ namespace System.Windows.Media
             {
                 if (SpoolEdoc())
                 {
-                    if (_eDocRendition != null)
+                    if (_eDocRendition is not null)
                     {
                         PrintSystemPage page = _eDocRendition.AddPage("Page " + (pageNo + 1));
 
@@ -444,7 +444,7 @@ namespace System.Windows.Media
                     }
                 }
 
-                if (_writer != null)
+                if (_writer is not null)
                 {
                     _writer.WriteStartElement("PageContent");
                     _writer.WriteStartElement("FixedPage");
@@ -466,13 +466,13 @@ namespace System.Windows.Media
         {
             if (IsPremium())
             {
-                if (_writer != null)
+                if (_writer is not null)
                 {
                     _writer.WriteEndElement();
                     _writer.WriteEndElement();
                     _writer.WriteEndElement();
 
-                    if (_eDocRendition != null)
+                    if (_eDocRendition is not null)
                     {
                         _writer.WriteEndElement();
                     }

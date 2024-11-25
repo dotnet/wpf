@@ -183,7 +183,7 @@ namespace System.Windows.Documents
             {
                 Type forwardType = forwardPosition.GetElementType(LogicalDirection.Forward);
                 Type backwardType = backwardPosition.GetElementType(LogicalDirection.Backward);
-                if (forwardType != null && backwardType != null)
+                if (forwardType is not null && backwardType is not null)
                 {
                     TextPointerContext forwardContext = forwardPosition.GetPointerContext(LogicalDirection.Forward);
                     TextPointerContext backwardContext = backwardPosition.GetPointerContext(LogicalDirection.Backward);
@@ -284,7 +284,7 @@ namespace System.Windows.Documents
             ITextPointer navigator = position.CreatePointer();
             Type parentType = navigator.ParentType;
 
-            while (parentType != null && allowedParentType.IsAssignableFrom(parentType))
+            while (parentType is not null && allowedParentType.IsAssignableFrom(parentType))
             {
                 if (limitingType.IsAssignableFrom(parentType))
                 {
@@ -681,14 +681,14 @@ namespace System.Windows.Documents
         /// </summary>
         internal static bool IsAtLineWrappingPosition(ITextPointer position, ITextView textView)
         {
-            Invariant.Assert(position != null, "null check: position");
+            Invariant.Assert(position is not null, "null check: position");
 
             if (!position.HasValidLayout)
             {
                 return false;
             }
 
-            Invariant.Assert(textView != null, "textView cannot be null because the position has valid layout");
+            Invariant.Assert(textView is not null, "textView cannot be null because the position has valid layout");
             TextSegment lineSegment = textView.GetLineRange(position);
 
             if (lineSegment.IsNull)
@@ -775,7 +775,7 @@ namespace System.Windows.Documents
             }
 
             Block paragraphOrBlockUIContainer = position.ParagraphOrBlockUIContainer;
-            if (paragraphOrBlockUIContainer != null && paragraphOrBlockUIContainer.Parent is ListItem &&
+            if (paragraphOrBlockUIContainer is not null && paragraphOrBlockUIContainer.Parent is ListItem &&
                 paragraphOrBlockUIContainer.ElementStart.GetPointerContext(LogicalDirection.Backward) == TextPointerContext.ElementStart)
             {
                 return (ListItem)paragraphOrBlockUIContainer.Parent;
@@ -789,7 +789,7 @@ namespace System.Windows.Documents
         internal static bool IsInEmptyListItem(TextPointer position)
         {
             ListItem listItem = position.Parent as ListItem;
-            return listItem != null && listItem.IsEmpty;
+            return listItem is not null && listItem.IsEmpty;
         }
 
         //This overload is to cover for a bug that prevents line by line navigation in Fixed documents PS#1742102
@@ -807,7 +807,7 @@ namespace System.Windows.Documents
             double newSuggestedX;
 
             Invariant.Assert(!thisPointer.IsFrozen, "Can't reposition a frozen pointer!");
-            Invariant.Assert(textView != null, "Null TextView!"); // Did you check ITextPointer.HasValidLayout?
+            Invariant.Assert(textView is not null, "Null TextView!"); // Did you check ITextPointer.HasValidLayout?
 
             position = textView.GetPositionAtNextLine(thisPointer, Double.NaN, count, out newSuggestedX, out count);
 
@@ -863,17 +863,17 @@ namespace System.Windows.Documents
         {
             ITextView textView = thisPointer.TextContainer.TextView;
 
-            Invariant.Assert(textView != null, "Null TextView!"); // Did you check ITextPointer.HasValidLayout?
-            Invariant.Assert(textView.RenderScope != null, "Null RenderScope");
-            Invariant.Assert(thisPointer.TextContainer != null, "Null TextContainer");
-            Invariant.Assert(thisPointer.TextContainer.Parent != null, "Null parent of TextContainer");
+            Invariant.Assert(textView is not null, "Null TextView!"); // Did you check ITextPointer.HasValidLayout?
+            Invariant.Assert(textView.RenderScope is not null, "Null RenderScope");
+            Invariant.Assert(thisPointer.TextContainer is not null, "Null TextContainer");
+            Invariant.Assert(thisPointer.TextContainer.Parent is not null, "Null parent of TextContainer");
 
             // Try to ask for a Rect from an insertion position.
             if (!thisPointer.IsAtInsertionPosition)
             {
                 ITextPointer insertionPosition = thisPointer.GetInsertionPosition(direction);
 
-                if (insertionPosition != null)
+                if (insertionPosition is not null)
                 {
                     thisPointer = insertionPosition;
                 }
@@ -905,7 +905,7 @@ namespace System.Windows.Documents
                     templatedParent = null;
                 }
 
-                if (templatedParent != null && templatedParent.IsAncestorOf( /*descendant:*/textView.RenderScope))
+                if (templatedParent is not null && templatedParent.IsAncestorOf( /*descendant:*/textView.RenderScope))
                 {
                     // translate the rect from renderscope to uiscope coordinate system (from FlowDocumentView to RichTextBox)
                     GeneralTransform transformFromRenderToUiScope = textView.RenderScope.TransformToAncestor(/*ancestor:*/templatedParent);

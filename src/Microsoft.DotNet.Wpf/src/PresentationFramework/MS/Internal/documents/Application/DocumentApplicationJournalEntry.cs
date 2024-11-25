@@ -72,8 +72,8 @@ namespace MS.Internal.Documents.Application
             DocumentApplicationDocumentViewer docViewer = navigator.Template.FindName(
                 "PUIDocumentApplicationDocumentViewer", navigator)
                 as DocumentApplicationDocumentViewer;
-            Debug.Assert(docViewer != null, "PUIDocumentApplicationDocumentViewer not found.");
-            if (docViewer != null)
+            Debug.Assert(docViewer is not null, "PUIDocumentApplicationDocumentViewer not found.");
+            if (docViewer is not null)
             {
                 // Set the new state on the DocumentViewer
                 if (_state is DocumentApplicationState)
@@ -82,14 +82,14 @@ namespace MS.Internal.Documents.Application
                 }
 
                 // Check that a Document exists.
-                if (navigationService.Content != null)
+                if (navigationService.Content is not null)
                 {
                     IDocumentPaginatorSource document = navigationService.Content as IDocumentPaginatorSource;
 
                     // If the document has already been paginated (could happen in the
                     // case of a fragment navigation), then set the DocumentViewer to the
                     // new state that was set.
-                    if ((document != null) && (document.DocumentPaginator.IsPageCountValid))
+                    if ((document is not null) && (document.DocumentPaginator.IsPageCountValid))
                     {
                         docViewer.SetUIToStoredState();
                     }

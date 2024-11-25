@@ -148,7 +148,7 @@ namespace MS.Internal.MilCodeGen.Runtime
             {
                 if (disposing)
                 {
-                    if (_streamWriter != null)
+                    if (_streamWriter is not null)
                     {
                         FlushCurrentLine();
                         _streamWriter.Close();

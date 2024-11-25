@@ -24,7 +24,7 @@ namespace DrtXaml.XamlTestFramework
                 types = e.Types;
             }
 
-            foreach(Type testClass in types.Where(t => t != null))
+            foreach(Type testClass in types.Where(t => t is not null))
             {
                 if (IsATestType(testClass))
                 {
@@ -71,14 +71,14 @@ namespace DrtXaml.XamlTestFramework
                 {
                     var testKnownFailureAttr = GetTestKnownFailureAttribute(method);
 
-                    if (excludeKnownFailures && testKnownFailureAttr != null)
+                    if (excludeKnownFailures && testKnownFailureAttr is not null)
                     {
                         Console.WriteLine($"Excluding known failure: Method: {method.Name} Owner: {testKnownFailureAttr.Reason}");
                         continue;  // Exclude Known Failures
                     }
                     SimpleTest test = (SimpleTest)Delegate.CreateDelegate(typeof(SimpleTest), suiteInstance, method, true);
                     
-                    if (setup != null)
+                    if (setup is not null)
                     {
                         test = (SimpleTest)Delegate.Combine(setup, test);
                     }
@@ -88,7 +88,7 @@ namespace DrtXaml.XamlTestFramework
                     Type expectedExceptionType = GetExpectedException(method);
 
                     var testBlock = new XamlTestInfoBlock(name, test, expectedExceptionType);
-                    if (testKnownFailureAttr != null)
+                    if (testKnownFailureAttr is not null)
                     {
                         testBlock.IsTestKnownFailure = true;
                         testBlock.OwnerName = testKnownFailureAttr.Reason;
@@ -108,7 +108,7 @@ namespace DrtXaml.XamlTestFramework
                 {
                     var testKnownFailureAttr = GetTestKnownFailureAttribute(field);
 
-                    if (excludeKnownFailures && testKnownFailureAttr != null)
+                    if (excludeKnownFailures && testKnownFailureAttr is not null)
                     {
                         Console.WriteLine($"Excluding known failure: XamlString:{field.Name} Owner:{testKnownFailureAttr.Reason}");
                         continue;  // Exclude Known Failures
@@ -137,7 +137,7 @@ namespace DrtXaml.XamlTestFramework
                     string name = String.Format("{0}.{1}", testClass.Name, field.Name);
 
                     var testBlock = new XamlTestInfoBlock(name, xamlString, loader, validator, expectedExceptionType);
-                    if (testKnownFailureAttr != null)
+                    if (testKnownFailureAttr is not null)
                     {
                         testBlock.IsTestKnownFailure = true;
                         testBlock.OwnerName = testKnownFailureAttr.Reason;

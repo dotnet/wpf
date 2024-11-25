@@ -126,7 +126,7 @@ namespace System.Windows
             // If the default value is non-null then wire it to the current instance.
             PropertyMetadata metadata = StyleProperty.GetMetadata(DependencyObjectType);
             Style defaultValue = (Style) metadata.DefaultValue;
-            if (defaultValue != null)
+            if (defaultValue is not null)
             {
                 OnStyleChanged(this, new DependencyPropertyChangedEventArgs(StyleProperty, metadata, null, defaultValue));
             }
@@ -138,7 +138,7 @@ namespace System.Windows
 
             // Set the ShouldLookupImplicitStyles flag to true if App.Resources has implicit styles.
             Application app = Application.Current;
-            if (app != null && app.HasImplicitStylesInResources)
+            if (app is not null && app.HasImplicitStylesInResources)
             {
                 ShouldLookupImplicitStyles = true;
             }
@@ -366,7 +366,7 @@ namespace System.Windows
             // We dont want to get stuck in a loop doing this, so limit the number of
             // template changes before we bail out.
             int retryCount = 2;
-            for (int i = 0; template != null && i < retryCount; i++)
+            for (int i = 0; template is not null && i < retryCount; i++)
             {
                 // VisualTree application never clears existing trees. Trees
                 // will be conditionally cleared on Template invalidation
@@ -671,7 +671,7 @@ namespace System.Windows
             get
             {
                 ResourceDictionary resources = ResourcesField.GetValue(this);
-                return (resources != null &&
+                return (resources is not null &&
                         ((resources.Count > 0) || (resources.MergedDictionaries.Count > 0)));
             }
         }
@@ -723,7 +723,7 @@ namespace System.Windows
                 }
 
 
-                if (oldValue != null)
+                if (oldValue is not null)
                 {
                     // This element is no longer an owner for the old RD
                     oldValue.RemoveOwner(this);
@@ -734,7 +734,7 @@ namespace System.Windows
                     window.AddFluentDictionary(value, out invalidateResources);
                 }
 
-                if (value != null)
+                if (value is not null)
                 {
                     if (!value.ContainsOwner(this))
                     {
@@ -811,7 +811,7 @@ namespace System.Windows
         {
             FrameworkTemplate template = TemplateInternal;
             /* Calling this before getting a style/template is not a bug.
-            Debug.Assert(template != null,
+            Debug.Assert(template is not null,
                 "The VisualTree should have been created from a Template");
             */
 
@@ -1062,7 +1062,7 @@ namespace System.Windows
             {
 
                 // First try to find the resource in the tree
-                if (fe != null || fce != null || unlinkedParent != null)
+                if (fe is not null || fce is not null || unlinkedParent is not null)
                 {
                     value = FindResourceInTree(fe, fce, dp, resourceKey, unlinkedParent, allowDeferredResourceReference, mustReturnDeferredResourceReference, boundaryElement,
                                                 out inheritanceBehavior, out source);
@@ -1075,13 +1075,13 @@ namespace System.Windows
 
                 // Then we try to find the resource in the App's Resources
                 Application app = Application.Current;
-                if (app != null &&
+                if (app is not null &&
                     (inheritanceBehavior == InheritanceBehavior.Default ||
                      inheritanceBehavior == InheritanceBehavior.SkipToAppNow ||
                      inheritanceBehavior == InheritanceBehavior.SkipToAppNext))
                 {
                     value = app.FindResourceInternal(resourceKey, allowDeferredResourceReference, mustReturnDeferredResourceReference);
-                    if (value != null)
+                    if (value is not null)
                     {
                         source = app;
 
@@ -1104,7 +1104,7 @@ namespace System.Windows
                     inheritanceBehavior != InheritanceBehavior.SkipAllNext)
                 {
                     value = SystemResources.FindResourceInternal(resourceKey, allowDeferredResourceReference, mustReturnDeferredResourceReference);
-                    if (value != null)
+                    if (value is not null)
                     {
                         source = SystemResourceHost.Instance;
 
@@ -1142,7 +1142,7 @@ namespace System.Windows
             // style lookup and the element has been loaded
             if (TraceResourceDictionary.IsEnabledOverride && !isImplicitStyleLookup)
             {
-                if ((fe != null && fe.IsLoaded) || (fce != null && fce.IsLoaded))
+                if ((fe is not null && fe.IsLoaded) || (fce is not null && fce.IsLoaded))
                 {
                     TraceResourceDictionary.Trace( TraceEventType.Warning,
                             TraceResourceDictionary.ResourceNotFound,
@@ -1185,7 +1185,7 @@ namespace System.Windows
 
             while (hasParent)
             {
-                Debug.Assert(startNode.IsValid || unlinkedParent != null,
+                Debug.Assert(startNode.IsValid || unlinkedParent is not null,
                               "Don't call FindResource with a null fe/fce and unlinkedParent");
 
                 if (loopCount > ContextLayoutManager.s_LayoutRecursionLimit)
@@ -1275,7 +1275,7 @@ namespace System.Windows
                     }
                 }
 
-                if (style != null)
+                if (style is not null)
                 {
                     value = style.FindResource(resourceKey, allowDeferredResourceReference, mustReturnDeferredResourceReference);
                     if (value != DependencyProperty.UnsetValue)
@@ -1296,7 +1296,7 @@ namespace System.Windows
                         return value;
                     }
                 }
-                if (frameworkTemplate != null)
+                if (frameworkTemplate is not null)
                 {
                     value = frameworkTemplate.FindResource(resourceKey, allowDeferredResourceReference, mustReturnDeferredResourceReference);
                     if (value != DependencyProperty.UnsetValue)
@@ -1318,7 +1318,7 @@ namespace System.Windows
                     }
                 }
 
-                if (themeStyle != null)
+                if (themeStyle is not null)
                 {
                     value = themeStyle.FindResource(resourceKey, allowDeferredResourceReference, mustReturnDeferredResourceReference);
                     if (value != DependencyProperty.UnsetValue)
@@ -1343,7 +1343,7 @@ namespace System.Windows
 
                 // If the current element that has been searched is the boundary element
                 // then we need to progress no further
-                if (boundaryElement != null && (fo.DO == boundaryElement))
+                if (boundaryElement is not null && (fo.DO == boundaryElement))
                 {
                     break;
                 }
@@ -1360,14 +1360,14 @@ namespace System.Windows
                 //  Find the next parent instance to lookup
                 // -------------------------------------------
 
-                if (unlinkedParent != null)
+                if (unlinkedParent is not null)
                 {
                     // This is for the special case when the parser tries to fetch
                     // a resource on an element even before it is hooked to the
                     // tree. In this case the parser passes us the unlinkedParent
                     // to use it for resource lookup.
                     DependencyObject unlinkedParentAsDO = unlinkedParent as DependencyObject;
-                    if (unlinkedParentAsDO != null)
+                    if (unlinkedParentAsDO is not null)
                     {
                         fo.Reset(unlinkedParentAsDO);
                         if (fo.IsValid)
@@ -1377,7 +1377,7 @@ namespace System.Windows
                         else
                         {
                             DependencyObject doParent = GetFrameworkParent(unlinkedParent);
-                            if (doParent != null)
+                            if (doParent is not null)
                             {
                                 fo.Reset(doParent);
                                 hasParent = true;
@@ -1440,7 +1440,7 @@ namespace System.Windows
             int exactMatch = -1;    // number of entries that count as an exact match
 
             // add compound keys for the dataType and all its base types
-            while (dataType != null)
+            while (dataType is not null)
             {
                 object key = null;
                 if (templateType == typeof(ItemContainerTemplate))
@@ -1448,14 +1448,14 @@ namespace System.Windows
                 else if (templateType == typeof(DataTemplate))
                     key = new DataTemplateKey(dataType);
 
-                if (key != null)
+                if (key is not null)
                     keys.Add(key);
 
                 // all keys added for the given item type itself count as an exact match
                 if (exactMatch == -1)
                     exactMatch = keys.Count;
 
-                if (type != null)
+                if (type is not null)
                 {
                     type = type.BaseType;
                     if (type == typeof(Object))     // don't search for Object - perf
@@ -1475,7 +1475,7 @@ namespace System.Windows
                 // Exact match not found in the parent chain.  Try App and System Resources.
                 object appResource = Helper.FindTemplateResourceFromAppOrSystem(target, keys, exactMatch, ref bestMatch);
 
-                if (appResource != null)
+                if (appResource is not null)
                     resource = appResource;
             }
 
@@ -1485,7 +1485,7 @@ namespace System.Windows
         // Search the parent chain for a [Data|Table]Template in a ResourceDictionary.
         private static object FindTemplateResourceInTree(DependencyObject target, ArrayList keys, int exactMatch, ref int bestMatch)
         {
-            Debug.Assert(target != null, "Don't call FindTemplateResource with a null target object");
+            Debug.Assert(target is not null, "Don't call FindTemplateResource with a null target object");
 
             ResourceDictionary table;
             object resource = null;
@@ -1504,10 +1504,10 @@ namespace System.Windows
                 // Fetch the ResourceDictionary
                 // for the given target element
                 table = GetInstanceResourceDictionary(fo.FE, fo.FCE);
-                if( table != null )
+                if( table is not null )
                 {
                     candidate = FindBestMatchInResourceDictionary( table, keys, exactMatch, ref bestMatch );
-                    if (candidate != null)
+                    if (candidate is not null)
                     {
                         resource = candidate;
                         if (bestMatch < exactMatch)
@@ -1523,10 +1523,10 @@ namespace System.Windows
                 // -------------------------------------------
 
                 table = GetStyleResourceDictionary(fo.FE, fo.FCE);
-                if( table != null )
+                if( table is not null )
                 {
                     candidate = FindBestMatchInResourceDictionary( table, keys, exactMatch, ref bestMatch );
-                    if (candidate != null)
+                    if (candidate is not null)
                     {
                         resource = candidate;
                         if (bestMatch < exactMatch)
@@ -1542,10 +1542,10 @@ namespace System.Windows
                 // -------------------------------------------
 
                 table = GetThemeStyleResourceDictionary(fo.FE, fo.FCE);
-                if( table != null )
+                if( table is not null )
                 {
                     candidate = FindBestMatchInResourceDictionary( table, keys, exactMatch, ref bestMatch );
-                    if (candidate != null)
+                    if (candidate is not null)
                     {
                         resource = candidate;
                         if (bestMatch < exactMatch)
@@ -1561,10 +1561,10 @@ namespace System.Windows
                 // -------------------------------------------
 
                 table = GetTemplateResourceDictionary(fo.FE, fo.FCE);
-                if( table != null )
+                if( table is not null )
                 {
                     candidate = FindBestMatchInResourceDictionary( table, keys, exactMatch, ref bestMatch );
-                    if (candidate != null)
+                    if (candidate is not null)
                     {
                         resource = candidate;
                         if (bestMatch < exactMatch)
@@ -1609,12 +1609,12 @@ namespace System.Windows
             int k;
 
             // Search target element's ResourceDictionary for the resource
-            if (table != null)
+            if (table is not null)
             {
                 for (k = 0;  k < bestMatch;  ++k)
                 {
                     object candidate = table[keys[k]];
-                    if (candidate != null)
+                    if (candidate is not null)
                     {
                         resource = candidate;
                         bestMatch = k;
@@ -1635,14 +1635,14 @@ namespace System.Windows
         {
             ResourceDictionary table = null;
 
-            if (fe != null)
+            if (fe is not null)
             {
                 if (fe.HasResources)
                 {
                     table = fe.Resources;
                 }
             }
-            else // (fce != null)
+            else // (fce is not null)
             {
                 if (fce.HasResources)
                 {
@@ -1659,14 +1659,14 @@ namespace System.Windows
         {
             ResourceDictionary table = null;
 
-            if (fe != null)
+            if (fe is not null)
             {
 #if DEBUG
                 if( !fe.IsStyleUpdateInProgress )
                 {
 #endif
-                    if( fe.Style != null &&
-                        fe.Style._resources != null )
+                    if( fe.Style is not null &&
+                        fe.Style._resources is not null )
                     {
                         table = fe.Style._resources;
                     }
@@ -1674,14 +1674,14 @@ namespace System.Windows
                 }
 #endif
             }
-            else // (fce != null)
+            else // (fce is not null)
             {
 #if DEBUG
                 if( !fce.IsStyleUpdateInProgress )
                 {
 #endif
-                    if( fce.Style != null &&
-                        fce.Style._resources != null )
+                    if( fce.Style is not null &&
+                        fce.Style._resources is not null )
                     {
                         table = fce.Style._resources;
                     }
@@ -1699,14 +1699,14 @@ namespace System.Windows
         {
             ResourceDictionary table = null;
 
-            if (fe != null)
+            if (fe is not null)
             {
 #if DEBUG
                 if( !fe.IsThemeStyleUpdateInProgress )
                 {
 #endif
-                    if( fe.ThemeStyle != null &&
-                        fe.ThemeStyle._resources != null )
+                    if( fe.ThemeStyle is not null &&
+                        fe.ThemeStyle._resources is not null )
                     {
                         table = fe.ThemeStyle._resources;
                     }
@@ -1714,14 +1714,14 @@ namespace System.Windows
                 }
 #endif
             }
-            else // (fce != null)
+            else // (fce is not null)
             {
 #if DEBUG
                 if( !fce.IsThemeStyleUpdateInProgress )
                 {
 #endif
-                    if( fce.ThemeStyle != null &&
-                        fce.ThemeStyle._resources != null )
+                    if( fce.ThemeStyle is not null &&
+                        fce.ThemeStyle._resources is not null )
                     {
                         table = fce.ThemeStyle._resources;
                     }
@@ -1739,10 +1739,10 @@ namespace System.Windows
         {
             ResourceDictionary table = null;
 
-            if (fe != null)
+            if (fe is not null)
             {
-                if( fe.TemplateInternal != null &&
-                    fe.TemplateInternal._resources != null )
+                if( fe.TemplateInternal is not null &&
+                    fe.TemplateInternal._resources is not null )
                 {
                     table = fe.TemplateInternal._resources;
                 }
@@ -1767,10 +1767,10 @@ namespace System.Windows
         // Finds the nearest NameScope by walking up the logical tree
         internal static INameScope FindScope(DependencyObject d, out DependencyObject scopeOwner)
         {
-            while (d != null)
+            while (d is not null)
             {
                 INameScope nameScope = NameScope.NameScopeFromObject(d);
-                if (nameScope != null)
+                if (nameScope is not null)
                 {
                     scopeOwner = d;
                     return nameScope;
@@ -1778,7 +1778,7 @@ namespace System.Windows
 
                 DependencyObject parent = LogicalTreeHelper.GetParent(d);
 
-                d = (parent != null) ? parent : Helper.FindMentor(d.InheritanceContext);
+                d = (parent is not null) ? parent : Helper.FindMentor(d.InheritanceContext);
             }
 
             scopeOwner = null;
@@ -1913,7 +1913,7 @@ namespace System.Windows
             // Note that for inheritable properties that override the default value a parent can impart
             // its default value to the child even though the property may not have been set locally or
             // via a style or template (ie. IsUsed flag would be false).
-            if (fmetadata != null)
+            if (fmetadata is not null)
             {
                 if (fmetadata.Inherits)
                 {
@@ -1946,7 +1946,7 @@ namespace System.Windows
             FrameworkElement feTemplatedParent = (FrameworkElement)_templatedParent;
             frameworkTemplate = feTemplatedParent.TemplateInternal;
 
-            if (frameworkTemplate != null)
+            if (frameworkTemplate is not null)
             {
                 return StyleHelper.GetValueFromTemplatedParent(
                         _templatedParent,
@@ -1980,11 +1980,11 @@ namespace System.Windows
                 while (hasParent)
                 {
                     bool inheritanceNode;
-                    if (parentFE != null)
+                    if (parentFE is not null)
                     {
                         inheritanceNode = TreeWalkHelper.IsInheritanceNode(parentFE, dp, out inheritanceBehavior);
                     }
-                    else // (parentFCE != null)
+                    else // (parentFCE is not null)
                     {
                         inheritanceNode = TreeWalkHelper.IsInheritanceNode(parentFCE, dp, out inheritanceBehavior);
                     }
@@ -2032,7 +2032,7 @@ namespace System.Windows
                     }
 
                     // No boundary or inheritance node found, continue search
-                    if (parentFE != null)
+                    if (parentFE is not null)
                     {
                         hasParent = GetFrameworkParent(parentFE, out parentFE, out parentFCE);
                     }
@@ -2080,7 +2080,7 @@ namespace System.Windows
                 // because for this case the OnParentChanged will not
                 // have a chance to fire the Loaded event.
                 //
-                if (dp != null && dp.OwnerType == typeof(PresentationSource) && dp.Name == "RootSource")
+                if (dp is not null && dp.OwnerType == typeof(PresentationSource) && dp.Name == "RootSource")
                 {
                     TryFireInitialized();
                 }
@@ -2100,12 +2100,12 @@ namespace System.Windows
                 if (dp != StyleProperty && dp != Control.TemplateProperty && dp != DefaultStyleKeyProperty)
                 {
                     // Note even properties on non-container nodes within a template could be driving a trigger
-                    if (TemplatedParent != null)
+                    if (TemplatedParent is not null)
                     {
                         FrameworkElement feTemplatedParent = TemplatedParent as FrameworkElement;
 
                         FrameworkTemplate frameworkTemplate = feTemplatedParent.TemplateInternal;
-                        if (frameworkTemplate != null)
+                        if (frameworkTemplate is not null)
                         {
                             StyleHelper.OnTriggerSourcePropertyInvalidated(null, frameworkTemplate, TemplatedParent, dp, e, false /*invalidateOnlyContainer*/,
                                 ref frameworkTemplate.TriggerSourceRecordFromChildIndex, ref frameworkTemplate.PropertyTriggersWithActions, TemplateChildIndex /*sourceChildIndex*/);
@@ -2114,7 +2114,7 @@ namespace System.Windows
 
                     // Do not validate Style during an invalidation if the Style was
                     // never used before (dependents do not need invalidation)
-                    if (Style != null)
+                    if (Style is not null)
                     {
                         StyleHelper.OnTriggerSourcePropertyInvalidated(Style, null, this, dp, e, true /*invalidateOnlyContainer*/,
                             ref Style.TriggerSourceRecordFromChildIndex, ref Style.PropertyTriggersWithActions, 0 /*sourceChildIndex*/); // Style can only have triggers that are driven by properties on the container
@@ -2122,14 +2122,14 @@ namespace System.Windows
 
                     // Do not validate Template during an invalidation if the Template was
                     // never used before (dependents do not need invalidation)
-                    if (TemplateInternal != null)
+                    if (TemplateInternal is not null)
                     {
                         StyleHelper.OnTriggerSourcePropertyInvalidated(null, TemplateInternal, this, dp, e, !HasTemplateGeneratedSubTree /*invalidateOnlyContainer*/,
                             ref TemplateInternal.TriggerSourceRecordFromChildIndex, ref TemplateInternal.PropertyTriggersWithActions, 0 /*sourceChildIndex*/); // These are driven by the container
                     }
 
                     // There may be container dependents in the ThemeStyle. Invalidate them.
-                    if (ThemeStyle != null && Style != ThemeStyle)
+                    if (ThemeStyle is not null && Style != ThemeStyle)
                     {
                         StyleHelper.OnTriggerSourcePropertyInvalidated(ThemeStyle, null, this, dp, e, true /*invalidateOnlyContainer*/,
                             ref ThemeStyle.TriggerSourceRecordFromChildIndex, ref ThemeStyle.PropertyTriggersWithActions, 0 /*sourceChildIndex*/); // ThemeStyle can only have triggers that are driven by properties on the container
@@ -2145,7 +2145,7 @@ namespace System.Windows
 
             // Metadata must exist specifically stating propagate invalidation
             // due to group or inheritance
-            if (fmetadata != null)
+            if (fmetadata is not null)
             {
                 //
                 // Inheritance
@@ -2223,11 +2223,11 @@ namespace System.Windows
                         {
                             // Locate nearest Layout parent
                             for (Visual v = VisualTreeHelper.GetParent(this) as Visual;
-                                 v != null;
+                                 v is not null;
                                  v = VisualTreeHelper.GetParent(v) as Visual)
                             {
                                 layoutParent = v as UIElement;
-                                if (layoutParent != null)
+                                if (layoutParent is not null)
                                 {
                                     //let incrementally-updating FrameworkElements to mark the vicinity of the affected child
                                     //to perform partial update.
@@ -2347,7 +2347,7 @@ namespace System.Windows
             isChildRecordValid = false;
             childRecord = new ChildRecord();    // CS0177
 
-            if (templatedParent != null)
+            if (templatedParent is not null)
             {
                 FrameworkObject foTemplatedParent = new FrameworkObject(templatedParent, true);
 
@@ -2358,11 +2358,11 @@ namespace System.Windows
                 // Pick the owner for the VisualTree that generated this node
                 templatedParentTemplate = foTemplatedParent.FE.TemplateInternal;
 
-                Debug.Assert(templatedParentTemplate != null ,
+                Debug.Assert(templatedParentTemplate is not null ,
                     "If this node is the result of a VisualTree expansion then it should have a parent template");
 
                 // Check if this Child Index is represented in FrameworkTemplate
-                if (templatedParentTemplate != null && ((0 <= childIndex) && (childIndex < templatedParentTemplate.ChildRecordFromChildIndex.Count)))
+                if (templatedParentTemplate is not null && ((0 <= childIndex) && (childIndex < templatedParentTemplate.ChildRecordFromChildIndex.Count)))
                 {
                     childRecord = templatedParentTemplate.ChildRecordFromChildIndex[childIndex];
                     isChildRecordValid = true;
@@ -2468,7 +2468,7 @@ namespace System.Windows
             DependencyObject newParent = VisualTreeHelper.GetParentInternal(this);
 
             // Visual parent implies no InheritanceContext
-            if (newParent != null)
+            if (newParent is not null)
             {
                 ClearInheritanceContext();
             }
@@ -2479,12 +2479,12 @@ namespace System.Windows
             // Fire Loaded and Unloaded Events
             BroadcastEventHelper.BroadcastLoadedOrUnloadedEvent(this, oldParent, newParent);
 
-            if (newParent != null && (newParent is FrameworkElement) == false)
+            if (newParent is not null && (newParent is FrameworkElement) == false)
             {
                 // If you are being connected to a non-FE parent then start listening for VisualAncestor
                 // changes because otherwise you won't know about changes happening above you
                 Visual newParentAsVisual = newParent as Visual;
-                if (newParentAsVisual != null)
+                if (newParentAsVisual is not null)
                 {
                     newParentAsVisual.VisualAncestorChanged += new AncestorChangedEventHandler(OnVisualAncestorChanged);
                 }
@@ -2493,12 +2493,12 @@ namespace System.Windows
                     ((Visual3D)newParent).VisualAncestorChanged += new Visual.AncestorChangedEventHandler(OnVisualAncestorChanged);
                 }
             }
-            else if (oldParent != null && (oldParent is FrameworkElement) == false)
+            else if (oldParent is not null && (oldParent is FrameworkElement) == false)
             {
                 // If you are being disconnected from a non-FE parent then stop listening for
                 // VisualAncestor changes
                 Visual oldParentAsVisual = oldParent as Visual;
-                if (oldParentAsVisual != null)
+                if (oldParentAsVisual is not null)
                 {
                     oldParentAsVisual.VisualAncestorChanged -= new AncestorChangedEventHandler(OnVisualAncestorChanged);
                 }
@@ -2512,8 +2512,8 @@ namespace System.Windows
             if (Parent is null)
             {
                 // Invalidate relevant properties for this subtree
-                DependencyObject parent = (newParent != null) ? newParent : oldParent;
-                TreeWalkHelper.InvalidateOnTreeChange(this, null, parent, (newParent != null));
+                DependencyObject parent = (newParent is not null) ? newParent : oldParent;
+                TreeWalkHelper.InvalidateOnTreeChange(this, null, parent, (newParent is not null));
             }
 
             // Initialize, if not already done.
@@ -2578,7 +2578,7 @@ namespace System.Windows
                     // the break point in the tree.
                     FrameworkElement.GetContainingFrameworkElement(e.OldParent, out feParent, out fceParent);
 
-                    if(feParent != null)
+                    if(feParent is not null)
                     {
                         // Update HasLoadedChangeHandler Flag
                         BroadcastEventHelper.AddOrRemoveHasLoadedChangeHandlerFlag(this, feParent, null);
@@ -2652,7 +2652,7 @@ namespace System.Windows
 
                     _flags = (InternalFlags)((inheritanceBehavior & inheritanceBehaviorMask) | (((uint)_flags) & ~inheritanceBehaviorMask));
 
-                    if (_parent != null)
+                    if (_parent is not null)
                     {
                         // This means that we are in the process of xaml parsing:
                         // an instance of FE has been created and added to a parent,
@@ -2848,7 +2848,7 @@ namespace System.Windows
             //
             // BUGBUG: this misses "trees" that have only one logical node.  No parents, no children.
 
-            if(_parent != null || HasLogicalChildren)
+            if(_parent is not null || HasLogicalChildren)
             {
                 DependencyObject logicalSource = args.Source as DependencyObject;
                 if(logicalSource is null || !IsLogicalDescendent(logicalSource))
@@ -2912,7 +2912,7 @@ namespace System.Windows
             // that we left before.  If so, restore the source of the event to
             // be the source that it was when we left the logical tree.
             DependencyObject branchNode = route.PeekBranchNode() as DependencyObject;
-            if (branchNode != null && IsLogicalDescendent(branchNode))
+            if (branchNode is not null && IsLogicalDescendent(branchNode))
             {
                 // We keep the most recent source in the event args.  Note that
                 // this is only for our consumption.  Once the event is raised,
@@ -2943,12 +2943,12 @@ namespace System.Windows
                 // If there is no visual parent, route via the model tree.
                 if (visualParent is null)
                 {
-                    continuePastCoreTree = modelParent != null;
+                    continuePastCoreTree = modelParent is not null;
                 }
-                else if(modelParent != null)
+                else if(modelParent is not null)
                 {
                     Visual visualParentAsVisual = visualParent as Visual;
-                    if (visualParentAsVisual != null)
+                    if (visualParentAsVisual is not null)
                     {
                         if (visualParentAsVisual.CheckFlagsAnd(VisualFlags.IsLayoutIslandRoot))
                         {
@@ -2990,16 +2990,16 @@ namespace System.Windows
             EventRoute route,
             RoutedEventArgs args)
         {
-            Debug.Assert(fe != null || fce != null);
+            Debug.Assert(fe is not null || fce is not null);
 
-            DependencyObject source = (fe != null) ? (DependencyObject)fe : (DependencyObject)fce;
+            DependencyObject source = (fe is not null) ? (DependencyObject)fe : (DependencyObject)fce;
             Style selfStyle = null;
             FrameworkTemplate selfFrameworkTemplate = null;
             DependencyObject templatedParent = null;
             int templateChildIndex = -1;
 
             // Fetch selfStyle, TemplatedParent and TemplateChildIndex
-            if (fe != null)
+            if (fe is not null)
             {
                 selfStyle = fe.Style;
                 selfFrameworkTemplate = fe.TemplateInternal;
@@ -3016,29 +3016,29 @@ namespace System.Windows
             // Add TargetType EventHandlers to the route. Notice that ThemeStyle
             // cannot have EventHandlers and hence are ignored here.
             RoutedEventHandlerInfo[] handlers = null;
-            if (selfStyle != null && selfStyle.EventHandlersStore != null)
+            if (selfStyle is not null && selfStyle.EventHandlersStore is not null)
             {
                 handlers = selfStyle.EventHandlersStore.GetRoutedEventHandlers(args.RoutedEvent);
                 AddStyleHandlersToEventRoute(route, source, handlers);
             }
-            if (selfFrameworkTemplate != null && selfFrameworkTemplate.EventHandlersStore != null)
+            if (selfFrameworkTemplate is not null && selfFrameworkTemplate.EventHandlersStore is not null)
             {
                 handlers = selfFrameworkTemplate.EventHandlersStore.GetRoutedEventHandlers(args.RoutedEvent);
                 AddStyleHandlersToEventRoute(route, source, handlers);
             }
 
-            if (templatedParent != null)
+            if (templatedParent is not null)
             {
                 FrameworkTemplate templatedParentTemplate = null;
 
                 FrameworkElement feTemplatedParent = templatedParent as FrameworkElement;
-                Debug.Assert( feTemplatedParent != null );
+                Debug.Assert( feTemplatedParent is not null );
 
                 templatedParentTemplate = feTemplatedParent.TemplateInternal;
 
                 // Fetch handlers from either the parent style or template
                 handlers = null;
-                if (templatedParentTemplate != null && templatedParentTemplate.HasEventDependents)
+                if (templatedParentTemplate is not null && templatedParentTemplate.HasEventDependents)
                 {
                     handlers = StyleHelper.GetChildRoutedEventHandlers(templateChildIndex, args.RoutedEvent, ref templatedParentTemplate.EventDependents);
                 }
@@ -3054,7 +3054,7 @@ namespace System.Windows
             DependencyObject source,
             RoutedEventHandlerInfo[] handlers)
         {
-            if (handlers != null)
+            if (handlers is not null)
             {
                 for (int i=0; i<handlers.Length; i++)
                 {
@@ -3091,12 +3091,12 @@ namespace System.Windows
             {
                 IEnumerator enumerator = LogicalChildren;
 
-                if (enumerator != null)
+                if (enumerator is not null)
                 {
                     while (enumerator.MoveNext())
                     {
                         DependencyObject child = enumerator.Current as DependencyObject;
-                        if (child != null)
+                        if (child is not null)
                         {
                             child.CoerceValue(property);
                         }
@@ -3118,7 +3118,7 @@ namespace System.Windows
             DependencyObject modelParent = GetUIParentCore();
 
             DependencyObject branchNode = branchNodeStack.Count > 0 ? branchNodeStack.Peek() : null;
-            if (branchNode != null && IsLogicalDescendent(branchNode))
+            if (branchNode is not null && IsLogicalDescendent(branchNode))
             {
                 branchNodeStack.Pop();
 
@@ -3131,12 +3131,12 @@ namespace System.Windows
             // If there is no visual parent, route via the model tree.
             if (visualParent is null)
             {
-                continuePastCoreTree = modelParent != null;
+                continuePastCoreTree = modelParent is not null;
             }
-            else if(modelParent != null)
+            else if(modelParent is not null)
             {
                 Visual visualParentAsVisual = visualParent as Visual;
-                if (visualParentAsVisual != null)
+                if (visualParentAsVisual is not null)
                 {
                     if (visualParentAsVisual.CheckFlagsAnd(VisualFlags.IsLayoutIslandRoot))
                     {
@@ -3166,7 +3166,7 @@ namespace System.Windows
             ContentElement ce = null;
             UIElement3D e3d = null;
 
-            while (modelTreeNode != null && modelTreeNode != mergePoint)
+            while (modelTreeNode is not null && modelTreeNode != mergePoint)
             {
                 if (!UIElementHelper.InvalidateAutomationPeer(modelTreeNode, out e, out ce, out e3d))
                 {
@@ -3663,7 +3663,7 @@ namespace System.Windows
         private static object CoerceFlowDirectionProperty(DependencyObject d, object value)
         {
             FrameworkElement fe = d as FrameworkElement;
-            if (fe != null)
+            if (fe is not null)
             {
                 fe.InvalidateArrange();
                 fe.InvalidateVisual();
@@ -3677,7 +3677,7 @@ namespace System.Windows
             // Check that d is a FrameworkElement since the property inherits and this can be called
             // on non-FEs.
             FrameworkElement fe = d as FrameworkElement;
-            if (fe != null)
+            if (fe is not null)
             {
                 // Cache the new value as a bit to optimize accessing the FlowDirection property's CLR accessor
                 fe.IsRightToLeft = ((FlowDirection)e.NewValue) == FlowDirection.RightToLeft;
@@ -3935,7 +3935,7 @@ namespace System.Windows
             // as a property on this element.
             Cursor cursor = fe.Cursor;
 
-            if(cursor != null)
+            if(cursor is not null)
             {
                 // We specify the cursor if the QueryCursor event is not
                 // handled by the time it gets to us, or if we are configured
@@ -3978,7 +3978,7 @@ namespace System.Windows
             // it is a ContentElement get FlowDirection form it. ContentHosts
             // may not fully create their visual tree before Arrange process is done.
             DependencyObject parentVisual = VisualTreeHelper.GetParent(fe);
-            if (parentVisual != null)
+            if (parentVisual is not null)
             {
                 parentFlowDirection = GetFlowDirectionFromVisual(parentVisual);
             }
@@ -3989,11 +3989,11 @@ namespace System.Windows
                 bool hasParent = GetFrameworkParent(fe, out parentFE, out parentFCE);
                 if (hasParent)
                 {
-                    if (parentFE != null && parentFE is IContentHost)
+                    if (parentFE is not null && parentFE is IContentHost)
                     {
                         parentFlowDirection = parentFE.FlowDirection;
                     }
-                    else if (parentFCE != null)
+                    else if (parentFCE is not null)
                     {
                         parentFlowDirection = (FlowDirection)parentFCE.GetValue(FlowDirectionProperty);
                     }
@@ -4013,10 +4013,10 @@ namespace System.Windows
         {
             FlowDirection flowDirection = FlowDirection.LeftToRight;
 
-            for (DependencyObject v = visual; v != null; v = VisualTreeHelper.GetParent(v))
+            for (DependencyObject v = visual; v is not null; v = VisualTreeHelper.GetParent(v))
             {
                 FrameworkElement fe = v as FrameworkElement;
-                if (fe != null)
+                if (fe is not null)
                 {
                     flowDirection = fe.FlowDirection;
                     break;
@@ -4101,7 +4101,7 @@ namespace System.Windows
 
             internal void CreateTransformSnapshot(Transform sourceTransform)
             {
-                Debug.Assert(sourceTransform != null);
+                Debug.Assert(sourceTransform is not null);
                 _transform = new MatrixTransform(sourceTransform.Value);
                 _transform.Freeze();
             }
@@ -4110,7 +4110,7 @@ namespace System.Windows
             {
                 get
                 {
-                    Debug.Assert(_transform != null);
+                    Debug.Assert(_transform is not null);
                     return (_transform);
                 }
             }
@@ -4361,7 +4361,7 @@ namespace System.Windows
                 {
                     Transform layoutTransform = this.LayoutTransform;
                     //  check that LayoutTransform is non-trivial
-                    if (layoutTransform != null && !layoutTransform.IsIdentity)
+                    if (layoutTransform is not null && !layoutTransform.IsIdentity)
                     {
                         if (ltd is null)
                         {
@@ -4378,7 +4378,7 @@ namespace System.Windows
                             ltd.TransformedUnroundedDS = new Size();
                         }
                     }
-                    else if (ltd != null)
+                    else if (ltd is not null)
                     {
                         //  clear ltd storage
                         ltd = null;
@@ -4386,7 +4386,7 @@ namespace System.Windows
                     }
                 }
 
-                if (ltd != null)
+                if (ltd is not null)
                 {
                     // Find the maximal area rectangle in local (child) space that we can fit, post-transform
                     // in the decorator's measure constraint.
@@ -4414,7 +4414,7 @@ namespace System.Windows
                 //for sure enough for the control to render its content.
                 Size unclippedDesiredSize = desiredSize;
 
-                if (ltd != null)
+                if (ltd is not null)
                 {
                     //need to store unclipped, untransformed desired size to be able to arrange later
                     ltd.UntransformedDS = unclippedDesiredSize;
@@ -4443,7 +4443,7 @@ namespace System.Windows
                 }
 
                 //transform desired size to layout slot space
-                if (ltd != null)
+                if (ltd is not null)
                 {
                     Rect childBoundsTransformed = Rect.Transform(new Rect(0, 0, desiredSize.Width, desiredSize.Height), ltd.Transform.Value);
                     desiredSize.Width = childBoundsTransformed.Width;
@@ -4472,7 +4472,7 @@ namespace System.Windows
                 }
 
                 // Set transformed, unrounded size on layout transform, if any.
-                if (ltd != null)
+                if (ltd is not null)
                 {
                     ltd.TransformedUnroundedDS = new Size(Math.Max(0, clippedDesiredWidth), Math.Max(0, clippedDesiredHeight));
                 }
@@ -4517,7 +4517,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    if (sb != null)
+                    if (sb is not null)
                         UnclippedDesiredSizeField.ClearValue(this);
                 }
 
@@ -4590,7 +4590,7 @@ namespace System.Windows
                 if (useLayoutRounding)
                 {
                     // 'transformUnroundedDS' is a non-nullable value type and can never be null.
-                    if (ltd != null)
+                    if (ltd is not null)
                     {
                         transformedUnroundedDS = ltd.TransformedUnroundedDS;
                         transformedUnroundedDS.Width = Math.Max(0, transformedUnroundedDS.Width - marginWidth);
@@ -4644,7 +4644,7 @@ namespace System.Windows
 
                 //if LayoutTransform is set, arrange at untransformed DS always
                 //alignments apply to the BoundingBox after transform
-                if (ltd != null)
+                if (ltd is not null)
                 {
                     // Repeat the measure-time algorithm for finding a best fit local rect.
                     // This essentially implements Stretch in case of LayoutTransform
@@ -4749,7 +4749,7 @@ namespace System.Windows
                     || DoubleUtil.LessThan(clippedInkSize.Height, innerInkSize.Height);
 
                 //if LayoutTransform is set, get the "outer bounds" - the alignments etc work on them
-                if (ltd != null)
+                if (ltd is not null)
                 {
                     Rect inkRectTransformed = Rect.Transform(new Rect(0, 0, clippedInkSize.Width, clippedInkSize.Height), ltd.Transform.Value);
                     clippedInkSize.Width = inkRectTransformed.Width;
@@ -4924,7 +4924,7 @@ namespace System.Windows
                 //if LayoutTransform is set, convert RenderSize to "outer bounds"
                 LayoutTransformData ltd = LayoutTransformDataField.GetValue(this);
                 Rect inkRectTransformed = new Rect();
-                if (ltd != null)
+                if (ltd is not null)
                 {
                     inkRectTransformed = Rect.Transform(new Rect(0, 0, inkSize.Width, inkSize.Height), ltd.Transform.Value);
                     inkSize.Width = inkRectTransformed.Width;
@@ -4956,7 +4956,7 @@ namespace System.Windows
                     }
 
                     RectangleGeometry localClip = new RectangleGeometry(clipRect);
-                    if (rtlMirror != null) localClip.Transform = rtlMirror;
+                    if (rtlMirror is not null) localClip.Transform = rtlMirror;
                     return localClip;
                 }
 
@@ -4964,7 +4964,7 @@ namespace System.Windows
                 {
                     Vector offset = ComputeAlignmentOffset(clippingSize, inkSize);
 
-                    if (ltd != null)
+                    if (ltd is not null)
                     {
                         Rect slotClipRect = new Rect(-offset.X + inkRectTransformed.X,
                                                      -offset.Y + inkRectTransformed.Y,
@@ -4995,14 +4995,14 @@ namespace System.Windows
 
                             RectangleGeometry localClip = new RectangleGeometry(localClipRect);
                             PathGeometry combinedClip = Geometry.Combine(localClip, slotClip, GeometryCombineMode.Intersect, null);
-                            if (rtlMirror != null) combinedClip.Transform = rtlMirror;
+                            if (rtlMirror is not null) combinedClip.Transform = rtlMirror;
                             return combinedClip;
                         }
                         else
                         {
-                            if (rtlMirror != null)
+                            if (rtlMirror is not null)
                             {
-                                if (slotClip.Transform != null)
+                                if (slotClip.Transform is not null)
                                     slotClip.Transform = new MatrixTransform(slotClip.Transform.Value * rtlMirror.Value);
                                 else
                                     slotClip.Transform = rtlMirror;
@@ -5035,7 +5035,7 @@ namespace System.Windows
                         }
 
                         RectangleGeometry combinedClip = new RectangleGeometry(slotRect);
-                        if (rtlMirror != null) combinedClip.Transform = rtlMirror;
+                        if (rtlMirror is not null) combinedClip.Transform = rtlMirror;
                         return combinedClip;
                     }
                 }
@@ -5165,10 +5165,10 @@ namespace System.Windows
             TransformCollection ts = new TransformCollection();
             ts.CanBeInheritanceContext = false;
 
-            if(additionalTransform != null)
+            if(additionalTransform is not null)
                 ts.Add(additionalTransform);
 
-            if(renderTransform != null)
+            if(renderTransform is not null)
                 ts.Add(renderTransform);
 
             ts.Add(layoutTransform);
@@ -5222,9 +5222,9 @@ namespace System.Windows
                 TransformGroup t = null;
 
                 //arbitrary transform, create a collection
-                if (additionalTransform != null
-                    || renderTransform != null
-                    || ltd != null)
+                if (additionalTransform is not null
+                    || renderTransform is not null
+                    || ltd is not null)
                 {
                     // Create a TransformGroup and make sure it does not participate
                     // in the InheritanceContext treeness because it is internal operation only.
@@ -5232,10 +5232,10 @@ namespace System.Windows
                     t.CanBeInheritanceContext = false;
                     t.Children.CanBeInheritanceContext = false;
 
-                    if (additionalTransform != null)
+                    if (additionalTransform is not null)
                         t.Children.Add(additionalTransform);
 
-                    if(ltd != null)
+                    if(ltd is not null)
                     {
                         t.Children.Add(ltd.Transform);
 
@@ -5257,7 +5257,7 @@ namespace System.Windows
                         t.Children.Add(new TranslateTransform(-inkRectTransformed.X, -inkRectTransformed.Y));
                     }
 
-                    if (renderTransform != null)
+                    if (renderTransform is not null)
                     {
                         Point origin = GetRenderTransformOrigin();
                         bool hasOrigin = (origin.X != 0d || origin.Y != 0d);
@@ -5343,7 +5343,7 @@ namespace System.Windows
                 // If element has an FocusedElement we need to delegate focus to it
                 // and handle the event if focus successfully delegated
                 IInputElement activeElement = FocusManager.GetFocusedElement(fe, true);
-                if (activeElement != null && activeElement != sender && Keyboard.IsFocusable(activeElement as DependencyObject))
+                if (activeElement is not null && activeElement != sender && Keyboard.IsFocusable(activeElement as DependencyObject))
                 {
                     IInputElement oldFocus = Keyboard.FocusedElement;
                     activeElement.Focus();
@@ -5516,10 +5516,10 @@ namespace System.Windows
         private void RaiseInitialized(EventPrivateKey key, EventArgs e)
         {
             EventHandlersStore store = EventHandlersStore;
-            if (store != null)
+            if (store is not null)
             {
                 Delegate handler = store.Get(key);
-                if (handler != null)
+                if (handler is not null)
                 {
                     ((EventHandler)handler)(this, e);
                 }
@@ -5704,7 +5704,7 @@ namespace System.Windows
                     //    If Loaded preceeded Unloaded then it is sure to have been cancelled
                     //    out by the latter.
 
-                    return (unloadedPending != null);
+                    return (unloadedPending is not null);
                 }
             }
         }
@@ -5808,7 +5808,7 @@ namespace System.Windows
         internal override void AddSynchronizedInputPreOpportunityHandlerCore(EventRoute route, RoutedEventArgs args)
         {
             UIElement uiElement = this._templatedParent as UIElement;
-            if (uiElement != null)
+            if (uiElement is not null)
             {
                 uiElement.AddSynchronizedInputPreOpportunityHandler(route, args);
             }
@@ -5820,10 +5820,10 @@ namespace System.Windows
         internal void RaiseClrEvent(EventPrivateKey key, EventArgs args)
         {
             EventHandlersStore store = EventHandlersStore;
-            if (store != null)
+            if (store is not null)
             {
                 Delegate handler = store.Get(key);
-                if (handler != null)
+                if (handler is not null)
                 {
                     ((EventHandler)handler)(this, args);
                 }
@@ -6066,10 +6066,10 @@ namespace System.Windows
         private void RaiseDependencyPropertyChanged(EventPrivateKey key, DependencyPropertyChangedEventArgs args)
         {
             EventHandlersStore store = EventHandlersStore;
-            if (store != null)
+            if (store is not null)
             {
                 Delegate handler = store.Get(key);
-                if (handler != null)
+                if (handler is not null)
                 {
                     ((DependencyPropertyChangedEventHandler)handler)(this, args);
                 }
@@ -6082,33 +6082,33 @@ namespace System.Windows
             RoutedEventArgs args,
             DependencyObject modelTreeNode)
         {
-            while (modelTreeNode != null && modelTreeNode != mergePoint)
+            while (modelTreeNode is not null && modelTreeNode != mergePoint)
             {
                 UIElement uiElement = modelTreeNode as UIElement;
                 ContentElement contentElement = modelTreeNode as ContentElement;
                 UIElement3D uiElement3D = modelTreeNode as UIElement3D;
 
-                if(uiElement != null)
+                if(uiElement is not null)
                 {
                     uiElement.AddToEventRoute(route, args);
 
                     FrameworkElement fe = uiElement as FrameworkElement;
-                    if (fe != null)
+                    if (fe is not null)
                     {
                         AddStyleHandlersToEventRoute(fe, null, route, args);
                     }
                 }
-                else if (contentElement != null)
+                else if (contentElement is not null)
                 {
                     contentElement.AddToEventRoute(route, args);
 
                     FrameworkContentElement fce = contentElement as FrameworkContentElement;
-                    if (fce != null)
+                    if (fce is not null)
                     {
                         AddStyleHandlersToEventRoute(null, fce, route, args);
                     }
                 }
-                else if (uiElement3D != null)
+                else if (uiElement3D is not null)
                 {
                     uiElement3D.AddToEventRoute(route, args);
                 }
@@ -6121,7 +6121,7 @@ namespace System.Windows
         // Returns if the given child instance is a logical descendent
         private bool IsLogicalDescendent(DependencyObject child)
         {
-            while (child != null)
+            while (child is not null)
             {
                 if (child == this)
                 {
@@ -6143,7 +6143,7 @@ namespace System.Windows
         internal void EventHandlersStoreRemove(EventPrivateKey key, Delegate handler)
         {
             EventHandlersStore store = EventHandlersStore;
-            if (store != null)
+            if (store is not null)
             {
                 store.Remove(key, handler);
             }

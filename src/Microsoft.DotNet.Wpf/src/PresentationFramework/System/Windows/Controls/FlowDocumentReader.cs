@@ -91,15 +91,15 @@ namespace System.Windows.Controls
 
             // Initialize ContentHost.
             // If old ContentHost is enabled, disable it first to ensure appropriate cleanup.
-            if (CurrentViewer != null)
+            if (CurrentViewer is not null)
             {
                 DetachViewer(CurrentViewer);
                 _contentHost.Child = null;
             }
             _contentHost = GetTemplateChild(_contentHostTemplateName) as Decorator;
-            if (_contentHost != null)
+            if (_contentHost is not null)
             {
-                if (_contentHost.Child != null)
+                if (_contentHost.Child is not null)
                 {
                     throw new NotSupportedException(SR.FlowDocumentReaderDecoratorMarkedAsContentHostMustHaveNoContent);
                 }
@@ -109,7 +109,7 @@ namespace System.Windows.Controls
 
             // Initialize FindTooBar host.
             // If old FindToolBar is enabled, disable it first to ensure appropriate cleanup.
-            if (FindToolBar != null)
+            if (FindToolBar is not null)
             {
                 ToggleFindToolBar(false);
             }
@@ -124,7 +124,7 @@ namespace System.Windows.Controls
         public bool CanGoToPage(int pageNumber)
         {
             bool canGoToPage = false;
-            if (CurrentViewer != null)
+            if (CurrentViewer is not null)
             {
                 canGoToPage = CurrentViewer.CanGoToPage(pageNumber);
             }
@@ -208,10 +208,10 @@ namespace System.Windows.Controls
             {
                 TextSelection result = null;
                 IFlowDocumentViewer viewer;
-                if (_contentHost != null)
+                if (_contentHost is not null)
                 {
                     viewer = _contentHost.Child as IFlowDocumentViewer;
-                    if(viewer != null)
+                    if(viewer is not null)
                     {
                         result = viewer.TextSelection as TextSelection;
                     }
@@ -694,7 +694,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnPrintCommand()
         {
-            if (CurrentViewer != null)
+            if (CurrentViewer is not null)
             {
                 CurrentViewer.Print();
             }
@@ -705,7 +705,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnCancelPrintCommand()
         {
-            if (CurrentViewer != null)
+            if (CurrentViewer is not null)
             {
                 CurrentViewer.CancelPrint();
             }
@@ -784,7 +784,7 @@ namespace System.Windows.Controls
             // needs to get focus, when any part of the control gets focused.
             // But if the focus is within the Document, do not change it. Otherwise it
             // will interfere with input handling inside the Document.
-            if (IsKeyboardFocusWithin && CurrentViewer != null)
+            if (IsKeyboardFocusWithin && CurrentViewer is not null)
             {
                 bool isFocusWithinDocument = IsFocusWithinDocument();
                 if (!isFocusWithinDocument)
@@ -806,7 +806,7 @@ namespace System.Windows.Controls
             {
                 // Esc -- Close FindToolBar
                 case Key.Escape:
-                    if (FindToolBar != null)
+                    if (FindToolBar is not null)
                     {
                         ToggleFindToolBar(false);
                         e.Handled = true;
@@ -817,7 +817,7 @@ namespace System.Windows.Controls
                 case Key.F3:
                     if (CanShowFindToolBar)
                     {
-                        if (FindToolBar != null)
+                        if (FindToolBar is not null)
                         {
                             // If the Shift key is also pressed, then search up.
                             FindToolBar.SearchUp = ((e.KeyboardDevice.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift);
@@ -857,7 +857,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (HasLogicalChildren && Document != null)
+                if (HasLogicalChildren && Document is not null)
                 {
                     return new SingleChildEnumerator(Document);
                 }
@@ -914,14 +914,14 @@ namespace System.Windows.Controls
             bool isKeyboardFocusWithin;
             DependencyObject focusedElement = null;
 
-            if (_contentHost != null)
+            if (_contentHost is not null)
             {
                 // Remember the current keyboard focus state.
                 isKeyboardFocusWithin = IsKeyboardFocusWithin;
 
                 // Detach old viewer
                 viewer = _contentHost.Child as IFlowDocumentViewer;
-                if (viewer != null)
+                if (viewer is not null)
                 {
                     // Remember focused element, if the focus is within the Document.
                     // After switching to a different viewer, this focus needs to be restored.
@@ -944,7 +944,7 @@ namespace System.Windows.Controls
 
                 viewer = GetViewerFromMode(viewingMode);
                 feViewer = (FrameworkElement)viewer;
-                if (viewer != null)
+                if (viewer is not null)
                 {
                     // Attach new viewer
                     _contentHost.Child = feViewer;
@@ -988,13 +988,13 @@ namespace System.Windows.Controls
         private bool IsFocusWithinDocument()
         {
             DependencyObject focusedElement = Keyboard.FocusedElement as DependencyObject;
-            while (focusedElement != null && focusedElement != Document)
+            while (focusedElement is not null && focusedElement != Document)
             {
                 // Skip elements in the control's template (if such exists) and
                 // walk up logical tree to find if the focused element is within
                 // the document.
                 FrameworkElement fe = focusedElement as FrameworkElement;
-                if (fe != null && fe.TemplatedParent != null)
+                if (fe is not null && fe.TemplatedParent is not null)
                 {
                     focusedElement = fe.TemplatedParent;
                 }
@@ -1003,7 +1003,7 @@ namespace System.Windows.Controls
                     focusedElement = LogicalTreeHelper.GetParent(focusedElement);
                 }
             }
-            return (focusedElement != null);
+            return (focusedElement is not null);
         }
 
         /// <summary>
@@ -1012,7 +1012,7 @@ namespace System.Windows.Controls
         private void DocumentChanged(FlowDocument oldDocument, FlowDocument newDocument)
         {
             // Cleanup state associated with the old document.
-            if (oldDocument != null)
+            if (oldDocument is not null)
             {
                 // If Document was added to logical tree before, remove it.
                 if (_documentAsLogicalChild)
@@ -1023,7 +1023,7 @@ namespace System.Windows.Controls
 
             // If FlowDocumentReader was created through style, then do not modify
             // the logical tree. Instead, set "core parent" for the Document.
-            if (TemplatedParent != null && newDocument != null && LogicalTreeHelper.GetParent(newDocument) != null)
+            if (TemplatedParent is not null && newDocument is not null && LogicalTreeHelper.GetParent(newDocument) is not null)
             {
                 // Set the "core parent" back to us.
                 ContentOperations.SetParent(newDocument, this);
@@ -1035,7 +1035,7 @@ namespace System.Windows.Controls
             }
 
             // Initialize state associated with the new document.
-            if (newDocument != null)
+            if (newDocument is not null)
             {
                 newDocument.SetDpi(this.GetDpi());
                 // If Document should be part of DocumentViewer's logical tree, add it.
@@ -1046,7 +1046,7 @@ namespace System.Windows.Controls
             }
 
             // Attach document to the current viewer.
-            if (CurrentViewer != null)
+            if (CurrentViewer is not null)
             {
                 CurrentViewer.SetDocument(newDocument);
             }
@@ -1062,7 +1062,7 @@ namespace System.Windows.Controls
             if (!CanShowFindToolBar)
             {
                 // Disable FindToolBar, if the content does not support it.
-                if (FindToolBar != null)
+                if (FindToolBar is not null)
                 {
                     ToggleFindToolBar(false);
                 }
@@ -1070,7 +1070,7 @@ namespace System.Windows.Controls
 
             // Document is also represented as Automation child. Need to invalidate peer to force update.
             FlowDocumentReaderAutomationPeer peer = UIElementAutomationPeer.FromElement(this) as FlowDocumentReaderAutomationPeer;
-            if (peer != null)
+            if (peer is not null)
             {
                 peer.InvalidatePeer();
             }
@@ -1081,7 +1081,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void DetachViewer(IFlowDocumentViewer viewer)
         {
-            Invariant.Assert(viewer != null && viewer is FrameworkElement);
+            Invariant.Assert(viewer is not null && viewer is FrameworkElement);
             FrameworkElement feViewer = (FrameworkElement)viewer;
             // Clear property bindings.
             BindingOperations.ClearBinding(feViewer, ZoomProperty);
@@ -1104,7 +1104,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void AttachViewer(IFlowDocumentViewer viewer)
         {
-            Invariant.Assert(viewer != null && viewer is FrameworkElement);
+            Invariant.Assert(viewer is not null && viewer is FrameworkElement);
             FrameworkElement feViewer = (FrameworkElement)viewer;
             // Set document
             viewer.SetDocument(Document);
@@ -1205,18 +1205,18 @@ namespace System.Windows.Controls
         {
             if (pageCountChanged)
             {
-                SetValue(PageCountPropertyKey, (CurrentViewer != null) ? CurrentViewer.PageCount : 0);
+                SetValue(PageCountPropertyKey, (CurrentViewer is not null) ? CurrentViewer.PageCount : 0);
             }
 
             if (pageNumberChanged)
             {
-                SetValue(PageNumberPropertyKey, (CurrentViewer != null) ? CurrentViewer.PageNumber : 0);
-                SetValue(CanGoToPreviousPagePropertyKey, (CurrentViewer != null) ? CurrentViewer.CanGoToPreviousPage : false);
+                SetValue(PageNumberPropertyKey, (CurrentViewer is not null) ? CurrentViewer.PageNumber : 0);
+                SetValue(CanGoToPreviousPagePropertyKey, (CurrentViewer is not null) ? CurrentViewer.CanGoToPreviousPage : false);
             }
 
             if (pageCountChanged || pageNumberChanged)
             {
-                SetValue(CanGoToNextPagePropertyKey, (CurrentViewer != null) ? CurrentViewer.CanGoToNextPage : false);
+                SetValue(CanGoToNextPagePropertyKey, (CurrentViewer is not null) ? CurrentViewer.CanGoToNextPage : false);
             }
         }
 
@@ -1225,7 +1225,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void OnPageCountChanged(object sender, EventArgs e)
         {
-            Invariant.Assert(CurrentViewer != null && sender == CurrentViewer);
+            Invariant.Assert(CurrentViewer is not null && sender == CurrentViewer);
             UpdateReadOnlyProperties(true, false);
         }
 
@@ -1234,7 +1234,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void OnPageNumberChanged(object sender, EventArgs e)
         {
-            Invariant.Assert(CurrentViewer != null && sender == CurrentViewer);
+            Invariant.Assert(CurrentViewer is not null && sender == CurrentViewer);
             UpdateReadOnlyProperties(false, true);
         }
 
@@ -1243,7 +1243,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void OnViewerPrintStarted(object sender, EventArgs e)
         {
-            Invariant.Assert(CurrentViewer != null && sender == CurrentViewer);
+            Invariant.Assert(CurrentViewer is not null && sender == CurrentViewer);
             _printInProgress = true;
             // Since _printInProgress value is used to determine CanExecute state, we must invalidate that state.
             CommandManager.InvalidateRequerySuggested();
@@ -1254,7 +1254,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void OnViewerPrintCompleted(object sender, EventArgs e)
         {
-            Invariant.Assert(CurrentViewer != null && sender == CurrentViewer);
+            Invariant.Assert(CurrentViewer is not null && sender == CurrentViewer);
             OnPrintCompleted();
         }
 
@@ -1310,7 +1310,7 @@ namespace System.Windows.Controls
             Invariant.Assert(enable == (FindToolBar is null));
 
             // Command event for toggle button is only fired in OnClick - Therefore we just need to change the state
-            if(_findButton != null && _findButton.IsChecked.HasValue && _findButton.IsChecked.Value != enable)
+            if(_findButton is not null && _findButton.IsChecked.HasValue && _findButton.IsChecked.Value != enable)
             {
                 _findButton.IsChecked = enable;
             }
@@ -1381,8 +1381,8 @@ namespace System.Windows.Controls
         private static void CanExecuteRoutedEventHandler(object target, CanExecuteRoutedEventArgs args)
         {
             FlowDocumentReader viewer = target as FlowDocumentReader;
-            Invariant.Assert(viewer != null, "Target of CanExecuteRoutedEventHandler must be FlowDocumentReader.");
-            Invariant.Assert(args != null, "args cannot be null.");
+            Invariant.Assert(viewer is not null, "Target of CanExecuteRoutedEventHandler must be FlowDocumentReader.");
+            Invariant.Assert(args is not null, "args cannot be null.");
 
             // FlowDocumentReader is capable of execution of the majority of its commands.
             // Special rules:
@@ -1414,7 +1414,7 @@ namespace System.Windows.Controls
                 }
                 else if (args.Command == ApplicationCommands.Print)
                 {
-                    args.CanExecute = (viewer.Document != null) && viewer.IsPrintEnabled;
+                    args.CanExecute = (viewer.Document is not null) && viewer.IsPrintEnabled;
                 }
                 else if (args.Command == ApplicationCommands.CancelPrint)
                 {
@@ -1439,8 +1439,8 @@ namespace System.Windows.Controls
         private static void ExecutedRoutedEventHandler(object target, ExecutedRoutedEventArgs args)
         {
             FlowDocumentReader viewer = target as FlowDocumentReader;
-            Invariant.Assert(viewer != null, "Target of ExecutedRoutedEventHandler must be FlowDocumentReader.");
-            Invariant.Assert(args != null, "args cannot be null.");
+            Invariant.Assert(viewer is not null, "Target of ExecutedRoutedEventHandler must be FlowDocumentReader.");
+            Invariant.Assert(args is not null, "args cannot be null.");
 
             if (args.Command == FlowDocumentReader.SwitchViewingModeCommand)
             {
@@ -1522,7 +1522,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void OnPreviousPageCommand()
         {
-            if (CurrentViewer != null)
+            if (CurrentViewer is not null)
             {
                 CurrentViewer.PreviousPage();
             }
@@ -1533,7 +1533,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void OnNextPageCommand()
         {
-            if (CurrentViewer != null)
+            if (CurrentViewer is not null)
             {
                 CurrentViewer.NextPage();
             }
@@ -1544,7 +1544,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void OnFirstPageCommand()
         {
-            if (CurrentViewer != null)
+            if (CurrentViewer is not null)
             {
                 CurrentViewer.FirstPage();
             }
@@ -1555,7 +1555,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void OnLastPageCommand()
         {
-            if (CurrentViewer != null)
+            if (CurrentViewer is not null)
             {
                 CurrentViewer.LastPage();
             }
@@ -1573,12 +1573,12 @@ namespace System.Windows.Controls
             TextEditor textEditor = TextEditor;
             FindToolBar findToolBar = FindToolBar;
 
-            if (findToolBar != null && textEditor != null)
+            if (findToolBar is not null && textEditor is not null)
             {
                 // In order to show current text selection TextEditor requires Focus to be set on the UIScope.
                 // If there embedded controls, it may happen that embedded control currently has focus and find
                 // was invoked through hotkeys. To support this case we manually move focus to the appropriate element.
-                if (CurrentViewer != null && CurrentViewer is UIElement)
+                if (CurrentViewer is not null && CurrentViewer is UIElement)
                 {
                     ((UIElement)CurrentViewer).Focus();
                 }
@@ -1586,10 +1586,10 @@ namespace System.Windows.Controls
                 findResult = DocumentViewerHelper.Find(findToolBar, textEditor, textEditor.TextView, textEditor.TextView);
 
                 // If we found something, bring it into the view. Otherwise alert the user.
-                if ((findResult != null) && (!findResult.IsEmpty))
+                if ((findResult is not null) && (!findResult.IsEmpty))
                 {
                     // Bring find result into view.
-                    if (CurrentViewer != null)
+                    if (CurrentViewer is not null)
                     {
                         CurrentViewer.ShowFindResult(findResult);
                     }
@@ -1637,7 +1637,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static void ViewingModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Invariant.Assert(d != null && d is FlowDocumentReader);
+            Invariant.Assert(d is not null && d is FlowDocumentReader);
             FlowDocumentReader viewer = (FlowDocumentReader)d;
             if (viewer.CanSwitchToViewingMode((FlowDocumentReaderViewingMode)e.NewValue))
             {
@@ -1650,7 +1650,7 @@ namespace System.Windows.Controls
 
             // Fire automation events if automation is active.
             FlowDocumentReaderAutomationPeer peer = UIElementAutomationPeer.FromElement(viewer) as FlowDocumentReaderAutomationPeer;
-            if (peer != null)
+            if (peer is not null)
             {
                 peer.RaiseCurrentViewChangedEvent((FlowDocumentReaderViewingMode)e.NewValue, (FlowDocumentReaderViewingMode)e.OldValue);
             }
@@ -1672,7 +1672,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static void ViewingModeEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Invariant.Assert(d != null && d is FlowDocumentReader);
+            Invariant.Assert(d is not null && d is FlowDocumentReader);
             FlowDocumentReader viewer = (FlowDocumentReader)d;
 
             // Cannot disable all viewing modes.
@@ -1691,7 +1691,7 @@ namespace System.Windows.Controls
 
             // Fire automation events if automation is active.
             FlowDocumentReaderAutomationPeer peer = UIElementAutomationPeer.FromElement(viewer) as FlowDocumentReaderAutomationPeer;
-            if (peer != null)
+            if (peer is not null)
             {
                 peer.RaiseSupportedViewsChangedEvent(e);
             }
@@ -1702,13 +1702,13 @@ namespace System.Windows.Controls
         /// </summary>
         private static void IsFindEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Invariant.Assert(d != null && d is FlowDocumentReader);
+            Invariant.Assert(d is not null && d is FlowDocumentReader);
             FlowDocumentReader viewer = (FlowDocumentReader)d;
 
             // Update the toolbar with our current state.
             if (!viewer.CanShowFindToolBar)
             {
-                if (viewer.FindToolBar != null)
+                if (viewer.FindToolBar is not null)
                 {
                     viewer.ToggleFindToolBar(false);
                 }
@@ -1723,7 +1723,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static void IsPrintEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Invariant.Assert(d != null && d is FlowDocumentReader);
+            Invariant.Assert(d is not null && d is FlowDocumentReader);
             FlowDocumentReader viewer = (FlowDocumentReader)d;
 
             // Since IsPrintEnabled state is used to determine CanExecute state, we must invalidate that state.
@@ -1735,7 +1735,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static void DocumentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Invariant.Assert(d != null && d is FlowDocumentReader);
+            Invariant.Assert(d is not null && d is FlowDocumentReader);
             FlowDocumentReader viewer = (FlowDocumentReader)d;
             viewer.DocumentChanged((FlowDocument)e.OldValue, (FlowDocument)e.NewValue);
 
@@ -1748,7 +1748,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static void ZoomChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Invariant.Assert(d != null && d is FlowDocumentReader);
+            Invariant.Assert(d is not null && d is FlowDocumentReader);
             FlowDocumentReader viewer = (FlowDocumentReader)d;
             if (!DoubleUtil.AreClose((double)e.OldValue, (double)e.NewValue))
             {
@@ -1763,7 +1763,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static object CoerceZoom(DependencyObject d, object value)
         {
-            Invariant.Assert(d != null && d is FlowDocumentReader);
+            Invariant.Assert(d is not null && d is FlowDocumentReader);
             FlowDocumentReader viewer = (FlowDocumentReader)d;
 
             double zoom = (double)value;
@@ -1788,7 +1788,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static void MaxZoomChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Invariant.Assert(d != null && d is FlowDocumentReader);
+            Invariant.Assert(d is not null && d is FlowDocumentReader);
             FlowDocumentReader viewer = (FlowDocumentReader)d;
 
             viewer.CoerceValue(ZoomProperty);
@@ -1800,7 +1800,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static object CoerceMaxZoom(DependencyObject d, object value)
         {
-            Invariant.Assert(d != null && d is FlowDocumentReader);
+            Invariant.Assert(d is not null && d is FlowDocumentReader);
             FlowDocumentReader viewer = (FlowDocumentReader)d;
 
             double min = viewer.MinZoom;
@@ -1812,7 +1812,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static void MinZoomChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Invariant.Assert(d != null && d is FlowDocumentReader);
+            Invariant.Assert(d is not null && d is FlowDocumentReader);
             FlowDocumentReader viewer = (FlowDocumentReader)d;
 
             viewer.CoerceValue(MaxZoomProperty);
@@ -1838,10 +1838,10 @@ namespace System.Windows.Controls
         {
             FlowDocumentReader reader = (FlowDocumentReader)d;
 
-            if (reader.Selection != null)
+            if (reader.Selection is not null)
             {
                 CaretElement caretElement = reader.Selection.CaretElement;
-                if (caretElement != null)
+                if (caretElement is not null)
                 {
                     caretElement.InvalidateVisual();
                 }
@@ -1865,7 +1865,7 @@ namespace System.Windows.Controls
         /// </summary>
         private bool CanShowFindToolBar
         {
-            get { return ((_findToolBarHost != null) && IsFindEnabled && (Document != null)); }
+            get { return ((_findToolBarHost is not null) && IsFindEnabled && (Document is not null)); }
         }
 
         /// <summary>
@@ -1877,7 +1877,7 @@ namespace System.Windows.Controls
             {
                 TextEditor textEditor = null;
                 IFlowDocumentViewer currentViewer = CurrentViewer;
-                if (currentViewer != null && currentViewer.TextSelection != null)
+                if (currentViewer is not null && currentViewer.TextSelection is not null)
                 {
                     textEditor = currentViewer.TextSelection.TextEditor;
                 }
@@ -1890,7 +1890,7 @@ namespace System.Windows.Controls
         /// </summary>
         private FindToolBar FindToolBar
         {
-            get { return (_findToolBarHost != null) ? _findToolBarHost.Child as FindToolBar : null; }
+            get { return (_findToolBarHost is not null) ? _findToolBarHost.Child as FindToolBar : null; }
         }
 
         /// <summary>
@@ -1900,7 +1900,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_contentHost != null)
+                if (_contentHost is not null)
                 {
                     return (IFlowDocumentViewer)_contentHost.Child;
                 }
@@ -1953,7 +1953,7 @@ namespace System.Windows.Controls
         {
             ArgumentNullException.ThrowIfNull(value);
             // Check if Content has already been set.
-            if (this.Document != null)
+            if (this.Document is not null)
             {
                 throw new ArgumentException(SR.FlowDocumentReaderCanHaveOnlyOneChild);
             }
@@ -2008,10 +2008,10 @@ namespace System.Windows.Controls
             int cp = -1;
             LogicalDirection cpDirection = LogicalDirection.Forward;
             IFlowDocumentViewer viewer = CurrentViewer;
-            if (viewer != null)
+            if (viewer is not null)
             {
                 TextPointer contentPosition = viewer.ContentPosition as TextPointer;
-                if (contentPosition != null)
+                if (contentPosition is not null)
                 {
                     cp = contentPosition.Offset;
                     cpDirection = contentPosition.LogicalDirection;
@@ -2026,7 +2026,7 @@ namespace System.Windows.Controls
         void IJournalState.RestoreJournalState(CustomJournalStateInternal state)
         {
             JournalState viewerState = state as JournalState;
-            if (state != null)
+            if (state is not null)
             {
                 SetCurrentValueInternal(ZoomProperty, viewerState.Zoom);
                 SetCurrentValueInternal(ViewingModeProperty, viewerState.ViewingMode);
@@ -2034,7 +2034,7 @@ namespace System.Windows.Controls
                 {
                     IFlowDocumentViewer viewer = CurrentViewer;
                     FlowDocument document = Document;
-                    if (viewer != null && document != null)
+                    if (viewer is not null && document is not null)
                     {
                         TextContainer textContainer = document.StructuralCache.TextContainer;
                         if (viewerState.ContentPosition <= textContainer.SymbolCount)

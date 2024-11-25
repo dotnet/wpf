@@ -31,9 +31,9 @@ namespace MS.Internal.Globalization
             BamlLocalizationDictionary dictionary
             )
         {
-            Debug.Assert(tree != null && tree.Root != null, "Empty Tree!");
-            Debug.Assert(treeMap != null, "Empty map!");
-            Debug.Assert(dictionary != null, "Empty dictionary");
+            Debug.Assert(tree is not null && tree.Root is not null, "Empty Tree!");
+            Debug.Assert(treeMap is not null, "Empty map!");
+            Debug.Assert(dictionary is not null, "Empty dictionary");
 
             // no changes to do to the tree.
             if (dictionary.Count <= 0)
@@ -180,7 +180,7 @@ namespace MS.Internal.Globalization
 
             // get the node, at this point, all the missing nodes are created
             BamlTreeNode node = treeMap.MapKeyToBamlTreeNode(key);
-            Invariant.Assert(node != null);
+            Invariant.Assert(node is not null);
 
             // apply translations
             switch (node.NodeType)
@@ -196,7 +196,7 @@ namespace MS.Internal.Globalization
                         if (literalNode.Parent is null)
                         {
                             BamlTreeNode parent = treeMap.MapUidToBamlTreeElementNode(key.Uid);
-                            if (parent != null)
+                            if (parent is not null)
                             {
                                 // link it up with the parent
                                 parent.AddChild(literalNode);
@@ -219,7 +219,7 @@ namespace MS.Internal.Globalization
                         if (propertyNode.Parent is null)
                         {
                             BamlStartElementNode parent = (BamlStartElementNode)treeMap.MapUidToBamlTreeElementNode(key.Uid);
-                            if (parent != null)
+                            if (parent is not null)
                             {
                                 // insert property node to the parent
                                 parent.InsertProperty(node);
@@ -288,7 +288,7 @@ namespace MS.Internal.Globalization
 
             int nodeIndex = 0;
             StringBuilder textBuffer = new StringBuilder();
-            if (oldChildren != null)
+            if (oldChildren is not null)
             {
                 Hashtable uidSubstitutions = new Hashtable(newChildren.Count);
                 foreach (BamlTreeNode node in newChildren)
@@ -298,7 +298,7 @@ namespace MS.Internal.Globalization
                         BamlStartElementNode element = (BamlStartElementNode)node;
 
                         // element's Uid can be null if it is a formatting tag.
-                        if (element.Uid != null)
+                        if (element.Uid is not null)
                         {
                             if (uidSubstitutions.ContainsKey(element.Uid))
                             {
@@ -329,7 +329,7 @@ namespace MS.Internal.Globalization
                             {
                                 BamlStartElementNode element = (BamlStartElementNode)child;
 
-                                if (element.Uid != null)
+                                if (element.Uid is not null)
                                 {
                                     if (!uidSubstitutions.ContainsKey(element.Uid))
                                     {
@@ -354,7 +354,7 @@ namespace MS.Internal.Globalization
                                 while (nodeIndex < newChildren.Count)
                                 {
                                     BamlTreeNode newNode = newChildren[nodeIndex++];
-                                    Invariant.Assert(newNode != null);
+                                    Invariant.Assert(newNode is not null);
 
                                     if (newNode.NodeType == BamlNodeType.Text)
                                     {
@@ -391,7 +391,7 @@ namespace MS.Internal.Globalization
             for (; nodeIndex < newChildren.Count; nodeIndex++)
             {
                 BamlTreeNode newNode = newChildren[nodeIndex];
-                Invariant.Assert(newNode != null);
+                Invariant.Assert(newNode is not null);
 
                 if (newNode.NodeType == BamlNodeType.Text)
                 {
@@ -441,7 +441,7 @@ namespace MS.Internal.Globalization
             {
                 doc.LoadXml(xmlContent.ToString());
                 XmlElement root = doc.FirstChild as XmlElement;
-                if (root != null && root.HasChildNodes)
+                if (root is not null && root.HasChildNodes)
                 {
                     for (int i = 0; i < root.ChildNodes.Count && succeed; i++)
                     {
@@ -530,7 +530,7 @@ namespace MS.Internal.Globalization
 
 
                 BamlStartElementNode bamlNode = null;
-                if (tagUid != null)
+                if (tagUid is not null)
                 {
                     bamlNode = bamlTreeMap.MapUidToBamlTreeElementNode(tagUid);
                 }
@@ -544,7 +544,7 @@ namespace MS.Internal.Globalization
                         false /*CreateUsingTypeConverter*/
                         );
 
-                    if (tagUid != null)
+                    if (tagUid is not null)
                     {
                         // store the new node created                        
                         bamlTreeMap.AddBamlTreeNode(
@@ -650,7 +650,7 @@ namespace MS.Internal.Globalization
                             BamlTreeNode node = bamlTreeMap.MapUidToBamlTreeElementNode(tokens[i].Value);
 
                             // The value will be null if there is no uid-matching node in the tree.                        
-                            if (node != null)
+                            if (node is not null)
                             {
                                 newChildrenList.Add(node);
                             }
@@ -768,7 +768,7 @@ namespace MS.Internal.Globalization
                 _tree.AddTreeNode(node);
 
                 // remember the tree node index
-                if (uid != null)
+                if (uid is not null)
                 {
                     _uidToNewBamlNodeIndexMap[uid] = _tree.Size - 1;
                 }
@@ -819,7 +819,7 @@ namespace MS.Internal.Globalization
                 //
                 // Look into cached values.                 
                 //
-                if (_contentPropertyTable != null && _contentPropertyTable.TryGetValue(fullTypeName, out contentProperty))
+                if (_contentPropertyTable is not null && _contentPropertyTable.TryGetValue(fullTypeName, out contentProperty))
                 {
                     return contentProperty;
                 }
@@ -831,7 +831,7 @@ namespace MS.Internal.Globalization
                 // Assembly.Load will throw exception if it fails. 
                 Assembly assm = Assembly.Load(assemblyName);
                 Type type = assm.GetType(fullTypeName);
-                if (type != null)
+                if (type is not null)
                 {
                     object[] contentPropertyAttributes = type.GetCustomAttributes(
                         typeof(ContentPropertyAttribute),

@@ -55,26 +55,26 @@ namespace System.Windows.Documents
         /// </param>
         public Span(Inline childInline, TextPointer insertionPosition)
         {
-            if (insertionPosition != null)
+            if (insertionPosition is not null)
             {
                 insertionPosition.TextContainer.BeginChange();
             }
             try
             {
-                if (insertionPosition != null)
+                if (insertionPosition is not null)
                 {
                     // This will throw InvalidOperationException if schema validity is violated.
                     insertionPosition.InsertInline(this);
                 }
 
-                if (childInline != null)
+                if (childInline is not null)
                 {
                     this.Inlines.Add(childInline);
                 }
             }
             finally
             {
-                if (insertionPosition != null)
+                if (insertionPosition is not null)
                 {
                     insertionPosition.TextContainer.EndChange();
                 }
@@ -122,11 +122,11 @@ namespace System.Windows.Documents
 
                 // If start or end positions have a Hyperlink ancestor, we cannot split them.
                 Inline nonMergeableAncestor;
-                if ((nonMergeableAncestor = start.GetNonMergeableInlineAncestor()) != null)
+                if ((nonMergeableAncestor = start.GetNonMergeableInlineAncestor()) is not null)
                 {
                     throw new InvalidOperationException(SR.Format(SR.TextSchema_CannotSplitElement, nonMergeableAncestor.GetType().Name));
                 }
-                if ((nonMergeableAncestor = end.GetNonMergeableInlineAncestor()) != null)
+                if ((nonMergeableAncestor = end.GetNonMergeableInlineAncestor()) is not null)
                 {
                     throw new InvalidOperationException(SR.Format(SR.TextSchema_CannotSplitElement, nonMergeableAncestor.GetType().Name));
                 }
@@ -201,7 +201,7 @@ namespace System.Windows.Documents
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool ShouldSerializeInlines(XamlDesignerSerializationManager manager)
         {
-            return manager != null && manager.XmlWriter is null;
+            return manager is not null && manager.XmlWriter is null;
         }
 
         #endregion Internal Methods

@@ -51,7 +51,7 @@ namespace MS.Internal.FontCache
                         // Location is an absolute URI. Make sure it's a supported scheme.
                         resolved = Util.IsSupportedSchemeForAbsoluteFontFamilyUri(absoluteUri);
                     }
-                    else if (baseUri != null && Util.IsEnumerableFontUriScheme(baseUri))
+                    else if (baseUri is not null && Util.IsEnumerableFontUriScheme(baseUri))
                     {
                         // Location is relative to the base URI.
                         resolved = Uri.TryCreate(baseUri, locationString, out absoluteUri);
@@ -61,7 +61,7 @@ namespace MS.Internal.FontCache
                 if (resolved)
                 {
                     string unescapeFamilyName = Uri.UnescapeDataString(escapedFamilyName);
-                    if (fileName != null)
+                    if (fileName is not null)
                     {
                         return new CanonicalFontFamilyReference(fileName, unescapeFamilyName);
                     }
@@ -116,7 +116,7 @@ namespace MS.Internal.FontCache
 
         public bool Equals(CanonicalFontFamilyReference other)
         {
-            return other != null &&
+            return other is not null &&
                 other._absoluteLocationUri == _absoluteLocationUri &&
                 other.EscapedFileName == EscapedFileName &&
                 other._familyName == _familyName;
@@ -137,7 +137,7 @@ namespace MS.Internal.FontCache
             else
             {
                 // Either we have a URI or a file name, never both
-                int hash = (_absoluteLocationUri != null) ? 
+                int hash = (_absoluteLocationUri is not null) ? 
                     _absoluteLocationUri.GetHashCode() : 
                     EscapedFileName.GetHashCode();
 

@@ -486,7 +486,7 @@ namespace System.Windows.Markup
                 { 
                     // Lazy initialize this to avoid addition reflection if it
                     // is not needed.
-                    if (_declaringType is null && _propertyMember != null)
+                    if (_declaringType is null && _propertyMember is not null)
                     {
                         _declaringType = XamlTypeMapper.GetDeclaringType(_propertyMember);
                     }
@@ -2257,7 +2257,7 @@ namespace System.Windows.Markup
                 {
                     // Lazy initialize this to avoid addition reflection if it
                     // is not needed.
-                    if (_declaringType is null && _propertyMember != null)
+                    if (_declaringType is null && _propertyMember is not null)
                     {
                         _declaringType = XamlTypeMapper.GetDeclaringType(_propertyMember);
                     }

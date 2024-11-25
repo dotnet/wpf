@@ -97,7 +97,7 @@ namespace System.Windows.Markup
             while ((null == d || null == d[prefix]) && null != elem)
             {
                 elem = LogicalTreeHelper.GetParent(elem);
-                if (elem != null)
+                if (elem is not null)
                 {
                     d = GetXmlnsDictionary(elem);
                 }

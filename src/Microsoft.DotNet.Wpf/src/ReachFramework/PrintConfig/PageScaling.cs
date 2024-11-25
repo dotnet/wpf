@@ -126,9 +126,9 @@ namespace MS.Internal.Printing.Configuration
         public override string ToString()
         {
             return Value.ToString() + ": " +
-                   ((CustomScaleWidth != null) ? CustomScaleWidth.ToString() : "null") + " x " +
-                   ((CustomScaleHeight != null) ? CustomScaleHeight.ToString() : "null") + " x " +
-                   ((CustomSquareScale != null) ? CustomSquareScale.ToString() : "null");
+                   ((CustomScaleWidth is not null) ? CustomScaleWidth.ToString() : "null") + " x " +
+                   ((CustomScaleHeight is not null) ? CustomScaleHeight.ToString() : "null") + " x " +
+                   ((CustomSquareScale is not null) ? CustomSquareScale.ToString() : "null");
         }
 
         #endregion Public Methods
@@ -186,7 +186,7 @@ namespace MS.Internal.Printing.Configuration
 
             ScalingOption option = baseOption as ScalingOption;
 
-            if (option._optionName != null)
+            if (option._optionName is not null)
             {
                 int enumValue = PrintSchemaMapper.SchemaNameToEnumValueWithArray(
                                     PrintSchemaTags.Keywords.PageScalingKeys.ScalingNames,

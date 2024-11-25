@@ -747,8 +747,8 @@ namespace MS.Internal.Documents
                                     stringFormat);
 
                 //Draw the icon
-                Debug.Assert(item._displayImage != null, "Signature icon is null");
-                if (item._displayImage != null)
+                Debug.Assert(item._displayImage is not null, "Signature icon is null");
+                if (item._displayImage is not null)
                 {
                     graphics.DrawImage(item._displayImage, iconRect.Location);
                 }

@@ -65,7 +65,7 @@ namespace MS.Internal.Media
             
             AsVisualInternal(element, out visual, out visual3D);
 
-            if (visual != null)
+            if (visual is not null)
             {
                 Visual.PropagateFlags(visual, flags, proxyFlags);
             }
@@ -87,11 +87,11 @@ namespace MS.Internal.Media
             
             AsVisualInternal(element, out visual, out visual3D);
 
-            if (visual != null)
+            if (visual is not null)
             {
                 visual.SetFlagsToRoot(value, flags);
             }
-            else if (visual3D != null)
+            else if (visual3D is not null)
             {
                 visual3D.SetFlagsToRoot(value, flags);
             }
@@ -108,11 +108,11 @@ namespace MS.Internal.Media
             
             AsVisualInternal(element, out visual, out visual3D);
 
-            if (visual != null)
+            if (visual is not null)
             {
                 return visual.FindFirstAncestorWithFlagsAnd(flags);
             }
-            else if (visual3D != null)
+            else if (visual3D is not null)
             {
                 return visual3D.FindFirstAncestorWithFlagsAnd(flags);
             }
@@ -137,21 +137,21 @@ namespace MS.Internal.Media
             
             PointHitTestResult resultAsPointHitTestResult = result as PointHitTestResult;
 
-            if (resultAsPointHitTestResult != null)
+            if (resultAsPointHitTestResult is not null)
             {
                 return resultAsPointHitTestResult;
             }
 
             RayHitTestResult resultAsRayHitTestResult = result as RayHitTestResult;
 
-            if (resultAsRayHitTestResult != null)
+            if (resultAsRayHitTestResult is not null)
             {
                 Visual3D current = (Visual3D) resultAsRayHitTestResult.VisualHit;
                 Matrix3D worldTransform = Matrix3D.Identity;
 
                 while (true)
                 {
-                    if (current.Transform != null)
+                    if (current.Transform is not null)
                     {
                         worldTransform.Append(current.Transform.Value);
                     }
@@ -168,7 +168,7 @@ namespace MS.Internal.Media
 
                 Viewport3DVisual viewport = current.InternalVisualParent as Viewport3DVisual;
 
-                if (viewport != null)
+                if (viewport is not null)
                 {
                     Point4D worldPoint = ((Point4D)resultAsRayHitTestResult.PointHit) * worldTransform;
                     Point viewportPoint = viewport.WorldToViewport(worldPoint);
@@ -253,7 +253,7 @@ namespace MS.Internal.Media
         {
             bool castSucceeded = AsVisualHelper(element, out visual, out visual3D);
 
-            if (element != null)
+            if (element is not null)
             {
                 if (!castSucceeded)
                 {
@@ -287,7 +287,7 @@ namespace MS.Internal.Media
             {
                 Debug.Fail(String.Format(
                                "'{0}' is not a Visual or Visual3D. Caller is responsible for guaranteeing that element is a Visual type.",
-                               element != null ? element.GetType() : null));
+                               element is not null ? element.GetType() : null));
             }
 
             return castSucceeded;
@@ -321,7 +321,7 @@ namespace MS.Internal.Media
         {
             Visual elementAsVisual = element as Visual;
 
-            if (elementAsVisual != null)
+            if (elementAsVisual is not null)
             {
                 visual = elementAsVisual;
                 visual3D = null;
@@ -330,7 +330,7 @@ namespace MS.Internal.Media
 
             Visual3D elementAsVisual3D = element as Visual3D;
 
-            if (elementAsVisual3D != null)
+            if (elementAsVisual3D is not null)
             {
                 visual = null;
                 visual3D = elementAsVisual3D;

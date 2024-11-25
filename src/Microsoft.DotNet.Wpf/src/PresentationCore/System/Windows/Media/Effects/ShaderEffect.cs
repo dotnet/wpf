@@ -176,13 +176,13 @@ namespace System.Windows.Media.Effects
         private void PixelShaderPropertyChangedHook(DependencyPropertyChangedEventArgs e)
         {
             PixelShader oldShader = (PixelShader)e.OldValue;
-            if (oldShader != null)
+            if (oldShader is not null)
             {
                 oldShader._shaderBytecodeChanged -= OnPixelShaderBytecodeChanged;
             }
 
             PixelShader newShader = (PixelShader)e.NewValue;
-            if (newShader != null)
+            if (newShader is not null)
             {
                 newShader._shaderBytecodeChanged += OnPixelShaderBytecodeChanged;
             }
@@ -198,7 +198,7 @@ namespace System.Windows.Media.Effects
         {
             PixelShader pixelShader = (PixelShader)sender;
 
-            if (pixelShader != null &&
+            if (pixelShader is not null &&
                 pixelShader.ShaderMajorVersion == 2 &&
                 pixelShader.ShaderMinorVersion == 0 &&
                 UsesPS30OnlyRegisters())
@@ -210,18 +210,18 @@ namespace System.Windows.Media.Effects
         private bool UsesPS30OnlyRegisters()
         {
             // int and bool registers are ps_3_0 only
-            if (_intCount > 0 || _intRegisters != null ||
-                _boolCount > 0 || _boolRegisters != null)
+            if (_intCount > 0 || _intRegisters is not null ||
+                _boolCount > 0 || _boolRegisters is not null)
             {
                 return true;
             }
 
             // float registers 32 or above are ps_3_0 only
-            if (_floatRegisters != null)
+            if (_floatRegisters is not null)
             {
                 for (int i = PS_2_0_FLOAT_REGISTER_LIMIT; i < _floatRegisters.Count; i++)
                 {
-                    if (_floatRegisters[i] != null)
+                    if (_floatRegisters[i] is not null)
                     {
                         return true;
                     }
@@ -231,11 +231,11 @@ namespace System.Windows.Media.Effects
             // sampler registers 4 or above are ps_3_0 only
             // Note: it's really 16, but we use 4 because some cards have trouble with 16 samplers
             // being set.
-            if (_samplerData != null)
+            if (_samplerData is not null)
             {
                 for (int i = PS_2_0_SAMPLER_LIMIT; i < _samplerData.Count; i++)
                 {
-                    if (_samplerData[i] != null)
+                    if (_samplerData[i] is not null)
                     {
                         return true;
                     }
@@ -251,15 +251,15 @@ namespace System.Windows.Media.Effects
         /// </summary>
         protected void UpdateShaderValue(DependencyProperty dp)
         {
-            if (dp != null)
+            if (dp is not null)
             {
                 WritePreamble();
                 object val = this.GetValue(dp);
                 var metadata = dp.GetMetadata(this);
-                if (metadata != null)
+                if (metadata is not null)
                 {
                     var callback = metadata.PropertyChangedCallback;
-                    if (callback != null)
+                    if (callback is not null)
                     {
                         callback(this, new DependencyPropertyChangedEventArgs(dp, val, val));
                     }
@@ -278,7 +278,7 @@ namespace System.Windows.Media.Effects
                 (obj, args) =>
                 {
                     ShaderEffect eff = obj as ShaderEffect;
-                    if (eff != null)
+                    if (eff is not null)
                     {
                         eff.UpdateShaderConstant(args.Property, args.NewValue, floatRegisterIndex);
                     }
@@ -308,7 +308,7 @@ namespace System.Windows.Media.Effects
                 (obj, args) =>
                 {
                     ShaderEffect eff = obj as ShaderEffect;
-                    if (eff != null)
+                    if (eff is not null)
                     {
                         if (args.IsAValueChange)
                         {
@@ -368,7 +368,7 @@ namespace System.Windows.Media.Effects
                 int registerMax = PS_2_0_FLOAT_REGISTER_LIMIT;
                 string srid = nameof(SR.Effect_Shader20ConstantRegisterLimit);
 
-                if (PixelShader != null && PixelShader.ShaderMajorVersion >= 3)
+                if (PixelShader is not null && PixelShader.ShaderMajorVersion >= 3)
                 {
                     //
                     // If there's a ps_3_0 shader, the limit depends on the type
@@ -433,7 +433,7 @@ namespace System.Windows.Media.Effects
         {
             WritePreamble();
 
-            if (newValue != null)
+            if (newValue is not null)
             {
                 if (newValue is not VisualBrush
                     and not BitmapCacheBrush
@@ -453,7 +453,7 @@ namespace System.Windows.Media.Effects
             int registerMax = PS_2_0_SAMPLER_LIMIT;
             string srid = nameof(SR.Effect_Shader20SamplerRegisterLimit);
 
-            if (PixelShader != null && PixelShader.ShaderMajorVersion >= 3)
+            if (PixelShader is not null && PixelShader.ShaderMajorVersion >= 3)
             {
                 registerMax = PS_3_0_SAMPLER_LIMIT;
                 srid = nameof(SR.Effect_Shader30SamplerRegisterLimit);
@@ -533,7 +533,7 @@ namespace System.Windows.Media.Effects
 
             // Release the old value if it is a resource on channel.  AddRef the
             // new value.
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 SamplerData? oldSampler = _samplerData[position];
                 Brush oldBrush = null;
@@ -634,7 +634,7 @@ namespace System.Windows.Media.Effects
                         AppendRegisters(channel, _floatRegisters);
 
                         // 2) float dp values
-                        if (_floatRegisters != null)
+                        if (_floatRegisters is not null)
                         {
                             for (int i = 0; i < _floatRegisters.Count; i++)
                             {
@@ -651,7 +651,7 @@ namespace System.Windows.Media.Effects
                         AppendRegisters(channel, _intRegisters);
 
                         // 4) int dp values
-                        if (_intRegisters != null)
+                        if (_intRegisters is not null)
                         {
                             for (int i = 0; i < _intRegisters.Count; i++)
                             {
@@ -668,7 +668,7 @@ namespace System.Windows.Media.Effects
                         AppendRegisters(channel, _boolRegisters);
 
                         // 6) bool dp values
-                        if (_boolRegisters != null)
+                        if (_boolRegisters is not null)
                         {
                             for (int i = 0; i < _boolRegisters.Count; i++)
                             {
@@ -724,7 +724,7 @@ namespace System.Windows.Media.Effects
                                     // handles as an Int32Collection
                                     Debug.Assert(sizeof(DUCE.ResourceHandle) == sizeof(Int32));
 
-                                    DUCE.ResourceHandle hBrush = ss._brush != null
+                                    DUCE.ResourceHandle hBrush = ss._brush is not null
                                         ? ((DUCE.IResource)ss._brush).GetHandle(channel)
                                         : DUCE.ResourceHandle.Null;
 
@@ -745,7 +745,7 @@ namespace System.Windows.Media.Effects
         // write the non-null values of the list of nullables to the command data.
         private void AppendRegisters<T>(DUCE.Channel channel, List<T?> list) where T : struct
         {
-            if (list != null)
+            if (list is not null)
             {
                 unsafe
                 {
@@ -780,7 +780,7 @@ namespace System.Windows.Media.Effects
                             SamplerData ss = ssn.Value;
 
                             DUCE.IResource brush = ss._brush as DUCE.IResource;
-                            if (brush != null)
+                            if (brush is not null)
                             {
                                 brush.AddRefOnChannel(channel);
                             }
@@ -789,7 +789,7 @@ namespace System.Windows.Media.Effects
                 }
 
                 PixelShader vPixelShader = PixelShader;
-                if (vPixelShader != null) ((DUCE.IResource)vPixelShader).AddRefOnChannel(channel);
+                if (vPixelShader is not null) ((DUCE.IResource)vPixelShader).AddRefOnChannel(channel);
 
                 AddRefOnChannelAnimations(channel);
 
@@ -820,7 +820,7 @@ namespace System.Windows.Media.Effects
                             SamplerData ss = ssn.Value;
 
                             DUCE.IResource brush = ss._brush as DUCE.IResource;
-                            if (brush != null)
+                            if (brush is not null)
                             {
                                 brush.ReleaseOnChannel(channel);
                             }
@@ -829,7 +829,7 @@ namespace System.Windows.Media.Effects
                 }
 
                 PixelShader vPixelShader = PixelShader;
-                if (vPixelShader != null) ((DUCE.IResource)vPixelShader).ReleaseOnChannel(channel);
+                if (vPixelShader is not null) ((DUCE.IResource)vPixelShader).ReleaseOnChannel(channel);
 
                 ReleaseOnChannelAnimations(channel);
             }
@@ -853,7 +853,7 @@ namespace System.Windows.Media.Effects
             {
                 result = typeof(float);
             }
-            else if (pixelShader != null && pixelShader.ShaderMajorVersion >= 3)
+            else if (pixelShader is not null && pixelShader.ShaderMajorVersion >= 3)
             {
                 //
                 // int and bool are also supported by ps_3_0.
@@ -1074,11 +1074,11 @@ namespace System.Windows.Media.Effects
             _bottomPadding = effect._bottomPadding;
             _leftPadding = effect._leftPadding;
             _rightPadding = effect._rightPadding;
-            if (_floatRegisters != null)
+            if (_floatRegisters is not null)
             {
                 _floatRegisters = new List<MilColorF?>(effect._floatRegisters);
             }
-            if (_samplerData != null)
+            if (_samplerData is not null)
             {
                 _samplerData = new List<SamplerData?>(effect._samplerData);
             }

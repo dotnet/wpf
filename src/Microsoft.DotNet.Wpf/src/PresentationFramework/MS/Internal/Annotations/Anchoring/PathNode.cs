@@ -168,7 +168,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             // make all the children readonly so we do not need to 
             // lock the PathNode when getting the children
-            if (firstPathNode != null)
+            if (firstPathNode is not null)
                 firstPathNode.FreezeChildren();
 
             return firstPathNode;
@@ -224,7 +224,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// logical tree</returns>
         internal static DependencyObject GetParent(DependencyObject node)
         {
-            Debug.Assert(node != null, "node can not be null");
+            Debug.Assert(node is not null, "node can not be null");
 
             DependencyObject current = node;
             DependencyObject parent;
@@ -239,7 +239,7 @@ namespace MS.Internal.Annotations.Anchoring
                     // Try for Visual parent
                     Visual visual = current as Visual;
 
-                    if (visual != null)
+                    if (visual is not null)
                     {
                         // This is a Visual node, get parent
                         parent = VisualTreeHelper.GetParent(visual);
@@ -278,14 +278,14 @@ namespace MS.Internal.Annotations.Anchoring
         /// node</returns>
         private static PathNode BuildPathForElement(DependencyObject node)
         {
-            Debug.Assert(node != null, "node can not be null");
+            Debug.Assert(node is not null, "node can not be null");
 
             PathNode childNode = null;
-            while (node != null)
+            while (node is not null)
             {
                 PathNode pathNode = new PathNode(node);
 
-                if (childNode != null)
+                if (childNode is not null)
                     pathNode.AddChild(childNode);
 
                 childNode = pathNode;
@@ -317,8 +317,8 @@ namespace MS.Internal.Annotations.Anchoring
         /// nodes pruned</returns>
         private static PathNode AddBranchToPath(PathNode path, PathNode branch)
         {
-            Debug.Assert(path != null, "path can not be null");
-            Debug.Assert(branch != null, "branch can not be null");
+            Debug.Assert(path is not null, "path can not be null");
+            Debug.Assert(branch is not null, "branch can not be null");
 
             // The paths must be in the same tree and therefore have the
             // same root.  

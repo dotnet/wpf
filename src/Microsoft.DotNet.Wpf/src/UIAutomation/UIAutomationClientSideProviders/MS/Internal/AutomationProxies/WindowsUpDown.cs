@@ -89,7 +89,7 @@ namespace MS.Internal.AutomationProxies
                 WindowsUpDown wtv = new WindowsUpDown(hwnd, null, -1);
                 button = wtv.CreateSpinButtonItem(SpinItem.UpArrow);
             }
-            if (button != null)
+            if (button is not null)
             {
                 button.DispatchEvents(NativeMethods.EventObjectInvoke, InvokePattern.InvokedEvent, idObject, idChild);
             }
@@ -312,7 +312,7 @@ namespace MS.Internal.AutomationProxies
             int hr = Accessible.AccessibleObjectFromWindow(hwnd, NativeMethods.OBJID_CLIENT, ref acc);
 
             // Verify the role
-            return hr == NativeMethods.S_OK && acc != null ? acc.Role == AccessibleRole.SpinButton : false;
+            return hr == NativeMethods.S_OK && acc is not null ? acc.Role == AccessibleRole.SpinButton : false;
         }
 
         #endregion
@@ -434,7 +434,7 @@ namespace MS.Internal.AutomationProxies
                 _cControlType = ControlType.Button;
 
                 WindowsUpDown upDownParent = parent as WindowsUpDown;
-                if (upDownParent != null)
+                if (upDownParent is not null)
                 {
                     _isInsideOfTab = upDownParent.IsInsideOfTab();
                 }

@@ -112,7 +112,7 @@ namespace System.Windows.Media
             BitmapCache newV = (BitmapCache) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 DUCE.IResource targetResource = (DUCE.IResource)target;
                 using (CompositionEngineLock.Acquire())
@@ -159,10 +159,10 @@ namespace System.Windows.Media
                 // only be done on UIElement.
                 //
                 UIElement element = (UIElement)oldV;
-                Debug.Assert(element != null);
+                Debug.Assert(element is not null);
                 element.LayoutUpdated -= target.OnLayoutUpdated;
 
-                Debug.Assert(target._DispatcherLayoutResult != null);
+                Debug.Assert(target._DispatcherLayoutResult is not null);
                 Debug.Assert(target._DispatcherLayoutResult.Status == System.Windows.Threading.DispatcherOperationStatus.Pending);
                 bool abortStatus = target._DispatcherLayoutResult.Abort();
                 Debug.Assert(abortStatus);
@@ -173,7 +173,7 @@ namespace System.Windows.Media
             Visual newV = (Visual) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 DUCE.IResource targetResource = (DUCE.IResource)target;
                 using (CompositionEngineLock.Acquire())
@@ -353,10 +353,10 @@ namespace System.Windows.Media
                 {
                     hRelativeTransform = ((DUCE.IResource)vRelativeTransform).GetHandle(channel);
                 }
-                DUCE.ResourceHandle hBitmapCache = vBitmapCache != null ? ((DUCE.IResource)vBitmapCache).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                DUCE.ResourceHandle hBitmapCache = vBitmapCache is not null ? ((DUCE.IResource)vBitmapCache).GetHandle(channel) : DUCE.ResourceHandle.Null;
 
                 // Obtain handles for properties that implement DUCE.IResource
-                DUCE.ResourceHandle  hInternalTarget = vInternalTarget != null ? ((DUCE.IResource)vInternalTarget).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                DUCE.ResourceHandle  hInternalTarget = vInternalTarget is not null ? ((DUCE.IResource)vInternalTarget).GetHandle(channel) : DUCE.ResourceHandle.Null;
 
                 // Obtain handles for animated properties
                 DUCE.ResourceHandle hOpacityAnimations = GetAnimationResourceHandle(OpacityProperty, channel);
@@ -389,13 +389,13 @@ namespace System.Windows.Media
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_BITMAPCACHEBRUSH))
                 {
                     Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
+                    if (vTransform is not null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
                     Transform vRelativeTransform = RelativeTransform;
-                    if (vRelativeTransform != null) ((DUCE.IResource)vRelativeTransform).AddRefOnChannel(channel);
+                    if (vRelativeTransform is not null) ((DUCE.IResource)vRelativeTransform).AddRefOnChannel(channel);
                     BitmapCache vBitmapCache = BitmapCache;
-                    if (vBitmapCache != null) ((DUCE.IResource)vBitmapCache).AddRefOnChannel(channel);
+                    if (vBitmapCache is not null) ((DUCE.IResource)vBitmapCache).AddRefOnChannel(channel);
                     Visual vInternalTarget = InternalTarget;
-                    if (vInternalTarget != null) vInternalTarget.AddRefOnChannelForCyclicBrush(this, channel);
+                    if (vInternalTarget is not null) vInternalTarget.AddRefOnChannelForCyclicBrush(this, channel);
                     AddRefOnChannelAnimations(channel);
 
 
@@ -411,13 +411,13 @@ namespace System.Windows.Media
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
                     Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
+                    if (vTransform is not null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
                     Transform vRelativeTransform = RelativeTransform;
-                    if (vRelativeTransform != null) ((DUCE.IResource)vRelativeTransform).ReleaseOnChannel(channel);
+                    if (vRelativeTransform is not null) ((DUCE.IResource)vRelativeTransform).ReleaseOnChannel(channel);
                     BitmapCache vBitmapCache = BitmapCache;
-                    if (vBitmapCache != null) ((DUCE.IResource)vBitmapCache).ReleaseOnChannel(channel);
+                    if (vBitmapCache is not null) ((DUCE.IResource)vBitmapCache).ReleaseOnChannel(channel);
                     Visual vInternalTarget = InternalTarget;
-                    if (vInternalTarget != null) vInternalTarget.ReleaseOnChannelForCyclicBrush(this, channel);
+                    if (vInternalTarget is not null) vInternalTarget.ReleaseOnChannelForCyclicBrush(this, channel);
                     ReleaseOnChannelAnimations(channel);
 }
 }

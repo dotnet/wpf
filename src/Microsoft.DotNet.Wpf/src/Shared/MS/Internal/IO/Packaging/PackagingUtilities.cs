@@ -63,7 +63,7 @@ namespace MS.Internal.IO.Packaging
         /// <returns>throws an exception if the encoding is not UTF-8 or UTF-16</returns>
         internal static void PerformInitailReadAndVerifyEncoding(XmlTextReader reader)
         {
-            Invariant.Assert(reader != null && reader.ReadState == ReadState.Initial);
+            Invariant.Assert(reader is not null && reader.ReadState == ReadState.Initial);
 
             //If the first node is XmlDeclaration we check to see if the encoding attribute is present
             if (reader.Read() && reader.NodeType == XmlNodeType.XmlDeclaration && reader.Depth == 0)
@@ -71,7 +71,7 @@ namespace MS.Internal.IO.Packaging
                 string encoding;
                 encoding = reader.GetAttribute(_encodingAttribute);
 
-                if (encoding != null && encoding.Length > 0)
+                if (encoding is not null && encoding.Length > 0)
                 {
                     encoding = encoding.ToUpperInvariant();
 
@@ -196,8 +196,8 @@ namespace MS.Internal.IO.Packaging
         /// return.  This one does.</remarks>
         internal static int ReliableRead(Stream stream, byte[] buffer, int offset, int requestedCount, int requiredCount)
         {
-            Invariant.Assert(stream != null);
-            Invariant.Assert(buffer != null);
+            Invariant.Assert(stream is not null);
+            Invariant.Assert(buffer is not null);
             Invariant.Assert(buffer.Length > 0);
             Invariant.Assert(offset >= 0);
             Invariant.Assert(requestedCount >= 0);
@@ -251,8 +251,8 @@ namespace MS.Internal.IO.Packaging
         /// return.  This one does.</remarks>
         internal static int ReliableRead(BinaryReader reader, byte[] buffer, int offset, int requestedCount, int requiredCount)
         {
-            Invariant.Assert(reader != null);
-            Invariant.Assert(buffer != null);
+            Invariant.Assert(reader is not null);
+            Invariant.Assert(buffer is not null);
             Invariant.Assert(buffer.Length > 0);
             Invariant.Assert(offset >= 0);
             Invariant.Assert(requestedCount >= 0);
@@ -290,8 +290,8 @@ namespace MS.Internal.IO.Packaging
         ///  Target stream isn't truncated even if it has more data past the area that was copied.</remarks>
         internal static long CopyStream(Stream sourceStream, Stream targetStream, long bytesToCopy, int bufferSize)
         {
-            Invariant.Assert(sourceStream != null);
-            Invariant.Assert(targetStream != null);
+            Invariant.Assert(sourceStream is not null);
+            Invariant.Assert(targetStream is not null);
             Invariant.Assert(bytesToCopy >= 0);
             Invariant.Assert(bufferSize > 0);
 
@@ -404,7 +404,7 @@ namespace MS.Internal.IO.Packaging
         /// <returns>An integer indicating the number of non-xmlns attributes</returns>
         internal static int GetNonXmlnsAttributeCount(XmlReader reader)
         {
-            Debug.Assert(reader != null, "xmlReader should not be null");
+            Debug.Assert(reader is not null, "xmlReader should not be null");
             Debug.Assert(reader.NodeType == XmlNodeType.Element, "XmlReader should be positioned at an Element");
 
             int readerCount = 0;
@@ -538,11 +538,11 @@ namespace MS.Internal.IO.Packaging
                 // inspect registry and look for user profile via SID
                 string userSid = System.Security.Principal.WindowsIdentity.GetCurrent().User.Value;
                 userProfileKey = Registry.LocalMachine.OpenSubKey(_profileListKeyName + @"\" + userSid);
-                userHasProfile = userProfileKey != null;
+                userHasProfile = userProfileKey is not null;
             }
             finally
             {
-                if (userProfileKey != null)
+                if (userProfileKey is not null)
                     userProfileKey.Close();
             }
 
@@ -595,7 +595,7 @@ namespace MS.Internal.IO.Packaging
                         // and release it.
                         base.Dispose(disposing);
 
-                        if (_path != null)
+                        if (_path is not null)
                         {
                             PackagingUtilities.DeleteIsolatedStorageFile(_path);
                             _path = null;

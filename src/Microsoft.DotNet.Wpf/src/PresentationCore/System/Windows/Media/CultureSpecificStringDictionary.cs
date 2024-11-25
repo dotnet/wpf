@@ -165,7 +165,7 @@ namespace System.Windows.Media
                 throw new ArgumentException(SR.Format(SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, "array"));
 
             SC.DictionaryEntry[] typedArray = array as SC.DictionaryEntry[];
-            if (typedArray != null)
+            if (typedArray is not null)
             {
                 // it's an array of the exact type
                 foreach (KeyValuePair<XmlLanguage, string> item in _innerDictionary)
@@ -301,7 +301,7 @@ namespace System.Windows.Media
         void SC.IDictionary.Remove(object key)
         {
             XmlLanguage language = TryConvertKey(key);
-            if (language != null)
+            if (language is not null)
                 _innerDictionary.Remove(language);
         }
         #endregion
@@ -346,11 +346,11 @@ namespace System.Windows.Media
         private XmlLanguage TryConvertKey(object key)
         {
             XmlLanguage language = key as XmlLanguage;
-            if (language != null)
+            if (language is not null)
                 return language;
 
             string name = key as string;
-            if (name != null)
+            if (name is not null)
                 return XmlLanguage.GetLanguage(name);
 
             return null;

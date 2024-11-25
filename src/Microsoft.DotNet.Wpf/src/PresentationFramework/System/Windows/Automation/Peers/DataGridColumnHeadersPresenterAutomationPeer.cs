@@ -104,7 +104,7 @@ namespace System.Windows.Automation.Peers
                         peer = GetPeerFromWeakRefStorage(dataItem);
 
                         // As cached peer is getting used it must be invalidated.
-                        if (peer != null)
+                        if (peer is not null)
                         {
                             peer.AncestorsInvalid = false;
                             peer.ChildrenValid = false;
@@ -120,10 +120,10 @@ namespace System.Windows.Automation.Peers
                     }
 
                     // perform hookup so the events sourced from wrapper peer are fired as if from the data item
-                    if (peer != null)
+                    if (peer is not null)
                     {
                         AutomationPeer wrapperPeer = peer.GetWrapperPeer();
-                        if (wrapperPeer != null)
+                        if (wrapperPeer is not null)
                         {
                             wrapperPeer.EventsSource = peer;
                         }
@@ -131,7 +131,7 @@ namespace System.Windows.Automation.Peers
 
                     // protection from indistinguishable items - for example, 2 strings with same value
                     // this scenario does not work in ItemsControl however is not checked for.
-                    if (peer != null && ItemPeers[dataItem] is null)
+                    if (peer is not null && ItemPeers[dataItem] is null)
                     {
                         children.Add(peer);
                         ItemPeers[dataItem] = peer;
@@ -168,13 +168,13 @@ namespace System.Windows.Automation.Peers
             ItemsControl owner = (ItemsControl)Owner;
 
             IList items = null;
-            if (owner != null)
+            if (owner is not null)
                 items = OwningDataGrid.Columns;
 
-            if (items != null && items.Count > 0)
+            if (items is not null && items.Count > 0)
             {
                 DataGridColumnHeaderItemAutomationPeer startAfterItem = null;
-                if (startAfter != null)
+                if (startAfter is not null)
                 {
                     // get the peer corresponding to this provider
                     startAfterItem = PeerFromProvider(startAfter) as DataGridColumnHeaderItemAutomationPeer;
@@ -184,7 +184,7 @@ namespace System.Windows.Automation.Peers
 
                 // startIndex refers to the index of the item just after startAfterItem
                 int startIndex = 0;
-                if (startAfterItem != null)
+                if (startAfterItem is not null)
                 {
                     if (startAfterItem.Item is null)
                     {
@@ -256,7 +256,7 @@ namespace System.Windows.Automation.Peers
         protected override ItemAutomationPeer CreateItemAutomationPeer(object column)
         {
             DataGridColumn dataGridColumn = column as DataGridColumn;
-            if (column != null)
+            if (column is not null)
             {
                 // Pass in the column and the Header in so that ItemsContainerGenerator will give a container
                 // when ItemAutomationPeer.GetWrapper is called.

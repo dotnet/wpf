@@ -364,7 +364,7 @@ namespace System.Windows.Markup
                 // type name.
                 if (Char.IsWhiteSpace(attrValue[i]))
                 {
-                    if (stringBuilder != null)
+                    if (stringBuilder is not null)
                     {
                         break;
                     }
@@ -425,7 +425,7 @@ namespace System.Windows.Markup
 
             // Set typeName and arguments.  Note that both may be empty, but having
             // an empyt typeName will generate an error later on.
-            if (stringBuilder != null)
+            if (stringBuilder is not null)
             {
                 typeName = stringBuilder.ToString();
             }
@@ -786,7 +786,7 @@ namespace System.Windows.Markup
                                   data.Depth,
                                   true));
             int listIndex = 0;
-            if (list != null &&
+            if (list is not null &&
                 (list.Count == 1 ||
                  (list.Count > 1 && !(list[1] is String) && ((Char)list[1] == ','))))
             {
@@ -862,7 +862,7 @@ namespace System.Windows.Markup
                                   data.Depth,
                                   true));
             int listIndex = 0;
-            if (list != null &&
+            if (list is not null &&
                 (list.Count == 1 ||
                  (list.Count > 1 && !(list[1] is String) && ((Char)list[1] == ','))))
             {
@@ -934,7 +934,7 @@ namespace System.Windows.Markup
             Dictionary<string, SpecialBracketCharacters> bracketCharacterCache = _parserContext.InitBracketCharacterCacheForType(extensionType);
             Stack<char> bracketCharacterStack = new Stack<char>();
             int currentConstructorParam = 0;
-            bool inCtorParsingMode = constructorParameters != null && maxConstructorParams > 0;
+            bool inCtorParsingMode = constructorParameters is not null && maxConstructorParams > 0;
             bool inBracketCharacterMode = false;
             
             ArrayList list = null;
@@ -949,7 +949,7 @@ namespace System.Windows.Markup
             int i = 0;
             string parameterName = null;
             SpecialBracketCharacters bracketCharacters = null;
-            if (inCtorParsingMode && bracketCharacterCache != null)
+            if (inCtorParsingMode && bracketCharacterCache is not null)
             {
                 parameterName = maxConstructorParams > 0 ? constructorParameters[currentConstructorParam].Name : null;
                 if (!string.IsNullOrEmpty(parameterName))
@@ -1088,7 +1088,7 @@ namespace System.Windows.Markup
                             }
 
                             // If we have a token in the stringbuilder, then store it
-                            if (stringBuilder != null && stringBuilder.Length > 0)
+                            if (stringBuilder is not null && stringBuilder.Length > 0)
                             {
                                 AddToTokenList(list, stringBuilder, true);
                                 if (bracketCharacterStack.Count != 0)
@@ -1129,7 +1129,7 @@ namespace System.Windows.Markup
                             // there is a delimiter on the top of the stack and we haven't
                             // hit another non-whitespace character, then its an error
                             gotFinalCloseCurly = true;
-                            if (stringBuilder != null)
+                            if (stringBuilder is not null)
                             {
                                 if (stringBuilder.Length > 0)
                                 {
@@ -1149,7 +1149,7 @@ namespace System.Windows.Markup
                             break;
 
                         default:
-                            if (bracketCharacters != null && bracketCharacters.StartsEscapeSequence(args[i]))
+                            if (bracketCharacters is not null && bracketCharacters.StartsEscapeSequence(args[i]))
                             {
                                 bracketCharacterStack.Clear();
                                 bracketCharacterStack.Push(args[i]);
@@ -1235,7 +1235,7 @@ namespace System.Windows.Markup
             int numberOfConstructorAttributes = 0;
 #endif
 
-            if (list != null && listIndex < list.Count)
+            if (list is not null && listIndex < list.Count)
             {
                 // Mark the start of the constructor parameter section.  Nodes directly
                 // under this one are constructor parameters.  Note that we can have
@@ -1343,7 +1343,7 @@ namespace System.Windows.Markup
             int              listIndex,
             DefAttributeData data)
         {
-            if (list != null && listIndex < list.Count)
+            if (list is not null && listIndex < list.Count)
             {
                 ArrayList propertyNamesSoFar = new ArrayList(list.Count/4);
 
@@ -1417,7 +1417,7 @@ namespace System.Windows.Markup
                         return;
                     }
 
-                    if (nestedAttrData != null)
+                    if (nestedAttrData is not null)
                     {
                         if (nestedAttrData.IsSimple)
                         {
@@ -1481,7 +1481,7 @@ namespace System.Windows.Markup
         private SpecialBracketCharacters GetBracketCharacterForProperty(string propertyName, Dictionary<string, SpecialBracketCharacters> bracketCharacterCache)
         {
             SpecialBracketCharacters bracketCharacters = null;
-            if (bracketCharacterCache != null && bracketCharacterCache.ContainsKey(propertyName))
+            if (bracketCharacterCache is not null && bracketCharacterCache.ContainsKey(propertyName))
             {
                 bracketCharacters = bracketCharacterCache[propertyName];
             }
@@ -1543,7 +1543,7 @@ namespace System.Windows.Markup
 
             Debug.Assert(null != info, "No property or method info for field Name");
 
-            if (data != null && data.IsSimple)
+            if (data is not null && data.IsSimple)
             {
                 if (data.IsTypeExtension)
                 {
@@ -1552,7 +1552,7 @@ namespace System.Windows.Markup
                     Type typeValue = _parserContext.XamlTypeMapper.GetTypeFromBaseString(value,
                                                                                          _parserContext,
                                                                                          true);
-                    if (typeValue != null)
+                    if (typeValue is not null)
                     {
                         typeValueFullName = typeValue.FullName;
                         typeValueAssemblyFullName = typeValue.Assembly.FullName;
@@ -1629,14 +1629,14 @@ namespace System.Windows.Markup
                     }
                     noEscape = false;
                 }
-                else if (builder != null)
+                else if (builder is not null)
                 {
                     builder.Append(value[i]);
                     noEscape = true;
                 }
             }
 
-            if (builder != null)
+            if (builder is not null)
             {
                 value = builder.ToString();
             }

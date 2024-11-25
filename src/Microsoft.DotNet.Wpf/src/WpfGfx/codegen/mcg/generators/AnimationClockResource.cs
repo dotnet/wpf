@@ -132,7 +132,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                     {
                                         get
                                         {
-                                            if (_animationClock != null)
+                                            if (_animationClock is not null)
                                             {
                                                 // No handoff for DrawingContext animations so we use the
                                                 // BaseValue as the defaultOriginValue and the

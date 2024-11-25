@@ -168,7 +168,7 @@ namespace System.Windows
             {
                 // Inflate the deferred reference if the _value is one of those.
                 DeferredReference deferredReference = _value as DeferredReference;
-                if (deferredReference != null)
+                if (deferredReference is not null)
                 {
                     _value = deferredReference.GetValue(BaseValueSourceInternal.Unknown);
                 }
@@ -288,7 +288,7 @@ namespace System.Windows
         void ISupportInitialize.EndInit()
         {
             // Resolve all properties here
-            if (_unresolvedProperty != null)
+            if (_unresolvedProperty is not null)
             {
                 try
                 {
@@ -300,7 +300,7 @@ namespace System.Windows
                     _unresolvedProperty = null;
                 }
             }
-            if (_unresolvedValue != null)
+            if (_unresolvedValue is not null)
             {
                 try
                 {

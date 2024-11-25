@@ -306,7 +306,7 @@ namespace System.Windows.Xps.Packaging
         {
             _interleavingNodes.Add( new InterleavingNode( n, number, parent ) );
             PackagingAction action = GetAddType(n);
-            if (PackagingProgressEvent != null && action != PackagingAction.None )
+            if (PackagingProgressEvent is not null && action != PackagingAction.None )
             {
                 PackagingProgressEvent( this, new PackagingProgressEventArgs( action, 1 ) );
             }
@@ -461,7 +461,7 @@ namespace System.Windows.Xps.Packaging
                 {
                     _interleavingNodes.Remove(n);
                 }
-                if (PackagingProgressEvent != null )
+                if (PackagingProgressEvent is not null )
                 {
                     if( pageCnt != 0 )
                     {

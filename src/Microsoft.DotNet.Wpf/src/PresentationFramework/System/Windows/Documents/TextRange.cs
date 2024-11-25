@@ -381,7 +381,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                Invariant.Assert(_textSegments != null, "_textSegments must not be null");
+                Invariant.Assert(_textSegments is not null, "_textSegments must not be null");
                 Invariant.Assert(_textSegments.Count > 0, "_textSegments.Count must be > 0");
                 return _textSegments[0].Start is TextPointer;
             }
@@ -481,7 +481,7 @@ namespace System.Windows.Documents
         /// </summary>
         void ITextRange.FireChanged()
         {
-            if (this.Changed != null)
+            if (this.Changed is not null)
             {
                 this.Changed(this, EventArgs.Empty);
             }
@@ -799,7 +799,7 @@ namespace System.Windows.Documents
             if ((value is string) && formattingProperty.PropertyType != typeof(string))
             {
                 System.ComponentModel.TypeConverter typeConverter = System.ComponentModel.TypeDescriptor.GetConverter(formattingProperty.PropertyType);
-                Invariant.Assert(typeConverter != null);
+                Invariant.Assert(typeConverter is not null);
                 value = typeConverter.ConvertFromString((string)value);
             }
 
@@ -1022,7 +1022,7 @@ namespace System.Windows.Documents
         // otherwise uses InlineUIContainer wrapper.
         internal void InsertEmbeddedUIElement(FrameworkElement embeddedElement)
         {
-            Invariant.Assert(embeddedElement != null);
+            Invariant.Assert(embeddedElement is not null);
 
             this.InsertEmbeddedUIElementVirtual(embeddedElement);
         }
@@ -1041,7 +1041,7 @@ namespace System.Windows.Documents
 
             System.Windows.Media.Imaging.BitmapSource bitmapSource = (System.Windows.Media.Imaging.BitmapSource)image.Source;
 
-            Invariant.Assert(bitmapSource != null);
+            Invariant.Assert(bitmapSource is not null);
 
             const double MaxImageHeight = 300.0;
 
@@ -1375,7 +1375,7 @@ namespace System.Windows.Documents
                     object xamlObject = XamlReader.Load(new XmlTextReader(new System.IO.StringReader(value)), _useRestrictiveXamlXmlReader);
                     TextElement fragment = xamlObject as TextElement;
 
-                    if (fragment != null)
+                    if (fragment is not null)
                     {
                         this.SetXmlVirtual(fragment);
                     }
@@ -1574,7 +1574,7 @@ namespace System.Windows.Documents
         internal virtual void InsertEmbeddedUIElementVirtual(FrameworkElement embeddedElement)
         {
             Invariant.Assert(this.HasConcreteTextContainer, "Can't insert embedded object to non-TextContainer range!");
-            Invariant.Assert(embeddedElement != null);
+            Invariant.Assert(embeddedElement is not null);
 
             TextRangeBase.BeginChange(this);
             try
@@ -1590,7 +1590,7 @@ namespace System.Windows.Documents
                 // depending on the current paragraph emptiness
                 Paragraph paragraph = startPosition.Paragraph;
 
-                if (paragraph != null)
+                if (paragraph is not null)
                 {
                     if (Paragraph.HasNoTextContent(paragraph))
                     {

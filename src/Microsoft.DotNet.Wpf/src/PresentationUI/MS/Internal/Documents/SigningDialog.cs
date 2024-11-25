@@ -51,12 +51,12 @@ namespace MS.Internal.Documents
 
             // Check DocumentManager to see if we can save package
             DocumentManager documentManager = DocumentManager.CreateDefault();
-            if (documentManager != null)
+            if (documentManager is not null)
             {
                 _signButton.Enabled = documentManager.CanSave;
             }
 
-            if (DocumentRightsManagementManager.Current != null)
+            if (DocumentRightsManagementManager.Current is not null)
             {
                 _signSaveAsButton.Enabled = DocumentRightsManagementManager.Current.HasPermissionToSave;
             }
@@ -81,8 +81,8 @@ namespace MS.Internal.Documents
 
             //If this is a request, re-use the requested signature, so we update the request
             //to the signed version in place.
-            if (_digitalSignatureRequest != null && 
-                _digitalSignatureRequest.GuidID != null)
+            if (_digitalSignatureRequest is not null && 
+                _digitalSignatureRequest.GuidID is not null)
             {
                 digSig = _digitalSignatureRequest;
             }
@@ -175,7 +175,7 @@ namespace MS.Internal.Documents
                                   );
 
             //Check to see if this signing is a request(or second signing without request).
-            if (_digitalSignatureRequest != null)
+            if (_digitalSignatureRequest is not null)
             {
                 // For both Reason and Location, determine if this is a second signing
                 // without a request.  If this is without a request, then display

@@ -61,13 +61,13 @@ namespace MS.Internal.ComponentModel
         /// </summary>
         public string GetComponentName()
         {
-            if (_instance != null) 
+            if (_instance is not null) 
             {
                 RuntimeNamePropertyAttribute nameAttr = GetAttributes()[typeof(RuntimeNamePropertyAttribute)] as RuntimeNamePropertyAttribute;
-                if (nameAttr != null && nameAttr.Name != null) 
+                if (nameAttr is not null && nameAttr.Name is not null) 
                 {
                     PropertyDescriptor nameProp = GetProperties()[nameAttr.Name];
-                    if (nameProp != null) 
+                    if (nameProp is not null) 
                     {
                         return nameProp.GetValue(_instance) as string;
                     }
@@ -100,12 +100,12 @@ namespace MS.Internal.ComponentModel
 
             PropertyFilterOptions filter = PropertyFilterOptions.Valid | PropertyFilterOptions.SetValues;
 
-            if (attributes != null) 
+            if (attributes is not null) 
             {
                 foreach (Attribute attr in attributes) 
                 {
                     PropertyFilterAttribute filterAttr = attr as PropertyFilterAttribute;
-                    if (filterAttr != null) 
+                    if (filterAttr is not null) 
                     {
                         filter = filterAttr.Filter;
                         break;
@@ -195,13 +195,13 @@ namespace MS.Internal.ComponentModel
                         }
                     }
                 }
-                else if (newDescriptors != null) 
+                else if (newDescriptors is not null) 
                 {
                     newDescriptors.Add(prop);
                 }
             }
 
-            if (newDescriptors != null) 
+            if (newDescriptors is not null) 
             {
                 properties = new PropertyDescriptorCollection(newDescriptors.ToArray(), true);
             }
@@ -297,7 +297,7 @@ namespace MS.Internal.ComponentModel
                     inMap = _propertyMap.TryGetValue(prop, out dpProp);
                 }
 
-                if (inMap && dpProp != null)
+                if (inMap && dpProp is not null)
                 {
                     // We need to verify that this property descriptor contains the correct DP.
                     // We can get the wrong one if a descendant of the type introducing the
@@ -331,14 +331,14 @@ namespace MS.Internal.ComponentModel
                     // the fact that we got a dp means that there used to be something in the map
                     // so the component type is already a DependencyObject.
 
-                    if (dp != null || typeof(DependencyObject).IsAssignableFrom(prop.ComponentType))
+                    if (dp is not null || typeof(DependencyObject).IsAssignableFrom(prop.ComponentType))
                     {
                         if (dp is null) 
                         {
                             dp = DependencyProperty.FromName(prop.Name, _objectType);
                         }
 
-                        if (dp != null) 
+                        if (dp is not null) 
                         {
                             dpProp = new DependencyObjectPropertyDescriptor(prop, dp, _objectType);
                         }
@@ -361,7 +361,7 @@ namespace MS.Internal.ComponentModel
                 // If we found a dependency property desecriptor for this property,
                 // use it as our new property.
 
-                if (dpProp != null) 
+                if (dpProp is not null) 
                 {
                     prop = dpProp;
                 }

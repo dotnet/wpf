@@ -73,7 +73,7 @@ namespace MS.Internal.Text
         /// </summary>
         internal LineMetrics Dispose(bool returnUpdatedMetrics)
         {
-            if(_textLineBreak != null)
+            if(_textLineBreak is not null)
             {
                 _textLineBreak.Dispose();
                 if (returnUpdatedMetrics)

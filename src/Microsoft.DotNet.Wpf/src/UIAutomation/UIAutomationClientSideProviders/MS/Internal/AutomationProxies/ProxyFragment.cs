@@ -191,7 +191,7 @@ namespace MS.Internal.AutomationProxies
         override internal void RecursiveRaiseEvents (object idProp, AutomationPropertyChangedEventArgs e)
         {
             AutomationInteropProvider.RaiseAutomationPropertyChangedEvent (this, e);
-            for (ProxySimple el = GetFirstChild (); el != null; el = this.GetNextSibling (el))
+            for (ProxySimple el = GetFirstChild (); el is not null; el = this.GetNextSibling (el))
             {
                 el.RecursiveRaiseEvents (idProp, e);
             }
@@ -210,12 +210,12 @@ namespace MS.Internal.AutomationProxies
         // This method will return the leaf element that lives in ProxyFragment at Point(x,y)
         static internal ProxySimple DrillDownFragment(ProxyFragment fragment, int x, int y)
         {
-            System.Diagnostics.Debug.Assert(fragment != null, "DrillDownFragment: starting point is null");
+            System.Diagnostics.Debug.Assert(fragment is not null, "DrillDownFragment: starting point is null");
 
             // drill down
             ProxySimple fromPoint = fragment.ElementProviderFromPoint(x, y);
 
-            System.Diagnostics.Debug.Assert(fromPoint != null, @"DrillDownFragment: calling ElementProviderFromPoint on Fragment should not return null");
+            System.Diagnostics.Debug.Assert(fromPoint is not null, @"DrillDownFragment: calling ElementProviderFromPoint on Fragment should not return null");
 
             // Check if we got back a new fragment
             // do this check before trying to cast to ProxyFragment

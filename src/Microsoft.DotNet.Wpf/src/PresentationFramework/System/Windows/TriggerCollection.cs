@@ -146,7 +146,7 @@ namespace System.Windows
         {
             // If we don't have an Owner (the Style/Template case), or the
             // element isn't initialized yet, we don't need to do anything
-            if (Owner != null && Owner.IsInitialized)
+            if (Owner is not null && Owner.IsInitialized)
             {
                 EventTrigger.ProcessOneTrigger(Owner, triggerBase);
             }
@@ -161,7 +161,7 @@ namespace System.Windows
         {
             // If we don't have an Owner (the Style/Template case), 
 			// we don't need to do anything
-			if (Owner != null)
+			if (Owner is not null)
 			{
 				// If the owner is initialized, we need to disconnect the trigger.
 				if (Owner.IsInitialized)
@@ -182,7 +182,7 @@ namespace System.Windows
         {
 			// If we don't have an Owner (the Style/Template case), 
 			// we don't need to do anything
-			if (Owner != null)
+			if (Owner is not null)
 			{
 				// If the owner is initialized, we need to disconnect all the trigger.
 				if (Owner.IsInitialized)

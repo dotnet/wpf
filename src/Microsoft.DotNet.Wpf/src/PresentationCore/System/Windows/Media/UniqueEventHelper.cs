@@ -23,7 +23,7 @@ namespace System.Windows.Media
         internal UniqueEventHelper<TEventArgs> Clone()
         {
             var ueh = new UniqueEventHelper<TEventArgs>();
-            if (_delegates != null)
+            if (_delegates is not null)
             {
                 ueh._delegates = new Dictionary<EventHandler<TEventArgs>, int>(_delegates);
             }
@@ -39,10 +39,10 @@ namespace System.Windows.Media
         /// <param name="args">The args object to be sent by the delegate</param>
         internal void InvokeEvents(object sender, TEventArgs args)
         {
-            Debug.Assert(sender != null, "Sender is null");
+            Debug.Assert(sender is not null, "Sender is null");
             foreach (EventHandler<TEventArgs> handler in CopyHandlers())
             {
-                Debug.Assert(handler != null, "Event handler is null");
+                Debug.Assert(handler is not null, "Event handler is null");
                 handler(sender, args);
             }
         }
@@ -54,7 +54,7 @@ namespace System.Windows.Media
         internal UniqueEventHelper Clone()
         {
             var ueh = new UniqueEventHelper();
-            if (_delegates != null)
+            if (_delegates is not null)
             {
                 ueh._delegates = new Dictionary<EventHandler, int>(_delegates);
             }
@@ -70,10 +70,10 @@ namespace System.Windows.Media
         /// <param name="args">The args object to be sent by the delegate</param>
         internal void InvokeEvents(object sender, EventArgs args)
         {
-            Debug.Assert(sender != null, "Sender is null");
+            Debug.Assert(sender is not null, "Sender is null");
             foreach (EventHandler handler in CopyHandlers())
             {
-                Debug.Assert(handler != null, "Event handler is null");
+                Debug.Assert(handler is not null, "Event handler is null");
                 handler(sender, args);
             }
         }

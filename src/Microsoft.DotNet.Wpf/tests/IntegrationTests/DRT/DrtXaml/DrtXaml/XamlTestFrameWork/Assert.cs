@@ -253,7 +253,7 @@ namespace DrtXaml.XamlTestFramework
         
         public static void IsEmpty(ICollection collection, string message)
         {
-            if (collection != null)
+            if (collection is not null)
             {
                 AreEqual(0, collection.Count, message);
             }
@@ -292,7 +292,7 @@ namespace DrtXaml.XamlTestFramework
 
         public static void IsNull(object o, string message)
         {
-            if (o != null)
+            if (o is not null)
             {
                 Assert.Fail(message);
             }

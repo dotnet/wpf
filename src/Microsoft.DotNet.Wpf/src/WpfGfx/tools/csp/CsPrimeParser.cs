@@ -128,7 +128,7 @@ namespace MS.Internal.Csp
                 BeginFile(filename);
                 String inputLine;
 
-                while ((inputLine = sr.ReadLine()) != null)
+                while ((inputLine = sr.ReadLine()) is not null)
                 {
                     _current.LineNumber++;
 
@@ -460,7 +460,7 @@ namespace MS.Internal.Csp
         {
             get
             {
-                return _sbTag != null;
+                return _sbTag is not null;
             }
         }
         #endregion Private Properties

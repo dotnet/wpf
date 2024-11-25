@@ -131,7 +131,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 result = true;
             }
             // Do comparison only if both v1 and v2 are not null
-            else if ((Object) v1 != null && (Object) v2 != null)
+            else if ((Object) v1 is not null && (Object) v2 is not null)
             {
                 if (v1.Major == v2.Major && v1.Minor == v2.Minor)
                 {
@@ -163,11 +163,11 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             bool result = false;
 
-            if ((Object) v1 is null && (Object) v2 != null)
+            if ((Object) v1 is null && (Object) v2 is not null)
             {
                 result = true;
             }
-            else if ((Object) v1 != null && (object) v2 != null)
+            else if ((Object) v1 is not null && (object) v2 is not null)
             {
                 // == is previously define so it can be used
                 if (v1.Major < v2.Major || ((v1.Major == v2.Major) && (v1.Minor < v2.Minor)))
@@ -188,12 +188,12 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             bool result = false;
 
-            if ((Object) v1 != null && (Object) v2 is null)
+            if ((Object) v1 is not null && (Object) v2 is null)
             {
                 result = true;
             }
             // Comare only if neither v1 nor v2 are not null
-            else if ((Object) v1 != null && (object) v2 != null)
+            else if ((Object) v1 is not null && (object) v2 is not null)
             {
                 // < and == are previously define so it can be used
                 if (!(v1 < v2) && v1 != v2)

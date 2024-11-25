@@ -517,7 +517,7 @@ namespace System.Windows.Controls
 
         private void OnPopupOpened(object source, EventArgs e)
         {
-            if (CurrentSelection != null)
+            if (CurrentSelection is not null)
             {
                 CurrentSelection = null;
             }
@@ -549,7 +549,7 @@ namespace System.Windows.Controls
 
         private void ClosingMenu()
         {
-            if (_parentPopup != null)
+            if (_parentPopup is not null)
             {
                 _parentPopup.Unloaded -= new RoutedEventHandler(OnPopupUnloaded);
 
@@ -603,7 +603,7 @@ namespace System.Windows.Controls
             if (IsMenuMode)
             {
                 // Keep the previous focus
-                if (Keyboard.FocusedElement != null)
+                if (Keyboard.FocusedElement is not null)
                 {
                     _weakRefToPreviousFocus = new WeakReference<IInputElement>(Keyboard.FocusedElement);
                 }
@@ -615,7 +615,7 @@ namespace System.Windows.Controls
             {
                 SetCurrentValueInternal(IsOpenProperty, BooleanBoxes.FalseBox);
 
-                if(_weakRefToPreviousFocus != null)
+                if(_weakRefToPreviousFocus is not null)
                 {
                     IInputElement previousFocus;
                     if (_weakRefToPreviousFocus.TryGetTarget(out previousFocus))

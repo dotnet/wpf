@@ -71,10 +71,10 @@ namespace System.Windows.Controls
         /// </exception>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            if (value != null)
+            if (value is not null)
             {
                 string stringSource = value as string;
-                if (stringSource != null)
+                if (stringSource is not null)
                 {
                     // Convert from string
                     return ConvertFromString(stringSource, culture);
@@ -132,7 +132,7 @@ namespace System.Windows.Controls
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if ((value != null) && (value is DataGridLength))
+            if ((value is not null) && (value is DataGridLength))
             {
                 DataGridLength length = (DataGridLength)value;
 

@@ -139,7 +139,7 @@ namespace System.Windows.Input.Manipulations
         /// <param name="processor"></param>
         internal override void Set(ManipulationProcessor2D processor)
         {
-            Debug.Assert(processor != null);
+            Debug.Assert(processor is not null);
             processor.Pivot = this;
         }
 

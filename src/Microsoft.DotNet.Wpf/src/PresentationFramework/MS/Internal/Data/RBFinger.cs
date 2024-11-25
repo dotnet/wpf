@@ -16,7 +16,7 @@ namespace MS.Internal.Data
         public bool Found { get; set; }
         public T Item { get { return Node.GetItemAt(Offset); } }
         public void SetItem(T x) { Node.SetItemAt(Offset, x); }
-        public bool IsValid { get { return Node != null && Node.HasData; } }
+        public bool IsValid { get { return Node is not null && Node.HasData; } }
 
         public static RBFinger<T> operator +(RBFinger<T> finger, int delta)
         {
@@ -56,7 +56,7 @@ namespace MS.Internal.Data
             if (finger.Offset < 0)
             {
                 finger.Node = finger.Node.GetPredecessor();
-                if (finger.Node != null)
+                if (finger.Node is not null)
                     finger.Offset = finger.Node.Size - 1;
             }
             return finger;

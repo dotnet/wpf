@@ -46,7 +46,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         public override void Dispose()
         {
-            if(_cellParagraphs != null)
+            if(_cellParagraphs is not null)
             {
                 for(int index = 0; index < _cellParagraphs.Length; index++)
                 {
@@ -257,7 +257,7 @@ namespace MS.Internal.PtsHost
 
                 for (int j = 0; j < _spannedCells.Length; ++j)
                 {
-                    Debug.Assert (_spannedCells[j] != null);
+                    Debug.Assert (_spannedCells[j] is not null);
 
                     TableCell cell = _spannedCells[j].Cell;
                     rgnmCell[i] = _spannedCells[j].Handle;
@@ -293,7 +293,7 @@ namespace MS.Internal.PtsHost
         {
             RowParagraph rowPrevious = null;
 
-            if(Row.Index != 0 && Previous != null)
+            if(Row.Index != 0 && Previous is not null)
             {
                 rowPrevious = ((RowParagraph)Previous);
             }
@@ -309,7 +309,7 @@ namespace MS.Internal.PtsHost
 
             Invariant.Assert(_spannedCells is null);
 
-            if (Row.SpannedCells != null)
+            if (Row.SpannedCells is not null)
             {
                 _spannedCells = new CellParagraph[Row.SpannedCells.Length];
             }
@@ -398,7 +398,7 @@ namespace MS.Internal.PtsHost
                 }
             }
 
-            if(previousRow != null)
+            if(previousRow is not null)
             {
                 for(int index = 0; index < previousRow._spannedCells.Length; index++)
                 {

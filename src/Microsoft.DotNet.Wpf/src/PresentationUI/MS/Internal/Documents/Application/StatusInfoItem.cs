@@ -48,14 +48,14 @@ namespace MS.Internal.Documents.Application
             _type = type;
 
             // If InfoBar button is not null, set references to the Icon and Text.
-            if (infoBarButton != null)
+            if (infoBarButton is not null)
             {
                 _infoBarButton = infoBarButton;
                 _infoBarIcon = infoBarButton.Template.FindName("PUIInfoBarIcon", infoBarButton) as Rectangle;
                 _infoBarText = infoBarButton.Template.FindName("PUIInfoBarText", infoBarButton) as TextBlock;
             }
             // Set ToolBar button reference.
-            if (toolBarControl != null)
+            if (toolBarControl is not null)
             {
                 _toolBarControl = toolBarControl;
             }
@@ -81,7 +81,7 @@ namespace MS.Internal.Documents.Application
                 _infoBarButton.Visibility = value;
                 // When the Visibility is set, notify the DocumentViewer to check the visibility
                 // of the entire InfoBar
-                if (InfoBarVisibilityChanged != null)
+                if (InfoBarVisibilityChanged is not null)
                 {
                     InfoBarVisibilityChanged(this, new EventArgs());
                 }
@@ -113,7 +113,7 @@ namespace MS.Internal.Documents.Application
         /// <param name="args"></param>
         public void OnStatusChange(object sender, DocumentSignatureManager.SignatureStatusEventArgs args)
         {
-            if ((args != null) && (_type == StatusInfoItemType.DigSig))
+            if ((args is not null) && (_type == StatusInfoItemType.DigSig))
             {
                 UpdateUI(args.StatusResources);
 
@@ -136,7 +136,7 @@ namespace MS.Internal.Documents.Application
         /// <param name="args"></param>
         public void OnStatusChange(object sender, DocumentRightsManagementManager.RightsManagementStatusEventArgs args)
         {
-            if ((args != null) && (_type == StatusInfoItemType.RM))
+            if ((args is not null) && (_type == StatusInfoItemType.RM))
             {
                 UpdateUI(args.StatusResources);
 
@@ -164,25 +164,25 @@ namespace MS.Internal.Documents.Application
         /// <param name="resources"></param>
         private void UpdateUI(DocumentStatusResources resources)
         {
-            if (_infoBarIcon != null)
+            if (_infoBarIcon is not null)
             {
                 // Set the InfoBar Image
                 _infoBarIcon.Fill = resources.Image;
             }            
  
-            if (_infoBarText != null)
+            if (_infoBarText is not null)
             {
                 // Set the InfoBar Text
                 _infoBarText.Text = resources.Text;
             }
 
-            if (_infoBarButton != null)
+            if (_infoBarButton is not null)
             {
                 // Set the InfoBar ToolTip
                 _infoBarButton.ToolTip = resources.ToolTip;
             }
 
-            if (_toolBarControl != null)
+            if (_toolBarControl is not null)
             {
                 // Set the ToolBarButton Image and ToolTip
                 _toolBarControl.Background = resources.Image;

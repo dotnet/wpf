@@ -317,7 +317,7 @@ namespace DrtXaml.Tests
 
             //string result = (string)RoundTrip(s, expected);
 
-            //Assert.IsTrue(result != null);
+            //Assert.IsTrue(result is not null);
             //Assert.IsTrue(GetBar(result) == 98);
         }
 
@@ -338,7 +338,7 @@ namespace DrtXaml.Tests
 
             //string result = (string)RoundTrip(s, expected);
 
-            //Assert.IsTrue(result != null);
+            //Assert.IsTrue(result is not null);
             //Assert.IsTrue(GetComplex(result).Equals(ap));
         }
 

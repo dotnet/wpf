@@ -378,7 +378,7 @@ namespace System.Windows.Markup
                     for (int i=0; i<AttributeIdMap.Count; i++)
                     {
                         BamlAttributeInfoRecord info = AttributeIdMap[i] as BamlAttributeInfoRecord;
-                        if (info.PropInfo != null)
+                        if (info.PropInfo is not null)
                         {
                             object key = GetAttributeInfoKey(info.OwnerType.FullName, info.Name);
                             ObjectHashTable.Add(key, info);
@@ -389,7 +389,7 @@ namespace System.Windows.Markup
                     for (int j=0; j<TypeIdMap.Count; j++)
                     {
                         BamlTypeInfoRecord info = TypeIdMap[j] as BamlTypeInfoRecord;
-                        if (info.Type != null)
+                        if (info.Type is not null)
                         {
                             BamlAssemblyInfoRecord assyInfo = GetAssemblyInfoFromId(info.AssemblyId);
                             TypeInfoKey key = GetTypeInfoKey(assyInfo.AssemblyFullName, info.TypeFullName);
@@ -685,7 +685,7 @@ namespace System.Windows.Markup
             else
             {
                 BamlAttributeInfoRecord record = (BamlAttributeInfoRecord)AttributeIdMap[id];
-                if (record != null)
+                if (record is not null)
                 {
                     return record.Name;
                 }
@@ -772,7 +772,7 @@ namespace System.Windows.Markup
                     // Check for cached type in object hash table.
                     TypeInfoKey key = GetTypeInfoKey(assemblyInfoRecord.AssemblyFullName, typeInfo.TypeFullName);
                     BamlTypeInfoRecord cachedTypeInfo = GetHashTableData(key) as BamlTypeInfoRecord;
-                    if (cachedTypeInfo != null && cachedTypeInfo.Type != null)
+                    if (cachedTypeInfo is not null && cachedTypeInfo.Type is not null)
                     {
                         typeInfo.Type = cachedTypeInfo.Type;
                     }
@@ -823,7 +823,7 @@ namespace System.Windows.Markup
             Debug.Assert(attributeId >= 0, "Known Property Id must be a DependencyProperty.");
 
             BamlAttributeInfoRecord attributeInfo = GetAttributeInfoFromIdWithOwnerType(attributeId);
-            if (attributeInfo != null && attributeInfo.OwnerType != null)
+            if (attributeInfo is not null && attributeInfo.OwnerType is not null)
             {
                 // Update the CLR propInfo into the AttributeInfoRecord.
                 XamlTypeMapper.UpdateClrPropertyInfo(attributeInfo.OwnerType, attributeInfo);
@@ -1042,7 +1042,7 @@ namespace System.Windows.Markup
                         // Load the assembly so that we can get the Assembly.FullName to store in Baml.
                         // This will ensure that we are we use the same assembly during compilation and loading.
                         GetAssemblyFromAssemblyInfo(bamlAssemblyInfoRecord);
-                        if (bamlAssemblyInfoRecord.Assembly != null &&
+                        if (bamlAssemblyInfoRecord.Assembly is not null &&
                             bamlAssemblyInfoRecord.Assembly.FullName != assemblyFullName)
                         {
                             // Given name is a partial name for the assembly
@@ -1092,7 +1092,7 @@ namespace System.Windows.Markup
                 // written it out to Baml. This now needs to be written out to Baml.
 
                 Debug.Assert(
-                    bamlAssemblyInfoRecord.Assembly != null &&
+                    bamlAssemblyInfoRecord.Assembly is not null &&
                     bamlAssemblyInfoRecord.Assembly.FullName == bamlAssemblyInfoRecord.AssemblyFullName);
 
                 // review, could be a race condition here.
@@ -1246,7 +1246,7 @@ namespace System.Windows.Markup
             BamlAssemblyInfoRecord bamlAssemblyInfoRecord = AddAssemblyMap(binaryWriter, assemblyFullName);
             bamlTypeInfoRecord.AssemblyId = bamlAssemblyInfoRecord.AssemblyId;
 
-            bamlTypeInfoRecord.IsInternalType = (elementType != null && ReflectionHelper.IsInternalType(elementType));
+            bamlTypeInfoRecord.IsInternalType = (elementType is not null && ReflectionHelper.IsInternalType(elementType));
 
             // review, could be a race condition here.
             bamlTypeInfoRecord.TypeId = (short)TypeIdMap.Add(bamlTypeInfoRecord);
@@ -1283,8 +1283,8 @@ namespace System.Windows.Markup
             string ownerTypeName,
             string attributeName)
         {
-            Debug.Assert(ownerTypeName != null);
-            Debug.Assert(attributeName != null);
+            Debug.Assert(ownerTypeName is not null);
+            Debug.Assert(attributeName is not null);
             return $"{ownerTypeName}.{attributeName}";
         }
 
@@ -1390,7 +1390,7 @@ namespace System.Windows.Markup
 
                 // NOTE: We do not want to check for custom converters when the property is
                 // known to be custom serializable or it is a complex property.
-                if (converterOrSerializerType != null)
+                if (converterOrSerializerType is not null)
                 {
                     return true;
                 }
@@ -1408,7 +1408,7 @@ namespace System.Windows.Markup
                 }
 
                 // If we found a custom serializer or a type converter then we need to write it out to Baml
-                if (converterOrSerializerType != null)
+                if (converterOrSerializerType is not null)
                 {
                     string converterOrSerializerTypeFullName = converterOrSerializerType.FullName;
 
@@ -1501,7 +1501,7 @@ namespace System.Windows.Markup
                 case (short)KnownElements.StaticExtension:
 
                     targetType = XamlTypeMapper.GetTargetTypeAndMember(memberValue, pc, true, out memberName);
-                    Debug.Assert(targetType != null && memberName != null);
+                    Debug.Assert(targetType is not null && memberName is not null);
 
                     MemberInfo memberInfo = XamlTypeMapper.GetStaticMemberInfo(targetType, memberName, false);
                     if (memberInfo is PropertyInfo)
@@ -1566,7 +1566,7 @@ namespace System.Windows.Markup
         {
             // Check for known per property type converter
             Type converterType = GetKnownConverterTypeFromPropName(ownerType, fieldName);
-            if (converterType != null)
+            if (converterType is not null)
             {
                 return converterType;
             }
@@ -1584,7 +1584,7 @@ namespace System.Windows.Markup
 #endif
             {
                 converterType = XamlTypeMapper.GetPropertyConverterType(attributeType, piOrMi);
-                if (converterType != null)
+                if (converterType is not null)
                 {
                     return converterType;
                 }
@@ -1706,7 +1706,7 @@ namespace System.Windows.Markup
         private TypeConverter GetConverterFromCache(short typeId)
         {
             TypeConverter tc = null;
-            if (_converterCache != null)
+            if (_converterCache is not null)
             {
                 tc = _converterCache[typeId] as TypeConverter;
             }
@@ -1717,7 +1717,7 @@ namespace System.Windows.Markup
         private TypeConverter GetConverterFromCache(Type type)
         {
             TypeConverter tc = null;
-            if (_converterCache != null)
+            if (_converterCache is not null)
             {
                 tc = _converterCache[type] as TypeConverter;
             }
@@ -1728,7 +1728,7 @@ namespace System.Windows.Markup
         internal void ClearConverterCache()
         {
             // clear the Type converterCache to reduce survived memory allocs
-            if (_converterCache != null)
+            if (_converterCache is not null)
             {
                 _converterCache.Clear();
                 _converterCache = null;
@@ -1858,7 +1858,7 @@ namespace System.Windows.Markup
             {
                 AssemblyInfoKey key = (AssemblyInfoKey)o;
 
-                return ((key.AssemblyFullName != null) ?
+                return ((key.AssemblyFullName is not null) ?
                                       key.AssemblyFullName.Equals(this.AssemblyFullName) :
                                       (this.AssemblyFullName is null));
             }
@@ -1889,7 +1889,7 @@ namespace System.Windows.Markup
         /// </summary>
         public override int GetHashCode()
         {
-            return ((AssemblyFullName != null) ? AssemblyFullName.GetHashCode() : 0);
+            return ((AssemblyFullName is not null) ? AssemblyFullName.GetHashCode() : 0);
         }
 
         /// <summary>
@@ -1920,10 +1920,10 @@ namespace System.Windows.Markup
             {
                 TypeInfoKey key = (TypeInfoKey)o;
 
-                return ((key.DeclaringAssembly != null) ?
+                return ((key.DeclaringAssembly is not null) ?
                                       key.DeclaringAssembly.Equals(this.DeclaringAssembly) :
                                       (this.DeclaringAssembly is null)) &&
-                       ((key.TypeFullName != null) ?
+                       ((key.TypeFullName is not null) ?
                                       key.TypeFullName.Equals(this.TypeFullName) :
                                       (this.TypeFullName is null));
             }
@@ -1954,14 +1954,14 @@ namespace System.Windows.Markup
         /// </summary>
         public override int GetHashCode()
         {
-            return ((DeclaringAssembly != null) ? DeclaringAssembly.GetHashCode() : 0) ^
-                    ((TypeFullName != null) ? TypeFullName.GetHashCode() : 0);
+            return ((DeclaringAssembly is not null) ? DeclaringAssembly.GetHashCode() : 0) ^
+                    ((TypeFullName is not null) ? TypeFullName.GetHashCode() : 0);
         }
 
         /// <summary>
         ///     Return string representation of this key
         /// </summary>
         public override string ToString() =>
-            $"TypeInfoKey: Assembly={((DeclaringAssembly != null) ? DeclaringAssembly : "null")} Type={((TypeFullName != null) ? TypeFullName : "null")}";
+            $"TypeInfoKey: Assembly={((DeclaringAssembly is not null) ? DeclaringAssembly : "null")} Type={((TypeFullName is not null) ? TypeFullName : "null")}";
     }
 }

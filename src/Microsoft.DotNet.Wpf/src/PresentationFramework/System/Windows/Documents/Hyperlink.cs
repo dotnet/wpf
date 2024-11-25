@@ -110,7 +110,7 @@ namespace System.Windows.Documents
             {
                 Hyperlink hyperlink = navigator.GetAdjacentElement(LogicalDirection.Forward) as Hyperlink;
 
-                if (hyperlink != null)
+                if (hyperlink is not null)
                 {
                     hyperlink.Reposition(null, null);
                 }
@@ -177,11 +177,11 @@ namespace System.Windows.Documents
 
         private void OnCommandChanged(ICommand oldCommand, ICommand newCommand)
         {
-            if (oldCommand != null)
+            if (oldCommand is not null)
             {
                 UnhookCommand(oldCommand);
             }
-            if (newCommand != null)
+            if (newCommand is not null)
             {
                 HookCommand(newCommand);
             }
@@ -206,7 +206,7 @@ namespace System.Windows.Documents
 
         private void UpdateCanExecute()
         {
-            if (Command != null)
+            if (Command is not null)
             {
                 CanExecute = MS.Internal.Commands.CommandHelpers.CanExecuteCommandSource(this);
             }
@@ -235,7 +235,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return (this.TextContainer.TextSelection != null &&
+                return (this.TextContainer.TextSelection is not null &&
                         !this.TextContainer.TextSelection.TextEditor.IsReadOnly);
             }
         }
@@ -564,7 +564,7 @@ namespace System.Windows.Documents
         /// <param name="targetWindow">Target window for the RequestNavigateEventArgs.</param>
         private static void NavigateToUri(IInputElement sourceElement, Uri targetUri, string targetWindow)
         {
-            Debug.Assert(targetUri != null);
+            Debug.Assert(targetUri is not null);
 
             //
             // This prevents against multi-threaded spoofing attacks.
@@ -685,7 +685,7 @@ namespace System.Windows.Documents
             if (AutomationPeer.ListenerExists(AutomationEvents.InvokePatternOnInvoked))
             {
                 AutomationPeer peer = ContentElementAutomationPeer.CreatePeerForElement(this);
-                if (peer != null)
+                if (peer is not null)
                     peer.RaiseAutomationEvent(AutomationEvents.InvokePatternOnInvoked);
             }
 
@@ -881,7 +881,7 @@ namespace System.Windows.Documents
             // However, for backward compatibility we shouldn't make this callback fail since
             // other places such as FixedTextBuilder use NavigateUri e.g. for serialization.
             //
-            if (element != null)
+            if (element is not null)
             {
                 Uri navigateUri = (Uri)e.NewValue;
 
@@ -889,11 +889,11 @@ namespace System.Windows.Documents
                 // We use a different code path for Path, Canvas, Glyphs and FixedPage to maintain backward compatibility
                 // with the original separate Hyperlink implementation of this (which didn't execute CanNavigateToUri).
                 //
-                if (navigateUri != null)
+                if (navigateUri is not null)
                 {
                     FrameworkElement fe = d as FrameworkElement;
 
-                    if (fe != null && ((fe is Path) || (fe is Canvas) || (fe is Glyphs) || (fe is FixedPage)))
+                    if (fe is not null && ((fe is Path) || (fe is Canvas) || (fe is Glyphs) || (fe is FixedPage)))
                     {
                         SetUpNavigationEventHandlers(element);
                         fe.Cursor = Cursors.Hand;
@@ -902,7 +902,7 @@ namespace System.Windows.Documents
                     {
                         FrameworkContentElement fce = d as FrameworkContentElement;
 
-                        if (fce != null && (fce is Hyperlink))
+                        if (fce is not null && (fce is Hyperlink))
                         {
                             SetUpNavigationEventHandlers(element);
                         }
@@ -1095,7 +1095,7 @@ namespace System.Windows.Documents
         private static void DispatchNavigation(object sender)
         {
             Hyperlink hl = sender as Hyperlink;
-            if (hl != null)
+            if (hl is not null)
             {
                 //
                 // Call the virtual OnClick on Hyperlink to keep old behavior.
@@ -1132,7 +1132,7 @@ namespace System.Windows.Documents
             //
             // Do secure (spoofing countermeasures) navigation.
             //
-            if (targetUri != null)
+            if (targetUri is not null)
             {
                 NavigateToUri(element, targetUri, targetWindow);
             }

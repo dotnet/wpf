@@ -97,8 +97,8 @@ namespace MS.Internal.IO.Packaging
             String xmlDateTimeFormat,
             String signatureId)
         {
-            Invariant.Assert(xDoc != null);
-            Invariant.Assert(signatureId != null);
+            Invariant.Assert(xDoc is not null);
+            Invariant.Assert(signatureId is not null);
 
             // check for null format - use default if null
             if (xmlDateTimeFormat is null)
@@ -335,7 +335,7 @@ namespace MS.Internal.IO.Packaging
 
 
             // generate an equivalent DateTime object
-            if (timeValue != null && timeFormat != null)
+            if (timeValue is not null && timeFormat is not null)
                 return XmlFormattedTimeToDateTime(timeValue, timeFormat);
             else
                 throw new XmlException(SR.PackageSignatureCorruption);
@@ -428,7 +428,7 @@ namespace MS.Internal.IO.Packaging
         {
             string idTargetValue = reader.GetAttribute(XTable.Get(XTable.ID.TargetAttrName));
 
-            if (idTargetValue != null)
+            if (idTargetValue is not null)
             {
                 //whether there is an Id attribute on the <Signature> tag or no,
                 //an empty Target attribute on <SignatureProperty> tag, is allowed.
@@ -439,7 +439,7 @@ namespace MS.Internal.IO.Packaging
                 {
                     //If the Target attribute has a non-empty string then
                     //it must match the <Signature> tag Id attribute value
-                    if (signatureId != null && string.Equals(idTargetValue, "#" + signatureId, StringComparison.Ordinal))
+                    if (signatureId is not null && string.Equals(idTargetValue, "#" + signatureId, StringComparison.Ordinal))
                         return true;
                     else
                         return false;

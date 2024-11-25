@@ -430,7 +430,7 @@ namespace System.Windows.Input.StylusPlugIns
 
             if (_lastRenderTransform != _element.RenderTransform)
             {
-                if (_renderTransformChangedEventHandler != null)
+                if (_renderTransformChangedEventHandler is not null)
                 {
                     _lastRenderTransform.Changed -= _renderTransformChangedEventHandler;
                     _renderTransformChangedEventHandler = null;
@@ -439,11 +439,11 @@ namespace System.Windows.Input.StylusPlugIns
                 _lastRenderTransform = _element.RenderTransform;
             }
 
-            if (_lastRenderTransform != null)
+            if (_lastRenderTransform is not null)
             {
                 if (_lastRenderTransform.IsFrozen)
                 {
-                    if (_renderTransformChangedEventHandler != null)
+                    if (_renderTransformChangedEventHandler is not null)
                     {
                         _renderTransformChangedEventHandler = null;
                     }
@@ -470,7 +470,7 @@ namespace System.Windows.Input.StylusPlugIns
         {
             // Only lock here if needed.
             // Our impl has provided a SyncRoot which indicates a lock being used.
-            if (_stylusPlugInCollectionImpl.SyncRoot != null)
+            if (_stylusPlugInCollectionImpl.SyncRoot is not null)
             {
                 lock (_stylusPlugInCollectionImpl.SyncRoot)
                 {
@@ -494,7 +494,7 @@ namespace System.Windows.Input.StylusPlugIns
         {
             // Only disable the dispatcher here if needed .
             // Our impl has provided a SyncRoot which indicates a lock being used.
-            if (_stylusPlugInCollectionImpl.SyncRoot != null)
+            if (_stylusPlugInCollectionImpl.SyncRoot is not null)
             {
                 using (_element.Dispatcher.DisableProcessing())
                 {
@@ -528,7 +528,7 @@ namespace System.Windows.Input.StylusPlugIns
                 PresentationSource.AddSourceChangedHandler(_element, _sourceChangedEventHandler);  // has a security linkdemand
                 _element.LayoutUpdated += _layoutChangedEventHandler;
 
-                if (_element.RenderTransform != null &&
+                if (_element.RenderTransform is not null &&
                     !_element.RenderTransform.IsFrozen)
                 {
                     if (_renderTransformChangedEventHandler is null)
@@ -552,7 +552,7 @@ namespace System.Windows.Input.StylusPlugIns
                 _element.IsEnabledChanged -= _isEnabledChangedEventHandler;
                 _element.IsVisibleChanged -= _isVisibleChangedEventHandler;
                 _element.IsHitTestVisibleChanged -= _isHitTestVisibleChangedEventHandler;
-                if (_renderTransformChangedEventHandler != null)
+                if (_renderTransformChangedEventHandler is not null)
                 {
                     _element.RenderTransform.Changed -= _renderTransformChangedEventHandler;
                 }

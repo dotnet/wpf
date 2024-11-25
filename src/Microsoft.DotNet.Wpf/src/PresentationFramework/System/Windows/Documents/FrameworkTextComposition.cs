@@ -159,7 +159,7 @@ namespace System.Windows.Documents
 
             UnsafeNativeMethods.ITfCompositionView composition = GetComposition(context);
 
-            if (composition != null)
+            if (composition is not null)
             {
                 UnsafeNativeMethods.ITfContextOwnerCompositionServices compositionService = context as UnsafeNativeMethods.ITfContextOwnerCompositionServices;
 
@@ -187,9 +187,9 @@ namespace System.Windows.Documents
         // Set result string to TextComposition.
         internal void SetResultPositions(ITextPointer start, ITextPointer end, string text)
         {
-            Invariant.Assert(start != null);
-            Invariant.Assert(end != null);
-            Invariant.Assert(text != null);
+            Invariant.Assert(start is not null);
+            Invariant.Assert(end is not null);
+            Invariant.Assert(text is not null);
 
             _compositionStart = null;
             _compositionEnd = null;
@@ -211,9 +211,9 @@ namespace System.Windows.Documents
         // Set composition string to TextComposition.
         internal void SetCompositionPositions(ITextPointer start, ITextPointer end, string text)
         {
-            Invariant.Assert(start != null);
-            Invariant.Assert(end != null);
-            Invariant.Assert(text != null);
+            Invariant.Assert(start is not null);
+            Invariant.Assert(end is not null);
+            Invariant.Assert(text is not null);
 
             // We need to have another instances of TextPointer since we don't want to
             // freeze original TextPointers.

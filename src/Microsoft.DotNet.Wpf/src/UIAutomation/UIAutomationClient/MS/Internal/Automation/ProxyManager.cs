@@ -78,7 +78,7 @@ namespace MS.Internal.Automation
             }
 
             ClientSideProviderDescription[] table = fi.GetValue(null) as ClientSideProviderDescription[];
-            if (table != null)
+            if (table is not null)
             {
                 ClientSettings.RegisterClientSideProviders(table);
             }
@@ -372,7 +372,7 @@ namespace MS.Internal.Automation
             proxyAssemblyName.CultureInfo = ourAssembly.CultureInfo;
             proxyAssemblyName.SetPublicKeyToken( ourAssembly.GetPublicKeyToken() );
 
-            if ( callingAssembly != null )
+            if ( callingAssembly is not null )
             {
                 // find the name of the UIAutomation dll referenced by this assembly because it my be different
                 // from the one that acually got loaded.  We want to load the proxy dll that matches this one.
@@ -387,7 +387,7 @@ namespace MS.Internal.Automation
                     }
                 }
 
-                if ( assemblyName.Name != null )
+                if ( assemblyName.Name is not null )
                 {
                     proxyAssemblyName.Version = assemblyName.Version;
                     proxyAssemblyName.CultureInfo = assemblyName.CultureInfo;
@@ -568,7 +568,7 @@ namespace MS.Internal.Automation
 
                 // Null and Empty string mean different things here.
 #pragma warning suppress 6507
-                if (imageName != null)
+                if (imageName is not null)
                 {
                     object entryOrArrayList;
                     lock (_lockObj)
@@ -619,7 +619,7 @@ namespace MS.Internal.Automation
                 }
 
                 proxy = GetProxyFromEntry(findType, entry, ref imageName, hwnd, idChild, idObject, classNameForPartialMatch);
-                if( proxy != null )
+                if( proxy is not null )
                     break;
             }
 
@@ -649,7 +649,7 @@ namespace MS.Internal.Automation
 
                 // Get the image name if necessary...
 #pragma warning suppress 6507 // Null and Empty string mean different things here.
-                if (imageName is null && pi.ImageName != null)
+                if (imageName is null && pi.ImageName is not null)
                 {
                     imageName = GetImageName(hwnd);
                 }
@@ -726,13 +726,13 @@ namespace MS.Internal.Automation
                 pi = proxyInfo[i];
 
                 // Check for pseudo-proxy names...
-                if( pi.ClassName != null && pi.ClassName.Length > 0 && pi.ClassName[ 0 ] == '#' )
+                if( pi.ClassName is not null && pi.ClassName.Length > 0 && pi.ClassName[ 0 ] == '#' )
                 {
                     for( int j = 0 ; j < _pseudoProxyClassNames.Length ; j++ )
                     {
                         if( pi.ClassName.Equals( _pseudoProxyClassNames[ j ] ) )
                         {
-                            if( pi.ImageName != null || pi.Flags != 0 )
+                            if( pi.ImageName is not null || pi.Flags != 0 )
                             {
                                 throw new ArgumentException(SR.NonclientClassnameCannotBeUsedWithFlagsOrImagename);
                             }

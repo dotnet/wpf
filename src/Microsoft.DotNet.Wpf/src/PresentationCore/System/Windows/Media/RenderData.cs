@@ -107,7 +107,7 @@ namespace System.Windows.Media
 
             // At this point, _buffer must be non-null and
             // _buffer.Length must be >= newOffset
-            Debug.Assert((_buffer != null) && (_buffer.Length >= newOffset));
+            Debug.Assert((_buffer is not null) && (_buffer.Length >= newOffset));
 
             // Also, because pinning a 0-length buffer fails, we assert this too.
             Debug.Assert(_buffer.Length > 0);
@@ -135,7 +135,7 @@ namespace System.Windows.Media
         /// </returns>
         public Rect GetContentBounds(BoundsDrawingContextWalker ctx)
         {
-            Debug.Assert(ctx != null);
+            Debug.Assert(ctx is not null);
 
             DrawingContextWalk(ctx);
             return ctx.Bounds;
@@ -251,7 +251,7 @@ namespace System.Windows.Media
             for (int i = 0, count = _dependentResources.Count; i < count; i++)
             {
                 Freezable freezableResource = _dependentResources[i] as Freezable;
-                if (freezableResource != null)
+                if (freezableResource is not null)
                 {
                     // Ideally, we would call OFPC(null, freezable) in AddDependentResource
                     // but RenderData never removes resources so nothing would ever remove
@@ -273,7 +273,7 @@ namespace System.Windows.Media
                     // also need to handle.
                     AnimationClockResource clockResource = _dependentResources[i] as AnimationClockResource;
 
-                    if (clockResource != null)
+                    if (clockResource is not null)
                     {
                         // if it is a clock, it better not be a Freezable too or we'll
                         // end up firing the handler twice
@@ -352,7 +352,7 @@ namespace System.Windows.Media
                     {
                         DUCE.IResource resource = _dependentResources[i] as DUCE.IResource;
 
-                        if (resource != null)
+                        if (resource is not null)
                         {
                             resource.AddRefOnChannel(channel);
                         }
@@ -380,7 +380,7 @@ namespace System.Windows.Media
                     {
                         DUCE.IResource resource = _dependentResources[i] as DUCE.IResource;
 
-                        if (resource != null)
+                        if (resource is not null)
                         {
                             resource.ReleaseOnChannel(channel);
                         }

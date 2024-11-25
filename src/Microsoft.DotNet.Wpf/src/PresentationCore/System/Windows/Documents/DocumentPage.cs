@@ -100,7 +100,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_pageSize == Size.Empty && _visual != null)
+                if (_pageSize == Size.Empty && _visual is not null)
                 {
                     return VisualTreeHelper.GetContentBounds(_visual).Size;
                 }
@@ -175,7 +175,7 @@ namespace System.Windows.Documents
         /// <param name="e">Event arguments for the PageDestroyed event.</param>
         protected void OnPageDestroyed(EventArgs e)
         {
-            if (this.PageDestroyed != null)
+            if (this.PageDestroyed is not null)
             {
                 this.PageDestroyed(this, e);
             }

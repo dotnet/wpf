@@ -54,7 +54,7 @@ namespace MS.Internal.AutomationProxies
         // don't call this constructor directly -- call a Create or Wrap function below.
         protected MsaaNativeProvider(Accessible acc, IntPtr hwnd, MsaaNativeProvider parent, MsaaNativeProvider knownRoot, RootStatus isRoot)
         {
-            Debug.Assert(acc != null, "acc");
+            Debug.Assert(acc is not null, "acc");
             Debug.Assert(hwnd != IntPtr.Zero);
 
             _acc = acc;
@@ -88,11 +88,11 @@ namespace MS.Internal.AutomationProxies
             // may need to reconstruct the parent chain to account for skipped-over ancestors: keep climbing
             // upwards till we reach the 'parent' that was passed in...
             MsaaNativeProvider parentChain = parent;
-            if (parent != null)
+            if (parent is not null)
             {
                 ArrayList actualParentChain = null;
                 Accessible scan = acc.Parent;
-                while (scan != null)
+                while (scan is not null)
                 {
                     if (Accessible.Compare(scan, parent._acc))
                         break; // found actual parent
@@ -103,7 +103,7 @@ namespace MS.Internal.AutomationProxies
                     scan = scan.Parent;
                 }
 
-                if (actualParentChain != null)
+                if (actualParentChain is not null)
                 {
                     // if we found intermediate ancestors, process them top-down, creating
                     // MsaaNativeProviders for each in turn, using the bottom-most one as
@@ -272,7 +272,7 @@ namespace MS.Internal.AutomationProxies
         {
             AutomationEvent eventId = AutomationEvent.LookupById(eventIdAsInt);
             AutomationProperty [] properties = null;
-            if (propertiesAsInts != null)
+            if (propertiesAsInts is not null)
             {
                 properties = new AutomationProperty[propertiesAsInts.Length];
                 for (int i = 0; i < propertiesAsInts.Length; i++)
@@ -290,7 +290,7 @@ namespace MS.Internal.AutomationProxies
         {
             AutomationEvent eventId = AutomationEvent.LookupById(eventIdAsInt);
             AutomationProperty [] properties = null;
-            if (propertiesAsInts != null)
+            if (propertiesAsInts is not null)
             {
                 properties = new AutomationProperty[propertiesAsInts.Length];
                 for (int i = 0; i < propertiesAsInts.Length; i++)
@@ -390,7 +390,7 @@ namespace MS.Internal.AutomationProxies
                 // get our parent's runtime ID
                 int[] parentId = ((IRawElementProviderFragment)Parent).GetRuntimeId();
 
-                if (parentId != null)
+                if (parentId is not null)
                 {
                     rval = new int[parentId.Length + 1];
                     parentId.CopyTo(rval, 0);
@@ -738,14 +738,14 @@ namespace MS.Internal.AutomationProxies
                 // get our next sibling and keep looking until we find one that is exposed or run out of siblings
                 Accessible siblingAcc;
                 for (siblingAcc = _acc.NextSibling(Parent._acc);
-                     siblingAcc != null && !siblingAcc.IsExposedToUIA;
+                     siblingAcc is not null && !siblingAcc.IsExposedToUIA;
                      siblingAcc = siblingAcc.NextSibling(Parent._acc))
                     ;
 
                 // If we found a sibling that is exposed then wrap it in a provider.
                 // IAccessibles with bad navigation may cause us to navigate outside of
                 // this fragment's hwnd.  Check that here and return null for that case.
-                if (siblingAcc != null && siblingAcc.InSameHwnd(_hwnd))
+                if (siblingAcc is not null && siblingAcc.InSameHwnd(_hwnd))
                 {
                     rval = Wrap(siblingAcc, _hwnd, _parent, _knownRoot, RootStatus.NotRoot);
                 }
@@ -764,14 +764,14 @@ namespace MS.Internal.AutomationProxies
                 // get our previous sibling and keep looking until we find one that is exposed or run out of siblings
                 Accessible siblingAcc;
                 for (siblingAcc = _acc.PreviousSibling(Parent._acc);
-                     siblingAcc != null && !siblingAcc.IsExposedToUIA;
+                     siblingAcc is not null && !siblingAcc.IsExposedToUIA;
                      siblingAcc = siblingAcc.PreviousSibling(Parent._acc))
                     ;
 
                 // If we found a sibling that is exposed then wrap it in a provider.
                 // IAccessibles with bad navigation may cause us to navigate outside of
                 // this fragment's hwnd.  Check that here and return null for that case.
-                if (siblingAcc != null && siblingAcc.InSameHwnd(_hwnd))
+                if (siblingAcc is not null && siblingAcc.InSameHwnd(_hwnd))
                 {
                     rval = Wrap(siblingAcc, _hwnd, _parent, _knownRoot, RootStatus.NotRoot);
                 }
@@ -787,14 +787,14 @@ namespace MS.Internal.AutomationProxies
             // get our first child. examine it and its siblings until we find one that is exposed or run out of children
             Accessible childAcc;
             for (childAcc = _acc.FirstChild;
-                 childAcc != null && !childAcc.IsExposedToUIA;
+                 childAcc is not null && !childAcc.IsExposedToUIA;
                  childAcc = childAcc.NextSibling(_acc))
                 ;
 
             // If we found a child that is exposed then wrap it in a provider.
             // IAccessibles with bad navigation may cause us to navigate outside of
             // this fragment's hwnd.  Check that here and return null for that case.
-            if (childAcc != null && childAcc.InSameHwnd(_hwnd))
+            if (childAcc is not null && childAcc.InSameHwnd(_hwnd))
             {
                 rval = Wrap(childAcc, _hwnd, this, _knownRoot, RootStatus.NotRoot);
             }
@@ -809,14 +809,14 @@ namespace MS.Internal.AutomationProxies
             // get our last child. examine it and its siblings until we find one that is exposed or run out of children
             Accessible childAcc;
             for (childAcc = _acc.LastChild;
-                 childAcc != null && !childAcc.IsExposedToUIA;
+                 childAcc is not null && !childAcc.IsExposedToUIA;
                  childAcc = childAcc.PreviousSibling(_acc))
                 ;
 
             // If we found a child that is exposed then wrap it in a provider.
             // IAccessibles with bad navigation may cause us to navigate outside of
             // this fragment's hwnd.  Check that here and return null for that case.
-            if (childAcc != null && childAcc.InSameHwnd(_hwnd))
+            if (childAcc is not null && childAcc.InSameHwnd(_hwnd))
             {
                 rval = Wrap(childAcc, _hwnd, this, _knownRoot, RootStatus.NotRoot);
             }
@@ -908,7 +908,7 @@ namespace MS.Internal.AutomationProxies
             else if (idProp == AutomationElement.ControlTypeProperty)
             {
                 ControlType ctype = ControlType;
-                if( ctype != null )
+                if( ctype is not null )
                     return ctype.Id;
                 else
                     return null;

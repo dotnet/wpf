@@ -35,7 +35,7 @@ namespace System.Windows.Interop
 
         public void OnRootChanged(Visual oldRoot, Visual newRoot)
         {
-            if(_active && newRoot != null)
+            if(_active && newRoot is not null)
             {
                 Keyboard.Focus(null); // internally we will set the focus to the root.
             }
@@ -351,7 +351,7 @@ namespace System.Windows.Interop
                             if (_restoreFocusWindow == IntPtr.Zero)
                             {
                                 DependencyObject focusedDO = Keyboard.FocusedElement as DependencyObject;
-                                if (focusedDO != null)
+                                if (focusedDO is not null)
                                 {
                                     HwndSource hwndSource = PresentationSource.CriticalFromVisual(focusedDO) as HwndSource;
                                     if (hwndSource == _source)
@@ -475,7 +475,7 @@ namespace System.Windows.Interop
                         DependencyObject restoreFocusDO = _restoreFocus as DependencyObject;
                         _restoreFocus = null;
 
-                        if (restoreFocusDO != null)
+                        if (restoreFocusDO is not null)
                         {
                             // Only restore focus to an element if that
                             // element still belongs to this HWND.
@@ -500,7 +500,7 @@ namespace System.Windows.Interop
                         if (focus == thisSource.CriticalHandle)
                         {
                             restoreFocusDO = (DependencyObject)Keyboard.FocusedElement;
-                            if (restoreFocusDO != null)
+                            if (restoreFocusDO is not null)
                             {
                                 HwndSource hwndSource = PresentationSource.CriticalFromVisual(restoreFocusDO) as HwndSource;
                                 if (hwndSource != thisSource)
@@ -741,7 +741,7 @@ namespace System.Windows.Interop
             if(hwnd != IntPtr.Zero)
             {
                 HwndSource hwndSource = HwndSource.CriticalFromHwnd(hwnd);
-                if(hwndSource != null)
+                if(hwndSource is not null)
                 {
                     if(hwndSource.Dispatcher == _source.Dispatcher)
                     {

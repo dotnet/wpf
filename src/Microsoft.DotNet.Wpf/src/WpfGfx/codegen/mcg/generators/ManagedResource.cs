@@ -90,7 +90,7 @@ namespace MS.Internal.MilCodeGen.Generators
                         attributes += "[ValueSerializer(typeof(" + resource.Name + "ValueSerializer))] // Used by MarkupWriter\n";
                     }
 
-                    if (resource.Extends != null)
+                    if (resource.Extends is not null)
                     {
                         extends.Add(resource.Extends.Name);
                     }
@@ -301,12 +301,12 @@ namespace MS.Internal.MilCodeGen.Generators
             string modifiersStr = String.Empty;
             string extendsStr = String.Empty;
 
-            if (modifiers != null && modifiers.Count > 0)
+            if (modifiers is not null && modifiers.Count > 0)
             {
                 modifiersStr = String.Join(" ", modifiers.ToArray()) + " ";
             }
 
-            if (extends != null && extends.Count > 0)
+            if (extends is not null && extends.Count > 0)
             {
                 extendsStr = " : " + String.Join(", ", extends.ToArray());
             }
@@ -750,7 +750,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                             if ((e.OldValueSource != BaseValueSourceInternal.Default) || e.IsOldValueModified)
                                             {
                                                 oldCollection = ([[field.Type.ManagedName]]) e.OldValue;
-                                                if ((oldCollection != null) && !oldCollection.IsFrozen)
+                                                if ((oldCollection is not null) && !oldCollection.IsFrozen)
                                                 {
                                                     [[removeListHandler]]
                                                 }
@@ -760,7 +760,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                             if ((e.NewValueSource != BaseValueSourceInternal.Default) || e.IsNewValueModified)
                                             {
                                                 newCollection = ([[field.Type.ManagedName]]) e.NewValue;
-                                                if ((newCollection != null) && !newCollection.IsFrozen)
+                                                if ((newCollection is not null) && !newCollection.IsFrozen)
                                                 {
                                                     [[addListHandler]]
                                                 }
@@ -773,7 +773,7 @@ namespace MS.Internal.MilCodeGen.Generators
                             {
                                 cs.Write(
                                     [[inline]]
-                                            if (oldCollection != newCollection && target.Dispatcher != null)
+                                            if (oldCollection != newCollection && target.Dispatcher is not null)
                                             {
                                                 using (CompositionEngineLock.Acquire())
                                                 {
@@ -790,24 +790,24 @@ namespace MS.Internal.MilCodeGen.Generators
                                                         // 2) Codegen already made sure the collection contains DUCE.IResources
                                                         // ... so we'll Assert it
 
-                                                        if (newCollection != null)
+                                                        if (newCollection is not null)
                                                         {
                                                             int count = newCollection.Count;
                                                             for (int i = 0; i < count; i++)
                                                             {
                                                                 DUCE.IResource resource = newCollection.Internal_GetItem(i) as DUCE.IResource;
-                                                                Debug.Assert(resource != null);
+                                                                Debug.Assert(resource is not null);
                                                                 resource.AddRefOnChannel(channel);
                                                             }
                                                         }
 
-                                                        if (oldCollection != null)
+                                                        if (oldCollection is not null)
                                                         {
                                                             int count = oldCollection.Count;
                                                             for (int i = 0; i < count; i++)
                                                             {
                                                                 DUCE.IResource resource = oldCollection.Internal_GetItem(i) as DUCE.IResource;
-                                                                Debug.Assert(resource != null);
+                                                                Debug.Assert(resource is not null);
                                                                 resource.ReleaseOnChannel(channel);
                                                             }
                                                         }
@@ -863,10 +863,10 @@ namespace MS.Internal.MilCodeGen.Generators
                                             // only be done on UIElement.
                                             //
                                             UIElement element = (UIElement)oldV;
-                                            Debug.Assert(element != null);
+                                            Debug.Assert(element is not null);
                                             element.LayoutUpdated -= target.OnLayoutUpdated;
 
-                                            Debug.Assert(target._DispatcherLayoutResult != null);
+                                            Debug.Assert(target._DispatcherLayoutResult is not null);
                                             Debug.Assert(target._DispatcherLayoutResult.Status == System.Windows.Threading.DispatcherOperationStatus.Pending);
                                             bool abortStatus = target._DispatcherLayoutResult.Abort();
                                             Debug.Assert(abortStatus);
@@ -877,7 +877,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                         [[field.Type.ManagedName]] newV = ([[field.Type.ManagedName]]) e.NewValue;
                                         System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-                                        if (dispatcher != null)
+                                        if (dispatcher is not null)
                                         {
                                             DUCE.IResource targetResource = (DUCE.IResource)target;
                                             using (CompositionEngineLock.Acquire())
@@ -906,7 +906,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                         [[field.Type.ManagedName]] newV = ([[field.Type.ManagedName]]) e.NewValue;
                                         System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-                                        if (dispatcher != null)
+                                        if (dispatcher is not null)
                                         {
                                             DUCE.IResource targetResource = (DUCE.IResource)target;
                                             using (CompositionEngineLock.Acquire())
@@ -1198,7 +1198,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 if (field.Default != "")
                 {
                     McgResource fieldResource = field.Type as McgResource;
-                    if (fieldResource != null && fieldResource.IsFreezable)
+                    if (fieldResource is not null && fieldResource.IsFreezable)
                     {
                         cs.WriteBlock(
                             [[inline]]
@@ -1535,7 +1535,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 string newKeyword = "";
                 McgResource parent = resource.Extends as McgResource;
 
-                if (parent != null && !parent.IsAbstract)
+                if (parent is not null && !parent.IsAbstract)
                 {
                     newKeyword = "new ";
                 }
@@ -1785,10 +1785,10 @@ namespace MS.Internal.MilCodeGen.Generators
                         else
                         {
                             // Genenerate handle assignment without checking for a MarshalledIdentity
-                            // E.g., DUCE.ResourceHandle hTransform = vTransform != null ? ((DUCE.IResource)vTransform).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                            // E.g., DUCE.ResourceHandle hTransform = vTransform is not null ? ((DUCE.IResource)vTransform).GetHandle(channel) : DUCE.ResourceHandle.Null;
                             duceUpdate.Write(
                                 [[inline]]
-                                    DUCE.ResourceHandle h[[resourceField.PropertyName]] = v[[resourceField.PropertyName]] != null ? ((DUCE.IResource)v[[resourceField.PropertyName]]).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                                    DUCE.ResourceHandle h[[resourceField.PropertyName]] = v[[resourceField.PropertyName]] is not null ? ((DUCE.IResource)v[[resourceField.PropertyName]]).GetHandle(channel) : DUCE.ResourceHandle.Null;
                                 [[/inline]]
                                 );
                         }
@@ -1803,7 +1803,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 {
                     string visualHandleString =
                         [[inline]]
-                            DUCE.ResourceHandle  h{propertyName} = v{propertyName} != null ? ((DUCE.IResource)v{propertyName}).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                            DUCE.ResourceHandle  h{propertyName} = v{propertyName} is not null ? ((DUCE.IResource)v{propertyName}).GetHandle(channel) : DUCE.ResourceHandle.Null;
                         [[/inline]];
 
                     duceUpdate.WriteBlock(
@@ -2149,7 +2149,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
                     {managedType} v{propertyName} = {propertyName};
 
-                    if (v{propertyName} != null)
+                    if (v{propertyName} is not null)
                     {
                         int count = v{propertyName}.Count;
                         for (int i = 0; i < count; i++)
@@ -2163,12 +2163,12 @@ namespace MS.Internal.MilCodeGen.Generators
                 [[inline]]
                     [[Helpers.CodeGenHelpers.WriteFieldStatements(resourceFields,
                                                           "{managedType} v{propertyName} = {propertyName};\n" +
-                                                          "if (v{propertyName} != null) ((DUCE.IResource)v{propertyName}).AddRefOnChannel(channel);")]]
+                                                          "if (v{propertyName} is not null) ((DUCE.IResource)v{propertyName}).AddRefOnChannel(channel);")]]
                 [[/inline]];
 
             string visualAddRef = Helpers.CodeGenHelpers.WriteFieldStatements(visualFields,
                                                           "{managedType} v{propertyName} = {propertyName};\n" +
-                                                          "if (v{propertyName} != null) v{propertyName}.AddRefOnChannelForCyclicBrush(this, channel);");
+                                                          "if (v{propertyName} is not null) v{propertyName}.AddRefOnChannelForCyclicBrush(this, channel);");
             if (visualAddRef != String.Empty)
             {
                 duceAddRef = duceAddRef + visualAddRef;
@@ -2188,7 +2188,7 @@ namespace MS.Internal.MilCodeGen.Generators
             {
                 McgResource collectionType = resource.CollectionType as McgResource;
 
-                if ((collectionType != null) &&
+                if ((collectionType is not null) &&
                     collectionType.HasUnmanagedResource)
                 {
                     addRefCollection =
@@ -2292,7 +2292,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
                     {managedType} v{propertyName} = {propertyName};
 
-                    if (v{propertyName} != null)
+                    if (v{propertyName} is not null)
                     {
                         int count = v{propertyName}.Count;
                         for (int i = 0; i < count; i++)
@@ -2306,12 +2306,12 @@ namespace MS.Internal.MilCodeGen.Generators
                 [[inline]]
                     [[Helpers.CodeGenHelpers.WriteFieldStatements(resourceFields,
                                                           "{managedType} v{propertyName} = {propertyName};\n" +
-                                                          "if (v{propertyName} != null) ((DUCE.IResource)v{propertyName}).ReleaseOnChannel(channel);")]]
+                                                          "if (v{propertyName} is not null) ((DUCE.IResource)v{propertyName}).ReleaseOnChannel(channel);")]]
                 [[/inline]];
 
             string visualRelease = Helpers.CodeGenHelpers.WriteFieldStatements(visualFields,
                                                           "{managedType} v{propertyName} = {propertyName};\n" +
-                                                          "if (v{propertyName} != null) v{propertyName}.ReleaseOnChannelForCyclicBrush(this, channel);");
+                                                          "if (v{propertyName} is not null) v{propertyName}.ReleaseOnChannelForCyclicBrush(this, channel);");
 
             if (visualRelease != String.Empty)
             {
@@ -2584,7 +2584,7 @@ namespace MS.Internal.MilCodeGen.Generators
             {
                 McgResource fieldResource = field.Type as McgResource;
 
-                if (fieldResource != null
+                if (fieldResource is not null
                     && fieldResource.IsFreezable
                     && fieldResource.IsCollectionOfHandles)
                 {
@@ -2593,7 +2593,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
                             private void [[field.PropertyName]]ItemInserted(object sender, object item)
                             {
-                                if (this.Dispatcher != null)
+                                if (this.Dispatcher is not null)
                                 {
                                     DUCE.IResource thisResource = (DUCE.IResource)this;
                                     using (CompositionEngineLock.Acquire())
@@ -2608,7 +2608,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
                                             // We're on a channel, which means our dependents are also on the channel.
                                             DUCE.IResource addResource = item as DUCE.IResource;
-                                            if (addResource != null)
+                                            if (addResource is not null)
                                             {
                                                 addResource.AddRefOnChannel(channel);
                                             }
@@ -2621,7 +2621,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
                             private void [[field.PropertyName]]ItemRemoved(object sender, object item)
                             {
-                                if (this.Dispatcher != null)
+                                if (this.Dispatcher is not null)
                                 {
                                     DUCE.IResource thisResource = (DUCE.IResource)this;
                                     using (CompositionEngineLock.Acquire())
@@ -2638,7 +2638,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
                                             // We're on a channel, which means our dependents are also on the channel.
                                             DUCE.IResource releaseResource = item as DUCE.IResource;
-                                            if (releaseResource != null)
+                                            if (releaseResource is not null)
                                             {
                                                 releaseResource.ReleaseOnChannel(channel);
                                             }
@@ -2685,7 +2685,7 @@ namespace MS.Internal.MilCodeGen.Generators
         private string WriteCallBase(McgResource resource, string methodInvokation)
         {
             // Protect against CS0205: Cannot call an abstract base member.
-            if (resource.Extends != null)
+            if (resource.Extends is not null)
             {
                 return
                     [[inline]]
@@ -2729,13 +2729,13 @@ namespace MS.Internal.MilCodeGen.Generators
 
             cs.WriteBlock(
                 [[inline]]
-                    if (_animations != null)
+                    if (_animations is not null)
                     {
                         [[Helpers.CodeGenHelpers.WriteFieldStatements(fields, notNullStatement)]]
                     }
                 [[/inline]]
             );
-            if (nullStatement != null)
+            if (nullStatement is not null)
             {
                 cs.WriteBlock(
                     [[inline]]
@@ -2797,7 +2797,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     );
                 }
 
-                if (resource.Extends != null)
+                if (resource.Extends is not null)
                 {
                     modifiers = "override";
                 }
@@ -2829,12 +2829,12 @@ namespace MS.Internal.MilCodeGen.Generators
 
              // Should we emit the parse code?
              if (resource.IsCollection ||
-                 ((resource.ParseMethod != null) && (resource.ParseMethod.Length > 0)))
+                 ((resource.ParseMethod is not null) && (resource.ParseMethod.Length > 0)))
              {
                  string parseBody;
 
                  // A ParseMethod trumps the automatic handling of a collection
-                 if ((resource.ParseMethod != null) && (resource.ParseMethod.Length > 0))
+                 if ((resource.ParseMethod is not null) && (resource.ParseMethod.Length > 0))
                  {
                      parseBody = "return " + resource.ParseMethod + "(source, formatProvider);\n";
                  }

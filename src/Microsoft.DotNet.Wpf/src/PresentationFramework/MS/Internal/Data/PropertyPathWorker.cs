@@ -125,10 +125,10 @@ namespace MS.Internal.Data
                         DynamicPropertyAccessor dpa;
 
                         SetPropertyInfo(GetAccessor(level), out pi, out pd, out dp, out dpa);
-                        return (dp != null) ? dp.Name :
-                                (pi != null) ? pi.Name :
-                                (pd != null) ? pd.Name :
-                                (dpa != null) ? dpa.PropertyName : null;
+                        return (dp is not null) ? dp.Name :
+                                (pi is not null) ? pi.Name :
+                                (pd is not null) ? pd.Name :
+                                (dpa is not null) ? dpa.PropertyName : null;
 
                     case SourceValueType.Indexer:
                         // return the indexer string, e.g. "[foo]"
@@ -181,8 +181,8 @@ namespace MS.Internal.Data
 
             // unwrap the IList wrapper, if any
             IListIndexerArg wrapper;
-            if (args != null && args.Length == 1 &&
-                (wrapper = args[0] as IListIndexerArg) != null)
+            if (args is not null && args.Length == 1 &&
+                (wrapper = args[0] as IListIndexerArg) is not null)
             {
                 return new object[] { wrapper.Value };
             }
@@ -240,16 +240,16 @@ namespace MS.Internal.Data
             switch (SVI[level].type)
             {
                 case SourceValueType.Property:
-                    if (pi != null)
+                    if (pi is not null)
                     {
                         value = pi.GetValue(item, null);
                     }
-                    else if (pd != null)
+                    else if (pd is not null)
                     {
                         bool indexerIsNext = (level + 1 < SVI.Length && SVI[level + 1].type == SourceValueType.Indexer);
                         value = Engine.GetValue(item, pd, indexerIsNext);
                     }
-                    else if (dp != null)
+                    else if (dp is not null)
                     {
                         DependencyObject d = (DependencyObject)item;
                         if (level != Length - 1 || _host is null || _host.TransfersDefaultValue)
@@ -259,7 +259,7 @@ namespace MS.Internal.Data
                         else
                             value = BindingExpression.IgnoreDefaultValue;
                     }
-                    else if (dpa != null)
+                    else if (dpa is not null)
                     {
                         value = dpa.GetValue(item);
                     }
@@ -268,13 +268,13 @@ namespace MS.Internal.Data
                 case SourceValueType.Indexer:
                     DynamicIndexerAccessor dia;
                     // how do we get an indexed value from a PropertyDescriptor?
-                    if (pi != null)
+                    if (pi is not null)
                     {
                         object[] args = _arySVS[level].args;
 
                         IListIndexerArg wrapper;
-                        if (args != null && args.Length == 1 &&
-                            (wrapper = args[0] as IListIndexerArg) != null)
+                        if (args is not null && args.Length == 1 &&
+                            (wrapper = args[0] as IListIndexerArg) is not null)
                         {
                             // common special case: IList indexer.  Avoid
                             // out-of-range exceptions.
@@ -299,7 +299,7 @@ namespace MS.Internal.Data
                                             CultureInfo.InvariantCulture);
                         }
                     }
-                    else if ((dia = _arySVS[level].info as DynamicIndexerAccessor) != null)
+                    else if ((dia = _arySVS[level].info as DynamicIndexerAccessor) is not null)
                     {
                         value = dia.GetValue(item, _arySVS[level].args);
                     }
@@ -358,19 +358,19 @@ namespace MS.Internal.Data
             switch (SVI[level].type)
             {
                 case SourceValueType.Property:
-                    if (pd != null)
+                    if (pd is not null)
                     {
                         pd.SetValue(item, value);
                     }
-                    else if (pi != null)
+                    else if (pi is not null)
                     {
                         pi.SetValue(item, value, null);
                     }
-                    else if (dp != null)
+                    else if (dp is not null)
                     {
                         ((DependencyObject)item).SetValue(dp, value);
                     }
-                    else if (dpa != null)
+                    else if (dpa is not null)
                     {
                         dpa.SetValue(item, value);
                     }
@@ -379,14 +379,14 @@ namespace MS.Internal.Data
                 case SourceValueType.Indexer:
                     DynamicIndexerAccessor dia;
                     //  How do we set an indexed value on a PropertyDescriptor?
-                    if (pi != null)
+                    if (pi is not null)
                     {
                         pi.SetValue(item, value,
                                         BindingFlags.SetProperty, null,
                                         GetIndexerArguments(level),
                                         CultureInfo.InvariantCulture);
                     }
-                    else if ((dia = _arySVS[level].info as DynamicIndexerAccessor) != null)
+                    else if ((dia = _arySVS[level].info as DynamicIndexerAccessor) is not null)
                     {
                         dia.SetValue(item, _arySVS[level].args, value);
                     }
@@ -548,7 +548,7 @@ namespace MS.Internal.Data
 #pragma warning disable 56500
             try
             {
-                result = (pi != null) && pi.GetIndexParameters().Length > 0;
+                result = (pi is not null) && pi.GetIndexParameters().Length > 0;
             }
             catch (Exception ex)
             {
@@ -594,7 +594,7 @@ namespace MS.Internal.Data
             // give host a chance to shut down the binding if the target has
             // gone away
             DependencyObject target = null;
-            if (_host != null)
+            if (_host is not null)
             {
                 target = _host.CheckTarget();
                 if (_rootItem != BindingExpression.NullDataItem && target is null)
@@ -616,7 +616,7 @@ namespace MS.Internal.Data
             _dependencySourcesChanged = false;
 
             // Update the current item at level k, if requested
-            if (collectionView != null)
+            if (collectionView is not null)
             {
                 Debug.Assert(0 <= k && k < _arySVS.Length && _arySVS[k].collectionView == collectionView, "bad parameters to UpdateSourceValueState");
                 ReplaceItem(k, collectionView.CurrentItem, NoParent);
@@ -649,14 +649,14 @@ namespace MS.Internal.Data
 
                 // replace view, if necessary
                 ICollectionView newCollectionView = _arySVS[k].collectionView;
-                if (oldCollectionView != newCollectionView && _host != null)
+                if (oldCollectionView != newCollectionView && _host is not null)
                 {
                     _host.ReplaceCurrentItem(oldCollectionView, newCollectionView);
                 }
             }
 
             // notify binding about what happened
-            if (_host != null)
+            if (_host is not null)
             {
                 if (initialLevel < _arySVS.Length)
                 {
@@ -703,36 +703,36 @@ namespace MS.Internal.Data
 
                 if (oldO == BindingExpression.StaticSource)
                 {
-                    Type declaringType = (oldPI != null) ? oldPI.DeclaringType
-                                        : (oldPD != null) ? oldPD.ComponentType
+                    Type declaringType = (oldPI is not null) ? oldPI.DeclaringType
+                                        : (oldPD is not null) ? oldPD.ComponentType
                                         : null;
-                    if (declaringType != null)
+                    if (declaringType is not null)
                     {
                         StaticPropertyChangedEventManager.RemoveHandler(declaringType, OnStaticPropertyChanged, SVI[k].propertyName);
                     }
                 }
-                else if (oldDP != null)
+                else if (oldDP is not null)
                 {
                     _dependencySourcesChanged = true;
                 }
-                else if ((oldPC = oldO as INotifyPropertyChanged) != null)
+                else if ((oldPC = oldO as INotifyPropertyChanged) is not null)
                 {
                     PropertyChangedEventManager.RemoveHandler(oldPC, OnPropertyChanged, SVI[k].propertyName);
                 }
-                else if (oldPD != null && oldO != null)
+                else if (oldPD is not null && oldO is not null)
                 {
                     ValueChangedEventManager.RemoveHandler(oldO, OnValueChanged, oldPD);
                 }
             }
 
             // extra work at the last level
-            if (_host != null && k == Length - 1)
+            if (_host is not null && k == Length - 1)
             {
                 // handle INotifyDataErrorInfo
                 if (IsDynamic && _host.ValidatesOnNotifyDataErrors)
                 {
                     INotifyDataErrorInfo indei = oldO as INotifyDataErrorInfo;
-                    if (indei != null)
+                    if (indei is not null)
                     {
                         ErrorsChangedEventManager.RemoveHandler(indei, OnErrorsChanged);
                     }
@@ -800,7 +800,7 @@ namespace MS.Internal.Data
                             return BindingExpression.GetReference((k == 0) ? _rootItem : _arySVS[k - 1].item);
                         });
 
-                    if (view != null && drillIn != DrillIn.Always)
+                    if (view is not null && drillIn != DrillIn.Always)
                     {
                         if (view != parent)             // don't duplicate work
                             GetInfo(k, view, ref svs);
@@ -808,10 +808,10 @@ namespace MS.Internal.Data
                 }
 
                 // if that fails, drill in to the current item
-                if (svs.info is null && drillIn != DrillIn.Never && view != null)
+                if (svs.info is null && drillIn != DrillIn.Never && view is not null)
                 {
                     newO = view.CurrentItem;
-                    if (newO != null)
+                    if (newO is not null)
                     {
                         GetInfo(k, newO, ref svs);
                         svs.collectionView = view;
@@ -875,30 +875,30 @@ namespace MS.Internal.Data
 
                 if (newO == BindingExpression.StaticSource)
                 {
-                    Type declaringType = (newPI != null) ? newPI.DeclaringType
-                                        : (newPD != null) ? newPD.ComponentType
+                    Type declaringType = (newPI is not null) ? newPI.DeclaringType
+                                        : (newPD is not null) ? newPD.ComponentType
                                         : null;
-                    if (declaringType != null)
+                    if (declaringType is not null)
                     {
                         StaticPropertyChangedEventManager.AddHandler(declaringType, OnStaticPropertyChanged, SVI[k].propertyName);
                     }
                 }
-                else if (newDP != null)
+                else if (newDP is not null)
                 {
                     _dependencySourcesChanged = true;
                 }
-                else if ((newPC = newO as INotifyPropertyChanged) != null)
+                else if ((newPC = newO as INotifyPropertyChanged) is not null)
                 {
                     PropertyChangedEventManager.AddHandler(newPC, OnPropertyChanged, SVI[k].propertyName);
                 }
-                else if (newPD != null && newO != null)
+                else if (newPD is not null && newO is not null)
                 {
                     ValueChangedEventManager.AddHandler(newO, OnValueChanged, newPD);
                 }
             }
 
             // extra work at the last level
-            if (_host != null && k == Length - 1)
+            if (_host is not null && k == Length - 1)
             {
                 // set up the default transformer
                 _host.SetupDefaultValueConverter(svs.type);
@@ -913,7 +913,7 @@ namespace MS.Internal.Data
                 if (_host.ValidatesOnNotifyDataErrors)
                 {
                     INotifyDataErrorInfo indei = newO as INotifyDataErrorInfo;
-                    if (indei != null)
+                    if (indei is not null)
                     {
                         if (IsDynamic)
                         {
@@ -931,7 +931,7 @@ namespace MS.Internal.Data
             // report cannot find info.  Ignore when in priority bindings.
             if (TraceData.IsEnabled)
             {
-                BindingExpression bindingExpression = (_host != null) ? _host.ParentBindingExpression : null;
+                BindingExpression bindingExpression = (_host is not null) ? _host.ParentBindingExpression : null;
                 if (bindingExpression is null || !bindingExpression.IsInPriorityBindingExpression)
                 {
                     if (!SystemXmlHelper.IsEmptyXmlDataCollection(parent))
@@ -958,7 +958,7 @@ namespace MS.Internal.Data
                         }
                         else
                         {
-                            TraceEventType traceType = (bindingExpression != null) ? bindingExpression.TraceLevel : TraceEventType.Error;
+                            TraceEventType traceType = (bindingExpression is not null) ? bindingExpression.TraceLevel : TraceEventType.Error;
                             TraceData.TraceAndNotify(traceType, TraceData.ClrReplaceItem(cs, ps, os), bindingExpression,
                                 traceParameters: new object[] { bindingExpression },
                                 eventParameters: new object[] { cs, parent, inCollection });
@@ -966,7 +966,7 @@ namespace MS.Internal.Data
                     }
                     else
                     {
-                        TraceEventType traceType = (bindingExpression != null) ? bindingExpression.TraceLevel : TraceEventType.Error;
+                        TraceEventType traceType = (bindingExpression is not null) ? bindingExpression.TraceLevel : TraceEventType.Error;
                         _host.ReportBadXPath(traceType);
                     }
                 }
@@ -985,7 +985,7 @@ namespace MS.Internal.Data
             for (int level = 0, n = Length; level < n; ++level)
             {
                 ICollectionView view = _arySVS[level].collectionView;
-                if (view != null)
+                if (view is not null)
                 {
                     item = view.CurrentItem;
                 }
@@ -1084,7 +1084,7 @@ namespace MS.Internal.Data
             if (cacheAccessor)
             {
                 AccessorInfo accessorInfo = Engine.AccessorTable[SVI[k].type, newType, SVI[k].name];
-                if (accessorInfo != null)
+                if (accessorInfo is not null)
                 {
                     svs.info = accessorInfo.Accessor;
                     svs.type = accessorInfo.PropertyType;
@@ -1146,7 +1146,7 @@ namespace MS.Internal.Data
                     DynamicObjectAccessor doa;
                     PropertyPath.DowncastAccessor(info, out dp, out pi1, out pd, out doa);
 
-                    if (dp != null)
+                    if (dp is not null)
                     {
                         sourceType = dp.PropertyType;
                         if (IsDynamic)
@@ -1159,15 +1159,15 @@ namespace MS.Internal.Data
                         }
                         break;
                     }
-                    else if (pi1 != null)
+                    else if (pi1 is not null)
                     {
                         sourceType = pi1.PropertyType;
                     }
-                    else if (pd != null)
+                    else if (pd is not null)
                     {
                         sourceType = pd.PropertyType;
                     }
-                    else if (doa != null)
+                    else if (doa is not null)
                     {
                         sourceType = doa.PropertyType;
 #if DEBUG
@@ -1210,7 +1210,7 @@ namespace MS.Internal.Data
                         for (int jj = 0; jj < defaultMembers.Length; ++jj)
                         {
                             PropertyInfo pi = defaultMembers[jj] as PropertyInfo;
-                            if (pi != null)
+                            if (pi is not null)
                             {
                                 if (MatchIndexerParameters(pi, aryInfo, args, isIList))
                                 {
@@ -1278,8 +1278,8 @@ namespace MS.Internal.Data
                 if (item != BindingExpression.GetReference(svs.item))
                     sb.AppendLine($"  Item is wrong: expected '{item}' got '{BindingExpression.GetReference(svs.item)}'");
 
-                int len1 = (args != null) ? args.Length : 0;
-                int len2 = (svs.args != null) ? svs.args.Length : 0;
+                int len1 = (args is not null) ? args.Length : 0;
+                int len2 = (svs.args is not null) ? svs.args.Length : 0;
                 if (len1 == len2)
                 {
                     for (int i=0; i<len1; ++i)
@@ -1313,7 +1313,7 @@ namespace MS.Internal.Data
             // cache the answer, to avoid doing all that reflection again
             // (but not if the answer is a PropertyDescriptor,
             // since then the answer potentially depends on the item itself)
-            if (cacheAccessor && info != null && !(info is PropertyDescriptor))
+            if (cacheAccessor && info is not null && !(info is PropertyDescriptor))
             {
                 Engine.AccessorTable[SVI[k].type, newType, SVI[k].name] =
                             new AccessorInfo(info, sourceType, args);
@@ -1358,15 +1358,15 @@ namespace MS.Internal.Data
             ParameterInfo[] aryPI = pi?.GetIndexParameters();
 
             // must have the right number of parameters
-            if (aryPI != null && aryPI.Length != aryInfo.Length)
+            if (aryPI is not null && aryPI.Length != aryInfo.Length)
                 return false;
 
             // each parameter must be settable from user-specified type or from a string
             for (int i = 0; i < args.Length; ++i)
             {
                 IndexerParameterInfo pInfo = aryInfo[i];
-                Type paramType = (aryPI != null) ? aryPI[i].ParameterType : typeof(Object);
-                if (pInfo.type != null)
+                Type paramType = (aryPI is not null) ? aryPI[i].ParameterType : typeof(Object);
+                if (pInfo.type is not null)
                 {
                     // Check that a user-specified type is compatible with the parameter type
                     if (paramType.IsAssignableFrom(pInfo.type))
@@ -1406,7 +1406,7 @@ namespace MS.Internal.Data
                     else
                     {
                         TypeConverter tc = TypeDescriptor.GetConverter(paramType);
-                        if (tc != null && tc.CanConvertFrom(typeof(string)))
+                        if (tc is not null && tc.CanConvertFrom(typeof(string)))
                         {
                             arg = tc.ConvertFromString(null, TypeConverterHelper.InvariantEnglishUS,
                                                             (string)pInfo.value);
@@ -1424,7 +1424,7 @@ namespace MS.Internal.Data
                         arg = pInfo.value;
                     }
 
-                    if (arg != null)
+                    if (arg is not null)
                         args.SetValue(arg, i);
                     else
                         return false;
@@ -1492,7 +1492,7 @@ namespace MS.Internal.Data
             if (SystemDataHelper.IsDataRowView(item))
             {
                 PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(item);
-                if (properties[name] != null)
+                if (properties[name] is not null)
                     return true;
 
                 int index;
@@ -1526,15 +1526,15 @@ namespace MS.Internal.Data
             // try to get the value, unless (a) binding is being detached,
             // (b) no info - e.g. Nullable with no value, or (c) item expected
             // but not present - e.g. currency moved off the end.
-            if (item != BindingExpression.NullDataItem && info != null && !(item is null && info != DependencyProperty.UnsetValue))
+            if (item != BindingExpression.NullDataItem && info is not null && !(item is null && info != DependencyProperty.UnsetValue))
             {
                 object o = DependencyProperty.UnsetValue;
                 DependencyProperty dp = info as DependencyProperty;
 
                 // if the binding is async, post a request to get the value
-                if (!(dp != null || SVI[k].type == SourceValueType.Direct))
+                if (!(dp is not null || SVI[k].type == SourceValueType.Direct))
                 {
-                    if (_host != null && _host.AsyncGet(item, k))
+                    if (_host is not null && _host.AsyncGet(item, k))
                     {
                         _status = PropertyPathStatus.AsyncRequestPending;
                         return AsyncRequestPending;
@@ -1561,12 +1561,12 @@ namespace MS.Internal.Data
                     if (CriticalExceptions.IsCriticalApplicationException(ex))
                         throw;
                     BindingOperations.LogException(ex);
-                    if (_host != null)
+                    if (_host is not null)
                         _host.ReportGetValueError(k, item, ex);
                 }
                 catch // non CLS compliant exception
                 {
-                    if (_host != null)
+                    if (_host is not null)
                         _host.ReportGetValueError(k, item, new InvalidOperationException(SR.Format(SR.NonCLSException, "GetValue")));
                 }
 
@@ -1574,7 +1574,7 @@ namespace MS.Internal.Data
                 if (o == IListIndexOutOfRange)
                 {
                     o = DependencyProperty.UnsetValue;
-                    if (_host != null)
+                    if (_host is not null)
                         _host.ReportGetValueError(k, item, new ArgumentOutOfRangeException("index"));
                 }
 
@@ -1584,7 +1584,7 @@ namespace MS.Internal.Data
                 return o;
             }
 
-            if (_host != null)
+            if (_host is not null)
             {
                 _host.ReportRawValueErrors(k, item, info);
             }
@@ -1620,22 +1620,22 @@ namespace MS.Internal.Data
             DynamicPropertyAccessor dpa;
             SetPropertyInfo(info, out pi, out pd, out dp, out dpa);
 
-            if (pi != null)
+            if (pi is not null)
             {
                 if (IsPropertyReadOnly(item, pi))
                     throw new InvalidOperationException(SR.Format(SR.CannotWriteToReadOnly, item.GetType(), pi.Name));
             }
-            else if (pd != null)
+            else if (pd is not null)
             {
                 if (pd.IsReadOnly)
                     throw new InvalidOperationException(SR.Format(SR.CannotWriteToReadOnly, item.GetType(), pd.Name));
             }
-            else if (dp != null)
+            else if (dp is not null)
             {
                 if (dp.ReadOnly)
                     throw new InvalidOperationException(SR.Format(SR.CannotWriteToReadOnly, item.GetType(), dp.Name));
             }
-            else if (dpa != null)
+            else if (dpa is not null)
             {
                 if (dpa.IsReadOnly)
                     throw new InvalidOperationException(SR.Format(SR.CannotWriteToReadOnly, item.GetType(), dpa.PropertyName));
@@ -1703,7 +1703,7 @@ namespace MS.Internal.Data
             bool result = false;
             object item = GetItem(Length - 1);
 
-            if (item != null && AssemblyHelper.IsLoaded(UncommonAssembly.System_Data_Common))
+            if (item is not null && AssemblyHelper.IsLoaded(UncommonAssembly.System_Data_Common))
             {
                 result = DetermineWhetherDBNullIsValid(item);
             }
@@ -1719,10 +1719,10 @@ namespace MS.Internal.Data
             DynamicPropertyAccessor dpa;
             SetPropertyInfo(_arySVS[Length - 1].info, out pi, out pd, out dp, out dpa);
 
-            string columnName = (pd != null) ? pd.Name :
-                                (pi != null) ? pi.Name : null;
+            string columnName = (pd is not null) ? pd.Name :
+                                (pi is not null) ? pi.Name : null;
 
-            object arg = (columnName == "Item" && pi != null) ? _arySVS[Length - 1].args[0] : null;
+            object arg = (columnName == "Item" && pi is not null) ? _arySVS[Length - 1].args[0] : null;
 
             return SystemDataHelper.DetermineWhetherDBNullIsValid(item, columnName, arg);
         }
@@ -1790,7 +1790,7 @@ namespace MS.Internal.Data
 
         bool IsExtendedTraceEnabled(TraceDataLevel level)
         {
-            if (_host != null)
+            if (_host is not null)
             {
                 return TraceData.IsExtendedTraceEnabled(_host.ParentBindingExpression, level);
             }

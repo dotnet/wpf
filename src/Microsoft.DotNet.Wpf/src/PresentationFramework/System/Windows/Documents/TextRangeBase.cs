@@ -259,7 +259,7 @@ namespace System.Windows.Documents
             {
                 TableCell cell;
                 if (thisRange.Start is TextPointer &&
-                    (cell = TextRangeEditTables.GetTableCellFromPosition((TextPointer)thisRange.Start)) != null)
+                    (cell = TextRangeEditTables.GetTableCellFromPosition((TextPointer)thisRange.Start)) is not null)
                 {
                     // Select the first cell content to make springload formatting happen below
                     thisRange.Select(cell.ContentStart, cell.ContentEnd);
@@ -616,7 +616,7 @@ namespace System.Windows.Documents
             {
                 // Make sure we close the undo record no matter what happened.
                 changeBlockUndoRecord = (ChangeBlockUndoRecord)thisRange._ChangeBlockUndoRecord;
-                if (changeBlockUndoRecord != null && thisRange._ChangeBlockLevel == 0)
+                if (changeBlockUndoRecord is not null && thisRange._ChangeBlockLevel == 0)
                 {
                     try
                     {
@@ -813,7 +813,7 @@ namespace System.Windows.Documents
             // Note that we do not expect List tag balansing:
             // We can get more List closing tags than we had opening ones -
             // it happens when range starts in the middle of a list.
-            if (listItemCounter != null && listItemCounter.Count > 0)
+            if (listItemCounter is not null && listItemCounter.Count > 0)
             {
                 listItemCounter.Pop();
             }
@@ -843,8 +843,8 @@ namespace System.Windows.Documents
                 // Get list item number
                 Invariant.Assert(listItemCounter.Count > 0, "expectinng listItemCounter.Count > 0");
                 int listItemIndex = listItemCounter.Pop();
-                int indexBase = list != null ? list.StartIndex : 0;
-                TextMarkerStyle markerStyle = list != null ? list.MarkerStyle : TextMarkerStyle.Disc;
+                int indexBase = list is not null ? list.StartIndex : 0;
+                TextMarkerStyle markerStyle = list is not null ? list.MarkerStyle : TextMarkerStyle.Disc;
 
                 WriteListMarker(textBuffer, markerStyle, listItemIndex + indexBase);
 
@@ -932,11 +932,11 @@ namespace System.Windows.Documents
                     break;
             }
 
-            if (markerText != null)
+            if (markerText is not null)
             {
                 textBuffer.Append(markerText);
             }
-            else if (charArray != null)
+            else if (charArray is not null)
             {
                 textBuffer.Append(charArray, 0, charArray.Length);
             }
@@ -1191,7 +1191,7 @@ namespace System.Windows.Documents
         {
             NormalizeRange(thisRange);
 
-            Invariant.Assert(thisRange._TextSegments != null && thisRange._TextSegments.Count > 0, "expecting nonempty _TextSegments array for Start position");
+            Invariant.Assert(thisRange._TextSegments is not null && thisRange._TextSegments.Count > 0, "expecting nonempty _TextSegments array for Start position");
             return thisRange._TextSegments[0].Start;
         }
 
@@ -1199,7 +1199,7 @@ namespace System.Windows.Documents
         {
             NormalizeRange(thisRange);
 
-            Invariant.Assert(thisRange._TextSegments != null && thisRange._TextSegments.Count > 0, "expecting nonempty _TextSegments array for End position");
+            Invariant.Assert(thisRange._TextSegments is not null && thisRange._TextSegments.Count > 0, "expecting nonempty _TextSegments array for End position");
             return thisRange._TextSegments[thisRange._TextSegments.Count - 1].End;
         }
 
@@ -1375,7 +1375,7 @@ namespace System.Windows.Documents
                     ITextPointer newStart = insertPosition.GetFrozenPointer(LogicalDirection.Backward);
                     ITextPointer newEnd = insertPosition.CreatePointer(LogicalDirection.Forward);
 
-                    if ((newStart is TextPointer) && ((TextPointer)newStart).Paragraph != null)
+                    if ((newStart is TextPointer) && ((TextPointer)newStart).Paragraph is not null)
                     {
                         // Rich text - '\n' must be replaced by Paragraphs
                         TextPointer insertionPosition = (TextPointer)newStart.CreatePointer(LogicalDirection.Forward);
@@ -1669,7 +1669,7 @@ namespace System.Windows.Documents
         {
             ITextContainer textContainer = thisRange.Start.TextContainer;
 
-            if (description != null && thisRange._ChangeBlockUndoRecord is null && thisRange._ChangeBlockLevel == 0)
+            if (description is not null && thisRange._ChangeBlockUndoRecord is null && thisRange._ChangeBlockLevel == 0)
             {
                 thisRange._ChangeBlockUndoRecord = new ChangeBlockUndoRecord(textContainer, description);
             }
@@ -1677,7 +1677,7 @@ namespace System.Windows.Documents
             Invariant.Assert(thisRange._ChangeBlockLevel > 0 || !thisRange._IsChanged, "_changed must be false on new move sequence");
             thisRange._ChangeBlockLevel++;
 
-            if (description != null)
+            if (description is not null)
             {
                 textContainer.BeginChange();
             }
@@ -1825,20 +1825,20 @@ namespace System.Windows.Documents
         {
             // Check AnchoredBlocks ancestors at start
             TextElement outerAnchoredBlock = start.Parent as TextElement;
-            while (outerAnchoredBlock != null)
+            while (outerAnchoredBlock is not null)
             {
                 // Find the next ancestor AncoredBlock
-                while (outerAnchoredBlock != null && !typeof(AnchoredBlock).IsAssignableFrom(outerAnchoredBlock.GetType()))
+                while (outerAnchoredBlock is not null && !typeof(AnchoredBlock).IsAssignableFrom(outerAnchoredBlock.GetType()))
                 {
                     outerAnchoredBlock = outerAnchoredBlock.Parent as TextElement;
                 }
 
-                if (outerAnchoredBlock != null)
+                if (outerAnchoredBlock is not null)
                 {
                     // Anchored block found. Check whether the other position belongs to it.
                     AnchoredBlock innerAnchoredBlock = null;
                     TextElement innerElement = end.Parent as TextElement;
-                    while (innerElement != null && innerElement != outerAnchoredBlock)
+                    while (innerElement is not null && innerElement != outerAnchoredBlock)
                     {
                         if (innerElement is AnchoredBlock)
                         {
@@ -1849,7 +1849,7 @@ namespace System.Windows.Documents
                     if (innerElement == outerAnchoredBlock)
                     {
                         // Common ancestor AnchoredBlock is found.
-                        if (innerAnchoredBlock != null)
+                        if (innerAnchoredBlock is not null)
                         {
                             end = innerAnchoredBlock.ElementEnd;
                         }
@@ -1867,20 +1867,20 @@ namespace System.Windows.Documents
 
             // Check AnchoredBlocks ancestors at end
             outerAnchoredBlock = end.Parent as TextElement;
-            while (outerAnchoredBlock != null)
+            while (outerAnchoredBlock is not null)
             {
                 // Find the next ancestor AncoredBlock
-                while (outerAnchoredBlock != null && !typeof(AnchoredBlock).IsAssignableFrom(outerAnchoredBlock.GetType()))
+                while (outerAnchoredBlock is not null && !typeof(AnchoredBlock).IsAssignableFrom(outerAnchoredBlock.GetType()))
                 {
                     outerAnchoredBlock = outerAnchoredBlock.Parent as TextElement;
                 }
 
-                if (outerAnchoredBlock != null)
+                if (outerAnchoredBlock is not null)
                 {
                     // Anchored block found. Check whether the other position belongs to it.
                     AnchoredBlock innerAnchoredBlock = null;
                     TextElement innerElement = start.Parent as TextElement;
-                    while (innerElement != null && innerElement != outerAnchoredBlock)
+                    while (innerElement is not null && innerElement != outerAnchoredBlock)
                     {
                         if (innerElement is AnchoredBlock)
                         {
@@ -1891,7 +1891,7 @@ namespace System.Windows.Documents
                     if (innerElement == outerAnchoredBlock)
                     {
                         // Common ancestor AnchoredBlock is found.
-                        if (innerAnchoredBlock != null)
+                        if (innerAnchoredBlock is not null)
                         {
                             start = innerAnchoredBlock.ElementStart;
                         }
@@ -1987,8 +1987,8 @@ namespace System.Windows.Documents
             List<TextSegment> textSegments;
             bool isTableCellRange;
 
-            Invariant.Assert(position1 != null, "null check: position1");
-            Invariant.Assert(position2 != null, "null check: position2");
+            Invariant.Assert(position1 is not null, "null check: position1");
+            Invariant.Assert(position2 is not null, "null check: position2");
 
             if (position1 is TextPointer)
             {
@@ -2006,7 +2006,7 @@ namespace System.Windows.Documents
                 isTableCellRange = false;
             }
 
-            if (textSegments != null)
+            if (textSegments is not null)
             {
                 // Note also that table range is always in normalized condition - by construction
                 // Check though whether normalization really happens when one end is outside of a table?
@@ -2054,7 +2054,7 @@ namespace System.Windows.Documents
                             /*movingPosition:*/(TextPointer)finalEnd, 
                             /*includeCellAtMovingPosition:*/false, 
                             out isTableCellRange);
-                        if (textSegments != null)
+                        if (textSegments is not null)
                         {
                             thisRange._TextSegments = textSegments;
                             thisRange._IsTableCellRange = isTableCellRange;

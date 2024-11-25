@@ -24,28 +24,28 @@ namespace MS.Internal
         {
             DependencyObject parent = null;
             
-            if(treeState != null && treeState._oldCoreParents.ContainsKey(element))
+            if(treeState is not null && treeState._oldCoreParents.ContainsKey(element))
             {
                 parent = treeState._oldCoreParents[element];
             }
             else
             {
                 Visual v = element as Visual;
-                if(v != null)
+                if(v is not null)
                 {
                     parent = VisualTreeHelper.GetParent(v);
                 }
                 else
                 {
                     ContentElement ce = element as ContentElement;
-                    if(ce != null)
+                    if(ce is not null)
                     {
                         parent = ContentOperations.GetParent(ce);
                     }
                     else
                     {
                         Visual3D v3D = element as Visual3D;
-                        if (v3D != null)
+                        if (v3D is not null)
                         {
                             parent = VisualTreeHelper.GetParent(v3D);
                         }
@@ -85,20 +85,20 @@ namespace MS.Internal
         {
             DependencyObject parent = null;
             
-            if(treeState != null && treeState._oldLogicalParents.ContainsKey(element))
+            if(treeState is not null && treeState._oldLogicalParents.ContainsKey(element))
             {
                 parent = treeState._oldLogicalParents[element];
             }
             else
             {
                 UIElement e = element as UIElement;
-                if(e != null)
+                if(e is not null)
                 {
                     parent = e.GetUIParentCore();  // Overriden by FrameworkElement.
                 }
 
                 ContentElement ce = element as ContentElement;
-                if(ce != null)
+                if(ce is not null)
                 {
                     parent = ce.GetUIParentCore(); // Overriden by FrameworkContentElement.
                 }

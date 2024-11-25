@@ -98,16 +98,16 @@ namespace MS.Internal.Commands
                                                           CanExecuteRoutedEventHandler canExecuteRoutedEventHandler, params InputGesture[] inputGestures)
         {
             // Validate parameters
-            Debug.Assert(controlType != null);
-            Debug.Assert(command != null);
-            Debug.Assert(executedRoutedEventHandler != null);
+            Debug.Assert(controlType is not null);
+            Debug.Assert(command is not null);
+            Debug.Assert(executedRoutedEventHandler is not null);
             // All other parameters may be null
 
             // Create command link for this command
             CommandManager.RegisterClassCommandBinding(controlType, new CommandBinding(command, executedRoutedEventHandler, canExecuteRoutedEventHandler));
 
             // Create additional input binding for this command
-            if (inputGestures != null)
+            if (inputGestures is not null)
             {
                 for (int i = 0; i < inputGestures.Length; i++)
                 {
@@ -119,13 +119,13 @@ namespace MS.Internal.Commands
         internal static bool CanExecuteCommandSource(ICommandSource commandSource)
         {
             ICommand command = commandSource.Command;
-            if (command != null)
+            if (command is not null)
             {
                 object parameter = commandSource.CommandParameter;
                 IInputElement target = commandSource.CommandTarget;
 
                 RoutedCommand routed = command as RoutedCommand;
-                if (routed != null)
+                if (routed is not null)
                 {
                     if (target is null)
                     {
@@ -156,13 +156,13 @@ namespace MS.Internal.Commands
         internal static void CriticalExecuteCommandSource(ICommandSource commandSource, bool userInitiated)
         {
             ICommand command = commandSource.Command;
-            if (command != null)
+            if (command is not null)
             {
                 object parameter = commandSource.CommandParameter;
                 IInputElement target = commandSource.CommandTarget;
 
                 RoutedCommand routed = command as RoutedCommand;
-                if (routed != null)
+                if (routed is not null)
                 {
                     if (target is null)
                     {
@@ -183,7 +183,7 @@ namespace MS.Internal.Commands
         internal static void ExecuteCommand(ICommand command, object parameter, IInputElement target)
         {
             RoutedCommand routed = command as RoutedCommand;
-            if (routed != null)
+            if (routed is not null)
             {
                 if (routed.CanExecute(parameter, target))
                 {

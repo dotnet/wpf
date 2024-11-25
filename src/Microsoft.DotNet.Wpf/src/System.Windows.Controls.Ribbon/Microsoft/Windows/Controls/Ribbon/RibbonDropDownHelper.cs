@@ -31,7 +31,7 @@ namespace Microsoft.Windows.Controls.Ribbon
     {
         public static void OnPopupResizeStarted(FrameworkElement itemsPresenter)
         {
-            if (itemsPresenter != null)
+            if (itemsPresenter is not null)
             {
                 // We need Height and Width to be a valid double (not NaN or zero)
                 // because we are going to add/subtract from these later
@@ -51,7 +51,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             double horizontalDelta, 
             double verticalDelta)
         {
-            if (itemsPresenter != null)
+            if (itemsPresenter is not null)
             {
                 verticalDelta = isDropDownPositionedAbove ? (-verticalDelta) : verticalDelta;
                 horizontalDelta = isDropDownPositionedLeft? (-horizontalDelta): horizontalDelta;
@@ -135,7 +135,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static bool ResizePopupActual(FrameworkElement itemsPresenter, Size minDropDownSize, bool canUserResizeHorizontally, bool canUserResizeVertically, double newWidth, double newHeight)
         {
             bool result = false;
-            if (itemsPresenter != null)
+            if (itemsPresenter is not null)
             {
                 // Only if the new Width and Height are adequate to display the items in their minimum variant.
                 if (canUserResizeHorizontally && DoubleUtil.GreaterThanOrClose(newWidth, 0) &&
@@ -163,7 +163,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// <returns></returns>
         public static Rect GetScreenBounds(FrameworkElement targetElement, Popup popup)
         {
-            if (targetElement != null)
+            if (targetElement is not null)
             {
                 Rect targetBoundingBox = new Rect(targetElement.PointToScreen(new Point()),
                                               targetElement.PointToScreen(new Point(targetElement.RenderSize.Width, targetElement.RenderSize.Height)));
@@ -199,12 +199,12 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         public static void ClearLocalValues(FrameworkElement itemsPresenter, Popup popup)
         {
-            if (itemsPresenter != null)
+            if (itemsPresenter is not null)
             {
                 itemsPresenter.ClearValue(FrameworkElement.HeightProperty);
                 itemsPresenter.ClearValue(FrameworkElement.WidthProperty);
             }
-            if (popup != null)
+            if (popup is not null)
             {
                 popup.ClearValue(Popup.PlacementProperty);
                 popup.ClearValue(Popup.VerticalOffsetProperty);
@@ -215,13 +215,13 @@ namespace Microsoft.Windows.Controls.Ribbon
         public static Size GetMinDropDownSize(RibbonMenuItemsPanel itemsHost, Popup popup, Thickness borderThickness)
         {
             Size minSize = new Size();
-            if (itemsHost != null)
+            if (itemsHost is not null)
             {
                 minSize = itemsHost.CachedAutoSize;
-                if (popup != null)
+                if (popup is not null)
                 {
                     FrameworkElement popupChild = popup.Child as FrameworkElement;
-                    if (popupChild != null && DoubleUtil.GreaterThan(popupChild.MinWidth, minSize.Width)) 
+                    if (popupChild is not null && DoubleUtil.GreaterThan(popupChild.MinWidth, minSize.Width)) 
                     {
                         // MenuButton's BorderThickness around the ItemsPresenter
                         minSize.Width = popupChild.MinWidth - (borderThickness.Left + borderThickness.Right);

@@ -26,7 +26,7 @@ namespace MS.Internal.AppModel
                 return content as Visual;
 
             ContentPresenter cp = null;
-            if (navigator.Template != null)
+            if (navigator.Template is not null)
             {
                 cp = (ContentPresenter)navigator.Template.FindName(contentPresenterName, navigator);
             }

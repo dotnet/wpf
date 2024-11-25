@@ -29,7 +29,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         {
             ImageSource imageSource = value as ImageSource;
             ImageSource returnImageSource = null;
-            if (imageSource != null)
+            if (imageSource is not null)
             {
                 returnImageSource = GetSmallIconImageSource(imageSource);
 
@@ -60,7 +60,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             bool asGoodAsItGets = false;
 
             var bf = imageSource as BitmapFrame;
-            if (bf != null && bf.Decoder != null && bf.Decoder.Frames != null && bf.Decoder.Frames.Count > 0)
+            if (bf is not null && bf.Decoder is not null && bf.Decoder.Frames is not null && bf.Decoder.Frames.Count > 0)
             {
                 bf = GetBestMatch(bf.Decoder.Frames, size);
 

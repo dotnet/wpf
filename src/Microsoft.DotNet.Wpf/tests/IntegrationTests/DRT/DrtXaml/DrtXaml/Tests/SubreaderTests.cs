@@ -202,11 +202,11 @@ namespace DrtXaml.Tests
         public void ConfirmStuffIsRemoved(object tree)
         {
             var e3 = (Test.Elements.Element10)tree;
-            if (e3.Element2 != null)
+            if (e3.Element2 is not null)
             {
                 throw new InvalidOperationException("Property Element2 should be nulll");
             }
-            if (e3.Element3 != null)
+            if (e3.Element3 is not null)
             {
                 throw new InvalidOperationException("Property Element3 should be nulll");
             }

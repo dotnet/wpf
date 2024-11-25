@@ -101,7 +101,7 @@ namespace System.Windows.Threading
         /// </param>
         internal void Initialize(Exception exception, bool handled)
         {
-            Debug.Assert(exception != null);
+            Debug.Assert(exception is not null);
             _exception = exception;
             _handled = handled;
         }

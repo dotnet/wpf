@@ -77,7 +77,7 @@ namespace System.Windows.Controls
         {
             HeaderedItemsControl ctrl = (HeaderedItemsControl) d;
 
-            ctrl.SetValue(HasHeaderPropertyKey, (e.NewValue != null) ? BooleanBoxes.TrueBox : BooleanBoxes.FalseBox);
+            ctrl.SetValue(HasHeaderPropertyKey, (e.NewValue is not null) ? BooleanBoxes.TrueBox : BooleanBoxes.FalseBox);
             ctrl.OnHeaderChanged(e.OldValue, e.NewValue);
         }
 
@@ -283,15 +283,15 @@ namespace System.Windows.Controls
                 DataTemplateSelector itemTemplateSelector = parentItemsControl.ItemTemplateSelector;
                 string itemStringFormat = parentItemsControl.ItemStringFormat;
 
-                if (itemTemplate != null)
+                if (itemTemplate is not null)
                 {
                     SetValue(HeaderTemplateProperty, itemTemplate);
                 }
-                if (itemTemplateSelector != null)
+                if (itemTemplateSelector is not null)
                 {
                     SetValue(HeaderTemplateSelectorProperty, itemTemplateSelector);
                 }
-                if (itemStringFormat != null &&
+                if (itemStringFormat is not null &&
                     Helper.HasDefaultValue(this, HeaderStringFormatProperty))
                 {
                     SetValue(HeaderStringFormatProperty, itemStringFormat);
@@ -410,7 +410,7 @@ namespace System.Windows.Controls
             if (headerTemplate is null)
             {
                 DataTemplateSelector selector = HeaderTemplateSelector;
-                if (selector != null)
+                if (selector is not null)
                 {
                     headerTemplate = selector.SelectTemplate(item, this);
                 }
@@ -424,12 +424,12 @@ namespace System.Windows.Controls
             // if the effective template is a HierarchicalDataTemplate, forward
             // the special properties
             HierarchicalDataTemplate hTemplate = headerTemplate as HierarchicalDataTemplate;
-            if (hTemplate != null)
+            if (hTemplate is not null)
             {
                 bool templateMatches = (ItemTemplate == parentItemsControl.ItemTemplate);
                 bool containerStyleMatches = (ItemContainerStyle == parentItemsControl.ItemContainerStyle);
 
-                if (hTemplate.ItemsSource != null && !HasNonDefaultValue(ItemsSourceProperty))
+                if (hTemplate.ItemsSource is not null && !HasNonDefaultValue(ItemsSourceProperty))
                 {
                     SetBinding(ItemsSourceProperty, hTemplate.ItemsSource);
                 }
@@ -443,7 +443,7 @@ namespace System.Windows.Controls
 
                     // forward the HDT's string format
                     ClearValue(ItemStringFormatProperty);
-                    bool setItemStringFormat = (hTemplate.ItemStringFormat != null);
+                    bool setItemStringFormat = (hTemplate.ItemStringFormat is not null);
                     if (setItemStringFormat)
                     {
                         ItemStringFormat = hTemplate.ItemStringFormat;
@@ -458,7 +458,7 @@ namespace System.Windows.Controls
 
                     // forward the HDT's template selector
                     ClearValue(ItemTemplateSelectorProperty);
-                    bool setItemTemplateSelector = (hTemplate.ItemTemplateSelector != null);
+                    bool setItemTemplateSelector = (hTemplate.ItemTemplateSelector is not null);
                     if (setItemTemplateSelector)
                     {
                         ItemTemplateSelector = hTemplate.ItemTemplateSelector;
@@ -469,7 +469,7 @@ namespace System.Windows.Controls
                 {
                     // forward the HDT's template
                     ClearValue(ItemTemplateProperty);
-                    bool setItemTemplate = (hTemplate.ItemTemplate != null);
+                    bool setItemTemplate = (hTemplate.ItemTemplate is not null);
                     if (setItemTemplate)
                     {
                         ItemTemplate = hTemplate.ItemTemplate;
@@ -484,7 +484,7 @@ namespace System.Windows.Controls
 
                     // forward the HDT's container-style selector
                     ClearValue(ItemContainerStyleSelectorProperty);
-                    bool setItemContainerStyleSelector = (hTemplate.ItemContainerStyleSelector != null);
+                    bool setItemContainerStyleSelector = (hTemplate.ItemContainerStyleSelector is not null);
                     if (setItemContainerStyleSelector)
                     {
                         ItemContainerStyleSelector = hTemplate.ItemContainerStyleSelector;
@@ -495,7 +495,7 @@ namespace System.Windows.Controls
                 {
                     // forward the HDT's container style
                     ClearValue(ItemContainerStyleProperty);
-                    bool setItemContainerStyle = (hTemplate.ItemContainerStyle != null);
+                    bool setItemContainerStyle = (hTemplate.ItemContainerStyle is not null);
                     if (setItemContainerStyle)
                     {
                         ItemContainerStyle = hTemplate.ItemContainerStyle;
@@ -517,7 +517,7 @@ namespace System.Windows.Controls
                 {
                     // forward the HDT's ItemBindingGroup
                     ClearValue(ItemBindingGroupProperty);
-                    bool setItemBindingGroup = (hTemplate.ItemBindingGroup != null);
+                    bool setItemBindingGroup = (hTemplate.ItemBindingGroup is not null);
                     if (setItemBindingGroup)
                     {
                         ItemBindingGroup = hTemplate.ItemBindingGroup;
@@ -530,7 +530,7 @@ namespace System.Windows.Controls
         bool IsBound(DependencyProperty dp, Binding binding)
         {
             BindingExpressionBase bindExpr = BindingOperations.GetBindingExpression(this, dp);
-            return (bindExpr != null && bindExpr.ParentBindingBase == binding);
+            return (bindExpr is not null && bindExpr.ParentBindingBase == binding);
         }
 
         // return true if the Header should be a logical child

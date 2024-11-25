@@ -94,7 +94,7 @@ namespace DrtXaml
                                     PostTreeValidator validator)
         {
             object root = null;
-            bool hasExpectedException = (expectedExceptionType != null);
+            bool hasExpectedException = (expectedExceptionType is not null);
 
             try
             {
@@ -102,7 +102,7 @@ namespace DrtXaml
             }
             catch (Exception ex)
             {
-                if (expectedExceptionType != null && expectedExceptionType == ex.GetType())
+                if (expectedExceptionType is not null && expectedExceptionType == ex.GetType())
                 {
                     hasExpectedException = false;
                 }
@@ -119,7 +119,7 @@ namespace DrtXaml
                 DRT.Assert(false, "XAAML Test '{0}' did not throw expected exception of type '{1}'.", name, expectedExceptionType);
             }
 
-            if (validator != null)
+            if (validator is not null)
             {
                 try
                 {
@@ -141,7 +141,7 @@ namespace DrtXaml
             }
             catch (Exception ex)
             {
-                if (expectedExceptionType != null && expectedExceptionType == ex.GetType())
+                if (expectedExceptionType is not null && expectedExceptionType == ex.GetType())
                 {
                     return;
                 }
@@ -153,7 +153,7 @@ namespace DrtXaml
                 }
             }
 
-            if (expectedExceptionType != null)
+            if (expectedExceptionType is not null)
             {
                 DRT.Assert(false, "XAAML Test '{0}' did not throw expected exception of type '{1}'.", test.Method.Name, expectedExceptionType);
             }

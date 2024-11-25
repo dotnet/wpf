@@ -60,18 +60,18 @@ public abstract class ControllableStoryboardAction : TriggerAction
 
     internal sealed override void Invoke( FrameworkElement fe, FrameworkContentElement fce, Style targetStyle, FrameworkTemplate frameworkTemplate, Int64 layer )
     {
-        Debug.Assert( fe != null || fce != null, "Caller of internal function failed to verify that we have a FE or FCE - we have neither." );
-        Debug.Assert( targetStyle != null || frameworkTemplate != null,
+        Debug.Assert( fe is not null || fce is not null, "Caller of internal function failed to verify that we have a FE or FCE - we have neither." );
+        Debug.Assert( targetStyle is not null || frameworkTemplate is not null,
             "This function expects to be called when the associated action is inside a Style/Template.  But it was not given a reference to anything." );
 
         INameScope nameScope = null;
-        if( targetStyle != null )
+        if( targetStyle is not null )
         {
             nameScope = targetStyle;
         }
         else
         {
-            Debug.Assert( frameworkTemplate != null );
+            Debug.Assert( frameworkTemplate is not null );
             nameScope = frameworkTemplate;
         }
 
@@ -80,7 +80,7 @@ public abstract class ControllableStoryboardAction : TriggerAction
     
     internal sealed override void Invoke( FrameworkElement fe )
     {
-        Debug.Assert( fe != null, "Invoke needs an object as starting point");
+        Debug.Assert( fe is not null, "Invoke needs an object as starting point");
 
         Invoke( fe, null, GetStoryboard( fe, null, null ) );
     }

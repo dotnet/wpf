@@ -46,14 +46,14 @@ namespace MS.Internal.Printing.Configuration
 
         public void Release()
         {
-            if (this._writer != null)
+            if (this._writer is not null)
             {
                 this._writer.Flush();
                 this._writer.Close();
                 this._writer = null;
             }
 
-            if (this._strings != null)
+            if (this._strings is not null)
             {
                 // Security Critical call
                 this._strings.Release();
@@ -75,7 +75,7 @@ namespace MS.Internal.Printing.Configuration
             this._writer.WriteAttributeString(PrintSchemaPrefixes.xmlns, PrintSchemaPrefixes.xsi, null, PrintSchemaNamespaces.xsi);
             this._writer.WriteAttributeString(PrintSchemaPrefixes.xmlns, PrintSchemaPrefixes.xsd, null, PrintSchemaNamespaces.xsd);
             this._writer.WriteAttributeString("version", "1");
-            if (this._privateNamespace != null && this._privateQName != null)
+            if (this._privateNamespace is not null && this._privateQName is not null)
             {
                 this._writer.WriteAttributeString(PrintSchemaPrefixes.xmlns, this._privateQName, null, this._privateNamespace);
             }
@@ -286,7 +286,7 @@ namespace MS.Internal.Printing.Configuration
                             string optionNamespace = hasStandardKeywordNamespace ? PrintSchemaNamespaces.StandardKeywordSet : this._privateNamespace;
                             WriteStartOption(optionNamespace, optionLocalName, optionDisplayNameId, "None");
                             {
-                                if (pskFeedType != null)
+                                if (pskFeedType is not null)
                                 {
                                     WriteStartScoredProperty(PrintSchemaNamespaces.StandardKeywordSet, "FeedType");
                                     {
@@ -295,7 +295,7 @@ namespace MS.Internal.Printing.Configuration
                                     WriteEndScoredProperty();
                                 }
 
-                                if (pskBinType != null)
+                                if (pskBinType is not null)
                                 {
                                     WriteStartScoredProperty(PrintSchemaNamespaces.StandardKeywordSet, "BinType");
                                     {
@@ -351,7 +351,7 @@ namespace MS.Internal.Printing.Configuration
                         }
 
 
-                        if (optionLocalName != null &&
+                        if (optionLocalName is not null &&
                             ((i < paperSizeDisplayNames.Count) || (i < paperSizes.Count)))
                         {
                             string optionDisplayName = (i < paperSizeDisplayNames.Count) ? paperSizeDisplayNames[i] : null;
@@ -425,7 +425,7 @@ namespace MS.Internal.Printing.Configuration
 
                         WriteStartOption(PrintSchemaNamespaces.StandardKeywordSet, optionLocalName, optionDisplayName, "None");
                         {
-                            if (pskFrontCoating != null)
+                            if (pskFrontCoating is not null)
                             {
                                 WriteStartScoredProperty(PrintSchemaNamespaces.StandardKeywordSet, "FrontCoating");
                                 {
@@ -434,7 +434,7 @@ namespace MS.Internal.Printing.Configuration
                                 WriteEndScoredProperty();
                             }
 
-                            if (pskBackCoating != null)
+                            if (pskBackCoating is not null)
                             {
                                 WriteStartScoredProperty(PrintSchemaNamespaces.StandardKeywordSet, "BackCoating");
                                 {
@@ -443,7 +443,7 @@ namespace MS.Internal.Printing.Configuration
                                 WriteEndScoredProperty();
                             }
 
-                            if (pskMaterial != null)
+                            if (pskMaterial is not null)
                             {
                                 WriteStartScoredProperty(PrintSchemaNamespaces.StandardKeywordSet, "Material");
                                 {
@@ -616,8 +616,8 @@ namespace MS.Internal.Printing.Configuration
 
         public void WritePageDevmodeSnapshot(byte[] devMode)
         {
-            Invariant.Assert(this._privateNamespace != null, "Cannot write PageDevmodeSnapshot without private namespace");
-            Invariant.Assert(this._privateQName != null, "Cannot write PageDevmodeSnapshot without private namespace prefix");
+            Invariant.Assert(this._privateNamespace is not null, "Cannot write PageDevmodeSnapshot without private namespace");
+            Invariant.Assert(this._privateQName is not null, "Cannot write PageDevmodeSnapshot without private namespace prefix");
 
             string base64DevMode = Convert.ToBase64String(devMode);
 
@@ -625,7 +625,7 @@ namespace MS.Internal.Printing.Configuration
             // Scale the whole thing rounded up for its base64 equivalent.  
             // It takes 4 characters to represent 3 bytes.
             int maxDevModeSize = ((ushort.MaxValue) * 2 * 4 + 2) / 3;
-            if (this._privateNamespace != null && this._privateQName != null)
+            if (this._privateNamespace is not null && this._privateQName is not null)
             {
                 WriteStartParameterDef(this._privateNamespace, "PageDevmodeSnapshot", COMPSTUISR.IDS_NULL);
                 {
@@ -672,7 +672,7 @@ namespace MS.Internal.Printing.Configuration
         private void WriteStartOption(string optionNamespace, string optionName, string displayName, string pskConstraint)
         {
             this._writer.WriteStartElement(PrintSchemaTags.Framework.Option, PrintSchemaNamespaces.Framework);
-            if (optionName != null)
+            if (optionName is not null)
             {
                 WriteQNameAttribute(null, PrintSchemaTags.Framework.NameAttr, optionNamespace, optionName);
             }
@@ -684,7 +684,7 @@ namespace MS.Internal.Printing.Configuration
         private void WriteStartOption(string optionNamespace, string optionName, uint displayNameId, string pskConstraint)
         {
             this._writer.WriteStartElement(PrintSchemaTags.Framework.Option, PrintSchemaNamespaces.Framework);
-            if (optionName != null)
+            if (optionName is not null)
             {
                 WriteQNameAttribute(null, PrintSchemaTags.Framework.NameAttr, optionNamespace, optionName);
             }
@@ -709,7 +709,7 @@ namespace MS.Internal.Printing.Configuration
 
             string displayName = GetDisplayString(displayNameId);
 
-            if (displayName != null)
+            if (displayName is not null)
             {
                 WriteDisplayNameProperty(displayName);
             }

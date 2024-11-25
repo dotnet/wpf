@@ -781,10 +781,10 @@ namespace System.Windows.Documents
             {
                 // Skip caches invalidation if content has not been formatted yet - non of caches are valid,
                 // so they will be aquired during first formatting (full format).
-                if (_structuralCache != null && _structuralCache.IsFormattedOnce)
+                if (_structuralCache is not null && _structuralCache.IsFormattedOnce)
                 {
                     FrameworkPropertyMetadata fmetadata = e.Metadata as FrameworkPropertyMetadata;
-                    if (fmetadata != null)
+                    if (fmetadata is not null)
                     {
                         bool affectsRender = (fmetadata.AffectsRender &&
                             (e.IsAValueChange || !fmetadata.SubPropertiesDoNotAffectRender));
@@ -803,7 +803,7 @@ namespace System.Windows.Documents
                             _structuralCache.InvalidateFormatCache(!affectsRender);
 
                             // Notify formatter about content invalidation.
-                            if (_formatter != null)
+                            if (_formatter is not null)
                             {
                                 _formatter.OnContentInvalidated(!affectsRender);
                             }
@@ -922,12 +922,12 @@ namespace System.Windows.Documents
                 }
             }
             // Check if the TextPointer belongs to our tree.
-            if (textPointer != null && textPointer.TextContainer != _structuralCache.TextContainer)
+            if (textPointer is not null && textPointer.TextContainer != _structuralCache.TextContainer)
             {
                 textPointer = null;
             }
             flowContentPosition = textPointer as TextPointer;
-            return (flowContentPosition != null) ? flowContentPosition : ContentPosition.Missing;
+            return (flowContentPosition is not null) ? flowContentPosition : ContentPosition.Missing;
         }
 
         /// <summary>
@@ -939,7 +939,7 @@ namespace System.Windows.Documents
         /// <param name="child"></param>
         internal void OnChildDesiredSizeChanged(UIElement child)
         {
-            if (_structuralCache != null && _structuralCache.IsFormattedOnce && !_structuralCache.ForceReformat)
+            if (_structuralCache is not null && _structuralCache.IsFormattedOnce && !_structuralCache.ForceReformat)
             {
                 // If executed during formatting process, delay invalidation.
                 // This may happen during formatting when text host notifies its about
@@ -968,7 +968,7 @@ namespace System.Windows.Documents
                 _structuralCache.AddDirtyTextRange(dtr);
 
                 // Notify formatter about content invalidation.
-                if (_formatter != null)
+                if (_formatter is not null)
                 {
                     _formatter.OnContentInvalidated(true, childStart, childEnd);
                 }
@@ -1064,7 +1064,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_formatter != null && !(_formatter is FlowDocumentFormatter))
+                if (_formatter is not null && !(_formatter is FlowDocumentFormatter))
                 {
                     _formatter.Suspend();
                     _formatter = null;
@@ -1136,7 +1136,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if(_formatter != null)
+                if(_formatter is not null)
                 {
                     return _formatter.IsLayoutDataValid;
                 }
@@ -1226,7 +1226,7 @@ namespace System.Windows.Documents
             _structuralCache = new StructuralCache(this, textContainer);
 
             // Get rid of the current formatter.
-            if (_formatter != null)
+            if (_formatter is not null)
             {
                 _formatter.Suspend();
                 _formatter = null;
@@ -1239,10 +1239,10 @@ namespace System.Windows.Documents
         private static void OnPageMetricsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             FlowDocument fd = (FlowDocument)d;
-            if (fd._structuralCache != null && fd._structuralCache.IsFormattedOnce)
+            if (fd._structuralCache is not null && fd._structuralCache.IsFormattedOnce)
             {
                 // Notify formatter about content invalidation.
-                if (fd._formatter != null)
+                if (fd._formatter is not null)
                 {
                     // Any change of page metrics invalidates the layout.
                     // Hence page metrics change is treated in the same way as ContentChanged
@@ -1251,7 +1251,7 @@ namespace System.Windows.Documents
                 }
 
                 // Fire notification about the PageSize change - needed in RichTextBox
-                if (fd.PageSizeChanged != null)
+                if (fd.PageSizeChanged is not null)
                 {
                     // NOTE: May execute external code, so it is possible to get
                     //       an exception here.
@@ -1386,9 +1386,9 @@ namespace System.Windows.Documents
             TextSegment textSegment;
             int i;
 
-            Invariant.Assert(args != null);
-            Invariant.Assert(args.Ranges != null);
-            Invariant.Assert(_structuralCache != null && _structuralCache.IsFormattedOnce, "Unexpected Highlights.Changed callback before first format!");
+            Invariant.Assert(args is not null);
+            Invariant.Assert(args.Ranges is not null);
+            Invariant.Assert(_structuralCache is not null && _structuralCache.IsFormattedOnce, "Unexpected Highlights.Changed callback before first format!");
 
             // Detect invalid content change operations.
             if (_structuralCache.IsFormattingInProgress)
@@ -1415,7 +1415,7 @@ namespace System.Windows.Documents
                 }
 
                 // Notify formatter about content invalidation.
-                if (_formatter != null)
+                if (_formatter is not null)
                 {
                     for (i = 0; i < args.Ranges.Count; i++)
                     {
@@ -1441,7 +1441,7 @@ namespace System.Windows.Documents
         private void OnTextContainerChanging(object sender, EventArgs args)
         {
             Invariant.Assert(sender == _structuralCache.TextContainer, "Received text change for foreign TextContainer.");
-            Invariant.Assert(_structuralCache != null && _structuralCache.IsFormattedOnce, "Unexpected TextContainer.Changing callback before first format!");
+            Invariant.Assert(_structuralCache is not null && _structuralCache.IsFormattedOnce, "Unexpected TextContainer.Changing callback before first format!");
 
             // Detect invalid content change operations.
             if (_structuralCache.IsFormattingInProgress)
@@ -1465,9 +1465,9 @@ namespace System.Windows.Documents
             DirtyTextRange dtr;
             ITextPointer segmentEnd;
 
-            Invariant.Assert(args != null);
+            Invariant.Assert(args is not null);
             Invariant.Assert(sender == _structuralCache.TextContainer);
-            Invariant.Assert(_structuralCache != null && _structuralCache.IsFormattedOnce, "Unexpected TextContainer.Change callback before first format!");
+            Invariant.Assert(_structuralCache is not null && _structuralCache.IsFormattedOnce, "Unexpected TextContainer.Change callback before first format!");
 
             if (args.Count == 0)
             {
@@ -1497,7 +1497,7 @@ namespace System.Windows.Documents
 
                 // Invalidate affected pages and break records.
                 // We DTR invalidate if we're using a formatter as well for incremental update.
-                if (!args.AffectsRenderOnly || (_formatter != null && _formatter is FlowDocumentFormatter))
+                if (!args.AffectsRenderOnly || (_formatter is not null && _formatter is FlowDocumentFormatter))
                 {
                     // Create new DTR for changing range and add it to DRTList.
                     dtr = new DirtyTextRange(args);
@@ -1510,7 +1510,7 @@ namespace System.Windows.Documents
                 }
 
                 // Notify formatter about content invalidation.
-                if (_formatter != null)
+                if (_formatter is not null)
                 {
                     _formatter.OnContentInvalidated(!args.AffectsRenderOnly, args.ITextPosition, segmentEnd);
                 }
@@ -1643,7 +1643,7 @@ namespace System.Windows.Documents
             }
 
             // Checking that the element inserted does not have a parent
-            if (value is TextElement && ((TextElement)value).Parent != null)
+            if (value is TextElement && ((TextElement)value).Parent is not null)
             {
                 throw new ArgumentException(SR.Format(SR.TextSchema_TheChildElementBelongsToAnotherTreeAlready, value.GetType().Name));
             }
@@ -1724,7 +1724,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (_formatter != null && !(_formatter is FlowDocumentPaginator))
+                if (_formatter is not null && !(_formatter is FlowDocumentPaginator))
                 {
                     _formatter.Suspend();
                     _formatter = null;

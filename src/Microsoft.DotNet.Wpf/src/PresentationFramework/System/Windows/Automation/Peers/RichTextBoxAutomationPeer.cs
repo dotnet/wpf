@@ -60,7 +60,7 @@ namespace System.Windows.Automation.Peers
             {
                 if (patternInterface == PatternInterface.Scroll)
                 {
-                    if (owner.ScrollViewer != null)
+                    if (owner.ScrollViewer is not null)
                     {
                         returnValue = owner.ScrollViewer.CreateAutomationPeer();
                         ((AutomationPeer)returnValue).EventsSource = this;

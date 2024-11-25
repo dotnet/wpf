@@ -690,7 +690,7 @@ namespace System.IO.Packaging
                     {
                         result = temp;  // note failure
                         
-                        if (InvalidSignatureEvent != null)
+                        if (InvalidSignatureEvent is not null)
                             InvalidSignatureEvent(this, new SignatureVerificationEventArgs(_signatures[i], temp));
 
                         if (exitOnFailure)
@@ -935,7 +935,7 @@ namespace System.IO.Packaging
         private void VerifyPartsExist(IEnumerable<Uri> parts)
         {
             // check for missing parts
-            if (parts != null)
+            if (parts is not null)
             {
                 foreach (Uri partUri in parts)
                 {
@@ -975,7 +975,7 @@ namespace System.IO.Packaging
                 throw new ArgumentException(SR.NothingToSign);
 
             // check for illegal and/or duplicate id's in signatureObjects
-            if (signatureObjects != null)
+            if (signatureObjects is not null)
             {
                 List<String> ids = new List<String>();
                 foreach (DataObject obj in signatureObjects)
@@ -1020,7 +1020,7 @@ namespace System.IO.Packaging
 
             // see if it's really a collection as this is more efficient than enumerating
             System.Collections.ICollection collection = enumerable as System.Collections.ICollection;
-            if (collection != null)
+            if (collection is not null)
             {
                 return (collection.Count == 0);
             }
@@ -1047,7 +1047,7 @@ namespace System.IO.Packaging
         /// <remarks>Caller should call Package.Flush() in order to persist changes.</remarks>
         private void InternalRemoveSignature(Uri signatureUri, int countOfSignaturesRemaining)
         {
-            Debug.Assert(signatureUri != null);
+            Debug.Assert(signatureUri is not null);
             Debug.Assert(countOfSignaturesRemaining >= 0);
 
             // Remove origin if this operation will have removed the last signature in order to conform with Metro specification.
@@ -1156,7 +1156,7 @@ namespace System.IO.Packaging
         private bool DeleteRelationshipToSignature(PackageRelationship r, Object signatureUri)
         {
             Uri uri = signatureUri as Uri;
-            Debug.Assert(uri != null, "Improper use of delegate - context must be Uri");
+            Debug.Assert(uri is not null, "Improper use of delegate - context must be Uri");
 
             // don't resolve if external
             if (r.TargetMode != TargetMode.Internal)
@@ -1217,7 +1217,7 @@ namespace System.IO.Packaging
             for (int i = 0; i < _signatures.Count; i++)
             {
                 // for each signature, follow it's certificate link (if there) and compare the Uri
-                if (_signatures[i].GetCertificatePart() != null)
+                if (_signatures[i].GetCertificatePart() is not null)
                 {
                     // same Uri?
                     if (PackUriHelper.ComparePartUri(certificatePartUri, _signatures[i].GetCertificatePart().Uri) == 0)

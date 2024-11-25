@@ -51,7 +51,7 @@ namespace System.Windows.Controls.Primitives
         {
             var details = d as DataGridDetailsPresenter;
             var row = details.DataGridRowOwner;
-            var dataGrid = row != null ? row.DataGridOwner : null;
+            var dataGrid = row is not null ? row.DataGridOwner : null;
             return DataGridHelper.GetCoercedTransferPropertyValue(
                 details, 
                 baseValue, 
@@ -69,7 +69,7 @@ namespace System.Windows.Controls.Primitives
         {
             var details = d as DataGridDetailsPresenter;
             var row = details.DataGridRowOwner;
-            var dataGrid = row != null ? row.DataGridOwner : null;
+            var dataGrid = row is not null ? row.DataGridOwner : null;
             return DataGridHelper.GetCoercedTransferPropertyValue(
                 details, 
                 baseValue, 
@@ -91,7 +91,7 @@ namespace System.Windows.Controls.Primitives
             // DataGridRow.DetailsPresenter is used by automation peers
             // Give the Row a pointer to the RowHeader so that it can propagate down change notifications
             DataGridRow owner = DataGridRowOwner;
-            if (owner != null)
+            if (owner is not null)
             {
                 owner.DetailsPresenter = this;
 
@@ -115,8 +115,8 @@ namespace System.Windows.Controls.Primitives
             }
 
             DataGridRow rowOwner = DataGridRowOwner;
-            DataGrid dataGridOwner = rowOwner != null ? rowOwner.DataGridOwner : null;
-            if ((dataGridOwner != null) && (rowOwner != null))
+            DataGrid dataGridOwner = rowOwner is not null ? rowOwner.DataGridOwner : null;
+            if ((dataGridOwner is not null) && (rowOwner is not null))
             {
                 // HandleSelectionForRowHeaderAndDetailsInput below sets the CurrentCell
                 // of datagrid to the cell with displayindex 0 in the row.
@@ -162,7 +162,7 @@ namespace System.Windows.Controls.Primitives
         internal void SyncProperties()
         {
             DataGridRow owner = DataGridRowOwner;
-            Content = owner != null ? owner.Item : null;
+            Content = owner is not null ? owner.Item : null;
             DataGridHelper.TransferProperty(this, ContentTemplateProperty);
             DataGridHelper.TransferProperty(this, ContentTemplateSelectorProperty);
         }
@@ -311,7 +311,7 @@ namespace System.Windows.Controls.Primitives
             get
             {
                 DataGridRow owner = DataGridRowOwner;
-                if (owner != null)
+                if (owner is not null)
                 {
                     return owner.DataGridOwner;
                 }

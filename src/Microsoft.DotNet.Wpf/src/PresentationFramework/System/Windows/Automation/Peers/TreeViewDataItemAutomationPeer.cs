@@ -56,7 +56,7 @@ namespace System.Windows.Automation.Peers
             else if ((patternInterface == PatternInterface.ItemContainer) || (patternInterface == PatternInterface.SynchronizedInput))
             {
                 TreeViewItemAutomationPeer treeViewItemAutomationPeer = GetWrapperPeer() as TreeViewItemAutomationPeer;
-                if (treeViewItemAutomationPeer != null)
+                if (treeViewItemAutomationPeer is not null)
                 {
                     if(patternInterface == PatternInterface.SynchronizedInput)
                     {
@@ -77,7 +77,7 @@ namespace System.Windows.Automation.Peers
         {
             AutomationPeer wrapperPeer = base.GetWrapperPeer();
             TreeViewItemAutomationPeer treeViewItemWrapperPeer = wrapperPeer as TreeViewItemAutomationPeer;
-            if (treeViewItemWrapperPeer != null)
+            if (treeViewItemWrapperPeer is not null)
             {
                 treeViewItemWrapperPeer.AddDataPeerInfo(this);
             }
@@ -128,7 +128,7 @@ namespace System.Windows.Automation.Peers
         void IExpandCollapseProvider.Expand()
         {
             TreeViewItemAutomationPeer wrapperPeer = GetWrapperPeer() as TreeViewItemAutomationPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 IExpandCollapseProvider iExpandCollapseProvider = wrapperPeer as IExpandCollapseProvider;
                 iExpandCollapseProvider.Expand();
@@ -141,7 +141,7 @@ namespace System.Windows.Automation.Peers
         void IExpandCollapseProvider.Collapse()
         {
             TreeViewItemAutomationPeer wrapperPeer = GetWrapperPeer() as TreeViewItemAutomationPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 IExpandCollapseProvider iExpandCollapseProvider = wrapperPeer as IExpandCollapseProvider;
                 iExpandCollapseProvider.Collapse();
@@ -156,7 +156,7 @@ namespace System.Windows.Automation.Peers
             get
             {
                 TreeViewItemAutomationPeer wrapperPeer = GetWrapperPeer() as TreeViewItemAutomationPeer;
-                if (wrapperPeer != null)
+                if (wrapperPeer is not null)
                 {
                     IExpandCollapseProvider iExpandCollapseProvider = wrapperPeer as IExpandCollapseProvider;
                     return iExpandCollapseProvider.ExpandCollapseState;
@@ -185,7 +185,7 @@ namespace System.Windows.Automation.Peers
         void ISelectionItemProvider.Select()
         {
             TreeViewItemAutomationPeer wrapperPeer = GetWrapperPeer() as TreeViewItemAutomationPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 ISelectionItemProvider iSelectionItemProvider = wrapperPeer as ISelectionItemProvider;
                 iSelectionItemProvider.Select();
@@ -200,7 +200,7 @@ namespace System.Windows.Automation.Peers
         void ISelectionItemProvider.AddToSelection()
         {
             TreeViewItemAutomationPeer wrapperPeer = GetWrapperPeer() as TreeViewItemAutomationPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 ISelectionItemProvider iSelectionItemProvider = wrapperPeer as ISelectionItemProvider;
                 iSelectionItemProvider.AddToSelection();
@@ -215,7 +215,7 @@ namespace System.Windows.Automation.Peers
         void ISelectionItemProvider.RemoveFromSelection()
         {
             TreeViewItemAutomationPeer wrapperPeer = GetWrapperPeer() as TreeViewItemAutomationPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 ISelectionItemProvider iSelectionItemProvider = wrapperPeer as ISelectionItemProvider;
                 iSelectionItemProvider.RemoveFromSelection();
@@ -233,7 +233,7 @@ namespace System.Windows.Automation.Peers
             {
                 // Virtualized Element are treated as not selected.
                 TreeViewItemAutomationPeer wrapperPeer = GetWrapperPeer() as TreeViewItemAutomationPeer;
-                if (wrapperPeer != null)
+                if (wrapperPeer is not null)
                 {
                     ISelectionItemProvider iSelectionItemProvider = wrapperPeer as ISelectionItemProvider;
                     return iSelectionItemProvider.IsSelected;
@@ -250,7 +250,7 @@ namespace System.Windows.Automation.Peers
             get
             {
                 TreeViewItemAutomationPeer wrapperPeer = GetWrapperPeer() as TreeViewItemAutomationPeer;
-                if (wrapperPeer != null)
+                if (wrapperPeer is not null)
                 {
                     ISelectionItemProvider iSelectionItemProvider = wrapperPeer as ISelectionItemProvider;
                     return iSelectionItemProvider.SelectionContainer;
@@ -265,7 +265,7 @@ namespace System.Windows.Automation.Peers
         void IScrollItemProvider.ScrollIntoView()
         {
             TreeViewItemAutomationPeer wrapperPeer = GetWrapperPeer() as TreeViewItemAutomationPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 IScrollItemProvider iScrollItemProvider = wrapperPeer as IScrollItemProvider;
                 iScrollItemProvider.ScrollIntoView();
@@ -293,7 +293,7 @@ namespace System.Windows.Automation.Peers
         {
             ItemsControlAutomationPeer itemsControlAutomationPeer = ItemsControlAutomationPeer;
             // to check if the parent of this item is TreeViewItem.
-            if (ParentDataItemAutomationPeer != null)
+            if (ParentDataItemAutomationPeer is not null)
             {
                 // there might be a possibility that it's parent item is itself virtualized so we have to realize it and make a second attempt
                 if (itemsControlAutomationPeer is null)
@@ -303,16 +303,16 @@ namespace System.Windows.Automation.Peers
                 }
             }
 
-            if (itemsControlAutomationPeer != null)
+            if (itemsControlAutomationPeer is not null)
             {
                 TreeViewItemAutomationPeer treeViewItemAutomationPeer = itemsControlAutomationPeer as TreeViewItemAutomationPeer;
-                if (treeViewItemAutomationPeer != null && (treeViewItemAutomationPeer as IExpandCollapseProvider).ExpandCollapseState == ExpandCollapseState.Collapsed)
+                if (treeViewItemAutomationPeer is not null && (treeViewItemAutomationPeer as IExpandCollapseProvider).ExpandCollapseState == ExpandCollapseState.Collapsed)
                 {
                     (treeViewItemAutomationPeer as IExpandCollapseProvider).Expand();
                 }
 
                 ItemsControl parent = itemsControlAutomationPeer.Owner as ItemsControl;
-                if (parent != null)
+                if (parent is not null)
                 {
                     if (parent.ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
                     {

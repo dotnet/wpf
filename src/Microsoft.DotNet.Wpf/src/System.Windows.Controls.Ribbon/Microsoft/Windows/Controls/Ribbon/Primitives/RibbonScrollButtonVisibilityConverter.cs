@@ -72,7 +72,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
                 double target;
 
                 string parameterString = parameter as string;
-                if (parameterString != null)
+                if (parameterString is not null)
                 {
                     target = Double.Parse(parameterString, NumberFormatInfo.InvariantInfo);
                 }

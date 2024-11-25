@@ -308,7 +308,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 int len = 0;
                 BinaryWriter binarywriter = null;
 #pragma warning restore 6518
-                if (stream != null)
+                if (stream is not null)
                 {
                     binarywriter = new BinaryWriter(stream, System.Text.Encoding.Unicode);
                 }
@@ -323,7 +323,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 //  Reader Version
                 // ****************
 
-                if (stream != null)
+                if (stream is not null)
                 {
                     binarywriter.Write(_reader.Major);   // Major number
                     binarywriter.Write(_reader.Minor);   // Minor number
@@ -336,7 +336,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 //  Updater Version
                 // *****************
 
-                if (stream != null)
+                if (stream is not null)
                 {
                     binarywriter.Write(_updater.Major);   // Major number
                     binarywriter.Write(_updater.Minor);   // Minor number
@@ -349,7 +349,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 //  Writer Version
                 // ****************
 
-                if (stream != null)
+                if (stream is not null)
                 {
                     binarywriter.Write(_writer.Major);   // Major number
                     binarywriter.Write(_writer.Minor);   // Minor number

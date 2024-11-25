@@ -43,7 +43,7 @@ namespace MS.Internal.AutomationProxies
                 // other operation, e.g. cloning an existing TextPatternRange.
                 throw new InvalidOperationException(SR.Format(SR.InvalidTextRangeOffset, GetType().FullName));
             }
-            Debug.Assert(provider != null);
+            Debug.Assert(provider is not null);
 
             _provider = provider;
             _start = start;

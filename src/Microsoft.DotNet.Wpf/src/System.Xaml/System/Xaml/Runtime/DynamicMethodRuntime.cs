@@ -128,11 +128,11 @@ namespace MS.Internal.Xaml.Runtime
             XamlAccessLevel accessLevel)
             : base(settings, true /*isWriter*/)
         {
-            Debug.Assert(schemaContext != null);
-            Debug.Assert(accessLevel != null);
+            Debug.Assert(schemaContext is not null);
+            Debug.Assert(accessLevel is not null);
             _schemaContext = schemaContext;
             _localAssembly = Assembly.Load(accessLevel.AssemblyAccessToAssemblyName);
-            if (accessLevel.PrivateAccessToTypeName != null)
+            if (accessLevel.PrivateAccessToTypeName is not null)
             {
                 _localType = _localAssembly.GetType(accessLevel.PrivateAccessToTypeName, true /*throwOnError*/);
             }
@@ -163,7 +163,7 @@ namespace MS.Internal.Xaml.Runtime
             if (ts == BuiltInValueConverter.Event)
             {
                 string valueString = value as string;
-                if (valueString != null)
+                if (valueString is not null)
                 {
                     object rootObject;
                     Type delegateType;
@@ -391,7 +391,7 @@ namespace MS.Internal.Xaml.Runtime
             }
             for (int i = 0; i < locals.Length; i++)
             {
-                if (locals[i] != null)
+                if (locals[i] is not null)
                 {
                     ilGenerator.Emit(OpCodes.Ldarg_0);
                     Emit_ConstInt(ilGenerator, i);
@@ -446,7 +446,7 @@ namespace MS.Internal.Xaml.Runtime
 
         private DynamicMethod CreateDynamicMethod(string name, Type returnType, params Type[] argTypes)
         {
-            if (_localType != null)
+            if (_localType is not null)
             {
                 return new DynamicMethod(name, returnType, argTypes, _localType);
             }
@@ -461,7 +461,7 @@ namespace MS.Internal.Xaml.Runtime
             Type declaringType = instanceMethod.DeclaringType;
             // Derived classes are not allowed to access protected members on instances of their base classes.
             // So if it it's an inherited protected member, we need to cast to the local type.
-            if (_localType != null && _localType != declaringType && declaringType.IsAssignableFrom(_localType))
+            if (_localType is not null && _localType != declaringType && declaringType.IsAssignableFrom(_localType))
             {
                 if (instanceMethod.IsFamily || instanceMethod.IsFamilyAndAssembly)
                 {

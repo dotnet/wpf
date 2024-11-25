@@ -65,7 +65,7 @@ namespace System.Windows
         {
             // Find a cached theme style
             object resource = _themeStyleCache[key];
-            if (resource != null)
+            if (resource is not null)
             {
                 // Found a cached value
                 if (resource == _specialNull)
@@ -84,7 +84,7 @@ namespace System.Windows
             // to the cache will need a lock though
             lock (ThemeDictionaryLock)
             {
-                if (resource != null)
+                if (resource is not null)
                 {
                     // Cache the value
                     _themeStyleCache[key] = resource;
@@ -157,8 +157,8 @@ namespace System.Windows
                 lock (ThemeDictionaryLock)
                 {
                     bool canCache = true;
-                    SystemResourceKey sysKey = (resourceKey != null) ? resourceKey as SystemResourceKey : null;
-                    if (sysKey != null)
+                    SystemResourceKey sysKey = (resourceKey is not null) ? resourceKey as SystemResourceKey : null;
+                    if (sysKey is not null)
                     {
                         // Check the list of system metrics
                         if (!mustReturnDeferredResourceReference)
@@ -207,16 +207,16 @@ namespace System.Windows
             {
                 List<ResourceDictionaryInfo> dictionaries = new List<ResourceDictionaryInfo>();
 
-                if (_dictionaries != null)
+                if (_dictionaries is not null)
                 {
                     lock (ThemeDictionaryLock)
                     {
-                        if (_dictionaries != null)
+                        if (_dictionaries is not null)
                         {
                             foreach (var dictionary in _dictionaries)
                             {
                                 ResourceDictionaryInfo info = dictionary.Value.ThemedDictionaryInfo;
-                                if (info.ResourceDictionary != null)
+                                if (info.ResourceDictionary is not null)
                                 {
                                     dictionaries.Add(info);
                                 }
@@ -238,16 +238,16 @@ namespace System.Windows
             {
                 List<ResourceDictionaryInfo> dictionaries = new List<ResourceDictionaryInfo>();
 
-                if (_dictionaries != null)
+                if (_dictionaries is not null)
                 {
                     lock (ThemeDictionaryLock)
                     {
-                        if (_dictionaries != null)
+                        if (_dictionaries is not null)
                         {
                             foreach (var dictionary in _dictionaries)
                             {
                                 ResourceDictionaryInfo info = dictionary.Value.GenericDictionaryInfo;
-                                if (info.ResourceDictionary != null)
+                                if (info.ResourceDictionary is not null)
                                 {
                                     dictionaries.Add(info);
                                 }
@@ -277,7 +277,7 @@ namespace System.Windows
         {
             // Thread safety handled by FindResourceInternal. Be sure to have locked _resourceCache.SyncRoot.
 
-            if (resource != null)
+            if (resource is not null)
             {
                 // Cache the value
                 _resourceCache[key] = resource;
@@ -307,7 +307,7 @@ namespace System.Windows
             // reading the cache is lock free
 
             resource = _resourceCache[key];
-            bool found = (resource != null);
+            bool found = (resource is not null);
 
             if (resource == _specialNull)
             {
@@ -317,7 +317,7 @@ namespace System.Windows
             else
             {
                 DispatcherObject dispatcherObject = resource as DispatcherObject;
-                if (dispatcherObject != null)
+                if (dispatcherObject is not null)
                 {
                     // The current thread may not have access to this object.
                     dispatcherObject.VerifyAccess();
@@ -361,11 +361,11 @@ namespace System.Windows
         {
             // Thread safety handled by FindResourceInternal. Be sure to have locked _resourceCache.SyncRoot.
 
-            Debug.Assert(typeKey != null || resourceKey != null, "typeKey or resourceKey should be non-null");
+            Debug.Assert(typeKey is not null || resourceKey is not null, "typeKey or resourceKey should be non-null");
 
             canCache = true;
             object resource = null;
-            Assembly assembly = (typeKey != null) ? typeKey.Assembly : resourceKey.Assembly;
+            Assembly assembly = (typeKey is not null) ? typeKey.Assembly : resourceKey.Assembly;
 
             if ((assembly is null) || IgnoreAssembly(assembly))
             {
@@ -376,7 +376,7 @@ namespace System.Windows
 
             ResourceDictionaries dictionaries = EnsureDictionarySlot(assembly);
             ResourceDictionary dictionary = dictionaries.LoadThemedDictionary(isTraceEnabled);
-            if (dictionary != null)
+            if (dictionary is not null)
             {
                 resource = LookupResourceInDictionary(dictionary, key, allowDeferredResourceReference, mustReturnDeferredResourceReference, out canCache);
             }
@@ -384,13 +384,13 @@ namespace System.Windows
             if (resource is null)
             {
                 dictionary = dictionaries.LoadGenericDictionary(isTraceEnabled);
-                if (dictionary != null)
+                if (dictionary is not null)
                 {
                     resource = LookupResourceInDictionary(dictionary, key, allowDeferredResourceReference, mustReturnDeferredResourceReference, out canCache);
                 }
             }
 
-            if (resource != null)
+            if (resource is not null)
             {
                 // Resources coming out of the dictionary may need to be frozen
                 Freeze(resource);
@@ -444,7 +444,7 @@ namespace System.Windows
         private static void Freeze(object resource)
         {
             Freezable freezable = resource as Freezable;
-            if (freezable != null && !freezable.IsFrozen)
+            if (freezable is not null && !freezable.IsFrozen)
             {
                 freezable.Freeze();
             }
@@ -468,7 +468,7 @@ namespace System.Windows
         private static ResourceDictionaries EnsureDictionarySlot(Assembly assembly)
         {
             ResourceDictionaries dictionaries = null;
-            if (_dictionaries != null)
+            if (_dictionaries is not null)
             {
                 _dictionaries.TryGetValue(assembly, out dictionaries);
             }
@@ -597,7 +597,7 @@ namespace System.Windows
                 _themedDictionaryAssembly = null;
                 _themedDictionarySourceUri = null;
 
-                if (info.ResourceDictionary != null)
+                if (info.ResourceDictionary is not null)
                 {
                     SystemResources.ThemedDictionaryUnloaded?.Invoke(null, new ResourceDictionaryUnloadedEventArgs(info));
                 }
@@ -640,7 +640,7 @@ namespace System.Windows
                             dictionaryAssemblyName = _assemblyName;
                         }
 
-                        if (_themedDictionaryAssembly != null)
+                        if (_themedDictionaryAssembly is not null)
                         {
                             dictionary = LoadDictionary(_themedDictionaryAssembly, dictionaryAssemblyName, ThemedResourceName, isTraceEnabled, out _themedDictionarySourceUri);
                             if ((dictionary is null) && !external)
@@ -648,7 +648,7 @@ namespace System.Windows
                                 // Themed resources should have been inside the source assembly, but failed to load.
                                 // Try falling back to external in case this is a theme that shipped later.
                                 LoadExternalAssembly(false /* classic */, false /* generic */, out _themedDictionaryAssembly, out dictionaryAssemblyName);
-                                if (_themedDictionaryAssembly != null)
+                                if (_themedDictionaryAssembly is not null)
                                 {
                                     dictionary = LoadDictionary(_themedDictionaryAssembly, dictionaryAssemblyName, ThemedResourceName, isTraceEnabled, out _themedDictionarySourceUri);
                                 }
@@ -668,7 +668,7 @@ namespace System.Windows
                                 dictionaryAssemblyName = _assemblyName;
                             }
 
-                            if (_themedDictionaryAssembly != null)
+                            if (_themedDictionaryAssembly is not null)
                             {
                                 dictionary = LoadDictionary(_themedDictionaryAssembly, dictionaryAssemblyName, ClassicResourceName, isTraceEnabled, out _themedDictionarySourceUri);
                             }
@@ -677,7 +677,7 @@ namespace System.Windows
                         _themedDictionary = dictionary;
                         _themedLoaded = true;
 
-                        if (_themedDictionary != null)
+                        if (_themedDictionary is not null)
                         {
                             SystemResources.ThemedDictionaryLoaded?.Invoke(null, new ResourceDictionaryLoadedEventArgs(ThemedDictionaryInfo));
                         }
@@ -727,7 +727,7 @@ namespace System.Windows
                             dictionaryAssemblyName = _assemblyName;
                         }
 
-                        if (_genericDictionaryAssembly != null)
+                        if (_genericDictionaryAssembly is not null)
                         {
                             dictionary = LoadDictionary(_genericDictionaryAssembly, dictionaryAssemblyName, GenericResourceName, isTraceEnabled, out _genericDictionarySourceUri);
                         }
@@ -735,7 +735,7 @@ namespace System.Windows
                         _genericDictionary = dictionary;
                         _genericLoaded = true;
 
-                        if (_genericDictionary != null)
+                        if (_genericDictionary is not null)
                         {
                             SystemResources.GenericDictionaryLoaded?.Invoke(null, new ResourceDictionaryLoadedEventArgs(GenericDictionaryInfo));
                         }
@@ -758,7 +758,7 @@ namespace System.Windows
                 if (!_locationsLoaded)
                 {
                     ThemeInfoAttribute locations = ThemeInfoAttribute.FromAssembly(_assembly);
-                    if (locations != null)
+                    if (locations is not null)
                     {
                         _themedLocation = locations.ThemeDictionaryLocation;
                         _genericLocation = locations.GenericDictionaryLocation;
@@ -815,10 +815,10 @@ namespace System.Windows
                 }
 
                 // Wires themes KnownTypeHelper
-                if (_assemblyName == PresentationFrameworkName && assembly != null)
+                if (_assemblyName == PresentationFrameworkName && assembly is not null)
                 {
                     Type knownTypeHelper = assembly.GetType("Microsoft.Windows.Themes.KnownTypeHelper");
-                    if (knownTypeHelper != null)
+                    if (knownTypeHelper is not null)
                     {
                         RuntimeHelpers.RunClassConstructor(knownTypeHelper.TypeHandle);
                     }
@@ -844,7 +844,7 @@ namespace System.Windows
                         // try to update the shared member
                         string currentName = System.Threading.Interlocked.CompareExchange(ref _themedResourceName, themedResourceName, null);
 
-                        if (currentName != null && currentName != themedResourceName)
+                        if (currentName is not null && currentName != themedResourceName)
                         {
                             // another thread updated with a different value, which might
                             // be stale.  To be safe, retry as if a fresh ThemeChange occurred
@@ -941,7 +941,7 @@ namespace System.Windows
 
 #pragma warning restore 6502
 
-                if (stream != null)
+                if (stream is not null)
                 {
                     Baml2006ReaderSettings settings = new Baml2006ReaderSettings();
                     settings.OwnsStream = true;
@@ -951,7 +951,7 @@ namespace System.Windows
                     Baml2006Reader bamlReader = new Baml2006ReaderInternal(stream, new Baml2006SchemaContext(settings.LocalAssembly), settings);
 
                     System.Xaml.XamlObjectWriterSettings owSettings = XamlReader.CreateObjectWriterSettingsForBaml();
-                    if (assembly != null)
+                    if (assembly is not null)
                     {
                         owSettings.AccessLevel = XamlAccessLevel.AssemblyAccessTo(assembly);
 
@@ -975,7 +975,7 @@ namespace System.Windows
 
                     dictionary = (ResourceDictionary)writer.Result;
 
-                    if (isTraceEnabled && (dictionary != null))
+                    if (isTraceEnabled && (dictionary is not null))
                     {
                         EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientResourceBamlAssembly,
                                                             EventTrace.Keyword.KeywordXamlBaml, EventTrace.Level.Verbose,
@@ -1107,8 +1107,8 @@ namespace System.Windows
         /// <returns><see cref="DpiUtil.HwndDpiInfo"/> of the newly created <see cref="HwndWrapper"/>, which is also a new key added into <see cref="_hwndNotify"/></returns>
         private static DpiUtil.HwndDpiInfo CreateResourceChangeListenerWindow(DpiAwarenessContextValue dpiContextValue, int x = 0, int y = 0, [System.Runtime.CompilerServices.CallerMemberName] string callerName = "")
         {
-            Debug.Assert(_hwndNotify != null);
-            Debug.Assert(_hwndNotifyHook != null);
+            Debug.Assert(_hwndNotify is not null);
+            Debug.Assert(_hwndNotifyHook is not null);
             Debug.Assert(callerName.Equals(nameof(EnsureResourceChangeListener), StringComparison.InvariantCulture));
 
             using (DpiUtil.WithDpiAwarenessContext(dpiContextValue))
@@ -1151,7 +1151,7 @@ namespace System.Windows
 
         private static void OnShutdownFinished(object sender, EventArgs args)
         {
-            if (_hwndNotify != null && _hwndNotify.Count != 0)
+            if (_hwndNotify is not null && _hwndNotify.Count != 0)
             {
                 foreach (var hwndDpiInfo in _dpiAwarenessContextAndDpis)
                 {
@@ -1209,7 +1209,7 @@ namespace System.Windows
                 _themeStyleCache.Clear();
 
                 // Clear the themed dictionaries
-                if (_dictionaries != null)
+                if (_dictionaries is not null)
                 {
                     foreach (ResourceDictionaries dictionaries in _dictionaries.Values)
                     {
@@ -1232,7 +1232,7 @@ namespace System.Windows
                 foreach (object key in _resourceCache.Keys)
                 {
                     SystemResourceKey resKey = key as SystemResourceKey;
-                    if (resKey != null)
+                    if (resKey is not null)
                     {
                         keys.Add(resKey);
                     }
@@ -1255,7 +1255,7 @@ namespace System.Windows
             if (!source.IsDisposed)
             {
                 FrameworkElement fe = source.RootVisual as FrameworkElement;
-                if (fe != null)
+                if (fe is not null)
                 {
                     bool isSysColorsOrSettingsChange = (bool)argsArray[1];
                     if (isSysColorsOrSettingsChange)
@@ -1279,7 +1279,7 @@ namespace System.Windows
                     SystemResourcesAreChanging = false;
 
                     PopupRoot popupRoot = fe as PopupRoot;
-                    if (popupRoot != null && popupRoot.Parent != null)
+                    if (popupRoot is not null && popupRoot.Parent is not null)
                     {
                         popupRoot.Parent.CoerceValue(Popup.HasDropShadowProperty);
                     }
@@ -1305,11 +1305,11 @@ namespace System.Windows
             // shutdown.  StylusLogic should be instantiated by <see cref="HwndSource.Initialize">.
             if (StylusLogic.IsStylusAndTouchSupportEnabled
                 && StylusLogic.IsInstantiated
-                && _hwndNotify != null
+                && _hwndNotify is not null
                 && _hwndNotify.Count != 0)
             {
                 Dispatcher dispatcher = Hwnd.Dispatcher;
-                if (dispatcher?.InputManager != null)
+                if (dispatcher?.InputManager is not null)
                 {
 
                     // Switch to using CurrentStylusLogic mechanism and guard against the stack
@@ -1324,7 +1324,7 @@ namespace System.Windows
             SystemResourcesHaveChanged = true;
 
             Dispatcher dispatcher = isSysColorsOrSettingsChange ? null : Dispatcher.FromThread(System.Threading.Thread.CurrentThread);
-            if (dispatcher != null || isSysColorsOrSettingsChange)
+            if (dispatcher is not null || isSysColorsOrSettingsChange)
             {
                 foreach (PresentationSource source in PresentationSource.CriticalCurrentSources)
                 {
@@ -1568,7 +1568,7 @@ namespace System.Windows
                 EnsureResourceChangeListener();
 
                 var hwndDpiInfo = _hwndNotify.Keys.FirstOrDefault((hwndDpiContext) => hwndDpiContext.DpiAwarenessContextValue == ProcessDpiAwarenessContextValue);
-                Debug.Assert(hwndDpiInfo != null);
+                Debug.Assert(hwndDpiInfo is not null);
 
                 // will throw when a match is not found, which should never happen because we just called Ensure...()
                 return _hwndNotify[hwndDpiInfo];
@@ -1666,7 +1666,7 @@ namespace System.Windows
         /// </summary>
         internal static void DelayHwndShutdown()
         {
-            if (_hwndNotify != null && _hwndNotify.Count != 0)
+            if (_hwndNotify is not null && _hwndNotify.Count != 0)
             {
                 Dispatcher d = Dispatcher.CurrentDispatcher;
                 d.ShutdownFinished -= OnShutdownFinished;
@@ -1738,7 +1738,7 @@ namespace System.Windows
         {
             // If the _value cache is invalid fetch the value from
             // the dictionary else just retun the cached value
-            if (_dictionary != null)
+            if (_dictionary is not null)
             {
                 object value  = _dictionary.GetValue(_keyOrValue, out bool canCache);
                 if (canCache)
@@ -1788,7 +1788,7 @@ namespace System.Windows
         // Tell the listeners that we're inflated.
         private void OnInflated()
         {
-            if (_inflatedList != null)
+            if (_inflatedList is not null)
             {
                 foreach (ResourceReferenceExpression listener in _inflatedList)
                 {
@@ -1800,7 +1800,7 @@ namespace System.Windows
         // Gets the type of the value it represents
         internal override Type GetValueType()
         {
-            if (_dictionary != null)
+            if (_dictionary is not null)
             {
                 // Take a peek at the element type of the ElementStartRecord
                 // within the ResourceDictionary's deferred content.
@@ -1808,14 +1808,14 @@ namespace System.Windows
             }
             else
             {
-                return _keyOrValue != null ? _keyOrValue.GetType() : null;
+                return _keyOrValue is not null ? _keyOrValue.GetType() : null;
             }
         }
 
         // remove this DeferredResourceReference from its ResourceDictionary
         internal virtual void RemoveFromDictionary()
         {
-            if (_dictionary != null)
+            if (_dictionary is not null)
             {
                 if (FrameworkAppContextSwitches.DisableDynamicResourceOptimization)
                 {
@@ -1840,9 +1840,9 @@ namespace System.Windows
 
         internal virtual void RemoveInflatedListener(ResourceReferenceExpression listener)
         {
-            Debug.Assert(_inflatedList != null);
+            Debug.Assert(_inflatedList is not null);
 
-            if (_inflatedList != null)
+            if (_inflatedList is not null)
             {
                 _inflatedList.Remove(listener);
             }
@@ -1943,7 +1943,7 @@ namespace System.Windows
             {
                 // If the value cache is invalid fetch the value from
                 // the dictionary else just retun the cached value
-                if (Dictionary != null)
+                if (Dictionary is not null)
                 {
                     bool canCache;
                     object key = Key;
@@ -2028,7 +2028,7 @@ namespace System.Windows
         internal override Type GetValueType()
         {
             object value = Value;
-            return value != null ? value.GetType() : null;
+            return value is not null ? value.GetType() : null;
         }
 
         #endregion Methods

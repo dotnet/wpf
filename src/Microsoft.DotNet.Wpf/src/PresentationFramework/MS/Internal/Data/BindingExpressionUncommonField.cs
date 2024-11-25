@@ -27,7 +27,7 @@ namespace MS.Internal.Data
         internal new void ClearValue(DependencyObject instance)
         {
             BindingExpression bindingExpr = GetValue(instance);
-            if (bindingExpr != null)
+            if (bindingExpr is not null)
             {
                 bindingExpr.Detach();
             }

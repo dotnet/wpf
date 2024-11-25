@@ -303,7 +303,7 @@ namespace System.Windows.Documents
                 double newSuggestedX;
                 int linesMoved;
                 ITextPointer newMovingPosition = This.TextView.GetPositionAtNextLine(This.Selection.MovingPosition, suggestedX, +1, out newSuggestedX, out linesMoved);
-                Invariant.Assert(newMovingPosition != null);
+                Invariant.Assert(newMovingPosition is not null);
 
                 if (linesMoved != 0)
                 {
@@ -326,7 +326,7 @@ namespace System.Windows.Documents
 
                         ITextPointer lineEndPosition = GetPositionAtLineEnd(originalMovingPosition);
                         ITextPointer nextPosition = lineEndPosition.GetNextInsertionPosition(LogicalDirection.Forward);
-                        This.Selection.SetCaretToPosition(nextPosition != null ? nextPosition : lineEndPosition,
+                        This.Selection.SetCaretToPosition(nextPosition is not null ? nextPosition : lineEndPosition,
                             originalMovingPosition.LogicalDirection, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/true);
                     }
                     else if (IsPaginated(This.TextView))
@@ -392,7 +392,7 @@ namespace System.Windows.Documents
                 double newSuggestedX;
                 int linesMoved;
                 ITextPointer newMovingPosition = This.TextView.GetPositionAtNextLine(This.Selection.MovingPosition, suggestedX, -1, out newSuggestedX, out linesMoved);
-                Invariant.Assert(newMovingPosition != null);
+                Invariant.Assert(newMovingPosition is not null);
 
                 if (linesMoved != 0)
                 {
@@ -416,7 +416,7 @@ namespace System.Windows.Documents
 
                         ITextPointer lineStartPosition = GetPositionAtLineStart(originalMovingPosition);
                         ITextPointer previousPosition = lineStartPosition.GetNextInsertionPosition(LogicalDirection.Backward);
-                        This.Selection.SetCaretToPosition(previousPosition != null ? previousPosition : lineStartPosition,
+                        This.Selection.SetCaretToPosition(previousPosition is not null ? previousPosition : lineStartPosition,
                             originalMovingPosition.LogicalDirection, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/true);
                     }
                     else if (IsPaginated(This.TextView))
@@ -607,7 +607,7 @@ namespace System.Windows.Documents
 
                         targetPosition = This.TextView.GetPositionAtNextPage(movingPosition, new Point(GetViewportXOffset(This.TextView, suggestedX), suggestedY), +1, out newSuggestedOffset, out pagesMoved);
                         newSuggestedX = newSuggestedOffset.X;
-                        Invariant.Assert(targetPosition != null);
+                        Invariant.Assert(targetPosition is not null);
 
                         if (pagesMoved != 0)
                         {
@@ -721,7 +721,7 @@ namespace System.Windows.Documents
 
                         targetPosition = This.TextView.GetPositionAtNextPage(movingPosition, new Point(GetViewportXOffset(This.TextView, suggestedX), suggestedY), -1, out newSuggestedOffset, out pagesMoved);
                         newSuggestedX = newSuggestedOffset.X;
-                        Invariant.Assert(targetPosition != null);
+                        Invariant.Assert(targetPosition is not null);
 
                         if (pagesMoved != 0)
                         {
@@ -1041,7 +1041,7 @@ namespace System.Windows.Documents
                         return;
                     }
 
-                    if (This._NextLineAdvanceMovingPosition != null &&
+                    if (This._NextLineAdvanceMovingPosition is not null &&
                         This._IsNextLineAdvanceMovingPositionAtDocumentHead)
                     {
                         // Moving position is at the beginning of text container
@@ -1060,7 +1060,7 @@ namespace System.Windows.Documents
                         int linesMoved;
 
                         newMovingPosition = This.TextView.GetPositionAtNextLine(newMovingPosition, suggestedX, +1, out newSuggestedX, out linesMoved);
-                        Invariant.Assert(newMovingPosition != null);
+                        Invariant.Assert(newMovingPosition is not null);
 
                         if (linesMoved != 0)
                         {
@@ -1085,7 +1085,7 @@ namespace System.Windows.Documents
                                 ITextPointer nextPosition = lineEndPosition.GetNextInsertionPosition(LogicalDirection.Forward);
 
                                 // Extend selection and bring new position into view if needed (for paginated viewers)
-                                ExtendSelectionAndBringIntoView(nextPosition != null ? nextPosition : lineEndPosition, This);
+                                ExtendSelectionAndBringIntoView(nextPosition is not null ? nextPosition : lineEndPosition, This);
                             }
                             else if (IsPaginated(This.TextView))
                             {
@@ -1213,7 +1213,7 @@ namespace System.Windows.Documents
                         return;
                     }
 
-                    if (This._NextLineAdvanceMovingPosition != null &&
+                    if (This._NextLineAdvanceMovingPosition is not null &&
                         !This._IsNextLineAdvanceMovingPositionAtDocumentHead)
                     {
                         // Moving position is at the end of text container
@@ -1232,7 +1232,7 @@ namespace System.Windows.Documents
                         int linesMoved;
 
                         newMovingPosition = This.TextView.GetPositionAtNextLine(newMovingPosition, suggestedX, -1, out newSuggestedX, out linesMoved);
-                        Invariant.Assert(newMovingPosition != null);
+                        Invariant.Assert(newMovingPosition is not null);
 
                         if (linesMoved != 0)
                         {
@@ -1275,7 +1275,7 @@ namespace System.Windows.Documents
                                 ITextPointer previousPosition = lineStartPosition.GetNextInsertionPosition(LogicalDirection.Backward);
 
                                 // Extend selection and bring new position into view if needed (for paginated viewers)
-                                ExtendSelectionAndBringIntoView(previousPosition != null ? previousPosition : lineStartPosition, This);
+                                ExtendSelectionAndBringIntoView(previousPosition is not null ? previousPosition : lineStartPosition, This);
                             }
                             else if (IsPaginated(This.TextView))
                             {
@@ -1432,7 +1432,7 @@ namespace System.Windows.Documents
 
                         targetPosition = This.TextView.GetPositionAtNextPage(movingPosition, new Point(GetViewportXOffset(This.TextView, suggestedX), suggestedY), +1, out newSuggestedOffset, out pagesMoved);
                         newSuggestedX = newSuggestedOffset.X;
-                        Invariant.Assert(targetPosition != null);
+                        Invariant.Assert(targetPosition is not null);
 
                         if (pagesMoved != 0)
                         {
@@ -1528,7 +1528,7 @@ namespace System.Windows.Documents
 
                         targetPosition = This.TextView.GetPositionAtNextPage(movingPosition, new Point(GetViewportXOffset(This.TextView, suggestedX), suggestedY), -1, out newSuggestedOffset, out pagesMoved);
                         newSuggestedX = newSuggestedOffset.X;
-                        Invariant.Assert(targetPosition != null);
+                        Invariant.Assert(targetPosition is not null);
 
                         if (pagesMoved != 0)
                         {
@@ -1780,7 +1780,7 @@ namespace System.Windows.Documents
             Invariant.Assert(sender is ITextView);
             ((ITextView)sender).BringLineIntoViewCompleted -= new BringLineIntoViewCompletedEventHandler(HandleMoveByLineCompleted);
 
-            if (e != null && !e.Cancelled && e.Error is null)
+            if (e is not null && !e.Cancelled && e.Error is null)
             {
                 TextEditor This = e.UserState as TextEditor;
 
@@ -1810,7 +1810,7 @@ namespace System.Windows.Documents
             Invariant.Assert(sender is ITextView);
             ((ITextView)sender).BringPageIntoViewCompleted -= new BringPageIntoViewCompletedEventHandler(HandleMoveByPageCompleted);
 
-            if (e != null && !e.Cancelled && e.Error is null)
+            if (e is not null && !e.Cancelled && e.Error is null)
             {
                 TextEditor This = e.UserState as TextEditor;
 
@@ -1842,7 +1842,7 @@ namespace System.Windows.Documents
             Invariant.Assert(sender is ITextView);
             ((ITextView)sender).BringLineIntoViewCompleted -= new BringLineIntoViewCompletedEventHandler(HandleSelectByLineCompleted);
 
-            if (e != null && !e.Cancelled && e.Error is null)
+            if (e is not null && !e.Cancelled && e.Error is null)
             {
                 This = e.UserState as TextEditor;
 
@@ -1905,7 +1905,7 @@ namespace System.Windows.Documents
             Invariant.Assert(sender is ITextView);
             ((ITextView)sender).BringPageIntoViewCompleted -= new BringPageIntoViewCompletedEventHandler(HandleSelectByPageCompleted);
 
-            if (e != null && !e.Cancelled && e.Error is null)
+            if (e is not null && !e.Cancelled && e.Error is null)
             {
                 This = e.UserState as TextEditor;
 
@@ -2031,7 +2031,7 @@ namespace System.Windows.Documents
         /// </summary>
         private static bool IsFlowDirectionRightToLeftThenTopToBottom(TextEditor textEditor)
         {
-            Invariant.Assert(textEditor != null);
+            Invariant.Assert(textEditor is not null);
 
             ITextPointer position = textEditor.Selection.MovingPosition.CreatePointer();
 
@@ -2051,7 +2051,7 @@ namespace System.Windows.Documents
         /// </summary>
         private static void MoveToCharacterLogicalDirection(TextEditor textEditor, LogicalDirection direction, bool extend)
         {
-            Invariant.Assert(textEditor != null);
+            Invariant.Assert(textEditor is not null);
 
             TextEditorTyping._FlushPendingInputItems(textEditor);
 
@@ -2076,7 +2076,7 @@ namespace System.Windows.Documents
                         movingEnd = movingEnd.GetNextInsertionPosition(direction);
                     }
 
-                    if (movingEnd != null)
+                    if (movingEnd is not null)
                     {
                         // Identify an orientation toward content as a character just passed by this move
                         LogicalDirection contentDirection = direction == LogicalDirection.Forward ? LogicalDirection.Backward : LogicalDirection.Forward;
@@ -2112,7 +2112,7 @@ namespace System.Windows.Documents
         /// </summary>
         private static void NavigateWordLogicalDirection(TextEditor textEditor, LogicalDirection direction)
         {
-            Invariant.Assert(textEditor != null);
+            Invariant.Assert(textEditor is not null);
 
             TextEditorTyping._FlushPendingInputItems(textEditor);
 
@@ -2187,7 +2187,7 @@ namespace System.Windows.Documents
         /// </summary>
         private static void ExtendWordLogicalDirection(TextEditor textEditor, LogicalDirection direction)
         {
-            Invariant.Assert(textEditor != null);
+            Invariant.Assert(textEditor is not null);
 
             TextEditorTyping._FlushPendingInputItems(textEditor);
 
@@ -2282,7 +2282,7 @@ namespace System.Windows.Documents
         private static Double GetSuggestedYFromPosition(TextEditor This, ITextPointer position)
         {
             double suggestedY = Double.NaN;
-            if (position != null)
+            if (position is not null)
             {
                 suggestedY = This.TextView.GetRectangleFromTextPosition(position).Y;
             }
@@ -2393,7 +2393,7 @@ namespace System.Windows.Documents
             double pageHeight = (double)textEditor.UiScope.GetValue(TextEditor.PageHeightProperty);
 
             if (pageHeight == 0 && // Check for paginated viewer case
-                textEditor.TextView != null && textEditor.TextView.IsValid && !textEditor.TextView.Contains(position) && IsPaginated(textEditor.TextView))
+                textEditor.TextView is not null && textEditor.TextView.IsValid && !textEditor.TextView.Contains(position) && IsPaginated(textEditor.TextView))
             {
                 // This will bring the position into view when it is in another page for paginated viewers.
                 textEditor.TextView.BringPositionIntoViewAsync(position, textEditor);
@@ -2409,7 +2409,7 @@ namespace System.Windows.Documents
             if (This.Selection.IsEmpty && TextPointerBase.IsAtRowEnd(This.Selection.Start))
             {
                 ITextPointer position = This.Selection.Start.GetNextInsertionPosition(LogicalDirection.Backward);
-                if (position != null)
+                if (position is not null)
                 {
                     This.Selection.SetCaretToPosition(position, LogicalDirection.Forward, /*allowStopAtLineEnd:*/false, /*allowStopNearSpace:*/false);
                 }
@@ -2425,7 +2425,7 @@ namespace System.Windows.Documents
             if (TextPointerBase.IsAtRowEnd(position))
             {
                 ITextPointer cellEnd = position.GetNextInsertionPosition(LogicalDirection.Backward);
-                if (cellEnd != null)
+                if (cellEnd is not null)
                 {
                     position = cellEnd;
                 }
@@ -2462,7 +2462,7 @@ namespace System.Windows.Documents
             if (textview is TextBoxView) // Extra strict....this could be removed in the future.
             {
                 IScrollInfo scrollInfo = textview as IScrollInfo;
-                if (scrollInfo != null)
+                if (scrollInfo is not null)
                 {
                     x += scrollInfo.HorizontalOffset;
                 }
@@ -2481,7 +2481,7 @@ namespace System.Windows.Documents
             if (textview is TextBoxView) // Extra strict....this could be removed in the future.
             {
                 IScrollInfo scrollInfo = textview as IScrollInfo;
-                if (scrollInfo != null)
+                if (scrollInfo is not null)
                 {
                     suggestedX -= scrollInfo.HorizontalOffset;
                 }

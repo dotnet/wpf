@@ -234,7 +234,7 @@ namespace Microsoft.Windows.Themes
         private void DrawBackground(DrawingContext dc, ref Rect bounds)
         {
             Brush fill = BackgroundBrush;
-            if (fill != null && (bounds.Width > 2.0) && (bounds.Height > 2.0))
+            if (fill is not null && (bounds.Width > 2.0) && (bounds.Height > 2.0))
             {
                 if (!IsRound)
                 {
@@ -258,7 +258,7 @@ namespace Microsoft.Windows.Themes
         {
             Pen highlightPen = HighlightPen;
 
-            if (highlightPen != null && (bounds.Width >= 4.0) && (bounds.Height >= 4.0))
+            if (highlightPen is not null && (bounds.Width >= 4.0) && (bounds.Height >= 4.0))
             {
                 if (!IsRound)
                 {
@@ -278,7 +278,7 @@ namespace Microsoft.Windows.Themes
         private void DrawGlyph(DrawingContext dc, ref Rect bounds, bool isUnitThickness)
         {
             Brush glyphFill = GlyphFill;
-            if (glyphFill != null && (bounds.Width > 4.0) && (bounds.Height > 4.0))
+            if (glyphFill is not null && (bounds.Width > 4.0) && (bounds.Height > 4.0))
             {
                 if (!IsRound)
                 {
@@ -336,7 +336,7 @@ namespace Microsoft.Windows.Themes
                     {
                         Pen borderPen = BorderPen;
 
-                        if (borderPen != null)
+                        if (borderPen is not null)
                         {
                             Rect rect = new Rect(bounds.Left + 0.5,
                                                 bounds.Top + 0.5,
@@ -350,7 +350,7 @@ namespace Microsoft.Windows.Themes
                     {
                         Brush borderBrush = Border;
 
-                        if (borderBrush != null)
+                        if (borderBrush is not null)
                         {
                             dc.DrawGeometry(borderBrush, null, GenerateBorderGeometry(bounds, thickness));
                         }
@@ -360,7 +360,7 @@ namespace Microsoft.Windows.Themes
                 {
                      Pen borderPen = BorderPen;
 
-                     if (borderPen != null)
+                     if (borderPen is not null)
                      {
                          double centerX = bounds.Width * 0.5;
                          double centerY = bounds.Height * 0.5;
@@ -375,7 +375,7 @@ namespace Microsoft.Windows.Themes
         {
             Pen pen = null;
 
-            if (border != null)
+            if (border is not null)
             {
                 if (_commonBorderPen is null)   // Common case, if non-null, avoid the lock
                 {
@@ -412,7 +412,7 @@ namespace Microsoft.Windows.Themes
                     }
                 }
 
-                if (_commonBorderPen != null && border == _commonBorderPen.Brush)
+                if (_commonBorderPen is not null && border == _commonBorderPen.Brush)
                 {
 
                     pen = _commonBorderPen;

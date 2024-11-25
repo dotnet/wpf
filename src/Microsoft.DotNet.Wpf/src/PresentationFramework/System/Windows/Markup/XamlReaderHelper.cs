@@ -125,9 +125,9 @@ namespace System.Windows.Markup
             XmlReader xmlReader)
         {
 
-            Debug.Assert(xamlParser != null, "Cannot have null xaml parser");
-            Debug.Assert(parserContext != null, "Cannot have null parser context");
-            Debug.Assert(xmlReader != null, "Cannot have null xmlReader");
+            Debug.Assert(xamlParser is not null, "Cannot have null xaml parser");
+            Debug.Assert(parserContext is not null, "Cannot have null parser context");
+            Debug.Assert(xmlReader is not null, "Cannot have null xmlReader");
 
             // use the parser class for making resolution callbacks. for GetElementBaseType
             // probably should break that call + the XamlTypeMapper calls into an interface to
@@ -214,7 +214,7 @@ namespace System.Windows.Markup
                     return false;
                 // Created a synthetic clr or element start tag:  continue
                 // to see if there is a real one
-                if (CurrentContext != null && _readAnotherToken)
+                if (CurrentContext is not null && _readAnotherToken)
                 {
                     _readAnotherToken = false;
                     return true;
@@ -294,14 +294,14 @@ namespace System.Windows.Markup
             {
                 XmlCompatibilityReader xmlCompatReader = _xmlReader as XmlCompatibilityReader;
 
-                if (xmlCompatReader != null)
+                if (xmlCompatReader is not null)
                 {
                     return xmlCompatReader.Encoding;
                 }
                 else
                 {
                     XmlTextReader textReader = _xmlReader as XmlTextReader;
-                    if (textReader != null)
+                    if (textReader is not null)
                     {
                         return textReader.Encoding;
                     }
@@ -318,7 +318,7 @@ namespace System.Windows.Markup
         /// </summary>
         internal void Close()
         {
-            if (_xmlReader != null)
+            if (_xmlReader is not null)
             {
                 _xmlReader.Close();
                 _xmlReader = null;
@@ -342,7 +342,7 @@ namespace System.Windows.Markup
                 return true;
             }
 
-            if (CurrentContext != null && CurrentContext.IsEmptyElement)
+            if (CurrentContext is not null && CurrentContext.IsEmptyElement)
             {
                 // if the current element on the stack is an empty element,
                 // we need pop the stack here as all its attributes would
@@ -574,11 +574,11 @@ namespace System.Windows.Markup
             bool localAssembly = false;
             string ownerTypeFullName = string.Empty;
 
-            if (parentTypeName != null)
+            if (parentTypeName is not null)
             {
                 NamespaceMapEntry[] namespaceMaps = XamlTypeMapper.GetNamespaceMapEntries(parentTypeNamespace);
 
-                localAssembly = (namespaceMaps != null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly);
+                localAssembly = (namespaceMaps is not null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly);
                 if (localAssembly)
                 {
                     ownerTypeFullName = $"{namespaceMaps[0].ClrNamespace}.{parentTypeName}";
@@ -629,7 +629,7 @@ namespace System.Windows.Markup
             // This element needs a dictionary key if we are directly under an IDictionary
             // property or an IDictionary object
             bool needsKey =
-                   ParentContext != null &&
+                   ParentContext is not null &&
                    (ParentContext.ContextType == ElementContextType.PropertyIDictionary ||
 #if PBTCOMPILER
                     ReflectionHelper.GetMscorlibType(typeof(IDictionary)).IsAssignableFrom(ParentContext.ContextData as Type));
@@ -805,7 +805,7 @@ namespace System.Windows.Markup
                 // still be null, but this will be checked for in BamlRecordWriter.WritePropertyWithExtension
                 // where an appropriate exception will be thrown. We can't throw here as the XamlReader
                 // has no idea about passes of compilation.
-                if (typeValue != null)
+                if (typeValue is not null)
                 {
                     typeValueFullName = typeValue.FullName;
                     typeValueAssemblyFullName = typeValue.Assembly.FullName;
@@ -879,7 +879,7 @@ namespace System.Windows.Markup
             XamlTypeMapper.ValidateEnums(propertyName, propType, value);
 
             // See if this is the property that maps to x:Name, and if so, set the usage flag.
-            string parentName = declaringType != null ? declaringType.Name : string.Empty;
+            string parentName = declaringType is not null ? declaringType.Name : string.Empty;
             if (IsNameProperty(value, parentName, propertyName, propertyNamespaceUri, GetRuntimeNamePropertyName(declaringType)))
             {
                 usage = BamlAttributeUsage.RuntimeName;
@@ -1093,7 +1093,7 @@ namespace System.Windows.Markup
             string propertyName,
             object propertyMember)
         {
-            if (propertyMember != null)
+            if (propertyMember is not null)
             {
                 int dotIndex = propertyName.LastIndexOf('.');
                 if (-1 != dotIndex)
@@ -1389,7 +1389,7 @@ namespace System.Windows.Markup
             string messageWithLineNumber = keyString;
 
             // Xml exceptions already have line and position, so we don't have to add it again.
-            if (innerException != null &&
+            if (innerException is not null &&
                 !typeof(System.Xml.XmlException).IsAssignableFrom(innerException.GetType()))
             {
                 messageWithLineNumber += " ";
@@ -1896,10 +1896,10 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
             AttributeCollection attributes = TypeDescriptor.GetAttributes(type);
-            if (attributes != null)
+            if (attributes is not null)
             {
                 ContentPropertyAttribute cpa = attributes[typeof(ContentPropertyAttribute)] as ContentPropertyAttribute;
-                if (cpa != null)
+                if (cpa is not null)
                 {
                     contentProperty = cpa.Name;
                 }
@@ -2011,7 +2011,7 @@ namespace System.Windows.Markup
                 // Ideally the parser should recognize this case and not add any implicit
                 // start\end elements in this case. If\when that is fixed, this code below
                 // can be removed.
-                if (CurrentContext != null && CurrentContext.ContextType == ElementContextType.PropertyIDictionary)
+                if (CurrentContext is not null && CurrentContext.ContextType == ElementContextType.PropertyIDictionary)
                 {
                     ElementContextStack.Pop();
                     ParserContext.PopScope();
@@ -2304,7 +2304,7 @@ namespace System.Windows.Markup
                 }
             }
 
-            if (null != xmlLang && elementType != null)
+            if (null != xmlLang && elementType is not null)
             {
                 ParserContext.XmlLang = xmlLang;
 
@@ -2316,7 +2316,7 @@ namespace System.Windows.Markup
 
                 // If there is no property, then just store the xml:lang value in the
                 // ParserContext and leave xmlLangProperty as null.
-                if (xmlLangProperty != null)
+                if (xmlLangProperty is not null)
                 {
                     string assemblyName = elementType.Assembly.FullName;
 
@@ -2328,7 +2328,7 @@ namespace System.Windows.Markup
 
             // Write Freeze after the Xml namespaces & attributes have been resolved.
 
-            if (freezeValue != null)
+            if (freezeValue is not null)
             {
                 WritePresentationOptionsAttribute(PresentationOptionsFreeze, freezeValue);
             }
@@ -2759,7 +2759,7 @@ namespace System.Windows.Markup
                 string unknownTagName,         // non-null if properties belong to unknown tag
                 int depth)                  // Reader depth in xml tree
         {
-            Debug.Assert(unknownTagName != null || null != parentType);
+            Debug.Assert(unknownTagName is not null || null != parentType);
 
             // Bool used to avoid searching for element-scoped attributes when
             // we've HandleElementScopedAttributes has already determined they
@@ -2937,7 +2937,7 @@ namespace System.Windows.Markup
 
                 // Process any complex x: attributes.  These occur when something
                 // like x:Key contains complex markup that must be expanded.
-                if (complexDefAttributesList != null)
+                if (complexDefAttributesList is not null)
                 {
                     ArrayList xamlNodes = _extensionParser.CompileDictionaryKeys(complexDefAttributesList, XmlReader.Depth);
                     for (int i = 0; i < xamlNodes.Count; i++)
@@ -2949,7 +2949,7 @@ namespace System.Windows.Markup
                 // Process any MarkupExtension attributes that have been found while parsing properties.
                 // These must always come after the regular properties to maintain correct ordering
                 // of properties and things that behave sort of like children.
-                if (markupExtensionList != null)
+                if (markupExtensionList is not null)
                 {
                     ArrayList xamlNodes = _extensionParser.CompileAttributes(markupExtensionList, XmlReader.Depth);
                     for (int i = 0; i < xamlNodes.Count; i++)
@@ -2960,8 +2960,8 @@ namespace System.Windows.Markup
             }
 
             if (_definitionScopeType is null &&
-                parentType != null &&
-                ParentContext != null &&
+                parentType is not null &&
+                ParentContext is not null &&
                 KnownTypes.Types[(int)KnownElements.IComponentConnector].IsAssignableFrom(parentType))
             {
                 _definitionScopeType = parentType;
@@ -2981,7 +2981,7 @@ namespace System.Windows.Markup
             string parentTypeNamespace)
         {
             string runtimePropertyName = GetRuntimeNamePropertyName(parentType);
-            string parentName = parentType != null ? parentType.Name : string.Empty;
+            string parentName = parentType is not null ? parentType.Name : string.Empty;
 
             // review - should only check on the first tag.
             // review - should we enforce all x: grammar here instead
@@ -3009,7 +3009,7 @@ namespace System.Windows.Markup
             {
                 // Do not allow ID on abstract classes, classes without default constructors
                 // or value types.
-                if (parentType != null &&
+                if (parentType is not null &&
                     (parentType.IsAbstract ||
                      parentType.GetConstructor(Type.EmptyTypes) is null ||
                      parentType.IsValueType))
@@ -3132,7 +3132,7 @@ namespace System.Windows.Markup
                 }
 
                 DictionaryContextData dictionaryData = ParentContext.ContextData as DictionaryContextData;
-                if (dictionaryData != null)
+                if (dictionaryData is not null)
                 {
                     object key;
                     // Note that not all keys can be resolved at compile time.  For those that fail,
@@ -3191,16 +3191,16 @@ namespace System.Windows.Markup
             // Determine if the property is read only or if it was
             // already assigned using xml:lang and complain if so.
             PropertyInfo propInfo = dynamicObject as PropertyInfo;
-            if (ControllingXamlParser != null)
+            if (ControllingXamlParser is not null)
             {
                 bool propertyCanWrite;
-                if (propInfo != null)
+                if (propInfo is not null)
                 {
                     propertyCanWrite = propInfo.CanWrite;
                 }
 #if !PBTCOMPILER
                 else if (dynamicObject is DependencyProperty &&
-                    (parentType != null && KnownTypes.Types[(int)KnownElements.DependencyObject].IsAssignableFrom(parentType)))
+                    (parentType is not null && KnownTypes.Types[(int)KnownElements.DependencyObject].IsAssignableFrom(parentType)))
                 {
                     propertyCanWrite = !((DependencyProperty)dynamicObject).ReadOnly;
                 }
@@ -3214,7 +3214,7 @@ namespace System.Windows.Markup
                             $"Set{methodInfo.Name.Substring("Get".Length)}",
                             BindingFlags.Static | BindingFlags.Public);
                     }
-                    propertyCanWrite = methodInfo != null && methodInfo.GetParameters().Length == 2;
+                    propertyCanWrite = methodInfo is not null && methodInfo.GetParameters().Length == 2;
                 }
                 else if (dynamicObject is EventInfo)
                 {
@@ -3231,12 +3231,12 @@ namespace System.Windows.Markup
                 }
             }
 
-            if (propInfo != null && !XamlTypeMapper.IsAllowedPropertySet(propInfo))
+            if (propInfo is not null && !XamlTypeMapper.IsAllowedPropertySet(propInfo))
             {
                 ThrowException(nameof(SR.ParserCantSetAttribute), "property", $"{declaringType.Name}.{attribLocalName}", "set");
             }
 
-            string parentName = parentType != null ? parentType.Name : string.Empty;
+            string parentName = parentType is not null ? parentType.Name : string.Empty;
             bool isRuntimeNameProperty = IsNameProperty(attribValue, parentName, attribLocalName, attribNamespaceURI,
                                                                                 GetRuntimeNamePropertyName(parentType));
             Type propType;
@@ -3257,7 +3257,7 @@ namespace System.Windows.Markup
                                              dynamicObjectName, ref attribValue,
                                              lineNumber, linePosition, depth, dynamicObject);
 
-            if (data != null)
+            if (data is not null)
             {
                 if (data.IsSimple)
                 {
@@ -3288,7 +3288,7 @@ namespace System.Windows.Markup
                 {
                     // Do not allow Name on abstract classes, classes without default constructors
                     // or value types.
-                    if (parentType != null &&
+                    if (parentType is not null &&
                         (parentType.IsAbstract ||
                          parentType.GetConstructor(Type.EmptyTypes) is null ||
                          parentType.IsValueType))
@@ -3342,7 +3342,7 @@ namespace System.Windows.Markup
         private string GetRuntimeNamePropertyName(Type objectType)
         {
             bool knownName = false;
-            if (objectType != null)
+            if (objectType is not null)
             {
                 bool isDefaultAsm = true;
                 BamlAssemblyInfoRecord bairPF = XamlTypeMapper.MapTable.GetAssemblyInfoFromId(-1);
@@ -3400,12 +3400,12 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
                     object[] attributes = objectType.GetCustomAttributes(KnownTypes.Types[(int)KnownElements.RuntimeNamePropertyAttribute], true);
 
-                    if (attributes != null)
+                    if (attributes is not null)
                     {
                         for (int i = 0; i < attributes.Length; i++)
                         {
                             RuntimeNamePropertyAttribute rName = attributes[i] as RuntimeNamePropertyAttribute;
-                            if (rName != null)
+                            if (rName is not null)
                             {
                                 return rName.Name;
                             }
@@ -3428,7 +3428,7 @@ namespace System.Windows.Markup
                         if (propName is null)
                         {
                             baseType = baseType.BaseType;
-                            if (baseType != null)
+                            if (baseType is not null)
                             {
                                 if (baseType.Assembly == XamlTypeMapper.AssemblyPF)
                                 {
@@ -3474,7 +3474,7 @@ namespace System.Windows.Markup
                 isName = String.Equals(attributeName, "Name") && String.Equals(attribNamespaceURI, DefinitionNamespaceURI);
             }
 
-            if (isName && _definitionScopeType != null)
+            if (isName && _definitionScopeType is not null)
             {
                 ThrowException(nameof(SR.ParserNoNameUnderDefinitionScopeType), attributeValue, elementName, _definitionScopeType.Name);
             }
@@ -3490,12 +3490,12 @@ namespace System.Windows.Markup
             HybridDictionary resolvedProperties,
             string propertyName)
         {
-            if (parentType != null)
+            if (parentType is not null)
             {
                 if (!String.IsNullOrEmpty(propertyName))
                 {
                     PropertyInfo propertyMember = parentType.GetProperty(propertyName);
-                    if (propertyMember != null)
+                    if (propertyMember is not null)
                     {
                         CheckDuplicateProperty(resolvedProperties, propertyName, propertyMember);
                         string assembly = parentType.Assembly.FullName;
@@ -3514,13 +3514,13 @@ namespace System.Windows.Markup
         private bool PropertyIsWriteable(object propertyMember, Type declaringType)
         {
             PropertyInfo propertyInfo = propertyMember as PropertyInfo;
-            if (propertyInfo != null)
+            if (propertyInfo is not null)
             {
                 return propertyInfo.CanWrite;
             }
 
             MethodInfo methodInfo = propertyMember as MethodInfo;
-            if (methodInfo != null)
+            if (methodInfo is not null)
             {
                 return (methodInfo.GetParameters().Length == 2) ||
                     null != methodInfo.DeclaringType.GetMethod($"Set{methodInfo.Name.Substring("Get".Length)}",
@@ -3666,7 +3666,7 @@ namespace System.Windows.Markup
                                     // This prevents conditions where ResourceDictionary is followed by a locally defined type,
                                     // the ParentContext needs to know that FirstChildRead is true, else there is a mismatch in
                                     // StartElement & EndElement nodes.
-                                    if (ParentContext != null && !namespaceURI.Equals(DefinitionNamespaceURI))
+                                    if (ParentContext is not null && !namespaceURI.Equals(DefinitionNamespaceURI))
                                     {
                                         ParentContext.FirstChildRead = true;
                                     }
@@ -3709,7 +3709,7 @@ namespace System.Windows.Markup
                                             Debug.Assert(typeAndSerializer is null ||
                                                          typeAndSerializer.SerializerType is null ||
                                                          propertyType == typeAndSerializer.ObjectType);
-                                            serializerType = typeAndSerializer != null ? typeAndSerializer.SerializerType : null;
+                                            serializerType = typeAndSerializer is not null ? typeAndSerializer.SerializerType : null;
 
                                             CompileComplexProperty(dynamicObject, propertyType, serializerType,
                                                     depth, assemblyName, typeFullName, dynamicObjectName,
@@ -3750,7 +3750,7 @@ namespace System.Windows.Markup
                         }
                     case XmlNodeType.EndElement:
                         {
-                            if (_definitionScopeType != null && _definitionScopeType.Equals(CurrentContext.ContextData))
+                            if (_definitionScopeType is not null && _definitionScopeType.Equals(CurrentContext.ContextData))
                             {
                                 _definitionScopeType = null;
                             }
@@ -3854,7 +3854,7 @@ namespace System.Windows.Markup
         // Returns true if current element is beginning of an XML island.
         private bool IsXmlIsland(string namespaceUri, string tagName)
         {
-            if (ParentContext != null)
+            if (ParentContext is not null)
             {
                 // a XML data island must be wrapped in <x:XData>
                 if( tagName == DefinitionXDataTag &&
@@ -3871,7 +3871,7 @@ namespace System.Windows.Markup
         // Returns true if an XML island is expected in place of an element.
         private bool IsXmlIslandExpected()
         {
-            if (ParentContext != null)
+            if (ParentContext is not null)
             {
                 // check if ParentContext can accept a Xml island:
                 // either its ContentProperty is capable of parsing literal Xml content via IXmlSerializable...
@@ -3897,7 +3897,7 @@ namespace System.Windows.Markup
         {
             // InnerXml also consumes the ending x:XData tag
             string text = XmlReader.ReadInnerXml();
-            if (text != null)
+            if (text is not null)
                 text = text.Trim();
             if (!string.IsNullOrEmpty(text))
             {
@@ -3907,7 +3907,7 @@ namespace System.Windows.Markup
 
         private void CheckAllowedProperty(PropertyInfo pi, string propName)
         {
-            if (pi != null)
+            if (pi is not null)
             {
                 if (pi.CanWrite)
                 {
@@ -3959,7 +3959,7 @@ namespace System.Windows.Markup
             //  records, but the error message less friendly to users. ("'Property'
             //  record unexpected in BAML stream.")
             ElementContextStackData parentTag = ElementContextStack.ParentContext as ElementContextStackData;
-            if( parentTag != null )
+            if( parentTag is not null )
             {
                 if ( parentTag.ContextType == ElementContextType.PropertyComplex ||
                      parentTag.ContextType == ElementContextType.PropertyArray ||
@@ -3976,7 +3976,7 @@ namespace System.Windows.Markup
             {
                 int attributesToIgnore = 0;
 
-                if( XmlReader.GetAttribute(DefinitionUid, DefinitionNamespaceURI) != null)
+                if( XmlReader.GetAttribute(DefinitionUid, DefinitionNamespaceURI) is not null)
                 {
                     // Ignore the x:Uid attribute that's been inserted all over the place
                     attributesToIgnore++;
@@ -3996,7 +3996,7 @@ namespace System.Windows.Markup
             if( typeof(IEnumerable).IsAssignableFrom(propertyType) )
             {
                 Type iListTArgument = propertyType.GetInterface("System.Collections.Generic.ICollection`1");
-                if( iListTArgument != null )
+                if( iListTArgument is not null )
                 {
                     CurrentContext.CollectionItemType = iListTArgument.GetGenericArguments()[0];
                 }
@@ -4017,14 +4017,14 @@ namespace System.Windows.Markup
                 case BamlRecordType.PropertyArrayStart:
                 {
                     // If the property is not writable, then complain.
-                    if (ControllingXamlParser != null &&
+                    if (ControllingXamlParser is not null &&
                         !propertyCanWrite)
                     {
                         ThrowExceptionWithLine(SR.Format(SR.ParserReadOnlyProp,
                                                dynamicObjectName));
                     }
 
-                    if (pi != null && !XamlTypeMapper.IsAllowedPropertySet(pi))
+                    if (pi is not null && !XamlTypeMapper.IsAllowedPropertySet(pi))
                     {
                         ThrowException(nameof(SR.ParserCantSetAttribute), "property", complexPropName, "set");
                     }
@@ -4057,7 +4057,7 @@ namespace System.Windows.Markup
                     bool isList = (recordType == BamlRecordType.PropertyIListStart);
 
                     // If the property is not writable, then complain unless it is IXmlSerializable
-                    if (ControllingXamlParser != null &&
+                    if (ControllingXamlParser is not null &&
                         !propertyCanWrite &&
                         !isList &&
                         !IsAssignableToIXmlSerializable(propertyType))
@@ -4067,11 +4067,11 @@ namespace System.Windows.Markup
                     }
 
                     // make sure a settable property is actually allowed to be set
-                    if (pi != null && !propertyCanWrite && !XamlTypeMapper.IsAllowedPropertyGet(pi))
+                    if (pi is not null && !propertyCanWrite && !XamlTypeMapper.IsAllowedPropertyGet(pi))
                     {
                         ThrowException(nameof(SR.ParserCantGetProperty), complexPropName);
                     }
-                    if (pi != null && propertyCanWrite && !XamlTypeMapper.IsAllowedPropertySet(pi))
+                    if (pi is not null && propertyCanWrite && !XamlTypeMapper.IsAllowedPropertySet(pi))
                     {
                         ThrowException(nameof(SR.ParserCantSetAttribute), "property", complexPropName, "set");
                     }
@@ -4341,7 +4341,7 @@ namespace System.Windows.Markup
             //Check to make sure that content is not split up by property elements.
 
             //Don't need to check this if we are compiling the root element.
-            if (ParentContext != null)
+            if (ParentContext is not null)
             {
                 // Verify... "throw"s if we are "After" Content and
                 // returns false if there are multiple elements but
@@ -4375,8 +4375,8 @@ namespace System.Windows.Markup
             // NOTE: We will only remove the synthesised node if it is a match for
             //       for the one specified in the actual XAML.  We consider it a match
             //       for the property class if it is a subclass of the property type
-            if (ParentContext != null &&
-                ParentContext.ContextData != null &&
+            if (ParentContext is not null &&
+                ParentContext.ContextData is not null &&
                 ParentContext.NeedToWriteEndElement &&
                 !ParentContext.FirstChildRead)
             {
@@ -4421,7 +4421,7 @@ namespace System.Windows.Markup
                 }
             }
 
-            if (ParentContext != null)
+            if (ParentContext is not null)
                 ParentContext.FirstChildRead = true;  // may already be true
 
             WriteElementStart(assemblyName, typeFullName, depth,
@@ -4649,7 +4649,7 @@ namespace System.Windows.Markup
                         // then this rule may not apply, so don't complain.  Leave it up to
                         // whatever is using the XamlReaderHelper to decide.
                         Type parentType = ParentContext.ContextDataType;
-                        if (parentType != null &&
+                        if (parentType is not null &&
                             ControllingXamlParser.StrictParsing &&
                             !ParentContext.IsContentPropertySet &&
                             !BamlRecordManager.TreatAsIAddChild(parentType) &&
@@ -4884,7 +4884,7 @@ namespace System.Windows.Markup
             // Get the concrete ICollection<T> interface.  The defined name mangling pattern
             // for generics is a ` character followed by the number of arguments.
             Type iCollectionT = collectionType.GetInterface("System.Collections.Generic.ICollection`1");
-            if( iCollectionT != null )
+            if( iCollectionT is not null )
             {
                 // Make sure this is really ICollection<T> in mscorlib, not an interface with the same
                 // name/namespace.
@@ -4945,7 +4945,7 @@ namespace System.Windows.Markup
                 if( attributes[i].Constructor.ReflectedType == KnownTypes.Types[(int)KnownElements.ContentWrapperAttribute] )
                #else
                 ContentWrapperAttribute contentWrapperAttribute = attributes[i] as ContentWrapperAttribute;
-                if( contentWrapperAttribute != null )
+                if( contentWrapperAttribute is not null )
                #endif
                 {
                     // Now look at the type specified in this ContentWrapperAttribute.
@@ -6024,7 +6024,7 @@ namespace System.Windows.Markup
             // For example, when text is deemed to be content and not TypeConverter input.
             internal void ResetTypeConverterDecision()
             {
-                if(_typeConverterTextWrittenAndNotProcessed != null)
+                if(_typeConverterTextWrittenAndNotProcessed is not null)
                 {
                     // This means we were expecting to use TypeConverter, we had
                     //  written out a text XamlNode expecting to use it, but we
@@ -6133,7 +6133,7 @@ namespace System.Windows.Markup
                     {
                         _typeConverterDecisionState = TypeConverterDecisionState.InitializationString;
 
-                        Debug.Assert( _typeConverterTextWrittenAndNotProcessed != null,
+                        Debug.Assert( _typeConverterTextWrittenAndNotProcessed is not null,
                             "The caller had sent out TypeConverter initialization text - we should be seeing it now.");
                     }
                     else if( NodeTypePrecludesTypeConverterUse(xamlNode) )
@@ -6487,7 +6487,7 @@ namespace System.Windows.Markup
                 {
                     // If we already have a text node, and we've encountered an ignorable element
                     // like a comment, then just append the new text to the existing text node
-                    if (textFlowData.EncounteredIgnorableTag && textFlowData.TextNode != null)
+                    if (textFlowData.EncounteredIgnorableTag && textFlowData.TextNode is not null)
                     {
                         textFlowData.TextNode.UpdateText(textFlowData.TextNode.Text +
                                                          ((XamlTextNode)xamlNode).Text);
@@ -6560,7 +6560,7 @@ namespace System.Windows.Markup
                         // If we've accumulated whitespace text before the start of a
                         // property tag, then empty out that text, since property tags
                         // shouldn't cause whitespace text content to be realized.
-                        if (textFlowData.TextNode != null)
+                        if (textFlowData.TextNode is not null)
                         {
                             if (IsWhitespace(textFlowData.TextNode.Text))
                             {

@@ -32,7 +32,7 @@ namespace System.Windows.Documents
         // Null start/end creates an empty enumerator.
         internal RangeContentEnumerator(TextPointer start, TextPointer end)
         {
-            Invariant.Assert(start != null && end != null || start is null && end is null, "If start is null end should be null!");
+            Invariant.Assert(start is not null && end is not null || start is null && end is null, "If start is null end should be null!");
 
             _start = start;
             _end = end;
@@ -40,7 +40,7 @@ namespace System.Windows.Documents
             // Remember what generation the backing store was in when we started,
             // so we can throw if this enumerator is accessed after content has
             // changed.
-            if (_start != null)
+            if (_start is not null)
             {
                 _generation = _start.TextContainer.Generation;
             }
@@ -80,7 +80,7 @@ namespace System.Windows.Documents
                 // last item in the enumeration, _navigator == _end, but
                 // that's ok, the previous get_Current call (which sets _currentCache
                 // non-null) put it there.
-                if (_currentCache != null)
+                if (_currentCache is not null)
                 {
                     return _currentCache;
                 }
@@ -158,7 +158,7 @@ namespace System.Windows.Documents
             // by the property system is in progress. For example, changing DataContext on FlowDocument
             // can invalidate a binding on Run.Text during the inherited property change tree walk,
             // which in turn can modify the TextContainer.
-            if (_start != null && _generation != _start.TextContainer.Generation && !IsLogicalChildrenIterationInProgress)
+            if (_start is not null && _generation != _start.TextContainer.Generation && !IsLogicalChildrenIterationInProgress)
             {
                 throw new InvalidOperationException(SR.EnumeratorVersionChanged);
             }
@@ -166,7 +166,7 @@ namespace System.Windows.Documents
             if (_start is null || _start.CompareTo(_end) == 0)
                 return false;
 
-            if (_navigator != null && _navigator.CompareTo(_end) >= 0)
+            if (_navigator is not null && _navigator.CompareTo(_end) >= 0)
             {
                 return false;
             }
@@ -217,7 +217,7 @@ namespace System.Windows.Documents
         public void Reset()
         {
             // Throw if the tree has been modified since this enumerator was created.
-            if (_start != null && _generation != _start.TextContainer.Generation)
+            if (_start is not null && _generation != _start.TextContainer.Generation)
             {
                 throw new InvalidOperationException(SR.EnumeratorVersionChanged);
             }
@@ -327,10 +327,10 @@ namespace System.Windows.Documents
             {
                 DependencyObject node = _start.Parent;
 
-                while (node != null)
+                while (node is not null)
                 {
                     FrameworkElement fe = node as FrameworkElement;
-                    if (fe != null)
+                    if (fe is not null)
                     {
                         if (fe.IsLogicalChildrenIterationInProgress)
                         {
@@ -340,7 +340,7 @@ namespace System.Windows.Documents
                     else
                     {
                         FrameworkContentElement fce = node as FrameworkContentElement;
-                        if (fce != null && fce.IsLogicalChildrenIterationInProgress)
+                        if (fce is not null && fce.IsLogicalChildrenIterationInProgress)
                         {
                             return true;
                         }

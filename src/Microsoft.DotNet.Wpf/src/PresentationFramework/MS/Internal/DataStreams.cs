@@ -53,14 +53,14 @@ namespace MS.Internal.AppModel
         {
             get 
             {
-                return _subStreams != null && _subStreams.Count > 0
-                    || _customJournaledObjects != null && _customJournaledObjects.Count > 0;
+                return _subStreams is not null && _subStreams.Count > 0
+                    || _customJournaledObjects is not null && _customJournaledObjects.Count > 0;
             }
         }
 
         private bool HasSubStreams(object key)
         {
-            return _subStreams != null && _subStreams.Contains(key);
+            return _subStreams is not null && _subStreams.Contains(key);
         }
 
         private ArrayList GetSubStreams(object key)
@@ -88,7 +88,7 @@ namespace MS.Internal.AppModel
             ArrayList subStreams = null;
 
 #pragma warning disable 618
-            if ((element != null) && (element.PersistId != 0))
+            if ((element is not null) && (element.PersistId != 0))
 #pragma warning restore 618
             {
                 LocalValueEnumerator dpEnumerator = element.GetLocalValueEnumerator();
@@ -123,7 +123,7 @@ namespace MS.Internal.AppModel
                         object currentValue = element.GetValue(localValueEntry.Property);
                         byte[] bytes = null;
 
-                        if ((currentValue != null) && !(currentValue is Uri))
+                        if ((currentValue is not null) && !(currentValue is Uri))
                         {
                             // Convert the value of the DP into a byte array
                             MemoryStream byteStream = new MemoryStream();
@@ -179,7 +179,7 @@ namespace MS.Internal.AppModel
             if (persistId != 0)
             {
                 ArrayList subStreams = this.SaveSubStreams(element);
-                if (subStreams != null)
+                if (subStreams is not null)
                 {
                     //
                     // If one element in the tree is replaced with a new element which is created
@@ -202,10 +202,10 @@ namespace MS.Internal.AppModel
                 }
 
                 IJournalState customJournalingObject = node as IJournalState;
-                if (customJournalingObject != null)
+                if (customJournalingObject is not null)
                 {
                     object customState = customJournalingObject.GetJournalState(JournalReason.NewContentNavigation);
-                    if (customState != null)
+                    if (customState is not null)
                     {
                         if (_customJournaledObjects is null)
                         {
@@ -229,7 +229,7 @@ namespace MS.Internal.AppModel
 
         internal void PrepareForSerialization()
         {
-            if (_customJournaledObjects != null)
+            if (_customJournaledObjects is not null)
             {
                 foreach (DictionaryEntry entry in _customJournaledObjects)
                 {
@@ -250,10 +250,10 @@ namespace MS.Internal.AppModel
                 // Restore the value of an individual DP
                 DependencyProperty dp = DependencyProperty.FromName(subStream._propertyName, element.GetType());
                 // If the dp cannot be found it may mean that we navigated back to a loose file that has been changed.
-                if (dp != null)
+                if (dp is not null)
                 {
                     object newValue = null;
-                    if (subStream._data != null)
+                    if (subStream._data is not null)
                     {
                         using MemoryStream dataStream = new(subStream._data);
 
@@ -305,11 +305,11 @@ namespace MS.Internal.AppModel
                     LoadSubStreams(element, properties);
                 }
 
-                if (_customJournaledObjects != null && _customJournaledObjects.Contains(persistId))
+                if (_customJournaledObjects is not null && _customJournaledObjects.Contains(persistId))
                 {
                     CustomJournalStateInternal state = 
                         (CustomJournalStateInternal)_customJournaledObjects[persistId];
-                    Debug.Assert(state != null);
+                    Debug.Assert(state is not null);
                     IJournalState customJournalingObject = node as IJournalState;
 
                     //
@@ -322,7 +322,7 @@ namespace MS.Internal.AppModel
                     //  B. If the loose xaml file has been changed since the journal data was created
                     //
                     //
-                    if (customJournalingObject != null)
+                    if (customJournalingObject is not null)
                     {
                         customJournalingObject.RestoreJournalState(state);
                     }
@@ -340,7 +340,7 @@ namespace MS.Internal.AppModel
         /// <param name="operation"></param>
         private void WalkLogicalTree(object node, NodeOperation operation)
         {
-            if (node != null)
+            if (node is not null)
             {
                 operation(node);
             }

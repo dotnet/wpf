@@ -85,7 +85,7 @@ namespace System.Windows.Documents
             foreach (FixedSOMSemanticBox box in _semanticBoxes)
             {
                 FixedSOMTable table = box as FixedSOMTable;
-                if (table != null &&
+                if (table is not null &&
                     table.AddContainer(container))
                 {
                     return true;
@@ -113,12 +113,12 @@ namespace System.Windows.Documents
                 foreach (FixedSOMContainer container in this.SemanticBoxes)
                 {
                     FixedSOMTable table = container as FixedSOMTable;
-                    if (table != null && !table.IsEmpty)
+                    if (table is not null && !table.IsEmpty)
                     {
                         return false;
                     }
                     FixedSOMFixedBlock block = container as FixedSOMFixedBlock;
-                    if (block != null && !block.IsWhiteSpace)
+                    if (block is not null && !block.IsWhiteSpace)
                     {
                         return false;
                     }

@@ -119,8 +119,8 @@ namespace System.Windows.Markup
                 typeAndSerializer = _xamlTypeMapper.GetTypeAndSerializer(namespaceURI, $"{localName}Extension", null);
             }
 
-            if (typeAndSerializer != null &&
-                typeAndSerializer.ObjectType != null)
+            if (typeAndSerializer is not null &&
+                typeAndSerializer.ObjectType is not null)
             {
                 serializerType = typeAndSerializer.SerializerType;
                 baseType = typeAndSerializer.ObjectType;
@@ -353,7 +353,7 @@ namespace System.Windows.Markup
                     Type ownerType = null;
                     _dpProperty = XamlTypeMapper.ParsePropertyName(_parserContext, value, ref ownerType);
 
-                    if (_bamlRecordWriter != null && _dpProperty != null)
+                    if (_bamlRecordWriter is not null && _dpProperty is not null)
                     {
                         short typeId;
                         short propertyId = _parserContext.MapTable.GetAttributeOrTypeId(_bamlRecordWriter.BinaryWriter,
@@ -373,7 +373,7 @@ namespace System.Windows.Markup
                         }
                     }
                 }
-                else if (_dpProperty != null)
+                else if (_dpProperty is not null)
                 {
                     propNode.ValuePropertyType = _dpProperty.PropertyType;
                     propNode.ValuePropertyMember = _dpProperty;
@@ -394,7 +394,7 @@ namespace System.Windows.Markup
                         Type typeValue = _xamlTypeMapper.GetTypeFromBaseString(data.Args,
                                                                                _parserContext,
                                                                                true);
-                        Debug.Assert(typeValue != null);
+                        Debug.Assert(typeValue is not null);
 
                         XamlPropertyWithTypeNode xamlPropertyWithTypeNode =
                             new XamlPropertyWithTypeNode(0,
@@ -526,7 +526,7 @@ namespace System.Windows.Markup
                                                             PeekElementType(),    
                                                             ref value, 0, 0, 0);
 
-                if (data != null)
+                if (data is not null)
                 {
                     if (name != XamlReaderHelper.DefinitionName)
                     {
@@ -644,7 +644,7 @@ namespace System.Windows.Markup
             if (dpOrPi is null)
             {
                 MethodInfo mi = GetMi(assemblyName, ownerTypeFullName, propName, out ownerType);
-                if (mi != null)
+                if (mi is not null)
                 {
                     XamlTypeMapper.GetPropertyType(mi, out propertyType, out propertyCanWrite);
                 }
@@ -653,14 +653,14 @@ namespace System.Windows.Markup
             {
                 propertyType = XamlTypeMapper.GetPropertyType(dpOrPi);
                 PropertyInfo pi = dpOrPi as PropertyInfo;
-                if (pi != null)
+                if (pi is not null)
                 {
                     propertyCanWrite = pi.CanWrite;
                 }
                 else
                 {
                     DependencyProperty dp = dpOrPi as DependencyProperty;
-                    if (dp != null)
+                    if (dp is not null)
                     {
                         propertyCanWrite = !dp.ReadOnly;
                     }
@@ -1136,7 +1136,7 @@ namespace System.Windows.Markup
         object dpOrPi = null;
 
 #if !PBTCOMPILER
-        if (ownerType != null)
+        if (ownerType is not null)
         {
             dpOrPi = DependencyProperty.FromName(propName, ownerType);
             if (dpOrPi is null)
@@ -1157,7 +1157,7 @@ namespace System.Windows.Markup
             }
         }
 #else
-        if (ownerType != null)
+        if (ownerType is not null)
         {
 
             dpOrPi = KnownTypes.Types[(int)KnownElements.DependencyProperty].InvokeMember("FromName", 
@@ -1217,7 +1217,7 @@ namespace System.Windows.Markup
                                             BindingFlags.Public |
                                             BindingFlags.Static |
                                             BindingFlags.FlattenHierarchy);
-        if (memberInfo != null && ((MethodInfo)memberInfo).GetParameters().Length != 2)
+        if (memberInfo is not null && ((MethodInfo)memberInfo).GetParameters().Length != 2)
         {
             memberInfo = null;
         }
@@ -1229,7 +1229,7 @@ namespace System.Windows.Markup
                                                 BindingFlags.Public |
                                                 BindingFlags.Static |
                                                 BindingFlags.FlattenHierarchy);
-            if (memberInfo != null && ((MethodInfo)memberInfo).GetParameters().Length != 1)
+            if (memberInfo is not null && ((MethodInfo)memberInfo).GetParameters().Length != 1)
             {
                 memberInfo = null;
             }
@@ -1283,7 +1283,7 @@ namespace System.Windows.Markup
     private BamlRecordType Pop()
     {
         WriteStackNode stackNode = _nodeTypeStack.Pop() as WriteStackNode;
-        Debug.Assert(stackNode != null);
+        Debug.Assert(stackNode is not null);
         return stackNode.RecordType;
     }
 
@@ -1291,7 +1291,7 @@ namespace System.Windows.Markup
     private BamlRecordType PeekRecordType()
     {
         WriteStackNode stackNode = _nodeTypeStack.Peek() as WriteStackNode;
-        Debug.Assert(stackNode != null);
+        Debug.Assert(stackNode is not null);
         return stackNode.RecordType;
     }
     
@@ -1299,7 +1299,7 @@ namespace System.Windows.Markup
     private Type PeekElementType()
     {
         WriteStackNode stackNode = _nodeTypeStack.Peek() as WriteStackNode;
-        Debug.Assert(stackNode != null);
+        Debug.Assert(stackNode is not null);
         return stackNode.ElementType;
     }
 

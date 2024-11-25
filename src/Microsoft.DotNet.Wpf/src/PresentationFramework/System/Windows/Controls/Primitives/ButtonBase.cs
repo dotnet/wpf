@@ -292,11 +292,11 @@ namespace System.Windows.Controls.Primitives
 
         private void OnCommandChanged(ICommand oldCommand, ICommand newCommand)
         {
-            if (oldCommand != null)
+            if (oldCommand is not null)
             {
                 UnhookCommand(oldCommand);
             }
-            if (newCommand != null)
+            if (newCommand is not null)
             {
                 HookCommand(newCommand);
             }
@@ -321,7 +321,7 @@ namespace System.Windows.Controls.Primitives
 
         private void UpdateCanExecute()
         {
-            if (Command != null)
+            if (Command is not null)
             {
                 CanExecute = MS.Internal.Commands.CommandHelpers.CanExecuteCommandSource(this);
             }

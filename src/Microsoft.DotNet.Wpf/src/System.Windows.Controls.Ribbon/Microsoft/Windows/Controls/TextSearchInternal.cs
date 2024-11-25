@@ -143,7 +143,7 @@ namespace Microsoft.Windows.Controls
             {
                 // Skip over filtered categories
                 ItemsControl childItemsControl = _attachedTo.ItemContainerGenerator.ContainerFromIndex(currentIndex) as ItemsControl;
-                if (childItemsControl != null && childItemsControl.Visibility == Visibility.Visible)
+                if (childItemsControl is not null && childItemsControl.Visibility == Visibility.Visible)
                 {
                     int startItemIndex = 0;
 
@@ -408,13 +408,13 @@ namespace Microsoft.Windows.Controls
             {
                 object item = itemCollection[currentIndex];
 
-                if (item != null)
+                if (item is not null)
                 {
                     string itemString = GetPrimaryText(item, primaryTextPath);
 
                     // See if the current item matches the newPrefix, if so we can
                     // stop searching and accept this item as the match.
-                    if (itemString != null && itemString.StartsWith(newPrefix, /* ignoreCase */ true, cultureInfo))
+                    if (itemString is not null && itemString.StartsWith(newPrefix, /* ignoreCase */ true, cultureInfo))
                     {
                         // Accept the new prefix as the current prefix.
                         wasNewCharUsed = true;
@@ -438,7 +438,7 @@ namespace Microsoft.Windows.Controls
                     {
                         if ((!firstItem || fallbackFirstItemToo) && !string.IsNullOrEmpty(prefix))
                         {
-                            if (itemString != null)
+                            if (itemString is not null)
                             {
                                 if (fallbackMatchIndex == -1 && itemString.StartsWith(prefix, /* ignoreCase */ true, cultureInfo))
                                 {
@@ -504,7 +504,7 @@ namespace Microsoft.Windows.Controls
                 {
                     // Skip over filtered categories
                     ItemsControl childItemsControl = itemsControl.ItemContainerGenerator.ContainerFromItem(item) as ItemsControl;
-                    if (childItemsControl != null && childItemsControl.Visibility == Visibility.Visible)
+                    if (childItemsControl is not null && childItemsControl.Visibility == Visibility.Visible)
                     {
                         int matchedIndex = FindMatchingPrefix(childItemsControl, prefix, doHierarchicalSearch);
                         if (matchedIndex != -1)
@@ -565,7 +565,7 @@ namespace Microsoft.Windows.Controls
             {
                 // Fallback on ParentItemsControl
                 ItemsControl parentItemsControl = ItemsControl.ItemsControlFromItemContainer(itemsControl);
-                if (parentItemsControl != null)
+                if (parentItemsControl is not null)
                 {
                     primaryTextPath = (string)parentItemsControl.GetValue(TextSearch.TextPathProperty);
                 }
@@ -574,7 +574,7 @@ namespace Microsoft.Windows.Controls
                 {
                     // Fallback on GrandParentItemsControl
                     ItemsControl grandParentItemsControl = ItemsControl.ItemsControlFromItemContainer(parentItemsControl);
-                    if (grandParentItemsControl != null)
+                    if (grandParentItemsControl is not null)
                     {
                         primaryTextPath = (string)grandParentItemsControl.GetValue(TextSearch.TextPathProperty);
                     }
@@ -595,7 +595,7 @@ namespace Microsoft.Windows.Controls
 
             DependencyObject itemDO = item as DependencyObject;
 
-            if (itemDO != null)
+            if (itemDO is not null)
             {
                 string primaryText = (string)itemDO.GetValue(TextSearch.TextProperty);
 
@@ -633,30 +633,30 @@ namespace Microsoft.Windows.Controls
                 TextBlock textBlock;
                 TextBox textBox;
 
-                if ((hcc = o as HeaderedContentControl) != null)
+                if ((hcc = o as HeaderedContentControl) is not null)
                 {
                     return ConvertToPlainText(hcc.Header);
                 }
-                else if ((cc = o as ContentControl) != null)
+                else if ((cc = o as ContentControl) is not null)
                 {
                     return ConvertToPlainText(cc.Content);
                 }
-                else if ((hic = o as HeaderedItemsControl) != null)
+                else if ((hic = o as HeaderedItemsControl) is not null)
                 {
                     return ConvertToPlainText(hic.Header);
                 }
-                else if ((textBlock = o as TextBlock) != null)
+                else if ((textBlock = o as TextBlock) is not null)
                 {
                     return textBlock.Text;
                 }
-                else if ((textBox = o as TextBox) != null)
+                else if ((textBox = o as TextBox) is not null)
                 {
                     return textBox.Text;
                 }
             }
 
             // Try to convert the item to a string
-            return (o != null) ? o.ToString() : String.Empty;
+            return (o is not null) ? o.ToString() : String.Empty;
         }
 
         /// <summary>
@@ -714,7 +714,7 @@ namespace Microsoft.Windows.Controls
                 _charsEntered.Clear();
             }
 
-            if(_timeoutTimer != null)
+            if(_timeoutTimer is not null)
             {
                 _timeoutTimer.Stop();
             }
@@ -759,7 +759,7 @@ namespace Microsoft.Windows.Controls
 
         private void CauseTimeOut()
         {
-            if (_timeoutTimer != null)
+            if (_timeoutTimer is not null)
             {
                 _timeoutTimer.Stop();
                 OnTimeout(_timeoutTimer, EventArgs.Empty);
@@ -803,7 +803,7 @@ namespace Microsoft.Windows.Controls
 
 #if DEBUG
                 // Also need to invalidate the property CurrentPrefixProperty on the instance to which we are attached.
-                Debug.Assert(_attachedTo != null);
+                Debug.Assert(_attachedTo is not null);
 
                 _attachedTo.SetValue(CurrentPrefixProperty, _prefix);
 #endif
@@ -818,7 +818,7 @@ namespace Microsoft.Windows.Controls
                 _isActive = value;
 
 #if DEBUG
-                Debug.Assert(_attachedTo != null);
+                Debug.Assert(_attachedTo is not null);
 
                 _attachedTo.SetValue(IsActiveProperty, _isActive);
 #endif
@@ -860,7 +860,7 @@ namespace Microsoft.Windows.Controls
             object o = element.GetValue(FrameworkElement.LanguageProperty);
             CultureInfo culture = null;
 
-            if (o != null)
+            if (o is not null)
             {
                 XmlLanguage language = (XmlLanguage) o;
                 try
@@ -915,7 +915,7 @@ namespace Microsoft.Windows.Controls
                     {
                         _bindingPath = value;
                         Binding binding = new Binding();
-                        if (DataContext != null && AssemblyHelper.IsXmlNode(DataContext))
+                        if (DataContext is not null && AssemblyHelper.IsXmlNode(DataContext))
                         {
                             // Use xpath for xmlnodes (See Selector.PrepareItemValueBinding)
                             binding.XPath = _bindingPath;

@@ -221,7 +221,7 @@ namespace MS.Internal.AutomationProxies
 
                 // If a control has a LocalizedName, the _controlLabel will not get set.
                 // So look for it now.
-                if (_controlLabel == IntPtr.Zero && name != null && GetParent() is null)
+                if (_controlLabel == IntPtr.Zero && name is not null && GetParent() is null)
                 {
                     _controlLabel = Misc.GetLabelhwnd(_hwnd);
                 }
@@ -278,7 +278,7 @@ namespace MS.Internal.AutomationProxies
                 if (string.IsNullOrEmpty(text))
                 {
                     Accessible acc = Accessible.Wrap(AccessibleObject);
-                    if (acc != null)
+                    if (acc is not null)
                     {
                         text = acc.Description;
                     }
@@ -302,7 +302,7 @@ namespace MS.Internal.AutomationProxies
         {
             AutomationEvent eventId = AutomationEvent.LookupById(eventIdAsInt);
             AutomationProperty [] properties = null;
-            if (propertiesAsInts != null)
+            if (propertiesAsInts is not null)
             {
                 properties = new AutomationProperty[propertiesAsInts.Length];
                 for (int i = 0; i < propertiesAsInts.Length; i++)
@@ -320,7 +320,7 @@ namespace MS.Internal.AutomationProxies
         {
             AutomationEvent eventId = AutomationEvent.LookupById(eventIdAsInt);
             AutomationProperty [] properties = null;
-            if (propertiesAsInts != null)
+            if (propertiesAsInts is not null)
             {
                 properties = new AutomationProperty[propertiesAsInts.Length];
                 for (int i = 0; i < propertiesAsInts.Length; i++)
@@ -530,7 +530,7 @@ namespace MS.Internal.AutomationProxies
             {
                 int [] evtId = PropertyToWinEvent (idProp);
 
-                for (int i = 0; evtId != null && i < evtId.Length; i++)
+                for (int i = 0; evtId is not null && i < evtId.Length; i++)
                 {
                     alEvents.Add (new WinEventTracker.EvtIdProperty (evtId [i], idProp));
                 }

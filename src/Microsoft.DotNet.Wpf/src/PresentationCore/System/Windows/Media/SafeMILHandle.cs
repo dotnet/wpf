@@ -41,7 +41,7 @@ namespace System.Windows.Media
         /// </summary>
         internal void UpdateEstimatedSize(long estimatedSize)
         {
-            if (_gcPressure != null)
+            if (_gcPressure is not null)
             {
                 _gcPressure.Release();
             }
@@ -61,7 +61,7 @@ namespace System.Windows.Media
         internal void CopyMemoryPressure(SafeMILHandle original)
         {
             _gcPressure = original._gcPressure;
-            if (_gcPressure != null)
+            if (_gcPressure is not null)
             {
                 _gcPressure.AddRef();
             }
@@ -71,7 +71,7 @@ namespace System.Windows.Media
         {
             UnsafeNativeMethods.MILUnknown.ReleaseInterface(ref handle);
 
-            if (_gcPressure != null)
+            if (_gcPressure is not null)
             {
                 _gcPressure.Release();
                 _gcPressure = null;

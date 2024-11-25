@@ -137,7 +137,7 @@ namespace System.Windows.Interop
                 // We lookup the property in our invalidatorMap
                 // and call the appropriate method to push
                 // down the changed value to the hosted ActiveX control.
-                if (dp != null && invalidatorMap.ContainsKey(dp))
+                if (dp is not null && invalidatorMap.ContainsKey(dp))
                 {
                     PropertyInvalidator invalidator = (PropertyInvalidator)invalidatorMap[dp];
                     invalidator(this);
@@ -156,7 +156,7 @@ namespace System.Windows.Interop
             TransitionUpTo(ActiveXHelper.ActiveXState.InPlaceActive);
 
             //The above call should have set this interface
-            Invariant.Assert(_axOleInPlaceActiveObject != null, "InPlace activation of ActiveX control failed");
+            Invariant.Assert(_axOleInPlaceActiveObject is not null, "InPlace activation of ActiveX control failed");
 
             if (ControlHandle.Handle == IntPtr.Zero)
             {
@@ -571,7 +571,7 @@ namespace System.Windows.Interop
                 Debug.Assert(_axInstance is null, "_axInstance must be null");
 
                 _axInstance = CreateActiveXObject(_clsid);
-                Debug.Assert(_axInstance != null, "w/o an exception being thrown we must have an object...");
+                Debug.Assert(_axInstance is not null, "w/o an exception being thrown we must have an object...");
 
                 //
                 // We are now Loaded!
@@ -597,7 +597,7 @@ namespace System.Windows.Interop
                 {
                     //
                     // Release the _axInstance
-                    if (_axInstance != null)
+                    if (_axInstance is not null)
                     {
                         //
                         // Lets first get the cached interface pointers of _axInstance released.
@@ -856,7 +856,7 @@ namespace System.Windows.Interop
         private static void OnIsEnabledInvalidated(ActiveXHost axHost)
         {
             //Consider: ActiveX equivalent?
-            //if (axHost != null)
+            //if (axHost is not null)
             //{
             //    axHost.HostedControl.Enabled = axHost.IsEnabled;
             //}
@@ -864,7 +864,7 @@ namespace System.Windows.Interop
 
         private static void OnVisibilityInvalidated(ActiveXHost axHost)
         {
-            if (axHost != null)
+            if (axHost is not null)
             {
                 switch (axHost.Visibility)
                 {
@@ -889,7 +889,7 @@ namespace System.Windows.Interop
         {
             ActiveXHost axhost = sender as ActiveXHost;
 
-            if (axhost != null)
+            if (axhost is not null)
             {
                 Invariant.Assert(axhost.ActiveXState >= ActiveXHelper.ActiveXState.InPlaceActive, "Should at least be InPlaceActive when getting focus");
 
@@ -905,7 +905,7 @@ namespace System.Windows.Interop
         {
             ActiveXHost axhost = sender as ActiveXHost;
 
-            if (axhost != null)
+            if (axhost is not null)
             {
                 // If the focus goes from our control window to one of the child windows,
                 // we should not deactivate.
@@ -943,7 +943,7 @@ namespace System.Windows.Interop
 
                     // And recurse for our children, currently we only support one activex control
                     //
-                    if (HostedControl != null) GetMnemonicList(HostedControl, mnemonicList);
+                    if (HostedControl is not null) GetMnemonicList(HostedControl, mnemonicList);
                 }
         */
 
@@ -953,7 +953,7 @@ namespace System.Windows.Interop
 
         private void AttachInterfacesInternal()
         {
-            Debug.Assert(_axInstance != null, "The native control is null");
+            Debug.Assert(_axInstance is not null, "The native control is null");
             _axOleObject = (UnsafeNativeMethods.IOleObject)_axInstance;
             _axOleInPlaceObject = (UnsafeNativeMethods.IOleInPlaceObject)_axInstance;
             _axOleInPlaceActiveObject = (UnsafeNativeMethods.IOleInPlaceActiveObject)_axInstance;

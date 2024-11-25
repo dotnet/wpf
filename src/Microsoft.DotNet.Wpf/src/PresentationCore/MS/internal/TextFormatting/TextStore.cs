@@ -134,8 +134,8 @@ namespace MS.Internal.TextFormatting
             // Recreate the stack of text modifiers if there is one.
             TextLineBreak previousLineBreak = settings.PreviousLineBreak;
 
-            if (    previousLineBreak != null
-                &&  previousLineBreak.TextModifierScope != null)
+            if (    previousLineBreak is not null
+                &&  previousLineBreak.TextModifierScope is not null)
             {
                 _modifierScope = previousLineBreak.TextModifierScope.CloneStack();
 
@@ -288,8 +288,8 @@ namespace MS.Internal.TextFormatting
                         // store up the run info in a span indexed by actual character index
                         runInfoVector.SetReference(cch, stringLength, runInfo);
 
-                        TextEffectCollection textEffects = (runInfo.Properties != null) ? runInfo.Properties.TextEffects : null;
-                        if (textEffects != null && textEffects.Count != 0)
+                        TextEffectCollection textEffects = (runInfo.Properties is not null) ? runInfo.Properties.TextEffects : null;
+                        if (textEffects is not null && textEffects.Count != 0)
                         {
                             SetTextEffectsVector(textEffectsVector, cch, runInfo, textEffects);
                         }
@@ -309,7 +309,7 @@ namespace MS.Internal.TextFormatting
 
                     if (   lastBidiLevel > 0
                         || bidiCharFlagsSoFar != 0
-                        || _bidiState != null
+                        || _bidiState is not null
                        )
                     {
                         cchResolved = BidiAnalyze(runInfoVector, cch, out bidiLevels);
@@ -328,7 +328,7 @@ namespace MS.Internal.TextFormatting
 } while(cchResolved <= 0);
 
                 Debug.Assert(
-                        runInfoVector != null
+                        runInfoVector is not null
                     &&  (   bidiLevels is null
                         ||  cchResolved <= bidiLevels.Length)
                     );
@@ -443,7 +443,7 @@ namespace MS.Internal.TextFormatting
             TextModifierScope currentScope = _modifierScope;
             TextModifier modifier = textRun as TextModifier;
 
-            if (modifier != null)
+            if (modifier is not null)
             {
                 _modifierScope = new TextModifierScope(
                     _modifierScope,
@@ -454,7 +454,7 @@ namespace MS.Internal.TextFormatting
                 // The new scope inclues the current TextModifier run
                 currentScope = _modifierScope;
             }
-            else if (_modifierScope != null && textRun is TextEndOfSegment)
+            else if (_modifierScope is not null && textRun is TextEndOfSegment)
             {
                 // The new scope only affects subsequent runs. TextEndOfSegment run itself is
                 // still in the old scope such that its coresponding TextModifier run can be tracked.
@@ -503,7 +503,7 @@ namespace MS.Internal.TextFormatting
             )
         {
             // We already check for empty text effects at the call site.
-            Debug.Assert(textEffects != null && textEffects.Count != 0);
+            Debug.Assert(textEffects is not null && textEffects.Count != 0);
 
             int cpFetched = _cpFirst + _cchUpTo + ich; // get text source character index
 
@@ -676,7 +676,7 @@ namespace MS.Internal.TextFormatting
                     {
                         TextRunInfo nextRunInfo = FetchTextRun(_cpFirst + cchFetched + 1);
 
-                        if (nextRunInfo != null && nextRunInfo.TextRun is ITextSymbols)
+                        if (nextRunInfo is not null && nextRunInfo.TextRun is ITextSymbols)
                         {
                             newlineLength += ((nextRunInfo.CharacterBuffer[nextRunInfo.OffsetToFirstChar] == '\n') ? 1 : 0);
                         }
@@ -1058,7 +1058,7 @@ namespace MS.Internal.TextFormatting
 
         private bool IsEndOfDirectionalModifier(TextRunInfo runInfo)
         {
-            return (  runInfo.TextModifierScope != null
+            return (  runInfo.TextModifierScope is not null
                    && runInfo.TextModifierScope.TextModifier.HasDirectionalEmbedding
                    && runInfo.TextRun is TextEndOfSegment
                    );
@@ -1066,7 +1066,7 @@ namespace MS.Internal.TextFormatting
 
         private bool IsDirectionalModifier(TextModifier modifier)
         {
-            return modifier != null && modifier.HasDirectionalEmbedding;
+            return modifier is not null && modifier.HasDirectionalEmbedding;
         }
 
         internal bool InsertFakeLineBreak(int cpLimit)
@@ -1181,7 +1181,7 @@ namespace MS.Internal.TextFormatting
             NumberContext cachedNumberContext = _numberContext;
 
             // Is there a current bidi scope?
-            for (; scope != null; scope = scope.ParentScope)
+            for (; scope is not null; scope = scope.ParentScope)
             {
                 if (scope.TextModifier.HasDirectionalEmbedding)
                 {
@@ -1198,7 +1198,7 @@ namespace MS.Internal.TextFormatting
             }
 
             // Is it a right to left context?
-            bool rightToLeft = (scope != null) ?
+            bool rightToLeft = (scope is not null) ?
                 scope.TextModifier.FlowDirection == FlowDirection.RightToLeft :
                 Pap.RightToLeft;
 
@@ -1639,7 +1639,7 @@ namespace MS.Internal.TextFormatting
                 }
             }
 
-            if(lsrun != null)
+            if(lsrun is not null)
             {
                 Debug.Assert(lsrunLength > 0);
 
@@ -1676,9 +1676,9 @@ namespace MS.Internal.TextFormatting
 
             ITextSymbols textSymbols = runInfo.TextRun as ITextSymbols;
 
-            if (textSymbols != null)
+            if (textSymbols is not null)
             {
-                bool isRightToLeftParagraph = (runInfo.TextModifierScope != null) ?
+                bool isRightToLeftParagraph = (runInfo.TextModifierScope is not null) ?
                     runInfo.TextModifierScope.TextModifier.FlowDirection == FlowDirection.RightToLeft :
                     _settings.Pap.RightToLeft;
 
@@ -1700,7 +1700,7 @@ namespace MS.Internal.TextFormatting
             {
                 TextShapeableSymbols textShapeableSymbols = runInfo.TextRun as TextShapeableSymbols;
 
-                if (textShapeableSymbols != null)
+                if (textShapeableSymbols is not null)
                 {
                     shapeables = new TextShapeableSymbols[] { textShapeableSymbols };
                 }
@@ -2381,7 +2381,7 @@ namespace MS.Internal.TextFormatting
                 _textObjectMetricsVector.SetReference(cpFirst, textObject.Length, metrics);
             }
 
-            Debug.Assert(metrics != null);
+            Debug.Assert(metrics is not null);
             return metrics;
         }
 
@@ -2527,12 +2527,12 @@ namespace MS.Internal.TextFormatting
 
 
             // find the top most scope that has the direction embedding
-            while ( modifierScope != null && !modifierScope.TextModifier.HasDirectionalEmbedding)
+            while ( modifierScope is not null && !modifierScope.TextModifier.HasDirectionalEmbedding)
             {
                 modifierScope = modifierScope.ParentScope;
             }
 
-            if (modifierScope != null)
+            if (modifierScope is not null)
             {
                 _cpFirstScope = modifierScope.TextSourceCharacterIndex;
 
@@ -2702,7 +2702,7 @@ namespace MS.Internal.TextFormatting
         {
             Stack<TextModifier> directionalEmbeddingStack = new Stack<TextModifier>(32);
 
-            for (TextModifierScope currentScope = scope; currentScope != null; currentScope = currentScope.ParentScope)
+            for (TextModifierScope currentScope = scope; currentScope is not null; currentScope = currentScope.ParentScope)
             {
                 if (currentScope.TextModifier.HasDirectionalEmbedding)
                 {
@@ -2733,7 +2733,7 @@ namespace MS.Internal.TextFormatting
         /// </summary>
         internal DirectionClass GetEuropeanNumberClassOverride(CultureInfo cultureInfo)
         {
-            if (   cultureInfo != null
+            if (   cultureInfo is not null
                  &&(   (cultureInfo.LCID & 0xFF) == 0x01 // Arabic culture
                     || (cultureInfo.LCID & 0xFF) == 0x29 // Farsi culture
                    )

@@ -104,7 +104,7 @@ namespace System.Windows.Media
         /// </summary>
         ~MediaPlayerState()
         {
-            if (_helper != null)
+            if (_helper is not null)
             {
                 AppDomain.CurrentDomain.ProcessExit -= _helper.ProcessExitHandler;
             }
@@ -646,13 +646,13 @@ namespace System.Windows.Media
                 _mediaClock = newClock;
 
                 // Disassociate the old clock
-                if (oldClock != null)
+                if (oldClock is not null)
                 {
                     oldClock.Player = null;
                 }
 
                 // Associate the new clock;
-                if (newClock != null)
+                if (newClock is not null)
                 {
                     newClock.Player = player;
                 }
@@ -817,7 +817,7 @@ namespace System.Windows.Media
             }
             catch
             {
-                if (_nativeMedia != null && !_nativeMedia.IsInvalid)
+                if (_nativeMedia is not null && !_nativeMedia.IsInvalid)
                 {
                     _nativeMedia.Close();
                 }
@@ -836,7 +836,7 @@ namespace System.Windows.Media
         {
             string toOpen = null;
 
-            if (source != null && source.IsAbsoluteUri && source.Scheme == PackUriHelper.UriSchemePack)
+            if (source is not null && source.IsAbsoluteUri && source.Scheme == PackUriHelper.UriSchemePack)
             {
                 try
                 {
@@ -850,7 +850,7 @@ namespace System.Windows.Media
             }
 
             // Setting a null source effectively disconects the MediaElement.
-            if (source != null)
+            if (source is not null)
             {
                 // get the base directory of the application; never expose this
                 Uri appBase = SecurityHelper.GetBaseDirectory(AppDomain.CurrentDomain);
@@ -945,7 +945,7 @@ namespace System.Windows.Media
             // We don't change the speed if we are paused, unless we are in
             // clock mode, which overrides paused mode.
             //
-            if (!_paused || _mediaClock != null)
+            if (!_paused || _mediaClock is not null)
             {
                 PrivateSpeedRatio = _speedRatio;
             }
@@ -984,7 +984,7 @@ namespace System.Windows.Media
             // We create _nativeMedia in the constructor, so it should always
             // be initialized.
             //
-            Debug.Assert(_nativeMedia != null && !_nativeMedia.IsInvalid);
+            Debug.Assert(_nativeMedia is not null && !_nativeMedia.IsInvalid);
 
             //
             // We only allow calls to any media object on the UI thread.
@@ -1005,7 +1005,7 @@ namespace System.Windows.Media
         void
         VerifyNotControlledByClock()
         {
-            if (Clock != null)
+            if (Clock is not null)
             {
                 throw new InvalidOperationException(SR.Media_NotAllowedWhileTimingEngineInControl);
             }
@@ -1168,7 +1168,7 @@ namespace System.Windows.Media
                 )
             {
                 SafeMediaHandle nativeMedia = (SafeMediaHandle)_nativeMedia.Target;
-                if (nativeMedia != null)
+                if (nativeMedia is not null)
                 {
                     MILMedia.ProcessExitHandler(nativeMedia);
                 }

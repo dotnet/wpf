@@ -75,16 +75,16 @@ namespace System.Windows.Media
 
             if (uriHolder.OriginalUri.IsAbsoluteUri == false)
             {
-                //Debug.Assert (context != null, "Context should not be null");
-                if (context != null)
+                //Debug.Assert (context is not null, "Context should not be null");
+                if (context is not null)
                 {
                     IUriContext iuc = (IUriContext)context.GetService(typeof(IUriContext));
 
-                    //Debug.Assert (iuc != null, "IUriContext should not be null here");
-                    if (iuc != null)
+                    //Debug.Assert (iuc is not null, "IUriContext should not be null here");
+                    if (iuc is not null)
                     {
                         // the base uri is NOT ""
-                        if (iuc.BaseUri != null)
+                        if (iuc.BaseUri is not null)
                         {
 
                             uriHolder.BaseUri = iuc.BaseUri;
@@ -101,7 +101,7 @@ namespace System.Windows.Media
                             // application's base
                             uriHolder.BaseUri = BaseUriHelper.BaseUri;
                         }
-                    } // iuc != null
+                    } // iuc is not null
                 } // context!= null
             } // uriHolder.OriginalUri.IsAbsoluteUri == false
 

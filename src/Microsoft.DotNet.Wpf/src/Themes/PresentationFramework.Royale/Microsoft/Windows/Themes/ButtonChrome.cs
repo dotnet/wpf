@@ -274,7 +274,7 @@ namespace Microsoft.Windows.Themes
         {
             Size desired;
             UIElement child = Child;
-            if (child != null)
+            if (child is not null)
             {
                 Size childConstraint = new Size();
                 bool isWidthTooSmall = (availableSize.Width < sideThickness2);
@@ -328,7 +328,7 @@ namespace Microsoft.Windows.Themes
             childArrangeRect.Y = (finalSize.Height - childArrangeRect.Height) * 0.5;
 
             UIElement child = Child;
-            if (child != null)
+            if (child is not null)
             {
                 child.Arrange(childArrangeRect);
             }
@@ -340,7 +340,7 @@ namespace Microsoft.Windows.Themes
         {
             // draw actual background
             Brush brush = Background;
-            if (brush != null)
+            if (brush is not null)
             {
                 dc.DrawRoundedRectangle(brush, null, bounds, 3.0, 3.0);
             }
@@ -361,28 +361,28 @@ namespace Microsoft.Windows.Themes
 
             // draw top shade
             Brush brush = TopShade;
-            if (brush != null)
+            if (brush is not null)
             {
                 dc.DrawRoundedRectangle(brush, null, new Rect(bounds.Left, bounds.Top, bounds.Width, 6.0), 3.0, 3.0);
             }
 
             // draw bottom shade
             brush = BottomShade;
-            if (brush != null)
+            if (brush is not null)
             {
                 dc.DrawRoundedRectangle(brush, null, new Rect(bounds.Left, bounds.Bottom - 6.0, bounds.Width, 6.0), 3.0, 3.0);
             }
 
             // draw left shade
             brush = LeftShade;
-            if (brush != null)
+            if (brush is not null)
             {
                 dc.DrawRoundedRectangle(brush, null, new Rect(bounds.Left, bounds.Top, 6.0, bounds.Height), 3.0, 3.0);
             }
 
             // draw right shade
             brush = RightShade;
-            if (brush != null)
+            if (brush is not null)
             {
                 dc.DrawRoundedRectangle(brush, null, new Rect(bounds.Right - 6.0, bounds.Top, 6.0, bounds.Height), 3.0, 3.0);
             }
@@ -395,7 +395,7 @@ namespace Microsoft.Windows.Themes
         {
             // draw inner highlight
             Pen pen = InnerHighlight;
-            if (pen != null && (bounds.Width >= (8.0 / 3.0)) && (bounds.Height >= (8.0 / 3.0)))
+            if (pen is not null && (bounds.Width >= (8.0 / 3.0)) && (bounds.Height >= (8.0 / 3.0)))
             {
                 dc.DrawRoundedRectangle(
                         null,
@@ -414,7 +414,7 @@ namespace Microsoft.Windows.Themes
         {
             // draw border
             Pen borderPen = BorderPen;
-            if ((borderPen != null) && (bounds.Width >= 1.0) && (bounds.Height >= 1.0))
+            if ((borderPen is not null) && (bounds.Width >= 1.0) && (bounds.Height >= 1.0))
             {
                 dc.DrawRoundedRectangle(
                         null,
@@ -496,7 +496,7 @@ namespace Microsoft.Windows.Themes
                 Pen pen = null;
 
                 Brush brush = BorderBrush;
-                if (brush != null)
+                if (brush is not null)
                 {
                     if (_commonBorderPen is null)   // Common case, if non-null, avoid the lock
                     {
@@ -533,7 +533,7 @@ namespace Microsoft.Windows.Themes
                     }
 
                     
-                    if (_commonBorderPen != null && brush == _commonBorderPen.Brush)
+                    if (_commonBorderPen is not null && brush == _commonBorderPen.Brush)
                     {
                         pen = _commonBorderPen;
                     }

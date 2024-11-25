@@ -70,7 +70,7 @@ namespace System.Windows.Xps.Packaging
             {
                 IXpsFixedDocumentSequenceReader seqReader = _package.FixedDocumentSequenceReader;
                 IXpsFixedDocumentSequenceReader returnReader = null;
-                if( seqReader != null )
+                if( seqReader is not null )
                 {
                     Dictionary<Uri, Uri> dependentList = new Dictionary<Uri,Uri>();
 
@@ -156,7 +156,7 @@ namespace System.Windows.Xps.Packaging
             {
                 Guid? id = null;
                 Signature  sig = (Signature)_packageSignature.Signature;
-                if( sig != null )
+                if( sig is not null )
                 {
                     try
                     {

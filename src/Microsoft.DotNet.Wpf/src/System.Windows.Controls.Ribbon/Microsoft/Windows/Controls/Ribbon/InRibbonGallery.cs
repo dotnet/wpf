@@ -118,7 +118,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private bool TryNavigateToNeighboringElement(KeyEventArgs e, FocusNavigationDirection direction)
         {
             UIElement neighboringElement = this.PredictFocus(direction) as UIElement;
-            if (neighboringElement != null)
+            if (neighboringElement is not null)
             {
                 Keyboard.Focus(neighboringElement);
                 return neighboringElement.IsKeyboardFocusWithin;
@@ -160,7 +160,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 _cachedDesiredSize = desiredSize;
 
                 if (DoubleUtil.AreClose(_scrollButtonsBorderFactor, 0) || 
-                    (_contentPresenter != null && DoubleUtil.AreClose(_contentPresenter.MaxWidth, 0)))
+                    (_contentPresenter is not null && DoubleUtil.AreClose(_contentPresenter.MaxWidth, 0)))
                 {
                     UpdateInRibbonGalleryModeProperties();
                 }
@@ -193,7 +193,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             foreach (object item in Items)
             {
                 RibbonGallery firstGallery = ItemContainerGenerator.ContainerFromItem(item) as RibbonGallery;
-                if (firstGallery != null)
+                if (firstGallery is not null)
                 {
                     _firstGalleryItem = new WeakReference(item);
                     FirstGallery = firstGallery;
@@ -207,9 +207,9 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             // If a new Gallery container has been generated for _galleryItem, update _gallery reference.
             RibbonGallery gallery = container as RibbonGallery;
-            if (gallery != null)
+            if (gallery is not null)
             {
-                if (_firstGalleryItem != null && _firstGalleryItem.IsAlive && _firstGalleryItem.Target.Equals(item))
+                if (_firstGalleryItem is not null && _firstGalleryItem.IsAlive && _firstGalleryItem.Target.Equals(item))
                 {
                     FirstGallery = gallery;
                 }
@@ -220,7 +220,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         protected override void ClearContainerForItemOverride(DependencyObject element, object item)
         {
-            if (_firstGalleryItem != null && _firstGalleryItem.IsAlive && _firstGalleryItem.Target.Equals(item))
+            if (_firstGalleryItem is not null && _firstGalleryItem.IsAlive && _firstGalleryItem.Target.Equals(item))
             {
                 FirstGallery = null;
             }
@@ -284,7 +284,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (DependencyPropertyHelper.GetValueSource(irg, IsCollapsedProperty).BaseValueSource != BaseValueSource.Local)
             {
                 RibbonControlSizeDefinition csd = irg.ControlSizeDefinition;
-                if (csd != null)
+                if (csd is not null)
                 {
                     return csd.IsCollapsed;
                 }
@@ -308,7 +308,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
 
             if ((bool)args.NewValue == false &&
-                irg.FirstGallery != null)
+                irg.FirstGallery is not null)
             {
                 irg.FirstGallery.ChangeHighlight(null, null, false);
             }
@@ -327,7 +327,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     me._ribbonControl = TreeHelper.FindAncestor(me, delegate(DependencyObject element)
                     {
                         RibbonControl rc = (element as RibbonControl);
-                        if (rc != null)
+                        if (rc is not null)
                         {
                             return me == rc.ContentChild;
                         }
@@ -359,7 +359,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         // actual pixel value by using Item's width in pixels.
         private double GetPixelValueFromRibbonControlLength(RibbonControlLength cl)
         {
-            if (_firstGallery != null)
+            if (_firstGallery is not null)
             {
                 double itemWidth = _firstGallery.MaxColumnWidth;
                 if (cl.RibbonControlLengthUnitType == RibbonControlLengthUnitType.Item)
@@ -376,10 +376,10 @@ namespace Microsoft.Windows.Controls.Ribbon
         // when attains In Ribbon mode.
         private void UpdateInRibbonGalleryModeProperties()
         {
-            if (IsInInRibbonMode && ControlSizeDefinition != null)
+            if (IsInInRibbonMode && ControlSizeDefinition is not null)
             {
                 _scrollButtonsBorderFactor = 0;
-                if (_scrollButtonsBorder != null)
+                if (_scrollButtonsBorder is not null)
                 {
                     if (DoubleUtil.AreClose(_scrollButtonsBorder.ActualWidth, 0))
                     {
@@ -391,7 +391,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     }
                 }
 
-                if (_contentPresenter != null)
+                if (_contentPresenter is not null)
                 {
                     // Converts if the Width property values specified in terms of items and assigns it to 
                     // InRibbonGallery Content Template parts from ControlSizeDefinition
@@ -417,7 +417,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         _contentPresenter.Width = width;
                     }
 
-                    if (_ribbonControl != null)
+                    if (_ribbonControl is not null)
                     {
                         // Ribbon Control Length is bound to Min/Max values of ControlSizeDefinition by default
                         // but in case on InRibbonGallery it needs to be taken care specifically as InRibbonGallery 
@@ -445,7 +445,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
             else
             {
-                if (_ribbonControl != null)
+                if (_ribbonControl is not null)
                 {
                     _ribbonControl.ClearValue(FrameworkElement.MaxWidthProperty);
                     _ribbonControl.ClearValue(FrameworkElement.MinWidthProperty);
@@ -457,7 +457,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         // Coerces the various visual's properties when InRibbonGallery attains in-Ribbon mode.
         private void CoerceVisibilityPropertiesOnRibbonGallery()
         {
-            if (_firstGallery != null)
+            if (_firstGallery is not null)
             {
                 _firstGallery.CoerceValue(RibbonGallery.CanUserFilterProperty);
                 _firstGallery.CoerceValue(ScrollViewer.VerticalScrollBarVisibilityProperty);
@@ -465,7 +465,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 for (int i = 0; i < _firstGallery.Items.Count; i++)
                 {
                     RibbonGalleryCategory category = _firstGallery.ItemContainerGenerator.ContainerFromIndex(i) as RibbonGalleryCategory;
-                    if (category != null)
+                    if (category is not null)
                     {
                         category.CoerceValue(RibbonGalleryCategory.HeaderVisibilityProperty);
                     }
@@ -481,18 +481,18 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             if (IsInInRibbonMode)
             {
-                if (_firstGallery != null)
+                if (_firstGallery is not null)
                 {
-                    if (_itemsPresenter != null)
+                    if (_itemsPresenter is not null)
                     {
                         RibbonMenuItemsPanel panel = (VisualTreeHelper.GetChildrenCount(_itemsPresenter) > 0 ? VisualTreeHelper.GetChild(_itemsPresenter, 0) : null) as RibbonMenuItemsPanel;
-                        if (panel != null)
+                        if (panel is not null)
                         {
                             panel.RemoveFirstGallery(this);
                         }
                     }
 
-                    if (_contentPresenter != null)
+                    if (_contentPresenter is not null)
                     {
                         _contentPresenter.Content = _firstGallery;
                     }
@@ -501,17 +501,17 @@ namespace Microsoft.Windows.Controls.Ribbon
             else
             {
                 // Removes _firstGallery from ContentPresenter and add it to the ItemsPresenter
-                if (_contentPresenter != null)
+                if (_contentPresenter is not null)
                 {
                     _contentPresenter.Content = null;
                 }
 
-                if (_itemsPresenter != null)
+                if (_itemsPresenter is not null)
                 {
                     if (VisualTreeHelper.GetChildrenCount(_itemsPresenter) > 0)
                     {
                         RibbonMenuItemsPanel panel = VisualTreeHelper.GetChild(_itemsPresenter, 0) as RibbonMenuItemsPanel;
-                        if (panel != null && _firstGallery != null)
+                        if (panel is not null && _firstGallery is not null)
                         {
                             panel.ReInsertFirstGallery(this);
                         }
@@ -540,14 +540,14 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
             private set
             {
-                if (_firstGallery != null)
+                if (_firstGallery is not null)
                 {
                     _firstGallery.ShouldGalleryItemsAcquireFocus = true;
                 }
                 
                 _firstGallery = value;
 
-                if (_firstGallery != null)
+                if (_firstGallery is not null)
                 {
                     _firstGallery.ShouldGalleryItemsAcquireFocus = false;
                 }
@@ -576,7 +576,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             Debug.Assert(this.IsDropDownOpen, "This method is only applicable when IsDropDownOpen is true.");
 
-            if (_contentPresenter != null)
+            if (_contentPresenter is not null)
             {
                 return _contentPresenter.ActualWidth;
             }
@@ -585,7 +585,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 // If IRG is retemplated but ContentPresenterTemplatePartName is not found, approximate its dimensions.
                 // TODO: Revisit these values when finalizing IRG's template.
                 // TODO: Are we being too smart here?  Does this affect RibbonGroup's Measure/Arrange?
-                double scrollButtonsBorderWidth = _scrollButtonsBorder != null ? _scrollButtonsBorder.ActualWidth : 14.0;
+                double scrollButtonsBorderWidth = _scrollButtonsBorder is not null ? _scrollButtonsBorder.ActualWidth : 14.0;
                 return this.ActualWidth - scrollButtonsBorderWidth;
             }
         }
@@ -603,7 +603,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             _scrollButtonsBorder = (Border)GetTemplateChild(ScrollButtonsBorderTemplatePartName);
 
             _scrollUpButton = GetTemplateChild(ScrollUpRepeatButtonTemplatePartName) as RepeatButton;
-            if (_scrollUpButton != null)
+            if (_scrollUpButton is not null)
             {
                 _scrollUpButton.SetValue(AutomationProperties.NameProperty, _scrollUpButtonAutomationName);
                 _scrollUpButton.SetBinding(RepeatButton.IsEnabledProperty, new Binding("CanLineUp") { Source = this });
@@ -614,7 +614,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
 
             _scrollDownButton = GetTemplateChild(ScrollDownRepeatButtonTemplatePartName) as RepeatButton;
-            if (_scrollDownButton != null)
+            if (_scrollDownButton is not null)
             {
                 _scrollDownButton.SetValue(AutomationProperties.NameProperty, _scrollDownButtonAutomationName);
                 _scrollDownButton.SetBinding(RepeatButton.IsEnabledProperty, new Binding("CanLineDown") { Source = this });
@@ -625,13 +625,13 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
 
             RibbonToggleButton partToggleButton = PartToggleButton;
-            if (partToggleButton != null)
+            if (partToggleButton is not null)
             {
                 Binding labelBinding = new Binding("Label") { RelativeSource = RelativeSource.TemplatedParent };
                 partToggleButton.SetBinding(AutomationProperties.NameProperty, labelBinding);
             }
 
-            if (Popup != null && Popup.Child != null)
+            if (Popup is not null && Popup.Child is not null)
             {
                 Popup.Child.Measure(new Size());
                 UpdateFirstGallery();
@@ -701,10 +701,10 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private static bool CoerceCanLineUpDown(InRibbonGallery irg, bool lineUp)
         {
-            if (irg.FirstGallery != null)
+            if (irg.FirstGallery is not null)
             {
                 RibbonGalleryCategoriesPanel categoriesPanel = irg.FirstGallery.ItemsHostSite as RibbonGalleryCategoriesPanel;
-                if (categoriesPanel != null)
+                if (categoriesPanel is not null)
                 {
                     return lineUp ? categoriesPanel.InRibbonModeCanLineUp() : categoriesPanel.InRibbonModeCanLineDown();
                 }

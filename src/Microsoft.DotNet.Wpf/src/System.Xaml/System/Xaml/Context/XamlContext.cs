@@ -99,7 +99,7 @@ namespace MS.Internal.Xaml
                 if (ownerTypeMatchesGenericTagType)
                 {
                     property = GetInstanceOrAttachableProperty(tagType, propName.Name, rootTagType);
-                    if (property != null)
+                    if (property is not null)
                     {
                         return property;
                     }
@@ -165,7 +165,7 @@ namespace MS.Internal.Xaml
             // Second line of if just handles tagNamespace always being null from MEScanner
             // Correct fix is to fix MEScanner and remove second line
             if ((propUsageNamespace == tagNamespace)
-                || (tagNamespace is null && propUsageNamespace != null && tagType.GetXamlNamespaces().Contains(propUsageNamespace)))
+                || (tagNamespace is null && propUsageNamespace is not null && tagType.GetXamlNamespaces().Contains(propUsageNamespace)))
             {
                 XamlType rootTagType = tagIsRoot ? tagType : null;
                 property = GetXamlProperty(tagType, propName.Name, rootTagType);
@@ -179,11 +179,11 @@ namespace MS.Internal.Xaml
                 }
             }
             // Not Simple, not Attachable, look for Directives.
-            if (property is null && propUsageNamespace != null)
+            if (property is null && propUsageNamespace is not null)
             {
                 // A processing attribute like;  x:Key  x:Name
                 XamlDirective directive = SchemaContext.GetXamlDirective(propUsageNamespace, propName.Name);
-                if (directive != null)
+                if (directive is not null)
                 {
                     if (AllowedMemberLocations.None == (directive.AllowedLocation & AllowedMemberLocations.Attribute))
                     {
@@ -256,11 +256,11 @@ namespace MS.Internal.Xaml
         internal XamlType GetXamlType(XamlTypeName typeName, bool returnUnknownTypesOnFailure,
             bool skipVisibilityCheck)
         {
-            Debug.Assert(typeName != null, "typeName cannot be null and should have been checked before now");
-            Debug.Assert(typeName.Name != null, "typeName.Name cannot be null and should have been checked before now");
-            Debug.Assert(typeName.Namespace != null);
+            Debug.Assert(typeName is not null, "typeName cannot be null and should have been checked before now");
+            Debug.Assert(typeName.Name is not null, "typeName.Name cannot be null and should have been checked before now");
+            Debug.Assert(typeName.Namespace is not null);
             XamlType xamlType = _schemaContext.GetXamlType(typeName);
-            if (xamlType != null && !skipVisibilityCheck && !xamlType.IsVisibleTo(LocalAssembly))
+            if (xamlType is not null && !skipVisibilityCheck && !xamlType.IsVisibleTo(LocalAssembly))
             {
                 xamlType = null;
             }
@@ -312,7 +312,7 @@ namespace MS.Internal.Xaml
 
         internal XamlMember ResolveDirectiveProperty(string xamlNS, string name)
         {
-            if (xamlNS != null)
+            if (xamlNS is not null)
             {
                 return SchemaContext.GetXamlDirective(xamlNS, name);
             }
@@ -371,7 +371,7 @@ namespace MS.Internal.Xaml
             XamlType[] typeArgArray = new XamlType[typeArguments.Count];
             typeArguments.CopyTo(typeArgArray, 0);
             XamlType xamlType = _schemaContext.GetXamlType(ns, name, typeArgArray);
-            if (xamlType != null && !xamlType.IsVisibleTo(LocalAssembly))
+            if (xamlType is not null && !xamlType.IsVisibleTo(LocalAssembly))
             {
                 xamlType = null;
             }

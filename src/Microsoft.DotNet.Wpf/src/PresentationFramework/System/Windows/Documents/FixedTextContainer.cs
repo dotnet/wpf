@@ -47,7 +47,7 @@ namespace System.Windows.Documents
         /// </param>
         internal FixedTextContainer(DependencyObject parent)
         {
-            Debug.Assert(parent != null && parent is FixedDocument);
+            Debug.Assert(parent is not null && parent is FixedDocument);
             _parent = parent;
             _CreateEmptyContainer();
         }
@@ -199,7 +199,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                Debug.Assert(_start != null);
+                Debug.Assert(_start is not null);
                 return _start;
             }
         }
@@ -212,7 +212,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                Debug.Assert(_end != null);
+                Debug.Assert(_end is not null);
                 return _end;
             }
         }
@@ -347,7 +347,7 @@ namespace System.Windows.Documents
             FixedTextPointer fixedTextPointer = textPointer as FixedTextPointer;
             int  pageNumber = int.MaxValue;
 
-            if (fixedTextPointer != null)
+            if (fixedTextPointer is not null)
             {
                 if (fixedTextPointer.CompareTo(((ITextContainer)this).Start) == 0)
                 {
@@ -383,7 +383,7 @@ namespace System.Windows.Documents
                     {
                         pageNumber = (int)flowNode.Cookie;
                     }
-                    else if (fixedElement != null)
+                    else if (fixedElement is not null)
                     {
                         pageNumber = (int)fixedElement.PageIndex;
                     }
@@ -407,7 +407,7 @@ namespace System.Windows.Documents
         internal void GetMultiHighlights(FixedTextPointer start, FixedTextPointer end, Dictionary<FixedPage, ArrayList> highlights, FixedHighlightType t,
             Brush foregroundBrush, Brush backgroundBrush)
         {
-            Debug.Assert(highlights != null);
+            Debug.Assert(highlights is not null);
             if (start.CompareTo(end) > 0)
             {
                 // make sure start <= end
@@ -482,7 +482,7 @@ namespace System.Windows.Documents
                     }
 
                     FixedSOMTextRun textRun = elem as FixedSOMTextRun;
-                    if (textRun != null && textRun.IsReversed)
+                    if (textRun is not null && textRun.IsReversed)
                     {
                         int oldBeginOffset = beginOffset;
                         beginOffset = elem.EndIndex - endOffset;
@@ -525,7 +525,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                Debug.Assert(_fixedTextBuilder != null);
+                Debug.Assert(_fixedTextBuilder is not null);
                 return _fixedTextBuilder;
             }
         }
@@ -534,7 +534,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                Debug.Assert(_containerElement != null);
+                Debug.Assert(_containerElement is not null);
                 return _containerElement;
             }
         }
@@ -596,7 +596,7 @@ namespace System.Windows.Documents
             FixedTextPointer eStart = new FixedTextPointer(false, LogicalDirection.Backward, pStart);
             FixedTextPointer eEnd = new FixedTextPointer(false, LogicalDirection.Forward, pEnd);
             FixedElement e = new FixedElement(elementType, eStart, eEnd, pageIndex);
-            if (source != null)
+            if (source is not null)
             {
                 e.Object = source;
             }

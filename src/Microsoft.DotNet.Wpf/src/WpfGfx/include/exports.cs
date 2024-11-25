@@ -407,7 +407,7 @@ namespace System.Windows.Media.Composition
                 _isOutOfBandChannel = isOutOfBandChannel;
                 _isSynchronous = isSynchronous;
 
-                if (referenceChannel != null)
+                if (referenceChannel is not null)
                 {
                     referenceChannelHandle = referenceChannel._hChannel;
                 }
@@ -929,7 +929,7 @@ namespace System.Windows.Media.Composition
                 BitmapSourceSafeMILHandle pBitmapSource
                 )
             {
-                Invariant.Assert(pBitmapSource != null && !pBitmapSource.IsInvalid);
+                Invariant.Assert(pBitmapSource is not null && !pBitmapSource.IsInvalid);
                 Invariant.Assert(_hChannel != IntPtr.Zero);
 
                 HRESULT.Check(UnsafeNativeMethods.MilResource_SendCommandBitmapSource(
@@ -951,7 +951,7 @@ namespace System.Windows.Media.Composition
                 bool notifyUceDirect
                 )
             {
-                Invariant.Assert(pMedia != null && !pMedia.IsInvalid);
+                Invariant.Assert(pMedia is not null && !pMedia.IsInvalid);
 
                 Invariant.Assert(_hChannel != IntPtr.Zero);
 
@@ -1106,7 +1106,7 @@ namespace System.Windows.Media.Composition
             /// </summary>
             public bool CreateOrAddRefOnChannel(object instance, Channel channel, DUCE.ResourceType type)
             {
-                Debug.Assert(channel != null);
+                Debug.Assert(channel is not null);
 #if DEBUG
                 _debugOnly_Channel = channel;
 #endif
@@ -1126,7 +1126,7 @@ namespace System.Windows.Media.Composition
             /// </return>
             public bool ReleaseOnChannel(Channel channel)
             {
-                Debug.Assert(channel != null);
+                Debug.Assert(channel is not null);
 #if DEBUG
                 Debug.Assert(_debugOnly_Channel == channel);
 #endif
@@ -1216,12 +1216,12 @@ namespace System.Windows.Media.Composition
 
             public bool IsEmpty()
             {
-                if (_first._key != null)
+                if (_first._key is not null)
                 {
                     return false;
                 }
 
-                if (_others != null)
+                if (_others is not null)
                 {
                     return false;
                 }
@@ -1238,7 +1238,7 @@ namespace System.Windows.Media.Composition
             {
                 int index = NOT_FOUND; // Not found.
 
-                if (_first._key != null)
+                if (_first._key is not null)
                 {
                     if (_first._key == key)
                     {
@@ -1246,7 +1246,7 @@ namespace System.Windows.Media.Composition
                     }
                     else
                     {
-                        if (_others != null)
+                        if (_others is not null)
                         {
                             for (int i = 0; i < _others.Count; i++)
                             {
@@ -1315,7 +1315,7 @@ namespace System.Windows.Media.Composition
 
                 if (index == FOUND_IN_INLINE_STORAGE)
                 {
-                    if (_others != null)
+                    if (_others is not null)
                     {
                         Debug.Assert(_others.Count > 0);
                         int j = _others.Count-1;
@@ -1473,7 +1473,7 @@ namespace System.Windows.Media.Composition
             {
                 int index = NOT_FOUND; // Not found.
 
-                if (_head._key != null)
+                if (_head._key is not null)
                 {
                     if (_head._key == key)
                     {
@@ -1696,7 +1696,7 @@ namespace System.Windows.Media.Composition
             /// </remark>
             public bool CreateOrAddRefOnChannel(object instance, Channel channel, DUCE.ResourceType type)
             {
-                Debug.Assert(channel != null);
+                Debug.Assert(channel is not null);
                 DUCE.ResourceHandle handle;
                 bool inmap = _map.Get(channel, out handle);
 
@@ -1721,7 +1721,7 @@ namespace System.Windows.Media.Composition
             /// <param name="targetChannel">The channel to duplicate the handle to.</param>
             public DUCE.ResourceHandle DuplicateHandle(Channel sourceChannel, Channel targetChannel)
             {
-                Debug.Assert(sourceChannel != null);
+                Debug.Assert(sourceChannel is not null);
                 DUCE.ResourceHandle duplicate = DUCE.ResourceHandle.Null;
 
                 DUCE.ResourceHandle handle = DUCE.ResourceHandle.Null;
@@ -1759,7 +1759,7 @@ namespace System.Windows.Media.Composition
             /// </return>
             public bool ReleaseOnChannel(Channel channel)
             {
-                Debug.Assert(channel != null);
+                Debug.Assert(channel is not null);
 
                 DUCE.ResourceHandle handle;
 
@@ -1784,7 +1784,7 @@ namespace System.Windows.Media.Composition
             {
                 DUCE.ResourceHandle h;
 
-                if (channel != null)
+                if (channel is not null)
                 {
                     _map.Get(channel, out h);
                 }
@@ -1827,7 +1827,7 @@ namespace System.Windows.Media.Composition
 
             public uint GetRefCountOnChannel(Channel channel)
             {
-                Debug.Assert(channel != null);
+                Debug.Assert(channel is not null);
 
                 DUCE.ResourceHandle handle;
 
@@ -2536,7 +2536,7 @@ namespace System.Windows.Media.Composition
                 bool? enableMultiMonitorDisplayClipping =
                     System.Windows.CoreCompatibilityPreferences.EnableMultiMonitorDisplayClipping;
 
-                if (enableMultiMonitorDisplayClipping != null)
+                if (enableMultiMonitorDisplayClipping is not null)
                 {
                     // The flag is explicitly set by the user in application manifest
                     command.flags |= (UInt32)MILRTInitializationFlags.MIL_RT_IS_DISABLE_MULTIMON_DISPLAY_CLIPPING_VALID;

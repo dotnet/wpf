@@ -107,7 +107,7 @@ internal class TransactionalPackage : Package, IDisposable
             throw new InvalidOperationException();
         }
 
-        if (_tempPackage != null)
+        if (_tempPackage is not null)
         {
             Package destination = Package.Open(
                 target, FileMode.Open, FileAccess.ReadWrite);
@@ -292,13 +292,13 @@ internal class TransactionalPackage : Package, IDisposable
 
         if (disposing)
         {
-            if (_tempPackage != null)
+            if (_tempPackage is not null)
             {
                 ((IDisposable)_tempPackage).Dispose();
                 _tempPackage = null;
             }
 
-            if (_originalPackage != null)
+            if (_originalPackage is not null)
             {
                 ((IDisposable)_originalPackage).Dispose();
                 _originalPackage = null;
@@ -319,7 +319,7 @@ internal class TransactionalPackage : Package, IDisposable
     /// </remarks>
     protected override void FlushCore()
     {
-        if (_tempPackage != null)
+        if (_tempPackage is not null)
         {
             _tempPackage.Flush();
         }
@@ -382,7 +382,7 @@ internal class TransactionalPackage : Package, IDisposable
         // or the temporary package, this method will return null.
 
         bool canGetFromTempPackage =
-            (_tempPackage != null) && (_tempPackage.PartExists(partUri));
+            (_tempPackage is not null) && (_tempPackage.PartExists(partUri));
         bool canGetFromOriginalPackage =
             canGetFromTempPackage ? false : _originalPackage.PartExists(partUri);
 

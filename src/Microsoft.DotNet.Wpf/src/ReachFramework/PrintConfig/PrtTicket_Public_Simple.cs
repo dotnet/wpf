@@ -115,10 +115,10 @@ namespace System.Printing
         /// <returns>String that shows the page media size setting.</returns>
         public override string ToString()
         {
-            return ((PageMediaSizeName != null) ? String.Format(CultureInfo.CurrentCulture, "{0}", PageMediaSizeName) : "Null") + " (" +
-                   ((Width != null) ? String.Format(CultureInfo.CurrentCulture, "{0}", Width) : "Null") +
+            return ((PageMediaSizeName is not null) ? String.Format(CultureInfo.CurrentCulture, "{0}", PageMediaSizeName) : "Null") + " (" +
+                   ((Width is not null) ? String.Format(CultureInfo.CurrentCulture, "{0}", Width) : "Null") +
                    " x " +
-                   ((Height != null) ? String.Format(CultureInfo.CurrentCulture, "{0}", Height) : "Null") +
+                   ((Height is not null) ? String.Format(CultureInfo.CurrentCulture, "{0}", Height) : "Null") +
                    ")";
         }
         #endregion Public Methods
@@ -223,11 +223,11 @@ namespace System.Printing
         /// <returns>String that shows the page resolution setting.</returns>
         public override string ToString()
         {
-            return ((X != null) ? String.Format(CultureInfo.CurrentCulture, "{0}", X) : "Null") +
+            return ((X is not null) ? String.Format(CultureInfo.CurrentCulture, "{0}", X) : "Null") +
                    " x " +
-                   ((Y != null) ? String.Format(CultureInfo.CurrentCulture, "{0}", Y) : "Null") +
+                   ((Y is not null) ? String.Format(CultureInfo.CurrentCulture, "{0}", Y) : "Null") +
                    " (QualitativeResolution: " +
-                   ((QualitativeResolution != null) ? QualitativeResolution.ToString() : "Null") +
+                   ((QualitativeResolution is not null) ? QualitativeResolution.ToString() : "Null") +
                    ")";
         }
 
@@ -359,7 +359,7 @@ namespace System.Printing
             }
             set
             {
-                if ((value != null) &&
+                if ((value is not null) &&
                     (value < PrintSchema.CollationEnumMin ||
                      value > PrintSchema.CollationEnumMax))
                 {
@@ -449,7 +449,7 @@ namespace System.Printing
             }
             set
             {
-                if ((value != null) &&
+                if ((value is not null) &&
                     (value < PrintSchema.DeviceFontSubstitutionEnumMin ||
                      value > PrintSchema.DeviceFontSubstitutionEnumMax))
                 {
@@ -493,7 +493,7 @@ namespace System.Printing
             }
             set
             {
-                if ((value != null) &&
+                if ((value is not null) &&
                     (value < PrintSchema.DuplexingEnumMin ||
                      value > PrintSchema.DuplexingEnumMax))
                 {
@@ -563,7 +563,7 @@ namespace System.Printing
             }
             set
             {
-                if ((value != null) &&
+                if ((value is not null) &&
                     (value < PrintSchema.InputBinEnumMin ||
                     value > PrintSchema.InputBinEnumMax))
                 {
@@ -615,7 +615,7 @@ namespace System.Printing
             }
             set
             {
-                if ((value != null) &&
+                if ((value is not null) &&
                     (value < PrintSchema.OutputColorEnumMin ||
                      value > PrintSchema.OutputColorEnumMax))
                 {
@@ -659,7 +659,7 @@ namespace System.Printing
             }
             set
             {
-                if ((value != null) &&
+                if ((value is not null) &&
                     (value < PrintSchema.OutputQualityEnumMin ||
                      value > PrintSchema.OutputQualityEnumMax))
                 {
@@ -703,7 +703,7 @@ namespace System.Printing
             }
             set
             {
-                if ((value != null) &&
+                if ((value is not null) &&
                     (value < PrintSchema.PageBorderlessEnumMin ||
                      value > PrintSchema.PageBorderlessEnumMax))
                 {
@@ -745,7 +745,7 @@ namespace System.Printing
             get
             {
                 // return the most recent cached set operation if it exists
-                if ((_setterCache != null) &&
+                if ((_setterCache is not null) &&
                     _setterCache.ContainsKey(CapabilityName.PageMediaSize))
                 {
                     object cacheObj;
@@ -786,7 +786,7 @@ namespace System.Printing
             set
             {
                 // first performing input parameter validation
-                if (value != null)
+                if (value is not null)
                 {
                     // either media name or the width/height values need to be specified
                     if ((value.PageMediaSizeName is null) &&
@@ -796,7 +796,7 @@ namespace System.Printing
                     }
 
                     // if size name is specified, it needs to be valid name
-                    if ((value.PageMediaSizeName != null) &&
+                    if ((value.PageMediaSizeName is not null) &&
                         (value.PageMediaSizeName < PrintSchema.PageMediaSizeNameEnumMin ||
                          value.PageMediaSizeName > PrintSchema.PageMediaSizeNameEnumMax))
                     {
@@ -804,13 +804,13 @@ namespace System.Printing
                     }
 
                     // if width or height value is specified, it needs to be positive
-                    if ((value.Width != null) && (value.Width <= 0))
+                    if ((value.Width is not null) && (value.Width <= 0))
                     {
                         throw new ArgumentOutOfRangeException("value",
                                   PTUtility.GetTextFromResource("ArgumentException.PositiveValue"));
                     }
 
-                    if ((value.Height != null) && (value.Height <= 0))
+                    if ((value.Height is not null) && (value.Height <= 0))
                     {
                         throw new ArgumentOutOfRangeException("value",
                                   PTUtility.GetTextFromResource("ArgumentException.PositiveValue"));
@@ -858,7 +858,7 @@ namespace System.Printing
             }
             set
             {
-                if ((value != null) &&
+                if ((value is not null) &&
                     (value < PrintSchema.PageMediaTypeEnumMin ||
                      value > PrintSchema.PageMediaTypeEnumMax))
                 {
@@ -902,7 +902,7 @@ namespace System.Printing
             }
             set
             {
-                if ((value != null) &&
+                if ((value is not null) &&
                     (value < PrintSchema.PageOrderEnumMin ||
                      value > PrintSchema.PageOrderEnumMax))
                 {
@@ -946,7 +946,7 @@ namespace System.Printing
             }
             set
             {
-                if ((value != null) &&
+                if ((value is not null) &&
                     (value < PrintSchema.PageOrientationEnumMin ||
                      value > PrintSchema.PageOrientationEnumMax))
                 {
@@ -988,7 +988,7 @@ namespace System.Printing
             get
             {
                 // return the most recent cached set operation if it exists
-                if ((_setterCache != null) &&
+                if ((_setterCache is not null) &&
                     _setterCache.ContainsKey(CapabilityName.PageResolution))
                 {
                     object cacheObj;
@@ -1029,7 +1029,7 @@ namespace System.Printing
             set
             {
                 // first performing input parameter validation
-                if (value != null)
+                if (value is not null)
                 {
                     if ((value.QualitativeResolution is null) &&
                         (value.X is null || value.Y is null))
@@ -1038,7 +1038,7 @@ namespace System.Printing
                     }
 
                     // If quality lable is specified, it needs to be valid value
-                    if ((value.QualitativeResolution != null) &&
+                    if ((value.QualitativeResolution is not null) &&
                         (value.QualitativeResolution < PrintSchema.PageQualitativeResolutionEnumMin ||
                          value.QualitativeResolution > PrintSchema.PageQualitativeResolutionEnumMax))
                     {
@@ -1046,13 +1046,13 @@ namespace System.Printing
                     }
 
                     // If specified, resolution X and Y values must be positive
-                    if ((value.X != null) && (value.X <= 0))
+                    if ((value.X is not null) && (value.X <= 0))
                     {
                         throw new ArgumentOutOfRangeException("value",
                                       PTUtility.GetTextFromResource("ArgumentException.PositiveValue"));
                     }
 
-                    if ((value.Y != null) && (value.Y <= 0))
+                    if ((value.Y is not null) && (value.Y <= 0))
                     {
                         throw new ArgumentOutOfRangeException("value",
                                       PTUtility.GetTextFromResource("ArgumentException.PositiveValue"));
@@ -1200,7 +1200,7 @@ namespace System.Printing
             }
             set
             {
-                if ((value != null) &&
+                if ((value is not null) &&
                     (value < PrintSchema.PagesPerSheetDirectionEnumMin ||
                      value > PrintSchema.PagesPerSheetDirectionEnumMax))
                 {
@@ -1244,7 +1244,7 @@ namespace System.Printing
             }
             set
             {
-                if ((value != null) &&
+                if ((value is not null) &&
                     (value < PrintSchema.PhotoPrintingIntentEnumMin ||
                      value > PrintSchema.PhotoPrintingIntentEnumMax))
                 {
@@ -1288,7 +1288,7 @@ namespace System.Printing
             }
             set
             {
-                if ((value != null) &&
+                if ((value is not null) &&
                     (value < PrintSchema.StaplingEnumMin ||
                      value > PrintSchema.StaplingEnumMax))
                 {
@@ -1332,7 +1332,7 @@ namespace System.Printing
             }
             set
             {
-                if ((value != null) &&
+                if ((value is not null) &&
                     (value < PrintSchema.TrueTypeFontModeEnumMin ||
                      value > PrintSchema.TrueTypeFontModeEnumMax))
                 {
@@ -1420,7 +1420,7 @@ namespace System.Printing
         {
             EnumType valueGot;
 
-            if ((_setterCache != null) &&
+            if ((_setterCache is not null) &&
                 _setterCache.ContainsKey(feature))
             {
                 object cacheObj;
@@ -1459,13 +1459,13 @@ namespace System.Printing
             {
                 PageMediaSize mediaSize = (PageMediaSize)cacheValue;
 
-                if (mediaSize.PageMediaSizeName != null)
+                if (mediaSize.PageMediaSizeName is not null)
                 {
                     // If we have non-null media name, the property setter validation code should have verified
                     // it's not the special Unspecified value of 0.
                     if ((int)mediaSize.PageMediaSizeName != PrintSchema.EnumUnknownValue)
                     {
-                        if ((mediaSize.Width != null) && (mediaSize.Height != null))
+                        if ((mediaSize.Width is not null) && (mediaSize.Height is not null))
                         {
                             _printTicket.PageMediaSize.SetFixedMediaSize((PageMediaSizeName)mediaSize.PageMediaSizeName,
                                                                          (double)mediaSize.Width, (double)mediaSize.Height);
@@ -1477,7 +1477,7 @@ namespace System.Printing
                     }
                     else
                     {
-                        if ((mediaSize.Width != null) && (mediaSize.Height != null))
+                        if ((mediaSize.Width is not null) && (mediaSize.Height is not null))
                         {
                             _printTicket.PageMediaSize.SetFixedMediaSize((double)mediaSize.Width, (double)mediaSize.Height);
                         }
@@ -1506,8 +1506,8 @@ namespace System.Printing
             {
                 PageResolution resoluton = (PageResolution)cacheValue;
 
-                if ((resoluton.X != null) || (resoluton.Y != null) ||
-                    ((resoluton.QualitativeResolution != null) &&
+                if ((resoluton.X is not null) || (resoluton.Y is not null) ||
+                    ((resoluton.QualitativeResolution is not null) &&
                      ((int)resoluton.QualitativeResolution != PrintSchema.EnumUnknownValue)))
                 {
                     // If any of the 3 properties are set by client, we need to do a ClearSetting before setting
@@ -1516,13 +1516,13 @@ namespace System.Printing
                     _printTicket.PageResolution.ClearSetting();
                 }
 
-                if (resoluton.X != null)
+                if (resoluton.X is not null)
                     _printTicket.PageResolution.ResolutionX = (int)resoluton.X;
 
-                if (resoluton.Y != null)
+                if (resoluton.Y is not null)
                     _printTicket.PageResolution.ResolutionY = (int)resoluton.Y;
 
-                if ((resoluton.QualitativeResolution != null) &&
+                if ((resoluton.QualitativeResolution is not null) &&
                     ((int)resoluton.QualitativeResolution != PrintSchema.EnumUnknownValue))
                 {
                     // If we have non-null quality label, the property setter validation code should have verified

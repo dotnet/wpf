@@ -159,7 +159,7 @@ namespace Microsoft.Build.Tasks.Windows
                     if (!SkipMarkupCompilation)
                     {
 
-                        if (CompilerAnalyzer.RecompileMarkupPages != null)
+                        if (CompilerAnalyzer.RecompileMarkupPages is not null)
                         {
                             for (int i = 0; i < CompilerAnalyzer.RecompileMarkupPages.Length; i++)
                             {
@@ -404,7 +404,7 @@ namespace Microsoft.Build.Tasks.Windows
         {
             get
             {
-                if (SplashScreen != null && SplashScreen.Length > 0)
+                if (SplashScreen is not null && SplashScreen.Length > 0)
                 {
                     return SplashScreen[0].ItemSpec.ToLowerInvariant();
                 }
@@ -502,7 +502,7 @@ namespace Microsoft.Build.Tasks.Windows
             {
                 string localizationDirectives = value;
 
-                if (localizationDirectives != null)
+                if (localizationDirectives is not null)
                 {
                     localizationDirectives = localizationDirectives.ToLower(CultureInfo.InvariantCulture);
                 }
@@ -904,12 +904,12 @@ namespace Microsoft.Build.Tasks.Windows
 
             VerifyApplicationFile();
 
-            if (PageMarkup != null && PageMarkup.Length > 0)
+            if (PageMarkup is not null && PageMarkup.Length > 0)
             {
                 VerifyInputTaskItems(PageMarkup);
             }
 
-            if (SplashScreen != null && SplashScreen.Length > 1)
+            if (SplashScreen is not null && SplashScreen.Length > 1)
             {
                 Log.LogErrorWithCodeFromResources(nameof(SR.MultipleSplashScreenImages));
                 _nErrors++;
@@ -927,7 +927,7 @@ namespace Microsoft.Build.Tasks.Windows
                 //
                 // For non Application target type.
                 //
-                if (ApplicationMarkup != null && ApplicationMarkup.Length > 0)
+                if (ApplicationMarkup is not null && ApplicationMarkup.Length > 0)
                 {
                     //
                     // For non-Application target type, Application definition should not be set.
@@ -943,7 +943,7 @@ namespace Microsoft.Build.Tasks.Windows
                 //
                 // For Application Target type.
                 //
-                if (ApplicationMarkup != null && ApplicationMarkup.Length > 0)
+                if (ApplicationMarkup is not null && ApplicationMarkup.Length > 0)
                 {
                     if (ApplicationMarkup.Length > 1)
                     {
@@ -1127,7 +1127,7 @@ namespace Microsoft.Build.Tasks.Windows
             ArrayList referenceList = new ArrayList();
 
             // Generate the asmmebly reference list.
-            if (References != null && References.Length > 0)
+            if (References is not null && References.Length > 0)
             {
                 ReferenceAssembly asmReference;
                 string refpath, asmname;
@@ -1170,7 +1170,7 @@ namespace Microsoft.Build.Tasks.Windows
                 }
             }
 
-            if (CompilerAnalyzer.RecompileMarkupPages != null)
+            if (CompilerAnalyzer.RecompileMarkupPages is not null)
             {
                 for (int i = 0; i < CompilerAnalyzer.RecompileMarkupPages.Length; i++)
                 {
@@ -1227,7 +1227,7 @@ namespace Microsoft.Build.Tasks.Windows
             {
                 compilerWrapper = TaskHelper.CreateCompilerWrapper();
 
-                if (compilerWrapper != null)
+                if (compilerWrapper is not null)
                 {
                     compilerWrapper.OutputPath = OutputPath;
                     compilerWrapper.AssemblyVersion = AssemblyVersion;
@@ -1272,12 +1272,12 @@ namespace Microsoft.Build.Tasks.Windows
             finally
             {
 
-                if (compilerWrapper != null && compilerWrapper.ErrorTimes > 0)
+                if (compilerWrapper is not null && compilerWrapper.ErrorTimes > 0)
                 {
                     _nErrors += compilerWrapper.ErrorTimes;
                 }
 
-                if (appDomain != null)
+                if (appDomain is not null)
                 {
                     System.Threading.Tasks.Task.Run(() => 
                     {
@@ -1310,7 +1310,7 @@ namespace Microsoft.Build.Tasks.Windows
             ArrayList localRefAppdefList = new ArrayList();
 
             // Generate Output Items for PageMarkup
-            if (PageMarkup != null && PageMarkup.Length > 0)
+            if (PageMarkup is not null && PageMarkup.Length > 0)
             {
                 GenerateOutputItemsForCompiledXamlFiles(PageMarkup,
                                                         _localXamlPages,
@@ -1322,7 +1322,7 @@ namespace Microsoft.Build.Tasks.Windows
             //
             // Generate output items for ApplicationDefinition if it is set in the project file.
             //
-            if (ApplicationFile != null && ApplicationFile.Length > 0)
+            if (ApplicationFile is not null && ApplicationFile.Length > 0)
             {
                 string[] appdefLocalList = null;
 
@@ -1477,7 +1477,7 @@ namespace Microsoft.Build.Tasks.Windows
 
                 GetGeneratedFiles(inputXamlItemList[i].ItemSpec, out genLangFilePath, out bamlFile);
 
-                if (!String.IsNullOrEmpty(genLangFilePath) && outputCodeFileList != null)
+                if (!String.IsNullOrEmpty(genLangFilePath) && outputCodeFileList is not null)
                 {
                     TaskItem codeItem;
 
@@ -1508,7 +1508,7 @@ namespace Microsoft.Build.Tasks.Windows
             //
             // If MarkupCompilation is skipped, there is no need to check local-type xaml files.
             //
-            if (!SkipMarkupCompilation && inputLocalRefXamlFileList != null && inputLocalRefXamlFileList.Length > 0)
+            if (!SkipMarkupCompilation && inputLocalRefXamlFileList is not null && inputLocalRefXamlFileList.Length > 0)
             {
                 for (int i = 0; i < inputLocalRefXamlFileList.Length; i++)
                 {
@@ -1516,7 +1516,7 @@ namespace Microsoft.Build.Tasks.Windows
 
                     LocalReferenceFile localFile = GenerateLocalTypeItem(fullLocalXamlFile, inputXamlItemList);
 
-                    if (localFile != null && outputLocalRefXamlList != null)
+                    if (localFile is not null && outputLocalRefXamlList is not null)
                     {
                         outputLocalRefXamlList.Add(localFile);
                     }
@@ -1597,7 +1597,7 @@ namespace Microsoft.Build.Tasks.Windows
             //
             // Normally MarkupPage and MarkupResource need to transfer their attributes.
             // But Application definition doesn't require this.
-            if (SourceItem != null)
+            if (SourceItem is not null)
             {
                 string[] listCarryOverAttribute = new string[] {
                     SharedStrings.Localizable,
@@ -1610,7 +1610,7 @@ namespace Microsoft.Build.Tasks.Windows
                     string attributeValue;
 
                     attributeValue = SourceItem.GetMetadata(listCarryOverAttribute[j]);
-                    if (attributeValue != null)
+                    if (attributeValue is not null)
                     {
                         bamlItem.SetMetadata(listCarryOverAttribute[j], attributeValue);
                     }
@@ -1630,19 +1630,19 @@ namespace Microsoft.Build.Tasks.Windows
             TaskItem  tiLoc;
             ITaskItem xamlItem;
 
-            if (ApplicationMarkup != null && ApplicationMarkup.Length > 0 && ApplicationMarkup[0] != null)
+            if (ApplicationMarkup is not null && ApplicationMarkup.Length > 0 && ApplicationMarkup[0] is not null)
             {
 
                 tiLoc = ProcessLocFileForXamlItem(ApplicationMarkup[0]);
 
-                if (tiLoc != null)
+                if (tiLoc is not null)
                 {
                     // Add this LocItem to the locFileItemList
                     locFileItemList.Add(tiLoc);
                 }
             }
 
-            if (PageMarkup != null)
+            if (PageMarkup is not null)
             {
                 for (int i = 0; i < PageMarkup.Length; i++)
                 {
@@ -1650,7 +1650,7 @@ namespace Microsoft.Build.Tasks.Windows
 
                     tiLoc = ProcessLocFileForXamlItem(xamlItem);
 
-                    if (tiLoc != null)
+                    if (tiLoc is not null)
                     {
                         // Add this LocItem to the locFileItemList
                         locFileItemList.Add(tiLoc);

@@ -606,7 +606,7 @@ namespace System.Windows.Controls
                 value = String.Empty;
             }
 
-            if (textblock._complexContent != null &&
+            if (textblock._complexContent is not null &&
                 !textblock.CheckFlags(Flags.TextContentChanging) &&
                 (string)value == (string)textblock.GetValue(TextProperty))
             {
@@ -1189,7 +1189,7 @@ namespace System.Windows.Controls
             // Hook up our TextContainer event listeners if we haven't yet.
             if (CheckFlags(Flags.PendingTextContainerEventInit))
             {
-                Invariant.Assert(_complexContent != null);
+                Invariant.Assert(_complexContent is not null);
                 InitializeTextContainerListeners();
                 SetFlags(false, Flags.PendingTextContainerEventInit);
             }
@@ -1247,7 +1247,7 @@ namespace System.Windows.Controls
 
             ClearLineMetrics();
 
-            if (_complexContent != null)
+            if (_complexContent is not null)
             {
                 _complexContent.TextView.Invalidate();
             }
@@ -1392,14 +1392,14 @@ namespace System.Windows.Controls
             MS.Internal.PtsHost.TextPanelDebug.StartTimer("TextBlock.ArrangeOverride", MS.Internal.PtsHost.TextPanelDebug.Category.MeasureArrange);
 #endif
             // Remove all existing visuals. If there are inline objects, they will be added below.
-            if (_complexContent != null)
+            if (_complexContent is not null)
             {
                 _complexContent.VisualChildren.Clear();
             }
 
             ArrayList inlineObjects = InlineObjects;
             int lineCount = LineCount;
-            if (inlineObjects != null && lineCount > 0)
+            if (inlineObjects is not null && lineCount > 0)
             {
                 bool exceptionThrown = true;
 
@@ -1473,7 +1473,7 @@ Debug.Assert(lineCount == LineCount);
                 }
             }
 
-            if (_complexContent != null)
+            if (_complexContent is not null)
             {
                 Dispatcher.BeginInvoke(DispatcherPriority.Normal,
                     new DispatcherOperationCallback(OnValidateTextView), EventArgs.Empty);
@@ -1502,7 +1502,7 @@ Debug.Assert(lineCount == LineCount);
 
             // Draw background in rectangle.
             Brush background = this.Background;
-            if (background != null)
+            if (background is not null)
             {
                 ctx.DrawRectangle(background, null, new Rect(0, 0, RenderSize.Width, RenderSize.Height));
             }
@@ -1614,7 +1614,7 @@ Debug.Assert(lineCount == LineCount);
                 if (CheckFlags(Flags.FormattedOnce))
                 {
                     FrameworkPropertyMetadata fmetadata = e.Metadata as FrameworkPropertyMetadata;
-                    if (fmetadata != null)
+                    if (fmetadata is not null)
                     {
                         bool affectsRender = (fmetadata.AffectsRender &&
                             (e.IsAValueChange || !fmetadata.SubPropertiesDoNotAffectRender));
@@ -1727,7 +1727,7 @@ Debug.Assert(lineCount == LineCount);
             }
 
             // If nothing has been hit, assume that element itself has been hit.
-            return (ie != null) ? ie : this;
+            return (ie is not null) ? ie : this;
         }
 
         /// <summary>
@@ -1848,7 +1848,7 @@ Debug.Assert(lineCount == LineCount);
             while (endOffset > lineStart);
 
             // Rectangles collection must be non-null
-            Invariant.Assert(rectangles != null);
+            Invariant.Assert(rectangles is not null);
             return new ReadOnlyCollection<Rect>(rectangles);
         }
 
@@ -1917,7 +1917,7 @@ Debug.Assert(lineCount == LineCount);
         /// </summary>
         internal void RemoveChild(Visual child)
         {
-            if (_complexContent != null)
+            if (_complexContent is not null)
             {
                 _complexContent.VisualChildren.Remove(child);
             }
@@ -1937,14 +1937,14 @@ Debug.Assert(lineCount == LineCount);
         internal void SetTextContainer(ITextContainer textContainer)
         {
             // Detach from a previous container
-            if (_complexContent != null)
+            if (_complexContent is not null)
             {
                 _complexContent.Detach(this);
                 _complexContent = null;
                 SetFlags(false, Flags.PendingTextContainerEventInit);
             }
             // Attach new container
-            if (textContainer != null)
+            if (textContainer is not null)
             {
                 _complexContent = null;
                 EnsureComplexContent(textContainer);
@@ -1964,7 +1964,7 @@ Debug.Assert(lineCount == LineCount);
         //-------------------------------------------------------------------
         internal Size MeasureChild(InlineObject inlineObject)
         {
-            Debug.Assert(_complexContent != null, "Inline objects are supported only in complex content.");
+            Debug.Assert(_complexContent is not null, "Inline objects are supported only in complex content.");
 
             Size desiredSize;
             // Measure child only during measure pass. If not during measuring
@@ -2017,13 +2017,13 @@ Debug.Assert(lineCount == LineCount);
         /// </summary>
         internal override string GetPlainText()
         {
-            if (_complexContent != null)
+            if (_complexContent is not null)
             {
                 return TextRangeBase.GetTextInternal(_complexContent.TextContainer.Start, _complexContent.TextContainer.End);
             }
             else
             {
-                if (_contentCache != null)
+                if (_contentCache is not null)
                 {
                     return _contentCache;
                 }
@@ -2175,7 +2175,7 @@ Debug.Assert(lineCount == LineCount);
             MS.Internal.PtsHost.TextPanelDebug.StartTimer("TextBlock.GetRectangleFromTextPosition", MS.Internal.PtsHost.TextPanelDebug.Category.TextView);
 #endif
             Invariant.Assert(IsLayoutDataValid);
-            Invariant.Assert(orientedPosition != null);
+            Invariant.Assert(orientedPosition is not null);
 
             // Line props may be invalid, even if Measure/Arrange is valid - rendering only props are changing.
             LineProperties lineProperties = GetLineProperties();
@@ -2277,8 +2277,8 @@ Debug.Assert(lineCount == LineCount);
             MS.Internal.PtsHost.TextPanelDebug.StartTimer("TextBlock.GetTightBoundingGeometryFromTextPositions", MS.Internal.PtsHost.TextPanelDebug.Category.TextView);
 #endif
             Invariant.Assert(IsLayoutDataValid);
-            Invariant.Assert(startPosition != null);
-            Invariant.Assert(endPosition != null);
+            Invariant.Assert(startPosition is not null);
+            Invariant.Assert(endPosition is not null);
             Invariant.Assert(startPosition.CompareTo(endPosition) <= 0);
 
             Geometry geometry = null;
@@ -2763,7 +2763,7 @@ Debug.Assert(lineCount == LineCount);
         {
             get
             {
-                return (_complexContent != null);
+                return (_complexContent is not null);
             }
         }
 
@@ -2784,7 +2784,7 @@ Debug.Assert(lineCount == LineCount);
         private ArrayList InlineObjects
         {
             get { return (_complexContent is null) ? null : _complexContent.InlineObjects; }
-            set { if (_complexContent != null) _complexContent.InlineObjects = value; }
+            set { if (_complexContent is not null) _complexContent.InlineObjects = value; }
         }
 
         //-------------------------------------------------------------------
@@ -2820,7 +2820,7 @@ Debug.Assert(lineCount == LineCount);
         /// </summary>
         private object OnValidateTextView(object arg)
         {
-            if (IsLayoutDataValid && _complexContent != null)
+            if (IsLayoutDataValid && _complexContent is not null)
             {
                 _complexContent.TextView.OnUpdated();
             }
@@ -2928,7 +2928,7 @@ Debug.Assert(lineCount == LineCount);
         // ------------------------------------------------------------------
         private void ClearComplexContent()
         {
-            if (_complexContent != null)
+            if (_complexContent is not null)
             {
                 _complexContent.Detach(this);
                 _complexContent = null;
@@ -2941,8 +2941,8 @@ Debug.Assert(lineCount == LineCount);
         // ------------------------------------------------------------------
         private void OnHighlightChanged(object sender, HighlightChangedEventArgs args)
         {
-            Invariant.Assert(args != null);
-            Invariant.Assert(args.Ranges != null);
+            Invariant.Assert(args is not null);
+            Invariant.Assert(args.Ranges is not null);
             Invariant.Assert(CheckFlags(Flags.FormattedOnce), "Unexpected Highlights.Changed callback before first format!");
 
             // The only supported highlight type for TextBlock is SpellerHightlight.
@@ -2981,7 +2981,7 @@ Debug.Assert(lineCount == LineCount);
         // ------------------------------------------------------------------
         private void OnTextContainerChange(object sender, TextContainerChangeEventArgs args)
         {
-            Invariant.Assert(args != null);
+            Invariant.Assert(args is not null);
 
             if (_complexContent is null)
             {
@@ -3380,7 +3380,7 @@ Debug.Assert(lineCount == LineCount);
             {
                 object localValue = ReadLocalValue(TextProperty);
 
-                if (localValue != null &&
+                if (localValue is not null &&
                     localValue != DependencyProperty.UnsetValue &&
                     localValue as string != String.Empty)
                 {
@@ -3405,7 +3405,7 @@ Debug.Assert(lineCount == LineCount);
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool ShouldSerializeInlines(XamlDesignerSerializationManager manager)
         {
-            return (_complexContent != null) && (manager != null) && (manager.XmlWriter is null);
+            return (_complexContent is not null) && (manager is not null) && (manager.XmlWriter is null);
         }
 
         // ------------------------------------------------------------------
@@ -3475,7 +3475,7 @@ Debug.Assert(lineCount == LineCount);
             TextBlock textBlock = sender as TextBlock;
             ContentElement child = args.TargetObject as ContentElement;
 
-            if (textBlock != null && child != null)
+            if (textBlock is not null && child is not null)
             {
                 if (TextBlock.ContainsContentElement(textBlock, child))
                 {
@@ -3486,7 +3486,7 @@ Debug.Assert(lineCount == LineCount);
                     // raise a new BrightIntoView event with such rectangle.
 
                     ReadOnlyCollection<Rect> rects = textBlock.GetRectanglesCore(child);
-                    Invariant.Assert(rects != null, "Rect collection cannot be null.");
+                    Invariant.Assert(rects is not null, "Rect collection cannot be null.");
                     if (rects.Count > 0)
                     {
                         textBlock.BringIntoView(rects[0]);
@@ -3643,7 +3643,7 @@ Debug.Assert(lineCount == LineCount);
         private TextPointer FindElementPosition(IInputElement e)
         {
             // Parameter validation
-            Debug.Assert(e != null);
+            Debug.Assert(e is not null);
 
             // Validate that this function is only called when a TextContainer exists as complex content
             Debug.Assert(_complexContent.TextContainer is TextContainer);
@@ -3718,18 +3718,18 @@ Debug.Assert(lineCount == LineCount);
             //fire event!
             TextElement te = TextElement.ContainerTextElementField.GetValue(d);
 
-            if (te != null)
+            if (te is not null)
             {
                 DependencyObject parent = te.TextContainer.Parent;
                 TextBlock tb = parent as TextBlock;
-                if (tb != null)
+                if (tb is not null)
                 {
                     tb.OnChildBaselineOffsetChanged(d);
                 }
                 else
                 {
                     FlowDocument fd = parent as FlowDocument;
-                    if (fd != null && d is UIElement)
+                    if (fd is not null && d is UIElement)
                     {
                         fd.OnChildDesiredSizeChanged((UIElement)d);
                     }
@@ -3755,7 +3755,7 @@ Debug.Assert(lineCount == LineCount);
         {
             if (CheckFlags(Flags.HasFirstLine))
             {
-                if (_subsequentLines != null)
+                if (_subsequentLines is not null)
                 {
                     int subsequentLineCount = _subsequentLines.Count;
                     for (int i = 0; i < subsequentLineCount; i++)
@@ -3917,8 +3917,8 @@ Debug.Assert(lineCount == LineCount);
             internal ComplexContent(TextBlock owner, ITextContainer textContainer, bool foreignTextContianer, string content)
             {
                 // Paramaters validation
-                Debug.Assert(owner != null);
-                Debug.Assert(textContainer != null);
+                Debug.Assert(owner is not null);
+                Debug.Assert(textContainer is not null);
 
                 VisualChildren = new VisualCollection(owner);
 
@@ -3927,7 +3927,7 @@ Debug.Assert(lineCount == LineCount);
                 ForeignTextContainer = foreignTextContianer;
 
                 // Add content
-                if (content != null && content.Length > 0)
+                if (content is not null && content.Length > 0)
                 {
                     TextBlock.InsertTextRun(this.TextContainer.End, content, /*whitespacesIgnorable:*/false);
                 }
@@ -4100,7 +4100,7 @@ Debug.Assert(lineCount == LineCount);
 
             if (text._complexContent is null)
             {
-                text._contentCache = (newText != null) ? newText : String.Empty;
+                text._contentCache = (newText is not null) ? newText : String.Empty;
             }
             else
             {

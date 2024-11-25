@@ -46,7 +46,7 @@ namespace MS.Internal.Shaping
             IDeviceFont          deviceFont
             )
         {
-            Invariant.Assert(glyphTypeface != null);
+            Invariant.Assert(glyphTypeface is not null);
             _glyphTypeface = glyphTypeface;
             _deviceFont = deviceFont;
         }
@@ -65,7 +65,7 @@ namespace MS.Internal.Shaping
 
             if (_deviceFont is null)
             {
-                if (t._deviceFont != null)
+                if (t._deviceFont is not null)
                     return false;
             }
             else

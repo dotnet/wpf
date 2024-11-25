@@ -174,7 +174,7 @@ namespace System.Windows.Media.Imaging
         /// </param>
         internal BitmapMetadataEnumerator(SafeMILHandle metadataHandle)
         {
-            Debug.Assert(metadataHandle != null && !metadataHandle.IsInvalid);
+            Debug.Assert(metadataHandle is not null && !metadataHandle.IsInvalid);
 
             HRESULT.Check(UnsafeNativeMethods.WICMetadataQueryReader.GetEnumerator(
                 metadataHandle,

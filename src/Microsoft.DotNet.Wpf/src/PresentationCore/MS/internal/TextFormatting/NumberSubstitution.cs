@@ -30,12 +30,12 @@ namespace MS.Internal.TextFormatting
         }
 
         /// <summary>
-        /// RequiresNumberSubstitution is true if digit substitution is required (DigitCulture != null)
+        /// RequiresNumberSubstitution is true if digit substitution is required (DigitCulture is not null)
         /// and false if digit substitution is not required (DigitCulture is null).
         /// </summary>
         internal bool RequiresNumberSubstitution
         {
-            get { return _digitCulture != null; }
+            get { return _digitCulture is not null; }
         }
 
         /// <summary>
@@ -59,12 +59,12 @@ namespace MS.Internal.TextFormatting
             ignoreUserOverride = true;
             NumberSubstitutionMethod resolvedMethod = NumberSubstitutionMethod.European;
 
-            if (digitCulture != null)
+            if (digitCulture is not null)
             {
                 NumberSubstitutionMethod method;
                 CultureInfo numberCulture = GetNumberCulture(properties, out method, out ignoreUserOverride);
 
-                if (numberCulture != null)
+                if (numberCulture is not null)
                 {
                     // First, disambiguate AsCulture method, which depends on digit substitution contained in CultureInfo.NumberFormat
                     if (method == NumberSubstitutionMethod.AsCulture)
@@ -83,7 +83,7 @@ namespace MS.Internal.TextFormatting
                         }
                     }
 
-                    // Next, disambiguate Context method, which maps to Traditional if digitCulture != null
+                    // Next, disambiguate Context method, which maps to Traditional if digitCulture is not null
                     resolvedMethod = method;
                     if (resolvedMethod == NumberSubstitutionMethod.Context)
                     {
@@ -243,7 +243,7 @@ namespace MS.Internal.TextFormatting
             int lcid = numberCulture.LCID;
 
             // Do we already have a traditional culture for this LCID?
-            if (_lastTraditionalCulture != null && _lastTraditionalCulture.LCID == lcid)
+            if (_lastTraditionalCulture is not null && _lastTraditionalCulture.LCID == lcid)
             {
                 return _lastTraditionalCulture;
             }
@@ -554,7 +554,7 @@ namespace MS.Internal.TextFormatting
 
         internal DigitMap(CultureInfo digitCulture)
         {
-            if (digitCulture != null)
+            if (digitCulture is not null)
             {
                 _format = digitCulture.NumberFormat;
                 _digits = _format.NativeDigits;
@@ -570,7 +570,7 @@ namespace MS.Internal.TextFormatting
         {
             get
             {
-                if (_format != null && IsDigitOrSymbol(ch))
+                if (_format is not null && IsDigitOrSymbol(ch))
                 {
                     uint n = (uint)ch - '0';
                     if (n < 10)

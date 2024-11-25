@@ -75,8 +75,8 @@ namespace MS.Internal.IO.Packaging
         internal ByteRangeDownloader(Uri requestedUri, Stream tempStream, SafeWaitHandle eventHandle, Mutex fileMutex)
             : this(requestedUri, eventHandle)
         {
-            Debug.Assert(fileMutex != null, "FileMutex must be a valid mutex");
-            Debug.Assert(tempStream != null, "ByteRangeDownloader requires a stream to write to");
+            Debug.Assert(fileMutex is not null, "FileMutex must be a valid mutex");
+            Debug.Assert(tempStream is not null, "ByteRangeDownloader requires a stream to write to");
             _tempFileStream = tempStream;
             _fileMutex = fileMutex;
         }
@@ -108,7 +108,7 @@ namespace MS.Internal.IO.Packaging
                         try
                         {
                             // if there is no mutex, then we own the stream and we should close it
-                            if (FileMutex is null && _tempFileStream != null)
+                            if (FileMutex is null && _tempFileStream is not null)
                             {
                                 _tempFileStream.Close();
                             }
@@ -474,7 +474,7 @@ namespace MS.Internal.IO.Packaging
         /// <remarks></remarks>
         private void RaiseEvent(bool throwExceptionOnError)
         {
-            if (_eventHandle != null && !_eventHandle.IsInvalid && !_eventHandle.IsClosed)
+            if (_eventHandle is not null && !_eventHandle.IsInvalid && !_eventHandle.IsClosed)
             {
                 if (MS.Win32.UnsafeNativeMethods.SetEvent(_eventHandle) == 0)
                 {
@@ -571,7 +571,7 @@ namespace MS.Internal.IO.Packaging
                 }
                 finally
                 {
-                    if (webResponse != null)
+                    if (webResponse is not null)
                     {
                         webResponse.Close();
                     }
@@ -637,7 +637,7 @@ namespace MS.Internal.IO.Packaging
                 }
 
                 // mutex available?
-                if (_fileMutex != null)
+                if (_fileMutex is not null)
                 {
                     // use it
                     try
@@ -668,7 +668,7 @@ namespace MS.Internal.IO.Packaging
         private void ProcessWaitQueue()
         {
             // There is other requests waiting in the queue; Process those
-            if (_requestsOnWait != null && _requestsOnWait.Count > 0)
+            if (_requestsOnWait is not null && _requestsOnWait.Count > 0)
             {
                 // _byteRangesInProgress is already allocated and can be reused
                 _byteRangesInProgress[0,Offset_Index] = (int) _requestsOnWait[Offset_Index];

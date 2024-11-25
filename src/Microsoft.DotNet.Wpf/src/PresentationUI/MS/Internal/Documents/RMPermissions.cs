@@ -63,7 +63,7 @@ namespace MS.Internal.Documents
             //  - the referral URI. If that is not available,
             //  - the referral name. If that is not available,
             //  - the default text "Unknown"
-            if (referralUri != null)
+            if (referralUri is not null)
             {
                 requestFromLabel.Text = referralUri.ToString();
             }
@@ -73,7 +73,7 @@ namespace MS.Internal.Documents
             }
 
             // If the referral URI is a mailto URI, make the LinkLabel clickable
-            if (referralUri != null && AddressUtility.IsMailtoUri(referralUri))
+            if (referralUri is not null && AddressUtility.IsMailtoUri(referralUri))
             {
                 // LinkLabels have one Link in the Links list by default
                 requestFromLabel.Links[0].Description = referralName;

@@ -119,7 +119,7 @@ namespace System.Printing
         {
             int hashCode = NullHashCode;
             
-            int ptStreamHash = (this._ptStream != null) ? this._ptStream.GetHashCode() : NullHashCode;
+            int ptStreamHash = (this._ptStream is not null) ? this._ptStream.GetHashCode() : NullHashCode;
             hashCode = (hashCode << 5) + ptStreamHash;            
             hashCode = (hashCode << 5) + this.ValidatedPrintTicket.GetHashCode();
             
@@ -297,7 +297,7 @@ namespace System.Printing
 
             MemoryStream ptStream = null;
 
-            if (printTicket != null)
+            if (printTicket is not null)
             {
                 ptStream = printTicket.GetXmlStream();
             }
@@ -388,7 +388,7 @@ namespace System.Printing
 
             baseStream = basePrintTicket.GetXmlStream();
 
-            if (deltaPrintTicket != null)
+            if (deltaPrintTicket is not null)
             {
                 deltaStream = deltaPrintTicket.GetXmlStream();
             }
@@ -453,7 +453,7 @@ namespace System.Printing
 
             if (disposing)
             {
-                if (_ptProvider != null)
+                if (_ptProvider is not null)
                 {
                     _ptProvider.Dispose();
                     _ptProvider = null;

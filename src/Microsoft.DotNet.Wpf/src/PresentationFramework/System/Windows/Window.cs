@@ -437,7 +437,7 @@ namespace System.Windows
                 //
                 // In any other exception cases, we get in this handler before Dialog is closed and thus we do
                 // need to enable all the disable windows.
-                if (_threadWindowHandles != null)
+                if (_threadWindowHandles is not null)
                 {
                     // Some exception case. Re-enable the windows that were disabled
                     EnableThreadWindows(true);
@@ -677,11 +677,11 @@ namespace System.Windows
 
             if (!e.IsASubPropertyChange)
             {
-                if (oldBar != null)
+                if (oldBar is not null)
                 {
                     oldBar.PropertyChanged -= OnTaskbarItemInfoSubPropertyChanged;
                 }
-                if (newBar != null)
+                if (newBar is not null)
                 {
                     newBar.PropertyChanged += OnTaskbarItemInfoSubPropertyChanged;
                 }
@@ -750,7 +750,7 @@ namespace System.Windows
             }
 
             // If the taskbar has timed out in the last minute, don't try to do this again.
-            if (_taskbarRetryTimer != null && _taskbarRetryTimer.IsEnabled)
+            if (_taskbarRetryTimer is not null && _taskbarRetryTimer.IsEnabled)
             {
                 return;
             }
@@ -1261,7 +1261,7 @@ namespace System.Windows
                     throw new InvalidOperationException(SR.CantSetOwnerAfterDialogIsShown);
                 }
 
-                if (value != null && value.IsSourceWindowNull == true)
+                if (value is not null && value.IsSourceWindowNull == true)
                 {
                     // Try to be specific in the error message.
                     if (value._disposed)
@@ -1280,7 +1280,7 @@ namespace System.Windows
                 {
                     // Check to see if value is already a child of this window.
                     // If yes, throw Exception
-                    if (value != null)
+                    if (value is not null)
                     {
                         WindowCollection ownedWindows = OwnedWindows;
                         for (int i = 0; i < ownedWindows.Count; i++)
@@ -1293,7 +1293,7 @@ namespace System.Windows
                     }
 
                     // Update OwnerWindows of the previous owner
-                    if (_ownerWindow != null)
+                    if (_ownerWindow is not null)
                     {
                         // using OwnedWindowsInternl b/c we want to modifying the
                         // underlying collection
@@ -1314,10 +1314,10 @@ namespace System.Windows
                     return;
                 }
 
-                SetOwnerHandle(_ownerWindow != null ? _ownerWindow.CriticalHandle: IntPtr.Zero);
+                SetOwnerHandle(_ownerWindow is not null ? _ownerWindow.CriticalHandle: IntPtr.Zero);
 
                 // Update OwnerWindows of the new owner
-                if (_ownerWindow != null)
+                if (_ownerWindow is not null)
                 {
                     // using OwnedWindowsInternl b/c we want to modifying the
                     // underlying collection
@@ -1806,7 +1806,7 @@ namespace System.Windows
             // w1.VisualChildren.Add(w2);
             //  w2.Show();
 
-            if ( VisualTreeHelper.GetParent(this) != null )
+            if ( VisualTreeHelper.GetParent(this) is not null )
             {
                 throw new InvalidOperationException(SR.WindowMustBeRoot);
             }
@@ -1886,7 +1886,7 @@ namespace System.Windows
             if (this.VisualChildrenCount > 0)
             {
                 UIElement child = this.GetVisualChild(0) as UIElement;
-                if (child != null)
+                if (child is not null)
                 {
                     // Find out the size of the window frame x.
                     // (constraint - x) is the size we pass onto
@@ -1984,7 +1984,7 @@ namespace System.Windows
             WindowBackdropManager.SetBackdrop(this, WindowBackdropType);
 
             EventHandler handler = (EventHandler)Events[EVENT_SOURCEINITIALIZED];
-            if (handler != null) handler(this, e);
+            if (handler is not null) handler(this, e);
         }
 
         /// <summary>
@@ -2002,7 +2002,7 @@ namespace System.Windows
         {
             VerifyContextAndObjectState();
             EventHandler handler = (EventHandler)Events[EVENT_ACTIVATED];
-            if (handler != null) handler(this, e);
+            if (handler is not null) handler(this, e);
         }
 
         /// <summary>
@@ -2019,7 +2019,7 @@ namespace System.Windows
         {
             VerifyContextAndObjectState();
             EventHandler handler = (EventHandler)Events[EVENT_DEACTIVATED];
-            if (handler != null) handler(this, e);
+            if (handler is not null) handler(this, e);
         }
 
         /// <summary>
@@ -2036,7 +2036,7 @@ namespace System.Windows
         {
             VerifyContextAndObjectState();
             EventHandler handler = (EventHandler)Events[EVENT_STATECHANGED];
-            if (handler != null) handler(this, e);
+            if (handler is not null) handler(this, e);
         }
 
         /// <summary>
@@ -2053,7 +2053,7 @@ namespace System.Windows
         {
             VerifyContextAndObjectState();
             EventHandler handler = (EventHandler)Events[EVENT_LOCATIONCHANGED];
-            if (handler != null) handler(this, e);
+            if (handler is not null) handler(this, e);
         }
 
         /// <summary>
@@ -2071,7 +2071,7 @@ namespace System.Windows
         {
             VerifyContextAndObjectState();
             CancelEventHandler handler = (CancelEventHandler)Events[EVENT_CLOSING];
-            if (handler != null) handler(this, e);
+            if (handler is not null) handler(this, e);
         }
 
         /// <summary>
@@ -2088,7 +2088,7 @@ namespace System.Windows
         {
             VerifyContextAndObjectState();
             EventHandler handler = (EventHandler)Events[EVENT_CLOSED];
-            if (handler != null) handler(this, e);
+            if (handler is not null) handler(this, e);
         }
 
         /// <summary>
@@ -2102,15 +2102,15 @@ namespace System.Windows
             // After the content is rendered we want to check if there is an element that needs to be focused
             // If there is - set focus to it
             DependencyObject doContent = Content as DependencyObject;
-            if (doContent != null)
+            if (doContent is not null)
             {
                 IInputElement focusedElement = FocusManager.GetFocusedElement(doContent) as IInputElement;
-                if (focusedElement != null)
+                if (focusedElement is not null)
                     focusedElement.Focus();
             }
 
             EventHandler handler = (EventHandler)Events[EVENT_CONTENTRENDERED];
-            if (handler != null) handler(this, e);
+            if (handler is not null) handler(this, e);
         }
         #endregion Protected Methods
 
@@ -2162,7 +2162,7 @@ namespace System.Windows
 
             if(_reloadFluentDictionary && !AreResourcesInitialized)
             {
-                if(value != null && ThemeMode != ThemeMode.None) 
+                if(value is not null && ThemeMode != ThemeMode.None) 
                 {
                     value.MergedDictionaries.Insert(0, ThemeManager.GetThemeDictionary(ThemeMode));
                     invalidateResources = true;
@@ -2296,7 +2296,7 @@ namespace System.Windows
         {
             get
             {
-                if ( _swh != null )
+                if ( _swh is not null )
                 {
                     return _swh.IsSourceWindowNull;
                 }
@@ -2308,7 +2308,7 @@ namespace System.Windows
         {
             get
             {
-                if (_swh != null)
+                if (_swh is not null)
                 {
                     return _swh.IsCompositionTargetInvalid;
                 }
@@ -2320,7 +2320,7 @@ namespace System.Windows
         {
             get
             {
-                Debug.Assert( _swh != null );
+                Debug.Assert( _swh is not null );
                 return _swh.WorkAreaBoundsForNearestMonitor;
             }
         }
@@ -2329,7 +2329,7 @@ namespace System.Windows
         {
             get
             {
-                Debug.Assert( _swh != null );
+                Debug.Assert( _swh is not null );
                 return _swh.WindowSize;
             }
         }
@@ -2342,7 +2342,7 @@ namespace System.Windows
             get
             {
 
-                if ( _swh != null )
+                if ( _swh is not null )
                     return _swh.HwndSourceWindow;
                 else
                     return null;
@@ -2389,7 +2389,7 @@ namespace System.Windows
             // a WM_DESTROY msg and it is a duplicate msg.
 
             // When the window is closing, stop any deferred operations.
-            if (_taskbarRetryTimer != null)
+            if (_taskbarRetryTimer is not null)
             {
                 _taskbarRetryTimer.Stop();
                 _taskbarRetryTimer = null;
@@ -2424,7 +2424,7 @@ namespace System.Windows
         internal override void OnAncestorChanged()
         {
             base.OnAncestorChanged();
-            if (Parent != null)
+            if (Parent is not null)
             {
                 throw new InvalidOperationException(SR.WindowMustBeRoot);
             }
@@ -3217,7 +3217,7 @@ namespace System.Windows
             get
             {
                 VerifyContextAndObjectState();
-                if (_swh != null)
+                if (_swh is not null)
                 {
                     return _swh.CriticalHandle;
                 }
@@ -3271,7 +3271,7 @@ namespace System.Windows
 
                 // The reason this is not wrapped by a manager is that it should never
                 // be invoked outside the scope on an already established manager.
-                Debug.Assert(Manager != null, "HwndStyleManager must have a valid value here");
+                Debug.Assert(Manager is not null, "HwndStyleManager must have a valid value here");
                 _Style = value;
             }
         }
@@ -3280,7 +3280,7 @@ namespace System.Windows
         {
             get
             {
-                if (Manager != null)
+                if (Manager is not null)
                 {
                     return _styleDoNotUse;
 }
@@ -3304,7 +3304,7 @@ namespace System.Windows
         {
             get
             {
-                if (Manager != null)
+                if (Manager is not null)
                 {
                     return _styleExDoNotUse;
 }
@@ -3422,7 +3422,7 @@ namespace System.Windows
             if (this.VisualChildrenCount > 0)
             {
                 UIElement child = this.GetVisualChild(0) as UIElement;
-                if (child != null) // UIElement children
+                if (child is not null) // UIElement children
                 {
                     // Find out the size of the window frame x.
                     // (constraint - x) is the size we pass onto
@@ -3553,7 +3553,7 @@ namespace System.Windows
         {
             // Post the firing of ContentRendered as Input priority work item so
             // that ContentRendered will be fired after render query empties.
-            if (_contentRenderedCallback != null)
+            if (_contentRenderedCallback is not null)
             {
                 // Content was changed again before the previous rendering completed (or at least
                 // before the Dispatcher got to Input priority callbacks).
@@ -3605,7 +3605,7 @@ namespace System.Windows
             //close dialog & return result
             Window w = target as Window;
 
-            Debug.Assert(w != null, "Target must be of type Window.");
+            Debug.Assert(w is not null, "Target must be of type Window.");
             w.OnDialogCancelCommand();
         }
 
@@ -3628,7 +3628,7 @@ namespace System.Windows
         /// <returns></returns>
         private bool ThreadWindowsCallback(IntPtr hWnd, IntPtr lparam)
         {
-            Debug.Assert(_threadWindowHandles != null, "_threadWindowHandles must not be null at this point");
+            Debug.Assert(_threadWindowHandles is not null, "_threadWindowHandles must not be null at this point");
 
             // the dialog's hwnd has not been created yet when calling into this function.
             // so its hwnd won't be in the list.
@@ -3651,7 +3651,7 @@ namespace System.Windows
         /// <param name="state"></param>
         private void EnableThreadWindows(bool state)
         {
-            Debug.Assert(_threadWindowHandles != null, "_threadWindowHandles must not be null at this point");
+            Debug.Assert(_threadWindowHandles is not null, "_threadWindowHandles must not be null at this point");
 
             for (int i = 0; i < _threadWindowHandles.Count; i++)
             {
@@ -3816,7 +3816,7 @@ namespace System.Windows
 
                     IntPtr hMonitor = IntPtr.Zero;
                     if ((_ownerHandle == IntPtr.Zero) ||
-                        ((_hiddenWindow != null) && (_hiddenWindow.Handle == _ownerHandle)))
+                        ((_hiddenWindow is not null) && (_hiddenWindow.Handle == _ownerHandle)))
                     {
                         hMonitor = GetCurrentMonitorFromMousePosition();
                     }
@@ -4101,7 +4101,7 @@ namespace System.Windows
             NativeMethods.IconHandle largeIconHandle;
             NativeMethods.IconHandle smallIconHandle;
 
-            if (_icon != null)
+            if (_icon is not null)
             {
                 IconHelper.GetIconHandlesFromImageSource(_icon, out largeIconHandle, out smallIconHandle);
             }
@@ -4140,7 +4140,7 @@ namespace System.Windows
             };
             int iconWindowsCount = 1;
 
-            if (_hiddenWindow != null)
+            if (_hiddenWindow is not null)
             {
                 iconWindows[1] = new HandleRef(_hiddenWindow, _hiddenWindow.Handle);
                 ++iconWindowsCount;
@@ -4164,12 +4164,12 @@ namespace System.Windows
             }
 
             // dispose the previous icon handle if it's not the default handle
-            if (_currentLargeIconHandle != null && _currentLargeIconHandle != _defaultLargeIconHandle)
+            if (_currentLargeIconHandle is not null && _currentLargeIconHandle != _defaultLargeIconHandle)
             {
                 _currentLargeIconHandle.Dispose();
             }
 
-            if (_currentSmallIconHandle != null && _currentSmallIconHandle != _defaultSmallIconHandle)
+            if (_currentSmallIconHandle is not null && _currentSmallIconHandle != _defaultSmallIconHandle)
             {
                 _currentSmallIconHandle.Dispose();
             }
@@ -4217,7 +4217,7 @@ namespace System.Windows
                 // We want to do this because once we are passed in the IntPtr for
                 // the parent window, the Owner window is not the parent anymore.
 
-                if ((_ownerWindow != null) && (_ownerWindow.CriticalHandle != _ownerHandle))
+                if ((_ownerWindow is not null) && (_ownerWindow.CriticalHandle != _ownerHandle))
                 {
                     _ownerWindow.OwnedWindowsInternal.Remove(this);
                     _ownerWindow = null;
@@ -4294,14 +4294,14 @@ namespace System.Windows
                     break;
             }
 
-            if(_swh != null && _swh.CompositionTarget != null) // For extraneous messages during shutdown
+            if(_swh is not null && _swh.CompositionTarget is not null) // For extraneous messages during shutdown
             {
                 // Can't case this in the switch statement since it's dynamically generated.
                 if (message == WM_TASKBARBUTTONCREATED || message == WM_APPLYTASKBARITEMINFO)
                 {
                     // Either Explorer's created a new button or it's time to try again.
                     // Stop deferring updates to the Taskbar.
-                    if (_taskbarRetryTimer != null)
+                    if (_taskbarRetryTimer is not null)
                     {
                         _taskbarRetryTimer.Stop();
                     }
@@ -4354,7 +4354,7 @@ namespace System.Windows
             if (NativeMethods.SignedHIWORD(wParam.ToInt32()) == THUMBBUTTON.THBN_CLICKED)
             {
                 TaskbarItemInfo taskbar = TaskbarItemInfo;
-                if (taskbar != null)
+                if (taskbar is not null)
                 {
                     int index = NativeMethods.SignedLOWORD(wParam.ToInt32());
                     if (index >= 0 && index < taskbar.ThumbButtonInfos.Count)
@@ -4466,7 +4466,7 @@ namespace System.Windows
             //before _dispatcherFrame is instantiated. In the Activated handler, if user closes the
             //window (setting DialogResult fires the WM_CLOSE event), the _dispatcherFrame is still null.
             //Bug 874463 addressed this.
-            if (_dispatcherFrame != null)
+            if (_dispatcherFrame is not null)
             {
                 // un block the push frame call
                 _dispatcherFrame.Continue = false;
@@ -4498,7 +4498,7 @@ namespace System.Windows
             //
             // Keeping this as assert.  If this turn out to be an over active assert, we'll switch to
             // an if condition.
-            Debug.Assert(_threadWindowHandles != null, "_threadWindowHandles must not be null at this point");
+            Debug.Assert(_threadWindowHandles is not null, "_threadWindowHandles must not be null at this point");
             // reenable windows in the thread that were disabled
             EnableThreadWindows(true);
 
@@ -4850,7 +4850,7 @@ namespace System.Windows
                 //This will schedule a deferred update of bounding rectangle and
                 //corresponding notification to the Automation layer.
                 AutomationPeer peer = UIElementAutomationPeer.FromElement(this);
-                if(peer != null)
+                if(peer is not null)
                 {
                     peer.InvalidatePeer();
                 }
@@ -5100,7 +5100,7 @@ namespace System.Windows
         private static void _OnIconChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Window w = (Window)d;
-            Debug.Assert(w != null, "DependencyObject must be of type Window.");
+            Debug.Assert(w is not null, "DependencyObject must be of type Window.");
 
             // We'll support most kinds of Images.  If it's not a BitmapFrame we'll rasterize it.
             w.OnIconChanged(e.NewValue as ImageSource);
@@ -5126,14 +5126,14 @@ namespace System.Windows
         private static void _OnTitleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Window w = (Window)d;
-            Debug.Assert(w != null, "DependencyObject must be of type Window.");
+            Debug.Assert(w is not null, "DependencyObject must be of type Window.");
 
             w.OnTitleChanged();
         }
 
         private static bool _ValidateText(object value)
         {
-            return (value != null);
+            return (value is not null);
         }
 
         private void OnTitleChanged()
@@ -5145,7 +5145,7 @@ namespace System.Windows
         {
             Window w = (Window)d;
 
-            Debug.Assert(w != null, "DependencyObject must be of type Window.");
+            Debug.Assert(w is not null, "DependencyObject must be of type Window.");
             w.OnShowInTaskbarChanged();
         }
 
@@ -5205,7 +5205,7 @@ namespace System.Windows
         {
             Window w = (Window)d;
 
-            Debug.Assert(w != null, "DependencyObject must be of type Window.");
+            Debug.Assert(w is not null, "DependencyObject must be of type Window.");
             w.OnWindowStateChanged((WindowState) e.NewValue);
         }
 
@@ -5332,7 +5332,7 @@ namespace System.Windows
         {
             Window w = (Window)d;
 
-            Debug.Assert(w != null, "DependencyObject must be of type Window.");
+            Debug.Assert(w is not null, "DependencyObject must be of type Window.");
             w.OnWindowStyleChanged((WindowStyle) e.NewValue);
         }
 
@@ -5352,7 +5352,7 @@ namespace System.Windows
         {
             Window w = (Window)d;
 
-            Debug.Assert(w != null, "DependencyObject must be of type Window.");
+            Debug.Assert(w is not null, "DependencyObject must be of type Window.");
             w.OnTopmostChanged((bool) e.NewValue);
         }
 
@@ -5672,7 +5672,7 @@ namespace System.Windows
         {
             Window w = d as Window;
 
-            Debug.Assert(w != null, "DependencyObject must be of type Window.");
+            Debug.Assert(w is not null, "DependencyObject must be of type Window.");
             return w.SizeToContent;
         }
 
@@ -5683,7 +5683,7 @@ namespace System.Windows
         {
             Window w = d as Window;
 
-            Debug.Assert(w != null, "DependencyObject must be of type Window.");
+            Debug.Assert(w is not null, "DependencyObject must be of type Window.");
             w.OnSizeToContentChanged((SizeToContent) e.NewValue);
         }
 
@@ -5743,7 +5743,7 @@ namespace System.Windows
         private static void _OnHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Window w = d as Window;
-            Debug.Assert(w != null, "d must be typeof Window");
+            Debug.Assert(w is not null, "d must be typeof Window");
             if (w._updateHwndSize)
             {
                 w.OnHeightChanged((double) e.NewValue);
@@ -5766,7 +5766,7 @@ namespace System.Windows
         private static void _OnMinHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Window w = d as Window;
-            Debug.Assert(w != null, "d must be typeof Window");
+            Debug.Assert(w is not null, "d must be typeof Window");
             w.OnMinHeightChanged((double) e.NewValue);
         }
 
@@ -5805,7 +5805,7 @@ namespace System.Windows
         private static void _OnMaxHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Window w = d as Window;
-            Debug.Assert(w != null, "d must be typeof Window");
+            Debug.Assert(w is not null, "d must be typeof Window");
             w.OnMaxHeightChanged((double) e.NewValue);
         }
 
@@ -5843,7 +5843,7 @@ namespace System.Windows
         private static void _OnWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Window w = d as Window;
-            Debug.Assert(w != null, "d must be typeof Window");
+            Debug.Assert(w is not null, "d must be typeof Window");
             if (w._updateHwndSize)
             {
                 w.OnWidthChanged((double) e.NewValue);
@@ -5864,7 +5864,7 @@ namespace System.Windows
         private static void _OnMinWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Window w = d as Window;
-            Debug.Assert(w != null, "d must be typeof Window");
+            Debug.Assert(w is not null, "d must be typeof Window");
             w.OnMinWidthChanged((double) e.NewValue);
         }
 
@@ -5905,7 +5905,7 @@ namespace System.Windows
         private static void _OnMaxWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Window w = d as Window;
-            Debug.Assert(w != null, "d must be typeof Window");
+            Debug.Assert(w is not null, "d must be typeof Window");
             w.OnMaxWidthChanged((double) e.NewValue);
         }
 
@@ -6131,7 +6131,7 @@ namespace System.Windows
         private static void _OnTopChanged (DependencyObject d , DependencyPropertyChangedEventArgs e)
         {
             Window w = d as Window;
-            Debug.Assert( w != null, "DependencyObject must be of type Window." );
+            Debug.Assert( w is not null, "DependencyObject must be of type Window." );
 
             if (w._updateHwndLocation)
             {
@@ -6206,7 +6206,7 @@ namespace System.Windows
         private static void _OnLeftChanged (DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Window w = d as Window;
-            Debug.Assert( w != null, "DependencyObject must be of type Window." );
+            Debug.Assert( w is not null, "DependencyObject must be of type Window." );
 
             if (w._updateHwndLocation)
             {
@@ -6285,7 +6285,7 @@ namespace System.Windows
         private static void _OnResizeModeChanged (DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Window w = d as Window;
-            Debug.Assert( w != null, "DependencyObject must be of type Window." );
+            Debug.Assert( w is not null, "DependencyObject must be of type Window." );
 
             w.OnResizeModeChanged();
         }
@@ -6317,7 +6317,7 @@ namespace System.Windows
         private static void _OnFlowDirectionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Window w = d as Window;
-            Debug.Assert(w != null, "DependencyObject must be of type Window.");
+            Debug.Assert(w is not null, "DependencyObject must be of type Window.");
 
             w.OnFlowDirectionChanged();
         }
@@ -6342,7 +6342,7 @@ namespace System.Windows
             Transform renderTransformValue = (Transform)value;
 
             if ((value is null) ||
-                (renderTransformValue != null && renderTransformValue.Value.IsIdentity == true))
+                (renderTransformValue is not null && renderTransformValue.Value.IsIdentity == true))
             {
                 // setting this value is allowed.
             }
@@ -6431,7 +6431,7 @@ namespace System.Windows
                 _StyleEx |= NativeMethods.WS_EX_APPWINDOW;
                 if( ! IsSourceWindowNull )
                 {
-                    if ((_hiddenWindow != null) && (_ownerHandle == _hiddenWindow.Handle))
+                    if ((_hiddenWindow is not null) && (_ownerHandle == _hiddenWindow.Handle))
                     {
                         SetOwnerHandle(IntPtr.Zero);
                     }
@@ -6463,7 +6463,7 @@ namespace System.Windows
             }
 
             // If the taskbar has timed out in the last minute, don't try to do this again.
-            if (_taskbarRetryTimer != null && _taskbarRetryTimer.IsEnabled)
+            if (_taskbarRetryTimer is not null && _taskbarRetryTimer.IsEnabled)
             {
                 return;
             }
@@ -6553,7 +6553,7 @@ namespace System.Windows
             TaskbarItemInfo taskbarInfo = TaskbarItemInfo;
             TBPF tbpf = TBPF.NOPROGRESS;
 
-            if (taskbarInfo != null)
+            if (taskbarInfo is not null)
             {
                 switch (taskbarInfo.ProgressState)
                 {
@@ -6645,7 +6645,7 @@ namespace System.Windows
             TaskbarItemInfo taskbarInfo = TaskbarItemInfo;
             string tooltip = "";
 
-            if (taskbarInfo != null)
+            if (taskbarInfo is not null)
             {
                 tooltip = taskbarInfo.Description ?? "";
             }
@@ -6662,7 +6662,7 @@ namespace System.Windows
                 return HRESULT.S_OK;
             }
 
-            if (_taskbarRetryTimer != null && _taskbarRetryTimer.IsEnabled)
+            if (_taskbarRetryTimer is not null && _taskbarRetryTimer.IsEnabled)
             {
                 // Explorer appears to be non-responsive.  Don't try this.
                 return HRESULT.S_FALSE;
@@ -6680,7 +6680,7 @@ namespace System.Windows
             NativeMethods.RefRECT interopRc = null;
 
             // If the taskbarInfo isn't available then remove any clipping.
-            if (taskbarInfo != null && !taskbarInfo.ThumbnailClipMargin.IsZero)
+            if (taskbarInfo is not null && !taskbarInfo.ThumbnailClipMargin.IsZero)
             {
                 Thickness margin = taskbarInfo.ThumbnailClipMargin;
                 // Use the native GetClientRect.  Window.ActualWidth and .ActualHeight include the non-client areas.
@@ -6745,7 +6745,7 @@ namespace System.Windows
             TaskbarItemInfo taskbarInfo = TaskbarItemInfo;
             ThumbButtonInfoCollection thumbButtons = null;
 
-            if (taskbarInfo != null)
+            if (taskbarInfo is not null)
             {
                 thumbButtons = taskbarInfo.ThumbButtonInfos;
             }
@@ -6783,7 +6783,7 @@ namespace System.Windows
                             case Visibility.Visible:
 
                                 nativeTB.szTip = wrappedTB.Description ?? "";
-                                if (wrappedTB.ImageSource != null)
+                                if (wrappedTB.ImageSource is not null)
                                 {
                                     NativeMethods.IconHandle nativeIcon = IconHelper.CreateIconHandleFromImageSource(wrappedTB.ImageSource, _overlaySize);
                                     nativeTB.hIcon = nativeIcon.CriticalGetHandle();
@@ -6910,7 +6910,7 @@ namespace System.Windows
         }
         private void ClearRootVisual()
         {
-            if (_swh != null)
+            if (_swh is not null)
             {
                 _swh.ClearRootVisual();
             }
@@ -6933,7 +6933,7 @@ namespace System.Windows
 
         private void ClearSourceWindow()
         {
-            if (_swh != null)
+            if (_swh is not null)
             {
                 try
                 {
@@ -6944,7 +6944,7 @@ namespace System.Windows
                     HwndSource source = _swh.HwndSourceWindow;
                     _swh = null;
 
-                    if (source != null)
+                    if (source is not null)
                     {
                         source.SizeToContentChanged -= new EventHandler(OnSourceSizeToContentChanged);
                     }
@@ -6961,7 +6961,7 @@ namespace System.Windows
             // Unparent it in WM_CLOSE because when we get to WM_DESTROY, _sourceWindow.Handle could be IntPtr.Zero;
             // InternalDispose() is where _hiddenWindow is disposed. It could be called from two places: 1. WmDestroy 2. OnSourceWindowDisposed.
             // When it's called from OnSourceWindowDisposed, _sourceWindow.Handle could have been set to IntPtr.Zero.
-            if ((_hiddenWindow != null) && (_hiddenWindow.Handle == _ownerHandle))
+            if ((_hiddenWindow is not null) && (_hiddenWindow.Handle == _ownerHandle))
             {
                 SetOwnerHandle(IntPtr.Zero);
             }
@@ -7064,7 +7064,7 @@ namespace System.Windows
                     !_currentPanningTarget.IsAlive ||
                     _currentPanningTarget.Target != e.OriginalSource)
                 {
-                    if (_swh != null)
+                    if (_swh is not null)
                     {
                         // Cache location if starting the panning feedback.
                         // Using SourceWindowHelper.WindowBounds instead of Window.Left
@@ -7083,7 +7083,7 @@ namespace System.Windows
         private static void OnStaticManipulationInertiaStarting(object sender, ManipulationInertiaStartingEventArgs e)
         {
             Window window = sender as Window;
-            if (window != null)
+            if (window is not null)
             {
                 // Transitioning from direct manipulation to inertia, animate the window
                 // back to its original position.
@@ -7094,7 +7094,7 @@ namespace System.Windows
         private static void OnStaticManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
         {
             Window window = sender as Window;
-            if (window != null)
+            if (window is not null)
             {
                 // A complete was encountered. If this was a forced complete, snap the window
                 // back to its original position.
@@ -7107,14 +7107,14 @@ namespace System.Windows
         /// </summary>
         private void UpdatePanningFeedback(Vector totalOverpanOffset, object originalSource)
         {
-            if ((_currentPanningTarget != null) && !_currentPanningTarget.IsAlive)
+            if ((_currentPanningTarget is not null) && !_currentPanningTarget.IsAlive)
             {
                 // The old source is gone, end any pending feedback
                 _currentPanningTarget = null;
                 EndPanningFeedback(false);
             }
 
-            if (_swh != null)
+            if (_swh is not null)
             {
                 if (_currentPanningTarget is null)
                 {
@@ -7136,7 +7136,7 @@ namespace System.Windows
         /// </summary>
         private void EndPanningFeedback(bool animateBack)
         {
-            if (_swh != null)
+            if (_swh is not null)
             {
                 // Restore the window to its original position
                 _swh.EndPanningFeedback(animateBack);
@@ -7150,7 +7150,7 @@ namespace System.Windows
         /// </summary>
         Point CompensateForPanningFeedback(Point point)
         {
-            if (!double.IsNaN(_prePanningLocation.X) && !double.IsNaN(_prePanningLocation.Y) && (_swh != null))
+            if (!double.IsNaN(_prePanningLocation.X) && !double.IsNaN(_prePanningLocation.Y) && (_swh is not null))
             {
                 // transform the point to pre pan coordinate system
                 NativeMethods.RECT rc = WindowBounds;
@@ -7185,7 +7185,7 @@ namespace System.Windows
         {
             get
             {
-                Debug.Assert( _swh != null );
+                Debug.Assert( _swh is not null );
                 return _swh.WindowBounds;
             }
         }
@@ -7194,7 +7194,7 @@ namespace System.Windows
         {
             get
             {
-                return _swh != null ? _swh.StyleFromHwnd : 0;
+                return _swh is not null ? _swh.StyleFromHwnd : 0;
             }
         }
 
@@ -7202,7 +7202,7 @@ namespace System.Windows
         {
             get
             {
-                return _swh != null ? _swh.StyleExFromHwnd : 0;
+                return _swh is not null ? _swh.StyleExFromHwnd : 0;
             }
         }
 
@@ -7239,7 +7239,7 @@ namespace System.Windows
         {
             get
             {
-                return (Application.Current != null);
+                return (Application.Current is not null);
             }
         }
 
@@ -7403,7 +7403,7 @@ namespace System.Windows
         {
                 internal SourceWindowHelper( HwndSource sourceWindow )
                 {
-                    Debug.Assert( sourceWindow != null );
+                    Debug.Assert( sourceWindow is not null );
                     _sourceWindow = sourceWindow;
                 }
 
@@ -7427,7 +7427,7 @@ namespace System.Windows
                 {
                     get
                     {
-                        if (_sourceWindow != null)
+                        if (_sourceWindow is not null)
                         {
                             return _sourceWindow.CriticalHandle;
                         }
@@ -7542,10 +7542,10 @@ namespace System.Windows
                 {
                     get
                     {
-                        if (_sourceWindow != null)
+                        if (_sourceWindow is not null)
                         {
                             HwndTarget compositionTarget = _sourceWindow.CompositionTarget;
-                            if (compositionTarget != null && compositionTarget.IsDisposed == false)
+                            if (compositionTarget is not null && compositionTarget.IsDisposed == false)
                             {
                                 return compositionTarget;
                             }
@@ -7650,7 +7650,7 @@ namespace System.Windows
 
                 internal void ClearRootVisual()
                 {
-                    if ( _sourceWindow.RootVisual != null )
+                    if ( _sourceWindow.RootVisual is not null )
                     {
                         _sourceWindow.RootVisual = null;
                     }
@@ -7658,7 +7658,7 @@ namespace System.Windows
 
                 internal void AddDisposedHandler( EventHandler theHandler )
                 {
-                    if (_sourceWindow != null)
+                    if (_sourceWindow is not null)
                     {
                         _sourceWindow.Disposed += theHandler;
                     }
@@ -7666,7 +7666,7 @@ namespace System.Windows
 
                 internal void RemoveDisposedHandler( EventHandler theHandler )
                 {
-                    if (_sourceWindow != null)
+                    if (_sourceWindow is not null)
                     {
                         _sourceWindow.Disposed -= theHandler;
                     }
@@ -7679,12 +7679,12 @@ namespace System.Windows
                 /// <param name="animate">Whether to animate to the new feedback position.</param>
                 internal void UpdatePanningFeedback(Vector totalOverpanOffset, bool animate)
                 {
-                    if ((_panningFeedback is null) && (_sourceWindow != null))
+                    if ((_panningFeedback is null) && (_sourceWindow is not null))
                     {
                         _panningFeedback = new HwndPanningFeedback(_sourceWindow);
                     }
 
-                    if (_panningFeedback != null)
+                    if (_panningFeedback is not null)
                     {
                         // Update the window position
                         _panningFeedback.UpdatePanningFeedback(totalOverpanOffset, animate);
@@ -7697,7 +7697,7 @@ namespace System.Windows
                 /// <param name="animateBack">Whether to animate to the original position.</param>
                 internal void EndPanningFeedback(bool animateBack)
                 {
-                    if (_panningFeedback != null)
+                    if (_panningFeedback is not null)
                     {
                         // Restore the window to its original position
                         _panningFeedback.EndPanningFeedback(animateBack);

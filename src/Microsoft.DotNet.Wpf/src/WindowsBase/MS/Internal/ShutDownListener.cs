@@ -107,7 +107,7 @@ namespace MS.Internal
             if ((_flags & PrivateFlags.DispatcherShutdown) != 0)
             {
                 Dispatcher dispatcher = (Dispatcher)_dispatcherWR.Target;
-                if (dispatcher != null)
+                if (dispatcher is not null)
                 {
                     dispatcher.ShutdownFinished -= new EventHandler(HandleShutDown);
                 }
@@ -129,7 +129,7 @@ namespace MS.Internal
 
                 // do the shutdown work, unless the target has been GC'd already.
                 object target = Target;
-                if (target != null || (_flags & PrivateFlags.Static) != 0)
+                if (target is not null || (_flags & PrivateFlags.Static) != 0)
                 {
                     OnShutDown(target, sender, e);
                 }

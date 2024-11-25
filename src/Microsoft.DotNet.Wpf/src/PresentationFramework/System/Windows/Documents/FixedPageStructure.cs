@@ -102,7 +102,7 @@ namespace System.Windows.Documents
             DocumentsTrace.FixedTextOM.Builder.Trace("----LineResults Begin Dump-----\r\n");
             foreach(FixedLineResult lineResult in _lineResults)
             {
-                Debug.Assert(lineResult != null);
+                Debug.Assert(lineResult is not null);
                 DocumentsTrace.FixedTextOM.Builder.Trace($"{lineResult.ToString()}\r\n");
             }
             DocumentsTrace.FixedTextOM.Builder.Trace("----LineResults End Dump-----\r\n");
@@ -114,7 +114,7 @@ namespace System.Windows.Documents
         // Return true if it can get some line range
         internal FixedNode[] GetNextLine(int line, bool forward, ref int count)
         {
-            Debug.Assert(_lineResults != null);
+            Debug.Assert(_lineResults is not null);
 
             if (forward)
             {
@@ -152,7 +152,7 @@ namespace System.Windows.Documents
         /// <returns></returns>
         internal FixedNode[] FindSnapToLine(Point pt)
         {
-            Debug.Assert(_lineResults != null);
+            Debug.Assert(_lineResults is not null);
             FixedLineResult closestLine = null;
             FixedLineResult closestManhattan = null;
             double minVerDistance = double.MaxValue;
@@ -185,9 +185,9 @@ namespace System.Windows.Documents
             }
             //We couldn't find the next line below. Return the closest line in this case
 
-            if (closestLine != null)
+            if (closestLine is not null)
             {
-                if (closestManhattan != null && (closestManhattan.LayoutBox.Left > closestLine.LayoutBox.Right || closestLine.LayoutBox.Left > closestManhattan.LayoutBox.Right))
+                if (closestManhattan is not null && (closestManhattan.LayoutBox.Left > closestLine.LayoutBox.Right || closestLine.LayoutBox.Left > closestManhattan.LayoutBox.Right))
                 {
                     // they don't overlap, so go with closer one
                     return closestManhattan.Nodes;
@@ -206,8 +206,8 @@ namespace System.Windows.Documents
         //-------------------------------------
         internal void SetFlowBoundary(FlowNode flowStart, FlowNode flowEnd)
         {
-            Debug.Assert(flowStart != null && flowStart.Type != FlowNodeType.Virtual);
-            Debug.Assert(flowEnd   != null && flowEnd.Type != FlowNodeType.Virtual);
+            Debug.Assert(flowStart is not null && flowStart.Type != FlowNodeType.Virtual);
+            Debug.Assert(flowEnd   is not null && flowEnd.Type != FlowNodeType.Virtual);
             _flowStart = flowStart;
             _flowEnd = flowEnd;
         }
@@ -314,7 +314,7 @@ namespace System.Windows.Documents
                 DependencyObject dependencyObject = fp.GetElement(currentFixedNode);
 
                 Image image = dependencyObject as Image;
-                if (image != null)
+                if (image is not null)
                 {
                     GeneralTransform transform = image.TransformToAncestor(fp);
                     // You can't use GetContentBounds inside OnRender
@@ -348,7 +348,7 @@ namespace System.Windows.Documents
                     continue;
                 }
                 Path path = dependencyObject as Path;
-                if (path != null)
+                if (path is not null)
                 {
                     GeneralTransform transform = path.TransformToAncestor(fp);
                     // You can't use GetContentBounds inside OnRender
@@ -382,10 +382,10 @@ namespace System.Windows.Documents
                     continue;
                 }
                 Glyphs glyphs = dependencyObject as Glyphs;
-                if (glyphs != null)
+                if (glyphs is not null)
                 {
                     GlyphRun run = glyphs.ToGlyphRun();
-                    if (run != null)
+                    if (run is not null)
                     {
                         Rect glyphBox = run.ComputeAlignmentBox();
                         glyphBox.Offset(glyphs.OriginX, glyphs.OriginY);
@@ -395,7 +395,7 @@ namespace System.Windows.Documents
                         //
                         Pen pen = new Pen(Brushes.Red, 0.5);
                         Transform t = transform.AffineTransform;
-                        if (t != null)
+                        if (t is not null)
                         {
                             dc.PushTransform(t);
                         }
@@ -585,7 +585,7 @@ namespace System.Windows.Documents
                             Image image = dependencyObject as Image;
                             Path path = dependencyObject as Path;
 
-                            if (image != null || path != null)
+                            if (image is not null || path is not null)
                             {
                                 Rect  imageRect, boundingRect = Rect.Empty;
                                 //
@@ -593,7 +593,7 @@ namespace System.Windows.Documents
                                 //
                                 GeneralTransform transform = ((Visual)dependencyObject).TransformToAncestor(fp);
                                 // You can't use GetContentBounds inside OnRender
-                                if (image != null)
+                                if (image is not null)
                                 {
                                     boundingRect = new Rect(0, 0, image.Width, image.Height);
                                 }
@@ -676,7 +676,7 @@ namespace System.Windows.Documents
 
         public void ConstructFixedSOMPage(List<FixedNode> fixedNodes)
         {
-            Debug.Assert(_fixedSOMPageConstructor != null);
+            Debug.Assert(_fixedSOMPageConstructor is not null);
             _fixedSOMPageConstructor.ConstructPageStructure(fixedNodes);
         }
 
@@ -733,7 +733,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return (_flowStart != null && _flowStart.Type != FlowNodeType.Virtual);
+                return (_flowStart is not null && _flowStart.Type != FlowNodeType.Virtual);
             }
         }
 

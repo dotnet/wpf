@@ -208,7 +208,7 @@ namespace System.Windows
             {
                 isDeferredReference = Value is DeferredReference;
             }
-            else if (ModifiedValue != null)
+            else if (ModifiedValue is not null)
             {
                 if (IsCoercedWithCurrentValue)
                 {
@@ -350,7 +350,7 @@ namespace System.Windows
             entry.IsDeferredReference = IsDeferredReference;
 
             // If the property has a modifier return the modified value
-            Debug.Assert(ModifiedValue != null);
+            Debug.Assert(ModifiedValue is not null);
 
             // outside of DO, we flatten modified value
             ModifiedValue modifiedValue = ModifiedValue;
@@ -487,7 +487,7 @@ namespace System.Windows
                     }
                     else
                     {
-                        Debug.Assert(ModifiedValue != null && ModifiedValue.BaseValue != DependencyProperty.UnsetValue);
+                        Debug.Assert(ModifiedValue is not null && ModifiedValue.BaseValue != DependencyProperty.UnsetValue);
                         return ModifiedValue.BaseValue;
                     }
                 }
@@ -508,7 +508,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    Debug.Assert(ModifiedValue != null && ModifiedValue.BaseValue != DependencyProperty.UnsetValue);
+                    Debug.Assert(ModifiedValue is not null && ModifiedValue.BaseValue != DependencyProperty.UnsetValue);
                     ModifiedValue.BaseValue = value;
                 }
             }
@@ -518,7 +518,7 @@ namespace System.Windows
         {
             get
             {
-                if (_value != null)
+                if (_value is not null)
                 {
                     return _value as ModifiedValue;
                 }
@@ -633,7 +633,7 @@ namespace System.Windows
             get
             {
                 BaseValueWeakReference wr = _baseValue as BaseValueWeakReference;
-                return (wr != null) ? wr.Target : _baseValue;
+                return (wr is not null) ? wr.Target : _baseValue;
             }
             set { _baseValue = value; }
         }

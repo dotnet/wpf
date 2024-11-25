@@ -77,14 +77,14 @@ namespace System.Windows.Threading
             if(numArgsEx == 0)
             {
                 Action action = callback as Action;
-                if (action != null)
+                if (action is not null)
                 {
                     action();
                 }
                 else
                 {
                     Dispatcher.ShutdownCallback shutdownCallback = callback as Dispatcher.ShutdownCallback;
-                    if(shutdownCallback != null)
+                    if(shutdownCallback is not null)
                     {
                         shutdownCallback();
                     }
@@ -98,14 +98,14 @@ namespace System.Windows.Threading
             else if(numArgsEx == 1)
             {
                 DispatcherOperationCallback dispatcherOperationCallback = callback as DispatcherOperationCallback;
-                if(dispatcherOperationCallback != null)
+                if(dispatcherOperationCallback is not null)
                 {
                     result = dispatcherOperationCallback(singleArg);
                 }
                 else
                 {
                     SendOrPostCallback sendOrPostCallback = callback as SendOrPostCallback;
-                    if(sendOrPostCallback != null)
+                    if(sendOrPostCallback is not null)
                     {
                         sendOrPostCallback(singleArg);
                     }
@@ -153,7 +153,7 @@ namespace System.Windows.Threading
         // true means Exception is "handled" and things just continue on.
         private bool CatchException(object source, Exception e, Delegate catchHandler)
         {
-            if (catchHandler != null)
+            if (catchHandler is not null)
             {
                 if(catchHandler is DispatcherOperationCallback)
                 {

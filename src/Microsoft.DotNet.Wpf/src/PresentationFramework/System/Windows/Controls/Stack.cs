@@ -804,7 +804,7 @@ namespace System.Windows.Controls
         // At the time this method is called, scrolling state is in its new, valid state.
         private void OnScrollChange()
         {
-            if (ScrollOwner != null) { ScrollOwner.InvalidateScrollInfo(); }
+            if (ScrollOwner is not null) { ScrollOwner.InvalidateScrollInfo(); }
         }
 
         private static void VerifyScrollingData(IStackMeasure measureElement, IStackMeasureScrollData scrollData, Size viewport, Size extent, Vector offset)
@@ -1033,7 +1033,7 @@ namespace System.Windows.Controls
 
         private bool IsScrolling
         {
-            get { return (_scrollData != null) && (_scrollData._scrollOwner != null); }
+            get { return (_scrollData is not null) && (_scrollData._scrollOwner is not null); }
         }
 
         //

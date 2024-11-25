@@ -44,7 +44,7 @@ namespace System.Windows.Controls
             string s = TextRangeBase.GetTextInternal(_textContainer.Start, _textContainer.End);
 
             TextBox tb = _textContainer.Parent as TextBox;
-            if (tb != null)
+            if (tb is not null)
             {
                 tb.OnDeferredTextReferenceResolved(this, s);
             }

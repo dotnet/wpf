@@ -85,7 +85,7 @@ namespace Microsoft.Windows.Automation.Peers
         void IScrollItemProvider.ScrollIntoView()
         {
             RibbonGalleryItem ribbonGalleryItem = GetWrapper() as RibbonGalleryItem;
-            if (ribbonGalleryItem != null)
+            if (ribbonGalleryItem is not null)
             {
                 ribbonGalleryItem.BringIntoView();
             }
@@ -105,7 +105,7 @@ namespace Microsoft.Windows.Automation.Peers
             get 
             {
                 RibbonGalleryItem ribbonGalleryItem = GetWrapper() as RibbonGalleryItem;
-                if (ribbonGalleryItem != null)
+                if (ribbonGalleryItem is not null)
                 {
                     return ribbonGalleryItem.IsSelected;
                 }
@@ -119,7 +119,7 @@ namespace Microsoft.Windows.Automation.Peers
         void ISelectionItemProvider.RemoveFromSelection()
         {
             RibbonGalleryItem ribbonGalleryItem = GetWrapper() as RibbonGalleryItem;
-            if (ribbonGalleryItem != null)
+            if (ribbonGalleryItem is not null)
             {
                 ribbonGalleryItem.IsSelected = false;
             }
@@ -130,7 +130,7 @@ namespace Microsoft.Windows.Automation.Peers
         void ISelectionItemProvider.Select()
         {
             RibbonGalleryItem ribbonGalleryItem = GetWrapper() as RibbonGalleryItem;
-            if (ribbonGalleryItem != null)
+            if (ribbonGalleryItem is not null)
             {
                 ribbonGalleryItem.IsSelected = true;
             }
@@ -143,10 +143,10 @@ namespace Microsoft.Windows.Automation.Peers
             get
             {
                 RibbonGalleryCategoryDataAutomationPeer categoryDataPeer = ParentCategoryDataAutomationPeer;
-                if(categoryDataPeer != null)
+                if(categoryDataPeer is not null)
                 {
                     RibbonGalleryAutomationPeer galleryAutomationPeer = categoryDataPeer.GetParent() as RibbonGalleryAutomationPeer;
-                    if (galleryAutomationPeer != null)
+                    if (galleryAutomationPeer is not null)
                         return ProviderFromPeer(galleryAutomationPeer);
                 }
 
@@ -169,10 +169,10 @@ namespace Microsoft.Windows.Automation.Peers
         {
             UIElement wrapper = null;
             ItemsControlAutomationPeer itemsControlAutomationPeer = ItemsControlAutomationPeer;
-            if (itemsControlAutomationPeer != null)
+            if (itemsControlAutomationPeer is not null)
             {
                 ItemsControl owner = (ItemsControl)(itemsControlAutomationPeer.Owner);
-                if (owner != null)
+                if (owner is not null)
                 {
                     wrapper = owner.ItemContainerGenerator.ContainerFromItem(Item) as UIElement;
                 }
@@ -184,7 +184,7 @@ namespace Microsoft.Windows.Automation.Peers
         {
             AutomationPeer wrapperPeer = null;
             UIElement wrapper = GetWrapper();
-            if (wrapper != null)
+            if (wrapper is not null)
             {
                 wrapperPeer = UIElementAutomationPeer.CreatePeerForElement(wrapper);
                 if (wrapperPeer is null)

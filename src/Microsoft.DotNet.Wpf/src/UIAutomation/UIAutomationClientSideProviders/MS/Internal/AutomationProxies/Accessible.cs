@@ -148,7 +148,7 @@ namespace MS.Internal.AutomationProxies
         // called by Wrap to create a node Accessible that manages its children
         private Accessible(IAccessible acc, int idChild)
         {
-            Debug.Assert(acc != null, "null IAccessible");
+            Debug.Assert(acc is not null, "null IAccessible");
             _acc = acc;
             _idChild = idChild;
             _accessibleChildrenIndex = -1;
@@ -215,7 +215,7 @@ namespace MS.Internal.AutomationProxies
             // !Marshal.IsComObject()) - that only protects us from managed IAccessibles we get back directly; we could
             // still hit the above issue if we get back a remote unmanaged impl that then returns a maanged impl via
             // navigation (Media Center does this). So we now use AOFW all the time.
-            if(hr == NativeMethods.S_OK && acc != null)
+            if(hr == NativeMethods.S_OK && acc is not null)
             {
                 object obj = null;
                 hr = UnsafeNativeMethods.AccessibleObjectFromWindow(hwnd, idObject, ref UnsafeNativeMethods.IID_IUnknown, ref obj);
@@ -282,7 +282,7 @@ namespace MS.Internal.AutomationProxies
         // returns a new Accessible for the IAccessible + child id, or null if IAccessible is null
         internal static Accessible Wrap(IAccessible acc, int idChild)
         {
-            return acc != null ? new Accessible(acc, idChild) : null;
+            return acc is not null ? new Accessible(acc, idChild) : null;
         }
 
         internal IAccessible IAccessible   { get { return _acc; } }
@@ -321,7 +321,7 @@ namespace MS.Internal.AutomationProxies
 
         internal Accessible NextSibling(Accessible parent)
         {
-            Debug.Assert(parent != null);
+            Debug.Assert(parent is not null);
 
             // if this object doesn't yet have an index into parent's children find it
             object[] children = null; // if we need to get children to find an index; re-use them
@@ -348,7 +348,7 @@ namespace MS.Internal.AutomationProxies
 
         internal Accessible PreviousSibling(Accessible parent)
         {
-            Debug.Assert(parent != null);
+            Debug.Assert(parent is not null);
 
             // if this object doesn't yet have an index into parent's children find it
             object[] children = null; // if we need to get children to find an index; re-use them
@@ -520,7 +520,7 @@ namespace MS.Internal.AutomationProxies
                     // Need to convert nulls into an empty string, so need to just test for a null.
                     // Therefore we can not use IsNullOrEmpty() here, suppress the warning.
 #pragma warning suppress 6507
-                    return value != null ? value : "";
+                    return value is not null ? value : "";
                 }
                 catch (Exception e)
                 {
@@ -569,11 +569,11 @@ namespace MS.Internal.AutomationProxies
             int childCount = 0; 
             object[] accChildren = Accessible.GetAccessibleChildren(accParent.IAccessible, out childCount);
 
-            if (accChildren != null && 0 <= index && index < accChildren.Length)
+            if (accChildren is not null && 0 <= index && index < accChildren.Length)
             {
                 object child = accChildren[index];
                 IAccessible accChild = child as IAccessible;
-                if (accChild != null)
+                if (accChild is not null)
                 {
                     return Accessible.Wrap(accChild);
                 }
@@ -995,7 +995,7 @@ namespace MS.Internal.AutomationProxies
                 index = children.Length - 1; 
 
             Accessible nav = AccessibleFromObject(children[index], parent);
-            if (nav != null)
+            if (nav is not null)
             {
                 nav._accessibleChildrenIndex = index;
             }
@@ -1102,7 +1102,7 @@ namespace MS.Internal.AutomationProxies
             acc = obj as IAccessible;
 
             // first see if o is a full IAccessible object
-            if (acc != null)
+            if (acc is not null)
             {
                 idChild = NativeMethods.CHILD_SELF;
             }
@@ -1345,7 +1345,7 @@ namespace MS.Internal.AutomationProxies
                 // just return on E_NOTIMPL errors
                 return false;
             }
-            else if (comException != null)
+            else if (comException is not null)
             {
                 // convert certain COM exceptions to ElementNotAvailable exceptions.
                 // these occur when the underlying UI elements disappear but we are still

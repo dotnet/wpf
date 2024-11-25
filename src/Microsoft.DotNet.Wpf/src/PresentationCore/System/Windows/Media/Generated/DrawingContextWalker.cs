@@ -344,7 +344,7 @@ namespace System.Windows.Media
         public override void DrawDrawing(
             Drawing drawing)
         {
-            if (drawing != null)
+            if (drawing is not null)
             {
                 drawing.WalkCurrentValue(this);
             }

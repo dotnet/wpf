@@ -82,7 +82,7 @@ namespace MS.Internal.Ink
         /// <returns>The matched clipboard format. Return -1 if there is no recognized format in the data object</returns>
         internal bool CheckDataFormats(IDataObject dataObject)
         {
-            Debug.Assert(dataObject != null && _preferredClipboardData!= null);
+            Debug.Assert(dataObject is not null && _preferredClipboardData!= null);
 
             foreach ( KeyValuePair<InkCanvasClipboardFormat, ClipboardData> pair in _preferredClipboardData )
             {
@@ -186,7 +186,7 @@ namespace MS.Internal.Ink
         /// <param name="newElements">The elements array which are converted from the data in the IDataObject</param>
         internal bool PasteData(IDataObject dataObject, ref StrokeCollection newStrokes, ref List<UIElement> newElements)
         {
-            Debug.Assert(dataObject != null && _preferredClipboardData!= null);
+            Debug.Assert(dataObject is not null && _preferredClipboardData!= null);
 
             // We honor the order in our preferred list.
             foreach ( KeyValuePair<InkCanvasClipboardFormat, ClipboardData> pair in _preferredClipboardData )
@@ -205,7 +205,7 @@ namespace MS.Internal.Ink
                             
                             List<UIElement> elements = xamlData.Elements;
 
-                            if (elements != null && elements.Count != 0)
+                            if (elements is not null && elements.Count != 0)
                             {
                                 // If the Xaml data has been set in an InkCanvas, the top element will be a container InkCanvas.
                                 // In this case, the new elements will be the children of the container.
@@ -256,7 +256,7 @@ namespace MS.Internal.Ink
         {
             get
             {
-                Debug.Assert(_preferredClipboardData != null);
+                Debug.Assert(_preferredClipboardData is not null);
 
                 foreach ( KeyValuePair<InkCanvasClipboardFormat, ClipboardData> pair in _preferredClipboardData )
                 {
@@ -265,7 +265,7 @@ namespace MS.Internal.Ink
             }
             set
             {
-                Debug.Assert(value != null);
+                Debug.Assert(value is not null);
 
                 Dictionary<InkCanvasClipboardFormat, ClipboardData> preferredData = new Dictionary<InkCanvasClipboardFormat, ClipboardData>();
                 
@@ -352,7 +352,7 @@ namespace MS.Internal.Ink
                     }
                 }
 
-                if (inkCanvas != null)
+                if (inkCanvas is not null)
                 {
                     inkCanvas.Width = size.Width;
                     inkCanvas.Height = size.Height;
@@ -371,7 +371,7 @@ namespace MS.Internal.Ink
                     }
                 }
 
-                return inkCanvas != null;
+                return inkCanvas is not null;
         }
 
         private void TearDownInkCanvasContainer(InkCanvas rootInkCanvas, ref StrokeCollection newStrokes, ref List<UIElement> newElements)

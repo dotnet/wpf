@@ -26,7 +26,7 @@ namespace MS.Internal.Xaml.Runtime
 
         public ClrObjectRuntime(XamlRuntimeSettings settings, bool isWriter)
         {
-            if (settings != null)
+            if (settings is not null)
             {
                 _ignoreCanConvert = settings.IgnoreCanConvert;
             }
@@ -35,7 +35,7 @@ namespace MS.Internal.Xaml.Runtime
 
         private static Exception UnwrapTargetInvocationException(Exception e)
         {
-            if(e is TargetInvocationException && e.InnerException != null)
+            if(e is TargetInvocationException && e.InnerException is not null)
             {
                 return e.InnerException;
             }
@@ -363,7 +363,7 @@ namespace MS.Internal.Xaml.Runtime
                 // - an IEnumerator<KeyValuePair<K,V>>, or
                 // - an IEnumerator that returns DictionaryEntrys
                 IDictionaryEnumerator dictionaryEnumerator = enumerator as IDictionaryEnumerator;
-                if (dictionaryEnumerator != null)
+                if (dictionaryEnumerator is not null)
                 {
                     return DictionaryEntriesFromIDictionaryEnumerator(dictionaryEnumerator);
                 }
@@ -441,7 +441,7 @@ namespace MS.Internal.Xaml.Runtime
             try
             {
                 XAML3.IComponentConnector connector = root as XAML3.IComponentConnector;
-                if(connector != null)
+                if(connector is not null)
                 {
                     connector.Connect(connectionId, instance);
                 }
@@ -461,7 +461,7 @@ namespace MS.Internal.Xaml.Runtime
             try
             {
                 ISupportInitialize supportInit = obj as ISupportInitialize;
-                if(supportInit != null)
+                if(supportInit is not null)
                 {
                     if(begin)
                     {
@@ -505,7 +505,7 @@ namespace MS.Internal.Xaml.Runtime
             try
             {
                 XAML3.IUriContext uriContext = obj as XAML3.IUriContext;
-                if(uriContext != null)
+                if(uriContext is not null)
                 {
                     uriContext.BaseUri = baseUri;
                 }
@@ -572,7 +572,7 @@ namespace MS.Internal.Xaml.Runtime
             {
                 // Reset the reader in case our caller catches and retries
                 IXamlIndexingReader indexingReader = deferredContent as IXamlIndexingReader;
-                if(indexingReader != null && indexingReader.CurrentIndex >= 0)
+                if(indexingReader is not null && indexingReader.CurrentIndex >= 0)
                 {
                     indexingReader.CurrentIndex = -1;
                 }
@@ -629,7 +629,7 @@ namespace MS.Internal.Xaml.Runtime
             TypeConverter typeConverter = GetConverterInstance(ts);
 
             object obj;
-            if (typeConverter != null)
+            if (typeConverter is not null)
             {
                 //We sometimes ignoreCanConvert for WPFv3 Compatibility (but only if a string is coming in)
                 if (_ignoreCanConvert && value.GetType() == typeof(string))
@@ -684,7 +684,7 @@ namespace MS.Internal.Xaml.Runtime
             {
                 ex = new XamlObjectReaderException(message, innerException);
             }
-            return (LineInfo != null) ? LineInfo.WithLineInfo(ex) : ex;
+            return (LineInfo is not null) ? LineInfo.WithLineInfo(ex) : ex;
         }
 
         private IEnumerator GetItems(object collection, XamlType collectionType)

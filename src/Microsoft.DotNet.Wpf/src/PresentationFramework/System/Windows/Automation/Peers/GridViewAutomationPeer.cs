@@ -40,8 +40,8 @@ namespace System.Windows.Automation.Peers
         public GridViewAutomationPeer(GridView owner, ListView listview)
             : base()
         {
-            Invariant.Assert(owner != null);
-            Invariant.Assert(listview != null);
+            Invariant.Assert(owner is not null);
+            Invariant.Assert(listview is not null);
             _owner = owner;
             _listview = listview;
 
@@ -77,10 +77,10 @@ namespace System.Windows.Automation.Peers
         List<AutomationPeer> IViewAutomationPeer.GetChildren(List<AutomationPeer> children)
         {
             //Add GridViewHeaderRowPresenter as the first child of ListView
-            if (_owner.HeaderRowPresenter != null)
+            if (_owner.HeaderRowPresenter is not null)
             {
                 AutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(_owner.HeaderRowPresenter);
-                if (peer != null)
+                if (peer is not null)
                 {
                     //If children is null, we still need to create an empty list to insert HeaderRowPresenter
                     if (children is null)
@@ -105,7 +105,7 @@ namespace System.Windows.Automation.Peers
         void IViewAutomationPeer.ItemsChanged(NotifyCollectionChangedEventArgs e)
         {
             ListViewAutomationPeer peer = UIElementAutomationPeer.FromElement(_listview) as ListViewAutomationPeer;
-            if (peer != null)
+            if (peer is not null)
             {
                 if (_oldItemsCount != _listview.Items.Count)
                 {
@@ -140,17 +140,17 @@ namespace System.Windows.Automation.Peers
         /// </summary>
         IRawElementProviderSimple[] ITableProvider.GetColumnHeaders()
         {
-            if (_owner.HeaderRowPresenter != null)
+            if (_owner.HeaderRowPresenter is not null)
             {
                 List<IRawElementProviderSimple> array = new List<IRawElementProviderSimple>(_owner.HeaderRowPresenter.ActualColumnHeaders.Count);
                 ListViewAutomationPeer lvpeer = UIElementAutomationPeer.FromElement(_listview) as ListViewAutomationPeer;
 
-                if(lvpeer != null)
+                if(lvpeer is not null)
                 {
                     foreach (UIElement e in _owner.HeaderRowPresenter.ActualColumnHeaders)
                     {
                         AutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(e);
-                        if (peer != null)
+                        if (peer is not null)
                         {
                             array.Add(ElementProxy.StaticWrap(peer, lvpeer));
                         }
@@ -182,7 +182,7 @@ namespace System.Windows.Automation.Peers
         {
             get
             {
-                if (_owner.HeaderRowPresenter != null)
+                if (_owner.HeaderRowPresenter is not null)
                 {
                     return _owner.HeaderRowPresenter.ActualColumnHeaders.Count;
                 }
@@ -213,14 +213,14 @@ namespace System.Windows.Automation.Peers
             if (lvi is null)
             {
                 VirtualizingPanel itemsHost = _listview.ItemsHost as VirtualizingPanel;
-                if (itemsHost != null)
+                if (itemsHost is not null)
                 {
                     itemsHost.BringIndexIntoView(row);
                 }
 
                 lvi = _listview.ItemContainerGenerator.ContainerFromIndex(row) as ListViewItem;
 
-                if (lvi != null)
+                if (lvi is not null)
                 {
                     //Must call Invoke here to force run the render process
                     _listview.Dispatcher.Invoke(
@@ -234,17 +234,17 @@ namespace System.Windows.Automation.Peers
             }
 
             //lvi is null, it is virtualized, so we can't return its cell
-            if (lvi != null)
+            if (lvi is not null)
             {
                 AutomationPeer lvpeer = UIElementAutomationPeer.FromElement(_listview);
-                if(lvpeer != null)
+                if(lvpeer is not null)
                 {
                     AutomationPeer peer = UIElementAutomationPeer.FromElement(lvi);
-                    if (peer != null)
+                    if (peer is not null)
                     {
                         // use the GridViewItemAutomationPeer, if available
                         AutomationPeer eventSource = peer.EventsSource;
-                        if (eventSource != null)
+                        if (eventSource is not null)
                         {
                             peer = eventSource;
                         }
@@ -270,8 +270,8 @@ namespace System.Windows.Automation.Peers
             if (_oldColumnsCount != _owner.Columns.Count)
             {
                 ListViewAutomationPeer peer = UIElementAutomationPeer.FromElement(_listview) as ListViewAutomationPeer;
-                Invariant.Assert(peer != null);
-                if (peer != null)
+                Invariant.Assert(peer is not null);
+                if (peer is not null)
                 {
                     peer.RaisePropertyChangedEvent(GridPatternIdentifiers.ColumnCountProperty, _oldColumnsCount, _owner.Columns.Count);
                 }
@@ -280,10 +280,10 @@ namespace System.Windows.Automation.Peers
             _oldColumnsCount = _owner.Columns.Count;
 
             AutomationPeer lvPeer = UIElementAutomationPeer.FromElement(_listview);
-            if (lvPeer != null)
+            if (lvPeer is not null)
             {
                 List<AutomationPeer> list = lvPeer.GetChildren();
-                if (list != null)
+                if (list is not null)
                 {
                     foreach (AutomationPeer peer in list)
                     {
@@ -299,7 +299,7 @@ namespace System.Windows.Automation.Peers
 
         internal static Visual FindVisualByType(Visual parent, Type type)
         {
-            if (parent != null)
+            if (parent is not null)
             {
                 int count = parent.InternalVisualChildrenCount;
                 for (int i = 0; i < count; i++)
@@ -310,7 +310,7 @@ namespace System.Windows.Automation.Peers
                         visual = FindVisualByType(visual, type);
                     }
 
-                    if (visual != null)
+                    if (visual is not null)
                     {
                         return visual;
                     }

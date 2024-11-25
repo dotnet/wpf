@@ -85,13 +85,13 @@ namespace System.Windows.Media
                 return;
             }
 
-            if (brush != null)
+            if (brush is not null)
             {
                 _contains |= geometry.FillContains(_point);
             }
 
             // If we have a pen and we haven't yet hit, try the widened geometry.
-            if ((pen != null) && !_contains)
+            if ((pen is not null) && !_contains)
             {
                 _contains |= geometry.StrokeContains(pen, _point);
             }
@@ -113,7 +113,7 @@ namespace System.Windows.Media
         /// </exception>
         public override void DrawGlyphRun(Brush foregroundBrush, GlyphRun glyphRun)
         {
-            if (!IsCurrentLayerNoOp && (glyphRun != null))
+            if (!IsCurrentLayerNoOp && (glyphRun is not null))
             {
                 // The InkBoundingBox + the Origin produce the true InkBoundingBox.
                 Rect rectangle = glyphRun.ComputeInkBoundingBox();
@@ -149,7 +149,7 @@ namespace System.Windows.Media
                 // If the clip being pushed doesn't contain the hit test point,
                 // then we don't need to consider any of the subsequent Drawing
                 // operations in this layer.
-                if ((clipGeometry != null) && !clipGeometry.FillContains(_point))
+                if ((clipGeometry is not null) && !clipGeometry.FillContains(_point))
                 {
                     IsCurrentLayerNoOp = true;
                 }
@@ -343,7 +343,7 @@ namespace System.Windows.Media
         private void PopPointStack()
         {
             // We must have a point stack and it must not be empty.
-            Debug.Assert(_pointStack != null);
+            Debug.Assert(_pointStack is not null);
             Debug.Assert(_pointStack.Count > 0);
 
             // Retrieve the previous point from the stack.

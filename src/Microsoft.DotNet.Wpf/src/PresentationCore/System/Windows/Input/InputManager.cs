@@ -219,7 +219,7 @@ namespace System.Windows.Input
         /// </summary>
         internal void RaiseTranslateAccelerator(KeyEventArgs e)
         {
-            if (_translateAccelerator != null)
+            if (_translateAccelerator is not null)
             {
                 _translateAccelerator(this, e);
             }
@@ -448,7 +448,7 @@ namespace System.Windows.Input
         private object HitTestInvalidatedAsyncCallback(object arg)
         {
             _hitTestInvalidatedAsyncOperation = null;
-            if (HitTestInvalidatedAsync != null)
+            if (HitTestInvalidatedAsync is not null)
             {
                 HitTestInvalidatedAsync(this, EventArgs.Empty);
             }
@@ -491,7 +491,7 @@ namespace System.Windows.Input
         {
             // It turns out that somehow we get here after the DispatcherOperation has been dispatched and we 
             // need to no-op on that.
-            if (_hitTestInvalidatedAsyncOperation != null)
+            if (_hitTestInvalidatedAsyncOperation is not null)
             {
                 // Promote the pending DispatcherOperation to Input Priority
 
@@ -638,7 +638,7 @@ namespace System.Windows.Input
                 _synchronizedInputEvents = null;
                 _pairedSynchronizedInputEvents = null;
 
-                if (_synchronizedInputAsyncClearOperation != null)
+                if (_synchronizedInputAsyncClearOperation is not null)
                 {
                     _synchronizedInputAsyncClearOperation.Abort();
                     _synchronizedInputAsyncClearOperation = null;
@@ -658,9 +658,9 @@ namespace System.Windows.Input
             // PreProcessedInputEventArgs and cast it to NotifyInputEventArgs
             // or ProcessInputEventArgs because a malicious user could upcast
             // the object and call inappropriate methods.
-            NotifyInputEventArgs notifyInputEventArgs = (_notifyInputEventArgs != null) ? _notifyInputEventArgs : new NotifyInputEventArgs();
-            ProcessInputEventArgs processInputEventArgs = (_processInputEventArgs != null) ? _processInputEventArgs : new ProcessInputEventArgs();
-            PreProcessInputEventArgs preProcessInputEventArgs = (_preProcessInputEventArgs != null) ? _preProcessInputEventArgs : new PreProcessInputEventArgs();
+            NotifyInputEventArgs notifyInputEventArgs = (_notifyInputEventArgs is not null) ? _notifyInputEventArgs : new NotifyInputEventArgs();
+            ProcessInputEventArgs processInputEventArgs = (_processInputEventArgs is not null) ? _processInputEventArgs : new ProcessInputEventArgs();
+            PreProcessInputEventArgs preProcessInputEventArgs = (_preProcessInputEventArgs is not null) ? _preProcessInputEventArgs : new PreProcessInputEventArgs();
             _notifyInputEventArgs = null;
             _processInputEventArgs = null;
             _preProcessInputEventArgs = null;
@@ -670,7 +670,7 @@ namespace System.Windows.Input
             // changes underneath us.  Instead, just loop until we find a
             // frame marker or until the staging area is empty.
             StagingAreaInputItem item = null;
-            while((item = PopInput()) != null)
+            while((item = PopInput()) is not null)
             {
                 // If we found a marker, we have reached the end of a
                 // "section" of the staging area.  We just return from
@@ -705,7 +705,7 @@ namespace System.Windows.Input
                 // a handler.  This means we can just call the current
                 // multi-cast delegate instance, and it is safe to iterate
                 // over, even if we get reentered.
-                if (_preProcessInput != null)
+                if (_preProcessInput is not null)
                 {
                     preProcessInputEventArgs.Reset(item, this);
 
@@ -728,7 +728,7 @@ namespace System.Windows.Input
                     // a handler.  This means we can just call the current
                     // multi-cast delegate instance, and it is safe to iterate
                     // over, even if we get reentered.
-                    if(_preNotifyInput != null)
+                    if(_preNotifyInput is not null)
                     {
                         notifyInputEventArgs.Reset(item, this);
 
@@ -751,7 +751,7 @@ namespace System.Windows.Input
                     DependencyObject eventSource = input.Source as DependencyObject;
                     if(eventSource is null || !InputElement.IsValid(eventSource as IInputElement))
                     {
-                        if (input.Device != null)
+                        if (input.Device is not null)
                         {
                             eventSource = input.Device.Target as DependencyObject;
                         }
@@ -784,7 +784,7 @@ namespace System.Windows.Input
                     }
                     else
                     {
-                        if (eventSource != null)
+                        if (eventSource is not null)
                         {
                             if (eventSource is UIElement e)
                             {
@@ -828,7 +828,7 @@ namespace System.Windows.Input
                     // a handler.  This means we can just call the current
                     // multi-cast delegate instance, and it is safe to iterate
                     // over, even if we get reentered.
-                    if(_postNotifyInput != null)
+                    if(_postNotifyInput is not null)
                     {
                         notifyInputEventArgs.Reset(item, this);
 
@@ -850,7 +850,7 @@ namespace System.Windows.Input
                     // a handler.  This means we can just call the current
                     // multi-cast delegate instance, and it is safe to iterate
                     // over, even if we get reentered.
-                    if(_postProcessInput != null)
+                    if(_postProcessInput is not null)
                     {
                         processInputEventArgs.Reset(item, this);
 

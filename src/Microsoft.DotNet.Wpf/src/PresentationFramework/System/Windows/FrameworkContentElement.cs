@@ -76,14 +76,14 @@ namespace System.Windows
             // If the default value is non-null then wire it to the current instance.
             PropertyMetadata metadata = StyleProperty.GetMetadata(DependencyObjectType);
             Style defaultValue = (Style)metadata.DefaultValue;
-            if (defaultValue != null)
+            if (defaultValue is not null)
             {
                 OnStyleChanged(this, new DependencyPropertyChangedEventArgs(StyleProperty, metadata, null, defaultValue));
             }
 
             // Set the ShouldLookupImplicitStyles flag to true if App.Resources has implicit styles.
             Application app = Application.Current;
-            if (app != null && app.HasImplicitStylesInResources)
+            if (app is not null && app.HasImplicitStylesInResources)
             {
                 ShouldLookupImplicitStyles = true;
             }
@@ -266,7 +266,7 @@ namespace System.Windows
             get
             {
                 ResourceDictionary resources = ResourcesField.GetValue(this);
-                return (resources != null &&
+                return (resources is not null &&
                         ((resources.Count > 0) || (resources.MergedDictionaries.Count > 0)));
             }
         }
@@ -294,13 +294,13 @@ namespace System.Windows
                 ResourceDictionary oldValue = ResourcesField.GetValue(this);
                 ResourcesField.SetValue(this, value);
 
-                if (oldValue != null)
+                if (oldValue is not null)
                 {
                     // This element is no longer an owner for the old RD
                     oldValue.RemoveOwner(this);
                 }
 
-                if (value != null)
+                if (value is not null)
                 {
                     if (!value.ContainsOwner(this))
                     {
@@ -557,7 +557,7 @@ namespace System.Windows
             // Note that for inheritable properties that override the default value a parent can impart
             // its default value to the child even though the property may not have been set locally or
             // via a style or template (ie. IsUsed flag would be false).
-            if (fmetadata != null)
+            if (fmetadata is not null)
             {
                 if (fmetadata.Inherits)
                 {
@@ -576,11 +576,11 @@ namespace System.Windows
                         while (hasParent)
                         {
                             bool inheritanceNode;
-                            if (parentFE != null)
+                            if (parentFE is not null)
                             {
                                 inheritanceNode = TreeWalkHelper.IsInheritanceNode(parentFE, dp, out inheritanceBehavior);
                             }
-                            else // (parentFCE != null)
+                            else // (parentFCE is not null)
                             {
                                 inheritanceNode = TreeWalkHelper.IsInheritanceNode(parentFCE, dp, out inheritanceBehavior);
                             }
@@ -633,7 +633,7 @@ namespace System.Windows
                             }
 
                             // No boundary or inheritance node found, continue search
-                            if (parentFE != null)
+                            if (parentFE is not null)
                             {
                                 hasParent = FrameworkElement.GetFrameworkParent(parentFE, out parentFE, out parentFCE);
                             }
@@ -662,7 +662,7 @@ namespace System.Windows
             FrameworkElement feTemplatedParent = (FrameworkElement)_templatedParent;
             frameworkTemplate = feTemplatedParent.TemplateInternal;
 
-            if (frameworkTemplate != null)
+            if (frameworkTemplate is not null)
             {
                 return StyleHelper.GetValueFromTemplatedParent(
                     _templatedParent,
@@ -711,7 +711,7 @@ namespace System.Windows
                 // because for this case the OnParentChanged will not
                 // have a chance to fire the Loaded event.
                 //
-                if (dp != null && dp.OwnerType == typeof(PresentationSource) && dp.Name == "RootSource")
+                if (dp is not null && dp.OwnerType == typeof(PresentationSource) && dp.Name == "RootSource")
                 {
                     TryFireInitialized();
                 }
@@ -731,7 +731,7 @@ namespace System.Windows
                 if (dp != StyleProperty && dp != DefaultStyleKeyProperty)
                 {
                     // Note even properties on non-container nodes within a template could be driving a trigger
-                    if (TemplatedParent != null)
+                    if (TemplatedParent is not null)
                     {
                         FrameworkElement feTemplatedParent = TemplatedParent as FrameworkElement;
 
@@ -742,7 +742,7 @@ namespace System.Windows
 
                     // Do not validate Style during an invalidation if the Style was
                     // never used before (dependents do not need invalidation)
-                    if (Style != null)
+                    if (Style is not null)
                     {
                         StyleHelper.OnTriggerSourcePropertyInvalidated(Style, null, this, dp, e, true /*invalidateOnlyContainer*/,
                             ref Style.TriggerSourceRecordFromChildIndex, ref Style.PropertyTriggersWithActions, 0 /*sourceChildId*/); // Style can only have triggers that are driven by properties on the container
@@ -752,7 +752,7 @@ namespace System.Windows
                     // never used before (dependents do not need invalidation)
 
                     // There may be container dependents in the ThemeStyle. Invalidate them.
-                    if (ThemeStyle != null && Style != ThemeStyle)
+                    if (ThemeStyle is not null && Style != ThemeStyle)
                     {
                         StyleHelper.OnTriggerSourcePropertyInvalidated(ThemeStyle, null, this, dp, e, true /*invalidateOnlyContainer*/,
                             ref ThemeStyle.TriggerSourceRecordFromChildIndex, ref ThemeStyle.PropertyTriggersWithActions, 0 /*sourceChildIndex*/); // ThemeStyle can only have triggers that are driven by properties on the container
@@ -768,7 +768,7 @@ namespace System.Windows
 
             // Metadata must exist specifically stating propagate invalidation
             // due to group or inheritance
-            if (fmetadata != null)
+            if (fmetadata is not null)
             {
                 //
                 // Inheritance
@@ -980,7 +980,7 @@ namespace System.Windows
             // as a property on this element.
             Cursor cursor = fce.Cursor;
 
-            if(cursor != null)
+            if(cursor is not null)
             {
                 // We specify the cursor if the QueryCursor event is not
                 // handled by the time it gets to us, or if we are configured
@@ -1264,7 +1264,7 @@ namespace System.Windows
             //
             // BUGBUG: this misses "trees" that have only one logical node.  No parents, no children.
 
-            if(_parent != null || HasLogicalChildren)
+            if(_parent is not null || HasLogicalChildren)
             {
                 DependencyObject logicalSource = args.Source as DependencyObject;
                 if(logicalSource is null || !IsLogicalDescendent(logicalSource))
@@ -1332,7 +1332,7 @@ namespace System.Windows
             // that we left before.  If so, restore the source of the event to
             // be the source that it was when we left the logical tree.
             DependencyObject branchNode = route.PeekBranchNode() as DependencyObject;
-            if (branchNode != null && IsLogicalDescendent(branchNode))
+            if (branchNode is not null && IsLogicalDescendent(branchNode))
             {
                 // We keep the most recent source in the event args.  Note that
                 // this is only for our consumption.  Once the event is raised,
@@ -1360,9 +1360,9 @@ namespace System.Windows
                 // If there is no visual parent, route via the model tree.
                 if (visualParent is null)
                 {
-                    continuePastCoreTree = modelParent != null;
+                    continuePastCoreTree = modelParent is not null;
                 }
-                else if(modelParent != null)
+                else if(modelParent is not null)
                 {
                     // If there is a model parent, record the branch node.
                     route.PushBranchNode(this, args.Source);
@@ -1388,7 +1388,7 @@ namespace System.Windows
         // Returns if the given child instance is a logical descendent
         private bool IsLogicalDescendent(DependencyObject child)
         {
-            while (child != null)
+            while (child is not null)
             {
                 if (child == this)
                 {
@@ -1410,7 +1410,7 @@ namespace System.Windows
             DependencyObject modelParent = this._parent;
 
             DependencyObject branchNode = branchNodeStack.Count > 0 ? branchNodeStack.Peek() : null;
-            if (branchNode != null && IsLogicalDescendent(branchNode))
+            if (branchNode is not null && IsLogicalDescendent(branchNode))
             {
                 branchNodeStack.Pop();
                 continueInvalidation = FrameworkElement.InvalidateAutomationIntermediateElements(this, LogicalTreeHelper.GetParent(branchNode));
@@ -1419,9 +1419,9 @@ namespace System.Windows
             // If there is no visual parent, route via the model tree.
             if (visualParent is null)
             {
-                continuePastCoreTree = modelParent != null;
+                continuePastCoreTree = modelParent is not null;
             }
-            else if(modelParent != null)
+            else if(modelParent is not null)
             {
                 // If there is a model parent, record the branch node.
                 branchNodeStack.Push(this);
@@ -1515,7 +1515,7 @@ namespace System.Windows
 
                     _flags = (InternalFlags)((inheritanceBehavior & inheritanceBehaviorMask) | (((uint)_flags) & ~inheritanceBehaviorMask));
 
-                    if (_parent != null)
+                    if (_parent is not null)
                     {
                         // This means that we are in the process of xaml parsing:
                         // an instance of FCE has been created and added to a parent,
@@ -1639,10 +1639,10 @@ namespace System.Windows
         private void RaiseInitialized(EventPrivateKey key, EventArgs e)
         {
             EventHandlersStore store = EventHandlersStore;
-            if (store != null)
+            if (store is not null)
             {
                 Delegate handler = store.Get(key);
-                if (handler != null)
+                if (handler is not null)
                 {
                     ((EventHandler)handler)(this, e);
                 }
@@ -1704,7 +1704,7 @@ namespace System.Windows
                     //    If Loaded preceeded Unloaded then it is sure to have been cancelled
                     //    out by the latter.
 
-                    return (unloadedPending != null);
+                    return (unloadedPending is not null);
                 }
             }
         }
@@ -1808,10 +1808,10 @@ namespace System.Windows
         internal void RaiseClrEvent(EventPrivateKey key, EventArgs args)
         {
             EventHandlersStore store = EventHandlersStore;
-            if (store != null)
+            if (store is not null)
             {
                 Delegate handler = store.Get(key);
-                if (handler != null)
+                if (handler is not null)
                 {
                     ((EventHandler)handler)(this, args);
                 }
@@ -2010,12 +2010,12 @@ namespace System.Windows
         {
             IEnumerator enumerator = LogicalChildren;
 
-            if(enumerator != null)
+            if(enumerator is not null)
             {
                 while(enumerator.MoveNext())
                 {
                     DependencyObject child =enumerator.Current as DependencyObject;
-                    if(child != null)
+                    if(child is not null)
                     {
                         // CODE REVIEW (dwaynen)
                         //
@@ -2032,10 +2032,10 @@ namespace System.Windows
         private void RaiseDependencyPropertyChanged(EventPrivateKey key, DependencyPropertyChangedEventArgs args)
         {
             EventHandlersStore store = EventHandlersStore;
-            if (store != null)
+            if (store is not null)
             {
                 Delegate handler = store.Get(key);
-                if (handler != null)
+                if (handler is not null)
                 {
                     ((DependencyPropertyChangedEventHandler)handler)(this, args);
                 }
@@ -2051,7 +2051,7 @@ namespace System.Windows
         private void EventHandlersStoreRemove(EventPrivateKey key, Delegate handler)
         {
             EventHandlersStore store = EventHandlersStore;
-            if (store != null)
+            if (store is not null)
             {
                 store.Remove(key, handler);
             }

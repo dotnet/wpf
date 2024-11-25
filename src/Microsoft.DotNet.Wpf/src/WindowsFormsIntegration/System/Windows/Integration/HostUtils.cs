@@ -90,12 +90,12 @@ namespace System.Windows.Forms.Integration
             DependencyObject current = descendant;
             Visual root = descendant;
 
-            while (current != null)
+            while (current is not null)
             {
                 current = VisualTreeHelper.GetParent(current);
                 Visual visual = current as Visual;
 
-                if (visual != null)
+                if (visual is not null)
                 {
                     root = visual;
                 }
@@ -118,13 +118,13 @@ namespace System.Windows.Forms.Integration
             outPoint = transform.Transform(pointElement);
 
             FrameworkElement rootElement = ancestor as FrameworkElement;
-            if (rootElement != null)
+            if (rootElement is not null)
             {
-                if (rootElement.LayoutTransform != null)
+                if (rootElement.LayoutTransform is not null)
                 {
                     outPoint = rootElement.LayoutTransform.Transform(outPoint);
                 }
-                if (rootElement.RenderTransform != null)
+                if (rootElement.RenderTransform is not null)
                 {
                     outPoint = rootElement.RenderTransform.Transform(outPoint);
                 }
@@ -142,12 +142,12 @@ namespace System.Windows.Forms.Integration
         internal static bool BrushIsSolidOpaque(SWM.Brush c)
         {
             SWM.SolidColorBrush solid = c as SWM.SolidColorBrush;
-            return solid != null && solid.Color.A == 255;
+            return solid is not null && solid.Color.A == 255;
         }
 
         internal static void SetBackgroundImage(WinFormsAdapter adapter, Control child, SD.Bitmap image)
         {
-            if (child != null &&
+            if (child is not null &&
                 (child.BackgroundImage is null || child.BackgroundImage == adapter.BackgroundImage))
             {
                 child.BackgroundImage = image;
@@ -211,10 +211,10 @@ namespace System.Windows.Forms.Integration
         {
             FrameworkElement ancestor = null;
             DependencyObject current = descendant;
-            while (current != null)
+            while (current is not null)
             {
                 FrameworkElement currentElement = current as FrameworkElement;
-                if (currentElement != null) { ancestor = currentElement; }
+                if (currentElement is not null) { ancestor = currentElement; }
 
                 current = VisualTreeHelper.GetParent(current);
             }
@@ -234,7 +234,7 @@ namespace System.Windows.Forms.Integration
             //properly deal with it.
             FrameworkElement frameworkElementAncestor = GetFrameworkElementAncestor(host);
 
-            if (frameworkElementAncestor != null)
+            if (frameworkElementAncestor is not null)
             {
                 RenderTargetBitmap bmp = GetBitmapForFrameworkElement(frameworkElementAncestor);
 
@@ -422,11 +422,11 @@ namespace System.Windows.Forms.Integration
         /// <returns></returns>
         public static FrameworkElement GetCursorSource(DependencyObject currentObject, bool forceCursorMapped)
         {
-            while (currentObject != null)
+            while (currentObject is not null)
             {
                 FrameworkElement currentElement = currentObject as FrameworkElement;
-                if (currentElement != null && (
-                    currentElement.Cursor != null || 
+                if (currentElement is not null && (
+                    currentElement.Cursor is not null || 
                         (currentElement.ForceCursor && forceCursorMapped)
                     )
                 )

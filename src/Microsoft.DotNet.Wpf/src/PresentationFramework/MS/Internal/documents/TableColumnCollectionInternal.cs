@@ -137,7 +137,7 @@ namespace MS.Internal.Documents
         /// </remarks>
         internal override void PrivateConnectChild(int index, TableColumn item)
         {
-            Debug.Assert(item != null && item.Index == -1);
+            Debug.Assert(item is not null && item.Index == -1);
             Debug.Assert(Items[index] is null);
 
             // If the TItem is already parented correctly through a proxy, there's no need
@@ -151,7 +151,7 @@ namespace MS.Internal.Documents
             }
             else
             {
-                if (item.Parent != null)
+                if (item.Parent is not null)
                 {
                     throw new System.ArgumentException(SR.TableCollectionInOtherCollection);
                 }
@@ -174,7 +174,7 @@ namespace MS.Internal.Documents
         /// </summary>
         internal override void PrivateDisconnectChild(TableColumn item)
         {
-            Debug.Assert(item != null);
+            Debug.Assert(item is not null);
 
             // notify the TItem about the change
             item.OnExitParentTree();

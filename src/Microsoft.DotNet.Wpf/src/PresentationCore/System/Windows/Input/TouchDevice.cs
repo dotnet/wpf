@@ -48,7 +48,7 @@ namespace System.Windows.Input
             // custom touch device.
             StylusLogic stylusLogic = StylusLogic.CurrentStylusLogic;
 
-            if (stylusLogic != null && !(this is StylusTouchDeviceBase))
+            if (stylusLogic is not null && !(this is StylusTouchDeviceBase))
             {
                 stylusLogic.Statistics.FeaturesUsed |= StylusTraceLogger.FeatureFlags.CustomTouchDeviceUsed;
             }
@@ -161,7 +161,7 @@ namespace System.Windows.Input
         {
             IInputElement over = null;
 
-            if (_activeSource != null)
+            if (_activeSource is not null)
             {
                 switch (_captureMode)
                 {
@@ -196,7 +196,7 @@ namespace System.Windows.Input
                         // the sub-tree, then the device is over the captured element.
                         {
                             IInputElement capture = InputElement.GetContainingInputElement(_captured as DependencyObject);
-                            if (capture != null)
+                            if (capture is not null)
                             {
                                 // We need to re-hit-test to get the "real" UIElement we are over.
                                 // This allows us to have our capture-to-subtree span multiple windows.
@@ -214,14 +214,14 @@ namespace System.Windows.Input
                             // Note that we support the child being in a completely different window.
                             // So we use the GetUIParent method instead of just looking at
                             // visual/content parents.
-                            if (over != null)
+                            if (over is not null)
                             {
                                 IInputElement ieTest = over;
-                                while ((ieTest != null) && (ieTest != _captured))
+                                while ((ieTest is not null) && (ieTest != _captured))
                                 {
                                     UIElement eTest = ieTest as UIElement;
 
-                                    if (eTest != null)
+                                    if (eTest is not null)
                                     {
                                         ieTest = InputElement.GetContainingInputElement(eTest.GetUIParent(true));
                                     }
@@ -229,7 +229,7 @@ namespace System.Windows.Input
                                     {
                                         ContentElement ceTest = ieTest as ContentElement;
 
-                                        if (ceTest != null)
+                                        if (ceTest is not null)
                                         {
                                             ieTest = InputElement.GetContainingInputElement(ceTest.GetUIParent(true));
                                         }
@@ -264,7 +264,7 @@ namespace System.Windows.Input
         {
             // We understand UIElements, ContentElements and UIElement3Ds.
             // If we are over something else (like a raw visual) find the containing element.
-            if ((element != null) && !InputElement.IsValid(element))
+            if ((element is not null) && !InputElement.IsValid(element))
             {
                 element = InputElement.GetContainingInputElement(element as DependencyObject);
             }
@@ -339,7 +339,7 @@ namespace System.Windows.Input
             UIElement3D uiElement3D;
             CastInputElement(element, out uiElement, out contentElement, out uiElement3D);
 
-            if ((element != null) && (uiElement is null) && (contentElement is null) && (uiElement3D is null))
+            if ((element is not null) && (uiElement is null) && (contentElement is null) && (uiElement3D is null))
             {
                 throw new ArgumentException(SR.Format(SR.Invalid_IInputElement, element.GetType()), "element");
             }
@@ -348,9 +348,9 @@ namespace System.Windows.Input
             {
                 // Ensure that the new element is visible and enabled
                 if ((element is null) ||
-                    (((uiElement != null) && uiElement.IsVisible && uiElement.IsEnabled) ||
-                    ((contentElement != null) && contentElement.IsEnabled) ||
-                    ((uiElement3D != null) && uiElement3D.IsVisible && uiElement3D.IsEnabled)))
+                    (((uiElement is not null) && uiElement.IsVisible && uiElement.IsEnabled) ||
+                    ((contentElement is not null) && contentElement.IsEnabled) ||
+                    ((uiElement3D is not null) && uiElement3D.IsVisible && uiElement3D.IsEnabled)))
                 {
                     IInputElement oldCapture = _captured;
                     _captured = element;
@@ -361,33 +361,33 @@ namespace System.Windows.Input
                     UIElement3D oldUIElement3D;
                     CastInputElement(oldCapture, out oldUIElement, out oldContentElement, out oldUIElement3D);
 
-                    if (oldUIElement != null)
+                    if (oldUIElement is not null)
                     {
                         oldUIElement.IsEnabledChanged -= OnReevaluateCapture;
                         oldUIElement.IsVisibleChanged -= OnReevaluateCapture;
                         oldUIElement.IsHitTestVisibleChanged -= OnReevaluateCapture;
                     }
-                    else if (oldContentElement != null)
+                    else if (oldContentElement is not null)
                     {
                         oldContentElement.IsEnabledChanged -= OnReevaluateCapture;
                     }
-                    else if (oldUIElement3D != null)
+                    else if (oldUIElement3D is not null)
                     {
                         oldUIElement3D.IsEnabledChanged -= OnReevaluateCapture;
                         oldUIElement3D.IsVisibleChanged -= OnReevaluateCapture;
                         oldUIElement3D.IsHitTestVisibleChanged -= OnReevaluateCapture;
                     }
-                    if (uiElement != null)
+                    if (uiElement is not null)
                     {
                         uiElement.IsEnabledChanged += OnReevaluateCapture;
                         uiElement.IsVisibleChanged += OnReevaluateCapture;
                         uiElement.IsHitTestVisibleChanged += OnReevaluateCapture;
                     }
-                    else if (contentElement != null)
+                    else if (contentElement is not null)
                     {
                         contentElement.IsEnabledChanged += OnReevaluateCapture;
                     }
-                    else if (uiElement3D != null)
+                    else if (uiElement3D is not null)
                     {
                         uiElement3D.IsEnabledChanged += OnReevaluateCapture;
                         uiElement3D.IsVisibleChanged += OnReevaluateCapture;
@@ -396,23 +396,23 @@ namespace System.Windows.Input
 
                     UpdateReverseInheritedProperty(/* capture = */ true, oldCapture, _captured);
 
-                    if (oldCapture != null)
+                    if (oldCapture is not null)
                     {
                         DependencyObject o = oldCapture as DependencyObject;
                         o.SetValue(UIElement.AreAnyTouchesCapturedPropertyKey,
                             BooleanBoxes.Box(AreAnyTouchesCapturedOrDirectlyOver(oldCapture, /* isCapture = */ true)));
                     }
-                    if (_captured != null)
+                    if (_captured is not null)
                     {
                         DependencyObject o = _captured as DependencyObject;
                         o.SetValue(UIElement.AreAnyTouchesCapturedPropertyKey, BooleanBoxes.TrueBox);
                     }
 
-                    if (oldCapture != null)
+                    if (oldCapture is not null)
                     {
                         RaiseLostCapture(oldCapture);
                     }
-                    if (_captured != null)
+                    if (_captured is not null)
                     {
                         RaiseGotCapture(_captured);
                     }
@@ -438,7 +438,7 @@ namespace System.Windows.Input
         {
             // consdier caching the array
             List<DependencyObject> others = null;
-            int count = (_activeDevices != null) ? _activeDevices.Count : 0;
+            int count = (_activeDevices is not null) ? _activeDevices.Count : 0;
             if (count > 0)
             {
                 others = new List<DependencyObject>(count);
@@ -449,7 +449,7 @@ namespace System.Windows.Input
                 if (touchDevice != this)
                 {
                     DependencyObject other = capture ? (touchDevice._captured as DependencyObject) : (touchDevice._directlyOver as DependencyObject);
-                    if (other != null)
+                    if (other is not null)
                     {
                         others.Add(other);
                     }
@@ -474,7 +474,7 @@ namespace System.Windows.Input
 
         internal static void ReevaluateCapturedWithin(DependencyObject element, DependencyObject oldParent, bool isCoreParent)
         {
-            int count = _activeDevices != null ? _activeDevices.Count : 0;
+            int count = _activeDevices is not null ? _activeDevices.Count : 0;
             for (int i = 0; i < count; i++)
             {
                 TouchDevice touchDevice = _activeDevices[i];
@@ -484,7 +484,7 @@ namespace System.Windows.Input
 
         private void ReevaluateCapturedWithinAsync(DependencyObject element, DependencyObject oldParent, bool isCoreParent)
         {
-            if (element != null)
+            if (element is not null)
             {
                 if (_capturedWithinTreeState is null)
                 {
@@ -531,15 +531,15 @@ namespace System.Windows.Input
             ContentElement contentElement;
             UIElement3D uiElement3D;
             CastInputElement(_captured, out uiElement, out contentElement, out uiElement3D);
-            if (uiElement != null)
+            if (uiElement is not null)
             {
                 killCapture = !uiElement.IsEnabled || !uiElement.IsVisible || !uiElement.IsHitTestVisible;
             }
-            else if (contentElement != null)
+            else if (contentElement is not null)
             {
                 killCapture = !contentElement.IsEnabled;
             }
-            else if (uiElement3D != null)
+            else if (uiElement3D is not null)
             {
                 killCapture = !uiElement3D.IsEnabled || !uiElement3D.IsVisible || !uiElement3D.IsHitTestVisible;
             }
@@ -567,7 +567,7 @@ namespace System.Windows.Input
             }
 
             // Refresh AreAnyTouchCapturesWithinProperty so that ReverseInherited flags are updated.
-            if ((_capturedWithinTreeState != null) && !_capturedWithinTreeState.IsEmpty)
+            if ((_capturedWithinTreeState is not null) && !_capturedWithinTreeState.IsEmpty)
             {
                 UpdateReverseInheritedProperty(/* capture = */ true, _captured, _captured);
             }
@@ -580,7 +580,7 @@ namespace System.Windows.Input
 
             PresentationSource presentationSource = PresentationSource.CriticalFromVisual(visual);
 
-            return ((presentationSource != null) && (presentationSource == _activeSource));
+            return ((presentationSource is not null) && (presentationSource == _activeSource));
         }
 
         private void OnReevaluateCapture(object sender, DependencyPropertyChangedEventArgs e)
@@ -611,7 +611,7 @@ namespace System.Windows.Input
 
         private void RaiseLostCapture(IInputElement oldCapture)
         {
-            Debug.Assert(oldCapture != null, "oldCapture should be non-null.");
+            Debug.Assert(oldCapture is not null, "oldCapture should be non-null.");
 
             TouchEventArgs e = CreateEventArgs(Touch.LostTouchCaptureEvent);
             e.Source = oldCapture;
@@ -620,7 +620,7 @@ namespace System.Windows.Input
 
         private void RaiseGotCapture(IInputElement captured)
         {
-            Debug.Assert(captured != null, "captured should be non-null.");
+            Debug.Assert(captured is not null, "captured should be non-null.");
 
             TouchEventArgs e = CreateEventArgs(Touch.GotTouchCaptureEvent);
             e.Source = captured;
@@ -684,7 +684,7 @@ namespace System.Windows.Input
             // the hit test as well).  Hit testing is stateless (without capture) so the results 
             // will also be the same as another hit test run on the same visual tree.  In cases
             // with capture the hit test is triggered already, so this will not change anything.
-            if (_reevaluateOver != null)
+            if (_reevaluateOver is not null)
             {
                 _reevaluateOver = null;
 
@@ -719,7 +719,7 @@ namespace System.Windows.Input
 
             _isActive = true;
 
-            if (Activated != null)
+            if (Activated is not null)
             {
                 Activated(this, EventArgs.Empty);
             }
@@ -740,7 +740,7 @@ namespace System.Windows.Input
             _isActive = false;
             _manipulatingElement = null;
 
-            if (Deactivated != null)
+            if (Deactivated is not null)
             {
                 Deactivated(this, EventArgs.Empty);
             }
@@ -751,8 +751,8 @@ namespace System.Windows.Input
         /// </summary>
         public void Synchronize()
         {
-            if (_activeSource != null &&
-                _activeSource.CompositionTarget != null &&
+            if (_activeSource is not null &&
+                _activeSource.CompositionTarget is not null &&
                 !_activeSource.CompositionTarget.IsDisposed)
             {
                 if (UpdateDirectlyOver(/* isSynchronize = */ true))
@@ -766,7 +766,7 @@ namespace System.Windows.Input
         protected virtual void OnManipulationEnded(bool cancel)
         {
             UIElement manipulatableElement = GetManipulatableElement();
-            if (manipulatableElement != null && PromotingToManipulation)
+            if (manipulatableElement is not null && PromotingToManipulation)
             {
                 Capture(null);
             }
@@ -781,7 +781,7 @@ namespace System.Windows.Input
             // The hit-test result may have changed.
             Synchronize();
 
-            if ((_directlyOverTreeState != null) && !_directlyOverTreeState.IsEmpty)
+            if ((_directlyOverTreeState is not null) && !_directlyOverTreeState.IsEmpty)
             {
                 UpdateReverseInheritedProperty(/* capture = */ false, _directlyOver, _directlyOver);
             }
@@ -792,7 +792,7 @@ namespace System.Windows.Input
             IInputElement newDirectlyOver = null;
 
             TouchPoint touchPoint = GetTouchPoint(null);
-            if (touchPoint != null)
+            if (touchPoint is not null)
             {
                 Point position = touchPoint.Position;
                 newDirectlyOver = CriticalHitTest(position, isSynchronize);
@@ -816,7 +816,7 @@ namespace System.Windows.Input
 
         internal static void ReevaluateDirectlyOver(DependencyObject element, DependencyObject oldParent, bool isCoreParent)
         {
-            int count = _activeDevices != null ? _activeDevices.Count : 0;
+            int count = _activeDevices is not null ? _activeDevices.Count : 0;
             for (int i = 0; i < count; i++)
             {
                 TouchDevice touchDevice = _activeDevices[i];
@@ -826,7 +826,7 @@ namespace System.Windows.Input
 
         private void ReevaluateDirectlyOverAsync(DependencyObject element, DependencyObject oldParent, bool isCoreParent)
         {
-            if (element != null)
+            if (element is not null)
             {
                 if (_directlyOverTreeState is null)
                 {
@@ -872,33 +872,33 @@ namespace System.Windows.Input
             UIElement3D newUIElement3D;
             CastInputElement(newDirectlyOver, out newUIElement, out newContentElement, out newUIElement3D);
 
-            if (oldUIElement != null)
+            if (oldUIElement is not null)
             {
                 oldUIElement.IsEnabledChanged -= OnReevaluateDirectlyOver;
                 oldUIElement.IsVisibleChanged -= OnReevaluateDirectlyOver;
                 oldUIElement.IsHitTestVisibleChanged -= OnReevaluateDirectlyOver;
             }
-            else if (oldContentElement != null)
+            else if (oldContentElement is not null)
             {
                 oldContentElement.IsEnabledChanged -= OnReevaluateDirectlyOver;
             }
-            else if (oldUIElement3D != null)
+            else if (oldUIElement3D is not null)
             {
                 oldUIElement3D.IsEnabledChanged -= OnReevaluateDirectlyOver;
                 oldUIElement3D.IsVisibleChanged -= OnReevaluateDirectlyOver;
                 oldUIElement3D.IsHitTestVisibleChanged -= OnReevaluateDirectlyOver;
             }
-            if (newUIElement != null)
+            if (newUIElement is not null)
             {
                 newUIElement.IsEnabledChanged += OnReevaluateDirectlyOver;
                 newUIElement.IsVisibleChanged += OnReevaluateDirectlyOver;
                 newUIElement.IsHitTestVisibleChanged += OnReevaluateDirectlyOver;
             }
-            else if (newContentElement != null)
+            else if (newContentElement is not null)
             {
                 newContentElement.IsEnabledChanged += OnReevaluateDirectlyOver;
             }
-            else if (newUIElement3D != null)
+            else if (newUIElement3D is not null)
             {
                 newUIElement3D.IsEnabledChanged += OnReevaluateDirectlyOver;
                 newUIElement3D.IsVisibleChanged += OnReevaluateDirectlyOver;
@@ -907,13 +907,13 @@ namespace System.Windows.Input
 
             UpdateReverseInheritedProperty(/* capture = */ false, oldDirectlyOver, newDirectlyOver);
 
-            if (oldDirectlyOver != null)
+            if (oldDirectlyOver is not null)
             {
                 DependencyObject o = oldDirectlyOver as DependencyObject;
                 o.SetValue(UIElement.AreAnyTouchesDirectlyOverPropertyKey,
                             BooleanBoxes.Box(AreAnyTouchesCapturedOrDirectlyOver(oldDirectlyOver, /* isCapture = */ false)));
             }
-            if (newDirectlyOver != null)
+            if (newDirectlyOver is not null)
             {
                 DependencyObject o = newDirectlyOver as DependencyObject;
                 o.SetValue(UIElement.AreAnyTouchesDirectlyOverPropertyKey, BooleanBoxes.TrueBox);
@@ -940,7 +940,7 @@ namespace System.Windows.Input
 
         private void RaiseTouchEnterOrLeave(DependencyObject element, bool isLeave)
         {
-            Debug.Assert(element != null);
+            Debug.Assert(element is not null);
             TouchEventArgs touchEventArgs = CreateEventArgs(isLeave ? Touch.TouchLeaveEvent : Touch.TouchEnterEvent);
             touchEventArgs.Source = element;
             _inputManager.ProcessInput(touchEventArgs);
@@ -997,7 +997,7 @@ namespace System.Windows.Input
         private void PostProcessInput(object sender, ProcessInputEventArgs e)
         {
             InputEventArgs inputEventArgs = e.StagingItem.Input;
-            if ((inputEventArgs != null) && (inputEventArgs.Device == this))
+            if ((inputEventArgs is not null) && (inputEventArgs.Device == this))
             {
                 if (inputEventArgs.Handled)
                 {
@@ -1023,7 +1023,7 @@ namespace System.Windows.Input
                 {
                     bool forManipulation;
                     RoutedEvent promotedTouchEvent = PromotePreviewToMain(inputEventArgs.RoutedEvent, out forManipulation);
-                    if (promotedTouchEvent != null)
+                    if (promotedTouchEvent is not null)
                     {
                         TouchEventArgs promotedTouchEventArgs = CreateEventArgs(promotedTouchEvent);
                         e.PushInput(promotedTouchEventArgs, e.StagingItem);
@@ -1031,7 +1031,7 @@ namespace System.Windows.Input
                     else if (forManipulation)
                     {
                         UIElement manipulatableElement = GetManipulatableElement();
-                        if (manipulatableElement != null)
+                        if (manipulatableElement is not null)
                         {
                             PromoteMainToManipulation(manipulatableElement, (TouchEventArgs)inputEventArgs);
                         }
@@ -1067,7 +1067,7 @@ namespace System.Windows.Input
         private UIElement GetManipulatableElement()
         {
             UIElement element = InputElement.GetContainingUIElement(_directlyOver as DependencyObject) as UIElement;
-            if (element != null)
+            if (element is not null)
             {
                 element = Manipulation.FindManipulationParent(element);
             }
@@ -1093,7 +1093,7 @@ namespace System.Windows.Input
             else if ((routedEvent == Touch.GotTouchCaptureEvent) && !PromotingToManipulation)
             {
                 UIElement element = _captured as UIElement;
-                if (element != null && element.IsManipulationEnabled)
+                if (element is not null && element.IsManipulationEnabled)
                 {
                     // When touch gets capture and if the captured element
                     // is manipulable, then add it as a manipulator to
@@ -1104,11 +1104,11 @@ namespace System.Windows.Input
                     OnManipulationStarted();
                 }
             }
-            else if ((routedEvent == Touch.LostTouchCaptureEvent) && PromotingToManipulation && _manipulatingElement != null)
+            else if ((routedEvent == Touch.LostTouchCaptureEvent) && PromotingToManipulation && _manipulatingElement is not null)
             {
                 UIElement element = _manipulatingElement.Target as UIElement;
                 _manipulatingElement = null;
-                if (element != null)
+                if (element is not null)
                 {
                     // When touch loses capture, remove it as a manipulator.
                     Manipulation.TryRemoveManipulator(element, this);
@@ -1142,7 +1142,7 @@ namespace System.Windows.Input
 
         private static void RemoveActiveDevice(TouchDevice device)
         {
-            if (_activeDevices != null)
+            if (_activeDevices is not null)
             {
                 _activeDevices.Remove(device);
             }
@@ -1151,7 +1151,7 @@ namespace System.Windows.Input
         internal static TouchPointCollection GetTouchPoints(IInputElement relativeTo)
         {
             TouchPointCollection points = new TouchPointCollection();
-            if (_activeDevices != null)
+            if (_activeDevices is not null)
             {
                 int count = _activeDevices.Count;
                 for (int i = 0; i < count; i++)
@@ -1166,7 +1166,7 @@ namespace System.Windows.Input
 
         internal static TouchPoint GetPrimaryTouchPoint(IInputElement relativeTo)
         {
-            if ((_activeDevices != null) && (_activeDevices.Count > 0))
+            if ((_activeDevices is not null) && (_activeDevices.Count > 0))
             {
                 TouchDevice device = _activeDevices[0];
                 if (device._isPrimary)
@@ -1180,7 +1180,7 @@ namespace System.Windows.Input
 
         internal static void ReleaseAllCaptures(IInputElement element)
         {
-            if (_activeDevices != null)
+            if (_activeDevices is not null)
             {
                 int count = _activeDevices.Count;
                 for (int i = 0; i < count; i++)
@@ -1208,7 +1208,7 @@ namespace System.Windows.Input
         {
             // We are assuming parent and child are Visual, Visual3D, or ContentElement
             DependencyObject currentChild = child as DependencyObject;
-            while ((currentChild != null) && (currentChild != parent))
+            while ((currentChild is not null) && (currentChild != parent))
             {
                 if (currentChild is Visual || currentChild is Visual3D)
                 {
@@ -1226,14 +1226,14 @@ namespace System.Windows.Input
         private static IEnumerable<TouchDevice> GetCapturedOrOverTouches(IInputElement element, bool includeWithin, bool isCapture)
         {
             List<TouchDevice> touches = new List<TouchDevice>();
-            if (_activeDevices != null)
+            if (_activeDevices is not null)
             {
                 int count = _activeDevices.Count;
                 for (int i = 0; i < count; i++)
                 {
                     TouchDevice device = _activeDevices[i];
                     IInputElement touchElement = isCapture ? device.Captured : device.DirectlyOver;
-                    if ((touchElement != null) &&
+                    if ((touchElement is not null) &&
                         ((touchElement == element) ||
                         (includeWithin && IsWithin(element, touchElement))))
                     {
@@ -1246,14 +1246,14 @@ namespace System.Windows.Input
 
         private static bool AreAnyTouchesCapturedOrDirectlyOver(IInputElement element, bool isCapture)
         {
-            if (_activeDevices != null)
+            if (_activeDevices is not null)
             {
                 int count = _activeDevices.Count;
                 for (int i = 0; i < count; i++)
                 {
                     TouchDevice device = _activeDevices[i];
                     IInputElement touchElement = isCapture ? device.Captured : device.DirectlyOver;
-                    if (touchElement != null &&
+                    if (touchElement is not null &&
                         touchElement == element)
                     {
                         return true;
@@ -1284,7 +1284,7 @@ namespace System.Windows.Input
 
         private void OnUpdated()
         {
-            if (Updated != null)
+            if (Updated is not null)
             {
                 Updated(this, EventArgs.Empty);
             }

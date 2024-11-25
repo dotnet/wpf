@@ -53,7 +53,7 @@ namespace System.Windows.Documents
                     for (int i=0; i<_semanticBoxes.Count; i++)
                     {
                         FixedSOMGroup group = _semanticBoxes[i] as FixedSOMGroup;
-                        if (group != null)
+                        if (group is not null)
                         {
                             if (debugVisuals == DrawDebugVisual.Groups)
                             {
@@ -90,7 +90,7 @@ namespace System.Windows.Documents
 
         public override void SetRTFProperties(FixedElement element)
         {
-            if (_cultureInfo != null)
+            if (_cultureInfo is not null)
             {
                 element.SetValue(FrameworkContentElement.LanguageProperty, XmlLanguage.GetLanguage(_cultureInfo.IetfLanguageTag));
             }

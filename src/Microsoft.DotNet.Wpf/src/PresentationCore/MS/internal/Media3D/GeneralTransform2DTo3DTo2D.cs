@@ -117,7 +117,7 @@ namespace MS.Internal.Media3D
 
             // store the inverse as well
             _transform2DInverse = (GeneralTransform)_transform2D.Inverse;
-            if (_transform2DInverse != null)
+            if (_transform2DInverse is not null)
             {
                 _transform2DInverse.Freeze();
             }
@@ -126,7 +126,7 @@ namespace MS.Internal.Media3D
             Viewport3DVisual viewport3D = (Viewport3DVisual)VisualTreeHelper.GetContainingVisual2D(visual3D);
 
             _camera = viewport3D.Camera;
-            if (_camera != null)
+            if (_camera is not null)
             {
                 _camera = (Camera)viewport3D.Camera.GetCurrentValueAsFrozen();
             }
@@ -136,7 +136,7 @@ namespace MS.Internal.Media3D
             _objectToViewport = visual3D.TransformToAncestor(viewport3D);
 
             // if the transform was not possible, it could be null - check before freezing
-            if (_objectToViewport != null)
+            if (_objectToViewport is not null)
             {
                 _objectToViewport.Freeze();
             }
@@ -182,7 +182,7 @@ namespace MS.Internal.Media3D
             double distanceAdjust;
             bool foundIntersection = false;
             
-            if (_camera != null)
+            if (_camera is not null)
             {
                 RayHitTestParameters rayHitTestParameters = _camera.RayFromViewportPoint(inPoint,
                                                                                          _viewSize,
@@ -198,7 +198,7 @@ namespace MS.Internal.Media3D
                                                    {
                                                        RayHitTestResult rayResult = rawresult as RayHitTestResult;
 
-                                                       if (rayResult != null)
+                                                       if (rayResult is not null)
                                                        {
                                                            foundIntersection = Viewport2DVisual3D.GetIntersectionInfo(rayResult, out pointHit);
                                                        }
@@ -414,7 +414,7 @@ namespace MS.Internal.Media3D
             }
 
             // project all the edges to get at the 2D point of interest
-            if (_objectToViewport != null)
+            if (_objectToViewport is not null)
 
             {
                 for (int i = 0; i < hitTestEdgeList.Count; i++)
@@ -1115,7 +1115,7 @@ namespace MS.Internal.Media3D
             {
                 Point ptOnVisual = Viewport2DVisual3D.TextureCoordsToVisualCoords(closestIntersection, _visualBrushBounds);
 
-                if (_transform2DInverse != null)
+                if (_transform2DInverse is not null)
                 {
                     Point ptRelToCapture = _transform2DInverse.Transform(ptOnVisual);
                     
@@ -1150,7 +1150,7 @@ namespace MS.Internal.Media3D
 
             // need to walk the texture coordinates and look for where this point intersects one of them
             Point3D point3D;
-            if (_objectToViewport != null &&
+            if (_objectToViewport is not null &&
                 Viewport2DVisual3D.Get3DPointFor2DCoordinate(texCoord, 
                                                            out point3D,
                                                            _geometry.Positions,
@@ -1192,7 +1192,7 @@ namespace MS.Internal.Media3D
             edges = GrabValidEdges(texCoordsOfInterest);
 
             Rect result = Rect.Empty;
-            if (edges != null)
+            if (edges is not null)
             {
                 for (int i = 0, count = edges.Count; i < count; i++)
                 {

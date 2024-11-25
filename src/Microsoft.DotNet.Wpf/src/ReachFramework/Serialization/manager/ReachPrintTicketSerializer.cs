@@ -83,7 +83,7 @@ namespace System.Windows.Xps.Serialization
             //  The new class XpsOMSerializationManager now also interacts with this class
             // the cast below is shorthand for cast to either XpsSerializationManager or XpsOMSerializationManager
             // we want this to throw an InvalidCastException if it fails to mantain compatibility.
-            if ((IXpsSerializationManager)SerializationManager != null)
+            if ((IXpsSerializationManager)SerializationManager is not null)
             {
                 SerializationManager.
                      PackagingPolicy.PersistPrintTicket(printTicket);

@@ -83,13 +83,13 @@ namespace System.Windows.Documents
                     TextPointer contentStart = this.ContentStart;
 
                     UIElement child = Child;
-                    if (child != null)
+                    if (child is not null)
                     {
                         textContainer.DeleteContentInternal(contentStart, this.ContentEnd);
                         ContainerTextElementField.ClearValue(child);
                     }
 
-                    if (value != null)
+                    if (value is not null)
                     {
                         ContainerTextElementField.SetValue(value, this);
                         contentStart.InsertUIElement(value);

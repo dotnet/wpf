@@ -59,7 +59,7 @@ namespace MS.Internal.TextFormatting
             SpanVector<int>     ichVector
             )
         {
-            Invariant.Assert(breaks != null);
+            Invariant.Assert(breaks is not null);
             _breaks = breaks;
             _ichVector = ichVector;
         }

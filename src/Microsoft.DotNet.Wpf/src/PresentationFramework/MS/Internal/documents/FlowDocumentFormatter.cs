@@ -310,7 +310,7 @@ namespace MS.Internal.Documents
                 _isContentFormatValid = false;
             }
 
-            if (ContentInvalidated != null)
+            if (ContentInvalidated is not null)
             {
                 ContentInvalidated(this, EventArgs.Empty);
             }
@@ -332,7 +332,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IFlowDocumentFormatter.Suspend()
         {
-            if (Suspended != null)
+            if (Suspended is not null)
             {
                 Suspended(this, EventArgs.Empty);
             }
@@ -362,7 +362,7 @@ namespace MS.Internal.Documents
                 //   but we have not yet received a matching Changed event.
                 //
                 // So, it is possible to receive hittesting request on dirty layout.
-                bool layoutValid = _documentPage != null &&
+                bool layoutValid = _documentPage is not null &&
                     _document.StructuralCache.IsFormattedOnce &&
                     !_document.StructuralCache.ForceReformat &&
                     _isContentFormatValid &&

@@ -131,7 +131,7 @@ namespace MS.Internal
 
             Uri profileUri;
 
-            if (uriHolder.BaseUri != null)
+            if (uriHolder.BaseUri is not null)
             {
                 profileUri = new Uri(uriHolder.BaseUri, uriHolder.OriginalUri);
             }
@@ -287,7 +287,7 @@ namespace MS.Internal
             {
                 SolidColorBrush scp = KnownColors.ColorStringToKnownBrush(trimmedColor);
 
-                if (scp != null)
+                if (scp is not null)
                 {
                     return scp;
                 }

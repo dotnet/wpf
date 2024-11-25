@@ -68,7 +68,7 @@ namespace System.Windows.Media.Media3D
             Debug.Assert(!HasModelTransformMatrix,
                 "ModelTransform stack should be empty when pusing a visual transform");
             
-            if (transform != null && transform != Transform3D.Identity)
+            if (transform is not null && transform != Transform3D.Identity)
             {            
                 _visualTransformStack.Push(transform.Value);
             }
@@ -76,7 +76,7 @@ namespace System.Windows.Media.Media3D
 
         internal void PushModelTransform(Transform3D transform)
         {
-            if (transform != null && transform != Transform3D.Identity)
+            if (transform is not null && transform != Transform3D.Identity)
             {            
                 _modelTransformStack.Push(transform.Value);
             }
@@ -84,7 +84,7 @@ namespace System.Windows.Media.Media3D
 
         internal void PopTransform(Transform3D transform)
         {
-            if (transform != null && transform != Transform3D.Identity)
+            if (transform is not null && transform != Transform3D.Identity)
             {
                 if (_modelTransformStack.Count > 0)
                 {
@@ -159,7 +159,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         internal bool HasHitTestProjectionMatrix
         {
-            get { return _hitTestProjectionMatrix != null; }
+            get { return _hitTestProjectionMatrix is not null; }
         }
         
         /// <summary>

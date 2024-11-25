@@ -412,7 +412,7 @@ namespace System.IO.Packaging
         
         internal void SetCertificatePart(CertificatePart certificatePart)
         {
-            Debug.Assert(certificatePart != null, "Logic Error: Not expecting setting certificate part to null on digital signature");
+            Debug.Assert(certificatePart is not null, "Logic Error: Not expecting setting certificate part to null on digital signature");
             _certificatePart = certificatePart;
         }
 

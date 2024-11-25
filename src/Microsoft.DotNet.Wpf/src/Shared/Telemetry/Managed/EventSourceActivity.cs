@@ -103,7 +103,7 @@ namespace MS.Internal.Telemetry
         /// </param>
         internal EventSourceActivity(EventSource eventSource, EventSourceOptions startStopOptions, Guid parentActivityId)
         {
-            Contract.Requires<ArgumentNullException>(eventSource != null, nameof(eventSource));
+            Contract.Requires<ArgumentNullException>(eventSource is not null, nameof(eventSource));
 
             _eventSource = eventSource;
             _startStopOptions = startStopOptions;
@@ -142,7 +142,7 @@ namespace MS.Internal.Telemetry
         /// </param>
         internal EventSourceActivity(EventSourceActivity parentActivity, EventSourceOptions startStopOptions)
         {
-            Contract.Requires<ArgumentNullException>(parentActivity != null, nameof(parentActivity));
+            Contract.Requires<ArgumentNullException>(parentActivity is not null, nameof(parentActivity));
 
             _eventSource = parentActivity.EventSource;
             _startStopOptions = startStopOptions;
@@ -175,7 +175,7 @@ namespace MS.Internal.Telemetry
         /// </param>
         internal void Start(string eventName)
         {
-            Contract.Requires<ArgumentNullException>(eventName != null, nameof(eventName));
+            Contract.Requires<ArgumentNullException>(eventName is not null, nameof(eventName));
             
             var data = EmptyStruct.Instance;
             Start(eventName, ref data);
@@ -206,7 +206,7 @@ namespace MS.Internal.Telemetry
         /// </param>
         internal void Stop(string eventName)
         {
-            Contract.Requires<ArgumentNullException>(eventName != null, nameof(eventName));
+            Contract.Requires<ArgumentNullException>(eventName is not null, nameof(eventName));
 
             var data = EmptyStruct.Instance;
             Stop(eventName, ref data);
@@ -236,7 +236,7 @@ namespace MS.Internal.Telemetry
         /// </param>
         internal void Write(string eventName)
         {
-            Contract.Requires<ArgumentNullException>(eventName != null, nameof(eventName));
+            Contract.Requires<ArgumentNullException>(eventName is not null, nameof(eventName));
 
             var options = new EventSourceOptions();
             var data = EmptyStruct.Instance;
@@ -255,7 +255,7 @@ namespace MS.Internal.Telemetry
         /// </param>
         internal void Write(string eventName, EventSourceOptions options)
         {
-            Contract.Requires<ArgumentNullException>(eventName != null, nameof(eventName));
+            Contract.Requires<ArgumentNullException>(eventName is not null, nameof(eventName));
 
             var data = EmptyStruct.Instance;
             Write(eventName, ref options, ref data);

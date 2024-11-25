@@ -436,7 +436,7 @@ namespace System.Windows.Media.Media3D
             {
                 ReadPreamble();
 
-                return IsFrozen || Dispatcher != null;
+                return IsFrozen || Dispatcher is not null;
             }
         }
 
@@ -755,7 +755,7 @@ namespace System.Windows.Media.Media3D
 
             internal Enumerator(GeneralTransform3DCollection list)
             {
-                Debug.Assert(list != null, "list may not be null.");
+                Debug.Assert(list is not null, "list may not be null.");
 
                 _list = list;
                 _version = list._version;
@@ -912,7 +912,7 @@ namespace System.Windows.Media.Media3D
             bool needsItemValidation = true;
             ICollection<GeneralTransform3D> icollectionOfT = collection as ICollection<GeneralTransform3D>;
 
-            if (icollectionOfT != null)
+            if (icollectionOfT is not null)
             {
                 _collection = new FrugalStructList<GeneralTransform3D>(icollectionOfT);
             }
@@ -920,7 +920,7 @@ namespace System.Windows.Media.Media3D
             {
                 ICollection icollection = collection as ICollection;
 
-                if (icollection != null) // an IC but not and IC<T>
+                if (icollection is not null) // an IC but not and IC<T>
                 {
                     _collection = new FrugalStructList<GeneralTransform3D>(icollection);
                 }

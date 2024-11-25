@@ -132,7 +132,7 @@ namespace MS.Win32.Recognizer
             //which makes _recognizerHandle.IsInvalid == true before calling
             //DestroyContext.  I have removed this assert, but left it commented for
             //context.
-            //Debug.Assert(_recognizerHandle != null && !_recognizerHandle.IsInvalid);
+            //Debug.Assert(_recognizerHandle is not null && !_recognizerHandle.IsInvalid);
             Debug.Assert(handle != IntPtr.Zero);
             int hr = MS.Win32.Recognizer.UnsafeNativeMethods.DestroyContext(handle);
 

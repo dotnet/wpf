@@ -46,7 +46,7 @@ namespace System.Windows
         {
             Debug.Assert(d is FrameworkElement || d is FrameworkContentElement);
 
-            if (loadedPending != null)
+            if (loadedPending is not null)
             {
                 Debug.Assert(loadedPending.Length == 3);
 
@@ -94,7 +94,7 @@ namespace System.Windows
         {
             Debug.Assert(d is FrameworkElement || d is FrameworkContentElement);
 
-            if (unloadedPending != null)
+            if (unloadedPending is not null)
             {
                 Debug.Assert(unloadedPending.Length == 3);
 
@@ -133,7 +133,7 @@ namespace System.Windows
             DependencyObject newParent)
         {
             // Added to a tree
-            if (oldParent is null && newParent != null)
+            if (oldParent is null && newParent is not null)
             {
                 if(IsLoadedHelper(newParent) == true)
                 {
@@ -144,7 +144,7 @@ namespace System.Windows
                 }
             }
             // Removed from a tree
-            else if (oldParent != null && newParent is null)
+            else if (oldParent is not null && newParent is null)
             {
                 if (IsLoadedHelper(oldParent) == true)
                 {
@@ -169,7 +169,7 @@ namespace System.Windows
             object[] loadedPending = (object[])rootDO.GetValue(FrameworkElement.LoadedPendingProperty);
 
             // The LoadedPendingProperty must be set if we have reached this far
-            Debug.Assert(loadedPending != null && loadedPending.Length == 3,
+            Debug.Assert(loadedPending is not null && loadedPending.Length == 3,
                 "The LoadedPendingProperty must be set if we have reached this far");
 
             bool isLoaded = IsLoadedHelper(rootDO);
@@ -206,7 +206,7 @@ namespace System.Windows
             object[] unloadedPending = (object[])rootDO.GetValue(FrameworkElement.UnloadedPendingProperty);
 
             // The UnloadedPendingProperty must be set if we have reached this far
-            Debug.Assert(unloadedPending != null && unloadedPending.Length == 3,
+            Debug.Assert(unloadedPending is not null && unloadedPending.Length == 3,
                 "The UnloadedPendingProperty must be set if we have reached this far");
 
             bool isLoaded = IsLoadedHelper(rootDO);
@@ -296,14 +296,14 @@ namespace System.Windows
             // If this is a FrameworkElement            
             if (d is FrameworkElement fe)
             {
-                if (fe != root && routedEvent == FrameworkElement.LoadedEvent && fe.UnloadedPending != null)
+                if (fe != root && routedEvent == FrameworkElement.LoadedEvent && fe.UnloadedPending is not null)
                 {
                     // If there is a pending Unloaded event wait till we've broadcast 
                     // that event before we can fire the new Loaded event.
 
                     fe.FireLoadedOnDescendentsInternal();
                 }
-                else if (fe != root && routedEvent == FrameworkElement.UnloadedEvent && fe.LoadedPending != null)
+                else if (fe != root && routedEvent == FrameworkElement.UnloadedEvent && fe.LoadedPending is not null)
                 {
                     // If there is a pending Loaded event abort it because we are now 
                     // being Unloaded.
@@ -314,14 +314,14 @@ namespace System.Windows
                 {
                     if (fe != root)
                     {
-                        if (routedEvent == FrameworkElement.LoadedEvent && fe.LoadedPending != null)
+                        if (routedEvent == FrameworkElement.LoadedEvent && fe.LoadedPending is not null)
                         {
                             // If there is a pending Loaded event abort it because we are now 
                             // being Loaded.
                         
                             RemoveLoadedCallback(fe, fe.LoadedPending);
                         }
-                        else if (routedEvent == FrameworkElement.UnloadedEvent && fe.UnloadedPending != null)
+                        else if (routedEvent == FrameworkElement.UnloadedEvent && fe.UnloadedPending is not null)
                         {
                             // If there is a pending Unloaded event abort it because we are now 
                             // being Unloaded.
@@ -357,14 +357,14 @@ namespace System.Windows
                 // If this is a FrameworkContentElement
                 FrameworkContentElement fce = (FrameworkContentElement)d;
 
-                if (fce != root && routedEvent == FrameworkElement.LoadedEvent && fce.UnloadedPending != null)
+                if (fce != root && routedEvent == FrameworkElement.LoadedEvent && fce.UnloadedPending is not null)
                 {
                     // If there is a pending Unloaded event wait till we've broadcast 
                     // that event before we can fire the new Loaded event.
 
                     fce.FireLoadedOnDescendentsInternal();
                 }
-                else if (fce != root && routedEvent == FrameworkElement.UnloadedEvent && fce.LoadedPending != null)
+                else if (fce != root && routedEvent == FrameworkElement.UnloadedEvent && fce.LoadedPending is not null)
                 {
                     // If there is a pending Loaded event abort it because we are now 
                     // being Unloaded.
@@ -375,14 +375,14 @@ namespace System.Windows
                 {
                     if (fce != root)
                     {
-                        if (routedEvent == FrameworkElement.LoadedEvent && fce.LoadedPending != null)
+                        if (routedEvent == FrameworkElement.LoadedEvent && fce.LoadedPending is not null)
                         {
                             // If there is a pending Loaded event abort it because we are now 
                             // being Loaded.
                         
                             RemoveLoadedCallback(fce, fce.LoadedPending);
                         }
-                        else if (routedEvent == FrameworkElement.UnloadedEvent && fce.UnloadedPending != null)
+                        else if (routedEvent == FrameworkElement.UnloadedEvent && fce.UnloadedPending is not null)
                         {
                             // If there is a pending Unloaded event abort it because we are now 
                             // being Unloaded.
@@ -470,22 +470,22 @@ namespace System.Windows
             Visual              visual;
             Visual3D            visual3D;
 
-            if (parent != null)
+            if (parent is not null)
             {
                 return IsLoadedHelper(parent);
             }
-            else if ((visual = d as Visual) != null)
+            else if ((visual = d as Visual) is not null)
             {
                 // If parent is null then this is the root element
                 return SafeSecurityHelper.IsConnectedToPresentationSource(visual);
             }
-            else if ((visual3D = d as Visual3D) != null)
+            else if ((visual3D = d as Visual3D) is not null)
             {
                 // IsConnectedToPresentationSource could also be modified to take
                 // a DO - instead though we'll just get the containing visual2D for
                 // this 3D object.
                 visual = VisualTreeHelper.GetContainingVisual2D(visual3D);
-                if (visual != null)
+                if (visual is not null)
                 {
                     return SafeSecurityHelper.IsConnectedToPresentationSource(visual);
                 }
@@ -541,14 +541,14 @@ namespace System.Windows
             if(hasLoadChangedHandler)
             {
                 // Attaching to a Parent
-                if (oldParent is null && newParent != null)
+                if (oldParent is null && newParent is not null)
                 {
                     // Subtree with a handler got added
                     AddHasLoadedChangeHandlerFlagInAncestry(newParent);
                 }
 
                 // Detaching from a Parent
-                else if (oldParent != null && newParent is null)
+                else if (oldParent is not null && newParent is null)
                 {
                     // Subtree with a handler got removed
                     RemoveHasLoadedChangeHandlerFlagInAncestry(oldParent);
@@ -591,7 +591,7 @@ namespace System.Windows
                 for(int i = 0; i < count; i++)
                 {
                     FrameworkElement child = VisualTreeHelper.GetChild(v, i) as FrameworkElement;
-                    if (child != null && child.SubtreeHasLoadedChangeHandler)
+                    if (child is not null && child.SubtreeHasLoadedChangeHandler)
                     {
                         return true;
                     }
@@ -642,14 +642,14 @@ namespace System.Windows
                     fo.SubtreeHasLoadedChangeHandler = addHandler;
 
                     // Propagate the change to your visual ancestry
-                    if (coreParent != null)
+                    if (coreParent is not null)
                     {
                         UpdateHasLoadedChangeHandlerFlagInAncestry(coreParent, addHandler);
                         parent = coreParent;
                     }
 
                     // Propagate the change to your logical ancestry
-                    if (logicalParent != null && logicalParent != coreParent)
+                    if (logicalParent is not null && logicalParent != coreParent)
                     {
                         UpdateHasLoadedChangeHandlerFlagInAncestry(logicalParent, addHandler);
                         if (fo.IsFCE)
@@ -660,7 +660,7 @@ namespace System.Windows
                     if (logicalParent is null && coreParent is null)
                     {
                         parent = Helper.FindMentor(fo.DO.InheritanceContext);
-                        if (parent != null)
+                        if (parent is not null)
                         {
                             fo.ChangeSubtreeHasLoadedChangedHandler(parent);
                         }
@@ -697,20 +697,20 @@ namespace System.Windows
 
                 // This is neither an FE nor and FCE
                 // Propagate the change to your visual ancestry
-                if ((v = d as Visual) != null)
+                if ((v = d as Visual) is not null)
                 {
                     coreParent = VisualTreeHelper.GetParent(v);
                 }
-                else if ((ce = d as ContentElement) != null)
+                else if ((ce = d as ContentElement) is not null)
                 {
                     coreParent = ContentOperations.GetParent(ce);
                 }
-                else if ((v3D = d as Visual3D) != null)
+                else if ((v3D = d as Visual3D) is not null)
                 {
                     coreParent = VisualTreeHelper.GetParent(v3D);
                 }
 
-                if (coreParent != null)
+                if (coreParent is not null)
                 {
                     UpdateHasLoadedChangeHandlerFlagInAncestry(coreParent, addHandler);
                 }
@@ -727,7 +727,7 @@ namespace System.Windows
             if (fe.GetValue(FrameworkElement.LoadedPendingProperty) is null)
             {
                 // Propagate the change to your visual ancestry
-                if (parent != null)
+                if (parent is not null)
                 {
                     fe.IsLoadedCache = IsLoadedHelper(parent);
                 }

@@ -46,7 +46,7 @@ namespace System.Windows.Automation.Peers
                 if (value)
                     return;
                 AutomationPeer wrapperPeer = GetWrapperPeer();
-                if (wrapperPeer != null)
+                if (wrapperPeer is not null)
                 {
                     wrapperPeer.AncestorsInvalid = false;
                 }
@@ -58,7 +58,7 @@ namespace System.Windows.Automation.Peers
         {
             if (patternInterface == PatternInterface.VirtualizedItem)
             {
-                if(VirtualizedItemPatternIdentifiers.Pattern != null)
+                if(VirtualizedItemPatternIdentifiers.Pattern is not null)
                 {
                     if(GetWrapperPeer() is null)
                         return this;
@@ -66,7 +66,7 @@ namespace System.Windows.Automation.Peers
                     {
                         // ItemsControlAutomationPeer can be null in case of TreeViewItems when parent TreeViewItem is also virtualized
                         // If the Item is in Automation Tree we consider it has Realized and need not return VirtualizeItem pattern.
-                        if(ItemsControlAutomationPeer != null && !IsItemInAutomationTree())
+                        if(ItemsControlAutomationPeer is not null && !IsItemInAutomationTree())
                         {
                             return this;
                         }
@@ -80,7 +80,7 @@ namespace System.Windows.Automation.Peers
             else if(patternInterface == PatternInterface.SynchronizedInput)
             {
                 UIElementAutomationPeer peer = GetWrapperPeer() as UIElementAutomationPeer;
-                if(peer != null)
+                if(peer is not null)
                 {
                     return peer.GetPattern(patternInterface);
                 }
@@ -93,10 +93,10 @@ namespace System.Windows.Automation.Peers
         {
             UIElement wrapper = null;
             ItemsControlAutomationPeer itemsControlAutomationPeer = ItemsControlAutomationPeer;
-            if (itemsControlAutomationPeer != null)
+            if (itemsControlAutomationPeer is not null)
             {
                 ItemsControl owner = (ItemsControl)(itemsControlAutomationPeer.Owner);
-                if (owner != null)
+                if (owner is not null)
                 {
                     object item = RawItem;
                     if (item != DependencyProperty.UnsetValue)
@@ -115,7 +115,7 @@ namespace System.Windows.Automation.Peers
         {
             AutomationPeer wrapperPeer = null;
             UIElement wrapper = GetWrapper();
-            if(wrapper != null)
+            if(wrapper is not null)
             {
                 wrapperPeer = UIElementAutomationPeer.CreatePeerForElement(wrapper);
                 if(wrapperPeer is null) //fall back to default peer if there is no specific one
@@ -135,14 +135,14 @@ namespace System.Windows.Automation.Peers
         {
             // To avoid the situation on legacy systems which may not have new unmanaged core. this check with old unmanaged core
             // avoids throwing exception and provide older behavior returning default values for items which are virtualized rather than throwing exception.
-            if (VirtualizedItemPatternIdentifiers.Pattern != null && !(this is GridViewItemAutomationPeer) && !IsItemInAutomationTree())
+            if (VirtualizedItemPatternIdentifiers.Pattern is not null && !(this is GridViewItemAutomationPeer) && !IsItemInAutomationTree())
                 throw new ElementNotAvailableException(SR.VirtualizedElement);
         }
 
         private bool IsItemInAutomationTree()
         {
             AutomationPeer parent = this.GetParent();
-            if(this.Index != -1 && parent != null && parent.Children != null && this.Index < parent.Children.Count && parent.Children[this.Index] == this)
+            if(this.Index != -1 && parent is not null && parent.Children is not null && this.Index < parent.Children.Count && parent.Children[this.Index] == this)
                 return true;
             else return false;
         }
@@ -172,7 +172,7 @@ namespace System.Windows.Automation.Peers
         override internal void AddToParentProxyWeakRefCache()
         {
             ItemsControlAutomationPeer itemsControlAutomationPeer = ItemsControlAutomationPeer;
-            if(itemsControlAutomationPeer != null)
+            if(itemsControlAutomationPeer is not null)
             {
                 itemsControlAutomationPeer.AddProxyToWeakRefStorage(this.ElementProxyWeakReference, this);
             }
@@ -182,7 +182,7 @@ namespace System.Windows.Automation.Peers
         override internal Rect GetVisibleBoundingRectCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.GetVisibleBoundingRectCore();
             }
@@ -199,7 +199,7 @@ namespace System.Windows.Automation.Peers
         protected override List<AutomationPeer> GetChildrenCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 // The children needs to be updated before GetChildren call as ChildrenValid flag would already be true and GetChildren call won't update the children list.
                 wrapperPeer.ForceEnsureChildren();
@@ -214,7 +214,7 @@ namespace System.Windows.Automation.Peers
         protected override Rect GetBoundingRectangleCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.GetBoundingRectangle();
             }
@@ -228,7 +228,7 @@ namespace System.Windows.Automation.Peers
         protected override bool IsOffscreenCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.IsOffscreen();
             else
                 ThrowElementNotAvailableException();
@@ -240,7 +240,7 @@ namespace System.Windows.Automation.Peers
         protected override AutomationOrientation GetOrientationCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.GetOrientation();
             else
                 ThrowElementNotAvailableException();
@@ -254,7 +254,7 @@ namespace System.Windows.Automation.Peers
             AutomationPeer wrapperPeer = GetWrapperPeer();
             AutomationHeadingLevel headingLevel = AutomationHeadingLevel.None;
 
-            if(wrapperPeer != null)
+            if(wrapperPeer is not null)
             {
                 headingLevel = wrapperPeer.GetHeadingLevel();
             }
@@ -280,7 +280,7 @@ namespace System.Windows.Automation.Peers
         protected override int GetPositionInSetCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 int position = wrapperPeer.GetPositionInSet();
 
@@ -314,7 +314,7 @@ namespace System.Windows.Automation.Peers
         protected override int GetSizeOfSetCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 int size = wrapperPeer.GetSizeOfSet();
 
@@ -404,7 +404,7 @@ namespace System.Windows.Automation.Peers
                         position -= group.ItemCount;
                     }
                 }
-            } while ((collection = newCollection) != null);
+            } while ((collection = newCollection) is not null);
 
             return position;
         }
@@ -413,7 +413,7 @@ namespace System.Windows.Automation.Peers
         protected override string GetItemStatusCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.GetItemStatus();
             else
                 ThrowElementNotAvailableException();
@@ -426,7 +426,7 @@ namespace System.Windows.Automation.Peers
         protected override bool IsRequiredForFormCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.IsRequiredForForm();
             else
                 ThrowElementNotAvailableException();
@@ -438,7 +438,7 @@ namespace System.Windows.Automation.Peers
         protected override bool IsKeyboardFocusableCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.IsKeyboardFocusable();
             else
                 ThrowElementNotAvailableException();
@@ -450,7 +450,7 @@ namespace System.Windows.Automation.Peers
         protected override bool HasKeyboardFocusCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.HasKeyboardFocus();
             else
                 ThrowElementNotAvailableException();
@@ -462,7 +462,7 @@ namespace System.Windows.Automation.Peers
         protected override bool IsEnabledCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.IsEnabled();
             else
                 ThrowElementNotAvailableException();
@@ -474,7 +474,7 @@ namespace System.Windows.Automation.Peers
         protected override bool IsDialogCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.IsDialog();
             else
                 ThrowElementNotAvailableException();
@@ -486,7 +486,7 @@ namespace System.Windows.Automation.Peers
         protected override bool IsPasswordCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.IsPassword();
             else
                 ThrowElementNotAvailableException();
@@ -501,11 +501,11 @@ namespace System.Windows.Automation.Peers
             string id = null;
             object item;
 
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 id = wrapperPeer.GetAutomationId();
             }
-            else if ((item = Item) != null)
+            else if ((item = Item) is not null)
             {
                 using (RecyclableWrapper recyclableWrapper = ItemsControlAutomationPeer.GetRecyclableWrapperPeer(item))
                 {
@@ -523,12 +523,12 @@ namespace System.Windows.Automation.Peers
             string name = null;
             object item = Item;
 
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 name = wrapperPeer.GetName();
             }
             // see https://github.com/dotnet/wpf/issues/122
-            else if (item != null && ItemsControlAutomationPeer is { } itemsControlAutomationPeer)
+            else if (item is not null && ItemsControlAutomationPeer is { } itemsControlAutomationPeer)
             {
                 using (RecyclableWrapper recyclableWrapper = itemsControlAutomationPeer.GetRecyclableWrapperPeer(item))
                 {
@@ -536,11 +536,11 @@ namespace System.Windows.Automation.Peers
                 }
             }
 
-            if (string.IsNullOrEmpty(name) && item != null)
+            if (string.IsNullOrEmpty(name) && item is not null)
             {
                 // For FE we can't use ToString as that provides extraneous information than just the plain text
                 FrameworkElement fe = item as FrameworkElement;
-                if(fe != null)
+                if(fe is not null)
                   name = fe.GetPlainText();
 
                 if(string.IsNullOrEmpty(name))
@@ -554,7 +554,7 @@ namespace System.Windows.Automation.Peers
         protected override bool IsContentElementCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.IsContentElement();
 
             return true;
@@ -564,7 +564,7 @@ namespace System.Windows.Automation.Peers
         protected override bool IsControlElementCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.IsControlElement();
 
             return true;
@@ -574,7 +574,7 @@ namespace System.Windows.Automation.Peers
         protected override AutomationPeer GetLabeledByCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.GetLabeledBy();
             else
                 ThrowElementNotAvailableException();
@@ -586,7 +586,7 @@ namespace System.Windows.Automation.Peers
         protected override AutomationLiveSetting GetLiveSettingCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.GetLiveSetting();
             else
                 ThrowElementNotAvailableException();
@@ -598,7 +598,7 @@ namespace System.Windows.Automation.Peers
         protected override string GetHelpTextCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.GetHelpText();
             else
                 ThrowElementNotAvailableException();
@@ -610,7 +610,7 @@ namespace System.Windows.Automation.Peers
         protected override string GetAcceleratorKeyCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.GetAcceleratorKey();
             else
                 ThrowElementNotAvailableException();
@@ -622,7 +622,7 @@ namespace System.Windows.Automation.Peers
         protected override string GetAccessKeyCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.GetAccessKey();
             else
                 ThrowElementNotAvailableException();
@@ -634,7 +634,7 @@ namespace System.Windows.Automation.Peers
         protected override Point GetClickablePointCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.GetClickablePoint();
             else
                 ThrowElementNotAvailableException();
@@ -646,7 +646,7 @@ namespace System.Windows.Automation.Peers
         protected override void SetFocusCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 wrapperPeer.SetFocus();
             else
                 ThrowElementNotAvailableException();
@@ -663,11 +663,11 @@ namespace System.Windows.Automation.Peers
             get
             {
                 ItemWeakReference iwr = _item as ItemWeakReference;
-                return (iwr != null) ? iwr.Target : _item;
+                return (iwr is not null) ? iwr.Target : _item;
             }
             private set
             {
-                if (value != null && !value.GetType().IsValueType &&
+                if (value is not null && !value.GetType().IsValueType &&
                     !FrameworkAppContextSwitches.ItemAutomationPeerKeepsItsItemAlive)
                 {
                     _item = new ItemWeakReference(value);
@@ -684,7 +684,7 @@ namespace System.Windows.Automation.Peers
             get
             {
                 ItemWeakReference iwr = _item as ItemWeakReference;
-                if (iwr != null)
+                if (iwr is not null)
                 {
                     object item = iwr.Target;
                     return (item is null) ? DependencyProperty.UnsetValue : item;
@@ -706,7 +706,7 @@ namespace System.Windows.Automation.Peers
         {
             System.Diagnostics.Debug.Assert(Object.Equals(item, Item), "ItemPeer reuse for an unequal item is not supported");
             ItemWeakReference iwr = _item as ItemWeakReference;
-            if (iwr != null)
+            if (iwr is not null)
             {
                 if (!Object.ReferenceEquals(item, iwr.Target))
                 {
@@ -741,10 +741,10 @@ namespace System.Windows.Automation.Peers
         virtual internal void RealizeCore()
         {
             ItemsControlAutomationPeer itemsControlAutomationPeer = ItemsControlAutomationPeer;
-            if (itemsControlAutomationPeer != null)
+            if (itemsControlAutomationPeer is not null)
             {
                 ItemsControl parent = itemsControlAutomationPeer.Owner as ItemsControl;
-                if (parent != null)
+                if (parent is not null)
                 {
                     if (parent.ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
                     {

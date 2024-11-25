@@ -280,7 +280,7 @@ namespace MS.Internal.AutomationProxies
             base.AdviseEventAdded(eventId, aidProps);
 
             // Need to also advise the edit portions of the spinner so that it can raise events.
-            if (_elEdit != null)
+            if (_elEdit is not null)
             {
                 _elEdit.AdviseEventAdded(eventId, aidProps);
             }
@@ -291,7 +291,7 @@ namespace MS.Internal.AutomationProxies
             base.AdviseEventRemoved(eventId, aidProps);
 
             // Need to also remove the advise from the edit portions of the spinner.
-            if (_elEdit != null)
+            if (_elEdit is not null)
             {
                 _elEdit.AdviseEventRemoved(eventId, aidProps);
             }

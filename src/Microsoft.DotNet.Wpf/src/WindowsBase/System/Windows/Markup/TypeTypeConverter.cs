@@ -22,10 +22,10 @@ namespace System.Windows.Markup
 
         public override object ConvertFrom(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value)
         {
-            if (context != null && value is string typeName)
+            if (context is not null && value is string typeName)
             {
                 IXamlTypeResolver xamlTypeResolver = (IXamlTypeResolver)context.GetService(typeof(IXamlTypeResolver));
-                if (xamlTypeResolver != null)
+                if (xamlTypeResolver is not null)
                 {
                     return xamlTypeResolver.Resolve(typeName);
                 }

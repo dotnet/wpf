@@ -22,7 +22,7 @@ namespace MS.Internal.Utility
     {
         public WeakReferenceKey(T item)
         {
-            Invariant.Assert(item != null);
+            Invariant.Assert(item is not null);
 
             _item = new WeakReference(item);
             _hashCode = item.GetHashCode();
@@ -39,7 +39,7 @@ namespace MS.Internal.Utility
                 return true;
 
             WeakReferenceKey<T> key = o as WeakReferenceKey<T>;
-            if (key != null)
+            if (key is not null)
             {
                 T item = this.Item;
                 

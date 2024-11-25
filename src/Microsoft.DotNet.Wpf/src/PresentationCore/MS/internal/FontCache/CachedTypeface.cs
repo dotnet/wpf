@@ -42,7 +42,7 @@ namespace MS.Internal.FontCache
             _canonicalWeight  = canonicalWeight;
             _canonicalStretch = canonicalStretch;
 
-            Invariant.Assert(firstFontFamily != null && typefaceMetrics != null);
+            Invariant.Assert(firstFontFamily is not null && typefaceMetrics is not null);
             
             _firstFontFamily  = firstFontFamily;
             _typefaceMetrics  = typefaceMetrics;

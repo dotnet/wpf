@@ -62,7 +62,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 // If this resource exposes a special empty state we need to wrap
                 // the getHashCodyBody in a special clause to return a known
                 // constant.
-                if (resource.EmptyField != null)
+                if (resource.EmptyField is not null)
                 {
                     string emptyHashCode;
                     string emptyFlag;
@@ -157,7 +157,7 @@ namespace MS.Internal.MilCodeGen.Generators
                             }
                         [[/inline]];
                 }
-                else if (resource.EmptyField != null)
+                else if (resource.EmptyField is not null)
                 {
                     equalsBody =
                         [[inline]]
@@ -312,7 +312,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
                 if (!resource.IsAbstract)
                 {
-                    if (resource.Extends != null)
+                    if (resource.Extends is not null)
                     {
                         modifiers = " override";
                     }
@@ -386,7 +386,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     // If this resource exposes a special empty state we need to return
                     // the special empty string (since the empty state is sometimes
                     // signified by configuring the fields to an otherwise invalid state.)
-                    if (resource.EmptyField != null)
+                    if (resource.EmptyField is not null)
                     {
                         cs.WriteBlock(
                             [[inline]]
@@ -493,7 +493,7 @@ namespace MS.Internal.MilCodeGen.Generators
             string parseBody = String.Empty;
 
             // If the type has a specific ParseMethod, we'll use it.
-            if ((type.ParseMethod != null) && (type.ParseMethod.Length > 0))
+            if ((type.ParseMethod is not null) && (type.ParseMethod.Length > 0))
             {
                 parseBody =
                     [[inline]]
@@ -503,7 +503,7 @@ namespace MS.Internal.MilCodeGen.Generators
             else
             {
                 // We don't know how to handle non-McgResource types which don't specify a ParseMethod.
-                Debug.Assert(resource != null);
+                Debug.Assert(resource is not null);
 
                 parseBody =
                     [[inline]]
@@ -518,7 +518,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
                 // If this resource exposes a special empty state we need to wrap
                 // the parseBody in a special clause to handle this string.
-                if (resource.EmptyField != null)
+                if (resource.EmptyField is not null)
                 {
                     parseBody =
                         [[inline]]
@@ -728,7 +728,7 @@ namespace MS.Internal.MilCodeGen.Generators
                             [[inline]]
 
                                 // When invoked by the serialization engine we can convert to string only for some instances
-                                if (context != null && context.Instance != null)
+                                if (context is not null && context.Instance is not null)
                                 {
                                     if (!(context.Instance is [[resource.Name]]))
                                     {
@@ -749,7 +749,7 @@ namespace MS.Internal.MilCodeGen.Generators
                             [[inline]]
 
                                 // When invoked by the serialization engine we can convert to string only for some instances
-                                if (context != null && context.Instance != null)
+                                if (context is not null && context.Instance is not null)
                                 {
                                     #pragma warning suppress 6506 // instance is obviously not null
                                     if (!instance.CanSerializeToString())
@@ -832,7 +832,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
                                         String source = value as string;
 
-                                        if (source != null)
+                                        if (source is not null)
                                         {
                                             return [[resource.Name]].Parse(source[[contextParam]]);
                                         }
@@ -856,7 +856,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                     /// <param name="destinationType"> The type to which this will convert the [[resource.Name]] instance. </param>
                                     public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
                                     {
-                                        if (destinationType != null && value is [[resource.Name]])
+                                        if (destinationType is not null && value is [[resource.Name]])
                                         {
                                             [[resource.Name]] instance = ([[resource.Name]])value;
 
@@ -1002,7 +1002,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                     /// </summary>
                                     public override object ConvertFromString(string value, IValueSerializerContext context)
                                     {
-                                        if (value != null)
+                                        if (value is not null)
                                         {
                                             return [[resource.Name]].Parse(value[[contextParam]] );
                                         }

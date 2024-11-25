@@ -69,7 +69,7 @@ namespace System.Windows.Xps.Serialization
             _bodyWriter = bodyWriter;
             _manager    = manager;
 
-            if (_manager != null)
+            if (_manager is not null)
             {
                 _context = new XpsTokenContext(_manager, null, null);
             }
@@ -189,7 +189,7 @@ namespace System.Windows.Xps.Serialization
             {
                 DoubleCollection dc = obj as DoubleCollection;
 
-                if (dc != null)
+                if (dc is not null)
                 {
                     foreach (double d in dc)
                     {
@@ -206,7 +206,7 @@ namespace System.Windows.Xps.Serialization
 
                 PointCollection pc = obj as PointCollection;
 
-                if (pc != null)
+                if (pc is not null)
                 {
                     foreach (Point p in pc)
                     {
@@ -330,7 +330,7 @@ namespace System.Windows.Xps.Serialization
 
             TypeConverter converter = _manager.GetTypeConverter(typeof(Color));
 
-            if (converter != null)
+            if (converter is not null)
             {
                 colorString = converter.ConvertTo(_context, CultureInfo.InvariantCulture, color, typeof(string)) as string;
             }
@@ -343,7 +343,7 @@ namespace System.Windows.Xps.Serialization
         {
             SolidColorBrush solidBrush = brush as SolidColorBrush;
 
-            if (solidBrush != null) // SolidColorBrush
+            if (solidBrush is not null) // SolidColorBrush
             {
                 // Scale will normalize colors
                 Color color = Utility.Scale(solidBrush.Color, solidBrush.Opacity);
@@ -610,13 +610,13 @@ namespace System.Windows.Xps.Serialization
 
         protected void WriteBitmap(string attribute, ImageSource imageSource)
         {
-            if ((imageSource != null) && (imageSource.Height > 0) && (imageSource.Width > 0))
+            if ((imageSource is not null) && (imageSource.Height > 0) && (imageSource.Width > 0))
             {
                 string bitmapUri = null;
 
                 TypeConverter converter = _manager.GetTypeConverter(typeof(BitmapSource));
 
-                if (converter != null)
+                if (converter is not null)
                 {
                     ColorConvertedBitmap colorConvertedBitmap = imageSource as ColorConvertedBitmap;
 
@@ -648,7 +648,7 @@ namespace System.Windows.Xps.Serialization
 
                     Uri uri = obj as Uri;
 
-                    if (uri != null)
+                    if (uri is not null)
                     {
                         bitmapUri = GetUriAsString(uri);
                     }
@@ -657,7 +657,7 @@ namespace System.Windows.Xps.Serialization
                         bitmapUri = obj as String;
                     }
 
-                    if (colorConvertedBitmap != null)
+                    if (colorConvertedBitmap is not null)
                     {
                         string sourceProfile = ColorTypeConverter.SerializeColorContext(_context,colorConvertedBitmap.SourceColorContext);
 
@@ -694,7 +694,7 @@ namespace System.Windows.Xps.Serialization
             {
                 SolidColorBrush sb = brush as SolidColorBrush;
 
-                if (sb != null) // SolidColorBrush
+                if (sb is not null) // SolidColorBrush
                 {
                     WriteBrushHeader("SolidColorBrush", sb);
                     WriteAttr("Color", sb.Color);
@@ -704,7 +704,7 @@ namespace System.Windows.Xps.Serialization
 
                 LinearGradientBrush lb = brush as LinearGradientBrush;
 
-                if (lb != null)
+                if (lb is not null)
                 {
                     WriteBrushHeader("LinearGradientBrush", lb);
 
@@ -733,7 +733,7 @@ namespace System.Windows.Xps.Serialization
 
                 RadialGradientBrush rb = brush as RadialGradientBrush;
 
-                if (rb != null)
+                if (rb is not null)
                 {
                     WriteBrushHeader("RadialGradientBrush", rb);
 
@@ -765,7 +765,7 @@ namespace System.Windows.Xps.Serialization
 
                 ImageBrush ib = brush as ImageBrush;
 
-                if (ib != null)
+                if (ib is not null)
                 {
                     WriteTileBrush("ImageBrush", ib, bounds);
 
@@ -778,7 +778,7 @@ namespace System.Windows.Xps.Serialization
 
                 DrawingBrush db = brush as DrawingBrush;
 
-                if (db != null)
+                if (db is not null)
                 {
                     WriteTileBrush("VisualBrush", db, bounds);
 
@@ -799,7 +799,7 @@ namespace System.Windows.Xps.Serialization
 
                 VisualBrush vb = brush as VisualBrush;
 
-                if (vb != null)
+                if (vb is not null)
                 {
                     SaveResetState();
 
@@ -890,11 +890,11 @@ namespace System.Windows.Xps.Serialization
         // Transparent brushes are used with hyperlink Paths.
         protected void WriteBrush(string attribute, Brush brush, Rect bounds)
         {
-            if (brush != null)
+            if (brush is not null)
             {
                 string str = SimpleBrushToString(brush);
 
-                if (str != null)
+                if (str is not null)
                 {
                     _writer.WriteAttributeString(attribute, str);
                 }
@@ -902,7 +902,7 @@ namespace System.Windows.Xps.Serialization
                 {
                     string ob = FindBrush(brush, bounds);
 
-                    if ((_manager != null) || (_forceGeneral >= 1) ) // to container | within resource dictionary
+                    if ((_manager is not null) || (_forceGeneral >= 1) ) // to container | within resource dictionary
                     {
                         _writer.WriteAttributeString(attribute, "{StaticResource " + ob + "}");
                     }                     // to loose files
@@ -918,7 +918,7 @@ namespace System.Windows.Xps.Serialization
         // Transparent pen still affects rendering, since it'll shrink the fill.
         protected void WritePen(Pen pen, Rect bounds, bool isLineGeometry)
         {
-            if (pen != null && !PenProxy.IsNull(pen))
+            if (pen is not null && !PenProxy.IsNull(pen))
             {
                 WriteBrush("Stroke", pen.Brush, bounds);
                 WriteAttr("StrokeThickness", Math.Abs(pen.Thickness));
@@ -939,7 +939,7 @@ namespace System.Windows.Xps.Serialization
                     }
                 }
 
-                if ((pen.DashStyle != null) && (pen.DashStyle.Dashes.Count != 0))
+                if ((pen.DashStyle is not null) && (pen.DashStyle.Dashes.Count != 0))
                 {
                     WriteAttr("StrokeDashCap", pen.DashCap);
 
@@ -1041,7 +1041,7 @@ namespace System.Windows.Xps.Serialization
 
                     PolyLineSegment pl = ps as PolyLineSegment;
 
-                    if (pl != null)
+                    if (pl is not null)
                     {
                         _writer.WriteStartElement("PolyLineSegment");
                         WriteAttr("Points", pl.Points);
@@ -1152,7 +1152,7 @@ namespace System.Windows.Xps.Serialization
         // Check if brush and/or pen actually paint anything visible
         static private bool Visible(Brush brush, Pen pen)
         {
-            if (brush != null)
+            if (brush is not null)
             {
                 if (!BrushProxy.IsEmpty(brush))
                 {
@@ -1160,9 +1160,9 @@ namespace System.Windows.Xps.Serialization
                 }
             }
 
-            if (pen != null)
+            if (pen is not null)
             {
-                if ((pen.Brush != null) && !BrushProxy.IsEmpty(pen.Brush))
+                if ((pen.Brush is not null) && !BrushProxy.IsEmpty(pen.Brush))
                 {
                     return true;
                 }
@@ -1199,7 +1199,7 @@ namespace System.Windows.Xps.Serialization
         // Return null if it does not fit short-hand syntax
         private string PathGeometryToString(PathGeometry path, Matrix map, bool forFill, bool forStroke)
         {
-            if ((path.Transform != null) && !Utility.IsIdentity(path.Transform))
+            if ((path.Transform is not null) && !Utility.IsIdentity(path.Transform))
             {
                 map = path.Transform.Value * map;
             }
@@ -1392,7 +1392,7 @@ namespace System.Windows.Xps.Serialization
         {
             Matrix m = Matrix.Identity;
 
-            if (trans != null)
+            if (trans is not null)
             {
                 m = trans.Value;
             }
@@ -1431,7 +1431,7 @@ namespace System.Windows.Xps.Serialization
                 // EvenOdd is the default, don't write anything
             }
 
-            if (str != null)
+            if (str is not null)
             {
                 _writer.WriteAttributeString("FillRule", str);
             }
@@ -1451,14 +1451,14 @@ namespace System.Windows.Xps.Serialization
                 return false;
             }
 
-            if (attribute != null)
+            if (attribute is not null)
             {
-                if (!asElement && (pg != null))
+                if (!asElement && (pg is not null))
                 {
                     p = PathGeometryToString(pg, map, forFill, forStroke);
 
                     // If it can be converted to a string, output as attribute
-                    if (p != null)
+                    if (p is not null)
                     {
                         _writer.WriteAttributeString(attribute, p);
 
@@ -1478,7 +1478,7 @@ namespace System.Windows.Xps.Serialization
 
             p = PathGeometryToString(pg, trans.Value, forFill, forStroke);
 
-            if (p != null)
+            if (p is not null)
             {
                 // Remove "Fn " prefix
                 _writer.WriteAttributeString("Figures", p.Substring(3));
@@ -1496,7 +1496,7 @@ namespace System.Windows.Xps.Serialization
 
             _writer.WriteEndElement();
 
-            if (attribute != null)
+            if (attribute is not null)
             {
                 _writer.WriteEndElement();
             }
@@ -1521,7 +1521,7 @@ namespace System.Windows.Xps.Serialization
 
                 PathSegmentCollection segments = p.Segments;
 
-                if (segments != null)
+                if (segments is not null)
                 {
                     foreach (PathSegment ps in segments)
                     {
@@ -1671,7 +1671,7 @@ namespace System.Windows.Xps.Serialization
         /// </remarks>
         private bool PreserveTransparent()
         {
-            return _nameAttr != null || _navigateUri != null;
+            return _nameAttr is not null || _navigateUri is not null;
         }
 
         /// <summary>
@@ -1680,7 +1680,7 @@ namespace System.Windows.Xps.Serialization
         /// <param name="bWriteAutomation">Also write automation properties. Glyphs does not have automation properties.</param>
         private void WriteCommonAttrs(bool bWriteAutomation)
         {
-            if (_nameAttr != null)
+            if (_nameAttr is not null)
             {
                 Debug.Assert(_nameAttr.Length > 0, "Empty _nameAttr");
 
@@ -1688,7 +1688,7 @@ namespace System.Windows.Xps.Serialization
                 _nameAttr = null;
             }
 
-            if (_node != null)
+            if (_node is not null)
             {
                 if( bWriteAutomation )
                 {
@@ -1710,7 +1710,7 @@ namespace System.Windows.Xps.Serialization
                 _node = null;
             }
 
-            if (_navigateUri != null)
+            if (_navigateUri is not null)
             {
                 WriteAttr("FixedPage.NavigateUri", _navigateUri);
                 _navigateUri = null;
@@ -1731,14 +1731,14 @@ namespace System.Windows.Xps.Serialization
 
             TileBrush tb = b as TileBrush;
 
-            if (tb != null)
+            if (tb is not null)
             {
                 return (tb is VisualBrush) || (tb.ViewportUnits == BrushMappingMode.RelativeToBoundingBox);
             }
 
             GradientBrush gb = b as GradientBrush;
 
-            if (gb != null)
+            if (gb is not null)
             {
                 return gb.MappingMode == BrushMappingMode.RelativeToBoundingBox;
             }
@@ -1757,7 +1757,7 @@ namespace System.Windows.Xps.Serialization
             mat.Scale(bounds.Width, bounds.Height);
             mat.Translate(bounds.Left, bounds.Top);
 
-            if (_transform != null)
+            if (_transform is not null)
             {
                 mat.Append(_transform.Value);
             }
@@ -1785,11 +1785,11 @@ namespace System.Windows.Xps.Serialization
         {
             PathGeometry pg = geo as PathGeometry;
 
-            if (pg != null)
+            if (pg is not null)
             {
                 PathFigureCollection figures = pg.Figures;
 
-                if (figures != null)
+                if (figures is not null)
                 {
                     foreach (PathFigure p in figures)
                     {
@@ -1800,7 +1800,7 @@ namespace System.Windows.Xps.Serialization
 
                         PathSegmentCollection segments = p.Segments;
 
-                        if (segments != null)
+                        if (segments is not null)
                         {
                             foreach (PathSegment ps in segments)
                             {
@@ -1818,7 +1818,7 @@ namespace System.Windows.Xps.Serialization
 
             CombinedGeometry cg = geo as CombinedGeometry;
 
-            if (cg != null)
+            if (cg is not null)
             {
                 return IsGeometryPolymophic(cg.Geometry1)  ||
                        IsGeometryPolymophic(cg.Geometry2);
@@ -1826,9 +1826,9 @@ namespace System.Windows.Xps.Serialization
 
             GeometryGroup gg = geo as GeometryGroup;
 
-            if (gg != null)
+            if (gg is not null)
             {
-                if (gg.Children != null)
+                if (gg.Children is not null)
                 {
                     foreach (Geometry g in gg.Children)
                     {
@@ -1881,7 +1881,7 @@ namespace System.Windows.Xps.Serialization
 
 #if SPLITTING_PATH
 
-            if ((brush != null) && (pen != null) && IsGeometryPolymophic(geometry))
+            if ((brush is not null) && (pen is not null) && IsGeometryPolymophic(geometry))
             {
                 ((IMetroDrawingContext) this).DrawGeometry(brush, null, geometry);
 
@@ -1941,7 +1941,7 @@ namespace System.Windows.Xps.Serialization
         /// </summary>
         void IMetroDrawingContext.DrawImage(ImageSource image, Rect rectangle)
         {
-            if (image != null)
+            if (image is not null)
             {
                 Brush brush = new ImageBrush((BitmapSource)image);
 
@@ -2004,7 +2004,7 @@ namespace System.Windows.Xps.Serialization
                 out bitmapToDrawingTransform
                 );
 
-            if (bitmap != null)
+            if (bitmap is not null)
             {
                 //
                 // Draw the rasterized glyphs. bitmapToDrawingTransform should strictly
@@ -2070,7 +2070,7 @@ namespace System.Windows.Xps.Serialization
             {
                 trans = ExtractTranslation(_transform, out dx, out dy);
 
-                if (_clip != null)
+                if (_clip is not null)
                 {
                     clipMat = new Matrix(1, 0, 0, 1, dx, dy);
                 }
@@ -2084,11 +2084,11 @@ namespace System.Windows.Xps.Serialization
 
             Uri uri = Utility.GetFontUri(glyphRun.GlyphTypeface);
 
-            if (_manager != null)
+            if (_manager is not null)
             {
                 TypeConverter converter = _manager.GetTypeConverter(typeof(GlyphRun));
 
-                if (converter != null)
+                if (converter is not null)
                 {
                     uri = converter.ConvertTo(_context, null, glyphRun, typeof(Uri)) as Uri;
                 }
@@ -2175,7 +2175,7 @@ namespace System.Windows.Xps.Serialization
 
             WriteBrush("Fill", foreground, bounds);
 
-            if (glyphRun.Language != null &&
+            if (glyphRun.Language is not null &&
                 glyphRun.Language != _manager.Language)
             {
                 // Only write language attribute if it doesn't match the fixedpage language.
@@ -2250,11 +2250,11 @@ namespace System.Windows.Xps.Serialization
         bool WriteTCO(string element, Transform transform, Geometry clip, Matrix clipMat, double opacity, Brush opacityMask, Rect bounds)
         {
             // Extract opacity from SolidColorBrush OpacityMask
-            if (opacityMask != null)
+            if (opacityMask is not null)
             {
                 SolidColorBrush sb = opacityMask as SolidColorBrush;
 
-                if (sb != null)
+                if (sb is not null)
                 {
                     opacity *= Utility.NormalizeOpacity(sb.Color.ScA) * Utility.NormalizeOpacity(opacityMask.Opacity);
                     opacityMask = null;
@@ -2266,7 +2266,7 @@ namespace System.Windows.Xps.Serialization
                 WriteAttr("Opacity", Math.Min(Math.Max( opacity, 0.0),1.0));
             }
 
-            if (opacityMask != null && !BrushProxy.IsEmpty(opacityMask))
+            if (opacityMask is not null && !BrushProxy.IsEmpty(opacityMask))
             {
                 WriteBrush("OpacityMask", opacityMask, bounds);
             }
@@ -2275,7 +2275,7 @@ namespace System.Windows.Xps.Serialization
 
             bool asElement = false;
 
-            if (clip != null)
+            if (clip is not null)
             {
                 asElement = WriteGeometry(element, "Clip", clip, clipMat, false, true, false);
             }
@@ -2359,7 +2359,7 @@ namespace System.Windows.Xps.Serialization
 
             bool noTrans = Utility.IsIdentity(transform);
 
-            if (node != null)
+            if (node is not null)
             {
                 _node = node;
             }
@@ -2384,13 +2384,13 @@ namespace System.Windows.Xps.Serialization
                 _opacity     = opacity;
                 _opacityMask = opacityMask;
 
-                if (nameAttr != null)
+                if (nameAttr is not null)
                 {
                     Debug.Assert(_nameAttr is null, "Empty");
                     _nameAttr = nameAttr;
                 }
 
-                if (navigateUri != null)
+                if (navigateUri is not null)
                 {
                     _navigateUri = navigateUri;
                 }

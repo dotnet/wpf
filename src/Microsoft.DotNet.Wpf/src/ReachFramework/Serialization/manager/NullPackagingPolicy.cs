@@ -148,7 +148,7 @@ namespace System.Windows.Xps.Serialization
                 // We need to create the corresponding part in the Xps package
                 // and then acquire the writer
                 //
-                if(_currentFixedDocumentSequenceWriter != null)
+                if(_currentFixedDocumentSequenceWriter is not null)
                 {
                     _currentFixedDocumentWriter = new StringWriter(CultureInfo.InvariantCulture);
                     _currentFDWriter            = new XmlTextWriter(_currentFixedDocumentWriter);
@@ -217,7 +217,7 @@ namespace System.Windows.Xps.Serialization
                 // We need to create the corresponding part in the Xps package
                 // and then acquire the writer
                 //
-                if(_currentFixedDocumentWriter != null)
+                if(_currentFixedDocumentWriter is not null)
                 {
                     _currentFixedPageWriter      = new StringWriter(CultureInfo.InvariantCulture);
                     _currentFPWriter             = new XmlTextWriter(_currentFixedPageWriter);
@@ -308,7 +308,7 @@ namespace System.Windows.Xps.Serialization
                     //
                     Stream fontStream = null;
 
-                    if(_currentFixedPageWriter != null)
+                    if(_currentFixedPageWriter is not null)
                     {
                         //
                         // Create a new Font Stream
@@ -386,7 +386,7 @@ namespace System.Windows.Xps.Serialization
                     // We need to create the corresponding part in the Xps package
                     // and then acquire the Stream
                     //
-                    if(_currentFixedPageWriter != null)
+                    if(_currentFixedPageWriter is not null)
                     {
                         //XpsFont reachFont = _currentFixedPageWriter.AddFont(resourceId);
 
@@ -491,7 +491,7 @@ namespace System.Windows.Xps.Serialization
             {
                 ResourceStreamCacheItem resourceStreamCacheItem = (ResourceStreamCacheItem)_fontsCache[resourceId];
 
-                if(resourceStreamCacheItem != null)
+                if(resourceStreamCacheItem is not null)
                 {
                     if(resourceStreamCacheItem.Release() == 0)
                     {
@@ -535,7 +535,7 @@ namespace System.Windows.Xps.Serialization
                 // We need to create the corresponding part in the Xps package
                 // and then acquire the Stream
                 //
-                if(_currentFixedPageWriter != null)
+                if(_currentFixedPageWriter is not null)
                 {
                      _imageResourceStream = new XpsResourceStream(new MemoryStream(),
                                                                new Uri("package/image",UriKind.Relative));
@@ -599,7 +599,7 @@ namespace System.Windows.Xps.Serialization
                 // We need to create the corresponding part in the Xps package
                 // and then acquire the Stream
                 //
-                if(_currentFixedPageWriter != null)
+                if(_currentFixedPageWriter is not null)
                 {
                      _colorContextResourceStream = new XpsResourceStream(new MemoryStream(),
                                                                new Uri("package/colorcontext",UriKind.Relative));
@@ -663,7 +663,7 @@ namespace System.Windows.Xps.Serialization
                 // We need to create the corresponding part in the Xps package
                 // and then acquire the Stream
                 //
-                if(_currentFixedPageWriter != null)
+                if(_currentFixedPageWriter is not null)
                 {
                      _resourceDictionaryResourceStream = new XpsResourceStream(new MemoryStream(),
                                                                new Uri("package/colorcontext",UriKind.Relative));
@@ -765,15 +765,15 @@ namespace System.Windows.Xps.Serialization
             // We need to figure out at which level of the package
             // is this printTicket targeted
             //
-            if(_currentFixedPageWriter != null)
+            if(_currentFixedPageWriter is not null)
             {
                 _pagePrintTicket = printTicket.Clone();
             }
-            else if(_currentFixedDocumentWriter != null)
+            else if(_currentFixedDocumentWriter is not null)
             {
                 _documentPrintTicket = printTicket.Clone();
             }
-            else if(_currentFixedDocumentSequenceWriter != null)
+            else if(_currentFixedDocumentSequenceWriter is not null)
             {
                 _documentSequencePrintTicket = printTicket.Clone();
             }

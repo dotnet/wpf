@@ -82,7 +82,7 @@ namespace System.Windows.Input.StylusPlugIns
                     group.Children.Add(new MatrixTransform(_report.InputSource.CompositionTarget.TransformFromDevice));
                 }
                 group.Children.Add(_tabletToElementTransform);
-                if(transform != null)
+                if(transform is not null)
                 {
                     group.Children.Add(transform);
                 }
@@ -142,7 +142,7 @@ namespace System.Windows.Input.StylusPlugIns
         {
             get 
             {
-                return _stylusPoints != null;
+                return _stylusPoints is not null;
             }
         }
 

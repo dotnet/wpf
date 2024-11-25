@@ -41,16 +41,16 @@ namespace System.Windows.Markup
                 // If any value data is exactly "*", this serves as a global opt-out and allows everything through the system.
                 using (RegistryKey hklm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
                 {
-                    if (hklm != null)
+                    if (hklm is not null)
                     {
                         using (RegistryKey xpsDangerKey = hklm.OpenSubKey(AllowedTypesForRestrictiveXamlContexts, false))
                         {
-                            if (xpsDangerKey != null)
+                            if (xpsDangerKey is not null)
                             {
                                 foreach (string typeName in xpsDangerKey.GetValueNames())
                                 {
                                     object value = xpsDangerKey.GetValue(typeName);
-                                    if (value != null)
+                                    if (value is not null)
                                     {
                                         allowedTypesFromRegistry.Add(value.ToString());
                                     }
@@ -79,7 +79,7 @@ namespace System.Windows.Markup
         /// </summary>
         internal RestrictiveXamlXmlReader(XmlReader xmlReader, XamlSchemaContext schemaContext, XamlXmlReaderSettings settings, List<Type> safeTypes) : base(xmlReader, schemaContext, settings)
         {
-            if (safeTypes != null)
+            if (safeTypes is not null)
             {
                 foreach (Type safeType in safeTypes)
                 {
@@ -194,7 +194,7 @@ namespace System.Windows.Markup
             // - primitives (int, etc.); and
             // - any DependencyObject-derived type which exists in the System.Windows.* namespace.
 
-            bool isValidNamespace = type.Namespace != null && (type.Namespace.Equals("System.Windows", StringComparison.Ordinal) || type.Namespace.StartsWith("System.Windows.", StringComparison.Ordinal));
+            bool isValidNamespace = type.Namespace is not null && (type.Namespace.Equals("System.Windows", StringComparison.Ordinal) || type.Namespace.StartsWith("System.Windows.", StringComparison.Ordinal));
             bool isValidSubClass = type.IsSubclassOf(DependencyObjectType);
             bool isValidPrimitive = type.IsPrimitive;
 

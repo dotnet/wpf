@@ -42,7 +42,7 @@ namespace System.Windows.Media.Animation
         /// </param>
         internal ClockController(Clock owner)
         {
-            Debug.Assert(owner != null, "ClockController must have a non-null owner.");
+            Debug.Assert(owner is not null, "ClockController must have a non-null owner.");
             _owner = owner;
         }
 

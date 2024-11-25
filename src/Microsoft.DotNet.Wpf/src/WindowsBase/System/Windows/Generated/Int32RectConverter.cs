@@ -90,7 +90,7 @@ namespace System.Windows
 
             String source = value as string;
 
-            if (source != null)
+            if (source is not null)
             {
                 return Int32Rect.Parse(source);
             }
@@ -114,7 +114,7 @@ namespace System.Windows
         /// <param name="destinationType"> The type to which this will convert the Int32Rect instance. </param>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType != null && value is Int32Rect)
+            if (destinationType is not null && value is Int32Rect)
             {
                 Int32Rect instance = (Int32Rect)value;
 

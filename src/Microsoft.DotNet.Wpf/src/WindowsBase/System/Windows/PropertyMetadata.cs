@@ -134,7 +134,7 @@ namespace System.Windows
         /// <returns></returns>
         internal object GetDefaultValue(DependencyObject owner, DependencyProperty property)
         {
-            Debug.Assert(owner != null && property != null,
+            Debug.Assert(owner is not null && property is not null,
                 "Caller must provide owner and property or this method will throw in the event of a cache miss.");
 
             // If we are not using a DefaultValueFactory (common case)
@@ -260,7 +260,7 @@ namespace System.Windows
         {
             FrugalMapBase map = _defaultValueFactoryCache.GetValue(owner);
 
-            if (map != null)
+            if (map is not null)
             {
                 // Iterate through all the items in the map (each representing a DP)
                 // and promote them to locally-set.
@@ -279,7 +279,7 @@ namespace System.Windows
         {
             FrugalMapBase map = _defaultValueFactoryCache.GetValue(owner);
 
-            if (map != null)
+            if (map is not null)
             {
                 // Iterate through all the items in the map (each representing a DP)
                 // and remove the promotion handlers
@@ -303,7 +303,7 @@ namespace System.Windows
         {
             Freezable cachedDefault = value as Freezable;
 
-            if (cachedDefault != null)
+            if (cachedDefault is not null)
             {
                 // Freeze fires the Changed event so we need to clear off the handlers before
                 // calling it.  Otherwise the promoter would run and attempt to set the
@@ -326,7 +326,7 @@ namespace System.Windows
         {
             Freezable cachedDefault = value as Freezable;
 
-            if (cachedDefault != null)
+            if (cachedDefault is not null)
             {
                 // The only way to promote a cached default is to fire its Changed event.
                 cachedDefault.FireChanged();
@@ -410,7 +410,7 @@ namespace System.Windows
         {
             get
             {
-                if(_freezeValueCallback != null)
+                if(_freezeValueCallback is not null)
                 {
                     return _freezeValueCallback;
                 }
@@ -467,11 +467,11 @@ namespace System.Windows
                         metadata,
                         RequestFlags.FullyResolved).Value;
 
-                if (value != null)
+                if (value is not null)
                 {
                     Freezable valueAsFreezable = value as Freezable;
 
-                    if (valueAsFreezable != null)
+                    if (valueAsFreezable is not null)
                     {
                         if (!valueAsFreezable.Freeze(isChecking))
                         {
@@ -492,7 +492,7 @@ namespace System.Windows
                     {
                         DispatcherObject valueAsDispatcherObject = value as DispatcherObject;
 
-                        if (valueAsDispatcherObject != null)
+                        if (valueAsDispatcherObject is not null)
                         {
                             if (valueAsDispatcherObject.Dispatcher is null)
                             {
@@ -580,7 +580,7 @@ namespace System.Windows
                 _defaultValue = baseMetadata.DefaultValue;
             }
 
-            if (baseMetadata.PropertyChangedCallback != null)
+            if (baseMetadata.PropertyChangedCallback is not null)
             {
                 // All delegates are MulticastDelegate.  Non-multicast "Delegate"
                 //  was designed and is documented in MSDN.  But for all practical

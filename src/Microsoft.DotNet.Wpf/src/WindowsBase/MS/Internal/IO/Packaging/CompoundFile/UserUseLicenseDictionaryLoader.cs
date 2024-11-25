@@ -50,7 +50,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             // .GetEmbeddedUseLicenses. That method passes "this" as the parameter.
             // So it can't possibly be null.
             //
-            Invariant.Assert(rmet != null);
+            Invariant.Assert(rmet is not null);
 
             Load(rmet);
         }

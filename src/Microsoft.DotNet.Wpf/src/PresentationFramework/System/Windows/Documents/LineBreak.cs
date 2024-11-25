@@ -32,13 +32,13 @@ namespace System.Windows.Documents
         /// </param>
         public LineBreak(TextPointer insertionPosition)
         {
-            if (insertionPosition != null)
+            if (insertionPosition is not null)
             {
                 insertionPosition.TextContainer.BeginChange();
             }
             try
             {
-                if (insertionPosition != null)
+                if (insertionPosition is not null)
                 {
                     // This will throw InvalidOperationException if schema validity is violated.
                     insertionPosition.InsertInline(this);
@@ -46,7 +46,7 @@ namespace System.Windows.Documents
             }
             finally
             {
-                if (insertionPosition != null)
+                if (insertionPosition is not null)
                 {
                     insertionPosition.TextContainer.EndChange();
                 }

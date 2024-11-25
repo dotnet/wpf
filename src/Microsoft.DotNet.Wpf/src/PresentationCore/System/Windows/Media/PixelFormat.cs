@@ -66,7 +66,7 @@ namespace System.Windows.Media
     {
         internal PixelFormatChannelMask(byte[] mask)
         {
-            Debug.Assert(mask != null);
+            Debug.Assert(mask is not null);
             _mask = mask;
         }
 
@@ -78,7 +78,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return _mask != null ? new PartialList<byte>((byte[])_mask.Clone()) : null;
+                return _mask is not null ? new PartialList<byte>((byte[])_mask.Clone()) : null;
             }
         }
 
@@ -95,8 +95,8 @@ namespace System.Windows.Media
         /// </summary>
         public static bool Equals(PixelFormatChannelMask left, PixelFormatChannelMask right)
         {
-            int leftNumChannels  =  left._mask != null ?  left._mask.Length : 0;
-            int rightNumChannels = right._mask != null ? right._mask.Length : 0;
+            int leftNumChannels  =  left._mask is not null ?  left._mask.Length : 0;
+            int rightNumChannels = right._mask is not null ? right._mask.Length : 0;
 
             if (leftNumChannels != rightNumChannels)
             {
@@ -138,7 +138,7 @@ namespace System.Windows.Media
         {
             int hash = 0;
 
-            if (_mask != null)
+            if (_mask is not null)
             {
                 for (int i = 0, count = _mask.Length; i < count; ++i)
                 {

@@ -94,7 +94,7 @@ namespace System.Windows.Media
             {
                 Drawing drawing = Drawing;
 
-                if (drawing != null)
+                if (drawing is not null)
                 {
                     Size size = drawing.GetBounds().Size;
 

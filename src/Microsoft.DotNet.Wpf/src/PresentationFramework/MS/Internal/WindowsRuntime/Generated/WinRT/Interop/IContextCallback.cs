@@ -56,8 +56,8 @@ namespace ABI.WinRT.Interop
         }
         public static ObjectReference<Vftbl> FromAbi(IntPtr thisPtr) => ObjectReference<Vftbl>.FromAbi(thisPtr);
 
-        public static implicit operator IContextCallback(IObjectReference obj) => (obj != null) ? new IContextCallback(obj) : null;
-        public static implicit operator IContextCallback(ObjectReference<Vftbl> obj) => (obj != null) ? new IContextCallback(obj) : null;
+        public static implicit operator IContextCallback(IObjectReference obj) => (obj is not null) ? new IContextCallback(obj) : null;
+        public static implicit operator IContextCallback(ObjectReference<Vftbl> obj) => (obj is not null) ? new IContextCallback(obj) : null;
         protected readonly ObjectReference<Vftbl> _obj;
         public IntPtr ThisPtr => _obj.ThisPtr;
         public ObjectReference<I> AsInterface<I>() => _obj.As<I>();

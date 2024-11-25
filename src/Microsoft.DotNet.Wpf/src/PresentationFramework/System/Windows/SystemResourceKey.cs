@@ -1991,7 +1991,7 @@ namespace System.Windows
         {
             SystemResourceKey key = o as SystemResourceKey;
 
-            if (key != null)
+            if (key is not null)
             {
                 return (key._id == this._id);
             }

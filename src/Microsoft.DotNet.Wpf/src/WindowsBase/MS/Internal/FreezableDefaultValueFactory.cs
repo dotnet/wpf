@@ -16,7 +16,7 @@ namespace MS.Internal
     // <summary>
     // FreezableDefaultValueFactory is a DefaultValueFactory implementation which 
     // is inserted by the property system for any DP registered with a default 
-    // value of type Freezable. The user’s given default value is frozen and 
+    // value of type Freezable. The userï¿½s given default value is frozen and 
     // used as a template to create unfrozen copies on a per DP per DO basis. If 
     // the default value is modified it is automatically promoted from default to 
     // local.
@@ -28,7 +28,7 @@ namespace MS.Internal
         /// </summary>
         internal FreezableDefaultValueFactory(Freezable defaultValue)
         {
-            Debug.Assert(defaultValue != null,
+            Debug.Assert(defaultValue is not null,
                 "Null can not be made mutable.  Do not use FreezableDefaultValueFactory.");
             Debug.Assert(defaultValue.CanFreeze,
                 "The defaultValue prototype must be freezable.");
@@ -55,14 +55,14 @@ namespace MS.Internal
         /// </summary>
         internal override object CreateDefaultValue(DependencyObject owner, DependencyProperty property)
         {
-            Debug.Assert(owner != null && property != null,
+            Debug.Assert(owner is not null && property is not null,
                 "It is the caller responsibility to ensure that owner and property are non-null.");
             
             Freezable result = _defaultValuePrototype;
             Freezable ownerFreezable = owner as Freezable;
             
             // If the owner is frozen, just return the frozen prototype.
-            if (ownerFreezable != null && ownerFreezable.IsFrozen)
+            if (ownerFreezable is not null && ownerFreezable.IsFrozen)
             {
                 return result;
             }
@@ -93,7 +93,7 @@ namespace MS.Internal
         {
             internal FreezableDefaultPromoter(DependencyObject owner, DependencyProperty property)
             {
-                Debug.Assert(owner != null && property != null,
+                Debug.Assert(owner is not null && property is not null,
                     "Caller is responsible for ensuring that owner and property are non-null.");
                 Debug.Assert(!(owner is Freezable) || !((Freezable)owner).IsFrozen,
                     "We should not be observing mutables on a frozen owner.");
@@ -109,7 +109,7 @@ namespace MS.Internal
 
             internal void OnDefaultValueChanged(object sender, EventArgs e)
             {
-                Debug.Assert(_mutableDefaultValue != null,
+                Debug.Assert(_mutableDefaultValue is not null,
                     "Promoter's creator should have called SetFreezableDefaultValue.");
 
                 PropertyMetadata metadata = _property.GetMetadata(_owner.DependencyObjectType);

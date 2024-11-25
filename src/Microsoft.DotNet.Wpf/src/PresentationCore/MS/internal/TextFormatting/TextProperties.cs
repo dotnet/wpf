@@ -253,7 +253,7 @@ namespace MS.Internal.TextFormatting
                 // The non-null value is cached 
                 if (_properties is null)
                 {
-                    if (_modifierScope != null)
+                    if (_modifierScope is not null)
                     {
                         _properties = _modifierScope.ModifyProperties(_textRun.Properties);
                     }
@@ -388,7 +388,7 @@ namespace MS.Internal.TextFormatting
         {
             TextRunProperties properties = _textRun.Properties;
 
-            if (properties != null)
+            if (properties is not null)
             {
                 // estimate rough width of each character in a run being 75% of Em.
                 return (int)Math.Round(properties.FontRenderingEmSize * 0.75 * _textRunLength * realToIdeal);

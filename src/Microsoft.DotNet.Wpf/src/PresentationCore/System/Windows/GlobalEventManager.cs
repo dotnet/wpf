@@ -221,7 +221,7 @@ namespace System.Windows
                 
                 // Get the ItemList of RoutedEvents for the given DType
                 FrugalObjectList<RoutedEvent> ownerRoutedEventList = (FrugalObjectList<RoutedEvent>)_dTypedRoutedEventList[dType];
-                if (ownerRoutedEventList != null)
+                if (ownerRoutedEventList is not null)
                 {
                     return ownerRoutedEventList.ToArray();
                 }
@@ -230,7 +230,7 @@ namespace System.Windows
             {
                 // Get the ItemList of RoutedEvents for the given OwnerType
                 FrugalObjectList<RoutedEvent> ownerRoutedEventList = (FrugalObjectList<RoutedEvent>)_ownerTypedRoutedEventList[ownerType];
-                if (ownerRoutedEventList != null)
+                if (ownerRoutedEventList is not null)
                 {
                     return ownerRoutedEventList.ToArray();
                 }
@@ -253,11 +253,11 @@ namespace System.Windows
                 // Search DTypeMap
                 DependencyObjectType dType = DependencyObjectType.FromSystemTypeInternal(ownerType);
                 
-                while (dType != null)
+                while (dType is not null)
                 {
                     // Get the ItemList of RoutedEvents for the given DType
                     FrugalObjectList<RoutedEvent> ownerRoutedEventList = (FrugalObjectList<RoutedEvent>)_dTypedRoutedEventList[dType];                
-                    if (ownerRoutedEventList != null)
+                    if (ownerRoutedEventList is not null)
                     {
                         // Check for RoutedEvent with matching name in the ItemList
                         for (int i=0; i<ownerRoutedEventList.Count; i++)
@@ -278,11 +278,11 @@ namespace System.Windows
             else
             {
                 // Search Hashtable
-                while (ownerType != null)
+                while (ownerType is not null)
                 {
                     // Get the ItemList of RoutedEvents for the given OwnerType
                     FrugalObjectList<RoutedEvent> ownerRoutedEventList = (FrugalObjectList<RoutedEvent>)_ownerTypedRoutedEventList[ownerType];                
-                    if (ownerRoutedEventList != null)
+                    if (ownerRoutedEventList is not null)
                     {                        
                         // Check for RoutedEvent with matching name in the ItemList
                         for (int i=0; i<ownerRoutedEventList.Count; i++)
@@ -336,7 +336,7 @@ namespace System.Windows
             // Get the ClassHandlersStore for the given DType
             classListenersLists = (ClassHandlersStore)_dTypedClassListeners[dType];
             RoutedEventHandlerInfoList handlers;
-            if (classListenersLists != null)
+            if (classListenersLists is not null)
             {
                 // Get the handlers for the given DType and RoutedEvent
                 index = classListenersLists.GetHandlersIndex(routedEvent);
@@ -371,7 +371,7 @@ namespace System.Windows
             // Get the ClassHandlersStore for the given DType
             classListenersLists = (ClassHandlersStore)_dTypedClassListeners[dType];
             RoutedEventHandlerInfoList handlers;
-            if (classListenersLists != null)
+            if (classListenersLists is not null)
             {
                 // Get the handlers for the given DType and RoutedEvent
                 index = classListenersLists.GetHandlersIndex(routedEvent);
@@ -392,7 +392,7 @@ namespace System.Windows
             {
                 tempDType = tempDType.BaseType;
                 tempClassListenersLists = (ClassHandlersStore)_dTypedClassListeners[tempDType];
-                if (tempClassListenersLists != null)
+                if (tempClassListenersLists is not null)
                 {
                     // Get the handlers for the DType and RoutedEvent
                     tempIndex = tempClassListenersLists.GetHandlersIndex(routedEvent);

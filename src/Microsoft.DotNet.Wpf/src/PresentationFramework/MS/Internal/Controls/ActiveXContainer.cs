@@ -34,7 +34,7 @@ namespace MS.Internal.Controls
         {
             this._host = host;
 
-            Invariant.Assert(_host != null);
+            Invariant.Assert(_host is not null);
         }
 
         #endregion Constructor
@@ -54,7 +54,7 @@ namespace MS.Internal.Controls
         //
         int UnsafeNativeMethods.IOleContainer.ParseDisplayName(Object pbc, string pszDisplayName, int[] pchEaten, Object[] ppmkOut)
         {
-            if (ppmkOut != null)
+            if (ppmkOut is not null)
                 ppmkOut[0] = null;
 
             return NativeMethods.E_NOTIMPL;
@@ -64,13 +64,13 @@ namespace MS.Internal.Controls
         {
             ppenum = null;
 
-            Debug.Assert(_host != null, "gotta have the avalon activex host");
+            Debug.Assert(_host is not null, "gotta have the avalon activex host");
 
             object ax = _host.ActiveXInstance;
 
             //We support only one control, return that here
             //How does one add multiple controls to a container?
-            if (ax != null
+            if (ax is not null
                 &&
                 (((grfFlags & NativeMethods.OLECONTF_EMBEDDINGS) != 0)
                   ||
@@ -147,7 +147,7 @@ namespace MS.Internal.Controls
                 try
                 {
                     clientSite = oleObject.GetClientSite();
-                    if ((clientSite as ActiveXSite) != null)
+                    if ((clientSite as ActiveXSite) is not null)
                     {
                         ctl = ((ActiveXSite)(clientSite)).GetActiveXHost();
                     }
@@ -202,7 +202,7 @@ namespace MS.Internal.Controls
             if (_siteUIActive == site)
                 return;
 
-            if (_siteUIActive != null)
+            if (_siteUIActive is not null)
             {
                 //Winforms WebOC also uses ActiveXHost instead of ActiveXSite.
                 //Ideally it should have been the site but since its a 1-1 relationship
@@ -219,7 +219,7 @@ namespace MS.Internal.Controls
         internal void OnUIDeactivate(ActiveXHost site)
         {
 #if DEBUG
-            if (_siteUIActive != null) {
+            if (_siteUIActive is not null) {
                 //TODO: Debug.Assert(_siteUIActive == site, "deactivating when not active...");
                 Debug.Assert(this.ActiveXHost == site, "deactivating when not active...");
             }

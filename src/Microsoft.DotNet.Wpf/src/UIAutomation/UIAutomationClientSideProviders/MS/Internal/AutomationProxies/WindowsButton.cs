@@ -168,7 +168,7 @@ namespace MS.Internal.AutomationProxies
                 }
                 
                 //Only one event is generated for the winforms button so no need to check the pressed state.
-                if (wtv._acc != null)
+                if (wtv._acc is not null)
                 {
                     if (idProp == SelectionItemPattern.ElementSelectedEvent)
                     {
@@ -628,7 +628,7 @@ namespace MS.Internal.AutomationProxies
                 ToggleState icsState;
 
                 // Special handling for forms
-                if (_acc != null)
+                if (_acc is not null)
                 {
                     AccessibleState state = _acc.State;
                     if (Accessible.HasState(state, AccessibleState.Checked))
@@ -686,7 +686,7 @@ namespace MS.Internal.AutomationProxies
 
             Accessible acc = null;
             if (Accessible.AccessibleObjectFromWindow(hwnd, NativeMethods.OBJID_CLIENT, ref acc) == NativeMethods.S_OK &&
-                acc != null && 
+                acc is not null && 
                 acc.Role == AccessibleRole.RadioButton)
             {
                 *(bool*)lParam = true;
@@ -726,7 +726,7 @@ namespace MS.Internal.AutomationProxies
 
             Accessible acc = null;
             if (Accessible.AccessibleObjectFromWindow(hwnd, NativeMethods.OBJID_CLIENT, ref acc) == NativeMethods.S_OK &&
-                acc != null &&
+                acc is not null &&
                 acc.Role == AccessibleRole.RadioButton &&
                 acc.HasState(AccessibleState.Checked))
             {

@@ -39,7 +39,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal void MergeWithNext()
         {
-            Debug.Assert(Next != null); // This is the last UR, cannot merge with next.
+            Debug.Assert(Next is not null); // This is the last UR, cannot merge with next.
 
             // Merge DTRs
             int delta = Next.Dtr.StartIndex - Dtr.StartIndex;

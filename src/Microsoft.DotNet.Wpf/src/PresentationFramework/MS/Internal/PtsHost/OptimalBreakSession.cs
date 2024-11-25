@@ -44,12 +44,12 @@ namespace MS.Internal.PtsHost
         {
             try
             {
-                if(_textParagraphCache != null)
+                if(_textParagraphCache is not null)
                 {
                     _textParagraphCache.Dispose();
                 }
 
-                if(_optimalTextSource != null)
+                if(_optimalTextSource is not null)
                 {
                     _optimalTextSource.Dispose();
                 }
@@ -106,7 +106,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         public override void Dispose()
         {
-            if(_textBreakpoint != null)
+            if(_textBreakpoint is not null)
             {
                 _textBreakpoint.Dispose();
             }

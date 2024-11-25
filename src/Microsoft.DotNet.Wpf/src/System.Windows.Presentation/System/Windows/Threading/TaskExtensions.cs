@@ -33,7 +33,7 @@ namespace System.Windows.Threading
         public static DispatcherOperationStatus DispatcherOperationWait(this Task @this, TimeSpan timeout)
         {
             var mapping = @this.AsyncState as DispatcherOperationTaskMapping;
-            if(mapping != null)
+            if(mapping is not null)
             {
                 // This task did come from a DispatcherOperation.
                 return mapping.Operation.Wait(timeout);

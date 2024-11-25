@@ -87,7 +87,7 @@ namespace MS.Internal.Documents
         private static void ProgressDialogThreadProc(object state)
         {
             ProgressDialogReference reference = state as ProgressDialogReference;
-            Invariant.Assert(reference != null);            
+            Invariant.Assert(reference is not null);            
 
             reference.Form = new ProgressDialog(reference.Title, reference.Message);         
             

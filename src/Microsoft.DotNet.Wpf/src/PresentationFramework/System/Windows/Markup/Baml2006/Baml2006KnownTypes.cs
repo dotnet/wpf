@@ -2037,7 +2037,7 @@ namespace System.Windows.Baml2006
                         propertyName = null;
                         break;
                 }
-                return propertyName != null;
+                return propertyName is not null;
             }
 
             public static string GetKnownString(Int16 stringId)

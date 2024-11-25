@@ -28,7 +28,7 @@ namespace System.Windows.Automation.Peers
         internal GridViewCellAutomationPeer(ContentPresenter owner, ListViewAutomationPeer parent)
             : base(owner)
         {
-            Invariant.Assert(parent != null);
+            Invariant.Assert(parent is not null);
             _listviewAP = parent;
         }
 
@@ -36,7 +36,7 @@ namespace System.Windows.Automation.Peers
         internal GridViewCellAutomationPeer(TextBlock owner, ListViewAutomationPeer parent)
             : base(owner)
         {
-            Invariant.Assert(parent != null);
+            Invariant.Assert(parent is not null);
             _listviewAP = parent;
         }
 
@@ -84,7 +84,7 @@ namespace System.Windows.Automation.Peers
             else
             {
                 List<AutomationPeer> children = GetChildrenAutomationPeer(Owner, includeInvisibleItems);
-                return children != null && children.Count >= 1;
+                return children is not null && children.Count >= 1;
             }
         }
 
@@ -111,14 +111,14 @@ namespace System.Windows.Automation.Peers
         IRawElementProviderSimple[] ITableItemProvider.GetColumnHeaderItems()
         {
             ListView listview = _listviewAP.Owner as ListView;
-            if (listview != null && listview.View is GridView)
+            if (listview is not null && listview.View is GridView)
             {
                 GridView gridview = listview.View as GridView;
-                if (gridview.HeaderRowPresenter != null && gridview.HeaderRowPresenter.ActualColumnHeaders.Count > Column)
+                if (gridview.HeaderRowPresenter is not null && gridview.HeaderRowPresenter.ActualColumnHeaders.Count > Column)
                 {
                     GridViewColumnHeader header = gridview.HeaderRowPresenter.ActualColumnHeaders[Column];
                     AutomationPeer peer = UIElementAutomationPeer.FromElement(header);
-                    if (peer != null)
+                    if (peer is not null)
                     {
                         return new IRawElementProviderSimple[] { ProviderFromPeer(peer) };
                     }
@@ -147,7 +147,7 @@ namespace System.Windows.Automation.Peers
         /// </summary>
         private List<AutomationPeer> GetChildrenAutomationPeer(Visual parent, bool includeInvisibleItems)
         {
-            Invariant.Assert(parent != null);
+            Invariant.Assert(parent is not null);
 
             List<AutomationPeer> children = null;
 
@@ -177,10 +177,10 @@ namespace System.Windows.Automation.Peers
             for (int i = 0; i < count && !done; i++)
             {
                 Visual child = parent.InternalGetVisualChild(i);
-                if (child != null
+                if (child is not null
                     && child.CheckFlagsAnd(VisualFlags.IsUIElement)
                     && (includeInvisibleItems || ((UIElement)child).IsVisible)
-                    && (peer = CreatePeerForElement((UIElement)child)) != null)
+                    && (peer = CreatePeerForElement((UIElement)child)) is not null)
                 {
                     done = callback(peer);
                 }

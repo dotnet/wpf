@@ -325,7 +325,7 @@ namespace System.Windows.Automation.Peers
             }
 
             IRawElementProviderSimple provider = ProviderFromPeer(this);
-            if (provider != null)
+            if (provider is not null)
             {
                 AutomationInteropProvider.RaiseAutomationEvent(
                     eventObject,
@@ -362,7 +362,7 @@ namespace System.Windows.Automation.Peers
             if (EventMap.HasRegisteredEvent(AutomationEvents.AsyncContentLoaded))
             {
                 IRawElementProviderSimple provider = ProviderFromPeer(this);
-                if(provider != null)
+                if(provider is not null)
                 {
                     AutomationInteropProvider.RaiseAutomationEvent(
                         AutomationElementIdentifiers.AsyncContentLoadedEvent,
@@ -385,7 +385,7 @@ namespace System.Windows.Automation.Peers
             if (EventMap.HasRegisteredEvent(AutomationEvents.Notification))
             {
                 IRawElementProviderSimple provider = ProviderFromPeer(this);
-                if (provider != null)
+                if (provider is not null)
                 {
                     AutomationInteropProvider.RaiseAutomationEvent(
                         AutomationElementIdentifiers.NotificationEvent,
@@ -402,7 +402,7 @@ namespace System.Windows.Automation.Peers
             {
                 AutomationPeer peer = AutomationPeerFromInputElement(newFocus);
 
-                if (peer != null)
+                if (peer is not null)
                 {
                     peer.RaiseAutomationEvent(AutomationEvents.AutomationFocusChanged);
                 }
@@ -419,34 +419,34 @@ namespace System.Windows.Automation.Peers
             AutomationPeer peer = null;
 
             UIElement uie = focusedElement as UIElement;
-            if (uie != null)
+            if (uie is not null)
             {
                 peer = UIElementAutomationPeer.CreatePeerForElement(uie);
             }
             else
             {
                 ContentElement ce = focusedElement as ContentElement;
-                if (ce != null)
+                if (ce is not null)
                 {
                     peer = ContentElementAutomationPeer.CreatePeerForElement(ce);
                 }
                 else
                 {
                     UIElement3D uie3D = focusedElement as UIElement3D;
-                    if (uie3D != null)
+                    if (uie3D is not null)
                     {
                         peer = UIElement3DAutomationPeer.CreatePeerForElement(uie3D);
                     }
                 }
             }
 
-            if (peer != null)
+            if (peer is not null)
             {
                 //  ValidateConnected ensures that EventsSource is initialized
                 peer.ValidateConnected(peer);
 
                 //  always use event source when available
-                if (peer.EventsSource != null)
+                if (peer.EventsSource is not null)
                 {
                     peer = peer.EventsSource;
                 }
@@ -471,11 +471,11 @@ namespace System.Windows.Automation.Peers
         {
             ArgumentNullException.ThrowIfNull(connectedPeer);
 
-            if (_parent != null && _hwnd != IntPtr.Zero) return this;
+            if (_parent is not null && _hwnd != IntPtr.Zero) return this;
 
             if((connectedPeer._hwnd) != IntPtr.Zero)
             {
-                while(connectedPeer._parent != null) connectedPeer = connectedPeer._parent;
+                while(connectedPeer._parent is not null) connectedPeer = connectedPeer._parent;
 
                 //now connectedPeer is the root
                 if ((connectedPeer == this) || isDescendantOf(connectedPeer))
@@ -486,14 +486,14 @@ namespace System.Windows.Automation.Peers
             //only start fault in the tree from the root if we are not in the recursive sync update
             //Otherwise it will go through the peers that are currently on the stack
             ContextLayoutManager lm = ContextLayoutManager.From(this.Dispatcher);
-            if(lm != null && lm.AutomationSyncUpdateCounter == 0)
+            if(lm is not null && lm.AutomationSyncUpdateCounter == 0)
             {
                 AutomationPeer[] roots = lm.GetAutomationRoots();
                 for(int i = 0; i < roots.Length; i++)
                 {
                     AutomationPeer root = roots[i];
 
-                    if (root != null)
+                    if (root is not null)
                     {
                         if((root == this) || isDescendantOf(root))
                         return this;
@@ -515,7 +515,7 @@ namespace System.Windows.Automation.Peers
         /// <param name="peer"></param>
         internal bool TrySetParentInfo(AutomationPeer peer)
         {
-            Invariant.Assert((peer != null));
+            Invariant.Assert((peer is not null));
 
             if(peer._hwnd == IntPtr.Zero)
             {
@@ -1264,7 +1264,7 @@ namespace System.Windows.Automation.Peers
             List<AutomationPeer> controlledPeers = GetControlledPeers();
             IRawElementProviderSimple[] result = null;
 
-            if (controlledPeers != null)
+            if (controlledPeers is not null)
             {
                 result = new IRawElementProviderSimple[controlledPeers.Count];
 
@@ -1478,7 +1478,7 @@ namespace System.Windows.Automation.Peers
 
             EnsureChildren();
 
-            if (_children != null && _children.Count > 0)
+            if (_children is not null && _children.Count > 0)
             {
                 peer = _children[0];
                 peer.ChooseIterationParent(this);
@@ -1496,7 +1496,7 @@ namespace System.Windows.Automation.Peers
             if (!_childrenValid || _ancestorsInvalid)
             {
                 _children = GetChildrenCore();
-                if (_children != null)
+                if (_children is not null)
                 {
                     int count = _children.Count;
                     for (int i = 0; i < count; ++i)
@@ -1524,7 +1524,7 @@ namespace System.Windows.Automation.Peers
 
             EnsureChildren();
 
-            if (_children != null && _children.Count > 0)
+            if (_children is not null && _children.Count > 0)
             {
                 peer = _children[_children.Count - 1];
                 peer.ChooseIterationParent(this);
@@ -1545,11 +1545,11 @@ namespace System.Windows.Automation.Peers
             AutomationPeer sibling = null;
             AutomationPeer parent = IterationParent;
 
-            if (parent != null)
+            if (parent is not null)
             {
                 parent.EnsureChildren();
 
-                if (    parent._children != null
+                if (    parent._children is not null
                     &&  _index >= 0
                     &&  _index + 1 < parent._children.Count
                     &&  parent._children[_index] == this    )
@@ -1568,11 +1568,11 @@ namespace System.Windows.Automation.Peers
             AutomationPeer sibling = null;
             AutomationPeer parent = IterationParent;
 
-            if (parent != null)
+            if (parent is not null)
             {
                 parent.EnsureChildren();
 
-                if (    parent._children != null
+                if (    parent._children is not null
                     &&  _index - 1 >= 0
                     &&  _index < parent._children.Count
                     &&  parent._children[_index] == this    )
@@ -1637,7 +1637,7 @@ namespace System.Windows.Automation.Peers
         // should serve as the iteration parent for the iteration that's starting.
         private void ChooseIterationParent(AutomationPeer caller)
         {
-            Debug.Assert(caller._children != null, "iteration over a null family");
+            Debug.Assert(caller._children is not null, "iteration over a null family");
             AutomationPeer iterationParent;
 
             // easy (and frequent) case:  both candidates are the same
@@ -1770,7 +1770,7 @@ namespace System.Windows.Automation.Peers
             if(!IsOffscreen())
             {
                 List<AutomationPeer> children = GetChildren();
-                if(children != null)
+                if(children is not null)
                 {
                     int count = children.Count;
                     for(int i = count-1; (i >= 0) && (found is null); --i)
@@ -1810,7 +1810,7 @@ namespace System.Windows.Automation.Peers
 
             //replace itself with EventsSource if we are aggregated and hidden from the UIA
             AutomationPeer eventsSource;
-            if((peer == this) && ((eventsSource = EventsSource) != null))
+            if((peer == this) && ((eventsSource = EventsSource) is not null))
             {
                 referencePeer = peer = eventsSource;
             }
@@ -1861,7 +1861,7 @@ namespace System.Windows.Automation.Peers
         protected AutomationPeer PeerFromProvider(IRawElementProviderSimple provider)
         {
             ElementProxy proxy = provider as ElementProxy;
-            if (proxy != null)
+            if (proxy is not null)
             {
                 return (proxy.Peer);
             }
@@ -1883,7 +1883,7 @@ namespace System.Windows.Automation.Peers
                                                              object newValue)
         {
             // Callers have only checked if automation clients are present so filter for any interest in this particular event.
-            if (  provider != null
+            if (  provider is not null
                && EventMap.HasRegisteredEvent(AutomationEvents.PropertyChanged) )
             {
                 AutomationPropertyChangedEventArgs e = new AutomationPropertyChangedEventArgs(propertyId, oldValue, newValue);
@@ -1909,7 +1909,7 @@ namespace System.Windows.Automation.Peers
                 return;
 
             //store old children in a hashset
-            if(oldChildren != null)
+            if(oldChildren is not null)
             {
                 hs = new HashSet<AutomationPeer>();
                 for(int count = oldChildren.Count, i = 0; i < count; i++)
@@ -1922,12 +1922,12 @@ namespace System.Windows.Automation.Peers
             //and add new ones into addedChildren list
             int addedCount = 0;
 
-            if(_children != null)
+            if(_children is not null)
             {
                 for(int count = _children.Count, i = 0; i < count; i++)
                 {
                     AutomationPeer child = _children[i];
-                    if(hs != null && hs.Contains(child))
+                    if(hs is not null && hs.Contains(child))
                     {
                         hs.Remove(child); //same child, nothing to notify
                     }
@@ -1962,7 +1962,7 @@ namespace System.Windows.Automation.Peers
                     flags = StructureChangeType.ChildrenInvalidated;
 
                 IRawElementProviderSimple provider = ProviderFromPeerNoDelegation(this);
-                if(provider != null)
+                if(provider is not null)
                 {
                     int [] rid = this.GetRuntimeId(); //use runtimeID of parent for bulk notifications
 
@@ -1977,7 +1977,7 @@ namespace System.Windows.Automation.Peers
                 {
                     //for children removed, provider is the parent
                     IRawElementProviderSimple provider = ProviderFromPeerNoDelegation(this);
-                    if (provider != null)
+                    if (provider is not null)
                     {
                         //hs contains removed children by now
                         foreach (AutomationPeer removedChild in hs)
@@ -1997,7 +1997,7 @@ namespace System.Windows.Automation.Peers
                     {
                         //for children added, provider is the child itself
                         IRawElementProviderSimple provider = ProviderFromPeerNoDelegation(addedChild);
-                        if (provider != null)
+                        if (provider is not null)
                         {
                             int[] rid = addedChild.GetRuntimeId();
 
@@ -2034,7 +2034,7 @@ namespace System.Windows.Automation.Peers
         internal void UpdateSubtree()
         {
             ContextLayoutManager lm = ContextLayoutManager.From(this.Dispatcher);
-            if(lm != null)
+            if(lm is not null)
             {
                 lm.AutomationSyncUpdateCounter = lm.AutomationSyncUpdateCounter + 1;
 
@@ -2108,7 +2108,7 @@ namespace System.Windows.Automation.Peers
                         {
                             AncestorsInvalid = false;
 
-                            for(AutomationPeer peer = GetFirstChild(); peer != null; peer = peer.GetNextSibling())
+                            for(AutomationPeer peer = GetFirstChild(); peer is not null; peer = peer.GetNextSibling())
                             {
                                 peer.UpdateSubtree();
                             }
@@ -2133,12 +2133,12 @@ namespace System.Windows.Automation.Peers
             if (!AncestorsInvalid)
             {
                 AncestorsInvalid = true;
-                if (EventsSource != null)
+                if (EventsSource is not null)
                 {
                     EventsSource.InvalidateAncestorsRecursive();
                 }
 
-                if (_parent != null)
+                if (_parent is not null)
                     _parent.InvalidateAncestorsRecursive();
             }
         }
@@ -2176,10 +2176,10 @@ namespace System.Windows.Automation.Peers
 
             PatternInfo info = (PatternInfo)s_patternInfo[patternId];
 
-            if (info != null)
+            if (info is not null)
             {
                 object iface = GetPattern(info.PatternInterface);
-                if (iface != null)
+                if (iface is not null)
                 {
                     result = info.WrapObject(this, iface);
                 }
@@ -2195,10 +2195,10 @@ namespace System.Windows.Automation.Peers
 
             GetProperty getProperty = (GetProperty)s_propertyInfo[propertyId];
 
-            if (getProperty != null)
+            if (getProperty is not null)
             {
                 result = getProperty(this);
-                if(AutomationElementIdentifiers.HeadingLevelProperty != null && propertyId == AutomationElementIdentifiers.HeadingLevelProperty.Id)
+                if(AutomationElementIdentifiers.HeadingLevelProperty is not null && propertyId == AutomationElementIdentifiers.HeadingLevelProperty.Id)
                 {
                     result = ConvertHeadingLevelToId((AutomationHeadingLevel)result);
                 }
@@ -2247,7 +2247,7 @@ namespace System.Windows.Automation.Peers
             get{ return _elementProxyWeakReference; }
             set
             {
-                if(value.Target as ElementProxy != null)
+                if(value.Target as ElementProxy is not null)
                     _elementProxyWeakReference = value;
             }
         }
@@ -2399,11 +2399,11 @@ namespace System.Windows.Automation.Peers
 
             // To avoid the worst situation on legacy systems which may not have new unmanaged core. with this change with old unmanaged core
             // this will these patterns will be null and won't be added and hence reponse will be as it is not present at all rather than any crash.
-            if (VirtualizedItemPatternIdentifiers.Pattern != null)
+            if (VirtualizedItemPatternIdentifiers.Pattern is not null)
                 s_patternInfo[VirtualizedItemPatternIdentifiers.Pattern.Id] = new PatternInfo(VirtualizedItemPatternIdentifiers.Pattern.Id, new WrapObject(VirtualizedItemProviderWrapper.Wrap), PatternInterface.VirtualizedItem);
-            if (ItemContainerPatternIdentifiers.Pattern != null)
+            if (ItemContainerPatternIdentifiers.Pattern is not null)
                 s_patternInfo[ItemContainerPatternIdentifiers.Pattern.Id] = new PatternInfo(ItemContainerPatternIdentifiers.Pattern.Id, new WrapObject(ItemContainerProviderWrapper.Wrap), PatternInterface.ItemContainer);
-            if (SynchronizedInputPatternIdentifiers.Pattern != null)
+            if (SynchronizedInputPatternIdentifiers.Pattern is not null)
             {
                 s_patternInfo[SynchronizedInputPatternIdentifiers.Pattern.Id] = new PatternInfo(SynchronizedInputPatternIdentifiers.Pattern.Id, new WrapObject(SynchronizedInputProviderWrapper.Wrap), PatternInterface.SynchronizedInput);
             }
@@ -2437,27 +2437,27 @@ namespace System.Windows.Automation.Peers
             s_propertyInfo[AutomationElementIdentifiers.FrameworkIdProperty.Id] = new GetProperty(GetFrameworkId);
             s_propertyInfo[AutomationElementIdentifiers.IsRequiredForFormProperty.Id] = new GetProperty(IsRequiredForForm);
             s_propertyInfo[AutomationElementIdentifiers.ItemStatusProperty.Id] = new GetProperty(GetItemStatus);
-            if (!AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures && AutomationElementIdentifiers.LiveSettingProperty != null)
+            if (!AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures && AutomationElementIdentifiers.LiveSettingProperty is not null)
             {
                 s_propertyInfo[AutomationElementIdentifiers.LiveSettingProperty.Id] = new GetProperty(GetLiveSetting);
             }
-            if (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && AutomationElementIdentifiers.ControllerForProperty != null)
+            if (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && AutomationElementIdentifiers.ControllerForProperty is not null)
             {
                 s_propertyInfo[AutomationElementIdentifiers.ControllerForProperty.Id] = new GetProperty(GetControllerFor);
             }
-            if (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && AutomationElementIdentifiers.SizeOfSetProperty != null)
+            if (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && AutomationElementIdentifiers.SizeOfSetProperty is not null)
             {
                 s_propertyInfo[AutomationElementIdentifiers.SizeOfSetProperty.Id] = new GetProperty(GetSizeOfSet);
             }
-            if (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && AutomationElementIdentifiers.PositionInSetProperty != null)
+            if (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && AutomationElementIdentifiers.PositionInSetProperty is not null)
             {
                 s_propertyInfo[AutomationElementIdentifiers.PositionInSetProperty.Id] = new GetProperty(GetPositionInSet);
             }
-            if (AutomationElementIdentifiers.HeadingLevelProperty != null)
+            if (AutomationElementIdentifiers.HeadingLevelProperty is not null)
             { 
                 s_propertyInfo[AutomationElementIdentifiers.HeadingLevelProperty.Id] = new GetProperty(GetHeadingLevel);
             }
-            if (AutomationElementIdentifiers.IsDialogProperty != null)
+            if (AutomationElementIdentifiers.IsDialogProperty is not null)
             {
                 s_propertyInfo[AutomationElementIdentifiers.IsDialogProperty.Id] = new GetProperty(IsDialog);
             }

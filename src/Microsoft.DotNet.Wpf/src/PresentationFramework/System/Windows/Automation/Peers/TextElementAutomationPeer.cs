@@ -59,7 +59,7 @@ namespace System.Windows.Automation.Peers
 
             Geometry geometry = textView.GetTightBoundingGeometryFromTextPositions(textElement.ContentStart, textElement.ContentEnd);
 
-            if (geometry != null)
+            if (geometry is not null)
             {
                 PresentationSource presentationSource = PresentationSource.CriticalFromVisual(textView.RenderScope);
 
@@ -173,17 +173,17 @@ namespace System.Windows.Automation.Peers
         private Rect CalculateVisibleRect(ITextView textView, TextElement textElement, TextPointer startPointer, TextPointer endPointer)
         {
             Geometry geometry = textView.GetTightBoundingGeometryFromTextPositions(startPointer, endPointer);
-            Rect visibleRect = (geometry != null) ? geometry.Bounds : Rect.Empty;
+            Rect visibleRect = (geometry is not null) ? geometry.Bounds : Rect.Empty;
             Visual visual = textView.RenderScope;
-            while (visual != null && visibleRect != Rect.Empty)
+            while (visual is not null && visibleRect != Rect.Empty)
             {
-                if (VisualTreeHelper.GetClip(visual) != null)
+                if (VisualTreeHelper.GetClip(visual) is not null)
                 {
                     GeneralTransform transform = textView.RenderScope.TransformToAncestor(visual).Inverse;
 
                     // Safer version of transform to descendent (doing the inverse ourself), 
                     // we want the rect inside of our space. (Which is always rectangular and much nicer to work with)
-                    if (transform != null)
+                    if (transform is not null)
                     {
                         Rect rectBounds = VisualTreeHelper.GetClip(visual).Bounds;
                         rectBounds = transform.TransformBounds(rectBounds);

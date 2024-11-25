@@ -55,7 +55,7 @@ namespace System.Windows.Markup
             Type type = MemberType;
             string fieldString;
             string typeNameForError = null;
-            if (type != null)
+            if (type is not null)
             {
                 fieldString = _member;
                 typeNameForError = type.FullName;
@@ -122,27 +122,27 @@ namespace System.Windows.Markup
             do
             {
                 FieldInfo field = currentType.GetField(name, BindingFlags.Public | BindingFlags.Static);
-                if (field != null)
+                if (field is not null)
                 {
                     value = field.GetValue(null);
                     return true;
                 }
 
                 currentType = currentType.BaseType;
-            } while(currentType != null);
+            } while(currentType is not null);
 
             currentType = type;
             do
             {
                 PropertyInfo prop = currentType.GetProperty(name, BindingFlags.Public | BindingFlags.Static);
-                if (prop != null)
+                if (prop is not null)
                 {
                     value = prop.GetValue(null,null);
                     return true;
                 }
 
                 currentType = currentType.BaseType;
-            } while(currentType != null);
+            } while(currentType is not null);
 
             value = null;
             return false;

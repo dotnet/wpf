@@ -81,7 +81,7 @@ namespace MS.Internal.Data
 
         public SourceValueInfo[] Parse(string path)
         {
-            _path = (path != null) ? path.Trim() : String.Empty;
+            _path = (path is not null) ? path.Trim() : String.Empty;
             _n = _path.Length;
 
             if (_n == 0)

@@ -49,7 +49,7 @@ namespace System.Windows.Markup
         /// </summary>
         internal static void ThrowIfNonWhiteSpaceInAddText(string s)
         {
-            if (s != null)
+            if (s is not null)
             {
                 for (int i = 0; i < s.Length; i++)
                 {

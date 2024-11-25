@@ -62,7 +62,7 @@ namespace System.Windows.Controls
         internal void StartTracking(ref ContainerTracking<T> root)
         {
             // Add the node to the root
-            if (root != null)
+            if (root is not null)
             {
                 root._previous = this;
             }
@@ -78,12 +78,12 @@ namespace System.Windows.Controls
         internal void StopTracking(ref ContainerTracking<T> root)
         {
             // Unhook the node from the list
-            if (_previous != null)
+            if (_previous is not null)
             {
                 _previous._next = _next;
             }
 
-            if (_next != null)
+            if (_next is not null)
             {
                 _next._previous = _previous;
             }
@@ -132,7 +132,7 @@ namespace System.Windows.Controls
         {
             ContainerTracking<T> node = root;
 
-            while (node != null)
+            while (node is not null)
             {
                 if (node == this)
                 {

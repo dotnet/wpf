@@ -95,7 +95,7 @@ namespace System.Windows.Controls
 
             // Initialize FindTooBar host.
             // If old FindToolBar is enabled, disable it first to ensure appropriate cleanup.
-            if (FindToolBar != null)
+            if (FindToolBar is not null)
             {
                 ToggleFindToolBar(false);
             }
@@ -145,7 +145,7 @@ namespace System.Windows.Controls
             {
                 ITextSelection textSelection = null;
                 FlowDocument flowDocument = Document as FlowDocument;
-                if (flowDocument != null)
+                if (flowDocument is not null)
                 {
                     textSelection = flowDocument.StructuralCache.TextContainer.TextSelection;
                 }
@@ -380,7 +380,7 @@ namespace System.Windows.Controls
             // Esc -- Close FindToolBar
             if (e.Key == Key.Escape)
             {
-                if (FindToolBar != null)
+                if (FindToolBar is not null)
                 {
                     ToggleFindToolBar(false);
                     e.Handled = true;
@@ -392,7 +392,7 @@ namespace System.Windows.Controls
             {
                 if (CanShowFindToolBar)
                 {
-                    if (FindToolBar != null)
+                    if (FindToolBar is not null)
                     {
                         // If the Shift key is also pressed, then search up.
                         FindToolBar.SearchUp = ((e.KeyboardDevice.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift);
@@ -490,16 +490,16 @@ namespace System.Windows.Controls
             _contentPosition = null;
 
             // _oldDocument is cached from previous document changed notification.
-            if (_oldDocument != null)
+            if (_oldDocument is not null)
             {
                 DynamicDocumentPaginator dynamicDocumentPaginator = _oldDocument.DocumentPaginator as DynamicDocumentPaginator;
-                if (dynamicDocumentPaginator != null)
+                if (dynamicDocumentPaginator is not null)
                 {
                     dynamicDocumentPaginator.GetPageNumberCompleted -= new GetPageNumberCompletedEventHandler(HandleGetPageNumberCompleted);
                 }
 
                 FlowDocumentPaginator flowDocumentPaginator = _oldDocument.DocumentPaginator as FlowDocumentPaginator;
-                if (flowDocumentPaginator != null)
+                if (flowDocumentPaginator is not null)
                 {
                     flowDocumentPaginator.BreakRecordTableInvalidated -= new BreakRecordTableInvalidatedEventHandler(HandleAllBreakRecordsInvalidated);
                 }
@@ -509,7 +509,7 @@ namespace System.Windows.Controls
             _oldDocument = Document;
 
             // Validate the new document type
-            if (Document != null && !(Document is FlowDocument))
+            if (Document is not null && !(Document is FlowDocument))
             {
                 // Undo new document assignment.
                 Document = null;
@@ -517,16 +517,16 @@ namespace System.Windows.Controls
                 throw new NotSupportedException(SR.FlowDocumentPageViewerOnlySupportsFlowDocument);
             }
 
-            if(Document != null)
+            if(Document is not null)
             {
                 DynamicDocumentPaginator dynamicDocumentPaginator = Document.DocumentPaginator as DynamicDocumentPaginator;
-                if (dynamicDocumentPaginator != null)
+                if (dynamicDocumentPaginator is not null)
                 {
                     dynamicDocumentPaginator.GetPageNumberCompleted += new GetPageNumberCompletedEventHandler(HandleGetPageNumberCompleted);
                 }
 
                 FlowDocumentPaginator flowDocumentPaginator = Document.DocumentPaginator as FlowDocumentPaginator;
-                if (flowDocumentPaginator != null)
+                if (flowDocumentPaginator is not null)
                 {
                     flowDocumentPaginator.BreakRecordTableInvalidated += new BreakRecordTableInvalidatedEventHandler(HandleAllBreakRecordsInvalidated);
                 }
@@ -536,7 +536,7 @@ namespace System.Windows.Controls
             if (!CanShowFindToolBar)
             {
                 // Disable FindToolBar, if the content does not support it.
-                if (FindToolBar != null)
+                if (FindToolBar is not null)
                 {
                     ToggleFindToolBar(false);
                 }
@@ -654,17 +654,17 @@ namespace System.Windows.Controls
             Thickness pagePadding;
 
             // Only one printing job is allowed.
-            if (_printingState != null)
+            if (_printingState is not null)
             {
                 return;
             }
 
             // If the document is FlowDocument, do custom printing. Otherwise go through default path.
-            if (document != null)
+            if (document is not null)
             {
                 // Show print dialog.
                 docWriter = System.Printing.PrintQueue.CreateXpsDocumentWriter(ref ia);
-                if (docWriter != null && ia != null)
+                if (docWriter is not null && ia is not null)
                 {
                     // Store the current state of the document in the PrintingState
                     paginator = ((IDocumentPaginatorSource)document).DocumentPaginator as FlowDocumentPaginator;
@@ -723,7 +723,7 @@ namespace System.Windows.Controls
         protected override void OnCancelPrintCommand()
         {
 #if !DONOTREFPRINTINGASMMETA
-            if (_printingState != null)
+            if (_printingState is not null)
             {
                 _printingState.XpsDocumentWriter.CancelAsync();
             }
@@ -782,10 +782,10 @@ namespace System.Windows.Controls
             // This breaks navigation cursor management logic, because TextEditor attached
             // to FlowDocumentPageViewer handles those events first.
             DependencyObject document = this.Document as DependencyObject;
-            if (document != null && LogicalTreeHelper.GetParent(document) != this)
+            if (document is not null && LogicalTreeHelper.GetParent(document) != this)
             {
                 DependencyObject branchNode = route.PeekBranchNode() as DependencyObject;
-                if (branchNode != null && DocumentViewerHelper.IsLogicalDescendent(branchNode, document))
+                if (branchNode is not null && DocumentViewerHelper.IsLogicalDescendent(branchNode, document))
                 {
                     // Add intermediate ContentElements to the route.
                     FrameworkElement.AddIntermediateElementsToRoute(
@@ -800,10 +800,10 @@ namespace System.Windows.Controls
             bool continueInvalidation = true;
 
             DependencyObject document = this.Document as DependencyObject;
-            if (document != null && LogicalTreeHelper.GetParent(document) != this)
+            if (document is not null && LogicalTreeHelper.GetParent(document) != this)
             {
                 DependencyObject branchNode = (branchNodeStack.Count > 0) ? branchNodeStack.Peek() : null;
-                if (branchNode != null && DocumentViewerHelper.IsLogicalDescendent(branchNode, document))
+                if (branchNode is not null && DocumentViewerHelper.IsLogicalDescendent(branchNode, document))
                 {
                     continueInvalidation = FrameworkElement.InvalidateAutomationIntermediateElements(LogicalTreeHelper.GetParent(document), LogicalTreeHelper.GetParent(branchNode));
                 }
@@ -930,7 +930,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal bool CanShowFindToolBar
         {
-            get { return (_findToolBarHost != null && this.Document != null && this.TextEditor != null); }
+            get { return (_findToolBarHost is not null && this.Document is not null && this.TextEditor is not null); }
         }
 
         /// <summary>
@@ -938,7 +938,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal bool IsPrinting
         {
-            get { return (_printingState != null); }
+            get { return (_printingState is not null); }
         }
 
         #endregion Internal Properties
@@ -960,16 +960,16 @@ namespace System.Windows.Controls
             DynamicDocumentPaginator documentPaginator;
 
             // Ignore LayoutUpdated during printing.
-            if (this.Document != null && _printingState is null)
+            if (this.Document is not null && _printingState is null)
             {
                 documentPaginator = this.Document.DocumentPaginator as DynamicDocumentPaginator;
-                if (documentPaginator != null)
+                if (documentPaginator is not null)
                 {
                     // Update ContentPosition, if not cached.
                     if (_contentPosition is null)
                     {
                         masterPageView = GetMasterPageView();
-                        if (masterPageView != null && masterPageView.DocumentPage != null)
+                        if (masterPageView is not null && masterPageView.DocumentPage is not null)
                         {
                             _contentPosition = documentPaginator.GetPagePosition(masterPageView.DocumentPage);
                         }
@@ -992,7 +992,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void HandleGetPageNumberCompleted(object sender, GetPageNumberCompletedEventArgs e)
         {
-            if (Document != null && sender == Document.DocumentPaginator && e != null)
+            if (Document is not null && sender == Document.DocumentPaginator && e is not null)
             {
                 if (!e.Cancelled && e.Error is null && e.UserState == _bringContentPositionIntoViewToken)
                 {
@@ -1024,7 +1024,7 @@ namespace System.Windows.Controls
             FlowDocument flowDocument = document as FlowDocument;
             TextPointer textPointer = contentPosition as TextPointer;
 
-            if(flowDocument != null && textPointer != null)
+            if(flowDocument is not null && textPointer is not null)
             {
                 return flowDocument.ContentStart.TextContainer == textPointer.TextContainer;
             }
@@ -1038,10 +1038,10 @@ namespace System.Windows.Controls
         private void PrivateBringContentPositionIntoView(object arg, bool isAsyncRequest)
         {
             ContentPosition contentPosition = arg as ContentPosition;
-            if (contentPosition != null && Document != null)
+            if (contentPosition is not null && Document is not null)
             {
                 DynamicDocumentPaginator documentPaginator = this.Document.DocumentPaginator as DynamicDocumentPaginator;
-                if (documentPaginator != null && IsValidContentPositionForDocument(Document, contentPosition))
+                if (documentPaginator is not null && IsValidContentPositionForDocument(Document, contentPosition))
                 {
                     documentPaginator.CancelAsync(_bringContentPositionIntoViewToken);
 
@@ -1087,7 +1087,7 @@ namespace System.Windows.Controls
         private void ClearPrintingState()
         {
 #if !DONOTREFPRINTINGASMMETA
-            if (_printingState != null)
+            if (_printingState is not null)
             {
                 // Resume layout on DocumentPageViews.
                 ReadOnlyCollection<DocumentPageView> pageViews = PageViews;
@@ -1158,7 +1158,7 @@ namespace System.Windows.Controls
             int newMasterPageNumber;
             FindToolBar findToolBar = FindToolBar;
 
-            if (findToolBar != null && this.TextEditor != null)
+            if (findToolBar is not null && this.TextEditor is not null)
             {
                 // In order to show current text selection TextEditor requires Focus to be set on the UIScope.
                 // If there embedded controls, it may happen that embedded control currently has focus and find
@@ -1168,7 +1168,7 @@ namespace System.Windows.Controls
                 findResult = Find(findToolBar);
 
                 // If we found something, bring it into the view. Otherwise alert the user.
-                if ((findResult != null) && (!findResult.IsEmpty))
+                if ((findResult is not null) && (!findResult.IsEmpty))
                 {
                     if (findResult.Start is ContentPosition)
                     {
@@ -1290,8 +1290,8 @@ namespace System.Windows.Controls
         private static void CanExecuteRoutedEventHandler(object target, CanExecuteRoutedEventArgs args)
         {
             FlowDocumentPageViewer fdpv = target as FlowDocumentPageViewer;
-            Invariant.Assert(fdpv != null, "Target of QueryEnabledEvent must be FlowDocumentPageViewer.");
-            Invariant.Assert(args != null, "args cannot be null.");
+            Invariant.Assert(fdpv is not null, "Target of QueryEnabledEvent must be FlowDocumentPageViewer.");
+            Invariant.Assert(args is not null, "args cannot be null.");
 
             // DocumentViewerBase is capable of execution of the majority of its commands.
             // Special rules:
@@ -1314,8 +1314,8 @@ namespace System.Windows.Controls
         private static void ExecutedRoutedEventHandler(object target, ExecutedRoutedEventArgs args)
         {
             FlowDocumentPageViewer fdpv = target as FlowDocumentPageViewer;
-            Invariant.Assert(fdpv != null, "Target of ExecuteEvent must be FlowDocumentPageViewer.");
-            Invariant.Assert(args != null, "args cannot be null.");
+            Invariant.Assert(fdpv is not null, "Target of ExecuteEvent must be FlowDocumentPageViewer.");
+            Invariant.Assert(args is not null, "args cannot be null.");
 
             // Now we execute the method corresponding to the Command that fired this event;
             // each Command has its own protected virtual method that performs the operation
@@ -1344,11 +1344,11 @@ namespace System.Windows.Controls
         private void PreviewCanExecuteRoutedEventHandler(object target, CanExecuteRoutedEventArgs args)
         {
             FlowDocumentPageViewer fdpv = target as FlowDocumentPageViewer;
-            Invariant.Assert(fdpv != null, "Target of PreviewCanExecuteRoutedEventHandler must be FlowDocumentPageViewer.");
-            Invariant.Assert(args != null, "args cannot be null.");
+            Invariant.Assert(fdpv is not null, "Target of PreviewCanExecuteRoutedEventHandler must be FlowDocumentPageViewer.");
+            Invariant.Assert(args is not null, "args cannot be null.");
 
             // Disable UI commands, if printing is in progress.
-            if (fdpv._printingState != null)
+            if (fdpv._printingState is not null)
             {
                 if (args.Command != ApplicationCommands.CancelPrint)
                 {
@@ -1375,7 +1375,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static object CoerceZoom(DependencyObject d, object value)
         {
-            Invariant.Assert(d != null && d is FlowDocumentPageViewer);
+            Invariant.Assert(d is not null && d is FlowDocumentPageViewer);
 
             double maxZoom, minZoom;
             FlowDocumentPageViewer v = (FlowDocumentPageViewer) d;
@@ -1401,7 +1401,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static object CoerceMaxZoom(DependencyObject d, object value)
         {
-            Invariant.Assert(d != null && d is FlowDocumentPageViewer);
+            Invariant.Assert(d is not null && d is FlowDocumentPageViewer);
 
             FlowDocumentPageViewer v = (FlowDocumentPageViewer) d;
             double minZoom = v.MinZoom;
@@ -1417,7 +1417,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static void ZoomChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Invariant.Assert(d != null && d is FlowDocumentPageViewer);
+            Invariant.Assert(d is not null && d is FlowDocumentPageViewer);
             ((FlowDocumentPageViewer)d).ZoomChanged((double) e.OldValue, (double) e.NewValue);
         }
 
@@ -1426,7 +1426,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static void MaxZoomChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Invariant.Assert(d != null && d is FlowDocumentPageViewer);
+            Invariant.Assert(d is not null && d is FlowDocumentPageViewer);
             ((FlowDocumentPageViewer)d).MaxZoomChanged((double) e.OldValue, (double) e.NewValue);
         }
 
@@ -1435,7 +1435,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static void MinZoomChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Invariant.Assert(d != null && d is FlowDocumentPageViewer);
+            Invariant.Assert(d is not null && d is FlowDocumentPageViewer);
             ((FlowDocumentPageViewer)d).MinZoomChanged((double) e.OldValue, (double) e.NewValue);
         }
 
@@ -1457,10 +1457,10 @@ namespace System.Windows.Controls
         {
             FlowDocumentPageViewer viewer = (FlowDocumentPageViewer)d;
 
-            if (viewer.Selection != null)
+            if (viewer.Selection is not null)
             {
                 CaretElement caretElement = viewer.Selection.CaretElement;
-                if (caretElement != null)
+                if (caretElement is not null)
                 {
                     caretElement.InvalidateVisual();
                 }
@@ -1484,7 +1484,7 @@ namespace System.Windows.Controls
         /// </summary>
         private FindToolBar FindToolBar
         {
-            get { return (_findToolBarHost != null) ? _findToolBarHost.Child as FindToolBar : null; }
+            get { return (_findToolBarHost is not null) ? _findToolBarHost.Child as FindToolBar : null; }
         }
 
         #endregion Private Properties
@@ -1538,7 +1538,7 @@ namespace System.Windows.Controls
             int cp = -1;
             LogicalDirection cpDirection = LogicalDirection.Forward;
             TextPointer contentPosition = ContentPosition as TextPointer;
-            if (contentPosition != null)
+            if (contentPosition is not null)
             {
                 cp = contentPosition.Offset;
                 cpDirection = contentPosition.LogicalDirection;
@@ -1552,13 +1552,13 @@ namespace System.Windows.Controls
         void IJournalState.RestoreJournalState(CustomJournalStateInternal state)
         {
             JournalState viewerState = state as JournalState;
-            if (state != null)
+            if (state is not null)
             {
                 SetCurrentValueInternal(ZoomProperty, viewerState.Zoom);
                 if (viewerState.ContentPosition != -1)
                 {
                     FlowDocument document = Document as FlowDocument;
-                    if (document != null)
+                    if (document is not null)
                     {
                         TextContainer textContainer = document.StructuralCache.TextContainer;
                         if (viewerState.ContentPosition <= textContainer.SymbolCount)

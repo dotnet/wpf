@@ -284,7 +284,7 @@ namespace System.Windows.Media.Imaging
                 BitmapSource newSource = e.NewValue as BitmapSource;
                 _source = newSource;
                 RegisterDownloadEventSource(_source);
-                _syncObject = (newSource != null) ? newSource.SyncObject : _bitmapInit;
+                _syncObject = (newSource is not null) ? newSource.SyncObject : _bitmapInit;
             }
         }
 

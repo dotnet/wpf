@@ -40,7 +40,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                 [[/inline]]
                 ;
 
-            if (resource.PragmaPack != null)
+            if (resource.PragmaPack is not null)
             {
                 return
                     [[inline]]
@@ -110,21 +110,21 @@ namespace MS.Internal.MilCodeGen.Helpers
             McgUnion union = child as McgUnion;
             McgConstant constant = child as McgConstant;
 
-            if (field != null)
+            if (field is not null)
             {
                 WriteField(cs, field);
             }
-            else if (block != null)
+            else if (block is not null)
             {
                 WriteBlockCommentedFields(cs, block);
             }
-            else if (union != null)
+            else if (union is not null)
             {
                 WriteUnion(cs, union);
             }
             else
             {
-                Debug.Assert(constant != null);
+                Debug.Assert(constant is not null);
                 WriteConstant(cs, constant);
             }
         }
@@ -188,7 +188,7 @@ namespace MS.Internal.MilCodeGen.Helpers
             McgArray array = field.Type as McgArray;
             StringBuilder sb = new StringBuilder();
 
-            if (field.Comment != null)
+            if (field.Comment is not null)
             {
                 cs.BeginBlock(1);
                 cs.Write(
@@ -200,7 +200,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                     );
             }
 
-            if (array != null)
+            if (array is not null)
             {
                 foreach (McgArrayDimension dim in array.Dimensions)
                 {
@@ -216,7 +216,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                 [[/inline]]
                 );
 
-            if (field.Comment != null)
+            if (field.Comment is not null)
             {
                 cs.EndBlock(1);
             }

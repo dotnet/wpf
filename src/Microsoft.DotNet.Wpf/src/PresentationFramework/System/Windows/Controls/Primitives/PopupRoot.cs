@@ -115,7 +115,7 @@ namespace System.Windows.Controls.Primitives
             {
                 TranslateTransform transform = _adornerDecorator.RenderTransform as TranslateTransform;
 
-                if (transform != null)
+                if (transform is not null)
                 {
                     return new Vector(transform.X, transform.Y);
                 }
@@ -166,7 +166,7 @@ namespace System.Windows.Controls.Primitives
                 // To help developers and users identify the real problem, store the
                 // exception, so that it can be reported when the crashing null-ref
                 // occurs.
-                if (popup != null)
+                if (popup is not null)
                 {
                     popup.SavedException = e;
                 }
@@ -176,7 +176,7 @@ namespace System.Windows.Controls.Primitives
 
             desiredSize = _transformDecorator.DesiredSize;
 
-            if (popup != null)
+            if (popup is not null)
             {
                 // If the parent is a Popup, then the desired size may need to be restricted to satisfy placement constraints.
                 bool restrictWidth;
@@ -338,7 +338,7 @@ namespace System.Windows.Controls.Primitives
             BeginAnimation(PopupRoot.OpacityProperty, null);
 
             TranslateTransform transform = _adornerDecorator.RenderTransform as TranslateTransform;
-            if (transform != null)
+            if (transform is not null)
             {
                 transform.BeginAnimation(TranslateTransform.XProperty, null);
                 transform.BeginAnimation(TranslateTransform.YProperty, null);
@@ -359,7 +359,7 @@ namespace System.Windows.Controls.Primitives
 
             // Defer to the child to determine if we should route events up the logical tree.
             FrameworkElement child = Child as FrameworkElement;
-            if(child != null)
+            if(child is not null)
             {
                 return child.IgnoreModelParentBuildRoute(e);
             }

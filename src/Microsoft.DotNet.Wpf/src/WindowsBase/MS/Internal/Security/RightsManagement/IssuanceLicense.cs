@@ -96,7 +96,7 @@ namespace MS.Internal.Security.RightsManagement
             Debug.Assert(!boundLicenseHandle.IsClosed); // it must be either present or not
             // closed handle is an indication of some internal error
 
-            Invariant.Assert((boundLicenseHandle.IsInvalid) || (issuanceLicense != null));
+            Invariant.Assert((boundLicenseHandle.IsInvalid) || (issuanceLicense is not null));
 
             SystemTime validFromSysTime = null;
             SystemTime validUntilSysTime = null;
@@ -110,7 +110,7 @@ namespace MS.Internal.Security.RightsManagement
             }
 
             string referralInfoUriStr = null;
-            if (referralInfoUri != null)
+            if (referralInfoUri is not null)
             {
                 referralInfoUriStr = referralInfoUri.ToString();
             }
@@ -120,7 +120,7 @@ namespace MS.Internal.Security.RightsManagement
             // Handle Marshalling code  
             SafeRightsManagementPubHandle ownerHandle;
 
-            if (owner != null)
+            if (owner is not null)
             {
                 ownerHandle = GetHandleFromUser(owner);
             }
@@ -144,7 +144,7 @@ namespace MS.Internal.Security.RightsManagement
                 out _issuanceLicenseHandle);
 
             Errors.ThrowOnErrorCode(hr);
-            Invariant.Assert((_issuanceLicenseHandle != null) &&
+            Invariant.Assert((_issuanceLicenseHandle is not null) &&
                                        (!_issuanceLicenseHandle.IsInvalid));
 
             Debug.Assert(rightValidityIntervalDays >= 0); // our internal code makes the guarantee that is is not negative
@@ -154,7 +154,7 @@ namespace MS.Internal.Security.RightsManagement
                 SafeNativeMethods.DRMSetIntervalTime(_issuanceLicenseHandle, (uint)rightValidityIntervalDays);
             }
 
-            if (grantCollection != null)
+            if (grantCollection is not null)
             {
                 foreach (ContentGrant grant in grantCollection)
                 {
@@ -163,7 +163,7 @@ namespace MS.Internal.Security.RightsManagement
             }
 
             // Set localized name description info 
-            if (localizedNameDescriptionDictionary != null)
+            if (localizedNameDescriptionDictionary is not null)
             {
                 foreach (KeyValuePair<int, LocalizedNameDescriptionPair> nameDescriptionEntry in localizedNameDescriptionDictionary)
                 {
@@ -172,7 +172,7 @@ namespace MS.Internal.Security.RightsManagement
             }
 
             // Set application specific data 
-            if (applicationSpecificDataDictionary != null)
+            if (applicationSpecificDataDictionary is not null)
             {
                 foreach (KeyValuePair<string, string> applicationSpecificDataEntry in applicationSpecificDataDictionary)
                 {
@@ -196,7 +196,7 @@ namespace MS.Internal.Security.RightsManagement
             }
 
             // set revocation point if required 
-            if (revocationPoint != null)
+            if (revocationPoint is not null)
             {
                 SetRevocationPoint(revocationPoint);
             }
@@ -237,7 +237,7 @@ namespace MS.Internal.Security.RightsManagement
 
         internal void UpdateUnsignedPublishLicense(UnsignedPublishLicense unsignedPublishLicense)
         {
-            Invariant.Assert(unsignedPublishLicense != null);
+            Invariant.Assert(unsignedPublishLicense is not null);
 
             DateTime timeFrom;
             DateTime timeUntil;
@@ -257,7 +257,7 @@ namespace MS.Internal.Security.RightsManagement
 
             unsignedPublishLicense.ReferralInfoName = distributionPointName;
 
-            if (distributionPointUri != null)
+            if (distributionPointUri is not null)
             {
                 unsignedPublishLicense.ReferralInfoUri = new Uri(distributionPointUri);
             }
@@ -307,7 +307,7 @@ namespace MS.Internal.Security.RightsManagement
 
                     // right is null is an indication of a right that we didn't recognize 
                     // we should still continue the enumeration 
-                    if (right != null)
+                    if (right is not null)
                     {
                         // Add the grant for the User Right pair here 
                         unsignedPublishLicense.Grants.Add(
@@ -377,7 +377,7 @@ namespace MS.Internal.Security.RightsManagement
             {
                 try
                 {
-                    if (_issuanceLicenseHandle != null)
+                    if (_issuanceLicenseHandle is not null)
                     {
                         _issuanceLicenseHandle.Dispose();
 
@@ -403,8 +403,8 @@ namespace MS.Internal.Security.RightsManagement
 
         private void AddGrant(ContentGrant grant)
         {
-            Invariant.Assert(grant != null);
-            Invariant.Assert(grant.User != null);
+            Invariant.Assert(grant is not null);
+            Invariant.Assert(grant.User is not null);
 
             SafeRightsManagementPubHandle right = GetRightHandle(grant);
 
@@ -472,7 +472,7 @@ namespace MS.Internal.Security.RightsManagement
                 out rightHandle);
 
             Errors.ThrowOnErrorCode(hr);
-            Debug.Assert((rightHandle != null) && (!rightHandle.IsInvalid));
+            Debug.Assert((rightHandle is not null) && (!rightHandle.IsInvalid));
 
             _pubHandlesList.Add(rightHandle);
 
@@ -505,7 +505,7 @@ namespace MS.Internal.Security.RightsManagement
             }
 
             Errors.ThrowOnErrorCode(hr);
-            Debug.Assert((userHandle != null) && (!userHandle.IsInvalid));
+            Debug.Assert((userHandle is not null) && (!userHandle.IsInvalid));
 
             _pubHandlesList.Add(userHandle);
             return userHandle;
@@ -586,19 +586,19 @@ namespace MS.Internal.Security.RightsManagement
 
             // Convert String Builder values to string values 
             string userNameStr = null;
-            if (userName != null)
+            if (userName is not null)
             {
                 userNameStr = userName.ToString();
             }
 
             string userIdTypeStr = null;
-            if (userIdType != null)
+            if (userIdType is not null)
             {
                 userIdTypeStr = userIdType.ToString();
             }
 
             string userIdStr = null;
-            if (userId != null)
+            if (userId is not null)
             {
                 userIdStr = userId.ToString().ToUpperInvariant();
             }
@@ -648,7 +648,7 @@ namespace MS.Internal.Security.RightsManagement
 
             // check for errors
             Errors.ThrowOnErrorCode(hr);
-            Debug.Assert((userHandle != null) && (!userHandle.IsInvalid));
+            Debug.Assert((userHandle is not null) && (!userHandle.IsInvalid));
 
             // preserve handle so we can destruct it later 
             _pubHandlesList.Add(userHandle);
@@ -801,7 +801,7 @@ namespace MS.Internal.Security.RightsManagement
 
             // check for errors
             Errors.ThrowOnErrorCode(hr);
-            Debug.Assert((rightHandle != null) && (!rightHandle.IsInvalid));
+            Debug.Assert((rightHandle is not null) && (!rightHandle.IsInvalid));
 
             // preserve handle so we can destruct it later 
             _pubHandlesList.Add(rightHandle);
@@ -837,7 +837,7 @@ namespace MS.Internal.Security.RightsManagement
                                                                         out officialFlagTemp);
             Errors.ThrowOnErrorCode(hr);
 
-            if (ownerHandleTemp != null)
+            if (ownerHandleTemp is not null)
             {
                 // As a result of calling DRMGetIssuanceLicenseInfo twice,
                 // we are getting 2 handles. We are going to dispose the first one 
@@ -882,7 +882,7 @@ namespace MS.Internal.Security.RightsManagement
             timeUntil = timeUntilTemp.GetDateTime(DateTime.MaxValue);
 
             // only if we got some data back we shall try to process it 
-            if (distributionPointNameTemp != null)
+            if (distributionPointNameTemp is not null)
             {
                 distributionPointName = distributionPointNameTemp.ToString();
             }
@@ -892,7 +892,7 @@ namespace MS.Internal.Security.RightsManagement
             }
 
             // only if we got some data back we shall try to process it 
-            if (distributionPointUriTemp != null)
+            if (distributionPointUriTemp is not null)
             {
                 distributionPointUri = distributionPointUriTemp.ToString();
             }
@@ -904,7 +904,7 @@ namespace MS.Internal.Security.RightsManagement
             // if we have owner let's convert it to a user and preserve 
             // handler for further destruction
             owner = null;
-            if (ownerHandleTemp != null)
+            if (ownerHandleTemp is not null)
             {
                 _pubHandlesList.Add(ownerHandleTemp);
 
@@ -1034,7 +1034,7 @@ namespace MS.Internal.Security.RightsManagement
             //Disposed instance of this class is a 
 
 
-            Invariant.Assert((_issuanceLicenseHandle != null) &&
+            Invariant.Assert((_issuanceLicenseHandle is not null) &&
                                        (!_issuanceLicenseHandle.IsInvalid));
         }
 

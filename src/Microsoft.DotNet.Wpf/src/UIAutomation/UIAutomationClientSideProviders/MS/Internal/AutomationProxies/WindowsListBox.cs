@@ -128,7 +128,7 @@ namespace MS.Internal.AutomationProxies
 
                 default :
                     ProxySimple el = (ProxyHwnd)WindowsListBox.Create(hwnd, 0);
-                    if (el != null)
+                    if (el is not null)
                     {
                         el.DispatchEvents(eventId, idProp, idObject, idChild);
                     }
@@ -160,7 +160,7 @@ namespace MS.Internal.AutomationProxies
                 // delegate work to the NonClientArea implementation of IScrollProvider
                 IScrollProvider scroll = NonClientArea.Create(_hwnd, 0) as IScrollProvider;
 
-                if (scroll != null)
+                if (scroll is not null)
                 {
                     return scroll;
                 }
@@ -234,7 +234,7 @@ namespace MS.Internal.AutomationProxies
             // start with the scrollbars
             ProxySimple ret = base.GetPreviousSibling (child);
 
-            if (ret != null)
+            if (ret is not null)
             {
                 return ret;
             }
@@ -277,7 +277,7 @@ namespace MS.Internal.AutomationProxies
             // start with the scrollbars
             ProxySimple ret = base.GetFirstChild ();
 
-            if (ret != null)
+            if (ret is not null)
             {
                 return ret;
             }
@@ -511,7 +511,7 @@ namespace MS.Internal.AutomationProxies
                 return;
             }
 
-            if (el != null)
+            if (el is not null)
             {
                 el.DispatchEvents(eventId, idProp, idObject, idChild);
             }
@@ -523,7 +523,7 @@ namespace MS.Internal.AutomationProxies
             ProxySimple el = null;
 
             if ((eventId == NativeMethods.EventObjectShow || eventId == NativeMethods.EventObjectHide) &&
-                (automationProperty != null && automationProperty == ExpandCollapsePattern.ExpandCollapseStateProperty))
+                (automationProperty is not null && automationProperty == ExpandCollapsePattern.ExpandCollapseStateProperty))
             {
                 if (Misc.IsBitSet(Misc.GetWindowStyle(hwnd), NativeMethods.LBS_COMBOBOX))
                 {
@@ -542,7 +542,7 @@ namespace MS.Internal.AutomationProxies
                 }
             }
 
-            if (el != null)
+            if (el is not null)
             {
                 el.DispatchEvents(eventId, idProp, idObject, idChild);
             }
@@ -847,7 +847,7 @@ namespace MS.Internal.AutomationProxies
                 if (!multipleSelection)
                 {
                     IRawElementProviderSimple container = ((ISelectionItemProvider)this).SelectionContainer;
-                    bool selectionRequired = container != null ? ((ISelectionProvider)container).IsSelectionRequired : true;
+                    bool selectionRequired = container is not null ? ((ISelectionProvider)container).IsSelectionRequired : true;
 
                     // For single selection containers that IsSelectionRequired == false and nothing is selected
                     // an AddToSelection is valid.

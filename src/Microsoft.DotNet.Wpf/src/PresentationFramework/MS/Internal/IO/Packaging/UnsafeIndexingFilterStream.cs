@@ -282,7 +282,7 @@ namespace MS.Internal.IO.Packaging
             {
                 if (disposing)
                 {
-                    if (_oleStream != null)
+                    if (_oleStream is not null)
                     {
                         MS.Win32.UnsafeNativeMethods.SafeReleaseComObject(_oleStream);
                     }

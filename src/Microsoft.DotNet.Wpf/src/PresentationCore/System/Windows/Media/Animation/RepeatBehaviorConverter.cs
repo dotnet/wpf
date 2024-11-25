@@ -72,7 +72,7 @@ namespace System.Windows.Media.Animation
         {
             string stringValue = value as string;
 
-            if (stringValue != null)
+            if (stringValue is not null)
             {
                 stringValue = stringValue.Trim();
 
@@ -115,7 +115,7 @@ namespace System.Windows.Media.Animation
             Type destinationType)
         {
             if (   value is RepeatBehavior
-                && destinationType != null)
+                && destinationType is not null)
             {
                 RepeatBehavior repeatBehavior = (RepeatBehavior)value;
 

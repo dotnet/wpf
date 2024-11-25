@@ -59,7 +59,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         {
             InitializeMembers();
 
-            return (CurrentPublishLicense != null);
+            return (CurrentPublishLicense is not null);
         }
     }
 
@@ -176,7 +176,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
                                                             user);
 
         Trace.SafeWriteIf(
-            (_secureEnvironment != null),
+            (_secureEnvironment is not null),
             Trace.Rights,
             "SecureEnvironment was initialized for a specific user.");
 
@@ -202,13 +202,13 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         useLicense = _encryptedPackageEnvelope
                 .RightsManagementInformation.LoadUseLicense(_user);
 
-        if (useLicense != null)
+        if (useLicense is not null)
         {
             Trace.SafeWrite(Trace.Rights, "Existing use license was found.");
             _useLicense = useLicense;
         }
 
-        return (useLicense != null);
+        return (useLicense is not null);
     }
 
     /// <summary>
@@ -236,7 +236,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
             rmException = e;
         }
 
-        if (useLicense != null)
+        if (useLicense is not null)
         {
             Trace.SafeWrite(Trace.Rights, "A new use license was acquired.");
 
@@ -250,7 +250,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
                 rmException.Message);
         }
 
-        return (useLicense != null);
+        return (useLicense is not null);
     }
 
     /// <summary>
@@ -317,7 +317,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         cryptoProvider =
             _encryptedPackageEnvelope.RightsManagementInformation.CryptoProvider;
 
-        if (cryptoProvider != null)
+        if (cryptoProvider is not null)
         {
             grants = cryptoProvider.BoundGrants;
         }
@@ -339,7 +339,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         // CryptoProvider
 
         Invariant.Assert(
-            grants != null,
+            grants is not null,
             "CryptoProvider had no bound grants.");
 
         _rmUseLicense = ConvertGrantList(_user, grants);
@@ -396,18 +396,18 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         using (RegistryKey defaultRMKey = Registry.CurrentUser.OpenSubKey(
             _registryLocationForDefaultUser))
         {
-            if (defaultRMKey != null)
+            if (defaultRMKey is not null)
             {
                 // Get account name and validate it as a string.
                 object keyValue = defaultRMKey.GetValue(_registryValueNameForAccountName);
-                if ((keyValue != null) && 
+                if ((keyValue is not null) && 
                     (defaultRMKey.GetValueKind(_registryValueNameForAccountName) == RegistryValueKind.String))
                 {
                     defaultUserName = (string)keyValue;
                 }
                 // Get account type and validate it as an int.
                 keyValue = defaultRMKey.GetValue(_registryValueNameForAccountType);
-                if ((keyValue != null) && 
+                if ((keyValue is not null) && 
                     (defaultRMKey.GetValueKind(_registryValueNameForAccountType) == RegistryValueKind.DWord))
                 {
                     defaultAccountType = (int)keyValue;
@@ -416,7 +416,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         }
 
         //lets match up the user/type string with an actual avalable user
-        if ((users.Count > 0) && (defaultUserName != null))
+        if ((users.Count > 0) && (defaultUserName is not null))
         {
             RightsManagementUser user = RightsManagementUser.CreateUser(
                 defaultUserName,
@@ -464,7 +464,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
             using (RegistryKey defaultRMKey = Registry.CurrentUser.CreateSubKey(
                 _registryLocationForDefaultUser))
             {
-                if (defaultRMKey != null)
+                if (defaultRMKey is not null)
                 {
                     defaultRMKey.SetValue(
                         _registryValueNameForAccountName, defaultUserName);
@@ -495,9 +495,9 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
     {
         if (IsProtected &&
             _rightsDictionary is null &&
-            _rmUseLicense != null &&
+            _rmUseLicense is not null &&
             _rmUseLicense.HasPermission(RightsManagementPermissions.AllowOwner) &&
-            _unsignedPublishLicense != null)
+            _unsignedPublishLicense is not null)
         {
             UnsignedPublishLicense unsignedLicense = _unsignedPublishLicense;
 
@@ -603,7 +603,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
 
         RightsManagementLicense currentUseLicense =
             ((IRightsManagementProvider)this).CurrentUseLicense;
-        if (currentUseLicense != null &&
+        if (currentUseLicense is not null &&
             !HasPermission(currentUseLicense, RightsManagementPermissions.AllowEdit))
         {
             return null;
@@ -618,7 +618,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
             cp);
 
         // Always save the use license back into any new RM protected document
-        if (result != null)
+        if (result is not null)
         {
             ((IRightsManagementProvider)this).SaveUseLicense(result);
         }
@@ -763,7 +763,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
 
         RightsManagementUser currentOwner = null;
 
-        if (currentOwnerFromLicense != null)
+        if (currentOwnerFromLicense is not null)
         {
             currentOwner = RightsManagementUser.CreateUser(
                 currentOwnerFromLicense);
@@ -776,7 +776,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         {
             ContentGrant currentOwnerGrant = null;
 
-            if (currentOwner != null)
+            if (currentOwner is not null)
             {
                 currentOwnerGrant = CreateGrant(
                     currentOwner,
@@ -787,7 +787,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
 
             unsignedPublishLicense.Owner = _user;
 
-            if (currentOwnerGrant != null)
+            if (currentOwnerGrant is not null)
             {
                 unsignedPublishLicense.Grants.Add(currentOwnerGrant);
             }
@@ -832,7 +832,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         _temporaryRightsDictionary = null;
 
         // If the RightsDictionary exists then set use license.
-        if (_rightsDictionary != null)
+        if (_rightsDictionary is not null)
         {
             _rmUseLicense = _rightsDictionary[_user];
         }
@@ -890,7 +890,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
 
         // Save the current set of licenses. In case the publish license in the
         // new encrypted package envelope is the same, these will be restored.
-        if (_publishLicenseFromEnvelope != null)
+        if (_publishLicenseFromEnvelope is not null)
         {
             savedPublishLicense = _publishLicenseFromEnvelope;
             savedUseLicense = _useLicense;
@@ -906,8 +906,8 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         publishLicenseChanged = true;
 
         // If both publish licenses are non-null, compare them
-        if (savedPublishLicense != null &&
-            _publishLicenseFromEnvelope != null)
+        if (savedPublishLicense is not null &&
+            _publishLicenseFromEnvelope is not null)
         {
             string serializedSavedPublishLicense = string.Empty;
             string serializedNewPublishLicense = string.Empty;
@@ -968,7 +968,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
     /// </summary>
     public void Dispose()
     {
-        if (_cryptoProviders != null)
+        if (_cryptoProviders is not null)
         {
             foreach (CryptoProvider cryptoProvider in _cryptoProviders)
             {
@@ -1013,7 +1013,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
 
         // Add a reference to the CryptoProvider to the list of CryptoProviders
         // for disposal
-        if (cryptoProvider != null)
+        if (cryptoProvider is not null)
         {
             if (_cryptoProviders is null)
             {
@@ -1075,7 +1075,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
 
         AddReferralInfo(rmLicense);
 
-        if (grantList != null)
+        if (grantList is not null)
         {
             bool canSign = false;
 
@@ -1266,7 +1266,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
     /// </summary>
     private void InitializeMembers()
     {
-        if (_encryptedPackageEnvelope != null &&
+        if (_encryptedPackageEnvelope is not null &&
             _publishLicenseFromEnvelope is null)
         {
             RightsManagementInformation rmInfo =
@@ -1291,7 +1291,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
     /// </summary>
     private void CleanUpSecureEnvironment()
     {
-        if (_secureEnvironment != null)
+        if (_secureEnvironment is not null)
         {
              _secureEnvironment.Dispose();
             _secureEnvironment = null;
@@ -1329,7 +1329,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
     {
         ICollection<ContentGrant> grants = null;
 
-        if (unsignedLicense != null)
+        if (unsignedLicense is not null)
         {
             grants = unsignedLicense.Grants;
         }
@@ -1348,7 +1348,7 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         System.Diagnostics.ProcessModule processModule = currentProcess.MainModule;
 
         Invariant.Assert(
-            processModule != null,
+            processModule is not null,
             "Failed to get Process Module");
         
         string fileName = processModule.FileName;
@@ -1421,8 +1421,8 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
             // in the Use License's ApplicationData, this signifies that license 
             // caching should be disabled (and thus we will return false here)
             result =
-                !(_useLicense != null &&
-                _useLicense.ApplicationData != null &&
+                !(_useLicense is not null &&
+                _useLicense.ApplicationData is not null &&
                 _useLicense.ApplicationData.Contains(_noLicCacheKeyValuePair));
             
             return result;            

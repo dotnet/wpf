@@ -108,7 +108,7 @@ namespace System.Windows.Media
             WritePreamble();            
             
             Debug.Assert(_open);
-            Debug.Assert(rootDrawingGroupChildren != null);
+            Debug.Assert(rootDrawingGroupChildren is not null);
 
             if (!_openedForAppend)
             {
@@ -235,7 +235,7 @@ namespace System.Windows.Media
 
             // Draw the opacity mask property
             //
-            if (OpacityMask != null)
+            if (OpacityMask is not null)
             {
                 ctx.PushOpacityMask(OpacityMask);
                 popCount++;
@@ -247,7 +247,7 @@ namespace System.Windows.Media
             
             // Push the current value of the effect property, which
             // is what BitmapEffect returns.
-            if (BitmapEffect != null)
+            if (BitmapEffect is not null)
             {
                 // Disable warning about obsolete method.  This code must remain active 
                 // until we can remove the public BitmapEffect APIs.
@@ -265,12 +265,12 @@ namespace System.Windows.Media
             DrawingCollection collection = Children;
 
             // Call Walk on each child
-            if (collection != null)
+            if (collection is not null)
             {
                 for (int i = 0; i < collection.Count; i++)
                 {
                     Drawing drawing = collection.Internal_GetItem(i);
-                    if (drawing != null)
+                    if (drawing is not null)
                     {
                         drawing.WalkCurrentValue(ctx);
 

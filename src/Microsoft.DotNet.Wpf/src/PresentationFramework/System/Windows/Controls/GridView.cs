@@ -55,7 +55,7 @@ namespace System.Windows.Controls
         {
             GridViewColumn c = column as GridViewColumn;
 
-            if (c != null)
+            if (c is not null)
             {
                 Columns.Add(c);
             }
@@ -199,13 +199,13 @@ namespace System.Windows.Controls
         public static bool ShouldSerializeColumnCollection(DependencyObject obj)
         {
             ListViewItem listViewItem = obj as ListViewItem;
-            if (listViewItem != null)
+            if (listViewItem is not null)
             {
                 ListView listView = listViewItem.ParentSelector as ListView;
-                if (listView != null)
+                if (listView is not null)
                 {
                     GridView gridView = listView.View as GridView;
-                    if (gridView != null)
+                    if (gridView is not null)
                     {
                         // if GridViewColumnCollection attached on ListViewItem is Details.Columns, it should't be serialized.
                         GridViewColumnCollection localValue = listViewItem.ReadLocalValue(ColumnCollectionProperty) as GridViewColumnCollection;
@@ -503,7 +503,7 @@ namespace System.Windows.Controls
         {
             base.OnInheritanceContextChangedCore(args);
 
-            if (_columns != null)
+            if (_columns is not null)
             {
                 foreach (GridViewColumn column in _columns)
                 {
@@ -515,7 +515,7 @@ namespace System.Windows.Controls
         // Propagate theme changes to contained headers
         internal override void OnThemeChanged()
         {
-            if (_columns != null)
+            if (_columns is not null)
             {
                 for (int i=0; i<_columns.Count; i++)
                 {

@@ -196,7 +196,7 @@ namespace System.Windows.Media.Media3D
         {
             VerifyAPIReadOnly(value);
 
-            return (value != null && (value.InternalVisualParent == _owner));
+            return (value is not null && (value.InternalVisualParent == _owner));
         }
 
         /// <summary>
@@ -478,7 +478,7 @@ namespace System.Windows.Media.Media3D
 
             VerifyAPIReadWrite(value);
 
-            if (value.InternalVisualParent != null)
+            if (value.InternalVisualParent is not null)
             {
                 throw new System.ArgumentException(SR.VisualCollection_VisualHasParent);
             }
@@ -551,7 +551,7 @@ namespace System.Windows.Media.Media3D
         [Conditional("DEBUG")]
         private void Debug_ICC()
         {
-            Debug.Assert(_owner != null, "How did an Visual3DCollection get constructed without an owner?");
+            Debug.Assert(_owner is not null, "How did an Visual3DCollection get constructed without an owner?");
 
             Dictionary<Visual3D, string> duplicates = new Dictionary<Visual3D, string>();
 
@@ -613,7 +613,7 @@ namespace System.Windows.Media.Media3D
 
             internal Enumerator(Visual3DCollection list)
             {
-                Debug.Assert(list != null, "list may not be null.");
+                Debug.Assert(list is not null, "list may not be null.");
 
                 _list = list;
                 _index = -1;

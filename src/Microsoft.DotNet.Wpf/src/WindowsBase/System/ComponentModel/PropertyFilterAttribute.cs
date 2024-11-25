@@ -52,7 +52,7 @@ namespace System.ComponentModel
         public override bool Equals(object value) 
         {
             PropertyFilterAttribute a = value as PropertyFilterAttribute;
-            if (a != null && a._filter.Equals(_filter)) 
+            if (a is not null && a._filter.Equals(_filter)) 
             {
                 return true;
             }

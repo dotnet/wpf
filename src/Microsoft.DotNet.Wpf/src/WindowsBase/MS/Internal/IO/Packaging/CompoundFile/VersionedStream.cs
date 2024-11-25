@@ -157,7 +157,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             get
             {
-                return (_stream != null) && _stream.CanRead && _versionOwner.IsReadable;
+                return (_stream is not null) && _stream.CanRead && _versionOwner.IsReadable;
             }
         }
 
@@ -169,7 +169,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             get
             {
-                return (_stream != null) && _stream.CanSeek && _versionOwner.IsReadable;
+                return (_stream is not null) && _stream.CanSeek && _versionOwner.IsReadable;
             }
         }
 
@@ -181,7 +181,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             get
             {
-                return (_stream != null) && _stream.CanWrite && _versionOwner.IsUpdatable;
+                return (_stream is not null) && _stream.CanWrite && _versionOwner.IsUpdatable;
             }
         }
         #endregion
@@ -245,7 +245,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             try
             {
-                if (disposing && (_stream != null))
+                if (disposing && (_stream is not null))
                 {
                     _stream.Close();
                 }

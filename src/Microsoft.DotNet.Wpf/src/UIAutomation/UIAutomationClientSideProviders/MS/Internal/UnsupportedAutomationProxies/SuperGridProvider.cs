@@ -84,7 +84,7 @@ namespace MS.Internal.UnsupportedAutomationProxies
         // Process all the Logical and Raw Element Properties
         internal override object GetElementProperty (AutomationProperty idProp)
         {
-            if (_acc != null)
+            if (_acc is not null)
             {
                 if (idProp == AutomationElement.NameProperty)
                     return _acc.Value;

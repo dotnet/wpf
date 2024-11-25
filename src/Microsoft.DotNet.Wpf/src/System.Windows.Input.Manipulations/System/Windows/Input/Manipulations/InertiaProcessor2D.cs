@@ -329,21 +329,21 @@ namespace System.Windows.Input.Manipulations
             ArgumentNullException.ThrowIfNull(parameters);
 
             InertiaTranslationBehavior2D translationParameters = parameters as InertiaTranslationBehavior2D;
-            if (translationParameters != null)
+            if (translationParameters is not null)
             {
                 TranslationBehavior = translationParameters;
                 return;
             }
 
             InertiaRotationBehavior2D rotationParameters = parameters as InertiaRotationBehavior2D;
-            if (rotationParameters != null)
+            if (rotationParameters is not null)
             {
                 RotationBehavior = rotationParameters;
                 return;
             }
 
             InertiaExpansionBehavior2D expansionParameters = parameters as InertiaExpansionBehavior2D;
-            if (expansionParameters != null)
+            if (expansionParameters is not null)
             {
                 ExpansionBehavior = expansionParameters;
                 return;
@@ -414,17 +414,17 @@ namespace System.Windows.Input.Manipulations
             string propertyName)
             where TBehavior : InertiaParameters2D
         {
-            Debug.Assert(handler != null);
+            Debug.Assert(handler is not null);
 
             if (!object.ReferenceEquals(newBehavior, currentBehavior))
             {
-                if (currentBehavior != null)
+                if (currentBehavior is not null)
                 {
                     currentBehavior.Changed -= handler;
                     currentBehavior = null;
                 }
                 Reset();
-                if (newBehavior != null)
+                if (newBehavior is not null)
                 {
                     currentBehavior = newBehavior;
                     currentBehavior.Changed += handler;
@@ -786,7 +786,7 @@ namespace System.Windows.Input.Manipulations
 
                 // raise Completed event
                 EventHandler<Manipulation2DCompletedEventArgs> eventHandler = Completed;
-                if (eventHandler != null)
+                if (eventHandler is not null)
                 {
                     // calculate scale
                     double totalScale = this.initialScale;
@@ -830,7 +830,7 @@ namespace System.Windows.Input.Manipulations
             {
                 // raise Delta event
                 EventHandler<Manipulation2DDeltaEventArgs> eventHandler = Delta;
-                if (eventHandler != null)
+                if (eventHandler is not null)
                 {
                     // calculate scale
                     double totalScale = this.initialScale;
@@ -984,15 +984,15 @@ namespace System.Windows.Input.Manipulations
             {
                 case ProcessorState.NotInitialized:
                     // Check our various inertia behaviors to make sure they're in valid states
-                    if (this.translationBehavior != null)
+                    if (this.translationBehavior is not null)
                     {
                         this.translationBehavior.CheckValid();
                     }
-                    if (this.expansionBehavior != null)
+                    if (this.expansionBehavior is not null)
                     {
                         this.expansionBehavior.CheckValid();
                     }
-                    if (this.rotationBehavior != null)
+                    if (this.rotationBehavior is not null)
                     {
                         this.rotationBehavior.CheckValid();
                     }
@@ -1238,7 +1238,7 @@ namespace System.Windows.Input.Manipulations
             // constructs extrapolation state
             public ExtrapolationState(InitialState initialState)
             {
-                Debug.Assert(initialState != null);
+                Debug.Assert(initialState is not null);
                 Debug.Assert(initialState.AbsoluteDeceleration >= 0 || double.IsNaN(initialState.AbsoluteDeceleration));
                 Debug.Assert(initialState.AbsoluteOffset >= 0 || double.IsNaN(initialState.AbsoluteOffset));
 

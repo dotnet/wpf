@@ -141,11 +141,11 @@ namespace System.Windows.Markup
 
                 // Get the value serialization context
                 IValueSerializerContext valueSerializerContext = context as IValueSerializerContext;
-                if( valueSerializerContext != null )
+                if( valueSerializerContext is not null )
                 {
                     // And from that get a System.Type serializer
                     ValueSerializer typeSerializer = valueSerializerContext.GetValueSerializerFor(typeof(Type));
-                    if( typeSerializer != null )
+                    if( typeSerializer is not null )
                     {
                         // And use that to create the string-ized class name
                         string systemClassName = typeSerializer.ConvertToString(keyType, valueSerializerContext);

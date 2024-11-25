@@ -210,7 +210,7 @@ namespace System.Windows.Controls.Primitives
             base.OnMouseLeave(e);
 
             // if we don't have capture and the mouse left (but the item isn't selected), then we shouldn't have anything selected.
-            if (!HasCapture && !IsMouseOver && CurrentSelection != null && !CurrentSelection.IsKeyboardFocused && !CurrentSelection.IsSubmenuOpen)
+            if (!HasCapture && !IsMouseOver && CurrentSelection is not null && !CurrentSelection.IsKeyboardFocused && !CurrentSelection.IsSubmenuOpen)
             {
                 CurrentSelection = null;
             }
@@ -293,7 +293,7 @@ namespace System.Windows.Controls.Primitives
                 else
                 {
                     // Okay, we weren't in menu mode but we could have had a selection (mouse hovering), so clear that
-                    if (CurrentSelection != null)
+                    if (CurrentSelection is not null)
                     {
                         CurrentSelection = null;
                     }
@@ -310,7 +310,7 @@ namespace System.Windows.Controls.Primitives
             if (AutomationPeer.ListenerExists(automationEvent))
             {
                 AutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(this);
-                if (peer != null)
+                if (peer is not null)
                 {
                     if (open)
                     {
@@ -338,7 +338,7 @@ namespace System.Windows.Controls.Primitives
             // the one and only top-level menu.
             MenuItem newSelectedMenuItem = e.OriginalSource as MenuItem;
 
-            if (newSelectedMenuItem != null)
+            if (newSelectedMenuItem is not null)
             {
                 MenuBase menu = (MenuBase)sender;
 
@@ -351,14 +351,14 @@ namespace System.Windows.Controls.Primitives
                     {
                         bool wasSubmenuOpen = false;
 
-                        if (menu.CurrentSelection != null)
+                        if (menu.CurrentSelection is not null)
                         {
                             wasSubmenuOpen = menu.CurrentSelection.IsSubmenuOpen;
                             menu.CurrentSelection.SetCurrentValueInternal(MenuItem.IsSubmenuOpenProperty, BooleanBoxes.FalseBox);
                         }
 
                         menu.CurrentSelection = newSelectedMenuItem;
-                        if (menu.CurrentSelection != null && wasSubmenuOpen)
+                        if (menu.CurrentSelection is not null && wasSubmenuOpen)
                         {
                             // Only open the submenu if it's a header (i.e. has items)
                             MenuItemRole role = menu.CurrentSelection.Role;
@@ -398,7 +398,7 @@ namespace System.Windows.Controls.Primitives
 
             DependencyObject curr = node;
 
-            while (curr != null)
+            while (curr is not null)
             {
                 if (curr == reference)
                 {
@@ -408,7 +408,7 @@ namespace System.Windows.Controls.Primitives
 
                 // Find popup if curr is a PopupRoot
                 PopupRoot popupRoot = curr as PopupRoot;
-                if (popupRoot != null)
+                if (popupRoot is not null)
                 {
                     //Now Popup does not have a visual link to its parent (for context menu)
                     //it is stored in its parent's arraylist (DP)
@@ -417,7 +417,7 @@ namespace System.Windows.Controls.Primitives
 
                     curr = popup;
 
-                    if (popup != null)
+                    if (popup is not null)
                     {
                         // Try the poup Parent
                         curr = popup.Parent;
@@ -450,7 +450,7 @@ namespace System.Windows.Controls.Primitives
             {
                 case Key.Escape:
                     {
-                        if (CurrentSelection != null && CurrentSelection.IsSubmenuOpen)
+                        if (CurrentSelection is not null && CurrentSelection.IsSubmenuOpen)
                         {
                             CurrentSelection.SetCurrentValueInternal(MenuItem.IsSubmenuOpenProperty, BooleanBoxes.FalseBox);
                             OpenOnMouseEnter = false;
@@ -502,7 +502,7 @@ namespace System.Windows.Controls.Primitives
             if (UsesItemContainerTemplate)
             {
                 DataTemplate itemContainerTemplate = ItemContainerTemplateSelector.SelectTemplate(currentItem, this);
-                if (itemContainerTemplate != null)
+                if (itemContainerTemplate is not null)
                 {
                     object itemContainer = itemContainerTemplate.LoadContent();
                     if (itemContainer is MenuItem || itemContainer is Separator)
@@ -583,7 +583,7 @@ namespace System.Windows.Controls.Primitives
 
             MenuItem menuItemSource = e.OriginalSource as MenuItem;
 
-            if ((menuItemSource != null) && !menuItemSource.StaysOpenOnClick)
+            if ((menuItemSource is not null) && !menuItemSource.StaysOpenOnClick)
             {
                 MenuItemRole role = menuItemSource.Role;
 
@@ -619,7 +619,7 @@ namespace System.Windows.Controls.Primitives
                 // windows to retain focus when menus are dismissed.
                 IntPtr hwndWithFocus = MS.Win32.UnsafeNativeMethods.GetFocus();
                 HwndSource hwndSourceWithFocus = hwndWithFocus != IntPtr.Zero ? HwndSource.CriticalFromHwnd(hwndWithFocus) : null;
-                if(hwndSourceWithFocus != null)
+                if(hwndSourceWithFocus is not null)
                 {
                     // We restore focus by setting focus to the parent's focus
                     // scope.  This may not seem correct, because it presumes
@@ -652,10 +652,10 @@ namespace System.Windows.Controls.Primitives
                     //     parent = VisualTreeHelper.GetParent(this);
                     // }
 
-                    // if (parent != null)
+                    // if (parent is not null)
                     // {
                     //     IInputElement parentScope = FocusManager.GetFocusScope(parent) as IInputElement;
-                    //     if (parentScope != null)
+                    //     if (parentScope is not null)
                     //     {
                     //         Keyboard.Focus(parentScope);
                     //     }
@@ -688,7 +688,7 @@ namespace System.Windows.Controls.Primitives
         internal static void SetSuspendingPopupAnimation(ItemsControl menu, MenuItem ignore, bool suspend)
         {
             // menu can be either a MenuBase or MenuItem
-            if (menu != null)
+            if (menu is not null)
             {
                 int itemsCount = menu.Items.Count;
 
@@ -696,7 +696,7 @@ namespace System.Windows.Controls.Primitives
                 {
                     MenuItem mi = menu.ItemContainerGenerator.ContainerFromIndex(i) as MenuItem;
 
-                    if (mi != null && mi != ignore && mi.IsSuspendingPopupAnimation != suspend)
+                    if (mi is not null && mi != ignore && mi.IsSuspendingPopupAnimation != suspend)
                     {
                         mi.IsSuspendingPopupAnimation = suspend;
 
@@ -758,14 +758,14 @@ namespace System.Windows.Controls.Primitives
                 // Even if we don't have capture we should move focus when one item is already focused.
                 bool wasFocused = false;
 
-                if (_currentSelection != null)
+                if (_currentSelection is not null)
                 {
                     wasFocused = _currentSelection.IsKeyboardFocused;
                     _currentSelection.SetCurrentValueInternal(MenuItem.IsSelectedProperty, BooleanBoxes.FalseBox);
                 }
 
                 _currentSelection = value;
-                if (_currentSelection != null)
+                if (_currentSelection is not null)
                 {
                     _currentSelection.SetCurrentValueInternal(MenuItem.IsSelectedProperty, BooleanBoxes.TrueBox);
                     if (wasFocused)
@@ -837,7 +837,7 @@ namespace System.Windows.Controls.Primitives
                     {
                         bool wasSubmenuOpen = false;
 
-                        if (CurrentSelection != null)
+                        if (CurrentSelection is not null)
                         {
                             wasSubmenuOpen = CurrentSelection.IsSubmenuOpen;
                             CurrentSelection.IsSubmenuOpen = false;
@@ -897,7 +897,7 @@ namespace System.Windows.Controls.Primitives
         {
             Debug.Assert(_pushedMenuMode is null);
             _pushedMenuMode = PresentationSource.CriticalFromVisual(this);
-            Debug.Assert(_pushedMenuMode != null);
+            Debug.Assert(_pushedMenuMode is not null);
             IsAcquireFocusMenuMode = isAcquireFocusMenuMode;
             InputManager.UnsecureCurrent.PushMenuMode(_pushedMenuMode);
         }
@@ -906,7 +906,7 @@ namespace System.Windows.Controls.Primitives
         //             Do not rename, remove, or change the method signature without fixing RibbonMenuButton.
         private void PopMenuMode()
         {
-            Debug.Assert(_pushedMenuMode != null);
+            Debug.Assert(_pushedMenuMode is not null);
 
             PresentationSource pushedMenuMode = _pushedMenuMode;
             _pushedMenuMode = null;
@@ -920,7 +920,7 @@ namespace System.Windows.Controls.Primitives
         {
             get
             {
-                return _pushedMenuMode != null;
+                return _pushedMenuMode is not null;
             }
         }
 

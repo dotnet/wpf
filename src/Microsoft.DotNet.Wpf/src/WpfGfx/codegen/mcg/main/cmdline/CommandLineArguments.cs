@@ -188,7 +188,7 @@ namespace Utilities
             {
                 Debug.Assert(!argumentMap.ContainsKey(argument.LongName));
                 this.argumentMap[argument.LongName] = argument;
-                if (argument.ExplicitShortName && argument.ShortName != null && argument.ShortName.Length > 0)
+                if (argument.ExplicitShortName && argument.ShortName is not null && argument.ShortName.Length > 0)
                 {
                     Debug.Assert(!argumentMap.ContainsKey(argument.ShortName));
                     this.argumentMap[argument.ShortName] = argument;
@@ -198,7 +198,7 @@ namespace Utilities
             // add implicit names which don't collide to map
             foreach (Argument argument in this.arguments)
             {
-                if (!argument.ExplicitShortName && argument.ShortName != null && argument.ShortName.Length > 0)
+                if (!argument.ExplicitShortName && argument.ShortName is not null && argument.ShortName.Length > 0)
                 {
                     if (!argumentMap.ContainsKey(argument.ShortName))
                         this.argumentMap[argument.ShortName] = argument;
@@ -230,7 +230,7 @@ namespace Utilities
         private bool ParseArgumentList(string[] args, object destination)
         {
             bool hadError = false;
-            if (args != null)
+            if (args is not null)
             {
                 foreach (string argument in args)
                 {
@@ -273,7 +273,7 @@ namespace Utilities
                             hadError |= ParseArgumentList(nestedArguments, destination);
                             break;
                         default:
-                            if (this.defaultArgument != null)
+                            if (this.defaultArgument is not null)
                             {
                                 hadError |= !this.defaultArgument.SetValue(argument, destination);
                             }
@@ -306,7 +306,7 @@ namespace Utilities
             {
                 hadError |= arg.Finish(destination);
             }
-            if (this.defaultArgument != null)
+            if (this.defaultArgument is not null)
             {
                 hadError |= this.defaultArgument.Finish(destination);
             }
@@ -384,7 +384,7 @@ namespace Utilities
                 builder.Append("Read response file for more options");
                 builder.Append(Utility.NewLine);
                 
-                if (this.defaultArgument != null)
+                if (this.defaultArgument is not null)
                 {
                     oldLength = builder.Length;
                     builder.Append("    <");
@@ -523,7 +523,7 @@ namespace Utilities
         
         private static bool ExplicitShortName(CommandLineArgumentAttribute attribute)
         {
-            return (attribute != null && !attribute.DefaultShortName);
+            return (attribute is not null && !attribute.DefaultShortName);
         }
         
         private static Type ElementType(FieldInfo field)
@@ -536,7 +536,7 @@ namespace Utilities
         
         private static CommandLineArgumentType Flags(CommandLineArgumentAttribute attribute, FieldInfo field)
         {
-            if (attribute != null)
+            if (attribute is not null)
                 return attribute.Type;
             else if (IsCollectionType(field.FieldType))
                 return CommandLineArgumentType.MultipleUnique;
@@ -551,7 +551,7 @@ namespace Utilities
             
         private static bool IsValidElementType(Type type)
         {
-            return type != null && (
+            return type is not null && (
                 type == typeof(int) ||
                 type == typeof(uint) ||
                 type == typeof(string) ||
@@ -571,14 +571,14 @@ namespace Utilities
                 this.field = field;
                 this.seenValue = false;
                 this.reporter = reporter;
-                this.isDefault = attribute != null && attribute is DefaultCommandLineArgumentAttribute;
+                this.isDefault = attribute is not null && attribute is DefaultCommandLineArgumentAttribute;
                 
                 if (IsCollection)
                 {
                     this.collectionValues = new ArrayList();
                 }
                 
-                Debug.Assert(this.longName != null && this.longName.Length > 0);
+                Debug.Assert(this.longName is not null && this.longName.Length > 0);
                 Debug.Assert(!IsCollection || AllowMultiple, "Collection arguments must have allow multiple");
                 Debug.Assert(!Unique || IsCollection, "Unique only applicable to collection arguments");
                 Debug.Assert(IsValidElementType(Type) ||
@@ -661,7 +661,7 @@ namespace Utilities
             {
                 // null is only valid for bool variables
                 // empty string is never valid
-                if ((stringData != null || type == typeof(bool)) && (stringData is null || stringData.Length > 0))
+                if ((stringData is not null || type == typeof(bool)) && (stringData is null || stringData.Length > 0))
                 {
                     try
                     {

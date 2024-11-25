@@ -119,7 +119,7 @@ namespace System.Windows.Input
                     ArgumentNullException.ThrowIfNull(additionalValues);
                 }
 
-                if (additionalValues != null)
+                if (additionalValues is not null)
                 {
                     ReadOnlyCollection<StylusPointPropertyInfo> properties
                         = stylusPointDescription.GetStylusPointProperties();
@@ -256,7 +256,7 @@ namespace System.Windows.Input
                 // called by StylusPointCollection.Add / Set
                 // to replace the StylusPoint.Description with the collections.
                 //
-                Debug.Assert(value != null &&
+                Debug.Assert(value is not null &&
                     StylusPointDescription.AreCompatible(value, this.Description));
 
                 _stylusPointDescription = value;
@@ -593,12 +593,12 @@ namespace System.Windows.Input
                 _y.GetHashCode() ^
                 _pressureFactor.GetHashCode();
 
-            if (_stylusPointDescription != null)
+            if (_stylusPointDescription is not null)
             {
                 hash ^= _stylusPointDescription.GetHashCode();
             }
 
-            if (_additionalValues != null)
+            if (_additionalValues is not null)
             {
                 for (int x = 0; x < _additionalValues.Length; x++)
                 {
@@ -633,7 +633,7 @@ namespace System.Windows.Input
         internal int[] GetPacketData()
         {
             int count = 2; //x, y
-            if (_additionalValues != null)
+            if (_additionalValues is not null)
             {
                 count += _additionalValues.Length;
             }
@@ -650,7 +650,7 @@ namespace System.Windows.Input
                 startIndex = 3;
                 data[2] = GetPropertyValue(StylusPointProperties.NormalPressure);
             }
-            if (_additionalValues != null)
+            if (_additionalValues is not null)
             {
                 for (int x = 0; x < _additionalValues.Length; x++)
                 {

@@ -80,7 +80,7 @@ namespace MS.Internal
                 foreach (object obj in hashTable.Keys)
                 {
                     KeyType key = hashTable.UnwrapKey(obj) as KeyType;
-                    if (key != null)
+                    if (key is not null)
                     {
                         yield return key;
                     }
@@ -167,7 +167,7 @@ namespace MS.Internal
                 foreach (object obj in hashTable.Keys)
                 {
                     KeyType key = hashTable.UnwrapKey(obj) as KeyType;
-                    if (key != null)
+                    if (key is not null)
                     {
                         yield return (ValueType)hashTable[obj];
                     }
@@ -337,7 +337,7 @@ namespace MS.Internal
             foreach (object obj in _hashTable.Keys)
             {
                 TKey key = _hashTable.UnwrapKey(obj) as TKey;
-                if (key != null)
+                if (key is not null)
                 {
                     yield return new KeyValuePair<TKey, TValue>(key, (TValue)_hashTable[obj]);
                 }

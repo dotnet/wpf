@@ -31,7 +31,7 @@ namespace MS.Internal.Shaping
 
         internal UshortList(ushort[] array)
         {
-            Invariant.Assert(array != null, "Invalid parameter");
+            Invariant.Assert(array is not null, "Invalid parameter");
             _storage = new UshortArray(array);
         }
 

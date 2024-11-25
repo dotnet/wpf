@@ -92,7 +92,7 @@ namespace System.Windows.Input
 
         internal static void ApplyParameters(InertiaRotationBehavior behavior, InertiaProcessor2D processor, double initialVelocity)
         {
-            if (behavior != null && behavior.CanUseForInertia())
+            if (behavior is not null && behavior.CanUseForInertia())
             {
                 InertiaRotationBehavior2D behavior2D = new InertiaRotationBehavior2D();
 

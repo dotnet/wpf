@@ -55,7 +55,7 @@ namespace System.Windows.Xps.Serialization
             ReachSerializerContext context
             )
         {
-            if (context != null)
+            if (context is not null)
             {
                 switch (context.Action)
                 {

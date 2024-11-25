@@ -86,7 +86,7 @@ namespace MS.Internal.Controls.StickyNote
 
         public SNCAnnotation(Annotation annotation)
         {
-            Debug.Assert(annotation != null);
+            Debug.Assert(annotation is not null);
 
             _annotation = annotation;
             _isNewAnnotation = _annotation.Cargos.Count == 0;
@@ -120,7 +120,7 @@ namespace MS.Internal.Controls.StickyNote
             try
             {
                 service = AnnotationService.GetService(((IAnnotationComponent)snc).AnnotatedElement);
-                if (service != null && service.Store != null)
+                if (service is not null && service.Store is not null)
                 {
                     autoFlush = service.Store.AutoFlush;
                     // Temporarily turn off autoflush until we are done
@@ -151,7 +151,7 @@ namespace MS.Internal.Controls.StickyNote
             }
             finally
             {
-                if (service != null && service.Store != null)
+                if (service is not null && service.Store is not null)
                 {
                     // If auto flush was true before, setting it to true again should cause a flush.
                     service.Store.AutoFlush = autoFlush;
@@ -168,8 +168,8 @@ namespace MS.Internal.Controls.StickyNote
         public static void UpdateStickyNoteControl(XmlToken token, StickyNoteControl snc, SNCAnnotation sncAnnotation)
         {
             Invariant.Assert((token & AllValues) != 0, "No token specified.");
-            Invariant.Assert(snc != null, "Sticky Note Control is null.");
-            Invariant.Assert(sncAnnotation != null, "Annotation is null.");
+            Invariant.Assert(snc is not null, "Sticky Note Control is null.");
+            Invariant.Assert(sncAnnotation is not null, "Annotation is null.");
 
             // FUTURE-2004/08/18-WAYNEZEN,
             // Updating the xml data is synchronized below which could pontentially block the UIContext
@@ -217,7 +217,7 @@ namespace MS.Internal.Controls.StickyNote
             if ((token & XmlToken.Height) != 0)
             {
                 node = (XmlAttribute)sncAnnotation.FindData(XmlToken.Height);
-                if (node != null)
+                if (node is not null)
                 {
                     double height = Convert.ToDouble(node.Value, CultureInfo.InvariantCulture);
                     snc.SetValue(FrameworkElement.HeightProperty, height);
@@ -232,7 +232,7 @@ namespace MS.Internal.Controls.StickyNote
             if ((token & XmlToken.Width) != 0)
             {
                 node = (XmlAttribute)sncAnnotation.FindData(XmlToken.Width);
-                if (node != null)
+                if (node is not null)
                 {
                     double width = Convert.ToDouble(node.Value, CultureInfo.InvariantCulture);
                     snc.SetValue(FrameworkElement.WidthProperty, width);
@@ -247,7 +247,7 @@ namespace MS.Internal.Controls.StickyNote
             if ((token & XmlToken.IsExpanded) != 0)
             {
                 node = (XmlAttribute)sncAnnotation.FindData(XmlToken.IsExpanded);
-                if (node != null)
+                if (node is not null)
                 {
                     bool expanded = Convert.ToBoolean(node.Value, CultureInfo.InvariantCulture);
                     snc.IsExpanded = expanded;
@@ -262,7 +262,7 @@ namespace MS.Internal.Controls.StickyNote
             if ((token & XmlToken.ZOrder) != 0)
             {
                 node = (XmlAttribute)sncAnnotation.FindData(XmlToken.ZOrder);
-                if (node != null)
+                if (node is not null)
                 {
                     ((IAnnotationComponent)snc).ZOrder = Convert.ToInt32(node.Value, CultureInfo.InvariantCulture);
                 }
@@ -275,7 +275,7 @@ namespace MS.Internal.Controls.StickyNote
                 if ((token & XmlToken.Left) != 0)
                 {
                     node = (XmlAttribute)sncAnnotation.FindData(XmlToken.Left);
-                    if (node != null)
+                    if (node is not null)
                     {
                         double left = Convert.ToDouble(node.Value, CultureInfo.InvariantCulture);
                         // All 'left' values are persisted assuming two things:
@@ -295,7 +295,7 @@ namespace MS.Internal.Controls.StickyNote
                 if ((token & XmlToken.Top) != 0)
                 {
                     node = (XmlAttribute)sncAnnotation.FindData(XmlToken.Top);
-                    if (node != null)
+                    if (node is not null)
                     {
                         double top = Convert.ToDouble(node.Value, CultureInfo.InvariantCulture);
                         transform.Y = top;
@@ -306,7 +306,7 @@ namespace MS.Internal.Controls.StickyNote
                 if ((token & XmlToken.XOffset) != 0)
                 {
                     node = (XmlAttribute)sncAnnotation.FindData(XmlToken.XOffset);
-                    if (node != null)
+                    if (node is not null)
                     {
                         snc.XOffset = Convert.ToDouble(node.Value, CultureInfo.InvariantCulture);
                     }
@@ -315,7 +315,7 @@ namespace MS.Internal.Controls.StickyNote
                 if ((token & XmlToken.YOffset) != 0)
                 {
                     node = (XmlAttribute)sncAnnotation.FindData(XmlToken.YOffset);
-                    if (node != null)
+                    if (node is not null)
                     {
                         snc.YOffset = Convert.ToDouble(node.Value, CultureInfo.InvariantCulture);
                     }
@@ -378,7 +378,7 @@ namespace MS.Internal.Controls.StickyNote
         {
             get
             {
-                return FindData(XmlToken.Ink) != null;
+                return FindData(XmlToken.Ink) is not null;
             }
         }
 
@@ -389,7 +389,7 @@ namespace MS.Internal.Controls.StickyNote
         {
             get
             {
-                return FindData(XmlToken.Text) != null;
+                return FindData(XmlToken.Text) is not null;
             }
         }
 
@@ -438,12 +438,12 @@ namespace MS.Internal.Controls.StickyNote
             {
                 // Then, we try to search the data in the current annotation.
                 AnnotationResource cargo = FindCargo(GetCargoName(token));
-                if (cargo != null)
+                if (cargo is not null)
                 {
                     ret = SNCAnnotation.FindContent(token, cargo);
 
                     // If we found the data in annotation, we go ahead cache it.
-                    if (ret != null)
+                    if (ret is not null)
                     {
                         _cachedXmlElements.Add(token, ret);
                     }
@@ -468,7 +468,7 @@ namespace MS.Internal.Controls.StickyNote
         private static void GetCargoAndRoot(
             SNCAnnotation annotation, XmlToken token, out AnnotationResource cargo, out XmlElement root, out bool newCargo, out bool newRoot)
         {
-            Invariant.Assert(annotation != null, "Annotation is null.");
+            Invariant.Assert(annotation is not null, "Annotation is null.");
             Invariant.Assert((token & (AllValues | XmlToken.MetaData)) != 0, "No token specified.");
 
             string cargoName = GetCargoName(token);
@@ -478,7 +478,7 @@ namespace MS.Internal.Controls.StickyNote
             cargo = annotation.FindCargo(cargoName);
 
             // Cargo exists
-            if (cargo != null)
+            if (cargo is not null)
             {
                 root = FindRootXmlElement(token, cargo);
                 // Uncommon situation - cargo created without root XmlElement
@@ -631,7 +631,7 @@ namespace MS.Internal.Controls.StickyNote
         /// <returns>The root node or null</returns>
         private static XmlElement FindRootXmlElement(XmlToken token, AnnotationResource cargo)
         {
-            Debug.Assert(cargo != null);
+            Debug.Assert(cargo is not null);
 
             XmlElement element = null;
             string xmlName = string.Empty;
@@ -686,7 +686,7 @@ namespace MS.Internal.Controls.StickyNote
             // If we found the root node, we should use XPath to query the node which contains the corresponding data.
             // The StickyNoteControl's xml schema can be found
             // in http://tabletpc/longhorn/Specs/WinFX%20StickyNoteControl%20M8.1.mht#_Toc79371211
-            if (root != null)
+            if (root is not null)
             {
                 switch (token)
                 {
@@ -714,7 +714,7 @@ namespace MS.Internal.Controls.StickyNote
         // Update ink data from/to SNC.
         private void UpdateContent(StickyNoteControl snc, bool updateAnnotation, XmlToken token)
         {
-            Invariant.Assert(snc != null, "Sticky Note Control is null.");
+            Invariant.Assert(snc is not null, "Sticky Note Control is null.");
             Invariant.Assert((token & AllContents) != 0, "No token specified.");
 
             StickyNoteContentControl contentControl = snc.Content;
@@ -753,7 +753,7 @@ namespace MS.Internal.Controls.StickyNote
                 {
                     string cargoName = GetCargoName(token);
                     cargo = FindCargo(cargoName);
-                    if (cargo != null)
+                    if (cargo is not null)
                     {
                         _annotation.Cargos.Remove(cargo);
                         _cachedXmlElements.Remove(token);
@@ -761,13 +761,13 @@ namespace MS.Internal.Controls.StickyNote
                 }
                 if (newRoot)
                 {
-                    Invariant.Assert(root != null, "XmlElement should have been created.");
-                    Invariant.Assert(cargo != null, "Cargo should have been retrieved.");
+                    Invariant.Assert(root is not null, "XmlElement should have been created.");
+                    Invariant.Assert(cargo is not null, "Cargo should have been retrieved.");
                     cargo.Contents.Add(root);
                 }
                 if (newCargo)
                 {
-                    Invariant.Assert(cargo != null, "Cargo should have been created.");
+                    Invariant.Assert(cargo is not null, "Cargo should have been created.");
                     _annotation.Cargos.Add(cargo);
                 }
             }
@@ -777,7 +777,7 @@ namespace MS.Internal.Controls.StickyNote
 
                 // Check if we have the text data in the xml store.
                 XmlElement node = (XmlElement)FindData(token);
-                if (node != null)
+                if (node is not null)
                 {
                     contentControl.Load(node);
                 }
@@ -978,7 +978,7 @@ namespace System.Windows.Controls
             {
                 ArrayList annotations = new ArrayList(1);
 
-                if (_attachedAnnotation != null)
+                if (_attachedAnnotation is not null)
                 {
                     annotations.Add(_attachedAnnotation);
                 }
@@ -995,7 +995,7 @@ namespace System.Windows.Controls
         /// <returns></returns>
         GeneralTransform IAnnotationComponent.GetDesiredTransform(GeneralTransform transform)
         {
-            if (_attachedAnnotation != null)
+            if (_attachedAnnotation is not null)
             {
                 // If we are expanded and set to flow from RightToLeft and we are in a viewer using a DocumentPageHost
                 // we need to mirror ourselves.  This is work around an issue with DocumentViewerBase which mirrors its
@@ -1078,9 +1078,9 @@ namespace System.Windows.Controls
                     }
                 }
 
-                if (offsetTransform != null)
+                if (offsetTransform is not null)
                     transformations.Children.Add(offsetTransform);
-                if (transform != null)
+                if (transform is not null)
                     transformations.Children.Add(transform);                
                 return transformations;
             }
@@ -1096,7 +1096,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return _attachedAnnotation != null ? _attachedAnnotation.Parent as UIElement : null;
+                return _attachedAnnotation is not null ? _attachedAnnotation.Parent as UIElement : null;
             }
         }
 
@@ -1142,13 +1142,13 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_anchor != null)
+                if (_anchor is not null)
                     return _anchor.IsDirty;
                 return false;
             }
             set
             {
-                if (_anchor != null)
+                if (_anchor is not null)
                     _anchor.IsDirty = value;
                 if (value)
                     InvalidateVisual();
@@ -1190,7 +1190,7 @@ namespace System.Windows.Controls
             }
             set
             {
-                Invariant.Assert(value != null, "PositionTransform cannot be null.");
+                Invariant.Assert(value is not null, "PositionTransform cannot be null.");
                 _positionTransform = value;
 
                 InvalidateTransform();
@@ -1239,7 +1239,7 @@ namespace System.Windows.Controls
             get
             {
                 return (this.IsExpanded && this.FlowDirection == FlowDirection.RightToLeft &&
-                    _attachedAnnotation != null && _attachedAnnotation.Parent is DocumentPageHost);
+                    _attachedAnnotation is not null && _attachedAnnotation.Parent is DocumentPageHost);
             }
         }
 
@@ -1258,7 +1258,7 @@ namespace System.Windows.Controls
         //     args -   event arguement
         private void OnAuthorUpdated(object obj, AnnotationAuthorChangedEventArgs args)
         {
-            Debug.Assert(_attachedAnnotation != null && _attachedAnnotation.Annotation == args.Annotation);
+            Debug.Assert(_attachedAnnotation is not null && _attachedAnnotation.Annotation == args.Annotation);
 
             if (!InternalLocker.IsLocked(LockHelper.LockFlag.AnnotationChanged))
             {
@@ -1272,7 +1272,7 @@ namespace System.Windows.Controls
         //     args -   event arguement
         private void OnAnnotationUpdated(object obj, AnnotationResourceChangedEventArgs args)
         {
-            Debug.Assert(_attachedAnnotation != null && _attachedAnnotation.Annotation == args.Annotation);
+            Debug.Assert(_attachedAnnotation is not null && _attachedAnnotation.Annotation == args.Annotation);
 
             if (!InternalLocker.IsLocked(LockHelper.LockFlag.AnnotationChanged))
             {
@@ -1311,7 +1311,7 @@ namespace System.Windows.Controls
 
             // If we already created a Content control, make sure it matches our new type or
             // gets recreated to match.
-            if (Content != null)
+            if (Content is not null)
             {
                 EnsureStickyNoteType();
             }
@@ -1375,11 +1375,11 @@ namespace System.Windows.Controls
         /// the AnnotatedElement.</remarks>
         private void OnRequestBringIntoView(Object sender, RequestBringIntoViewEventArgs e)
         {
-            Debug.Assert(((IAnnotationComponent)this).AnnotatedElement != null, "undefined annotated element");
+            Debug.Assert(((IAnnotationComponent)this).AnnotatedElement is not null, "undefined annotated element");
             FrameworkElement target = ((IAnnotationComponent)this).AnnotatedElement as FrameworkElement;
 
             DocumentPageHost host = target as DocumentPageHost;
-            if (host != null)
+            if (host is not null)
             {
                 target = host.PageVisual as FrameworkElement;
             }
@@ -1392,7 +1392,7 @@ namespace System.Windows.Controls
 
             //if target is IScrollInfo - check if we are within the viewport
             IScrollInfo scrollInfo = target as IScrollInfo;
-            if (scrollInfo != null)
+            if (scrollInfo is not null)
             {
                 Rect bounds = StickyNoteBounds;
                 Rect viewport = new Rect(0, 0, scrollInfo.ViewportWidth, scrollInfo.ViewportHeight);
@@ -1402,7 +1402,7 @@ namespace System.Windows.Controls
 
             //get adorned element
             Transform adornerTransform = (Transform)TransformToVisual(target);
-            Debug.Assert(adornerTransform != null, "transform to AnnotatedElement is null");
+            Debug.Assert(adornerTransform is not null, "transform to AnnotatedElement is null");
 
             //get SN sizes
             Rect rect = new Rect(0, 0, Width, Height);
@@ -1435,7 +1435,7 @@ namespace System.Windows.Controls
         /// <param name="tokens">The data need to be updated</param>
         private void UpdateSNCWithAnnotation(XmlToken tokens)
         {
-            if (_sncAnnotation != null)
+            if (_sncAnnotation is not null)
             {
                 //fire trace event
                 EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordAnnotation, EventTrace.Event.UpdateSNCWithAnnotationBegin);
@@ -1461,7 +1461,7 @@ namespace System.Windows.Controls
         {
             // Check if we have an annotation attached.
             // Also we don't want to update the annotation when the data changes are actually caused by UpdateSNCWithAnnotation.
-            if (_sncAnnotation != null &&
+            if (_sncAnnotation is not null &&
                 !InternalLocker.IsLocked(LockHelper.LockFlag.DataChanged))
             {
                 //fire trace event
@@ -1487,7 +1487,7 @@ namespace System.Windows.Controls
         private void UpdateOffsets()
         {
             // If we don't have annotation, don't even borther.
-            if (_attachedAnnotation != null)
+            if (_attachedAnnotation is not null)
             {
                 Rect rectPage = PageBounds;
                 Rect rectStickyNote = StickyNoteBounds;
@@ -1568,12 +1568,12 @@ namespace System.Windows.Controls
         {
             get
             {
-                Debug.Assert(_attachedAnnotation != null, "This property should never be acccessed from outside of CAF");
+                Debug.Assert(_attachedAnnotation is not null, "This property should never be acccessed from outside of CAF");
 
                 Rect ret = Rect.Empty;
                 Point anchor = _attachedAnnotation.AnchorPoint;
 
-                if (!(double.IsNaN(anchor.X)) && !(double.IsNaN(anchor.Y)) && PositionTransform != null)
+                if (!(double.IsNaN(anchor.X)) && !(double.IsNaN(anchor.Y)) && PositionTransform is not null)
                 {
                     ret = new Rect(anchor.X + PositionTransform.X + _deltaX, anchor.Y + PositionTransform.Y + _deltaY, Width, Height);
                 }
@@ -1593,7 +1593,7 @@ namespace System.Windows.Controls
                 // If the annotated element is a scroll info, we should use the
                 // full size of the scrollable content - ExtendWidth/ExtentHeight.
                 IScrollInfo scrollInfo = component.AnnotatedElement as IScrollInfo;
-                if (scrollInfo != null)
+                if (scrollInfo is not null)
                 {
                     pageBounds = new Rect(-scrollInfo.HorizontalOffset, -scrollInfo.VerticalOffset, scrollInfo.ExtentWidth, scrollInfo.ExtentHeight);
                 }
@@ -1601,7 +1601,7 @@ namespace System.Windows.Controls
                 {
                     UIElement parent = component.AnnotatedElement;
 
-                    if (parent != null)
+                    if (parent is not null)
                     {
                         Size pageSize = parent.RenderSize;
                         pageBounds = new Rect(0, 0, pageSize.Width, pageSize.Height);

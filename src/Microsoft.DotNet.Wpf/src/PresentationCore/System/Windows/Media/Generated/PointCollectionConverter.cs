@@ -103,7 +103,7 @@ namespace System.Windows.Media
 
             String source = value as string;
 
-            if (source != null)
+            if (source is not null)
             {
                 return PointCollection.Parse(source);
             }
@@ -127,7 +127,7 @@ namespace System.Windows.Media
         /// <param name="destinationType"> The type to which this will convert the PointCollection instance. </param>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType != null && value is PointCollection)
+            if (destinationType is not null && value is PointCollection)
             {
                 PointCollection instance = (PointCollection)value;
 

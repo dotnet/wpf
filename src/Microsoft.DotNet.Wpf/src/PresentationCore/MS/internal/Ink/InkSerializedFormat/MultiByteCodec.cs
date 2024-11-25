@@ -76,7 +76,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <returns></returns>
         internal uint Decode(byte[] input, int inputIndex, ref uint data)
         {
-            Debug.Assert(input != null);
+            Debug.Assert(input is not null);
             Debug.Assert(inputIndex < input.Length);
 
             // We care about first 5 bytes
@@ -111,7 +111,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <returns></returns>
         internal uint SignDecode(byte[] input, int inputIndex, ref int data)
         {
-            Debug.Assert(input != null); //already validated at the AlgoModule level
+            Debug.Assert(input is not null); //already validated at the AlgoModule level
             ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(inputIndex, input.Length);
             uint xfData = 0;
             uint cb = Decode(input, inputIndex, ref xfData);

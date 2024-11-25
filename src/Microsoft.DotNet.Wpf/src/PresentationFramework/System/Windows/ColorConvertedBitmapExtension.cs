@@ -107,7 +107,7 @@ namespace System.Windows
             Uri destinationProfileUri = GetResolvedUri(_destinationProfile);
 
             ColorContext sourceContext = new ColorContext(sourceProfileUri);
-            ColorContext destinationContext = destinationProfileUri != null ?
+            ColorContext destinationContext = destinationProfileUri is not null ?
                                                 new ColorContext(destinationProfileUri) :
                                                 new ColorContext(PixelFormats.Default);
 

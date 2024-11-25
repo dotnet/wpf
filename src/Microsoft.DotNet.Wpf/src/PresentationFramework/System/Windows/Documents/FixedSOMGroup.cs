@@ -37,7 +37,7 @@ namespace System.Windows.Documents
 
             FixedSOMGroup compared = comparedObj as FixedSOMGroup;
             
-            Debug.Assert(compared != null);
+            Debug.Assert(compared is not null);
             
             if (compared is null)
             {
@@ -158,7 +158,7 @@ namespace System.Windows.Documents
             rect.Inflate(5,5);
             dc.DrawRectangle(null, pen , rect);
             
-            if (label != null)
+            if (label is not null)
             {
                 if (this.IsRTL)
                 {

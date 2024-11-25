@@ -125,10 +125,10 @@ namespace System.Windows.Controls
         private static void OnDockChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             UIElement uie = d as UIElement; //it may be anyting, like FlowDocument... bug 1237275
-            if(uie != null)
+            if(uie is not null)
             {
                 DockPanel p = VisualTreeHelper.GetParent(uie) as DockPanel;
-                if(p != null)
+                if(p is not null)
                 {
                     p.InvalidateMeasure();
                 }

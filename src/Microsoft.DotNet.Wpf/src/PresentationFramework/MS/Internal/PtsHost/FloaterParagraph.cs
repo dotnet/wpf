@@ -65,7 +65,7 @@ namespace MS.Internal.PtsHost
         {
             base.Dispose();
 
-            if (_mainTextSegment != null)
+            if (_mainTextSegment is not null)
             {
                 _mainTextSegment.Dispose();
                 _mainTextSegment = null;
@@ -565,7 +565,7 @@ namespace MS.Internal.PtsHost
             out IntPtr pmcsclientOut)           // OUT: MCSCLIENT that floater will return to track
         {
                         // Floaters margins are added during formatting.
-            if (mcs != null)
+            if (mcs is not null)
             {
                 pmcsclientOut = mcs.Handle;
             }
@@ -590,7 +590,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal override void ClearUpdateInfo()
         {
-            if (_mainTextSegment != null)
+            if (_mainTextSegment is not null)
             {
                 _mainTextSegment.ClearUpdateInfo();
             }
@@ -607,7 +607,7 @@ namespace MS.Internal.PtsHost
         internal override bool InvalidateStructure(int startPosition)
         {
             Debug.Assert(ParagraphEndCharacterPosition >= startPosition);
-            if (_mainTextSegment != null)
+            if (_mainTextSegment is not null)
             {
                 if (_mainTextSegment.InvalidateStructure(startPosition))
                 {
@@ -623,7 +623,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal override void InvalidateFormatCache()
         {
-            if (_mainTextSegment != null)
+            if (_mainTextSegment is not null)
             {
                 _mainTextSegment.InvalidateFormatCache();
             }
@@ -777,7 +777,7 @@ namespace MS.Internal.PtsHost
         private void InvalidateMainTextSegment()
         {
             DtrList dtrs = StructuralCache.DtrsFromRange(ParagraphStartCharacterPosition, LastFormatCch);
-            if (dtrs != null && dtrs.Length > 0)
+            if (dtrs is not null && dtrs.Length > 0)
             {
                 _mainTextSegment.InvalidateStructure(dtrs[0].StartIndex);
             }

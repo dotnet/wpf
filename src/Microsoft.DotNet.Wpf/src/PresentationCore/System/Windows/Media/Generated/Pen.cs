@@ -105,7 +105,7 @@ namespace System.Windows.Media
             Brush newV = (Brush) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 DUCE.IResource targetResource = (DUCE.IResource)target;
                 using (CompositionEngineLock.Acquire())
@@ -191,7 +191,7 @@ namespace System.Windows.Media
             DashStyle newV = (DashStyle) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 DUCE.IResource targetResource = (DUCE.IResource)target;
                 using (CompositionEngineLock.Acquire())
@@ -380,8 +380,8 @@ namespace System.Windows.Media
                 DashStyle vDashStyle = DashStyle;
 
                 // Obtain handles for properties that implement DUCE.IResource
-                DUCE.ResourceHandle hBrush = vBrush != null ? ((DUCE.IResource)vBrush).GetHandle(channel) : DUCE.ResourceHandle.Null;
-                DUCE.ResourceHandle hDashStyle = vDashStyle != null ? ((DUCE.IResource)vDashStyle).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                DUCE.ResourceHandle hBrush = vBrush is not null ? ((DUCE.IResource)vBrush).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                DUCE.ResourceHandle hDashStyle = vDashStyle is not null ? ((DUCE.IResource)vDashStyle).GetHandle(channel) : DUCE.ResourceHandle.Null;
 
                 // Obtain handles for animated properties
                 DUCE.ResourceHandle hThicknessAnimations = GetAnimationResourceHandle(ThicknessProperty, channel);
@@ -419,9 +419,9 @@ namespace System.Windows.Media
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_PEN))
                 {
                     Brush vBrush = Brush;
-                    if (vBrush != null) ((DUCE.IResource)vBrush).AddRefOnChannel(channel);
+                    if (vBrush is not null) ((DUCE.IResource)vBrush).AddRefOnChannel(channel);
                     DashStyle vDashStyle = DashStyle;
-                    if (vDashStyle != null) ((DUCE.IResource)vDashStyle).AddRefOnChannel(channel);
+                    if (vDashStyle is not null) ((DUCE.IResource)vDashStyle).AddRefOnChannel(channel);
 
                     AddRefOnChannelAnimations(channel);
 
@@ -441,9 +441,9 @@ namespace System.Windows.Media
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
                     Brush vBrush = Brush;
-                    if (vBrush != null) ((DUCE.IResource)vBrush).ReleaseOnChannel(channel);
+                    if (vBrush is not null) ((DUCE.IResource)vBrush).ReleaseOnChannel(channel);
                     DashStyle vDashStyle = DashStyle;
-                    if (vDashStyle != null) ((DUCE.IResource)vDashStyle).ReleaseOnChannel(channel);
+                    if (vDashStyle is not null) ((DUCE.IResource)vDashStyle).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
 }

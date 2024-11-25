@@ -115,7 +115,7 @@ namespace MS.Internal.Printing.Configuration
         private void BuildFeature(InternalPrintCapabilities printCap, PrintCapabilityFeature parentFeature)
         {
             int featureIndex = LookupFeatureIndex(_reader.CurrentElementNameAttrValue,
-                                                  (parentFeature != null));
+                                                  (parentFeature is not null));
 
             // Skip if the feature is unknown to us
             if (featureIndex < 0)
@@ -138,7 +138,7 @@ namespace MS.Internal.Printing.Configuration
             // (from XmlTextReader) is OK.
 
             LookupFeatureCallbacks(_reader.CurrentElementNameAttrValue,
-                                   (parentFeature != null),
+                                   (parentFeature is not null),
                                    out newFeatureCallback);
 
             // New-feature callback returns a new, empty feature object derived from PrintCapabilityFeature
@@ -261,7 +261,7 @@ namespace MS.Internal.Printing.Configuration
             // Accept the new feature only if it has valid state
             if (newFeature.IsValid)
             {
-                if (parentFeature != null)
+                if (parentFeature is not null)
                 {
                     parentFeature.AddSubFeatureCallback(newFeature);
                 }

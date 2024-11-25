@@ -96,7 +96,7 @@ namespace System.Windows.Documents
             if (isHit)
             {
                 Glyphs g = e as Glyphs;
-                if (g != null)
+                if (g is not null)
                 {
                     pos = _CreateTextPointerFromGlyphs(g, point);
                 }
@@ -120,7 +120,7 @@ namespace System.Windows.Documents
             if (snapToText && pos is null)
             {
                 pos = _SnapToText(point);
-                Debug.Assert(pos != null);
+                Debug.Assert(pos is not null);
             }
 
 
@@ -168,7 +168,7 @@ namespace System.Windows.Documents
             Rect designRect = new Rect(0, 0, 0, 10);
             transform = Transform.Identity;
 
-            Debug.Assert(ftp != null);
+            Debug.Assert(ftp is not null);
             if (ftp.FlowPosition.IsBoundary)
             {
                 if  (!_GetFirstFixedPosition(ftp, out fixedp))
@@ -245,8 +245,8 @@ namespace System.Windows.Documents
         internal override Geometry GetTightBoundingGeometryFromTextPositions(ITextPointer startPosition, ITextPointer endPosition)
         {
             PathGeometry boundingGeometry = new PathGeometry();
-            Debug.Assert(startPosition != null && this.Contains(startPosition));
-            Debug.Assert(endPosition != null && this.Contains(endPosition));
+            Debug.Assert(startPosition is not null && this.Contains(startPosition));
+            Debug.Assert(endPosition is not null && this.Contains(endPosition));
             Dictionary<FixedPage, ArrayList> highlights = new Dictionary<FixedPage,ArrayList>();
             FixedTextPointer startftp = this.Container.VerifyPosition(startPosition);
             FixedTextPointer endftp = this.Container.VerifyPosition(endPosition);
@@ -257,7 +257,7 @@ namespace System.Windows.Documents
 
             highlights.TryGetValue(this.FixedPage, out highlightList);
 
-            if (highlightList != null)
+            if (highlightList is not null)
             {
                 foreach (FixedHighlight fh in highlightList)
                 {
@@ -283,7 +283,7 @@ namespace System.Windows.Documents
 
                     Glyphs g = fh.Glyphs;
 
-                    if (fh.Element.Clip != null)
+                    if (fh.Element.Clip is not null)
                     {
                         Rect clipRect = fh.Element.Clip.Bounds;
                         backgroundRect.Intersect(clipRect);
@@ -410,7 +410,7 @@ namespace System.Windows.Documents
             }
 
             pos = _CreateTextPointer(fixedp, edge);
-            Debug.Assert(pos != null);
+            Debug.Assert(pos is not null);
 
             if (pos.CompareTo(position) == 0)
             {
@@ -687,7 +687,7 @@ namespace System.Windows.Documents
             {
                 Visual visual = _docPage.Visual;
 
-                while (visual != null && !(visual is UIElement))
+                while (visual is not null && !(visual is UIElement))
                 {
                     visual = VisualTreeHelper.GetParent(visual) as Visual;
                 }
@@ -778,9 +778,9 @@ namespace System.Windows.Documents
             e = null;
 
             HitTestResult result = VisualTreeHelper.HitTest(this.FixedPage, pt);
-            DependencyObject v = (result != null) ? result.VisualHit : null;
+            DependencyObject v = (result is not null) ? result.VisualHit : null;
 
-            while (v != null)
+            while (v is not null)
             {
                 DependencyObjectType t = v.DependencyObjectType;
                 if (t == UIElementType || t.IsSubclassOf(UIElementType))
@@ -824,7 +824,7 @@ namespace System.Windows.Documents
         {
             ITextPointer itp = null;
             FixedNode[] fixedNodes = Container.FixedTextBuilder.GetLine(this.PageIndex, point);
-            if (fixedNodes != null && fixedNodes.Length > 0)
+            if (fixedNodes is not null && fixedNodes.Length > 0)
             {
                 double closestDistance = Double.MaxValue;
                 double xoffset = 0;
@@ -836,7 +836,7 @@ namespace System.Windows.Documents
                     Glyphs startGlyphs = this.FixedPage.GetGlyphsElement(node);
                     GeneralTransform tranToGlyphs = this.FixedPage.TransformToDescendant(startGlyphs);
                     Point transformedPt = point;
-                    if (tranToGlyphs != null)
+                    if (tranToGlyphs is not null)
                     {
                         tranToGlyphs.TryTransform(transformedPt, out transformedPt);
                     }
@@ -864,7 +864,7 @@ namespace System.Windows.Documents
 
                 FixedPosition fixedp = new FixedPosition(closestNode, index);
                 itp = _CreateTextPointer(fixedp, dir);
-				Debug.Assert(itp != null);
+				Debug.Assert(itp is not null);
             }
             else
             {
@@ -895,7 +895,7 @@ namespace System.Windows.Documents
             bool moved = false;
             FixedNode[] fixedNodes = Container.FixedTextBuilder.GetNextLine(fixedp.Node, (scanDir == LogicalDirection.Forward), ref count);
 
-            if (fixedNodes != null && fixedNodes.Length > 0)
+            if (fixedNodes is not null && fixedNodes.Length > 0)
             {
                 FixedPage page = Container.FixedDocument.SyncGetPage(pageIndex, false);
                 // This line contains multiple Glyhs. Scan backward
@@ -917,12 +917,12 @@ namespace System.Windows.Documents
                 {
                     FixedNode node = fixedNodes[i];
                     Glyphs g = page.GetGlyphsElement(node);
-                    if (g != null)
+                    if (g is not null)
                     {
                         GeneralTransform transform = page.TransformToDescendant(g);
                         Point pt1 = topOfPage;
                         Point pt2 = secondPoint;
-                        if (transform != null)
+                        if (transform is not null)
                         {
                             transform.TryTransform(pt1, out pt1);
                             transform.TryTransform(pt2, out pt2);
@@ -962,7 +962,7 @@ namespace System.Windows.Documents
                     }
                 }
 
-                Debug.Assert(hitGlyphs != null);
+                Debug.Assert(hitGlyphs is not null);
 
                 int charIdx;
                 _GlyphRunHitTest(hitGlyphs, xoffset, out charIdx, out edge);
@@ -1002,11 +1002,11 @@ namespace System.Windows.Documents
             designRect.Offset(run.BaselineOrigin.X, run.BaselineOrigin.Y);
 
             int charCount = 0;
-            if (run.Characters != null)
+            if (run.Characters is not null)
             {
                 charCount = run.Characters.Count;
             }
-            else if (g.UnicodeString != null)
+            else if (g.UnicodeString is not null)
             {
                 charCount = g.UnicodeString.Length;
             }
@@ -1177,7 +1177,7 @@ namespace System.Windows.Documents
         {
             // Create a FlowPosition to represent this fixed position
             FlowPosition flowHit = Container.FixedTextBuilder.CreateFlowPosition(fixedPosition);
-            if (flowHit != null)
+            if (flowHit is not null)
             {
                 DocumentsTrace.FixedTextOM.TextView.Trace($"_CreatetTextPointer {fixedPosition}:{flowHit}");
 
@@ -1192,7 +1192,7 @@ namespace System.Windows.Documents
         private ITextPointer _CreateTextPointerFromGlyphs(Glyphs g, Point point)
         {
             GeneralTransform transform = this.VisualRoot.TransformToDescendant(g);
-            if (transform != null)
+            if (transform is not null)
             {
                 transform.TryTransform(point, out point);
             }

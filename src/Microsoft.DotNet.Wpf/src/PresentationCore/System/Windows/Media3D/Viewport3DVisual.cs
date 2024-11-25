@@ -215,7 +215,7 @@ namespace System.Windows.Media.Media3D
 
             if (!e.IsASubPropertyChange)
             {
-                if (e.OldValue != null)
+                if (e.OldValue is not null)
                 {
                     owner.DisconnectAttachedResource(
                         VisualProxyFlags.Viewport3DVisual_IsCameraDirty,
@@ -337,13 +337,13 @@ namespace System.Windows.Media.Media3D
             // invalid during a VisualTreeChanged event
             VisualDiagnostics.VerifyVisualTreeChange(this);
 
-            Debug.Assert(child != null);
+            Debug.Assert(child is not null);
             Debug.Assert(child.InternalVisualParent is null);
 
             child.SetParent(this);
 
             // set the inheritance context so databinding, etc... work
-            if (_inheritanceContextForChildren != null)
+            if (_inheritanceContextForChildren is not null)
             {
                 _inheritanceContextForChildren.ProvideSelfAsInheritanceContext(child, null);
             }
@@ -388,7 +388,7 @@ namespace System.Windows.Media.Media3D
             // invalid during a VisualTreeChanged event
             VisualDiagnostics.VerifyVisualTreeChange(this);
 
-            Debug.Assert(child != null);
+            Debug.Assert(child is not null);
             Debug.Assert(child.InternalVisualParent == this);
 
             VisualDiagnostics.OnVisualChildChanged(this, child, false);
@@ -396,7 +396,7 @@ namespace System.Windows.Media.Media3D
             child.SetParent(/* newParent = */ (Visual) null);  // CS0121: Call is ambigious without casting null to Visual.
 
             // remove the inheritance context
-            if (_inheritanceContextForChildren != null)
+            if (_inheritanceContextForChildren is not null)
             {
                 _inheritanceContextForChildren.RemoveSelfAsInheritanceContext(child, null);
             }
@@ -518,7 +518,7 @@ namespace System.Windows.Media.Media3D
             double aspectRatio = M3DUtil.GetAspectRatio(Viewport.Size);
             Camera camera = Camera;
 
-            if (camera != null)
+            if (camera is not null)
             {
                 Matrix3D viewProjMatrix = camera.GetViewMatrix() * camera.GetProjectionMatrix(aspectRatio);
                 point *= viewProjMatrix;
@@ -697,13 +697,13 @@ namespace System.Windows.Media.Media3D
         {
             base.PrecomputeContent();
 
-            if (_children != null)
+            if (_children is not null)
             {
                 for (int i = 0, count = _children.InternalCount; i < count; i++)
                 {
                     Visual3D child = _children.InternalGetItem(i);
 
-                    if (child != null)
+                    if (child is not null)
                     {
                         // This merely tells the Visual3Ds to update their bounds
                         // caches if necessary. Later on we'll get the cached bounds
@@ -736,7 +736,7 @@ namespace System.Windows.Media.Media3D
             if ((flags & VisualProxyFlags.Viewport3DVisual_IsCameraDirty) != 0)
             {
                 Camera camera = Camera;
-                if (camera != null)
+                if (camera is not null)
                 {
                     DUCE.Viewport3DVisualNode.SetCamera(
                         ((DUCE.IResource)this).GetHandle(channel),
@@ -776,13 +776,13 @@ namespace System.Windows.Media.Media3D
             Debug.Assert(!CheckFlagsAnd(channel, VisualProxyFlags.IsContentNodeConnected),
                 "Only HostVisuals are expected to have a content node.");
 
-            if (_children != null)
+            if (_children is not null)
             {
                 for (uint i = 0; i < _children.InternalCount; i++)
                 {
                     Visual3D child = _children.InternalGetItem((int) i);
 
-                    if (child != null)
+                    if (child is not null)
                     {
                         if (child.CheckFlagsAnd(channel, VisualProxyFlags.IsSubtreeDirtyForRender) || // or the visual is dirty
                             !(child.IsOnChannel(channel))) // or the child has not been marshalled yet.
@@ -817,7 +817,7 @@ namespace System.Windows.Media.Media3D
             Debug.Assert(IsOnChannel(channel));
             Camera camera = Camera;
 
-            if (camera != null)
+            if (camera is not null)
             {
                 if (!CheckFlagsAnd(channel, VisualProxyFlags.Viewport3DVisual_IsCameraDirty))
                 {
@@ -827,7 +827,7 @@ namespace System.Windows.Media.Media3D
                 }
             }
 
-            if (_children != null)
+            if (_children is not null)
             {
                 for (int i = 0; i < _children.InternalCount; i++)
                 {

@@ -119,7 +119,7 @@ namespace System.Windows.Media
             Pen pen,
             Rect rectangle)
         {
-            if ((brush != null) || Pen.ContributesToBounds(pen))
+            if ((brush is not null) || Pen.ContributesToBounds(pen))
             {
                 // _bounds is always in "world" space
                 // So, we need to transform the geometry to world to bound it
@@ -167,7 +167,7 @@ namespace System.Windows.Media
             Double radiusX,
             Double radiusY)
         {
-            if ((brush != null) || Pen.ContributesToBounds(pen))
+            if ((brush is not null) || Pen.ContributesToBounds(pen))
             {
                 // _bounds is always in "world" space
                 // So, we need to transform the geometry to world to bound it
@@ -217,7 +217,7 @@ namespace System.Windows.Media
             Double radiusX,
             Double radiusY)
         {
-            if ((brush != null) || Pen.ContributesToBounds(pen))
+            if ((brush is not null) || Pen.ContributesToBounds(pen))
             {
                 // _bounds is always in "world" space
                 // So, we need to transform the geometry to world to bound it
@@ -255,7 +255,7 @@ namespace System.Windows.Media
             Pen pen,
             Geometry geometry)
         {
-            if ((geometry != null) && ((brush != null) || Pen.ContributesToBounds(pen)))
+            if ((geometry is not null) && ((brush is not null) || Pen.ContributesToBounds(pen)))
             {
                 // _bounds is always in "world" space
                 // So, we need to transform the geometry to world to bound it
@@ -280,7 +280,7 @@ namespace System.Windows.Media
             ImageSource imageSource,
             Rect rectangle)
         {
-            if (imageSource != null)
+            if (imageSource is not null)
             {
                 AddBounds(ref rectangle);
             }
@@ -301,7 +301,7 @@ namespace System.Windows.Media
             MediaPlayer video,
             Rect rectangle)
         {
-            if (video != null)
+            if (video is not null)
             {
                 AddBounds(ref rectangle);
             }
@@ -314,7 +314,7 @@ namespace System.Windows.Media
         /// <param name="glyphRun"> The GlyphRun to draw. </param>
         public override void DrawGlyphRun(Brush foregroundBrush, GlyphRun glyphRun)
         {
-            if ((foregroundBrush != null) && (glyphRun != null))
+            if ((foregroundBrush is not null) && (glyphRun is not null))
             {
                 // The InkBoundingBox + the Origin produce the true InkBoundingBox.
                 Rect rectangle = glyphRun.ComputeInkBoundingBox();
@@ -364,7 +364,7 @@ namespace System.Windows.Media
             // Push the clip type
             PushTypeStack(PushType.Clip);
 
-            if (clipGeometry != null)
+            if (clipGeometry is not null)
             {
                 // Since _clip is a value type, we need to know whether we have a clip or not.
                 // If not, we can assert that the initial value is present (Rect.Empty).
@@ -421,7 +421,7 @@ namespace System.Windows.Media
             Matrix newValue = Matrix.Identity;
 
             // Retrieve the new transform as a matrix if it exists
-            if ((transform != null) && !transform.IsIdentity)
+            if ((transform is not null) && !transform.IsIdentity)
             {
                 // If the transform is degeneraate, we can skip all instructions until the
                 // corresponding Pop.
@@ -513,7 +513,7 @@ namespace System.Windows.Media
         public override void Pop()
         {
             // We must have a type stack and it must not be empty.
-            Debug.Assert(_pushTypeStack != null);
+            Debug.Assert(_pushTypeStack is not null);
             Debug.Assert(_pushTypeStack.Count > 0);
 
             // Retrieve the PushType to figure out what what this Pop is.
@@ -523,7 +523,7 @@ namespace System.Windows.Media
             {
                 case PushType.Transform:
                     // We must have a Transform stack and it must not be empty.
-                    Debug.Assert(_transformStack != null);
+                    Debug.Assert(_transformStack is not null);
                     Debug.Assert(_transformStack.Count > 0);
 
                     // Restore the transform
@@ -534,7 +534,7 @@ namespace System.Windows.Media
                 case PushType.Clip:
 
                     // Restore the clip, if there's one to restore
-                    if ((_clipStack != null) &&
+                    if ((_clipStack is not null) &&
                         (_clipStack.Count > 0))
                     {
                         _clip = _clipStack.Pop();

@@ -59,7 +59,7 @@ namespace System.Windows
         {
             SystemThemeKey key = o as SystemThemeKey;
 
-            if (key != null)
+            if (key is not null)
             {
                 return key._id == this._id;
             }

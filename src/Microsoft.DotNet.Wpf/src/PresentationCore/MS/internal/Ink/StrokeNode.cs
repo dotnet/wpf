@@ -39,7 +39,7 @@ namespace MS.Internal.Ink
             in StrokeNodeData lastNodeData,
             bool isLastNode)
         {
-            System.Diagnostics.Debug.Assert(operations != null);
+            System.Diagnostics.Debug.Assert(operations is not null);
             System.Diagnostics.Debug.Assert((nodeData.IsEmpty == false) && (index >= 0));
           
 
@@ -991,7 +991,7 @@ namespace MS.Internal.Ink
         /// <summary>
         /// Tells whether the StrokeNode instance is valid or not (created via the default ctor)
         /// </summary>
-        internal bool IsValid { get { return _operations != null; } }
+        internal bool IsValid { get { return _operations is not null; } }
 
         /// <summary>
         /// The quadrangle that connects this and the previous node.

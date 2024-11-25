@@ -125,7 +125,7 @@ namespace MS.Internal.PtsHost
                     run = new ParagraphBreakRun(_syntheticCharacterLength, PTS.FSFLRES.fsflrEndOfParagraph);
                     break;
             }
-            Invariant.Assert(run != null, "TextRun has not been created.");
+            Invariant.Assert(run is not null, "TextRun has not been created.");
             Invariant.Assert(run.Length > 0, "TextRun has to have positive length.");
 
             return run;
@@ -168,7 +168,7 @@ namespace MS.Internal.PtsHost
 
 
                 StaticTextPointer pointer = position.CreateStaticPointer();
-                DependencyObject element = (pointer.Parent != null) ? pointer.Parent : _paraClient.Paragraph.Element;
+                DependencyObject element = (pointer.Parent is not null) ? pointer.Parent : _paraClient.Paragraph.Element;
                 culture = DynamicPropertyReader.GetCultureInfo(element);                
             }
 
@@ -206,7 +206,7 @@ namespace MS.Internal.PtsHost
                 TextRun run = textSpan.Value;
 
                 
-                if (run != null && ((dcpRun + run.Length) >= (dcp + textBreakpoint.Length)))
+                if (run is not null && ((dcpRun + run.Length) >= (dcp + textBreakpoint.Length)))
                 {
                     if (run is ParagraphBreakRun)
                     {

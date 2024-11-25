@@ -77,11 +77,11 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (SelectedItemBinding != null)
+                if (SelectedItemBinding is not null)
                 {
                     return SelectedItemBinding;
                 }
-                else if (SelectedValueBinding != null)
+                else if (SelectedValueBinding is not null)
                 {
                     return SelectedValueBinding;
                 }
@@ -289,7 +289,7 @@ namespace System.Windows.Controls
         private void ApplyStyle(bool isEditing, bool defaultToElementStyle, FrameworkElement element)
         {
             Style style = PickStyle(isEditing, defaultToElementStyle);
-            if (style != null)
+            if (style is not null)
             {
                 element.Style = style;
             }
@@ -301,7 +301,7 @@ namespace System.Windows.Controls
         internal void ApplyStyle(bool isEditing, bool defaultToElementStyle, FrameworkContentElement element)
         {
             Style style = PickStyle(isEditing, defaultToElementStyle);
-            if (style != null)
+            if (style is not null)
             {
                 element.Style = style;
             }
@@ -323,7 +323,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static void ApplyBinding(BindingBase binding, DependencyObject target, DependencyProperty property)
         {
-            if (binding != null)
+            if (binding is not null)
             {
                 BindingOperations.SetBinding(target, property, binding);
             }
@@ -465,11 +465,11 @@ namespace System.Windows.Controls
         /// <returns></returns>
         private object GetComboBoxSelectionValue(ComboBox comboBox)
         {
-            if (SelectedItemBinding != null)
+            if (SelectedItemBinding is not null)
             {
                 return comboBox.SelectedItem;
             }
-            else if (SelectedValueBinding != null)
+            else if (SelectedValueBinding is not null)
             {
                 return comboBox.SelectedValue;
             }
@@ -537,7 +537,7 @@ namespace System.Windows.Controls
         protected override object PrepareCellForEdit(FrameworkElement editingElement, RoutedEventArgs editingEventArgs)
         {
             ComboBox comboBox = editingElement as ComboBox;
-            if (comboBox != null)
+            if (comboBox is not null)
             {
                 comboBox.Focus();
                 object originalValue = GetComboBoxSelectionValue(comboBox);
@@ -562,7 +562,7 @@ namespace System.Windows.Controls
         protected override void CancelCellEdit(FrameworkElement editingElement, object uneditedValue)
         {
             ComboBox cb = editingElement as ComboBox;
-            if (cb != null && cb.EditableTextBoxSite != null)
+            if (cb is not null && cb.EditableTextBoxSite is not null)
             {
                 DataGridHelper.CacheFlowDirection(cb.EditableTextBoxSite, cb.Parent as DataGridCell);
                 DataGridHelper.CacheFlowDirection(cb, cb.Parent as DataGridCell);
@@ -579,7 +579,7 @@ namespace System.Windows.Controls
         protected override bool CommitCellEdit(FrameworkElement editingElement)
         {
             ComboBox cb = editingElement as ComboBox;
-            if (cb != null && cb.EditableTextBoxSite != null)
+            if (cb is not null && cb.EditableTextBoxSite is not null)
             {
                 DataGridHelper.CacheFlowDirection(cb.EditableTextBoxSite, cb.Parent as DataGridCell);
                 DataGridHelper.CacheFlowDirection(cb, cb.Parent as DataGridCell);
@@ -599,7 +599,7 @@ namespace System.Windows.Controls
         private static bool IsComboBoxOpeningInputEvent(RoutedEventArgs e)
         {
             KeyEventArgs keyArgs = e as KeyEventArgs;
-            if ((keyArgs != null) && keyArgs.RoutedEvent == Keyboard.KeyDownEvent && ((keyArgs.KeyStates & KeyStates.Down) == KeyStates.Down))
+            if ((keyArgs is not null) && keyArgs.RoutedEvent == Keyboard.KeyDownEvent && ((keyArgs.KeyStates & KeyStates.Down) == KeyStates.Down))
             {
                 bool isAltDown = (keyArgs.KeyboardDevice.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt;
 

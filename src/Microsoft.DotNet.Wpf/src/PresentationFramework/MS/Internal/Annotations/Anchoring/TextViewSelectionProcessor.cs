@@ -144,7 +144,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             int startOffset;
             int endOffset;
-            if (textView != null && textView.IsValid)
+            if (textView is not null && textView.IsValid)
             {
                 GetTextViewTextRange(textView, out startOffset, out endOffset);
             }
@@ -232,7 +232,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <returns>TextRange spanning all visible content</returns>
         internal static TextRange GetTextViewTextRange(ITextView textView, out int startOffset, out int endOffset)
         {
-            Debug.Assert(textView != null);
+            Debug.Assert(textView is not null);
 
             // These are the default in case we don't find any content in the DocumentPageView
             startOffset = int.MinValue;
@@ -240,7 +240,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             TextRange textRange = null;
             IList<TextSegment> segments = textView.TextSegments;
-            if (segments != null && segments.Count > 0)
+            if (segments is not null && segments.Count > 0)
             {
                 ITextPointer start = segments[0].Start;
                 ITextPointer end = segments[segments.Count - 1].End;

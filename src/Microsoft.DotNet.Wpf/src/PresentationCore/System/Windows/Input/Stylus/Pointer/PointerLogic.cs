@@ -303,7 +303,7 @@ namespace System.Windows.Input.StylusPointer
             {
                 InputReportEventArgs input = e.StagingItem.Input as InputReportEventArgs;
 
-                if (input != null && !input.Handled)
+                if (input is not null && !input.Handled)
                 {
                     // See if we are in a DragDrop operation.  If so set our internal flag
                     // which stops us from promoting Stylus or Mouse events!
@@ -387,7 +387,7 @@ namespace System.Windows.Input.StylusPointer
                                         // device is still active, and so therefore no other touch input will be
                                         // considered "primary" input, causing it to be ignored for most actions
                                         // (like button clicks).  (DevDiv2 520639)
-                                        if ((report.Actions & RawStylusActions.Up) != 0 && stylusDevice != null)
+                                        if ((report.Actions & RawStylusActions.Up) != 0 && stylusDevice is not null)
                                         {
                                             PointerTouchDevice touchDevice = stylusDevice.TouchDevice;
                                             // Don't try to deactivate if the device isn't active.  This can happen if
@@ -526,7 +526,7 @@ namespace System.Windows.Input.StylusPointer
                 _stylusCapture = newStylusDeviceCapture;
 
                 // Adjust the handlers we use to track everything.
-                if (oldCapture != null)
+                if (oldCapture is not null)
                 {
                     o = oldCapture as DependencyObject;
                     if (o is UIElement element)
@@ -552,7 +552,7 @@ namespace System.Windows.Input.StylusPointer
                     }
                 }
 
-                if (_stylusCapture != null)
+                if (_stylusCapture is not null)
                 {
                     o = _stylusCapture as DependencyObject;
                     if (o is UIElement element)
@@ -584,13 +584,13 @@ namespace System.Windows.Input.StylusPointer
                 UIElement.StylusCaptureWithinProperty.OnOriginValueChanged(oldCapture as DependencyObject, _stylusCapture as DependencyObject, ref _stylusCaptureWithinTreeState);
 
                 // Invalidate the IsStylusCaptured properties.
-                if (oldCapture != null)
+                if (oldCapture is not null)
                 {
                     o = oldCapture as DependencyObject;
                     o.SetValue(UIElement.IsStylusCapturedPropertyKey, false); // Same property for ContentElements
                 }
 
-                if (_stylusCapture != null)
+                if (_stylusCapture is not null)
                 {
                     o = _stylusCapture as DependencyObject;
                     o.SetValue(UIElement.IsStylusCapturedPropertyKey, true); // Same property for ContentElements
@@ -613,7 +613,7 @@ namespace System.Windows.Input.StylusPointer
                 _stylusOver = newOver;
 
                 // Adjust the handlers we use to track everything.
-                if (oldOver != null)
+                if (oldOver is not null)
                 {
                     o = oldOver as DependencyObject;
                     if (o is UIElement element)
@@ -642,7 +642,7 @@ namespace System.Windows.Input.StylusPointer
                         throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, oldOver.GetType())); 
                     }
                 }
-                if (_stylusOver != null)
+                if (_stylusOver is not null)
                 {
                     o = _stylusOver as DependencyObject;
                     if (o is UIElement element)
@@ -678,13 +678,13 @@ namespace System.Windows.Input.StylusPointer
                 UIElement.StylusOverProperty.OnOriginValueChanged(oldOver as DependencyObject, _stylusOver as DependencyObject, ref _stylusOverTreeState);
 
                 // Invalidate the IsStylusDirectlyOver property.
-                if (oldOver != null)
+                if (oldOver is not null)
                 {
                     o = oldOver as DependencyObject;
                     o.SetValue(UIElement.IsStylusDirectlyOverPropertyKey, false); // Same property for ContentElements
                 }
 
-                if (_stylusOver != null)
+                if (_stylusOver is not null)
                 {
                     o = _stylusOver as DependencyObject;
                     o.SetValue(UIElement.IsStylusDirectlyOverPropertyKey, true); // Same property for ContentElements
@@ -748,7 +748,7 @@ namespace System.Windows.Input.StylusPointer
 
         internal override void ReevaluateCapture(DependencyObject element, DependencyObject oldParent, bool isCoreParent)
         {
-            if (element != null)
+            if (element is not null)
             {
                 if (isCoreParent)
                 {
@@ -831,7 +831,7 @@ namespace System.Windows.Input.StylusPointer
             // tree state.  This is because it is possible (even likely) that
             // we would have already killed capture if the capture criteria was
             // no longer met.
-            if (_stylusCaptureWithinTreeState != null && !_stylusCaptureWithinTreeState.IsEmpty)
+            if (_stylusCaptureWithinTreeState is not null && !_stylusCaptureWithinTreeState.IsEmpty)
             {
                 UIElement.StylusCaptureWithinProperty.OnOriginValueChanged(_stylusCapture as DependencyObject, _stylusCapture as DependencyObject, ref _stylusCaptureWithinTreeState);
             }
@@ -841,7 +841,7 @@ namespace System.Windows.Input.StylusPointer
 
         internal override void ReevaluateStylusOver(DependencyObject element, DependencyObject oldParent, bool isCoreParent)
         {
-            if (element != null)
+            if (element is not null)
             {
                 if (isCoreParent)
                 {
@@ -882,7 +882,7 @@ namespace System.Windows.Input.StylusPointer
             _reevaluateStylusOverOperation = null;
 
             // Synchronize causes state issues with the stylus events so we don't do this.
-            //if (_currentStylusDevice != null)
+            //if (_currentStylusDevice is not null)
             //{
             //    _currentStylusDevice.Synchronize();
             //}
@@ -893,7 +893,7 @@ namespace System.Windows.Input.StylusPointer
             // tree state.  This is because it is possible (even likely) that
             // Synchronize() would have already done this if we hit-tested to a
             // different element.
-            if (_stylusOverTreeState != null && !_stylusOverTreeState.IsEmpty)
+            if (_stylusOverTreeState is not null && !_stylusOverTreeState.IsEmpty)
             {
                 UIElement.StylusOverProperty.OnOriginValueChanged(_stylusOver as DependencyObject, _stylusOver as DependencyObject, ref _stylusOverTreeState);
             }
@@ -979,7 +979,7 @@ namespace System.Windows.Input.StylusPointer
         /// <returns>True if promotion should occur, false otherwise</returns>
         private bool IsTouchPromotionEvent(StylusEventArgs stylusEventArgs)
         {
-            if (stylusEventArgs != null)
+            if (stylusEventArgs is not null)
             {
                 RoutedEvent routedEvent = stylusEventArgs.RoutedEvent;
                 return (stylusEventArgs?.StylusDevice?.TabletDevice?.Type == TabletDeviceType.Touch &&
@@ -1001,7 +1001,7 @@ namespace System.Windows.Input.StylusPointer
         {
             RoutedEvent routedEvent = StylusLogic.GetPreviewEventFromRawStylusActions(report.Actions);
 
-            if (routedEvent != null && report.StylusDevice != null)
+            if (routedEvent is not null && report.StylusDevice is not null)
             {
                 StylusEventArgs args;
 
@@ -1041,7 +1041,7 @@ namespace System.Windows.Input.StylusPointer
             if (!e.StagingItem.Input.Handled)
             {
                 RoutedEvent eventMain = StylusLogic.GetMainEventFromPreviewEvent(e.StagingItem.Input.RoutedEvent);
-                if (eventMain != null)
+                if (eventMain is not null)
                 {
                     StylusEventArgs eventArgsPreview = (StylusEventArgs)e.StagingItem.Input;
                     StylusDevice stylusDevice = eventArgsPreview.InputReport.StylusDevice;
@@ -1085,7 +1085,7 @@ namespace System.Windows.Input.StylusPointer
                 // never be promoted to TouchUp event leaving the TouchDevice in inconsistent
                 // active state. Hence deactivating touch device if it is active.
                 StylusEventArgs stylusEventArgs = e.StagingItem.Input as StylusEventArgs;
-                if (stylusEventArgs != null &&
+                if (stylusEventArgs is not null &&
                     stylusEventArgs.RoutedEvent == Stylus.PreviewStylusUpEvent &&
                     stylusEventArgs.StylusDeviceImpl.As<PointerStylusDevice>().TouchDevice.IsActive)
                 {
@@ -1225,7 +1225,7 @@ namespace System.Windows.Input.StylusPointer
 
             _currentStylusDevice = pointerStylusDevice;
 
-            if (updateOver && pointerStylusDevice != null)
+            if (updateOver && pointerStylusDevice is not null)
             {
                 // This will cause StylusLogic.UpdateStylusOverProperty to unconditionally be called.
                 pointerStylusDevice.ChangeStylusOver(newOver);
@@ -1233,7 +1233,7 @@ namespace System.Windows.Input.StylusPointer
                 // If changing the current stylusdevice make sure that the old one's
                 // over state is set to null if it is not InRange anymore.
                 // NOTE: We only want to do this if we have multiple stylusdevices InRange!
-                if (stylusDeviceChange && oldStylusDevice != null)
+                if (stylusDeviceChange && oldStylusDevice is not null)
                 {
                     if (!oldStylusDevice.InRange)
                     {

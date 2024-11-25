@@ -625,7 +625,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (_container.TextView != null && _container.TextView.IsValid && _container.TextView.Contains(this));
+                return (_container.TextView is not null && _container.TextView.IsValid && _container.TextView.Contains(this));
             }
         }
 

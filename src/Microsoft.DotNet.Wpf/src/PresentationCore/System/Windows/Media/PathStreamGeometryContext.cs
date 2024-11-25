@@ -72,7 +72,7 @@ namespace System.Windows.Media
                 _pathGeometry.FillRule = fillRule;
             }
            
-            if ((transform != null) && !transform.IsIdentity)
+            if ((transform is not null) && !transform.IsIdentity)
             {
                 _pathGeometry.Transform = transform.Clone();
             }
@@ -89,8 +89,8 @@ namespace System.Windows.Media
 
         internal override void SetSegmentCount(int segmentCount)
         {
-            Debug.Assert(_figures != null, "It is illegal to call SetSegmentCount before BeginFigure.");
-            Debug.Assert(_currentFigure != null, "It is illegal to call SetSegmentCount before BeginFigure.");
+            Debug.Assert(_figures is not null, "It is illegal to call SetSegmentCount before BeginFigure.");
+            Debug.Assert(_currentFigure is not null, "It is illegal to call SetSegmentCount before BeginFigure.");
             Debug.Assert(_segments is null, "It is illegal to call SetSegmentCount multiple times per BeginFigure or after a *To method.");
             Debug.Assert(segmentCount > 0);
 
@@ -103,7 +103,7 @@ namespace System.Windows.Media
         /// </summary>
         override internal void SetClosedState(bool isClosed)
         {
-            Debug.Assert(_currentFigure != null);
+            Debug.Assert(_currentFigure is not null);
 
             if (isClosed != _currentIsClosed)
             {
@@ -117,8 +117,8 @@ namespace System.Windows.Media
         /// </summary>
         public override void BeginFigure(Point startPoint, bool isFilled, bool isClosed)
         {
-            // _currentFigure != null -> _figures != null
-            Debug.Assert(_currentFigure is null || _figures != null);
+            // _currentFigure is not null -> _figures is not null
+            Debug.Assert(_currentFigure is null || _figures is not null);
 
             // Is this the first figure?
             if (_currentFigure is null)
@@ -245,8 +245,8 @@ namespace System.Windows.Media
         /// </summary>
         public override void ArcTo(Point point, Size size, double rotationAngle, bool isLargeArc, SweepDirection sweepDirection, bool isStroked, bool isSmoothJoin)
         {
-            Debug.Assert(_figures != null);
-            Debug.Assert(_currentFigure != null);
+            Debug.Assert(_figures is not null);
+            Debug.Assert(_currentFigure is not null);
 
             FinishSegment();
 
@@ -324,7 +324,7 @@ namespace System.Windows.Media
                                    bool isSmoothJoin,
                                    MIL_SEGMENT_TYPE segmentType)
         {
-            Debug.Assert(points != null);
+            Debug.Assert(points is not null);
 
             int count = points.Count;
             PrepareToAddPoints(count, isStroked, isSmoothJoin, segmentType);
@@ -341,8 +341,8 @@ namespace System.Windows.Media
                                    bool isSmoothJoin,
                                    MIL_SEGMENT_TYPE segmentType)
         {
-            Debug.Assert(_figures != null);
-            Debug.Assert(_currentFigure != null);
+            Debug.Assert(_figures is not null);
+            Debug.Assert(_currentFigure is not null);
 
             Debug.Assert(count != 0);
 
@@ -368,9 +368,9 @@ namespace System.Windows.Media
         /// </summary>
         private void FinishSegment()
         {
-            if (_currentSegmentPoints != null)
+            if (_currentSegmentPoints is not null)
             {
-                Debug.Assert(_currentFigure != null);
+                Debug.Assert(_currentFigure is not null);
 
                 int count = _currentSegmentPoints.Count;
 

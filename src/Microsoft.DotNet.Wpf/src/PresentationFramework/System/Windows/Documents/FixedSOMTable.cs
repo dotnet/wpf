@@ -93,7 +93,7 @@ namespace System.Windows.Documents
                             {
                                 cell.AddContainer(container);
                                 FixedSOMFixedBlock block = container as FixedSOMFixedBlock;
-                                if (block != null)
+                                if (block is not null)
                                 {
                                     if (block.IsRTL)
                                     {
@@ -166,7 +166,7 @@ namespace System.Windows.Documents
                 if (this.SemanticBoxes.Count == 1)
                 {
                     FixedSOMTableRow row = this.SemanticBoxes[0] as FixedSOMTableRow;
-                    Debug.Assert(row != null);
+                    Debug.Assert(row is not null);
                     return (row.SemanticBoxes.Count == 1);
                 }
                 return false;
@@ -182,8 +182,8 @@ namespace System.Windows.Documents
             for (int i=0; i<this.SemanticBoxes.Count;)
             {
                 FixedSOMTableRow row = this.SemanticBoxes[i] as FixedSOMTableRow;
-                Debug.Assert(row != null);
-                if (row != null && row.IsEmpty && row.BoundingRect.Height < _minRowHeight)
+                Debug.Assert(row is not null);
+                if (row is not null && row.IsEmpty && row.BoundingRect.Height < _minRowHeight)
                 {
                     this.SemanticBoxes.RemoveAt(i);
                 }

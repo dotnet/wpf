@@ -38,7 +38,7 @@ namespace MS.Internal.Documents
 
         internal ContentElementCollection(TParent owner)
         {
-            Debug.Assert(owner != null);
+            Debug.Assert(owner is not null);
             _owner = owner;
             Items = new TItem[DefaultCapacity];
         }
@@ -309,7 +309,7 @@ namespace MS.Internal.Documents
         {
             internal ContentElementCollectionEnumeratorSimple(ContentElementCollection<TParent, TItem> collection)
             {
-                Debug.Assert(collection != null);
+                Debug.Assert(collection is not null);
 
                 _collection = collection;
                 _index = -1;

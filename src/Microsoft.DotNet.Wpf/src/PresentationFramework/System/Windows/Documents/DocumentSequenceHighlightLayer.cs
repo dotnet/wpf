@@ -76,7 +76,7 @@ namespace System.Windows.Documents
         {
             DocumentsTrace.FixedDocumentSequence.Highlights.Trace($"DSHL.RaiseHighlightChangedEvent ranges={ranges.Count}");
             Debug.Assert(ranges.Count > 0);
-            if (this.Changed != null)
+            if (this.Changed is not null)
             {
                 DocumentSequenceHighlightChangedEventArgs args;
                 args = new DocumentSequenceHighlightChangedEventArgs(ranges);

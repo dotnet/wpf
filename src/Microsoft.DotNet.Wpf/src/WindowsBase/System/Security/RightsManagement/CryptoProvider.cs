@@ -192,21 +192,21 @@ namespace System.Security.RightsManagement
             {
                 if (disposing)
                 {
-                    if (_decryptorHandle != null && !_decryptorHandle.IsInvalid)
+                    if (_decryptorHandle is not null && !_decryptorHandle.IsInvalid)
                         _decryptorHandle.Close();
                     
-                    if (_encryptorHandle != null && !_encryptorHandle.IsInvalid)
+                    if (_encryptorHandle is not null && !_encryptorHandle.IsInvalid)
                         _encryptorHandle.Close();
 
-                    if (_boundLicenseOwnerViewRightsHandle != null && !_boundLicenseOwnerViewRightsHandle.IsInvalid)
+                    if (_boundLicenseOwnerViewRightsHandle is not null && !_boundLicenseOwnerViewRightsHandle.IsInvalid)
                         _boundLicenseOwnerViewRightsHandle.Close();
                 
                     // dispose collection of the bound licenses that we have 
-                    if (_boundLicenseHandleList != null)
+                    if (_boundLicenseHandleList is not null)
                     {
                         foreach(SafeRightsManagementHandle boundLicenseHandle in _boundLicenseHandleList)
                         {
-                            if (boundLicenseHandle != null && !boundLicenseHandle.IsInvalid) 
+                            if (boundLicenseHandle is not null && !boundLicenseHandle.IsInvalid) 
                                 boundLicenseHandle.Close(); 
                         }
                     }
@@ -285,7 +285,7 @@ namespace System.Security.RightsManagement
                     {
                         Nullable<ContentRight> contentRight = ClientSession.GetRightFromString(rightsInfo.RightName);
 
-                        if (contentRight != null)
+                        if (contentRight is not null)
                         {
                             grantList.Add(new ContentGrant(_owner, contentRight.Value, rightsInfo.ValidFrom, rightsInfo.ValidUntil));
                         }
@@ -340,17 +340,17 @@ namespace System.Security.RightsManagement
                                                         List<RightNameExpirationInfoPair> rightsInfoList,
                                                         ContentUser owner)
         {
-            Invariant.Assert(boundLicenseHandleList != null);
+            Invariant.Assert(boundLicenseHandleList is not null);
             Invariant.Assert(boundLicenseHandleList.Count > 0);
 
-            Invariant.Assert(rightsInfoList != null);
+            Invariant.Assert(rightsInfoList is not null);
             Invariant.Assert(rightsInfoList.Count > 0);
 
             // we expect a match between lists of the Right Information and the bound license handles 
             // we will be mapping those lists based on indexes 
             Invariant.Assert(rightsInfoList.Count == boundLicenseHandleList.Count);
                 
-            Invariant.Assert(owner != null);
+            Invariant.Assert(owner is not null);
 
             _boundLicenseHandleList = boundLicenseHandleList;
             _boundRightsInfoList = rightsInfoList; 
@@ -366,7 +366,7 @@ namespace System.Security.RightsManagement
 
         internal UnsignedPublishLicense DecryptPublishLicense(string serializedPublishLicense)
         {
-            Invariant.Assert(serializedPublishLicense != null);
+            Invariant.Assert(serializedPublishLicense is not null);
 
             if ((BoundLicenseOwnerViewRightsHandle is null ) || BoundLicenseOwnerViewRightsHandle.IsInvalid)
             {
@@ -448,7 +448,7 @@ namespace System.Security.RightsManagement
 
                         if (hr == 0) 
                         {
-                            Debug.Assert(decryptorHandle != null);
+                            Debug.Assert(decryptorHandle is not null);
 
                             _decryptorHandle = decryptorHandle;
                              _decryptorHandleCalculated = true;
@@ -480,7 +480,7 @@ namespace System.Security.RightsManagement
 
                         if (hr == 0) 
                         {
-                            Debug.Assert(encryptorHandle != null);
+                            Debug.Assert(encryptorHandle is not null);
 
                             _encryptorHandle = encryptorHandle;
                             _encryptorHandleCalculated = true;
@@ -506,7 +506,7 @@ namespace System.Security.RightsManagement
                         Nullable<ContentRight> right = 
                                         ClientSession.GetRightFromString(_boundRightsInfoList[i].RightName);
                             
-                        if ((right != null) 
+                        if ((right is not null) 
                                 &&
                             ((right.Value == ContentRight.Owner) ||(right.Value== ContentRight.ViewRightsData)))
                         {

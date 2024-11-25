@@ -167,7 +167,7 @@ namespace MS.Internal.AppModel
             get
             {
                 _host.VerifyContextAndObjectState();
-                return _journal != null && !InAppShutdown && _journal.CanGoForward;
+                return _journal is not null && !InAppShutdown && _journal.CanGoForward;
             }
         }
         public bool CanGoBack
@@ -175,7 +175,7 @@ namespace MS.Internal.AppModel
             get
             {
                 _host.VerifyContextAndObjectState();
-                return _journal != null && !InAppShutdown && _journal.CanGoBack;
+                return _journal is not null && !InAppShutdown && _journal.CanGoBack;
             }
         }
 
@@ -274,7 +274,7 @@ namespace MS.Internal.AppModel
         {
             // The getter lazily creates Journal and notifies the host.
             Journal journal = Journal;
-            Debug.Assert(journal != null);
+            Debug.Assert(journal is not null);
         }
 
         internal bool CanInvokeJournalEntry(int entryId)
@@ -313,7 +313,7 @@ namespace MS.Internal.AppModel
             }
 
             NavigationService navigationService = _rootNavSvc.FindTarget(entry.NavigationServiceId);
-            Debug.Assert(navigationService != null, "NavigationService cannot be null for journal navigations");
+            Debug.Assert(navigationService is not null, "NavigationService cannot be null for journal navigations");
 
             NavigationMode mode = Journal.GetNavigationMode(entry);
             bool navigated = false;
@@ -333,7 +333,7 @@ namespace MS.Internal.AppModel
 
         internal void AbortJournalNavigation()
         {
-            if (_journal != null)
+            if (_journal is not null)
             {
                 _journal.AbortJournalNavigation();
             }
@@ -418,7 +418,7 @@ namespace MS.Internal.AppModel
             // Used by the getter; also by RootBrowserWindow and Frame to install a deserialized Journal.
             set
             {
-                Debug.Assert(_journal is null && value != null,
+                Debug.Assert(_journal is null && value is not null,
                     "The Journal should be set only once and never removed."); // see bug 1367999
                 _journal = value;
                 _journal.Filter = new JournalEntryFilter(this.IsEntryNavigable);
@@ -490,7 +490,7 @@ namespace MS.Internal.AppModel
             // this collapses all fragment-navigation and CustomContentState-navigation entries for
             // a page (other than the current one) to a single entry. That's what IE does.
             NavigationService ns = _rootNavSvc.FindTarget(entry.NavigationServiceId);
-            return ns != null
+            return ns is not null
                 && (ns.ContentId == entry.ContentId || entry.JEGroupState.GroupExitEntry == entry);
         }
 

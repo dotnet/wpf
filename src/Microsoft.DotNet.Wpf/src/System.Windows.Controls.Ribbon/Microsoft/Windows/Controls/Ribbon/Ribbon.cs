@@ -743,23 +743,23 @@ namespace Microsoft.Windows.Controls.Ribbon
             _itemsPresenterPopup = this.GetTemplateChild(ItemsPresenterPopupTemplateName) as Popup;
 
             _tabHeaderItemsControl = this.GetTemplateChild("TabHeaderItemsControl") as RibbonTabHeaderItemsControl;
-            if (_tabHeaderItemsControl != null && _tabHeaderItemsControl.ItemsSource is null)
+            if (_tabHeaderItemsControl is not null && _tabHeaderItemsControl.ItemsSource is null)
             {
                 _tabHeaderItemsControl.ItemsSource = _tabHeaderItemsSource;
             }
 
             _groupHeaderItemsControl = this.GetTemplateChild(Ribbon.ContextualTabGroupItemsControlTemplateName) as RibbonContextualTabGroupItemsControl;
-            if (_groupHeaderItemsControl != null && _groupHeaderItemsControl.ItemsSource is null)
+            if (_groupHeaderItemsControl is not null && _groupHeaderItemsControl.ItemsSource is null)
             {
-                if (ContextualTabGroupsSource != null && ContextualTabGroups.Count > 0)
+                if (ContextualTabGroupsSource is not null && ContextualTabGroups.Count > 0)
                 {
                     throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Ribbon_ContextualTabHeadersSourceInvalid);
                 }
-                if (ContextualTabGroupsSource != null)
+                if (ContextualTabGroupsSource is not null)
                 {
                     ContextualTabGroupItemsControl.ItemsSource = ContextualTabGroupsSource;
                 }
-                else if (ContextualTabGroups != null)
+                else if (ContextualTabGroups is not null)
                 {
                     ContextualTabGroupItemsControl.ItemsSource = ContextualTabGroups;
                 }
@@ -866,7 +866,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         internal void NotifyMouseClickedOnContextualTabGroup(RibbonContextualTabGroup tabGroupHeader)
         {
             RibbonTab firstVisibleTab = tabGroupHeader.FirstVisibleTab;
-            if (firstVisibleTab != null)
+            if (firstVisibleTab is not null)
             {
                 // If Ribbon is minimized - we should open it first
                 IsMinimized = false;
@@ -881,10 +881,10 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         internal void NotifyTabContextualTabGroupHeaderChanged()
         {
-            if (_tabHeaderItemsControl != null)
+            if (_tabHeaderItemsControl is not null)
             {
                 Panel headerItemsHost = _tabHeaderItemsControl.InternalItemsHost;
-                if (headerItemsHost != null)
+                if (headerItemsHost is not null)
                 {
                     headerItemsHost.InvalidateMeasure();
                     headerItemsHost.InvalidateArrange();
@@ -905,11 +905,11 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         internal void NotifyTabHeadersScrollOwnerChanged(ScrollViewer oldScrollViewer, ScrollViewer newScrollViewer)
         {
-            if (oldScrollViewer != null )
+            if (oldScrollViewer is not null )
             {
                 oldScrollViewer.ScrollChanged -= new ScrollChangedEventHandler(OnTabHeadersScrollChanged);
             }
-            if (newScrollViewer != null)
+            if (newScrollViewer is not null)
             {
                 newScrollViewer.ScrollChanged += new ScrollChangedEventHandler(OnTabHeadersScrollChanged);
             }
@@ -917,7 +917,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private void OnTabHeadersScrollChanged(object d, ScrollChangedEventArgs e)
         {
-            if (ContextualTabGroupItemsControl != null)
+            if (ContextualTabGroupItemsControl is not null)
             {
                 // When scrollbars appear for the TabHeaders, collapse the ContextualTabGroups. 
                 ContextualTabGroupItemsControl.ForceCollapse = !(DoubleUtil.GreaterThanOrClose(e.ViewportWidth, e.ExtentWidth));
@@ -949,10 +949,10 @@ namespace Microsoft.Windows.Controls.Ribbon
             while (children.MoveNext())
                 yield return children.Current;
             
-            if (this.ApplicationMenu != null)
+            if (this.ApplicationMenu is not null)
                 yield return this.ApplicationMenu;
 
-            if (this.QuickAccessToolBar != null)
+            if (this.QuickAccessToolBar is not null)
                 yield return this.QuickAccessToolBar;
         }
 
@@ -989,7 +989,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                             if (newSelectedIndex >= 0)
                             {
                                 SelectedIndex = newSelectedIndex;
-                                if (_tabHeaderItemsControl != null)
+                                if (_tabHeaderItemsControl is not null)
                                 {
                                     _tabHeaderItemsControl.ScrollIntoView(SelectedIndex);
                                 }
@@ -1007,7 +1007,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                             if (newSelectedIndex >= 0)
                             {
                                 SelectedIndex = newSelectedIndex;
-                                if (_tabHeaderItemsControl != null)
+                                if (_tabHeaderItemsControl is not null)
                                 {
                                     _tabHeaderItemsControl.ScrollIntoView(SelectedIndex);
                                 }
@@ -1041,7 +1041,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
         {
             ItemsControl childItemsControl = element as ItemsControl;
-            if (childItemsControl != null)
+            if (childItemsControl is not null)
             {
                 // copy templates and styles from this ItemsControl
                 var itemTemplate = RibbonHelper.GetValueAndValueSource(childItemsControl, ItemsControl.ItemTemplateProperty);
@@ -1083,7 +1083,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
 
             RibbonTab container = element as RibbonTab;
-            if (container != null)
+            if (container is not null)
             {
                 container.PrepareRibbonTab();
             }
@@ -1125,7 +1125,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             base.OnSelectionChanged(e);
 
-            if (e.AddedItems != null && e.AddedItems.Count > 0)
+            if (e.AddedItems is not null && e.AddedItems.Count > 0)
             {
                 // Selector.CanSelectMultiple is true by default and is internal.
                 // Force single selection by setting the selected item.
@@ -1175,14 +1175,14 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             // Unhook handlers if the previous container was a Window.
             if (e.OldSource is HwndSource &&
-                rib._window != null)
+                rib._window is not null)
             {
                 rib.UnhookWindowListeners(rib._window);
                 rib._window = null;
             }
 
             // Hook up new handlers if the new container is an Window.
-            if (e.NewSource != null &&
+            if (e.NewSource is not null &&
                 e.NewSource.RootVisual is Window)
             {
                 rib._window = (Window)e.NewSource.RootVisual;
@@ -1233,7 +1233,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void OnWindowIconVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Ribbon rib = (Ribbon) d;
-            if (rib != null)
+            if (rib is not null)
             {
                 if (rib.IsHostedInRibbonWindow)
                 {
@@ -1279,10 +1279,10 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             // Raise UI Automation Events
             RibbonTab selectedTab = ribbon.ItemContainerGenerator.ContainerFromItem(ribbon.SelectedItem) as RibbonTab;
-            if (selectedTab != null)
+            if (selectedTab is not null)
             {
                 RibbonTabAutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(selectedTab) as RibbonTabAutomationPeer;
-                if (peer != null)
+                if (peer is not null)
                 {
                     peer.RaiseTabExpandCollapseAutomationEvent((bool)e.OldValue, (bool)e.NewValue);
                 }
@@ -1305,7 +1305,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
 
             if (!ribbon.IsLoaded ||
-                (ribbon._itemsPresenterPopup != null &&
+                (ribbon._itemsPresenterPopup is not null &&
                  !((UIElement)(ribbon._itemsPresenterPopup.Parent)).IsArrangeValid))
             {
                 ribbon.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new DispatcherOperationCallback(ribbon.RecoerceIsDropDownOpen), ribbon);
@@ -1341,7 +1341,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             // Raise UI Automation Events
             RibbonAutomationPeer peer = UIElementAutomationPeer.FromElement(ribbon) as RibbonAutomationPeer;
-            if (peer != null)
+            if (peer is not null)
             {
                 peer.RaiseExpandCollapseAutomationEvent(!(bool)e.OldValue, !(bool)e.NewValue);
             }
@@ -1361,13 +1361,13 @@ namespace Microsoft.Windows.Controls.Ribbon
             RibbonQuickAccessToolBar newRibbonQuickAccessToolBar = e.NewValue as RibbonQuickAccessToolBar;
 
             // Remove Logical tree link
-            if (oldRibbonQuickAccessToolBar != null)
+            if (oldRibbonQuickAccessToolBar is not null)
             {
                 ribbon.RemoveLogicalChild(oldRibbonQuickAccessToolBar);
             }
 
             // Add Logical tree link
-            if (newRibbonQuickAccessToolBar != null)
+            if (newRibbonQuickAccessToolBar is not null)
             {
                 ribbon.AddLogicalChild(newRibbonQuickAccessToolBar);
             }
@@ -1386,13 +1386,13 @@ namespace Microsoft.Windows.Controls.Ribbon
             RibbonApplicationMenu newRibbonApplicationMenu = e.NewValue as RibbonApplicationMenu;
 
             // Remove Logical tree link
-            if (oldRibbonApplicationMenu != null)
+            if (oldRibbonApplicationMenu is not null)
             {
                 ribbon.RemoveLogicalChild(oldRibbonApplicationMenu);
             }
 
             // Add Logical tree link
-            if (newRibbonApplicationMenu != null)
+            if (newRibbonApplicationMenu is not null)
             {
                 ribbon.AddLogicalChild(newRibbonApplicationMenu);
             }
@@ -1441,7 +1441,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static object CoerceIsCollapsed(DependencyObject d, object baseValue)
         {
             Window window = ((Ribbon)d)._window;
-            if (window != null &&
+            if (window is not null &&
                 (DoubleUtil.LessThan(window.ActualWidth, CollapseWidth) ||
                  DoubleUtil.LessThan(window.ActualHeight, CollapseHeight)))
             {
@@ -1468,7 +1468,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// <param name="e">The event data.</param>
         private void OnContextualTabGroupsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (ContextualTabGroupsSource != null && ContextualTabGroups.Count > 0)
+            if (ContextualTabGroupsSource is not null && ContextualTabGroups.Count > 0)
             {
                 throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Ribbon_ContextualTabHeadersSourceInvalid);
             }
@@ -1478,12 +1478,12 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             Ribbon ribbon = (Ribbon)sender;
 
-            if (ribbon.ContextualTabGroupsSource != null && ribbon.ContextualTabGroups.Count > 0)
+            if (ribbon.ContextualTabGroupsSource is not null && ribbon.ContextualTabGroups.Count > 0)
             {
                 throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Ribbon_ContextualTabHeadersSourceInvalid);
             }
 
-            if (ribbon.ContextualTabGroupItemsControl != null)
+            if (ribbon.ContextualTabGroupItemsControl is not null)
             {
                 ribbon.ContextualTabGroupItemsControl.ItemsSource = (IEnumerable)args.NewValue;
             }
@@ -1492,7 +1492,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void OnNotifyContextualTabGroupPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Ribbon ribbon = (Ribbon)d;
-            if (ribbon.ContextualTabGroupItemsControl != null)
+            if (ribbon.ContextualTabGroupItemsControl is not null)
             {
                 ribbon.ContextualTabGroupItemsControl.NotifyPropertyChanged(e);
             }
@@ -1505,7 +1505,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             for (int i = 0; i < itemCount; i++)
             {
                 RibbonTab ribbonTab = ribbon.ItemContainerGenerator.ContainerFromIndex(i) as RibbonTab;
-                if (ribbonTab != null)
+                if (ribbonTab is not null)
                 {
                     ribbonTab.NotifyPropertyChanged(e);
                 }
@@ -1566,7 +1566,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             for (int i = 0; i < itemCount; i++)
             {
                 RibbonTab tab = ItemContainerGenerator.ContainerFromIndex(i) as RibbonTab;
-                if (tab != null &&
+                if (tab is not null &&
                     tab.IsVisible &&
                     (!tab.IsContextualTab || ignoreContextualTabs))
                 {
@@ -1677,7 +1677,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 RibbonTab tab = ItemContainerGenerator.ContainerFromIndex(i) as RibbonTab;
                 object headerItem = null;
-                if (tab != null)
+                if (tab is not null)
                 {
                     headerItem = tab.Header;
                 }
@@ -1713,19 +1713,19 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void OnBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Ribbon ribbon = (Ribbon)d;
-            if (ribbon._tabHeaderItemsControl != null)
+            if (ribbon._tabHeaderItemsControl is not null)
             {
                 RibbonTabHeadersPanel tabHeadersPanel = ribbon._tabHeaderItemsControl.InternalItemsHost as RibbonTabHeadersPanel;
-                if (tabHeadersPanel != null)
+                if (tabHeadersPanel is not null)
                 {
                     tabHeadersPanel.OnNotifyRibbonBorderBrushChanged();
                 }
             }
             RibbonContextualTabGroupItemsControl contextualItemsControl = ribbon.ContextualTabGroupItemsControl;
-            if (contextualItemsControl != null)
+            if (contextualItemsControl is not null)
             {
                 RibbonContextualTabGroupsPanel contextualTabHeadersPanel = contextualItemsControl.InternalItemsHost as RibbonContextualTabGroupsPanel;
-                if (contextualTabHeadersPanel != null)
+                if (contextualTabHeadersPanel is not null)
                 {
                     contextualTabHeadersPanel.OnNotifyRibbonBorderBrushChanged();
                 }
@@ -1894,7 +1894,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private bool OnArrowControlKeyDown(Key key)
         {
             RibbonQuickAccessToolBar quickAccessToolBar = QuickAccessToolBar;
-            if (quickAccessToolBar != null && !quickAccessToolBar.IsLoaded)
+            if (quickAccessToolBar is not null && !quickAccessToolBar.IsLoaded)
             {
                 quickAccessToolBar = null;
             }
@@ -1907,16 +1907,16 @@ namespace Microsoft.Windows.Controls.Ribbon
                 selectedTab = ItemContainerGenerator.ContainerFromIndex(selectedIndex) as RibbonTab;
             }
 
-            if ((quickAccessToolBar != null && quickAccessToolBar.IsKeyboardFocusWithin) ||
-                (tabHeaderItemsControl != null && tabHeaderItemsControl.IsKeyboardFocusWithin) ||
-                (selectedTab != null && selectedTab.IsKeyboardFocusWithin))
+            if ((quickAccessToolBar is not null && quickAccessToolBar.IsKeyboardFocusWithin) ||
+                (tabHeaderItemsControl is not null && tabHeaderItemsControl.IsKeyboardFocusWithin) ||
+                (selectedTab is not null && selectedTab.IsKeyboardFocusWithin))
             {
                 ArrowKeyControlNavigationScope startingNavigationScope = ArrowKeyControlNavigationScope.Tab;
-                if (quickAccessToolBar != null && quickAccessToolBar.IsKeyboardFocusWithin)
+                if (quickAccessToolBar is not null && quickAccessToolBar.IsKeyboardFocusWithin)
                 {
                     startingNavigationScope = ArrowKeyControlNavigationScope.QuickAccessToolbar;
                 }
-                else if (tabHeaderItemsControl != null && tabHeaderItemsControl.IsKeyboardFocusWithin)
+                else if (tabHeaderItemsControl is not null && tabHeaderItemsControl.IsKeyboardFocusWithin)
                 {
                     startingNavigationScope = ArrowKeyControlNavigationScope.TabHeaders;
                 }
@@ -1963,7 +1963,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private bool FocusSelectedTabHeader()
         {
             RibbonTabHeader tabHeader = SelectedTabHeader;
-            if (tabHeader != null)
+            if (tabHeader is not null)
             {
                 tabHeader.Focus();
                 return tabHeader.IsKeyboardFocusWithin;
@@ -2009,7 +2009,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             int index)
         {
             RibbonGroup group = tab.ItemContainerGenerator.ContainerFromIndex(index) as RibbonGroup;
-            if (group != null &&
+            if (group is not null &&
                 group.IsVisible)
             {
                 group.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
@@ -2053,7 +2053,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             int index)
         {
             RibbonControl ribbonControl = quickAccessToolBar.ItemContainerGenerator.ContainerFromIndex(index) as RibbonControl;
-            if (ribbonControl != null &&
+            if (ribbonControl is not null &&
                 ribbonControl.IsVisible &&
                 (index == 0 || ribbonControl.HostsRibbonGroup()))
             {
@@ -2116,7 +2116,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 extraControl,
                 itemCount,
                 getFocusedItemIndex);
-            bool considerExtraControl = (extraControl != null && extraControl.IsVisible);
+            bool considerExtraControl = (extraControl is not null && extraControl.IsVisible);
 
             if (currentIndex == Int32.MinValue)
             {
@@ -2186,7 +2186,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             Func<T, int> getFocusedItemIndex) where T : Control
         {
             int startIndex = 0;
-            bool considerExtraControl = (extraControl != null && extraControl.IsVisible);
+            bool considerExtraControl = (extraControl is not null && extraControl.IsVisible);
             if (startFromCurrent)
             {
                 if (!targetControl.IsKeyboardFocusWithin)
@@ -2243,10 +2243,10 @@ namespace Microsoft.Windows.Controls.Ribbon
             ArrowKeyControlNavigationScope startingNavigationScope)
         {
             DependencyObject focusedElement = Keyboard.FocusedElement as DependencyObject;
-            if (focusedElement != null &&
+            if (focusedElement is not null &&
                 !TreeHelper.IsVisualAncestorOf(this, focusedElement) &&
-                _itemsPresenterPopup != null &&
-                _itemsPresenterPopup.Child != null &&
+                _itemsPresenterPopup is not null &&
+                _itemsPresenterPopup.Child is not null &&
                 !TreeHelper.IsVisualAncestorOf(_itemsPresenterPopup.Child, focusedElement))
             {
                 // If the focused element is in uninteresting popups,
@@ -2263,7 +2263,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 switch (currentNavigationScope)
                 {
                     case ArrowKeyControlNavigationScope.QuickAccessToolbar:
-                        if (quickAccessToolBar != null && quickAccessToolBar.IsVisible && quickAccessToolBar.IsKeyboardFocusWithin)
+                        if (quickAccessToolBar is not null && quickAccessToolBar.IsVisible && quickAccessToolBar.IsKeyboardFocusWithin)
                         {
                             // Try to navigate through remaining qat items if focus is already in qat.
                             if (QatArrowKeyControlNavigate((navigateLeft == isRTL) /* leftToRight */,
@@ -2320,7 +2320,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         break;
                     case ArrowKeyControlNavigationScope.Tab:
 
-                        if (selectedTab != null && selectedTab.IsVisible && selectedTab.IsKeyboardFocusWithin)
+                        if (selectedTab is not null && selectedTab.IsVisible && selectedTab.IsKeyboardFocusWithin)
                         {
                             // Try to navigate through the remaining groups if the focus is already in selected tab.
                             if (TabArrowKeyControlNavigate(selectedTab,
@@ -2454,8 +2454,8 @@ namespace Microsoft.Windows.Controls.Ribbon
             // Find nearest element that can be added to the QAT directly
             obj = FindElementThatCanBeAddedToQAT(obj);
 
-            if (obj != null &&
-                RibbonControlService.GetQuickAccessToolBarId(obj) != null &&
+            if (obj is not null &&
+                RibbonControlService.GetQuickAccessToolBarId(obj) is not null &&
                 !RibbonHelper.ExistsInQAT(obj))
             {
                  args.CanExecute = true;
@@ -2469,15 +2469,15 @@ namespace Microsoft.Windows.Controls.Ribbon
             // Find nearest element that can be added to the QAT directly
             originalSource = FindElementThatCanBeAddedToQAT(originalSource) as UIElement;
 
-            if (originalSource != null)
+            if (originalSource is not null)
             {
                 RibbonQuickAccessToolBarCloneEventArgs e = new RibbonQuickAccessToolBarCloneEventArgs(originalSource);
                 originalSource.RaiseEvent(e);
 
                 Ribbon ribbon = RibbonControlService.GetRibbon(originalSource);
-                if (ribbon != null &&
-                    ribbon.QuickAccessToolBar != null &&
-                    e.CloneInstance != null)
+                if (ribbon is not null &&
+                    ribbon.QuickAccessToolBar is not null &&
+                    e.CloneInstance is not null)
                 {
                     ribbon.QuickAccessToolBar.Items.Add(e.CloneInstance);
                     args.Handled = true;
@@ -2487,7 +2487,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private static DependencyObject FindElementThatCanBeAddedToQAT(DependencyObject obj)
         {
-            while (obj != null && !RibbonControlService.GetCanAddToQuickAccessToolBarDirectly(obj))
+            while (obj is not null && !RibbonControlService.GetCanAddToQuickAccessToolBarDirectly(obj))
             {
                 obj = TreeHelper.GetParent(obj);
             }
@@ -2499,10 +2499,10 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             DependencyObject originalSource = args.OriginalSource as DependencyObject;
 
-            if (originalSource != null)
+            if (originalSource is not null)
             {
                 Ribbon ribbon = RibbonControlService.GetRibbon(originalSource);
-                if (ribbon != null &&
+                if (ribbon is not null &&
                     ribbon.IsMinimized)
                 {
                     args.CanExecute = true;
@@ -2513,10 +2513,10 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void MaximizeRibbonExecuted(object sender, ExecutedRoutedEventArgs args)
         {
             DependencyObject originalSource = args.OriginalSource as DependencyObject;
-            if (originalSource != null)
+            if (originalSource is not null)
             {
                 Ribbon ribbon = RibbonControlService.GetRibbon(originalSource);
-                if (ribbon != null)
+                if (ribbon is not null)
                 {
                     ribbon.IsMinimized = false;
                     args.Handled = true;
@@ -2528,10 +2528,10 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             DependencyObject originalSource = args.OriginalSource as DependencyObject;
 
-            if (originalSource != null)
+            if (originalSource is not null)
             {
                 Ribbon ribbon = RibbonControlService.GetRibbon(originalSource);
-                if (ribbon != null &&
+                if (ribbon is not null &&
                     !ribbon.IsMinimized)
                 {
                     args.CanExecute = true;
@@ -2542,10 +2542,10 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void MinimizeRibbonExecuted(object sender, ExecutedRoutedEventArgs args)
         {
             DependencyObject originalSource = args.OriginalSource as DependencyObject;
-            if (originalSource != null)
+            if (originalSource is not null)
             {
                 Ribbon ribbon = RibbonControlService.GetRibbon(originalSource);
-                if (ribbon != null)
+                if (ribbon is not null)
                 {
                     ribbon.IsMinimized = true;
                     args.Handled = true;
@@ -2557,7 +2557,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             DependencyObject obj = args.OriginalSource as DependencyObject;
 
-            if (obj != null)
+            if (obj is not null)
             {
                 args.CanExecute = RibbonControlService.GetIsInQuickAccessToolBar(obj);
             }
@@ -2566,11 +2566,11 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void RemoveFromQATExecuted(object sender, ExecutedRoutedEventArgs args)
         {
             UIElement originalSource = args.OriginalSource as UIElement;
-            if (originalSource != null)
+            if (originalSource is not null)
             {
                 Ribbon ribbon = RibbonControlService.GetRibbon(originalSource);
-                if (ribbon != null &&
-                    ribbon.QuickAccessToolBar != null)
+                if (ribbon is not null &&
+                    ribbon.QuickAccessToolBar is not null)
                 {
                     RibbonQuickAccessToolBar qat = ribbon.QuickAccessToolBar;
                     if (qat.Items.Contains(originalSource))
@@ -2586,11 +2586,11 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             DependencyObject originalSource = args.OriginalSource as DependencyObject;
 
-            if (originalSource != null)
+            if (originalSource is not null)
             {
                 Ribbon ribbon = RibbonControlService.GetRibbon(originalSource);
-                if (ribbon != null &&
-                    ribbon.QuickAccessToolBar != null &&
+                if (ribbon is not null &&
+                    ribbon.QuickAccessToolBar is not null &&
                     !ribbon.ShowQuickAccessToolBarOnTop)
                 {
                     args.CanExecute = true;
@@ -2601,10 +2601,10 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void ShowQATAboveExecuted(object sender, ExecutedRoutedEventArgs args)
         {
             DependencyObject originalSource = args.OriginalSource as DependencyObject;
-            if (originalSource != null)
+            if (originalSource is not null)
             {
                 Ribbon ribbon = RibbonControlService.GetRibbon(originalSource);
-                if (ribbon != null)
+                if (ribbon is not null)
                 {
                     ribbon.ShowQuickAccessToolBarOnTop = true;
                     args.Handled = true;
@@ -2616,11 +2616,11 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             DependencyObject originalSource = args.OriginalSource as DependencyObject;
 
-            if (originalSource != null)
+            if (originalSource is not null)
             {
                 Ribbon ribbon = RibbonControlService.GetRibbon(originalSource);
-                if (ribbon != null &&
-                    ribbon.QuickAccessToolBar != null &&
+                if (ribbon is not null &&
+                    ribbon.QuickAccessToolBar is not null &&
                     ribbon.ShowQuickAccessToolBarOnTop)
                 {
                     args.CanExecute = true;
@@ -2631,10 +2631,10 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void ShowQATBelowExecuted(object sender, ExecutedRoutedEventArgs args)
         {
             DependencyObject originalSource = args.OriginalSource as DependencyObject;
-            if (originalSource != null)
+            if (originalSource is not null)
             {
                 Ribbon ribbon = RibbonControlService.GetRibbon(originalSource);
-                if (ribbon != null)
+                if (ribbon is not null)
                 {
                     ribbon.ShowQuickAccessToolBarOnTop = false;
                     args.Handled = true;

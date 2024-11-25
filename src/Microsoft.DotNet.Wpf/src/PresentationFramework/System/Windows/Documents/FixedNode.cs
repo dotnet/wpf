@@ -94,7 +94,7 @@ namespace System.Windows.Documents
 
         internal static FixedNode Create(int pageIndex, int[] childPath)
         {
-            Debug.Assert(childPath != null);
+            Debug.Assert(childPath is not null);
             int[] completePath = new int[childPath.Length + 1];
             completePath[0] = pageIndex;
             childPath.CopyTo(completePath, 1);
@@ -132,7 +132,7 @@ namespace System.Windows.Documents
         // Ctor for deep nesting case
         private FixedNode(int[] path)
         {
-            Debug.Assert(path != null && path.Length >= 2); // At least a page index and an element index
+            Debug.Assert(path is not null && path.Length >= 2); // At least a page index and an element index
             _path = path;
        }
         #endregion Constructors

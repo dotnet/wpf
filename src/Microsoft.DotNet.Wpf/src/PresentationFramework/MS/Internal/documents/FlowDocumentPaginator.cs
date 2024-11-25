@@ -115,7 +115,7 @@ namespace MS.Internal.Documents
                 }
             }
 
-            if (page != null)
+            if (page is not null)
             {
                 OnGetPageCompleted(new GetPageCompletedEventArgs(page, pageNumber, null, false, userState));
             }
@@ -381,7 +381,7 @@ namespace MS.Internal.Documents
             // the top-left of the page. If position cannot be found, the start position of
             // the first range for TextView is treated as ContentPosition for the page.
             textView = (ITextView)((IServiceProvider)flowDocumentPage).GetService(typeof(ITextView));
-            Invariant.Assert(textView != null, "Cannot access ITextView for FlowDocumentPage.");
+            Invariant.Assert(textView is not null, "Cannot access ITextView for FlowDocumentPage.");
 
             //Invariant.Assert(textView.TextSegments.Count > 0, "Page cannot be empty.");
             // It is not necessarily WPF's fault if there are no TextSegments.  
@@ -681,7 +681,7 @@ namespace MS.Internal.Documents
         /// </summary>
         private void InvalidateBRT()
         {
-            if (BreakRecordTableInvalidated != null)
+            if (BreakRecordTableInvalidated is not null)
             {
                 BreakRecordTableInvalidated(this, EventArgs.Empty);
             }

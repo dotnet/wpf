@@ -66,7 +66,7 @@ namespace System.Windows.Controls
 
             // The target type of a ControlTemplate must match the 
             // type of the Control that it is being applied to
-            if (_targetType != null && !_targetType.IsInstanceOfType(templatedParent))
+            if (_targetType is not null && !_targetType.IsInstanceOfType(templatedParent))
             {
                 throw new ArgumentException(SR.Format(SR.TemplateTargetTypeMismatch, _targetType.Name, templatedParent.GetType().Name));
             }
@@ -155,7 +155,7 @@ namespace System.Windows.Controls
         {
             get 
             {  
-                if (TargetType != null)
+                if (TargetType is not null)
                 {
                     return TargetType; 
                 }

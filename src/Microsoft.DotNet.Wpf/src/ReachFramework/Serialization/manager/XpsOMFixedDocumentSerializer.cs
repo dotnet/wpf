@@ -136,7 +136,7 @@ namespace System.Windows.Xps.Serialization
                 //
                 if (e.Modified)
                 {
-                    if (e.PrintTicket != null)
+                    if (e.PrintTicket is not null)
                     {
                         PrintTicketSerializer serializer = new PrintTicketSerializer(SerializationManager);
                         serializer.SerializeObject(e.PrintTicket);

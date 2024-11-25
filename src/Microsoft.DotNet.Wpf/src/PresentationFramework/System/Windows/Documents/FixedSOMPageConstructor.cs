@@ -224,7 +224,7 @@ namespace System.Windows.Documents
         #region Constructors
         public FixedSOMPageConstructor(FixedPage fixedPage, int pageIndex)
         {
-            Debug.Assert(fixedPage != null);
+            Debug.Assert(fixedPage is not null);
             _fixedPage = fixedPage;
             _pageIndex = pageIndex;
             _fixedSOMPage  = new FixedSOMPage();
@@ -238,12 +238,12 @@ namespace System.Windows.Documents
 
         public FixedSOMPage ConstructPageStructure(List<FixedNode> fixedNodes)
         {
-            Debug.Assert(_fixedPage != null);
+            Debug.Assert(_fixedPage is not null);
 
             foreach (FixedNode node in fixedNodes)
             {
                 DependencyObject obj = _fixedPage.GetElement(node);
-                Debug.Assert(obj != null);
+                Debug.Assert(obj is not null);
 
                 if (obj is Glyphs)
                 {
@@ -282,8 +282,8 @@ namespace System.Windows.Documents
             ArgumentNullException.ThrowIfNull(path);
 
             Geometry geom   = path.Data;
-            bool     fill   = path.Fill != null;
-            bool     stroke = path.Stroke != null;
+            bool     fill   = path.Fill is not null;
+            bool     stroke = path.Stroke is not null;
 
             if ((geom is null) || (! fill && ! stroke))
             {
@@ -292,7 +292,7 @@ namespace System.Windows.Documents
 
             Transform transPath = path.RenderTransform;
 
-            if (transPath != null)
+            if (transPath is not null)
             {
                 transform *= transPath.Value;
             }
@@ -312,7 +312,7 @@ namespace System.Windows.Documents
 
             // Avoiding convert to PathGeometry if it's StreamGeometry, which can be walked
 
-            if (sgeo != null)
+            if (sgeo is not null)
             {
                 if (_geometryWalker is null)
                 {
@@ -325,7 +325,7 @@ namespace System.Windows.Documents
             {
                 PathGeometry pathGeom = PathGeometry.CreateFromGeometry(geom);
 
-                if (pathGeom != null)
+                if (pathGeom is not null)
                 {
                     if (fill)
                     {
@@ -377,13 +377,13 @@ namespace System.Windows.Documents
             while (true)
             {
                 Image image = obj as Image;
-                if (image != null)
+                if (image is not null)
                 {
                     somImage = FixedSOMImage.Create(_fixedPage, image, fixedNode);
                     break;
                 }
                 Path path = obj as Path;
-                if (path != null)
+                if (path is not null)
                 {
                     somImage = FixedSOMImage.Create(_fixedPage, path, fixedNode);
                     break;
@@ -400,7 +400,7 @@ namespace System.Windows.Documents
         //Processes the Glyphs element, create one or more text runs out of it, add to containing text line and text box
         private void _ProcessGlyphsElement(Glyphs glyphs, FixedNode node)
         {
-            Debug.Assert(glyphs != null);
+            Debug.Assert(glyphs is not null);
             string s = glyphs.UnicodeString;
             if (s.Length == 0 ||
                 glyphs.FontRenderingEmSize <= 0)
@@ -435,7 +435,7 @@ namespace System.Windows.Documents
                 charIndex = s.IndexOf(" ", charIndex+1, s.Length - charIndex -1, StringComparison.Ordinal);
                 if (charIndex >=0 )
                 {
-                    if (glyphRun.ClusterMap != null && glyphRun.ClusterMap.Count > 0)
+                    if (glyphRun.ClusterMap is not null && glyphRun.ClusterMap.Count > 0)
                     {
                         glyphIndex = glyphRun.ClusterMap[charIndex];
                     }
@@ -546,7 +546,7 @@ namespace System.Windows.Documents
                 return null;
             }
 
-            if (_currentFixedBlock != null && _IsCombinable(_currentFixedBlock, textRun))
+            if (_currentFixedBlock is not null && _IsCombinable(_currentFixedBlock, textRun))
             {
                 fixedBlock = _currentFixedBlock;
             }
@@ -592,7 +592,7 @@ namespace System.Windows.Documents
             FixedSOMTextRun compareLine = null;
             FixedSOMTextRun lastLine = fixedBlock.SemanticBoxes[fixedBlock.SemanticBoxes.Count - 1] as FixedSOMTextRun;
 
-            if (lastLine != null && textRunRect.Bottom <= lastLine.BoundingRect.Top)
+            if (lastLine is not null && textRunRect.Bottom <= lastLine.BoundingRect.Top)
             {
                 //This run is above the last run of the fixed block. Can't be the same paragraph
                 return false;
@@ -614,7 +614,7 @@ namespace System.Windows.Documents
             }
 
             if ( (fixedBlock.IsWhiteSpace || textRun.IsWhiteSpace) &&
-                 (fixedBlock != _currentFixedBlock || compareLine != null || !_IsSpatiallyCombinable(fixedBlockRect, textRunRect, textRun.DefaultCharWidth * 3, 0))
+                 (fixedBlock != _currentFixedBlock || compareLine is not null || !_IsSpatiallyCombinable(fixedBlockRect, textRunRect, textRun.DefaultCharWidth * 3, 0))
                  )
             {
                 //When combining with white spaces, they need to be consecutive in markup and need to be on the same line.
@@ -633,7 +633,7 @@ namespace System.Windows.Documents
 
             //Rect textRunRect = textRun.BoundingRect;
 
-            if (compareLine != null) //Most probably different lines
+            if (compareLine is not null) //Most probably different lines
             {
                 double ratio = fixedBlock.LineHeight / textRunRect.Height;
                 if (ratio<1.0)
@@ -807,7 +807,7 @@ namespace System.Windows.Documents
                                 if (vCellStart == vLastCellRight && h2 == hLastCellBottom)
                                 {
                                     // same row!
-                                    // Assert(currentRow != null);
+                                    // Assert(currentRow is not null);
                                 }
                                 else
                                 {
@@ -874,13 +874,13 @@ namespace System.Windows.Documents
                 for (int i = 0; i < boxes.Count; i++)
                 {
                     FixedSOMTable table1 = boxes[i] as FixedSOMTable;
-                    if (table1 != null)
+                    if (table1 is not null)
                     {
                         //Check for nested tables
                         for (int j = i + 1; j < boxes.Count; j++)
                         {
                             FixedSOMTable table2 = boxes[j] as FixedSOMTable;
-                            if (table2 != null &&
+                            if (table2 is not null &&
                                 table1.AddContainer(table2))
                             {
                                 boxes.Remove(table2);
@@ -899,7 +899,7 @@ namespace System.Windows.Documents
                     for (int j = i + 1; j < boxes.Count; j++)
                     {
                         FixedSOMFixedBlock box2 = boxes[j] as FixedSOMFixedBlock;
-                        if (box2 != null && !box2.IsFloatingImage &&
+                        if (box2 is not null && !box2.IsFloatingImage &&
                             box2.Matrix.Equals(box1.Matrix) &&
                             (_IsSpatiallyCombinable(box1, box2, 0, 0)))
                         {
@@ -943,7 +943,7 @@ namespace System.Windows.Documents
             PathFigureCollection pathFigures = pathGeom.Figures;
 
             // Single figure should already covered by bounding box check
-            if ((pathFigures != null) && (pathFigures.Count > 1))
+            if ((pathFigures is not null) && (pathFigures.Count > 1))
             {
                 foreach (PathFigure pathFigure in pathFigures)
                 {
@@ -1104,7 +1104,7 @@ namespace System.Windows.Documents
                             for (int i=0; i<cell.SemanticBoxes.Count;)
                             {
                                 FixedSOMTable innerTable = cell.SemanticBoxes[i] as FixedSOMTable;
-                                if (innerTable != null && innerTable.IsEmpty)
+                                if (innerTable is not null && innerTable.IsEmpty)
                                 {
                                     cell.SemanticBoxes.Remove(innerTable);
                                 }
@@ -1134,7 +1134,7 @@ namespace System.Windows.Documents
 
                 FixedSOMGroup currentGroup = new FixedSOMGroup(_fixedSOMPage);
                 FixedSOMPageElement currentPageElement = container.SemanticBoxes[0] as FixedSOMPageElement;
-                Debug.Assert(currentPageElement != null);
+                Debug.Assert(currentPageElement is not null);
 
                 FixedSOMPageElement nextPageElement = null;
                 currentGroup.AddContainer(currentPageElement);
@@ -1144,7 +1144,7 @@ namespace System.Windows.Documents
                 for (int i=1; i<container.SemanticBoxes.Count; i++)
                 {
                     nextPageElement = container.SemanticBoxes[i] as FixedSOMPageElement;
-                    Debug.Assert(nextPageElement != null);
+                    Debug.Assert(nextPageElement is not null);
 
                     if (!( _IsSpatiallyCombinable(currentPageElement, nextPageElement, 0, 30) &&
                          nextPageElement.BoundingRect.Top >= currentPageElement.BoundingRect.Top))

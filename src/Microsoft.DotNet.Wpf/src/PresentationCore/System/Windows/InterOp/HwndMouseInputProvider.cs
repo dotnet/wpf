@@ -34,7 +34,7 @@ namespace System.Windows.Interop
 
         public void Dispose()
         {
-            if(_site != null)
+            if(_site is not null)
             {
                 //Console.WriteLine("Disposing");
 
@@ -212,12 +212,12 @@ namespace System.Windows.Interop
 
             try
             {
-                if (points != null && relativeTo != null)
+                if (points is not null && relativeTo is not null)
                 {
                     DependencyObject containingVisual = InputElement.GetContainingVisual(relativeTo as DependencyObject);
                     HwndSource inputSource = PresentationSource.FromDependencyObject(containingVisual) as HwndSource;
 
-                    if (inputSource != null)
+                    if (inputSource is not null)
                     {
                         int nVirtualWidth  = UnsafeNativeMethods.GetSystemMetrics(SM.CXVIRTUALSCREEN);
                         int nVirtualHeight = UnsafeNativeMethods.GetSystemMetrics(SM.CYVIRTUALSCREEN);
@@ -297,7 +297,7 @@ namespace System.Windows.Interop
 
                             // Translate the point from the root to the visual.
                             GeneralTransform gDown = inputSource.RootVisual.TransformToDescendant(VisualTreeHelper.GetContainingVisual2D(containingVisual));
-                            if (gDown != null)
+                            if (gDown is not null)
                             {
                                 //  should we throw if the point could not be transformed?
                                 gDown.TryTransform(currentPosition, out currentPosition);
@@ -417,7 +417,7 @@ namespace System.Windows.Interop
 
                     // Abort the pending operation waiting to update the cursor, because we
                     // are going to update it as part of this mouse move processing.
-                    if (_queryCursorOperation != null)
+                    if (_queryCursorOperation is not null)
                     {
                         _queryCursorOperation.Abort();
                         _queryCursorOperation = null;
@@ -867,7 +867,7 @@ namespace System.Windows.Interop
                 // needs to check for that.
                 int dispatcherHashCode = 0;
 
-                if(_source != null && !_source.IsDisposed && _source.CompositionTarget != null)
+                if(_source is not null && !_source.IsDisposed && _source.CompositionTarget is not null)
                     dispatcherHashCode = _source.CompositionTarget.Dispatcher.GetHashCode();
 
                 // The ETW manifest for this event declares the lParam and
@@ -1083,7 +1083,7 @@ namespace System.Windows.Interop
         private bool EnsureFrameworkAccessors(HwndSource hwndSource)
         {
             // if we've already done the work, return
-            if (WindowChromeWorkerProperty != null)
+            if (WindowChromeWorkerProperty is not null)
             {
                 return true;
             }
@@ -1111,12 +1111,12 @@ namespace System.Windows.Interop
             // initialization succeeded.  This method can run on multiple threads,
             // but it sets the static members to the same value on each thread, so
             // it doesn't need any locking.
-            if (windowChromeWorkerProperty != null && GetEffectiveClientAreaMI != null)
+            if (windowChromeWorkerProperty is not null && GetEffectiveClientAreaMI is not null)
             {
                 WindowChromeWorkerProperty = windowChromeWorkerProperty;
             }
 
-            return (WindowChromeWorkerProperty != null);
+            return (WindowChromeWorkerProperty is not null);
         }
 
         // return the Assembly for PresentationFramework.  Usually the root visual
@@ -1127,7 +1127,7 @@ namespace System.Windows.Interop
             DependencyObject rootVisual = hwndSource?.RootVisual;
 
             Type type = rootVisual?.GetType();
-            while (type != null && type.Assembly.FullName != PresentationFrameworkAssemblyFullName)
+            while (type is not null && type.Assembly.FullName != PresentationFrameworkAssemblyFullName)
             {
                 type = type.BaseType;
             }
@@ -1192,7 +1192,7 @@ namespace System.Windows.Interop
             {
                 hwndSource = HwndSource.CriticalFromHwnd(hwnd);
 
-                if(hwndSource != null)
+                if(hwndSource is not null)
                 {
                     if(hwndSource.Dispatcher == _source.Dispatcher)
                     {
@@ -1271,7 +1271,7 @@ namespace System.Windows.Interop
                 // is under the mouse (even though they are reported to the window
                 // with keyboard focus)
                 MouseDevice mouse = _site.CriticalInputManager.PrimaryMouseDevice;
-                if (mouse != null && mouse.CriticalActiveSource != null)
+                if (mouse is not null && mouse.CriticalActiveSource is not null)
                 {
                     source = mouse.CriticalActiveSource;
                 }

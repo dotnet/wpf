@@ -210,7 +210,7 @@ namespace System.Windows.Controls
         private static void OnDisplayDateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Calendar c = d as Calendar;
-            Debug.Assert(c != null);
+            Debug.Assert(c is not null);
 
             c.DisplayDateInternal = DateTimeHelper.DiscardDayTime((DateTime)e.NewValue);
             c.UpdateCellItems();
@@ -266,7 +266,7 @@ namespace System.Windows.Controls
         private static void OnDisplayDateEndChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Calendar c = d as Calendar;
-            Debug.Assert(c != null);
+            Debug.Assert(c is not null);
 
             c.CoerceValue(DisplayDateProperty);
             c.UpdateCellItems();
@@ -327,7 +327,7 @@ namespace System.Windows.Controls
         private static void OnDisplayDateStartChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Calendar c = d as Calendar;
-            Debug.Assert(c != null);
+            Debug.Assert(c is not null);
 
             c.CoerceValue(DisplayDateEndProperty);
             c.CoerceValue(DisplayDateProperty);
@@ -384,7 +384,7 @@ namespace System.Windows.Controls
         private static void OnDisplayModePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Calendar c = d as Calendar;
-            Debug.Assert(c != null);
+            Debug.Assert(c is not null);
             CalendarMode mode = (CalendarMode)e.NewValue;
             CalendarMode oldMode = (CalendarMode)e.OldValue;
             CalendarItem monthControl = c.MonthControl;
@@ -542,7 +542,7 @@ namespace System.Windows.Controls
         private static void OnSelectedDateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Calendar c = d as Calendar;
-            Debug.Assert(c != null);
+            Debug.Assert(c is not null);
 
             if (c.SelectionMode != CalendarSelectionMode.None || e.NewValue is null)
             {
@@ -628,7 +628,7 @@ namespace System.Windows.Controls
         private static void OnSelectionModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Calendar c = d as Calendar;
-            Debug.Assert(c != null);
+            Debug.Assert(c is not null);
 
             c.HoverStart = c.HoverEnd = null;
             c.SelectedDates.ClearInternal(true /*fireChangeNotification*/);
@@ -748,7 +748,7 @@ namespace System.Windows.Controls
         /// </summary>
         public override void OnApplyTemplate()
         {
-            if (_monthControl != null)
+            if (_monthControl is not null)
             {
                 _monthControl.Owner = null;
             }
@@ -757,7 +757,7 @@ namespace System.Windows.Controls
 
             _monthControl = GetTemplateChild(ElementMonth) as CalendarItem;
 
-            if (_monthControl != null)
+            if (_monthControl is not null)
             {
                 _monthControl.Owner = this;
             }
@@ -772,7 +772,7 @@ namespace System.Windows.Controls
         /// <returns>A text representation of the selected date, or an empty string if SelectedDate is a null reference.</returns>
         public override string ToString()
         {
-            if (this.SelectedDate != null)
+            if (this.SelectedDate is not null)
             {
                 return this.SelectedDate.Value.ToString(DateTimeHelper.GetDateFormat(DateTimeHelper.GetCulture(this)));
             }
@@ -794,7 +794,7 @@ namespace System.Windows.Controls
         protected virtual void OnDisplayDateChanged(CalendarDateChangedEventArgs e)
         {
             EventHandler<CalendarDateChangedEventArgs> handler = this.DisplayDateChanged;
-            if (handler != null)
+            if (handler is not null)
             {
                 handler(this, e);
             }
@@ -804,7 +804,7 @@ namespace System.Windows.Controls
         {
             EventHandler<CalendarModeChangedEventArgs> handler = this.DisplayModeChanged;
 
-            if (handler != null)
+            if (handler is not null)
             {
                 handler(this, e);
             }
@@ -814,7 +814,7 @@ namespace System.Windows.Controls
         {
             EventHandler<EventArgs> handler = this.SelectionModeChanged;
 
-            if (handler != null)
+            if (handler is not null)
             {
                 handler(this, e);
             }
@@ -854,7 +854,7 @@ namespace System.Windows.Controls
 
         internal CalendarDayButton FindDayButtonFromDay(DateTime day)
         {
-            if (this.MonthControl != null)
+            if (this.MonthControl is not null)
             {
                 foreach (CalendarDayButton b in this.MonthControl.GetCalendarDayButtons())
                 {
@@ -1053,7 +1053,7 @@ namespace System.Windows.Controls
                     AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection))
                 {
                     CalendarAutomationPeer peer = FrameworkElementAutomationPeer.FromElement(this) as CalendarAutomationPeer;
-                    if (peer != null)
+                    if (peer is not null)
                     {
                         peer.RaiseSelectionEvents(e);
                     }
@@ -1067,7 +1067,7 @@ namespace System.Windows.Controls
         internal void UpdateCellItems()
         {
             CalendarItem monthControl = this.MonthControl;
-            if (monthControl != null)
+            if (monthControl is not null)
             {
                 switch (this.DisplayMode)
                 {
@@ -1110,7 +1110,7 @@ namespace System.Windows.Controls
         // This method adds the days that were selected by Keyboard to the SelectedDays Collection
         private void AddKeyboardSelection()
         {
-            if (this.HoverStart != null)
+            if (this.HoverStart is not null)
             {
                 this.SelectedDates.ClearInternal();
 
@@ -1216,7 +1216,7 @@ namespace System.Windows.Controls
 
         internal void FocusDate(DateTime date)
         {
-            if (MonthControl != null)
+            if (MonthControl is not null)
             {
                 MonthControl.FocusDate(date);
             }
@@ -1254,9 +1254,9 @@ namespace System.Windows.Controls
             {
                 // If a blackout day is inactive, when clicked on it, the previous inactive day which is not a blackout day can get the focus.
                 // In this case we should allow keyboard functions on that inactive day
-                CalendarDayButton currentDayButton = (MonthControl != null) ? MonthControl.GetCalendarDayButton(this.CurrentDate) : null;
+                CalendarDayButton currentDayButton = (MonthControl is not null) ? MonthControl.GetCalendarDayButton(this.CurrentDate) : null;
 
-                if (DateTimeHelper.CompareYearMonth(this.CurrentDate, this.DisplayDateInternal) != 0 && currentDayButton != null && !currentDayButton.IsInactive)
+                if (DateTimeHelper.CompareYearMonth(this.CurrentDate, this.DisplayDateInternal) != 0 && currentDayButton is not null && !currentDayButton.IsInactive)
                 {
                     return false;
                 }
@@ -1576,13 +1576,13 @@ namespace System.Windows.Controls
 
         private void ProcessSelection(bool shift, DateTime? lastSelectedDate)
         {
-            if (this.SelectionMode == CalendarSelectionMode.None && lastSelectedDate != null)
+            if (this.SelectionMode == CalendarSelectionMode.None && lastSelectedDate is not null)
             {
                 OnDayClick(lastSelectedDate.Value);
                 return;
             }
 
-            if (lastSelectedDate != null && IsValidKeyboardSelection(this, lastSelectedDate.Value))
+            if (lastSelectedDate is not null && IsValidKeyboardSelection(this, lastSelectedDate.Value))
             {
                 if (this.SelectionMode == CalendarSelectionMode.SingleRange || this.SelectionMode == CalendarSelectionMode.MultipleRange)
                 {

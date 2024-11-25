@@ -49,7 +49,7 @@ namespace MS.Internal.PtsHost
                 // will preserve visual children.
                 using (DrawingContext dc = RenderOpen())
                 {
-                    if (_backgroundBrush != null)
+                    if (_backgroundBrush is not null)
                     {
                         dc.DrawRectangle(_backgroundBrush, null, _renderBounds);
                     }
@@ -95,7 +95,7 @@ namespace MS.Internal.PtsHost
         internal void ClearDrawingContext()
         {
             DrawingContext ctx = this.RenderOpen();
-            if(ctx != null)
+            if(ctx is not null)
                 ctx.Close();               
         }
         
@@ -113,7 +113,7 @@ namespace MS.Internal.PtsHost
         IInputElement IContentHost.InputHitTest(Point point)
         {
             IContentHost host = _owner.Target as IContentHost;
-            if (host != null)
+            if (host is not null)
             {
                 return host.InputHitTest(point);
             }
@@ -126,7 +126,7 @@ namespace MS.Internal.PtsHost
         ReadOnlyCollection<Rect> IContentHost.GetRectangles(ContentElement child)
         {
             IContentHost host = _owner.Target as IContentHost;
-            if (host != null)
+            if (host is not null)
             {
                 return host.GetRectangles(child);
             }
@@ -141,7 +141,7 @@ namespace MS.Internal.PtsHost
             get
             {
                 IContentHost host = _owner.Target as IContentHost;
-                if (host != null)
+                if (host is not null)
                 {
                     return host.HostedElements;
                 }
@@ -155,7 +155,7 @@ namespace MS.Internal.PtsHost
         void IContentHost.OnChildDesiredSizeChanged(UIElement child)
         {
             IContentHost host = _owner.Target as IContentHost;
-            if (host != null)
+            if (host is not null)
             {
                 host.OnChildDesiredSizeChanged(child);
             }

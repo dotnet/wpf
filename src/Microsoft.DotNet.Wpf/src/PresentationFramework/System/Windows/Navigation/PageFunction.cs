@@ -94,7 +94,7 @@ namespace System.Windows.Navigation
         ///</summary>        
         internal void _OnReturnUnTyped(object o)
         {
-            if (_finish != null)
+            if (_finish is not null)
             {
                 _finish(this, o);
             }
@@ -106,7 +106,7 @@ namespace System.Windows.Navigation
             // PageFunction A attaches one of its methods to PageFunction B's
             // Return event, then A must be B's parent.
             PageFunctionBase parent = d.Target as PageFunctionBase;
-            if (parent != null)
+            if (parent is not null)
             {
                 ParentPageFunctionId = parent.PageFunctionId;
             }
@@ -264,15 +264,15 @@ namespace System.Windows.Navigation
             Delegate d = args.D;
             object returnEventArgs = args.O;
 
-            if (d != null)
+            if (d is not null)
             {
                 ReturnEventArgs<T> ra = returnEventArgs as ReturnEventArgs<T>;
 
-                Debug.Assert((returnEventArgs is null) || (ra != null));
+                Debug.Assert((returnEventArgs is null) || (ra is not null));
 
                 ReturnEventHandler<T> eh = d as ReturnEventHandler<T>;
 
-                Debug.Assert(eh != null);
+                Debug.Assert(eh is not null);
 
                 eh(this, ra);
             }

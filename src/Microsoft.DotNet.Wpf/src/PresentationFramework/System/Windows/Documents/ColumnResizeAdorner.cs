@@ -38,7 +38,7 @@ namespace System.Windows.Documents.Internal
         /// </param>
         internal ColumnResizeAdorner(UIElement scope) : base(scope)
         {
-            Debug.Assert(scope != null);
+            Debug.Assert(scope is not null);
 
             // position
             _pen = new Pen(new SolidColorBrush(Colors.LightSlateGray), 2.0);
@@ -77,7 +77,7 @@ namespace System.Windows.Documents.Internal
 
             group.Children.Add(translation);
 
-            if (transform != null)
+            if (transform is not null)
             {
                 group.Children.Add(transform);
             }
@@ -127,7 +127,7 @@ namespace System.Windows.Documents.Internal
                 AdornerLayer adornerLayer;
 
                 adornerLayer = VisualTreeHelper.GetParent(this) as AdornerLayer;
-                if (adornerLayer != null)
+                if (adornerLayer is not null)
                 {
                     // It may be null when TextBox is detached from a tree
                     adornerLayer.Update(AdornedElement);
@@ -142,7 +142,7 @@ namespace System.Windows.Documents.Internal
 
             _adornerLayer = AdornerLayer.GetAdornerLayer(renderScope);
 
-            if (_adornerLayer != null)
+            if (_adornerLayer is not null)
             {
                 _adornerLayer.Add(this);
             }
@@ -154,7 +154,7 @@ namespace System.Windows.Documents.Internal
 
         internal void Uninitialize()
         {
-            if (_adornerLayer != null)
+            if (_adornerLayer is not null)
             {
                 _adornerLayer.Remove(this);
                 _adornerLayer = null;

@@ -81,7 +81,7 @@ namespace MS.Internal.Documents
                 RightsManagementPermissions permissions =
                     RightsManagementPermissions.AllowNothing;
 
-                if (row != null)
+                if (row is not null)
                 {
                     // Enumerate through all the columns containing rights
                     // Starting at column index 1, since 0 refers to the user name.
@@ -208,7 +208,7 @@ namespace MS.Internal.Documents
             private void InitializeRightsTableContent(string ownerName, IDictionary<RightsManagementUser, RightsManagementLicense> grantDictionary)
             {
                 // Check if there are already grants issued
-                if (grantDictionary != null)
+                if (grantDictionary is not null)
                 {
                     // For each given key, add an entry in the table.
                     foreach (RightsManagementUser user in grantDictionary.Keys)
@@ -232,7 +232,7 @@ namespace MS.Internal.Documents
                         else
                         {
                             RightsManagementLicense license = grantDictionary[user];
-                            if (license != null)
+                            if (license is not null)
                             {
                                 // Add user with permissions given in the license
                                 AddUser(new RightsTableUser(
@@ -266,10 +266,10 @@ namespace MS.Internal.Documents
             /// <returns>The username in the row, otherwise String.Empty</returns>
             public static string GetUsernameFromRow(DataGridViewRow row)
             {
-                if (row != null)
+                if (row is not null)
                 {
                     DataGridViewCell cell = row.Cells[RightsTableColumnToIndex(RightsTableColumn.User)];
-                    if (cell != null)
+                    if (cell is not null)
                     {
                         return (string)cell.Value;
                     }
@@ -477,7 +477,7 @@ namespace MS.Internal.Documents
                 BackgroundColor = DefaultCellStyle.BackColor;
 
                 // Set the Height of the RightsTable to display 4 rows of users.
-                if (RowTemplate != null)
+                if (RowTemplate is not null)
                 {
                     // Extra 2 is to account for column underline.
                     Height = this.RowTemplate.Height * 4 + this.ColumnHeadersHeight + 2;
@@ -493,7 +493,7 @@ namespace MS.Internal.Documents
             private void RightsTable_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
             {
                 // Ensure the cell is valid (one of the CheckBox cells).
-                if ((e != null) && (e.RowIndex > 0) && (e.RowIndex < Rows.Count) &&
+                if ((e is not null) && (e.RowIndex > 0) && (e.RowIndex < Rows.Count) &&
                     (e.ColumnIndex > 0) && (e.ColumnIndex < Columns.Count))
                 {
                     DataGridViewDisableCheckBoxCell cell = Rows[e.RowIndex].Cells[e.ColumnIndex] as DataGridViewDisableCheckBoxCell;
@@ -540,7 +540,7 @@ namespace MS.Internal.Documents
                 {
                     // If the AllowOwner column was selected update the row, and redraw as necessary.
                     DataGridViewDisableCheckBoxCell cell = CurrentCell as DataGridViewDisableCheckBoxCell;
-                    if ((cell != null) && (cell.Enabled))
+                    if ((cell is not null) && (cell.Enabled))
                     {
                         UpdateAllowOwner(CurrentRow);
 
@@ -655,7 +655,7 @@ namespace MS.Internal.Documents
 
                     DataGridViewDisableCheckBoxCell targetOwnerCell =
                         targetRow.Cells[ownerColumnIndex] as DataGridViewDisableCheckBoxCell;
-                    if (targetOwnerCell != null)
+                    if (targetOwnerCell is not null)
                     {
                         targetOwnerCell.Enabled = !isEveryoneOwner;
 
@@ -680,14 +680,14 @@ namespace MS.Internal.Documents
 
                         DataGridViewDisableCheckBoxCell everyoneCell =
                             everyoneRow.Cells[column] as DataGridViewDisableCheckBoxCell;
-                        if (everyoneCell != null)
+                        if (everyoneCell is not null)
                         {
                             everyoneHasPermission = (bool)everyoneCell.Value;
                         }
 
                         DataGridViewDisableCheckBoxCell targetCell =
                             targetRow.Cells[column] as DataGridViewDisableCheckBoxCell;
-                        if (targetCell != null)
+                        if (targetCell is not null)
                         {
                             if (everyoneHasPermission)
                             {
@@ -729,7 +729,7 @@ namespace MS.Internal.Documents
                 {
                     DataGridViewDisableCheckBoxCell cell =
                         everyoneRow.Cells[column] as DataGridViewDisableCheckBoxCell;
-                    if (cell != null)
+                    if (cell is not null)
                     {
                         // If the checkbox in the current column is checked (i.e. the permission it
                         // represents was granted to the Everyone user), uncheck it. This will
@@ -790,11 +790,11 @@ namespace MS.Internal.Documents
 
                     // Determine whether this column is checked in the Everyone row. If so, the
                     // cell should be disabled.
-                    if (enableCell && (everyoneRow != null))
+                    if (enableCell && (everyoneRow is not null))
                     {
                         DataGridViewDisableCheckBoxCell everyoneCell =
                             everyoneRow.Cells[i] as DataGridViewDisableCheckBoxCell;
-                        if (everyoneCell != null)
+                        if (everyoneCell is not null)
                         {
                             enableCell = !((bool)everyoneCell.Value);
                         }
@@ -802,7 +802,7 @@ namespace MS.Internal.Documents
 
                     // Set the cell's checkbox to checked and gray it out if necessary
                     cell = row.Cells[i] as DataGridViewDisableCheckBoxCell;
-                    if (cell != null)
+                    if (cell is not null)
                     {
                         cell.Value = true;
                         cell.Enabled = enableCell;

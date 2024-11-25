@@ -69,7 +69,7 @@ namespace MS.Internal.Documents
             {
                 desiredSize = this.DesiredSize;
             }
-            else if (Document != null)
+            else if (Document is not null)
             {
                 // Create bottomless formatter, if necessary.
                 EnsureFormatter();
@@ -79,7 +79,7 @@ namespace MS.Internal.Documents
 
                 // DesiredSize is set to the calculated size of the page.
                 // If hosted by ScrollViewer, desired size is limited to constraint.
-                if (_scrollData != null)
+                if (_scrollData is not null)
                 {
                     desiredSize.Width = Math.Min(constraint.Width, _formatter.DocumentPage.Size.Width);
                     desiredSize.Height = Math.Min(constraint.Height, _formatter.DocumentPage.Size.Height);
@@ -109,13 +109,13 @@ namespace MS.Internal.Documents
                 // getting rounding errors later.
                 TextDpi.SnapToTextDpi(ref safeArrangeSize);
 
-                if (Document != null)
+                if (Document is not null)
                 {
                     // Create bottomless formatter, if necessary.
                     EnsureFormatter();
 
                     // Arrange bottomless content.
-                    if (_scrollData != null)
+                    if (_scrollData is not null)
                     {
                         if (!DoubleUtil.AreClose(_scrollData.Viewport, safeArrangeSize))
                         {
@@ -148,7 +148,7 @@ namespace MS.Internal.Documents
                             _scrollData.Offset = offset;
                             invalidateScrollInfo = true;
                         }
-                        if (invalidateScrollInfo && _scrollData.ScrollOwner != null)
+                        if (invalidateScrollInfo && _scrollData.ScrollOwner is not null)
                         {
                             _scrollData.ScrollOwner.InvalidateScrollInfo();
                         }
@@ -159,11 +159,11 @@ namespace MS.Internal.Documents
                     // Connect to visual tree.
                     if (_pageVisual != _formatter.DocumentPage.Visual)
                     {
-                        if (_textView != null)
+                        if (_textView is not null)
                         {
                             _textView.OnPageConnected();
                         }
-                        if (_pageVisual != null)
+                        if (_pageVisual is not null)
                         {
                             RemoveVisualChild(_pageVisual);
                         }
@@ -172,7 +172,7 @@ namespace MS.Internal.Documents
                     }
 
                     // Set appropriate content offset
-                    if (_scrollData != null)
+                    if (_scrollData is not null)
                     {
                         _pageVisual.Offset = new Vector(-_scrollData.HorizontalOffset, -_scrollData.VerticalOffset);
                     }
@@ -184,9 +184,9 @@ namespace MS.Internal.Documents
                 }
                 else
                 {
-                    if (_pageVisual != null)
+                    if (_pageVisual is not null)
                     {
-                        if (_textView != null)
+                        if (_textView is not null)
                         {
                             _textView.OnPageDisconnected();
                         }
@@ -194,7 +194,7 @@ namespace MS.Internal.Documents
                         _pageVisual = null;
                     }
                     // Arrange bottomless content.
-                    if (_scrollData != null)
+                    if (_scrollData is not null)
                     {
                         if (!DoubleUtil.AreClose(_scrollData.Viewport, safeArrangeSize))
                         {
@@ -211,7 +211,7 @@ namespace MS.Internal.Documents
                             _scrollData.Offset = new Vector();
                             invalidateScrollInfo = true;
                         }
-                        if (invalidateScrollInfo && _scrollData.ScrollOwner != null)
+                        if (invalidateScrollInfo && _scrollData.ScrollOwner is not null)
                         {
                             _scrollData.ScrollOwner.InvalidateScrollInfo();
                         }
@@ -270,7 +270,7 @@ namespace MS.Internal.Documents
         internal void SuspendLayout()
         {
             _suspendLayout = true;
-            if (_pageVisual != null)
+            if (_pageVisual is not null)
             {
                 _pageVisual.Opacity = 0.5;
             }
@@ -282,7 +282,7 @@ namespace MS.Internal.Documents
         internal void ResumeLayout()
         {
             _suspendLayout = false;
-            if (_pageVisual != null)
+            if (_pageVisual is not null)
             {
                 _pageVisual.Opacity = 1.0;
             }
@@ -310,7 +310,7 @@ namespace MS.Internal.Documents
             }
             set
             {
-                if (_formatter != null)
+                if (_formatter is not null)
                 {
                     HandleFormatterSuspended(_formatter, EventArgs.Empty);
                 }
@@ -329,7 +329,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_document != null)
+                if (_document is not null)
                 {
                     EnsureFormatter();
                     return _formatter.DocumentPage;
@@ -353,7 +353,7 @@ namespace MS.Internal.Documents
         /// </summary>
         private void EnsureFormatter()
         {
-            Invariant.Assert(_document != null);
+            Invariant.Assert(_document is not null);
             if (_formatter is null)
             {
                 _formatter = _document.BottomlessFormatter;
@@ -386,9 +386,9 @@ namespace MS.Internal.Documents
             _formatter = null;
 
             // Disconnect any content associated with the formatter.
-            if (_pageVisual != null && !_suspendLayout)
+            if (_pageVisual is not null && !_suspendLayout)
             {
-                if (_textView != null)
+                if (_textView is not null)
                 {
                     _textView.OnPageDisconnected();
                 }
@@ -429,7 +429,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.LineUp()
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.LineUp(this);
             }
@@ -440,7 +440,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.LineDown()
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.LineDown(this);
             }
@@ -451,7 +451,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.LineLeft()
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.LineLeft(this);
             }
@@ -462,7 +462,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.LineRight()
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.LineRight(this);
             }
@@ -473,7 +473,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.PageUp()
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.PageUp(this);
             }
@@ -484,7 +484,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.PageDown()
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.PageDown(this);
             }
@@ -495,7 +495,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.PageLeft()
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.PageLeft(this);
             }
@@ -506,7 +506,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.PageRight()
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.PageRight(this);
             }
@@ -517,7 +517,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.MouseWheelUp()
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.MouseWheelUp(this);
             }
@@ -528,7 +528,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.MouseWheelDown()
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.MouseWheelDown(this);
             }
@@ -539,7 +539,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.MouseWheelLeft()
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.MouseWheelLeft(this);
             }
@@ -550,7 +550,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.MouseWheelRight()
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.MouseWheelRight(this);
             }
@@ -561,7 +561,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.SetHorizontalOffset(double offset)
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.SetHorizontalOffset(this, offset);
             }
@@ -572,7 +572,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.SetVerticalOffset(double offset)
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.SetVerticalOffset(this, offset);
             }
@@ -602,11 +602,11 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return (_scrollData != null) ? _scrollData.CanVerticallyScroll : false;
+                return (_scrollData is not null) ? _scrollData.CanVerticallyScroll : false;
             }
             set
             {
-                if (_scrollData != null)
+                if (_scrollData is not null)
                 {
                     _scrollData.CanVerticallyScroll = value;
                 }
@@ -620,11 +620,11 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return (_scrollData != null) ? _scrollData.CanHorizontallyScroll : false;
+                return (_scrollData is not null) ? _scrollData.CanHorizontallyScroll : false;
             }
             set
             {
-                if (_scrollData != null)
+                if (_scrollData is not null)
                 {
                     _scrollData.CanHorizontallyScroll = value;
                 }
@@ -638,7 +638,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return (_scrollData != null) ? _scrollData.ExtentWidth : 0;
+                return (_scrollData is not null) ? _scrollData.ExtentWidth : 0;
             }
         }
 
@@ -649,7 +649,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return (_scrollData != null) ? _scrollData.ExtentHeight : 0;
+                return (_scrollData is not null) ? _scrollData.ExtentHeight : 0;
             }
         }
 
@@ -660,7 +660,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return (_scrollData != null) ? _scrollData.ViewportWidth : 0;
+                return (_scrollData is not null) ? _scrollData.ViewportWidth : 0;
             }
         }
 
@@ -671,7 +671,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return (_scrollData != null) ? _scrollData.ViewportHeight : 0;
+                return (_scrollData is not null) ? _scrollData.ViewportHeight : 0;
             }
         }
 
@@ -682,7 +682,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return (_scrollData != null) ? _scrollData.HorizontalOffset : 0;
+                return (_scrollData is not null) ? _scrollData.HorizontalOffset : 0;
             }
         }
 
@@ -693,7 +693,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return (_scrollData != null) ? _scrollData.VerticalOffset : 0;
+                return (_scrollData is not null) ? _scrollData.VerticalOffset : 0;
             }
         }
 
@@ -704,7 +704,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return (_scrollData != null) ? _scrollData.ScrollOwner : null;
+                return (_scrollData is not null) ? _scrollData.ScrollOwner : null;
             }
 
             set
@@ -744,7 +744,7 @@ namespace MS.Internal.Documents
 
             if (serviceType == typeof(ITextView))
             {
-                if (_textView is null && _document != null)
+                if (_textView is null && _document is not null)
                 {
                     _textView = new DocumentPageTextView(this, _document.StructuralCache.TextContainer);
                 }
@@ -752,7 +752,7 @@ namespace MS.Internal.Documents
             }
             else if (serviceType == typeof(ITextContainer))
             {
-                if (Document != null)
+                if (Document is not null)
                 {
                     service = Document.StructuralCache.TextContainer as TextContainer;
                 }

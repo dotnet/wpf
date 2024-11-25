@@ -79,9 +79,9 @@ namespace System.Windows.Media.Animation
             AnimationClock animationClock,
             EventHandler removeRequestedHandler)
         {
-            Debug.Assert(animationClock != null);
-            Debug.Assert(_dependencyObject.Target != null);
-            Debug.Assert(_currentTimeInvalidatedHandler != null);
+            Debug.Assert(animationClock is not null);
+            Debug.Assert(_dependencyObject.Target is not null);
+            Debug.Assert(_currentTimeInvalidatedHandler is not null);
 
             animationClock.CurrentTimeInvalidated += _currentTimeInvalidatedHandler;
 
@@ -107,8 +107,8 @@ namespace System.Windows.Media.Animation
             AnimationClock animationClock,
             EventHandler removeRequestedHandler)
         {
-            Debug.Assert(animationClock != null);
-            Debug.Assert(_currentTimeInvalidatedHandler != null);
+            Debug.Assert(animationClock is not null);
+            Debug.Assert(_currentTimeInvalidatedHandler is not null);
 
             animationClock.CurrentTimeInvalidated -= _currentTimeInvalidatedHandler;
 
@@ -125,7 +125,7 @@ namespace System.Windows.Media.Animation
 
             Animatable a = d as Animatable;
 
-            if (a != null)
+            if (a is not null)
             {
                 _dependencyObject = a.GetWeakReference();
             }
@@ -145,7 +145,7 @@ namespace System.Windows.Media.Animation
         /// <param name="layer"></param>
         internal void RemoveLayer(AnimationLayer layer)
         {
-            Debug.Assert(_propertyTriggerLayers != null);
+            Debug.Assert(_propertyTriggerLayers is not null);
             Debug.Assert(_propertyTriggerLayers.ContainsValue(layer));
 
             int index = _propertyTriggerLayers.IndexOfValue(layer);
@@ -214,7 +214,7 @@ namespace System.Windows.Media.Animation
                     // newly animated property will be passed across to the UCE.
                     Animatable a = d as Animatable;
 
-                    if (a != null)
+                    if (a is not null)
                     {
                         a.RegisterForAsyncUpdateResource();
                     }
@@ -223,11 +223,11 @@ namespace System.Windows.Media.Animation
                     // channel now.
                     DUCE.IResource animationResource = this as DUCE.IResource;
 
-                    if (animationResource != null)
+                    if (animationResource is not null)
                     {
                         DUCE.IResource targetResource = d as DUCE.IResource;
 
-                        if (targetResource != null)
+                        if (targetResource is not null)
                         {
                             using (CompositionEngineLock.Acquire())
                             {
@@ -257,11 +257,11 @@ namespace System.Windows.Media.Animation
                     // the channel now.
                     DUCE.IResource animationResource = this as DUCE.IResource;
 
-                    if (animationResource != null)
+                    if (animationResource is not null)
                     {
                         DUCE.IResource targetResource = d as DUCE.IResource;
 
-                        if (targetResource != null)
+                        if (targetResource is not null)
                         {
                             using (CompositionEngineLock.Acquire())
                             {
@@ -285,7 +285,7 @@ namespace System.Windows.Media.Animation
                     // across to the UCE.
                     Animatable a = d as Animatable;
 
-                    if (a != null)
+                    if (a is not null)
                     {
                         a.RegisterForAsyncUpdateResource();
                     }
@@ -411,7 +411,7 @@ namespace System.Windows.Media.Animation
                         if (oldEntry.IsDeferredReference)
                         {
                             DeferredReference dr = value as DeferredReference;
-                            if (dr != null)
+                            if (dr is not null)
                             {
                                 value = dr.GetValue(newEntry.BaseValueSourceInternal);
                             }
@@ -425,7 +425,7 @@ namespace System.Windows.Media.Animation
                             if (oldEntry.IsDeferredReference)
                             {
                                 DeferredReference dr = value as DeferredReference;
-                                if (dr != null)
+                                if (dr is not null)
                                 {
                                     value = dr.GetValue(newEntry.BaseValueSourceInternal);
                                 }
@@ -506,7 +506,7 @@ namespace System.Windows.Media.Animation
 
         private void OnRemoveRequested(object sender, EventArgs args)
         {
-            Debug.Assert(   _animationClocks != null
+            Debug.Assert(   _animationClocks is not null
                          && _animationClocks.Count > 0,
                 "An AnimationClock no longer associated with a property should not have a RemoveRequested event handler.");
 
@@ -553,7 +553,7 @@ namespace System.Windows.Media.Animation
 
         private void ClearAnimations()
         {
-            if (_animationClocks != null)
+            if (_animationClocks is not null)
             {
                 Debug.Assert(_animationClocks.Count > 0);
 
@@ -593,7 +593,7 @@ namespace System.Windows.Media.Animation
             IList<AnimationClock> animationClocks,
             HandoffBehavior handoffBehavior)
         {
-            Debug.Assert(animationClocks != null,
+            Debug.Assert(animationClocks is not null,
                 "The animationClocks parameter should not be passed in as null.");
             Debug.Assert(animationClocks.Count > 0,
                 "The animationClocks parameter should contain at least one clock.");
@@ -611,7 +611,7 @@ namespace System.Windows.Media.Animation
                 || storage is null
                 || storage._animationClocks is null)
             {
-                if (storage != null)
+                if (storage is not null)
                 {
                     EventHandler handler = new EventHandler(storage.OnCurrentStateInvalidated);
 
@@ -654,7 +654,7 @@ namespace System.Windows.Media.Animation
 
                 for (int i = 0; i < animationClocks.Count; i++)
                 {
-                    Debug.Assert(animationClocks[i] != null);
+                    Debug.Assert(animationClocks[i] is not null);
 
                     storage._animationClocks.Add(animationClocks[i]);
                     storage.AttachAnimationClock(animationClocks[i], storage._removeRequestedHandler);
@@ -663,8 +663,8 @@ namespace System.Windows.Media.Animation
             else
             {
                 Debug.Assert(handoffBehavior == HandoffBehavior.Compose);
-                Debug.Assert(storage != null);
-                Debug.Assert(storage._animationClocks != null);
+                Debug.Assert(storage is not null);
+                Debug.Assert(storage._animationClocks is not null);
 
                 FrugalObjectList<AnimationClock> newClockCollection = new FrugalObjectList<AnimationClock>(storage._animationClocks.Count + animationClocks.Count);
 
@@ -708,7 +708,7 @@ namespace System.Windows.Media.Animation
                 return;
             }
 
-            Debug.Assert(animationClocks != null);
+            Debug.Assert(animationClocks is not null);
             Debug.Assert(!animationClocks.Contains(null));
 
             Debug.Assert(HandoffBehaviorEnum.IsDefined(handoffBehavior),
@@ -853,7 +853,7 @@ namespace System.Windows.Media.Animation
                 // will still be used.
                 if (storage._hasStickySnapshotValue)
                 {
-                    Debug.Assert(storage._animationClocks != null && storage._animationClocks.Count > 0,
+                    Debug.Assert(storage._animationClocks is not null && storage._animationClocks.Count > 0,
                         "If _hasStickySnapshotValue is set we should have at least one animation clock stored in the AnimationStorage.");
 
                     storage._hasStickySnapshotValue = false;
@@ -900,7 +900,7 @@ namespace System.Windows.Media.Animation
             PropertyMetadata metadata,
             object baseValue)
         {
-            Debug.Assert(storage != null,
+            Debug.Assert(storage is not null,
                 "The 'storage' parameter cannot be passed into the GetCurrentPropertyValue method as null.");
 
             // If changes have been made to the snapshot value since the last tick
@@ -939,7 +939,7 @@ namespace System.Windows.Media.Animation
             // Process property trigger animations.
             //
 
-            if (storage._propertyTriggerLayers != null)
+            if (storage._propertyTriggerLayers is not null)
             {
                 int count = storage._propertyTriggerLayers.Count;
 
@@ -957,7 +957,7 @@ namespace System.Windows.Media.Animation
             // Process local animations
             //
 
-            if (storage._animationClocks != null)
+            if (storage._animationClocks is not null)
             {
                 FrugalObjectList<AnimationClock> clocks = storage._animationClocks;
                 int clocksCount = clocks.Count;
@@ -1035,7 +1035,7 @@ namespace System.Windows.Media.Animation
 
             UIPropertyMetadata uiMetadata = dp.GetMetadata(d.DependencyObjectType) as UIPropertyMetadata;
 
-            if (   uiMetadata != null
+            if (   uiMetadata is not null
                 && uiMetadata.IsAnimationProhibited)
             {
                 return false;

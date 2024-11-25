@@ -33,7 +33,7 @@ namespace System.Windows.Media
         /// <param name="drawingContext"> DrawingContext - the DrawingContext to forward calls to </param>
         public DrawingContextDrawingContextWalker(DrawingContext drawingContext)
         {
-            Debug.Assert (drawingContext != null);
+            Debug.Assert (drawingContext is not null);
             
             _drawingContext = drawingContext;
         } 

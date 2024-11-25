@@ -214,7 +214,7 @@ namespace System.Windows.Markup
             ArgumentNullException.ThrowIfNull(stream);
             _stream = stream;
 
-            if (_objectWriter != null)
+            if (_objectWriter is not null)
             {
                 // A XamlReader instance cannot be shared across two load operations
                 throw new InvalidOperationException(SR.ParserCannotReuseXamlReader);
@@ -293,7 +293,7 @@ namespace System.Windows.Markup
             ArgumentNullException.ThrowIfNull(stream);
             _stream = stream;
 
-            if (_objectWriter != null)
+            if (_objectWriter is not null)
             {
                 // A XamlReader instance cannot be shared across two load operations
                 throw new InvalidOperationException(SR.ParserCannotReuseXamlReader);
@@ -312,10 +312,10 @@ namespace System.Windows.Markup
         internal static bool ShouldReWrapException(Exception e, Uri baseUri)
         {
             XamlParseException xpe = e as XamlParseException;
-            if (xpe != null)
+            if (xpe is not null)
             {
                 // If we can set, the BaseUri, rewrap; otherwise we don't need to
-                return (xpe.BaseUri is null && baseUri != null);
+                return (xpe.BaseUri is null && baseUri is not null);
             }
             // Not an XPE, so we need to wrap it
             return true;
@@ -355,7 +355,7 @@ namespace System.Windows.Markup
             settings.IgnoreUidsOnPropertyElements = true;
             settings.BaseUri = parserContext.BaseUri;
             settings.ProvideLineInfo = true;
-            XamlSchemaContext schemaContext = parserContext.XamlTypeMapper != null ?
+            XamlSchemaContext schemaContext = parserContext.XamlTypeMapper is not null ?
                 parserContext.XamlTypeMapper.SchemaContext : GetWpfSchemaContext();
 
             try
@@ -375,13 +375,13 @@ namespace System.Windows.Markup
                         }
 
                         UIElement uiElement = args.Instance as UIElement;
-                        if (uiElement != null)
+                        if (uiElement is not null)
                         {
                             uiElement.SetPersistId(_persistId++);
                         }
 
                         DependencyObject dObject = args.Instance as DependencyObject;
-                        if (dObject != null && _stack.CurrentFrame.XmlnsDictionary != null)
+                        if (dObject is not null && _stack.CurrentFrame.XmlnsDictionary is not null)
                         {
                             XmlnsDictionary dictionary = _stack.CurrentFrame.XmlnsDictionary;
                             dictionary.Seal();
@@ -402,8 +402,8 @@ namespace System.Windows.Markup
                 IXamlLineInfo xamlLineInfo = xamlReader as IXamlLineInfo;
                 IXamlLineInfoConsumer xamlLineInfoConsumer = _objectWriter as IXamlLineInfoConsumer;
                 bool shouldPassLineNumberInfo = false;
-                if ((xamlLineInfo != null && xamlLineInfo.HasLineInfo)
-                    && (xamlLineInfoConsumer != null && xamlLineInfoConsumer.ShouldProvideLineInfo))
+                if ((xamlLineInfo is not null && xamlLineInfo.HasLineInfo)
+                    && (xamlLineInfoConsumer is not null && xamlLineInfoConsumer.ShouldProvideLineInfo))
                 {
                     shouldPassLineNumberInfo = true;
                 }
@@ -454,7 +454,7 @@ namespace System.Windows.Markup
                         lastPropWasSyncRecords = false;
                     }
 
-                    if (async && rootObject != null)
+                    if (async && rootObject is not null)
                         break;
                 }
             }
@@ -482,7 +482,7 @@ namespace System.Windows.Markup
 
             if (rootObject is DependencyObject)
             {
-                if (parserContext.BaseUri != null && !String.IsNullOrEmpty(parserContext.BaseUri.ToString()))
+                if (parserContext.BaseUri is not null && !String.IsNullOrEmpty(parserContext.BaseUri.ToString()))
                     (rootObject as DependencyObject).SetValue(BaseUriHelper.BaseUriProperty, parserContext.BaseUri);
                 //else
                 //    (rootObject as DependencyObject).SetValue(BaseUriHelper.BaseUriProperty, BaseUriHelper.PackAppBaseUri);
@@ -490,7 +490,7 @@ namespace System.Windows.Markup
             }
 
             Application app = rootObject as Application;
-            if (app != null)
+            if (app is not null)
             {
                 app.ApplicationMarkupBaseUri = GetBaseUri(settings.BaseUri);
             }
@@ -516,7 +516,7 @@ namespace System.Windows.Markup
             {
                 var xe = ((System.Windows.Markup.XamlParseException)baseException);
                 xe.BaseUri = xe.BaseUri ?? baseUri;
-                if (lineInfo != null && xe.LinePosition == 0 && xe.LineNumber == 0)
+                if (lineInfo is not null && xe.LinePosition == 0 && xe.LineNumber == 0)
                 {
                     xe.LinePosition = lineInfo.LinePosition;
                     xe.LineNumber = lineInfo.LineNumber;
@@ -535,7 +535,7 @@ namespace System.Windows.Markup
             }
             else
             {
-                if (lineInfo != null)
+                if (lineInfo is not null)
                 {
                     return new XamlParseException(e.Message, lineInfo.LineNumber, lineInfo.LinePosition, baseUri, baseException);
                 }
@@ -598,8 +598,8 @@ namespace System.Windows.Markup
                 IXamlLineInfo xamlLineInfo = xamlReader as IXamlLineInfo;
                 IXamlLineInfoConsumer xamlLineInfoConsumer = _objectWriter as IXamlLineInfoConsumer;
                 bool shouldPassLineNumberInfo = false;
-                if ((xamlLineInfo != null && xamlLineInfo.HasLineInfo)
-                    && (xamlLineInfoConsumer != null && xamlLineInfoConsumer.ShouldProvideLineInfo))
+                if ((xamlLineInfo is not null && xamlLineInfo.HasLineInfo)
+                    && (xamlLineInfoConsumer is not null && xamlLineInfoConsumer.ShouldProvideLineInfo))
                 {
                     shouldPassLineNumberInfo = true;
                 }
@@ -663,7 +663,7 @@ namespace System.Windows.Markup
             }
             finally
             {
-                if (_parseException != null || _parseCancelled)
+                if (_parseException is not null || _parseCancelled)
                 {
                     TreeBuildComplete();
                 }
@@ -685,9 +685,9 @@ namespace System.Windows.Markup
 
         internal void TreeBuildComplete()
         {
-            //if (ParseCompleted != null)
+            //if (ParseCompleted is not null)
             //{
-            if (LoadCompleted != null)
+            if (LoadCompleted is not null)
             {
                 // Fire the ParseCompleted event asynchronously
                 Dispatcher.CurrentDispatcher.BeginInvoke(
@@ -741,7 +741,7 @@ namespace System.Windows.Markup
         internal static XamlObjectWriterSettings CreateObjectWriterSettings(XamlObjectWriterSettings parentSettings)
         {
             XamlObjectWriterSettings owSettings = CreateObjectWriterSettings();
-            if (parentSettings != null)
+            if (parentSettings is not null)
             {
                 owSettings.SkipDuplicatePropertyCheck = parentSettings.SkipDuplicatePropertyCheck;
                 owSettings.AccessLevel = parentSettings.AccessLevel;
@@ -897,7 +897,7 @@ namespace System.Windows.Markup
                 settings.BaseUri = parserContext.BaseUri;
                 settings.ProvideLineInfo = true;
 
-                XamlSchemaContext schemaContext = parserContext.XamlTypeMapper != null ?
+                XamlSchemaContext schemaContext = parserContext.XamlTypeMapper is not null ?
                     parserContext.XamlTypeMapper.SchemaContext : GetWpfSchemaContext();
                 System.Xaml.XamlXmlReader xamlXmlReader = (useRestrictiveXamlReader || parserContext.FromRestrictiveReader) ? new RestrictiveXamlXmlReader(reader, schemaContext, settings, safeTypes) :
                                                                                        new System.Xaml.XamlXmlReader(reader, schemaContext, settings);
@@ -950,16 +950,16 @@ namespace System.Windows.Markup
             object root = WpfXamlLoader.Load(xamlReader, parserContext.SkipJournaledProperties, parserContext.BaseUri);
 
             DependencyObject dObject = root as DependencyObject;
-            if (dObject != null)
+            if (dObject is not null)
             {
-                if (parserContext.BaseUri != null && !String.IsNullOrEmpty(parserContext.BaseUri.ToString()))
+                if (parserContext.BaseUri is not null && !String.IsNullOrEmpty(parserContext.BaseUri.ToString()))
                 {
                     dObject.SetValue(BaseUriHelper.BaseUriProperty, parserContext.BaseUri);
                 }
             }
 
             Application app = root as Application;
-            if (app != null)
+            if (app is not null)
             {
                 app.ApplicationMarkupBaseUri = GetBaseUri(parserContext.BaseUri);
             }
@@ -980,7 +980,7 @@ namespace System.Windows.Markup
             catch (Exception e)
             {
                 IUriContext uriContext = reader as IUriContext;
-                Uri baseUri = (uriContext != null) ? uriContext.BaseUri : null;
+                Uri baseUri = (uriContext is not null) ? uriContext.BaseUri : null;
                 // Don't wrap critical exceptions or already-wrapped exceptions.
                 if (MS.Internal.CriticalExceptions.IsCriticalException(e) || !ShouldReWrapException(e, baseUri))
                 {
@@ -1052,7 +1052,7 @@ namespace System.Windows.Markup
                 // set StreamCreatedAssembly from the stream instance.
                 //
                 IStreamInfo streamInfo = stream as IStreamInfo;
-                if (streamInfo != null)
+                if (streamInfo is not null)
                 {
                     parserContext.StreamCreatedAssembly = streamInfo.Assembly;
                 }
@@ -1072,7 +1072,7 @@ namespace System.Windows.Markup
                 // We don't actually use the GeneratedInternalTypeHelper any more.
                 // But for v3 compat, don't allow loading of internals in PT unless there is one.
                 Type internalTypeHelper = null;
-                if (streamInfo.Assembly != null)
+                if (streamInfo.Assembly is not null)
                 {
                     try
                     {
@@ -1089,7 +1089,7 @@ namespace System.Windows.Markup
                     }
                 }
 
-                if (internalTypeHelper != null)
+                if (internalTypeHelper is not null)
                 {
                     XamlAccessLevel accessLevel = XamlAccessLevel.AssemblyAccessTo(streamInfo.Assembly);
                     root = WpfXamlLoader.LoadBaml(reader, parserContext.SkipJournaledProperties, parent, accessLevel, parserContext.BaseUri);
@@ -1100,13 +1100,13 @@ namespace System.Windows.Markup
                 }
 
                 DependencyObject dObject = root as DependencyObject;
-                if (dObject != null)
+                if (dObject is not null)
                 {
                     dObject.SetValue(BaseUriHelper.BaseUriProperty, readerSettings.BaseUri);
                 }
 
                 Application app = root as Application;
-                if (app != null)
+                if (app is not null)
                 {
                     app.ApplicationMarkupBaseUri = GetBaseUri(readerSettings.BaseUri);
                 }
@@ -1123,7 +1123,7 @@ namespace System.Windows.Markup
 
                 EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordXamlBaml | EventTrace.Keyword.KeywordPerf, EventTrace.Event.WClientParseBamlEnd, parserContext.BaseUri);
 
-                if (closeStream && stream != null)
+                if (closeStream && stream is not null)
                 {
                     stream.Close();
                 }

@@ -57,7 +57,7 @@ namespace System.Windows.Controls
             // If the default value is non-null then wire it to the current instance.
             PropertyMetadata metadata = TemplateProperty.GetMetadata(DependencyObjectType);
             ControlTemplate defaultValue = (ControlTemplate) metadata.DefaultValue;
-            if (defaultValue != null)
+            if (defaultValue is not null)
             {
                 OnTemplateChanged(this, new DependencyPropertyChangedEventArgs(TemplateProperty, metadata, null, defaultValue));
             }
@@ -683,7 +683,7 @@ namespace System.Windows.Controls
             // Due to inherited properties, its safer not to cast to control because this might get fired for
             // non-controls.
             var control = d as Control;
-            if (control != null)
+            if (control is not null)
             {
                 control.UpdateVisualState();
             }
@@ -705,7 +705,7 @@ namespace System.Windows.Controls
             if (count > 0)
             {
                 UIElement child = (UIElement)(this.GetVisualChild(0));
-                if (child != null)
+                if (child is not null)
                 {
                     child.Measure(constraint);
                     return child.DesiredSize;
@@ -727,7 +727,7 @@ namespace System.Windows.Controls
             if (count>0)
             {
                 UIElement child = (UIElement)(this.GetVisualChild(0));
-                if (child != null)
+                if (child is not null)
                 {
                     child.Arrange(new Rect(arrangeBounds));
                 }

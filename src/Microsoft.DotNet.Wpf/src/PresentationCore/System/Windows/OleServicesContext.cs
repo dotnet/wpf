@@ -171,7 +171,7 @@ namespace System.Windows
             }
 
             InputManager inputManager = (InputManager)Dispatcher.CurrentDispatcher.InputManager;
-            if (inputManager != null)
+            if (inputManager is not null)
             {
                 inputManager.InDragDrop = true;
             }
@@ -181,7 +181,7 @@ namespace System.Windows
             }
             finally
             {
-                if (inputManager != null)
+                if (inputManager is not null)
                 {
                     inputManager.InDragDrop = false;
                 }

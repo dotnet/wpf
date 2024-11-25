@@ -238,7 +238,7 @@ namespace System.Windows.Xps.Packaging
             }
             set
             {
-                if(value != null)
+                if(value is not null)
                 {
                     if (_isPrintTicketCommitted)
                     {
@@ -557,7 +557,7 @@ namespace System.Windows.Xps.Packaging
                         if (reader.NodeType == XmlNodeType.Element && reader.Name == XpsS0Markup.DocumentReference)
                         {
                             string attribute = reader.GetAttribute(XmlTags.Source);
-                            if (attribute != null)
+                            if (attribute is not null)
                             {
                                 Uri relativeUri = new Uri(attribute, UriKind.Relative);
                                 //This routine properly adds DocumentReaderWriter to the _documentCache
@@ -707,7 +707,7 @@ namespace System.Windows.Xps.Packaging
             //
             // Create the relationship between the package and the tumbnail
             //
-            if( _thumbnail != null )
+            if( _thumbnail is not null )
             {
                 _thumbnail = null;
             }

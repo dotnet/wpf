@@ -46,7 +46,7 @@ namespace MS.Internal.Security.RightsManagement
             ContentUser user,
             UserActivationMode userActivationMode)
         {
-            Invariant.Assert(user != null);
+            Invariant.Assert(user is not null);
             Invariant.Assert((userActivationMode == UserActivationMode.Permanent) ||
                                     (userActivationMode == UserActivationMode.Temporary));
 
@@ -64,7 +64,7 @@ namespace MS.Internal.Security.RightsManagement
                 out _hSession);
 
             Errors.ThrowOnErrorCode(hr);
-            Invariant.Assert((_hSession != null) && (!_hSession.IsInvalid));
+            Invariant.Assert((_hSession is not null) && (!_hSession.IsInvalid));
         }
 
         ~ClientSession()
@@ -88,7 +88,7 @@ namespace MS.Internal.Security.RightsManagement
                 // Interop exception indicating that an invalid handle was used.
                 try
                 {
-                    if (_cryptoProviderList != null)
+                    if (_cryptoProviderList is not null)
                     {
                         foreach (CryptoProvider cryptoProvider in _cryptoProviderList)
                         {
@@ -103,7 +103,7 @@ namespace MS.Internal.Security.RightsManagement
                     // close session handle which is a DRMHSESSION 
                     try
                     {
-                        if ((_hSession != null) &&
+                        if ((_hSession is not null) &&
                             (!_hSession.IsInvalid))
                         {
                             // if we deal with temporatry activation we should clean up 
@@ -124,7 +124,7 @@ namespace MS.Internal.Security.RightsManagement
                         // close default library handle which is a DRMHANDLE  
                         try
                         {
-                            if ((_defaultLibraryHandle != null) &&
+                            if ((_defaultLibraryHandle is not null) &&
                                 (!_defaultLibraryHandle.IsInvalid))
                             {
                                 _defaultLibraryHandle.Dispose();
@@ -137,7 +137,7 @@ namespace MS.Internal.Security.RightsManagement
                             // close secure environment handle which is a DRMENVHANDLE  
                             try
                             {
-                                if ((_envHandle != null) &&
+                                if ((_envHandle is not null) &&
                                      (!_envHandle.IsInvalid))
                                 {
                                     _envHandle.Dispose();
@@ -150,7 +150,7 @@ namespace MS.Internal.Security.RightsManagement
                                 // Dispose call back handler 
                                 try
                                 {
-                                    if (_callbackHandler != null)
+                                    if (_callbackHandler is not null)
                                     {
                                         _callbackHandler.Dispose();
                                     }
@@ -175,7 +175,7 @@ namespace MS.Internal.Security.RightsManagement
         {
             CheckDisposed();
 
-            return IsActivated(ActivationFlags.Machine) && (GetMachineCert() != null);
+            return IsActivated(ActivationFlags.Machine) && (GetMachineCert() is not null);
         }
 
         internal void ActivateMachine(AuthenticationType authentication)
@@ -251,7 +251,7 @@ namespace MS.Internal.Security.RightsManagement
         {
             CheckDisposed();
 
-            return (GetClientLicensorCert() != null);
+            return (GetClientLicensorCert() is not null);
         }
 
         /// <summary>
@@ -308,7 +308,7 @@ namespace MS.Internal.Security.RightsManagement
                 out _defaultLibraryHandle);
 
             Errors.ThrowOnErrorCode(hr);
-            Debug.Assert((_envHandle != null) && (!_envHandle.IsInvalid));
+            Debug.Assert((_envHandle is not null) && (!_envHandle.IsInvalid));
         }
 
         private bool IsActivated(ActivationFlags activateFlags)
@@ -430,7 +430,7 @@ namespace MS.Internal.Security.RightsManagement
 
             DateTime currentTimeStamp = ExtractIssuedTimeFromCertificateChain(currentCert, DateTime.MinValue);
 
-            while (currentCert != null)
+            while (currentCert is not null)
             {
                 index++;
 
@@ -535,7 +535,7 @@ namespace MS.Internal.Security.RightsManagement
         {
             CheckDisposed();
 
-            Invariant.Assert(issuanceLicense != null);
+            Invariant.Assert(issuanceLicense is not null);
             Invariant.Assert(!_envHandle.IsInvalid);
 
             using (CallbackHandler signIssuanceLicenseCallbackHandler = new CallbackHandler())
@@ -603,7 +603,7 @@ namespace MS.Internal.Security.RightsManagement
                 out licenseStorageSessionHandle);
 
             Errors.ThrowOnErrorCode(hr);
-            Debug.Assert((licenseStorageSessionHandle != null) && (!licenseStorageSessionHandle.IsInvalid));
+            Debug.Assert((licenseStorageSessionHandle is not null) && (!licenseStorageSessionHandle.IsInvalid));
 
             using (licenseStorageSessionHandle)
             {
@@ -654,7 +654,7 @@ namespace MS.Internal.Security.RightsManagement
 
         private static int FindNewEntryIndex(ArrayList oldList, ArrayList newList)
         {
-            Invariant.Assert((oldList != null) && (newList != null));
+            Invariant.Assert((oldList is not null) && (newList is not null));
 
             for (int i = 0; i < newList.Count; i++)
             {
@@ -690,9 +690,9 @@ namespace MS.Internal.Security.RightsManagement
                                                                 BoundLicenseParams boundLicenseParams,
                                                                 out int theFirstHrFailureCode)
         {
-            Debug.Assert(serializedUseLicense != null);
-            Debug.Assert(unboundRightsList != null);
-            Debug.Assert(boundLicenseParams != null);
+            Debug.Assert(serializedUseLicense is not null);
+            Debug.Assert(unboundRightsList is not null);
+            Debug.Assert(boundLicenseParams is not null);
 
 
             List<SafeRightsManagementHandle> successfullyBoundLicenseHandleList =
@@ -725,7 +725,7 @@ namespace MS.Internal.Security.RightsManagement
                                                 out boundLicenseHandle,
                                                 out errorLogHandle);
 
-                    if (boundLicenseHandle != null && (hr == 0))
+                    if (boundLicenseHandle is not null && (hr == 0))
                     {
                         // we got a successful bound let's copy the whole grant 
                         // the only thing that we need to substitute in the grant is the User identity 
@@ -778,7 +778,7 @@ namespace MS.Internal.Security.RightsManagement
         {
             CheckDisposed();
 
-            Invariant.Assert(serializedUseLicense != null);
+            Invariant.Assert(serializedUseLicense is not null);
             
             int hr = 0;
             int theFirstHrFailureCode = 0;
@@ -822,7 +822,7 @@ namespace MS.Internal.Security.RightsManagement
                                                                 boundLicenseParams,
                                                                 out hr);
 
-            if (cryptoProvider != null)
+            if (cryptoProvider is not null)
             {
                 return cryptoProvider;
             }
@@ -852,7 +852,7 @@ namespace MS.Internal.Security.RightsManagement
                                                                 boundLicenseParams,
                                                                 out hr);
 
-                if (cryptoProvider != null)
+                if (cryptoProvider is not null)
                 {
                     return cryptoProvider;
                 }
@@ -938,7 +938,7 @@ namespace MS.Internal.Security.RightsManagement
             {
                 object keyValue = key.GetValue(null); // this should get the default value
                 string stringValue = keyValue as string;
-                if (stringValue != null)
+                if (stringValue is not null)
                 {
                     return new Uri(stringValue);
                 }
@@ -974,7 +974,7 @@ namespace MS.Internal.Security.RightsManagement
             // regardless of the user type 
             Uri server = GetServiceLocation(ServiceType.Publishing, ServiceLocation.Enterprise, null);
 
-            if (server != null)
+            if (server is not null)
             {
                 return server;
             }
@@ -993,7 +993,7 @@ namespace MS.Internal.Security.RightsManagement
             // Optional server information. To query UDDI for an activation URL, pass in NULL
             ActivationServerInfo activationServer = null;
 
-            if (url != null)
+            if (url is not null)
             {
                 activationServer = new ActivationServerInfo();
                 activationServer.PubKey = null;
@@ -1078,7 +1078,7 @@ namespace MS.Internal.Security.RightsManagement
             string certificateChain, int index)
         {
             Invariant.Assert(index >= 0);
-            Invariant.Assert(certificateChain != null);
+            Invariant.Assert(certificateChain is not null);
             uint chainElementSize = 0;
             StringBuilder chainElement = null;
 
@@ -1255,7 +1255,7 @@ namespace MS.Internal.Security.RightsManagement
 
         internal static ContentUser ExtractUserFromCertificateChain(string certificateChain)
         {
-            Invariant.Assert(certificateChain != null);
+            Invariant.Assert(certificateChain is not null);
 
             return ExtractUserFromCertificate(GetElementFromCertificateChain(certificateChain, 0));
         }
@@ -1265,7 +1265,7 @@ namespace MS.Internal.Security.RightsManagement
                         string certificateChain,
                         DateTime defaultValue)
         {
-            Invariant.Assert(certificateChain != null);
+            Invariant.Assert(certificateChain is not null);
 
             return ExtractIssuedTimeFromCertificate(GetElementFromCertificateChain(certificateChain, 0), defaultValue);
         }
@@ -1281,7 +1281,7 @@ namespace MS.Internal.Security.RightsManagement
                 certificate,
                 out queryRootHandle);
             Errors.ThrowOnErrorCode(hr);
-            Debug.Assert((queryRootHandle != null) && (!queryRootHandle.IsInvalid));
+            Debug.Assert((queryRootHandle is not null) && (!queryRootHandle.IsInvalid));
 
             using (queryRootHandle)
             {
@@ -1304,7 +1304,7 @@ namespace MS.Internal.Security.RightsManagement
                 certificate,
                 out queryRootHandle);
             Errors.ThrowOnErrorCode(hr);
-            Debug.Assert((queryRootHandle != null) && (!queryRootHandle.IsInvalid));
+            Debug.Assert((queryRootHandle is not null) && (!queryRootHandle.IsInvalid));
 
             using (queryRootHandle)
             {
@@ -1316,7 +1316,7 @@ namespace MS.Internal.Security.RightsManagement
                     0,
                     out querySubHandle);
                 Errors.ThrowOnErrorCode(hr);
-                Debug.Assert((querySubHandle != null) && (!querySubHandle.IsInvalid));
+                Debug.Assert((querySubHandle is not null) && (!querySubHandle.IsInvalid));
 
                 using (querySubHandle)
                 {
@@ -1345,7 +1345,7 @@ namespace MS.Internal.Security.RightsManagement
 
         internal static string ExtractCertificateIdFromCertificateChain(string certificateChain)
         {
-            Invariant.Assert(certificateChain != null);
+            Invariant.Assert(certificateChain is not null);
 
             return ExtractCertificateIdFromCertificate(GetElementFromCertificateChain(certificateChain, 0));
         }
@@ -1359,7 +1359,7 @@ namespace MS.Internal.Security.RightsManagement
                 certificate,
                 out queryRootHandle);
             Errors.ThrowOnErrorCode(hr);
-            Debug.Assert((queryRootHandle != null) && (!queryRootHandle.IsInvalid));
+            Debug.Assert((queryRootHandle is not null) && (!queryRootHandle.IsInvalid));
 
             using (queryRootHandle)
             {
@@ -1374,19 +1374,19 @@ namespace MS.Internal.Security.RightsManagement
 
         internal static Dictionary<string, string> ExtractApplicationSpecificDataFromLicense(string useLicenseChain)
         {
-            Invariant.Assert(useLicenseChain != null);
+            Invariant.Assert(useLicenseChain is not null);
             Dictionary<string, string> _applicationSpecificDataDictionary =
                         new Dictionary<string, string>(3, StringComparer.Ordinal);
 
             string useLicense =
                 GetElementFromCertificateChain(useLicenseChain, 0);
-            Invariant.Assert(useLicense != null);
+            Invariant.Assert(useLicense is not null);
 
             SafeRightsManagementQueryHandle queryRootHandle = null;
 
             int hr = SafeNativeMethods.DRMParseUnboundLicense(useLicense, out queryRootHandle);
             Errors.ThrowOnErrorCode(hr);
-            Debug.Assert((queryRootHandle != null) && (!queryRootHandle.IsInvalid));
+            Debug.Assert((queryRootHandle is not null) && (!queryRootHandle.IsInvalid));
 
             using (queryRootHandle)
             {
@@ -1424,11 +1424,11 @@ namespace MS.Internal.Security.RightsManagement
             out string contentId,
             out string contentIdType)
         {
-            Invariant.Assert(useLicenseChain != null);
+            Invariant.Assert(useLicenseChain is not null);
 
             string useLicense =
                 GetElementFromCertificateChain(useLicenseChain, 0);
-            Invariant.Assert(useLicense != null);
+            Invariant.Assert(useLicense is not null);
 
             SafeRightsManagementQueryHandle queryRootHandle = null;
 
@@ -1437,7 +1437,7 @@ namespace MS.Internal.Security.RightsManagement
                 useLicense,
                 out queryRootHandle);
             Errors.ThrowOnErrorCode(hr);
-            Debug.Assert((queryRootHandle != null) && (!queryRootHandle.IsInvalid));
+            Debug.Assert((queryRootHandle is not null) && (!queryRootHandle.IsInvalid));
 
             using (queryRootHandle)
             {
@@ -1450,7 +1450,7 @@ namespace MS.Internal.Security.RightsManagement
                                         0,
                                         out workItemQueryHandle);
                 Errors.ThrowOnErrorCode(hr);
-                Debug.Assert((workItemQueryHandle != null) && (!workItemQueryHandle.IsInvalid));
+                Debug.Assert((workItemQueryHandle is not null) && (!workItemQueryHandle.IsInvalid));
 
                 using (workItemQueryHandle)
                 {
@@ -1500,7 +1500,7 @@ namespace MS.Internal.Security.RightsManagement
                 }
 
                 Errors.ThrowOnErrorCode(hr);
-                Debug.Assert((rightQueryHandle != null) && (!rightQueryHandle.IsInvalid));
+                Debug.Assert((rightQueryHandle is not null) && (!rightQueryHandle.IsInvalid));
 
                 using (rightQueryHandle)
                 {
@@ -1510,7 +1510,7 @@ namespace MS.Internal.Security.RightsManagement
                     // if it is one of the erights that we "understand" we can proceed to query the time interval 
                     Nullable<ContentRight> right = GetRightFromString(rightName);
 
-                    if (right != null)
+                    if (right is not null)
                     {
                         DateTime timeFrom = DateTime.MinValue;
                         DateTime timeUntil = DateTime.MaxValue;
@@ -1528,7 +1528,7 @@ namespace MS.Internal.Security.RightsManagement
                              (hr != (int)RightsManagementFailureCode.QueryReportsNoResults))
                         {
                             Errors.ThrowOnErrorCode(hr);
-                            Debug.Assert((rangeTimeQueryHandle != null) && (!rangeTimeQueryHandle.IsInvalid));
+                            Debug.Assert((rangeTimeQueryHandle is not null) && (!rangeTimeQueryHandle.IsInvalid));
 
                             using (rangeTimeQueryHandle)
                             {
@@ -1556,7 +1556,7 @@ namespace MS.Internal.Security.RightsManagement
         private static List<ContentGrant> GetGrantsFromBoundUseLicenseList(
                                     List<SafeRightsManagementHandle> boundUseLicenseHandleList, ContentUser user)
         {
-            Invariant.Assert(boundUseLicenseHandleList != null);
+            Invariant.Assert(boundUseLicenseHandleList is not null);
 
             List<ContentGrant> resultList = new List<ContentGrant>(boundUseLicenseHandleList.Count);
 
@@ -1580,10 +1580,10 @@ namespace MS.Internal.Security.RightsManagement
             string useLicenseChain,
             out string rightGroupName)
         {
-            Invariant.Assert(useLicenseChain != null);
+            Invariant.Assert(useLicenseChain is not null);
 
             string useLicense = GetElementFromCertificateChain(useLicenseChain, 0);
-            Invariant.Assert(useLicense != null);
+            Invariant.Assert(useLicense is not null);
 
             List<RightNameExpirationInfoPair> resultRightsInfoList = new List<RightNameExpirationInfoPair>(10);
 
@@ -1594,7 +1594,7 @@ namespace MS.Internal.Security.RightsManagement
                     useLicense,
                     out queryRootHandle);
             Errors.ThrowOnErrorCode(hr);
-            Debug.Assert((queryRootHandle != null) && (!queryRootHandle.IsInvalid));
+            Debug.Assert((queryRootHandle is not null) && (!queryRootHandle.IsInvalid));
 
             using (queryRootHandle)
             {
@@ -1607,7 +1607,7 @@ namespace MS.Internal.Security.RightsManagement
                     0,
                     out workItemQueryHandle);
                 Errors.ThrowOnErrorCode(hr);
-                Debug.Assert((workItemQueryHandle != null) && (!workItemQueryHandle.IsInvalid));
+                Debug.Assert((workItemQueryHandle is not null) && (!workItemQueryHandle.IsInvalid));
 
                 using (workItemQueryHandle)
                 {
@@ -1620,7 +1620,7 @@ namespace MS.Internal.Security.RightsManagement
                         0,
                         out rightGroupQueryHandle);
                     Errors.ThrowOnErrorCode(hr);
-                    Debug.Assert((rightGroupQueryHandle != null) && (!rightGroupQueryHandle.IsInvalid));
+                    Debug.Assert((rightGroupQueryHandle is not null) && (!rightGroupQueryHandle.IsInvalid));
 
                     using (rightGroupQueryHandle)
                     {
@@ -1667,7 +1667,7 @@ namespace MS.Internal.Security.RightsManagement
                 return null;
             }
             Errors.ThrowOnErrorCode(hr);
-            Debug.Assert((rightQueryHandle != null) && (!rightQueryHandle.IsInvalid));
+            Debug.Assert((rightQueryHandle is not null) && (!rightQueryHandle.IsInvalid));
 
             using (rightQueryHandle)
             {
@@ -1691,7 +1691,7 @@ namespace MS.Internal.Security.RightsManagement
 
                 if (hr >= 0)
                 {
-                    Debug.Assert((conditionListHandle != null) && (!conditionListHandle.IsInvalid));
+                    Debug.Assert((conditionListHandle is not null) && (!conditionListHandle.IsInvalid));
 
                     using (conditionListHandle)
                     {
@@ -1707,7 +1707,7 @@ namespace MS.Internal.Security.RightsManagement
                              (hr != (int)RightsManagementFailureCode.QueryReportsNoResults))
                         {
                             Errors.ThrowOnErrorCode(hr);
-                            Debug.Assert((rangeTimeQueryHandle != null) && (!rangeTimeQueryHandle.IsInvalid));
+                            Debug.Assert((rangeTimeQueryHandle is not null) && (!rangeTimeQueryHandle.IsInvalid));
 
                             using (rangeTimeQueryHandle)
                             {
@@ -1733,14 +1733,14 @@ namespace MS.Internal.Security.RightsManagement
 
         internal static string GetContentIdFromPublishLicense(string publishLicense)
         {
-            Invariant.Assert(publishLicense != null);
+            Invariant.Assert(publishLicense is not null);
 
             SafeRightsManagementQueryHandle queryRootHandle = null;
 
             // Parse the license and get the query handle 
             int hr = SafeNativeMethods.DRMParseUnboundLicense(publishLicense, out queryRootHandle);
             Errors.ThrowOnErrorCode(hr);
-            Debug.Assert((queryRootHandle != null) && (!queryRootHandle.IsInvalid));
+            Debug.Assert((queryRootHandle is not null) && (!queryRootHandle.IsInvalid));
 
             using (queryRootHandle)
             {
@@ -1754,7 +1754,7 @@ namespace MS.Internal.Security.RightsManagement
                                         0,
                                         out workQueryHandle);
                 Errors.ThrowOnErrorCode(hr);
-                Debug.Assert((workQueryHandle != null) && (!workQueryHandle.IsInvalid));
+                Debug.Assert((workQueryHandle is not null) && (!workQueryHandle.IsInvalid));
 
                 // contentIdValue information from the root query object 
                 using (workQueryHandle)
@@ -1797,7 +1797,7 @@ namespace MS.Internal.Security.RightsManagement
 
             referralInfoName = nameAttributeValue;
 
-            if (addressAttributeValue != null)
+            if (addressAttributeValue is not null)
             {
                 referralInfoUri = new Uri(addressAttributeValue);
             }
@@ -1813,7 +1813,7 @@ namespace MS.Internal.Security.RightsManagement
                                                                             out string nameAttributeValue,
                                                                             out string addressAttributeValue)
         {
-            Invariant.Assert(publishLicense != null);
+            Invariant.Assert(publishLicense is not null);
 
             // we are not making a distinction between truly missing values and NULL values 
             nameAttributeValue = null;
@@ -1823,7 +1823,7 @@ namespace MS.Internal.Security.RightsManagement
             SafeRightsManagementQueryHandle queryRootHandle = null;
             int hr = SafeNativeMethods.DRMParseUnboundLicense(publishLicense, out queryRootHandle);
             Errors.ThrowOnErrorCode(hr);
-            Debug.Assert((queryRootHandle != null) && (!queryRootHandle.IsInvalid));
+            Debug.Assert((queryRootHandle is not null) && (!queryRootHandle.IsInvalid));
 
             using (queryRootHandle)
             {
@@ -1843,7 +1843,7 @@ namespace MS.Internal.Security.RightsManagement
                         break;
                     }
                     Errors.ThrowOnErrorCode(hr);
-                    Debug.Assert((distributionPointQueryHandle != null) && (!distributionPointQueryHandle.IsInvalid));
+                    Debug.Assert((distributionPointQueryHandle is not null) && (!distributionPointQueryHandle.IsInvalid));
 
                     using (distributionPointQueryHandle)
                     {

@@ -28,7 +28,7 @@ namespace System.Windows.Controls
 
         internal static void PrepareContainer(Control container)
         {
-            if (container != null)
+            if (container is not null)
             {
                 // Disable the control and set the alignment to stretch
                 container.IsEnabled = false;

@@ -21,11 +21,11 @@
 
         Helper.DowncastToFEorFCE(d, out fe, out fce, false);
 
-        if (fe != null)
+        if (fe is not null)
         {
             fe.SomeMethod(arg);
         }
-        else if (fce != null)
+        else if (fce is not null)
         {
             fce.SomeMethod(arg);
         }
@@ -66,7 +66,7 @@ namespace MS.Internal
         {
             if (throwIfNeither && _fe is null && _fce is null)
             {
-                object arg = (d != null) ? (object)d.GetType() : (object)"NULL";
+                object arg = (d is not null) ? (object)d.GetType() : (object)"NULL";
                 throw new InvalidOperationException(SR.Format(SR.MustBeFrameworkDerived, arg));
             }
         }
@@ -76,7 +76,7 @@ namespace MS.Internal
             _fe = fe;
             _fce = fce;
 
-            if (fe != null)
+            if (fe is not null)
                 _do = fe;
             else
                 _do = fce;
@@ -98,9 +98,9 @@ namespace MS.Internal
         internal FrameworkContentElement    FCE { get { return _fce; } }
         internal DependencyObject           DO  { get { return _do; } }
 
-        internal bool   IsFE    { get { return (_fe != null); } }
-        internal bool   IsFCE   { get { return (_fce != null); } }
-        internal bool   IsValid { get { return (_fe != null || _fce != null); } }
+        internal bool   IsFE    { get { return (_fe is not null); } }
+        internal bool   IsFCE   { get { return (_fce is not null); } }
+        internal bool   IsValid { get { return (_fe is not null || _fce is not null); } }
 
         #endregion Conversion to DO/FE/FCE
 
@@ -226,7 +226,7 @@ namespace MS.Internal
                     DependencyObject parent = _fe.ContextVerifiedGetParent();
 
                     // NOTE: Logical parent can only be an FE, FCE
-                    if (parent != null)
+                    if (parent is not null)
                     {
                         Invariant.Assert(parent is FrameworkElement || parent is FrameworkContentElement);
 
@@ -263,7 +263,7 @@ namespace MS.Internal
                     DependencyObject parent = _fce.Parent;
 
                     // NOTE: Logical parent can only be an FE, FCE
-                    if (parent != null)
+                    if (parent is not null)
                     {
                         Invariant.Assert(parent is FrameworkElement || parent is FrameworkContentElement);
 
@@ -300,7 +300,7 @@ namespace MS.Internal
         {
             FrameworkObject fo = new FrameworkObject(current);
 
-            while (!fo.IsValid && fo.DO != null)
+            while (!fo.IsValid && fo.DO is not null)
             {
                 // The current object is neither a FrameworkElement nor a
                 // FrameworkContentElement.  We will now walk the "core"
@@ -309,15 +309,15 @@ namespace MS.Internal
                 Visual3D visual3D;
                 ContentElement ce;
 
-                if ((visual = fo.DO as Visual) != null)
+                if ((visual = fo.DO as Visual) is not null)
                 {
                     fo.Reset(VisualTreeHelper.GetParent(visual));
                 }
-                else if ((ce = fo.DO as ContentElement) != null)
+                else if ((ce = fo.DO as ContentElement) is not null)
                 {
                     fo.Reset(ContentOperations.GetParent(ce));
                 }
-                else if ((visual3D = fo.DO as Visual3D) != null)
+                else if ((visual3D = fo.DO as Visual3D) is not null)
                 {
                     fo.Reset(VisualTreeHelper.GetParent(visual3D));
                 }
@@ -416,15 +416,15 @@ namespace MS.Internal
                     Visual3D visual3D;
                     ContentElement ce;
 
-                    if ((visual = _do as Visual) != null)
+                    if ((visual = _do as Visual) is not null)
                     {
                         parent = VisualTreeHelper.GetParent(visual);
                     }
-                    else if ((ce = _do as ContentElement) != null)
+                    else if ((ce = _do as ContentElement) is not null)
                     {
                         parent = ContentOperations.GetParent(ce);
                     }
-                    else if ((visual3D = _do as Visual3D) != null)
+                    else if ((visual3D = _do as Visual3D) is not null)
                     {
                         parent = VisualTreeHelper.GetParent(visual3D);
                     }
@@ -434,7 +434,7 @@ namespace MS.Internal
                     }
                 }
 
-                if (parent is null && _do != null)
+                if (parent is null && _do is not null)
                 {
                     parent = _do.InheritanceContext;
                 }
@@ -718,7 +718,7 @@ namespace MS.Internal
             int depth = 0;
 #endif
             for (   FrameworkObject fo = new FrameworkObject(d2);
-                    fo.DO != null;
+                    fo.DO is not null;
                     fo.Reset(fo.EffectiveParent))
             {
                 if (fo.DO == d1)
@@ -871,17 +871,17 @@ namespace MS.Internal
             {
                 visualParent = null;
             }
-            else if (_do != null)
+            else if (_do is not null)
             {
                 Visual visual = _do as Visual;
-                visualParent = (visual != null) ? VisualTreeHelper.GetParent(visual) : null;
+                visualParent = (visual is not null) ? VisualTreeHelper.GetParent(visual) : null;
             }
             else
             {
                 visualParent = null;
             }
 
-            if (visualParent != null)
+            if (visualParent is not null)
             {
                 return new FrameworkObject(visualParent);
             }
@@ -896,17 +896,17 @@ namespace MS.Internal
             {
                 logicalParent = _fce.Parent;
             }
-            else if (_do != null)
+            else if (_do is not null)
             {
                 ContentElement ce = _do as ContentElement;
-                logicalParent = (ce != null) ? ContentOperations.GetParent(ce) : null;
+                logicalParent = (ce is not null) ? ContentOperations.GetParent(ce) : null;
             }
             else
             {
                 logicalParent = null;
             }
 
-            if (logicalParent != null)
+            if (logicalParent is not null)
             {
                 return new FrameworkObject(logicalParent);
             }
@@ -915,11 +915,11 @@ namespace MS.Internal
             UIElement uiElement;
             ContentElement contentElement;
             DependencyObject uiCoreParent;
-            if ((uiElement = _do as UIElement) != null)
+            if ((uiElement = _do as UIElement) is not null)
             {
                 uiCoreParent = uiElement.GetUIParentCore();
             }
-            else if ((contentElement = _do as ContentElement) != null)
+            else if ((contentElement = _do as ContentElement) is not null)
             {
                 uiCoreParent = contentElement.GetUIParentCore();
             }
@@ -928,7 +928,7 @@ namespace MS.Internal
                 uiCoreParent = null;
             }
 
-            if (uiCoreParent != null)
+            if (uiCoreParent is not null)
             {
                 return new FrameworkObject(uiCoreParent);
             }

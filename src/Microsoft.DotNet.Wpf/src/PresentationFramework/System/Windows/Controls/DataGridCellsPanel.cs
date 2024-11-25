@@ -85,7 +85,7 @@ namespace System.Windows.Controls
                 // This makes sure that the ItemsPresenter and the DatagridCellsPresenter is invalidated even if this is an arrange pass.
                 this.ParentPresenter.InvalidateMeasure();
                 UIElement parent =  VisualTreeHelper.GetParent(this) as UIElement;
-                if (parent != null)
+                if (parent is not null)
                     parent.InvalidateMeasure();
             }
 
@@ -109,7 +109,7 @@ namespace System.Windows.Controls
             bool remeasure = false;
 
             // Allow the column to affect the constraint.
-            if (cell != null)
+            if (cell is not null)
             {
                 // For auto kind columns measure with infinity to find the actual desired width of the cell.
                 DataGridColumn column = cell.Column;
@@ -133,7 +133,7 @@ namespace System.Windows.Controls
 
             Size childDesiredSize = child.DesiredSize;
 
-            if (cell != null)
+            if (cell is not null)
             {
                 DataGridColumn column = cell.Column;
 
@@ -169,7 +169,7 @@ namespace System.Windows.Controls
 
             List<RealizedColumnsBlock> blockList = RealizedColumnsBlockList;
 
-            Debug.Assert(blockList != null, "RealizedColumnsBlockList shouldn't be null at this point.");
+            Debug.Assert(blockList is not null, "RealizedColumnsBlockList shouldn't be null at this point.");
 
             // Virtualize the children which are not necessary
             VirtualizeChildren(blockList, generator);
@@ -281,7 +281,7 @@ namespace System.Windows.Controls
                     if (columnIndex != childIndex || previousColumnIndex != (columnIndex - 1))
                     {
                         childIndex = columnIndex;
-                        if (generatorState != null)
+                        if (generatorState is not null)
                         {
                             generatorState.Dispose();
                             generatorState = null;
@@ -339,7 +339,7 @@ namespace System.Windows.Controls
                                             redeterminationNeeded = true;
                                         }
                                     }
-                                    else if (generatorState != null)
+                                    else if (generatorState is not null)
                                     {
                                         generatorState.Dispose();
                                         generatorState = null;
@@ -404,7 +404,7 @@ namespace System.Windows.Controls
             }
             finally
             {
-                if (generatorState != null)
+                if (generatorState is not null)
                 {
                     generatorState.Dispose();
                     generatorState = null;
@@ -519,7 +519,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static GeneratorPosition IndexToGeneratorPositionForStart(IItemContainerGenerator generator, int index, out int childIndex)
         {
-            GeneratorPosition position = (generator != null) ? generator.GeneratorPositionFromIndex(index) : new GeneratorPosition(-1, index + 1);
+            GeneratorPosition position = (generator is not null) ? generator.GeneratorPositionFromIndex(index) : new GeneratorPosition(-1, index + 1);
 
             // Determine the position in the children collection for the first
             // generated container.  This assumes that generator.StartAt will be called
@@ -681,7 +681,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void InsertContainer(int childIndex, UIElement container, bool isRecycled)
         {
-            Debug.Assert(container != null, "Null container was generated");
+            Debug.Assert(container is not null, "Null container was generated");
 
             UIElementCollection children = InternalChildren;
 
@@ -712,12 +712,12 @@ namespace System.Windows.Controls
                 if (visualTreeIndex < children.Count)
                 {
                     int insertIndex = visualTreeIndex;
-                    if (isRecycled && VisualTreeHelper.GetParent(container) != null)
+                    if (isRecycled && VisualTreeHelper.GetParent(container) is not null)
                     {
                         // If the container is recycled we have to remove it from its place in the visual tree and
                         // insert it in the proper location.   We cant use an internal Move api, so we are removing
                         // and inserting the container
-                        Debug.Assert(children[visualTreeIndex] != null, "MoveVisualChild interprets a null destination as 'move to end'");
+                        Debug.Assert(children[visualTreeIndex] is not null, "MoveVisualChild interprets a null destination as 'move to end'");
                         int containerIndex = children.IndexOf(container);
                         RemoveInternalChildRange(containerIndex, 1);
                         if (containerIndex < insertIndex)
@@ -734,7 +734,7 @@ namespace System.Windows.Controls
                 }
                 else
                 {
-                    if (isRecycled && VisualTreeHelper.GetParent(container) != null)
+                    if (isRecycled && VisualTreeHelper.GetParent(container) is not null)
                     {
                         // Recycled container is still in the tree; move it to the end
                         int originalIndex = children.IndexOf(container);
@@ -843,7 +843,7 @@ namespace System.Windows.Controls
                         using (generator.StartAt(IndexToGeneratorPositionForStart(generator, childIndex, out childIndex), GeneratorDirection.Forward, true))
                         {
                             UIElement child = GenerateChild(generator, constraint, column, ref childIndex, out childSize);
-                            if (child != null)
+                            if (child is not null)
                             {
                                 int displayIndexListIterator = 0;
                                 AddToIndicesListIfNeeded(
@@ -978,7 +978,7 @@ namespace System.Windows.Controls
                     }
                 }
 
-                if (child != null && DataGridHelper.TreeHasFocusAndTabStop(child))
+                if (child is not null && DataGridHelper.TreeHasFocusAndTabStop(child))
                 {
                     AddToIndicesListIfNeeded(
                         realizedColumnIndices,
@@ -1061,7 +1061,7 @@ namespace System.Windows.Controls
                 int columnIndex = i;
                 UIElement child = children[i] as UIElement;
                 IProvideDataGridColumn columnProvider = child as IProvideDataGridColumn;
-                if (columnProvider != null)
+                if (columnProvider is not null)
                 {
                     DataGridColumn column = columnProvider.Column;
                     for (; columnIterator < columnCount; columnIterator++)
@@ -1079,10 +1079,10 @@ namespace System.Windows.Controls
                 bool virtualizeChild = pastLastBlock || !InBlockOrNextBlock(blockList, columnIndex, ref blockIndex, ref block, out pastLastBlock);
 
                 DataGridCell cell = child as DataGridCell;
-                if ((cell != null && (cell.IsEditing || cell.IsKeyboardFocusWithin || cell == parentDataGrid.FocusedCell)) ||
-                    (cellsPresenter != null &&
+                if ((cell is not null && (cell.IsEditing || cell.IsKeyboardFocusWithin || cell == parentDataGrid.FocusedCell)) ||
+                    (cellsPresenter is not null &&
                     cellsPresenter.IsItemItsOwnContainerInternal(cellsPresenter.Items[columnIndex])) ||
-                    (headersPresenter != null &&
+                    (headersPresenter is not null &&
                     headersPresenter.IsItemItsOwnContainerInternal(headersPresenter.Items[columnIndex])))
                 {
                     virtualizeChild = false;
@@ -1307,20 +1307,20 @@ namespace System.Windows.Controls
             DataGrid parentDataGrid = ParentDataGrid;
 
             // Update the NonFrozenColumnsViewportHorizontalOffset property of datagrid
-            if (parentDataGrid != null)
+            if (parentDataGrid is not null)
             {
                 parentDataGrid.NonFrozenColumnsViewportHorizontalOffset = arrangeState.DataGridHorizontalScrollStartX;
             }
 
             // Remove the clip on previous clipped child
-            if (arrangeState.OldClippedChild != null)
+            if (arrangeState.OldClippedChild is not null)
             {
                 arrangeState.OldClippedChild.CoerceValue(ClipProperty);
             }
 
             // Add the clip on new child to be clipped for the sake of frozen columns.
             _clippedChildForFrozenBehaviour = arrangeState.NewClippedChild;
-            if (_clippedChildForFrozenBehaviour != null)
+            if (_clippedChildForFrozenBehaviour is not null)
             {
                 _clippedChildForFrozenBehaviour.CoerceValue(ClipProperty);
             }
@@ -1341,7 +1341,7 @@ namespace System.Windows.Controls
         private static void Debug_VerifyRealizedIndexCountVsDisplayIndexCount(List<RealizedColumnsBlock> blockList, List<RealizedColumnsBlock> displayIndexBlockList)
         {
             Debug.Assert(
-                blockList != null && blockList.Count > 0,
+                blockList is not null && blockList.Count > 0,
                 "RealizedColumnsBlockList should not be null or empty");
 
             RealizedColumnsBlock lastBlock = blockList[blockList.Count - 1];
@@ -1368,7 +1368,7 @@ namespace System.Windows.Controls
             /*
              * determine the horizontal offset, cells panel offset and other coordinates used for arrange of children
              */
-            if (parentDataGrid != null)
+            if (parentDataGrid is not null)
             {
                 parentDataGrid.QueueInvalidateCellsPanelHorizontalOffset();
                 SetDataGridCellPanelWidth(children, arrangeSize.Width);
@@ -1376,7 +1376,7 @@ namespace System.Windows.Controls
             }
 
             List<RealizedColumnsBlock> displayIndexBlockList = RealizedColumnsDisplayIndexBlockList;
-            if (displayIndexBlockList != null && displayIndexBlockList.Count > 0)
+            if (displayIndexBlockList is not null && displayIndexBlockList.Count > 0)
             {
                 double averageColumnWidth = parentDataGrid.InternalColumns.AverageColumnWidth;
                 List<RealizedColumnsBlock> blockList = RealizedColumnsBlockList;
@@ -1402,7 +1402,7 @@ namespace System.Windows.Controls
                         int columnIndex = parentDataGrid.ColumnIndexFromDisplayIndex(i);
                         RealizedColumnsBlock block = GetRealizedBlockForColumn(blockList, columnIndex);
                         int childIndex = block.StartIndexOffset + columnIndex - block.StartIndex;
-                        if (additionalChildIndices != null)
+                        if (additionalChildIndices is not null)
                         {
                             for (int j = 0, additionalChildrenCount = additionalChildIndices.Count;
                                         j < additionalChildrenCount && additionalChildIndices[j] <= childIndex; j++)
@@ -1429,7 +1429,7 @@ namespace System.Windows.Controls
                     }
                 }
 
-                if (additionalChildIndices != null)
+                if (additionalChildIndices is not null)
                 {
                     for (int i = 0, count = additionalChildIndices.Count; i < count; i++)
                     {
@@ -1457,7 +1457,7 @@ namespace System.Windows.Controls
             int displayIndex,
             ArrangeState arrangeState)
         {
-            Debug.Assert(child != null, "child cannot be null.");
+            Debug.Assert(child is not null, "child cannot be null.");
             double childWidth = 0.0;
             IProvideDataGridColumn cell = child as IProvideDataGridColumn;
 
@@ -1470,9 +1470,9 @@ namespace System.Windows.Controls
 
             // Width determinition of the child to be arranged. It is
             // display value if available else the ActualWidth
-            if (cell != null)
+            if (cell is not null)
             {
-                Debug.Assert(cell.Column != null, "column cannot be null.");
+                Debug.Assert(cell.Column is not null, "column cannot be null.");
                 childWidth = cell.Column.Width.DisplayValue;
                 if (double.IsNaN(childWidth))
                 {
@@ -1596,7 +1596,7 @@ namespace System.Windows.Controls
                 {
                     IProvideDataGridColumn cell = children[i] as IProvideDataGridColumn;
                     int columnIndex = i;
-                    if (cell != null)
+                    if (cell is not null)
                     {
                         columnIndex = parentDataGrid.Columns.IndexOf(cell.Column);
                     }
@@ -1661,7 +1661,7 @@ namespace System.Windows.Controls
                         for (; k<n; ++k)
                         {
                             IProvideDataGridColumn cell = children[k] as IProvideDataGridColumn;
-                            if (cell != null)
+                            if (cell is not null)
                             {
                                 int displayIndex = cell.Column.DisplayIndex;
                                 int childColumnIndex = (displayIndex < 0 ? -1 : displayIndexMap[displayIndex]);
@@ -1686,7 +1686,7 @@ namespace System.Windows.Controls
             get
             {
                 DataGrid dataGrid = ParentDataGrid;
-                if (dataGrid != null)
+                if (dataGrid is not null)
                 {
                     DataGridColumnCollection columns = dataGrid.InternalColumns;
                     return IsVirtualizing ? columns.RebuildRealizedColumnsBlockListForVirtualizedRows : columns.RebuildRealizedColumnsBlockListForNonVirtualizedRows;
@@ -1698,7 +1698,7 @@ namespace System.Windows.Controls
             set
             {
                 DataGrid dataGrid = ParentDataGrid;
-                if (dataGrid != null)
+                if (dataGrid is not null)
                 {
                     if (IsVirtualizing)
                     {
@@ -1717,7 +1717,7 @@ namespace System.Windows.Controls
             get
             {
                 DataGrid dataGrid = ParentDataGrid;
-                if (dataGrid != null)
+                if (dataGrid is not null)
                 {
                     DataGridColumnCollection columns = dataGrid.InternalColumns;
                     return IsVirtualizing ? columns.RealizedColumnsBlockListForVirtualizedRows : columns.RealizedColumnsBlockListForNonVirtualizedRows;
@@ -1729,7 +1729,7 @@ namespace System.Windows.Controls
             set
             {
                 DataGrid dataGrid = ParentDataGrid;
-                if (dataGrid != null)
+                if (dataGrid is not null)
                 {
                     if (IsVirtualizing)
                     {
@@ -1748,7 +1748,7 @@ namespace System.Windows.Controls
             get
             {
                 DataGrid dataGrid = ParentDataGrid;
-                if (dataGrid != null)
+                if (dataGrid is not null)
                 {
                     DataGridColumnCollection columns = dataGrid.InternalColumns;
                     return IsVirtualizing ? columns.RealizedColumnsDisplayIndexBlockListForVirtualizedRows : columns.RealizedColumnsDisplayIndexBlockListForNonVirtualizedRows;
@@ -1760,7 +1760,7 @@ namespace System.Windows.Controls
             set
             {
                 DataGrid dataGrid = ParentDataGrid;
-                if (dataGrid != null)
+                if (dataGrid is not null)
                 {
                     if (IsVirtualizing)
                     {
@@ -1786,20 +1786,20 @@ namespace System.Windows.Controls
             if (newIsItemsHost)
             {
                 ItemsControl parentPresenter = ParentPresenter;
-                if (parentPresenter != null)
+                if (parentPresenter is not null)
                 {
                     IItemContainerGenerator generator = parentPresenter.ItemContainerGenerator as IItemContainerGenerator;
-                    if (generator != null && generator == generator.GetItemContainerGeneratorForPanel(this))
+                    if (generator is not null && generator == generator.GetItemContainerGeneratorForPanel(this))
                     {
                         DataGridCellsPresenter cellsPresenter = parentPresenter as DataGridCellsPresenter;
-                        if (cellsPresenter != null)
+                        if (cellsPresenter is not null)
                         {
                             cellsPresenter.InternalItemsHost = this;
                         }
                         else
                         {
                             DataGridColumnHeadersPresenter headersPresenter = parentPresenter as DataGridColumnHeadersPresenter;
-                            if (headersPresenter != null)
+                            if (headersPresenter is not null)
                             {
                                 headersPresenter.InternalItemsHost = this;
                             }
@@ -1810,10 +1810,10 @@ namespace System.Windows.Controls
             else
             {
                 ItemsControl parentPresenter = ParentPresenter;
-                if (parentPresenter != null)
+                if (parentPresenter is not null)
                 {
                     DataGridCellsPresenter cellsPresenter = parentPresenter as DataGridCellsPresenter;
-                    if (cellsPresenter != null)
+                    if (cellsPresenter is not null)
                     {
                         if (cellsPresenter.InternalItemsHost == this)
                         {
@@ -1823,7 +1823,7 @@ namespace System.Windows.Controls
                     else
                     {
                         DataGridColumnHeadersPresenter headersPresenter = parentPresenter as DataGridColumnHeadersPresenter;
-                        if (headersPresenter != null && headersPresenter.InternalItemsHost == this)
+                        if (headersPresenter is not null && headersPresenter.InternalItemsHost == this)
                         {
                             headersPresenter.InternalItemsHost = null;
                         }
@@ -1853,10 +1853,10 @@ namespace System.Windows.Controls
                 // when grouping, we can't just look down from DataGrid - there
                 // are different presenters for each group.  Instead, look up.
                 DataGridCellsPresenter presenter = ParentPresenter as DataGridCellsPresenter;
-                if (presenter != null)
+                if (presenter is not null)
                 {
                     DataGridRow row = presenter.DataGridRowOwner;
-                    if (row != null)
+                    if (row is not null)
                     {
                         return VisualTreeHelper.GetParent(row) as DataGridRowsPresenter;
                     }
@@ -1869,7 +1869,7 @@ namespace System.Windows.Controls
         private void DetermineVirtualizationState()
         {
             ItemsControl parentPresenter = ParentPresenter;
-            if (parentPresenter != null)
+            if (parentPresenter is not null)
             {
                 IsVirtualizing = VirtualizingPanel.GetIsVirtualizing(parentPresenter);
                 InRecyclingMode = (VirtualizingPanel.GetVirtualizationMode(parentPresenter) == VirtualizationMode.Recycling);
@@ -1980,13 +1980,13 @@ namespace System.Windows.Controls
         /// </summary>
         internal double ComputeCellsPanelHorizontalOffset()
         {
-            Debug.Assert(ParentDataGrid != null, "ParentDataGrid should not be null");
+            Debug.Assert(ParentDataGrid is not null, "ParentDataGrid should not be null");
 
             double cellsPanelOffset = 0.0;
             DataGrid dataGrid = ParentDataGrid;
             double horizontalOffset = dataGrid.HorizontalScrollOffset;
             ScrollViewer scrollViewer = dataGrid.InternalScrollHost;
-            if (scrollViewer != null)
+            if (scrollViewer is not null)
             {
                 cellsPanelOffset = horizontalOffset + TransformToAncestor(scrollViewer).Transform(new Point()).X;
             }
@@ -2001,10 +2001,10 @@ namespace System.Windows.Controls
         {
             double availableViewportWidth = 0.0;
             DataGrid parentDataGrid = ParentDataGrid;
-            if (parentDataGrid != null)
+            if (parentDataGrid is not null)
             {
                 ScrollContentPresenter scrollContentPresenter = parentDataGrid.InternalScrollContentPresenter;
-                if (scrollContentPresenter != null &&
+                if (scrollContentPresenter is not null &&
                     !scrollContentPresenter.CanContentScroll)
                 {
                     availableViewportWidth = scrollContentPresenter.ViewportWidth;
@@ -2012,7 +2012,7 @@ namespace System.Windows.Controls
                 else
                 {
                     IScrollInfo scrollInfo = parentDataGrid.InternalItemsHost as IScrollInfo;
-                    if (scrollInfo != null)
+                    if (scrollInfo is not null)
                     {
                         availableViewportWidth = scrollInfo.ViewportWidth;
                     }
@@ -2021,7 +2021,7 @@ namespace System.Windows.Controls
 
             DataGridRowsPresenter parentRowsPresenter = ParentRowsPresenter;
 
-            if (DoubleUtil.AreClose(availableViewportWidth, 0.0) && parentRowsPresenter != null)
+            if (DoubleUtil.AreClose(availableViewportWidth, 0.0) && parentRowsPresenter is not null)
             {
                 Size rowPresenterAvailableSize = parentRowsPresenter.AvailableSize;
                 if (!double.IsNaN(rowPresenterAvailableSize.Width) && !Double.IsInfinity(rowPresenterAvailableSize.Width))
@@ -2031,7 +2031,7 @@ namespace System.Windows.Controls
                 else if (parentDataGrid.IsGrouping) // parentRowsPresenter!=null implies parentDataGrid!=null
                 {
                     IHierarchicalVirtualizationAndScrollInfo hvsInfo = DataGridHelper.FindParent<GroupItem>(parentRowsPresenter) as IHierarchicalVirtualizationAndScrollInfo;
-                    if (hvsInfo != null)
+                    if (hvsInfo is not null)
                     {
                         availableViewportWidth = hvsInfo.Constraints.Viewport.Width;
                     }
@@ -2162,7 +2162,7 @@ namespace System.Windows.Controls
 
             ScrollContentPresenter scrollContentPresenter = parentDataGrid.InternalScrollContentPresenter;
             IScrollInfo scrollInfo = null;
-            if (scrollContentPresenter != null &&
+            if (scrollContentPresenter is not null &&
                 !scrollContentPresenter.CanContentScroll)
             {
                 scrollInfo = scrollContentPresenter;
@@ -2170,7 +2170,7 @@ namespace System.Windows.Controls
             else
             {
                 ScrollViewer scrollViewer = parentDataGrid.InternalScrollHost;
-                if (scrollViewer != null)
+                if (scrollViewer is not null)
                 {
                     scrollInfo = scrollViewer.ScrollInfo;
                 }
@@ -2233,7 +2233,7 @@ namespace System.Windows.Controls
             // if the app has changed the column collection since the retry was posted,
             // don't throw - just ignore it
             DataGrid parentDataGrid = ParentDataGrid;
-            if (parentDataGrid != null && 0 <= index && index < parentDataGrid.Columns.Count)
+            if (parentDataGrid is not null && 0 <= index && index < parentDataGrid.Columns.Count)
             {
                 BringIndexIntoView(index);
             }
@@ -2390,7 +2390,7 @@ namespace System.Windows.Controls
             get
             {
                 DataGrid parentDataGrid = ParentDataGrid;
-                if (parentDataGrid != null)
+                if (parentDataGrid is not null)
                 {
                     return parentDataGrid.Columns;
                 }
@@ -2410,11 +2410,11 @@ namespace System.Windows.Controls
                 {
                     DataGridCellsPresenter presenter = ParentPresenter as DataGridCellsPresenter;
 
-                    if (presenter != null)
+                    if (presenter is not null)
                     {
                         DataGridRow row = presenter.DataGridRowOwner;
 
-                        if (row != null)
+                        if (row is not null)
                         {
                             _parentDataGrid = row.DataGridOwner;
                         }
@@ -2423,7 +2423,7 @@ namespace System.Windows.Controls
                     {
                         DataGridColumnHeadersPresenter headersPresenter = ParentPresenter as DataGridColumnHeadersPresenter;
 
-                        if (headersPresenter != null)
+                        if (headersPresenter is not null)
                         {
                             _parentDataGrid = headersPresenter.ParentDataGrid;
                         }
@@ -2439,7 +2439,7 @@ namespace System.Windows.Controls
             get
             {
                 FrameworkElement itemsPresenter = TemplatedParent as FrameworkElement;
-                if (itemsPresenter != null)
+                if (itemsPresenter is not null)
                 {
                     return itemsPresenter.TemplatedParent as ItemsControl;
                 }

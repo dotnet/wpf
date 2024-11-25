@@ -478,7 +478,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             }
             else    // tack on data at the end, want to keep x,y at the beginning
             {
-                while(start.Next != null)
+                while(start.Next is not null)
                 {
                     start = start.Next;
                 }

@@ -104,7 +104,7 @@ namespace System.Windows.Media.Media3D
             if ((e.OldValueSource != BaseValueSourceInternal.Default) || e.IsOldValueModified)
             {
                 oldCollection = (Model3DCollection) e.OldValue;
-                if ((oldCollection != null) && !oldCollection.IsFrozen)
+                if ((oldCollection is not null) && !oldCollection.IsFrozen)
                 {
                     oldCollection.ItemRemoved -= target.ChildrenItemRemoved;
                     oldCollection.ItemInserted -= target.ChildrenItemInserted;
@@ -115,13 +115,13 @@ namespace System.Windows.Media.Media3D
             if ((e.NewValueSource != BaseValueSourceInternal.Default) || e.IsNewValueModified)
             {
                 newCollection = (Model3DCollection) e.NewValue;
-                if ((newCollection != null) && !newCollection.IsFrozen)
+                if ((newCollection is not null) && !newCollection.IsFrozen)
                 {
                     newCollection.ItemInserted += target.ChildrenItemInserted;
                     newCollection.ItemRemoved += target.ChildrenItemRemoved;
                 }
             }
-            if (oldCollection != newCollection && target.Dispatcher != null)
+            if (oldCollection != newCollection && target.Dispatcher is not null)
             {
                 using (CompositionEngineLock.Acquire())
                 {
@@ -138,24 +138,24 @@ namespace System.Windows.Media.Media3D
                         // 2) Codegen already made sure the collection contains DUCE.IResources
                         // ... so we'll Assert it
 
-                        if (newCollection != null)
+                        if (newCollection is not null)
                         {
                             int count = newCollection.Count;
                             for (int i = 0; i < count; i++)
                             {
                                 DUCE.IResource resource = newCollection.Internal_GetItem(i) as DUCE.IResource;
-                                Debug.Assert(resource != null);
+                                Debug.Assert(resource is not null);
                                 resource.AddRefOnChannel(channel);
                             }
                         }
 
-                        if (oldCollection != null)
+                        if (oldCollection is not null)
                         {
                             int count = oldCollection.Count;
                             for (int i = 0; i < count; i++)
                             {
                                 DUCE.IResource resource = oldCollection.Internal_GetItem(i) as DUCE.IResource;
-                                Debug.Assert(resource != null);
+                                Debug.Assert(resource is not null);
                                 resource.ReleaseOnChannel(channel);
                             }
                         }
@@ -278,11 +278,11 @@ namespace System.Windows.Media.Media3D
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_MODEL3DGROUP))
                 {
                     Transform3D vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
+                    if (vTransform is not null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
 
                     Model3DCollection vChildren = Children;
 
-                    if (vChildren != null)
+                    if (vChildren is not null)
                     {
                         int count = vChildren.Count;
                         for (int i = 0; i < count; i++)
@@ -305,11 +305,11 @@ namespace System.Windows.Media.Media3D
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
                     Transform3D vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
+                    if (vTransform is not null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
 
                     Model3DCollection vChildren = Children;
 
-                    if (vChildren != null)
+                    if (vChildren is not null)
                     {
                         int count = vChildren.Count;
                         for (int i = 0; i < count; i++)
@@ -338,7 +338,7 @@ namespace System.Windows.Media.Media3D
 
         private void ChildrenItemInserted(object sender, object item)
         {
-            if (this.Dispatcher != null)
+            if (this.Dispatcher is not null)
             {
                 DUCE.IResource thisResource = (DUCE.IResource)this;
                 using (CompositionEngineLock.Acquire())
@@ -353,7 +353,7 @@ namespace System.Windows.Media.Media3D
 
                         // We're on a channel, which means our dependents are also on the channel.
                         DUCE.IResource addResource = item as DUCE.IResource;
-                        if (addResource != null)
+                        if (addResource is not null)
                         {
                             addResource.AddRefOnChannel(channel);
                         }
@@ -366,7 +366,7 @@ namespace System.Windows.Media.Media3D
 
         private void ChildrenItemRemoved(object sender, object item)
         {
-            if (this.Dispatcher != null)
+            if (this.Dispatcher is not null)
             {
                 DUCE.IResource thisResource = (DUCE.IResource)this;
                 using (CompositionEngineLock.Acquire())
@@ -383,7 +383,7 @@ namespace System.Windows.Media.Media3D
 
                         // We're on a channel, which means our dependents are also on the channel.
                         DUCE.IResource releaseResource = item as DUCE.IResource;
-                        if (releaseResource != null)
+                        if (releaseResource is not null)
                         {
                             releaseResource.ReleaseOnChannel(channel);
                         }

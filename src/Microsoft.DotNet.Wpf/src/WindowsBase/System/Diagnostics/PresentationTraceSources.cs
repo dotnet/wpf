@@ -103,7 +103,7 @@ namespace System.Diagnostics
             System.Diagnostics.Trace.Refresh();
 
             // Initialize any traces classes if needed
-            if (TraceRefresh != null)
+            if (TraceRefresh is not null)
             {
                 TraceRefresh();
             }

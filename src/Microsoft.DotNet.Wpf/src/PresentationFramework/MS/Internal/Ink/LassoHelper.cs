@@ -153,7 +153,7 @@ namespace MS.Internal.Ink
             }
             finally
             {
-                if (dc != null)
+                if (dc is not null)
                 {
                     dc.Close();
                 }

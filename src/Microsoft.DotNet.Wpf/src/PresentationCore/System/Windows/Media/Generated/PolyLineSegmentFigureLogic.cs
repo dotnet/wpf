@@ -77,7 +77,7 @@ namespace System.Windows.Media
         {            
             PointCollection points = Points;
 
-            if (points != null  && points.Count >= 1)
+            if (points is not null  && points.Count >= 1)
             {
                 if (matrix.IsIdentity)
                 {

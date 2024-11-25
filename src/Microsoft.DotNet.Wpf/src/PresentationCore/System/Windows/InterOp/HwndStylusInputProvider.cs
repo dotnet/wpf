@@ -99,7 +99,7 @@ namespace System.Windows.Interop
                     Point ptClient1 = new Point(pt1.x, pt1.y);
 
                     IInputElement inputElement = StylusDevice.LocalHitTest(_source, ptClient1);
-                    if (inputElement != null)
+                    if (inputElement is not null)
                     {
                         // walk up the parent chain
                         DependencyObject elementCur = (DependencyObject)inputElement;
@@ -145,7 +145,7 @@ namespace System.Windows.Interop
 
                     // We always handle any scroll actions if we are enabled.  We do this when we see the SystemGesture Flick come through.
                     // Note: Scrolling happens on window flicked on even if it is not the active window.
-                    if(_stylusLogic != null && _stylusLogic.Enabled && (WispLogic.GetFlickAction(flickData) == StylusLogic.FlickAction.Scroll))
+                    if(_stylusLogic is not null && _stylusLogic.Enabled && (WispLogic.GetFlickAction(flickData) == StylusLogic.FlickAction.Scroll))
                     {
                         result = new IntPtr(0x0001); // tell UIHub the flick has already been handled.
                     }
@@ -155,7 +155,7 @@ namespace System.Windows.Interop
             if (handled && EventTrace.IsEnabled(EventTrace.Keyword.KeywordInput | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Info))
             {
                 EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientInputMessage, EventTrace.Keyword.KeywordInput | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Info,
-                                                    (_source.CompositionTarget != null ? _source.CompositionTarget.Dispatcher.GetHashCode() : 0),
+                                                    (_source.CompositionTarget is not null ? _source.CompositionTarget.Dispatcher.GetHashCode() : 0),
                                                      hwnd.ToInt64(),
                                                      msg,
                                                      (int)wParam,

@@ -71,7 +71,7 @@ namespace System.Windows.Input
         /// </summary>
         public void Dispose()
         {
-             if (_ipp != null)
+             if (_ipp is not null)
                  Uninitialize();
         }
 
@@ -90,7 +90,7 @@ namespace System.Windows.Input
         /// </summary>
         public void Uninitialize()
         {
-            if (_ipp != null)
+            if (_ipp is not null)
             {
                 _ipp.Uninitialize();
                 _ipp = null;
@@ -190,7 +190,7 @@ namespace System.Windows.Input
         private void EnsureInputProcessorProfile()
         {
             // _ipp has been initialzied. Don't do this again.
-            if (_ipp != null)
+            if (_ipp is not null)
                 return;
 
             // We don't need to initialize _ipp if there is onlyone keyboard layout.
@@ -230,7 +230,7 @@ namespace System.Windows.Input
             {
                 EnsureInputProcessorProfile();
 
-                if (_ipp != null)
+                if (_ipp is not null)
                 {
                     _ipp.CurrentInputLanguage = value;
                 }

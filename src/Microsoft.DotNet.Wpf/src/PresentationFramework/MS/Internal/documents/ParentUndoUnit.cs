@@ -73,14 +73,14 @@ namespace MS.Internal.Documents
                 }
 
                 _openedUnit = newUnit;
-                if (newUnit != null)
+                if (newUnit is not null)
                 {
                     newUnit.Container = this;
                 }
             }
             else
             {
-                if (newUnit != null)
+                if (newUnit is not null)
                 {
                     newUnit.Container = deepestOpen;
                 }
@@ -129,7 +129,7 @@ namespace MS.Internal.Documents
                 IParentUndoUnit closeParent;
 
                 closeParent = this;
-                while (closeParent.OpenedUnit != null && closeParent.OpenedUnit != unit)
+                while (closeParent.OpenedUnit is not null && closeParent.OpenedUnit != unit)
                 {
                     closeParent = closeParent.OpenedUnit;
                 }
@@ -156,12 +156,12 @@ namespace MS.Internal.Documents
             if (closeAction != UndoCloseAction.Commit)
             {
                 // discard unit
-                if (undoManager != null)
+                if (undoManager is not null)
                 {
                     undoManager.IsEnabled = false;
                 }
 
-                if (OpenedUnit.OpenedUnit != null)
+                if (OpenedUnit.OpenedUnit is not null)
                 {
                     OpenedUnit.Close(closeAction);
                 }
@@ -183,7 +183,7 @@ namespace MS.Internal.Documents
                     ((IParentUndoUnit)TopContainer).OnNextDiscard();
                 }
 
-                if (undoManager != null)
+                if (undoManager is not null)
                 {
                     undoManager.IsEnabled = true;
                 }
@@ -191,7 +191,7 @@ namespace MS.Internal.Documents
             else
             {
                 // commit unit
-                if (OpenedUnit.OpenedUnit != null)
+                if (OpenedUnit.OpenedUnit is not null)
                 {
                     OpenedUnit.Close(UndoCloseAction.Commit);
                 }
@@ -229,7 +229,7 @@ namespace MS.Internal.Documents
             parentUndoUnit = DeepestOpenUnit;
 
             // If we have an open unit, call Add on it
-            if (parentUndoUnit != null)
+            if (parentUndoUnit is not null)
             {
                 parentUndoUnit.Add(unit);
                 return;
@@ -327,7 +327,7 @@ namespace MS.Internal.Documents
             redo = CreateParentUndoUnitForSelf();
             topContainer = TopContainer as UndoManager;
 
-            if (topContainer != null)
+            if (topContainer is not null)
             {
                 if (topContainer.IsEnabled)
                 {
@@ -343,7 +343,7 @@ namespace MS.Internal.Documents
                 unit.Do();
             }
 
-            if (topContainer != null)
+            if (topContainer is not null)
             {
                 if (topContainer.IsEnabled)
                 {
@@ -364,7 +364,7 @@ namespace MS.Internal.Documents
         /// </returns>
         public virtual bool Merge(IUndoUnit unit)
         {
-            Invariant.Assert(unit != null);
+            Invariant.Assert(unit is not null);
             return false;
         }
 
@@ -545,9 +545,9 @@ namespace MS.Internal.Documents
                 IParentUndoUnit openedUnit;
 
                 openedUnit = _openedUnit;
-                if (openedUnit != null)
+                if (openedUnit is not null)
                 {
-                    while (openedUnit.OpenedUnit != null)
+                    while (openedUnit.OpenedUnit is not null)
                     {
                         openedUnit = openedUnit.OpenedUnit;
                     }
@@ -566,7 +566,7 @@ namespace MS.Internal.Documents
                 object container;
 
                 container = this;
-                while (container is IParentUndoUnit && ((IParentUndoUnit)container).Container != null)
+                while (container is IParentUndoUnit && ((IParentUndoUnit)container).Container is not null)
                 {
                     container = ((IParentUndoUnit)container).Container;
                 }
@@ -617,7 +617,7 @@ namespace MS.Internal.Documents
                     }
 
                     parent = parent.Container as IParentUndoUnit;
-                } while (parent != null);
+                } while (parent is not null);
             }
             return false;
         }

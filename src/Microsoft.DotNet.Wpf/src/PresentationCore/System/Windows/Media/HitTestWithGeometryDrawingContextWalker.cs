@@ -40,7 +40,7 @@ namespace System.Windows.Media
         internal HitTestWithGeometryDrawingContextWalker(PathGeometry geometry)
         {
             // The caller should pre-cull if the geometry is null.
-            Debug.Assert(geometry != null);
+            Debug.Assert(geometry is not null);
 
             _geometry = geometry;
             _currentTransform = null;
@@ -125,7 +125,7 @@ namespace System.Windows.Media
             Geometry testedGeometry;
 
             // Transform if so prescribed
-            if ((_currentTransform != null) && !_currentTransform.IsIdentity)
+            if ((_currentTransform is not null) && !_currentTransform.IsIdentity)
             {
                 testedGeometry = geometry.GetTransformedCopy(_currentTransform);
             }
@@ -135,7 +135,7 @@ namespace System.Windows.Media
             }
 
             // Clip, if so prescribed
-            if (_currentClip != null)
+            if (_currentClip is not null)
             {
                 testedGeometry = Geometry.Combine(
                     testedGeometry,
@@ -144,13 +144,13 @@ namespace System.Windows.Media
                     null);  // transform
             }
 
-            if (brush != null)
+            if (brush is not null)
             {
                 AccumulateIntersectionDetail(testedGeometry.FillContainsWithDetail(_geometry));
             }
 
             // If we have a pen and we haven't yet hit, try the widened geometry.
-            if ((pen != null) && !_contains)
+            if ((pen is not null) && !_contains)
             {
                 AccumulateIntersectionDetail(testedGeometry.StrokeContainsWithDetail(pen, _geometry));
             }
@@ -173,7 +173,7 @@ namespace System.Windows.Media
         /// </exception>
         public override void DrawGlyphRun(Brush foregroundBrush, GlyphRun glyphRun)
         {
-            if (glyphRun != null)
+            if (glyphRun is not null)
             {
                 // The InkBoundingBox + the Origin produce the true InkBoundingBox.
                 Rect rectangle = glyphRun.ComputeInkBoundingBox();
@@ -208,13 +208,13 @@ namespace System.Windows.Media
             else
             {
                 // Transform the clip new if so prescribed
-                if ((_currentTransform != null) && !_currentTransform.IsIdentity)
+                if ((_currentTransform is not null) && !_currentTransform.IsIdentity)
                 {
                     clipGeometry = clipGeometry.GetTransformedCopy(_currentTransform);
                 }
 
                 // Intersect it with the current clip
-                if (_currentClip != null)
+                if (_currentClip is not null)
                 {
                     clipGeometry = Geometry.Combine(
                         _currentClip,
@@ -273,7 +273,7 @@ namespace System.Windows.Media
                 // The new transform does not change the existing one
                 transform = _currentTransform;
             }
-            else if ((_currentTransform != null) && !_currentTransform.IsIdentity)
+            else if ((_currentTransform is not null) && !_currentTransform.IsIdentity)
             {
                 // Both the current transform and the new one are nontrivial, combine them
                 Matrix combined =  transform.Value * _currentTransform.Value;
@@ -340,7 +340,7 @@ namespace System.Windows.Media
         public override void Pop()
         {
             // We must have a modifier stack and it must not be empty.
-            Debug.Assert(_modifierStack != null);
+            Debug.Assert(_modifierStack is not null);
             Debug.Assert(_modifierStack.Count > 0);
 
             object currentModifier = _modifierStack.Pop();

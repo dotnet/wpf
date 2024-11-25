@@ -553,7 +553,7 @@ namespace MS.Win32
 
             public void Release()
             {
-                if (lpSecurityDescriptor != null)
+                if (lpSecurityDescriptor is not null)
                 {
                     lpSecurityDescriptor.Dispose();
                     

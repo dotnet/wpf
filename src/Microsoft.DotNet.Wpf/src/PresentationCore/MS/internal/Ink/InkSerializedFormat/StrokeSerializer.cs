@@ -811,7 +811,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         {
             // First write or calculate how many points are there
             uint pointCount = (uint)stroke.StylusPoints.Count;
-            uint localBytesWritten = (stream != null) ? SerializationHelper.Encode(stream, pointCount) : SerializationHelper.VarSize(pointCount);
+            uint localBytesWritten = (stream is not null) ? SerializationHelper.Encode(stream, pointCount) : SerializationHelper.VarSize(pointCount);
             byte compressionAlgorithm;
 
             int[][] outputArrays = strokeLookupEntry.ISFReadyStrokeData;
@@ -964,7 +964,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                         packetdata, 
                         ref algo);
 
-            Debug.Assert(stream != null);
+            Debug.Assert(stream is not null);
             // Now write the data in the stream
             stream.Write(data, 0, (int)data.Length);
 

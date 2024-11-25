@@ -210,7 +210,7 @@ internal class StreamProxy : Stream
         }
         finally
         {
-            if (disposing && _proxy != null)
+            if (disposing && _proxy is not null)
             {
                 _proxy.Dispose();
                 _proxy = null;

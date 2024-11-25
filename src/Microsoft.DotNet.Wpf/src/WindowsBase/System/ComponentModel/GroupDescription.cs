@@ -71,7 +71,7 @@ namespace System.ComponentModel
         /// </summary>
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if (PropertyChanged != null)
+            if (PropertyChanged is not null)
             {
                 PropertyChanged(this, e);
             }
@@ -127,7 +127,7 @@ namespace System.ComponentModel
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool ShouldSerializeSortDescriptions()
         {
-            return (_sort != null && _sort.Count > 0);
+            return (_sort is not null && _sort.Count > 0);
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace System.ComponentModel
         // set new SortDescription collection; rehook collection change notification handler
         private void SetSortDescriptions(SortDescriptionCollection descriptions)
         {
-            if (_sort != null)
+            if (_sort is not null)
             {
                 ((INotifyCollectionChanged)_sort).CollectionChanged -= new NotifyCollectionChangedEventHandler(SortDescriptionsChanged);
             }
@@ -215,7 +215,7 @@ namespace System.ComponentModel
 
             _sort = descriptions;
 
-            if (_sort != null)
+            if (_sort is not null)
             {
                 Invariant.Assert(_sort.Count == 0, "must be empty SortDescription collection");
                 ((INotifyCollectionChanged)_sort).CollectionChanged += new NotifyCollectionChangedEventHandler(SortDescriptionsChanged);
@@ -233,7 +233,7 @@ namespace System.ComponentModel
             // adding to SortDescriptions overrides custom sort
             if (_sort.Count > 0)
             {
-                if (_customSort != null)
+                if (_customSort is not null)
                 {
                     _customSort = null;
                     OnPropertyChanged(new PropertyChangedEventArgs("CustomSort"));

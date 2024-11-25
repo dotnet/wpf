@@ -281,7 +281,7 @@ namespace System.Windows.Markup
             string bamlFilePath = string.Empty;
             string xamlFilePath = string.Empty;
 
-            if (resourceUri != null)
+            if (resourceUri is not null)
             {
                 if (resourceUri.IsAbsoluteUri)
                 {
@@ -327,30 +327,30 @@ namespace System.Windows.Markup
             // Calculate the simpleObjectId.  Use the object's name, key, Uid, or
             // type name, whichever is available (in that order).
 
-            if (xamlObjectIds != null)
+            if (xamlObjectIds is not null)
             {
-                if (xamlObjectIds.Name != null)
+                if (xamlObjectIds.Name is not null)
                 {
                     simpleObjectId = xamlObjectIds.Name;
                 }
-                else if (xamlObjectIds.Key != null)
+                else if (xamlObjectIds.Key is not null)
                 {
                     simpleObjectId = xamlObjectIds.Key.ToString();
                 }
-                else if (xamlObjectIds.Uid != null)
+                else if (xamlObjectIds.Uid is not null)
                 {
                     simpleObjectId = xamlObjectIds.Uid;
                 }
             }
 
-            if (simpleObjectId is null && objectType != null)
+            if (simpleObjectId is null && objectType is not null)
             {
                 simpleObjectId = objectType.ToString();
             }
 
             ContextBits flags = 0;
 
-            if (simpleObjectId != null)
+            if (simpleObjectId is not null)
                 flags |= ContextBits.Type;
 
             if (!String.IsNullOrEmpty(xamlFile))
@@ -426,7 +426,7 @@ namespace System.Windows.Markup
         {
             // If there's an inner exception, we'll append its message to our own.
 
-            if (innerException != null && innerException.Message != null)
+            if (innerException is not null && innerException.Message is not null)
             {
                 StringBuilder sb = new StringBuilder(message);
                 if (innerException.Message != String.Empty)
@@ -481,7 +481,7 @@ namespace System.Windows.Markup
             }
 
             // Fill in the exception with some more runtime-context information.
-            if (contextXamlObjectIds != null)
+            if (contextXamlObjectIds is not null)
             {
                 xamlParseException.NameContext = contextXamlObjectIds.Name;
                 xamlParseException.UidContext = contextXamlObjectIds.Uid;

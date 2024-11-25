@@ -69,8 +69,8 @@ namespace MS.Internal.TextFormatting
                 emSize,
                 charFlags,
                 charBufferRange,
-                (shapeable != null ? (int)Math.Round(shapeable.Baseline * realToIdeal) : 0),
-                (shapeable != null ? (int)Math.Round(shapeable.Height * realToIdeal) : 0),
+                (shapeable is not null ? (int)Math.Round(shapeable.Baseline * realToIdeal) : 0),
+                (shapeable is not null ? (int)Math.Round(shapeable.Height * realToIdeal) : 0),
                 shapeable,
                 bidiLevel
                 )
@@ -209,7 +209,7 @@ namespace MS.Internal.TextFormatting
         {
             get
             {
-                return _shapeable != null && _shapeable.NeedsCaretInfo;
+                return _shapeable is not null && _shapeable.NeedsCaretInfo;
             }
         }
 
@@ -221,7 +221,7 @@ namespace MS.Internal.TextFormatting
         {
             get
             {
-                return _shapeable != null && _shapeable.HasExtendedCharacter;
+                return _shapeable is not null && _shapeable.HasExtendedCharacter;
             }
         }
 
@@ -245,7 +245,7 @@ namespace MS.Internal.TextFormatting
             GlyphRun        glyphRun
             )
         {
-            Debug.Assert(_shapeable != null);
+            Debug.Assert(_shapeable is not null);
             
             Rect inkBoundingBox = glyphRun.ComputeInkBoundingBox();
 
@@ -256,12 +256,12 @@ namespace MS.Internal.TextFormatting
                 inkBoundingBox.Y += glyphRun.BaselineOrigin.Y;
             }
 
-            if (drawingContext != null)
+            if (drawingContext is not null)
             {
                 int pushCount = 0;              // the number of push we do
                 try 
                 {
-                    if (_textEffects != null)
+                    if (_textEffects is not null)
                     {                
                         // we need to push in the same order as they are set
                         for (int i = 0; i < _textEffects.Count; i++)
@@ -269,19 +269,19 @@ namespace MS.Internal.TextFormatting
                             // get the text effect by its index
                             TextEffect textEffect = _textEffects[i];
 
-                            if (textEffect.Transform != null && textEffect.Transform != Transform.Identity)
+                            if (textEffect.Transform is not null && textEffect.Transform != Transform.Identity)
                             {
                                 drawingContext.PushTransform(textEffect.Transform);
                                 pushCount++;
                             }
 
-                            if (textEffect.Clip != null)
+                            if (textEffect.Clip is not null)
                             {
                                 drawingContext.PushClip(textEffect.Clip);
                                 pushCount++;
                             }
 
-                            if (textEffect.Foreground != null)
+                            if (textEffect.Foreground is not null)
                             {
                                 // remember the out-most non-null brush
                                 // this brush will be used to draw the glyph run
@@ -461,7 +461,7 @@ namespace MS.Internal.TextFormatting
             get 
             {
                 TextShapeableCharacters shapeable = _shapeable as TextShapeableCharacters;
-                return shapeable != null && shapeable.IsSymbol;
+                return shapeable is not null && shapeable.IsSymbol;
             }
         }
 
@@ -544,7 +544,7 @@ namespace MS.Internal.TextFormatting
         {
             get
             {
-                return CultureMapper.GetSpecificCulture(RunProp != null ? RunProp.CultureInfo : null);
+                return CultureMapper.GetSpecificCulture(RunProp is not null ? RunProp.CultureInfo : null);
             }
         }
 
@@ -645,9 +645,9 @@ namespace MS.Internal.TextFormatting
 
         private static DWriteFontFeature[] CreateDWriteFontFeatures(TextRunTypographyProperties textRunTypographyProperties)
         {
-            if (textRunTypographyProperties != null)
+            if (textRunTypographyProperties is not null)
             {
-                if (textRunTypographyProperties.CachedFeatureSet != null)
+                if (textRunTypographyProperties.CachedFeatureSet is not null)
                 {
                     return textRunTypographyProperties.CachedFeatureSet;
                 }
@@ -918,7 +918,7 @@ namespace MS.Internal.TextFormatting
             out uint[]                fontFeatureRanges
             )
         {           
-            Debug.Assert(lsruns != null && lsruns.Length > 0 && lsruns[0] != null);
+            Debug.Assert(lsruns is not null && lsruns.Length > 0 && lsruns[0] is not null);
 
             //
             //  Quick check for null properties
@@ -928,7 +928,7 @@ namespace MS.Internal.TextFormatting
             {
                 for (int i = 1; i < lsruns.Length; i++)
                 {
-                    if (lsruns[i].RunProp.TypographyProperties != null)
+                    if (lsruns[i].RunProp.TypographyProperties is not null)
                     {
                         throw new ArgumentException(SR.CompileFeatureSet_InvalidTypographyProperties);
                     }

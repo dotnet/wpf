@@ -41,7 +41,7 @@ namespace MS.Internal.IO.Packaging
         {
             // Making this initialization idempotent is useful in so far as
             // a XAML filter gets reinitialized every time a new input gets loaded.
-            if (_xamlElementContentDescriptorDictionary != null)
+            if (_xamlElementContentDescriptorDictionary is not null)
             {
                 return;
             }

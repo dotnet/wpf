@@ -123,7 +123,7 @@ namespace MS.Internal.AutomationProxies
 
             IPAddress ipAddress = GetIPAddressFromString (val);
 
-            if (ipAddress != null)
+            if (ipAddress is not null)
             {
                 byte[] abOctet = ipAddress.GetAddressBytes();
 

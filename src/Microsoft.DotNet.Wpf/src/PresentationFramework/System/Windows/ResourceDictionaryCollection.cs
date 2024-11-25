@@ -15,7 +15,7 @@ namespace System.Windows
 
         internal ResourceDictionaryCollection(ResourceDictionary owner)
         {
-            Debug.Assert(owner != null, "ResourceDictionaryCollection's owner cannot be null");
+            Debug.Assert(owner is not null, "ResourceDictionaryCollection's owner cannot be null");
 
             _owner = owner;
         }

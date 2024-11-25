@@ -206,7 +206,7 @@ namespace System.Windows.Media
                 return true;
             }
 
-            if (language != null)
+            if (language is not null)
             {
                 return familyMapLanguage.RangeIncludes(language);
             }   
@@ -222,7 +222,7 @@ namespace System.Windows.Media
                 return true;
             }
 
-            if (culture != null)
+            if (culture is not null)
             {
                 return familyMapLanguage.RangeIncludes(culture);
             }   

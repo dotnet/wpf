@@ -86,7 +86,7 @@ namespace System.Windows.Documents
         {
             internal _DragDropProcess(TextEditor textEditor)
             {
-                Invariant.Assert(textEditor != null);
+                Invariant.Assert(textEditor is not null);
                 _textEditor = textEditor;
             }
             
@@ -142,7 +142,7 @@ namespace System.Windows.Documents
                     {
                         Point mouseDownPoint = e.GetPosition(_textEditor.TextView.RenderScope);
                         ITextPointer cursorPosition = this.TextView.GetTextPositionFromPoint(mouseDownPoint, /*snapToText:*/true);
-                        if (cursorPosition != null)
+                        if (cursorPosition is not null)
                         {
                             _textEditor.Selection.SetSelectionByMouse(cursorPosition, mouseDownPoint);
                         }
@@ -187,7 +187,7 @@ namespace System.Windows.Documents
                 // Note: _CreateDataObject raises a public event which might throw a recoverable exception.
                 IDataObject dataObject = TextEditorCopyPaste._CreateDataObject(_textEditor, /*isDragDrop:*/true);
 
-                if (dataObject != null) // null would mean that application cancelled the command
+                if (dataObject is not null) // null would mean that application cancelled the command
                 {
                     //  Check if we better normalize selection before doing this?
                     SourceDoDragDrop(selection, dataObject);
@@ -252,7 +252,7 @@ namespace System.Windows.Documents
                 // Remove source selection 
                 if (!_textEditor.IsReadOnly && //
                     resultingDragDropEffects == DragDropEffects.Move && //
-                    _dragSourceTextRange != null &&
+                    _dragSourceTextRange is not null &&
                     !_dragSourceTextRange.IsEmpty)
                 {
                     // Normally we delete the source selection from OnDrop event,
@@ -281,7 +281,7 @@ namespace System.Windows.Documents
                 {
                     BindingExpressionBase bindingExpression = BindingOperations.GetBindingExpressionBase(
                         _textEditor.UiScope, TextBox.TextProperty);
-                    if (bindingExpression != null)
+                    if (bindingExpression is not null)
                     {
                         bindingExpression.UpdateSource();
                         bindingExpression.UpdateTarget();
@@ -351,7 +351,7 @@ namespace System.Windows.Documents
                 }
 
                 // Show the caret on the drag over target position.
-                if (_caretDragDrop != null)
+                if (_caretDragDrop is not null)
                 {
                     // Update the layout to get the corrected text position. Otherwise, we can get the
                     // incorrected text position.
@@ -364,7 +364,7 @@ namespace System.Windows.Documents
                     FrameworkElement scroller = _textEditor._Scroller;
 
                     // Automatically scroll the dropable content(line or page up/down) if scroller is available
-                    if (scroller != null)
+                    if (scroller is not null)
                     {
                         // Get the ScrollInfo to scroll a line or page up/down
                         IScrollInfo scrollInfo = scroller as IScrollInfo;
@@ -374,7 +374,7 @@ namespace System.Windows.Documents
                             scrollInfo = ((ScrollViewer)scroller).ScrollInfo;
                         }
 
-                        Invariant.Assert(scrollInfo != null);
+                        Invariant.Assert(scrollInfo is not null);
 
                         // Takes care of scrolling mechanism when vertical scrollbar is available, it creates a virtual
                         // block within the viewport where if you position your mouse during drag leads to scrolling,here
@@ -421,7 +421,7 @@ namespace System.Windows.Documents
                     {
                         ITextPointer dragPosition = GetDropPosition(_textEditor.TextView.RenderScope as Visual, e.GetPosition(_textEditor.TextView.RenderScope));
 
-                        if (dragPosition != null)
+                        if (dragPosition is not null)
                         {
                             // Get the caret position to show the dropable point.
                             Rect caretRectangle = this.TextView.GetRectangleFromTextPosition(dragPosition);
@@ -452,11 +452,11 @@ namespace System.Windows.Documents
             /// </returns>
             private ITextPointer GetDropPosition(Visual target, Point point)
             {
-                Invariant.Assert(target != null);
+                Invariant.Assert(target is not null);
                 Invariant.Assert(_textEditor.TextView.IsValid); // caller must guarantee this.
 
                 // Convert point to RenderScope
-                if (target != _textEditor.TextView.RenderScope && target != null && (_textEditor.TextView.RenderScope).IsAncestorOf(target))
+                if (target != _textEditor.TextView.RenderScope && target is not null && (_textEditor.TextView.RenderScope).IsAncestorOf(target))
                 {
                     GeneralTransform transform = target.TransformToAncestor(_textEditor.TextView.RenderScope);
                     transform.TryTransform(point, out point); 
@@ -465,7 +465,7 @@ namespace System.Windows.Documents
                 ITextPointer dropPosition = this.TextView.GetTextPositionFromPoint(point, /*snapToText:*/true);
                 
                 // For rich text content we adjust drop position to word boundary
-                if (dropPosition != null)
+                if (dropPosition is not null)
                 {
                     // Normalize drop position
                     dropPosition = dropPosition.GetInsertionPosition(dropPosition.LogicalDirection);
@@ -480,7 +480,7 @@ namespace System.Windows.Documents
                             // We check if we are not at word boundary already:
                             !TextPointerBase.IsAtWordBoundary(dropPosition, /*insideWordDirection:*/LogicalDirection.Forward) &&
                             // We do not do it if the source range was not on word boundaries from both ends
-                            _dragSourceTextRange != null && //
+                            _dragSourceTextRange is not null && //
                             TextPointerBase.IsAtWordBoundary(_dragSourceTextRange.Start, LogicalDirection.Forward) && //
                             TextPointerBase.IsAtWordBoundary(_dragSourceTextRange.End, LogicalDirection.Forward))
                         {
@@ -502,7 +502,7 @@ namespace System.Windows.Documents
             internal void DeleteCaret()
             {
                 // Delete the caret
-                if (_caretDragDrop != null)
+                if (_caretDragDrop is not null)
                 {
                     AdornerLayer layer = AdornerLayer.GetAdornerLayer(TextView.RenderScope);
                     layer.Remove(_caretDragDrop);
@@ -523,7 +523,7 @@ namespace System.Windows.Documents
                 }
 
                 ITextSelection selection = _textEditor.Selection;
-                Invariant.Assert(selection != null);
+                Invariant.Assert(selection is not null);
 
                 if (e.Data is null || e.AllowedEffects == DragDropEffects.None)
                 {
@@ -551,9 +551,9 @@ namespace System.Windows.Documents
                 // Get the text position from the text target point.
                 ITextPointer dropPosition = GetDropPosition(_textEditor.TextView.RenderScope as Visual, e.GetPosition(_textEditor.TextView.RenderScope));
 
-                if (dropPosition != null)
+                if (dropPosition is not null)
                 {
-                    if (_dragSourceTextRange != null && _dragSourceTextRange.Start.TextContainer == selection.Start.TextContainer &&
+                    if (_dragSourceTextRange is not null && _dragSourceTextRange.Start.TextContainer == selection.Start.TextContainer &&
                         !selection.IsEmpty && IsSelectionContainsDropPosition(selection, dropPosition))
                     {
                         // When we drop inside of selected area, we
@@ -582,7 +582,7 @@ namespace System.Windows.Documents
                             // Note, that this will duplicate operation on
                             // source side, but it will be void deletion action
                             if ((e.Effects & DragDropEffects.Move) != 0 && //
-                                _dragSourceTextRange != null && _dragSourceTextRange.Start.TextContainer == selection.Start.TextContainer)
+                                _dragSourceTextRange is not null && _dragSourceTextRange.Start.TextContainer == selection.Start.TextContainer)
                             {
                                 _dragSourceTextRange.Text = String.Empty;
                             }
@@ -642,7 +642,7 @@ namespace System.Windows.Documents
 
             private bool AllowDragDrop(DragEventArgs e)
             {
-                if (!_textEditor.IsReadOnly && _textEditor.TextView != null && _textEditor.TextView.RenderScope != null)
+                if (!_textEditor.IsReadOnly && _textEditor.TextView is not null && _textEditor.TextView.RenderScope is not null)
                 {
                     Window window = Window.GetWindow(_textEditor.TextView.RenderScope);
                     if (window is null)
@@ -669,7 +669,7 @@ namespace System.Windows.Documents
                 PresentationSource source = null;
                 IntPtr hwnd = IntPtr.Zero;
                 source = PresentationSource.CriticalFromVisual(_textEditor.UiScope);
-                if (source != null)
+                if (source is not null)
                 {
                     hwnd = (source as IWin32Window).Handle;
                 }

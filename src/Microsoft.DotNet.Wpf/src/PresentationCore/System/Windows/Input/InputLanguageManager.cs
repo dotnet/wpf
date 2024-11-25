@@ -135,8 +135,8 @@ namespace System.Windows.Input
 
             _source = inputLanguageSource;
 
-            if (((_InputLanguageChanged != null) || 
-                 (_InputLanguageChanging != null)) &&
+            if (((_InputLanguageChanged is not null) || 
+                 (_InputLanguageChanging is not null)) &&
                 IsMultipleKeyboardLayout)
                 _source.Initialize();
 
@@ -169,7 +169,7 @@ namespace System.Windows.Input
                 _previousLanguageId = null;
             }
 
-            if (_InputLanguageChanged != null)
+            if (_InputLanguageChanged is not null)
             {
                 InputLanguageChangedEventArgs args = new InputLanguageChangedEventArgs(newLanguageId, previousLanguageId);
 
@@ -198,7 +198,7 @@ namespace System.Windows.Input
 
             bool accepted = true;
 
-            if (_InputLanguageChanging != null)
+            if (_InputLanguageChanging is not null)
             {
                 InputLanguageChangingEventArgs args = new InputLanguageChangingEventArgs(newLanguageId, previousLanguageId);
 
@@ -253,7 +253,7 @@ namespace System.Windows.Input
             get
             {
                 // If the source is available, we should use it.
-                if (_source != null)
+                if (_source is not null)
                 {
                     return _source.CurrentInputLanguage;
                 }
@@ -309,7 +309,7 @@ namespace System.Windows.Input
                 if ((_InputLanguageChanged is null) && 
                     (_InputLanguageChanging is null) &&
                     IsMultipleKeyboardLayout &&
-                    (_source != null))
+                    (_source is not null))
                     _source.Initialize();
 
                 _InputLanguageChanged += value;
@@ -322,7 +322,7 @@ namespace System.Windows.Input
                 if ((_InputLanguageChanged is null) && 
                     (_InputLanguageChanging is null) &&
                     IsMultipleKeyboardLayout &&
-                    (_source != null))
+                    (_source is not null))
                     _source.Uninitialize();
             }
         }
@@ -339,7 +339,7 @@ namespace System.Windows.Input
                 if ((_InputLanguageChanged is null) && 
                     (_InputLanguageChanging is null) &&
                     IsMultipleKeyboardLayout &&
-                    (_source != null))
+                    (_source is not null))
                     _source.Initialize();
 
                 _InputLanguageChanging += value;
@@ -352,7 +352,7 @@ namespace System.Windows.Input
                 if ((_InputLanguageChanged is null) && 
                     (_InputLanguageChanging is null) &&
                     IsMultipleKeyboardLayout &&
-                    (_source != null))
+                    (_source is not null))
                     _source.Uninitialize();
             }
         }
@@ -381,7 +381,7 @@ namespace System.Windows.Input
         {
             CultureInfo culture = null;
 
-            if (focus != null)
+            if (focus is not null)
             {
                 //
                 // Check the InputLanguageProperty of the focus element.
@@ -396,9 +396,9 @@ namespace System.Windows.Input
                 // If the focus element does not have InputLanguage property,
                 // we may need to restore the previous input language.
                 //
-                if (focused != null)
+                if (focused is not null)
                 {
-                    if ((_previousLanguageId != null) &&
+                    if ((_previousLanguageId is not null) &&
                         (bool)focused.GetValue(RestoreInputLanguageProperty))
                     {
                         //

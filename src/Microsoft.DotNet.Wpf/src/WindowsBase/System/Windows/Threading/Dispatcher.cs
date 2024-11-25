@@ -87,7 +87,7 @@ namespace System.Windows.Threading
             {
                 Dispatcher dispatcher = null;
 
-                if(thread != null)
+                if(thread is not null)
                 {
                     // Shortcut: we track one static reference to the last current
                     // dispatcher we gave out.  For single-threaded apps, this will
@@ -113,7 +113,7 @@ namespace System.Windows.Threading
                         for(int i = 0; i < _dispatchers.Count; i++)
                         {
                             Dispatcher d = _dispatchers[i].Target as Dispatcher;
-                            if(d != null)
+                            if(d is not null)
                             {
                                 // Note: we compare the thread objects themselves to protect
                                 // against threads reusing old thread IDs.
@@ -138,7 +138,7 @@ namespace System.Windows.Threading
 
                         // Stash this dispatcher as a "possible" dispatcher for the
                         // next call to FromThread.
-                        if(dispatcher != null)
+                        if(dispatcher is not null)
                         {
                             // We expect this call to be frequent so we want to
                             // avoid uneccesary allocations, such as a new
@@ -970,7 +970,7 @@ namespace System.Windows.Threading
                     operation.Completed += (s,e) => cancellationRegistration.Dispose();
                 }
 
-                if(hooks != null)
+                if(hooks is not null)
                 {
                     hooks.RaiseOperationPosted(this, operation);
                 }
@@ -1407,7 +1407,7 @@ namespace System.Windows.Threading
                 finally
                 {
                     ctTimeoutRegistration.Dispose();
-                    if (ctsTimeout != null)
+                    if (ctsTimeout is not null)
                     {
                         ctsTimeout.Dispose();
                     }
@@ -1715,7 +1715,7 @@ namespace System.Windows.Threading
                 else
                 {
                     Tuple<Object, List<String>> tuple = _reservedPtsCache as Tuple<Object, List<String>>;
-                    List<String> list = (tuple != null) ? tuple.Item2 : new List<String>();
+                    List<String> list = (tuple is not null) ? tuple.Item2 : new List<String>();
                     _reservedPtsCache = new Tuple<Object, List<String>>(value, list);
                 }
             }
@@ -1794,7 +1794,7 @@ namespace System.Windows.Threading
                 // Call the ShutdownStarted event before we actually mark ourselves
                 // as shutting down.  This is so the handlers can actaully do work
                 // when they get this event without throwing exceptions.
-                if(ShutdownStarted != null)
+                if(ShutdownStarted is not null)
                 {
                     ShutdownStarted(this, EventArgs.Empty);
                 }
@@ -1852,7 +1852,7 @@ namespace System.Windows.Threading
             // Call the ShutdownFinished event before we actually mark ourselves
             // as shut down.  This is so the handlers can actaully do work
             // when they get this event without throwing exceptions.
-            if(ShutdownFinished != null)
+            if(ShutdownFinished is not null)
             {
                 ShutdownFinished(this, EventArgs.Empty);
             }
@@ -1894,11 +1894,11 @@ namespace System.Windows.Threading
                     }
                 }
 
-                if(operation != null)
+                if(operation is not null)
                 {
                     operation.Abort();
                 }
-            } while(operation != null);
+            } while(operation is not null);
 
             // clear out the fields that could be holding onto large graphs of objects.
             lock(_instanceLock)
@@ -1934,7 +1934,7 @@ namespace System.Windows.Threading
 
             lock(_instanceLock)
             {
-                if(_queue != null && operation._item.IsQueued)
+                if(_queue is not null && operation._item.IsQueued)
                 {
                     _queue.ChangeItemPriority(operation._item, priority);
                     notify = true;
@@ -1951,7 +1951,7 @@ namespace System.Windows.Threading
 
             if (notify)
             {
-                if(hooks != null)
+                if(hooks is not null)
                 {
                     hooks.RaiseOperationPriorityChanged(this, operation);
                 }
@@ -1973,7 +1973,7 @@ namespace System.Windows.Threading
 
             lock(_instanceLock)
             {
-                if(_queue != null && operation._item.IsQueued)
+                if(_queue is not null && operation._item.IsQueued)
                 {
                     _queue.RemoveItem(operation._item);
                     operation._status = DispatcherOperationStatus.Aborted;
@@ -1985,7 +1985,7 @@ namespace System.Windows.Threading
 
             if (notify)
             {
-                if(hooks != null)
+                if(hooks is not null)
                 {
                     hooks.RaiseOperationAborted(this, operation);
                 }
@@ -2035,7 +2035,7 @@ namespace System.Windows.Threading
                 RequestProcessing();
             }
 
-            if(op != null)
+            if(op is not null)
             {
                 bool eventlogged = false;
 
@@ -2045,14 +2045,14 @@ namespace System.Windows.Threading
                     eventlogged = true;
                 }
 
-                if(hooks != null)
+                if(hooks is not null)
                 {
                     hooks.RaiseOperationStarted(this, op);
                 }
 
                 op.Invoke();
 
-                if(hooks != null)
+                if(hooks is not null)
                 {
                     hooks.RaiseOperationCompleted(this, op);
                 }
@@ -2176,7 +2176,7 @@ namespace System.Windows.Threading
             }
             finally
             {
-                if (messagePump != null) Marshal.ReleaseComObject(messagePump);
+                if (messagePump is not null) Marshal.ReleaseComObject(messagePump);
             }
 
             return result;
@@ -2200,7 +2200,7 @@ namespace System.Windows.Threading
                         threadManager = TextServicesLoader.Load();
 
                         // ThreadManager does not exist. No MessagePump yet.
-                        if (threadManager != null)
+                        if (threadManager is not null)
                         {
                             // QI ITfMessagePump.
                             messagePump = threadManager as UnsafeNativeMethods.ITfMessagePump;
@@ -2296,7 +2296,7 @@ namespace System.Windows.Threading
 
             if (idle)
             {
-                if(hooks != null)
+                if(hooks is not null)
                 {
                     hooks.RaiseDispatcherInactive(this);
                 }
@@ -2496,7 +2496,7 @@ namespace System.Windows.Threading
 
             // add a new entry to the failure log
             Tuple<Object, List<String>> tuple = _reservedPtsCache as Tuple<Object, List<String>>;
-            if (tuple != null)
+            if (tuple is not null)
             {
                 List<String> list = tuple.Item2;
                 list.Add(String.Format(System.Globalization.CultureInfo.InvariantCulture,
@@ -2545,7 +2545,7 @@ namespace System.Windows.Threading
                     }
                 }
 
-                if(timers != null)
+                if(timers is not null)
                 {
                     DispatcherTimer timer = null;
                     int iTimer = 0;
@@ -2583,11 +2583,11 @@ namespace System.Windows.Threading
                         }
 
                         // Now that we are outside of the lock, promote the timer.
-                        if(timer != null)
+                        if(timer is not null)
                         {
                             timer.Promote();
                         }
-                    } while(timer != null);
+                    } while(timer is not null);
 }
             }
             finally
@@ -2744,7 +2744,7 @@ namespace System.Windows.Threading
 
             // The app can hook up an ExceptionFilter to avoid catching it.
             // ExceptionFilter will run REGARDLESS of whether there are exception handlers.
-            if (_unhandledExceptionFilter != null)
+            if (_unhandledExceptionFilter is not null)
             {
                 // The default requestCatch value that is passed in the args
                 // should be returned unchanged if filters don't set them explicitly.
@@ -2786,7 +2786,7 @@ namespace System.Windows.Threading
         {
             bool handled = false;
 
-            if (UnhandledException != null)
+            if (UnhandledException is not null)
             {
                 _unhandledExceptionEventArgs.Initialize(e, false);
 
@@ -2810,7 +2810,7 @@ namespace System.Windows.Threading
         // This is called by DRT (via reflection) to see if there is a UnhandledException handler.
         private bool HasUnhandledExceptionHandler
         {
-            get { return (UnhandledException != null); }
+            get { return (UnhandledException is not null); }
         }
 
         internal object WrappedInvoke(Delegate callback, object args, int numArgs, Delegate catchHandler)
@@ -2822,7 +2822,7 @@ namespace System.Windows.Threading
         {
             object[] parameters = new object[1 + (args is null ? 1 : args.Length)];
             parameters[0] = arg;
-            if (args != null)
+            if (args is not null)
             {
                 Array.Copy(args, 0, parameters, 1, args.Length);
             }

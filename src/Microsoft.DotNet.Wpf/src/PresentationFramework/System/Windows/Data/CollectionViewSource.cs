@@ -613,7 +613,7 @@ namespace System.Windows.Data
             {
                 // Get existing event hanlders
                 FilterEventHandler handlers = FilterHandlersField.GetValue(this);
-                if (handlers != null)
+                if (handlers is not null)
                 {
                     // combine to a multicast delegate
                     handlers = (FilterEventHandler)Delegate.Combine(handlers, value);
@@ -631,7 +631,7 @@ namespace System.Windows.Data
             {
                 // Get existing event hanlders
                 FilterEventHandler handlers = FilterHandlersField.GetValue(this);
-                if (handlers != null)
+                if (handlers is not null)
                 {
                     // Remove the given handler
                     handlers = (FilterEventHandler)Delegate.Remove(handlers, value);
@@ -680,7 +680,7 @@ namespace System.Windows.Data
         /// </summary>
         public static bool IsDefaultView(ICollectionView view)
         {
-            if (view != null)
+            if (view is not null)
             {
                 object source = view.SourceCollection;
                 return (GetOriginalView(view) == LazyGetDefaultView(source));
@@ -757,7 +757,7 @@ namespace System.Windows.Data
             {
                 ICollectionView view = (ICollectionView)GetValue(ViewProperty);
 
-                if (view != null && !_isViewInitialized)
+                if (view is not null && !_isViewInitialized)
                 {
                     // leak prevention: re-fetch ViewRecord instead of keeping a reference to it,
                     // to be sure that we don't inadvertently keep it alive.
@@ -765,16 +765,16 @@ namespace System.Windows.Data
                     DataSourceProvider dataProvider = source as DataSourceProvider;
 
                     // if the source is DataSourceProvider, use its Data instead
-                    if (dataProvider != null)
+                    if (dataProvider is not null)
                     {
                         source = dataProvider.Data;
                     }
 
-                    if (source != null)
+                    if (source is not null)
                     {
                         DataBindEngine engine = DataBindEngine.CurrentDataBindEngine;
                         ViewRecord viewRecord = engine.GetViewRecord(source, this, CollectionViewType, true, null);
-                        if (viewRecord != null)
+                        if (viewRecord is not null)
                         {
                             viewRecord.InitializeView();
                             _isViewInitialized = true;
@@ -811,7 +811,7 @@ namespace System.Windows.Data
             DataBindEngine engine = DataBindEngine.CurrentDataBindEngine;
             ViewRecord viewRecord = engine.GetViewRecord(source, DefaultSource, null, createView, GetSourceItem);
 
-            return (viewRecord != null) ? (CollectionView)viewRecord.View : null;
+            return (viewRecord is not null) ? (CollectionView)viewRecord.View : null;
         }
 
         /// <summary>
@@ -825,10 +825,10 @@ namespace System.Windows.Data
 
             // at first use of a view, set its culture from the xml:lang of the
             // element that's using the view
-            if (view != null && view.Culture is null)
+            if (view is not null && view.Culture is null)
             {
-                XmlLanguage language = (d != null) ? (XmlLanguage)d.GetValue(FrameworkElement.LanguageProperty) : null;
-                if (language != null)
+                XmlLanguage language = (d is not null) ? (XmlLanguage)d.GetValue(FrameworkElement.LanguageProperty) : null;
+                if (language is not null)
                 {
                     try
                     {
@@ -920,14 +920,14 @@ namespace System.Windows.Data
             // listen for DataChanged events from an DataSourceProvider
             if (dataProvider != _dataProvider)
             {
-                if (_dataProvider != null)
+                if (_dataProvider is not null)
                 {
                     DataChangedEventManager.RemoveHandler(_dataProvider, OnDataChanged);
                 }
 
                 _dataProvider = dataProvider;
 
-                if (_dataProvider != null)
+                if (_dataProvider is not null)
                 {
                     DataChangedEventManager.AddHandler(_dataProvider, OnDataChanged);
                     _dataProvider.InitialLoad();
@@ -935,7 +935,7 @@ namespace System.Windows.Data
             }
 
             // if the source is DataSourceProvider, use its Data instead
-            if (dataProvider != null)
+            if (dataProvider is not null)
             {
                 source = dataProvider.Data;
             }
@@ -943,17 +943,17 @@ namespace System.Windows.Data
             // get the view
             ICollectionView view = null;
 
-            if (source != null)
+            if (source is not null)
             {
                 DataBindEngine engine = DataBindEngine.CurrentDataBindEngine;
                 ViewRecord viewRecord = engine.GetViewRecord(source, this, collectionViewType, true,
                     (object x) =>
                     {
                         BindingExpressionBase beb = BindingOperations.GetBindingExpressionBase(this, SourceProperty);
-                        return (beb != null) ? beb.GetSourceItem(x) : null;
+                        return (beb is not null) ? beb.GetSourceItem(x) : null;
                     });
 
-                if (viewRecord != null)
+                if (viewRecord is not null)
                 {
                     view = viewRecord.View;
                     _isViewInitialized = viewRecord.IsInitialized;
@@ -984,7 +984,7 @@ namespace System.Windows.Data
                 int i, n;
 
                 // Culture
-                if (Culture != null)
+                if (Culture is not null)
                 {
                     view.Culture = Culture;
                 }
@@ -1003,7 +1003,7 @@ namespace System.Windows.Data
 
                 // Filter
                 Predicate<object> filter;
-                if (FilterHandlersField.GetValue(this) != null)
+                if (FilterHandlersField.GetValue(this) is not null)
                 {
                     filter = FilterWrapper;
                 }
@@ -1016,7 +1016,7 @@ namespace System.Windows.Data
                 {
                     view.Filter = filter;
                 }
-                else if (filter != null)
+                else if (filter is not null)
                     throw new InvalidOperationException(SR.Format(SR.CannotFilterView, view));
 
                 // GroupBy
@@ -1032,7 +1032,7 @@ namespace System.Windows.Data
                     throw new InvalidOperationException(SR.Format(SR.CannotGroupView, view));
 
                 // Live shaping
-                if (liveView != null)
+                if (liveView is not null)
                 {
                     ObservableCollection<string> properties;
 
@@ -1109,7 +1109,7 @@ namespace System.Windows.Data
         static ICollectionView GetOriginalView(ICollectionView view)
         {
             for (   CollectionViewProxy proxy = view as CollectionViewProxy;
-                    proxy != null;
+                    proxy is not null;
                     proxy = view as CollectionViewProxy)
             {
                 view = proxy.ProxiedView;
@@ -1136,7 +1136,7 @@ namespace System.Windows.Data
             FilterEventArgs args = new FilterEventArgs(item);
             FilterEventHandler handlers = FilterHandlersField.GetValue(this);
 
-            if (handlers != null)
+            if (handlers is not null)
             {
                 handlers(this, args);
             }
@@ -1208,7 +1208,7 @@ namespace System.Windows.Data
 
             public void Dispose()
             {
-                if (_target != null)
+                if (_target is not null)
                 {
                     CollectionViewSource target = _target;
                     _target = null;
@@ -1241,7 +1241,7 @@ namespace System.Windows.Data
             bool WrapFilter(object item)
             {
                 CollectionViewSource parent = (CollectionViewSource)_parent.Target;
-                if (parent != null)
+                if (parent is not null)
                 {
                     return parent.WrapFilter(item);
                 }

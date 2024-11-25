@@ -98,7 +98,7 @@ namespace System.Windows.Navigation
         internal JournalEntry(JournalEntryGroupState jeGroupState, Uri uri)
         {
             _jeGroupState = jeGroupState;
-            if (jeGroupState != null)
+            if (jeGroupState is not null)
             {
                 // Seems convenient to always do this here.
                 jeGroupState.GroupExitEntry = this;
@@ -154,7 +154,7 @@ namespace System.Windows.Navigation
         {
             // not verifying Context on static method
 
-            return dependencyObject != null ? (string)dependencyObject.GetValue(NameProperty) : null;
+            return dependencyObject is not null ? (string)dependencyObject.GetValue(NameProperty) : null;
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace System.Windows.Navigation
             ArgumentNullException.ThrowIfNull(contentObject);
             if (!IsAlive())
             {
-                if (_jeGroupState.JournalDataStreams != null)
+                if (_jeGroupState.JournalDataStreams is not null)
                 {
                     Debug.Assert(!_jeGroupState.JournalDataStreams.HasAnyData,
                         "JournalDataSreams should have been emptied by the last RestoreState() call.");
@@ -298,7 +298,7 @@ namespace System.Windows.Navigation
             else
             {
                 DataStreams jds = _jeGroupState.JournalDataStreams;
-                if (jds != null)
+                if (jds is not null)
                 {
                     jds.Load(contentObject);
                     // DataStreams not needed anymore. Clear for fresh saving when the next navigation
@@ -313,7 +313,7 @@ namespace System.Windows.Navigation
             Debug.Assert(navMode == NavigationMode.Back || navMode == NavigationMode.Forward);
 
             // This is fallback functionality if somebody creates a JournalEntry and gives it a URI.
-            if (this.Source != null)
+            if (this.Source is not null)
             {
                 return navigator.Navigate(Source, new NavigateInfo(Source, navMode, this));
             }

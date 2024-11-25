@@ -88,7 +88,7 @@ namespace System.Windows.Media.Media3D
                 ReadPreamble();
 
                 Transform3DCollection children = Children;
-                if (children != null)
+                if (children is not null)
                 {
                     for (int i = 0, count = children.Count; i < count; ++i)
                     {
@@ -115,7 +115,7 @@ namespace System.Windows.Media.Media3D
         internal override void Append(ref Matrix3D matrix)
         {
             Transform3DCollection children = Children;
-            if (children != null)
+            if (children is not null)
             {
                 for (int i = 0, count = children.Count; i < count; i++)
                 {

@@ -51,7 +51,7 @@ namespace System.Windows.Media
             // the first value in the cluster map can be non-zero, in which case it's applied as an offset to all
             // subsequent entries in the cluster map
             _clusters = glyphRun.ClusterMap;
-            if (_clusters != null)
+            if (_clusters is not null)
                 _glyphClusterInitialOffset = _clusters[0];
 
             _indices = glyphRun.GlyphIndices;
@@ -82,7 +82,7 @@ namespace System.Windows.Media
             _currentAdvanceTotal = 0.0;
             _idealAdvanceTotal = 0.0;
 
-            if (_clusters != null)
+            if (_clusters is not null)
             {
                 // the algorithm works by finding (n:m) clusters and appending m glyphs for each cluster
                 int characterIndex;
@@ -211,7 +211,7 @@ namespace System.Windows.Media
             _glyphStringBuider.Append(GlyphSubEntrySeparator);
 
             // u,v offset
-            if (_offsets != null)
+            if (_offsets is not null)
             {
                 // u offset
                 int offset = (int)Math.Round(_offsets[glyph].X * _milToEm);
@@ -260,7 +260,7 @@ namespace System.Windows.Media
                 {
                     // 1:1 cluster, we can omit (n:m) specification and possibly deduce some
                     // glyph properties from character
-                    if (_characters != null && _characters.Count != 0)
+                    if (_characters is not null && _characters.Count != 0)
                         sourceCharacter = _characters[charClusterStart];
                 }
             }

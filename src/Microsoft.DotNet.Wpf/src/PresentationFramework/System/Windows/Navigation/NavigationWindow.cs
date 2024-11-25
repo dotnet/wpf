@@ -317,7 +317,7 @@ namespace System.Windows.Navigation
 
          JournalNavigationScope INavigator.GetJournal(bool create)
          {
-             Debug.Assert(_JNS != null);
+             Debug.Assert(_JNS is not null);
              return _JNS;
          }
 
@@ -435,13 +435,13 @@ namespace System.Windows.Navigation
             // Get the root element of the style
             FrameworkElement root = (this.GetVisualChild(0)) as FrameworkElement;
 
-            if (_navigationService != null)
+            if (_navigationService is not null)
             {
                 _navigationService.VisualTreeAvailable(root);
             }
 
             // did we just apply the framelet style?
-            if ((root != null) && (root.Name == "NavigationBarRoot"))
+            if ((root is not null) && (root.Name == "NavigationBarRoot"))
             {
                 if (!_fFramelet)
                 {
@@ -493,7 +493,7 @@ namespace System.Windows.Navigation
         {
             // When uri of NavigationService is valid and can be used to
             // relaod, we do not serialize content
-            if (_navigationService != null)
+            if (_navigationService is not null)
             {
                 return !_navigationService.CanReloadFromUri;
             }
@@ -883,7 +883,7 @@ namespace System.Windows.Navigation
             base.OnClosed( args ) ;
 
             // detach the event handlers on the NC
-            if(_navigationService != null)
+            if(_navigationService is not null)
                 _navigationService.Dispose();
         }
 
@@ -1014,14 +1014,14 @@ namespace System.Windows.Navigation
         private static void OnGoBack(object sender, ExecutedRoutedEventArgs args)
         {
             NavigationWindow nw = sender as NavigationWindow;
-            Debug.Assert(nw != null, "sender must be of type NavigationWindow.");
+            Debug.Assert(nw is not null, "sender must be of type NavigationWindow.");
             nw.GoBack();
         }
 
         private static void OnQueryGoBack(object sender, CanExecuteRoutedEventArgs e)
         {
             NavigationWindow nw = sender as NavigationWindow;
-            Debug.Assert(nw != null, "sender must be of type NavigationWindow.");
+            Debug.Assert(nw is not null, "sender must be of type NavigationWindow.");
             e.CanExecute = nw.CanGoBack;
             e.ContinueRouting = !nw.CanGoBack;
         }
@@ -1029,14 +1029,14 @@ namespace System.Windows.Navigation
         private static void OnGoForward(object sender, ExecutedRoutedEventArgs e)
         {
             NavigationWindow nw = sender as NavigationWindow;
-            Debug.Assert(nw != null, "sender must be of type NavigationWindow.");
+            Debug.Assert(nw is not null, "sender must be of type NavigationWindow.");
             nw.GoForward();
         }
 
         private static void OnQueryGoForward(object sender, CanExecuteRoutedEventArgs e)
         {
             NavigationWindow nw = sender as NavigationWindow;
-            Debug.Assert(nw != null, "sender must be of type NavigationWindow.");
+            Debug.Assert(nw is not null, "sender must be of type NavigationWindow.");
             e.CanExecute = nw.CanGoForward;
             e.ContinueRouting = !nw.CanGoForward;
         }
@@ -1044,21 +1044,21 @@ namespace System.Windows.Navigation
         private static void OnRefresh(object sender, ExecutedRoutedEventArgs e)
         {
             NavigationWindow nw = sender as NavigationWindow;
-            Debug.Assert(nw != null, "sender must be of type NavigationWindow.");
+            Debug.Assert(nw is not null, "sender must be of type NavigationWindow.");
             nw.Refresh();
         }
 
         private static void OnQueryRefresh(object sender, CanExecuteRoutedEventArgs e)
         {
             NavigationWindow nw = sender as NavigationWindow;
-            Debug.Assert(nw != null, "sender must be of type NavigationWindow.");
-            e.CanExecute = nw.Content != null;
+            Debug.Assert(nw is not null, "sender must be of type NavigationWindow.");
+            e.CanExecute = nw.Content is not null;
         }
 
         private static void OnBrowseStop(object sender, ExecutedRoutedEventArgs e)
         {
             NavigationWindow nw = sender as NavigationWindow;
-            Debug.Assert(nw != null, "sender must be of type NavigationWindow.");
+            Debug.Assert(nw is not null, "sender must be of type NavigationWindow.");
             nw.StopLoading();
         }
 
@@ -1070,14 +1070,14 @@ namespace System.Windows.Navigation
         private static void OnNavigateJournal(object sender, ExecutedRoutedEventArgs e)
         {
             NavigationWindow nw = sender as NavigationWindow;
-            Debug.Assert(nw != null, "sender must be of type NavigationWindow.");
+            Debug.Assert(nw is not null, "sender must be of type NavigationWindow.");
 
             FrameworkElement journalEntryUIElem = e.Parameter as FrameworkElement;
-            if (journalEntryUIElem != null)
+            if (journalEntryUIElem is not null)
             {
                 // Get journal entry from MenuItem
                 JournalEntry je = journalEntryUIElem.DataContext as JournalEntry;
-                if (je != null)
+                if (je is not null)
                 {
                     nw.JournalNavigationScope.NavigateToEntry(je);
                 }

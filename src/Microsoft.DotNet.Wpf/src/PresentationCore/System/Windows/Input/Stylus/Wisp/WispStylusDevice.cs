@@ -49,7 +49,7 @@ namespace System.Windows.Input.StylusWisp
             _reevaluateCaptureOperation = null;
 #endif
 
-            if (_stylusButtonCollection != null)
+            if (_stylusButtonCollection is not null)
             {
                 foreach (StylusButton button in _stylusButtonCollection)
                 {
@@ -128,7 +128,7 @@ namespace System.Windows.Input.StylusWisp
         {
             get
             {
-                return (_tabletDevice != null);
+                return (_tabletDevice is not null);
             }
         }
 
@@ -244,12 +244,12 @@ namespace System.Windows.Input.StylusWisp
 
             // Validate that element is either a UIElement, a ContentElement or a UIElement3D.
             DependencyObject doStylusCapture = element as DependencyObject;
-            if (doStylusCapture != null && !InputElement.IsValid(element))
+            if (doStylusCapture is not null && !InputElement.IsValid(element))
             {
                 throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, doStylusCapture.GetType()));
             }
 
-            if (doStylusCapture != null)
+            if (doStylusCapture is not null)
             {
                 doStylusCapture.VerifyAccess();
             }
@@ -259,7 +259,7 @@ namespace System.Windows.Input.StylusWisp
             // The element we are capturing to must be both enabled and visible.
 
             UIElement e = element as UIElement;
-            if (e != null)
+            if (e is not null)
             {
                 if (e.IsVisible || e.IsEnabled)
                 {
@@ -269,7 +269,7 @@ namespace System.Windows.Input.StylusWisp
             else
             {
                 ContentElement ce = element as ContentElement;
-                if (ce != null)
+                if (ce is not null)
                 {
                     if (ce.IsEnabled) // There is no IsVisible property for ContentElement
                     {
@@ -306,7 +306,7 @@ namespace System.Windows.Input.StylusWisp
             // Take lock so both are returned with proper state since called from a pen thread.
             lock (_rtiCaptureChanged)
             {
-                elementHasCapture = (_stylusCapture != null);
+                elementHasCapture = (_stylusCapture is not null);
                 return _stylusCapturePlugInCollection;
             }
         }
@@ -341,7 +341,7 @@ namespace System.Windows.Input.StylusWisp
                     int timeStamp = Environment.TickCount;
                     PenContext penContext = _stylusLogic.GetStylusPenContextForHwnd(_inputSource, TabletDevice.Id);
 
-                    if (_eventStylusPoints != null &&
+                    if (_eventStylusPoints is not null &&
                         _eventStylusPoints.Count > 0 &&
                         StylusPointDescription.AreCompatible(penContext.StylusPointDescription, _eventStylusPoints.Description))
                     {
@@ -383,7 +383,7 @@ namespace System.Windows.Input.StylusWisp
             DependencyObject o = null;
 
             // Adjust the handlers we use to track everything.
-            if (oldOver != null)
+            if (oldOver is not null)
             {
                 o = oldOver as DependencyObject;
                 if (o is UIElement uie)
@@ -412,7 +412,7 @@ namespace System.Windows.Input.StylusWisp
                     throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, oldOver.GetType())); 
                 }
             }
-            if (_stylusOver != null)
+            if (_stylusOver is not null)
             {
                 o = _stylusOver as DependencyObject;
                 if (o is UIElement uie)
@@ -448,12 +448,12 @@ namespace System.Windows.Input.StylusWisp
             UIElement.StylusOverProperty.OnOriginValueChanged(oldOver as DependencyObject, _stylusOver as DependencyObject, ref _stylusOverTreeState);
 
             // Invalidate the IsStylusDirectlyOver property.
-            if (oldOver != null)
+            if (oldOver is not null)
             {
                 o = oldOver as DependencyObject;
                 o.SetValue(UIElement.IsStylusDirectlyOverPropertyKey, false); // Same property for ContentElements
             }
-            if (_stylusOver != null)
+            if (_stylusOver is not null)
             {
                 o = _stylusOver as DependencyObject;
                 o.SetValue(UIElement.IsStylusDirectlyOverPropertyKey, true); // Same property for ContentElements
@@ -495,7 +495,7 @@ namespace System.Windows.Input.StylusWisp
         /// </summary>
         internal void ReevaluateStylusOver(DependencyObject element, DependencyObject oldParent, bool isCoreParent)
         {
-            if (element != null)
+            if (element is not null)
             {
                 if (isCoreParent)
                 {
@@ -536,7 +536,7 @@ namespace System.Windows.Input.StylusWisp
             _reevaluateStylusOverOperation = null;
 
             // Synchronize causes state issues with the stylus events so we don't do this.
-            //if (_currentStylusDevice != null)
+            //if (_currentStylusDevice is not null)
             //{
             //    _currentStylusDevice.Synchronize();
             //}
@@ -547,7 +547,7 @@ namespace System.Windows.Input.StylusWisp
             // tree state.  This is because it is possible (even likely) that
             // Synchronize() would have already done this if we hit-tested to a
             // different element.
-            if (_stylusOverTreeState != null && !_stylusOverTreeState.IsEmpty)
+            if (_stylusOverTreeState is not null && !_stylusOverTreeState.IsEmpty)
             {
                 UIElement.StylusOverProperty.OnOriginValueChanged(_stylusOver as DependencyObject, _stylusOver as DependencyObject, ref _stylusOverTreeState);
             }
@@ -583,14 +583,14 @@ namespace System.Windows.Input.StylusWisp
                         // We also need to figure out ahead of time if any plugincollections on this captured element (or a parent)
                         // for the penthread hittesting code.
                         _stylusCapturePlugInCollection = null;
-                        if (stylusCapture != null)
+                        if (stylusCapture is not null)
                         {
                             UIElement uiElement = InputElement.GetContainingUIElement(stylusCapture as DependencyObject) as UIElement;
-                            if (uiElement != null)
+                            if (uiElement is not null)
                             {
                                 PresentationSource source = PresentationSource.CriticalFromVisual(uiElement as Visual);
 
-                                if (source != null)
+                                if (source is not null)
                                 {
                                     PenContexts penContexts = _stylusLogic.GetPenContextsFromHwnd(source);
 
@@ -611,12 +611,12 @@ namespace System.Windows.Input.StylusWisp
                 UIElement.StylusCaptureWithinProperty.OnOriginValueChanged(oldStylusCapture as DependencyObject, _stylusCapture as DependencyObject, ref _stylusCaptureWithinTreeState);
                 
                 // Invalidate the IsStylusCaptured properties.
-                if (oldStylusCapture != null)
+                if (oldStylusCapture is not null)
                 {
                     var o = oldStylusCapture as DependencyObject;
                     o.SetValue(UIElement.IsStylusCapturedPropertyKey, false); // Same property for ContentElements
                 }
-                if (_stylusCapture != null)
+                if (_stylusCapture is not null)
                 {
                     var o = _stylusCapture as DependencyObject;
                     o.SetValue(UIElement.IsStylusCapturedPropertyKey, true); // Same property for ContentElements
@@ -626,14 +626,14 @@ namespace System.Windows.Input.StylusWisp
 #endif
 
                 // Send the LostStylusCapture and GotStylusCapture events.
-                if (oldStylusCapture != null)
+                if (oldStylusCapture is not null)
                 {
                     StylusEventArgs lostCapture = new StylusEventArgs(StylusDevice, timestamp);
                     lostCapture.RoutedEvent = Stylus.LostStylusCaptureEvent;
                     lostCapture.Source = oldStylusCapture;
                     _stylusLogic.InputManagerProcessInputEventArgs(lostCapture);
                 }
-                if (_stylusCapture != null)
+                if (_stylusCapture is not null)
                 {
                     StylusEventArgs gotCapture = new StylusEventArgs(StylusDevice, timestamp);
                     gotCapture.RoutedEvent = Stylus.GotStylusCaptureEvent;
@@ -645,12 +645,12 @@ namespace System.Windows.Input.StylusWisp
                 // it is inrange).
                 if (_stylusLogic.CurrentStylusDevice == this || InRange)
                 {
-                    if (_stylusCapture != null)
+                    if (_stylusCapture is not null)
                     {
                         IInputElement inputElementHit = _stylusCapture;
 
                         // See if we need to update over for subtree mode.
-                        if (CapturedMode == CaptureMode.SubTree && _inputSource != null)
+                        if (CapturedMode == CaptureMode.SubTree && _inputSource is not null)
                         {
                             Point pt = _stylusLogic.DeviceUnitsFromMeasureUnits(_inputSource, GetPosition(null));
                             inputElementHit = FindTarget(_inputSource, pt);
@@ -688,7 +688,7 @@ namespace System.Windows.Input.StylusWisp
         internal void AttachToPropertiesAffectingCapture(IInputElement element)
         {
             // Adjust the handlers we use to track everything.
-            if (element != null)
+            if (element is not null)
             {
                 var o = element as DependencyObject;
                 if (InputElement.IsUIElement(o))
@@ -717,7 +717,7 @@ namespace System.Windows.Input.StylusWisp
 
         internal void DetachFromPropertiesAffectingCapture(IInputElement element)
         {
-            if (element != null)
+            if (element is not null)
             {
                 var o = element as DependencyObject;
                 if (InputElement.IsUIElement(o))
@@ -778,7 +778,7 @@ namespace System.Windows.Input.StylusWisp
         /// </summary>
         internal void ReevaluateCapture(DependencyObject element, DependencyObject oldParent, bool isCoreParent)
         {
-            if (element != null)
+            if (element is not null)
             {
                 if (isCoreParent)
                 {
@@ -858,7 +858,7 @@ namespace System.Windows.Input.StylusWisp
             // tree state.  This is because it is possible (even likely) that
             // we would have already killed capture if the capture criteria was
             // no longer met.
-            if (_stylusCaptureWithinTreeState != null && !_stylusCaptureWithinTreeState.IsEmpty)
+            if (_stylusCaptureWithinTreeState is not null && !_stylusCaptureWithinTreeState.IsEmpty)
             {
                 UIElement.StylusCaptureWithinProperty.OnOriginValueChanged(_stylusCapture as DependencyObject, _stylusCapture as DependencyObject, ref _stylusCaptureWithinTreeState);
             }
@@ -991,7 +991,7 @@ namespace System.Windows.Input.StylusWisp
                     {
                         IInputElement stylusCapture = InputElement.GetContainingInputElement(_stylusCapture as DependencyObject);
 
-                        if (stylusCapture != null && inputSource != null)
+                        if (stylusCapture is not null && inputSource is not null)
                         {
                             // We need to re-hit-test to get the "real" UIElement we are over.
                             // This allows us to have our capture-to-subtree span multiple windows.
@@ -1000,7 +1000,7 @@ namespace System.Windows.Input.StylusWisp
                             stylusOver = StylusDevice.GlobalHitTest(inputSource, position);
                         }
 
-                        if (stylusOver != null && !InputElement.IsValid(stylusOver))
+                        if (stylusOver is not null && !InputElement.IsValid(stylusOver))
                             stylusOver = InputElement.GetContainingInputElement(stylusOver as DependencyObject);
 
                         // Make sure that the element we hit is acutally underneath
@@ -1010,17 +1010,17 @@ namespace System.Windows.Input.StylusWisp
                         // Note that we support the child being in a completely different window.
                         // So we use the GetUIParent method instead of just looking at
                         // visual/content parents.
-                        if (stylusOver != null)
+                        if (stylusOver is not null)
                         {
                             IInputElement ieTest = stylusOver;
                             UIElement eTest = null;
                             ContentElement ceTest = null;
 
-                            while (ieTest != null && ieTest != stylusCapture)
+                            while (ieTest is not null && ieTest != stylusCapture)
                             {
                                 eTest = ieTest as UIElement;
 
-                                if (eTest != null)
+                                if (eTest is not null)
                                 {
                                     ieTest = InputElement.GetContainingInputElement(eTest.GetUIParent(true));
                                 }
@@ -1158,25 +1158,25 @@ namespace System.Windows.Input.StylusWisp
             VerifyAccess();
 
             // Validate that relativeTo is either a UIElement, a ContentElement or a UIElement3D.
-            if (relativeTo != null && !InputElement.IsValid(relativeTo))
+            if (relativeTo is not null && !InputElement.IsValid(relativeTo))
             {
                 throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, relativeTo.GetType()));
             }
 
             PresentationSource relativePresentationSource = null;
 
-            if (relativeTo != null)
+            if (relativeTo is not null)
             {
                 DependencyObject dependencyObject = relativeTo as DependencyObject;
                 DependencyObject containingVisual = InputElement.GetContainingVisual(dependencyObject);
-                if (containingVisual != null)
+                if (containingVisual is not null)
                 {
                     relativePresentationSource = PresentationSource.CriticalFromVisual(containingVisual);
                 }
             }
             else
             {
-                if (_inputSource != null)
+                if (_inputSource is not null)
                 {
                     relativePresentationSource = _inputSource;
                 }
@@ -1335,12 +1335,12 @@ namespace System.Windows.Input.StylusWisp
 
         internal override void UpdateEventStylusPoints(RawStylusInputReport report, bool resetIfNoOverride)
         {
-            if (report.RawStylusInput != null && report.RawStylusInput.StylusPointsModified)
+            if (report.RawStylusInput is not null && report.RawStylusInput.StylusPointsModified)
             {
                 GeneralTransform transformToElement = report.RawStylusInput.Target.ViewToElement.Inverse;
                 //note that RawStylusInput.Target (of type StylusPluginCollection)
                 //guarantees that ViewToElement is invertible
-                Debug.Assert(transformToElement != null);
+                Debug.Assert(transformToElement is not null);
 
                 _eventStylusPoints = report.RawStylusInput.GetStylusPoints(transformToElement);
             }
@@ -1408,7 +1408,7 @@ namespace System.Windows.Input.StylusWisp
             PresentationSource inputSource = DetermineValidSource(report.InputSource, _eventStylusPoints, report.PenContext.Contexts);
 
             // See if we need to remap the stylus data X and Y values to different presentation source.
-            if (inputSource != null && inputSource != report.InputSource)
+            if (inputSource is not null && inputSource != report.InputSource)
             {
                 Point newWindowLocation = PointUtil.ClientToScreen(new Point(0, 0), inputSource);
                 newWindowLocation = _stylusLogic.MeasureUnitsFromDeviceUnits(inputSource, newWindowLocation);
@@ -1459,7 +1459,7 @@ namespace System.Windows.Input.StylusWisp
                     _tabletDevice.UpdateSizeDeltas(report.StylusPointDescription, _stylusLogic);
                 }
                 // See if we need to do our own Drag detection (on Stylus Move event)
-                else if (inputSource != null && _fBlockMouseMoveChanges && _seenDoubleTapGesture && !_fGestureWasFired && !_fDetectedDrag)
+                else if (inputSource is not null && _fBlockMouseMoveChanges && _seenDoubleTapGesture && !_fGestureWasFired && !_fDetectedDrag)
                 {
                     Size delta = _tabletDevice.CancelSize;
 
@@ -1507,13 +1507,13 @@ namespace System.Windows.Input.StylusWisp
                 PresentationSource newSource = null;
 
                 // use capture as fallback first
-                if (_stylusCapture != null)
+                if (_stylusCapture is not null)
                 {
                     DependencyObject containingVisual = InputElement.GetContainingVisual(_stylusCapture as DependencyObject);
                     PresentationSource capturedSource = PresentationSource.CriticalFromVisual(containingVisual);
 
-                    if (capturedSource != null &&
-                        capturedSource.CompositionTarget != null &&
+                    if (capturedSource is not null &&
+                        capturedSource.CompositionTarget is not null &&
                         !capturedSource.CompositionTarget.IsDisposed)
                     {
                         newSource = capturedSource; // Good new source to use!
@@ -1521,13 +1521,13 @@ namespace System.Windows.Input.StylusWisp
                 }
 
                 // Now try last screen point hittesting to find a new window/PresetationSource.
-                if (newSource is null && stylusPoints != null)
+                if (newSource is null && stylusPoints is not null)
                 {
                     Point ptScreen;
 
                     // If we have the last penContext and a valid CompositionTarget, then we can remap the coordinates properly.
                     // Otherwise we just use the last stylus mouse location to figure out a PresenationSource.
-                    if (penContextsOfPoints?.InputSource?.CompositionTarget != null)
+                    if (penContextsOfPoints?.InputSource?.CompositionTarget is not null)
                     {
                         ptScreen = _stylusLogic.DeviceUnitsFromMeasureUnits(penContextsOfPoints.InputSource, (Point)stylusPoints[0]);
 
@@ -1543,7 +1543,7 @@ namespace System.Windows.Input.StylusWisp
                     if (hwndHit != IntPtr.Zero)
                     {
                         HwndSource newHwndSource = HwndSource.CriticalFromHwnd(hwndHit);
-                        if (newHwndSource != null && newHwndSource.Dispatcher == Dispatcher)
+                        if (newHwndSource is not null && newHwndSource.Dispatcher == Dispatcher)
                         {
                             newSource = newHwndSource;
                         }
@@ -1610,7 +1610,7 @@ namespace System.Windows.Input.StylusWisp
                     // element you really flicked on.
 
                     // Only route the flick if we have data we can send.
-                    if (report != null && report.InputSource != null && _eventStylusPoints != null && _eventStylusPoints.Count > 0)
+                    if (report is not null && report.InputSource is not null && _eventStylusPoints is not null && _eventStylusPoints.Count > 0)
                     {
                         StylusPoint stylusPoint = _eventStylusPoints[_eventStylusPoints.Count - 1];
 
@@ -1625,7 +1625,7 @@ namespace System.Windows.Input.StylusWisp
 
                         PresentationSource inputSource = DetermineValidSource(report.InputSource, _eventStylusPoints, report.PenContext.Contexts);
 
-                        if (inputSource != null)
+                        if (inputSource is not null)
                         {
                             // See if we need to remap the stylus data X and Y values to different presentation source.
                             if (inputSource != report.InputSource)
@@ -1662,7 +1662,7 @@ namespace System.Windows.Input.StylusWisp
                 // as it will be process anyway and either way we need to clean up the cached down
                 PresentationSource mouseInputSource = GetMousePresentationSource();
 
-                if (mouseInputSource != null)
+                if (mouseInputSource is not null)
                 {
                     Point pt = PointUtil.ScreenToClient(_lastMouseScreenLocation, mouseInputSource);
 
@@ -1679,7 +1679,7 @@ namespace System.Windows.Input.StylusWisp
                         // See if we need to set the Mouse Activate flag.
                         InputManager inputManager = (InputManager)Dispatcher.InputManager;
 
-                        if (inputManager != null)
+                        if (inputManager is not null)
                         {
                             if (inputManager.PrimaryMouseDevice.CriticalActiveSource != mouseInputSource)
                             {
@@ -1709,20 +1709,20 @@ namespace System.Windows.Input.StylusWisp
             // presentation source.  We have to do this if the mouse has capture.
             InputManager inputManager = (InputManager)Dispatcher.InputManager;
             PresentationSource mouseInputSource = null;
-            if (inputManager != null)
+            if (inputManager is not null)
             {
                 IInputElement mouseCaptured = inputManager.PrimaryMouseDevice.Captured;
-                if (mouseCaptured != null)
+                if (mouseCaptured is not null)
                 {
                     // See if mouse is captured to a different window (HwndSource will be different)
                     // NOTE: Today we can only translate points between HwndSources (PresentationSource doesn't support this)
                     DependencyObject mouseCapturedVisual = InputElement.GetContainingVisual((DependencyObject)mouseCaptured);
-                    if (mouseCapturedVisual != null)
+                    if (mouseCapturedVisual is not null)
                     {
                         mouseInputSource = PresentationSource.CriticalFromVisual(mouseCapturedVisual);
                     }
                 }
-                else if (_stylusOver != null)
+                else if (_stylusOver is not null)
                 {
                     // Use our current input source (or one we're may be over) if no capture.
                     mouseInputSource = (_inputSource is not null) ?
@@ -1904,10 +1904,10 @@ namespace System.Windows.Input.StylusWisp
 
         internal void UpdateTouchActiveSource()
         {
-            if (_touchDevice != null)
+            if (_touchDevice is not null)
             {
                 PresentationSource activeSource = CriticalActiveSource;
-                if (activeSource != null)
+                if (activeSource is not null)
                 {
                     _touchDevice.ChangeActiveSource(activeSource);
                 }

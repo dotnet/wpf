@@ -101,7 +101,7 @@ namespace System.Windows
         private static string GetValue(object element, DependencyProperty property)
         {
             DependencyObject dependencyObject = element as DependencyObject;
-            if (dependencyObject != null)
+            if (dependencyObject is not null)
             {
                 // For DO, get the value from the property system
                 return (string) dependencyObject.GetValue(property);
@@ -125,7 +125,7 @@ namespace System.Windows
         private static void SetValue(object element, DependencyProperty property, string value)
         {
             DependencyObject dependencyObject = element as DependencyObject;
-            if (dependencyObject != null)
+            if (dependencyObject is not null)
             {
                 // For DO, store the value in the property system
                 dependencyObject.SetValue(property, value);

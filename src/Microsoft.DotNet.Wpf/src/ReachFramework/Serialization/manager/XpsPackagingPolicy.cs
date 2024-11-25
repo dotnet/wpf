@@ -576,7 +576,7 @@ namespace System.Windows.Xps.Serialization
                 //
                 // retreive the appropriate writer from the reach package api layer
                 //
-                if(_currentFixedDocumentSequenceWriter != null)
+                if(_currentFixedDocumentSequenceWriter is not null)
                 {
                      _currentDSWriter = ((XpsFixedDocumentSequenceReaderWriter)_currentFixedDocumentSequenceWriter).XmlWriter;
                      _interleavingPolicy.AddItem((INode)_currentFixedDocumentSequenceWriter, 0, (INode) _reachPackage);
@@ -599,7 +599,7 @@ namespace System.Windows.Xps.Serialization
         ReleaseXmlWriterForFixedDocumentSequence(
             )
         {
-            if(_currentFixedDocumentSequenceWriter != null &&
+            if(_currentFixedDocumentSequenceWriter is not null &&
                _currentDocumentSequenceWriterRef > 0)
             {
                 _currentDocumentSequenceWriterRef--;
@@ -639,7 +639,7 @@ namespace System.Windows.Xps.Serialization
                 // We need to create the corresponding part in the Xps package
                 // and then acquire the writer
                 //
-                if(_currentFixedDocumentSequenceWriter != null)
+                if(_currentFixedDocumentSequenceWriter is not null)
                 {
                     _currentFixedDocumentWriter = _currentFixedDocumentSequenceWriter.AddFixedDocument();
                     _interleavingPolicy.AddItem((INode)_currentFixedDocumentWriter, 0, (INode) _currentFixedDocumentSequenceWriter);
@@ -669,7 +669,7 @@ namespace System.Windows.Xps.Serialization
         ReleaseXmlWriterForFixedDocument(
             )
         {
-            if(_currentFixedDocumentWriter != null &&
+            if(_currentFixedDocumentWriter is not null &&
                _currentFixedDocumentWriterRef > 0)
             {
                 _currentFixedDocumentWriterRef--;
@@ -714,7 +714,7 @@ namespace System.Windows.Xps.Serialization
                 // We need to create the corresponding part in the Xps package
                 // and then acquire the writer
                 //
-                if(_currentFixedDocumentWriter != null)
+                if(_currentFixedDocumentWriter is not null)
                 {
                     _currentFixedPageWriter = _currentFixedDocumentWriter.AddFixedPage();
                     _interleavingPolicy.AddItem((INode)_currentFixedPageWriter, 0, (INode)_currentFixedDocumentWriter);
@@ -723,7 +723,7 @@ namespace System.Windows.Xps.Serialization
                 //
                 // retreive the appropriate writer from the reach package api layer
                 //
-                if(_currentFixedPageWriter != null)
+                if(_currentFixedPageWriter is not null)
                 {
                      _currentFPWriter = ((XpsFixedPageReaderWriter)_currentFixedPageWriter).XmlWriter;
                 }
@@ -802,7 +802,7 @@ namespace System.Windows.Xps.Serialization
                     // We need to create the corresponding part in the Xps package
                     // and then acquire the Stream
                     //
-                    if(_currentFixedPageWriter != null)
+                    if(_currentFixedPageWriter is not null)
                     {
                         _currentXpsFont = _currentFixedPageWriter.AddFont();
                         _interleavingPolicy.AddItem((INode)_currentXpsFont, 0, (INode)_currentFixedPageWriter);
@@ -815,7 +815,7 @@ namespace System.Windows.Xps.Serialization
                     //
                     // retreive the appropriate stream and uri from the reach package api layer
                     //
-                    if(_currentXpsFont != null)
+                    if(_currentXpsFont is not null)
                     {
                          _fontResourceStream = new XpsResourceStream(_currentXpsFont.GetStream(),
                                                                   _currentXpsFont.Uri);
@@ -863,11 +863,11 @@ namespace System.Windows.Xps.Serialization
                     // We need to create the corresponding part in the Xps package
                     // and then acquire the Stream
                     //
-                    if(_currentFixedPageWriter != null)
+                    if(_currentFixedPageWriter is not null)
                     {
                         XpsFont reachFont = _currentFixedPageWriter.AddFont();
     
-                        if(reachFont != null)
+                        if(reachFont is not null)
                         {
                             _interleavingPolicy.AddItem((INode)reachFont, 0, (INode) _currentFixedPageWriter);
                             resourceStreamCacheItem.XpsResource = (XpsResource)reachFont;
@@ -910,7 +910,7 @@ namespace System.Windows.Xps.Serialization
         {
             if(_fontAcquireMode == ResourceAcquireMode.SingleAcquired)
             {
-                if(_currentXpsFont != null &&
+                if(_currentXpsFont is not null &&
                    _currentXpsFontRef > 0)
                 {
                     _currentXpsFontRef--;
@@ -948,7 +948,7 @@ namespace System.Windows.Xps.Serialization
             {
                 ResourceStreamCacheItem resourceStreamCacheItem = (ResourceStreamCacheItem)_fontsCache[resourceId];
 
-                if(resourceStreamCacheItem != null)
+                if(resourceStreamCacheItem is not null)
                 {
                     if(resourceStreamCacheItem.Release() == 0)
                     {
@@ -989,7 +989,7 @@ namespace System.Windows.Xps.Serialization
                 // We need to create the corresponding part in the Xps package
                 // and then acquire the Stream
                 //
-                if(_currentFixedPageWriter != null)
+                if(_currentFixedPageWriter is not null)
                 {
                     _currentXpsImage = _currentFixedPageWriter.AddImage(resourceId);
                     _interleavingPolicy.AddItem((INode)_currentXpsImage, 0, (INode) _currentFixedPageWriter);
@@ -1002,7 +1002,7 @@ namespace System.Windows.Xps.Serialization
                 //
                 // retreive the appropriate stream and uri from the reach package api layer
                 //
-                if(_currentXpsImage != null)
+                if(_currentXpsImage is not null)
                 {
                     _imageResourceStream = new XpsResourceStream(_currentXpsImage.GetStream(),
                                                                _currentXpsImage.Uri);
@@ -1025,7 +1025,7 @@ namespace System.Windows.Xps.Serialization
         ReleaseResourceStreamForXpsImage(
             )
         {
-            if(_currentXpsImage != null &&
+            if(_currentXpsImage is not null &&
                _currentXpsImageRef > 0)
             {
                 _currentXpsImageRef--;
@@ -1065,7 +1065,7 @@ namespace System.Windows.Xps.Serialization
                 // We need to create the corresponding part in the Xps package
                 // and then acquire the Stream
                 //
-                if(_currentFixedPageWriter != null)
+                if(_currentFixedPageWriter is not null)
                 {
                     _currentXpsColorContext = _currentFixedPageWriter.AddColorContext();
                     _interleavingPolicy.AddItem((INode)_currentXpsColorContext, 0, (INode) _currentFixedPageWriter);
@@ -1078,7 +1078,7 @@ namespace System.Windows.Xps.Serialization
                 //
                 // retreive the appropriate stream and uri from the reach package api layer
                 //
-                if(_currentXpsColorContext != null)
+                if(_currentXpsColorContext is not null)
                 {
                      _colorContextResourceStream = new XpsResourceStream(_currentXpsColorContext.GetStream(),
                                                                _currentXpsColorContext.Uri);
@@ -1101,7 +1101,7 @@ namespace System.Windows.Xps.Serialization
         ReleaseResourceStreamForXpsColorContext(
             )
         {
-            if(_currentXpsColorContext != null &&
+            if(_currentXpsColorContext is not null &&
                _currentXpsColorContextRef > 0)
             {
                 _currentXpsColorContextRef--;
@@ -1141,7 +1141,7 @@ namespace System.Windows.Xps.Serialization
                 // We need to create the corresponding part in the Xps package
                 // and then acquire the Stream
                 //
-                if(_currentFixedPageWriter != null)
+                if(_currentFixedPageWriter is not null)
                 {
                     _currentXpsResourceDictionary = _currentFixedPageWriter.AddResourceDictionary();
                     _interleavingPolicy.AddItem((INode) _currentXpsResourceDictionary, 0, (INode) _currentFixedPageWriter);
@@ -1154,7 +1154,7 @@ namespace System.Windows.Xps.Serialization
                 //
                 // retreive the appropriate stream and uri from the reach package api layer
                 //
-                if(_currentXpsResourceDictionary != null)
+                if(_currentXpsResourceDictionary is not null)
                 {
                      _resourceDictionaryResourceStream = new XpsResourceStream(_currentXpsResourceDictionary.GetStream(),
                                                                _currentXpsResourceDictionary.Uri);
@@ -1177,7 +1177,7 @@ namespace System.Windows.Xps.Serialization
         ReleaseResourceStreamForXpsResourceDictionary(
             )
         {
-            if(_currentXpsResourceDictionary != null &&
+            if(_currentXpsResourceDictionary is not null &&
                _currentXpsResourceDictionaryRef > 0)
             {
                 _currentXpsResourceDictionaryRef--;
@@ -1214,7 +1214,7 @@ namespace System.Windows.Xps.Serialization
             string  relationshipName
             )
         {
-            if (_currentFixedPageWriter != null)
+            if (_currentFixedPageWriter is not null)
             {
                 ((XpsFixedPageReaderWriter)_currentFixedPageWriter).AddRelationship(targetUri, relationshipName);
             }
@@ -1235,7 +1235,7 @@ namespace System.Windows.Xps.Serialization
             Uri targetUri
             )     
         {
-            if (_currentFixedDocumentWriter != null)
+            if (_currentFixedDocumentWriter is not null)
             {
                ((XpsFixedDocumentReaderWriter)_currentFixedDocumentWriter).AddRelationship(targetUri, XpsS0Markup.RestrictedFontRelationshipType);
      
@@ -1269,15 +1269,15 @@ namespace System.Windows.Xps.Serialization
             // We need to figure out at which level of the package
             // is this printTicket targeted
             //
-            if (_currentFixedPageWriter != null)
+            if (_currentFixedPageWriter is not null)
             {
                 _currentFixedPageWriter.PrintTicket = printTicket;
             }
-            else if(_currentFixedDocumentWriter != null)
+            else if(_currentFixedDocumentWriter is not null)
             {
                 _currentFixedDocumentWriter.PrintTicket = printTicket;
             }
-            else if(_currentFixedDocumentSequenceWriter != null)
+            else if(_currentFixedDocumentSequenceWriter is not null)
             {
                 _currentFixedDocumentSequenceWriter.PrintTicket = printTicket;
             }
@@ -1364,7 +1364,7 @@ namespace System.Windows.Xps.Serialization
         {
             get
             {
-                if (_currentFixedDocumentWriter != null)
+                if (_currentFixedDocumentWriter is not null)
                 {
                     return _currentFixedDocumentWriter.Uri;                  
                 }
@@ -1386,7 +1386,7 @@ namespace System.Windows.Xps.Serialization
         {
             get
             {
-                if (_currentFixedPageWriter != null)
+                if (_currentFixedPageWriter is not null)
                 {
                     return _currentFixedPageWriter.Uri;
                 }

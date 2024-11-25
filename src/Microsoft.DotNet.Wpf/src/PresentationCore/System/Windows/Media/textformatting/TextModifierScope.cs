@@ -75,7 +75,7 @@ namespace System.Windows.Media.TextFormatting
         /// <returns>Returns the text run properties after modification.</returns>
         internal TextRunProperties ModifyProperties(TextRunProperties properties)
         {
-            for (TextModifierScope scope = this; scope != null; scope = scope._parentScope)
+            for (TextModifierScope scope = this; scope is not null; scope = scope._parentScope)
             {
                 properties = scope._modifier.ModifyProperties(properties);
             }
@@ -91,7 +91,7 @@ namespace System.Windows.Media.TextFormatting
             TextModifierScope top = new TextModifierScope(null, _modifier, _cp);
             TextModifierScope scope = top;
 
-            for (TextModifierScope source = _parentScope; source != null; source = source._parentScope)
+            for (TextModifierScope source = _parentScope; source is not null; source = source._parentScope)
             {
                 scope._parentScope = new TextModifierScope(null, source._modifier, source._cp);
                 scope = scope._parentScope;

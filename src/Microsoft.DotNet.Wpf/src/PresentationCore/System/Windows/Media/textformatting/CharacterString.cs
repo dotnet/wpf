@@ -97,7 +97,7 @@ namespace System.Windows.Media.TextFormatting
         {
             ArgumentOutOfRangeException.ThrowIfNegative(characterLength);
 
-            int maxLength = (characterBufferReference.CharacterBuffer != null) ?
+            int maxLength = (characterBufferReference.CharacterBuffer is not null) ?
                 characterBufferReference.CharacterBuffer.Count - characterBufferReference.OffsetToFirstChar :
                 0;
 

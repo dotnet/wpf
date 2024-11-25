@@ -164,7 +164,7 @@ namespace Standard
             Assert.IsNotNull(hwndWrapper);
 
             WndProc callback = hwndWrapper._wndProcCallback;
-            if (callback != null)
+            if (callback is not null)
             {
                 ret = callback(hwnd, msg, wParam, lParam);
             }

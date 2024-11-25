@@ -49,17 +49,17 @@ namespace System.Windows.Markup
             string routedEventName = source as string;
             RoutedEvent routedEvent = null;
 
-            if (routedEventName != null)
+            if (routedEventName is not null)
             {
                 routedEventName = routedEventName.Trim();
                 IServiceProvider serviceProvider = typeDescriptorContext as IServiceProvider;
 
-                if (serviceProvider != null)
+                if (serviceProvider is not null)
                 {
                     IXamlTypeResolver resolver = serviceProvider.GetService(typeof(IXamlTypeResolver)) as IXamlTypeResolver;
                     Type type = null;
 
-                    if (resolver != null)
+                    if (resolver is not null)
                     {
                         // Verify that there's at least one period.  (A simple
                         //  but not foolproof check for "[class].[event]")
@@ -81,7 +81,7 @@ namespace System.Windows.Markup
 
                         IAmbientProvider iapp = serviceProvider.GetService(typeof(IAmbientProvider)) as IAmbientProvider;
 
-                        if (schemaContextProvider != null && iapp != null)
+                        if (schemaContextProvider is not null && iapp is not null)
                         {
                             XamlSchemaContext schemaContext = schemaContextProvider.SchemaContext;
 
@@ -94,7 +94,7 @@ namespace System.Windows.Markup
 
                             AmbientPropertyValue firstAmbientValue = iapp.GetFirstAmbientValue(ceilingTypes, styleTargetType);
 
-                            if (firstAmbientValue != null)
+                            if (firstAmbientValue is not null)
                             {
                                 type = firstAmbientValue.Value as Type;
                             }
@@ -105,7 +105,7 @@ namespace System.Windows.Markup
                         }
                     }
 
-                    if (type != null)
+                    if (type is not null)
                     {
                         Type currentType = type;
 

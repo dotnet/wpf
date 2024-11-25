@@ -234,7 +234,7 @@ namespace System.Windows.Media.Imaging
             // and forcing the creation of a new one.
             _isSourceCached = false;
 
-            if (_convertedDUCEPtr != null)
+            if (_convertedDUCEPtr is not null)
             {
                 _convertedDUCEPtr.Close();
                 _convertedDUCEPtr = null;
@@ -265,13 +265,13 @@ namespace System.Windows.Media.Imaging
                         MILRTInitializationFlags.MIL_RT_INITIALIZE_DEFAULT,
                         out renderTargetBitmap));
 
-                    Debug.Assert(renderTargetBitmap != null && !renderTargetBitmap.IsInvalid);
+                    Debug.Assert(renderTargetBitmap is not null && !renderTargetBitmap.IsInvalid);
 
                     BitmapSourceSafeMILHandle bitmapSource = null;
                     HRESULT.Check(MILRenderTargetBitmap.GetBitmap(
                         renderTargetBitmap,
                         out bitmapSource));
-                    Debug.Assert(bitmapSource != null && !bitmapSource.IsInvalid);
+                    Debug.Assert(bitmapSource is not null && !bitmapSource.IsInvalid);
 
                     lock (_syncObject)
                     {

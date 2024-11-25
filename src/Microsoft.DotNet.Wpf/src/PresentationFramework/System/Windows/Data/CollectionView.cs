@@ -98,13 +98,13 @@ namespace System.Windows.Data
 
             // forward collection change events from underlying collection to our listeners.
             INotifyCollectionChanged incc = collection as INotifyCollectionChanged;
-            if (incc != null)
+            if (incc is not null)
             {
                 // BindingListCollectionView already listens to IBindingList.ListChanged;
                 // Don't double-subscribe (bug 452474, 607512)
                 IBindingList ibl;
                 if (!(this is BindingListCollectionView) ||
-                    ((ibl = collection as IBindingList) != null && !ibl.SupportsChangeNotification))
+                    ((ibl = collection as IBindingList) is not null && !ibl.SupportsChangeNotification))
                 {
                     incc.CollectionChanged += new NotifyCollectionChangedEventHandler(OnCollectionChanged);
                 }
@@ -127,7 +127,7 @@ namespace System.Windows.Data
                         }
 
                         IDisposable d = e as IDisposable;
-                        if (d != null)
+                        if (d is not null)
                         {
                             d.Dispose();
                         }
@@ -305,7 +305,7 @@ namespace System.Windows.Data
         public virtual void Refresh()
         {
             IEditableCollectionView ecv = this as IEditableCollectionView;
-            if (ecv != null && (ecv.IsAddingNew || ecv.IsEditingItem))
+            if (ecv is not null && (ecv.IsAddingNew || ecv.IsEditingItem))
                 throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, "Refresh"));
 
             RefreshInternal();
@@ -331,7 +331,7 @@ namespace System.Windows.Data
                 VerifyAccess();
 
             IEditableCollectionView ecv = this as IEditableCollectionView;
-            if (ecv != null && (ecv.IsAddingNew || ecv.IsEditingItem))
+            if (ecv is not null && (ecv.IsAddingNew || ecv.IsEditingItem))
                 throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, "DeferRefresh"));
 
             ++ _deferLevel;
@@ -417,7 +417,7 @@ namespace System.Windows.Data
 
             int index = 0;
             IEditableCollectionView ecv = this as IEditableCollectionView;
-            if (ecv != null && ecv.NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtBeginning)
+            if (ecv is not null && ecv.NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtBeginning)
             {
                 index = 1;
             }
@@ -435,7 +435,7 @@ namespace System.Windows.Data
 
             int index = Count - 1;
             IEditableCollectionView ecv = this as IEditableCollectionView;
-            if (ecv != null && ecv.NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtEnd)
+            if (ecv is not null && ecv.NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtEnd)
             {
                 index -= 1;
             }
@@ -455,11 +455,11 @@ namespace System.Windows.Data
             int count = Count;
             IEditableCollectionView ecv = this as IEditableCollectionView;
 
-            if (ecv != null && index == 0 && ecv.NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtBeginning)
+            if (ecv is not null && index == 0 && ecv.NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtBeginning)
             {
                 index = 1;
             }
-            if (ecv != null && index == count-1 && ecv.NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtEnd)
+            if (ecv is not null && index == count-1 && ecv.NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtEnd)
             {
                 index = count;
             }
@@ -486,11 +486,11 @@ namespace System.Windows.Data
             int count = Count;
             IEditableCollectionView ecv = this as IEditableCollectionView;
 
-            if (ecv != null && index == count-1 && ecv.NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtEnd)
+            if (ecv is not null && index == count-1 && ecv.NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtEnd)
             {
                 index = count-2;
             }
-            if (ecv != null && index == 0 && ecv.NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtBeginning)
+            if (ecv is not null && index == 0 && ecv.NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtBeginning)
             {
                 index = -1;
             }
@@ -519,13 +519,13 @@ namespace System.Windows.Data
             if (System.Windows.Controls.ItemsControl.EqualsEx(CurrentItem, item) || System.Windows.Controls.ItemsControl.EqualsEx(NewItemPlaceholder, item))
             {
                 // also check that we're not fooled by a false null _currentItem
-                if (item != null || IsCurrentInView)
+                if (item is not null || IsCurrentInView)
                     return IsCurrentInView;
             }
 
             int index = -1;
             IEditableCollectionView ecv = this as IEditableCollectionView;
-            bool isNewItem = (ecv != null && ecv.IsAddingNew && System.Windows.Controls.ItemsControl.EqualsEx(item, ecv.CurrentAddItem));
+            bool isNewItem = (ecv is not null && ecv.IsAddingNew && System.Windows.Controls.ItemsControl.EqualsEx(item, ecv.CurrentAddItem));
             if (isNewItem || PassesFilter(item))
             {
                 // if the item is not found IndexOf() will return -1, and
@@ -550,7 +550,7 @@ namespace System.Windows.Data
 
             // ignore request to move onto the placeholder
             IEditableCollectionView ecv = this as IEditableCollectionView;
-            if (ecv != null &&
+            if (ecv is not null &&
                     ((position == 0 && ecv.NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtBeginning) ||
                      (position == Count-1 && ecv.NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtEnd)))
             {
@@ -622,7 +622,7 @@ namespace System.Windows.Data
         /// </summary>
         public virtual bool PassesFilter(object item)
         {
-            if (CanFilter && Filter != null)
+            if (CanFilter && Filter is not null)
                 return Filter(item);
 
             return true;
@@ -675,11 +675,11 @@ namespace System.Windows.Data
         public virtual void DetachFromSourceCollection()
         {
             INotifyCollectionChanged incc = _sourceCollection as INotifyCollectionChanged;
-            if (incc != null)
+            if (incc is not null)
             {
                 IBindingList ibl;
                 if (!(this is BindingListCollectionView) ||
-                    ((ibl = _sourceCollection as IBindingList) != null && !ibl.SupportsChangeNotification))
+                    ((ibl = _sourceCollection as IBindingList) is not null && !ibl.SupportsChangeNotification))
                 {
                     incc.CollectionChanged -= new NotifyCollectionChangedEventHandler(OnCollectionChanged);
                 }
@@ -749,8 +749,8 @@ namespace System.Windows.Data
         /// </summary>
         public virtual bool IsInUse
         {
-            get { return CollectionChanged != null || PropertyChanged != null ||
-                        CurrentChanged != null || CurrentChanging != null; }
+            get { return CollectionChanged is not null || PropertyChanged is not null ||
+                        CurrentChanged is not null || CurrentChanging is not null; }
         }
 
         public static object NewItemPlaceholder
@@ -813,7 +813,7 @@ namespace System.Windows.Data
         /// </summary>
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if (PropertyChanged != null)
+            if (PropertyChanged is not null)
             {
                 PropertyChanged(this, e);
             }
@@ -862,7 +862,7 @@ namespace System.Windows.Data
             {
                 _MoveCurrentToPosition(Count);
             }
-            else if (oldCurrentItem != null) // set currency back to old current item, or first if not found
+            else if (oldCurrentItem is not null) // set currency back to old current item, or first if not found
             {
                 int index = EnumerableWrapper.IndexOf(oldCurrentItem);
                 if (index  < 0)
@@ -919,7 +919,7 @@ namespace System.Windows.Data
 
             unchecked { ++ _timestamp; }    // invalidate enumerators because of a change
 
-            if (CollectionChanged != null)
+            if (CollectionChanged is not null)
                 CollectionChanged(this, args);
 
             // Collection changes change the count unless an item is being
@@ -947,7 +947,7 @@ namespace System.Windows.Data
         /// </remarks>
         protected void SetCurrent(object newItem, int newPosition)
         {
-            int count = (newItem != null) ? 0 : IsEmpty ? 0 : Count;
+            int count = (newItem is not null) ? 0 : IsEmpty ? 0 : Count;
             SetCurrent(newItem, newPosition, count);
         }
 
@@ -964,7 +964,7 @@ namespace System.Windows.Data
         /// </remarks>
         protected void SetCurrent(object newItem, int newPosition, int count)
         {
-            if (newItem != null)
+            if (newItem is not null)
             {
                 // non-null item implies position is within range.
                 // We ignore count - it's just a placeholder
@@ -1036,7 +1036,7 @@ namespace System.Windows.Data
                 return;
             }
 
-            if (CurrentChanging != null)
+            if (CurrentChanging is not null)
             {
                 CurrentChanging(this, args);
             }
@@ -1047,7 +1047,7 @@ namespace System.Windows.Data
         /// </summary>
         protected virtual void OnCurrentChanged()
         {
-            if (CurrentChanged != null && _currentChangedMonitor.Enter())
+            if (CurrentChanged is not null && _currentChangedMonitor.Enter())
             {
                 using (_currentChangedMonitor)
                 {
@@ -1439,7 +1439,7 @@ namespace System.Windows.Data
         internal void InvalidateEnumerableWrapper()
         {
             IndexedEnumerable wrapper = (IndexedEnumerable) Interlocked.Exchange(ref _enumerableWrapper, null);
-            if (wrapper != null)
+            if (wrapper is not null)
             {
                 wrapper.Invalidate();
             }
@@ -1457,17 +1457,17 @@ namespace System.Windows.Data
             Type itemType;
             object item;
 
-            if (itl != null)
+            if (itl is not null)
             {
                 // ITypedList has the information
                 properties = itl.GetItemProperties(null);
             }
-            else if ((itemType = GetItemType(false)) != null)
+            else if ((itemType = GetItemType(false)) is not null)
             {
                 // If we know the item type, use its properties.
                 properties = TypeDescriptor.GetProperties(itemType);
             }
-            else if ((item = GetRepresentativeItem()) != null)
+            else if ((item = GetRepresentativeItem()) is not null)
             {
                 // If we have a representative item, use its properties.
                 // It's cheaper to use the item type, but we cannot do that
@@ -1496,11 +1496,11 @@ namespace System.Windows.Data
                 PropertyDescriptor pd;
                 PropertyInfo pi;
 
-                if ((pd = property as PropertyDescriptor) != null)
+                if ((pd = property as PropertyDescriptor) is not null)
                 {
                     list.Add(new ItemPropertyInfo(pd.Name, pd.PropertyType, pd));
                 }
-                else if ((pi = property as PropertyInfo) != null)
+                else if ((pi = property as PropertyInfo) is not null)
                 {
                     list.Add(new ItemPropertyInfo(pi.Name, pi.PropertyType, pi));
                 }
@@ -1572,7 +1572,7 @@ namespace System.Windows.Data
             while (ie.MoveNext())
             {
                 object item = ie.Current;
-                if (item != null && item != NewItemPlaceholder)
+                if (item is not null && item != NewItemPlaceholder)
                 {
                     result = item;
                     break;
@@ -1580,7 +1580,7 @@ namespace System.Windows.Data
             }
 
             IDisposable d = ie as IDisposable;
-            if (d != null)
+            if (d is not null)
             {
                 d.Dispose();
             }
@@ -1591,7 +1591,7 @@ namespace System.Windows.Data
         internal virtual void GetCollectionChangedSources(int level, Action<int, object, bool?, List<string>> format, List<string> sources)
         {
             format(level, this, null, sources);
-            if (_sourceCollection != null)
+            if (_sourceCollection is not null)
             {
                 format(level+1, _sourceCollection, null, sources);
             }
@@ -1823,7 +1823,7 @@ namespace System.Windows.Data
         /// </param>
         private void DeferProcessing(ICollection changeLog)
         {
-            Debug.Assert(changeLog != null && changeLog.Count > 0, "don't defer when there's no work");
+            Debug.Assert(changeLog is not null && changeLog.Count > 0, "don't defer when there's no work");
 
             lock(SyncRoot)
             {
@@ -1838,7 +1838,7 @@ namespace System.Windows.Data
                         _changeLog.InsertRange(0, changeLog);
                     }
 
-                    if (_databindOperation != null)
+                    if (_databindOperation is not null)
                     {
                         _engine.ChangeCost(_databindOperation, changeLog.Count);
                     }
@@ -1869,7 +1869,7 @@ namespace System.Windows.Data
             {
                 NotifyCollectionChangedEventArgs args = changeLog[currentIndex] as NotifyCollectionChangedEventArgs;
 
-                if (args != null)
+                if (args is not null)
                 {
                     ProcessCollectionChanged(args);
                 }
@@ -1966,7 +1966,7 @@ namespace System.Windows.Data
             ICollection unprocessedChanges = ProcessChangeLog(_tempChangeLog);
 
             // if changes remain (because we ran out of time), reschedule them
-            if (unprocessedChanges != null && unprocessedChanges.Count > 0)
+            if (unprocessedChanges is not null && unprocessedChanges.Count > 0)
             {
                 DeferProcessing(unprocessedChanges);
             }
@@ -2098,7 +2098,7 @@ namespace System.Windows.Data
 
             public void Dispose()
             {
-                if (_collectionView != null)
+                if (_collectionView is not null)
                 {
                     _collectionView.EndDefer();
                     _collectionView = null;

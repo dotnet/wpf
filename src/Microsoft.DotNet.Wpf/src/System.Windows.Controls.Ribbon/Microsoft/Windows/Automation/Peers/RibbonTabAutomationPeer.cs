@@ -45,7 +45,7 @@ namespace Microsoft.Windows.Automation.Peers
                 children = base.GetChildrenCore();
             }
 
-            if (HeaderPeer != null)
+            if (HeaderPeer is not null)
             {
                 if (children is null)
                 {
@@ -77,13 +77,13 @@ namespace Microsoft.Windows.Automation.Peers
         protected override Rect GetBoundingRectangleCore()
         {
             // If this is not the selected tab, return the bounding Rect of just the TabHeader.
-            if (!OwningTab.IsSelected && HeaderPeer != null)
+            if (!OwningTab.IsSelected && HeaderPeer is not null)
             {
                 return HeaderPeer.GetBoundingRectangle();
             }
 
             Rect r = base.GetBoundingRectangleCore();
-            if (HeaderPeer != null)
+            if (HeaderPeer is not null)
             {
                 r.Union(HeaderPeer.GetBoundingRectangle());
             }
@@ -99,7 +99,7 @@ namespace Microsoft.Windows.Automation.Peers
 #if RIBBON_IN_FRAMEWORK
         internal override Rect GetVisibleBoundingRectCore()
         {
-            if (!OwningTab.IsSelected && HeaderPeer != null)
+            if (!OwningTab.IsSelected && HeaderPeer is not null)
             {
                 return HeaderPeer.GetVisibleBoundingRect();
             }
@@ -122,10 +122,10 @@ namespace Microsoft.Windows.Automation.Peers
         {
             get
             {
-                if (OwningTab.RibbonTabHeader != null)
+                if (OwningTab.RibbonTabHeader is not null)
                 {
                     AutomationPeer headerPeer = CreatePeerForElement(OwningTab.RibbonTabHeader);
-                    if (headerPeer != null)
+                    if (headerPeer is not null)
                     {
                         return headerPeer.EventsSource as RibbonTabHeaderDataAutomationPeer;
                     }
@@ -143,7 +143,7 @@ namespace Microsoft.Windows.Automation.Peers
         {
             AutomationPeer dataPeer = EventsSource;
 
-            if (dataPeer != null)
+            if (dataPeer is not null)
             {
                 dataPeer.RaisePropertyChangedEvent(
                     ExpandCollapsePatternIdentifiers.ExpandCollapseStateProperty,
@@ -159,7 +159,7 @@ namespace Microsoft.Windows.Automation.Peers
         {
             AutomationPeer dataPeer = EventsSource;
 
-            if (dataPeer != null)
+            if (dataPeer is not null)
             {
                 if( OwningTab.IsSelected )
                     dataPeer.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementSelected);

@@ -49,10 +49,10 @@ namespace MS.Internal.Markup
             }
 
             object value;
-            if (MemberType != null)
+            if (MemberType is not null)
             {
                 value = SystemResourceKey.GetSystemResourceKey($"{MemberType.Name}.{Member}");
-                if (value != null)
+                if (value is not null)
                 {
                     return value;
                 }
@@ -60,7 +60,7 @@ namespace MS.Internal.Markup
             else
             {
                 value = SystemResourceKey.GetSystemResourceKey(Member);
-                if (value != null)
+                if (value is not null)
                 {
                     return value;
                 }
@@ -101,7 +101,7 @@ namespace MS.Internal.Markup
             }
 
             value = CommandConverter.GetKnownControlCommand(MemberType, Member);
-            if (value != null)
+            if (value is not null)
             {
                 return value;
             }

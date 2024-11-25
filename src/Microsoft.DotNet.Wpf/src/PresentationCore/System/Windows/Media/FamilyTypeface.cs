@@ -294,7 +294,7 @@ namespace System.Windows.Media
 
         bool IDeviceFont.ContainsCharacter(int unicodeScalar)
         {
-            return _characterMetrics != null && _characterMetrics.GetValue(unicodeScalar) != null;
+            return _characterMetrics is not null && _characterMetrics.GetValue(unicodeScalar) is not null;
         }
 
 
@@ -310,7 +310,7 @@ namespace System.Windows.Media
                 for (int i = 0; i < characterLength; ++i)
                 {
                     CharacterMetrics metrics = _characterMetrics.GetValue(characterString[i]);
-                    if (metrics != null)
+                    if (metrics is not null)
                     {
                         // Side bearings are included in the advance width but are not used as offsets for glyph positioning.
                         pAdvances[i] = Math.Max(0, (int)((metrics.BlackBoxWidth + metrics.LeftSideBearing + metrics.RightSideBearing) * emSize));

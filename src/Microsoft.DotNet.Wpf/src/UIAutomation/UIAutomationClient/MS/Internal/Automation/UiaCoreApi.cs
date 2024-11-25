@@ -213,7 +213,7 @@ namespace MS.Internal.Automation
                     if (request._automationElementMode == AutomationElementMode.Full)
                     {
                         object val = data[objIndex, 0];
-                        if (val != null)
+                        if (val is not null)
                         {
                             SafeNodeHandle safeHandle = UiaHUiaNodeFromVariant(val);
                             data[objIndex, 0] = safeHandle;
@@ -235,7 +235,7 @@ namespace MS.Internal.Automation
                         AutomationPropertyInfo pi;
                         if (Schema.GetPropertyInfo(request.Properties[propertyIndex], out pi))
                         {
-                            if (pi.ObjectConverter != null)
+                            if (pi.ObjectConverter is not null)
                             {
                                 data[objIndex, 1 + propertyIndex] = pi.ObjectConverter(val);
                             }
@@ -251,7 +251,7 @@ namespace MS.Internal.Automation
                     for (int patternIndex = 0; patternIndex < request.Patterns.Length; patternIndex++)
                     {
                         object val = data[objIndex, patternBaseIndex + patternIndex];
-                        if (val != null)
+                        if (val is not null)
                         {
                             // Just wrap patterns to a SafeHandle, not a full pattern object, since patten
                             // object reqire a AutomationElement reference.
@@ -1127,7 +1127,7 @@ namespace MS.Internal.Automation
             // implements IErrorInfo, and effectively "passes through" uiacore).
             // IsComObject returns true only for non-CLR (eg. unmanaged) objects, so we have to check
             // for CLR Exception objects (with "is Exception") separately.
-            if(arr[1] != null
+            if(arr[1] is not null
                 && !Marshal.IsComObject(arr[1])
                 && !(arr[1] is Exception) )
                 return false;
@@ -1136,7 +1136,7 @@ namespace MS.Internal.Automation
             {
                 int hr = (int)arr[0];
                 object errorInfo = arr[1];
-                if (errorInfo != null)
+                if (errorInfo is not null)
                 {
                     // Marshal.ThrowExceptionForHR(hr, IntPtr) seems to ignore the errorInfo, but if we
                     // explicitly set it as a the errorInfo for this thread using SetErrorInfo, it works(!)...

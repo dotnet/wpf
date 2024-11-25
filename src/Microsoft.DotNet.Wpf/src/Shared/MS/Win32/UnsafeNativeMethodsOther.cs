@@ -1090,7 +1090,7 @@ namespace MS.Win32
             int refCount = 0;
 
             // Validate
-            if (o != null)
+            if (o is not null)
             {
                 if (Marshal.IsComObject(o))
                 {

@@ -61,7 +61,7 @@ namespace MS.Internal.Security.RightsManagement
             _resetEvent.WaitOne(); // return to the reset state after unblocking current transaction (as it is an "Auto"ResetEvent)
 
             // second process possible managed exception from the other thread 
-            if (_exception != null)
+            if (_exception is not null)
             {
                 // rethrow exception that was cought from a worker thread 
                 throw _exception;
@@ -116,7 +116,7 @@ namespace MS.Internal.Security.RightsManagement
         {
             if (disposing)
             {   
-                if (_resetEvent != null)
+                if (_resetEvent is not null)
                 {
                     _resetEvent.Set();
                     ((IDisposable)_resetEvent).Dispose();

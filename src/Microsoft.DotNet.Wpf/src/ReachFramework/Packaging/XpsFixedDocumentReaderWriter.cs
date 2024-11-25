@@ -310,7 +310,7 @@ namespace System.Windows.Xps.Packaging
             }
             set
             {
-                if(value != null)
+                if(value is not null)
                 {
                     if (_isPrintTicketCommitted)
                     {
@@ -474,7 +474,7 @@ namespace System.Windows.Xps.Packaging
         AddDocumentStructure(
             )
         {
-            if (this.DocumentStructure != null)
+            if (this.DocumentStructure is not null)
             {
                 // Document structure already available for this FixedDocument
                 throw new XpsPackagingException(SR.ReachPackaging_MoreThanOneDocStructure);
@@ -733,7 +733,7 @@ namespace System.Windows.Xps.Packaging
                                  );
 
 
-            if( signatureDefinitionPart != null )
+            if( signatureDefinitionPart is not null )
             {
                 dependentList[signatureDefinitionPart.Uri] = signatureDefinitionPart.Uri;
             }
@@ -783,7 +783,7 @@ namespace System.Windows.Xps.Packaging
             // Add DocumentStructure
             //
             EnsureDocumentStructure();
-            if (_documentStructure != null)
+            if (_documentStructure is not null)
             {
                 //
                 // Add my DocumentStructure to be tested for V&E Markup
@@ -795,7 +795,7 @@ namespace System.Windows.Xps.Packaging
             //
             PackagePart signatureDefinitionPart =
                 CurrentXpsManager.GetSignatureDefinitionPart(Uri);
-            if (signatureDefinitionPart != null)
+            if (signatureDefinitionPart is not null)
             {
                 //
                 // Add my signatureDefinitionPart to be tested for V&E Markup
@@ -833,7 +833,7 @@ namespace System.Windows.Xps.Packaging
             // Add DocumentStructure
             //
             EnsureDocumentStructure();
-            if( _documentStructure != null )
+            if( _documentStructure is not null )
             {
                 dependents[_documentStructure.Uri] = _documentStructure.Uri;
             }
@@ -914,7 +914,7 @@ namespace System.Windows.Xps.Packaging
         void
         CurrentPageCommitted()
         {
-            if( _currentPage != null )
+            if( _currentPage is not null )
             {
                 //Write out the fixed page tag
                 AddPageToDocument(_currentPage.Uri, _linkTargetStream);
@@ -958,7 +958,7 @@ namespace System.Windows.Xps.Packaging
                         if (reader.NodeType == XmlNodeType.Element && reader.Name == XpsS0Markup.PageContent)
                         {
                             string attribute = reader.GetAttribute(XmlTags.Source);
-                            if (attribute != null)
+                            if (attribute is not null)
                             {
                                 Uri relativeUri = new Uri(attribute, UriKind.Relative);
                                 AddPageToCache(PackUriHelper.ResolvePartUri(Uri, relativeUri));
@@ -1022,7 +1022,7 @@ namespace System.Windows.Xps.Packaging
             _signatureDefinitions = new Collection<XpsSignatureDefinition>();
             PackagePart sigDefPart =
                 CurrentXpsManager.GetSignatureDefinitionPart(Uri);
-            if( sigDefPart != null )
+            if( sigDefPart is not null )
             {
                 ParseSignaturePart( sigDefPart, _signatureDefinitions );
             }
@@ -1043,7 +1043,7 @@ namespace System.Windows.Xps.Packaging
 
             foreach (PackageRelationship rel in _metroPart.GetRelationshipsByType(XpsS0Markup.StructureRelationshipName))
             {
-                if (documentStructureRelationship != null)
+                if (documentStructureRelationship is not null)
                 {
                     throw new InvalidDataException(SR.ReachPackaging_MoreThanOneDocStructure);
                 }
@@ -1051,7 +1051,7 @@ namespace System.Windows.Xps.Packaging
                 documentStructureRelationship = rel;
             }
 
-            if (documentStructureRelationship != null)
+            if (documentStructureRelationship is not null)
             {
                 Uri documentStructureUri = PackUriHelper.ResolvePartUri(documentStructureRelationship.SourceUri,
                                                                 documentStructureRelationship.TargetUri);
@@ -1238,7 +1238,7 @@ namespace System.Windows.Xps.Packaging
             //
             // Create the relationship between the package and the tumbnail
             //
-            if( _thumbnail != null )
+            if( _thumbnail is not null )
             {
                 _thumbnail = null;
             }

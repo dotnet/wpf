@@ -135,7 +135,7 @@ namespace MS.Internal.Csp
 
             cp.OutputAssembly = Path.Combine(tempDirectory.PathName, "csp.project.exe");
 
-            if (parameters.MainClass != null)
+            if (parameters.MainClass is not null)
             {
                 cp.MainClass = parameters.MainClass;
             }
@@ -316,7 +316,7 @@ namespace MS.Internal.Csp
                     "Error: Multiple Main methods in class '" + t.FullName + "'");
             }
 
-            return method != null;
+            return method is not null;
         }
 
         /// <summary>

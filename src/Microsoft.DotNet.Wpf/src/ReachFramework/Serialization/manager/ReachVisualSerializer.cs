@@ -60,7 +60,7 @@ namespace System.Windows.Xps.Serialization
             //  The new class XpsOMSerializationManager now also interacts with this class
             // the cast below is shorthand for cast to either XpsSerializationManager or XpsOMSerializationManager
             // we want this to throw an InvalidCastException if it fails to mantain compatibility.
-            if((IXpsSerializationManager)SerializationManager != null)
+            if((IXpsSerializationManager)SerializationManager is not null)
             {
                 XmlWriter pageWriter  = SerializationManager.
                                         PackagingPolicy.AcquireXmlWriterForPage();
@@ -118,7 +118,7 @@ namespace System.Windows.Xps.Serialization
                 NodeContext ctx = contextStack.Peek();
 
                 Visual v = ctx.GetNextChild();
-                if (v != null)
+                if (v is not null)
                 {
                     if (flattener.StartVisual(v))
                     {
@@ -196,7 +196,7 @@ namespace System.Windows.Xps.Serialization
             //  The new class XpsOMSerializationManager now also interacts with this class
             // the cast below is shorthand for cast to either XpsSerializationManager or XpsOMSerializationManager
             // we want this to throw an InvalidCastException if it fails to mantain compatibility.
-            if ((IXpsSerializationManager)SerializationManager != null)
+            if ((IXpsSerializationManager)SerializationManager is not null)
             {
                 XmlWriter           pageWriter  = SerializationManager.
                                                   PackagingPolicy.AcquireXmlWriterForPage();

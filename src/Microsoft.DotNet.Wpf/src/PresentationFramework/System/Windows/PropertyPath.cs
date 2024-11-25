@@ -84,7 +84,7 @@ namespace System.Windows
 
             _path = path;
 
-            if (pathParameters != null && pathParameters.Length > 0)
+            if (pathParameters is not null && pathParameters.Length > 0)
             {
                 // initialize internal pathParameters list
                 PathParameterCollection parameters = new PathParameterCollection(pathParameters);
@@ -177,10 +177,10 @@ namespace System.Windows
             DynamicObjectAccessor doa;
             DowncastAccessor(accessor, out dp, out pi, out pd, out doa);
 
-            if (pi != null)
+            if (pi is not null)
             {
                 mi =  pi.GetGetMethod();
-                return mi != null && mi.IsStatic;
+                return mi is not null && mi.IsStatic;
             }
 
             return false;
@@ -196,18 +196,18 @@ namespace System.Windows
         internal static void DowncastAccessor(object accessor,
                             out DependencyProperty dp, out PropertyInfo pi, out PropertyDescriptor pd, out DynamicObjectAccessor doa)
         {
-            if ((dp = accessor as DependencyProperty) != null)
+            if ((dp = accessor as DependencyProperty) is not null)
             {
                 pd = null;
                 pi = null;
                 doa = null;
             }
-            else if ((pi = accessor as PropertyInfo) != null)
+            else if ((pi = accessor as PropertyInfo) is not null)
             {
                 pd = null;
                 doa = null;
             }
-            else if ((pd = accessor as PropertyDescriptor) != null)
+            else if ((pd = accessor as PropertyDescriptor) is not null)
             {
                 doa = null;
             }
@@ -412,7 +412,7 @@ namespace System.Windows
                 switch (_arySVI[i].type)
                 {
                     case SourceValueType.Property:
-                        if (_earlyBoundPathParts[i] != null)
+                        if (_earlyBoundPathParts[i] is not null)
                         {
                             builder.Append('(');
                             builder.Append(parameters.Count.ToString(TypeConverterHelper.InvariantEnglishUS.NumberFormat));
@@ -428,7 +428,7 @@ namespace System.Windows
 
                     case SourceValueType.Indexer:
                         builder.Append('[');
-                        if (_earlyBoundPathParts[i] != null)
+                        if (_earlyBoundPathParts[i] is not null)
                         {
                             IndexerParameterInfo[] aryIPI = (IndexerParameterInfo[])_earlyBoundPathParts[i];
                             // the params should be at the very least a single empty string
@@ -437,7 +437,7 @@ namespace System.Windows
                             while (true)
                             {
                                 IndexerParameterInfo info = aryIPI[j];
-                                if (info.type != null)
+                                if (info.type is not null)
                                 {
                                     builder.Append('(');
                                     builder.Append(parameters.Count.ToString(TypeConverterHelper.InvariantEnglishUS.NumberFormat));
@@ -484,12 +484,12 @@ namespace System.Windows
         // set new parameter collection; update collection change notification handler
         private void SetPathParameterCollection(PathParameterCollection parameters)
         {
-            if (_parameters != null)
+            if (_parameters is not null)
             {
                 _parameters.CollectionChanged -= new NotifyCollectionChangedEventHandler(ParameterCollectionChanged);
             }
             _parameters = parameters;
-            if (_parameters != null)
+            if (_parameters is not null)
             {
                 _parameters.CollectionChanged += new NotifyCollectionChangedEventHandler(ParameterCollectionChanged);
             }
@@ -505,12 +505,12 @@ namespace System.Windows
         // resolve the property names and path parameters early, if possible
         void ResolvePathParts(ITypeDescriptorContext typeDescriptorContext)
         {
-            bool throwOnError = (typeDescriptorContext != null);
+            bool throwOnError = (typeDescriptorContext is not null);
 
             object context = null;
 
             TypeConvertContext typeConvertContext = typeDescriptorContext as TypeConvertContext;
-            if( typeConvertContext != null )
+            if( typeConvertContext is not null )
                 context = typeConvertContext.ParserContext;
 
             if (context is null)
@@ -527,7 +527,7 @@ namespace System.Windows
                         object accessor = ResolvePropertyName(name, null, null, context, throwOnError);
                         _earlyBoundPathParts[level] = accessor;
 
-                        if (accessor != null)
+                        if (accessor is not null)
                         {
                             _arySVI[level].propertyName = GetPropertyName(accessor);
                         }
@@ -562,7 +562,7 @@ namespace System.Windows
                     // be corrected later on.
                     if (!IsValidAccessor(accessor))
                         throw new InvalidOperationException(SR.Format(SR.PropertyPathInvalidAccessor,
-                                    (accessor != null) ? accessor.GetType().FullName : "null"));
+                                    (accessor is not null) ? accessor.GetType().FullName : "null"));
 
                     return accessor;
                 }
@@ -593,7 +593,7 @@ namespace System.Windows
                 }
             }
 
-            if (ownerType != null)
+            if (ownerType is not null)
             {
                 // get an appropriate accessor from the ownerType and propertyName.
                 // We prefer accessors in a certain order, defined below.
@@ -625,7 +625,7 @@ namespace System.Windows
                 // discover properties obtained from TypeDescriptorProvider -
                 // see bug 1713000).
                 // This supports the WinForms ValueChanged pattern.
-                if (accessor is null && item != null)
+                if (accessor is null && item is not null)
                 {
                     accessor = TypeDescriptor.GetProperties(item)[propertyName];
                 }
@@ -675,7 +675,7 @@ namespace System.Windows
             {
                 try
                 {
-                    for (result = null;  result is null && ownerType != null;  ownerType = ownerType.BaseType)
+                    for (result = null;  result is null && ownerType is not null;  ownerType = ownerType.BaseType)
                     {
                         result = ownerType.GetProperty(propertyName, BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public);
                     }
@@ -725,7 +725,7 @@ namespace System.Windows
                         if (0 <= index && index < PathParameters.Count)
                         {
                             object value = PathParameters[index];
-                            if (value != null)
+                            if (value is not null)
                             {
                                 args[i].value = value;
                                 args[i].type = value.GetType();
@@ -751,10 +751,10 @@ namespace System.Windows
                 {
                     // both strings appear "(Double)3.14159" - value is type-converted from value string
                     args[i].type = GetTypeFromName(paramList[i].parenString, context);
-                    if (args[i].type != null)
+                    if (args[i].type is not null)
                     {
                         object value = GetTypedParamValue(paramList[i].valueString.Trim(), args[i].type, throwOnError);
-                        if (value != null)
+                        if (value is not null)
                         {
                             args[i].value = value;
                         }
@@ -785,7 +785,7 @@ namespace System.Windows
 
             TypeConverter tc = TypeDescriptor.GetConverter(type);
 
-            if (tc != null && tc.CanConvertFrom(typeof(string)))
+            if (tc is not null && tc.CanConvertFrom(typeof(string)))
             {
                 // PreSharp uses message numbers that the C# compiler doesn't know about.
                 // Disable the C# complaints, per the PreSharp documentation.
@@ -838,7 +838,7 @@ namespace System.Windows
             // bchapman 5/8/2009 - I believe with System.Xaml there is never an old parserContext here.
             // But cannot be sure.
             ParserContext parserContext = context as ParserContext;
-            if (parserContext != null)
+            if (parserContext is not null)
             {
                 // Find the namespace prefix
                 string nsPrefix;
@@ -862,7 +862,7 @@ namespace System.Windows
 
                 TypeAndSerializer typeAndSerializer = parserContext.XamlTypeMapper.GetTypeOnly(namespaceURI, name);
 
-                return (typeAndSerializer != null) ? typeAndSerializer.ObjectType : null;
+                return (typeAndSerializer is not null) ? typeAndSerializer.ObjectType : null;
             }
 
             else
@@ -872,17 +872,17 @@ namespace System.Windows
 
                     IXamlTypeResolver xtr = (context as IServiceProvider).GetService(typeof(IXamlTypeResolver)) as IXamlTypeResolver;
 
-                    if (xtr != null)
+                    if (xtr is not null)
                     {
                         return xtr.Resolve(name);
                     }
                 }
 
                 IValueSerializerContext serializerContext = context as IValueSerializerContext;
-                if (serializerContext != null)
+                if (serializerContext is not null)
                 {
                     ValueSerializer typeSerializer = ValueSerializer.GetSerializerFor(typeof(Type), serializerContext);
-                    if (typeSerializer != null)
+                    if (typeSerializer is not null)
                         return typeSerializer.ConvertFromString(name, serializerContext) as Type;
                 }
             }
@@ -912,7 +912,7 @@ namespace System.Windows
         // return true if the name has the form:  (property)
         internal static bool IsPropertyReference(string name)
         {
-            return (name != null && name.Length > 1 && name[0] == '(' && (name[name.Length - 1] == ')'));
+            return (name is not null && name.Length > 1 && name[0] == '(' && (name[name.Length - 1] == ')'));
         }
 
         // return true if the name has the form:  (nnn)
@@ -952,13 +952,13 @@ namespace System.Windows
             PropertyDescriptor pd;
             DynamicObjectAccessor doa;
 
-            if ((dp = accessor as DependencyProperty) != null)
+            if ((dp = accessor as DependencyProperty) is not null)
                 return dp.Name;
-            else if ((pi = accessor as PropertyInfo) != null)
+            else if ((pi = accessor as PropertyInfo) is not null)
                 return pi.Name;
-            else if ((pd = accessor as PropertyDescriptor) != null)
+            else if ((pd = accessor as PropertyDescriptor) is not null)
                 return pd.Name;
-            else if ((doa = accessor as DynamicObjectAccessor) != null)
+            else if ((doa = accessor as DynamicObjectAccessor) is not null)
                 return doa.PropertyName;
             else
             {

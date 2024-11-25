@@ -157,7 +157,7 @@ namespace MS.Internal.Ink
                     {
                         HighContrastCallback highContrastCallback = weakRef.Target as HighContrastCallback;
 
-                        if ( highContrastCallback.Dispatcher != null )
+                        if ( highContrastCallback.Dispatcher is not null )
                         {
                             highContrastCallback.Dispatcher.BeginInvoke(DispatcherPriority.Background,
                                 new UpdateHighContrastCallback(OnUpdateHighContrast),

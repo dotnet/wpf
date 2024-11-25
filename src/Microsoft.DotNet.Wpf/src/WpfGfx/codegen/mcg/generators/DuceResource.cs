@@ -215,7 +215,7 @@ namespace MS.Internal.MilCodeGen.Generators
                             // or otherwise we're risking problems during while unregistering.
                             //
 
-                            if (rgpResources != NULL)
+                            if (rgpResources is not null)
                             {
                                 WPFFree(ProcessHeap, rgpResources);
                                 rgpResources = NULL;
@@ -399,7 +399,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
             McgResource resourceType = resource.CollectionType as McgResource;
 
-            if (resourceType != null && resourceType.UsesHandles)
+            if (resourceType is not null && resourceType.UsesHandles)
             {
                 return
                     [[inline]]
@@ -418,7 +418,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
             McgResource resourceType = resource.CollectionType as McgResource;
 
-            if (resourceType != null && resourceType.UsesHandles)
+            if (resourceType is not null && resourceType.UsesHandles)
             {
                 return
                     [[inline]]
@@ -452,7 +452,7 @@ namespace MS.Internal.MilCodeGen.Generators
             {
                 McgResource fieldResource = field.Type as McgResource;
 
-                if (fieldResource != null &&
+                if (fieldResource is not null &&
                     fieldResource.IsCollection &&
                     !fieldResource.HasUnmanagedResource)
                 {
@@ -543,7 +543,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
             McgResource resource = dataType as McgResource;
 
-            if (resource != null)
+            if (resource is not null)
             {
                 if (resource.IsCollection)
                 {
@@ -624,7 +624,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 return;
             }
 
-            if (dataType.Realization != null && dataType.Realization.IsCached)
+            if (dataType.Realization is not null && dataType.Realization.IsCached)
             {
                 clearRealization = "ClearRealization();";
             }
@@ -663,7 +663,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     unmarshalStructBody.Write(
                         [[inline]]
 
-                            if (pCmd->h[[field.Name]] != NULL)
+                            if (pCmd->h[[field.Name]] is not null)
                             {
                                 m_data.m_p[[FirstCap(field.Name)]] =
                                     static_cast<[[fieldResource.DuceClass]]*>(pHandleTable->GetResource(
@@ -701,7 +701,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 {
                     McgResource fieldResource = field.Type as McgResource;
 
-                    if (fieldResource != null
+                    if (fieldResource is not null
                         && fieldResource.IsCollection
                         && !fieldResource.HasUnmanagedResource)
                     {
@@ -842,7 +842,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
                     unmarshalStructBody.Write(
                         [[inline]]
-                            if (pCmd->h[[FirstCap(field.Name)]]Animations != NULL)
+                            if (pCmd->h[[FirstCap(field.Name)]]Animations is not null)
                             {
                                 m_data.m_p[[FirstCap(field.Name)]]Animation =
                                     static_cast<[[fieldResource.DuceClass]]*>(pHandleTable->GetResource(
@@ -868,7 +868,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
             McgResource resource = dataType as McgResource;
 
-            if (resource != null)
+            if (resource is not null)
             {
                 if (resource.IsCollection)
                 {
@@ -1017,7 +1017,7 @@ namespace MS.Internal.MilCodeGen.Generators
             foreach (McgField field in dataType.AllUceFields)
             {
                 McgResource resource = field.Type as McgResource;
-                if (resource != null &&
+                if (resource is not null &&
                     resource.IsCollection &&
                     !resource.HasUnmanagedResource)
                 {
@@ -1059,8 +1059,8 @@ namespace MS.Internal.MilCodeGen.Generators
                 }
                 else
                 {
-                    string fieldType = (resource != null) ? resource.DuceClass : null;
-                    if (resource != null && !resource.IsValueType)
+                    string fieldType = (resource is not null) ? resource.DuceClass : null;
+                    if (resource is not null && !resource.IsValueType)
                     {
                         // The field is a composition resource
                         if (!forwards.ContainsKey(fieldType))
@@ -1148,7 +1148,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 string resourceType = AllCaps(resource.Name);
 
                 McgResource extendsBase = resource.ExtendsBase as McgResource;
-                if (extendsBase != null)
+                if (extendsBase is not null)
                 {
                     resourceType = AllCaps(extendsBase.Name);
                 }
@@ -1164,10 +1164,10 @@ namespace MS.Internal.MilCodeGen.Generators
         {
             string parentClassName = "CMilSlaveResource";
 
-            if (resource.Extends != null)
+            if (resource.Extends is not null)
             {
                 McgResource parentResource = resource.Extends as McgResource;
-                if (parentResource != null)
+                if (parentResource is not null)
                 {
                     parentClassName = parentResource.DuceClass;
                 }

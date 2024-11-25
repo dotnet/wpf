@@ -227,7 +227,7 @@ namespace System.Windows.Controls
             DataGridLength newWidth = (DataGridLength)e.NewValue;
             DataGrid dataGrid = column.DataGridOwner;
 
-            if (dataGrid != null &&
+            if (dataGrid is not null &&
                 !DoubleUtil.AreClose(oldWidth.DisplayValue, newWidth.DisplayValue))
             {
                 dataGrid.InternalColumns.InvalidateAverageColumnWidth();
@@ -247,7 +247,7 @@ namespace System.Windows.Controls
 
             try
             {
-                if (dataGrid != null && (newWidth.IsStar ^ oldWidth.IsStar))
+                if (dataGrid is not null && (newWidth.IsStar ^ oldWidth.IsStar))
                 {
                     dataGrid.InternalColumns.InvalidateHasVisibleStarColumns();
                 }
@@ -263,7 +263,7 @@ namespace System.Windows.Controls
                     DataGridNotificationTarget.ColumnHeadersPresenter |
                     DataGridNotificationTarget.DataGrid);
 
-                if (dataGrid != null)
+                if (dataGrid is not null)
                 {
                     if (!column._ignoreRedistributionOnWidthChange && column.IsVisible)
                     {
@@ -317,7 +317,7 @@ namespace System.Windows.Controls
 
             column.NotifyPropertyChanged(d, e, DataGridNotificationTarget.Columns);
 
-            if (dataGrid != null && column.IsVisible)
+            if (dataGrid is not null && column.IsVisible)
             {
                 dataGrid.InternalColumns.RedistributeColumnWidthsOnMinWidthChangeOfColumn(column, (double)e.OldValue);
             }
@@ -356,7 +356,7 @@ namespace System.Windows.Controls
 
             column.NotifyPropertyChanged(d, e, DataGridNotificationTarget.Columns);
 
-            if (dataGrid != null && column.IsVisible)
+            if (dataGrid is not null && column.IsVisible)
             {
                 dataGrid.InternalColumns.RedistributeColumnWidthsOnMaxWidthChangeOfColumn(column, (double)e.OldValue);
             }
@@ -617,10 +617,10 @@ namespace System.Windows.Controls
         {
             ArgumentNullException.ThrowIfNull(dataItem);
 
-            if (_dataGridOwner != null)
+            if (_dataGridOwner is not null)
             {
                 DataGridRow row = _dataGridOwner.ItemContainerGenerator.ContainerFromItem(dataItem) as DataGridRow;
-                if (row != null)
+                if (row is not null)
                 {
                     return GetCellContent(row);
                 }
@@ -638,13 +638,13 @@ namespace System.Windows.Controls
         {
             ArgumentNullException.ThrowIfNull(dataGridRow);
 
-            if (_dataGridOwner != null)
+            if (_dataGridOwner is not null)
             {
                 int columnIndex = _dataGridOwner.Columns.IndexOf(this);
                 if (columnIndex >= 0)
                 {
                     DataGridCell cell = dataGridRow.TryGetCell(columnIndex);
-                    if (cell != null)
+                    if (cell is not null)
                     {
                         return cell.Content as FrameworkElement;
                     }
@@ -721,7 +721,7 @@ namespace System.Windows.Controls
         {
             // This call is to ensure that the tree and its bindings have resolved
             // before we proceed to code that relies on the tree being ready.
-            if (editingElement != null)
+            if (editingElement is not null)
             {
                 editingElement.UpdateLayout();
 
@@ -732,7 +732,7 @@ namespace System.Windows.Controls
 
         internal void CancelEdit(FrameworkElement editingElement)
         {
-            if (editingElement != null)
+            if (editingElement is not null)
             {
                 CancelCellEdit(editingElement, GetOriginalValue(editingElement));
                 ClearOriginalValue(editingElement);
@@ -741,7 +741,7 @@ namespace System.Windows.Controls
 
         internal bool CommitEdit(FrameworkElement editingElement)
         {
-            if (editingElement != null)
+            if (editingElement is not null)
             {
                 if (CommitCellEdit(editingElement))
                 {
@@ -873,7 +873,7 @@ namespace System.Windows.Controls
                 // to the targets that need notification.
                 DataGridColumn column = (DataGridColumn)d;
                 DataGrid dataGridOwner = column.DataGridOwner;
-                if (dataGridOwner != null)
+                if (dataGridOwner is not null)
                 {
                     dataGridOwner.NotifyPropertyChanged(d, e, target);
                 }
@@ -886,7 +886,7 @@ namespace System.Windows.Controls
         /// <param name="propertyName"></param>
         protected void NotifyPropertyChanged(string propertyName)
         {
-            if (DataGridOwner != null)
+            if (DataGridOwner is not null)
             {
                 DataGridOwner.NotifyPropertyChanged(this, propertyName, new DependencyPropertyChangedEventArgs(), DataGridNotificationTarget.RefreshCellContent);
             }
@@ -976,7 +976,7 @@ namespace System.Windows.Controls
         {
             DataGridColumn column = (DataGridColumn)d;
 
-            if (column.DataGridOwner != null)
+            if (column.DataGridOwner is not null)
             {
                 column.DataGridOwner.ValidateDisplayIndex(column, (int)baseValue);
             }
@@ -1058,7 +1058,7 @@ namespace System.Windows.Controls
             bool basePropertyHasModifiers;
             BaseValueSourceInternal baseValueSource = column.GetValueSource(CanUserSortProperty, /*metadata*/ null, out basePropertyHasModifiers);
 
-            if (column.DataGridOwner != null)
+            if (column.DataGridOwner is not null)
             {
                 bool parentPropertyHasModifiers;
                 BaseValueSourceInternal parentValueSource = column.DataGridOwner.GetValueSource(DataGrid.CanUserSortColumnsProperty, /*metadata*/ null, out parentPropertyHasModifiers);
@@ -1154,7 +1154,7 @@ namespace System.Windows.Controls
         /// <returns></returns>
         internal static DataGridColumn CreateDefaultColumn(ItemPropertyInfo itemProperty)
         {
-            Debug.Assert(itemProperty != null && itemProperty.PropertyType != null, "itemProperty and/or its PropertyType member cannot be null");
+            Debug.Assert(itemProperty is not null && itemProperty.PropertyType is not null, "itemProperty and/or its PropertyType member cannot be null");
 
             DataGridColumn dataGridColumn = null;
             DataGridComboBoxColumn comboBoxColumn = null;
@@ -1195,10 +1195,10 @@ namespace System.Windows.Controls
             // Set the data field binding for such created columns and
             // choose the BindingMode based on editability of the property.
             DataGridBoundColumn boundColumn = dataGridColumn as DataGridBoundColumn;
-            if (boundColumn != null || comboBoxColumn != null)
+            if (boundColumn is not null || comboBoxColumn is not null)
             {
                 Binding binding = new Binding(itemProperty.Name);
-                if (comboBoxColumn != null)
+                if (comboBoxColumn is not null)
                 {
                     comboBoxColumn.SelectedItemBinding = binding;
                 }
@@ -1208,7 +1208,7 @@ namespace System.Windows.Controls
                 }
 
                 PropertyDescriptor pd = itemProperty.Descriptor as PropertyDescriptor;
-                if (pd != null)
+                if (pd is not null)
                 {
                     if (pd.IsReadOnly)
                     {
@@ -1219,7 +1219,7 @@ namespace System.Windows.Controls
                 else
                 {
                     PropertyInfo pi = itemProperty.Descriptor as PropertyInfo;
-                    if (pi != null)
+                    if (pi is not null)
                     {
                         if (!pi.CanWrite)
                         {
@@ -1282,7 +1282,7 @@ namespace System.Windows.Controls
         {
             DataGridColumn column = (DataGridColumn)d;
             DataGrid dataGrid = column.DataGridOwner;
-            if (dataGrid != null)
+            if (dataGrid is not null)
             {
                 if (column.DisplayIndex < dataGrid.FrozenColumnCount)
                 {
@@ -1384,7 +1384,7 @@ namespace System.Windows.Controls
             object cellValue = DataGridOwner.GetCellClipboardValue(item, this);
 
             // Raise the event to give a chance for external listeners to modify the cell content
-            if (CopyingCellClipboardContent != null)
+            if (CopyingCellClipboardContent is not null)
             {
                 DataGridCellClipboardEventArgs args = new DataGridCellClipboardEventArgs(item, this, cellValue);
                 CopyingCellClipboardContent(this, args);
@@ -1403,11 +1403,11 @@ namespace System.Windows.Controls
         public virtual void OnPastingCellClipboardContent(object item, object cellContent)
         {
             BindingBase binding = ClipboardContentBinding;
-            if (binding != null)
+            if (binding is not null)
             {
                 // Raise the event to give a chance for external listeners to modify the cell content
                 // before it gets stored into the cell
-                if (PastingCellClipboardContent != null)
+                if (PastingCellClipboardContent is not null)
                 {
                     DataGridCellClipboardEventArgs args = new DataGridCellClipboardEventArgs(item, this, cellContent);
                     PastingCellClipboardContent(this, args);
@@ -1415,7 +1415,7 @@ namespace System.Windows.Controls
                 }
 
                 // Event handlers can cancel Paste of a cell by setting its content to null
-                if (cellContent != null)
+                if (cellContent is not null)
                 {
                     DataGridOwner.SetCellClipboardValue(item, this, cellContent);
                 }
@@ -1447,7 +1447,7 @@ namespace System.Windows.Controls
         internal void BeginEdit(InputEventArgs e, bool handled)
         {
             var owner = DataGridOwner;
-            if (owner != null)
+            if (owner is not null)
             {
                 if (owner.BeginEdit(e))
                 {

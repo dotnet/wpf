@@ -212,7 +212,7 @@ namespace MS.Internal
 
             // create the instance of the extension class
             Type extensionType = Type.GetType($"{extensionTypeName}, {extensionAssemblyName}", throwOnError:false);
-            if (extensionType != null)
+            if (extensionType is not null)
             {
                 result = Activator.CreateInstance(extensionType);
             }

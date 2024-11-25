@@ -37,13 +37,13 @@ namespace System.Windows.Documents
             get
             {
                 FixedSOMTextRun lastRun = this.LastTextRun;
-                if (lastRun != null)
+                if (lastRun is not null)
                 {
                     //Need to check for edge case - subscript or superscript at the end of a line
                     if (this.SemanticBoxes.Count > 1)
                     {
                          FixedSOMTextRun run = this.SemanticBoxes[this.SemanticBoxes.Count - 2] as FixedSOMTextRun;
-                         if (run != null &&
+                         if (run is not null &&
                              lastRun.BoundingRect.Height / run.BoundingRect.Height < 0.75 &&
                              run.BoundingRect.Left != lastRun.BoundingRect.Left &&
                              run.BoundingRect.Right != lastRun.BoundingRect.Right &&
@@ -153,7 +153,7 @@ namespace System.Windows.Documents
             rect.Inflate(3,3);
             dc.DrawRectangle(null, pen , rect);
 
-            if (debugVisual == DrawDebugVisual.Paragraphs && label != null)
+            if (debugVisual == DrawDebugVisual.Paragraphs && label is not null)
             {
                 base.RenderLabel(dc, label);
             }
@@ -171,7 +171,7 @@ namespace System.Windows.Documents
             foreach (FixedSOMSemanticBox box in block.SemanticBoxes)
             {
                 FixedSOMTextRun run = box as FixedSOMTextRun;
-                if (run != null)
+                if (run is not null)
                 {
                     AddTextRun(run);
                 }
@@ -221,7 +221,7 @@ namespace System.Windows.Documents
             foreach (FixedSOMSemanticBox box in _semanticBoxes)
             {
                 FixedSOMTextRun run  = box as FixedSOMTextRun;
-                if (run != null)
+                if (run is not null)
                 {
                     builder.Append(run.Text);
                     builder.Append(' ');

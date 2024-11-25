@@ -105,7 +105,7 @@ namespace MS.Internal.Documents
             ArgumentNullException.ThrowIfNull(scope);
             ArgumentNullException.ThrowIfNull(undoManager);
 
-            if (undoManager is UndoManager && ((UndoManager)undoManager)._scope != null)
+            if (undoManager is UndoManager && ((UndoManager)undoManager)._scope is not null)
             {
                 throw new InvalidOperationException(SR.UndoManagerAlreadyAttached);
             }
@@ -141,7 +141,7 @@ namespace MS.Internal.Documents
 
             // Detach existing undo service if any
             undoManager = scope.ReadLocalValue(UndoManager.UndoManagerInstanceProperty) as UndoManager;
-            if (undoManager != null)
+            if (undoManager is not null)
             {
                 // Disable the service while in detached state
                 undoManager.IsEnabled = false;
@@ -251,7 +251,7 @@ namespace MS.Internal.Documents
 
             ArgumentNullException.ThrowIfNull(unit);
 
-            if (OpenedUnit != null)
+            if (OpenedUnit is not null)
             {
                 throw new InvalidOperationException(SR.UndoUnitAlreadyOpen);
             }
@@ -339,7 +339,7 @@ namespace MS.Internal.Documents
 
                 closeParent = OpenedUnit;
 
-                while (closeParent.OpenedUnit != null && closeParent.OpenedUnit != unit)
+                while (closeParent.OpenedUnit is not null && closeParent.OpenedUnit != unit)
                 {
                     closeParent = closeParent.OpenedUnit;
                 }
@@ -360,7 +360,7 @@ namespace MS.Internal.Documents
             {
                 // discard unit
                 SetState(UndoState.Rollback);
-                if (unit.OpenedUnit != null)
+                if (unit.OpenedUnit is not null)
                 {
                     unit.Close(closeAction);
                 }
@@ -380,7 +380,7 @@ namespace MS.Internal.Documents
             else
             {
                 // commit unit
-                if (unit.OpenedUnit != null)
+                if (unit.OpenedUnit is not null)
                 {
                     unit.Close(UndoCloseAction.Commit);
                 }
@@ -421,7 +421,7 @@ namespace MS.Internal.Documents
             ArgumentNullException.ThrowIfNull(unit);
 
             parent = DeepestOpenUnit;
-            if (parent != null)
+            if (parent is not null)
             {
                 parent.Add(unit);
             }
@@ -447,7 +447,7 @@ namespace MS.Internal.Documents
                     }
                     else
                     {
-                        if (PeekUndoStack() != null)
+                        if (PeekUndoStack() is not null)
                         {
                             if (++_bottomUndoIndex == UndoLimit)
                             {
@@ -524,7 +524,7 @@ namespace MS.Internal.Documents
                 throw new InvalidOperationException(SR.UndoNotInNormalState);
             }
 
-            if (OpenedUnit != null)
+            if (OpenedUnit is not null)
             {
                 throw new InvalidOperationException(SR.UndoUnitOpen);
             }
@@ -589,7 +589,7 @@ namespace MS.Internal.Documents
                 throw new InvalidOperationException(SR.UndoNotInNormalState);
             }
 
-            if (OpenedUnit != null)
+            if (OpenedUnit is not null)
             {
                 throw new InvalidOperationException(SR.UndoUnitOpen);
             }
@@ -1048,9 +1048,9 @@ namespace MS.Internal.Documents
                 IParentUndoUnit openedUnit;
 
                 openedUnit = OpenedUnit;
-                if (openedUnit != null)
+                if (openedUnit is not null)
                 {
-                    while (openedUnit.OpenedUnit != null)
+                    while (openedUnit.OpenedUnit is not null)
                     {
                         openedUnit = openedUnit.OpenedUnit;
                     }

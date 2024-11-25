@@ -38,13 +38,13 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         private bool IsAutoLayoutPass()
         {
             RibbonGallery gallery = Gallery;
-            if (gallery != null)
+            if (gallery is not null)
             {
                 RibbonGalleryCategoriesPanel categoriesPanel = gallery.ItemsHostSite as RibbonGalleryCategoriesPanel;
-                if (categoriesPanel != null)
+                if (categoriesPanel is not null)
                 {
                     IContainsStarLayoutManager iContainsStarLayoutManager = (IContainsStarLayoutManager)categoriesPanel;
-                    if (iContainsStarLayoutManager.StarLayoutManager != null)
+                    if (iContainsStarLayoutManager.StarLayoutManager is not null)
                         return !iContainsStarLayoutManager.StarLayoutManager.IsStarLayoutPass;
                 }
             }
@@ -55,7 +55,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         private void AddScrollDeltaInfo(double sumOfHeight, int childrenCount)
         {
             RibbonGalleryCategory category = Category;
-            if (category != null)
+            if (category is not null)
             {
                 // Adding virtual count of items and cumulative height to RGC for the purpose of calcualting 
                 // avg height as scrolling delta in RibbonGalleryCategoriesPanel.
@@ -68,7 +68,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         private int GetMinColumnCount()
         {
             RibbonGalleryCategory category = Category;
-            if (category != null)
+            if (category is not null)
             {
                 return (int)category.MinColumnCount;
             }
@@ -79,7 +79,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         private int GetMaxColumnCount()
         {
             RibbonGalleryCategory category = Category;
-            if (category != null)
+            if (category is not null)
             {
                 return (int)category.MaxColumnCount;
             }
@@ -93,7 +93,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         private double GetMaxColumnWidth()
         {
             RibbonGallery gallery = Gallery;
-            if (gallery != null && SharedColumnSizeScopeAtGalleryLevel)
+            if (gallery is not null && SharedColumnSizeScopeAtGalleryLevel)
             {
                 return gallery.MaxColumnWidth;
             }
@@ -107,7 +107,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         private double GetMaxItemHeight()
         {
             RibbonGallery gallery = Gallery;
-            if (gallery != null)
+            if (gallery is not null)
             {
                 return gallery.MaxItemHeight;
             }
@@ -122,7 +122,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             MaxColumnWidth = value;
 
             RibbonGallery gallery = Gallery;
-            if (gallery != null)
+            if (gallery is not null)
             {
                 if (SharedColumnSizeScopeAtGalleryLevel)
                 {
@@ -141,7 +141,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             SetMaxColumnWidth(maxWidth);
 
             RibbonGallery gallery = Gallery;
-            if (gallery != null)
+            if (gallery is not null)
             {            
                 if (gallery.MaxItemHeight < maxHeight)
                 {
@@ -154,7 +154,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         private double GetArrangeWidth()
         {
             RibbonGallery gallery = Gallery;
-            if (gallery != null && SharedColumnSizeScopeAtGalleryLevel)
+            if (gallery is not null && SharedColumnSizeScopeAtGalleryLevel)
             {
                 return gallery.ArrangeWidth;
             }
@@ -168,7 +168,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             _arrangeWidth = value;
 
             RibbonGallery gallery = Gallery;
-            if (gallery != null && SharedColumnSizeScopeAtGalleryLevel)
+            if (gallery is not null && SharedColumnSizeScopeAtGalleryLevel)
             {
                 gallery.ArrangeWidth = value;
                 gallery.IsArrangeWidthValid = true;
@@ -189,7 +189,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         {
             RibbonGallery gallery = Gallery;
 #if IN_RIBBON_GALLERY
-            if (gallery != null && gallery.IsInInRibbonGalleryMode())
+            if (gallery is not null && gallery.IsInInRibbonGalleryMode())
             {
                 return InRibbonGalleryModeMeasureOverride(availableSize);
             }
@@ -263,7 +263,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             panelSize.Width = columnCount * maxColumnWidth;
 
             RibbonGalleryCategory category = Category;
-            if (category != null)
+            if (category is not null)
             {
                 panelSize.Height = category.RowOffset * maxItemHeight;
 
@@ -329,7 +329,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             int columnCount = 0;
             int childrenCount = children.Count;
             RibbonGallery parentGallery = Gallery;
-            double maxColumnWidth = (parentGallery != null && parentGallery.IsMaxColumnWidthValid) ? GetMaxColumnWidth() : 0.0;
+            double maxColumnWidth = (parentGallery is not null && parentGallery.IsMaxColumnWidthValid) ? GetMaxColumnWidth() : 0.0;
             int minColumnCount = GetMinColumnCount();
             int maxColumnCount = GetMaxColumnCount();
 
@@ -368,7 +368,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
                     columnCount = Math.Min(Math.Max(minColumnCount, Math.Min((int)(availableSize.Width / maxColumnWidth), childrenCount)), maxColumnCount);
                     
                     RibbonGalleryCategory category = Category;
-                    if (parentGallery != null && category != null)
+                    if (parentGallery is not null && category is not null)
                     {
                         if (SharedColumnSizeScopeAtGalleryLevel && parentGallery.ColumnsStretchToFill)
                         {
@@ -447,7 +447,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         {
             RibbonGallery gallery = Gallery;
 #if IN_RIBBON_GALLERY
-            if (gallery != null && gallery.IsInInRibbonGalleryMode())
+            if (gallery is not null && gallery.IsInInRibbonGalleryMode())
             {
                 return InRibbonGalleryModeArrangeOverride(finalSize);
             }
@@ -501,7 +501,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             RibbonGalleryCategory category = Category;
 
             // Calculate the starting offsets in pixels from actual Row and Coulmn offsets.
-            if (category != null)
+            if (category is not null)
             {
                 rowStartHeight = category.RowOffset * maxItemHeight;
                 rowStartWidth = category.ColumnOffset * maxColumnWidth;
@@ -545,7 +545,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             RibbonGalleryCategory category = Category;
             double arrangeWidth = 0.0;
 
-            if (parentGallery != null && category != null)
+            if (parentGallery is not null && category is not null)
             {
                 if (SharedColumnSizeScopeAtGalleryLevel && parentGallery.ColumnsStretchToFill)
                 {
@@ -614,7 +614,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             get
             {
                 RibbonGalleryCategory category = this.Category;
-                if (category != null)
+                if (category is not null)
                 {
                     return category.RibbonGallery;
                 }
@@ -629,7 +629,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             get
             {
                 RibbonGalleryCategory category = Category;
-                if (category != null &&
+                if (category is not null &&
                     category.IsSharedColumnSizeScope)
                 {
                     return false;

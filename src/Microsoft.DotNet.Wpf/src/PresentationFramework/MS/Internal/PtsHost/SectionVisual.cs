@@ -99,7 +99,7 @@ namespace MS.Internal.PtsHost
                 // will preserve visual children.
                 using (DrawingContext dc = RenderOpen())
                 {
-                    if (rulePositions != null)
+                    if (rulePositions is not null)
                     {
                         // We do not want to cause the user's Brush to become frozen when we
                         // freeze pen below, therefore we make our own copy of the Brush if

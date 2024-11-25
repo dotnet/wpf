@@ -121,7 +121,7 @@ namespace System.Windows.Ink
         /// </summary>
         private Stream GetSeekableStream(Stream stream)
         {
-            Debug.Assert(stream != null);
+            Debug.Assert(stream is not null);
             Debug.Assert(stream.CanRead);
             if ( stream.CanSeek )
             {
@@ -277,7 +277,7 @@ namespace System.Windows.Ink
             //
             // clone epc if we have them
             //
-            if ( _extendedProperties != null )
+            if ( _extendedProperties is not null )
             {
                 clone._extendedProperties = _extendedProperties.Clone();
             }
@@ -549,7 +549,7 @@ namespace System.Windows.Ink
         /// </summary>
         internal void AddWithoutEvent(Stroke stroke)
         {
-            Debug.Assert(stroke != null && IndexOf(stroke) == -1);
+            Debug.Assert(stroke is not null && IndexOf(stroke) == -1);
             ( (List<Stroke>)this.Items ).Add(stroke);
         }
 
@@ -574,7 +574,7 @@ namespace System.Windows.Ink
                 //
                 // private setter used by copy
                 //
-                if ( value != null )
+                if ( value is not null )
                 {
                     _extendedProperties = value;
                 }
@@ -641,15 +641,15 @@ namespace System.Windows.Ink
             //they are the first in the delegate chain, they can be optimized
             //to not have to handle out of order events caused by 3rd party code
             //getting called first
-            if ( this.StrokesChangedInternal != null)
+            if ( this.StrokesChangedInternal is not null)
             {
                 this.StrokesChangedInternal(this, e);
             }
-            if ( this.StrokesChanged != null )
+            if ( this.StrokesChanged is not null )
             {
                 this.StrokesChanged(this, e);
             }
-            if ( _collectionChanged != null )
+            if ( _collectionChanged is not null )
             {
                 //raise CollectionChanged.  We support the following 
                 //NotifyCollectionChangedActions
@@ -693,7 +693,7 @@ namespace System.Windows.Ink
                 throw new ArgumentNullException("e", SR.EventArgIsNull);
             }
 
-            if ( this.PropertyDataChanged != null )
+            if ( this.PropertyDataChanged is not null )
             {
                 this.PropertyDataChanged(this, e);
             }
@@ -707,7 +707,7 @@ namespace System.Windows.Ink
         /// instance, but every other INotifyPropertyChanged implementation follows this pattern.</remarks>
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if ( _propertyChanged != null )
+            if ( _propertyChanged is not null )
             {
                 _propertyChanged(this, e);
             }
@@ -861,7 +861,7 @@ namespace System.Windows.Ink
         {
             internal ReadOnlyStrokeCollection(StrokeCollection strokeCollection)
             {
-                if ( strokeCollection != null )
+                if ( strokeCollection is not null )
                 {
                     ( (List<Stroke>)this.Items ).AddRange(strokeCollection);
                 }

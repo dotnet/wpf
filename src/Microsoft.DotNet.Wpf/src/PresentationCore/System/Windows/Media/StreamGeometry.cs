@@ -87,7 +87,7 @@ namespace System.Windows.Media
 
             unsafe
             {
-                Invariant.Assert((_data != null) && (_data.Length >= sizeof(MIL_PATHGEOMETRY)));
+                Invariant.Assert((_data is not null) && (_data.Length >= sizeof(MIL_PATHGEOMETRY)));
                 fixed (byte *pbPathData = _data)
                 {
                     MIL_PATHGEOMETRY* pPathGeometry = (MIL_PATHGEOMETRY*)pbPathData;
@@ -110,7 +110,7 @@ namespace System.Windows.Media
 
             unsafe
             {
-                Debug.Assert((_data != null) && (_data.Length >= sizeof(MIL_PATHGEOMETRY)));
+                Debug.Assert((_data is not null) && (_data.Length >= sizeof(MIL_PATHGEOMETRY)));
                 fixed (byte* pbPathData = _data)
                 {
                     MIL_PATHGEOMETRY* pGeometry = (MIL_PATHGEOMETRY*)pbPathData;
@@ -134,7 +134,7 @@ namespace System.Windows.Media
         {
             unsafe
             {
-                Debug.Assert((_data != null) && (_data.Length >= sizeof(MIL_PATHGEOMETRY)));
+                Debug.Assert((_data is not null) && (_data.Length >= sizeof(MIL_PATHGEOMETRY)));
                 fixed (byte* pbPathData = _data)
                 {
                     MIL_PATHGEOMETRY* pGeometry = (MIL_PATHGEOMETRY*)pbPathData;
@@ -154,7 +154,7 @@ namespace System.Windows.Media
             {
                 unsafe
                 {
-                    Debug.Assert((_data != null) && (_data.Length >= sizeof(MIL_PATHGEOMETRY)));
+                    Debug.Assert((_data is not null) && (_data.Length >= sizeof(MIL_PATHGEOMETRY)));
                     fixed (byte* pbPathData = _data)
                     {
                         MIL_PATHGEOMETRY* pGeometry = (MIL_PATHGEOMETRY*)pbPathData;
@@ -214,7 +214,7 @@ namespace System.Windows.Media
 
             unsafe
             {
-                Invariant.Assert((_data != null) && (_data.Length >= sizeof(MIL_PATHGEOMETRY)));
+                Invariant.Assert((_data is not null) && (_data.Length >= sizeof(MIL_PATHGEOMETRY)));
                 fixed (byte* pbPathData = (this._data))
                 {
                     MIL_PATHGEOMETRY* pPathGeometryData = (MIL_PATHGEOMETRY*)pbPathData;
@@ -238,7 +238,7 @@ namespace System.Windows.Media
 
             unsafe
             {
-                Invariant.Assert((_data != null) && (_data.Length >= sizeof(MIL_PATHGEOMETRY)));
+                Invariant.Assert((_data is not null) && (_data.Length >= sizeof(MIL_PATHGEOMETRY)));
                 fixed (byte* pbPathData = (this._data))
                 {
                     MIL_PATHGEOMETRY* pPathGeometryData = (MIL_PATHGEOMETRY*)pbPathData;
@@ -260,7 +260,7 @@ namespace System.Windows.Media
 
             unsafe
             {
-                Invariant.Assert((_data != null) && (_data.Length >= sizeof(MIL_PATHGEOMETRY)));
+                Invariant.Assert((_data is not null) && (_data.Length >= sizeof(MIL_PATHGEOMETRY)));
                 fixed (byte* pbPathData = (this._data))
                 {
                     MIL_PATHGEOMETRY* pPathGeometryData = (MIL_PATHGEOMETRY*)pbPathData;
@@ -450,7 +450,7 @@ namespace System.Windows.Media
             {
                 Transform vTransform = Transform;
 
-                if (vTransform != null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
+                if (vTransform is not null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
 
                 UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
             }
@@ -465,7 +465,7 @@ namespace System.Windows.Media
             if (_duceResource.ReleaseOnChannel(channel))
             {
                 Transform vTransform = Transform;
-                if (vTransform != null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
+                if (vTransform is not null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
             }
         }
 
@@ -494,7 +494,7 @@ namespace System.Windows.Media
 
             StreamGeometry sourceStream = (StreamGeometry) source;
 
-            if ((sourceStream._data != null) && (sourceStream._data.Length > 0))
+            if ((sourceStream._data is not null) && (sourceStream._data.Length > 0))
             {
                 _data = new byte[sourceStream._data.Length];
                 sourceStream._data.CopyTo(_data, 0);
@@ -509,7 +509,7 @@ namespace System.Windows.Media
 
             StreamGeometry sourceStream = (StreamGeometry) source;
 
-            if ((sourceStream._data != null) && (sourceStream._data.Length > 0))
+            if ((sourceStream._data is not null) && (sourceStream._data.Length > 0))
             {
                 _data = new byte[sourceStream._data.Length];
                 sourceStream._data.CopyTo(_data, 0);
@@ -525,7 +525,7 @@ namespace System.Windows.Media
 
             StreamGeometry sourceStream = (StreamGeometry) source;
 
-            if ((sourceStream._data != null) && (sourceStream._data.Length > 0))
+            if ((sourceStream._data is not null) && (sourceStream._data.Length > 0))
             {
                 _data = new byte[sourceStream._data.Length];
                 sourceStream._data.CopyTo(_data, 0);
@@ -541,7 +541,7 @@ namespace System.Windows.Media
 
             StreamGeometry sourceStream = (StreamGeometry) source;
 
-            if ((sourceStream._data != null) && (sourceStream._data.Length > 0))
+            if ((sourceStream._data is not null) && (sourceStream._data.Length > 0))
             {
                 _data = new byte[sourceStream._data.Length];
                 sourceStream._data.CopyTo(_data, 0);

@@ -446,7 +446,7 @@ namespace System.Windows.Annotations
             {
                 get
                 {
-                    if (_basePage != null)
+                    if (_basePage is not null)
                     {
                         return _basePage.HostedElements;
                     }
@@ -462,7 +462,7 @@ namespace System.Windows.Annotations
             /// </summary>
             public ReadOnlyCollection<Rect> GetRectangles(ContentElement child)
             {
-                if (_basePage != null)
+                if (_basePage is not null)
                 {
                     return _basePage.GetRectangles(child);
                 }
@@ -477,7 +477,7 @@ namespace System.Windows.Annotations
             /// </summary>
             public IInputElement InputHitTest(Point point)
             {
-                if (_basePage != null)
+                if (_basePage is not null)
                 {
                     return _basePage.InputHitTest(point);
                 }
@@ -493,7 +493,7 @@ namespace System.Windows.Annotations
             /// </summary>
             public void OnChildDesiredSizeChanged(UIElement child)
             {
-                if (_basePage != null)
+                if (_basePage is not null)
                 {
                     _basePage.OnChildDesiredSizeChanged(child);
                 }

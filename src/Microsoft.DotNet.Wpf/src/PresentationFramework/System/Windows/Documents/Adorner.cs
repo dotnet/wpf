@@ -77,7 +77,7 @@ namespace System.Windows.Documents
             for (int i = 0; i < count; i++)
             {
                 UIElement ch = this.GetVisualChild(i) as UIElement;
-                if (ch != null)
+                if (ch is not null)
                 {
                     ch.Measure(desiredSize);
                 }

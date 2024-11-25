@@ -34,7 +34,7 @@ namespace MS.Internal.Ink
         // The constructor which takes a FrameworkElement array.
         internal ElementsClipboardData(UIElement[] elements)
         {
-            if ( elements != null )
+            if ( elements is not null )
             {
                 ElementList = new List<UIElement>(elements);
             }
@@ -55,7 +55,7 @@ namespace MS.Internal.Ink
         {
             get
             {
-                if ( ElementList != null )
+                if ( ElementList is not null )
                 {
                     return _elementList;
                 }

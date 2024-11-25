@@ -110,7 +110,7 @@ namespace System.Windows
                                            CultureInfo cultureInfo, 
                                            object source)
         {
-            if (source != null)
+            if (source is not null)
             {
                 if (source is string) { return FromString((string)source, cultureInfo); }
                 else                  { return (double)(Convert.ToDouble(source, cultureInfo)); }
@@ -143,7 +143,7 @@ namespace System.Windows
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (    value != null
+            if (    value is not null
                 &&  value is double )
             {
                 double l = (double)value;

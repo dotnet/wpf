@@ -85,10 +85,10 @@ namespace System.Windows.Annotations
         {
             ArgumentNullException.ThrowIfNull(locator);
 
-            Invariant.Assert(locator.Parts != null, "Locator has null Parts property.");
+            Invariant.Assert(locator.Parts is not null, "Locator has null Parts property.");
 
             // If this locator is shorter than matchList, then this can't contain matchList.            
-            #pragma warning suppress 6506 // Invariant.Assert(locator.Parts != null)
+            #pragma warning suppress 6506 // Invariant.Assert(locator.Parts is not null)
             if (this.Parts.Count < locator.Parts.Count)
             {
                 return false;
@@ -100,7 +100,7 @@ namespace System.Windows.Annotations
                 ContentLocatorPart right = this.Parts[locatorPartIndex];
 
                 // ContentLocator parts can be null so check for that case here
-                if (left is null && right != null)
+                if (left is null && right is not null)
                 {
                     return false;
                 }
@@ -126,7 +126,7 @@ namespace System.Windows.Annotations
             ContentLocatorPart newPart = null;
             foreach (ContentLocatorPart part in this.Parts)
             {
-                if (part != null)
+                if (part is not null)
                     newPart = (ContentLocatorPart)part.Clone();
                 else
                     newPart = null;
@@ -409,7 +409,7 @@ namespace System.Windows.Annotations
                 return this;
 
             ContentLocatorGroup locatorGroup = other as ContentLocatorGroup;
-            if (locatorGroup != null)
+            if (locatorGroup is not null)
             {
                 ContentLocatorGroup newGroup = new ContentLocatorGroup();
 
@@ -433,7 +433,7 @@ namespace System.Windows.Annotations
 
                 // Finally, add the remaining LPS in the set to this LPS
                 // and add this to the new ContentLocatorGroup
-                if (temp != null)
+                if (temp is not null)
                 {
                     this.Append(temp);
                     newGroup.Locators.Add(this);
@@ -459,7 +459,7 @@ namespace System.Windows.Annotations
         /// <param name="other">locator to append</param>
         internal void Append(ContentLocator other)
         {
-            Invariant.Assert(other != null, "Parameter 'other' is null.");
+            Invariant.Assert(other is not null, "Parameter 'other' is null.");
 
             foreach(ContentLocatorPart part in other.Parts)
             {

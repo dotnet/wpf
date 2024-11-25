@@ -172,7 +172,7 @@ namespace System.Windows.Automation
                         // False positive, element is checked, see above
 #pragma warning suppress 6506
                         object val = element.GetCurrentPropertyValue(AutomationElement.NativeWindowHandleProperty);
-                        if ( val != null && val is int && (int)val != 0 )
+                        if ( val is not null && val is int && (int)val != 0 )
                         {
                             if ( HwndProxyElementProvider.IsWindowPatternWindow( NativeMethods.HWND.Cast( new IntPtr( (int)val ) ) ) )
                             {

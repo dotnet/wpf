@@ -70,7 +70,7 @@ namespace System.Windows.Interop
         {
             get
             {
-                Invariant.Assert(_window != null, "Cannot be null since we verify in the constructor");
+                Invariant.Assert(_window is not null, "Cannot be null since we verify in the constructor");
                 return _window.CriticalHandle;
             }
         }
@@ -85,12 +85,12 @@ namespace System.Windows.Interop
         {
             get
             {
-                Debug.Assert(_window != null, "Cannot be null since we verify in the constructor");
+                Debug.Assert(_window is not null, "Cannot be null since we verify in the constructor");
                 return _window.OwnerHandle;
             }
             set
             {
-                Debug.Assert(_window != null, "Cannot be null since we verify in the constructor");
+                Debug.Assert(_window is not null, "Cannot be null since we verify in the constructor");
                 // error checking done in Window
                 _window.OwnerHandle = value;
             }

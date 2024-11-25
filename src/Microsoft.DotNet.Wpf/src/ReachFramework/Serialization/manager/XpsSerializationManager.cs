@@ -76,7 +76,7 @@ namespace System.Windows.Xps.Serialization
             _pageStartState = false;
 
             XpsPackagingPolicy xpsPackagingPolicy = _packagingPolicy as XpsPackagingPolicy;
-            if (xpsPackagingPolicy != null)
+            if (xpsPackagingPolicy is not null)
             {
                 _xpsDocEventManager = new XpsDriverDocEventManager(this);
 
@@ -149,7 +149,7 @@ namespace System.Windows.Xps.Serialization
 
             ReachSerializer reachSerializer = GetSerializer(serializedObject);
 
-            if(reachSerializer != null)
+            if(reachSerializer is not null)
             {
                 //
                 // Things that need to be done at this stage
@@ -206,7 +206,7 @@ namespace System.Windows.Xps.Serialization
         {
             IServiceProvider resourceServiceProvider = (IServiceProvider)ResourcePolicy;
             XpsFontSerializationService fontService = (XpsFontSerializationService)resourceServiceProvider.GetService(typeof(XpsFontSerializationService));
-            if (fontService != null)
+            if (fontService is not null)
             {
                 XpsFontSubsetter fontSubsetter = fontService.FontSubsetter;
                 fontSubsetter.SetSubsetCommitPolicy(policy);
@@ -225,7 +225,7 @@ namespace System.Windows.Xps.Serialization
         {
             IServiceProvider resourceServiceProvider = (IServiceProvider)ResourcePolicy;
             XpsFontSerializationService fontService = (XpsFontSerializationService)resourceServiceProvider.GetService(typeof(XpsFontSerializationService));
-            if (fontService != null)
+            if (fontService is not null)
             {
                 XpsFontSubsetter fontSubsetter = fontService.FontSubsetter;
                 fontSubsetter.SetSubsetCommitCountPolicy(countPolicy);
@@ -442,7 +442,7 @@ namespace System.Windows.Xps.Serialization
         {
             XmlWriter xmlWriter = null;
 
-            if(_packagingPolicy != null)
+            if(_packagingPolicy is not null)
             {
                 if (writerType == typeof(FixedDocumentSequence))
                 {
@@ -539,14 +539,14 @@ namespace System.Windows.Xps.Serialization
 
             //
             // signal the font sub-setter that we completed a node
-             if( _resourcePolicy != null )
+             if( _resourcePolicy is not null )
             {
                 XpsFontSerializationService fontService = (XpsFontSerializationService)_resourcePolicy.GetService(typeof(XpsFontSerializationService));
                 //
                 // The font subsetter will determine if based on this
                 // signal we have completed a subset
                 //
-                if( fontService != null && refCnt == 0 )
+                if( fontService is not null && refCnt == 0 )
                 {
                     subsetComplete = fontService.SignalCommit(writerType);
                 }
@@ -556,7 +556,7 @@ namespace System.Windows.Xps.Serialization
             //
             // Allow the packaging policy to release the stream
             //
-            if(_packagingPolicy != null)
+            if(_packagingPolicy is not null)
             {
                 if (writerType == typeof(FixedDocumentSequence))
                 {
@@ -587,7 +587,7 @@ namespace System.Windows.Xps.Serialization
             if( subsetComplete && refCnt == 0 )
             {
                 XpsPackagingPolicy xpsPackagingPolicy = _packagingPolicy as  XpsPackagingPolicy;
-                if(xpsPackagingPolicy != null )
+                if(xpsPackagingPolicy is not null )
                 {
                     xpsPackagingPolicy.InterleavingPolicy.SignalSubsetComplete();
                 }
@@ -605,7 +605,7 @@ namespace System.Windows.Xps.Serialization
         {
             XpsResourceStream resourceStream = null;
 
-            if(_packagingPolicy != null)
+            if(_packagingPolicy is not null)
             {
                 if (resourceType == typeof(GlyphRun))
                 {
@@ -642,7 +642,7 @@ namespace System.Windows.Xps.Serialization
         {
             XpsResourceStream resourceStream = null;
 
-            if(_packagingPolicy != null)
+            if(_packagingPolicy is not null)
             {
                 if (resourceType == typeof(GlyphRun))
                 {
@@ -676,7 +676,7 @@ namespace System.Windows.Xps.Serialization
             Type    resourceType
             )
         {
-            if(_packagingPolicy != null)
+            if(_packagingPolicy is not null)
             {
                if (resourceType == typeof(GlyphRun))
                {
@@ -709,7 +709,7 @@ namespace System.Windows.Xps.Serialization
             String  resourceID
             )
         {
-            if(_packagingPolicy != null)
+            if(_packagingPolicy is not null)
             {
                 if (resourceType == typeof(GlyphRun))
                 {
@@ -756,19 +756,19 @@ namespace System.Windows.Xps.Serialization
         {
             bool canSerialize = false;
 
-            if(serializableObject != null &&
-               dependencyProperty != null &&
-               ((dependencyProperty.PropertyInfo != null) ||
-                (((DependencyProperty)(dependencyProperty.DependencyProperty)).Name != null)))
+            if(serializableObject is not null &&
+               dependencyProperty is not null &&
+               ((dependencyProperty.PropertyInfo is not null) ||
+                (((DependencyProperty)(dependencyProperty.DependencyProperty)).Name is not null)))
             {
-                String name = (dependencyProperty.PropertyInfo != null) ?
+                String name = (dependencyProperty.PropertyInfo is not null) ?
                               dependencyProperty.PropertyInfo.Name :
                               ((DependencyProperty)(dependencyProperty.DependencyProperty)).Name;
 
                 Hashtable dependencyPropertiesTable = (Hashtable)reachSerializationServices.
                                                       TypeSerializableDependencyProperties[serializableObject.GetType()];
 
-                if(dependencyPropertiesTable != null)
+                if(dependencyPropertiesTable is not null)
                 {
                     if(dependencyPropertiesTable.Contains(name))
                     {
@@ -810,16 +810,16 @@ namespace System.Windows.Xps.Serialization
         {
             bool canSerialize = true;
 
-            if (serializableObject != null &&
-               property != null &&
-               property.PropertyInfo != null)
+            if (serializableObject is not null &&
+               property is not null &&
+               property.PropertyInfo is not null)
             {
                 String name = property.PropertyInfo.Name;
 
                 Hashtable clrPropertiesTable = (Hashtable)reachSerializationServices.
                                                TypeNoneSerializableClrProperties[serializableObject.GetType()];
 
-                if (clrPropertiesTable != null)
+                if (clrPropertiesTable is not null)
                 {
                     if (clrPropertiesTable.Contains(name))
                     {
@@ -849,7 +849,7 @@ namespace System.Windows.Xps.Serialization
             string relationshipName
             )
         {
-            if (_packagingPolicy != null)
+            if (_packagingPolicy is not null)
             {
                 _packagingPolicy.RelateResourceToCurrentPage(targetUri, relationshipName);
             }
@@ -1112,13 +1112,13 @@ namespace System.Windows.Xps.Serialization
         {
             XpsSerializationPrintTicketRequiredEventArgs e = operationState as XpsSerializationPrintTicketRequiredEventArgs;
 
-            if(XpsSerializationPrintTicketRequired != null)
+            if(XpsSerializationPrintTicketRequired is not null)
             {
                 e.Modified = true;
 
                 XpsSerializationPrintTicketRequired(this,e);
 
-                if (XpsSerializationPrintTicketRequiredOnXpsDriverDocEvent != null)
+                if (XpsSerializationPrintTicketRequiredOnXpsDriverDocEvent is not null)
                 {
                     XpsSerializationPrintTicketRequiredOnXpsDriverDocEvent(this, e);
                 }
@@ -1132,7 +1132,7 @@ namespace System.Windows.Xps.Serialization
         {
             XpsSerializationProgressChangedEventArgs e = operationState as XpsSerializationProgressChangedEventArgs;
 
-            if(XpsSerializationProgressChanged != null)
+            if(XpsSerializationProgressChanged is not null)
             {
                 XpsSerializationProgressChanged(this,e);
             }
@@ -1144,7 +1144,7 @@ namespace System.Windows.Xps.Serialization
             XpsSerializationXpsDriverDocEventArgs e
             )
         {
-            if (XpsSerializationXpsDriverDocEvent != null)
+            if (XpsSerializationXpsDriverDocEvent is not null)
             {
                 XpsSerializationXpsDriverDocEvent(this, e);
             }

@@ -86,7 +86,7 @@ namespace System.Windows.Documents
         {
             TextServicesDisplayAttributePropertyRanges displayAttributes = _propertyRanges as TextServicesDisplayAttributePropertyRanges;
 
-            if (displayAttributes != null)
+            if (displayAttributes is not null)
             {
                 displayAttributes.OnLayoutUpdated();
             }

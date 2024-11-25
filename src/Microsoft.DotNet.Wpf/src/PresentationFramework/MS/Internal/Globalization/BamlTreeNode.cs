@@ -40,7 +40,7 @@ namespace MS.Internal.Globalization
         /// </summary>
         internal BamlTree(BamlTreeNode root, int size)
         {
-            Debug.Assert(root != null, "Baml tree root is null!");
+            Debug.Assert(root is not null, "Baml tree root is null!");
             Debug.Assert(size > 0, "Baml tree size is less than 1");
 
             _root = root;
@@ -101,7 +101,7 @@ namespace MS.Internal.Globalization
             {
                 // creates a copy of the current node
                 parent = parent.Copy();
-                if (children != null)
+                if (children is not null)
                 {
                     // create an new list if there are children.
                     parent.Children = new List<BamlTreeNode>(children.Count);
@@ -548,7 +548,7 @@ namespace MS.Internal.Globalization
                 {
                     // walk up the tree to find a parent node that is ILocalizabilityInheritable
                     for (BamlTreeNode parentNode = Parent;
-                         _localizabilityAncestor is null && parentNode != null;
+                         _localizabilityAncestor is null && parentNode is not null;
                          parentNode = parentNode.Parent)
                     {
                         _localizabilityAncestor = (parentNode as ILocalizabilityInheritable);

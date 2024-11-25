@@ -124,10 +124,10 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             base.OnTemplateChanged(oldTemplate, newTemplate);
 
-            if (oldTemplate != null)
+            if (oldTemplate is not null)
             {
                 RibbonHelper.ClearPseudoInheritedProperties(_templateRoot);
-                if (_templateRoot != null)
+                if (_templateRoot is not null)
                 {
                     // Clearing the Ribbon property value which was set earlier.
                     _templateRoot.ClearValue(RibbonControlService.RibbonPropertyKey);
@@ -166,7 +166,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private void TransferPseudoInheritedProperties()
         {
-            if (_templateRoot != null)
+            if (_templateRoot is not null)
             {
                 // Ribbon is an inherited property. In non-MVVM scenarios where
                 // controls are directly added under RibbonGroup in XAML, RibbonGroup
@@ -194,17 +194,17 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         internal bool ChildHasLargeImage
         {
-            get { return (_templateRoot != null) ? (RibbonControlService.GetLargeImageSource(_templateRoot) != null) : false; }
+            get { return (_templateRoot is not null) ? (RibbonControlService.GetLargeImageSource(_templateRoot) is not null) : false; }
         }
 
         internal bool ChildHasSmallImage
         {
-            get { return (_templateRoot != null) ? (RibbonControlService.GetSmallImageSource(_templateRoot) != null) : false; }
+            get { return (_templateRoot is not null) ? (RibbonControlService.GetSmallImageSource(_templateRoot) is not null) : false; }
         }
 
         internal bool ChildHasLabel
         {
-            get { return (_templateRoot != null) ? !string.IsNullOrEmpty(RibbonControlService.GetLabel(_templateRoot)) : false; }
+            get { return (_templateRoot is not null) ? !string.IsNullOrEmpty(RibbonControlService.GetLabel(_templateRoot)) : false; }
         }
 
         #endregion

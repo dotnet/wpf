@@ -59,18 +59,18 @@ namespace System.Windows.Automation.Peers
             // Add AutomationPeer associated with the document.
             // Make it the first child of the collection.
             FlowDocument document = ((FlowDocumentReader)Owner).Document;
-            if (document != null)
+            if (document is not null)
             {
                 AutomationPeer documentPeer = ContentElementAutomationPeer.CreatePeerForElement(document);
                 if (_documentPeer != documentPeer)
                 {
-                    if (_documentPeer != null)
+                    if (_documentPeer is not null)
                     {
                         _documentPeer.OnDisconnected();
                     }
                     _documentPeer = documentPeer as DocumentAutomationPeer;
                 }
-                if (documentPeer != null)
+                if (documentPeer is not null)
                 {
                     if (children is null)
                     {

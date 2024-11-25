@@ -41,13 +41,13 @@ namespace Microsoft.Windows.Automation.Peers
             if (String.IsNullOrEmpty(name))
             {
                 RibbonContextualTabGroup tabGroup = Owner as RibbonContextualTabGroup;
-                if (tabGroup != null && tabGroup.Header != null)
+                if (tabGroup is not null && tabGroup.Header is not null)
                 {
                     UIElement headerElement = tabGroup.Header as UIElement;
-                    if (headerElement != null)
+                    if (headerElement is not null)
                     {
                         AutomationPeer peer = CreatePeerForElement(headerElement);
-                        if (peer != null)
+                        if (peer is not null)
                         {
                             name = peer.GetName();
                         }

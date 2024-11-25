@@ -124,7 +124,7 @@ namespace MS.Internal.Automation
                     throw new ArgumentException(SR.Automation_InvalidEventId, "eventId");
             }
 
-            if ((eventObject != null) && (!_eventsTable.ContainsKey(eventObject.Id)))
+            if ((eventObject is not null) && (!_eventsTable.ContainsKey(eventObject.Id)))
             {
                 eventObject = null;
             }
@@ -170,7 +170,7 @@ namespace MS.Internal.Automation
         {
             lock (_lock)
             {
-                if (_eventsTable != null)
+                if (_eventsTable is not null)
                 {
                     // Decrement the count of listeners for this event
                     if (_eventsTable.TryGetValue(idEvent, out EventInfo info))
@@ -198,9 +198,9 @@ namespace MS.Internal.Automation
         {
             lock (_lock)
             {
-                if (_eventsTable != null && _eventsTable.Count != 0)
+                if (_eventsTable is not null && _eventsTable.Count != 0)
                 {
-                    return (GetRegisteredEventObjectHelper(eventId) != null);
+                    return (GetRegisteredEventObjectHelper(eventId) is not null);
                 }
             }
             return (false);
@@ -210,7 +210,7 @@ namespace MS.Internal.Automation
         {
             lock (_lock)
             {
-                if (_eventsTable != null && _eventsTable.Count != 0)
+                if (_eventsTable is not null && _eventsTable.Count != 0)
                 {
                     return (GetRegisteredEventObjectHelper(eventId));
                 }
@@ -221,7 +221,7 @@ namespace MS.Internal.Automation
 
         internal static bool HasListeners
         {
-            get { return (_eventsTable != null); }
+            get { return (_eventsTable is not null); }
         }
 
         // Most automation clients send WM_GETOBJECT messages to our hwnd(s).
@@ -271,7 +271,7 @@ namespace MS.Internal.Automation
                     source.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (DispatcherOperationCallback)(state =>
                     {
                         PresentationSource source = (PresentationSource)state;
-                        if (source != null && !source.IsDisposed)
+                        if (source is not null && !source.IsDisposed)
                         {
                             // setting the RootVisual to itself triggers the logic to
                             // add to the AutomationEvents list

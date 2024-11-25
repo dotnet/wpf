@@ -85,7 +85,7 @@ namespace Microsoft.Windows.Automation.Peers
             if (String.IsNullOrEmpty(helpText))
             {
                 RibbonToolTip toolTip = ((RibbonToggleButton)Owner).ToolTip as RibbonToolTip;
-                if (toolTip != null)
+                if (toolTip is not null)
                 {
                     helpText = toolTip.Description;
                 }

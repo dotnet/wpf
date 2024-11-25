@@ -133,7 +133,7 @@ namespace MS.Internal.SchemaGen.Main
             }
             foreach (XmlNode child in node.ChildNodes)
             {
-                if ((node = FindElement(child, name)) != null)
+                if ((node = FindElement(child, name)) is not null)
                 {
                     return node;
                 }
@@ -167,7 +167,7 @@ namespace MS.Internal.SchemaGen.Main
             }
             foreach (XmlNode child in node.ChildNodes)
             {
-                if ((node = FindAttributeWithDefault(child, defAttr)) != null)
+                if ((node = FindAttributeWithDefault(child, defAttr)) is not null)
                 {
                     return node;
                 }

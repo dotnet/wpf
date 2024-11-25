@@ -48,7 +48,7 @@ namespace MS.Internal.ComponentModel
 
             TypeDescriptor.Refreshed += delegate(RefreshEventArgs args)
             {
-                if (args.TypeChanged != null && typeof(DependencyObject).IsAssignableFrom(args.TypeChanged)) 
+                if (args.TypeChanged is not null && typeof(DependencyObject).IsAssignableFrom(args.TypeChanged)) 
                 {
                     ClearCache();
                     DependencyObjectPropertyDescriptor.ClearCache();
@@ -90,7 +90,7 @@ namespace MS.Internal.ComponentModel
             // If it did, we don't need our own descriptor because we don't support
             // attached properties on type instances.
 
-            if (instance != null && !(instance is Type)) 
+            if (instance is not null && !(instance is Type)) 
             {
                 descriptor = new APCustomTypeDescriptor(descriptor, instance);
             }

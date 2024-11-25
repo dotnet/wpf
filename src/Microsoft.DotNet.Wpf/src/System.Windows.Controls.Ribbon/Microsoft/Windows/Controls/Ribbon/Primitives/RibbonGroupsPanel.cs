@@ -164,7 +164,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             if ((DoubleUtil.GreaterThanOrClose(_cachedRemainingSpace, 0) && (DoubleUtil.LessThan(remainingSpace, 0) || DoubleUtil.GreaterThan(remainingSpace, _cachedRemainingSpace))) ||
                 (DoubleUtil.LessThan(_cachedRemainingSpace, 0) && DoubleUtil.GreaterThan(remainingSpace, 0)))
             {
-                if (ribbonTab != null)
+                if (ribbonTab is not null)
                 {
                     double? lastPreIncreaseRemainingSpace = null;
                     while (DoubleUtil.GreaterThan(remainingSpace, 0))
@@ -210,7 +210,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
                         if (ribbonTab.DecreaseNextGroupSize())
                         {
                             desiredSize = BasicMeasure(availableSize, out remainingSpace);
-                            if (lastPreIncreaseRemainingSpace != null)
+                            if (lastPreIncreaseRemainingSpace is not null)
                             {
                                 // Though in most of the cases we expect that the desired size of the
                                 // entire subtree is up to date synchronously, there are some cases where desired 
@@ -289,7 +289,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             get
             {
                 FrameworkElement itemsPresenter = TemplatedParent as FrameworkElement;
-                if (itemsPresenter != null)
+                if (itemsPresenter is not null)
                 {
                     return itemsPresenter.TemplatedParent as RibbonTab;
                 }
@@ -381,11 +381,11 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
                                               ribbonGroup == starLayoutInfoProvider.TargetElement);
                 bool added = false;
                 IEnumerable<StarLayoutInfo> starLayoutCombinations = starLayoutInfoProvider.StarLayoutCombinations;
-                if (starLayoutCombinations != null)
+                if (starLayoutCombinations is not null)
                 {
                     foreach (StarLayoutInfo starLayoutInfo in starLayoutCombinations)
                     {
-                        if (starLayoutInfo != null && DoubleUtil.GreaterThan(starLayoutInfo.RequestedStarWeight, 0))
+                        if (starLayoutInfo is not null && DoubleUtil.GreaterThan(starLayoutInfo.RequestedStarWeight, 0))
                         {
                             starLayoutInfo.AllocatedStarWidth = starLayoutInfo.RequestedStarMinWidth;
                             if (considerForAllocation)

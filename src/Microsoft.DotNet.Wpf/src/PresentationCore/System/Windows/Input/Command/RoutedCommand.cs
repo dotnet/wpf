@@ -129,7 +129,7 @@ namespace System.Windows.Input
         public void Execute(object parameter, IInputElement target)
         {
             // We only support UIElement, ContentElement and UIElement3D
-            if ((target != null) && !InputElement.IsValid(target))
+            if ((target is not null) && !InputElement.IsValid(target))
             {
                 throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, target.GetType()));
             }
@@ -165,7 +165,7 @@ namespace System.Windows.Input
         internal bool CriticalCanExecute(object parameter, IInputElement target, bool trusted, out bool continueRouting)
         {
             // We only support UIElement, ContentElement and UIElement3D
-            if ((target != null) && !InputElement.IsValid(target))
+            if ((target is not null) && !InputElement.IsValid(target))
             {
                 throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, target.GetType()));
             }
@@ -311,7 +311,7 @@ namespace System.Windows.Input
         private static IInputElement FilterInputElement(IInputElement elem)
         {
             // We only support UIElement, ContentElement, and UIElement3D
-            if ((elem != null) && InputElement.IsValid(elem))
+            if ((elem is not null) && InputElement.IsValid(elem))
             {
                 return elem;
             }
@@ -327,7 +327,7 @@ namespace System.Windows.Input
         private bool CanExecuteImpl(object parameter, IInputElement target, bool trusted, out bool continueRouting)
         {
             // If blocked by rights-management fall through and return false
-            if ((target != null) && !IsBlockedByRM)
+            if ((target is not null) && !IsBlockedByRM)
             {
                 // Raise the Preview Event, check the Handled value, and raise the regular event.
                 CanExecuteRoutedEventArgs args = new CanExecuteRoutedEventArgs(this, parameter);
@@ -381,7 +381,7 @@ namespace System.Windows.Input
         private bool ExecuteImpl(object parameter, IInputElement target, bool userInitiated)
         {
             // If blocked by rights-management fall through and return false
-            if ((target != null) && !IsBlockedByRM)
+            if ((target is not null) && !IsBlockedByRM)
             {
                 UIElement targetUIElement = target as UIElement;
                 ContentElement targetAsContentElement = null;
@@ -392,21 +392,21 @@ namespace System.Windows.Input
                 ExecutedRoutedEventArgs args = new ExecutedRoutedEventArgs(this, parameter);
                 args.RoutedEvent = CommandManager.PreviewExecutedEvent;
                 
-                if (targetUIElement != null)
+                if (targetUIElement is not null)
                 {
                     targetUIElement.RaiseEvent(args, userInitiated);
                 }
                 else
                 {
                     targetAsContentElement = target as ContentElement;
-                    if (targetAsContentElement != null)
+                    if (targetAsContentElement is not null)
                     {
                         targetAsContentElement.RaiseEvent(args, userInitiated);
                     }
                     else
                     {
                         targetAsUIElement3D = target as UIElement3D;
-                        if (targetAsUIElement3D != null)
+                        if (targetAsUIElement3D is not null)
                         {
                             targetAsUIElement3D.RaiseEvent(args, userInitiated);
                         }
@@ -416,15 +416,15 @@ namespace System.Windows.Input
                 if (!args.Handled)
                 {
                     args.RoutedEvent = CommandManager.ExecutedEvent;
-                    if (targetUIElement != null)
+                    if (targetUIElement is not null)
                     {
                         targetUIElement.RaiseEvent(args, userInitiated);
                     }
-                    else if (targetAsContentElement != null)
+                    else if (targetAsContentElement is not null)
                     {
                         targetAsContentElement.RaiseEvent(args, userInitiated);
                     }
-                    else if (targetAsUIElement3D != null)
+                    else if (targetAsUIElement3D is not null)
                     {
                         targetAsUIElement3D.RaiseEvent(args, userInitiated);
                     }

@@ -223,7 +223,7 @@ namespace System.Security.RightsManagement
         {
             try
             {
-                if (disposing && (_clientSession != null))
+                if (disposing && (_clientSession is not null))
                 {
                     _clientSession.Dispose();
                 }
@@ -238,7 +238,7 @@ namespace System.Security.RightsManagement
         {
             get
             {
-                Invariant.Assert(_clientSession != null);
+                Invariant.Assert(_clientSession is not null);
             
                 return _clientSession;
             }
@@ -354,9 +354,9 @@ namespace System.Security.RightsManagement
                                                          ContentUser user, 
                                                          ClientSession clientSession) 
         {
-            Invariant.Assert(applicationManifest != null);
-            Invariant.Assert(user != null);
-            Invariant.Assert(clientSession != null);
+            Invariant.Assert(applicationManifest is not null);
+            Invariant.Assert(user is not null);
+            Invariant.Assert(clientSession is not null);
 
             _user = user;
             _applicationManifest = applicationManifest;

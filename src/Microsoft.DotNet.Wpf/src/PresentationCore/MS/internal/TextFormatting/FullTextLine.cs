@@ -205,7 +205,7 @@ namespace MS.Internal.TextFormatting
                 )
             {
                 _metrics._formatter = fullText.Formatter;
-                Debug.Assert(_metrics._formatter != null);
+                Debug.Assert(_metrics._formatter is not null);
 
                 TextStore store = fullText.TextStore;
                 TextStore markerStore = fullText.TextMarkerStore;
@@ -213,7 +213,7 @@ namespace MS.Internal.TextFormatting
                 ParaProp pap = settings.Pap;
 
                 _paragraphTextDecorations = pap.TextDecorations;
-                if (_paragraphTextDecorations != null)
+                if (_paragraphTextDecorations is not null)
                 {
                     if (_paragraphTextDecorations.Count != 0)
                     {
@@ -311,7 +311,7 @@ namespace MS.Internal.TextFormatting
                 if(lserr != LsErr.None)
                 {
                     GC.SuppressFinalize(this);
-                    if(callbackException != null)
+                    if(callbackException is not null)
                     {
                         // rethrow exception thrown in callbacks
                         throw WrapException(callbackException);
@@ -342,7 +342,7 @@ namespace MS.Internal.TextFormatting
                 // keep record for min width as we may be formatting min/max
                 _textMinWidthAtTrailing = lineWidths.upMinStartTrailing - _metrics._textStart;
 
-                if (collapsingSymbol != null)
+                if (collapsingSymbol is not null)
                 {
                     _collapsingSymbol = collapsingSymbol;
                     _textMinWidthAtTrailing += TextFormatterImp.RealToIdeal(collapsingSymbol.Width);
@@ -372,7 +372,7 @@ namespace MS.Internal.TextFormatting
                     }
                 }
 
-                if (    fullText != null
+                if (    fullText is not null
                     &&  (   fullText.KeepState
                         ||  (_statusFlags & StatusFlags.KeepState) != 0
                         )
@@ -397,7 +397,7 @@ namespace MS.Internal.TextFormatting
                 _plsrunVector = store.PlsrunVector;
                 _lsrunsMainText = store.LsrunList;
 
-                if (markerStore != null)
+                if (markerStore is not null)
                     _lsrunsMarkerText = markerStore.LsrunList;
 
                 // we store the text source in the line in case drawing code calls
@@ -423,7 +423,7 @@ namespace MS.Internal.TextFormatting
                     ConstructorInfo constructor = t.GetConstructor(
                         new Type[] { typeof(Exception) }
                         );
-                    if (constructor != null)
+                    if (constructor is not null)
                     {
                         return (Exception)constructor.Invoke(
                             new object[] { caughtException }
@@ -434,7 +434,7 @@ namespace MS.Internal.TextFormatting
                     constructor = t.GetConstructor(
                         new Type[] { typeof(string), typeof(Exception) }
                         );
-                    if (constructor != null)
+                    if (constructor is not null)
                     {
                         return (Exception)constructor.Invoke(
                             new object[] { caughtException.Message, caughtException }
@@ -463,7 +463,7 @@ namespace MS.Internal.TextFormatting
                 FormattedTextSymbols    symbol
                 )
             {
-                Debug.Assert(_collapsingSymbol is null && symbol != null);
+                Debug.Assert(_collapsingSymbol is null && symbol is not null);
 
                 _collapsingSymbol = symbol;
                 int symbolIdealWidth = TextFormatterImp.RealToIdeal(symbol.Width);
@@ -630,7 +630,7 @@ namespace MS.Internal.TextFormatting
 
                     if(lserr != LsErr.None)
                     {
-                        if(callbackException != null)
+                        if(callbackException is not null)
                         {
                             // rethrow exception thrown in callbacks
                             throw callbackException;
@@ -646,11 +646,11 @@ namespace MS.Internal.TextFormatting
                     GC.KeepAlive(context);
                 }
 
-                if (_collapsingSymbol != null)
+                if (_collapsingSymbol is not null)
                 {
                     // draw collapsing symbol if any
                     Point vectorToOrigin = new Point();
-                    if (antiInversion != null)
+                    if (antiInversion is not null)
                     {
                         vectorToOrigin = origin;
                         origin.X = origin.Y = 0;
@@ -735,7 +735,7 @@ namespace MS.Internal.TextFormatting
 
                 FormattedTextSymbols symbol = null;
 
-                if (collapsingProp.Symbol != null)
+                if (collapsingProp.Symbol is not null)
                 {
                     // create formatted collapsing symbol
                     symbol = new FormattedTextSymbols(
@@ -750,7 +750,7 @@ namespace MS.Internal.TextFormatting
                     constraintWidth -= symbol.Width;
                 }
 
-                Debug.Assert(_fullText != null);
+                Debug.Assert(_fullText is not null);
 
                 FullTextLine line = new TextMetrics.FullTextLine(_textFormattingMode, IsJustified, PixelsPerDip);
 
@@ -792,7 +792,7 @@ namespace MS.Internal.TextFormatting
 
                     line._metrics._cchDepend = 0; // no dependency
                 }
-                else if (symbol != null)
+                else if (symbol is not null)
                 {
                     line.AppendCollapsingSymbol(symbol);
                 }
@@ -871,8 +871,8 @@ namespace MS.Internal.TextFormatting
                 }
 
                 if (    HasCollapsed
-                    &&  _collapsedRange != null
-                    &&  _collapsingSymbol != null
+                    &&  _collapsedRange is not null
+                    &&  _collapsingSymbol is not null
                     )
                 {
                     int lineEndDistance = _metrics._textStart + _metrics._textWidthAtTrailing;
@@ -1012,7 +1012,7 @@ namespace MS.Internal.TextFormatting
                 }
 
                 if (    HasCollapsed
-                    &&  _collapsedRange != null
+                    &&  _collapsedRange is not null
                     &&  characterHit.FirstCharacterIndex >= _collapsedRange.TextSourceCharacterIndex
                     )
                 {
@@ -1316,7 +1316,7 @@ namespace MS.Internal.TextFormatting
                 offsetToNextCaretStopIndex = 0;
 
                 if (    HasCollapsed
-                    &&  _collapsedRange != null
+                    &&  _collapsedRange is not null
                     &&  currentIndex >= _collapsedRange.TextSourceCharacterIndex
                     )
                 {
@@ -1472,7 +1472,7 @@ namespace MS.Internal.TextFormatting
             /// </summary>
             private TextBounds CreateCollapsingSymbolBounds()
             {
-                Debug.Assert(_collapsingSymbol != null);
+                Debug.Assert(_collapsingSymbol is not null);
 
                 return new TextBounds(
                     new Rect(Start + Width - _collapsingSymbol.Width, 0, _collapsingSymbol.Width, Height),
@@ -1573,8 +1573,8 @@ namespace MS.Internal.TextFormatting
 
                 // check if collapsing symbol is wholely selected
                 bool collapsingSymbolSelected =
-                    (   _collapsingSymbol != null
-                    &&  _collapsedRange != null
+                    (   _collapsingSymbol is not null
+                    &&  _collapsedRange is not null
                     &&  firstTextSourceCharacterIndex < _collapsedRange.TextSourceCharacterIndex
                     &&  firstTextSourceCharacterIndex + textLength - _collapsedRange.TextSourceCharacterIndex > _collapsedRange.Length / 2
                     );
@@ -1725,7 +1725,7 @@ namespace MS.Internal.TextFormatting
 
                 if (bounds is null)
                 {
-                    Debug.Assert(boundsList != null);
+                    Debug.Assert(boundsList is not null);
                     if (boundsList.Count > 0)
                     {
                         if (collapsingSymbolSelected)
@@ -2011,7 +2011,7 @@ namespace MS.Internal.TextFormatting
                             int cchBounds = cch;
 
                             if (    HasCollapsed
-                                &&  _collapsedRange != null
+                                &&  _collapsedRange is not null
                                 &&  cp <= _collapsedRange.TextSourceCharacterIndex
                                 &&  cp + cchBounds >= _collapsedRange.TextSourceCharacterIndex
                                 &&  cp + cchBounds < _collapsedRange.TextSourceCharacterIndex + _collapsedRange.Length)
@@ -2089,9 +2089,9 @@ namespace MS.Internal.TextFormatting
                     if (cch > 0)
                     {
                         TextRun textRun = ((LSRun)GetRun((Plsrun)plsrunSpan.element)).TextRun;
-                        Debug.Assert(textRun != null);
+                        Debug.Assert(textRun is not null);
 
-                        if (lastTextRun != null && textRun != lastTextRun)
+                        if (lastTextRun is not null && textRun != lastTextRun)
                         {
                             Debug.Assert(cchAcc > 0);
                             lsrunList.Add(new TextSpan<TextRun>(cchAcc, lastTextRun));
@@ -2104,7 +2104,7 @@ namespace MS.Internal.TextFormatting
                     }
                 }
 
-                if (lastTextRun != null)
+                if (lastTextRun is not null)
                 {
                     Debug.Assert(cchAcc > 0);
                     lsrunList.Add(new TextSpan<TextRun>(cchAcc, lastTextRun));
@@ -2161,7 +2161,7 @@ namespace MS.Internal.TextFormatting
 
                     if (lserr != LsErr.None)
                     {
-                        if (callbackException != null)
+                        if (callbackException is not null)
                         {
                             // rethrow exception thrown in callbacks
                             throw callbackException;
@@ -2708,7 +2708,7 @@ namespace MS.Internal.TextFormatting
             {
                 if (lscp >= _metrics._lscpLim)
                 {
-                    if (_collapsedRange != null)
+                    if (_collapsedRange is not null)
                         return _collapsedRange.TextSourceCharacterIndex;
 
                     return _cpFirst + _metrics._cchLength;

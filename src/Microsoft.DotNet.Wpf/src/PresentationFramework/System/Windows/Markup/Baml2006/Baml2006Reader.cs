@@ -208,12 +208,12 @@ namespace System.Windows.Baml2006
 
         protected override void Dispose(bool disposing)
         {
-            if (_binaryReader != null)
+            if (_binaryReader is not null)
             {
                 if (_settings.OwnsStream)
                 {
                     SharedStream sharedStream = _binaryReader.BaseStream as SharedStream;
-                    if (sharedStream != null && sharedStream.SharedCount < 1)
+                    if (sharedStream is not null && sharedStream.SharedCount < 1)
                     {
                         // The reader is responsible for the streams lifetime and no one is sharing the stream
                         _binaryReader.Close();
@@ -232,7 +232,7 @@ namespace System.Windows.Baml2006
 
         bool IXamlLineInfo.HasLineInfo
         {
-            get { return _context.CurrentFrame != null; }
+            get { return _context.CurrentFrame is not null; }
         }
 
         int IXamlLineInfo.LineNumber
@@ -325,7 +325,7 @@ namespace System.Windows.Baml2006
             foreach (KeyRecord keyRecord in _context.KeyList)
             {
                 keyRecord.ValuePosition += endOfKeysStartOfObjects;
-                if (previousKeyRecord != null)
+                if (previousKeyRecord is not null)
                 {
                     previousKeyRecord.ValueSize = (int)(keyRecord.ValuePosition - previousKeyRecord.ValuePosition);
                 }
@@ -742,7 +742,7 @@ namespace System.Windows.Baml2006
 
             if (shouldInjectContentProperty)
             {
-                if (_context.CurrentFrame.XamlType.ContentProperty != null)
+                if (_context.CurrentFrame.XamlType.ContentProperty is not null)
                 {
                     Common_Process_Property();
 
@@ -840,7 +840,7 @@ namespace System.Windows.Baml2006
             // If we are loading the BAML and setting Resource Dictionary DeferrableContent property
             // then these will have been upgraded to StaticResourceHolders (an ME).
             var staticResource = value as StaticResource;
-            if (staticResource != null)
+            if (staticResource is not null)
             {
                 XamlServices.Transform(staticResource.ResourceNodeList.GetReader(), _xamlNodesWriter, false);
             }
@@ -1050,7 +1050,7 @@ namespace System.Windows.Baml2006
             if (IsStringOnlyWhiteSpace(stringValue) &&
                 _context.CurrentFrame.Member != XamlLanguage.PositionalParameters)
             {
-                if (_context.CurrentFrame.XamlType != null && _context.CurrentFrame.XamlType.IsCollection)
+                if (_context.CurrentFrame.XamlType is not null && _context.CurrentFrame.XamlType.IsCollection)
                 {
                     if (!_context.CurrentFrame.XamlType.IsWhitespaceSignificantCollection)
                     {
@@ -1059,7 +1059,7 @@ namespace System.Windows.Baml2006
                 }
                 else
                 {
-                    if (_context.CurrentFrame.Member.Type != null &&
+                    if (_context.CurrentFrame.Member.Type is not null &&
                         !_context.CurrentFrame.Member.Type.UnderlyingType.IsAssignableFrom(typeof(String)))
                         return;
                 }
@@ -1131,7 +1131,7 @@ namespace System.Windows.Baml2006
             Int16 typeId = _binaryReader.ReadInt16();
             // Obfuscated root types remain unobfuscated in BAML.
             // Reflect the root instance for the root type in case of obfuscation.
-            if (_root != null && _context.CurrentFrame.Depth == 0)
+            if (_root is not null && _context.CurrentFrame.Depth == 0)
             {
                 Type rootType = _root.GetType();
                 type = BamlSchemaContext.GetXamlType(rootType);
@@ -1195,7 +1195,7 @@ namespace System.Windows.Baml2006
             // If you're the first element, write out the BaseUri
             if (_context.CurrentFrame.Depth == 1)
             {
-                if (_settings.BaseUri != null && !String.IsNullOrEmpty(_settings.BaseUri.ToString()))
+                if (_settings.BaseUri is not null && !String.IsNullOrEmpty(_settings.BaseUri.ToString()))
                 {
                     _xamlNodesWriter.WriteStartMember(XamlLanguage.Base);
                     _xamlNodesWriter.WriteValue(_settings.BaseUri.ToString());
@@ -1218,7 +1218,7 @@ namespace System.Windows.Baml2006
                     {
                         _xamlNodesWriter.WriteValue(record.KeyString);
                     }
-                    else if (record.KeyType != null)
+                    else if (record.KeyType is not null)
                     {
                         _xamlNodesWriter.WriteStartObject(XamlLanguage.Type);
                         _xamlNodesWriter.WriteStartMember(XamlLanguage.PositionalParameters);
@@ -1243,12 +1243,12 @@ namespace System.Windows.Baml2006
         {
             RemoveImplicitFrame();
 
-            if (_context.CurrentFrame.Key != null)
+            if (_context.CurrentFrame.Key is not null)
             {
                 _xamlNodesWriter.WriteStartMember(XamlLanguage.Key);
 
                 KeyRecord keyRecord = _context.CurrentFrame.Key;
-                if (keyRecord.KeyType != null)
+                if (keyRecord.KeyType is not null)
                 {
                     if (_isBinaryProvider)
                     {
@@ -1263,7 +1263,7 @@ namespace System.Windows.Baml2006
                         _xamlNodesWriter.WriteEndObject();
                     }
                 }
-                else if (keyRecord.KeyNodeList != null)
+                else if (keyRecord.KeyNodeList is not null)
                 {
                     XamlServices.Transform(keyRecord.KeyNodeList.GetReader(), _xamlNodesWriter, false);
                 }
@@ -1417,7 +1417,7 @@ namespace System.Windows.Baml2006
             }
 
             // new start properties not appear without having ended an old property
-            if (_context.CurrentFrame.Member != null)
+            if (_context.CurrentFrame.Member is not null)
             {
                 throw new XamlParseException(SR.Format(SR.PropertyOutOfOrder, _context.CurrentFrame.Member));
             }
@@ -1604,7 +1604,7 @@ namespace System.Windows.Baml2006
                         _typeConverterMap[typeConverterId] = converter;
                     }
                 }
-                if (converter != null)
+                if (converter is not null)
                 {
                     value = CreateTypeConverterMarkupExtension(property, converter, value, _settings);
                 }
@@ -1663,7 +1663,7 @@ namespace System.Windows.Baml2006
                     string staticExParam = GetStaticExtensionValue(valueId, out ownerType, out providedValue);
 
                     // If it's a Known command or a SystemResourceKey, send the value across directly
-                    if (providedValue != null)
+                    if (providedValue is not null)
                     {
                         param = providedValue;
                     }
@@ -1671,7 +1671,7 @@ namespace System.Windows.Baml2006
                     {
                         System.Windows.Markup.StaticExtension staticExtension =
                             new System.Windows.Markup.StaticExtension(staticExParam);
-                        Debug.Assert(ownerType != null);
+                        Debug.Assert(ownerType is not null);
                         staticExtension.MemberType = ownerType;
                         param = staticExtension.ProvideValue(null); // if MemberType is set we don't need ITypeResolver
                     }
@@ -1725,7 +1725,7 @@ namespace System.Windows.Baml2006
                 }
                 else if (extensionTypeId == Baml2006SchemaContext.StaticExtensionTypeId)
                 {
-                    if (providedValue != null)
+                    if (providedValue is not null)
                     {
                         value = providedValue;
                     }
@@ -1759,7 +1759,7 @@ namespace System.Windows.Baml2006
                     value = GetStaticExtensionValue(valueId, out ownerType, out providedValue);
 
                     // If it's a Known command or a SystemResourceKey, send the value across directly
-                    if (providedValue != null)
+                    if (providedValue is not null)
                     {
                         _xamlNodesWriter.WriteValue(providedValue);
                     }
@@ -1772,7 +1772,7 @@ namespace System.Windows.Baml2006
                         _xamlNodesWriter.WriteEndMember();
 
                         // In BAML scenario, we want to pass MemberType directly along cuz it's optimal
-                        if (ownerType != null)
+                        if (ownerType is not null)
                         {
                             _xamlNodesWriter.WriteStartMember(BamlSchemaContext.StaticExtensionMemberTypeProperty);
                             _xamlNodesWriter.WriteValue(ownerType);
@@ -1834,7 +1834,7 @@ namespace System.Windows.Baml2006
                 }
 
                 _xamlNodesWriter.WriteEndMember();
-                if (memberType != null)
+                if (memberType is not null)
                 {
                     _xamlNodesWriter.WriteStartMember(BamlSchemaContext.StaticExtensionMemberTypeProperty);
                     _xamlNodesWriter.WriteValue(memberType);
@@ -1905,7 +1905,7 @@ namespace System.Windows.Baml2006
             _xamlNodesWriter.WriteStartMember(XamlLanguage.PositionalParameters);
 
             OptimizedStaticResource optimizedResource = resource as OptimizedStaticResource;
-            if (optimizedResource != null)
+            if (optimizedResource is not null)
             {
                 if (optimizedResource.IsKeyStaticExtension)
                 {
@@ -1913,7 +1913,7 @@ namespace System.Windows.Baml2006
                     object providedValue;
                     string param = GetStaticExtensionValue(optimizedResource.KeyId, out memberType, out providedValue);
 
-                    if (providedValue != null)
+                    if (providedValue is not null)
                     {
                         _xamlNodesWriter.WriteValue(providedValue);
                     }
@@ -1923,7 +1923,7 @@ namespace System.Windows.Baml2006
                         _xamlNodesWriter.WriteStartMember(XamlLanguage.PositionalParameters);
                         _xamlNodesWriter.WriteValue(param);
                         _xamlNodesWriter.WriteEndMember();
-                        if (memberType != null)
+                        if (memberType is not null)
                         {
                             _xamlNodesWriter.WriteStartMember(BamlSchemaContext.StaticExtensionMemberTypeProperty);
                             _xamlNodesWriter.WriteValue(memberType);
@@ -1957,7 +1957,7 @@ namespace System.Windows.Baml2006
             else
             {
                 StaticResource sr = resource as StaticResource;
-                Debug.Assert(sr != null);
+                Debug.Assert(sr is not null);
                 XamlServices.Transform(sr.ResourceNodeList.GetReader(), _xamlNodesWriter, false);
             }
             _xamlNodesWriter.WriteEndMember();
@@ -2032,7 +2032,7 @@ namespace System.Windows.Baml2006
 
             IList<string> xamlNamespaces = type.GetXamlNamespaces();
 
-            while (currentFrame != null)
+            while (currentFrame is not null)
             {
                 foreach(string xmlns in xamlNamespaces)
                 {
@@ -2071,7 +2071,7 @@ namespace System.Windows.Baml2006
                     {
                         // We need to append local assembly
 
-                        return uriInput + ((_settings.LocalAssembly != null)
+                        return uriInput + ((_settings.LocalAssembly is not null)
                                                 ? $";assembly={GetAssemblyNameForNamespace(_settings.LocalAssembly)}"
                                                 : String.Empty);
                     }
@@ -2112,7 +2112,7 @@ namespace System.Windows.Baml2006
         // (prefix, namespaceUri)
         private void Process_XmlnsProperty()
         {
-            Debug.Assert(_context.CurrentFrame.XamlType != null, "BAML Xmlns record is only legal between ElementStart and ElementEnd");
+            Debug.Assert(_context.CurrentFrame.XamlType is not null, "BAML Xmlns record is only legal between ElementStart and ElementEnd");
 
             Read_RecordSize();
             string prefix = _binaryReader.ReadString();
@@ -2153,7 +2153,7 @@ namespace System.Windows.Baml2006
             _context.LineOffset = _binaryReader.ReadInt32();
             // We do this cast on every line info, but that is harmless for perf since line info is only in debug build
             IXamlLineInfoConsumer consumer = _xamlNodesWriter as IXamlLineInfoConsumer;
-            if (consumer != null)
+            if (consumer is not null)
             {
                 consumer.SetLineInfo(_context.LineNumber, _context.LineOffset);
             }
@@ -2166,7 +2166,7 @@ namespace System.Windows.Baml2006
             _context.LineOffset = _binaryReader.ReadInt32();
             // We do this cast on every line info, but that is harmless for perf since line info is only in debug build
             IXamlLineInfoConsumer consumer = _xamlNodesWriter as IXamlLineInfoConsumer;
-            if (consumer != null)
+            if (consumer is not null)
             {
                 consumer.SetLineInfo(_context.LineNumber, _context.LineOffset);
             }
@@ -2243,7 +2243,7 @@ namespace System.Windows.Baml2006
             {
                 XamlMember contentProperty = GetProperty(propertyId, false);
                 WpfXamlMember wpfProperty = contentProperty as WpfXamlMember;
-                if (wpfProperty != null)
+                if (wpfProperty is not null)
                 {
                     contentProperty = wpfProperty.AsContentProperty;
                 }
@@ -2255,7 +2255,7 @@ namespace System.Windows.Baml2006
         {
             int connectionId = _binaryReader.ReadInt32();
 
-            if (_context.CurrentFrame.Member != null)
+            if (_context.CurrentFrame.Member is not null)
             {
                 // ConnectionId could come in the middle of a collection.  In that case, we must wait until the end of the
                 // collection to set the ConnectionId.
@@ -2358,17 +2358,17 @@ namespace System.Windows.Baml2006
             XamlType parentType = _context.CurrentFrame.XamlType;
             XamlMember parentProperty = _context.CurrentFrame.Member;
 
-            if (parentType != null)
+            if (parentType is not null)
             {
                 if (parentProperty is null)
                 {
                     // We have got two consecutive ElementStart records
                     // We must insert an implicit content property between them
-                    if (_context.CurrentFrame.ContentProperty != null)
+                    if (_context.CurrentFrame.ContentProperty is not null)
                     {
                         _context.CurrentFrame.Member = parentProperty = _context.CurrentFrame.ContentProperty;
                     }
-                    else if (parentType.ContentProperty != null)
+                    else if (parentType.ContentProperty is not null)
                     {
                         _context.CurrentFrame.Member = parentProperty = parentType.ContentProperty;
                     }
@@ -2378,7 +2378,7 @@ namespace System.Windows.Baml2006
                         {
                             _context.CurrentFrame.Member = parentProperty = XamlLanguage.Items;
                         }
-                        else if (parentType.TypeConverter != null)
+                        else if (parentType.TypeConverter is not null)
                         {
                             _context.CurrentFrame.Member = parentProperty = XamlLanguage.Initialization;
                         }
@@ -2408,7 +2408,7 @@ namespace System.Windows.Baml2006
                                 // This is needed to ensure that template root element carries a line info
                                 // which can then be used when it is instantiated
                                 IXamlLineInfoConsumer consumer = _xamlNodesWriter as IXamlLineInfoConsumer;
-                                if (consumer != null)
+                                if (consumer is not null)
                                 {
                                     consumer.SetLineInfo(_context.LineNumber, _context.LineOffset);
                                 }
@@ -2419,7 +2419,7 @@ namespace System.Windows.Baml2006
 
                 XamlType parentPropertyType = parentProperty.Type;
                 // Normally an error except for collections
-                if (parentPropertyType != null && (parentPropertyType.IsCollection || parentPropertyType.IsDictionary) &&
+                if (parentPropertyType is not null && (parentPropertyType.IsCollection || parentPropertyType.IsDictionary) &&
                     !parentProperty.IsDirective && (flags & ReaderFlags_AddedToTree) == 0)
                 {
                     bool emitPreamble = false;
@@ -2757,7 +2757,7 @@ namespace System.Windows.Baml2006
         Freezable IFreezeFreezables.TryGetFreezable(string value)
         {
             Freezable freezable = null;
-            if (_freezeCache != null)
+            if (_freezeCache is not null)
             {
                 _freezeCache.TryGetValue(value, out freezable);
             }

@@ -34,7 +34,7 @@ static class CookieHandler
     internal static void HandleWebRequest(WebRequest request)
     {
         HttpWebRequest httpRequest = request as HttpWebRequest;
-        if (httpRequest != null)
+        if (httpRequest is not null)
         {
             try
             {
@@ -67,7 +67,7 @@ static class CookieHandler
     internal static void HandleWebResponse(WebResponse response)
     {
         HttpWebResponse httpResponse = response as HttpWebResponse;
-        if (httpResponse != null)
+        if (httpResponse is not null)
         {
             // Not relying on httpResponse.Cookies, because the original cookie header is needed, with all
             // attributes. (A CookieCollection can be stuffed in a CookieContainer, but CookieContainer.

@@ -42,7 +42,7 @@ namespace WinRT
             where TDelegate : class, Delegate
         {
             var target_invoke = FindObject<TDelegate>(thisPtr);
-            if (target_invoke != null)
+            if (target_invoke is not null)
             {
                 return invoke(target_invoke);
             }
@@ -53,7 +53,7 @@ namespace WinRT
             where T : class, Delegate
         {
             var target_invoke = FindObject<T>(thisPtr);
-            if (target_invoke != null)
+            if (target_invoke is not null)
             {
                 invoke(target_invoke);
             }

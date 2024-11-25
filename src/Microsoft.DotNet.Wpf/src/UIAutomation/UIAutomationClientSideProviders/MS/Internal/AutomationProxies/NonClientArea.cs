@@ -48,13 +48,13 @@ namespace MS.Internal.AutomationProxies
             {
                 // If the window does not have a menu, it at least has a system menu.
                 WindowsTitleBar titleBar = (WindowsTitleBar)CreateNonClientChild(NonClientItem.TitleBar);
-                if (titleBar != null)
+                if (titleBar is not null)
                 {
                     menuProxy = (ProxyHwnd)titleBar.CreateTitleBarChild(WindowsTitleBar._systemMenu);
                 }
             }
 
-            if (menuProxy != null)
+            if (menuProxy is not null)
             {
                 menuProxy.AdviseEventAdded(eventId, aidProps);
             }
@@ -71,13 +71,13 @@ namespace MS.Internal.AutomationProxies
             {
                 // If the window does not have a menu, it at least has a system menu.
                 WindowsTitleBar titleBar = (WindowsTitleBar)CreateNonClientChild(NonClientItem.TitleBar);
-                if (titleBar != null)
+                if (titleBar is not null)
                 {
                     menuProxy = (ProxyHwnd)titleBar.CreateTitleBarChild(WindowsTitleBar._systemMenu);
                 }
             }
 
-            if (menuProxy != null)
+            if (menuProxy is not null)
             {
                 menuProxy.AdviseEventRemoved(eventId, aidProps);
             }
@@ -278,16 +278,16 @@ namespace MS.Internal.AutomationProxies
             {
                 // Since in system menu mode try to find point on the SystemMenu
                 WindowsTitleBar titleBar = (WindowsTitleBar)CreateNonClientChild(NonClientItem.TitleBar);
-                if (titleBar != null)
+                if (titleBar is not null)
                 {
                     ProxyFragment systemMenu = (ProxyFragment)titleBar.CreateTitleBarChild(WindowsTitleBar._systemMenu);
 
-                    if (systemMenu != null)
+                    if (systemMenu is not null)
                     {
                         // need to drill down ourself, since the FragmentRoot of the System Menu Bar will
                         // be NonClient area hence UIAutomation will not drill down
                         ProxySimple proxy = systemMenu.GetFocus();
-                        if (proxy != null)
+                        if (proxy is not null)
                         {
                             return proxy;
                         }
@@ -439,7 +439,7 @@ namespace MS.Internal.AutomationProxies
             for (int i = (int) start; i > (int) NonClientItem.MIN && i < (int) NonClientItem.MAX; i += next ? 1 : -1)
             {
                 el = CreateNonClientChild ((NonClientItem) i);
-                if (el != null)
+                if (el is not null)
                     return el;
             }
 
@@ -539,7 +539,7 @@ namespace MS.Internal.AutomationProxies
                 {
                     // Since in system menu mode try to find point on the SystemMenu
                     WindowsTitleBar titleBar = (WindowsTitleBar)CreateNonClientChild(NonClientItem.TitleBar);
-                    if (titleBar != null)
+                    if (titleBar is not null)
                     {
                         menuProxy = (ProxyHwnd)titleBar.CreateTitleBarChild(WindowsTitleBar._systemMenu);
                     }
@@ -553,7 +553,7 @@ namespace MS.Internal.AutomationProxies
                     }
                 }
 
-                if (menuProxy != null)
+                if (menuProxy is not null)
                 {
                     // if this menu is not visible its really not there
                     if (menuProxy.BoundingRectangle.Width != 0 && menuProxy.BoundingRectangle.Height != 0)
@@ -572,7 +572,7 @@ namespace MS.Internal.AutomationProxies
             // return in fact HTBOTTOMRIGHT for sizing purposes.
             // make sure we don't accidently include the borders
             ProxyFragment grip = CreateNonClientChild(NonClientItem.Grip);
-            if (grip != null)
+            if (grip is not null)
             {
                 Rect rect = grip.BoundingRectangle;
                 if (x < rect.Right && y < rect.Bottom)
@@ -594,7 +594,7 @@ namespace MS.Internal.AutomationProxies
                 // return in fact HTBOTTOMLEFT for sizing purposes.
                 // make sure we don't accidently include the borders
                 ProxyFragment grip = CreateNonClientChild(NonClientItem.Grip);
-                if (grip != null)
+                if (grip is not null)
                 {
                     Rect rect = grip.BoundingRectangle;
                     if (x > rect.Left && y < rect.Bottom)
@@ -613,16 +613,16 @@ namespace MS.Internal.AutomationProxies
             {
                 // Since in system menu mode try to find point on the SystemMenu
                 WindowsTitleBar titleBar = (WindowsTitleBar)CreateNonClientChild(NonClientItem.TitleBar);
-                if (titleBar != null)
+                if (titleBar is not null)
                 {
                     ProxyFragment systemMenu = (ProxyFragment)titleBar.CreateTitleBarChild(WindowsTitleBar._systemMenu);
 
-                    if (systemMenu != null)
+                    if (systemMenu is not null)
                     {
                         // need to drill down ourself, since the FragmentRoot of the System Menu Bar will
                         // be NonClient area hence UIAutomation will not drill down
                         ProxySimple proxy = systemMenu.ElementProviderFromPoint(x, y);
-                        if (proxy != null)
+                        if (proxy is not null)
                         {
                             return proxy;
                         }
@@ -633,12 +633,12 @@ namespace MS.Internal.AutomationProxies
             {
                 // Not in system menu mode so it may be a Popup Menu, have a go at it
                 ProxyFragment menu = CreateNonClientChild(NonClientItem.Menu);
-                if (menu != null)
+                if (menu is not null)
                 {
                     // need to drill down ourself, since the FragmentRoot of the MenuBar will
                     // be NonClient area hence UIAutomation will not drill down
                     ProxySimple proxy = menu.ElementProviderFromPoint(x, y);
-                    if (proxy != null)
+                    if (proxy is not null)
                     {
                         return proxy;
                     }
@@ -654,7 +654,7 @@ namespace MS.Internal.AutomationProxies
         private static void RaiseMenuEventsOnClient(IntPtr hwnd, int eventId, object idProp, int idObject, int idChild)
         {
             ProxySimple el = WindowsMenu.CreateMenuItemFromEvent(hwnd, eventId, idChild, idObject);
-            if (el != null)
+            if (el is not null)
             {
                 el.DispatchEvents(eventId, idProp, idObject, idChild);
             }
@@ -665,7 +665,7 @@ namespace MS.Internal.AutomationProxies
             if (Misc.GetClassName(hwnd) == "ComboLBox")
             {
                 ProxySimple el = (ProxySimple)WindowsListBox.Create(hwnd, idChild);
-                if (el != null)
+                if (el is not null)
                 {
                     el.DispatchEvents(eventId, idProp, idObject, idChild);
                 }
@@ -689,10 +689,10 @@ namespace MS.Internal.AutomationProxies
                 NonClientItem item = idObject == NativeMethods.OBJID_HSCROLL ? NonClientItem.HScrollBar : NonClientItem.VScrollBar;
                 int sbFlag = idObject == NativeMethods.OBJID_HSCROLL ? NativeMethods.SB_HORZ : NativeMethods.SB_VERT;
                 ProxyFragment scrollBar = new WindowsScrollBar(hwnd, el, (int)item, sbFlag);
-                if (scrollBar != null)
+                if (scrollBar is not null)
                 {
                     ProxySimple scrollBarBit = WindowsScrollBarBits.CreateFromChildId(hwnd, scrollBar, idChild, sbFlag);
-                    if (scrollBarBit != null)
+                    if (scrollBarBit is not null)
                     {
                         scrollBarBit.DispatchEvents(eventId, idProp, idObject, idChild);
                     }
@@ -736,7 +736,7 @@ namespace MS.Internal.AutomationProxies
                 el = (ProxyFragment)WindowsListBox.Create(hwnd, 0);
             }
 
-            if (el != null)
+            if (el is not null)
             {
                 el.DispatchEvents(eventId, idProp, idObject, idChild);
             }

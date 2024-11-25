@@ -154,7 +154,7 @@ namespace System.Windows.Documents
                 case FlowNodeType.Object:
                 {
                     FixedElement element = _cookie as FixedElement;
-                    if (element != null)
+                    if (element is not null)
                     {
                         page = element.PageIndex;
                     }
@@ -168,7 +168,7 @@ namespace System.Windows.Documents
                 }
                 case FlowNodeType.Run:
                 {
-                    if (this.FixedSOMElements != null && this.FixedSOMElements.Length > 0)
+                    if (this.FixedSOMElements is not null && this.FixedSOMElements.Length > 0)
                     {
                         page = this.FixedSOMElements[0].FixedNode.Page;
                     }

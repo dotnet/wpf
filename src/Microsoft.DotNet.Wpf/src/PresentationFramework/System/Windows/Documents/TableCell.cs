@@ -97,19 +97,19 @@ namespace System.Windows.Documents
             DependencyObject oldParent = this.Parent;
             TableRow newParentTR = newParent as TableRow;
 
-            if((newParent != null) && (newParentTR is null))
+            if((newParent is not null) && (newParentTR is null))
             {
                 throw new InvalidOperationException(SR.Format(SR.TableInvalidParentNodeType, newParent.GetType().ToString()));
             }
 
-            if(oldParent != null)
+            if(oldParent is not null)
             {
                 ((TableRow)oldParent).Cells.InternalRemove(this);
             } 
 
             base.OnNewParent(newParent);
 
-            if ((newParentTR != null) && (newParentTR.Cells != null)) // keep PreSharp happy
+            if ((newParentTR is not null) && (newParentTR.Cells is not null)) // keep PreSharp happy
             {
                 newParentTR.Cells.InternalAdd(this);
             }
@@ -336,7 +336,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal void OnEnterParentTree()
         {
-            if(Table != null)
+            if(Table is not null)
             {
                 Table.OnStructureChanged();
             }
@@ -354,7 +354,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal void OnAfterExitParentTree(TableRow row)
         {
-            if(row.Table != null)
+            if(row.Table is not null)
             {
                 row.Table.OnStructureChanged();
             }
@@ -390,7 +390,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// Table owner accessor
         /// </summary>
-        internal Table Table { get { return Row != null ? Row.Table : null; } }
+        internal Table Table { get { return Row is not null ? Row.Table : null; } }
 
         /// <summary>
         /// Cell's index in the parents collection.
@@ -579,14 +579,14 @@ namespace System.Windows.Documents
         {
             TableCell cell = (TableCell) d;
 
-            if(cell.Table != null)
+            if(cell.Table is not null)
             {
                 cell.Table.OnStructureChanged();
             }
 
             // Update AutomaitonPeer.
             TableCellAutomationPeer peer = ContentElementAutomationPeer.FromElement(cell) as TableCellAutomationPeer;
-            if (peer != null)
+            if (peer is not null)
             {
                 peer.OnColumnSpanChanged((int)e.OldValue, (int)e.NewValue);
             }
@@ -599,14 +599,14 @@ namespace System.Windows.Documents
         {
             TableCell cell = (TableCell) d;
 
-            if(cell.Table != null)
+            if(cell.Table is not null)
             {
                 cell.Table.OnStructureChanged();
             }
 
             // Update AutomaitonPeer.
             TableCellAutomationPeer peer = ContentElementAutomationPeer.FromElement(cell) as TableCellAutomationPeer;
-            if (peer != null)
+            if (peer is not null)
             {
                 peer.OnRowSpanChanged((int)e.OldValue, (int)e.NewValue);
             }

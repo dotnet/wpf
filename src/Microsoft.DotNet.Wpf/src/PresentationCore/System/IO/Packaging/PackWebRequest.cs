@@ -70,8 +70,8 @@ namespace System.IO.Packaging
         internal PackWebRequest(Uri uri, Uri packageUri, Uri partUri, Package cacheEntry,
             bool respectCachePolicy, bool cachedPackageIsThreadSafe)
         {
-            Debug.Assert(uri != null, "PackWebRequest uri cannot be null");
-            Debug.Assert(packageUri != null, "packageUri cannot be null");
+            Debug.Assert(uri is not null, "PackWebRequest uri cannot be null");
+            Debug.Assert(packageUri is not null, "packageUri cannot be null");
 
             // keep these
             _uri = uri;
@@ -83,7 +83,7 @@ namespace System.IO.Packaging
             _cachePolicy = _defaultCachePolicy;         // always use default and then let them change it
 
 #if DEBUG
-            if (PackWebRequestFactory._traceSwitch.Enabled && (cacheEntry != null))
+            if (PackWebRequestFactory._traceSwitch.Enabled && (cacheEntry is not null))
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
                         Environment.CurrentManagedThreadId + ": " + 
@@ -500,7 +500,7 @@ namespace System.IO.Packaging
 
                         // special optimization for ftp - Passive mode won't return lengths on ISA servers
                         FtpWebRequest ftpWebRequest = _webRequest as FtpWebRequest;
-                        if (ftpWebRequest != null)
+                        if (ftpWebRequest is not null)
                         {
                             ftpWebRequest.UsePassive = false;  // default but allow override
                         }
@@ -546,7 +546,7 @@ namespace System.IO.Packaging
         {
             get
             {
-                return (_cacheEntry != null);
+                return (_cacheEntry is not null);
             }
         }
 
@@ -558,7 +558,7 @@ namespace System.IO.Packaging
             get
             {
                 // _respectCachePolicy is only false for packages retrieved from PreloadedPackages
-                return ((_cacheEntry != null) && (!_respectCachePolicy));
+                return ((_cacheEntry is not null) && (!_respectCachePolicy));
             }
         }
 

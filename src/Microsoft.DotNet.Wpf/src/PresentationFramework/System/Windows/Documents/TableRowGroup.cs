@@ -86,7 +86,7 @@ namespace System.Windows.Documents
             ArgumentNullException.ThrowIfNull(value);
 
             TableRow row = value as TableRow;
-            if (row != null)
+            if (row is not null)
             {
                 Rows.Add(row);
 
@@ -191,7 +191,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal void OnEnterParentTree()
         {
-            if(Table != null)
+            if(Table is not null)
             {
                 Table.OnStructureChanged();
             }
@@ -316,12 +316,12 @@ namespace System.Windows.Documents
         {
             DependencyObject oldParent = this.Parent;
 
-            if (newParent != null && !(newParent is Table))
+            if (newParent is not null && !(newParent is Table))
             {
                 throw new InvalidOperationException(SR.Format(SR.TableInvalidParentNodeType, newParent.GetType().ToString()));
             }
 
-            if (oldParent != null)
+            if (oldParent is not null)
             {
                 OnExitParentTree();
                 ((Table)oldParent).RowGroups.InternalRemove(this);
@@ -330,7 +330,7 @@ namespace System.Windows.Documents
 
             base.OnNewParent(newParent);
 
-            if (newParent != null)
+            if (newParent is not null)
             {
                 ((Table)newParent).RowGroups.InternalAdd(this);
                 OnEnterParentTree();

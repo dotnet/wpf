@@ -58,7 +58,7 @@ namespace MS.Internal.Documents
             if (e.CursorLeft == KeyboardInvokedSentinel)
             {
                 DocumentViewer dv = sender as DocumentViewer;
-                if (dv != null && dv.ScrollViewer != null)
+                if (dv is not null && dv.ScrollViewer is not null)
                 {
                     OnContextMenuOpening(dv.ScrollViewer.Content, e);
                 }
@@ -83,7 +83,7 @@ namespace MS.Internal.Documents
                 return;
 
             // If the DocumentViewer or ScrollViewer has a ContextMenu set, the DocumentGrid menu should be ignored
-            if (documentGrid.DocumentViewerOwner.ContextMenu != null || documentGrid.DocumentViewerOwner.ScrollViewer.ContextMenu != null)
+            if (documentGrid.DocumentViewerOwner.ContextMenu is not null || documentGrid.DocumentViewerOwner.ScrollViewer.ContextMenu is not null)
                 return;
 
             // Start by grabbing whatever's set to the UiScope's ContextMenu property.
@@ -94,7 +94,7 @@ namespace MS.Internal.Documents
                 return;
 
             // If it's not null, someone's overriding our default -- don't mess with it.
-            if (contextMenu != null)
+            if (contextMenu is not null)
                 return;
 
             // It's a default null, so spin up a temporary ContextMenu now.
@@ -214,7 +214,7 @@ namespace MS.Internal.Documents
                     menuItem.Header = header;
                 }
 
-                if (inputGestureText != null)
+                if (inputGestureText is not null)
                 {
                     menuItem.InputGestureText = inputGestureText;
                 }

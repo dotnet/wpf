@@ -67,13 +67,13 @@ namespace System.Windows.Media
         {
             Brush brush;
             IFreezeFreezables freezer = null;
-            if (context != null)
+            if (context is not null)
             {
                 freezer = (IFreezeFreezables)context.GetService(typeof(IFreezeFreezables));
-                if ((freezer != null) && freezer.FreezeFreezables)
+                if ((freezer is not null) && freezer.FreezeFreezables)
                 {
                     brush = (Brush)freezer.TryGetFreezable(value);
-                    if (brush != null)
+                    if (brush is not null)
                     {
                         return brush;
                     }
@@ -82,7 +82,7 @@ namespace System.Windows.Media
             
             brush = Parsers.ParseBrush(value, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS, context);
             
-            if ((brush != null) && (freezer != null) && (freezer.FreezeFreezables))
+            if ((brush is not null) && (freezer is not null) && (freezer.FreezeFreezables))
             {
                 freezer.TryFreeze(value, brush);
             }

@@ -104,7 +104,7 @@ namespace System.Windows.Media.Imaging
             }
 
             SafeMILHandle renderTargetBitmap = _bitmapTarget.MILRenderTarget;
-            Debug.Assert (renderTargetBitmap != null, "Render Target is null");
+            Debug.Assert (renderTargetBitmap is not null, "Render Target is null");
 
             IntPtr pIRenderTargetBitmap = IntPtr.Zero;
 

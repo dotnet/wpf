@@ -38,7 +38,7 @@ namespace System.Windows
             {
             }
 
-            if (appSettings != null)
+            if (appSettings is not null)
             {
                 SetUseSetWindowPosForTopmostWindowsFromAppSettings(appSettings);
                 SetVSP45CompatFromAppSettings(appSettings);

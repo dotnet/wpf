@@ -96,12 +96,12 @@ namespace MS.Internal
             Freezable newValue,
             EventHandler changedHandler)
         {
-            if (newValue != null && !newValue.IsFrozen)
+            if (newValue is not null && !newValue.IsFrozen)
             {
                 newValue.Changed += changedHandler;
             }
 
-            if (oldValue != null && !oldValue.IsFrozen)
+            if (oldValue is not null && !oldValue.IsFrozen)
             {
                 oldValue.Changed -= changedHandler;
             }

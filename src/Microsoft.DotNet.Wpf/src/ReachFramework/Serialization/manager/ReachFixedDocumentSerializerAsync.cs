@@ -201,7 +201,7 @@ namespace System.Windows.Xps.Serialization
                     //
                     if(e.Modified)
                     {
-                        if(e.PrintTicket != null)
+                        if(e.PrintTicket is not null)
                         {
                             PrintTicketSerializerAsync serializer = new PrintTicketSerializerAsync(SerializationManager);
                             serializer.SerializeObject(e.PrintTicket);
@@ -269,7 +269,7 @@ namespace System.Windows.Xps.Serialization
 
             attributeValue = GetValueOfAttributeAsString(serializablePropertyContext);
 
-            if ( (attributeValue != null) && 
+            if ( (attributeValue is not null) && 
                  (attributeValue.Length > 0) )
             {
                 //
@@ -299,7 +299,7 @@ namespace System.Windows.Xps.Serialization
             Object targetObjectContainingProperty = serializablePropertyContext.TargetObject;
             Object propertyValue                  = serializablePropertyContext.Value;
 
-            if(propertyValue != null)
+            if(propertyValue is not null)
             {
                 TypeConverter typeConverter = serializablePropertyContext.TypeConverter;
 

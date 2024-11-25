@@ -111,7 +111,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             /// <param name="disposing"></param>
             protected virtual void Dispose(bool disposing)
             {
-                if (disposing && (_baseStream != null))
+                if (disposing && (_baseStream is not null))
                 {
                     // We only set the _baseStream to null without closing it,
                     // because _baseStream is a reference of an outside stream,

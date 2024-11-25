@@ -75,7 +75,7 @@ namespace System.Windows.Input.StylusPlugIns
         internal void StylusEnterLeave(bool isEnter, RawStylusInput rawStylusInput, bool confirmed)
         {
             // Only fire if plugin is enabled and hooked up to plugincollection.
-            if (__enabled && _pic != null)
+            if (__enabled && _pic is not null)
             {
                 if (isEnter)
                     OnStylusEnter(rawStylusInput, confirmed);
@@ -89,7 +89,7 @@ namespace System.Windows.Input.StylusPlugIns
         internal void RawStylusInput(RawStylusInput rawStylusInput)
         {
             // Only fire if plugin is enabled and hooked up to plugincollection.
-            if (__enabled && _pic != null)
+            if (__enabled && _pic is not null)
             {
                 switch (rawStylusInput.Report.Actions)
                 {
@@ -153,7 +153,7 @@ namespace System.Windows.Input.StylusPlugIns
                                                             bool targetVerified)
         {
             // Only fire if plugin is enabled and hooked up to plugincollection.
-            if (__enabled && _pic != null)
+            if (__enabled && _pic is not null)
             {
                 switch (action)
                 {
@@ -202,7 +202,7 @@ namespace System.Windows.Input.StylusPlugIns
         {
             get
             {
-                return (_pic != null) ? _pic.Element : null;
+                return (_pic is not null) ? _pic.Element : null;
             }
         }
 
@@ -214,7 +214,7 @@ namespace System.Windows.Input.StylusPlugIns
         {
             get
             {
-                return (_pic != null) ? _pic.Rect : new Rect();
+                return (_pic is not null) ? _pic.Rect : new Rect();
             }
         }
 
@@ -231,7 +231,7 @@ namespace System.Windows.Input.StylusPlugIns
             set // on Dispatcher
             {
                 // Verify we are on the proper thread.
-                if (_pic != null)
+                if (_pic is not null)
                 {
                     _pic.Element.VerifyAccess();
                 }
@@ -240,7 +240,7 @@ namespace System.Windows.Input.StylusPlugIns
                 {
                     // If we are currently active for input we need to lock before input before
                     // changing so we don't get input coming in before event is fired.
-                    if (_pic != null && _pic.IsActiveForInput)
+                    if (_pic is not null && _pic.IsActiveForInput)
                     {
                         // Make sure lock() doesn't cause reentrancy.
                         using (_pic.Element.Dispatcher.DisableProcessing())
@@ -298,7 +298,7 @@ namespace System.Windows.Input.StylusPlugIns
         /// </summary>
         internal void InvalidateIsActiveForInput()
         {
-            bool newIsActive = (_pic != null) ? (Enabled && _pic.Contains(this) &&
+            bool newIsActive = (_pic is not null) ? (Enabled && _pic.Contains(this) &&
                 _pic.IsActiveForInput) : false;
 
             if (newIsActive != _activeForInput)

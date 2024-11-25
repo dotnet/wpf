@@ -125,7 +125,7 @@ namespace System.Windows.Input
             bool forceToNullIfFailed = false;
 
             // Validate that elt is either a UIElement, a ContentElement or a UIElement3D.
-            if(element != null)
+            if(element is not null)
             {
                 if(!InputElement.IsValid(element))
                 {
@@ -137,7 +137,7 @@ namespace System.Windows.Input
             }
 
             // If no element is given for focus, use the root of the active source.
-            if(oFocus is null && _activeSource != null)
+            if(oFocus is null && _activeSource is not null)
             {
                 oFocus = _activeSource.RootVisual;
                 forceToNullIfFailed = true;
@@ -151,7 +151,7 @@ namespace System.Windows.Input
         {
             // Make sure that the element is valid for receiving focus.
             bool isValid = true;
-            if(focus != null)
+            if(focus is not null)
             {
                 isValid = Keyboard.IsFocusable(focus);
 
@@ -167,10 +167,10 @@ namespace System.Windows.Input
                 // Get the keyboard input provider that provides input for the active source.
                 IKeyboardInputProvider keyboardInputProvider = null;
                 DependencyObject containingVisual = InputElement.GetContainingVisual(focus);
-                if(containingVisual != null)
+                if(containingVisual is not null)
                 {
                     PresentationSource source = PresentationSource.CriticalFromVisual(containingVisual);
-                    if (source != null)
+                    if (source is not null)
                     {
                         keyboardInputProvider = (IKeyboardInputProvider)source.GetInputProvider(typeof(KeyboardDevice));
                     }
@@ -282,7 +282,7 @@ namespace System.Windows.Input
                 // If requested, and there is currently something with focus
                 // Send the PreviewLostKeyboardFocus event to see if the object losing focus want to cancel it.
                 // - no need to check "changeFocus" here as it was just previously unconditionally set to true
-                if(askOld && _focus != null)
+                if(askOld && _focus is not null)
                 {
                     KeyboardFocusChangedEventArgs previewLostFocus = new KeyboardFocusChangedEventArgs(this, timeStamp, (IInputElement)_focus, (IInputElement)newFocus);
                     previewLostFocus.RoutedEvent=Keyboard.PreviewLostKeyboardFocusEvent;
@@ -299,7 +299,7 @@ namespace System.Windows.Input
                 // Send the PreviewGotKeyboardFocus event to see if the object gaining focus want to cancel it.
                 // - must also check "changeFocus", no point in checking if the "previewLostFocus" event
                 //   above already cancelled it
-                if(askNew && changeFocus && newFocus != null)
+                if(askNew && changeFocus && newFocus is not null)
                 {
                     KeyboardFocusChangedEventArgs previewGotFocus = new KeyboardFocusChangedEventArgs(this, timeStamp, (IInputElement)_focus, (IInputElement)newFocus);
                     previewGotFocus.RoutedEvent=Keyboard.PreviewGotKeyboardFocusEvent;
@@ -315,9 +315,9 @@ namespace System.Windows.Input
 
                 // If we are setting the focus to an element, see if the InputProvider
                 // can take focus for us.
-                if(changeFocus && newFocus != null)
+                if(changeFocus && newFocus is not null)
                 {
-                    if (keyboardInputProvider != null && Keyboard.IsFocusable(newFocus))
+                    if (keyboardInputProvider is not null && Keyboard.IsFocusable(newFocus))
                     {
                         // Tell the element we are about to acquire focus through
                         // the input provider.  The element losing focus and the
@@ -385,7 +385,7 @@ namespace System.Windows.Input
                 using(Dispatcher.DisableProcessing()) // Disable reentrancy due to locks taken
                 {
                     // Adjust the handlers we use to track everything.
-                    if(oldFocus != null)
+                    if(oldFocus is not null)
                     {
                         o = oldFocus;
                         if (o is UIElement uie)
@@ -411,7 +411,7 @@ namespace System.Windows.Input
                             throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, o.GetType())); 
                         }
                     }
-                    if(_focus != null)
+                    if(_focus is not null)
                     {
                         o = _focus;
                         if (o is UIElement uie)
@@ -445,12 +445,12 @@ namespace System.Windows.Input
                 UIElement.FocusWithinProperty.OnOriginValueChanged(oldFocus, _focus, ref _focusTreeState);
 
                 // Invalidate the IsKeyboardFocused properties.
-                if(oldFocus != null)
+                if(oldFocus is not null)
                 {
                     o = oldFocus;
                     o.SetValue(UIElement.IsKeyboardFocusedPropertyKey, false); // Same property for ContentElements
                 }
-                if(_focus != null)
+                if(_focus is not null)
                 {
                     // Invalidate the IsKeyboardFocused property.
                     o = _focus;
@@ -467,7 +467,7 @@ namespace System.Windows.Input
                 InputLanguageManager.Current.Focus(_focus, oldFocus);
 
                 // Send the LostKeyboardFocus and GotKeyboardFocus events.
-                if(oldFocus != null)
+                if(oldFocus is not null)
                 {
                     KeyboardFocusChangedEventArgs lostFocus = new KeyboardFocusChangedEventArgs(this, timestamp, (IInputElement) oldFocus, (IInputElement) focus);
                     lostFocus.RoutedEvent=Keyboard.LostKeyboardFocusEvent;
@@ -475,7 +475,7 @@ namespace System.Windows.Input
                     _inputManager?.ProcessInput(lostFocus);
                 }
 
-                if(_focus != null)
+                if(_focus is not null)
                 {
                     KeyboardFocusChangedEventArgs gotFocus = new KeyboardFocusChangedEventArgs(this, timestamp, (IInputElement) oldFocus, (IInputElement) _focus);
                     gotFocus.RoutedEvent=Keyboard.GotKeyboardFocusEvent;
@@ -528,7 +528,7 @@ namespace System.Windows.Input
         /// </remarks>
         internal void ReevaluateFocusAsync(DependencyObject element, DependencyObject oldParent, bool isCoreParent)
         {
-            if(element != null)
+            if(element is not null)
             {
                 if(isCoreParent)
                 {
@@ -585,7 +585,7 @@ namespace System.Windows.Input
             // for an ancestor that is.
             //
             DependencyObject element = _focus;
-            while(element != null)
+            while(element is not null)
             {
                 if(Keyboard.IsFocusable(element))
                 {
@@ -599,7 +599,7 @@ namespace System.Windows.Input
             // Get the PresentationSource that contains the element to be focused.
             PresentationSource presentationSource = null;
             DependencyObject visualContainer = InputElement.GetContainingVisual(element);
-            if(visualContainer != null)
+            if(visualContainer is not null)
             {
                 presentationSource = PresentationSource.CriticalFromVisual(visualContainer);
             }
@@ -609,10 +609,10 @@ namespace System.Windows.Input
             bool moveFocus = true;
             DependencyObject moveFocusTo = null;
 
-            if(presentationSource != null)
+            if(presentationSource is not null)
             {
                 IKeyboardInputProvider keyboardProvider = presentationSource.GetInputProvider(typeof(KeyboardDevice)) as IKeyboardInputProvider;
-                if(keyboardProvider != null)
+                if(keyboardProvider is not null)
                 {
                     // Confirm with the keyboard provider for this
                     // presentation source that it has acquired focus.
@@ -649,7 +649,7 @@ namespace System.Windows.Input
                 //
                 // We only need to do this if there is any information about the old
                 // tree structure.
-                if(_focusTreeState != null && !_focusTreeState.IsEmpty)
+                if(_focusTreeState is not null && !_focusTreeState.IsEmpty)
                 {
                     UIElement.FocusWithinProperty.OnOriginValueChanged(_focus, _focus, ref _focusTreeState);
                 }
@@ -661,7 +661,7 @@ namespace System.Windows.Input
         private void PreProcessInput(object sender, PreProcessInputEventArgs e)
         {
             RawKeyboardInputReport keyboardInput = ExtractRawKeyboardInputReport(e, InputManager.PreviewInputReportEvent);
-            if(keyboardInput != null)
+            if(keyboardInput is not null)
             {
                 // Claim the input for the keyboard.
                 e.StagingItem.Input.Device = this;
@@ -671,7 +671,7 @@ namespace System.Windows.Input
         private void PreNotifyInput(object sender, NotifyInputEventArgs e)
         {
             RawKeyboardInputReport keyboardInput = ExtractRawKeyboardInputReport(e, InputManager.PreviewInputReportEvent);
-            if(keyboardInput != null)
+            if(keyboardInput is not null)
             {
                 CheckForDisconnectedFocus();
 
@@ -704,7 +704,7 @@ namespace System.Windows.Input
                         // we are now active.
                         _activeSource = keyboardInput.InputSource;
 
-                        if(toDeactivate != null)
+                        if(toDeactivate is not null)
                         {
                             toDeactivate.NotifyDeactivate();
                         }
@@ -903,7 +903,7 @@ namespace System.Windows.Input
             }
 
             RawKeyboardInputReport keyboardInput = ExtractRawKeyboardInputReport(e, InputManager.InputReportEvent);
-            if(keyboardInput != null)
+            if(keyboardInput is not null)
             {
                 CheckForDisconnectedFocus();
 
@@ -971,7 +971,7 @@ namespace System.Windows.Input
             RawKeyboardInputReport keyboardInput = null;
 
             InputReportEventArgs input = e.StagingItem.Input as InputReportEventArgs;
-            if(input != null)
+            if(input is not null)
             {
                 if(input.Report.Type == InputType.Keyboard && input.RoutedEvent == Event)
                 {
@@ -989,7 +989,7 @@ namespace System.Windows.Input
             // The CLR throws a null-ref exception if it tries to unbox a
             // null.  So we have to special case that.
             object o = e.StagingItem.GetData(_tagNonRedundantActions);
-            if(o != null)
+            if(o is not null)
             {
                 actions = (RawKeyboardActions) o;
             }

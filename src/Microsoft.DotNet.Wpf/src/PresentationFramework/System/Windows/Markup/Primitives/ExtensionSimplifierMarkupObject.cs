@@ -317,7 +317,7 @@ namespace System.Windows.Markup.Primitives
         private string ConvertMarkupItemToString(MarkupObject item)
         {
             ValueSerializer typeSerializer = _context.GetValueSerializerFor(typeof(Type));
-            Debug.Assert(typeSerializer != null, "Could not retrieve typeSerializer for Type");
+            Debug.Assert(typeSerializer is not null, "Could not retrieve typeSerializer for Type");
 
             // Serialize the markup extension into a string
             StringBuilder resultBuilder = new StringBuilder();

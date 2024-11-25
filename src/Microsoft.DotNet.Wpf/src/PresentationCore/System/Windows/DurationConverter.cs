@@ -67,7 +67,7 @@ namespace System.Windows
             string stringValue = value as string;
 
             // Override the converter for sentinel values
-            if (stringValue != null)
+            if (stringValue is not null)
             {
                 stringValue = stringValue.Trim();
                 if (stringValue == "Automatic")
@@ -104,7 +104,7 @@ namespace System.Windows
             object value, 
             Type destinationType)
         {
-            if (destinationType != null && value is Duration)
+            if (destinationType is not null && value is Duration)
             {
                 Duration durationValue = (Duration)value;
 

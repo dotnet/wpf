@@ -110,7 +110,7 @@ namespace System.Windows.Annotations
 
             foreach (ContentLocatorBase locator in _locators)
             {
-                if (locator != null)
+                if (locator is not null)
                 {
                     AnnotationResource.ListSerializer.Serialize(writer, locator);
                 }
@@ -219,7 +219,7 @@ namespace System.Windows.Annotations
 
             ContentLocator firstRight = null;
             ContentLocatorGroup locatorGroup = other as ContentLocatorGroup;
-            if (locatorGroup != null)
+            if (locatorGroup is not null)
             {
                 List<ContentLocatorBase> tempList = new List<ContentLocatorBase>(locatorGroup.Locators.Count * (this.Locators.Count - 1));
                 foreach (ContentLocator left in this.Locators)
@@ -252,7 +252,7 @@ namespace System.Windows.Annotations
             else
             {
                 ContentLocator otherLoc = other as ContentLocator;
-                Invariant.Assert(otherLoc != null, "other should be of type ContentLocator");  // Only other possible type for the ContentLocatorBase
+                Invariant.Assert(otherLoc is not null, "other should be of type ContentLocator");  // Only other possible type for the ContentLocatorBase
 
                 foreach(ContentLocator loc in this.Locators)
                 {

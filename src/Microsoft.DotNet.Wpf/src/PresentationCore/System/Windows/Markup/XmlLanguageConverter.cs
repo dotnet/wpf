@@ -83,7 +83,7 @@ namespace System.Windows.Markup
                                            object source)
         {
             string ietfLanguageTag = source as string;
-            if (ietfLanguageTag != null)
+            if (ietfLanguageTag is not null)
             {
                 return XmlLanguage.GetLanguage(ietfLanguageTag);
             }
@@ -116,7 +116,7 @@ namespace System.Windows.Markup
             ArgumentNullException.ThrowIfNull(destinationType);
 
             XmlLanguage xmlLanguage = value as XmlLanguage;
-            if (xmlLanguage != null)
+            if (xmlLanguage is not null)
             {
                 if (destinationType == typeof(string))
                 {

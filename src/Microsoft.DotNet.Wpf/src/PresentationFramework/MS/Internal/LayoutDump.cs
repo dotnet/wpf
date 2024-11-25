@@ -216,7 +216,7 @@ namespace MS.Internal
 
                 // Dump clip geometry
                 Geometry clip = VisualTreeHelper.GetClip(visual);
-                if (clip != null)
+                if (clip is not null)
                 {
                     DumpRect(writer, "Clip.Bounds", clip.Bounds);
                 }
@@ -248,7 +248,7 @@ namespace MS.Internal
             DumpSize(writer, "DesiredSize", element.DesiredSize);
             DumpSize(writer, "ComputedSize", element.RenderSize);
             Geometry clip = VisualTreeHelper.GetClip(element);
-            if (clip != null)
+            if (clip is not null)
             {
                 DumpRect(writer, "Clip.Bounds", clip.Bounds);
             }
@@ -271,7 +271,7 @@ namespace MS.Internal
                 dumpElement = _elementToDumpHandler[t] as DumpCustomUIElement;
                 t = t.BaseType;
             }
-            if (dumpElement != null)
+            if (dumpElement is not null)
             {
                 childrenHandled = dumpElement(writer, element, uiElementsOnly);
             }
@@ -320,7 +320,7 @@ namespace MS.Internal
                     dumpDocumentPage = _documentPageToDumpHandler[t] as DumpCustomDocumentPage;
                     t = t.BaseType;
                 }
-                if (dumpDocumentPage != null)
+                if (dumpDocumentPage is not null)
                 {
                     dumpDocumentPage(writer, page);
                 }                
@@ -463,10 +463,10 @@ namespace MS.Internal
         private static bool DumpDocumentPageView(XmlTextWriter writer, UIElement element, bool uiElementsOnly)
         {
             DocumentPageView dpv = element as DocumentPageView;
-            Debug.Assert(dpv != null, "Dump function has to match element type.");
+            Debug.Assert(dpv is not null, "Dump function has to match element type.");
 
             // Dump text range
-            if (dpv.DocumentPage != null)
+            if (dpv.DocumentPage is not null)
             {
                 DumpDocumentPage(writer, dpv.DocumentPage, element);
             }
@@ -479,7 +479,7 @@ namespace MS.Internal
         private static bool DumpText(XmlTextWriter writer, UIElement element, bool uiElementsOnly)
         {
             System.Windows.Controls.TextBlock text = element as System.Windows.Controls.TextBlock;
-            Debug.Assert(text != null, "Dump function has to match element type.");
+            Debug.Assert(text is not null, "Dump function has to match element type.");
 
             // Dump text range
             if (text.HasComplexContent)
@@ -512,16 +512,16 @@ namespace MS.Internal
         private static bool DumpFlowDocumentScrollViewer(XmlTextWriter writer, UIElement element, bool uiElementsOnly)
         {
             FlowDocumentScrollViewer fdsv = element as FlowDocumentScrollViewer;
-            Debug.Assert(fdsv != null, "Dump function has to match element type.");
+            Debug.Assert(fdsv is not null, "Dump function has to match element type.");
 
             bool childrenHandled = false;
             if (fdsv.HorizontalScrollBarVisibility == ScrollBarVisibility.Hidden && fdsv.VerticalScrollBarVisibility == ScrollBarVisibility.Hidden)
             {
                 FlowDocumentView fdv = null;
-                if (fdsv.ScrollViewer != null)
+                if (fdsv.ScrollViewer is not null)
                 {
                     fdv = fdsv.ScrollViewer.Content as FlowDocumentView;
-                    if (fdv != null)
+                    if (fdv is not null)
                     {
                         DumpUIElement(writer, fdv, fdsv, uiElementsOnly);
                         childrenHandled = true;
@@ -538,11 +538,11 @@ namespace MS.Internal
         private static bool DumpFlowDocumentView(XmlTextWriter writer, UIElement element, bool uiElementsOnly)
         {
             FlowDocumentView fdView = element as FlowDocumentView;
-            Debug.Assert(fdView != null, "Dump function has to match element type.");
+            Debug.Assert(fdView is not null, "Dump function has to match element type.");
 
             // Dump scrolling information
             IScrollInfo isi = (IScrollInfo)fdView;
-            if (isi.ScrollOwner != null)
+            if (isi.ScrollOwner is not null)
             {
                 Size extent = new Size(isi.ExtentWidth, isi.ExtentHeight);
                 if (DoubleUtil.AreClose(extent, element.DesiredSize))
@@ -578,7 +578,7 @@ namespace MS.Internal
         private static void DumpFlowDocumentPage(XmlTextWriter writer, DocumentPage page)
         {
             FlowDocumentPage flowDocumentPage = page as FlowDocumentPage;
-            Debug.Assert(flowDocumentPage != null, "Dump function has to match page type.");
+            Debug.Assert(flowDocumentPage is not null, "Dump function has to match page type.");
 
             // Dump private info.
             writer.WriteStartElement("FormattedLines");
@@ -645,7 +645,7 @@ namespace MS.Internal
         // ------------------------------------------------------------------
         private static void DumpLineResults(XmlTextWriter writer, ReadOnlyCollection<LineResult> lines, Visual visualParent)
         {
-            if (lines != null)
+            if (lines is not null)
             {
                 // Dump line array
                 writer.WriteStartElement("Lines");
@@ -663,7 +663,7 @@ namespace MS.Internal
                     /*
                     // Dump inline objects
                     ReadOnlyCollection<UIElement> inlineObjects = line.InlineObjects;
-                    if (inlineObjects != null)
+                    if (inlineObjects is not null)
                     {
                         // All inline UIElements are dumped as Children collection of UIElement 
                         // that invokes this dump method. Hence, do not dump UIElements here.
@@ -686,7 +686,7 @@ namespace MS.Internal
         // ------------------------------------------------------------------
         private static void DumpParagraphResults(XmlTextWriter writer, string tagName, ReadOnlyCollection<ParagraphResult> paragraphs, Visual visualParent)
         {
-            if (paragraphs != null)
+            if (paragraphs is not null)
             {
                 // Dump paragraphs array
                 writer.WriteStartElement(tagName);
@@ -874,7 +874,7 @@ namespace MS.Internal
         // ------------------------------------------------------------------
         private static void DumpColumnResults(XmlTextWriter writer, ReadOnlyCollection<ColumnResult> columns, Visual visualParent)
         {
-            if (columns != null)
+            if (columns is not null)
             {
                 writer.WriteStartElement("Columns");
                 writer.WriteAttributeString("Count", columns.Count.ToString(CultureInfo.InvariantCulture));
@@ -931,7 +931,7 @@ namespace MS.Internal
             Type type = typeof(Table);
             System.Reflection.PropertyInfo prop = type.GetProperty("ColumnCount");
 
-            if (prop != null)
+            if (prop is not null)
             {
                 int count = (int)prop.GetValue(element, null);
                 writer.WriteStartElement("ColumnCount");
@@ -964,7 +964,7 @@ namespace MS.Internal
 
             System.Reflection.PropertyInfo propOfColumnIndex = typeOfCell.GetProperty("ColumnIndex", 
                 System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.DeclaredOnly);
-            if (propOfColumnIndex != null)
+            if (propOfColumnIndex is not null)
             {
                 int columnIndex = (int)propOfColumnIndex.GetValue(cell, null);
                 writer.WriteAttributeString("ColumnIndex", columnIndex.ToString(CultureInfo.InvariantCulture));
@@ -972,7 +972,7 @@ namespace MS.Internal
 
             System.Reflection.PropertyInfo propOfRowIndex = typeOfCell.GetProperty("RowIndex", 
                 System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.DeclaredOnly);
-            if (propOfRowIndex != null)
+            if (propOfRowIndex is not null)
             {
                 int rowIndex = (int)propOfRowIndex.GetValue(cell, null);
                 writer.WriteAttributeString("RowIndex", rowIndex.ToString(CultureInfo.InvariantCulture));

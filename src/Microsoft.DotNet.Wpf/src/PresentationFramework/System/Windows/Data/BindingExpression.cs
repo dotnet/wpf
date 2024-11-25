@@ -69,7 +69,7 @@ namespace System.Windows.Data
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.ShowPath))
             {
                 PropertyPath pp = binding.Path;
-                string path = (pp != null) ? pp.Path : String.Empty;
+                string path = (pp is not null) ? pp.Path : String.Empty;
 
                 if (String.IsNullOrEmpty(binding.XPath))
                 {
@@ -170,7 +170,7 @@ namespace System.Windows.Data
                     return null;
 
                 // if we're using DataContext, find the source for the DataContext
-                if (_ctxElement != null)
+                if (_ctxElement is not null)
                     return GetDataSourceForDataContext(ContextElement);
 
                 // otherwise use the explicit source
@@ -202,7 +202,7 @@ namespace System.Windows.Data
             if (IsDetached)
                 throw new InvalidOperationException(SR.BindingExpressionIsDetached);
 
-            if (Worker != null)
+            if (Worker is not null)
             {
                 Worker.RefreshValue();  // calls TransferValue
             }
@@ -241,7 +241,7 @@ namespace System.Windows.Data
             }
             else if (relevant)
             {
-                relevant = (Worker != null) && (Worker.UsesDependencyProperty(d, dp));
+                relevant = (Worker is not null) && (Worker.UsesDependencyProperty(d, dp));
             }
 
             if (!relevant)
@@ -307,7 +307,7 @@ namespace System.Windows.Data
         {
             get
             {
-                if (_ctxElement != null)
+                if (_ctxElement is not null)
                     return _ctxElement.Target as DependencyObject;
                 else
                     return null;
@@ -364,19 +364,19 @@ namespace System.Windows.Data
         // the item whose property changes when we UpdateSource
         internal object SourceItem
         {
-            get { return (Worker != null) ? Worker.SourceItem : null; }
+            get { return (Worker is not null) ? Worker.SourceItem : null; }
         }
 
         // the name of the property that changes when we UpdateSource
         internal string SourcePropertyName
         {
-            get { return (Worker != null) ? Worker.SourcePropertyName : null; }
+            get { return (Worker is not null) ? Worker.SourcePropertyName : null; }
         }
 
         // the value of the source property
         internal object SourceValue
         {
-            get { return (Worker != null) ? Worker.RawValue() : DependencyProperty.UnsetValue; }
+            get { return (Worker is not null) ? Worker.RawValue() : DependencyProperty.UnsetValue; }
         }
 
         internal override bool IsParentBindingUpdateTriggerDefault
@@ -403,7 +403,7 @@ namespace System.Windows.Data
         {
             FrameworkPropertyMetadata fwMetaData = dp.GetMetadata(d.DependencyObjectType) as FrameworkPropertyMetadata;
 
-            if ((fwMetaData != null && !fwMetaData.IsDataBindingAllowed) || dp.ReadOnly)
+            if ((fwMetaData is not null && !fwMetaData.IsDataBindingAllowed) || dp.ReadOnly)
                 throw new ArgumentException(SR.Format(SR.PropertyNotBindable, dp.Name), "dp");
 
             // create the BindingExpression
@@ -432,7 +432,7 @@ namespace System.Windows.Data
                 Converter = null;
                 _sourceType = type;
             }
-            else if (type != null && type != _sourceType)
+            else if (type is not null && type != _sourceType)
             {
                 _sourceType = type;
 
@@ -487,7 +487,7 @@ namespace System.Windows.Data
             {
                 if (!HasValue(Feature.DynamicConverter))
                 {
-                    Invariant.Assert(Worker != null);
+                    Invariant.Assert(Worker is not null);
                     // pass along the static source and target types to find same DefaultValueConverter as SetupDefaultValueConverter
                     SetValue(Feature.DynamicConverter, new DynamicValueConverter(IsReflective, Worker.SourcePropertyType, Worker.TargetPropertyType), null);
                 }
@@ -578,7 +578,7 @@ namespace System.Windows.Data
 
             // detach from target element
             DependencyObject target = TargetElement;
-            if (target != null && IsUpdateOnLostFocus)
+            if (target is not null && IsUpdateOnLostFocus)
             {
                 LostFocusEventManager.RemoveHandler(target, OnLostFocus);
             }
@@ -588,7 +588,7 @@ namespace System.Windows.Data
             {
                 WeakReference dataErrorWR = (WeakReference)GetValue(Feature.DataErrorValue, null);
                 INotifyDataErrorInfo dataErrorValue = (dataErrorWR is null) ? null : dataErrorWR.Target as INotifyDataErrorInfo;
-                if (dataErrorValue != null)
+                if (dataErrorValue is not null)
                 {
                     ErrorsChangedEventManager.RemoveHandler(dataErrorValue, OnErrorsChanged);
                     SetValue(Feature.DataErrorValue, null, null);
@@ -622,7 +622,7 @@ namespace System.Windows.Data
             {
                 // relative source with ancestor lookup
                 ObjectRef or = ParentBinding.SourceReference;
-                if (or != null && or.TreeContextIsRequired(target))
+                if (or is not null && or.TreeContextIsRequired(target))
                 {
                     if (isExtendedTraceEnabled)
                     {
@@ -714,18 +714,18 @@ namespace System.Windows.Data
                     (TargetProperty == ContentPresenter.ContentProperty &&
                             target is ContentPresenter) ||
                     (UsingMentor &&
-                            (cvs = target as CollectionViewSource) != null &&
+                            (cvs = target as CollectionViewSource) is not null &&
                             cvs.PropertyForInheritanceContext == FrameworkElement.DataContextProperty)
                     )
                 {
                     contextElement = FrameworkElement.GetFrameworkParent(contextElement);
-                    contextElementFound = (contextElement != null);
+                    contextElementFound = (contextElement is not null);
                 }
             }
             else
             {
                 RelativeObjectRef ror = ParentBinding.SourceReference as RelativeObjectRef;
-                if (ror != null && ror.ReturnsDataContext)
+                if (ror is not null && ror.ReturnsDataContext)
                 {
                     object o = ror.GetObject(mentor, new ObjectRefArgs() { IsTracing = traceObjectRef});
                     contextElement = o as DependencyObject;    // ref to another element's DataContext
@@ -762,7 +762,7 @@ namespace System.Windows.Data
             object source;
             ObjectRef sourceRef;
 
-            if (contextElement != null)
+            if (contextElement is not null)
             {
                 source = contextElement.GetValue(FrameworkElement.DataContextProperty);
 
@@ -783,7 +783,7 @@ namespace System.Windows.Data
                     return;
                 }
             }
-            else if ((sourceRef = ParentBinding.SourceReference) != null)
+            else if ((sourceRef = ParentBinding.SourceReference) is not null)
             {
                 ObjectRefArgs args = new ObjectRefArgs() {
                                         IsTracing = traceObjectRef,
@@ -823,7 +823,7 @@ namespace System.Windows.Data
 
             // if we get this far, all the ingredients for a successful binding
             // are present.  Remember what we've found and activate the binding.
-            if (contextElement != null)
+            if (contextElement is not null)
                 _ctxElement = new WeakReference(contextElement);
 
             // attach to context element
@@ -873,7 +873,7 @@ namespace System.Windows.Data
             if (UsingMentor)
             {
                 DependencyObject target = TargetElement;
-                if (target != null)
+                if (target is not null)
                     InheritanceContextChangedEventManager.RemoveHandler(target, OnInheritanceContextChanged);
             }
 
@@ -896,7 +896,7 @@ namespace System.Windows.Data
                 if (StatusInternal == BindingStatusInternal.Inactive)
                 {
                     DependencyObject target = TargetElement;
-                    if (target != null)
+                    if (target is not null)
                     {
                         if (UsingMentor)
                         {
@@ -963,7 +963,7 @@ namespace System.Windows.Data
             {
                 CollectionViewSource cvs = item as CollectionViewSource;
                 this.CollectionViewSource = cvs;
-                if (cvs != null)
+                if (cvs is not null)
                 {
                     item = cvs.CollectionView;
 
@@ -1029,7 +1029,7 @@ namespace System.Windows.Data
                     TransferValue(value, false);
                 }
 
-                if (error != null)
+                if (error is not null)
                 {
                     UpdateValidationError(error, useValueFromBindingGroup);
                 }
@@ -1121,7 +1121,7 @@ namespace System.Windows.Data
             CancelPendingTasks();
 
             // detach from data item
-            if (Worker != null)
+            if (Worker is not null)
                 Worker.DetachDataItem();
 
             // restore default value, in case source/converter fail to provide a good value
@@ -1158,7 +1158,7 @@ namespace System.Windows.Data
             if (newDataProvider != oldDataProvider)
             {
                 // we have a new data provider - retarget the event handler
-                if (oldDataProvider != null)
+                if (oldDataProvider is not null)
                 {
                     DataChangedEventManager.RemoveHandler(oldDataProvider, OnDataChanged);
                 }
@@ -1175,14 +1175,14 @@ namespace System.Windows.Data
                                         this);
                 }
 
-                if (newDataProvider != null)
+                if (newDataProvider is not null)
                 {
                     DataChangedEventManager.AddHandler(newDataProvider, OnDataChanged);
                     newDataProvider.InitialLoad();
                 }
             }
 
-            return (oldDataProvider != null) ? oldDataProvider.Data : item;
+            return (oldDataProvider is not null) ? oldDataProvider.Data : item;
         }
 
         // Return the object from which the given value was obtained, if possible
@@ -1214,25 +1214,25 @@ namespace System.Windows.Data
             CollectionViewSource cvs = CollectionViewSource;
             bool usesLanguage = UsesLanguage;
 
-            if (contextElement != null)
+            if (contextElement is not null)
                 ++size;
-            if (cvs != null)
+            if (cvs is not null)
                 ++size;
             if (usesLanguage)
                 ++size;
 
             WeakDependencySource[] newSources = (size > 0) ? new WeakDependencySource[size] : null;
 
-            if (contextElement != null)
+            if (contextElement is not null)
             {
                 newSources[offset++] = new WeakDependencySource(_ctxElement, FrameworkElement.DataContextProperty);
             }
 
-            if (cvs != null)
+            if (cvs is not null)
             {
                 WeakReference wr = GetValue(Feature.CollectionViewSource, null) as WeakReference;
                 newSources[offset++] =
-                    (wr != null) ? new WeakDependencySource(wr, CollectionViewSource.ViewProperty)
+                    (wr is not null) ? new WeakDependencySource(wr, CollectionViewSource.ViewProperty)
                                  : new WeakDependencySource(cvs, CollectionViewSource.ViewProperty);
             }
 
@@ -1328,7 +1328,7 @@ namespace System.Windows.Data
                     }
 
                     // chain in a default value converter if the returned value's type is not compatible with the targetType
-                    if (   ((value != null) && (value != Binding.DoNothing) && (value != DependencyProperty.UnsetValue))
+                    if (   ((value is not null) && (value != Binding.DoNothing) && (value != DependencyProperty.UnsetValue))
                         && !targetType.IsAssignableFrom(value.GetType()))
                     {
                         // the dynamic converter is shared between Transfer and Update directions
@@ -1399,7 +1399,7 @@ namespace System.Windows.Data
                         }
                     }
                 #endif
-                    else if (implicitConverter != null || EffectiveStringFormat != null)
+                    else if (implicitConverter is not null || EffectiveStringFormat is not null)
                     {
                         // call a DefaultValueConverter:
                         // NOTE:
@@ -1537,7 +1537,7 @@ namespace System.Windows.Data
 
             bool needDataErrorRule = ParentBinding.ValidatesOnDataErrors;
 
-            if (validationRules != null)
+            if (validationRules is not null)
             {
                 // these may be needed by several rules, but only compute them once
                 object rawValue = DependencyProperty.UnsetValue;
@@ -1583,7 +1583,7 @@ namespace System.Windows.Data
                         }
 
                         validationError = RunValidationRule(validationRule, value, culture);
-                        if (validationError != null)
+                        if (validationError is not null)
                             break;
                     }
                 }
@@ -1634,7 +1634,7 @@ namespace System.Windows.Data
         {
             // use the StringFormat (if appropriate) in preference to the default converter
             string stringFormat = EffectiveStringFormat;
-            Invariant.Assert(converter != null || stringFormat != null);
+            Invariant.Assert(converter is not null || stringFormat is not null);
 
             // PreSharp uses message numbers that the C# compiler doesn't know about.
             // Disable the C# complaints, per the PreSharp documentation.
@@ -1647,7 +1647,7 @@ namespace System.Windows.Data
             object convertedValue = null;
             try
             {
-                if (stringFormat != null)
+                if (stringFormat is not null)
                 {
                     convertedValue = String.Format(culture, stringFormat, value);
                 }
@@ -1705,7 +1705,7 @@ namespace System.Windows.Data
                                          object parameter,
                                          CultureInfo culture)
         {
-            Invariant.Assert(converter != null);
+            Invariant.Assert(converter is not null);
 
             // PreSharp uses message numbers that the C# compiler doesn't know about.
             // Disable the C# complaints, per the PreSharp documentation.
@@ -1765,7 +1765,7 @@ namespace System.Windows.Data
 
         internal void ScheduleTransfer(bool isASubPropertyChange)
         {
-            if (isASubPropertyChange && Converter != null)
+            if (isASubPropertyChange && Converter is not null)
             {
                 // a converter doesn't care about sub-property changes
                 isASubPropertyChange = false;
@@ -1780,7 +1780,7 @@ namespace System.Windows.Data
             if (NotifyOnTargetUpdated)
             {
                 DependencyObject target = TargetElement;
-                if (target != null)
+                if (target is not null)
                 {
                     if (    !IsInMultiBindingExpression           // not an inner BindingExpression
                         &&  (   !IsInPriorityBindingExpression
@@ -1811,7 +1811,7 @@ namespace System.Windows.Data
             if (NotifyOnSourceUpdated)
             {
                 DependencyObject target = TargetElement;
-                if (target != null)
+                if (target is not null)
                 {
                     if (    !IsInMultiBindingExpression           // not an inner BindingExpression
                         &&  (   !IsInPriorityBindingExpression
@@ -1863,7 +1863,7 @@ namespace System.Windows.Data
             CultureInfo culture = GetCulture();
 
             // apply user-defined converter
-            if (Converter != null)
+            if (Converter is not null)
             {
                 if (!UseDefaultValueConverter)
                 {
@@ -1922,7 +1922,7 @@ namespace System.Windows.Data
                         }
                     }
                 }
-                else if (implicitConverter != null)
+                else if (implicitConverter is not null)
                 {
                     // here we pass in the TargetElement, see NOTE of caution in TransferValue() why this is ok
                     value = ConvertBackHelper(implicitConverter, value, sourceType, this.TargetElement, culture);
@@ -2030,7 +2030,7 @@ namespace System.Windows.Data
                 if (TraceData.IsEnabled)
                     TraceData.TraceAndNotify(TraceEventType.Error, TraceData.WorkerUpdateFailed, this, ex);
 
-                ProcessException(ex, (ValidatesOnExceptions || BindingGroup != null));
+                ProcessException(ex, (ValidatesOnExceptions || BindingGroup is not null));
                 SetStatus(BindingStatusInternal.UpdateSourceError);
                 value = DependencyProperty.UnsetValue;
             }
@@ -2096,7 +2096,7 @@ namespace System.Windows.Data
                 {
                     // remember the old validation error, if it came from the implicit DataError rule
                     ValidationError oldValidationError = GetValidationErrors(validationStep);
-                    if (oldValidationError != null &&
+                    if (oldValidationError is not null &&
                         oldValidationError.RuleInError != DataErrorValidationRule.Instance)
                     {
                         oldValidationError = null;
@@ -2106,12 +2106,12 @@ namespace System.Windows.Data
                     // ValidationRules collection
                     ValidationError error = RunValidationRule(DataErrorValidationRule.Instance, this, GetCulture());
 
-                    if (error != null)
+                    if (error is not null)
                     {
                         UpdateValidationError(error);
                         result = false;
                     }
-                    else if (oldValidationError != null)
+                    else if (oldValidationError is not null)
                     {
                         // the implicit rule is now valid - clear the old error
                         UpdateValidationError(null);
@@ -2245,7 +2245,7 @@ namespace System.Windows.Data
                 }
             }
 
-            if (validationError != null)
+            if (validationError is not null)
             {
                 UpdateValidationError(validationError);
             }
@@ -2276,7 +2276,7 @@ namespace System.Windows.Data
             if (contextElement is null)
             {
                 DependencyObject target = TargetElement;
-                if (target != null && UsingMentor)
+                if (target is not null && UsingMentor)
                 {
                     target = Helper.FindMentor(target);
                 }
@@ -2299,11 +2299,11 @@ namespace System.Windows.Data
                 CollectionViewSource cvs;
                 DataSourceProvider dsp;
 
-                if ((cvs = item as CollectionViewSource) != null)
+                if ((cvs = item as CollectionViewSource) is not null)
                 {
                     item = cvs.CollectionView;
                 }
-                else if ((dsp = item as DataSourceProvider) != null)
+                else if ((dsp = item as DataSourceProvider) is not null)
                 {
                     item = dsp.Data;
                 }
@@ -2332,7 +2332,7 @@ namespace System.Windows.Data
             INotifyDataErrorInfo dataErrorValue = (dataErrorWR is null) ? null : dataErrorWR.Target as INotifyDataErrorInfo;
             if (value != DependencyProperty.UnsetValue && value != dataErrorValue && IsDynamic)
             {
-                if (dataErrorValue != null)
+                if (dataErrorValue is not null)
                     ErrorsChangedEventManager.RemoveHandler(dataErrorValue, OnErrorsChanged);
 
                 INotifyDataErrorInfo newDataErrorValue = value as INotifyDataErrorInfo;
@@ -2340,7 +2340,7 @@ namespace System.Windows.Data
                 SetValue(Feature.DataErrorValue, newDataErrorWR, null);
                 dataErrorValue = newDataErrorValue;
 
-                if (newDataErrorValue != null)
+                if (newDataErrorValue is not null)
                     ErrorsChangedEventManager.AddHandler(newDataErrorValue, OnErrorsChanged);
             }
 
@@ -2374,7 +2374,7 @@ namespace System.Windows.Data
         {
             const int RetryCount = 3;
             List<object> result = null;
-            if (indei != null && indei.HasErrors)
+            if (indei is not null && indei.HasErrors)
             {
                 // if a worker thread is updating the source's errors while we're trying to
                 // read them, the enumerator will throw.   The interface doesn't provide
@@ -2386,7 +2386,7 @@ namespace System.Windows.Data
                     {
                         result = new List<object>();
                         IEnumerable ie = indei.GetErrors(propertyName);
-                        if (ie != null)
+                        if (ie is not null)
                         {
                             foreach (object o in ie)
                             {
@@ -2404,7 +2404,7 @@ namespace System.Windows.Data
                 }
             }
 
-            if (result != null && result.Count == 0)
+            if (result is not null && result.Count == 0)
                 result = null;
 
             return result;
@@ -2575,7 +2575,7 @@ namespace System.Windows.Data
         //
         private object CallDoFilterException(Exception ex)
         {
-            if (ParentBinding.UpdateSourceExceptionFilter != null)
+            if (ParentBinding.UpdateSourceExceptionFilter is not null)
             {
                 return ParentBinding.DoFilterException(this, ex);
             }
@@ -2589,8 +2589,8 @@ namespace System.Windows.Data
 
         private bool ExceptionFilterExists()
         {
-            return ( (ParentBinding.UpdateSourceExceptionFilter != null) ||
-                     (IsInMultiBindingExpression && ParentMultiBindingExpression.ParentMultiBinding.UpdateSourceExceptionFilter != null)
+            return ( (ParentBinding.UpdateSourceExceptionFilter is not null) ||
+                     (IsInMultiBindingExpression && ParentMultiBindingExpression.ParentMultiBinding.UpdateSourceExceptionFilter is not null)
                    );
         }
 
@@ -2613,7 +2613,7 @@ namespace System.Windows.Data
         void Replace()
         {
             DependencyObject target = TargetElement;
-            if (target != null)
+            if (target is not null)
             {
                 if (IsInBindingExpressionCollection)
                     ParentBindingExpressionBase.ReplaceChild(this);
@@ -2629,7 +2629,7 @@ namespace System.Windows.Data
             args.RoutedEvent = Binding.TargetUpdatedEvent;
             FrameworkObject fo = new FrameworkObject(d);
 
-            if (!fo.IsValid && d != null)
+            if (!fo.IsValid && d is not null)
             {
                 fo.Reset(Helper.FindMentor(d));
             }
@@ -2644,7 +2644,7 @@ namespace System.Windows.Data
             args.RoutedEvent = Binding.SourceUpdatedEvent;
             FrameworkObject fo = new FrameworkObject(d);
 
-            if (!fo.IsValid && d != null)
+            if (!fo.IsValid && d is not null)
             {
                 fo.Reset(Helper.FindMentor(d));
             }
@@ -2691,7 +2691,7 @@ namespace System.Windows.Data
                 TransferValue();
             }
 
-            if (Worker != null)
+            if (Worker is not null)
             {
                 Worker.OnSourceInvalidation(d, dp, args.IsASubPropertyChange);
             }
@@ -2729,7 +2729,7 @@ namespace System.Windows.Data
             BindingExpression b = null;
 
             for (ancestor = d;
-                 ancestor != null;
+                 ancestor is not null;
                  ancestor = FrameworkElement.GetFrameworkParent(ancestor))
             {
                 if (HasLocalDataContext(ancestor))
@@ -2739,7 +2739,7 @@ namespace System.Windows.Data
                 }
             }
 
-            if (b != null)
+            if (b is not null)
                 return b.DataSource;
 
             return null;

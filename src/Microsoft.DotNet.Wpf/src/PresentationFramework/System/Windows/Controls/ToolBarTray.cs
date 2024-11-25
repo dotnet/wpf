@@ -331,7 +331,7 @@ namespace System.Windows.Controls
         {
             // Draw background in rectangle inside border.
             Brush background = this.Background;
-            if (background != null)
+            if (background is not null)
             {
                 dc.DrawRectangle(background,
                                  null,
@@ -512,10 +512,10 @@ namespace System.Windows.Controls
         {
             // Process thumb event only if Thumb styled parent is a ToolBar under the TollBarTray
             Thumb thumb = e.OriginalSource as Thumb;
-            if (thumb != null)
+            if (thumb is not null)
             {
                 ToolBar toolBar = thumb.TemplatedParent as ToolBar;
-                if (toolBar != null && toolBar.Parent == this)
+                if (toolBar is not null && toolBar.Parent == this)
                 {
                     // _bandsDirty would be true at this time only when a Measure gets
                     // skipped between two mouse moves. Ideally that should not happen
@@ -666,7 +666,7 @@ namespace System.Windows.Controls
         {
             Point p = point;
             GeneralTransform transform = this.TransformToDescendant(toolBar);
-            if (transform != null)
+            if (transform is not null)
             {
                 transform.TryTransform(point, out p);
             }

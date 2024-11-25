@@ -102,7 +102,7 @@ namespace System.Windows.Media.Animation
             set
             {
 //                 VerifyAccess();
-                if (value != null)
+                if (value is not null)
                 {
                     _systemClock = value;
                 }
@@ -613,7 +613,7 @@ namespace System.Windows.Media.Animation
         /// </remarks>
         internal void NotifyNewEarliestFutureActivity()
         {
-            if (_nextTickTimeQueried && _userNeedTickSooner != null)
+            if (_nextTickTimeQueried && _userNeedTickSooner is not null)
             {
                 _nextTickTimeQueried = false;
                 _userNeedTickSooner(this, EventArgs.Empty);
@@ -630,7 +630,7 @@ namespace System.Windows.Media.Animation
                 WeakReference instance = _eventQueue.Dequeue();
                 Clock clock = (Clock)instance.Target;
 
-                if (clock != null)
+                if (clock is not null)
                 {
                     clock.RaiseAccumulatedEvents();
                 }

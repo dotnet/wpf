@@ -99,7 +99,7 @@ internal class HostedController : IDocumentController
     /// </summary>
     bool IChainOfResponsibiltyNode<Document>.IsResponsible(Document subject)
     {
-        return NavigationHelper.Navigate != null;
+        return NavigationHelper.Navigate is not null;
     }
 
     #endregion IChainOfResponsibiltyNode<Document> Members

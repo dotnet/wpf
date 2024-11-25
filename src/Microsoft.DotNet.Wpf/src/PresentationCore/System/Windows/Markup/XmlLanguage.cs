@@ -420,7 +420,7 @@ namespace System.Windows.Markup
         {
             int specificity = 0;
             
-            if (maxDepth != 0 && culture != null)
+            if (maxDepth != 0 && culture is not null)
             {
                 string languageTag = culture.IetfLanguageTag;
 
@@ -654,7 +654,7 @@ namespace System.Windows.Markup
 
             culture = _equivalentCulture;
 
-            return (culture != null);
+            return (culture is not null);
         }
 
         private XmlLanguage PrefixLanguage

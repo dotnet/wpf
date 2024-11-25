@@ -120,7 +120,7 @@ namespace System.Windows.Documents
             [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
             private static bool CreateLockFree(bool suppressCOMExceptions = true, bool suppressOtherExceptions = true)
             {
-                if (Singleton.ComFactory != null)
+                if (Singleton.ComFactory is not null)
                 {
                     try
                     {
@@ -187,7 +187,7 @@ namespace System.Windows.Documents
                 var languages = ComFactory?.SupportedLanguages;
 
                 List<string> result = null; 
-                if (languages != null)
+                if (languages is not null)
                 {
                     result = languages.ToList();
                 }
@@ -237,7 +237,7 @@ namespace System.Windows.Documents
             /// <returns></returns>
             private bool IsSupportedImpl(string languageTag)
             {
-                return ((ComFactory != null) && (ComFactory.IsSupported(languageTag) != 0));
+                return ((ComFactory is not null) && (ComFactory.IsSupported(languageTag) != 0));
             }
 
             private bool IsSupportedImplWithRetries(string languageTag, bool suppressCOMExceptions = true)
@@ -268,7 +268,7 @@ namespace System.Windows.Documents
 
             internal static bool IsSupported(string languageTag, bool suppressCOMExceptons = true)
             {
-                return ((Singleton != null) && Singleton.IsSupportedPrivate(languageTag, suppressCOMExceptons));
+                return ((Singleton is not null) && Singleton.IsSupportedPrivate(languageTag, suppressCOMExceptons));
             }
 
             #endregion // IsSupported

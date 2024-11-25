@@ -65,7 +65,7 @@ namespace Test.Elements
         {
             IProvideValueTarget ipvt = serviceProvider.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
 
-            if (ipvt != null)
+            if (ipvt is not null)
             {
                 object targetProperty = ipvt.TargetProperty;
                 if (targetProperty is MethodInfo)

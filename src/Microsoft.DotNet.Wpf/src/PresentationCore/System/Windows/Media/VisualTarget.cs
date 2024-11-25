@@ -73,8 +73,8 @@ namespace System.Windows.Media
 
         internal override void CreateUCEResources(DUCE.Channel channel, DUCE.Channel outOfBandChannel)
         {
-            Debug.Assert(channel != null);
-            Debug.Assert(outOfBandChannel != null);
+            Debug.Assert(channel is not null);
+            Debug.Assert(outOfBandChannel is not null);
 
             _outOfBandChannel = outOfBandChannel;
 
@@ -162,7 +162,7 @@ namespace System.Windows.Media
 
                 if (!IsDisposed)
                 {
-                    if (_hostVisual != null && _connected)
+                    if (_hostVisual is not null && _connected)
                     {
                         RootVisual = null;
 

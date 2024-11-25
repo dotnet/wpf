@@ -99,7 +99,7 @@ namespace System.Windows.Input
         internal static DependencyObject GetTabOnceActiveElement(DependencyObject d)
         {
             WeakReference weakRef = (WeakReference)d.GetValue(TabOnceActiveElementProperty);
-            if (weakRef != null && weakRef.IsAlive)
+            if (weakRef is not null && weakRef.IsAlive)
             {
                 DependencyObject activeElement = weakRef.Target as DependencyObject;
                 // Verify if the element is still in the same visual tree
@@ -122,7 +122,7 @@ namespace System.Windows.Input
         private static DependencyObject GetControlTabOnceActiveElement(DependencyObject d)
         {
             WeakReference weakRef = (WeakReference)d.GetValue(ControlTabOnceActiveElementProperty);
-            if (weakRef != null && weakRef.IsAlive)
+            if (weakRef is not null && weakRef.IsAlive)
             {
                 DependencyObject activeElement = weakRef.Target as DependencyObject;
                 // Verify if the element is still in the same visual tree
@@ -158,13 +158,13 @@ namespace System.Windows.Input
             {
                 PresentationSource source = PresentationSource.CriticalFromVisual(d);
 
-                if (source != null)
+                if (source is not null)
                     return source.RootVisual;
             }
             else
             {
                 FrameworkContentElement fce = d as FrameworkContentElement;
-                if (fce != null)
+                if (fce is not null)
                     return GetVisualRoot(fce.Parent);
             }
 
@@ -309,7 +309,7 @@ namespace System.Windows.Input
                         delegate(object item)
                         {
                             KeyboardFocusChangedEventHandler handler = item as KeyboardFocusChangedEventHandler;
-                            if (handler != null)
+                            if (handler is not null)
                             {
                                 handler(sender, e);
                             }
@@ -502,8 +502,8 @@ namespace System.Windows.Input
         {
             public FocusVisualAdorner(UIElement adornedElement, Style focusVisualStyle) : base(adornedElement)
             {
-                Debug.Assert(adornedElement != null, "adornedElement should not be null");
-                Debug.Assert(focusVisualStyle != null, "focusVisual should not be null");
+                Debug.Assert(adornedElement is not null, "adornedElement should not be null");
+                Debug.Assert(focusVisualStyle is not null, "focusVisual should not be null");
 
                 Control control = new Control();
                 control.Style = focusVisualStyle;
@@ -517,11 +517,11 @@ namespace System.Windows.Input
             public FocusVisualAdorner(ContentElement adornedElement, UIElement adornedElementParent, IContentHost contentHostParent, Style focusVisualStyle)
                 : base(adornedElementParent)
             {
-                Debug.Assert(adornedElement != null, "adornedElement should not be null");
-                Debug.Assert(adornedElementParent != null, "adornedElementParent should not be null");
-                Debug.Assert(contentHostParent != null, "contentHostParent should not be null");
+                Debug.Assert(adornedElement is not null, "adornedElement should not be null");
+                Debug.Assert(adornedElementParent is not null, "adornedElementParent should not be null");
+                Debug.Assert(contentHostParent is not null, "contentHostParent should not be null");
                 Debug.Assert(contentHostParent is Visual, "contentHostParent should be Visual");
-                Debug.Assert(focusVisualStyle != null, "focusVisual should not be null");
+                Debug.Assert(focusVisualStyle is not null, "focusVisual should not be null");
 
                 _contentHostParent = contentHostParent;
                 _adornedContentElement = adornedElement;
@@ -567,7 +567,7 @@ namespace System.Windows.Input
                 Size finalSize = base.ArrangeOverride(size);
 
                 // In case we adorn ContentElement we have to update the rectangles
-                if (_adornedContentElement != null)
+                if (_adornedContentElement is not null)
                 {
                     if (_contentRects is null)
                     {
@@ -677,7 +677,7 @@ namespace System.Windows.Input
                 get
                 {
                     // Re-query IContentHost if the old one was disposed
-                    if (_adornedContentElement != null && (_contentHostParent==null || VisualTreeHelper.GetParent(_contentHostParent as Visual) is null))
+                    if (_adornedContentElement is not null && (_contentHostParent==null || VisualTreeHelper.GetParent(_contentHostParent as Visual) is null))
                     {
                         _contentHostParent = MS.Internal.Documents.ContentHostHelper.FindContentHost(_adornedContentElement);
                     }
@@ -692,13 +692,13 @@ namespace System.Windows.Input
             /// </summary>
             internal override bool NeedsUpdate(Size oldSize)
             {
-                if (_adornedContentElement != null)
+                if (_adornedContentElement is not null)
                 {
                     ReadOnlyCollection<Rect> oldRects = _contentRects;
                     _contentRects = null;
 
                     IContentHost contentHost = ContentHost;
-                    if (contentHost != null)
+                    if (contentHost is not null)
                     {
                         _contentRects = contentHost.GetRectangles(_adornedContentElement);
                     }
@@ -729,7 +729,7 @@ namespace System.Windows.Input
                         }
                     }
 
-                    if (_contentRects != null && oldRects != null && _contentRects.Count == oldRects.Count)
+                    if (_contentRects is not null && oldRects is not null && _contentRects.Count == oldRects.Count)
                     {
                         for (int i=0; i<oldRects.Count; i++)
                         {
@@ -776,28 +776,28 @@ namespace System.Windows.Input
                 ichParent = ich;
 
             DependencyObject parent =  ich as DependencyObject;
-            if(parent != null)
+            if(parent is not null)
             {
                 // Case 1: UIElement
                 // return the element
                 UIElement eParent = parent as UIElement;
-                if(eParent != null)
+                if(eParent is not null)
                     return eParent;
 
                 // Case 2: Visual
                 // Walk up the visual tree until we find UIElement
                 Visual visualParent = parent as Visual;
-                while (visualParent != null)
+                while (visualParent is not null)
                 {
                     visualParent = VisualTreeHelper.GetParent(visualParent) as Visual;
                     UIElement uielement = visualParent as UIElement;
-                    if (uielement != null)
+                    if (uielement is not null)
                         return uielement;
                 }
 
                 // Case 3: ContentElement
                 ContentElement ceParent = parent as ContentElement;
-                if(ceParent != null)
+                if(ceParent is not null)
                     return GetParentUIElementFromContentElement(ceParent, ref ichParent);
             }
 
@@ -807,10 +807,10 @@ namespace System.Windows.Input
         internal void HideFocusVisual()
         {
             // Remove the existing focus visual
-            if (_focusVisualAdornerCache != null)
+            if (_focusVisualAdornerCache is not null)
             {
                 AdornerLayer adornerlayer = VisualTreeHelper.GetParent(_focusVisualAdornerCache) as AdornerLayer;
-                if (adornerlayer != null)
+                if (adornerlayer is not null)
                 {
                     adornerlayer.Remove(_focusVisualAdornerCache);
                 }
@@ -855,7 +855,7 @@ namespace System.Windows.Input
             if (AlwaysShowFocusVisual || IsKeyboardMostRecentInputDevice())
             {
                 FrameworkElement fe = element as FrameworkElement;
-                if (fe != null)
+                if (fe is not null)
                 {
                     AdornerLayer adornerlayer = AdornerLayer.GetAdornerLayer(fe);
                     if (adornerlayer is null)
@@ -870,7 +870,7 @@ namespace System.Windows.Input
                         fvs = FrameworkElement.FindResourceInternal(fe, fce: null, SystemParameters.FocusVisualStyleKey) as Style;
                     }
 
-                    if (fvs != null)
+                    if (fvs is not null)
                     {
                         _focusVisualAdornerCache = new FocusVisualAdorner(fe, fvs);
                         adornerlayer.Add(_focusVisualAdornerCache);
@@ -879,14 +879,14 @@ namespace System.Windows.Input
                 else // If not FrameworkElement
                 {
                     FrameworkContentElement fce = element as FrameworkContentElement;
-                    if (fce != null)
+                    if (fce is not null)
                     {
                         IContentHost parentICH = null;
                         UIElement parentUIElement = GetParentUIElementFromContentElement(fce, ref parentICH);
-                        if (parentICH != null && parentUIElement != null)
+                        if (parentICH is not null && parentUIElement is not null)
                         {
                             AdornerLayer adornerlayer = AdornerLayer.GetAdornerLayer(parentUIElement);
-                            if (adornerlayer != null)
+                            if (adornerlayer is not null)
                             {
                                 Style fvs = fce.FocusVisualStyle;
 
@@ -897,7 +897,7 @@ namespace System.Windows.Input
                                     fvs = FrameworkElement.FindResourceInternal(fe: null, fce, SystemParameters.FocusVisualStyleKey) as Style;
                                 }
 
-                                if (fvs != null)
+                                if (fvs is not null)
                                 {
                                     _focusVisualAdornerCache = new FocusVisualAdorner(fce, parentUIElement, parentICH, fvs);
                                     adornerlayer.Add(_focusVisualAdornerCache);
@@ -918,13 +918,13 @@ namespace System.Windows.Input
         internal static void UpdateFocusedElement(DependencyObject focusTarget)
         {
             DependencyObject focusScope = FocusManager.GetFocusScope(focusTarget);
-            if (focusScope != null && focusScope != focusTarget)
+            if (focusScope is not null && focusScope != focusTarget)
             {
                 FocusManager.SetFocusedElement(focusScope, focusTarget as IInputElement);
 
                 // Raise FocusEnterMainFocusScope event
                 Visual visualRoot = GetVisualRoot(focusTarget);
-                if (visualRoot != null && focusScope == visualRoot)
+                if (visualRoot is not null && focusScope == visualRoot)
                 {
                     Current.NotifyFocusEnterMainFocusScope(visualRoot, EventArgs.Empty);
                 }
@@ -985,7 +985,7 @@ namespace System.Windows.Input
 
         private bool Navigate(DependencyObject currentElement, TraversalRequest request, ModifierKeys modifierKeys, DependencyObject firstElement, bool fromProcessInputTabKey = false)
         {
-            Debug.Assert(currentElement != null, "currentElement should not be null");
+            Debug.Assert(currentElement is not null, "currentElement should not be null");
             DependencyObject nextTab = null;
             IKeyboardInputSink inputSink = null;
 
@@ -1040,7 +1040,7 @@ namespace System.Windows.Input
                 {
                     // In case focus cannot navigate outside - we should cycle
                     Visual visualRoot = GetVisualRoot(currentElement);
-                    if (visualRoot != null)
+                    if (visualRoot is not null)
                         return Navigate(visualRoot, new TraversalRequest(request.FocusNavigationDirection == FocusNavigationDirection.Next ? FocusNavigationDirection.First : FocusNavigationDirection.Last));
                 }
 
@@ -1104,19 +1104,19 @@ namespace System.Windows.Input
             }
 
             IKeyboardInputSink inputSink = PresentationSource.CriticalFromVisual(visual) as IKeyboardInputSink;
-            if (inputSink != null)
+            if (inputSink is not null)
             {
                 IKeyboardInputSite ikis = null;
                 ikis = inputSink.KeyboardInputSite;
 
-                if (ikis != null && ShouldNavigateOutsidePresentationSource(currentElement, request))
+                if (ikis is not null && ShouldNavigateOutsidePresentationSource(currentElement, request))
                 {
                     // Only call into the specialized OnNoMoreTabStops if App context flag is set, 
                     // otherwise we call into the regular OnNoMoreTabStops and leave shouldCycle as it is
                     if (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures)
                     {
                         System.Windows.Input.IAvalonAdapter avalonAdapter = ikis as System.Windows.Input.IAvalonAdapter;
-                        if (avalonAdapter != null && fromProcessInput)
+                        if (avalonAdapter is not null && fromProcessInput)
                         {
                             return avalonAdapter.OnNoMoreTabStops(request, ref shouldCycle);
                         }
@@ -1142,7 +1142,7 @@ namespace System.Windows.Input
 
                 // The looping should stop as soon as either the GroupParent is
                 // null or is currentElement itself.
-                while ((parent = GetGroupParent(currentElement)) != null &&
+                while ((parent = GetGroupParent(currentElement)) is not null &&
                     parent != currentElement)
                 {
                     KeyboardNavigationMode mode = GetKeyNavigationMode(parent);
@@ -1207,7 +1207,7 @@ namespace System.Windows.Input
             // except in this case.  And I added a check that the "forced" target
             // is an HwndHost for good measure.
             DependencyObject innerElement = keyEventArgs.KeyboardDevice.Target as DependencyObject;
-            if( innerElement != null && sourceElement != innerElement )
+            if( innerElement is not null && sourceElement != innerElement )
             {
                 if(sourceElement is HwndHost)
                     sourceElement = innerElement;
@@ -1256,7 +1256,7 @@ namespace System.Windows.Input
             }
 
             Visual rootVisual = GetVisualRoot(visual);
-            if (rootVisual != null)
+            if (rootVisual is not null)
             {
                 rootVisual.SetValue(ShowKeyboardCuesProperty, enable ? BooleanBoxes.TrueBox : BooleanBoxes.FalseBox);
             }
@@ -1346,7 +1346,7 @@ namespace System.Windows.Input
             if (container is null)
             {
                 container = GetGroupParent(sourceElement);
-                Debug.Assert(container != null, "container cannot be null");
+                Debug.Assert(container is not null, "container cannot be null");
             }
 
             // If we get to the tree root, return null
@@ -1362,7 +1362,7 @@ namespace System.Windows.Input
                 direction,
                 treeViewNavigation);
 
-            if (result != null)
+            if (result is not null)
             {
                 if (IsElementEligible(result, treeViewNavigation))
                 {
@@ -1379,7 +1379,7 @@ namespace System.Windows.Input
                     treeViewNavigation,
                     viewportBoundsElement,
                     result);
-                if (result != null)
+                if (result is not null)
                 {
                     return result;
                 }
@@ -1439,14 +1439,14 @@ namespace System.Windows.Input
         private static bool IsInNavigationTree(DependencyObject visual)
         {
             UIElement uiElement = visual as UIElement;
-            if (uiElement != null && uiElement.IsVisible)
+            if (uiElement is not null && uiElement.IsVisible)
                 return true;
 
             if (visual is IContentHost && !(visual is MS.Internal.Documents.UIElementIsland))
                 return true;
 
             UIElement3D uiElement3D = visual as UIElement3D;
-            if (uiElement3D != null && uiElement3D.IsVisible)
+            if (uiElement3D is not null && uiElement3D.IsVisible)
                 return true;
 
             return false;
@@ -1458,7 +1458,7 @@ namespace System.Windows.Input
 
             // If parent is IContentHost - get next from the enumerator
             IContentHost ich = parent as IContentHost;
-            if (ich != null)
+            if (ich is not null)
             {
                 IInputElement previousElement = null;
                 IEnumerator<IInputElement> enumerator = ich.HostedElements;
@@ -1473,7 +1473,7 @@ namespace System.Windows.Input
                     else
                     {
                         ContentElement ce = current as ContentElement;
-                        if (ce != null && IsTabStop(ce))
+                        if (ce is not null && IsTabStop(ce))
                             previousElement = current;
                     }
                 }
@@ -1493,7 +1493,7 @@ namespace System.Windows.Input
                     elementAsVisual = e as Visual3D;
                 }
 
-                if (parentAsUIElement != null && elementAsVisual != null)
+                if (parentAsUIElement is not null && elementAsVisual is not null)
                 {
                     int count = VisualTreeHelper.GetChildrenCount(parentAsUIElement);
                     DependencyObject prev = null;
@@ -1516,7 +1516,7 @@ namespace System.Windows.Input
 
             // If parent is IContentHost - get next from the enumerator
             IContentHost ich = parent as IContentHost;
-            if (ich != null)
+            if (ich is not null)
             {
                 IEnumerator<IInputElement> enumerator = ich.HostedElements;
                 bool found = false;
@@ -1530,7 +1530,7 @@ namespace System.Windows.Input
                         else
                         {
                             ContentElement ce = current as ContentElement;
-                            if (ce != null && IsTabStop(ce))
+                            if (ce is not null && IsTabStop(ce))
                                 return ce;
                         }
                     }
@@ -1554,7 +1554,7 @@ namespace System.Windows.Input
                     elementAsVisual = e as Visual3D;
                 }
 
-                if (parentAsUIElement != null && elementAsVisual != null)
+                if (parentAsUIElement is not null && elementAsVisual is not null)
                 {
                     int count = VisualTreeHelper.GetChildrenCount(parentAsUIElement);
                     int i = 0;
@@ -1586,10 +1586,10 @@ namespace System.Windows.Input
         {
             IInputElement iie = e as IInputElement;
             // Focus delegation is enabled only if keyboard focus is outside the container
-            if (iie != null && !iie.IsKeyboardFocusWithin)
+            if (iie is not null && !iie.IsKeyboardFocusWithin)
             {
                 DependencyObject focusedElement = FocusManager.GetFocusedElement(e) as DependencyObject;
-                if (focusedElement != null)
+                if (focusedElement is not null)
                 {
                     if (_navigationProperty == ControlTabNavigationProperty || !IsFocusScope(e))
                     {
@@ -1610,7 +1610,7 @@ namespace System.Windows.Input
                                 }
                             }
                         }
-                        if (visualFocusedElement != null && visualFocusedElement != e && visualFocusedElement.IsDescendantOf(e))
+                        if (visualFocusedElement is not null && visualFocusedElement != e && visualFocusedElement.IsDescendantOf(e))
                         {
                             return focusedElement;
                         }
@@ -1626,12 +1626,12 @@ namespace System.Windows.Input
         {
             // If the element has a FocusedElement it should be its first child
             DependencyObject focusedElement = FocusedElement(e);
-            if (focusedElement != null)
+            if (focusedElement is not null)
                 return focusedElement;
 
             // If the element is IContentHost - return the first child
             IContentHost ich = e as IContentHost;
-            if (ich != null)
+            if (ich is not null)
             {
                 IEnumerator<IInputElement> enumerator = ich.HostedElements;
                 while (enumerator.MoveNext())
@@ -1644,7 +1644,7 @@ namespace System.Windows.Input
                     else
                     {
                         ContentElement ce = current as ContentElement;
-                        if (ce != null && IsTabStop(ce))
+                        if (ce is not null && IsTabStop(ce))
                             return ce;
                     }
                 }
@@ -1667,7 +1667,7 @@ namespace System.Windows.Input
                     elementAsVisual = e as Visual3D;
                 }
 
-                if (elementAsVisual != null)
+                if (elementAsVisual is not null)
                 {
                     int count = VisualTreeHelper.GetChildrenCount(elementAsVisual);
                     for (int i = 0; i < count; i++)
@@ -1678,7 +1678,7 @@ namespace System.Windows.Input
                         else
                         {
                             DependencyObject firstChild = GetFirstChild(visual);
-                            if (firstChild != null)
+                            if (firstChild is not null)
                                 return firstChild;
                         }
                     }
@@ -1693,12 +1693,12 @@ namespace System.Windows.Input
         {
             // If the element has a FocusedElement it should be its last child
             DependencyObject focusedElement = FocusedElement(e);
-            if (focusedElement != null)
+            if (focusedElement is not null)
                 return focusedElement;
 
             // If the element is IContentHost - return the last child
             IContentHost ich = e as IContentHost;
-            if (ich != null)
+            if (ich is not null)
             {
                 IEnumerator<IInputElement> enumerator = ich.HostedElements;
                 IInputElement last = null;
@@ -1710,7 +1710,7 @@ namespace System.Windows.Input
                     else
                     {
                         ContentElement ce = current as ContentElement;
-                        if (ce != null && IsTabStop(ce))
+                        if (ce is not null && IsTabStop(ce))
                             last = current;
                     }
                 }
@@ -1732,7 +1732,7 @@ namespace System.Windows.Input
                     elementAsVisual = e as Visual3D;
                 }
 
-                if (elementAsVisual != null)
+                if (elementAsVisual is not null)
                 {
                     int count = VisualTreeHelper.GetChildrenCount(elementAsVisual);
                     for (int i = count - 1; i >= 0; i--)
@@ -1743,7 +1743,7 @@ namespace System.Windows.Input
                         else
                         {
                             DependencyObject lastChild = GetLastChild(visual);
-                            if (lastChild != null)
+                            if (lastChild is not null)
                                 return lastChild;
                         }
                     }
@@ -1760,7 +1760,7 @@ namespace System.Windows.Input
             {
                 DependencyObject visual = e;
 
-                while ((visual = VisualTreeHelper.GetParent(visual)) != null)
+                while ((visual = VisualTreeHelper.GetParent(visual)) is not null)
                 {
                     // bug here related to movemement when you need to go from a child UI3D
                     // and you get a parent Viewport3D
@@ -1773,7 +1773,7 @@ namespace System.Windows.Input
             {
                 // For ContentElement - return the host element (which is IContentHost)
                 ContentElement contentElement = e as ContentElement;
-                if (contentElement != null)
+                if (contentElement is not null)
                 {
                     return MS.Internal.Documents.ContentHostHelper.FindContentHost(contentElement) as DependencyObject;
                 }
@@ -1797,26 +1797,26 @@ namespace System.Windows.Input
         \***************************************************************************/
         private DependencyObject GetNextInTree(DependencyObject e, DependencyObject container)
         {
-            Debug.Assert(e != null, "e should not be null");
-            Debug.Assert(container != null, "container should not be null");
+            Debug.Assert(e is not null, "e should not be null");
+            Debug.Assert(container is not null, "container should not be null");
 
             DependencyObject result = null;
 
             if (e == container || !IsGroup(e))
                 result = GetFirstChild(e);
 
-            if (result != null || e == container)
+            if (result is not null || e == container)
                 return result;
 
             DependencyObject parent = e;
             do
             {
                 DependencyObject sibling = GetNextSibling(parent);
-                if (sibling != null)
+                if (sibling is not null)
                     return sibling;
 
                 parent = GetParent(parent);
-            } while (parent != null && parent != container);
+            } while (parent is not null && parent != container);
 
             return null;
         }
@@ -1840,7 +1840,7 @@ namespace System.Windows.Input
 
             DependencyObject result = GetPreviousSibling(e);
 
-            if (result != null)
+            if (result is not null)
             {
                 if (IsGroup(result))
                     return result;
@@ -1859,9 +1859,9 @@ namespace System.Windows.Input
             {
                 result = container;
                 container = GetLastChild(container);
-            } while (container != null && !IsGroup(container));
+            } while (container is not null && !IsGroup(container));
 
-            if (container != null)
+            if (container is not null)
                 return container;
 
             return result;
@@ -1876,7 +1876,7 @@ namespace System.Windows.Input
         // In case all parents are Continue then return the root
         private DependencyObject GetGroupParent(DependencyObject e, bool includeCurrent)
         {
-            Debug.Assert(e != null, "e cannot be null");
+            Debug.Assert(e is not null, "e cannot be null");
 
             DependencyObject result = e; // Keep the last non null element
 
@@ -1893,7 +1893,7 @@ namespace System.Windows.Input
                 }
             }
 
-            while (e != null)
+            while (e is not null)
             {
                 if (IsGroup(e))
                     return e;
@@ -1912,7 +1912,7 @@ namespace System.Windows.Input
         private bool IsTabStop(DependencyObject e)
         {
             FrameworkElement fe = e as FrameworkElement;
-            if (fe != null)
+            if (fe is not null)
                 return
                     (fe.Focusable
                     && (bool)fe.GetValue(IsTabStopProperty))
@@ -1920,7 +1920,7 @@ namespace System.Windows.Input
                     && fe.IsVisible;
 
             FrameworkContentElement fce = e as FrameworkContentElement;
-            return fce != null && fce.Focusable && (bool)fce.GetValue(IsTabStopProperty) && fce.IsEnabled;
+            return fce is not null && fce.Focusable && (bool)fce.GetValue(IsTabStopProperty) && fce.IsEnabled;
         }
 
         private bool IsGroup(DependencyObject e)
@@ -1931,15 +1931,15 @@ namespace System.Windows.Input
         internal bool IsFocusableInternal(DependencyObject element)
         {
             UIElement uie = element as UIElement;
-            if (uie != null)
+            if (uie is not null)
             {
                 return (uie.Focusable && uie.IsEnabled && uie.IsVisible);
             }
 
             ContentElement ce = element as ContentElement;
-            if (ce != null)
+            if (ce is not null)
             {
-                return (ce != null && ce.Focusable && ce.IsEnabled);
+                return (ce is not null && ce.Focusable && ce.IsEnabled);
             }
 
             return false;
@@ -1993,7 +1993,7 @@ namespace System.Windows.Input
             int minIndexFirstTab = Int32.MinValue;
 
             DependencyObject currElement = container;
-            while ((currElement = GetNextInTree(currElement, container)) != null)
+            while ((currElement = GetNextInTree(currElement, container)) is not null)
             {
                 if (IsTabStopOrGroup(currElement))
                 {
@@ -2014,7 +2014,7 @@ namespace System.Windows.Input
         {
             int elementTabPriority = GetTabIndexHelper(e);
             DependencyObject currElement = e;
-            while ((currElement = GetNextInTree(currElement, container)) != null)
+            while ((currElement = GetNextInTree(currElement, container)) is not null)
             {
                 if (IsTabStopOrGroup(currElement) && GetTabIndexHelper(currElement) == elementTabPriority)
                 {
@@ -2037,7 +2037,7 @@ namespace System.Windows.Input
             int elementTabPriority = GetTabIndexHelper(e);
 
             DependencyObject currElement = container;
-            while ((currElement = GetNextInTree(currElement, container)) != null)
+            while ((currElement = GetNextInTree(currElement, container)) is not null)
             {
                 if (IsTabStopOrGroup(currElement))
                 {
@@ -2082,7 +2082,7 @@ namespace System.Windows.Input
                 return null;
 
             DependencyObject nextTabElement = GetNextTabWithSameIndex(e, container);
-            if (nextTabElement != null)
+            if (nextTabElement is not null)
                 return nextTabElement;
 
             return GetNextTabWithNextIndex(e, container, tabbingType);
@@ -2090,7 +2090,7 @@ namespace System.Windows.Input
 
         private DependencyObject GetNextTab(DependencyObject e, DependencyObject container, bool goDownOnly)
         {
-            Debug.Assert(container != null, "container should not be null");
+            Debug.Assert(container is not null, "container should not be null");
 
             KeyboardNavigationMode tabbingType = GetKeyNavigationMode(container);
 
@@ -2101,7 +2101,7 @@ namespace System.Windows.Input
 
                 // Using ActiveElement if set
                 DependencyObject activeElement = GetActiveElement(container);
-                if (activeElement != null)
+                if (activeElement is not null)
                     return GetNextTab(null, activeElement, true);
             }
             else
@@ -2124,7 +2124,7 @@ namespace System.Windows.Input
             KeyboardNavigationMode currentTabbingType = tabbingType;
 
             // Search down inside the container
-            while ((nextTabElement = GetNextTabInGroup(nextTabElement, container, currentTabbingType)) != null)
+            while ((nextTabElement = GetNextTabInGroup(nextTabElement, container, currentTabbingType)) is not null)
             {
                 Debug.Assert(IsTabStopOrGroup(nextTabElement), "nextTabElement should be IsTabStop or group");
 
@@ -2135,7 +2135,7 @@ namespace System.Windows.Input
                     loopStartElement = nextTabElement;
 
                 DependencyObject firstTabElementInside = GetNextTab(null, nextTabElement, true);
-                if (firstTabElementInside != null)
+                if (firstTabElementInside is not null)
                     return firstTabElementInside;
 
                 // If we want to continue searching inside the Once groups, we should change the navigation mode
@@ -2147,7 +2147,7 @@ namespace System.Windows.Input
 
             // Search up in the tree if allowed
             // consider: Use original tabbingType instead of currentTabbingType
-            if (!goDownOnly && currentTabbingType != KeyboardNavigationMode.Contained && GetParent(container) != null)
+            if (!goDownOnly && currentTabbingType != KeyboardNavigationMode.Contained && GetParent(container) is not null)
             {
                 return GetNextTab(container, GetGroupParent(container), false);
             }
@@ -2164,7 +2164,7 @@ namespace System.Windows.Input
             DependencyObject lastTabElement = null;
             int maxIndexFirstTab = Int32.MaxValue;
             DependencyObject currElement = GetLastInTree(container);
-            while (currElement != null && currElement != container)
+            while (currElement is not null && currElement != container)
             {
                 if (IsTabStopOrGroup(currElement))
                 {
@@ -2186,7 +2186,7 @@ namespace System.Windows.Input
         {
             int elementTabPriority = GetTabIndexHelper(e);
             DependencyObject currElement = GetPreviousInTree(e, container);
-            while (currElement != null)
+            while (currElement is not null)
             {
                 if (IsTabStopOrGroup(currElement) && GetTabIndexHelper(currElement) == elementTabPriority && currElement != container)
                 {
@@ -2207,7 +2207,7 @@ namespace System.Windows.Input
             int maxIndexFirstTab = Int32.MaxValue;
             int maxIndex = Int32.MaxValue;
             DependencyObject currElement = GetLastInTree(container);
-            while (currElement != null)
+            while (currElement is not null)
             {
                 if (IsTabStopOrGroup(currElement) && currElement != container)
                 {
@@ -2257,7 +2257,7 @@ namespace System.Windows.Input
                 return null;
 
             DependencyObject nextTabElement = GetPrevTabWithSameIndex(e, container);
-            if (nextTabElement != null)
+            if (nextTabElement is not null)
                 return nextTabElement;
 
             return GetPrevTabWithPrevIndex(e, container, tabbingType);
@@ -2265,7 +2265,7 @@ namespace System.Windows.Input
 
         private DependencyObject GetPrevTab(DependencyObject e, DependencyObject container, bool goDownOnly)
         {
-            Debug.Assert(e != null || container != null, "e or container should not be null");
+            Debug.Assert(e is not null || container is not null, "e or container should not be null");
 
             if (container is null)
                 container = GetGroupParent(e);
@@ -2276,7 +2276,7 @@ namespace System.Windows.Input
             {
                 // Using ActiveElement if set
                 DependencyObject activeElement = GetActiveElement(container);
-                if (activeElement != null)
+                if (activeElement is not null)
                     return GetPrevTab(null, activeElement, true);
                 else
                 {
@@ -2321,7 +2321,7 @@ namespace System.Windows.Input
             DependencyObject nextTabElement = e;
 
             // Look for element with the same TabIndex before the current element
-            while ((nextTabElement = GetPrevTabInGroup(nextTabElement, container, tabbingType)) != null)
+            while ((nextTabElement = GetPrevTabInGroup(nextTabElement, container, tabbingType)) is not null)
             {
                 if (nextTabElement == container && tabbingType == KeyboardNavigationMode.Local)
                     break;
@@ -2339,7 +2339,7 @@ namespace System.Windows.Input
 
                 // At this point nextTabElement is TabGroup
                 DependencyObject lastTabElementInside = GetPrevTab(null, nextTabElement, true);
-                if (lastTabElementInside != null)
+                if (lastTabElementInside is not null)
                     return lastTabElementInside;
             }
 
@@ -2350,7 +2350,7 @@ namespace System.Windows.Input
                 return container;
 
             // If end of the subtree is reached or there no other elements above
-            if (!goDownOnly && GetParent(container) != null)
+            if (!goDownOnly && GetParent(container) is not null)
             {
                 return GetPrevTab(container, null, false);
             }
@@ -2372,7 +2372,7 @@ namespace System.Windows.Input
         internal static Rect GetRectangle(DependencyObject element)
         {
             UIElement uiElement = element as UIElement;
-            if (uiElement != null)
+            if (uiElement is not null)
             {
                 if (!uiElement.IsArrangeValid)
                 {
@@ -2382,7 +2382,7 @@ namespace System.Windows.Input
 
                 Visual rootVisual = GetVisualRoot(uiElement);
 
-                if (rootVisual != null)
+                if (rootVisual is not null)
                 {
                     GeneralTransform transform = uiElement.TransformToAncestor(rootVisual);
                     Thickness deflateThickness = (Thickness)uiElement.GetValue(DirectionalNavigationMarginProperty);
@@ -2406,15 +2406,15 @@ namespace System.Windows.Input
             else
             {
                 ContentElement ce = element as ContentElement;
-                if (ce != null)
+                if (ce is not null)
                 {
                     IContentHost parentICH = null;
                     UIElement parentUIElement = GetParentUIElementFromContentElement(ce, ref parentICH);
                     Visual parent = parentICH as Visual;
-                    if (parentICH != null && parent != null && parentUIElement != null)
+                    if (parentICH is not null && parent is not null && parentUIElement is not null)
                     {
                         Visual rootVisual = GetVisualRoot(parent);
-                        if (rootVisual != null)
+                        if (rootVisual is not null)
                         {
                             if (!parentUIElement.IsMeasureValid)
                             {
@@ -2438,12 +2438,12 @@ namespace System.Windows.Input
                 else
                 {
                     UIElement3D uiElement3D = element as UIElement3D;
-                    if (uiElement3D != null)
+                    if (uiElement3D is not null)
                     {
                         Visual rootVisual = GetVisualRoot(uiElement3D);
                         Visual containingVisual2D = VisualTreeHelper.GetContainingVisual2D(uiElement3D);
 
-                        if (rootVisual != null && containingVisual2D != null)
+                        if (rootVisual is not null && containingVisual2D is not null)
                         {
                             Rect rectElement = uiElement3D.Visual2DContentBounds;
                             GeneralTransform transform = containingVisual2D.TransformToAncestor(rootVisual);
@@ -2466,10 +2466,10 @@ namespace System.Windows.Input
         {
             Rect rect = GetRectangle(element);
             TreeViewItem tvi = element as TreeViewItem;
-            if (tvi != null)
+            if (tvi is not null)
             {
                 Panel itemsHost = tvi.ItemsHost;
-                if (itemsHost != null && itemsHost.IsVisible)
+                if (itemsHost is not null && itemsHost.IsVisible)
                 {
                     Rect itemsHostRect = GetRectangle(itemsHost);
                     if (itemsHostRect != Rect.Empty)
@@ -2479,7 +2479,7 @@ namespace System.Windows.Input
                         // if there's a header, put the representative Rect on
                         // the same side of the children as the header.
                         FrameworkElement header = tvi.TryGetHeaderElement();
-                        if (header != null && header != tvi && header.IsVisible)
+                        if (header is not null && header != tvi && header.IsVisible)
                         {
                             Rect headerRect = GetRectangle(header);
                             if (!headerRect.IsEmpty)
@@ -2644,9 +2644,9 @@ namespace System.Windows.Input
         // to keep the existing calls to the previous method around for compat.]
         internal bool IsAncestorOfEx(DependencyObject sourceElement, DependencyObject targetElement)
         {
-            Debug.Assert(sourceElement != null, "sourceElement must not be null");
+            Debug.Assert(sourceElement is not null, "sourceElement must not be null");
 
-            while (targetElement != null && targetElement != sourceElement)
+            while (targetElement is not null && targetElement != sourceElement)
             {
                 targetElement = GetParent(targetElement);
             }
@@ -2729,15 +2729,15 @@ namespace System.Windows.Input
             _containerHashtable.Clear();
             DependencyObject targetElement = MoveNext(sourceElement, null, direction, BASELINE_DEFAULT, BASELINE_DEFAULT, treeViewNavigation, considerDescendants);
 
-            if (targetElement != null)
+            if (targetElement is not null)
             {
                 UIElement sourceUIElement = sourceElement as UIElement;
-                if (sourceUIElement != null)
+                if (sourceUIElement is not null)
                     sourceUIElement.RemoveHandler(Keyboard.PreviewLostKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(_LostFocus));
                 else
                 {
                     ContentElement sourceContentElement = sourceElement as ContentElement;
-                    if (sourceContentElement != null)
+                    if (sourceContentElement is not null)
                         sourceContentElement.RemoveHandler(Keyboard.PreviewLostKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(_LostFocus));
                 }
 
@@ -2747,14 +2747,14 @@ namespace System.Windows.Input
                 else
                 {
                     ContentElement targetContentElement = targetElement as ContentElement;
-                    if (targetContentElement != null)
+                    if (targetContentElement is not null)
                     {
                         // When Focus is changed we need to reset the base line
                         targetContentElement.AddHandler(Keyboard.PreviewLostKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(_LostFocus), true);
                     }
                 }
 
-                if (targetUIElement != null)
+                if (targetUIElement is not null)
                 {
                     // When layout is changed we need to reset the base line
                     // Set up a layout invalidation listener.
@@ -2775,7 +2775,7 @@ namespace System.Windows.Input
         {
             UIElement uiElement = sender as UIElement;
             // Disconnect the layout listener.
-            if (uiElement != null)
+            if (uiElement is not null)
             {
                 uiElement.LayoutUpdated -= new EventHandler(OnLayoutUpdated);
             }
@@ -2797,13 +2797,13 @@ namespace System.Windows.Input
 
         private bool IsEndlessLoop(DependencyObject element, DependencyObject container)
         {
-            object elementObject = element != null ? (object)element : _fakeNull;
+            object elementObject = element is not null ? (object)element : _fakeNull;
 
             // If entry exists then we have endless loop
             Hashtable elementTable = _containerHashtable[container] as Hashtable;
-            if (elementTable != null)
+            if (elementTable is not null)
             {
-                if (elementTable[elementObject] != null)
+                if (elementTable[elementObject] is not null)
                     return true;
             }
             else
@@ -2847,7 +2847,7 @@ namespace System.Windows.Input
             double resultScore = 0d;
             bool searchInsideContainer = sourceElement is null;
             DependencyObject currElement = container;
-            while ((currElement = GetNextInTree(currElement, container)) != null)
+            while ((currElement = GetNextInTree(currElement, container)) is not null)
             {
                 if (currElement != sourceElement &&
                     IsGroupElementEligible(currElement, treeViewNavigation))
@@ -2903,7 +2903,7 @@ namespace System.Windows.Input
             if (container is null)
             {
                 container = GetGroupParent(sourceElement);
-                Debug.Assert(container != null, "container cannot be null");
+                Debug.Assert(container is not null, "container cannot be null");
             }
 
             // If we get to the tree root, return null
@@ -2961,13 +2961,13 @@ namespace System.Windows.Input
 
             // Using ActiveElement if set
             DependencyObject activeElement = GetActiveElementChain(result, treeViewNavigation);
-            if (activeElement != null)
+            if (activeElement is not null)
                 return activeElement;
 
             // Try to find focus inside the element
             // result is not TabStop, which means it is a group
             DependencyObject insideElement = MoveNext(null, result, direction, startRange, endRange, treeViewNavigation, considerDescendants:true);
-            if (insideElement != null)
+            if (insideElement is not null)
                 return insideElement;
 
             return MoveNext(result, null, direction, startRange, endRange, treeViewNavigation, considerDescendants:true);
@@ -2977,7 +2977,7 @@ namespace System.Windows.Input
         {
             DependencyObject validActiveElement = null;
             DependencyObject activeElement = element;
-            while ((activeElement = GetActiveElement(activeElement)) != null)
+            while ((activeElement = GetActiveElement(activeElement)) is not null)
             {
                 if (IsElementEligible(activeElement, treeViewNavigation))
                     validActiveElement = activeElement;
@@ -2998,7 +2998,7 @@ namespace System.Windows.Input
             bool treeViewNavigation)
         {
             Rect sourceRect = new Rect(0, 0, 0, 0);
-            if (sourceElement != null)
+            if (sourceElement is not null)
             {
                 // Find sourceElement's position wrt viewport.
                 ElementViewportPosition sourceElementPosition = ItemsControl.GetElementViewportPosition(viewportBoundsElement,
@@ -3021,7 +3021,7 @@ namespace System.Windows.Input
             double partialResultRangeScore = double.NegativeInfinity;
 
             DependencyObject currElement = container;
-            while ((currElement = GetNextInTree(currElement, container)) != null)
+            while ((currElement = GetNextInTree(currElement, container)) is not null)
             {
                 if (IsGroupElementEligible(currElement, treeViewNavigation))
                 {
@@ -3103,7 +3103,7 @@ namespace System.Windows.Input
                     }
                 }
             }
-            return result != null ? result : partialResult;
+            return result is not null ? result : partialResult;
         }
 
         /// <summary>
@@ -3166,7 +3166,7 @@ namespace System.Windows.Input
             if (inputEventArgs.RoutedEvent == Keyboard.LostKeyboardFocusEvent)
             {
                 KeyboardFocusChangedEventArgs args = inputEventArgs as KeyboardFocusChangedEventArgs;
-                if (((args != null) && (args.NewFocus is null)) || inputEventArgs.Handled)
+                if (((args is not null) && (args.NewFocus is null)) || inputEventArgs.Handled)
                 {
                     // Focus went to null, stop tracking the last key down
                     _lastKeyPressed = Key.None;
@@ -3280,10 +3280,10 @@ namespace System.Windows.Input
                 //             source of the active window.
                 PresentationSource source = null;
 
-                if (eventSource != null)
+                if (eventSource is not null)
                 {
                     Visual eventSourceVisual = eventSource as Visual;
-                    source = (eventSourceVisual != null) ? PresentationSource.CriticalFromVisual(eventSourceVisual) : null;
+                    source = (eventSourceVisual is not null) ? PresentationSource.CriticalFromVisual(eventSourceVisual) : null;
                 }
                 else
                 {
@@ -3310,7 +3310,7 @@ namespace System.Windows.Input
                             {
                                 EnterMenuModeEventHandler currentHandler = obj as EnterMenuModeEventHandler;
 
-                                if (currentHandler != null)
+                                if (currentHandler is not null)
                                 {
                                     if (currentHandler(source, e))
                                     {
@@ -3343,7 +3343,7 @@ namespace System.Windows.Input
             }
             remove
             {
-                if (_weakEnterMenuModeHandlers != null)
+                if (_weakEnterMenuModeHandlers is not null)
                 {
                     lock (_weakEnterMenuModeHandlers)
                     {
@@ -3399,7 +3399,7 @@ namespace System.Windows.Input
             PresentationSource source;
             RawUIStateInputReport report = ExtractRawUIStateInputReport(inputEventArgs, InputManager.InputReportEvent);
 
-            if (report != null && (source = report.InputSource) != null)
+            if (report is not null && (source = report.InputSource) is not null)
             {
                 // handle accelerator cue display
                 if ((report.Targets & RawUIStateTargets.HideAccelerators) != 0)
@@ -3417,7 +3417,7 @@ namespace System.Windows.Input
             RawUIStateInputReport uiStateInputReport = null;
             InputReportEventArgs input = e as InputReportEventArgs;
 
-            if (input != null)
+            if (input is not null)
             {
                 if (input.Report.Type == InputType.Keyboard && input.RoutedEvent == Event)
                 {
@@ -3458,7 +3458,7 @@ namespace System.Windows.Input
                         delegate(object item)
                         {
                             EventHandler handler = item as EventHandler;
-                            if (handler != null)
+                            if (handler is not null)
                             {
                                 handler(sender, e);
                             }
@@ -3507,7 +3507,7 @@ namespace System.Windows.Input
                 for (int i=0;  i<_list.Count;  ++i)
                 {
                     object item = _list[i].Target;
-                    if (item != null)
+                    if (item is not null)
                     {
                         if (item == target)
                         {
@@ -3534,7 +3534,7 @@ namespace System.Windows.Input
                 for (int i=0;  i<_list.Count;  ++i)
                 {
                     object item = _list[i].Target;
-                    if (item != null)
+                    if (item is not null)
                     {
                         if (action(item))
                             break;

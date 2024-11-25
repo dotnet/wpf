@@ -59,7 +59,7 @@ namespace MS.Internal.AutomationProxies
             // Accessible.CreateNativeFromEvent() by passes OleAcc by sending a WM_GETOBJECT directly to the control and creating
             // IAccessible from the return, if it can.
             Accessible acc = Accessible.CreateNativeFromEvent(hwnd, NativeMethods.OBJID_CLIENT, NativeMethods.CHILD_SELF);
-            if (acc != null)
+            if (acc is not null)
             {
                 AccessibleRole role = acc.Role;
                 if (role == AccessibleRole.MenuBar || role == AccessibleRole.MenuPopup)
@@ -102,7 +102,7 @@ namespace MS.Internal.AutomationProxies
                     }
                 }
                 // Ends up calling CreateToolbarItem which can return null
-                if (proxySimple != null)
+                if (proxySimple is not null)
                 {
                     proxySimple.DispatchEvents(eventId, idProp, idObject, idChild);
                 }
@@ -137,7 +137,7 @@ namespace MS.Internal.AutomationProxies
             for (int item = child._item + 1; item >= 0 && item < count; item++)
             {
                 // This may fail if the toolbar item is hidden
-                if ((toolbarItem = CreateToolbarItem (item)) != null)
+                if ((toolbarItem = CreateToolbarItem (item)) is not null)
                 {
                     break;
                 }
@@ -164,7 +164,7 @@ namespace MS.Internal.AutomationProxies
             for (int item = child._item - 1; item >= 0 && item < count; item--)
             {
                 // This may fail if the toolbar item is hidden
-                if ((toolbarItem = CreateToolbarItem (item)) != null)
+                if ((toolbarItem = CreateToolbarItem (item)) is not null)
                 {
                     break;
                 }
@@ -182,7 +182,7 @@ namespace MS.Internal.AutomationProxies
             for (int item = 0, count = Count; item < count; item++)
             {
                 // This may fail if the toolbar item is hidden
-                if ((toolbarItem = CreateToolbarItem (item)) != null)
+                if ((toolbarItem = CreateToolbarItem (item)) is not null)
                 {
                     break;
                 }
@@ -200,7 +200,7 @@ namespace MS.Internal.AutomationProxies
             for (int item = Count - 1; item >= 0; item--)
             {
                 // This may fail if the toolbar item is hidden
-                if ((toolbarItem = CreateToolbarItem (item)) != null)
+                if ((toolbarItem = CreateToolbarItem (item)) is not null)
                 {
                     break;
                 }
@@ -237,7 +237,7 @@ namespace MS.Internal.AutomationProxies
             if (focusIndex >= 0)
             {
                 Accessible acc = Accessible.CreateNativeFromEvent(_hwnd, NativeMethods.OBJID_CLIENT, NativeMethods.CHILD_SELF);
-                if (acc != null)
+                if (acc is not null)
                 {
                     AccessibleRole role = acc.Role;
                     if (role == AccessibleRole.MenuBar || role == AccessibleRole.MenuPopup)
@@ -306,7 +306,7 @@ namespace MS.Internal.AutomationProxies
             if (Misc.ProxySendMessageInt(_hwnd, NativeMethods.TB_ISBUTTONHIDDEN, new IntPtr(tbb.idCommand), IntPtr.Zero) == 0)
             {
                 Accessible acc = Accessible.CreateNativeFromEvent(_hwnd, NativeMethods.OBJID_CLIENT, item + 1);
-                if (acc != null)
+                if (acc is not null)
                 {
                     if (acc.Role == AccessibleRole.MenuItem)
                     {

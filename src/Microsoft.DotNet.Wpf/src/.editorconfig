@@ -186,7 +186,7 @@ dotnet_diagnostic.CA5362.severity = suggestion
 # dotnet_diagnostic.CSIsNull001.severity = suggestion
 
 # CSIsNull002: Use 'is not' pattern check
-dotnet_diagnostic.CSIsNull002.severity = suggestion
+# dotnet_diagnostic.CSIsNull002.severity = suggestion
 
 # IDE0005: Using directive is unnecessary.
 dotnet_diagnostic.IDE0005.severity = suggestion

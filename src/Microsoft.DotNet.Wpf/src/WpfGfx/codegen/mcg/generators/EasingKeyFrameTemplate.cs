@@ -167,7 +167,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                 protected override [[instance.TypeName]] InterpolateValueCore([[instance.TypeName]] baseValue, double keyFrameProgress)
                                 {
                                     IEasingFunction easingFunction = EasingFunction;
-                                    if (easingFunction != null)
+                                    if (easingFunction is not null)
                                     {
                                         keyFrameProgress = easingFunction.Ease(keyFrameProgress);
                                     }
@@ -283,7 +283,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
         private void CloseFile(ref FileCodeSink csFile)
         {
-            if (csFile != null)
+            if (csFile is not null)
             {
                 // Write the closing brace of the namespace block
                 csFile.WriteBlock("}");

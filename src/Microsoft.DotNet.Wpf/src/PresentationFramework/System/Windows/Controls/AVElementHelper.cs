@@ -57,7 +57,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal AVElementHelper(MediaElement element)
         {
-            Debug.Assert((element != null), "Element is null");
+            Debug.Assert((element is not null), "Element is null");
 
             _element = element;
 
@@ -98,7 +98,7 @@ namespace System.Windows.Controls
         {
             MediaElement mediaElement = d as MediaElement;
 
-            if (mediaElement != null)
+            if (mediaElement is not null)
             {
                 return mediaElement.Helper;
             }
@@ -384,7 +384,7 @@ namespace System.Windows.Controls
                 // If we have a clock, then our loaded behavior is always manual.
                 // The clock always wins.
                 //
-                if (_clock._value != null)
+                if (_clock._value is not null)
                 {
                     thisStateRequest = MediaState.Manual;
 
@@ -433,7 +433,7 @@ namespace System.Windows.Controls
                     //
                     Invariant.Assert(_unloadedBehavior == MediaState.Manual);
 
-                    if (_clock._value != null)
+                    if (_clock._value is not null)
                     {
                         thisStateRequest = MediaState.Manual;
 
@@ -469,7 +469,7 @@ namespace System.Windows.Controls
                 // where UnloadedBehavior is specified after the timing engine has
                 // been in control.
                 //
-                if (_mediaPlayer.Clock != null)
+                if (_mediaPlayer.Clock is not null)
                 {
                     _mediaPlayer.Clock = null;
                 }
@@ -689,13 +689,13 @@ namespace System.Windows.Controls
             Uri     sourceUri
             )
         {
-            if (sourceUri != null)
+            if (sourceUri is not null)
             {
                 if (sourceUri.IsAbsoluteUri)
                 {
                     return sourceUri;
                 }
-                else if (BaseUri != null)
+                else if (BaseUri is not null)
                 {
                     return new Uri(BaseUri, sourceUri);
                 }
@@ -724,7 +724,7 @@ namespace System.Windows.Controls
 
         private void MemberOnInvalidateSource(DependencyPropertyChangedEventArgs e)
         {
-            if (_clock._value != null)
+            if (_clock._value is not null)
             {
                 throw new InvalidOperationException(SR.MediaElement_CannotSetSourceOnMediaElementDrivenByClock);
             }

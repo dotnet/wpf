@@ -201,12 +201,12 @@ namespace System.Windows.Documents
                     page.Measure(pageSize);
                     page.Arrange(new Rect(new Point(0, 0), pageSize));
 
-                    Debug.Assert(page != null);
+                    Debug.Assert(page is not null);
                     Debug.Assert(page.IsInitialized);
 
                     bool constructSOM = true;
                     StoryFragments sf = page.GetPageStructure();
-                    if (sf != null)
+                    if (sf is not null)
                     {
                         constructSOM = false;
                         FixedDSBuilder fb = new FixedDSBuilder(page, sf);
@@ -262,7 +262,7 @@ namespace System.Windows.Documents
         internal Glyphs GetGlyphsElement(FixedNode node)
         {
             FixedPage page = GetFixedPage(node);
-            if (page != null)
+            if (page is not null)
             {
                 return page.GetGlyphsElement(node);
             }
@@ -349,12 +349,12 @@ namespace System.Windows.Documents
             EnsureTextOMForPage(fixedPosition.Page);
 
             FixedSOMElement element = _fixedFlowMap.MappingGetFixedSOMElement(fixedPosition.Node, fixedPosition.Offset);
-            if (element != null)
+            if (element is not null)
             {
                 FlowNode flow = element.FlowNode;
                 int fixedOffset = fixedPosition.Offset;
                 FixedSOMTextRun run = element as FixedSOMTextRun;
-                if (run != null && run.IsReversed)
+                if (run is not null && run.IsReversed)
                 {
                     fixedOffset  = run.EndIndex - run.StartIndex - fixedOffset;
                 }
@@ -434,7 +434,7 @@ namespace System.Windows.Documents
                 if (offsetInLast == last.EndIndex)
                 {
                     run = last as FixedSOMTextRun;
-                    if (run != null && run.IsReversed)
+                    if (run is not null && run.IsReversed)
                     {
                         offsetInLast = run.EndIndex - run.StartIndex - offsetInLast;
                     }
@@ -445,7 +445,7 @@ namespace System.Windows.Documents
 
             run = element as FixedSOMTextRun;
             int fixedOffset  = flowOffset - element.OffsetInFlowNode + element.StartIndex;
-            if (run != null && run.IsReversed)
+            if (run is not null && run.IsReversed)
             {
                 fixedOffset = run.EndIndex - run.StartIndex - fixedOffset;
             }
@@ -581,7 +581,7 @@ namespace System.Windows.Documents
             StringBuilder sb = new StringBuilder();
             FixedSOMElement[] fixes = flowNode.FixedSOMElements;
             Debug.Assert(flowNode.Type == FlowNodeType.Run);
-            Debug.Assert(fixes != null);
+            Debug.Assert(fixes is not null);
 
             foreach (FixedSOMTextRun element in fixes)
             {
@@ -794,7 +794,7 @@ namespace System.Windows.Documents
             {
                 // For deeply nested path, we need to append current childIndex to a pathPrefix
                 // to form the entire childPath.
-                Debug.Assert(pathPrefix != null);
+                Debug.Assert(pathPrefix is not null);
                 int[] newPath = new int[pathPrefix.Length + 1];
                 pathPrefix.CopyTo(newPath, 0);
                 newPath[newPath.Length - 1] = childIndex;
@@ -807,9 +807,9 @@ namespace System.Windows.Documents
         private bool _IsImage(object o)
         {
             System.Windows.Shapes.Path p = o as System.Windows.Shapes.Path;
-            if (p != null)
+            if (p is not null)
             {
-                return p.Fill is ImageBrush && p.Data != null;
+                return p.Fill is ImageBrush && p.Data is not null;
             }
             return o is Image;
         }
@@ -817,8 +817,8 @@ namespace System.Windows.Documents
 
         private bool _IsNonContiguous(FixedSOMTextRun prevRun, FixedSOMTextRun currentRun, GlyphComparison comparison)
         {
-            Debug.Assert(prevRun != null);
-            Debug.Assert(currentRun != null);
+            Debug.Assert(prevRun is not null);
+            Debug.Assert(currentRun is not null);
 
             if (prevRun.FixedNode == currentRun.FixedNode)
             {
@@ -841,11 +841,11 @@ namespace System.Windows.Documents
             {
                 comparison = GlyphComparison.SameLine;
             }
-            else if (glyph1 != null && glyph2 != null)
+            else if (glyph1 is not null && glyph2 is not null)
             {
                 GlyphRun run1 = glyph1.ToGlyphRun();
                 GlyphRun run2 = glyph2.ToGlyphRun();
-                if (run1 != null && run2 != null)
+                if (run1 is not null && run2 is not null)
                 {
                     Rect box1 = run1.ComputeAlignmentBox();
                     box1.Offset(glyph1.OriginX, glyph1.OriginY);
@@ -858,7 +858,7 @@ namespace System.Windows.Documents
                     GeneralTransform transform = glyph2.TransformToVisual(glyph1);
                     Point prevPt = LTR1 ? box1.TopRight : box1.TopLeft;
                     Point currentPt = LTR2 ? box2.TopLeft : box2.TopRight;
-                    if (transform != null)
+                    if (transform is not null)
                     {
                         transform.TryTransform(currentPt, out currentPt);
                     }
@@ -950,7 +950,7 @@ namespace System.Windows.Documents
                 if (!constructLines)
                 {
                     namedNode = elements.Current as IFrameworkInputElement;
-                    if (namedNode != null && namedNode.Name != null && namedNode.Name.Length != 0)
+                    if (namedNode is not null && namedNode.Name is not null && namedNode.Name.Length != 0)
                     {
                         pageStructure.FixedDSBuilder.BuildNameHashTable(namedNode.Name,
                                     elements.Current as UIElement,
@@ -959,7 +959,7 @@ namespace System.Windows.Documents
                 }
 
                 if (_IsImage(elements.Current) ||
-                    (elements.Current is Glyphs && (elements.Current as Glyphs).MeasurementGlyphRun != null))
+                    (elements.Current is Glyphs && (elements.Current as Glyphs).MeasurementGlyphRun is not null))
                 {
                     fixedNodes.Add(
                         _NewFixedNode(pageIndex, nestingLevel, level1Index, pathPrefix, childIndex)
@@ -987,7 +987,7 @@ namespace System.Windows.Documents
                         localTransform = Transform.Identity;
                     }
 
-                    if (children != null)
+                    if (children is not null)
                     {
                         int[] newPathPrefix = null;
                         if (nestingLevel >= 2)
@@ -1006,7 +1006,7 @@ namespace System.Windows.Documents
                                 pathPrefix.CopyTo(newPathPrefix, 0);
                             }
                             // Append the childIndex to newPathPrefix.
-                            Debug.Assert(newPathPrefix != null);
+                            Debug.Assert(newPathPrefix is not null);
                             newPathPrefix[newPathPrefix.Length - 1] = childIndex;
                         }
 #if DEBUG
@@ -1307,7 +1307,7 @@ namespace System.Windows.Documents
                             g = new RectangleGeometry(new Rect(0, 0, im.Width, im.Height));
                         }
                         logicalHyperlink = _GetHyperlinkFromGeometry(g, t);
-                        if (logicalHyperlink != null)
+                        if (logicalHyperlink is not null)
                         {
                             relUri = logicalHyperlink.Uri;
                             shadowElement = logicalHyperlink.UIElement;
@@ -1340,7 +1340,7 @@ namespace System.Windows.Documents
                 {
                     Geometry g = geom;
 
-                    if (t != null && !t.Value.IsIdentity)
+                    if (t is not null && !t.Value.IsIdentity)
                     {
                         g = PathGeometry.CreateFromGeometry(geom);
                         g.Transform = t;
@@ -1405,7 +1405,7 @@ namespace System.Windows.Documents
                 foreach (UIElement child in children)
                 {
                     Canvas canvas = child as Canvas;
-                    if (canvas != null)
+                    if (canvas is not null)
                     {
                         FindHyperlinkPaths(canvas);
                     }
@@ -1418,12 +1418,12 @@ namespace System.Windows.Documents
 
                     Uri navUri = FixedPage.GetNavigateUri(child);
 
-                    if (navUri != null && ((Path)child).Data != null)
+                    if (navUri is not null && ((Path)child).Data is not null)
                     {
                         Transform trans = child.TransformToAncestor(_fixedPage) as Transform;
 
                         Geometry geom = ((Path)child).Data;
-                        if (trans != null && !trans.Value.IsIdentity)
+                        if (trans is not null && !trans.Value.IsIdentity)
                         {
                             geom = PathGeometry.CreateFromGeometry(geom);
                             geom.Transform = trans;
@@ -1474,11 +1474,11 @@ namespace System.Windows.Documents
                     // Will add code to get font info for rich copy here
                     FixedSOMTextRun run = element as FixedSOMTextRun;
                     bool createNewRun = (_currentRun is null) || (!run.HasSameRichProperties(_currentRun))
-                        || navUri != _currentNavUri || (navUri != null && navUri.ToString() != _currentNavUri.ToString());
+                        || navUri != _currentNavUri || (navUri is not null && navUri.ToString() != _currentNavUri.ToString());
 
                     if (createNewRun)
                     {
-                        if (_currentRun != null)
+                        if (_currentRun is not null)
                         {
                             //Close existing inline tag
                             FixedSOMFixedBlock parent = run.FixedBlock;
@@ -1573,7 +1573,7 @@ namespace System.Windows.Documents
             private void DumpFlowNode(FlowNode node)
             {
                 FixedElement element = node.Cookie as FixedElement;
-                if (element != null)
+                if (element is not null)
                 {
                     XmlElement newDumpNode = _dumpDoc.CreateElement(element.Type.Name);
                     newDumpNode.SetAttribute("id", node.ScopeId.ToString());
@@ -1592,7 +1592,7 @@ namespace System.Windows.Documents
                         foreach (FixedSOMElement somElem in somElems)
                         {
                             FixedSOMTextRun run = somElem as FixedSOMTextRun;
-                            if (run != null)
+                            if (run is not null)
                             {
                                 strBuilder.Append(run.Text);
                             }
@@ -1708,7 +1708,7 @@ namespace System.Windows.Documents
                 }
 
                 //Close the inline tag if any
-                if (_currentRun != null)
+                if (_currentRun is not null)
                 {
                     _AddEndNode();
                     _currentRun = null;
@@ -1717,7 +1717,7 @@ namespace System.Windows.Documents
 
             private void _FinishHyperlink()
             {
-                if (_currentNavUri != null)
+                if (_currentNavUri is not null)
                 {
                     _AddEndNode(); // </Hyperlink>
                     _currentNavUri = null;
@@ -1726,24 +1726,24 @@ namespace System.Windows.Documents
 
             private void _SetHyperlink(Uri navUri, FixedNode node, UIElement shadowHyperlink)
             {
-                if (navUri != _currentNavUri || (navUri != null && navUri.ToString() != _currentNavUri.ToString()))
+                if (navUri != _currentNavUri || (navUri is not null && navUri.ToString() != _currentNavUri.ToString()))
                 {
-                    if (_currentNavUri != null)
+                    if (_currentNavUri is not null)
                     {
                         _AddEndNode(); // </Hyperlink>
                     }
 
-                    if (navUri != null)
+                    if (navUri is not null)
                     {
                         _AddStartNode(FixedElement.ElementType.Hyperlink);
                         _currentFixedElement.SetValue(Hyperlink.NavigateUriProperty, navUri);
                         UIElement uiElement = _fixedPage.GetElement(node) as UIElement;
-                        Debug.Assert(uiElement != null);
-                        if (uiElement != null)
+                        Debug.Assert(uiElement is not null);
+                        if (uiElement is not null)
                         {
                             _currentFixedElement.SetValue(FixedElement.HelpTextProperty, (String) (uiElement.GetValue(AutomationProperties.HelpTextProperty)));
                             _currentFixedElement.SetValue(FixedElement.NameProperty, (String) (uiElement.GetValue(AutomationProperties.NameProperty)));
-                            if (shadowHyperlink != null)
+                            if (shadowHyperlink is not null)
                             {
                                 _logicalHyperlinkContainer.MarkAsUsed(shadowHyperlink);
                             }
@@ -1759,7 +1759,7 @@ namespace System.Windows.Documents
                 if (_nodesInLine.Count > 0)
                 {
                     FixedLineResult newLineResult = new FixedLineResult(_nodesInLine.ToArray(), _lineLayoutBox);
-                    Debug.Assert(newLineResult != null);
+                    Debug.Assert(newLineResult is not null);
 
                     _lineResults.Add(newLineResult);
 

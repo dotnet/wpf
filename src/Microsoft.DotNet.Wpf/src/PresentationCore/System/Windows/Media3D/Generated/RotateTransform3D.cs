@@ -130,7 +130,7 @@ namespace System.Windows.Media.Media3D
             Rotation3D newV = (Rotation3D) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 DUCE.IResource targetResource = (DUCE.IResource)target;
                 using (CompositionEngineLock.Acquire())
@@ -262,7 +262,7 @@ namespace System.Windows.Media.Media3D
                 Rotation3D vRotation = Rotation;
 
                 // Obtain handles for properties that implement DUCE.IResource
-                DUCE.ResourceHandle hRotation = vRotation != null ? ((DUCE.IResource)vRotation).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                DUCE.ResourceHandle hRotation = vRotation is not null ? ((DUCE.IResource)vRotation).GetHandle(channel) : DUCE.ResourceHandle.Null;
 
                 // Obtain handles for animated properties
                 DUCE.ResourceHandle hCenterXAnimations = GetAnimationResourceHandle(CenterXProperty, channel);
@@ -304,7 +304,7 @@ namespace System.Windows.Media.Media3D
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_ROTATETRANSFORM3D))
                 {
                     Rotation3D vRotation = Rotation;
-                    if (vRotation != null) ((DUCE.IResource)vRotation).AddRefOnChannel(channel);
+                    if (vRotation is not null) ((DUCE.IResource)vRotation).AddRefOnChannel(channel);
 
                     AddRefOnChannelAnimations(channel);
 
@@ -321,7 +321,7 @@ namespace System.Windows.Media.Media3D
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
                     Rotation3D vRotation = Rotation;
-                    if (vRotation != null) ((DUCE.IResource)vRotation).ReleaseOnChannel(channel);
+                    if (vRotation is not null) ((DUCE.IResource)vRotation).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
 }

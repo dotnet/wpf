@@ -262,7 +262,7 @@ namespace MS.Internal.Annotations.Anchoring
                 IServiceProvider serviceProvider = null;
                 ITextView textView = null;
 
-                if (_targetPage != null)
+                if (_targetPage is not null)
                 {
                     serviceProvider = _targetPage as IServiceProvider;
                 }
@@ -272,9 +272,9 @@ namespace MS.Internal.Annotations.Anchoring
                     serviceProvider = PathNode.GetParent(content as DependencyObject) as IServiceProvider;
                 }
 
-                Invariant.Assert(serviceProvider != null, "No ServiceProvider found to get TextView from.");
+                Invariant.Assert(serviceProvider is not null, "No ServiceProvider found to get TextView from.");
                 textView = serviceProvider.GetService(typeof(ITextView)) as ITextView;
-                Invariant.Assert(textView != null, "Null TextView provided by ServiceProvider.");
+                Invariant.Assert(textView is not null, "Null TextView provided by ServiceProvider.");
 
                 anchor = TextAnchor.TrimToIntersectionWith(anchor, textView.TextSegments);
 
@@ -392,7 +392,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// </summary>
         internal void SetTargetDocumentPageView(DocumentPageView target)
         {
-            Debug.Assert(target != null);
+            Debug.Assert(target is not null);
             _targetPage = target;
         }
 
@@ -462,11 +462,11 @@ namespace MS.Internal.Annotations.Anchoring
         /// </summary>
         private ITextContainer GetTextContainer(DependencyObject startNode)
         {
-            Debug.Assert(startNode != null);
+            Debug.Assert(startNode is not null);
 
             ITextContainer textContainer = null;
             IServiceProvider serviceProvider = startNode as IServiceProvider;
-            if (serviceProvider != null)
+            if (serviceProvider is not null)
             {
                 textContainer = serviceProvider.GetService(typeof(ITextContainer)) as ITextContainer;
             }
@@ -475,7 +475,7 @@ namespace MS.Internal.Annotations.Anchoring
             {
                 // Special case for TextBox which doesn't implement IServiceProvider
                 TextBoxBase textBox = startNode as TextBoxBase;
-                if (textBox != null)
+                if (textBox is not null)
                 {
                     textContainer = textBox.TextContainer;
                 }
@@ -494,7 +494,7 @@ namespace MS.Internal.Annotations.Anchoring
             end = null;
 
             ITextContainer textContainer = GetTextContainer(startNode);
-            if (textContainer != null)
+            if (textContainer is not null)
             {
                 start = textContainer.Start;
                 end = textContainer.End;
@@ -503,7 +503,7 @@ namespace MS.Internal.Annotations.Anchoring
             {
                 // Special case for TextElement which doesn't expose its TextContainer
                 TextElement textElement = startNode as TextElement;
-                if (textElement != null)
+                if (textElement is not null)
                 {
                     start = textElement.ContentStart;
                     end = textElement.ContentEnd;

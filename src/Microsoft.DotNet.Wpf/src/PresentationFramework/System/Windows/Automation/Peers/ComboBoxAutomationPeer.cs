@@ -81,10 +81,10 @@ namespace System.Windows.Automation.Peers
             //  include text box part into children collection
             ComboBox owner = (ComboBox)Owner;
             TextBox textBox = owner.EditableTextBoxSite;
-            if (textBox != null)
+            if (textBox is not null)
             {
                 AutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(textBox);
-                if (peer != null)
+                if (peer is not null)
                 {
                     if (children is null)
                         children = new List<AutomationPeer>();

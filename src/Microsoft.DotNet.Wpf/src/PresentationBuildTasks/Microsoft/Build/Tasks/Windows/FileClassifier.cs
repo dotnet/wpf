@@ -91,7 +91,7 @@ namespace Microsoft.Build.Tasks.Windows
                     // Do the real work to classify input files.
                     Classify(SourceFiles, mainEmbeddedList, satelliteEmbeddedList);
                     
-                    if (CLRResourceFiles != null)
+                    if (CLRResourceFiles is not null)
                     {
                         // Generate the output CLR embedded resource list.
                         Classify(CLRResourceFiles, clrEmbeddedResourceList, clrSatelliteEmbeddedResourceList);
@@ -168,7 +168,7 @@ namespace Microsoft.Build.Tasks.Windows
         /// </summary>
         public string Culture
         {
-            get { return _culture != null ? _culture.ToLower(CultureInfo.InvariantCulture) : null; }
+            get { return _culture is not null ? _culture.ToLower(CultureInfo.InvariantCulture) : null; }
             set { _culture = value; }
         }
 

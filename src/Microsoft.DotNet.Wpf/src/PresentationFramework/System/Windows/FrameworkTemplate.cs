@@ -64,7 +64,7 @@ namespace System.Windows
         /// </summary>
         protected virtual void ValidateTemplatedParent(FrameworkElement templatedParent)
         {
-            Debug.Assert(templatedParent != null,
+            Debug.Assert(templatedParent is not null,
                 "Must have a non-null FE TemplatedParent.");
         }
 
@@ -121,7 +121,7 @@ namespace System.Windows
             // Verify Context Access
             VerifyAccess();
 
-            return HasContent || VisualTree != null;
+            return HasContent || VisualTree is not null;
         }
 
 
@@ -163,7 +163,7 @@ namespace System.Windows
             // Verify Context Access
             VerifyAccess();
 
-            return HasContent || VisualTree != null;
+            return HasContent || VisualTree is not null;
         }
 
 
@@ -251,7 +251,7 @@ namespace System.Windows
 
                 _resources = value;
 
-                if (_resources != null)
+                if (_resources is not null)
                 {
                     // A Template ResourceDictionary can be accessed across threads
                     _resources.CanBeAccessedAcrossThreads = true;
@@ -271,7 +271,7 @@ namespace System.Windows
         /// </summary>
         internal object FindResource(object resourceKey, bool allowDeferredResourceReference, bool mustReturnDeferredResourceReference)
         {
-            if ((_resources != null) && _resources.Contains(resourceKey))
+            if ((_resources is not null) && _resources.Contains(resourceKey))
             {
                 bool canCache;
                 return _resources.FetchResource(resourceKey, allowDeferredResourceReference, mustReturnDeferredResourceReference, out canCache);
@@ -380,7 +380,7 @@ namespace System.Windows
         private void ValidateVisualTree(FrameworkElementFactory templateRoot)
         {
             // The VisualTree's root must be a FrameworkElement.
-            if (templateRoot != null &&
+            if (templateRoot is not null &&
                 typeof(FrameworkContentElement).IsAssignableFrom(templateRoot.Type))
             {
                 throw new ArgumentException(SR.Format(SR.VisualTreeRootIsFrameworkElement,
@@ -427,7 +427,7 @@ namespace System.Windows
 
             //Let go of the TemplateContent object to reduce survived allocations.
             //Need to keep while parsing due to ambient lookup of DependencyPropertyConverter.
-            if (_templateHolder != null)
+            if (_templateHolder is not null)
             {
                 _templateHolder.ResetTemplateLoadData();
             }
@@ -551,7 +551,7 @@ namespace System.Windows
             // Verify Context Access
             VerifyAccess();
 
-            if (VisualTree != null)
+            if (VisualTree is not null)
             {
                 FrameworkObject frameworkObject = VisualTree.InstantiateUnoptimizedTree();
                 return frameworkObject.DO;
@@ -660,7 +660,7 @@ namespace System.Windows
 
             bool shouldSerialize = true;
 
-            if (manager != null)
+            if (manager is not null)
             {
                 shouldSerialize = (manager.XmlWriter is null);
             }
@@ -722,7 +722,7 @@ namespace System.Windows
             DependencyObject dependencyObject = targetObject as DependencyObject;
             DependencyProperty dependencyProperty;
             System.Windows.Baml2006.WpfXamlMember wpfMember = member as System.Windows.Baml2006.WpfXamlMember;
-            if (wpfMember != null)
+            if (wpfMember is not null)
             {
                 dependencyProperty = wpfMember.DependencyProperty;
             }
@@ -791,12 +791,12 @@ namespace System.Windows
             int childIndex = fo.TemplateChildIndex;
 
 
-            if ((expr = value as Expression) != null)
+            if ((expr = value as Expression) is not null)
             {
                 BindingExpressionBase bindingExpr;
                 TemplateBindingExpression templateBindingExpr;
 
-                if ((bindingExpr = expr as BindingExpressionBase) != null)
+                if ((bindingExpr = expr as BindingExpressionBase) is not null)
                 {
                     // If this is a BindingExpression then we need to store the corresponding
                     // MarkupExtension into the per instance store for the unshared DP value.
@@ -808,7 +808,7 @@ namespace System.Windows
 
                     value = bindingExpr.ParentBindingBase;
                 }
-                else if ((templateBindingExpr = expr as TemplateBindingExpression) != null)
+                else if ((templateBindingExpr = expr as TemplateBindingExpression) is not null)
                 {
                     // If this is a TemplateBindingExpression then we create an equivalent Binding
                     // MarkupExtension and store that in the per instance store for the unshared DP
@@ -912,7 +912,7 @@ namespace System.Windows
             }
 
             FrameworkElement feContainer = container as FrameworkElement;
-            bool isTemplatedParentAnFE = feContainer != null;
+            bool isTemplatedParentAnFE = feContainer is not null;
 
             TemplateNameScope nameScope = new TemplateNameScope(container, affectedChildren, this);
             XamlObjectWriterSettings settings = System.Windows.Markup.XamlReader.CreateObjectWriterSettings(_templateHolder.ObjectWriterParentSettings);
@@ -963,7 +963,7 @@ namespace System.Windows
         private void LoadTemplateXaml(XamlObjectWriter objectWriter)
         {
             System.Xaml.XamlReader templateReader = _templateHolder.PlayXaml();
-            Debug.Assert(templateReader != null, "PlayXaml returned null");
+            Debug.Assert(templateReader is not null, "PlayXaml returned null");
             LoadTemplateXaml(templateReader, objectWriter);
         }
 
@@ -979,7 +979,7 @@ namespace System.Windows
                 if (XamlSourceInfoHelper.IsXamlSourceInfoEnabled)
                 {
                     lineInfo = templateReader as IXamlLineInfo;
-                    if (lineInfo != null)
+                    if (lineInfo is not null)
                     {
                         lineInfoConsumer = currentWriter as IXamlLineInfoConsumer;
                     }
@@ -987,7 +987,7 @@ namespace System.Windows
 
                 while (templateReader.Read())
                 {
-                    if (lineInfoConsumer != null)
+                    if (lineInfoConsumer is not null)
                     {
                         lineInfoConsumer.SetLineInfo(lineInfo.LineNumber, lineInfo.LinePosition);
                     }
@@ -1030,14 +1030,14 @@ namespace System.Windows
 
                         case System.Xaml.XamlNodeType.StartMember:
                             Names.CurrentFrame.Property = templateReader.Member;
-                            if (templateReader.Member.DeferringLoader != null)
+                            if (templateReader.Member.DeferringLoader is not null)
                             {
                                 nestedTemplateDepth += 1;
                             }
                             break;
 
                         case System.Xaml.XamlNodeType.EndMember:
-                            if (Names.CurrentFrame.Property.DeferringLoader != null)
+                            if (Names.CurrentFrame.Property.DeferringLoader is not null)
                             {
                                 nestedTemplateDepth -= 1;
                             }
@@ -1053,7 +1053,7 @@ namespace System.Windows
                             {
                                 if (Names.CurrentFrame.Property == XamlLanguage.ConnectionId)
                                 {
-                                    if (_styleConnector != null)
+                                    if (_styleConnector is not null)
                                     {
                                         _styleConnector.Connect((int)templateReader.Value, Names.CurrentFrame.Instance);
                                     }
@@ -1128,10 +1128,10 @@ namespace System.Windows
         private static DependencyObject WireRootObjectToParent(object createdObject, DependencyObject rootObject, DependencyObject container, FrameworkElement feContainer, INameScope nameScope)
         {
             rootObject = createdObject as DependencyObject;
-            if (rootObject != null)
+            if (rootObject is not null)
             {
                 // Add the root to the appropriate tree.
-                if (feContainer != null)
+                if (feContainer is not null)
                 {
                     // Put the root object into FE.Templatechild (must be a UIElement).
                     UIElement rootElement = rootObject as UIElement;
@@ -1145,13 +1145,13 @@ namespace System.Windows
                         ((FrameworkElement)rootElement).TemplateChildIndex != -1);
                 }
                 // If we have a container that is not a FE, add to the logical tree of the FEF
-                else if (container != null)
+                else if (container is not null)
                 {
                     FrameworkElement feResult;
                     FrameworkContentElement fceResult;
                     Helper.DowncastToFEorFCE(rootObject, out feResult, out fceResult, true);
                     FrameworkElementFactory.AddNodeToLogicalTree((FrameworkContentElement)container,
-                        rootObject.GetType(), feResult != null, feResult, fceResult);
+                        rootObject.GetType(), feResult is not null, feResult, fceResult);
                 }
 
 
@@ -1166,10 +1166,10 @@ namespace System.Windows
 
         private void InvalidatePropertiesOnTemplate(DependencyObject container, Object currentObject)
         {
-            if (container != null)
+            if (container is not null)
             {
                 DependencyObject dObject = currentObject as DependencyObject;
-                if (dObject != null)
+                if (dObject is not null)
                 {
                     FrameworkObject child = new FrameworkObject(dObject);
                     if (child.IsValid)
@@ -1287,7 +1287,7 @@ namespace System.Windows
 
                             MarkupExtension me = value as MarkupExtension;
 
-                            if (me != null)
+                            if (me is not null)
                             {
                                 // This is provided for completeness, but really there's only a few
                                 // MEs that survive TemplateBamlRecordReader.  E.g. NullExtension would

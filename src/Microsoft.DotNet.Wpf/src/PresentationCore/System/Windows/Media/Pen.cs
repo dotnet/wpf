@@ -124,7 +124,7 @@ namespace System.Windows.Media
                 pData->MiterLimit = MiterLimit;
             }
 
-            if (DashStyle != null)
+            if (DashStyle is not null)
             {
                 DashStyle.GetDashData(pData, out dashArray);
             }
@@ -136,11 +136,11 @@ namespace System.Windows.Media
             {
                 DashStyle style = DashStyle;
 
-                if (style != null)
+                if (style is not null)
                 {
                     DoubleCollection dashes = style.Dashes;
 
-                    if ((dashes != null) && (dashes.Count > 0))
+                    if ((dashes is not null) && (dashes.Count > 0))
                     {
                         return false;
                     }
@@ -153,7 +153,7 @@ namespace System.Windows.Media
         internal static bool ContributesToBounds(
             Pen pen)
         {
-            return (pen != null) && (pen.Brush != null);
+            return (pen is not null) && (pen.Brush is not null);
         }
 }
 }

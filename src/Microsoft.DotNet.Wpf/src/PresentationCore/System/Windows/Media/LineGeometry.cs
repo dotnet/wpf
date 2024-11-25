@@ -74,7 +74,7 @@ namespace System.Windows.Media
 
                 Transform transform = Transform;
                 
-                if (transform != null && !transform.IsIdentity) 
+                if (transform is not null && !transform.IsIdentity) 
                 {
                     transform.TransformRect(ref rect);
                 }
@@ -213,7 +213,7 @@ namespace System.Windows.Media
             // Apply internal transform
             Transform internalTransform = Transform;
 
-            if (internalTransform != null && !internalTransform.IsIdentity)
+            if (internalTransform is not null && !internalTransform.IsIdentity)
             {
                 Matrix matrix = internalTransform.Value;
 
@@ -222,7 +222,7 @@ namespace System.Windows.Media
             }
 
             // Apply external transform
-            if (transform != null && !transform.IsIdentity)
+            if (transform is not null && !transform.IsIdentity)
             {
                 Matrix matrix = transform.Value;
 

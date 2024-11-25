@@ -46,7 +46,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         internal BitmapCodecInfo(SafeMILHandle codecInfoHandle)
         {
-            Debug.Assert(codecInfoHandle != null);
+            Debug.Assert(codecInfoHandle is not null);
             _isBuiltIn = true;
             _codecInfoHandle = codecInfoHandle;
         }
@@ -112,7 +112,7 @@ namespace System.Windows.Media.Imaging
                         ));
                 }
 
-                if (author != null)
+                if (author is not null)
                     return author.ToString();
                 else
                     return String.Empty;
@@ -155,7 +155,7 @@ namespace System.Windows.Media.Imaging
                         ));
                 }
 
-                if (version != null)
+                if (version is not null)
                     return new Version(version.ToString());
                 else
                     return new Version();
@@ -198,7 +198,7 @@ namespace System.Windows.Media.Imaging
                         ));
                 }
 
-                if (specVersion != null)
+                if (specVersion is not null)
                     return new Version(specVersion.ToString());
                 else
                     return new Version();
@@ -241,7 +241,7 @@ namespace System.Windows.Media.Imaging
                         ));
                 }
 
-                if (friendlyName != null)
+                if (friendlyName is not null)
                     return friendlyName.ToString();
                 else
                     return String.Empty;
@@ -284,7 +284,7 @@ namespace System.Windows.Media.Imaging
                         ));
                 }
 
-                if (deviceManufacturer != null)
+                if (deviceManufacturer is not null)
                     return deviceManufacturer.ToString();
                 else
                     return String.Empty;
@@ -327,7 +327,7 @@ namespace System.Windows.Media.Imaging
                         ));
                 }
 
-                if (deviceModels != null)
+                if (deviceModels is not null)
                     return deviceModels.ToString();
                 else
                     return String.Empty;
@@ -370,7 +370,7 @@ namespace System.Windows.Media.Imaging
                         ));
                 }
 
-                if (mimeTypes != null)
+                if (mimeTypes is not null)
                     return mimeTypes.ToString();
                 else
                     return String.Empty;
@@ -413,7 +413,7 @@ namespace System.Windows.Media.Imaging
                         ));
                 }
 
-                if (fileExtensions != null)
+                if (fileExtensions is not null)
                     return fileExtensions.ToString();
                 else
                     return String.Empty;

@@ -162,7 +162,7 @@ namespace System.Windows.Media.Media3D
 
             if (!e.IsASubPropertyChange)
             {
-                if (e.OldValue != null)
+                if (e.OldValue is not null)
                 {
                     owner.DisconnectAttachedResource(
                         VisualProxyFlags.IsTransformDirty,
@@ -242,7 +242,7 @@ namespace System.Windows.Media.Media3D
             // invalid during a VisualTreeChanged event
             VisualDiagnostics.VerifyVisualTreeChange(this);
 
-            Debug.Assert(child != null);
+            Debug.Assert(child is not null);
             Debug.Assert(child.InternalVisualParent is null);
 
             child.SetParent(this);
@@ -290,7 +290,7 @@ namespace System.Windows.Media.Media3D
                 throw new InvalidOperationException(SR.CannotModifyVisualChildrenDuringTreeWalk);
             }
 
-            Debug.Assert(child != null);
+            Debug.Assert(child is not null);
             Debug.Assert(child.InternalVisualParent == this);
 
             // invalid during a VisualTreeChanged event
@@ -366,7 +366,7 @@ namespace System.Windows.Media.Media3D
                     {
                         Transform3D transform = Transform;
 
-                        if (transform != null)
+                        if (transform is not null)
                         {
                             DisconnectAttachedResource(
                                 VisualProxyFlags.IsTransformDirty,
@@ -390,7 +390,7 @@ namespace System.Windows.Media.Media3D
         {
             if (!isSubpropertyChange)
             {
-                if (oldValue != null)
+                if (oldValue is not null)
                 {
                     DisconnectAttachedResource(VisualProxyFlags.IsContentDirty,
                                                oldValue);
@@ -430,7 +430,7 @@ namespace System.Windows.Media.Media3D
                 if (value != _visual3DModel)
                 {
                     // remove the old change listener
-                    if (_visual3DModel != null && !_visual3DModel.IsFrozenInternal)
+                    if (_visual3DModel is not null && !_visual3DModel.IsFrozenInternal)
                     {
                         _visual3DModel.ChangedInternal -= Visual3DModelPropertyChanged;
                     }
@@ -440,7 +440,7 @@ namespace System.Windows.Media.Media3D
                     _visual3DModel = value;
 
                     // set the new one
-                    if (_visual3DModel != null && !_visual3DModel.IsFrozenInternal)
+                    if (_visual3DModel is not null && !_visual3DModel.IsFrozenInternal)
                     {
                         _visual3DModel.ChangedInternal += Visual3DModelPropertyChanged;
                     }
@@ -463,7 +463,7 @@ namespace System.Windows.Media.Media3D
             // send the bit up if we need to.
             if (oldParent is null)
             {
-                Debug.Assert(VisualTreeHelper.GetParent(this) != null, "If oldParent is null, current parent should != null.");
+                Debug.Assert(VisualTreeHelper.GetParent(this) is not null, "If oldParent is null, current parent should is not null.");
 
                 if(CheckFlagsAnd(VisualFlags.SubTreeHoldsAncestorChanged))
                 {
@@ -535,7 +535,7 @@ namespace System.Windows.Media.Media3D
                 // search should fail.  But it is safe to check.
                 Visual.AncestorChangedEventHandler newHandler = AncestorChangedEventField.GetValue(this);
 
-                if (newHandler != null)
+                if (newHandler is not null)
                 {
                     newHandler -= value;
 
@@ -576,7 +576,7 @@ namespace System.Windows.Media.Media3D
                 // If there is a handler on this node, then fire it.
                 Visual.AncestorChangedEventHandler handler = AncestorChangedEventField.GetValue(eAsVisual3D);
 
-                if(handler != null)
+                if(handler is not null)
                 {
                     handler(eAsVisual3D, args);
                 }
@@ -586,7 +586,7 @@ namespace System.Windows.Media.Media3D
                 for (int i = 0; i < count; i++)
                 {
                     DependencyObject child = eAsVisual3D.InternalGet2DOr3DVisualChild(i);
-                    if (child != null)
+                    if (child is not null)
                     {
                         Visual3D.ProcessAncestorChangedNotificationRecursive(child, args);
                     }
@@ -648,7 +648,7 @@ namespace System.Windows.Media.Media3D
 
             RayHitTestParameters rayParams = hitTestParameters as RayHitTestParameters;
 
-            if (rayParams != null)
+            if (rayParams is not null)
             {
                 // In case the user is reusing the same RayHitTestParameters
                 rayParams.ClearResults();
@@ -680,7 +680,7 @@ namespace System.Windows.Media.Media3D
 
                 HitTestFilterBehavior behavior = HitTestFilterBehavior.Continue;
 
-                if (filterCallback != null)
+                if (filterCallback is not null)
                 {
                     behavior = filterCallback(this);
 
@@ -728,7 +728,7 @@ namespace System.Windows.Media.Media3D
             RayHitTestParameters rayParams,
             IVisual3DContainer container)
         {
-            if (container != null)
+            if (container is not null)
             {
                 int childrenCount = container.GetChildrenCount();
 
@@ -762,7 +762,7 @@ namespace System.Windows.Media.Media3D
         {
             Model3D model = _visual3DModel;
 
-            if (model != null)
+            if (model is not null)
             {
                 // If our Model3D hit test intersects anything we should return "this" Visual3D
                 // as the HitTestResult.VisualHit.
@@ -810,7 +810,7 @@ namespace System.Windows.Media.Media3D
                 Rect contentBounds = Rect.Empty;
 
                 Viewport3DVisual viewport3DVisual = (Viewport3DVisual)VisualTreeHelper.GetContainingVisual2D(this);
-                if (viewport3DVisual != null) {
+                if (viewport3DVisual is not null) {
                     GeneralTransform3DTo2D transform = TransformToAncestor(viewport3DVisual);
                     contentBounds = transform.TransformBounds(VisualContentBounds);
                 }
@@ -918,7 +918,7 @@ namespace System.Windows.Media.Media3D
         {
             VerifyAPIReadOnly();
 
-            if (other != null)
+            if (other is not null)
             {
                 // Make sure the visual is on the same context as we are
                 MediaSystem.AssertSameContext(this, other);
@@ -943,7 +943,7 @@ namespace System.Windows.Media.Media3D
         {
             VerifyAPIReadWrite();
 
-            if (other != null)
+            if (other is not null)
             {
                 // Make sure the visual is on the same context as we are
                 MediaSystem.AssertSameContext(this, other);
@@ -1085,7 +1085,7 @@ namespace System.Windows.Media.Media3D
         {
             Model3D model = _visual3DModel;
 
-            Debug.Assert(model != null);
+            Debug.Assert(model is not null);
 
             Debug_VerifyBoundsEqual(model.CalculateSubgraphBoundsOuterSpace(),
                                     _bboxContent, "Cached content bounds is incorrect!");
@@ -1186,7 +1186,7 @@ namespace System.Windows.Media.Media3D
             if ((flags & VisualProxyFlags.IsTransformDirty) != 0)
             {
                 Transform3D transform = Transform;
-                if (transform != null && InternalIsVisible)
+                if (transform is not null && InternalIsVisible)
                 {
                     //
                     // Set the new transform resource for this visual.  If transform is
@@ -1224,7 +1224,7 @@ namespace System.Windows.Media.Media3D
             {
                 Visual3D child = GetVisual3DChild(i);
 
-                if (child != null)
+                if (child is not null)
                 {
                     if (child.CheckFlagsAnd(channel, VisualProxyFlags.IsSubtreeDirtyForRender) || // or the visual is dirty
                         !(child.IsOnChannel(channel))) // or the child has not been marshalled yet.
@@ -1272,7 +1272,7 @@ namespace System.Windows.Media.Media3D
             // Create the content on the channel.
             //
 
-            if (_visual3DModel != null)
+            if (_visual3DModel is not null)
             {
                 //
                 // Attach the content to the visual resource
@@ -1306,7 +1306,7 @@ namespace System.Windows.Media.Media3D
             VisualTreeUtils.AsNonNullVisual(descendant, out visual, out visual3D);
 
             // x86 branch prediction skips the branch on first encounter.  We favor 3D.
-            if(visual != null)
+            if(visual is not null)
             {
                 return visual.IsDescendantOf(this);
             }
@@ -1327,14 +1327,14 @@ namespace System.Windows.Media.Media3D
             // of 3D parents or we find the ancestor.
             Visual3D current = this;
 
-            while (current != null && current != ancestor)
+            while (current is not null && current != ancestor)
             {
                 // If our 3D parent is null then continue walk in 2D
                 if (current._3DParent is null)
                 {
                     DependencyObject parent2D = current.InternalVisualParent;
 
-                    if (parent2D != null)
+                    if (parent2D is not null)
                     {
                         // The type has to be Visual because of the above if condition
                         return ((Visual)parent2D).IsDescendantOf(ancestor);
@@ -1368,7 +1368,7 @@ namespace System.Windows.Media.Media3D
 
                 current = current._3DParent;
             }
-            while (current != null);
+            while (current is not null);
         }
 
         /// <summary>
@@ -1395,7 +1395,7 @@ namespace System.Windows.Media.Media3D
 
                 current = current._3DParent;
             }
-            while (current != null);
+            while (current is not null);
 
             return null;
         }
@@ -1440,7 +1440,7 @@ namespace System.Windows.Media.Media3D
             {
                 if (InternalIsVisible)
                 {
-                    if (transform != null)
+                    if (transform is not null)
                     {
                         ((DUCE.IResource)transform).ReleaseOnChannel(channel);
                     }
@@ -1452,7 +1452,7 @@ namespace System.Windows.Media.Media3D
             }
 
             Model3D model = _visual3DModel;
-            if ((model != null) && (!CheckFlagsAnd(channel, VisualProxyFlags.IsContentDirty)))
+            if ((model is not null) && (!CheckFlagsAnd(channel, VisualProxyFlags.IsContentDirty)))
             {
                 ((DUCE.IResource)model).ReleaseOnChannel(channel);
             }
@@ -1655,7 +1655,7 @@ namespace System.Windows.Media.Media3D
         /// <param name="inverse">Returns inverse if this argument is true.</param>
         private GeneralTransform3D InternalTransformToAncestor(Visual3D ancestor, bool inverse)
         {
-            Debug.Assert(ancestor != null);
+            Debug.Assert(ancestor is not null);
 
             // used to track if all the collected transforms on the way to the ancestor were valid
             bool success = true;
@@ -1678,13 +1678,13 @@ namespace System.Windows.Media.Media3D
             // If, as is commonly the case, this loop terminates without encountering a 2D parent
             // we will simply use the Matrix3D.
 
-            while ((VisualTreeHelper.GetParent(g) != null) && (g != ancestor))
+            while ((VisualTreeHelper.GetParent(g) is not null) && (g != ancestor))
             {
                 Visual3D gAsVisual3D = g as Visual3D;
-                if (gAsVisual3D != null)
+                if (gAsVisual3D is not null)
                 {
                     Transform3D transform = gAsVisual3D.Transform;
-                    if (transform != null)
+                    if (transform is not null)
                     {
                         transform.Append(ref m);
                     }
@@ -1747,7 +1747,7 @@ namespace System.Windows.Media.Media3D
             // if we successfully found a transform then we can create it here, otherwise finalTransform stays null
             if (success)
             {
-                if (group != null)
+                if (group is not null)
                 {
                     finalTransform = group;
                 }
@@ -1762,7 +1762,7 @@ namespace System.Windows.Media.Media3D
                 }
             }
 
-            if (finalTransform != null)
+            if (finalTransform is not null)
             {
                 finalTransform.Freeze();
             }
@@ -1803,7 +1803,7 @@ namespace System.Windows.Media.Media3D
         /// <returns>The transform from 3D to 2D</returns>
         internal GeneralTransform3DTo2D InternalTransformToAncestor(Visual ancestor)
         {
-            Debug.Assert(ancestor != null);
+            Debug.Assert(ancestor is not null);
 
             // get the transform out of 3D and in to 2D
             Viewport3DVisual containingViewport;
@@ -1838,7 +1838,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                if (_3DParent != null)
+                if (_3DParent is not null)
                 {
                     Debug.Assert(_2DParent.GetValue(this) is null,
                         "Only one parent pointer should be set at a time.");
@@ -2023,11 +2023,11 @@ namespace System.Windows.Media.Media3D
                 Visual3D v3D = null;
                 VisualTreeUtils.AsNonNullVisual(child, out v, out v3D);
 
-                if (v != null && v.CheckFlagsAnd(flag))
+                if (v is not null && v.CheckFlagsAnd(flag))
                 {
                     return true;
                 }
-                else if (v3D != null && v3D.CheckFlagsAnd(flag))
+                else if (v3D is not null && v3D.CheckFlagsAnd(flag))
                 {
                     return true;
                 }
@@ -2047,7 +2047,7 @@ namespace System.Windows.Media.Media3D
             VisualFlags flags,
             VisualProxyFlags proxyFlags)
         {
-            while ((e != null) &&
+            while ((e is not null) &&
                    (!e.CheckFlagsAnd(flags) || !e.CheckFlagsOnAllChannels(proxyFlags)))
             {
                 // These asserts are mostly for documentation when diffing the 2D/3D
@@ -2069,7 +2069,7 @@ namespace System.Windows.Media.Media3D
                     Debug.Assert((viewport is null) == (e.InternalVisualParent is null),
                         "Viewport3DVisual is the only supported 2D parent of a 3D visual.");
 
-                    if(viewport != null)
+                    if(viewport is not null)
                     {
                         // We must notify the 2D visual that its contents have changed.
                         // This will cause the 2D visual to set it's content dirty flag

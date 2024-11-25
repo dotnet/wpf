@@ -422,7 +422,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     [[inline]]
 
                         {
-                            if (drawing != null)
+                            if (drawing is not null)
                             {
                                 drawing.WalkCurrentValue(this);
                             }
@@ -512,7 +512,7 @@ namespace MS.Internal.MilCodeGen.Generators
                             {
                                 EnsureRenderData();
 
-                                if (guidelines != null && guidelines.IsFrozen && guidelines.IsDynamic)
+                                if (guidelines is not null && guidelines.IsFrozen && guidelines.IsDynamic)
                                 {
                                     DoubleCollection guidelinesX = guidelines.GuidelinesX;
                                     DoubleCollection guidelinesY = guidelines.GuidelinesY;
@@ -1298,7 +1298,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
                             // The buffer being null implies that _curOffset must be 0.
                             // (_buffer is null) -> (_curOffset == 0)
-                            Debug.Assert((_buffer != null) || (_curOffset == 0));
+                            Debug.Assert((_buffer is not null) || (_curOffset == 0));
 
                             // The _curOffset must be less than the length, if there is a buffer.
                             Debug.Assert((_buffer is null) || (_curOffset <= _buffer.Length));
@@ -1370,7 +1370,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
                         // The buffer being null implies that _curOffset must be 0.
                         // (_buffer is null) -> (_curOffset == 0)
-                        Debug.Assert((_buffer != null) || (_curOffset == 0));
+                        Debug.Assert((_buffer is not null) || (_curOffset == 0));
 
                         // The _curOffset must be less than the length, if there is a buffer.
                         Debug.Assert((_buffer is null) || (_curOffset <= _buffer.Length));
@@ -1636,7 +1636,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 {
                     // We've found a field worth processing
                     McgResource resource = field.Type as McgResource;
-                    Debug.Assert(resource != null);
+                    Debug.Assert(resource is not null);
 
                     haveResourceFields = true;
 
@@ -1647,7 +1647,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 {
                     // We've found a field worth processing
                     McgResource resource = field.Type as McgResource;
-                    Debug.Assert(resource != null);
+                    Debug.Assert(resource is not null);
 
                     haveResourceFields = true;
 
@@ -1841,7 +1841,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
             string memberName = String.Empty;
 
-            if ((className != null) && (className.Length > 0))
+            if ((className is not null) && (className.Length > 0))
             {
                 memberName = className + "::";
             }
@@ -1905,7 +1905,7 @@ namespace MS.Internal.MilCodeGen.Generators
             // the instruction is recorded to the instruction stream.
             string returnString = String.Empty;
 
-            if (instruction != null)
+            if (instruction is not null)
             {
                 // If this is a pop instruction, write a check that validates the stack depth
                 if (instruction.IsPop)
@@ -1920,7 +1920,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 }
                 // If in-parameters can cause the operation to become a no-op, write a check
                 // that no-ops the operation when the no-op conditions are met.
-                else if(instruction.NoOpGroups != null &&
+                else if(instruction.NoOpGroups is not null &&
                         instruction.NoOpGroups.Length > 0)
                 {
                     returnString = WriteNoOpCheck(instruction, isManaged, indent);
@@ -1965,8 +1965,8 @@ namespace MS.Internal.MilCodeGen.Generators
         {
             // This method assumes it is only called when the following conditions are true
             Debug.Assert(
-                (instruction != null) &&
-                (instruction.NoOpGroups != null) &&
+                (instruction is not null) &&
+                (instruction.NoOpGroups is not null) &&
                 (instruction.NoOpGroups.Length > 0)
                 );
 

@@ -32,7 +32,7 @@ namespace MS.Internal.Data
         public override LiveShapingItem SetItemAt(int offset, LiveShapingItem lsi)
         {
             base.SetItemAt(offset, lsi);
-            if (lsi != null)
+            if (lsi is not null)
                 lsi.Block = this;
             return lsi;
         }
@@ -128,7 +128,7 @@ namespace MS.Internal.Data
             LiveShapingItem rightItem = (right < size) ? GetItemAt(right) : null;
             int cL = 0, cR = 0; // result of comparisons
 
-            if (leftItem != null && (cL = comparison(item, leftItem)) < 0)
+            if (leftItem is not null && (cL = comparison(item, leftItem)) < 0)
             {
                 if (first != left)
                     cL = comparison(item, GetItemAt(first));
@@ -141,7 +141,7 @@ namespace MS.Internal.Data
                     newFinger = SearchLeft(item, first, comparison);
                 }
             }
-            else if (rightItem != null && (cR = comparison(item, rightItem)) > 0)
+            else if (rightItem is not null && (cR = comparison(item, rightItem)) > 0)
             {
                 if (last != right)
                     cR = comparison(item, GetItemAt(last));
@@ -154,9 +154,9 @@ namespace MS.Internal.Data
                     newFinger = SearchRight(item, last + 1, comparison);
                 }
             }
-            else if (leftItem != null)  // hence item >= leftItem
+            else if (leftItem is not null)  // hence item >= leftItem
             {
-                if (rightItem != null)  // hence item <= rightItem
+                if (rightItem is not null)  // hence item <= rightItem
                 {   // item is already in a good position
                     newFinger = oldFinger;
                 }
@@ -167,7 +167,7 @@ namespace MS.Internal.Data
             }
             else // leftItem is null
             {
-                if (rightItem != null)  // hence item <= rightItem
+                if (rightItem is not null)  // hence item <= rightItem
                 {
                     newFinger = SearchLeft(item, index, comparison);
                 }
@@ -284,7 +284,7 @@ namespace MS.Internal.Data
             // phase 1, walk up the tree looking for the item in each left-parent
             LiveShapingBlock block, parent;
             int first, last, size;
-            for (block = this, parent = block.ParentBlock; parent != null; block = parent, parent = block.ParentBlock)
+            for (block = this, parent = block.ParentBlock; parent is not null; block = parent, parent = block.ParentBlock)
             {
                 if (parent.RightChildBlock == block)
                 {
@@ -365,7 +365,7 @@ namespace MS.Internal.Data
             // phase 1, walk up the tree looking for the item in each right-parent
             LiveShapingBlock block, parent;
             int first, last, size;
-            for (block = this, parent = block.ParentBlock; parent != null; block = parent, parent = block.ParentBlock)
+            for (block = this, parent = block.ParentBlock; parent is not null; block = parent, parent = block.ParentBlock)
             {
                 if (parent.LeftChildBlock == block)
                 {

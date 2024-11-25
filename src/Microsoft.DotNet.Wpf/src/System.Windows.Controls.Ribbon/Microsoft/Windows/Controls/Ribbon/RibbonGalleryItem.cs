@@ -65,7 +65,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             get
             {
-                return RibbonGalleryCategory != null ? RibbonGalleryCategory.RibbonGallery : null;
+                return RibbonGalleryCategory is not null ? RibbonGalleryCategory.RibbonGallery : null;
             }
         }
 
@@ -109,7 +109,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             }, this);
 
             RibbonGalleryItemAutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(this) as RibbonGalleryItemAutomationPeer;
-            if (peer != null)
+            if (peer is not null)
             {
                 peer.RaiseAutomationIsSelectedChanged(true);
                 peer.RaiseAutomationSelectionEvent(AutomationEvents.SelectionItemPatternOnElementSelected);
@@ -147,7 +147,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             RaiseEvent(e);
 
             RibbonGalleryItemAutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(this) as RibbonGalleryItemAutomationPeer;
-            if (peer != null)
+            if (peer is not null)
             {
                 peer.RaiseAutomationIsSelectedChanged(false);
                 peer.RaiseAutomationSelectionEvent(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection);
@@ -183,10 +183,10 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             RibbonGalleryCategory category = galleryItem.RibbonGalleryCategory;
 
-            if( category != null )
+            if( category is not null )
             {
                 RibbonGallery gallery = category.RibbonGallery;
-                if (gallery != null)
+                if (gallery is not null)
                 {
                     // Give the RibbonGallery a reference to this container and its data
                     object item = category.ItemContainerGenerator.ItemFromContainer(galleryItem);
@@ -237,10 +237,10 @@ namespace Microsoft.Windows.Controls.Ribbon
             bool isHighlighted = (bool)e.NewValue;
 
             RibbonGalleryCategory category = galleryItem.RibbonGalleryCategory;
-            if (category != null)
+            if (category is not null)
             {
                 RibbonGallery gallery = category.RibbonGallery;
-                if (gallery != null)
+                if (gallery is not null)
                 {
                     // Give the RibbonGallery a reference to this container and its data
                     object item = category.ItemContainerGenerator.ItemFromContainer(galleryItem);
@@ -294,7 +294,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             // Parent constrols such as RibbonComboBox don't want this item to acquire focus
 
             RibbonGallery gallery = RibbonGallery;
-            if (gallery != null)
+            if (gallery is not null)
             {
                 if (gallery.ShouldGalleryItemsAcquireFocus)
                 {
@@ -346,7 +346,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         protected override void OnMouseLeave(MouseEventArgs e)
         {
             RibbonGallery gallery = RibbonGallery;
-            if (gallery != null && gallery.DidMouseMove(e))
+            if (gallery is not null && gallery.DidMouseMove(e))
             {
                 try
                 {
@@ -371,7 +371,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         protected override void OnMouseMove(MouseEventArgs e)
         {
             RibbonGallery gallery = RibbonGallery;            
-            if (gallery != null && gallery.DidMouseMove(e))
+            if (gallery is not null && gallery.DidMouseMove(e))
             {
                 // Parent constrols such as RibbonComboBox don't want this item to acquire focus
 
@@ -477,7 +477,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             // In this case RibbonComboBox has logic to reacquire focus itself. But we do not 
             // want this operation to trigger a dehighlight.
 
-            if (e.OriginalSource == this && RibbonGallery != null && RibbonGallery.ShouldGalleryItemsAcquireFocus)
+            if (e.OriginalSource == this && RibbonGallery is not null && RibbonGallery.ShouldGalleryItemsAcquireFocus)
             {
                 IsPressed = false;
                 IsHighlighted = false;

@@ -24,17 +24,17 @@ namespace System.Windows.Baml2006
         public override void SetValue(object instance, object value)
         {
              DependencyObject dObject = instance as DependencyObject;
-             if (dObject != null)
+             if (dObject is not null)
              {
-                 if (_member.DependencyProperty != null)
+                 if (_member.DependencyProperty is not null)
                  {
                      dObject.SetValue(_member.DependencyProperty, value);
                      return;
                  }
-                 else if (_member.RoutedEvent != null)
+                 else if (_member.RoutedEvent is not null)
                  {
                      Delegate handler = value as Delegate;
-                     if (handler != null)
+                     if (handler is not null)
                      {
                          UIElement.AddHandler(dObject, _member.RoutedEvent, handler);
                          return;
@@ -48,10 +48,10 @@ namespace System.Windows.Baml2006
         public override object GetValue(object instance)
         {
             DependencyObject dObject = instance as DependencyObject;
-            if (dObject != null && _member.DependencyProperty != null)
+            if (dObject is not null && _member.DependencyProperty is not null)
             {
                 object result = dObject.GetValue(_member.DependencyProperty);
-                if (result != null)
+                if (result is not null)
                 {
                     return result;
                 }
@@ -88,7 +88,7 @@ namespace System.Windows.Baml2006
             }        
 
             // Invoke the method if we found one
-            if (_shouldSerializeMethod != null)
+            if (_shouldSerializeMethod is not null)
             {
                 bool result;
                 var args = new object[] { instance as DependencyObject };
@@ -105,7 +105,7 @@ namespace System.Windows.Baml2006
             }
 
             DependencyObject dObject = instance as DependencyObject;
-            if (dObject != null && _member.DependencyProperty != null)
+            if (dObject is not null && _member.DependencyProperty is not null)
             {
                 // Call DO's ShouldSerializeProperty to see if the property is set.
                 // If the property is unset, the property should not be serialized

@@ -194,10 +194,10 @@ namespace System.Windows.Controls
         private static void OnPositioningChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             UIElement uie = d as UIElement;
-            if(uie != null)
+            if(uie is not null)
             {
                 Canvas p = VisualTreeHelper.GetParent(uie) as Canvas;
-                if(p != null)
+                if(p is not null)
                     p.InvalidateArrange();
             }
          }

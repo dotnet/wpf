@@ -139,7 +139,7 @@ namespace System.Windows
                 for(int i = 0; i < count; i++)
                 {
                     DependencyObject childVisual = v.InternalGet2DOr3DVisualChild(i);
-                    if (childVisual != null)
+                    if (childVisual is not null)
                     {
                         bool visitedViaVisualTree = true;
                         VisitNode(childVisual, visitedViaVisualTree);
@@ -166,7 +166,7 @@ namespace System.Windows
                 for(int i = 0; i < count; i++)
                 {
                     DependencyObject childVisual = v.InternalGet2DOr3DVisualChild(i);
-                    if (childVisual != null)
+                    if (childVisual is not null)
                     {
                         bool visitedViaVisualTree = true;
                         VisitNode(childVisual, visitedViaVisualTree);
@@ -188,19 +188,19 @@ namespace System.Windows
             FrameworkContentElement fceParent, 
             IEnumerator             logicalChildren )
         {
-            if (feParent != null)
+            if (feParent is not null)
                 feParent.IsLogicalChildrenIterationInProgress = true;
             else
                 fceParent.IsLogicalChildrenIterationInProgress = true;
 
             try
             {
-                if (logicalChildren != null)
+                if (logicalChildren is not null)
                 {
                     while (logicalChildren.MoveNext())
                     {
                         DependencyObject child = logicalChildren.Current as DependencyObject;
-                        if (child != null)
+                        if (child is not null)
                         {
                             bool visitedViaVisualTree = false;
                             VisitNode(child, visitedViaVisualTree);
@@ -210,7 +210,7 @@ namespace System.Windows
             }
             finally
             {
-                if (feParent != null)
+                if (feParent is not null)
                     feParent.IsLogicalChildrenIterationInProgress = false;
                 else
                     fceParent.IsLogicalChildrenIterationInProgress = false;
@@ -236,7 +236,7 @@ namespace System.Windows
             //
             List<Popup> registeredPopups = Popup.RegisteredPopupsField.GetValue(feParent);
 
-            if (registeredPopups != null)
+            if (registeredPopups is not null)
             {
                 foreach (Popup p in registeredPopups)
                 {
@@ -254,13 +254,13 @@ namespace System.Windows
                 if (hasLogicalChildren)
                 {
                     IEnumerator logicalChildren = feParent.LogicalChildren;
-                    if (logicalChildren != null)
+                    if (logicalChildren is not null)
                     {
                         while (logicalChildren.MoveNext())
                         {
                             object current = logicalChildren.Current;
                             FrameworkElement fe = current as FrameworkElement;
-                            if (fe != null)
+                            if (fe is not null)
                             {
                                 // For the case that both parents are identical, this node should
                                 // have already been visited when walking through visual
@@ -274,7 +274,7 @@ namespace System.Windows
                             else
                             {
                                 FrameworkContentElement fce = current as FrameworkContentElement;
-                                if (fce != null)
+                                if (fce is not null)
                                 {
                                     bool visitedViaVisualTree = false;
                                     VisitNode(fce, visitedViaVisualTree);
@@ -317,7 +317,7 @@ namespace System.Windows
                 for(int i = 0; i < count; i++)
                 {
                     Visual child = feParent.InternalGetVisualChild(i);
-                    if (child != null && child is FrameworkElement fe)
+                    if (child is not null && child is FrameworkElement fe)
                     {
                         // For the case that both parents are identical, this node should
                         // have already been visited when walking through logical
@@ -340,7 +340,7 @@ namespace System.Windows
             //
             List<Popup> registeredPopups = Popup.RegisteredPopupsField.GetValue(feParent);
 
-            if (registeredPopups != null)
+            if (registeredPopups is not null)
             {
                 foreach (Popup p in registeredPopups)
                 {
@@ -377,7 +377,7 @@ namespace System.Windows
 
                     DependencyObject dependencyObjectParent = VisualTreeHelper.GetParent(fe);
                     DependencyObject logicalParent = fe.Parent;
-                    if (dependencyObjectParent != null && logicalParent != null && dependencyObjectParent != logicalParent)
+                    if (dependencyObjectParent is not null && logicalParent is not null && dependencyObjectParent != logicalParent)
                     {
                         _nodes.Add(fe);
                     }

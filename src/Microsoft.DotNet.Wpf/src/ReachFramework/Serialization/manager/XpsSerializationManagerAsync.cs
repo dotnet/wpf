@@ -56,7 +56,7 @@ namespace System.Windows.Xps.Serialization
 
             XpsDriverDocEventManager    xpsDocEventManager = base.GetXpsDriverDocEventManager();
 
-            if (xpsDocEventManager != null)
+            if (xpsDocEventManager is not null)
             {
                 XpsSerializationCompletedInternal += new XpsSerializationCompletedEventHandler(xpsDocEventManager.ForwardSerializationCompleted);
 
@@ -109,7 +109,7 @@ namespace System.Windows.Xps.Serialization
             {
                 ReachSerializer reachSerializer = GetSerializer(serializedObject);
 
-                if(reachSerializer != null)
+                if(reachSerializer is not null)
                 {
                     //
                     // Prepare the context that is going to be pushed on the stack
@@ -240,7 +240,7 @@ namespace System.Windows.Xps.Serialization
 
                             ReachSerializer reachSerializer = GetSerializer(batchOperationWorkItem.SerializedObject);
 
-                            if(reachSerializer != null)
+                            if(reachSerializer is not null)
                             {
                                 //
                                 // Prepare the context that is going to be pushed on the stack
@@ -520,12 +520,12 @@ namespace System.Windows.Xps.Serialization
         {
             XpsSerializationCompletedEventArgs e = operationState as XpsSerializationCompletedEventArgs;
 
-            if (XpsSerializationCompleted != null)
+            if (XpsSerializationCompleted is not null)
             {
                 XpsSerializationCompleted(this, e);
             }
 
-            if (XpsSerializationCompletedInternal != null)
+            if (XpsSerializationCompletedInternal is not null)
             {
                 XpsSerializationCompletedInternal(this, e);
             }

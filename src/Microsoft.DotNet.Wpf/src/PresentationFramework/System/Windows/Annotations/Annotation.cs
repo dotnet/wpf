@@ -217,12 +217,12 @@ namespace System.Windows.Annotations
                 writer.WriteQualifiedName(_typeName.Name, _typeName.Namespace);
                 writer.WriteEndAttribute();
 
-                if (_authors != null && _authors.Count > 0)
+                if (_authors is not null && _authors.Count > 0)
                 {
                     writer.WriteStartElement(AnnotationXmlConstants.Elements.AuthorCollection, AnnotationXmlConstants.Namespaces.CoreSchemaNamespace);
                     foreach (string author in _authors)
                     {
-                        if (author != null)
+                        if (author is not null)
                         {
                             writer.WriteElementString(AnnotationXmlConstants.Prefixes.BaseSchemaPrefix, AnnotationXmlConstants.Elements.StringAuthor, AnnotationXmlConstants.Namespaces.BaseSchemaNamespace, author);
                         }
@@ -230,12 +230,12 @@ namespace System.Windows.Annotations
                     writer.WriteEndElement();
                 }
 
-                if (_anchors != null && _anchors.Count > 0)
+                if (_anchors is not null && _anchors.Count > 0)
                 {
                     writer.WriteStartElement(AnnotationXmlConstants.Elements.AnchorCollection, AnnotationXmlConstants.Namespaces.CoreSchemaNamespace);
                     foreach (AnnotationResource anchor in _anchors)
                     {
-                        if (anchor != null)
+                        if (anchor is not null)
                         {
                             ResourceSerializer.Serialize(writer, anchor);
                         }
@@ -243,12 +243,12 @@ namespace System.Windows.Annotations
                     writer.WriteEndElement();
                 }
 
-                if (_cargos != null && _cargos.Count > 0)
+                if (_cargos is not null && _cargos.Count > 0)
                 {
                     writer.WriteStartElement(AnnotationXmlConstants.Elements.CargoCollection, AnnotationXmlConstants.Namespaces.CoreSchemaNamespace);
                     foreach (AnnotationResource cargo in _cargos)
                     {
-                        if (cargo != null)
+                        if (cargo is not null)
                         {
                             ResourceSerializer.Serialize(writer, cargo);
                         }
@@ -514,7 +514,7 @@ namespace System.Windows.Annotations
         /// </summary>
         internal static bool IsNamespaceDeclaration(XmlReader reader)
         {
-            Invariant.Assert(reader != null);
+            Invariant.Assert(reader is not null);
 
             // The reader is on a namespace declaration if:
             //   - the current node is an attribute AND either
@@ -544,8 +544,8 @@ namespace System.Windows.Annotations
         /// </summary>
         internal static void CheckForNonNamespaceAttribute(XmlReader reader, string elementName)
         {
-            Invariant.Assert(reader != null, "No reader supplied.");
-            Invariant.Assert(elementName != null, "No element name supplied.");
+            Invariant.Assert(reader is not null, "No reader supplied.");
+            Invariant.Assert(elementName is not null, "No element name supplied.");
 
             while (reader.MoveToNextAttribute())
             {
@@ -602,7 +602,7 @@ namespace System.Windows.Annotations
 
         private void ReadAttributes(XmlReader reader)
         {
-            Invariant.Assert(reader != null, "No reader passed in.");
+            Invariant.Assert(reader is not null, "No reader passed in.");
 
             // Read all the attributes
             while (reader.MoveToNextAttribute())
@@ -737,7 +737,7 @@ namespace System.Windows.Annotations
                     throw new NotSupportedException(SR.Format(SR.UnexpectedCollectionChangeAction, e.Action));
             }
 
-            if (changedItems != null)
+            if (changedItems is not null)
             {
                 foreach (AnnotationResource cargo in changedItems)
                 {
@@ -791,7 +791,7 @@ namespace System.Windows.Annotations
                     throw new NotSupportedException(SR.Format(SR.UnexpectedCollectionChangeAction, e.Action));
             }
 
-            if (changedItems != null)
+            if (changedItems is not null)
             {
                 foreach (AnnotationResource anchor in changedItems)
                 {
@@ -840,7 +840,7 @@ namespace System.Windows.Annotations
                     throw new NotSupportedException(SR.Format(SR.UnexpectedCollectionChangeAction, e.Action));
             }
 
-            if (changedItems != null)
+            if (changedItems is not null)
             {
                 foreach (Object author in changedItems)
                 {
@@ -862,7 +862,7 @@ namespace System.Windows.Annotations
             // Always update the modification time before firing change events
             _modified = DateTime.Now;
 
-            if (AuthorChanged != null)
+            if (AuthorChanged is not null)
             {
                 AuthorChanged(this, new AnnotationAuthorChangedEventArgs(this, action, author));
             }
@@ -882,7 +882,7 @@ namespace System.Windows.Annotations
             // Always update the modification time before firing change events
             _modified = DateTime.Now;
 
-            if (handlers != null)
+            if (handlers is not null)
             {
                 handlers(this, new AnnotationResourceChangedEventArgs(this, action, resource));
             }

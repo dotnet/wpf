@@ -39,7 +39,7 @@ namespace MS.Internal.WindowsRuntime
                     // If we can't get the instance, we will use the default accent color.
                 }
 
-                if (_uisettings != null)
+                if (_uisettings is not null)
                 {
                     _isSupported = true;
                     TryUpdateAccentColors();
@@ -162,7 +162,7 @@ namespace MS.Internal.WindowsRuntime
             {
                 if (!_disposed)
                 {
-                    if (_uisettings != null)
+                    if (_uisettings is not null)
                     {
                         try
                         {

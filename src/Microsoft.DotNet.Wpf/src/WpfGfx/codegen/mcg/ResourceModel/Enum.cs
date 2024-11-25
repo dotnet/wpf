@@ -59,7 +59,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                      parseMethod)
         {
             _namespaces = namespaces;
-            _managedNamespace = managedNamespace != null ? managedNamespace : String.Empty;
+            _managedNamespace = managedNamespace is not null ? managedNamespace : String.Empty;
 
             _guid = guid;
             _comment = comment;
@@ -78,7 +78,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
             {
                 McgEnumValue enumValue = child as McgEnumValue;
 
-                if (enumValue != null)
+                if (enumValue is not null)
                 {
                     alFlattenedEnumValues.Add(enumValue);
                 }

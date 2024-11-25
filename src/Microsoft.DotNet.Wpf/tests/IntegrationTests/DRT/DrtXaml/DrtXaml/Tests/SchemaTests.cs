@@ -1226,7 +1226,7 @@ Add(Test.Elements.DoubleCollection,23.666)";
                 GC.Collect();
                 collectCount++;
                 assemblyIsAlive = (AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(
-                    a => a.GetName().Name == "Foo") != null);
+                    a => a.GetName().Name == "Foo") is not null);
             }
             while (assemblyIsAlive && collectCount < 10);
             Assert.IsFalse(assemblyIsAlive);
@@ -1566,14 +1566,14 @@ Add(Test.Elements.DoubleCollection,23.666)";
                 {
                     return false;
                 }
-                if (_underlyingReader.Type != null)
+                if (_underlyingReader.Type is not null)
                 {
                     _type = new XamlType(
                         _underlyingReader.Type.UnderlyingType,
                         _underlyingReader.SchemaContext,
                         new LoggingTypeInvoker(_underlyingReader.Type, _log));
                 }
-                else if (_underlyingReader.Member != null)
+                else if (_underlyingReader.Member is not null)
                 {
                     _member = _underlyingReader.Member;
                     if (!_member.IsDirective)

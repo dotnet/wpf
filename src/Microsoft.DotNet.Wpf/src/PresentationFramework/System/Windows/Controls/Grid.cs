@@ -80,7 +80,7 @@ namespace System.Windows.Controls
             ArgumentNullException.ThrowIfNull(value);
 
             UIElement cell = value as UIElement;
-            if (cell != null)
+            if (cell is not null)
             {
                 Children.Add(cell);
                 return;
@@ -345,7 +345,7 @@ namespace System.Windows.Controls
         protected override int VisualChildrenCount
         {
             //since GridLinesRenderer has not been added as a child, so we do not subtract
-            get { return base.VisualChildrenCount + (_gridLinesRenderer != null ? 1 : 0); }
+            get { return base.VisualChildrenCount + (_gridLinesRenderer is not null ? 1 : 0); }
         }
 
 
@@ -374,7 +374,7 @@ namespace System.Windows.Controls
                     for (int i = 0, count = children.Count; i < count; ++i)
                     {
                         UIElement child = children[i];
-                        if (child != null)
+                        if (child is not null)
                         {
                             child.Measure(constraint);
                             gridDesiredSize.Width = Math.Max(gridDesiredSize.Width, child.DesiredSize.Width);
@@ -391,7 +391,7 @@ namespace System.Windows.Controls
                         // Clear index information and rounding errors
                         if (RowDefinitionCollectionDirty || ColumnDefinitionCollectionDirty)
                         {
-                            if (_definitionIndices != null)
+                            if (_definitionIndices is not null)
                             {
                                 Array.Clear(_definitionIndices, 0, _definitionIndices.Length);
                                 _definitionIndices = null;
@@ -399,7 +399,7 @@ namespace System.Windows.Controls
 
                             if (UseLayoutRounding)
                             {
-                                if (_roundingErrors != null)
+                                if (_roundingErrors is not null)
                                 {
                                     Array.Clear(_roundingErrors, 0, _roundingErrors.Length);
                                     _roundingErrors = null;
@@ -672,7 +672,7 @@ namespace System.Windows.Controls
                     for (int i = 0, count = children.Count; i < count; ++i)
                     {
                         UIElement child = children[i];
-                        if (child != null)
+                        if (child is not null)
                         {
                             child.Arrange(new Rect(arrangeSize));
                         }
@@ -717,7 +717,7 @@ namespace System.Windows.Controls
 
                     //  update render bound on grid lines renderer visual
                     GridLinesRenderer gridLinesRenderer = EnsureGridLinesRenderer();
-                    if (gridLinesRenderer != null)
+                    if (gridLinesRenderer is not null)
                     {
                         gridLinesRenderer.UpdateRenderBounds(arrangeSize);
                     }
@@ -773,7 +773,7 @@ namespace System.Windows.Controls
         {
             double value = 0.0;
 
-            Invariant.Assert(_data != null);
+            Invariant.Assert(_data is not null);
 
             //  actual value calculations require structure to be up-to-date
             if (!ColumnDefinitionCollectionDirty)
@@ -795,7 +795,7 @@ namespace System.Windows.Controls
         {
             double value = 0.0;
 
-            Invariant.Assert(_data != null);
+            Invariant.Assert(_data is not null);
 
             //  actual value calculations require structure to be up-to-date
             if (!RowDefinitionCollectionDirty)
@@ -1027,7 +1027,7 @@ namespace System.Windows.Controls
                 ColumnDefinitionCollectionDirty = false;
             }
 
-            Debug.Assert(ExtData.DefinitionsU != null && ExtData.DefinitionsU.Length > 0);
+            Debug.Assert(ExtData.DefinitionsU is not null && ExtData.DefinitionsU.Length > 0);
 
             ExitCounter(Counters._ValidateColsStructure);
         }
@@ -1074,7 +1074,7 @@ namespace System.Windows.Controls
                 RowDefinitionCollectionDirty = false;
             }
 
-            Debug.Assert(ExtData.DefinitionsV != null && ExtData.DefinitionsV.Length > 0);
+            Debug.Assert(ExtData.DefinitionsV is not null && ExtData.DefinitionsV.Length > 0);
 
             ExitCounter(Counters._ValidateRowsStructure);
         }
@@ -1260,7 +1260,7 @@ namespace System.Windows.Controls
                 i = PrivateCells[i].Next;
             } while (i < PrivateCells.Length);
 
-            if (spanStore != null)
+            if (spanStore is not null)
             {
                 foreach (DictionaryEntry e in spanStore)
                 {
@@ -1361,7 +1361,7 @@ namespace System.Windows.Controls
 
             EnterCounter(Counters.__MeasureChild);
             UIElement child = InternalChildren[cell];
-            if (child != null)
+            if (child is not null)
             {
                 Size childConstraint = new Size(cellMeasureWidth, cellMeasureHeight);
                 child.Measure(childConstraint);
@@ -1950,7 +1950,7 @@ namespace System.Windows.Controls
                     for (int i = minCount; i < minCountPhase2; ++i)
                     {
                         DefinitionBase def = tempDefinitions[i];
-                        if (def != null)
+                        if (def is not null)
                         {
                             def.MeasureSize = 1.0;      // mark as 'not yet resolved'
                             ++starCount;
@@ -1966,7 +1966,7 @@ namespace System.Windows.Controls
                     for (int i = maxCount; i < maxCountPhase2; ++i)
                     {
                         DefinitionBase def = tempDefinitions[defCount + i];
-                        if (def != null)
+                        if (def is not null)
                         {
                             def.MeasureSize = 1.0;      // mark as 'not yet resolved'
                             ++starCount;
@@ -2867,12 +2867,12 @@ namespace System.Windows.Controls
         private void SetValid()
         {
             ExtendedData extData = ExtData;
-            if (extData != null)
+            if (extData is not null)
             {
 //                for (int i = 0; i < PrivateColumnCount; ++i) DefinitionsU[i].SetValid ();
 //                for (int i = 0; i < PrivateRowCount; ++i) DefinitionsV[i].SetValid ();
 
-                if (extData.TempDefinitions != null)
+                if (extData.TempDefinitions is not null)
                 {
                     //  TempDefinitions has to be cleared to avoid "memory leaks"
                     Array.Clear(extData.TempDefinitions, 0, Math.Max(DefinitionsU.Length, DefinitionsV.Length));
@@ -2888,8 +2888,8 @@ namespace System.Windows.Controls
         public bool ShouldSerializeColumnDefinitions()
         {
             ExtendedData extData = ExtData;
-            return (    extData != null
-                    &&  extData.ColumnDefinitions != null
+            return (    extData is not null
+                    &&  extData.ColumnDefinitions is not null
                     &&  extData.ColumnDefinitions.Count > 0   );
         }
 
@@ -2900,8 +2900,8 @@ namespace System.Windows.Controls
         public bool ShouldSerializeRowDefinitions()
         {
             ExtendedData extData = ExtData;
-            return (    extData != null
-                    &&  extData.RowDefinitions != null
+            return (    extData is not null
+                    &&  extData.RowDefinitions is not null
                     &&  extData.RowDefinitions.Count > 0  );
         }
 
@@ -2921,7 +2921,7 @@ namespace System.Windows.Controls
                 this.AddVisualChild(_gridLinesRenderer);
             }
 
-            if ((!ShowGridLines) && (_gridLinesRenderer != null))
+            if ((!ShowGridLines) && (_gridLinesRenderer is not null))
             {
                 this.RemoveVisualChild(_gridLinesRenderer);
                 _gridLinesRenderer = null;
@@ -2968,7 +2968,7 @@ namespace System.Windows.Controls
         {
             Grid grid = (Grid)d;
 
-            if (    grid.ExtData != null    // trivial grid is 1 by 1. there is no grid lines anyway
+            if (    grid.ExtData is not null    // trivial grid is 1 by 1. there is no grid lines anyway
                 &&  grid.ListenToNotifications)
             {
                 grid.InvalidateVisual();
@@ -2984,11 +2984,11 @@ namespace System.Windows.Controls
         {
             Visual child = d as Visual;
 
-            if (child != null)
+            if (child is not null)
             {
                 Grid grid = VisualTreeHelper.GetParent(child) as Grid;
-                if (    grid != null
-                    &&  grid.ExtData != null
+                if (    grid is not null
+                    &&  grid.ExtData is not null
                     &&  grid.ListenToNotifications  )
                 {
                     grid.CellsStructureDirty = true;
@@ -3578,7 +3578,7 @@ namespace System.Windows.Controls
             public override bool Equals(object obj)
             {
                 SpanKey sk = obj as SpanKey;
-                return (    sk != null
+                return (    sk is not null
                         &&  sk._start == _start
                         &&  sk._count == _count
                         &&  sk._u == _u );
@@ -3689,7 +3689,7 @@ namespace System.Windows.Controls
 
             internal StarDistributionOrderIndexComparer(DefinitionBase[] definitions)
             {
-                Invariant.Assert(definitions != null);
+                Invariant.Assert(definitions is not null);
                 this.definitions = definitions;
             }
 
@@ -3715,7 +3715,7 @@ namespace System.Windows.Controls
 
             internal DistributionOrderIndexComparer(DefinitionBase[] definitions)
             {
-                Invariant.Assert(definitions != null);
+                Invariant.Assert(definitions is not null);
                 this.definitions = definitions;
             }
 
@@ -3743,7 +3743,7 @@ namespace System.Windows.Controls
 
             internal RoundingErrorIndexComparer(double[] errors)
             {
-                Invariant.Assert(errors != null);
+                Invariant.Assert(errors is not null);
                 this.errors = errors;
             }
 
@@ -3803,7 +3803,7 @@ namespace System.Windows.Controls
 
             internal MinRatioIndexComparer(DefinitionBase[] definitions)
             {
-                Invariant.Assert(definitions != null);
+                Invariant.Assert(definitions is not null);
                 this.definitions = definitions;
             }
 
@@ -3829,7 +3829,7 @@ namespace System.Windows.Controls
 
             internal MaxRatioIndexComparer(DefinitionBase[] definitions)
             {
-                Invariant.Assert(definitions != null);
+                Invariant.Assert(definitions is not null);
                 this.definitions = definitions;
             }
 
@@ -3855,7 +3855,7 @@ namespace System.Windows.Controls
 
             internal StarWeightIndexComparer(DefinitionBase[] definitions)
             {
-                Invariant.Assert(definitions != null);
+                Invariant.Assert(definitions is not null);
                 this.definitions = definitions;
             }
 
@@ -3882,10 +3882,10 @@ namespace System.Windows.Controls
         {
             internal GridChildrenCollectionEnumeratorSimple(Grid grid, bool includeChildren)
             {
-                Debug.Assert(grid != null);
+                Debug.Assert(grid is not null);
                 _currentEnumerator = -1;
-                _enumerator0 = new ColumnDefinitionCollection.Enumerator(grid.ExtData != null ? grid.ExtData.ColumnDefinitions : null);
-                _enumerator1 = new RowDefinitionCollection.Enumerator(grid.ExtData != null ? grid.ExtData.RowDefinitions : null);
+                _enumerator0 = new ColumnDefinitionCollection.Enumerator(grid.ExtData is not null ? grid.ExtData.ColumnDefinitions : null);
+                _enumerator1 = new RowDefinitionCollection.Enumerator(grid.ExtData is not null ? grid.ExtData.RowDefinitions : null);
                 // GridLineRenderer is NOT included into this enumerator.
                 _enumerator2Index = 0;
                 if (includeChildren)
@@ -3940,7 +3940,7 @@ namespace System.Windows.Controls
                     }
 
                     //  assert below is not true anymore since UIElementCollection allowes for null children
-                    //Debug.Assert(_currentChild != null);
+                    //Debug.Assert(_currentChild is not null);
                     return (_currentChild);
                 }
             }
@@ -4127,7 +4127,7 @@ namespace System.Windows.Controls
         internal void ExitCounterScope(Counters scopeCounter)
         {
             #if GRIDPARANOIA
-            if (_counters != null)
+            if (_counters is not null)
             {
                 if (scopeCounter != Counters.Default)
                 {
@@ -4174,7 +4174,7 @@ namespace System.Windows.Controls
         internal void EnterCounter(Counters counter)
         {
             #if GRIDPARANOIA
-            if (_counters != null)
+            if (_counters is not null)
             {
                 Debug.Assert((int)counter < _counters.Length);
 
@@ -4188,7 +4188,7 @@ namespace System.Windows.Controls
         internal void ExitCounter(Counters counter)
         {
             #if GRIDPARANOIA
-            if (_counters != null)
+            if (_counters is not null)
             {
                 Debug.Assert((int)counter < _counters.Length);
 

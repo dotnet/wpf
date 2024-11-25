@@ -130,12 +130,12 @@ namespace System.Windows.Media.Media3D
                 result.SetDistanceToRayOrigin(result.DistanceToRayOrigin + distanceAdjustment);
                 
                 Viewport2DVisual3D viewport2DVisual3D = result.VisualHit as Viewport2DVisual3D;
-                if (viewport2DVisual3D != null)
+                if (viewport2DVisual3D is not null)
                 {
                     Point intersectionPoint;
                     Visual viewport2DVisual3DChild = viewport2DVisual3D.Visual;
 
-                    if (viewport2DVisual3DChild != null)
+                    if (viewport2DVisual3DChild is not null)
                     {
                         if (Viewport2DVisual3D.GetIntersectionInfo(result, out intersectionPoint))
                         {
@@ -144,7 +144,7 @@ namespace System.Windows.Media.Media3D
                             GeneralTransform gt = viewport2DVisual3DChild.TransformToOuterSpace().Inverse;
 
                             Point pointOnChild;
-                            if (gt != null && gt.TryTransform(visualPoint, out pointOnChild))
+                            if (gt is not null && gt.TryTransform(visualPoint, out pointOnChild))
                             {
                                 HitTestResultBehavior behavior2D = viewport2DVisual3DChild.HitTestPoint(filterCallback, 
                                                                                                         resultCallback, 
@@ -191,7 +191,7 @@ namespace System.Windows.Media.Media3D
 
         internal void ClearResults()
         {
-            if (results != null)
+            if (results is not null)
             {
                 results.Clear();
             }

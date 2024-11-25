@@ -113,7 +113,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             // RibbonSplitButton or RibbonSplitMenuItem but has a different visual parent. 
             // Set one-way binding with visual parent for 
             // DefinitionBase.PrivateSharedSizeScopeProperty
-            if (newParent != null)
+            if (newParent is not null)
             {
                 Binding binding = new Binding();
                 binding.Path = new PropertyPath(PrivateSharedSizeScopeProperty);

@@ -49,10 +49,10 @@ namespace System.Windows.Automation.Peers
             else if(patternInterface == PatternInterface.Scroll)
             {
                 ItemsControl owner = (ItemsControl)Owner;
-                if(owner.ScrollHost != null)
+                if(owner.ScrollHost is not null)
                 {
                     AutomationPeer scrollPeer = UIElementAutomationPeer.CreatePeerForElement(owner.ScrollHost);
-                    if(scrollPeer != null && scrollPeer is IScrollProvider)
+                    if(scrollPeer is not null && scrollPeer is IScrollProvider)
                     {
                         scrollPeer.EventsSource = this;
                         return (IScrollProvider)scrollPeer;
@@ -84,17 +84,17 @@ namespace System.Windows.Automation.Peers
                     for (int i = 0; i < items.Count; i++)
                     {
                         TreeViewItem treeViewItem = owner.ItemContainerGenerator.ContainerFromIndex(i) as TreeViewItem;
-                        if (treeViewItem != null)
+                        if (treeViewItem is not null)
                         {
                             ItemAutomationPeer peer = oldChildren[items[i]];
                             if (peer is null)
                                 peer = CreateItemAutomationPeer(items[i]);
 
                             // perform hookup so the events sourced from wrapper peer are fired as if from the data item
-                            if (peer != null)
+                            if (peer is not null)
                             {
                                 AutomationPeer wrapperPeer = peer.GetWrapperPeer();
-                                if(wrapperPeer != null)
+                                if(wrapperPeer is not null)
                                 {
                                     wrapperPeer.EventsSource = peer;
                                 }
@@ -142,7 +142,7 @@ namespace System.Windows.Automation.Peers
             if (SelectionItemPatternIdentifiers.IsSelectedProperty.Id == propertyId)
             {
                 ISelectionItemProvider selectionItem = itemPeer.GetPattern(PatternInterface.SelectionItem) as ISelectionItemProvider;
-                if (selectionItem != null)
+                if (selectionItem is not null)
                     return selectionItem.IsSelected;
                 else
                     return null;
@@ -166,16 +166,16 @@ namespace System.Windows.Automation.Peers
         {
             IRawElementProviderSimple[] selection = null;
             TreeViewItem selectedContainer = ((TreeView)Owner).SelectedContainer;
-            if (selectedContainer != null)
+            if (selectedContainer is not null)
             {
                 AutomationPeer peer = UIElementAutomationPeer.FromElement(selectedContainer);
                 
                 // With virtualization in effect TreeViewDataItemAP would be exposed to client not the Peer directly associated with UI
                 // and Selection must return the relevant peer(TreeViewDataItemAP) stored in EventSource.
-                if(peer.EventsSource != null)
+                if(peer.EventsSource is not null)
                     peer = peer.EventsSource;
                     
-                if (peer != null)
+                if (peer is not null)
                 {
                     selection = new IRawElementProviderSimple[] { ProviderFromPeer(peer) };
                 }

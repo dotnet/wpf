@@ -66,7 +66,7 @@ namespace MS.Internal.Documents.Application
         /// </summary>
         public void SetPageNumber(int pageNumber)
         {
-            if (CultureInfo.CurrentCulture != null)
+            if (CultureInfo.CurrentCulture is not null)
             {
                 this.Text = pageNumber.ToString(CultureInfo.CurrentCulture);
 
@@ -196,7 +196,7 @@ namespace MS.Internal.Documents.Application
             // This will check for the use of 'enter', 'escape' and 'tab' and take the appropriate action
 
             // Ensure the arguments are not null.
-            if (e != null)
+            if (e is not null)
             {
                 // Check which Key was pressed.
                 switch (e.Key)
@@ -234,7 +234,7 @@ namespace MS.Internal.Documents.Application
         /// <param name="e">Arguments to the event, used for the input text.</param>
         private void OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if ((e != null) && (!String.IsNullOrEmpty(e.Text)) && (IsValidInputChar(e.Text[0])))
+            if ((e is not null) && (!String.IsNullOrEmpty(e.Text)) && (IsValidInputChar(e.Text[0])))
             {
                 // Set editing mode and allow the ComboBox to handle it.
                 _isEditingText = true;

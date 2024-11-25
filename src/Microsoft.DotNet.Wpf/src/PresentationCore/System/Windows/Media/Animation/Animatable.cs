@@ -56,7 +56,7 @@ namespace System.Windows.Media.Animation
             // animations all we need to do is update the animation resource
             // that represents this property value. Otherwise we need to invalidate
             // and and eventually update this whole object.
-            if (independentAnimationStorage != null)
+            if (independentAnimationStorage is not null)
             {
                 independentAnimationStorage.InvalidateResource();
             }
@@ -83,7 +83,7 @@ namespace System.Windows.Media.Animation
 
                     DUCE.IResource storage = storageObject as DUCE.IResource;
 
-                    if (storage != null)
+                    if (storage is not null)
                     {
                         storage.AddRefOnChannel(channel);
                     }
@@ -108,7 +108,7 @@ namespace System.Windows.Media.Animation
 
                     DUCE.IResource storage = storageObject as DUCE.IResource;
 
-                    if (storage != null)
+                    if (storage is not null)
                     {
                         storage.ReleaseOnChannel(channel);
                     }
@@ -148,7 +148,7 @@ namespace System.Windows.Media.Animation
 
             propertyMetadata.PropertyChangedCallback = changed;
 
-            if (coerced != null)
+            if (coerced is not null)
             {
                 propertyMetadata.CoerceValueCallback = coerced;
             }
@@ -169,7 +169,7 @@ namespace System.Windows.Media.Animation
         // overloads.
         internal void AddRefResource(DUCE.IResource resource, DUCE.Channel channel)
         {
-            if (resource != null)
+            if (resource is not null)
             {
                 resource.AddRefOnChannel(channel);
             }
@@ -177,7 +177,7 @@ namespace System.Windows.Media.Animation
 
         internal void ReleaseResource(DUCE.IResource resource, DUCE.Channel channel)
         {
-            if (resource != null)
+            if (resource is not null)
             {
                 resource.ReleaseOnChannel(channel);
             }
@@ -290,7 +290,7 @@ namespace System.Windows.Media.Animation
 
         internal DUCE.ResourceHandle GetAnimationResourceHandle(DependencyProperty dp, DUCE.Channel channel)
         {
-            if (channel != null && IAnimatable_HasAnimatedProperties)
+            if (channel is not null && IAnimatable_HasAnimatedProperties)
             {
                 return IndependentAnimationStorage.GetResourceHandle(this, dp, channel);
             }
@@ -348,9 +348,9 @@ namespace System.Windows.Media.Animation
         {
             DUCE.IResource resource = this as DUCE.IResource;
 
-            if (resource != null)
+            if (resource is not null)
             {
-                if ((Dispatcher != null) && Animatable_IsResourceInvalidationNecessary)
+                if ((Dispatcher is not null) && Animatable_IsResourceInvalidationNecessary)
                 {
                     MediaContext mediaContext = MediaContext.From(Dispatcher);
 

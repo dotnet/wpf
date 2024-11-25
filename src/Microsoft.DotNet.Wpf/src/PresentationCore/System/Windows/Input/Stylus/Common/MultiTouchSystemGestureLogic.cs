@@ -69,7 +69,7 @@ namespace System.Windows.Input
 
                 case State.OneFingerDown:
                     // The second finger came down
-                    Debug.Assert(_firstStylusDeviceId != null && _firstStylusDeviceId != stylusInputReport.StylusDeviceId);
+                    Debug.Assert(_firstStylusDeviceId is not null && _firstStylusDeviceId != stylusInputReport.StylusDeviceId);
                     Debug.Assert(_secondStylusDeviceId is null);
                     _secondStylusDeviceId = stylusInputReport.StylusDeviceId;
                     _currentState = State.TwoFingersDown;

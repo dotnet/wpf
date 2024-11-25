@@ -53,7 +53,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         public override void Dispose()
         {
-            if(_pageContext != null)
+            if(_pageContext is not null)
             {
                 _pageContext.RemoveFloatingParaClient(this);
             }
@@ -224,7 +224,7 @@ namespace MS.Internal.PtsHost
             IInputElement ie = null;
 
 
-            if(_pageContextOfThisPage.FloatingElementList != null)
+            if(_pageContextOfThisPage.FloatingElementList is not null)
             {
                 for(int index = 0; index < _pageContextOfThisPage.FloatingElementList.Count && ie is null; index++)
                 {
@@ -327,7 +327,7 @@ namespace MS.Internal.PtsHost
                         for (int index = 0; index < arrayColumnDesc.Length; index++)
                         {
                             List<Rect> trackRectangles = PtsHelper.GetRectanglesInTrack(PtsContext, e, start, length, ref arrayColumnDesc[index]);
-                            Invariant.Assert(trackRectangles != null);
+                            Invariant.Assert(trackRectangles is not null);
                             if (trackRectangles.Count != 0)
                             {
                                 // Add rectangles found in this track to all rectangles
@@ -340,7 +340,7 @@ namespace MS.Internal.PtsHost
                 rectangles = PtsHelper.OffsetRectangleList(rectangles, TextDpi.FromTextDpi(ContentRect.u), TextDpi.FromTextDpi(ContentRect.v));
             }
 
-            Invariant.Assert(rectangles != null);
+            Invariant.Assert(rectangles is not null);
             return rectangles;
         }
 
@@ -750,8 +750,8 @@ namespace MS.Internal.PtsHost
             Geometry geometry = null;
 
             // Floater always has one column, so we can skip getting a column from the text position range
-            Invariant.Assert(columns != null && columns.Count <= 1, "Columns collection is null.");
-            Invariant.Assert(floatingElements != null, "Floating element collection is null.");
+            Invariant.Assert(columns is not null && columns.Count <= 1, "Columns collection is null.");
+            Invariant.Assert(floatingElements is not null, "Floating element collection is null.");
             ReadOnlyCollection<ParagraphResult> paragraphs = (columns.Count > 0) ? columns[0].Paragraphs : new ReadOnlyCollection<ParagraphResult>(new List<ParagraphResult>(0));
 
             if (paragraphs.Count > 0 || floatingElements.Count > 0)
@@ -788,7 +788,7 @@ namespace MS.Internal.PtsHost
             {
                 List<ParagraphResult> floatingElements = new List<ParagraphResult>(0);
                 List<BaseParaClient> floatingElementList = _pageContextOfThisPage.FloatingElementList;
-                if (floatingElementList != null)
+                if (floatingElementList is not null)
                 {
                     for (int i = 0; i < floatingElementList.Count; i++)
                     {

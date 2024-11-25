@@ -814,9 +814,9 @@ namespace MS.Internal.FontCache
             {
                 if (disposing)
                 {
-                    if (_viewHandle != null)
+                    if (_viewHandle is not null)
                         _viewHandle.Dispose();
-                    if (_mappingHandle != null)
+                    if (_mappingHandle is not null)
                         _mappingHandle.Dispose();
                 }
 

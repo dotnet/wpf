@@ -45,7 +45,7 @@ namespace System.Windows.Automation.Peers
         protected override string GetClassNameCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.GetClassName();
             }
@@ -67,7 +67,7 @@ namespace System.Windows.Automation.Peers
             {
                 case PatternInterface.Invoke:
                     {
-                        if (Column != null && Column.CanUserSort)
+                        if (Column is not null && Column.CanUserSort)
                         {
                             return this;
                         }
@@ -77,7 +77,7 @@ namespace System.Windows.Automation.Peers
 
                 case PatternInterface.ScrollItem:
                     {
-                        if (Column != null)
+                        if (Column is not null)
                         {
                             return this;
                         }
@@ -86,7 +86,7 @@ namespace System.Windows.Automation.Peers
 
                 case PatternInterface.Transform:
                     {
-                        if (Column != null && Column.CanUserResize)
+                        if (Column is not null && Column.CanUserResize)
                         {
                             return this;
                         }
@@ -95,7 +95,7 @@ namespace System.Windows.Automation.Peers
                     }
                 case PatternInterface.VirtualizedItem:
                     {
-                        if (Column != null)
+                        if (Column is not null)
                         {
                             return this;
                         }
@@ -119,7 +119,7 @@ namespace System.Windows.Automation.Peers
         void IInvokeProvider.Invoke()
         {
             UIElementAutomationPeer wrapperPeer = GetWrapperPeer() as UIElementAutomationPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 ((DataGridColumnHeader)wrapperPeer.Owner).Invoke();
             }
@@ -132,7 +132,7 @@ namespace System.Windows.Automation.Peers
 
         void IScrollItemProvider.ScrollIntoView()
         {
-            if (Column != null && this.OwningDataGrid != null)
+            if (Column is not null && this.OwningDataGrid is not null)
             {
                 this.OwningDataGrid.ScrollIntoView(null, Column);
             }
@@ -154,7 +154,7 @@ namespace System.Windows.Automation.Peers
         { 
             get 
             { 
-                if (this.Column != null)
+                if (this.Column is not null)
                     return Column.CanUserResize;
                 return false;
             } 
@@ -175,7 +175,7 @@ namespace System.Windows.Automation.Peers
 
         void ITransformProvider.Resize(double width, double height)
         {
-            if (this.OwningDataGrid != null && Column.CanUserResize)
+            if (this.OwningDataGrid is not null && Column.CanUserResize)
             {
                 Column.Width = new DataGridLength(width);
             }
@@ -195,7 +195,7 @@ namespace System.Windows.Automation.Peers
         #region IVirtualizedItemProvider
         void IVirtualizedItemProvider.Realize()
         {
-            if (this.OwningDataGrid != null)
+            if (this.OwningDataGrid is not null)
                 OwningDataGrid.ScrollIntoView(null,Column);
         }
 
@@ -212,7 +212,7 @@ namespace System.Windows.Automation.Peers
                 if (value)
                     return;
                 AutomationPeer wrapperPeer = OwningColumnHeaderPeer;
-                if (wrapperPeer != null)
+                if (wrapperPeer is not null)
                 {
                     wrapperPeer.AncestorsInvalid = false;
                 }

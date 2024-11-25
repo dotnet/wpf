@@ -160,7 +160,7 @@ namespace MS.Internal.IO.Packaging
             {
                 lock (_syncRoot)
                 {
-                    return ((_baseStream != null) && _baseStream.CanRead);
+                    return ((_baseStream is not null) && _baseStream.CanRead);
                 }
             }
         }
@@ -174,7 +174,7 @@ namespace MS.Internal.IO.Packaging
             {
                 lock (_syncRoot)
                 {
-                    return ((_baseStream != null) && _baseStream.CanSeek);
+                    return ((_baseStream is not null) && _baseStream.CanSeek);
                 }
             }
         }
@@ -187,7 +187,7 @@ namespace MS.Internal.IO.Packaging
             {
                 lock (_syncRoot)
                 {
-                    return ((_baseStream != null) && _baseStream.CanWrite);
+                    return ((_baseStream is not null) && _baseStream.CanWrite);
                 }
             }
         }
@@ -241,7 +241,7 @@ namespace MS.Internal.IO.Packaging
             {
                 try
                 {
-                    if (disposing && (_baseStream != null))
+                    if (disposing && (_baseStream is not null))
                     {
                         // close the underlying Stream
                         _baseStream.Close();

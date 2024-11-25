@@ -95,7 +95,7 @@ namespace MS.Internal.Annotations
         /// </summary>
         protected override void InsertItem(int index, XmlElement item)
         {
-            if (item != null && this.Contains(item))
+            if (item is not null && this.Contains(item))
             {
                 throw new ArgumentException(SR.Format(SR.XmlNodeAlreadyOwned, "change", "change"), "item");
             }
@@ -111,7 +111,7 @@ namespace MS.Internal.Annotations
         /// </summary>
         protected override void SetItem(int index, XmlElement item)
         {
-            if (item != null && this.Contains(item))
+            if (item is not null && this.Contains(item))
             {
                 throw new ArgumentException(SR.Format(SR.XmlNodeAlreadyOwned, "change", "change"), "item");
             }
@@ -217,10 +217,10 @@ namespace MS.Internal.Annotations
             // (a) we do nothing.  In the case of (b) we must fire a change notification
             // for this Resource.
             XmlNode current = args.Node;
-            while (current != null)
+            while (current is not null)
             {
                 element = current as XmlElement;
-                if (element != null && this.Contains(element))
+                if (element is not null && this.Contains(element))
                 {
                     OnCollectionReset();
                     break;
@@ -228,7 +228,7 @@ namespace MS.Internal.Annotations
 
                 // Get the parent of the current node
                 attr = current as XmlAttribute;
-                if (attr != null)
+                if (attr is not null)
                 {
                     // ParentNode isn't implemented for XmlAttributes, we must
                     // use its OwnerElement to continue our walk up the node tree.

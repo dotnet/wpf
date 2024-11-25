@@ -101,7 +101,7 @@ namespace System.Windows
                 // in the example described above, make sure you listen for ResourcesChanged
                 // event on the mentor. That way you will be notified of ResourceDictionary
                 // changes as well as logical tree changes
-                if (_mentorCache != null && _mentorCache != _targetObject)
+                if (_mentorCache is not null && _mentorCache != _targetObject)
                 {
                     Debug.Assert(_targetObject == d, "TargetObject that this expression is attached to must be the same as the one on which its value is being queried");
 
@@ -109,7 +109,7 @@ namespace System.Windows
                     FrameworkContentElement mentorFCE;
                     Helper.DowncastToFEorFCE(_mentorCache, out mentorFE, out mentorFCE, true);
 
-                    if (mentorFE != null)
+                    if (mentorFE is not null)
                     {
                         mentorFE.ResourcesChanged += new EventHandler(InvalidateExpressionValue);
                     }
@@ -121,7 +121,7 @@ namespace System.Windows
             }
 
             object resource;
-            if (_mentorCache != null)
+            if (_mentorCache is not null)
             {
                 FrameworkElement fe;
                 FrameworkContentElement fce;
@@ -161,7 +161,7 @@ namespace System.Windows
 
             object effectiveResource = resource;
             DeferredResourceReference deferredResourceReference = resource as DeferredResourceReference;
-            if (deferredResourceReference != null)
+            if (deferredResourceReference is not null)
             {
                 if (deferredResourceReference.IsInflated)
                 {
@@ -261,7 +261,7 @@ namespace System.Windows
             // If the old value was a DeferredResourceReference, it should be
             // removed from its Dictionary's list to avoid a leak (bug 1624666).
             DeferredResourceReference deferredResourceReference = _cachedResourceValue as DeferredResourceReference;
-            if (deferredResourceReference != null)
+            if (deferredResourceReference is not null)
             {
                 if (deferredResourceReference.IsInflated)
                 {
@@ -309,7 +309,7 @@ namespace System.Windows
         {
             if (ReadInternalState(InternalState.IsMentorCacheValid) == true)
             {
-                if (_mentorCache != null)
+                if (_mentorCache is not null)
                 {
                     if (_mentorCache != _targetObject)
                     {
@@ -319,7 +319,7 @@ namespace System.Windows
 
                         // Your mentor is about to change, make sure you detach handlers for
                         // the events that you were listening on the old mentor
-                        if (mentorFE != null)
+                        if (mentorFE is not null)
                         {
                             mentorFE.ResourcesChanged -= new EventHandler(InvalidateExpressionValue);
                         }
@@ -359,7 +359,7 @@ namespace System.Windows
             }
 
             ResourcesChangedEventArgs args = e as ResourcesChangedEventArgs;
-            if (args != null)
+            if (args is not null)
             {
                 ResourcesChangeInfo info = args.Info;
                 if (!info.IsTreeChange)
@@ -408,7 +408,7 @@ namespace System.Windows
                 //  to listen to its changed event in order to properly update
                 //  the cache.
                 Freezable resourceAsFreezable = resource as Freezable;
-                if( resourceAsFreezable != null && !resourceAsFreezable.IsFrozen )
+                if( resourceAsFreezable is not null && !resourceAsFreezable.IsFrozen )
                 {
                     if (_weakContainerRRE is null)
                     {
@@ -432,7 +432,7 @@ namespace System.Windows
                 //  since then, the change handler we had attached was already
                 //  discarded during the freeze so we don't care here.
                 Freezable resourceAsFreezable = resource as Freezable;
-                if (resourceAsFreezable != null && _weakContainerRRE != null)
+                if (resourceAsFreezable is not null && _weakContainerRRE is not null)
                 {
                     if (!resourceAsFreezable.IsFrozen)
                     {
@@ -533,7 +533,7 @@ namespace System.Windows
             private void InvalidateTargetSubProperty(object sender, EventArgs args)
             {
                 ResourceReferenceExpression expression = (ResourceReferenceExpression)Target;
-                if (expression != null)
+                if (expression is not null)
                 {
                     expression.InvalidateTargetSubProperty(sender, args);
                 }
@@ -546,7 +546,7 @@ namespace System.Windows
             public void AddChangedHandler(Freezable resource)
             {
                 // If _resource already exists, unhook the event handler.
-                if (_resource != null)
+                if (_resource is not null)
                 {
                     RemoveChangedHandler();
                 }

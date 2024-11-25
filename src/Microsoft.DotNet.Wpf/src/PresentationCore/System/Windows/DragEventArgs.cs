@@ -97,7 +97,7 @@ namespace System.Windows
 
             dropPoint = new Point(0, 0);
 
-            if (_target != null)
+            if (_target is not null)
             {
                 // Translate the drop point from the drop target to the relative element.
                 dropPoint = InputElement.TranslatePoint(_dropPoint, _target, (DependencyObject)relativeTo);

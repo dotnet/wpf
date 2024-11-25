@@ -294,13 +294,13 @@ namespace MS.Internal.PtsHost
 
                 // Hittest PtsPage only when transform can be inverted in order to calculate
                 // point within PtsPage. If transform cannot be inverted, return the owner of this page.
-                if (transform != null)
+                if (transform is not null)
                 {
                     point = transform.Transform(point);
                     ie = _ptsPage.InputHitTest(point);
                 }
             }
-            return (ie != null) ? ie : _structuralCache.FormattingOwner as IInputElement;
+            return (ie is not null) ? ie : _structuralCache.FormattingOwner as IInputElement;
         }
 
         /// <summary>
@@ -319,11 +319,11 @@ namespace MS.Internal.PtsHost
             Invariant.Assert(!IsDisposed);
 
             List<Rect> rectangles = new List<Rect>();
-            Debug.Assert(child != null);
+            Debug.Assert(child is not null);
             if (IsLayoutDataValid)
             {
                 TextPointer elementStart = FindElementPosition(child, isLimitedToTextView);
-                if (elementStart != null)
+                if (elementStart is not null)
                 {
                     // Element exists within this Page, calculate its length
                     int elementStartOffset = _structuralCache.TextContainer.Start.GetOffsetToPosition(elementStart);
@@ -338,7 +338,7 @@ namespace MS.Internal.PtsHost
                 }
             }
 
-            if(this.PageVisual != null && rectangles.Count > 0)
+            if(this.PageVisual is not null && rectangles.Count > 0)
             {
                 List<Rect> transformedRectangles = new List<Rect>(rectangles.Count);
                 // NOTE: TransformToAncestor is safe (will never throw an exception).
@@ -353,7 +353,7 @@ namespace MS.Internal.PtsHost
             }
 
             // We should never return null for rectangles from public API, only empty ArrayList
-            Invariant.Assert(rectangles != null);
+            Invariant.Assert(rectangles is not null);
 
             return new ReadOnlyCollection<Rect>(rectangles);
         }
@@ -369,7 +369,7 @@ namespace MS.Internal.PtsHost
                 {
                     // At this point, we should create TextView if it doesn't exist
                     _textView = GetTextView();
-                    Invariant.Assert(_textView != null && ((ITextView)_textView).TextSegments.Count > 0);
+                    Invariant.Assert(_textView is not null && ((ITextView)_textView).TextSegments.Count > 0);
                     return new HostedElements(((ITextView)_textView).TextSegments);
                 }
                 else
@@ -387,7 +387,7 @@ namespace MS.Internal.PtsHost
             {
                 List<ParagraphResult> floatingElements = new List<ParagraphResult>(0);
                 List<BaseParaClient> floatingElementList = _ptsPage.PageContext.FloatingElementList;
-                if (floatingElementList != null)
+                if (floatingElementList is not null)
                 {
                     for (int i = 0; i < floatingElementList.Count; i++)
                     {
@@ -523,7 +523,7 @@ namespace MS.Internal.PtsHost
                 }
             }
 
-            Invariant.Assert(columnResults != null);
+            Invariant.Assert(columnResults is not null);
             return new ReadOnlyCollection<ColumnResult>(columnResults);
         }
 
@@ -632,7 +632,7 @@ namespace MS.Internal.PtsHost
             transform = transform.Inverse;
 
             contentViewport = viewport.FromTextDpi();
-            if (transform != null)
+            if (transform is not null)
             {
                 contentViewport = transform.TransformBounds(contentViewport);
             }
@@ -761,7 +761,7 @@ namespace MS.Internal.PtsHost
             }
             set
             {
-                if ((_DependentMax is null) || ((value != null) && (value.CompareTo(_DependentMax) > 0)))
+                if ((_DependentMax is null) || ((value is not null) && (value.CompareTo(_DependentMax) > 0)))
                 {
                     _DependentMax = value;
                 }
@@ -811,7 +811,7 @@ namespace MS.Internal.PtsHost
                 if (disposing)
                 {
                     // Clear content of the root visual
-                    if (this.PageVisual != null)
+                    if (this.PageVisual is not null)
                     {
                         // Disconnect all embedded visuals (UIElements) to make sure that
                         // they are not part of visual tree when page is destroyed.
@@ -825,7 +825,7 @@ namespace MS.Internal.PtsHost
                     }
 
                     // Dispose PTS page
-                    if (_ptsPage != null)
+                    if (_ptsPage is not null)
                     {
                         _ptsPage.Dispose();
                     }
@@ -904,7 +904,7 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         private void OnAfterFormatPage()
         {
-            if (_textView != null)
+            if (_textView is not null)
             {
                 _textView.Invalidate();
             }
@@ -929,7 +929,7 @@ namespace MS.Internal.PtsHost
         private TextPointer FindElementPosition(IInputElement e, bool isLimitedToTextView)
         {
             // Parameter validation
-            Debug.Assert(e != null);
+            Debug.Assert(e is not null);
 
             // Validate that this function is only called when a TextContainer exists as complex content
             Debug.Assert(_structuralCache.TextContainer is TextContainer);
@@ -982,13 +982,13 @@ namespace MS.Internal.PtsHost
             }
 
             // If the element was found, check if we are limited to text view
-            if (elementPosition != null)
+            if (elementPosition is not null)
             {
                 if (isLimitedToTextView)
                 {
                     // At this point, we should create TextView if it doesn't exist
                     _textView = GetTextView();
-                    Invariant.Assert(_textView != null);
+                    Invariant.Assert(_textView is not null);
                     // Check all segements in text view for position
                     for (int segmentIndex = 0; segmentIndex < ((ITextView)_textView).TextSegments.Count; segmentIndex++)
                     {
@@ -1015,7 +1015,7 @@ namespace MS.Internal.PtsHost
         private void DestroyVisualLinks(ContainerVisual visual)
         {
             VisualCollection vc = visual.Children;
-            if (vc != null)
+            if (vc is not null)
             {
                 for (int index = 0; index < vc.Count; index++)
                 {
@@ -1037,7 +1037,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         private void ValidateTextView()
         {
-            if (_textView != null)
+            if (_textView is not null)
             {
                 _textView.OnUpdated();
             }
@@ -1049,7 +1049,7 @@ namespace MS.Internal.PtsHost
         private TextDocumentView GetTextView()
         {
             TextDocumentView textView = (TextDocumentView)((IServiceProvider)this).GetService(typeof(ITextView));
-            Invariant.Assert(textView != null);
+            Invariant.Assert(textView is not null);
             return textView;
         }
 

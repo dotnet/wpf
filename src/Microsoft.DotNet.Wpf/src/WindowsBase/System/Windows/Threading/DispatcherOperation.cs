@@ -253,7 +253,7 @@ namespace System.Windows.Threading
         {
             bool removed = false;
 
-            if (_dispatcher != null)
+            if (_dispatcher is not null)
             {
                 removed = _dispatcher.Abort(this);
 
@@ -264,7 +264,7 @@ namespace System.Windows.Threading
 
                     // Raise the aborted event.
                     EventHandler aborted = _aborted;
-                    if (aborted != null)
+                    if (aborted is not null)
                     {
                         aborted(this, EventArgs.Empty);
                     }
@@ -404,7 +404,7 @@ namespace System.Windows.Threading
 
             // Invoke the operation under the execution context that was
             // current when the operation was created.
-            if(_executionContext != null)
+            if(_executionContext is not null)
             {
                 CulturePreservingExecutionContext.Run(_executionContext, _invokeInSecurityContext, this);
 
@@ -448,7 +448,7 @@ namespace System.Windows.Threading
                 }
             }
                 
-            if(handler != null)
+            if(handler is not null)
             {
                 handler(this, EventArgs.Empty);
             }
@@ -464,7 +464,7 @@ namespace System.Windows.Threading
                     break;
 
                 case DispatcherOperationStatus.Completed:
-                    if(_exception != null)
+                    if(_exception is not null)
                     {
                         _taskSource.SetException(_exception);
                     }
@@ -602,7 +602,7 @@ namespace System.Windows.Threading
             {
                 Continue = false;
 
-                if(_waitTimer != null)
+                if(_waitTimer is not null)
                 {
                     _waitTimer.Dispose();
                 }

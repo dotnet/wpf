@@ -214,7 +214,7 @@ namespace System.Windows.Input.StylusPointer
                     {
                         StylusPointPropertyInfo propInfo = PointerStylusPointPropertyInfoHelper.CreatePropertyInfo(prop);
 
-                        if (propInfo != null)
+                        if (propInfo is not null)
                         {
                             // If seeing a required property, just overwrite the default placeholder
                             // otherwise tack it onto the end of the appropriate list.

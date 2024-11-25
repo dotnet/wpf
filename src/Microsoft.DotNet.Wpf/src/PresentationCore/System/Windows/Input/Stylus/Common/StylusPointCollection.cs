@@ -160,7 +160,7 @@ namespace System.Windows.Input
             {
                 //first, determine the x, y values by xf-ing them
                 Point p = new Point(rawPacketData[i], rawPacketData[i + 1]);
-                if (tabletToView != null)
+                if (tabletToView is not null)
                 {
                     tabletToView.TryTransform(p, out p);
                 }
@@ -406,7 +406,7 @@ namespace System.Windows.Input
         protected virtual void OnChanged(EventArgs e)
         {
             ArgumentNullException.ThrowIfNull(e);
-            if (this.Changed != null)
+            if (this.Changed is not null)
             {
                 this.Changed(this, e);
             }

@@ -105,7 +105,7 @@ namespace MS.Utility
         // (i.e. count is adjusted after array size changes)
         private int Add(int delta, bool incrCount)
         {
-            if (List != null)
+            if (List is not null)
             {
                 if ((Count + delta) > List.Length)
                 {
@@ -137,7 +137,7 @@ namespace MS.Utility
 
         public void Sort()
         {
-            if (List != null)
+            if (List is not null)
             {
                 Array.Sort(List, 0, Count);
             }

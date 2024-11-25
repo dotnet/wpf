@@ -24,9 +24,9 @@ namespace System.Xaml
         public XamlXmlReaderSettings(XamlXmlReaderSettings settings)
             : base(settings)
         {
-            if (settings != null)
+            if (settings is not null)
             {
-                if (settings._xmlnsDictionary != null)
+                if (settings._xmlnsDictionary is not null)
                 {
                     _xmlnsDictionary = new Dictionary<string, string>(settings._xmlnsDictionary);
                 }

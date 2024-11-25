@@ -81,7 +81,7 @@ namespace MS.Internal.PtsHost
             // Determine cell width based on column widths.
             //
             CalculatedColumn[] calculatedColumns = _tableParaClient.CalculatedColumns;
-            Debug.Assert(calculatedColumns != null
+            Debug.Assert(calculatedColumns is not null
                         && (Cell.ColumnIndex + Cell.ColumnSpan) <= calculatedColumns.Length);
 
             double durCellSpacing = Table.InternalCellSpacing;
@@ -157,7 +157,7 @@ namespace MS.Internal.PtsHost
             int dvrTopSpace;
             PTS.FSPAP fspap;
 
-            if(CellParagraph.StructuralCache.DtrList != null && breakRecordIn != IntPtr.Zero)
+            if(CellParagraph.StructuralCache.DtrList is not null && breakRecordIn != IntPtr.Zero)
             {
                 CellParagraph.InvalidateStructure(TextContainerHelper.GetCPFromElement(CellParagraph.StructuralCache.TextContainer, CellParagraph.Element, ElementEdge.BeforeStart));
             }
@@ -226,7 +226,7 @@ namespace MS.Internal.PtsHost
             PTS.FSPAP fspap;
 
 
-            if(CellParagraph.StructuralCache.DtrList != null)
+            if(CellParagraph.StructuralCache.DtrList is not null)
             {
                 CellParagraph.InvalidateStructure(TextContainerHelper.GetCPFromElement(CellParagraph.StructuralCache.TextContainer, CellParagraph.Element, ElementEdge.BeforeStart));
             }
@@ -336,7 +336,7 @@ namespace MS.Internal.PtsHost
 
                 geometry = TextDocumentView.GetTightBoundingGeometryFromTextPositionsHelper(colResults[0].Paragraphs, paragraphResult.FloatingElements, startPosition, endPosition, 0.0, visibleRect);
 
-                if (geometry != null)
+                if (geometry is not null)
                 {
                     //  restrict geometry to the cell's content rect boundary.
                     //  because of end-of-line / end-of-para simulation calculated geometry could be larger. 
@@ -358,10 +358,10 @@ namespace MS.Internal.PtsHost
         /// <returns>Cell's width</returns>
         internal double CalculateCellWidth(TableParaClient tableParaClient)
         {
-            Debug.Assert(tableParaClient != null);
+            Debug.Assert(tableParaClient is not null);
 
             CalculatedColumn[] calculatedColumns = tableParaClient.CalculatedColumns;
-            Debug.Assert(   calculatedColumns != null 
+            Debug.Assert(   calculatedColumns is not null 
                         && (Cell.ColumnIndex + Cell.ColumnSpan) <= calculatedColumns.Length);
 
             double durCellSpacing = Table.InternalCellSpacing;

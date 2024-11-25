@@ -108,7 +108,7 @@ namespace System.Windows.Xps.Serialization
             ReachSerializer reachSerializer = GetSerializer(serializedObject);
 
 
-            if(reachSerializer != null)
+            if(reachSerializer is not null)
             {
                 //
                 // Call top-level type serializer, it will walk through the contents and
@@ -562,7 +562,7 @@ namespace System.Windows.Xps.Serialization
         {
             XpsSerializationPrintTicketRequiredEventArgs e = operationState as XpsSerializationPrintTicketRequiredEventArgs;
 
-            if(XpsSerializationPrintTicketRequired != null)
+            if(XpsSerializationPrintTicketRequired is not null)
             {
                 e.Modified = true;
 
@@ -585,7 +585,7 @@ namespace System.Windows.Xps.Serialization
         {
             XpsSerializationProgressChangedEventArgs e = operationState as XpsSerializationProgressChangedEventArgs;
 
-            if(XpsSerializationProgressChanged != null)
+            if(XpsSerializationProgressChanged is not null)
             {
                 XpsSerializationProgressChanged(this,e);
             }
@@ -762,7 +762,7 @@ namespace System.Windows.Xps.Serialization
             {
                 case PrintTicketLevel.FixedDocumentSequencePrintTicket:
                 {
-                    if(args.PrintTicket != null)
+                    if(args.PrintTicket is not null)
                     {
                         _fdsPrintTicket  = args.PrintTicket;
                         _rootPrintTicket = _fdsPrintTicket;
@@ -780,7 +780,7 @@ namespace System.Windows.Xps.Serialization
 
                 case PrintTicketLevel.FixedDocumentPrintTicket:
                 {
-                    if(args.PrintTicket != null)
+                    if(args.PrintTicket is not null)
                     {
                         _fdPrintTicket = args.PrintTicket;
 
@@ -817,7 +817,7 @@ namespace System.Windows.Xps.Serialization
 
                 case PrintTicketLevel.FixedPagePrintTicket:
                 {
-                    if(args.PrintTicket != null)
+                    if(args.PrintTicket is not null)
                     {
                         _fpPrintTicket = args.PrintTicket;
 
@@ -847,7 +847,7 @@ namespace System.Windows.Xps.Serialization
                     }
                     else
                     {
-                        if(_fpPrintTicket != null)
+                        if(_fpPrintTicket is not null)
                         {
                             _fpPrintTicket     = null;
                             _activePrintTicket = _rootPrintTicket;

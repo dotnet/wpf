@@ -125,7 +125,7 @@ namespace System.Windows.Xps.Serialization
                     new DispatcherOperationCallback(Idle), null);
             }
 
-            if (document != null)
+            if (document is not null)
             {
                 ReachSerializer serializer = SerializationManager.GetSerializer(document);
 

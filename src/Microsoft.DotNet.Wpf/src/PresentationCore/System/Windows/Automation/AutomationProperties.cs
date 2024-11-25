@@ -565,7 +565,7 @@ namespace System.Windows.Automation
         // Validation callback for string properties
         private static bool IsNotNull(object value)
         {
-            return (value != null);
+            return (value is not null);
         }
         #endregion
 

@@ -55,7 +55,7 @@ namespace MS.Internal.PtsHost
         {
             base.Dispose();
 
-            if(_mainTextSegment != null)
+            if(_mainTextSegment is not null)
             {
                 _mainTextSegment.Dispose();
                 _mainTextSegment = null;
@@ -150,7 +150,7 @@ namespace MS.Internal.PtsHost
             // This problem is currently investigated by PTS team: PTSLS bug 915.
             // For now, MCS gets ignored here.
             //Debug.Assert(pbrkrecIn == IntPtr.Zero || mcs is null, "Broken paragraph cannot have margin collapsing state.");
-            if (mcs != null && pbrkrecIn != IntPtr.Zero)
+            if (mcs is not null && pbrkrecIn != IntPtr.Zero)
             {
                 mcs = null;
             }
@@ -190,7 +190,7 @@ namespace MS.Internal.PtsHost
                 }
                 subpageHeight = Math.Max(1, subpageHeight - (marginTop + mbp.BPTop));
                 // Destroy top margin collapsing state (not needed anymore).
-                if (mcsSubpage != null)
+                if (mcsSubpage is not null)
                 {
                     mcsSubpage.Dispose();
                     mcsSubpage = null;
@@ -277,7 +277,7 @@ namespace MS.Internal.PtsHost
                     // (b) do margin collapsing; create a new margin collapsing state
                     // There is no bottom margin collapsing if paragraph will be continued (output break record is not null).
                     MarginCollapsingState.CollapseBottomMargin(PtsContext, mbp, mcsSubpage, out mcsBottom, out marginBottom);
-                    pmcsclientOut = (mcsBottom != null) ? mcsBottom.Handle : IntPtr.Zero;
+                    pmcsclientOut = (mcsBottom is not null) ? mcsBottom.Handle : IntPtr.Zero;
 
                     if (pmcsclientOut == IntPtr.Zero) // if last chunk
                         dvrUsed += marginBottom + mbp.BPBottom;
@@ -299,7 +299,7 @@ namespace MS.Internal.PtsHost
 
             // Since MCS returned by PTS is never passed back, destroy MCS provided by PTS.
             // If necessary, new MCS is created and passed back to PTS (see above).
-            if (mcsSubpage != null)
+            if (mcsSubpage is not null)
             {
                 mcsSubpage.Dispose();
                 mcsSubpage = null;
@@ -369,7 +369,7 @@ namespace MS.Internal.PtsHost
             subpageWidth = Math.Max(1, subpageWidth - (mbp.MBPLeft + mbp.MBPRight));
             MarginCollapsingState.CollapseTopMargin(PtsContext, mbp, mcs, out mcsSubpage, out marginTop);
             // Destroy top margin collapsing state (not needed anymore).
-            if (mcsSubpage != null)
+            if (mcsSubpage is not null)
             {
                 mcsSubpage.Dispose();
                 mcsSubpage = null;
@@ -424,11 +424,11 @@ namespace MS.Internal.PtsHost
                     pmcsclientOut = IntPtr.Zero;
                 }
                 MarginCollapsingState.CollapseBottomMargin(PtsContext, mbp, mcsSubpage, out mcsBottom, out marginBottom);
-                pmcsclientOut = (mcsBottom != null) ? mcsBottom.Handle : IntPtr.Zero;
+                pmcsclientOut = (mcsBottom is not null) ? mcsBottom.Handle : IntPtr.Zero;
 
                 // Since MCS returned by PTS is never passed back, destroy MCS provided by PTS.
                 // If necessary, new MCS is created and passed back to PTS.
-                if (mcsSubpage != null)
+                if (mcsSubpage is not null)
                 {
                     mcsSubpage.Dispose();
                     mcsSubpage = null;
@@ -529,7 +529,7 @@ namespace MS.Internal.PtsHost
             subpageWidth = Math.Max(1, subpageWidth - (mbp.MBPLeft + mbp.MBPRight));
             MarginCollapsingState.CollapseTopMargin(PtsContext, mbp, mcs, out mcsSubpage, out marginTop);
             // Destroy top margin collapsing state (not needed anymore).
-            if (mcsSubpage != null)
+            if (mcsSubpage is not null)
             {
                 mcsSubpage.Dispose();
                 mcsSubpage = null;
@@ -583,11 +583,11 @@ namespace MS.Internal.PtsHost
                     pmcsclientOut = IntPtr.Zero;
                 }
                 MarginCollapsingState.CollapseBottomMargin(PtsContext, mbp, mcsSubpage, out mcsBottom, out marginBottom);
-                pmcsclientOut = (mcsBottom != null) ? mcsBottom.Handle : IntPtr.Zero;
+                pmcsclientOut = (mcsBottom is not null) ? mcsBottom.Handle : IntPtr.Zero;
 
                 // Since MCS returned by PTS is never passed back, destroy MCS provided by PTS.
                 // If necessary, new MCS is created and passed back to PTS.
-                if (mcsSubpage != null)
+                if (mcsSubpage is not null)
                 {
                     mcsSubpage.Dispose();
                     mcsSubpage = null;
@@ -645,7 +645,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal override void ClearUpdateInfo()
         {
-            if (_mainTextSegment != null)
+            if (_mainTextSegment is not null)
             {
                 _mainTextSegment.ClearUpdateInfo();
             }
@@ -662,7 +662,7 @@ namespace MS.Internal.PtsHost
         internal override bool InvalidateStructure(int startPosition)
         {
             Debug.Assert(ParagraphEndCharacterPosition >= startPosition);
-            if (_mainTextSegment != null)
+            if (_mainTextSegment is not null)
             {
                 if (_mainTextSegment.InvalidateStructure(startPosition))
                 {
@@ -678,7 +678,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal override void InvalidateFormatCache()
         {
-            if (_mainTextSegment != null)
+            if (_mainTextSegment is not null)
             {
                 _mainTextSegment.InvalidateFormatCache();
             }

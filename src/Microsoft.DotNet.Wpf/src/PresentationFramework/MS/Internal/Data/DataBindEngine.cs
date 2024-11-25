@@ -219,7 +219,7 @@ namespace MS.Internal.Data
             // events and handlers (bug 1019232)
             if (op == TaskOps.AttachToContext &&
                 _layoutElement is null &&
-                (_layoutElement = c.TargetElement as UIElement) != null)
+                (_layoutElement = c.TargetElement as UIElement) is not null)
             {
                 _layoutElement.LayoutUpdated += new EventHandler(OnLayoutUpdated);
             }
@@ -231,7 +231,7 @@ namespace MS.Internal.Data
             if (_mostRecentTask is null)
                 return;
 
-            for (Task task = (Task)_mostRecentTask[c]; task != null; task = task.PreviousForClient)
+            for (Task task = (Task)_mostRecentTask[c]; task is not null; task = task.PreviousForClient)
             {
                 if (task.op == op && task.status == Task.Status.Pending)
                 {
@@ -248,7 +248,7 @@ namespace MS.Internal.Data
                 return;
 
             // cancel pending tasks for the given client
-            for (Task task = (Task)_mostRecentTask[c]; task != null; task = task.PreviousForClient)
+            for (Task task = (Task)_mostRecentTask[c]; task is not null; task = task.PreviousForClient)
             {
                 Invariant.Assert(task.client == c, "task list is corrupt");
                 if (task.status == Task.Status.Pending)
@@ -268,7 +268,7 @@ namespace MS.Internal.Data
             Task retryTail = retryHead;
 
             // unregister the LayoutUpdated event - we only need to be called once
-            if (_layoutElement != null)
+            if (_layoutElement is not null)
             {
                 _layoutElement.LayoutUpdated -= new EventHandler(OnLayoutUpdated);
                 _layoutElement = null;
@@ -279,7 +279,7 @@ namespace MS.Internal.Data
 
             // iterate through the task list
             Task nextTask = null;
-            for (Task task = _head.Next; task != null; task = nextTask)
+            for (Task task = _head.Next; task is not null; task = nextTask)
             {
                 // sever the back pointer - older tasks are no longer needed
                 task.PreviousForClient = null;
@@ -324,7 +324,7 @@ namespace MS.Internal.Data
                 Task headSave = _head;
                 _head = null;
 
-                for (Task task = retryHead.Next; task != null; task = task.Next)
+                for (Task task = retryHead.Next; task is not null; task = task.Next)
                 {
                     AddTask(task.client, task.op);
                 }
@@ -346,7 +346,7 @@ namespace MS.Internal.Data
             // we use a heuristic, namely the creation of a new view.  This suggests
             // that there is new activity, which often means that old content is
             // being replaced.  So perhaps the view table now has stale entries.
-            if (record != null && !record.IsInitialized)
+            if (record is not null && !record.IsInitialized)
             {
                 ScheduleCleanup();
             }
@@ -372,7 +372,7 @@ namespace MS.Internal.Data
             if (!_valueConverterTable.TryGetValue(key, out IValueConverter result))
             {
                 result = DefaultValueConverter.Create(sourceType, targetType, targetToSource, this);
-                if (result != null)
+                if (result is not null)
                 {
                     _valueConverterTable.Add(key, result);
                 }
@@ -424,7 +424,7 @@ namespace MS.Internal.Data
         internal void RegisterForCacheChanges(object item, object descriptor)
         {
             PropertyDescriptor pd = descriptor as PropertyDescriptor;
-            if (item != null && pd != null && ValueTable.ShouldCache(item, pd))
+            if (item is not null && pd is not null && ValueTable.ShouldCache(item, pd))
             {
                 _valueTable.RegisterForChanges(item, pd, this);
             }
@@ -625,12 +625,12 @@ namespace MS.Internal.Data
             // (in case Dispatcher and AppDomain are being shut down simultaneously
             // on two different threads)
             HybridDictionary asyncDispatchers = (HybridDictionary)Interlocked.Exchange(ref _asyncDispatchers, null);
-            if (asyncDispatchers != null)
+            if (asyncDispatchers is not null)
             {
                 foreach (object o in asyncDispatchers.Keys)
                 {
                     IAsyncDataDispatcher dispatcher = o as IAsyncDataDispatcher;
-                    if (dispatcher != null)
+                    if (dispatcher is not null)
                     {
                         dispatcher.CancelAllRequests();
                     }

@@ -84,7 +84,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
     public override void UpdateTarget()
     {
         BindingExpressionBase bindExpr = ActiveBindingExpression;
-        if (bindExpr != null)
+        if (bindExpr is not null)
         {
             bindExpr.UpdateTarget();
         }
@@ -95,7 +95,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
     public override void UpdateSource()
     {
         BindingExpressionBase bindExpr = ActiveBindingExpression;
-        if (bindExpr != null)
+        if (bindExpr is not null)
         {
             bindExpr.UpdateSource();
         }
@@ -115,7 +115,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
         bool result;
         BindingExpressionBase bindExpr = ActiveBindingExpression;
 
-        if (bindExpr != null)
+        if (bindExpr is not null)
         {
             result = bindExpr.SetValue(d, dp, value);
             if (result)
@@ -150,7 +150,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
     {
         FrameworkPropertyMetadata fwMetaData = dp.GetMetadata(d.DependencyObjectType) as FrameworkPropertyMetadata;
 
-        if ((fwMetaData != null && !fwMetaData.IsDataBindingAllowed) || dp.ReadOnly)
+        if ((fwMetaData is not null && !fwMetaData.IsDataBindingAllowed) || dp.ReadOnly)
             throw new ArgumentException(SR.Format(SR.PropertyNotBindable, dp.Name), "dp");
 
         // create the BindingExpression
@@ -215,7 +215,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
         for (int i = 0; i < count; ++i)
         {
             BindingExpressionBase b = MutableBindingExpressions[i];
-            if (b != null)
+            if (b is not null)
                 b.Detach();
         }
 
@@ -238,7 +238,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
         int index = MutableBindingExpressions.IndexOf(bindingExpression);
         DependencyObject target = TargetElement;
 
-        if (target != null && 0 <= index && index < AttentiveBindingExpressions)
+        if (target is not null && 0 <= index && index < AttentiveBindingExpressions)
         {
             // Optimization: only look for new ActiveBindingExpression when necessary:
             // 1. it is a higher priority BindingExpression (or there's no ActiveBindingExpression), or
@@ -252,7 +252,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
             // update the value
             UsingFallbackValue = false;
             BindingExpressionBase bindExpr = ActiveBindingExpression;
-            object newValue = (bindExpr != null) ? bindExpr.GetValue(target, TargetProperty) : UseFallbackValue();
+            object newValue = (bindExpr is not null) ? bindExpr.GetValue(target, TargetProperty) : UseFallbackValue();
             ChangeValue(newValue, true);
 
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.Transfer))
@@ -301,7 +301,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
         int index = MutableBindingExpressions.IndexOf(bindingExpression);
         DependencyObject target = TargetElement;
 
-        if (index >= 0 && target != null)
+        if (index >= 0 && target is not null)
         {
             // clean up the old BindingExpression
             bindingExpression.Detach();
@@ -324,7 +324,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
     {
         // react only if the active binding should react
         BindingExpressionBase active = ActiveBindingExpression;
-        return (active != null) && active.ShouldReactToDirtyOverride();
+        return (active is not null) && active.ShouldReactToDirtyOverride();
     }
 
     /// <summary>
@@ -333,7 +333,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
     internal override object GetRawProposedValue()
     {
         BindingExpressionBase bindExpr = ActiveBindingExpression;
-        if (bindExpr != null)
+        if (bindExpr is not null)
         {
             return bindExpr.GetRawProposedValue();
         }
@@ -346,7 +346,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
     internal override object ConvertProposedValue(object rawValue)
     {
         BindingExpressionBase bindExpr = ActiveBindingExpression;
-        if (bindExpr != null)
+        if (bindExpr is not null)
         {
             return bindExpr.ConvertProposedValue(rawValue);
         }
@@ -359,7 +359,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
     internal override bool ObtainConvertedProposedValue(BindingGroup bindingGroup)
     {
         BindingExpressionBase bindExpr = ActiveBindingExpression;
-        if (bindExpr != null)
+        if (bindExpr is not null)
         {
             return bindExpr.ObtainConvertedProposedValue(bindingGroup);
         }
@@ -375,7 +375,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
         object result;
         BindingExpressionBase bindExpr = ActiveBindingExpression;
 
-        if (bindExpr != null)
+        if (bindExpr is not null)
         {
             result = bindExpr.UpdateSource(convertedValue);
 
@@ -399,7 +399,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
     {
         bool result = true;
         BindingExpressionBase bindExpr = ActiveBindingExpression;
-        if (bindExpr != null)
+        if (bindExpr is not null)
         {
             result = bindExpr.UpdateSource(bindingGroup);
 
@@ -417,7 +417,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
     internal override void StoreValueInBindingGroup(object value, BindingGroup bindingGroup)
     {
         BindingExpressionBase bindExpr = ActiveBindingExpression;
-        if (bindExpr != null)
+        if (bindExpr is not null)
         {
             bindExpr.StoreValueInBindingGroup(value, bindingGroup);
         }
@@ -429,7 +429,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
     internal override bool Validate(object value, ValidationStep validationStep)
     {
         BindingExpressionBase bindExpr = ActiveBindingExpression;
-        if (bindExpr != null)
+        if (bindExpr is not null)
         {
             return bindExpr.Validate(value, validationStep);
         }
@@ -442,7 +442,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
     internal override bool CheckValidationRules(BindingGroup bindingGroup, ValidationStep validationStep)
     {
         BindingExpressionBase bindExpr = ActiveBindingExpression;
-        if (bindExpr != null)
+        if (bindExpr is not null)
         {
             return bindExpr.CheckValidationRules(bindingGroup, validationStep);
         }
@@ -458,7 +458,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
         Debug.Assert(NeedsValidation, "check NeedsValidation before calling this");
 
         BindingExpressionBase bindExpr = ActiveBindingExpression;
-        if (bindExpr != null)
+        if (bindExpr is not null)
         {
             return bindExpr.ValidateAndConvertProposedValue(out values);
         }
@@ -471,7 +471,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
     internal override object GetSourceItem(object newValue)
     {
         BindingExpressionBase bindExpr = ActiveBindingExpression;
-        if (bindExpr != null)
+        if (bindExpr is not null)
         {
             return bindExpr.GetSourceItem(newValue);
         }
@@ -481,7 +481,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
     internal override void UpdateCommitState()
     {
         BindingExpressionBase bindExpr = ActiveBindingExpression;
-        if (bindExpr != null)
+        if (bindExpr is not null)
         {
             AdoptProperties(bindExpr);
         }
@@ -589,7 +589,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
         {
             BindingExpressionBase bindExpr = MutableBindingExpressions[i];
             DependencySource[] sources = bindExpr.GetSources();
-            if (sources != null)
+            if (sources is not null)
             {
                 for (int j=0; j<sources.Length; ++j)
                 {

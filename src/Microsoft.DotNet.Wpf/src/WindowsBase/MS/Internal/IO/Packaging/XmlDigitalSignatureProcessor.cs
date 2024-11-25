@@ -97,7 +97,7 @@ namespace MS.Internal.IO.Packaging
         /// <returns>true if the data stream has not been altered since it was signed</returns>
         internal bool Verify(X509Certificate2 signer)
         {
-            Invariant.Assert(signer != null);
+            Invariant.Assert(signer is not null);
 
             // Create a SignedXml to do the dirty work
             SignedXml xmlSig = EnsureXmlSignatureParsed();
@@ -161,10 +161,10 @@ namespace MS.Internal.IO.Packaging
                         using (s)
                         {
                             // ensure hash algorithm object is available - re-use if possible
-                            if (((hashAlgorithm != null) && (!hashAlgorithm.CanReuseTransform)) ||
+                            if (((hashAlgorithm is not null) && (!hashAlgorithm.CanReuseTransform)) ||
                                 !string.Equals(partEntry.HashAlgorithm, currentHashAlgorithmName, StringComparison.Ordinal))
                             {
-                                if (hashAlgorithm != null)
+                                if (hashAlgorithm is not null)
                                     ((IDisposable)hashAlgorithm).Dispose();
 
                                 currentHashAlgorithmName = partEntry.HashAlgorithm;
@@ -193,7 +193,7 @@ namespace MS.Internal.IO.Packaging
                 }
                 finally
                 {
-                    if (hashAlgorithm != null)
+                    if (hashAlgorithm is not null)
                         ((IDisposable)hashAlgorithm).Dispose();
                 }
             }
@@ -302,7 +302,7 @@ namespace MS.Internal.IO.Packaging
                 if (_certificate is null)
                 {
                     // first look for cert part
-                    if (PackageSignature.GetCertificatePart() != null)
+                    if (PackageSignature.GetCertificatePart() is not null)
                         _certificate = PackageSignature.GetCertificatePart().GetCertificate();
                     else
                     {
@@ -321,7 +321,7 @@ namespace MS.Internal.IO.Packaging
                                 }
 
                                 // just need one for now
-                                if (_certificate != null)
+                                if (_certificate is not null)
                                     break;
                             }
 
@@ -420,7 +420,7 @@ namespace MS.Internal.IO.Packaging
             HashAlgorithm hashAlgorithm)
         {
             List<String> transforms = null;
-            if (transformName != null)
+            if (transformName is not null)
             {
                 transforms = new List<String>(1);
                 transforms.Add(transformName);
@@ -449,7 +449,7 @@ namespace MS.Internal.IO.Packaging
             List<Stream> transformStreams = null;
 
             // canonicalize the part content if asked
-            if (transforms != null)
+            if (transforms is not null)
             {
                 transformStreams = new List<Stream>(transforms.Count);
                 transformStreams.Add(transformStream);
@@ -480,7 +480,7 @@ namespace MS.Internal.IO.Packaging
             String hashValueString = System.Convert.ToBase64String(HashStream(hashAlgorithm, transformStream));
 
             // dispose of any generated streams
-            if (transformStreams != null)
+            if (transformStreams is not null)
             {
                 foreach (Stream stream in transformStreams)
                     stream.Close();
@@ -534,10 +534,10 @@ namespace MS.Internal.IO.Packaging
 
             // In the case that we get a valid crypto object that is not a hash algorithm
             // we should attempt to dispose it if it offers IDisposable.
-            if (algorithm is null && o != null)
+            if (algorithm is null && o is not null)
             {
                 IDisposable disposable = o as IDisposable;
-                if (disposable != null)
+                if (disposable is not null)
                     disposable.Dispose();
             }
 
@@ -552,7 +552,7 @@ namespace MS.Internal.IO.Packaging
         /// </remarks>
         private static Transform StringToTransform(String transformName)
         {
-            Invariant.Assert(transformName != null);
+            Invariant.Assert(transformName is not null);
 
             if (string.Equals(transformName, SignedXml.XmlDsigC14NTransformUrl, StringComparison.Ordinal))
             {
@@ -578,7 +578,7 @@ namespace MS.Internal.IO.Packaging
         // make sure that methods calling this method are updated as required.
         internal static bool IsValidXmlCanonicalizationTransform(String transformName)
         {
-            Invariant.Assert(transformName != null);
+            Invariant.Assert(transformName is not null);
 
             if (string.Equals(transformName, SignedXml.XmlDsigC14NTransformUrl, StringComparison.Ordinal) ||
                 string.Equals(transformName, SignedXml.XmlDsigC14NWithCommentsTransformUrl, StringComparison.Ordinal))
@@ -665,7 +665,7 @@ namespace MS.Internal.IO.Packaging
                 throw new XmlException(SR.UnsupportedCanonicalizationMethod);
 
             // As per OPC spec, signature ID must be NCName
-            if (_signedXml.Signature.Id != null)
+            if (_signedXml.Signature.Id is not null)
             {
                 try
                 {
@@ -694,8 +694,8 @@ namespace MS.Internal.IO.Packaging
         private XmlDigitalSignatureProcessor(PackageDigitalSignatureManager manager,
             PackagePart signaturePart)
         {
-            Invariant.Assert(manager != null);
-            Invariant.Assert(signaturePart != null);
+            Invariant.Assert(manager is not null);
+            Invariant.Assert(signaturePart is not null);
 
             _signaturePart = signaturePart;
             _manager = manager;
@@ -766,7 +766,7 @@ namespace MS.Internal.IO.Packaging
                 }
 
                 // Track if we are matching the signature method in order to retry on failure
-                bool usingMatchingSignatureMethod = _signedXml.SignedInfo.SignatureMethod != null;
+                bool usingMatchingSignatureMethod = _signedXml.SignedInfo.SignatureMethod is not null;
 
                 // put it in the XML
                 if (embedCertificate)
@@ -815,7 +815,7 @@ namespace MS.Internal.IO.Packaging
             }
             finally
             {
-                if (key != null)
+                if (key is not null)
                     ((IDisposable)key).Dispose();
             }
 
@@ -858,15 +858,15 @@ namespace MS.Internal.IO.Packaging
             // Get[Algorithm]PrivateKey methods returns unique object while PrivateKey property returns shared one
             // Make sure to dispose the key if it is from Get[Algorithm]PrivateKey methods
             AsymmetricAlgorithm key = cert.GetRSAPrivateKey();
-            if (key != null)
+            if (key is not null)
                 return key;
 
             key = cert.GetDSAPrivateKey();
-            if (key != null)
+            if (key is not null)
                 return key;
 
             key = cert.GetECDsaPrivateKey();
-            if (key != null)
+            if (key is not null)
                 return key;
 
             // Get[Algorithm]PrivateKey methods would always have returned the private key if the PrivateKey property would
@@ -905,11 +905,11 @@ namespace MS.Internal.IO.Packaging
         private void AddCustomObjectTags(IEnumerable<System.Security.Cryptography.Xml.DataObject> signatureObjects,
             IEnumerable<System.Security.Cryptography.Xml.Reference> objectReferences)
         {
-            Invariant.Assert(_signedXml != null);
+            Invariant.Assert(_signedXml is not null);
 
 
             // add any references
-            if (objectReferences != null)
+            if (objectReferences is not null)
             {
                 // Validate the Reference tags in the SignedInfo as per the 
                 // restrictions imposed by the OPC spec
@@ -924,7 +924,7 @@ namespace MS.Internal.IO.Packaging
             }
 
             // any object tags
-            if (signatureObjects != null)
+            if (signatureObjects is not null)
             {
                 // thes have been pre-screened for matches against reserved OpcAttrValue and duplicates
                 foreach (DataObject obj in signatureObjects)
@@ -1053,7 +1053,7 @@ namespace MS.Internal.IO.Packaging
                 if (string.Equals(dataObject.Id, opcId, StringComparison.Ordinal))
                 {
                     // duplicates not allowed
-                    if (returnValue != null)
+                    if (returnValue is not null)
                         throw new XmlException(SR.SignatureObjectIdMustBeUnique);
 
                     returnValue = dataObject;
@@ -1061,7 +1061,7 @@ namespace MS.Internal.IO.Packaging
             }
 
             // Package object tag required
-            if (returnValue != null)
+            if (returnValue is not null)
                 return returnValue;
             else
                 throw new XmlException(SR.PackageSignatureObjectTagRequired);
@@ -1164,7 +1164,7 @@ namespace MS.Internal.IO.Packaging
         /// references</param>
         private void ValidateReferences(IEnumerable references, bool allowPackageSpecificReferences)
         {
-            Debug.Assert(references != null);
+            Debug.Assert(references is not null);
 
             bool packageReferenceFound = false;
             TransformChain currentTransformChain;

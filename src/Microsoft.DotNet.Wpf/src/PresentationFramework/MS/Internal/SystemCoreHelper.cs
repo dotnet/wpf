@@ -16,21 +16,21 @@ namespace MS.Internal
         internal static bool IsIDynamicMetaObjectProvider(object item)
         {
             SystemCoreExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemCore();
-            return (extensions != null) ? extensions.IsIDynamicMetaObjectProvider(item) : false;
+            return (extensions is not null) ? extensions.IsIDynamicMetaObjectProvider(item) : false;
         }
 
         // return a new DynamicPropertyAccessor
         internal static object NewDynamicPropertyAccessor(Type ownerType, string propertyName)
         {
             SystemCoreExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemCore();
-            return (extensions != null) ? extensions.NewDynamicPropertyAccessor(ownerType, propertyName) : null;
+            return (extensions is not null) ? extensions.NewDynamicPropertyAccessor(ownerType, propertyName) : null;
         }
 
         // return a DynamicIndexerAccessor with the given number of arguments
         internal static object GetIndexerAccessor(int rank)
         {
             SystemCoreExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemCore();
-            return (extensions != null) ? extensions.GetIndexerAccessor(rank) : null;
+            return (extensions is not null) ? extensions.GetIndexerAccessor(rank) : null;
         }
     }
 }

@@ -50,7 +50,7 @@ namespace System.Windows.Automation.Peers
         protected override List<AutomationPeer> GetChildrenCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 // We need to update children manually since wrapperPeer is not in the Automation Tree
                 // When containers are recycled the visual (DataGridRow) will point to a new item. ForceEnsureChildren will just refresh children of this peer,
@@ -68,7 +68,7 @@ namespace System.Windows.Automation.Peers
         protected override string GetClassNameCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.GetClassName();
             }
@@ -113,11 +113,11 @@ namespace System.Windows.Automation.Peers
             if (!IsOffscreen())
             {
                 AutomationPeer rowHeaderAutomationPeer = RowHeaderAutomationPeer;
-                if (rowHeaderAutomationPeer != null)
+                if (rowHeaderAutomationPeer is not null)
                 {
                     // Check DataGridRowHeader first
                     AutomationPeer found = rowHeaderAutomationPeer.GetPeerFromPoint(point);
-                    if (found != null)
+                    if (found is not null)
                     {
                         return found;
                     }
@@ -145,10 +145,10 @@ namespace System.Windows.Automation.Peers
 
             IList<DataGridColumn> columns = OwningDataGrid.Columns;
 
-            if (columns != null && columns.Count > 0)
+            if (columns is not null && columns.Count > 0)
             {
                 DataGridCellItemAutomationPeer startAfterItem = null;
-                if (startAfter != null)
+                if (startAfter is not null)
                 {
                     // get the peer corresponding to this provider
                     startAfterItem = PeerFromProvider(startAfter) as DataGridCellItemAutomationPeer;
@@ -156,7 +156,7 @@ namespace System.Windows.Automation.Peers
 
                 // startIndex refers to the index of the item just after startAfterItem
                 int startIndex = 0;
-                if (startAfterItem != null)
+                if (startAfterItem is not null)
                 {
                     if (startAfterItem.Column is null)
                     {
@@ -228,7 +228,7 @@ namespace System.Windows.Automation.Peers
 
             bool success = false;
             UIElement owningRow = GetWrapper();
-            if (owningRow != null)
+            if (owningRow is not null)
             {
                 IEditableCollectionView iecv = (IEditableCollectionView)this.OwningDataGrid.Items;
                 if (iecv.CurrentEditItem == item)
@@ -240,7 +240,7 @@ namespace System.Windows.Automation.Peers
                     if (this.OwningDataGrid.Columns.Count > 0)
                     {
                         DataGridCell cell = this.OwningDataGrid.TryFindCell(item, this.OwningDataGrid.Columns[0]);
-                        if (cell != null)
+                        if (cell is not null)
                         {
                             this.OwningDataGrid.UnselectAll();
                             cell.Focus();
@@ -385,7 +385,7 @@ namespace System.Windows.Automation.Peers
                     {
                         DataGridColumn column = dataGrid.ColumnFromDisplayIndex(i);
                         DataGridCellItemAutomationPeer peer = GetOrCreateCellItemPeer(column);
-                        if (peer != null)
+                        if (peer is not null)
                         {
                             selectedProviders.Add(ProviderFromPeer(peer));
                         }
@@ -417,12 +417,12 @@ namespace System.Windows.Automation.Peers
             IList childItems = null;
             bool usingItemsHost = false;
             DataGridRow row = GetWrapper() as DataGridRow;
-            if (row != null)
+            if (row is not null)
             {
-                if (row.CellsPresenter != null)
+                if (row.CellsPresenter is not null)
                 {
                     Panel itemHost = row.CellsPresenter.ItemsHost;
-                    if (itemHost != null)
+                    if (itemHost is not null)
                     {
                         childItems = itemHost.Children;
                         usingItemsHost = true;
@@ -435,7 +435,7 @@ namespace System.Windows.Automation.Peers
                 childItems = OwningDataGrid.Columns;
             }
 
-            if (childItems != null)
+            if (childItems is not null)
             {
                 children = new List<AutomationPeer>(childItems.Count);
                 foreach (object childItem in childItems)
@@ -450,7 +450,7 @@ namespace System.Windows.Automation.Peers
                         column = childItem as DataGridColumn;
                     }
 
-                    if (column != null)
+                    if (column is not null)
                     {
                         DataGridCellItemAutomationPeer peer = GetOrCreateCellItemPeer(column,/*addParentInfo*/ false );
                         children.Add(peer);
@@ -483,7 +483,7 @@ namespace System.Windows.Automation.Peers
             if (peer is null)
             {
                 peer = GetPeerFromWeakRefStorage(column);
-                if (peer != null && !addParentInfo)
+                if (peer is not null && !addParentInfo)
                 {
                     // As cached peer is getting used it must be invalidated. addParentInfo check ensures that call is coming from GetChildrenCore
                     peer.AncestorsInvalid = false;
@@ -494,7 +494,7 @@ namespace System.Windows.Automation.Peers
             if (peer is null)
             {
                 peer = new DataGridCellItemAutomationPeer(Item, column);
-                if (addParentInfo && peer != null)
+                if (addParentInfo && peer is not null)
                 {
                     peer.TrySetParentInfo(this);
                 }
@@ -502,7 +502,7 @@ namespace System.Windows.Automation.Peers
 
             //perform hookup so the events sourced from wrapper peer are fired as if from the data item
             AutomationPeer wrapperPeer = peer.OwningCellPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 wrapperPeer.EventsSource = peer;
             }
@@ -515,10 +515,10 @@ namespace System.Windows.Automation.Peers
         {
             DataGridCellItemAutomationPeer returnPeer = null;
             WeakReference weakRefEP = WeakRefElementProxyStorage[column];
-            if (weakRefEP != null)
+            if (weakRefEP is not null)
             {
                 ElementProxy provider = weakRefEP.Target as ElementProxy;
-                if (provider != null)
+                if (provider is not null)
                 {
                     returnPeer = PeerFromProvider(provider as IRawElementProviderSimple) as DataGridCellItemAutomationPeer;
                     if (returnPeer is null)
@@ -535,7 +535,7 @@ namespace System.Windows.Automation.Peers
         internal void AddProxyToWeakRefStorage(WeakReference wr, DataGridCellItemAutomationPeer cellItemPeer)
         {
             IList<DataGridColumn> columns = OwningDataGrid.Columns;
-            if (columns != null && columns.Contains(cellItemPeer.Column))
+            if (columns is not null && columns.Contains(cellItemPeer.Column))
             {
                 if (GetPeerFromWeakRefStorage(cellItemPeer.Column) is null)
                     WeakRefElementProxyStorage[cellItemPeer.Column] = wr;
@@ -558,7 +558,7 @@ namespace System.Windows.Automation.Peers
         {
             get
             {
-                return (this.OwningDataGrid != null &&
+                return (this.OwningDataGrid is not null &&
                     (this.OwningDataGrid.SelectionUnit == DataGridSelectionUnit.FullRow ||
                     this.OwningDataGrid.SelectionUnit == DataGridSelectionUnit.CellOrRowHeader));
             }
@@ -578,7 +578,7 @@ namespace System.Windows.Automation.Peers
             get
             {
                 DataGridRowAutomationPeer owningRowPeer = GetWrapperPeer() as DataGridRowAutomationPeer;
-                return (owningRowPeer != null) ? owningRowPeer.RowHeaderAutomationPeer : null;
+                return (owningRowPeer is not null) ? owningRowPeer.RowHeaderAutomationPeer : null;
             }
         }
 

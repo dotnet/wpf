@@ -55,7 +55,7 @@ namespace System.Windows.Media
         {
             if (destinationType == typeof(string))
             {
-                if (context != null)
+                if (context is not null)
                 {
                     // When serializing to XAML we want to write the FontFamily as an attribute if and
                     // only if it's a named font family.
@@ -64,7 +64,7 @@ namespace System.Windows.Media
                     // Suppress PRESharp warning that fontFamily can be null; apparently PRESharp
                     // doesn't understand short circuit evaluation of operator &&.
 #pragma warning suppress 56506
-                    return fontFamily != null && fontFamily.Source != null && fontFamily.Source.Length != 0;
+                    return fontFamily is not null && fontFamily.Source is not null && fontFamily.Source.Length != 0;
                 }
                 else
                 {
@@ -86,7 +86,7 @@ namespace System.Windows.Media
         /// </summary>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo cultureInfo, object o)
         {
-            if ((o != null) && (o.GetType() == typeof(string)))
+            if ((o is not null) && (o.GetType() == typeof(string)))
             {
                 string s = o as string;
 
@@ -101,12 +101,12 @@ namespace System.Windows.Media
 
                 Uri baseUri = null;
 
-                if (context != null)
+                if (context is not null)
                 {
                     IUriContext iuc = (IUriContext)context.GetService(typeof(IUriContext));
-                    if (iuc != null)
+                    if (iuc is not null)
                     {
-                        if (iuc.BaseUri != null)
+                        if (iuc.BaseUri is not null)
                         {
                             baseUri = iuc.BaseUri;
 
@@ -146,7 +146,7 @@ namespace System.Windows.Media
 
             if (destinationType == typeof(string))
             {
-                if (fontFamily.Source != null)
+                if (fontFamily.Source is not null)
                 {
                     // Usual case: it's a named font family.
                     return fontFamily.Source;
@@ -159,7 +159,7 @@ namespace System.Windows.Media
                     string name = null;
 
                     CultureInfo parentCulture = null;
-                    if (culture != null)
+                    if (culture is not null)
                     {
                         if (culture.Equals(CultureInfo.InvariantCulture))
                         {
@@ -168,7 +168,7 @@ namespace System.Windows.Media
                         else
                         {
                             parentCulture = culture.Parent;
-                            if (parentCulture != null && 
+                            if (parentCulture is not null && 
                                 (parentCulture.Equals(CultureInfo.InvariantCulture) || parentCulture == culture))
                             {
                                 parentCulture = null;
@@ -179,20 +179,20 @@ namespace System.Windows.Media
                     // Try looking up the name in the FamilyNames dictionary.
                     LanguageSpecificStringDictionary names = fontFamily.FamilyNames;
 
-                    if (culture != null && names.TryGetValue(XmlLanguage.GetLanguage(culture.IetfLanguageTag), out name))
+                    if (culture is not null && names.TryGetValue(XmlLanguage.GetLanguage(culture.IetfLanguageTag), out name))
                     {
                         // LanguageSpecificStringDictionary does not allow null string to be added.
-                        Debug.Assert(name != null);
+                        Debug.Assert(name is not null);
                     }
-                    else if (parentCulture != null && names.TryGetValue(XmlLanguage.GetLanguage(parentCulture.IetfLanguageTag), out name))
+                    else if (parentCulture is not null && names.TryGetValue(XmlLanguage.GetLanguage(parentCulture.IetfLanguageTag), out name))
                     {
                         // LanguageSpecificStringDictionary does not allow null string to be added.
-                        Debug.Assert(name != null);
+                        Debug.Assert(name is not null);
                     }
                     else if (names.TryGetValue(XmlLanguage.Empty, out name))
                     {
                         // LanguageSpecificStringDictionary does not allow null string to be added.
-                        Debug.Assert(name != null);
+                        Debug.Assert(name is not null);
                     }
                     else
                     {

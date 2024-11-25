@@ -185,7 +185,7 @@ namespace System.Windows.Ink
             }
 
             ExtendedProperty propertyToRemove = GetExtendedPropertyById(id);
-            System.Diagnostics.Debug.Assert(propertyToRemove != null);
+            System.Diagnostics.Debug.Assert(propertyToRemove is not null);
 
             _extendedProperties.Remove(propertyToRemove);
 
@@ -195,7 +195,7 @@ namespace System.Windows.Ink
             _optimisticIndex = -1;
 
             // fire notification event
-            if (this.Changed != null)
+            if (this.Changed is not null)
             {
                 ExtendedPropertiesChangedEventArgs eventArgs
                     = new ExtendedPropertiesChangedEventArgs(propertyToRemove, null);
@@ -259,7 +259,7 @@ namespace System.Windows.Ink
                         currentProperty.Value = value;
 
                         //raise change if anyone is listening
-                        if (this.Changed != null)
+                        if (this.Changed is not null)
                         {
                             ExtendedPropertiesChangedEventArgs eventArgs
                                 = new ExtendedPropertiesChangedEventArgs(
@@ -327,7 +327,7 @@ namespace System.Windows.Ink
             _extendedProperties.Add(extendedProperty);
 
             // fire notification event
-            if (this.Changed != null)
+            if (this.Changed is not null)
             {
                 ExtendedPropertiesChangedEventArgs eventArgs
                     = new ExtendedPropertiesChangedEventArgs(null, extendedProperty);

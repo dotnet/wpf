@@ -171,7 +171,7 @@ namespace MS.Internal.MilCodeGen.Generators
                         public bool ShouldSerialize[[bindType]]Bindings()
                         {
                             [[bindType]]BindingCollection bindingCollection = [[bindType]]BindingCollectionField.GetValue(this);
-                            if (bindingCollection != null && bindingCollection.Count > 0)
+                            if (bindingCollection is not null && bindingCollection.Count > 0)
                             {
                                 return true;
                             }
@@ -481,7 +481,7 @@ namespace MS.Internal.MilCodeGen.Generators
                         }
 
                         EventHandlersStore store = EventHandlersStore;
-                        if (store != null)
+                        if (store is not null)
                         {
                             store.RemoveRoutedEventHandler(routedEvent, handler);
 
@@ -515,7 +515,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     private void EventHandlersStoreRemove(EventPrivateKey key, Delegate handler)
                     {
                         EventHandlersStore store = EventHandlersStore;
-                        if (store != null)
+                        if (store is not null)
                         {
                             store.Remove(key, handler);
                             if (store.Count == 0)
@@ -546,7 +546,7 @@ namespace MS.Internal.MilCodeGen.Generators
                             GlobalEventManager.GetDTypedClassListeners(this.DependencyObjectType, e.RoutedEvent);
 
                         // Add all class listeners for this [[element.Name]]
-                        while (classListeners != null)
+                        while (classListeners is not null)
                         {
                             for(int i = 0; i < classListeners.Handlers.Length; i++)
                             {
@@ -559,12 +559,12 @@ namespace MS.Internal.MilCodeGen.Generators
                         // Get instance listeners for this [[element.Name]]
                         FrugalObjectList<RoutedEventHandlerInfo> instanceListeners = null;
                         EventHandlersStore store = EventHandlersStore;
-                        if (store != null)
+                        if (store is not null)
                         {
                             instanceListeners = store[e.RoutedEvent];
 
                             // Add all instance listeners for this [[element.Name]]
-                            if (instanceListeners != null)
+                            if (instanceListeners is not null)
                             {
                                 for (int i = 0; i < instanceListeners.Count; i++)
                                 {
@@ -744,7 +744,7 @@ namespace MS.Internal.MilCodeGen.Generators
                         [[inline]]
                             UIElement uie = sender as UIElement;
 
-                            if (uie != null)
+                            if (uie is not null)
                             {
                                 uie.[[evt.VirtualName]](e);
                             }
@@ -752,7 +752,7 @@ namespace MS.Internal.MilCodeGen.Generators
                             {
                                 ContentElement ce = sender as ContentElement;
 
-                                if (ce != null)
+                                if (ce is not null)
                                 {
                                     ce.[[evt.VirtualName]](e);
                                 }

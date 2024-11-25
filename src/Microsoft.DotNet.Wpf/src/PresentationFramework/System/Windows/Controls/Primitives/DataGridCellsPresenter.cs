@@ -66,7 +66,7 @@ namespace System.Windows.Controls.Primitives
         {
             // If a new template has just been generated then 
             // be sure to clear any stale ItemsHost references
-            if (InternalItemsHost != null && !this.IsAncestorOf(InternalItemsHost))
+            if (InternalItemsHost is not null && !this.IsAncestorOf(InternalItemsHost))
             {
                 InternalItemsHost = null;
             }
@@ -81,7 +81,7 @@ namespace System.Windows.Controls.Primitives
             base.OnApplyTemplate();
 
             DataGridRow owningRow = DataGridRowOwner;
-            if (owningRow != null)
+            if (owningRow is not null)
             {
                 owningRow.CellsPresenter = this;
                 Item = owningRow.Item;
@@ -116,7 +116,7 @@ namespace System.Windows.Controls.Primitives
             // We may have missed an Add / Remove of a column from the grid (DataGridRow.OnColumnsChanged)
             // Sync the MultipleCopiesCollection count and update the Column on changed cells
             MultipleCopiesCollection cellItems = ItemsSource as MultipleCopiesCollection;
-            if (cellItems != null)
+            if (cellItems is not null)
             {
                 DataGridCell cell;
                 ObservableCollection<DataGridColumn> columns = dataGridOwner.Columns;
@@ -141,7 +141,7 @@ namespace System.Windows.Controls.Primitives
                 // if the DataGridCellsPanel missed out on some column virtualization
                 // activity while the row was virtualized, it needs to be measured
                 DataGridCellsPanel cellsPanel = InternalItemsHost as DataGridCellsPanel;
-                if (cellsPanel != null)
+                if (cellsPanel is not null)
                 {
                     if (cellsPanel.HasCorrectRealizedColumns)
                     {
@@ -164,7 +164,7 @@ namespace System.Windows.Controls.Primitives
                 for (int i = 0; i < dirtyCount; i++)
                 {
                     cell = (DataGridCell)ItemContainerGenerator.ContainerFromIndex(i);
-                    if (cell != null)
+                    if (cell is not null)
                     {
                         cell.PrepareCell(row.Item, this, row);
                         if (!measureAndArrangeInvalidated && !DoubleUtil.AreClose(cell.ActualWidth, columns[i].Width.DisplayValue))
@@ -182,7 +182,7 @@ namespace System.Windows.Controls.Primitives
                     for (int i = dirtyCount; i < newColumnCount; i++)
                     {
                         cell = (DataGridCell)ItemContainerGenerator.ContainerFromIndex(i);
-                        if (cell != null)
+                        if (cell is not null)
                         {
                             if (!DoubleUtil.AreClose(cell.ActualWidth, columns[i].Width.DisplayValue))
                             {
@@ -252,7 +252,7 @@ namespace System.Windows.Controls.Primitives
         {
             ObservableCollection<DataGridColumn> columns = Columns;
 
-            if (columns != null)
+            if (columns is not null)
             {
                 // Either update or create a collection that will return the row's data item
                 // n number of times, where n is the number of columns.
@@ -345,7 +345,7 @@ namespace System.Windows.Controls.Primitives
         {
             // Update the ItemsSource for the cells
             MultipleCopiesCollection cellItems = ItemsSource as MultipleCopiesCollection;
-            if (cellItems != null)
+            if (cellItems is not null)
             {
                 cellItems.MirrorCollectionChange(e);
             }
@@ -426,7 +426,7 @@ namespace System.Windows.Controls.Primitives
                 DataGridHelper.ShouldRefreshCellContent(target))
             {
                 ContainerTracking<DataGridCell> tracker = _cellTrackingRoot;
-                while (tracker != null)
+                while (tracker is not null)
                 {
                     tracker.Container.NotifyPropertyChanged(d, propertyName, e, target);
                     tracker = tracker.Next;
@@ -534,7 +534,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         private void InvalidateDataGridCellsPanelMeasureAndArrangeImpl(bool invalidateMeasureUptoRowsPresenter)
         {
-            if (_internalItemsHost != null)
+            if (_internalItemsHost is not null)
             {
                 _internalItemsHost.InvalidateMeasure();
                 _internalItemsHost.InvalidateArrange();
@@ -542,7 +542,7 @@ namespace System.Windows.Controls.Primitives
                 if(invalidateMeasureUptoRowsPresenter)
                 {
                     DataGrid dataGrid = DataGridOwner;
-                    if(dataGrid != null && dataGrid.InternalItemsHost != null)
+                    if(dataGrid is not null && dataGrid.InternalItemsHost is not null)
                     {
                         Helper.InvalidateMeasureOnPath(_internalItemsHost, dataGrid.InternalItemsHost, false/*duringMeasure*/, true/*includePathEnd*/);
                     }
@@ -584,7 +584,7 @@ namespace System.Windows.Controls.Primitives
         internal void ScrollCellIntoView(int index)
         {
             DataGridCellsPanel itemsHost = InternalItemsHost as DataGridCellsPanel;
-            if (itemsHost != null)
+            if (itemsHost is not null)
             {
                 itemsHost.InternalBringIndexIntoView(index);
                 return;
@@ -603,7 +603,7 @@ namespace System.Windows.Controls.Primitives
             get
             {
                 DataGridRow parent = DataGridRowOwner;
-                if (parent != null)
+                if (parent is not null)
                 {
                     return parent.DataGridOwner;
                 }
@@ -625,8 +625,8 @@ namespace System.Windows.Controls.Primitives
             get
             {
                 DataGridRow owningRow = DataGridRowOwner;
-                DataGrid owningDataGrid = (owningRow != null) ? owningRow.DataGridOwner : null;
-                return (owningDataGrid != null) ? owningDataGrid.Columns : null;
+                DataGrid owningDataGrid = (owningRow is not null) ? owningRow.DataGridOwner : null;
+                return (owningDataGrid is not null) ? owningDataGrid.Columns : null;
             }
         }
 

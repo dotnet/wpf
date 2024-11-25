@@ -169,20 +169,20 @@ namespace MS.Internal.Interop
             ContentElement contentElement;
             AutomationPeer peer = null;
 
-            if ((uiElement = focusedObject as UIElement) != null)
+            if ((uiElement = focusedObject as UIElement) is not null)
             {
                 peer = uiElement.GetAutomationPeer();
             }
-            else if ((uiElement3D = focusedObject as UIElement3D) != null)
+            else if ((uiElement3D = focusedObject as UIElement3D) is not null)
             {
                 peer = uiElement3D.GetAutomationPeer();
             }
-            else if ((contentElement = focusedObject as ContentElement) != null)
+            else if ((contentElement = focusedObject as ContentElement) is not null)
             {
                 peer = contentElement.GetAutomationPeer();
             }
 
-            return peer?.GetPattern(PatternInterface.Text) != null;
+            return peer?.GetPattern(PatternInterface.Text) is not null;
         }
 
         /// <summary>

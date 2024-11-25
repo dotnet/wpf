@@ -51,7 +51,7 @@ namespace Microsoft.Windows.Automation.Peers
             List<AutomationPeer> children = base.GetChildrenCore();
             RibbonApplicationMenu menu = Owner as RibbonApplicationMenu; 
             UIElement element = menu.FooterPaneHost;
-            if (element != null)
+            if (element is not null)
             {
                 if (children is null)
                 {
@@ -61,7 +61,7 @@ namespace Microsoft.Windows.Automation.Peers
             }
 
             element = menu.AuxiliaryPaneHost;
-            if (element != null)
+            if (element is not null)
             {
                 if (children is null)
                 {

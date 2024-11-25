@@ -39,7 +39,7 @@ namespace System.Windows
             ObjectWriterParentSettings = objectWriterFactory.GetParentSettings();
             bool assemblyTargetsFramework2 = false;
             // The local assembly can be null if it is not specified in the XamlReaderSettings.
-            if (schemaContext.LocalAssembly != null)
+            if (schemaContext.LocalAssembly is not null)
             {
                 assemblyTargetsFramework2 = schemaContext.LocalAssembly.ImageRuntimeVersion.StartsWith("v2", StringComparison.Ordinal);
             }

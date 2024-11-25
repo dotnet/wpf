@@ -30,11 +30,11 @@ namespace Microsoft.Windows.Input
         {
             ICommand command = commandSource.Command;
             
-            if (command != null)
+            if (command is not null)
             {
                 RoutedCommand routed = command as RoutedCommand;
 
-                if (routed != null)
+                if (routed is not null)
                 {
                     IInputElement target = commandSource.CommandTarget;
 
@@ -62,14 +62,14 @@ namespace Microsoft.Windows.Input
                     {
                         case CommandOperation.Preview:
                             previewCommand = command as IPreviewCommand;
-                            if (previewCommand != null)
+                            if (previewCommand is not null)
                             {
                                 previewCommand.Preview(previewParameter);
                             }
                             break;
                         case CommandOperation.CancelPreview:
                             previewCommand = command as IPreviewCommand;
-                            if (previewCommand != null)
+                            if (previewCommand is not null)
                             {
                                 previewCommand.CancelPreview();
                             }
@@ -92,11 +92,11 @@ namespace Microsoft.Windows.Input
         {
             ICommand command = commandSource.Command;
 
-            if (command != null)
+            if (command is not null)
             {
                 RoutedCommand routed = command as RoutedCommand;
 
-                if (routed != null)
+                if (routed is not null)
                 {
                     IInputElement target = commandSource.CommandTarget;
 

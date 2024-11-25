@@ -47,10 +47,10 @@ namespace System.Windows.Xps.Serialization
         {
             String  jobName = null;
 
-            if(o != null)
+            if(o is not null)
             {
                 IFrameworkInputElement inputElement = o as IFrameworkInputElement;
-                if (inputElement != null)
+                if (inputElement is not null)
                 {
                     jobName = inputElement.Name;
                 }
@@ -176,7 +176,7 @@ namespace System.Windows.Xps.Serialization
 
             Visual visual = (Visual)serializedObject as Visual;
 
-            if (visual != null)
+            if (visual is not null)
             {
                 ngcManager.WalkVisual(visual);
             }
@@ -243,7 +243,7 @@ namespace System.Windows.Xps.Serialization
 
             Visual visual = (Visual)serializedObject as Visual;
 
-            if (visual != null)
+            if (visual is not null)
             {
                 NgcManager.WalkVisual(visual);
             }
@@ -320,7 +320,7 @@ namespace System.Windows.Xps.Serialization
         {
 
             DocumentPage dp = serializedObject as DocumentPage;
-            if (dp != null)
+            if (dp is not null)
             {
                 Toolbox.EmitEvent(EventTrace.Event.WClientDRXGetVisualStart);
                 Visual pageRootVisual = dp.Visual;
@@ -398,8 +398,8 @@ namespace System.Windows.Xps.Serialization
             //
             // For FlowDocument, the application might attach a PrintTicket DP on it.
             //
-            DependencyObject dependencyObject = paginator != null ? paginator.Source as DependencyObject : null;
-            if (dependencyObject != null)
+            DependencyObject dependencyObject = paginator is not null ? paginator.Source as DependencyObject : null;
+            if (dependencyObject is not null)
             {
                 if(!ngcManager.IsPrintTicketEventHandlerEnabled)
                 {
@@ -409,7 +409,7 @@ namespace System.Windows.Xps.Serialization
 
             ngcManager.StartDocument(paginator,true);
 
-            if (paginator != null)
+            if (paginator is not null)
             {
                 for (int i = 0; !paginator.IsPageCountValid || (i < paginator.PageCount); i++)
                 {
@@ -417,7 +417,7 @@ namespace System.Windows.Xps.Serialization
 
                     ReachSerializer serializer = SerializationManager.GetSerializer(page);
 
-                    if (serializer != null)
+                    if (serializer is not null)
                     {
                         serializer.SerializeObject(page);
                     }
@@ -582,11 +582,11 @@ namespace System.Windows.Xps.Serialization
             //
             // Serialize each PageContent in PageContentColleciton
             //
-            if (drList != null)
+            if (drList is not null)
             {
                 foreach (object documentReference in drList)
                 {
-                    if (documentReference != null)
+                    if (documentReference is not null)
                     {
                         //
                         // Serialize the current ui element
@@ -609,14 +609,14 @@ namespace System.Windows.Xps.Serialization
         {
             IDocumentPaginatorSource idp = dre.GetDocument(false);
 
-            if (idp != null)
+            if (idp is not null)
             {
                 FixedDocument fixedDoc = idp as FixedDocument;
 
-                if (fixedDoc != null)
+                if (fixedDoc is not null)
                 {
                     ReachSerializer serializer = SerializationManager.GetSerializer(fixedDoc);
-                    if (serializer != null)
+                    if (serializer is not null)
                     {
                         serializer.SerializeObject(fixedDoc);
                     }
@@ -624,7 +624,7 @@ namespace System.Windows.Xps.Serialization
                 else
                 {
                     ReachSerializer serializer = SerializationManager.GetSerializer(idp.DocumentPaginator);
-                    if (serializer != null)
+                    if (serializer is not null)
                     {
                         serializer.SerializeObject(idp);
                     }
@@ -724,7 +724,7 @@ namespace System.Windows.Xps.Serialization
             //
             foreach (object pageContent in enumerableObject)
             {
-                if (pageContent != null)
+                if (pageContent is not null)
                 {
                     // Serialize the current item
                     SerializePageContent(pageContent);
@@ -822,7 +822,7 @@ namespace System.Windows.Xps.Serialization
         {
             FixedPage fixedPage = Toolbox.GetPageRoot(serializedObject);
 
-            if(fixedPage != null)
+            if(fixedPage is not null)
             {
                 ReachSerializer serializer = SerializationManager.GetSerializer(fixedPage);
 
@@ -942,7 +942,7 @@ namespace System.Windows.Xps.Serialization
             //
             foreach (object uiElement in enumerableObject)
             {
-                if (uiElement != null)
+                if (uiElement is not null)
                 {
                     //
                     // Serialize the current ui element
@@ -964,7 +964,7 @@ namespace System.Windows.Xps.Serialization
         {
             Visual visual = uiElement as Visual;
 
-            if(visual != null)
+            if(visual is not null)
             {
                 ReachSerializer serializer = SerializationManager.GetSerializer(visual);
 

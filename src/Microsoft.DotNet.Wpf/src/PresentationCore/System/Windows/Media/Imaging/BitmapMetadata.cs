@@ -320,7 +320,7 @@ namespace System.Windows.Media.Imaging
                             }
                             finally
                             {
-                                if (pIMetadataReader != null)
+                                if (pIMetadataReader is not null)
                                 {
                                     pIMetadataReader.Dispose();
                                 }
@@ -501,8 +501,8 @@ namespace System.Windows.Media.Imaging
                 BitmapMetadataBlockWriter blockWriter
             )
             {
-                Debug.Assert(blockWriter != null);
-                Debug.Assert(blockWriter.MetadataBlocks != null);
+                Debug.Assert(blockWriter is not null);
+                Debug.Assert(blockWriter.MetadataBlocks is not null);
 
                 _metadataBlocks = blockWriter.MetadataBlocks;
                 _index = 0;
@@ -1054,12 +1054,12 @@ namespace System.Windows.Media.Imaging
                 if (propVar.RequiresSyncObject)
                 {
                     BitmapMetadata metadata = value as BitmapMetadata;
-                    Invariant.Assert(metadata != null);
+                    Invariant.Assert(metadata is not null);
 
-                    #pragma warning suppress 6506 // Invariant.Assert(metadata != null);
+                    #pragma warning suppress 6506 // Invariant.Assert(metadata is not null);
                     metadata.VerifyAccess();
 
-                    #pragma warning suppress 6506 // Invariant.Assert(metadata != null);
+                    #pragma warning suppress 6506 // Invariant.Assert(metadata is not null);
                     lock (metadata._syncObject)
                     {
                         lock (_syncObject)
@@ -1128,7 +1128,7 @@ namespace System.Windows.Media.Imaging
                     {
                         BitmapMetadata metadata = objValue as BitmapMetadata;
 
-                        if (metadata != null)
+                        if (metadata is not null)
                         {
                             metadata.Freeze();
                         }
@@ -1249,7 +1249,7 @@ namespace System.Windows.Media.Imaging
             set
             {
                 String[] strAuthors = null;
-                if (value != null)
+                if (value is not null)
                 {
                     strAuthors = new String[value.Count];
                     value.CopyTo(strAuthors, 0);
@@ -1283,7 +1283,7 @@ namespace System.Windows.Media.Imaging
             {
                 object rating = GetQuery(policy_Rating);
 
-                if (rating != null && rating.GetType() == typeof(ushort))
+                if (rating is not null && rating.GetType() == typeof(ushort))
                 {
                     return System.Convert.ToInt32(rating, CultureInfo.InvariantCulture);
                 }
@@ -1334,7 +1334,7 @@ namespace System.Windows.Media.Imaging
             get
             {
                 object fileTime = GetQuery(policy_DateTaken);
-                if (fileTime != null && fileTime.GetType() == typeof(System.Runtime.InteropServices.ComTypes.FILETIME))
+                if (fileTime is not null && fileTime.GetType() == typeof(System.Runtime.InteropServices.ComTypes.FILETIME))
                 {
                     System.Runtime.InteropServices.ComTypes.FILETIME time = (System.Runtime.InteropServices.ComTypes.FILETIME)fileTime;
                     DateTime dateTime = DateTime.FromFileTime( (((long)time.dwHighDateTime) << 32) + (uint)time.dwLowDateTime );
@@ -1434,7 +1434,7 @@ namespace System.Windows.Media.Imaging
             set
             {
                 String[] strKeywords = null;
-                if (value != null)
+                if (value is not null)
                 {
                     strKeywords = new String[value.Count];
                     value.CopyTo(strKeywords, 0);
@@ -1465,7 +1465,7 @@ namespace System.Windows.Media.Imaging
 
             if (_metadataHandle is null)
             {
-                if (blockWriter != null)
+                if (blockWriter is not null)
                 {
                     InitializeFromBlockWriter(blockWriter, sourceBitmapMetadata._syncObject);
                 }

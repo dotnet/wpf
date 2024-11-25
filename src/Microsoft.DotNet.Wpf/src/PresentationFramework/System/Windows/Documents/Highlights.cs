@@ -239,7 +239,7 @@ namespace System.Windows.Documents
         /// </param>
         internal void RemoveLayer(HighlightLayer highlightLayer)
         {
-            Invariant.Assert(_layers != null && _layers.Contains(highlightLayer));
+            Invariant.Assert(_layers is not null && _layers.Contains(highlightLayer));
 
             // Raise final change event to cover existing content.
             RaiseChangedEventForLayerContent(highlightLayer);
@@ -326,7 +326,7 @@ namespace System.Windows.Documents
         private void OnLayerChanged(object sender, HighlightChangedEventArgs args)
         {
             // Forward on the event to any listeners.
-            if (this.Changed != null)
+            if (this.Changed is not null)
             {
                 Changed(this, args);
             }
@@ -339,7 +339,7 @@ namespace System.Windows.Documents
             StaticTextPointer highlightTransitionPosition;
             StaticTextPointer highlightRangeStart;
 
-            if (this.Changed != null)
+            if (this.Changed is not null)
             {
                 // Build a list of all highlights in this layer -- they're all
                 // going to "change" as the layer is added/removed.

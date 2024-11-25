@@ -112,7 +112,7 @@ namespace MS.Internal.Printing.Configuration
             CollateOption option = baseOption as CollateOption;
 
             // validate the option is complete before adding it to the collection
-            if (option._optionName != null)
+            if (option._optionName is not null)
             {
                 int enumValue = PrintSchemaMapper.SchemaNameToEnumValueWithArray(
                                     PrintSchemaTags.Keywords.CollateKeys.CollationNames,

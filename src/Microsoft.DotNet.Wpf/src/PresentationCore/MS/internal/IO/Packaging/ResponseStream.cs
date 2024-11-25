@@ -47,8 +47,8 @@ namespace MS.Internal.IO.Packaging
         /// <param name="container">container to hold on to</param>
         internal ResponseStream(Stream s, PackWebResponse response, Stream owningStream, System.IO.Packaging.Package container)
         {
-            Debug.Assert(container != null, "Logic error: use other constructor for full package request streams");
-            Debug.Assert(owningStream != null, "Logic error: use other constructor for full package request streams");
+            Debug.Assert(container is not null, "Logic error: use other constructor for full package request streams");
+            Debug.Assert(owningStream is not null, "Logic error: use other constructor for full package request streams");
             Init(s, response, owningStream, container);
         }
 
@@ -71,8 +71,8 @@ namespace MS.Internal.IO.Packaging
         /// <param name="container">container to hold on to</param>
         private void Init(Stream s, PackWebResponse response, Stream owningStream, System.IO.Packaging.Package container)
         {
-            Debug.Assert(s != null, "Logic error: base stream cannot be null");
-            Debug.Assert(response != null, "Logic error: response cannot be null");
+            Debug.Assert(s is not null, "Logic error: base stream cannot be null");
+            Debug.Assert(response is not null, "Logic error: response cannot be null");
 
             _innerStream = s;
             _response = response;
@@ -242,7 +242,7 @@ namespace MS.Internal.IO.Packaging
                     // close the Part or NetStream
                     _innerStream.Close();
 
-                    if (_owningStream != null)
+                    if (_owningStream is not null)
                     {
                         // in this case, the innerStream was the part so this is the NetStream
                         _owningStream.Close();

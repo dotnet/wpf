@@ -60,10 +60,10 @@ namespace Microsoft.Windows.Automation.Peers
 
             // Add TextBox to the children collection
             RibbonComboBox owner = OwningComboBox;
-            if (owner != null && owner.IsEditable && owner.EditableTextBoxSite != null)
+            if (owner is not null && owner.IsEditable && owner.EditableTextBoxSite is not null)
             {
                 AutomationPeer peer = CreatePeerForElement(owner.EditableTextBoxSite);
-                if (peer != null)
+                if (peer is not null)
                 {
                     if (children is null)
                     {

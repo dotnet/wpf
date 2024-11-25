@@ -101,17 +101,17 @@ namespace Microsoft.Windows.Controls.Ribbon
             base.OnApplyTemplate();
 
             // remove any old handlers
-            if (_filterMenuButton != null)
+            if (_filterMenuButton is not null)
             {
-                Debug.Assert(_filterMenuButton.ItemContainerGenerator != null);
+                Debug.Assert(_filterMenuButton.ItemContainerGenerator is not null);
                 _filterMenuButton.ItemContainerGenerator.StatusChanged -= OnFilterButtonItemContainerGeneratorStatusChanged;
             }
 
             _filterMenuButton = this.Template.FindName(_filterMenuButtonTemplatePartName, this) as RibbonFilterMenuButton;
 
-            if (_filterMenuButton != null)
+            if (_filterMenuButton is not null)
             {
-                Debug.Assert(_filterMenuButton.ItemContainerGenerator != null);
+                Debug.Assert(_filterMenuButton.ItemContainerGenerator is not null);
                 _filterMenuButton.ItemContainerGenerator.StatusChanged += new EventHandler(OnFilterButtonItemContainerGeneratorStatusChanged);
                 Binding itemsSourceBinding = new Binding() { Source = this._categoryFilters };
                 _filterMenuButton.SetBinding(RibbonMenuButton.ItemsSourceProperty, itemsSourceBinding);
@@ -125,10 +125,10 @@ namespace Microsoft.Windows.Controls.Ribbon
             PropertyHelper.TransferProperty(this, RibbonControlService.CanAddToQuickAccessToolBarDirectlyProperty);
 
 #if IN_RIBBON_GALLERY
-            if (_scrollViewer != null)
+            if (_scrollViewer is not null)
             {
                 InRibbonGallery parentInRibbonGallery = ParentInRibbonGallery;
-                if (parentInRibbonGallery != null)
+                if (parentInRibbonGallery is not null)
                 {
                     parentInRibbonGallery.CommandTarget = _scrollViewer;
                 }
@@ -190,9 +190,9 @@ namespace Microsoft.Windows.Controls.Ribbon
             RibbonGallery gallery = (RibbonGallery)d;
             object currentFilter = gallery.CurrentFilter;
             StyleSelector filterItemContainerStyleSelector = gallery.FilterItemContainerStyleSelector;
-            if (currentFilter != null &&
-                filterItemContainerStyleSelector != null &&
-                gallery._filterMenuButton != null)
+            if (currentFilter is not null &&
+                filterItemContainerStyleSelector is not null &&
+                gallery._filterMenuButton is not null)
             {
                 return filterItemContainerStyleSelector.SelectStyle(currentFilter, gallery._filterMenuButton.CurrentFilterItem);
             }
@@ -210,10 +210,10 @@ namespace Microsoft.Windows.Controls.Ribbon
         // We also need to run this logic in OnApplyTemplate AFTER Style bindings have been set up.
         internal void SetHeaderBindingForCurrentFilterItem()
         {
-            if (_filterMenuButton != null)
+            if (_filterMenuButton is not null)
             {
                 RibbonMenuItem currentFilterItem = _filterMenuButton.CurrentFilterItem;
-                if (currentFilterItem != null)
+                if (currentFilterItem is not null)
                 {
                     currentFilterItem.ClearValue(RibbonMenuItem.HeaderProperty);
 
@@ -254,10 +254,10 @@ namespace Microsoft.Windows.Controls.Ribbon
         // a Setter for HeaderTemplate in _filterMenuButton's Style, if present, will be honored.
         internal void SetTemplateBindingForCurrentFilterItem()
         {
-            if (_filterMenuButton != null)
+            if (_filterMenuButton is not null)
             {
                 RibbonMenuItem currentFilterItem = _filterMenuButton.CurrentFilterItem;
-                if (currentFilterItem != null)
+                if (currentFilterItem is not null)
                 {
                     // Assume we are not going to set up a binding for template.  The user may using FilterItemContainerStyle with a Setter
                     // for HeaderTemplate.  In this case, we need to honor that setter so long as an item template for the filter has not
@@ -270,14 +270,14 @@ namespace Microsoft.Windows.Controls.Ribbon
                     {
                         if (object.ReferenceEquals(CurrentFilter, AllFilterItem))
                         {
-                            if (this.AllFilterItemTemplate != null)
+                            if (this.AllFilterItemTemplate is not null)
                             {
                                 templateShouldBeBound = true;
                             }
                         }
                         else
                         {
-                            if (this.FilterItemTemplate != null)
+                            if (this.FilterItemTemplate is not null)
                             {
                                 templateShouldBeBound = true;
                             }
@@ -319,9 +319,9 @@ namespace Microsoft.Windows.Controls.Ribbon
             RibbonGallery gallery = (RibbonGallery)d;
             object currentFilter = gallery.CurrentFilter;
             DataTemplateSelector filterItemTemplateSelector = gallery.FilterItemTemplateSelector;
-            if (currentFilter != null &&
-                filterItemTemplateSelector != null &&
-                gallery._filterMenuButton != null)
+            if (currentFilter is not null &&
+                filterItemTemplateSelector is not null &&
+                gallery._filterMenuButton is not null)
             {
                 return filterItemTemplateSelector.SelectTemplate(currentFilter, gallery._filterMenuButton.CurrentFilterItem);
             }
@@ -335,7 +335,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 RepopulateCategoryFilters();
                 SynchronizeWithCurrentItem();
 
-                if (_itemsPresenter != null)
+                if (_itemsPresenter is not null)
                 {
                     ItemsHostSite = (Panel)(ItemsPanel.FindName(RibbonGallery.ItemsHostPanelName, _itemsPresenter));
                 }
@@ -590,14 +590,14 @@ namespace Microsoft.Windows.Controls.Ribbon
         // Invalidate Measure on all the Categories' panel.
         internal void InvalidateMeasureOnAllCategoriesPanel()
         {
-            if (Items != null)
+            if (Items is not null)
             {
                 for (int i = 0; i < Items.Count; i++)
                 {
                     RibbonGalleryCategory category = (RibbonGalleryCategory)ItemContainerGenerator.ContainerFromIndex(i);
-                    if (category != null)
+                    if (category is not null)
                     {
-                        if (category.ItemsHostSite != null)
+                        if (category.ItemsHostSite is not null)
                         {
                             TreeHelper.InvalidateMeasureForVisualAncestorPath<RibbonGallery>(category.ItemsHostSite, false);
                         }
@@ -641,7 +641,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             RaiseEvent(e);
 
-            if (ShouldExecuteCommand && !e.Handled && e.NewValue != null)
+            if (ShouldExecuteCommand && !e.Handled && e.NewValue is not null)
             {
                 CommandHelpers.InvokeCommandSource(CommandParameter, PreviewCommandParameter, this, CommandOperation.Execute);
             }
@@ -720,7 +720,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
                 if (!VerifyEqual(oldItem, newItem))
                 {
-                    if (newItem != null)
+                    if (newItem is not null)
                     {
                         RibbonGalleryCategory category = null;
                         RibbonGalleryItem galleryItem = null;
@@ -824,7 +824,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
                 if (!VerifyEqual(oldValue, newValue))
                 {
-                    if (newValue != null)
+                    if (newValue is not null)
                     {
                         object newItem;
                         RibbonGalleryCategory category = null;
@@ -907,7 +907,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             RibbonGallery gallery = (RibbonGallery)d;
             ValueSource valueSource = DependencyPropertyHelper.GetValueSource(gallery, RibbonGallery.SelectedValueProperty);
 
-            if (valueSource.IsCoerced || gallery.SelectedValue != null)
+            if (valueSource.IsCoerced || gallery.SelectedValue is not null)
             {
                 gallery.CoerceValue(SelectedValueProperty);
             }
@@ -956,7 +956,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
             else
             {
-                IsSynchronizedWithCurrentItemInternal = IsInitialized && (RibbonGallery.GetSourceCollectionView(this) != null);
+                IsSynchronizedWithCurrentItemInternal = IsInitialized && (RibbonGallery.GetSourceCollectionView(this) is not null);
             }
 
 
@@ -976,7 +976,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 for (int i = 0; i < Items.Count; i++ )
                 {
                     RibbonGalleryCategory category = ItemContainerGenerator.ContainerFromIndex(i) as RibbonGalleryCategory;
-                    if (category != null)
+                    if (category is not null)
                     {
                         if (newValue)
                         {
@@ -1002,7 +1002,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (IsSynchronizedWithCurrentItemInternal)
             {
                 object selectedItem = SelectedItem;
-                if (selectedItem != null)
+                if (selectedItem is not null)
                 {
                     // If there is a SelectedItem synchronize
                     // CurrentItem to match it
@@ -1037,9 +1037,9 @@ namespace Microsoft.Windows.Controls.Ribbon
             RibbonGalleryCategory category,
             object selectedItem)
         {
-            Debug.Assert(selectedItem != null, "Must have a selectedItem to synchronize with.");
+            Debug.Assert(selectedItem is not null, "Must have a selectedItem to synchronize with.");
 
-            if (category != null)
+            if (category is not null)
             {
                 // Synchronize currency on the category containing the SelectedItem
                 MoveCurrentTo(category.CollectionView, selectedItem);
@@ -1049,7 +1049,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
 
             // Synchronize currency on the source CollectionView to be the SelectedItem
-            int index = SourceCollectionView != null ? SourceCollectionView.IndexOf(selectedItem) : -1;
+            int index = SourceCollectionView is not null ? SourceCollectionView.IndexOf(selectedItem) : -1;
             if (index > -1)
             {
                 MoveCurrentToPosition(SourceCollectionView, index);
@@ -1094,7 +1094,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             CurrentChangedEventManager.AddListener(CollectionView, this);
 
             // Listen for currency changes on the Source CollectionView of the Gallery
-            if (SourceCollectionView != null)
+            if (SourceCollectionView is not null)
             {
                 CurrentChangedEventManager.AddListener(SourceCollectionView, this);
             }
@@ -1103,14 +1103,14 @@ namespace Microsoft.Windows.Controls.Ribbon
         private void RemoveCurrentItemChangedListener()
         {
             // Stop listening for currency changes on the immediate CollectionView for the Gallery
-            if (CollectionView != null)
+            if (CollectionView is not null)
             {
                 CurrentChangedEventManager.RemoveListener(CollectionView, this);
                 CollectionView = null;
             }
 
             // Stop listening for currency changes on the Source CollectionView of the Gallery
-            if (SourceCollectionView != null)
+            if (SourceCollectionView is not null)
             {
                 CurrentChangedEventManager.RemoveListener(SourceCollectionView, this);
                 SourceCollectionView = null;
@@ -1166,7 +1166,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             // Synchronize the SelectedItem to be the first Item
             // within the current Category.
             RibbonGalleryCategory category = this.ItemContainerGenerator.ContainerFromItem(CollectionView.CurrentItem) as RibbonGalleryCategory;
-            if (category != null && category.Items.Count > 0)
+            if (category is not null && category.Items.Count > 0)
             {
 #if RIBBON_IN_FRAMEWORK
                 SetCurrentValue(SelectedItemProperty, category.Items[0]);
@@ -1188,7 +1188,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             // Synchronize SelectedItem with the CurrentItem
             // of the Source CollectionView
-            if (SourceCollectionView != null)
+            if (SourceCollectionView is not null)
             {
 #if RIBBON_IN_FRAMEWORK
                 SetCurrentValue(SelectedItemProperty, SourceCollectionView.CurrentItem);
@@ -1229,10 +1229,10 @@ namespace Microsoft.Windows.Controls.Ribbon
             CollectionViewSource cvs = null;
             CollectionView cv = null;
             Binding binding = BindingOperations.GetBinding(itemsControl, ItemsSourceProperty);
-            if (binding != null)
+            if (binding is not null)
             {
                 cvs = binding.Source as CollectionViewSource;
-                if (cvs != null)
+                if (cvs is not null)
                 {
                     cv = cvs.View as CollectionView;
                 }
@@ -1270,7 +1270,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     // in this case. We only updated the _selectedContainers and
                     // ContainsSelection properties both of which are specific to
                     // the containers in view.
-                    if (!isSelected && container != null)
+                    if (!isSelected && container is not null)
                     {
                         container.IsSelected = false;
                         int index = _selectedContainers.IndexOf(container);
@@ -1316,7 +1316,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                             // at the time of its handling RibbonGallery.SelectedItem is still non-null.  We need to refresh
                             // RibbonComboBox's selection properties once RibbonGallery.SelectedItem is actually null.
                             RibbonComboBox comboBoxParent = LogicalTreeHelper.GetParent(this) as RibbonComboBox;
-                            if (comboBoxParent != null &&
+                            if (comboBoxParent is not null &&
                                 this == comboBoxParent.FirstGallery &&
                                 comboBoxParent.IsSelectedItemCached == false)
                             {
@@ -1337,7 +1337,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 #endif
 
                         // Synchronize currency with the specified SelectedItem.
-                        if (container != null)
+                        if (container is not null)
                         {
                             // This is the case where a single container is selected
                             SynchronizeWithCurrentItem(container.RibbonGalleryCategory, item);
@@ -1353,7 +1353,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 }
 
                 // Select the container and synchronize currency
-                if (isSelected && container != null && !_selectedContainers.Contains(container))
+                if (isSelected && container is not null && !_selectedContainers.Contains(container))
                 {
                     _selectedContainers.Add(container);
                     container.IsSelected = true;
@@ -1394,7 +1394,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             foreach (object current in Items)
             {
                 category = ItemContainerGenerator.ContainerFromItem(current) as RibbonGalleryCategory;
-                if (category != null)
+                if (category is not null)
                 {
                     index = category.Items.IndexOf(item);
                     if (index > -1)
@@ -1434,7 +1434,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             foreach (object current in Items)
             {
                 category = ItemContainerGenerator.ContainerFromItem(current) as RibbonGalleryCategory;
-                if (category != null)
+                if (category is not null)
                 {
                     for (int index=0; index<category.Items.Count; index++)
                     {
@@ -1505,7 +1505,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             XmlNode node = item as XmlNode;
 
-            if (node != null)
+            if (node is not null)
             {
                 return node.InnerText;
             }
@@ -1522,7 +1522,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private void MoveCurrentTo(CollectionView cv, object item)
         {
-            if (cv != null && IsSynchronizedWithCurrentItemInternal)
+            if (cv is not null && IsSynchronizedWithCurrentItemInternal)
             {
                 cv.MoveCurrentTo(item);
             }
@@ -1530,7 +1530,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private void MoveCurrentToPosition(CollectionView cv, int position)
         {
-            if (cv != null && IsSynchronizedWithCurrentItemInternal)
+            if (cv is not null && IsSynchronizedWithCurrentItemInternal)
             {
                 cv.MoveCurrentToPosition(position);
             }
@@ -1622,7 +1622,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
                 if (!VerifyEqual(oldItem, newItem))
                 {
-                    if (newItem != null)
+                    if (newItem is not null)
                     {
                         RibbonGalleryCategory category = null;
                         RibbonGalleryItem galleryItem = null;
@@ -1672,17 +1672,17 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         protected virtual void OnHighlightedItemChanged(DependencyPropertyChangedEventArgs e)
         {
-            if (HighlightChanged != null)
+            if (HighlightChanged is not null)
             {
                 HighlightChanged(this, EventArgs.Empty);
             }
 
-            if (ShouldExecuteCommand && e.OldValue != null)
+            if (ShouldExecuteCommand && e.OldValue is not null)
             {
                 CommandHelpers.InvokeCommandSource(CommandParameter, PreviewCommandParameter, this, CommandOperation.CancelPreview);
             }
 
-            if (ShouldExecuteCommand && e.NewValue != null)
+            if (ShouldExecuteCommand && e.NewValue is not null)
             {
                 // Fire the Preview operation on a Dispatcher callback to allow the
                 // PreviewCommandParameter's Binding to be updated to match the HighlightedItem
@@ -1709,7 +1709,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 IsHighlightChangeActive = true;
 
-                if (_highlightedContainer != null)
+                if (_highlightedContainer is not null)
                 {
                     _highlightedContainer.IsHighlighted = false;
                 }
@@ -1724,7 +1724,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     _highlightedContainer = container;
                     HighlightedItem = item;
 
-                    if (container != null)
+                    if (container is not null)
                     {
                         container.IsHighlighted = true;
                     }
@@ -1742,7 +1742,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             get
             {
-                if (_highlightedContainer != null)
+                if (_highlightedContainer is not null)
                 {
                     return _highlightedContainer.RibbonGalleryCategory;
                 }
@@ -1782,9 +1782,9 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void FilterCanExecute(object sender, CanExecuteRoutedEventArgs args)
         {
             RibbonGallery rg = sender as RibbonGallery;
-            if (rg != null &&
+            if (rg is not null &&
                 rg.CanUserFilter &&
-                rg._filterMenuButton != null &&
+                rg._filterMenuButton is not null &&
                 rg.FilterPaneContent is null &&
                 rg.FilterPaneContentTemplate is null)
             {
@@ -1907,8 +1907,8 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             RibbonGallery gallery = (RibbonGallery)d;
             if (baseValue is null ||
-                gallery.FilterItemContainerStyle != null ||
-                gallery.AllFilterItemContainerStyle != null)
+                gallery.FilterItemContainerStyle is not null ||
+                gallery.AllFilterItemContainerStyle is not null)
             {
                 return new RibbonGalleryDefaultFilterItemContainerStyleSelector(gallery);
             }
@@ -1929,14 +1929,14 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 if (Object.ReferenceEquals(item, _allFilter))
                 {
-                    if (_gallery.AllFilterItemContainerStyle != null)
+                    if (_gallery.AllFilterItemContainerStyle is not null)
                     {
                         return _gallery.AllFilterItemContainerStyle;
                     }
                 }
                 else
                 {
-                    if (_gallery.FilterItemContainerStyle != null)
+                    if (_gallery.FilterItemContainerStyle is not null)
                     {
                         return _gallery.FilterItemContainerStyle;
                     }
@@ -2065,8 +2065,8 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             RibbonGallery gallery = (RibbonGallery)d;
             if (baseValue is null ||
-                gallery.FilterItemTemplate != null ||
-                gallery.AllFilterItemTemplate != null)
+                gallery.FilterItemTemplate is not null ||
+                gallery.AllFilterItemTemplate is not null)
             {
                 return new RibbonGalleryDefaultFilterItemTemplateSelector(gallery);
             }
@@ -2087,14 +2087,14 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 if (Object.ReferenceEquals(item, _allFilter))
                 {
-                    if (_gallery.AllFilterItemTemplate != null)
+                    if (_gallery.AllFilterItemTemplate is not null)
                     {
                         return _gallery.AllFilterItemTemplate;
                     }
                 }
                 else
                 {
-                    if (_gallery.FilterItemTemplate != null)
+                    if (_gallery.FilterItemTemplate is not null)
                     {
                         return _gallery.FilterItemTemplate;
                     }
@@ -2144,7 +2144,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             RibbonGalleryCategory category = (RibbonGalleryCategory)element;
             category.RibbonGallery = this;
 
-            if (SelectedValue != null && SelectedItem is null)
+            if (SelectedValue is not null && SelectedItem is null)
             {
                 // Synchronize SelectedItem with SelectedValue
                 ForceCoerceSelectedValue();
@@ -2156,10 +2156,10 @@ namespace Microsoft.Windows.Controls.Ribbon
                 for (int index = 0; index < category.Items.Count; index++)
                 {
                     RibbonGalleryItem galleryItem = category.ItemContainerGenerator.ContainerFromIndex(index) as RibbonGalleryItem;
-                    if (galleryItem != null)
+                    if (galleryItem is not null)
                     {
                         // Set IsSelected to true on GalleryItems that match the SelectedItem
-                        if (selectedItem != null)
+                        if (selectedItem is not null)
                         {
                             if (VerifyEqual(selectedItem, category.Items[index]))
                             {
@@ -2221,7 +2221,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             for (int index = 0; index < category.Items.Count; index++)
             {
                 RibbonGalleryItem galleryItem = category.ItemContainerGenerator.ContainerFromIndex(index) as RibbonGalleryItem;
-                if (galleryItem != null)
+                if (galleryItem is not null)
                 {
                     object dataItem = category.Items[index];
 
@@ -2292,11 +2292,11 @@ namespace Microsoft.Windows.Controls.Ribbon
                 // When keyboard-navigating into an InRibbonGallery, transfer focus to PartToggleButton.  When
                 // IsInInRibbonMode is true, only PartToggleButton gets focus and RibbonGalleryItems are skipped.
                 InRibbonGallery parentInRibbonGallery = ParentInRibbonGallery;
-                if (parentInRibbonGallery != null &&
+                if (parentInRibbonGallery is not null &&
                     parentInRibbonGallery.IsInInRibbonMode)
                 {
                     RibbonToggleButton partToggleButton = parentInRibbonGallery.PartToggleButton;
-                    if (partToggleButton != null)
+                    if (partToggleButton is not null)
                     {
                         Keyboard.Focus(partToggleButton);
                     }
@@ -2338,7 +2338,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 // RibbonGalleryCategories that omit Header are omitted from the filters collection.
                 // If category.Header is a string, make sure it is non-empty as well.
                 if ((category.Header is string && !String.IsNullOrEmpty((string)category.Header)) ||
-                     category.Header != null)
+                     category.Header is not null)
                 {
                     _categoryFilters.Add(filterToAdd);
                 }
@@ -2410,12 +2410,12 @@ namespace Microsoft.Windows.Controls.Ribbon
                 case NotifyCollectionChangedAction.Remove:
                 case NotifyCollectionChangedAction.Reset:
                 case NotifyCollectionChangedAction.Replace:
-                    if (SelectedItem != null)
+                    if (SelectedItem is not null)
                     {
                         // Synchronize SelectedItem after Remove, Replace or Reset operations.
                         ForceCoerceSelectedItem();
                     }
-                    if (HighlightedItem != null)
+                    if (HighlightedItem is not null)
                     {
                         // Synchronize HighlightedItem after Remove, Replace or Reset operations.
                         ForceCoerceHighlightedItem();
@@ -2533,7 +2533,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 RibbonGalleryCategory category = (RibbonGalleryCategory)gallery.ItemContainerGenerator.ContainerFromIndex(index);
 
-                if (category != null)
+                if (category is not null)
                 {
                     category.NotifyPropertyChanged(e);
                 }
@@ -2555,7 +2555,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 ItemsControl parentItemsControl = ItemsControl.ItemsControlFromItemContainer(this);
                 InRibbonGallery parentInRibbonGallery = null;
 
-                if (parentItemsControl != null)
+                if (parentItemsControl is not null)
                 {
                     parentInRibbonGallery = parentItemsControl as InRibbonGallery;
                 }
@@ -2570,13 +2570,13 @@ namespace Microsoft.Windows.Controls.Ribbon
                     // in a RibbonMenuItemsPanel, because ItemsControl.ItemsControlFromItemContainer(this) also covers
                     // this scenario.
                     ContentPresenter parentContentPresenter = VisualTreeHelper.GetParent(this) as ContentPresenter;
-                    if (parentContentPresenter != null)
+                    if (parentContentPresenter is not null)
                     {
                         parentInRibbonGallery = parentContentPresenter.TemplatedParent as InRibbonGallery;
                     }
                 }
 
-                if (parentInRibbonGallery != null &&
+                if (parentInRibbonGallery is not null &&
                     parentInRibbonGallery.FirstGallery == this)
                 {
                     return parentInRibbonGallery;
@@ -2591,7 +2591,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             InRibbonGallery parentInRibbonGallery = ParentInRibbonGallery;
 
-            return parentInRibbonGallery != null &&
+            return parentInRibbonGallery is not null &&
                    !parentInRibbonGallery.IsCollapsed &&
                    !parentInRibbonGallery.IsDropDownOpen;
         }
@@ -2683,12 +2683,12 @@ namespace Microsoft.Windows.Controls.Ribbon
                 FocusNavigationDirection direction = (e.Key == Key.Down) ? FocusNavigationDirection.Down : FocusNavigationDirection.Up;
                 DependencyObject predictedFocus = null;
 
-                if (focusedElement != null)
+                if (focusedElement is not null)
                 {
                     // if predictedFocus is not a descendant of the Gallery._scrollViewer
                     // then handle the navigation
                     predictedFocus = RibbonHelper.PredictFocus(focusedElement, direction) as UIElement;
-                    if (_scrollViewer != null && predictedFocus != null)
+                    if (_scrollViewer is not null && predictedFocus is not null)
                     {
                         ScrollViewer predictedFocusAncestor = TreeHelper.FindVisualAncestor<ScrollViewer>(predictedFocus);
                         if (predictedFocusAncestor != _scrollViewer)
@@ -2703,10 +2703,10 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 UIElement predictedFocus = null;
                 FocusNavigationDirection direction = (FlowDirection == FlowDirection.LeftToRight ? FocusNavigationDirection.Left : FocusNavigationDirection.Right);
-                if (focusedElement != null)
+                if (focusedElement is not null)
                 {
                     RibbonMenuItem menuItem = TreeHelper.FindAncestor(this, delegate(DependencyObject d) { return (d is RibbonMenuItem); }) as RibbonMenuItem;
-                    if (menuItem != null)
+                    if (menuItem is not null)
                     {
                         predictedFocus = RibbonHelper.PredictFocus(focusedElement, direction) as UIElement;
                         bool callRibbonMenuItemHandler = false;
@@ -2725,7 +2725,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         {
                             Point focusedOrigin = new Point();
                             UIElement focusContainer = RibbonHelper.GetContainingUIElement(focusedElement);
-                            if (focusContainer != null)
+                            if (focusContainer is not null)
                             {
                                 focusedOrigin = focusContainer.PointToScreen(new Point());
                             }
@@ -2749,7 +2749,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 FocusNavigationDirection direction = e.Key == Key.PageDown ? FocusNavigationDirection.Down : FocusNavigationDirection.Up;
 
                 RibbonGalleryItem focusedGalleryItem = focusedElement as RibbonGalleryItem;
-                if (focusedGalleryItem != null)
+                if (focusedGalleryItem is not null)
                 {
                     RibbonGalleryItem highlightedGalleryItem;
                     e.Handled = RibbonHelper.NavigatePageAndHighlightRibbonGalleryItem(
@@ -2758,7 +2758,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         direction,
                         out highlightedGalleryItem);
 
-                    if (highlightedGalleryItem != null)
+                    if (highlightedGalleryItem is not null)
                     {
                         highlightedGalleryItem.Focus();
                         highlightedGalleryItem.BringIntoView();
@@ -2780,7 +2780,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 // Stop popup dismissal if the original source
                 // is from FilterPane.
                 ContentPresenter filterPane = FilterContentPane;
-                if (filterPane != null &&
+                if (filterPane is not null &&
                     RibbonHelper.IsAncestorOf(filterPane, e.OriginalSource as DependencyObject))
                 {
                     e.Handled = true;
@@ -2874,11 +2874,11 @@ namespace Microsoft.Windows.Controls.Ribbon
             ICommand oldCommand = (ICommand)e.OldValue;
             ICommand newCommand = (ICommand)e.NewValue;
 
-            if (oldCommand != null)
+            if (oldCommand is not null)
             {
                 gallery.UnhookCommand(oldCommand);
             }
-            if (newCommand != null)
+            if (newCommand is not null)
             {
                 gallery.HookCommand(newCommand);
             }
@@ -2902,7 +2902,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 #if RIBBON_IN_FRAMEWORK
             CanExecuteChangedEventManager.RemoveHandler(command, OnCanExecuteChanged);
 #else
-            if (_canExecuteChangedHandler != null)
+            if (_canExecuteChangedHandler is not null)
             {
                 command.CanExecuteChanged -= _canExecuteChangedHandler;
                 _canExecuteChangedHandler = null;
@@ -2918,7 +2918,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private void UpdateCanExecute()
         {
-            if (Command != null)
+            if (Command is not null)
             {
                 CanExecute = CommandHelpers.CanExecuteCommandSource(CommandParameter, this);
             }
@@ -3099,7 +3099,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// <param name="item"></param>
         public void ScrollIntoView(object item)
         {
-            if (item != null)
+            if (item is not null)
             {
                 // This is a fast path to scroll to the selected or the highlighted item
 
@@ -3107,7 +3107,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 {
                     _selectedContainers[0].BringIntoView();
                 }
-                else if (VerifyEqual(item, HighlightedItem) && _highlightedContainer != null)
+                else if (VerifyEqual(item, HighlightedItem) && _highlightedContainer is not null)
                 {
                     _highlightedContainer.BringIntoView();
                 }
@@ -3121,7 +3121,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
                     bool ignoreItemContainerGeneratorStatus = true;
                     if (ContainsItem(item, ignoreItemContainerGeneratorStatus, out category, out galleryItem) &&
-                        galleryItem != null)
+                        galleryItem is not null)
                     {
                         galleryItem.BringIntoView();
                     }

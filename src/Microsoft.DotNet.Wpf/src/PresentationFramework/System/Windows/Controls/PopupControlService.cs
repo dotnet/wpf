@@ -63,7 +63,7 @@ namespace System.Windows.Controls
                             {
                                 IInputElement directlyOver = Mouse.PrimaryDevice.RawDirectlyOver;
 
-                                if (directlyOver != null)
+                                if (directlyOver is not null)
                                 {
                                     // If possible, check that the mouse position is within the render bounds
                                     // (avoids mouse capture confusion).
@@ -71,8 +71,8 @@ namespace System.Windows.Controls
                                     {
                                         // Get the root visual
                                         PresentationSource source = PresentationSource.CriticalFromVisual((DependencyObject)directlyOver);
-                                        UIElement rootAsUIElement = source != null ? source.RootVisual as UIElement : null;
-                                        if (rootAsUIElement != null)
+                                        UIElement rootAsUIElement = source is not null ? source.RootVisual as UIElement : null;
+                                        if (rootAsUIElement is not null)
                                         {
                                             // Get mouse position wrt to root
                                             Point pt = Mouse.PrimaryDevice.GetPosition(rootAsUIElement);
@@ -87,7 +87,7 @@ namespace System.Windows.Controls
                                         }
                                     }
 
-                                    if (directlyOver != null)
+                                    if (directlyOver is not null)
                                     {
                                         // Process the mouse move
                                         OnMouseMove(directlyOver);
@@ -208,7 +208,7 @@ namespace System.Windows.Controls
                     (e.RightButton == MouseButtonState.Released))
                 {
                     IInputElement directlyOver = Mouse.PrimaryDevice.RawDirectlyOver;
-                    if (directlyOver != null)
+                    if (directlyOver is not null)
                     {
                         Point pt = Mouse.PrimaryDevice.GetPosition(directlyOver);
                         if (RaiseContextMenuOpeningEvent(directlyOver, pt.X, pt.Y,e.UserInitiated))
@@ -316,7 +316,7 @@ namespace System.Windows.Controls
                 LastMouseToolTipOwner = o;
 
                 // cancel a pending mouse request if the mouse has moved off its owner
-                if (PendingToolTip != null && !PendingToolTip.FromKeyboard && o != GetOwner(PendingToolTip))
+                if (PendingToolTip is not null && !PendingToolTip.FromKeyboard && o != GetOwner(PendingToolTip))
                 {
                     DismissPendingToolTip();
                 }
@@ -341,7 +341,7 @@ namespace System.Windows.Controls
                 switch (triggerAction)
                 {
                     case ToolTipService.TriggerAction.Mouse:
-                        if (SafeArea != null)
+                        if (SafeArea is not null)
                         {
                             // the mouse has moved over a tooltip owner o, while still
                             // within the safe area of the current tooltip (which must be from mouse).
@@ -375,7 +375,7 @@ namespace System.Windows.Controls
                 }
 
                 // replacing a tooltip with BetweenShowDelay=0 should invoke the delay
-                if (toReplace != null && (showNow || useShortDelay))
+                if (toReplace is not null && (showNow || useShortDelay))
                 {
                     DependencyObject currentOwner = GetOwner(toReplace);
                     if (ToolTipService.GetBetweenShowDelay(currentOwner) == 0)
@@ -408,7 +408,7 @@ namespace System.Windows.Controls
 
             DismissToolTips();
 
-            if (o != null)
+            if (o is not null)
             {
                 ShowToolTip(o, ToolTipService.IsFromKeyboard(triggerAction));
             }
@@ -429,7 +429,7 @@ namespace System.Windows.Controls
             bool show = true;
 
             IInputElement element = o as IInputElement;
-            if (element != null)
+            if (element is not null)
             {
                 ToolTipEventArgs args = new ToolTipEventArgs(opening:true);
                 // ** Public callout - re-entrancy is possible **//
@@ -443,7 +443,7 @@ namespace System.Windows.Controls
             {
                 object tooltip = ToolTipService.GetToolTip(o);
                 ToolTip tip = tooltip as ToolTip;
-                if (tip != null)
+                if (tip is not null)
                 {
                     _currentToolTip = tip;
                 }
@@ -547,13 +547,13 @@ namespace System.Windows.Controls
 
         private void DismissPendingToolTip()
         {
-            if (PendingToolTipTimer != null)
+            if (PendingToolTipTimer is not null)
             {
                 PendingToolTipTimer.Stop();
                 PendingToolTipTimer = null;
             }
 
-            if (PendingToolTip != null)
+            if (PendingToolTip is not null)
             {
                 PendingToolTip = null;
                 _sentinelToolTip.SetValue(OwnerProperty, null);
@@ -585,7 +585,7 @@ namespace System.Windows.Controls
                 if (tooltip.IsOpen)
                 {
                     IInputElement element = owner as IInputElement;
-                    if (element != null)
+                    if (element is not null)
                     {
                         // ** Public callout - re-entrancy is possible **//
                         element.RaiseEvent(new ToolTipEventArgs(opening:false));
@@ -639,7 +639,7 @@ namespace System.Windows.Controls
             // a call from OnToolTipClosed while tooltip.IsOpen is still true.  In that case we need to
             // leave the properties in place - CloseToolTip needs them (as does the popup if it should
             // re-open).  They will get cleared by OnForceClose, if not earlier.
-            if (tooltip != null && !tooltip.IsOpen)
+            if (tooltip is not null && !tooltip.IsOpen)
             {
                 tooltip.ClearValue(OwnerProperty);
                 tooltip.FromKeyboard = false;
@@ -671,7 +671,7 @@ namespace System.Windows.Controls
                 case ToolTipService.TriggerAction.KeyboardShortcut:
                     // use the element itself, if it is a tooltip owner
                     owner = element as DependencyObject;
-                    if (owner != null && !ToolTipService.ToolTipIsEnabled(owner, triggerAction))
+                    if (owner is not null && !ToolTipService.ToolTipIsEnabled(owner, triggerAction))
                     {
                         owner = null;
                     }
@@ -699,7 +699,7 @@ namespace System.Windows.Controls
             if (v is null)
             {
                 ContentElement ce = o as ContentElement;
-                if (ce != null)
+                if (ce is not null)
                 {
                     v = FindContentElementParent(ce);
                 }
@@ -709,14 +709,14 @@ namespace System.Windows.Controls
                 }
             }
 
-            return (v != null) &&
+            return (v is not null) &&
                    ((v is Visual && ((Visual)v).IsDescendantOf(_currentToolTip)) ||
                     (v is Visual3D && ((Visual3D)v).IsDescendantOf(_currentToolTip)));
         }
 
         private void ResetCurrentToolTipTimer()
         {
-            if (CurrentToolTipTimer != null)
+            if (CurrentToolTipTimer is not null)
             {
                 CurrentToolTipTimer.Stop();
                 CurrentToolTipTimer = null;
@@ -765,7 +765,7 @@ namespace System.Windows.Controls
         // The previous tooltip hasn't closed and we are trying to open a new one
         private void OnForceClose(object sender, EventArgs e)
         {
-            if (_forceCloseTimer != null)
+            if (_forceCloseTimer is not null)
             {
                 _forceCloseTimer.Stop();
                 ToolTip toolTip = (ToolTip)_forceCloseTimer.Tag;
@@ -843,12 +843,12 @@ namespace System.Windows.Controls
             SafeArea = null;     // default is no safe area
 
             // safe area is only needed for tooltips triggered by mouse
-            if (tooltip != null && !tooltip.FromKeyboard)
+            if (tooltip is not null && !tooltip.FromKeyboard)
             {
                 DependencyObject owner = GetOwner(tooltip);
-                PresentationSource presentationSource = (owner != null) ? PresentationSource.CriticalFromVisual(owner) : null;
+                PresentationSource presentationSource = (owner is not null) ? PresentationSource.CriticalFromVisual(owner) : null;
 
-                if (presentationSource != null)
+                if (presentationSource is not null)
                 {
                     // build a list of (native) rects, in the presentationSource's client coords
                     List<NativeMethods.RECT> rects = new List<NativeMethods.RECT>();
@@ -856,7 +856,7 @@ namespace System.Windows.Controls
                     // add the owner rect(s)
                     UIElement ownerUIE;
                     ContentElement ownerCE;
-                    if ((ownerUIE = owner as UIElement) != null)
+                    if ((ownerUIE = owner as UIElement) is not null)
                     {
                         // tooltip is owned by a UIElement.
                         Rect rectElement = new Rect(new Point(0, 0), ownerUIE.RenderSize);
@@ -868,14 +868,14 @@ namespace System.Windows.Controls
                             rects.Add(PointUtil.FromRect(ownerRect));
                         }
                     }
-                    else if ((ownerCE = owner as ContentElement) != null)
+                    else if ((ownerCE = owner as ContentElement) is not null)
                     {
                         // tooltip is owned by a ContentElement (e.g. Hyperlink).
                         IContentHost ichParent = null;
                         UIElement uieParent = KeyboardNavigation.GetParentUIElementFromContentElement(ownerCE, ref ichParent);
                         Visual visualParent = ichParent as Visual;
 
-                        if (visualParent != null && uieParent != null)
+                        if (visualParent is not null && uieParent is not null)
                         {
                             IReadOnlyCollection<Rect> ownerRects = ichParent.GetRectangles(ownerCE);
 
@@ -923,7 +923,7 @@ namespace System.Windows.Controls
             // if the current tooltip's owner is no longer being displayed, the safe area is no longer valid
             // so the mouse has effectively left it
             DependencyObject owner = GetOwner(CurrentToolTip);
-            PresentationSource presentationSource = (owner != null) ? PresentationSource.CriticalFromVisual(owner) : null;
+            PresentationSource presentationSource = (owner is not null) ? PresentationSource.CriticalFromVisual(owner) : null;
             if (presentationSource is null)
                 return true;
 
@@ -957,7 +957,7 @@ namespace System.Windows.Controls
         private void RaiseContextMenuOpeningEvent(KeyEventArgs e)
         {
             IInputElement source = e.OriginalSource as IInputElement;
-            if (source != null)
+            if (source is not null)
             {
                 if (RaiseContextMenuOpeningEvent(source, -1.0, -1.0,e.UserInitiated))
                 {
@@ -971,7 +971,7 @@ namespace System.Windows.Controls
             // Fire the event
             ContextMenuEventArgs args = new ContextMenuEventArgs(source, true /* opening */, x, y);
             DependencyObject sourceDO = source as DependencyObject;
-            if (userInitiated && sourceDO != null)
+            if (userInitiated && sourceDO is not null)
             {
                 if (sourceDO is UIElement uiElement)
                 {
@@ -1002,7 +1002,7 @@ namespace System.Windows.Controls
 
                 // Saved from the bubble up the tree where we looked for a set ContextMenu property
                 DependencyObject o = args.TargetElement;
-                if ((o != null) && ContextMenuService.ContextMenuIsEnabled(o))
+                if ((o is not null) && ContextMenuService.ContextMenuIsEnabled(o))
                 {
                     // Retrieve the value
                     object menu = ContextMenuService.GetContextMenu(o);
@@ -1042,17 +1042,17 @@ namespace System.Windows.Controls
         private void OnContextMenuClosed(object source, RoutedEventArgs e)
         {
             ContextMenu cm = source as ContextMenu;
-            if (cm != null)
+            if (cm is not null)
             {
                 cm.Closed -= OnContextMenuClosed;
 
                 DependencyObject o = (DependencyObject)cm.GetValue(OwnerProperty);
-                if (o != null)
+                if (o is not null)
                 {
                     cm.ClearValue(OwnerProperty);
 
                     UIElement uie = GetTarget(o);
-                    if (uie != null)
+                    if (uie is not null)
                     {
                         if (!IsPresentationSourceNull(uie))
                         {
@@ -1085,23 +1085,23 @@ namespace System.Windows.Controls
 
             ContentElement ce = (v is null) ? o as ContentElement : null;
 
-            if (ce != null)
+            if (ce is not null)
             {
                 o = ContentOperations.GetParent(ce);
-                if (o != null)
+                if (o is not null)
                 {
                     return o;
                 }
                 else
                 {
                     FrameworkContentElement fce = ce as FrameworkContentElement;
-                    if (fce != null)
+                    if (fce is not null)
                     {
                         return fce.Parent;
                     }
                 }
             }
-            else if (v != null)
+            else if (v is not null)
             {
                 return VisualTreeHelper.GetParent(v);
             }
@@ -1114,28 +1114,28 @@ namespace System.Windows.Controls
             DependencyObject nearestVisual = null;
             DependencyObject o = ce;
 
-            while (o != null)
+            while (o is not null)
             {
                 nearestVisual = o as Visual;
-                if (nearestVisual != null)
+                if (nearestVisual is not null)
                 {
                     break;
                 }
 
                 nearestVisual = o as Visual3D;
-                if (nearestVisual != null)
+                if (nearestVisual is not null)
                 {
                     break;
                 }
 
                 ce = o as ContentElement;
-                if (ce != null)
+                if (ce is not null)
                 {
                     o = ContentOperations.GetParent(ce);
                     if (o is null)
                     {
                         FrameworkContentElement fce = ce as FrameworkContentElement;
-                        if (fce != null)
+                        if (fce is not null)
                         {
                             o = fce.Parent;
                         }
@@ -1158,15 +1158,15 @@ namespace System.Windows.Controls
             ContentElement ce = (uie is null) ? o as ContentElement : null;
             UIElement3D uie3D = (uie is null && ce is null) ? o as UIElement3D : null;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 enabled = uie.IsEnabled;
             }
-            else if (ce != null)
+            else if (ce is not null)
             {
                 enabled = ce.IsEnabled;
             }
-            else if (uie3D != null)
+            else if (uie3D is not null)
             {
                 enabled = uie3D.IsEnabled;
             }
@@ -1191,7 +1191,7 @@ namespace System.Windows.Controls
             if (uie is null)
             {
                 ContentElement ce = o as ContentElement;
-                if (ce != null)
+                if (ce is not null)
                 {
                     DependencyObject ceParent = FindContentElementParent(ce);
 
@@ -1201,7 +1201,7 @@ namespace System.Windows.Controls
                     {
                         // target can't be a UIElement3D - so get the nearest containing UIElement
                         UIElement3D uie3D = ceParent as UIElement3D;
-                        if (uie3D != null)
+                        if (uie3D is not null)
                         {
                             uie = UIElementHelper.GetContainingUIElement2D(uie3D);
                         }
@@ -1213,7 +1213,7 @@ namespace System.Windows.Controls
                     // target can't be a UIElement3D - so get the nearest containing UIElement
                     UIElement3D uie3D = o as UIElement3D;
 
-                    if (uie3D != null)
+                    if (uie3D is not null)
                     {
                         uie = UIElementHelper.GetContainingUIElement2D(uie3D);
                     }
@@ -1270,7 +1270,7 @@ namespace System.Windows.Controls
         internal static object CoerceProperty(DependencyObject o, object value, DependencyProperty dp)
         {
             DependencyObject owner = (DependencyObject)o.GetValue(OwnerProperty);
-            if (owner != null)
+            if (owner is not null)
             {
                 bool hasModifiers;
                 if (owner.GetValueSource(dp, null, out hasModifiers) != BaseValueSourceInternal.Default || hasModifiers)
@@ -1283,7 +1283,7 @@ namespace System.Windows.Controls
                     UIElement uie = GetTarget(owner);
 
                     // If it is the PlacementTarget property, return the owner itself
-                    if (uie != null)
+                    if (uie is not null)
                         return uie;
                 }
             }
@@ -1301,7 +1301,7 @@ namespace System.Windows.Controls
             public T GetValue()
             {
                 T value;
-                if (_storage != null)
+                if (_storage is not null)
                 {
                     if (!_storage.TryGetTarget(out value))
                     {
@@ -1610,7 +1610,7 @@ namespace System.Windows.Controls
                 // and multiplications that should simply cancel each other out.
                 System.Windows.Interop.HwndSource hwndSource = _source as System.Windows.Interop.HwndSource;
                 IInputElement rootElement = hwndSource?.RootVisual as IInputElement;
-                Debug.Assert(hwndSource != null && rootElement != null, "expect non-null hwndSource and rootElement");
+                Debug.Assert(hwndSource is not null && rootElement is not null, "expect non-null hwndSource and rootElement");
                 System.Windows.Point pt2 = hwndSource.TransformToDevice(Mouse.PrimaryDevice.GetPosition(rootElement));
                 Debug.Assert(((int)pt.X == (int)Math.Round(pt2.X)) && ((int)pt.Y == (int)Math.Round(pt2.Y)), "got incorrect mouse point");
                 #endif

@@ -267,7 +267,7 @@ namespace MS.Internal.IO.Packaging
             IFILTER_INIT grfFlags,
             ManagedFullPropSpec[] attributes)
         {
-            if (attributes != null && attributes.Length > 0)
+            if (attributes is not null && attributes.Length > 0)
             {
                 //
                 // If attruibutes list specified,
@@ -343,7 +343,7 @@ namespace MS.Internal.IO.Packaging
             while (_currentIndex < _attributes.Length)
             {
                 if (   _attributes[_currentIndex].Property.PropType == PropSpecType.Id
-                    && CurrentValue != null)
+                    && CurrentValue is not null)
                 {
                     return true;
                 }
@@ -452,21 +452,21 @@ namespace MS.Internal.IO.Packaging
                         return _coreProperties.Revision;
 
                     case PropertyId.LastPrinted:
-                        if (_coreProperties.LastPrinted != null)
+                        if (_coreProperties.LastPrinted is not null)
                         {
                             return _coreProperties.LastPrinted.Value;
                         }
                         return null;
 
                     case PropertyId.DateCreated:
-                        if (_coreProperties.Created != null)
+                        if (_coreProperties.Created is not null)
                         {
                             return _coreProperties.Created.Value;
                         }
                         return null;
 
                     case PropertyId.DateModified:
-                        if (_coreProperties.Modified != null)
+                        if (_coreProperties.Modified is not null)
                         {
                             return _coreProperties.Modified.Value;
                         }

@@ -216,7 +216,7 @@ namespace System.Windows.Input
             if (destinationType == typeof(string))
             {
                 Cursor cursor = value as Cursor;
-                if (cursor != null)
+                if (cursor is not null)
                 {
                     return cursor.ToString();
                 }

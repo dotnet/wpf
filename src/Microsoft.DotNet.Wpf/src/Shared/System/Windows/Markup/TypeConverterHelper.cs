@@ -51,7 +51,7 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
                 DependencyProperty dp = dpOrPiOrMi as DependencyProperty;
 
-                if (dp != null)
+                if (dp is not null)
                 {
                     // While parsing styles or templates, we end up getting a DependencyProperty,
                     // even for non-attached cases. In this case, we try fetching the CLR
@@ -75,7 +75,7 @@ namespace System.Windows.Markup
                 }
                 else
 #endif
-                if ((methodInfo = dpOrPiOrMi as MethodInfo) != null)
+                if ((methodInfo = dpOrPiOrMi as MethodInfo) is not null)
                 {
                     // miSetter may not be a MethodInfo when we are dealing with event handlers that
                     // belong to local assemblies. One such case is encountered when building DrtCompiler.
@@ -124,7 +124,7 @@ namespace System.Windows.Markup
             {
                 converterType = ReflectionHelper.GetQualifiedType(converterName);
 
-                if (converterType != null)
+                if (converterType is not null)
                 {
                     // Validate that this is an accessible type converter.
                     if (!ReflectionHelper.IsPublicType(converterType))
@@ -448,7 +448,7 @@ namespace System.Windows.Markup
             if (typeConverter is null)
             {
                 Type? converterType = GetConverterType(type);
-                if (converterType != null)
+                if (converterType is not null)
                 {
                     typeConverter = Activator.CreateInstance(converterType,
                                                              BindingFlags.Instance | BindingFlags.CreateInstance | BindingFlags.Public,

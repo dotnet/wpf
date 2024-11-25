@@ -25,7 +25,7 @@ namespace System.Windows.Threading
         // DispatcherOperation as the Task's AsyncState.
         public override void Initialize(DispatcherOperation operation)
         {
-            if(_taskCompletionSource != null)
+            if(_taskCompletionSource is not null)
             {
                 throw new InvalidOperationException();
             }

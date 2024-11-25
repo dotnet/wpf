@@ -338,7 +338,7 @@ namespace System.Xaml
 
         public override string ToString()
         {
-            Debug.Assert(_declaringType != null, "XamlDirective should not call base.ToString");
+            Debug.Assert(_declaringType is not null, "XamlDirective should not call base.ToString");
             return $"{_declaringType}.{Name}";
         }
 
@@ -481,7 +481,7 @@ namespace System.Xaml
                 return true;
             }
             MethodInfo getter = Getter;
-            if (getter != null)
+            if (getter is not null)
             {
                 return MemberReflector.GenericArgumentsAreVisibleTo(getter, accessingAssembly, SchemaContext) &&
                     (MemberReflector.IsInternalVisibleTo(getter, accessingAssembly, SchemaContext) ||
@@ -498,7 +498,7 @@ namespace System.Xaml
                 return true;
             }
             MethodInfo setter = Setter;
-            if (setter != null)
+            if (setter is not null)
             {
                 return MemberReflector.GenericArgumentsAreVisibleTo(setter, accessingAssembly, SchemaContext) &&
                     (MemberReflector.IsInternalVisibleTo(setter, accessingAssembly, SchemaContext) ||
@@ -511,7 +511,7 @@ namespace System.Xaml
 
         protected virtual XamlMemberInvoker LookupInvoker()
         {
-            if (UnderlyingMember != null)
+            if (UnderlyingMember is not null)
             {
                 return new XamlMemberInvoker(this);
             }
@@ -528,12 +528,12 @@ namespace System.Xaml
             if (AreAttributesAvailable)
             {
                 Type[] loaderTypes = _reflector.GetAttributeTypes(typeof(XamlDeferLoadAttribute), 2);
-                if (loaderTypes != null)
+                if (loaderTypes is not null)
                 {
                     return SchemaContext.GetValueConverter<XamlDeferringLoader>(loaderTypes[0], null);
                 }
             }
-            if (Type != null)
+            if (Type is not null)
             {
                 return Type.DeferringLoader;
             }
@@ -559,7 +559,7 @@ namespace System.Xaml
 
                 // Normally we want to throw if property lookup fails to return anything
                 // but here we can not throw because v3.0 does not
-                if (member != null)
+                if (member is not null)
                 {
                     result.Add(member);
                 }
@@ -597,7 +597,7 @@ namespace System.Xaml
         protected virtual bool LookupIsReadPublic()
         {
             MethodInfo getter = Getter;
-            if (getter != null && !getter.IsPublic)
+            if (getter is not null && !getter.IsPublic)
             {
                 return false;
             }
@@ -606,7 +606,7 @@ namespace System.Xaml
 
         protected virtual bool LookupIsReadOnly()
         {
-            if (UnderlyingMember != null)
+            if (UnderlyingMember is not null)
             {
                 return (Setter is null);
             }
@@ -615,7 +615,7 @@ namespace System.Xaml
 
         protected virtual bool LookupIsUnknown()
         {
-            if (_reflector != null)
+            if (_reflector is not null)
             {
                 return _reflector.IsUnknown;
             }
@@ -624,7 +624,7 @@ namespace System.Xaml
 
         protected virtual bool LookupIsWriteOnly()
         {
-            if (UnderlyingMember != null)
+            if (UnderlyingMember is not null)
             {
                 return (Getter is null);
             }
@@ -636,7 +636,7 @@ namespace System.Xaml
         protected virtual bool LookupIsWritePublic()
         {
             MethodInfo setter = Setter;
-            if (setter != null && !setter.IsPublic)
+            if (setter is not null && !setter.IsPublic)
             {
                 return false;
             }
@@ -648,7 +648,7 @@ namespace System.Xaml
             if (IsAttachable)
             {
                 MethodInfo accessor = UnderlyingMember as MethodInfo;
-                if (accessor != null)
+                if (accessor is not null)
                 {
                     ParameterInfo[] parameters = accessor.GetParameters();
                     if (parameters.Length > 0)
@@ -668,12 +668,12 @@ namespace System.Xaml
             if (AreAttributesAvailable)
             {
                 Type converterType = _reflector.GetAttributeType(typeof(TypeConverterAttribute));
-                if (converterType != null)
+                if (converterType is not null)
                 {
                     result = SchemaContext.GetValueConverter<TypeConverter>(converterType, null);
                 }
             }
-            if (result is null && Type != null)
+            if (result is null && Type is not null)
             {
                 result = Type.TypeConverter;
             }
@@ -687,12 +687,12 @@ namespace System.Xaml
             if (AreAttributesAvailable)
             {
                 Type converterType = _reflector.GetAttributeType(typeof(ValueSerializerAttribute));
-                if (converterType != null)
+                if (converterType is not null)
                 {
                     result = SchemaContext.GetValueConverter<ValueSerializer>(converterType, null);
                 }
             }
-            if (result is null && Type != null)
+            if (result is null && Type is not null)
             {
                 result = Type.ValueSerializer;
             }
@@ -709,7 +709,7 @@ namespace System.Xaml
             if (AreAttributesAvailable)
             {
                 IReadOnlyDictionary<char, char> bracketCharactersList = _reflector.GetBracketCharacterAttributes(typeof(MarkupExtensionBracketCharactersAttribute));
-                if (bracketCharactersList != null)
+                if (bracketCharactersList is not null)
                 {
                     _reflector.MarkupExtensionBracketCharactersArgument = bracketCharactersList;
                 }
@@ -720,7 +720,7 @@ namespace System.Xaml
         protected virtual XamlType LookupType()
         {
             Type systemType = LookupSystemType();
-            return (systemType != null) ? SchemaContext.GetXamlType(systemType) : null;
+            return (systemType is not null) ? SchemaContext.GetXamlType(systemType) : null;
         }
 
         protected virtual MethodInfo LookupUnderlyingGetter()
@@ -728,12 +728,12 @@ namespace System.Xaml
             EnsureReflector();
             // Through normal paths, _reflector.Getter should always be null here.
             // But a user could always call this protected method directly, so check just in case
-            if (_reflector.Getter != null)
+            if (_reflector.Getter is not null)
             {
                 return _reflector.Getter;
             }
             PropertyInfo pi = UnderlyingMember as PropertyInfo;
-            return (pi != null) ? pi.GetGetMethod(true) : null;
+            return (pi is not null) ? pi.GetGetMethod(true) : null;
         }
 
         protected virtual MethodInfo LookupUnderlyingSetter()
@@ -741,19 +741,19 @@ namespace System.Xaml
             EnsureReflector();
             // Through normal paths, _reflector.Setter should always be null here.
             // But a user could always call this protected method directly, so check just in case
-            if (_reflector.Setter != null)
+            if (_reflector.Setter is not null)
             {
                 return _reflector.Setter;
             }
             PropertyInfo pi = UnderlyingMember as PropertyInfo;
-            if (pi != null)
+            if (pi is not null)
             {
                 return pi.GetSetMethod(true);
             }
             else
             {
                 EventInfo ei = UnderlyingMember as EventInfo;
-                return (ei != null) ? ei.GetAddMethod(true) : null;
+                return (ei is not null) ? ei.GetAddMethod(true) : null;
             }
         }
 
@@ -810,7 +810,7 @@ namespace System.Xaml
 
         private static void ValidateSetter(MethodInfo method, string argumentName)
         {
-            if ((method != null) && (method.GetParameters().Length != 2))
+            if ((method is not null) && (method.GetParameters().Length != 2))
             {
                 throw new ArgumentException(SR.IncorrectSetterParamNum, argumentName);
             }
@@ -841,7 +841,7 @@ namespace System.Xaml
                     }
                     _reflector.SetCustomAttributeProviderVolatile(attrProvider);
                 }
-                return _reflector.CustomAttributeProvider != null || UnderlyingMemberInternal.Value != null;
+                return _reflector.CustomAttributeProvider is not null || UnderlyingMemberInternal.Value is not null;
             }
         }
 
@@ -878,7 +878,7 @@ namespace System.Xaml
                         defaultValueAttrib = (DefaultValueAttribute)attribs[0];
                     }
                 }
-                if (defaultValueAttrib != null)
+                if (defaultValueAttrib is not null)
                 {
                     _reflector.DefaultValue = defaultValueAttrib.Value;
                 }
@@ -955,19 +955,19 @@ namespace System.Xaml
         {
             MemberInfo underlyingMember = UnderlyingMember;
             PropertyInfo pi = underlyingMember as PropertyInfo;
-            if (pi != null)
+            if (pi is not null)
             {
                 return pi.PropertyType;
             }
             EventInfo ei = underlyingMember as EventInfo;
-            if (ei != null)
+            if (ei is not null)
             {
                 return ei.EventHandlerType;
             }
             MethodInfo mi = underlyingMember as MethodInfo;
-            if (mi != null)
+            if (mi is not null)
             {
-                if (mi.ReturnType != null && mi.ReturnType != typeof(void))
+                if (mi.ReturnType is not null && mi.ReturnType != typeof(void))
                 {
                     return mi.ReturnType;
                 }
@@ -990,7 +990,7 @@ namespace System.Xaml
 
         public override int GetHashCode()
         {
-            Debug.Assert(DeclaringType != null, "XamlDirective should not call into base.GetHashCode");
+            Debug.Assert(DeclaringType is not null, "XamlDirective should not call into base.GetHashCode");
             return (Name is null ?  0 : Name.GetHashCode()) ^ (int)_memberType ^ DeclaringType.GetHashCode();
         }
 

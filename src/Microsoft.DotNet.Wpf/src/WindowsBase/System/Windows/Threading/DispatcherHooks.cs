@@ -187,7 +187,7 @@ namespace System.Windows.Threading
         internal void RaiseDispatcherInactive(Dispatcher dispatcher)
         {
             EventHandler dispatcherInactive = _dispatcherInactive;
-            if(dispatcherInactive != null)
+            if(dispatcherInactive is not null)
             {
                 dispatcherInactive(dispatcher, EventArgs.Empty);
             }
@@ -197,7 +197,7 @@ namespace System.Windows.Threading
         {
             DispatcherHookEventHandler operationPosted = _operationPosted;
             
-            if(operationPosted != null)
+            if(operationPosted is not null)
             {
                 operationPosted(dispatcher, new DispatcherHookEventArgs(operation));
             }
@@ -207,7 +207,7 @@ namespace System.Windows.Threading
         {
             DispatcherHookEventHandler operationStarted = _operationStarted;
             
-            if(operationStarted != null)
+            if(operationStarted is not null)
             {
                 operationStarted(dispatcher, new DispatcherHookEventArgs(operation));
             }
@@ -217,7 +217,7 @@ namespace System.Windows.Threading
         {
             DispatcherHookEventHandler operationCompleted = _operationCompleted;
 
-            if(operationCompleted != null)
+            if(operationCompleted is not null)
             {
                 operationCompleted(dispatcher, new DispatcherHookEventArgs(operation));
             }
@@ -227,7 +227,7 @@ namespace System.Windows.Threading
         {
             DispatcherHookEventHandler operationPriorityChanged = _operationPriorityChanged;
 
-            if(operationPriorityChanged != null)
+            if(operationPriorityChanged is not null)
             {
                 operationPriorityChanged(dispatcher, new DispatcherHookEventArgs(operation));
             }
@@ -237,7 +237,7 @@ namespace System.Windows.Threading
         {
             DispatcherHookEventHandler operationAborted = _operationAborted;
 
-            if(operationAborted != null)
+            if(operationAborted is not null)
             {
                 operationAborted(dispatcher, new DispatcherHookEventArgs(operation));
             }

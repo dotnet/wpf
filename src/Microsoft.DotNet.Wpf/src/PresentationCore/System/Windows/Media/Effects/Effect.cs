@@ -213,7 +213,7 @@ namespace System.Windows.Media.Effects
                 // Both the normal and the inverse require the point to first be
                 // translated from world space to unit space.
                 Point? unitSpace = Effect.WorldToUnit(inPoint, _worldBounds);
-                if (unitSpace != null)
+                if (unitSpace is not null)
                 {
                     // Now just run through the normal or the inverse version of the
                     // inner effect.
@@ -225,7 +225,7 @@ namespace System.Windows.Media.Effects
                         // Both the normal and the inverse require the unit-space result
                         // to be converted back to world space
                         Point? worldSpace = Effect.UnitToWorld(unitResult, _worldBounds);
-                        if (worldSpace != null)
+                        if (worldSpace is not null)
                         {
                             result = worldSpace.Value;
                             ok = true;

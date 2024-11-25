@@ -1430,7 +1430,7 @@ namespace Standard
             }
             finally
             {
-                if (dc != null)
+                if (dc is not null)
                 {
                     dc._created = true;
                 }
@@ -1452,7 +1452,7 @@ namespace Standard
             try
             {
                 IntPtr hPtr = IntPtr.Zero;
-                if (hdc != null)
+                if (hdc is not null)
                 {
                     hPtr = hdc.handle;
                 }
@@ -1464,7 +1464,7 @@ namespace Standard
             }
             finally
             {
-                if (dc != null)
+                if (dc is not null)
                 {
                     dc._created = true;
                 }
@@ -1488,7 +1488,7 @@ namespace Standard
             }
             finally
             {
-                if (dc != null)
+                if (dc is not null)
                 {
                     dc.Hwnd = hwnd;
                 }

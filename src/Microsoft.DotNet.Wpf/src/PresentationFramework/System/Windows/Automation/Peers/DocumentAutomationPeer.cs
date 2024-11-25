@@ -32,7 +32,7 @@ namespace System.Windows.Automation.Peers
             if (owner is IServiceProvider)
             {
                 _textContainer = ((IServiceProvider)owner).GetService(typeof(ITextContainer)) as ITextContainer;
-                if (_textContainer != null)
+                if (_textContainer is not null)
                 {
                     _textPattern = new TextAdaptor(this, _textContainer);
                 }
@@ -44,7 +44,7 @@ namespace System.Windows.Automation.Peers
         /// </summary>
         internal void OnDisconnected()
         {
-            if (_textPattern != null)
+            if (_textPattern is not null)
             {
                 _textPattern.Dispose();
                 _textPattern = null;
@@ -60,7 +60,7 @@ namespace System.Windows.Automation.Peers
         /// </remarks>
         protected override List<AutomationPeer> GetChildrenCore()
         {
-            if (_childrenStart != null && _childrenEnd != null)
+            if (_childrenStart is not null && _childrenEnd is not null)
             {
                 ITextContainer textContainer = ((IServiceProvider)Owner).GetService(typeof(ITextContainer)) as ITextContainer;
                 return TextContainerHelper.GetAutomationPeersFromRange(_childrenStart, _childrenEnd, textContainer.Start);
@@ -82,7 +82,7 @@ namespace System.Windows.Automation.Peers
                     if (Owner is IServiceProvider)
                     {
                         ITextContainer textContainer = ((IServiceProvider)Owner).GetService(typeof(ITextContainer)) as ITextContainer;
-                        if (textContainer != null)
+                        if (textContainer is not null)
                         {
                             _textPattern = new TextAdaptor(this, textContainer);
                         }
@@ -139,10 +139,10 @@ namespace System.Windows.Automation.Peers
         {
             UIElement uiScope;
             Rect boundingRect = CalculateBoundingRect(false, out uiScope);
-            if (boundingRect != Rect.Empty && uiScope != null)
+            if (boundingRect != Rect.Empty && uiScope is not null)
             {
                 HwndSource hwndSource = PresentationSource.CriticalFromVisual(uiScope) as HwndSource;
-                if (hwndSource != null)
+                if (hwndSource is not null)
                 {
                     boundingRect = PointUtil.ElementToRoot(boundingRect, uiScope, hwndSource);
                     boundingRect = PointUtil.RootToClient(boundingRect, hwndSource);
@@ -160,10 +160,10 @@ namespace System.Windows.Automation.Peers
             Point point = new Point();
             UIElement uiScope;
             Rect boundingRect = CalculateBoundingRect(true, out uiScope);
-            if (boundingRect != Rect.Empty && uiScope != null)
+            if (boundingRect != Rect.Empty && uiScope is not null)
             {
                 HwndSource hwndSource = PresentationSource.CriticalFromVisual(uiScope) as HwndSource;
-                if (hwndSource != null)
+                if (hwndSource is not null)
                 {
                     boundingRect = PointUtil.ElementToRoot(boundingRect, uiScope, hwndSource);
                     boundingRect = PointUtil.RootToClient(boundingRect, hwndSource);
@@ -219,8 +219,8 @@ namespace System.Windows.Automation.Peers
             if (Owner is IServiceProvider)
             {
                 ITextContainer textContainer = ((IServiceProvider)Owner).GetService(typeof(ITextContainer)) as ITextContainer;
-                ITextView textView = (textContainer != null) ? textContainer.TextView : null;
-                if (textView != null)
+                ITextView textView = (textContainer is not null) ? textContainer.TextView : null;
+                if (textView is not null)
                 {
                     // Make sure TextView is updated
                     if (!textView.IsValid)
@@ -229,13 +229,13 @@ namespace System.Windows.Automation.Peers
                         {
                             textView = null;
                         }
-                        if (textView != null && !textView.IsValid)
+                        if (textView is not null && !textView.IsValid)
                         {
                             textView = null;
                         }
                     }
                     // Get bounding rect from TextView.
-                    if (textView != null)
+                    if (textView is not null)
                     {
                         boundingRect = new Rect(textView.RenderScope.RenderSize);
                         uiScope = textView.RenderScope;
@@ -244,14 +244,14 @@ namespace System.Windows.Automation.Peers
                         if (clipToVisible)
                         {
                             Visual visual = textView.RenderScope;
-                            while (visual != null && boundingRect != Rect.Empty)
+                            while (visual is not null && boundingRect != Rect.Empty)
                             {
-                                if (VisualTreeHelper.GetClip(visual) != null)
+                                if (VisualTreeHelper.GetClip(visual) is not null)
                                 {
                                     GeneralTransform transform = textView.RenderScope.TransformToAncestor(visual).Inverse;
                                     // Safer version of transform to descendent (doing the inverse ourself), 
                                     // we want the rect inside of our space. (Which is always rectangular and much nicer to work with)
-                                    if (transform != null)
+                                    if (transform is not null)
                                     {
                                         Rect clipBounds = VisualTreeHelper.GetClip(visual).Bounds;
                                         clipBounds = transform.TransformBounds(clipBounds);

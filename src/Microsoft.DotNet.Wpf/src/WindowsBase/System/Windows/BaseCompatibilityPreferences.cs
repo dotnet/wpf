@@ -29,7 +29,7 @@ namespace System.Windows
             {
             }
 
-            if (appSettings != null)
+            if (appSettings is not null)
             {
                 SetHandleDispatcherRequestProcessingFailureFromAppSettings(appSettings);
             }
@@ -267,12 +267,12 @@ namespace System.Windows
                 // Query registry for system override
                 using (var regKey = Registry.CurrentUser.OpenSubKey(WpfPackagingSubKeyPath, RegistryKeyPermissionCheck.ReadSubTree))
                 {
-                    if (regKey != null
+                    if (regKey is not null
                         && regKey.GetValueKind(MatchPackageSignatureMethodToPackagePartDigestMethodValue) == RegistryValueKind.DWord)
                     {
                         var regVal = regKey.GetValue(MatchPackageSignatureMethodToPackagePartDigestMethodValue);
 
-                        if (regVal != null)
+                        if (regVal is not null)
                         {
                             MatchPackageSignatureMethodToPackagePartDigestMethod = ((int)regVal == 1);
                         }

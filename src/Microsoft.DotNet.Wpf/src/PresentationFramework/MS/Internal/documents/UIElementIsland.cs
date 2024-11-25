@@ -35,11 +35,11 @@ namespace MS.Internal.Documents
             SetFlags(true, VisualFlags.IsLayoutIslandRoot);
             _child = child;
 
-            if (_child != null)
+            if (_child is not null)
             {
                 // Disconnect visual from its old parent, if necessary.
                 Visual currentParent = VisualTreeHelper.GetParent(_child) as Visual;
-                if (currentParent != null)
+                if (currentParent is not null)
                 {
                     Invariant.Assert(currentParent is UIElementIsland, "Parent should always be a UIElementIsland.");
                     ((UIElementIsland)currentParent).Dispose();
@@ -70,11 +70,11 @@ namespace MS.Internal.Documents
         internal Size DoLayout(Size availableSize, bool horizontalAutoSize, bool verticalAutoSize)
         {
             Size islandSize = new Size();
-            if (_child != null)
+            if (_child is not null)
             {
                 // Get FlowDirection from logical parent and set it on UIElemntIsland
                 // to get layout mirroring provided by the layout system.
-                if (_child is FrameworkElement && ((FrameworkElement)_child).Parent != null)
+                if (_child is FrameworkElement && ((FrameworkElement)_child).Parent is not null)
                 {
                     SetValue(FrameworkElement.FlowDirectionProperty, ((FrameworkElement)_child).Parent.GetValue(FrameworkElement.FlowDirectionProperty));
                 }
@@ -163,7 +163,7 @@ namespace MS.Internal.Documents
         /// </summary>
         public void Dispose()
         {
-            if (_child != null)
+            if (_child is not null)
             {
                 Children.Clear();
                 _child = null;
@@ -208,7 +208,7 @@ namespace MS.Internal.Documents
             get
             {
                 List<IInputElement> hostedElements = new List<IInputElement>();
-                if (_child != null)
+                if (_child is not null)
                 {
                     hostedElements.Add(_child);
                 }
@@ -222,7 +222,7 @@ namespace MS.Internal.Documents
         void IContentHost.OnChildDesiredSizeChanged(UIElement child)
         {
             Invariant.Assert(child == _child);
-            if (!_layoutInProgress && DesiredSizeChanged != null)
+            if (!_layoutInProgress && DesiredSizeChanged is not null)
             {
                 DesiredSizeChanged(this, new DesiredSizeChangedEventArgs(child));
             }

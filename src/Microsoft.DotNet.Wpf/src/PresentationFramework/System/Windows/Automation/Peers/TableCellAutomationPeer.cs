@@ -147,7 +147,7 @@ namespace System.Windows.Automation.Peers
         {
             get
             {
-                if ((TableCell)Owner != null)
+                if ((TableCell)Owner is not null)
                 {
                     return ProviderFromPeer(CreatePeerForElement(((TableCell)Owner).Table));
                 }

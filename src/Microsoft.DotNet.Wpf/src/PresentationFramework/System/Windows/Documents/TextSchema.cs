@@ -241,12 +241,12 @@ namespace System.Windows.Documents
         {
             Inline ancestor = element as Inline;
 
-            while (ancestor != null && !(ancestor is Hyperlink))
+            while (ancestor is not null && !(ancestor is Hyperlink))
             {
                 ancestor = ancestor.Parent as Inline;
             }
 
-            return ancestor != null;
+            return ancestor is not null;
         }
 
         /// <summary>
@@ -285,7 +285,7 @@ namespace System.Windows.Documents
         internal static bool IsNonMergeableInline(Type elementType)
         {
             TextElementEditingBehaviorAttribute att = (TextElementEditingBehaviorAttribute)Attribute.GetCustomAttribute(elementType, typeof(TextElementEditingBehaviorAttribute));
-            if (att != null && att.IsMergeable == false)
+            if (att is not null && att.IsMergeable == false)
             {
                 return true;
             }
@@ -915,7 +915,7 @@ namespace System.Windows.Documents
         private static bool AreBrushesEqual(Brush brush1, Brush brush2)
         {
             SolidColorBrush solidBrush1 = brush1 as SolidColorBrush;
-            if (solidBrush1 != null)
+            if (solidBrush1 is not null)
             {
                 return solidBrush1.Color.Equals(((SolidColorBrush)brush2).Color);
             }
@@ -924,7 +924,7 @@ namespace System.Windows.Documents
                 // When the brush is not serializable to string, we consider values equal only is they are equal as objects
                 string string1 = DPTypeDescriptorContext.GetStringValue(TextElement.BackgroundProperty, brush1);
                 string string2 = DPTypeDescriptorContext.GetStringValue(TextElement.BackgroundProperty, brush2);
-                return string1 != null && string2 != null ? string1 == string2 : false;
+                return string1 is not null && string2 is not null ? string1 == string2 : false;
             }
         }
 

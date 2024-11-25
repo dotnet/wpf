@@ -69,7 +69,7 @@ namespace System.Windows.Media.Media3D.Converters
         /// </summary>
         public override object ConvertFromString(string value, IValueSerializerContext context)
         {
-            if (value != null)
+            if (value is not null)
             {
                 return Point3D.Parse(value );
             }

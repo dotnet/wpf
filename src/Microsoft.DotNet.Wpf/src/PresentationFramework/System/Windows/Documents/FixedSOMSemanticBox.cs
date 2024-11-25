@@ -92,7 +92,7 @@ namespace System.Windows.Documents
 
         public int CompareTo(object o)
         {
-            Debug.Assert(o != null);
+            Debug.Assert(o is not null);
 
             if (!(o is FixedSOMSemanticBox))
             {

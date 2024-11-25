@@ -87,7 +87,7 @@ namespace MS.Internal.AutomationProxies
             if (idProp == AutomationElement.AccessKeyProperty)
             {
                 // The IAccessible should be valid here since it is the cached value in ProxySimple.
-                System.Diagnostics.Debug.Assert(AccessibleObject != null, "Failed to get a valid IAccessible!");
+                System.Diagnostics.Debug.Assert(AccessibleObject is not null, "Failed to get a valid IAccessible!");
 
                 try
                 {

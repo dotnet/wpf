@@ -359,14 +359,14 @@ namespace System.Windows.Media
             // branch prediction hints increases code size by a byte per branch and doing this in every
             // method that is coded without default branch prediction behavior in mind would add an
             // unacceptable amount of working set.
-            if ((glyphTypeface != null) &&
-                (glyphIndices != null) &&
-                (advanceWidths != null) &&
+            if ((glyphTypeface is not null) &&
+                (glyphIndices is not null) &&
+                (advanceWidths is not null) &&
                 (renderingEmSize >= 0.0) &&
                 (glyphIndices.Count > 0) &&
                 (glyphIndices.Count <= MaxGlyphCount) &&
                 (advanceWidths.Count == glyphIndices.Count) &&
-                ((glyphOffsets is null) || ((glyphOffsets != null) && (glyphOffsets.Count != 0) && (glyphOffsets.Count == glyphIndices.Count))))
+                ((glyphOffsets is null) || ((glyphOffsets is not null) && (glyphOffsets.Count != 0) && (glyphOffsets.Count == glyphIndices.Count))))
             {
                 _textFormattingMode = textFormattingMode;
                 // Set member variables here,
@@ -386,9 +386,9 @@ namespace System.Windows.Media
                 _deviceFontName = deviceFontName;
                 _pixelsPerDip = pixelsPerDip;
 
-                if (characters != null && characters.Count != 0)
+                if (characters is not null && characters.Count != 0)
                 {
-                    if (clusterMap != null && clusterMap.Count != 0)
+                    if (clusterMap is not null && clusterMap.Count != 0)
                     {
                         if (clusterMap.Count == characters.Count)
                         {
@@ -434,7 +434,7 @@ namespace System.Windows.Media
                     }
                 }
 
-                if (caretStops != null && caretStops.Count != 0)
+                if (caretStops is not null && caretStops.Count != 0)
                 {
                     if (caretStops.Count != CodepointCount + 1)
                         throw new ArgumentException(SR.Format(SR.CollectionNumberOfElementsShouldBeEqualTo, CodepointCount + 1), "caretStops");
@@ -471,7 +471,7 @@ namespace System.Windows.Media
                 if (advanceWidths.Count != glyphIndices.Count)
                     throw new ArgumentException(SR.Format(SR.CollectionNumberOfElementsShouldBeEqualTo, glyphIndices.Count), "advanceWidths");
 
-                if (glyphOffsets != null && glyphOffsets.Count != 0 && glyphOffsets.Count != glyphIndices.Count)
+                if (glyphOffsets is not null && glyphOffsets.Count != 0 && glyphOffsets.Count != glyphIndices.Count)
                     throw new ArgumentException(SR.Format(SR.CollectionNumberOfElementsShouldBeEqualTo, glyphIndices.Count), "glyphOffsets");
 
                 // We should've caught all invalid cases above and thrown appropriate exceptions.
@@ -506,7 +506,7 @@ namespace System.Windows.Media
         {
             CheckInitialized(); // This can only be called on fully initialized GlyphRun
 
-            IList<bool> caretStops = CaretStops != null && CaretStops.Count != 0 ? CaretStops : new DefaultCaretStopList(CodepointCount);
+            IList<bool> caretStops = CaretStops is not null && CaretStops.Count != 0 ? CaretStops : new DefaultCaretStopList(CodepointCount);
             if (characterHit.FirstCharacterIndex < 0 || characterHit.FirstCharacterIndex > CodepointCount)
                 throw new ArgumentOutOfRangeException("characterHit");
 
@@ -598,7 +598,7 @@ namespace System.Windows.Media
             // Navigate the caret stop array and find a pair of caret stops that contains the distance.
 
             IList<double> advances = AdvanceWidths;
-            IList<bool> caretStops = CaretStops != null && CaretStops.Count != 0 ? CaretStops : new DefaultCaretStopList(CodepointCount);
+            IList<bool> caretStops = CaretStops is not null && CaretStops.Count != 0 ? CaretStops : new DefaultCaretStopList(CodepointCount);
             IList<ushort> clusterMap = ClusterMap;
             if (clusterMap is null)
                 clusterMap = new DefaultClusterMap(CodepointCount);
@@ -732,7 +732,7 @@ namespace System.Windows.Media
         {
             CheckInitialized(); // This can only be called on fully initialized GlyphRun
 
-            IList<bool> caretStops = CaretStops != null && CaretStops.Count != 0 ? CaretStops : new DefaultCaretStopList(CodepointCount);
+            IList<bool> caretStops = CaretStops is not null && CaretStops.Count != 0 ? CaretStops : new DefaultCaretStopList(CodepointCount);
             if (characterHit.FirstCharacterIndex < 0 || characterHit.FirstCharacterIndex > CodepointCount)
                 throw new ArgumentOutOfRangeException("characterHit");
 
@@ -779,7 +779,7 @@ namespace System.Windows.Media
         {
             CheckInitialized(); // This can only be called on fully initialized GlyphRun
 
-            IList<bool> caretStops = CaretStops != null && CaretStops.Count != 0 ? CaretStops : new DefaultCaretStopList(CodepointCount);
+            IList<bool> caretStops = CaretStops is not null && CaretStops.Count != 0 ? CaretStops : new DefaultCaretStopList(CodepointCount);
             if (characterHit.FirstCharacterIndex < 0 || characterHit.FirstCharacterIndex > CodepointCount)
                 throw new ArgumentOutOfRangeException("characterHit");
 
@@ -845,7 +845,7 @@ namespace System.Windows.Media
             get
             {
                 double advance = 0;
-                if (_advanceWidths != null)
+                if (_advanceWidths is not null)
                 {
                     foreach(double glyphAdvance in _advanceWidths)
                         advance += glyphAdvance;
@@ -1234,9 +1234,9 @@ namespace System.Windows.Media
         {
             get
             {
-                if (_characters != null && _characters.Count != 0)
+                if (_characters is not null && _characters.Count != 0)
                     return _characters.Count;
-                if (_clusterMap != null && _clusterMap.Count != 0)
+                if (_clusterMap is not null && _clusterMap.Count != 0)
                     return _clusterMap.Count;
                 return _glyphIndices.Count;
             }
@@ -1255,7 +1255,7 @@ namespace System.Windows.Media
 
             if ((_flags & GlyphRunFlags.CacheInkBounds) != 0)
             {
-                if (_inkBoundingBox != null)
+                if (_inkBoundingBox is not null)
                 {
                     return (Rect)_inkBoundingBox;
                 }
@@ -1493,7 +1493,7 @@ namespace System.Windows.Media
                         emGlyphMetrics.RightSideBearing);
                 }
 
-                if (GlyphOffsets != null)
+                if (GlyphOffsets is not null)
                 {
                     Point glyphOffset = GetGlyphOffset(i);
 
@@ -1677,7 +1677,7 @@ namespace System.Windows.Media
             // AdvanceWidth could be negative, but Rect.Width cannot
             // be negative. Don't paint the
             // background - it would paint over earlier glyphs.
-            if (backgroundBrush != null && (advanceWidth = AdvanceWidth) > 0.0)
+            if (backgroundBrush is not null && (advanceWidth = AdvanceWidth) > 0.0)
             {
                 Rect backgroundRect;
 
@@ -1870,7 +1870,7 @@ namespace System.Windows.Media
         /// </summary>
         private void CreateOnChannel(DUCE.Channel channel)
         {
-            Debug.Assert(_glyphTypeface != null);
+            Debug.Assert(_glyphTypeface is not null);
 
             int glyphCount = GlyphCount;
 
@@ -1921,7 +1921,7 @@ namespace System.Windows.Media
                 varDataSize += glyphCount * sizeof(float);
 
                 // offsets
-                if (_glyphOffsets != null && _glyphOffsets.Count != 0)
+                if (_glyphOffsets is not null && _glyphOffsets.Count != 0)
                 {
                     varDataSize += glyphCount * (2 * sizeof(float));
                 }
@@ -1985,7 +1985,7 @@ namespace System.Windows.Media
 
                     // offsets
                     {
-                        if (_glyphOffsets != null && _glyphOffsets.Count != 0)
+                        if (_glyphOffsets is not null && _glyphOffsets.Count != 0)
                         {
                             if (glyphCount <= MaxStackAlloc / (2 * sizeof(float)))
                             {
@@ -2029,7 +2029,7 @@ namespace System.Windows.Media
             if (IsSideways)
                 flags |= (UInt16)MilGlyphRun.Sideways;
 
-            if (_glyphOffsets != null && _glyphOffsets.Count != 0)
+            if (_glyphOffsets is not null && _glyphOffsets.Count != 0)
                 flags |= (UInt16)MilGlyphRun.HasOffsets;
 
             return flags;

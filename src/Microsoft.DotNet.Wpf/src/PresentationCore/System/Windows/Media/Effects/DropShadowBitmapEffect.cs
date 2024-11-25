@@ -60,7 +60,7 @@ namespace System.Windows.Media.Effects
         /// </summary>        
         internal override Effect GetEmulatingEffect()
         {
-            if (_imageEffectEmulation != null && _imageEffectEmulation.IsFrozen)
+            if (_imageEffectEmulation is not null && _imageEffectEmulation.IsFrozen)
             {
                 return _imageEffectEmulation;
             }

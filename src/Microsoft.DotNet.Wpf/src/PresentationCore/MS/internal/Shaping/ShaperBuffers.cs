@@ -234,7 +234,7 @@ namespace MS.Internal.Shaping
                 newSize == 0)
             {
                 Feature[] newArray = new Feature[newSize];
-                if (newArray != null)
+                if (newArray is not null)
                 {
                     _features = newArray;
                 }
@@ -242,7 +242,7 @@ namespace MS.Internal.Shaping
 
             _featuresCount = 0;
             _minimumAddCount = 3;       // add space for init,med,final whenever we need to actually resize array
-            return _features != null;
+            return _features is not null;
         }
 
         /// <summary>
@@ -260,7 +260,7 @@ namespace MS.Internal.Shaping
         {
             _featuresCount = keepCount;     // 
    
-            if (_features != null && 
+            if (_features is not null && 
                 _features.Length != 0 && 
                 keepCount > 0 &&
                 _features.Length >= keepCount)
@@ -354,7 +354,7 @@ namespace MS.Internal.Shaping
                }
             }
             
-            if (_features[_featuresCount] != null)
+            if (_features[_featuresCount] is not null)
             {
                 _features[_featuresCount].Tag = featureTag;
                 _features[_featuresCount].StartIndex = startIndex;

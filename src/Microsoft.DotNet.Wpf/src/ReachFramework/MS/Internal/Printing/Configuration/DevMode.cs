@@ -394,7 +394,7 @@ namespace MS.Internal.Printing.Configuration
         {
             DevMode result = new DevMode();
 
-            if (this._byteData != null)
+            if (this._byteData is not null)
             {
                 result._byteData = (byte[])this._byteData.Clone();
             }

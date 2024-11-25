@@ -105,7 +105,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         internal void PrepareColumnHeader(object item, DataGridColumn column)
         {
-            Debug.Assert(column != null, "This header must have been generated with for a particular column");
+            Debug.Assert(column is not null, "This header must have been generated with for a particular column");
             Debug.Assert(column.Header == item, "The data item for a ColumnHeader is the Header property of a column");
             _column = column;
             TabIndex = column.DisplayIndex;
@@ -172,7 +172,7 @@ namespace System.Windows.Controls.Primitives
             DataGridColumnHeader header = (DataGridColumnHeader)d;
             DataGridColumn column = header.Column;
 
-            if (column != null)
+            if (column is not null)
             {
                 return column.DisplayIndex;
             }
@@ -190,14 +190,14 @@ namespace System.Windows.Controls.Primitives
         {
             DataGridColumnHeader header = (DataGridColumnHeader)d;
             DataGridColumn column = header.Column;
-            if (column != null)
+            if (column is not null)
             {
                 DataGrid dataGrid = column.DataGridOwner;
-                if (dataGrid != null)
+                if (dataGrid is not null)
                 {
                     header.SetLeftGripperVisibility();
                     DataGridColumnHeader nextColumnHeader = dataGrid.ColumnHeaderFromDisplayIndex(header.DisplayIndex + 1);
-                    if (nextColumnHeader != null)
+                    if (nextColumnHeader is not null)
                     {
                         nextColumnHeader.SetLeftGripperVisibility(column.CanUserResize);
                     }
@@ -238,7 +238,7 @@ namespace System.Windows.Controls.Primitives
             _leftGripper = GetTemplateChild(LeftHeaderGripperTemplateName) as Thumb;
             _rightGripper = GetTemplateChild(RightHeaderGripperTemplateName) as Thumb;
 
-            if (_leftGripper != null)
+            if (_leftGripper is not null)
             {
                 _leftGripper.DragStarted += new DragStartedEventHandler(OnColumnHeaderGripperDragStarted);
                 _leftGripper.DragDelta += new DragDeltaEventHandler(OnColumnHeaderResize);
@@ -247,7 +247,7 @@ namespace System.Windows.Controls.Primitives
                 SetLeftGripperVisibility();
             }
 
-            if (_rightGripper != null)
+            if (_rightGripper is not null)
             {
                 _rightGripper.DragStarted += new DragStartedEventHandler(OnColumnHeaderGripperDragStarted);
                 _rightGripper.DragDelta += new DragDeltaEventHandler(OnColumnHeaderResize);
@@ -262,7 +262,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         private void UnhookGripperEvents()
         {
-            if (_leftGripper != null)
+            if (_leftGripper is not null)
             {
                 _leftGripper.DragStarted -= new DragStartedEventHandler(OnColumnHeaderGripperDragStarted);
                 _leftGripper.DragDelta -= new DragDeltaEventHandler(OnColumnHeaderResize);
@@ -271,7 +271,7 @@ namespace System.Windows.Controls.Primitives
                 _leftGripper = null;
             }
 
-            if (_rightGripper != null)
+            if (_rightGripper is not null)
             {
                 _rightGripper.DragStarted -= new DragStartedEventHandler(OnColumnHeaderGripperDragStarted);
                 _rightGripper.DragDelta -= new DragDeltaEventHandler(OnColumnHeaderResize);
@@ -295,12 +295,12 @@ namespace System.Windows.Controls.Primitives
         {
             DataGridColumnHeader header = HeaderToResize(sender);
 
-            if (header != null)
+            if (header is not null)
             {
-                if (header.Column != null)
+                if (header.Column is not null)
                 {
                     DataGrid dataGrid = header.Column.DataGridOwner;
-                    if (dataGrid != null)
+                    if (dataGrid is not null)
                     {
                         dataGrid.InternalColumns.OnColumnResizeStarted();
                     }
@@ -313,7 +313,7 @@ namespace System.Windows.Controls.Primitives
         private void OnColumnHeaderResize(object sender, DragDeltaEventArgs e)
         {
             DataGridColumnHeader header = HeaderToResize(sender);
-            if (header != null)
+            if (header is not null)
             {
                 RecomputeColumnWidthsOnColumnResize(header, e.HorizontalChange);
                 e.Handled = true;
@@ -325,7 +325,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         private static void RecomputeColumnWidthsOnColumnResize(DataGridColumnHeader header, double horizontalChange)
         {
-            Debug.Assert(header != null, "Header should not be null");
+            Debug.Assert(header is not null, "Header should not be null");
 
             DataGridColumn resizingColumn = header.Column;
             if (resizingColumn is null)
@@ -346,12 +346,12 @@ namespace System.Windows.Controls.Primitives
         {
             DataGridColumnHeader header = HeaderToResize(sender);
 
-            if (header != null)
+            if (header is not null)
             {
-                if (header.Column != null)
+                if (header.Column is not null)
                 {
                     DataGrid dataGrid = header.Column.DataGridOwner;
-                    if (dataGrid != null)
+                    if (dataGrid is not null)
                     {
                         dataGrid.InternalColumns.OnColumnResizeCompleted(e.Canceled);
                     }
@@ -365,7 +365,7 @@ namespace System.Windows.Controls.Primitives
         {
             DataGridColumnHeader header = HeaderToResize(sender);
 
-            if (header != null && header.Column != null)
+            if (header is not null && header.Column is not null)
             {
                 // DataGridLength is a struct, so setting to Auto resets desired and display widths to 0.0.
                 header.Column.Width = DataGridLength.Auto;
@@ -375,12 +375,12 @@ namespace System.Windows.Controls.Primitives
 
         private DataGridLength ColumnWidth
         {
-            get { return Column != null ? Column.Width : DataGridLength.Auto; }
+            get { return Column is not null ? Column.Width : DataGridLength.Auto; }
         }
 
         private double ColumnActualWidth
         {
-            get { return Column != null ? Column.ActualWidth : ActualWidth; }
+            get { return Column is not null ? Column.ActualWidth : ActualWidth; }
         }
 
         #endregion
@@ -401,7 +401,7 @@ namespace System.Windows.Controls.Primitives
         internal void NotifyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DataGridColumn column = d as DataGridColumn;
-            if ((column != null) && (column != Column))
+            if ((column is not null) && (column != Column))
             {
                 // This notification does not apply to this column header
                 return;
@@ -468,8 +468,8 @@ namespace System.Windows.Controls.Primitives
 
         private void OnCanUserResizeColumnsChanged()
         {
-            Debug.Assert(Column != null, "column can't be null if we got a notification for this property change");
-            if (Column.DataGridOwner != null)
+            Debug.Assert(Column is not null, "column can't be null if we got a notification for this property change");
+            if (Column.DataGridOwner is not null)
             {
                 SetLeftGripperVisibility();
                 SetRightGripperVisibility();
@@ -478,9 +478,9 @@ namespace System.Windows.Controls.Primitives
 
         private void OnCanUserResizeChanged()
         {
-            Debug.Assert(Column != null, "column can't be null if we got a notification for this property change");
+            Debug.Assert(Column is not null, "column can't be null if we got a notification for this property change");
             DataGrid dataGrid = Column.DataGridOwner;
-            if (dataGrid != null)
+            if (dataGrid is not null)
             {
                 SetNextHeaderLeftGripperVisibility(Column.CanUserResize);
                 SetRightGripperVisibility();
@@ -516,7 +516,7 @@ namespace System.Windows.Controls.Primitives
             }
 
             DataGrid dataGrid = Column.DataGridOwner;
-            if (dataGrid != null && dataGrid.CanUserResizeColumns && canPreviousColumnResize)
+            if (dataGrid is not null && dataGrid.CanUserResizeColumns && canPreviousColumnResize)
             {
                 _leftGripper.Visibility = Visibility.Visible;
             }
@@ -534,7 +534,7 @@ namespace System.Windows.Controls.Primitives
             }
 
             DataGrid dataGrid = Column.DataGridOwner;
-            if (dataGrid != null && dataGrid.CanUserResizeColumns && Column.CanUserResize)
+            if (dataGrid is not null && dataGrid.CanUserResizeColumns && Column.CanUserResize)
             {
                 _rightGripper.Visibility = Visibility.Visible;
             }
@@ -553,7 +553,7 @@ namespace System.Windows.Controls.Primitives
                 if (dataGrid.ColumnFromDisplayIndex(index).IsVisible)
                 {
                     DataGridColumnHeader nextHeader = dataGrid.ColumnHeaderFromDisplayIndex(index);
-                    if (nextHeader != null)
+                    if (nextHeader is not null)
                     {
                         nextHeader.SetLeftGripperVisibility(canUserResize);
                     }
@@ -564,9 +564,9 @@ namespace System.Windows.Controls.Primitives
 
         private void OnColumnVisibilityChanged(DependencyPropertyChangedEventArgs e)
         {
-            Debug.Assert(Column != null, "column can't be null if we got a notification for this property change");
+            Debug.Assert(Column is not null, "column can't be null if we got a notification for this property change");
             DataGrid dataGrid = Column.DataGridOwner;
-            if (dataGrid != null)
+            if (dataGrid is not null)
             {
                 bool oldIsVisible = (((Visibility)e.OldValue) == Visibility.Visible);
                 bool newIsVisible = (((Visibility)e.NewValue) == Visibility.Visible);
@@ -619,7 +619,7 @@ namespace System.Windows.Controls.Primitives
             // so that it can be connected to the DGColumnHeader.   This happens during
             // a theme change
             FrameworkObject fo = new FrameworkObject(content as DependencyObject);
-            if (fo.Parent != null && fo.Parent != header)
+            if (fo.Parent is not null && fo.Parent != header)
             {
                 fo.ChangeLogicalParent(null);
             }
@@ -682,7 +682,7 @@ namespace System.Windows.Controls.Primitives
             if (column is null)
             {
                 DataGridColumnHeadersPresenter presenter = columnHeader.TemplatedParent as DataGridColumnHeadersPresenter;
-                if (presenter != null)
+                if (presenter is not null)
                 {
                     dataGrid = presenter.ParentDataGrid;
                 }
@@ -763,7 +763,7 @@ namespace System.Windows.Controls.Primitives
                 if (AutomationPeer.ListenerExists(AutomationEvents.InvokePatternOnInvoked))
                 {
                     AutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(this);
-                    if (peer != null)
+                    if (peer is not null)
                     {
                         peer.RaiseAutomationEvent(AutomationEvents.InvokePatternOnInvoked);
                     }
@@ -771,8 +771,8 @@ namespace System.Windows.Controls.Primitives
 
                 base.OnClick();
 
-                if (Column != null &&
-                    Column.DataGridOwner != null)
+                if (Column is not null &&
+                    Column.DataGridOwner is not null)
                 {
                     Column.DataGridOwner.PerformSort(Column);
                 }
@@ -792,7 +792,7 @@ namespace System.Windows.Controls.Primitives
             if (column is null)
             {
                 DataGridColumnHeadersPresenter presenter = columnHeader.TemplatedParent as DataGridColumnHeadersPresenter;
-                if (presenter != null)
+                if (presenter is not null)
                 {
                     dataGrid = presenter.ParentDataGrid;
                 }
@@ -819,7 +819,7 @@ namespace System.Windows.Controls.Primitives
             DataGridColumnHeader header = (DataGridColumnHeader)d;
             DataGridColumn column = header.Column;
 
-            if (column != null)
+            if (column is not null)
             {
                 return column.CanUserSort;
             }
@@ -835,7 +835,7 @@ namespace System.Windows.Controls.Primitives
             DataGridColumnHeader header = (DataGridColumnHeader)d;
             DataGridColumn column = header.Column;
 
-            if (column != null)
+            if (column is not null)
             {
                 return column.SortDirection;
             }
@@ -893,7 +893,7 @@ namespace System.Windows.Controls.Primitives
             DataGridColumnHeader header = (DataGridColumnHeader)d;
             DataGridColumn column = header.Column;
 
-            if (column != null)
+            if (column is not null)
             {
                 return column.IsFrozen;
             }
@@ -910,7 +910,7 @@ namespace System.Windows.Controls.Primitives
             DataGridColumnHeader header = (DataGridColumnHeader)d;
             Geometry geometry = baseValue as Geometry;
             Geometry frozenGeometry = DataGridHelper.GetFrozenClipForCell(header);
-            if (frozenGeometry != null)
+            if (frozenGeometry is not null)
             {
                 if (geometry is null)
                 {
@@ -962,7 +962,7 @@ namespace System.Windows.Controls.Primitives
             base.OnMouseLeftButtonDown(e);
 
             DataGridColumnHeadersPresenter parentPresenter = ParentPresenter;
-            if (parentPresenter != null)
+            if (parentPresenter is not null)
             {
                 // If clickmode is hover then during the mouse move the hover events will be sent
                 // all the headers in the path. To avoid that we are using a capture
@@ -981,7 +981,7 @@ namespace System.Windows.Controls.Primitives
             base.OnMouseMove(e);
 
             DataGridColumnHeadersPresenter parentPresenter = ParentPresenter;
-            if (parentPresenter != null)
+            if (parentPresenter is not null)
             {
                 parentPresenter.OnHeaderMouseMove(e);
                 e.Handled = true;
@@ -993,7 +993,7 @@ namespace System.Windows.Controls.Primitives
             base.OnMouseLeftButtonUp(e);
 
             DataGridColumnHeadersPresenter parentPresenter = ParentPresenter;
-            if (parentPresenter != null)
+            if (parentPresenter is not null)
             {
                 if (ClickMode == ClickMode.Hover && IsMouseCaptured)
                 {
@@ -1010,7 +1010,7 @@ namespace System.Windows.Controls.Primitives
             base.OnLostMouseCapture(e);
 
             DataGridColumnHeadersPresenter parentPresenter = ParentPresenter;
-            if (parentPresenter != null)
+            if (parentPresenter is not null)
             {
                 parentPresenter.OnHeaderLostMouseCapture(e);
                 e.Handled = true;
@@ -1061,7 +1061,7 @@ namespace System.Windows.Controls.Primitives
 
             // Sort States
             var sortDirection = SortDirection;
-            if (sortDirection != null)
+            if (sortDirection is not null)
             {
                 if (sortDirection == ListSortDirection.Ascending)
                 {
@@ -1113,10 +1113,10 @@ namespace System.Windows.Controls.Primitives
             {
                 // we need to be able to find the corner header too.
                 DataGridColumn column = Column;
-                if (column != null)
+                if (column is not null)
                 {
                     DataGrid dataGridOwner = column.DataGridOwner;
-                    if (dataGridOwner != null)
+                    if (dataGridOwner is not null)
                     {
                         for (int index = DisplayIndex - 1; index >= 0; index--)
                         {

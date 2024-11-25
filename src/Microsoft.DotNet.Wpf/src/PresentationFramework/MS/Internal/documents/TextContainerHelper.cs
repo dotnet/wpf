@@ -27,7 +27,7 @@ namespace MS.Internal.Documents
         {
             Invariant.Assert(cpFirst <= cpLast);
             Invariant.Assert(cpFirst >= 0);
-            Invariant.Assert(textContainer != null);
+            Invariant.Assert(textContainer is not null);
             Invariant.Assert(cpLast <= textContainer.SymbolCount);
             _cpFirst = cpFirst;
             _cpLast = cpLast;
@@ -37,7 +37,7 @@ namespace MS.Internal.Documents
         }
         internal void Merge(TextContentRange other)
         {
-            Invariant.Assert(other != null);
+            Invariant.Assert(other is not null);
 
             // Skip merge operation if we're merging an empty text content range.
             if (other._textContainer is null)
@@ -53,7 +53,7 @@ namespace MS.Internal.Documents
                 _size = other._size;
                 if (_size != 0)
                 {
-                    Invariant.Assert(other._ranges != null);
+                    Invariant.Assert(other._ranges is not null);
                     Invariant.Assert(other._ranges.Length >= (other._size * 2));
                     _ranges = new int[_size * 2];
                     for (int i = 0; i < _ranges.Length; i++)
@@ -155,7 +155,7 @@ namespace MS.Internal.Documents
             get
             {
                 ITextPointer startPosition = null;
-                if (_textContainer != null)
+                if (_textContainer is not null)
                 {
                     startPosition = _textContainer.CreatePointerAtOffset(IsSimple ? _cpFirst : _ranges[0], LogicalDirection.Forward);
                 }
@@ -167,7 +167,7 @@ namespace MS.Internal.Documents
             get
             {
                 ITextPointer endPosition = null;
-                if (_textContainer != null)
+                if (_textContainer is not null)
                 {
                     endPosition = _textContainer.CreatePointerAtOffset(IsSimple ? _cpLast : _ranges[(_size - 1) * 2 + 1], LogicalDirection.Backward);
                 }
@@ -261,7 +261,7 @@ namespace MS.Internal.Documents
         private void EnsureSize()
         {
             Invariant.Assert(_size > 0);
-            Invariant.Assert(_ranges != null);
+            Invariant.Assert(_ranges is not null);
             if (_ranges.Length < (_size + 1) * 2)
             {
                 int[] ranges = new int[_ranges.Length * 2];
@@ -330,7 +330,7 @@ namespace MS.Internal.Documents
                         peer = ContentElementAutomationPeer.CreatePeerForElement((ContentElement)element);
                         // If AutomationPeer has been retrieved, add it to the collection.
                         // And skip entire element.
-                        if (peer != null)
+                        if (peer is not null)
                         {
                             if (ownerContentStart is null || IsImmediateAutomationChild(start, ownerContentStart))
                             {
@@ -352,7 +352,7 @@ namespace MS.Internal.Documents
                         {
                             peer = UIElementAutomationPeer.CreatePeerForElement((UIElement)element);
                             // If AutomationPeer has been retrieved, add it to the collection.
-                            if (peer != null)
+                            if (peer is not null)
                             {
                                 peers.Add(peer);
                             }
@@ -366,7 +366,7 @@ namespace MS.Internal.Documents
                     {
                         peer = ContentElementAutomationPeer.CreatePeerForElement((ContentElement)element);
                         // If AutomationPeer has been retrieved, add it to the collection.
-                        if (peer != null)
+                        if (peer is not null)
                         {
                             if (ownerContentStart is null || IsImmediateAutomationChild(start, ownerContentStart))
                             {
@@ -415,7 +415,7 @@ namespace MS.Internal.Documents
                 {
                     peer = ContentElementAutomationPeer.CreatePeerForElement((ContentElement)element);
                 }
-                if (peer != null)
+                if (peer is not null)
                 {
                     immediateChild = false;
                     break;
@@ -445,7 +445,7 @@ namespace MS.Internal.Documents
             {
                 position.MoveToElementEdge(ElementEdge.BeforeStart);
                 element = position.GetAdjacentElement(LogicalDirection.Forward);
-                if (element != null)
+                if (element is not null)
                 {
                     ancestorsStart.Insert(0, element);
                     positionsStart.Insert(0, position.CreatePointer(LogicalDirection.Forward));
@@ -461,7 +461,7 @@ namespace MS.Internal.Documents
             {
                 position.MoveToElementEdge(ElementEdge.AfterEnd);
                 element = position.GetAdjacentElement(LogicalDirection.Backward);
-                if (element != null)
+                if (element is not null)
                 {
                     ancestorsEnd.Insert(0, element);
                     positionsEnd.Insert(0, position.CreatePointer(LogicalDirection.Backward));
@@ -486,7 +486,7 @@ namespace MS.Internal.Documents
                     {
                         peer = ContentElementAutomationPeer.CreatePeerForElement((ContentElement)element);
                     }
-                    if (peer != null)
+                    if (peer is not null)
                     {
                         elementStart = positionsStart[depth - 1];
                         elementEnd = positionsEnd[depth - 1];
@@ -605,7 +605,7 @@ namespace MS.Internal.Documents
             // Likely the embedded element is hosted by some TextElement, like InlineUIContainer or BlockUIContainer
             ITextPointer position;
             TextElement uiContainer = embeddedObject.Parent as TextElement;
-            if (uiContainer != null)
+            if (uiContainer is not null)
             {
                 position = uiContainer.ContentStart;
             }
@@ -629,7 +629,7 @@ namespace MS.Internal.Documents
             TextElement textElement;
 
             textElement = element as TextElement;
-            if (textElement != null)
+            if (textElement is not null)
             {
                 if (!textElement.IsInTree || textElement.TextContainer != textContainer)
                 {
@@ -683,7 +683,7 @@ namespace MS.Internal.Documents
             TextElement textElement;
 
             textElement = element as TextElement;
-            if (textElement != null)
+            if (textElement is not null)
             {
                 cch = textElement.SymbolCount;
             }
@@ -738,9 +738,9 @@ namespace MS.Internal.Documents
             for (int i = 0; i < count; i++)
             {
                 Visual child = parent.InternalGetVisualChild(i);
-                if (child != null
+                if (child is not null
                     && child.CheckFlagsAnd(VisualFlags.IsUIElement)
-                    && (peer = UIElementAutomationPeer.CreatePeerForElement((UIElement)child)) != null)
+                    && (peer = UIElementAutomationPeer.CreatePeerForElement((UIElement)child)) is not null)
                 {
                     peers.Add(peer);
                 }

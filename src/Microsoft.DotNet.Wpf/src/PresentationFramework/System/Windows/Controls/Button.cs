@@ -35,7 +35,7 @@ namespace System.Windows.Controls
 
             // WORKAROUND: the following if statement is a workaround to get the ButtonBase cctor to run before we
             // override metadata.
-            if (ButtonBase.CommandProperty != null)
+            if (ButtonBase.CommandProperty is not null)
             {
                 IsEnabledProperty.OverrideMetadata(typeof(Button), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnIsEnabledChanged)));
             }
@@ -259,7 +259,7 @@ namespace System.Windows.Controls
             if (AutomationPeer.ListenerExists(AutomationEvents.InvokePatternOnInvoked))
             {
                 AutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(this);
-                if (peer != null)
+                if (peer is not null)
                     peer.RaiseAutomationEvent(AutomationEvents.InvokePatternOnInvoked);
             }
 

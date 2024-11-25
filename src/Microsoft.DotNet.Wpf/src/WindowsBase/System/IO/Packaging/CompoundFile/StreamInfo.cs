@@ -829,17 +829,17 @@ namespace System.IO.Packaging
                 foreach (IDataTransform dataTransform in transforms)
                 {
                     string id = dataTransform.TransformIdentifier as string;
-                    if (id != null)
+                    if (id is not null)
                     {
                         if (string.Equals(id, RightsManagementEncryptionTransform.ClassTransformIdentifier, StringComparison.OrdinalIgnoreCase)
                             &&
-                            (dataTransform as RightsManagementEncryptionTransform) != null)
+                            (dataTransform as RightsManagementEncryptionTransform) is not null)
                         {
                             _encryptionOption = EncryptionOption.RightsManagement;
                         }
                         else if (string.Equals(id, CompressionTransform.ClassTransformIdentifier, StringComparison.OrdinalIgnoreCase)
                                  &&
-                                 (dataTransform as CompressionTransform) != null)
+                                 (dataTransform as CompressionTransform) is not null)
                         {
                             // We don't persist the compression level used during compression process
                             // When we access the stream, all we can determine is whether it is compressed or not

@@ -225,7 +225,7 @@ namespace System.Windows.Controls
             Size padding = HelperCollapseThickness(this.Padding);
 
             //If we have a child
-            if (child != null)
+            if (child is not null)
             {
                 // Combine into total decorating size
                 Size combined = new Size(border.Width + padding.Width, border.Height + padding.Height);
@@ -272,7 +272,7 @@ namespace System.Windows.Controls
             
             //  arrange child
             UIElement child = Child;
-            if (child != null)
+            if (child is not null)
             {
                 Rect childRect = HelperDeflateRect(innerRect, Padding);
                 child.Arrange(childRect);
@@ -289,7 +289,7 @@ namespace System.Windows.Controls
             _useComplexRenderCodePath = !uniformCorners;
 
             if (    !_useComplexRenderCodePath
-                &&  borderBrush != null )
+                &&  borderBrush is not null )
             {
                 SolidColorBrush originIndependentBrush = borderBrush as SolidColorBrush;
 
@@ -338,7 +338,7 @@ namespace System.Windows.Controls
                     {
                         GenerateGeometry(ctx, boundRect, outerRadii);
 
-                        if (backgroundGeometry != null)
+                        if (backgroundGeometry is not null)
                         {
                             GenerateGeometry(ctx, innerRect, innerRadii);
                         }
@@ -373,15 +373,15 @@ namespace System.Windows.Controls
             {
                 Brush brush;
                 StreamGeometry borderGeometry = BorderGeometryCache;
-                if (    borderGeometry != null
-                    &&  (brush = BorderBrush) != null   )
+                if (    borderGeometry is not null
+                    &&  (brush = BorderBrush) is not null   )
                 {
                     dc.DrawGeometry(brush, null, borderGeometry);
                 }
 
                 StreamGeometry backgroundGeometry = BackgroundGeometryCache;
-                if (    backgroundGeometry != null
-                    &&  (brush = Background) != null    )
+                if (    backgroundGeometry is not null
+                    &&  (brush = Background) is not null    )
                 {
                     dc.DrawGeometry(brush, null, backgroundGeometry);
                 }
@@ -399,7 +399,7 @@ namespace System.Windows.Controls
                 // NB: We double draw corners right now.  Corner handling is tricky (bevelling, &c...) and
                 //     we need a firm spec before doing "the right thing."  (greglett, ffortes)
                 if (!border.IsZero
-                    && (borderBrush = BorderBrush) != null)
+                    && (borderBrush = BorderBrush) is not null)
                 {
                     // Initialize the first pen.  Note that each pen is created via new()
                     // and frozen if possible.  Doing this avoids the pen 
@@ -562,7 +562,7 @@ namespace System.Windows.Controls
 
                 // Draw background in rectangle inside border.
                 Brush background = Background;
-                if (background != null)
+                if (background is not null)
                 {
                     // Intialize background 
                     Point ptTL, ptBR;

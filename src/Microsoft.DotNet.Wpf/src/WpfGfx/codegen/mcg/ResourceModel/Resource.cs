@@ -153,7 +153,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
             get
             {
                 return IsValueType &&
-                    EmptyField != null &&
+                    EmptyField is not null &&
                     EmptyField.Distinguished;
             }
         }
@@ -162,7 +162,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
         {
             get
             {
-                return _collectionType != null;
+                return _collectionType is not null;
             }
         }
 
@@ -443,7 +443,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
             {
                 McgResource extendsAsResource = Extends as McgResource;
 
-                return _inlinedUnmanagedResource || (extendsAsResource != null && extendsAsResource.InlinedUnmanagedResource);
+                return _inlinedUnmanagedResource || (extendsAsResource is not null && extendsAsResource.InlinedUnmanagedResource);
             }
         }
 
@@ -475,7 +475,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                 // If we have an empty field and we are not a value type we
                 // need a special singleton class to serve as a sentinel for empty.
                 //
-                return EmptyField != null && EmptyField.GenerateClass && !IsValueType;
+                return EmptyField is not null && EmptyField.GenerateClass && !IsValueType;
             }
         }
 
@@ -486,7 +486,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                 McgResource extendsAsResource = this.Extends as McgResource;
 
                 return HasUnmanagedResource ||
-                    ((extendsAsResource != null) &&
+                    ((extendsAsResource is not null) &&
                      (extendsAsResource.HasUnmanagedResourceOrDerivesFromTypeWhichHasUnmanagedResource));
             }
         }
@@ -497,7 +497,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
             {
                 McgResource extendsAsResource = this.Extends as McgResource;
 
-                return ((extendsAsResource != null) &&
+                return ((extendsAsResource is not null) &&
                         (extendsAsResource.HasUnmanagedResourceOrDerivesFromTypeWhichHasUnmanagedResource));
             }
         }

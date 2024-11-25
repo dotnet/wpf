@@ -167,7 +167,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             Geometry shape = GetShapeGeometry();
 
-            if (shape != null && Clip != null)
+            if (shape is not null && Clip is not null)
             {
                 bool empty;
 
@@ -326,24 +326,24 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 GeometryDrawing gd = d as GeometryDrawing;
 
-                if (gd != null)
+                if (gd is not null)
                 {
                     GeometryPrimitive gp = null;
 
-                    if (gd.Geometry != null)
+                    if (gd.Geometry is not null)
                     {
                         gp = new GeometryPrimitive();
 
                         Rect bounds = gd.Geometry.Bounds;
 
-                        if (gd.Brush != null)
+                        if (gd.Brush is not null)
                         {
                             // gd.Brush comes directly from user-provided objects, so we need to perform
                             // brush reduction
                             gp.Brush = BrushProxy.CreateUserBrush(gd.Brush, bounds, drawingToWorldTransformHint,  new TreeWalkProgress());
                         }
 
-                        if ((gd.Pen != null) && (gd.Pen.Brush != null))
+                        if ((gd.Pen is not null) && (gd.Pen.Brush is not null))
                         {
                             // pen needs to be made absolute relative to widened geometry bounds
                             Rect renderBounds = gd.Geometry.GetRenderBounds(gd.Pen);
@@ -358,7 +358,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                         gp.Geometry = gd.Geometry;
 
-                        if ((gp.Brush != null) && (gp.Pen != null)) // split
+                        if ((gp.Brush is not null) && (gp.Pen is not null)) // split
                         {
                             CanvasPrimitive cp = new CanvasPrimitive();
 
@@ -386,11 +386,11 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 GlyphRunDrawing gd = d as GlyphRunDrawing;
 
-                if (gd != null)
+                if (gd is not null)
                 {
                     GlyphPrimitive gp = null;
 
-                    if ((gd.GlyphRun != null) && (gd.ForegroundBrush != null))
+                    if ((gd.GlyphRun is not null) && (gd.ForegroundBrush is not null))
                     {
                         gp = new GlyphPrimitive();
 
@@ -409,15 +409,15 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 ImageDrawing id = d as ImageDrawing;
 
-                if (id != null)
+                if (id is not null)
                 {
-                    if (id.ImageSource != null)
+                    if (id.ImageSource is not null)
                     {
                         DrawingImage di = id.ImageSource as DrawingImage;
 
                         // Convert DrawimgImage to DrawingBrush, 
                         // ImageDrawing with DrawingImage to geometry filled with DrawingBrush
-                        if (di != null)
+                        if (di is not null)
                         {
                             DrawingBrush db = Utility.CreateNonInheritingDrawingBrush(di.Drawing);
 
@@ -453,13 +453,13 @@ namespace Microsoft.Internal.AlphaFlattener
 
             DrawingGroup dg = d as DrawingGroup;
 
-            if (dg != null)
+            if (dg is not null)
             {
                 Primitive primitive = null;
 
                 if (Utility.IsRenderVisible(dg))
                 {
-                    if (dg.Transform != null)
+                    if (dg.Transform is not null)
                     {
                         drawingToWorldTransformHint.Prepend(dg.Transform.Value);
                     }
@@ -477,7 +477,7 @@ namespace Microsoft.Internal.AlphaFlattener
                         {
                             Primitive p = DrawingToPrimitive(children[i], drawingToWorldTransformHint);
 
-                            if (p != null)
+                            if (p is not null)
                             {
                                 cp.Children.Add(p);
                             }
@@ -501,7 +501,7 @@ namespace Microsoft.Internal.AlphaFlattener
                             out bitmapToDrawingTransform
                             );
 
-                        if (bitmap != null)
+                        if (bitmap is not null)
                         {
                             // bitmap may be null if bounds too small/invalid
                             ImagePrimitive ip = new ImagePrimitive();
@@ -514,9 +514,9 @@ namespace Microsoft.Internal.AlphaFlattener
                         }
                     }
 
-                    if (primitive != null)
+                    if (primitive is not null)
                     {
-                        if (dg.Transform != null)
+                        if (dg.Transform is not null)
                         {
                             primitive.Transform *= dg.Transform.Value;
                         }
@@ -524,7 +524,7 @@ namespace Microsoft.Internal.AlphaFlattener
                         primitive.Clip = dg.ClipGeometry;
                         primitive.Opacity = Utility.NormalizeOpacity(dg.Opacity);
 
-                        if (dg.OpacityMask != null)
+                        if (dg.OpacityMask is not null)
                         {
                             primitive.OpacityMask = BrushProxy.CreateOpacityMaskBrush(dg.OpacityMask, dg.Bounds);
                         }
@@ -550,7 +550,7 @@ namespace Microsoft.Internal.AlphaFlattener
             int level = 0;
 
             // Clipping already in device coordinate space, so it needs to be pushed first
-            if (Clip != null)
+            if (Clip is not null)
             {
                 dc.PushClip(Clip);
                 level++;
@@ -597,11 +597,11 @@ namespace Microsoft.Internal.AlphaFlattener
         /// </summary>
         protected void ExtractOpacity()
         {
-            if ((OpacityMask != null) && (OpacityMask.Brush != null))
+            if ((OpacityMask is not null) && (OpacityMask.Brush is not null))
             {
                 SolidColorBrush sb = OpacityMask.Brush as SolidColorBrush;
 
-                if (sb != null)
+                if (sb is not null)
                 {
                     Opacity *= Utility.NormalizeOpacity(sb.Color.ScA) * OpacityMask.Opacity;
 
@@ -622,7 +622,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// </remarks>
         protected virtual void CloneMembers()
         {
-            if (_opacityMask != null)
+            if (_opacityMask is not null)
             {
                 _opacityMask = _opacityMask.Clone();
             }
@@ -672,7 +672,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// </summary>
         public void Widen()
         {
-            if (Pen != null)
+            if (Pen is not null)
             {
                 Debug.Assert(Brush is null, "no brush expected");
 
@@ -783,7 +783,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <returns>Returns a primitive that replaces the current GeometryPrimitive, or null if not visible.</returns>
         public Primitive UnfoldDrawingBrush()
         {
-            if (_pen != null && _pen.StrokeBrush != null && _pen.StrokeBrush.Brush is DrawingBrush)
+            if (_pen is not null && _pen.StrokeBrush is not null && _pen.StrokeBrush.Brush is DrawingBrush)
             {
                 // Treat DrawingBrush stroke as fill so that we can unfold it.
                 Widen();
@@ -885,7 +885,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             double gdiRasterizeCost = rowCount * columnCount * brushPrimitive.GetDrawingCost(viewboxToViewportTransform);
 
-            if (OpacityMask != null)
+            if (OpacityMask is not null)
             {
                 gdiRasterizeCost *= Utility.TransparencyCostFactor;
             }
@@ -1047,7 +1047,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             get
             {
-                if (Pen != null)
+                if (Pen is not null)
                 {
                     if (_widenGeometry is null)
                     {
@@ -1088,16 +1088,16 @@ namespace Microsoft.Internal.AlphaFlattener
 
         private void AbsorbOpacity()
         {
-            if (!Utility.IsOpaque(Opacity) || (OpacityMask != null))
+            if (!Utility.IsOpaque(Opacity) || (OpacityMask is not null))
             {
-                if (Brush != null)
+                if (Brush is not null)
                 {
                     Brush = Brush.Clone();
 
                     Brush = Brush.PushOpacity(Opacity, OpacityMask);
                 }
 
-                if (Pen != null)
+                if (Pen is not null)
                 {
                     Pen.PushOpacity(Opacity, OpacityMask);
                 }
@@ -1113,7 +1113,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public override void OnRender(DrawingContext dc)
         {
-            if ((Geometry != null) && (Pen != null) || (Brush != null))
+            if ((Geometry is not null) && (Pen is not null) || (Brush is not null))
             {
                 //
                 // Fix bug 1308518: Gaps in DrawingBrush opacity mask
@@ -1141,7 +1141,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                     Pen p = null;
 
-                    if (Pen != null)
+                    if (Pen is not null)
                     {
                         p = Pen.GetPen(false);
                     }
@@ -1173,7 +1173,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public override void Exclude(Geometry g)
         {
-            if (g != null)
+            if (g is not null)
             {
                 Widen();
 
@@ -1194,7 +1194,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             // Transform is not pushed in GlyphPrimitive. 
             // Need to apply transform to Brush when returning to outside
-            if (b != null)
+            if (b is not null)
             {
                 b = b.ApplyTransformCopy(Transform);
             }
@@ -1213,7 +1213,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             // Transform is not pushed in GlyphPrimitive. 
             // Need to apply transform to Brush when returning to outside
-            if (b != null)
+            if (b is not null)
             {
                 b = b.ApplyTransformCopy(Transform);
             }
@@ -1232,7 +1232,7 @@ namespace Microsoft.Internal.AlphaFlattener
             // We need to reverse the order, since the DrawingBrush is the mask applied to
             // the color.
             //
-            if (g.Brush != null)
+            if (g.Brush is not null)
             {
                 g.Brush = g.Brush.Clone();
                 g.Brush.OpacityOnly = true;
@@ -1240,7 +1240,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 g.Brush = color.BlendBrush(g.Brush);
             }
 
-            if (g.Pen != null)
+            if (g.Pen is not null)
             {
                 g.Pen = g.Pen.Clone();
                 g.Pen.StrokeBrush.OpacityOnly = true;
@@ -1312,11 +1312,11 @@ namespace Microsoft.Internal.AlphaFlattener
         /// </summary>
         public override void ApplyTransform()
         {
-            Debug.Assert((Brush != null) || (Pen != null), "empty primitive");
+            Debug.Assert((Brush is not null) || (Pen is not null), "empty primitive");
 
             if (!Transform.IsIdentity)
             {
-                if (Pen != null)
+                if (Pen is not null)
                 {
                     double scale;
 
@@ -1335,7 +1335,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 // Clip     = Utility.TransformGeometry(Clip, Transform);
                 Geometry = Utility.TransformGeometry(Geometry, Transform);
 
-                if (Brush != null)
+                if (Brush is not null)
                 {
                     Brush.ApplyTransform(Transform);
                 }
@@ -1353,7 +1353,7 @@ namespace Microsoft.Internal.AlphaFlattener
             AbsorbOpacity();
 
             // Widen stroken with TileBrush, so that gap can be removed
-            if ((Pen != null) && (Pen.StrokeBrush.Brush is TileBrush))
+            if ((Pen is not null) && (Pen.StrokeBrush.Brush is TileBrush))
             {
                 Widen();
             }
@@ -1365,11 +1365,11 @@ namespace Microsoft.Internal.AlphaFlattener
             }
                             
             // Remove gaps whened filled by a TileBrush with no tiling and None/Uniform stretch
-            if (Brush != null)
+            if (Brush is not null)
             {
                 TileBrush tb = Brush.Brush as TileBrush;
 
-                if (tb != null)
+                if (tb is not null)
                 {
                     // get geometry bounds in world space. can't touch Geometry directly since
                     // we might be a GlyphPrimitive, which has Geometry is null
@@ -1431,7 +1431,7 @@ namespace Microsoft.Internal.AlphaFlattener
                         //
                         bool clipContent = false;
 
-                        if (!empty && tb.Transform != null && !Utility.IsScaleTranslate(tb.Transform.Value))
+                        if (!empty && tb.Transform is not null && !Utility.IsScaleTranslate(tb.Transform.Value))
                         {
                             // Rotation results in content not completely filling rasterization bitmap.
                             clipContent = true;
@@ -1471,7 +1471,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             // Optimize: Absorb clip into geometry to avoid converting two Geometry objects to GDI paths
             // in GDIExporter. In the future we may want to absorb clip only if intersection is simple.
-            if (Clip != null && Geometry != null && Pen is null)
+            if (Clip is not null && Geometry is not null && Pen is null)
             {
                 // By this point clip should be in world space. Transform back to geometry space before
                 // performing intersection.
@@ -1496,7 +1496,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 Clip = null;
             }
 
-            return Geometry != null;
+            return Geometry is not null;
         }
 
         // Override since opacity may be pushed into BrushProxy. Need to strip opacity from BrushProxy.
@@ -1504,7 +1504,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             double opacity = Opacity;
 
-            if (Brush != null)
+            if (Brush is not null)
             {
                 // Push only inherited opacity; strip BrushProxy.Brush.Opacity from BrushProxy.Opacity.
                 // Get real brush first in case it rebuilds the brush and modifies opacity.
@@ -1512,7 +1512,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 opacity *= Brush.Opacity;
                 
-                if (realBrush != null)
+                if (realBrush is not null)
                 {
                     double realOpacity = Utility.NormalizeOpacity(realBrush.Opacity);
 
@@ -1523,7 +1523,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 }
             }
 
-            if (Pen != null)
+            if (Pen is not null)
             {
                 // Like above, remove BrushProxy.Brush.Opacity since geometry rendering will
                 // apply it.
@@ -1531,7 +1531,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 opacity *= Pen.StrokeBrush.Opacity;
 
-                if (realBrush != null)
+                if (realBrush is not null)
                 {
                     double realOpacity = Utility.NormalizeOpacity(realBrush.Opacity);
 
@@ -1565,12 +1565,12 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             base.CloneMembers();
 
-            if (_brush != null)
+            if (_brush is not null)
             {
                 _brush = _brush.Clone();
             }
 
-            if (_pen != null)
+            if (_pen is not null)
             {
                 _pen = _pen.Clone();
             }
@@ -1582,7 +1582,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             if (Transform.IsIdentity)
             {
-                if (Pen != null)
+                if (Pen is not null)
                 {
                     result = Geometry.GetRenderBounds(Pen.GetPen(true));
                 }
@@ -1615,12 +1615,12 @@ namespace Microsoft.Internal.AlphaFlattener
 
             double cost = 0;
 
-            if (_brush != null)
+            if (_brush is not null)
             {
                 cost += _brush.GetDrawingCost(bounds.Size);
             }
 
-            if (_pen != null && _pen.StrokeBrush != null)
+            if (_pen is not null && _pen.StrokeBrush is not null)
             {
                 cost += _pen.StrokeBrush.GetDrawingCost(bounds.Size);
             }
@@ -1677,7 +1677,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public override void OnRender(DrawingContext dc)
         {
-            if ((GlyphRun != null) && (Pen != null) || (Brush != null))
+            if ((GlyphRun is not null) && (Pen is not null) || (Brush is not null))
             {
                 int level;
 
@@ -1698,7 +1698,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public override void Exclude(Geometry g)
         {
-            if ((GlyphRun != null) && (g != null))
+            if ((GlyphRun is not null) && (g is not null))
             {
                 if (_bounds is null)
                 {
@@ -1735,14 +1735,14 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             base.Optimize();
 
-            return GlyphRun != null;
+            return GlyphRun is not null;
         }
 
         protected override Rect GetBoundsCore()
         {
             Rect bounds = Rect.Empty;
 
-            if (GlyphRun != null)
+            if (GlyphRun is not null)
             {
                 bounds = GlyphRun.ComputeInkBoundingBox();
 
@@ -1817,7 +1817,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public override void OnRender(DrawingContext dc)
         {
-            if (Image != null)
+            if (Image is not null)
             {
                 int level;
 
@@ -1836,7 +1836,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public override void Exclude(Geometry g)
         {
-            if (Image != null)
+            if (Image is not null)
             {
                 if (Clip is null)
                 {
@@ -1926,7 +1926,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             AbsorbOpacity();
 
-            if ((Image != null) && (Clip != null))
+            if ((Image is not null) && (Clip is not null))
             {
                 Geometry dest = Utility.TransformGeometry(new RectangleGeometry(DstRect), Transform);
 
@@ -1936,7 +1936,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 }
             }
 
-            return Image != null;
+            return Image is not null;
         }
 
         public override void PushOpacity(double opacity, BrushProxy opacityMask)
@@ -1952,7 +1952,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             base.CloneMembers();
 
-            if (_image != null)
+            if (_image is not null)
             {
                 _image = _image.Clone();
             }
@@ -2174,7 +2174,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             Rect bounds = this.bounds;
 
-            if (primitive.Clip != null)
+            if (primitive.Clip is not null)
             {
                 bounds = Rect.Intersect(bounds, primitive.Clip.Bounds);
             }
@@ -2193,7 +2193,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 GeometryPrimitive gp = primitive as GeometryPrimitive;
 
-                if ((gp != null) && (gp.Brush != null) && (gp.Pen is null))
+                if ((gp is not null) && (gp.Brush is not null) && (gp.Pen is null))
                 {
                     BrushProxy bp = gp.Brush;
 
@@ -2201,7 +2201,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     {
                         Geometry pshape = p.primitive.GetShapeGeometry();
 
-                        if (primitive.Clip != null)
+                        if (primitive.Clip is not null)
                         {
                             if (!Utility.FullyCovers(primitive.Clip, pshape))
                             {

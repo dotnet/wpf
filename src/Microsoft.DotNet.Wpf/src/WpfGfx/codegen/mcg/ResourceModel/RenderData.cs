@@ -322,7 +322,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
         /// </summary>
         public void AddRenderDataInstruction(McgRenderDataInstruction renderDataInstruction)
         {
-            if (RenderDataInstructionHashTable[renderDataInstruction.Name] != null)
+            if (RenderDataInstructionHashTable[renderDataInstruction.Name] is not null)
             {
                 Helpers.CodeGenHelpers.ThrowValidationException(String.Format(
                     "Duplicate RenderDataInstruction: {0}",

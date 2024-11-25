@@ -31,14 +31,14 @@ namespace MS.Internal.IO.Packaging
             // although we could have implemented this constructor in terms of the other constructor; we shouldn't. 
             // It seems safer to always call the equivalent base class constructor, as we might be ignorant about 
             // some minor differences between various MemoryStream constructors
-            Debug.Assert(memoryStreamFactory != null);            
+            Debug.Assert(memoryStreamFactory is not null);            
             _memoryStreamFactory = memoryStreamFactory;
             ReportIfNeccessary();
         }
             
         internal TrackingMemoryStream (ITrackingMemoryStreamFactory memoryStreamFactory, Int32 capacity) : base(capacity)
         {
-            Debug.Assert(memoryStreamFactory != null);
+            Debug.Assert(memoryStreamFactory is not null);
             _memoryStreamFactory = memoryStreamFactory;
             ReportIfNeccessary();
         }
@@ -73,7 +73,7 @@ namespace MS.Internal.IO.Packaging
             {
                 if (disposing)
                 {
-                    if (_memoryStreamFactory != null)
+                    if (_memoryStreamFactory is not null)
                     {
                         // release all the memory, and report it to the TrackingMemoryStreamFactory 
                         SetLength(0);

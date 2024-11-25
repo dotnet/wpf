@@ -31,15 +31,15 @@ namespace System.Windows
             // IsMouseOver OnPropertyChanged override.
             
             bool shouldFireNotification = false;
-            if (uie != null)
+            if (uie is not null)
             {
                 shouldFireNotification = (!oldValue && uie.IsMouseOver) || (oldValue && !uie.IsMouseOver);
             }
-            else if (ce != null)
+            else if (ce is not null)
             {
                 shouldFireNotification = (!oldValue && ce.IsMouseOver) || (oldValue && !ce.IsMouseOver);
             }
-            else if (uie3D != null)
+            else if (uie3D is not null)
             {
                 shouldFireNotification = (!oldValue && uie3D.IsMouseOver) || (oldValue && !uie3D.IsMouseOver);
             }
@@ -49,15 +49,15 @@ namespace System.Windows
                 MouseEventArgs mouseEventArgs = new MouseEventArgs(Mouse.PrimaryDevice, Environment.TickCount, Mouse.PrimaryDevice.StylusDevice);
                 mouseEventArgs.RoutedEvent = oldValue ? Mouse.MouseLeaveEvent : Mouse.MouseEnterEvent;
 
-                if (uie != null)
+                if (uie is not null)
                 {
                     uie.RaiseEvent(mouseEventArgs);
                 }
-                else if (ce != null)
+                else if (ce is not null)
                 {
                     ce.RaiseEvent(mouseEventArgs);
                 }
-                else if (uie3D != null)
+                else if (uie3D is not null)
                 {
                     uie3D.RaiseEvent(mouseEventArgs);
                 }

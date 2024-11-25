@@ -133,7 +133,7 @@ namespace MS.Internal.Documents
                 // Add it to a geometry
                 CaretElement.AddGeometry(ref geometry, floatingElementGeometry);
                 // Add content't transform to geometry.
-                if (geometry != null)
+                if (geometry is not null)
                 {
                     TransformFromContent(geometry);
                 }
@@ -185,7 +185,7 @@ namespace MS.Internal.Documents
                         CaretElement.AddGeometry(ref geometry, columnGeometry);
                     }
                     // Add content't transform to geometry.
-                    if (geometry != null)
+                    if (geometry is not null)
                     {
                         TransformFromContent(geometry);
                     }
@@ -464,7 +464,7 @@ namespace MS.Internal.Documents
         {
             bool contains = false;
 
-            Invariant.Assert(segments != null);
+            Invariant.Assert(segments is not null);
             // Iterate through all segments and check if position is inside one of them.
             // Position is inside of a segment if:
             // a) it is between Start and End boundaries (exclusive), or
@@ -555,7 +555,7 @@ namespace MS.Internal.Documents
                 {
                     // The RenderScope in this case is typically DocumentPageView
                     Visual visual = _owner.Visual;
-                    while (visual != null && !(visual is UIElement))
+                    while (visual is not null && !(visual is UIElement))
                     {
                         visual = VisualTreeHelper.GetParent(visual) as Visual;
                     }
@@ -603,7 +603,7 @@ namespace MS.Internal.Documents
                 if (_segments is null)
                 {
                     _segments = GetTextSegments();
-                    Invariant.Assert(_segments != null, "TextSegment collection is empty.");
+                    Invariant.Assert(_segments is not null, "TextSegment collection is empty.");
                 }
                 return _segments;
             }
@@ -621,7 +621,7 @@ namespace MS.Internal.Documents
                 {
                     // When getting column results, query each on for text content, used to determine if the view has text content
                     _columns = _owner.GetColumnResults(out _hasTextContent);
-                    Invariant.Assert(_columns != null, "Column collection is null.");
+                    Invariant.Assert(_columns is not null, "Column collection is null.");
                 }
                 return _columns;
             }
@@ -638,7 +638,7 @@ namespace MS.Internal.Documents
                 if (_floatingElements is null)
                 {
                     _floatingElements = _owner.FloatingElementResults;
-                    Invariant.Assert(_floatingElements != null, "Floating elements collection is null.");
+                    Invariant.Assert(_floatingElements is not null, "Floating elements collection is null.");
                 }
                 return _floatingElements;
             }
@@ -683,8 +683,8 @@ namespace MS.Internal.Documents
             ITextPointer position;
             int paragraphIndex;
 
-            Invariant.Assert(paragraphs != null, "Paragraph collection is empty.");
-            Invariant.Assert(floatingElements != null, "Floating element collection is empty.");
+            Invariant.Assert(paragraphs is not null, "Paragraph collection is empty.");
+            Invariant.Assert(floatingElements is not null, "Floating element collection is empty.");
 
             // Figure out which paragraph is the closest to the input pixel position. First search floating elements
             paragraphIndex = GetParagraphFromPointInFloatingElements(floatingElements, point, snapToTextInFloatingElements);
@@ -754,7 +754,7 @@ namespace MS.Internal.Documents
                 // a) ContainerParagraph - hittest colleciton of nested paragraphs.
                 ReadOnlyCollection<ParagraphResult> nestedParagraphs = ((ContainerParagraphResult)paragraph).Paragraphs;
                 // Paragraphs collection may be null in case of empty List element,
-                Invariant.Assert(nestedParagraphs != null, "Paragraph collection is null.");
+                Invariant.Assert(nestedParagraphs is not null, "Paragraph collection is null.");
                 if (nestedParagraphs.Count > 0)
                 {
                     position = GetTextPositionFromPoint(nestedParagraphs, _emptyParagraphCollection, point, snapToText, /* snap to text for floating elements*/ false);
@@ -776,7 +776,7 @@ namespace MS.Internal.Documents
             {
                 // b) TextParagraph - hittest line collection.
                 ReadOnlyCollection<LineResult> lines = ((TextParagraphResult)paragraph).Lines;
-                Invariant.Assert(lines != null, "Lines collection is null");
+                Invariant.Assert(lines is not null, "Lines collection is null");
                 if (!((TextParagraphResult)paragraph).HasTextContent)
                 {
                     position = null;
@@ -789,7 +789,7 @@ namespace MS.Internal.Documents
             else if (paragraph is TableParagraphResult)
             {
                 ReadOnlyCollection<ParagraphResult> rowParagraphs = ((TableParagraphResult)paragraph).Paragraphs;
-                Invariant.Assert(rowParagraphs != null, "Paragraph collection is null.");
+                Invariant.Assert(rowParagraphs is not null, "Paragraph collection is null.");
 
                 int index = GetParagraphFromPoint(rowParagraphs, point, snapToText);
                 if (index != -1)
@@ -848,8 +848,8 @@ namespace MS.Internal.Documents
                 }
 
                 // Paragraphs collection may be null in case of empty List element,
-                Invariant.Assert(columns != null, "Columns collection is null.");
-                Invariant.Assert(nestedFloatingElements != null, "Floating elements collection is null.");
+                Invariant.Assert(columns is not null, "Columns collection is null.");
+                Invariant.Assert(nestedFloatingElements is not null, "Floating elements collection is null.");
                 if (columns.Count > 0 || nestedFloatingElements.Count > 0)
                 {
                     position = GetTextPositionFromPoint(columns, nestedFloatingElements, point, snapToText);
@@ -862,7 +862,7 @@ namespace MS.Internal.Documents
             else if (paragraph is UIElementParagraphResult)
             {
                 BlockUIContainer blockUIContainer = paragraph.Element as BlockUIContainer;
-                if (blockUIContainer != null)
+                if (blockUIContainer is not null)
                 {
                     position = null;
                     if (paragraphBox.Contains(point) || snapToText)
@@ -900,7 +900,7 @@ namespace MS.Internal.Documents
         private ITextPointer GetTextPositionFromPoint(ReadOnlyCollection<ColumnResult> columns, ReadOnlyCollection<ParagraphResult> floatingElements, Point point, bool snapToText)
         {
             ITextPointer position = null;
-            Invariant.Assert(floatingElements != null);
+            Invariant.Assert(floatingElements is not null);
 
             int columnIndex = GetColumnFromPoint(columns, point, snapToText);
             // If no column is hit, return null text position. This can also occur if column count is 0
@@ -937,7 +937,7 @@ namespace MS.Internal.Documents
             //          cannot be represented as TextPointer belonging to TextSegments, because
             //          Backward direction belongs to the first line and the Forward direction
             //          belongs to the next page.
-            if (position != null && !ContainsCore(position))
+            if (position is not null && !ContainsCore(position))
             {
                 position = null;
             }
@@ -962,8 +962,8 @@ namespace MS.Internal.Documents
         private CellInfo GetCellInfoFromPoint(ReadOnlyCollection<ParagraphResult> paragraphs, ReadOnlyCollection<ParagraphResult> floatingElements, Point point, Table tableFilter)
         {
             CellInfo cellInfo = null;
-            Invariant.Assert(paragraphs != null, "Paragraph collection is empty.");
-            Invariant.Assert(floatingElements != null, "Floating element collection is empty.");
+            Invariant.Assert(paragraphs is not null, "Paragraph collection is empty.");
+            Invariant.Assert(floatingElements is not null, "Floating element collection is empty.");
 
             // Figure out which paragraph is the closest to the input pixel position.
             // Search floating elements first, then paragraphs collection. Do not snap to text in either floating elements or
@@ -985,7 +985,7 @@ namespace MS.Internal.Documents
                 }
             }
 
-            if (paragraph != null)
+            if (paragraph is not null)
             {
                 cellInfo = GetCellInfoFromPoint(paragraph, point, tableFilter);
             }
@@ -1013,7 +1013,7 @@ namespace MS.Internal.Documents
                 // a) ContainerParagraph - hittest colleciton of nested paragraphs.
                 ReadOnlyCollection<ParagraphResult> nestedParagraphs = ((ContainerParagraphResult)paragraph).Paragraphs;
                 // Paragraphs collection may be empty, but should never be null
-                Invariant.Assert(nestedParagraphs != null, "Paragraph collection is null");
+                Invariant.Assert(nestedParagraphs is not null, "Paragraph collection is null");
                 if (nestedParagraphs.Count > 0)
                 {
                     cellInfo = GetCellInfoFromPoint(nestedParagraphs, _emptyParagraphCollection, point, tableFilter);
@@ -1022,7 +1022,7 @@ namespace MS.Internal.Documents
             else if (paragraph is TableParagraphResult)
             {
                 ReadOnlyCollection<ParagraphResult> nestedParagraphs = ((TableParagraphResult)paragraph).GetParagraphsFromPoint(point, false);
-                Invariant.Assert(nestedParagraphs != null, "Paragraph collection is null");
+                Invariant.Assert(nestedParagraphs is not null, "Paragraph collection is null");
                 if (nestedParagraphs.Count > 0)
                 {
                     cellInfo = GetCellInfoFromPoint(nestedParagraphs, _emptyParagraphCollection, point, tableFilter);
@@ -1041,7 +1041,7 @@ namespace MS.Internal.Documents
 
                 // WOOT! COLUMNS!
                 cellInfo = GetCellInfoFromPoint(subpageParagraphResult.Columns, subpageParagraphResult.FloatingElements, point, tableFilter);
-                if (cellInfo != null)
+                if (cellInfo is not null)
                 {
                     cellInfo.Adjust(new Point(subpageParagraphResult.ContentOffset.X, subpageParagraphResult.ContentOffset.Y));
                 }
@@ -1052,7 +1052,7 @@ namespace MS.Internal.Documents
                 FigureParagraphResult figureParagraphResult = (FigureParagraphResult)paragraph;
                 TransformToSubpage(ref point, figureParagraphResult.ContentOffset);
                 cellInfo = GetCellInfoFromPoint(figureParagraphResult.Columns, figureParagraphResult.FloatingElements, point, tableFilter);
-                if (cellInfo != null)
+                if (cellInfo is not null)
                 {
                     cellInfo.Adjust(new Point(figureParagraphResult.ContentOffset.X, figureParagraphResult.ContentOffset.Y));
                 }
@@ -1063,13 +1063,13 @@ namespace MS.Internal.Documents
                 FloaterParagraphResult floaterParagraphResult = (FloaterParagraphResult)paragraph;
                 TransformToSubpage(ref point, floaterParagraphResult.ContentOffset);
                 cellInfo = GetCellInfoFromPoint(floaterParagraphResult.Columns, floaterParagraphResult.FloatingElements, point, tableFilter);
-                if (cellInfo != null)
+                if (cellInfo is not null)
                 {
                     cellInfo.Adjust(new Point(floaterParagraphResult.ContentOffset.X, floaterParagraphResult.ContentOffset.Y));
                 }
             }
 
-            if (tableFilter != null && cellInfo != null && cellInfo.Cell.Table != tableFilter)
+            if (tableFilter is not null && cellInfo is not null && cellInfo.Cell.Table != tableFilter)
             {
                 cellInfo = null; // Clear out result if not matching input filter
             }
@@ -1081,7 +1081,7 @@ namespace MS.Internal.Documents
         /// </summary>
         private CellInfo GetCellInfoFromPoint(ReadOnlyCollection<ColumnResult> columns, ReadOnlyCollection<ParagraphResult> floatingElements, Point point, Table tableFilter)
         {
-            Invariant.Assert(floatingElements != null);
+            Invariant.Assert(floatingElements is not null);
             int columnIndex = GetColumnFromPoint(columns, point, false);
             CellInfo cellInfo;
 
@@ -1110,8 +1110,8 @@ namespace MS.Internal.Documents
         /// <param name="position">Position of an object/character.</param>
         private Rect GetRectangleFromTextPosition(ReadOnlyCollection<ParagraphResult> paragraphs, ReadOnlyCollection<ParagraphResult> floatingElements, ITextPointer position)
         {
-            Invariant.Assert(paragraphs != null, "Paragraph collection is null");
-            Invariant.Assert(floatingElements != null, "Floating element collection is null");
+            Invariant.Assert(paragraphs is not null, "Paragraph collection is null");
+            Invariant.Assert(floatingElements is not null, "Floating element collection is null");
 
             Rect rect = Rect.Empty;
             // Figure out which paragraph contains text position.
@@ -1132,7 +1132,7 @@ namespace MS.Internal.Documents
                 }
             }
 
-            if (paragraph != null)
+            if (paragraph is not null)
             {
                 rect = GetRectangleFromTextPosition(paragraph, position);
             }
@@ -1161,7 +1161,7 @@ namespace MS.Internal.Documents
                 {
                     // a) ContainerParagraph - check collection of nested paragraphs.
                     ReadOnlyCollection<ParagraphResult> nestedParagraphs = ((ContainerParagraphResult)paragraph).Paragraphs;
-                    Invariant.Assert(nestedParagraphs != null, "Paragraph collection is null.");
+                    Invariant.Assert(nestedParagraphs is not null, "Paragraph collection is null.");
 
                     if (nestedParagraphs.Count > 0)
                     {
@@ -1182,7 +1182,7 @@ namespace MS.Internal.Documents
                 if (rect == Rect.Empty)
                 {
                     ReadOnlyCollection<ParagraphResult> nestedParagraphs = ((TableParagraphResult)paragraph).GetParagraphsFromPosition(position);
-                    Invariant.Assert(nestedParagraphs != null, "Paragraph collection is null.");
+                    Invariant.Assert(nestedParagraphs is not null, "Paragraph collection is null.");
                     if (nestedParagraphs.Count > 0)
                     {
                         rect = GetRectangleFromTextPosition(nestedParagraphs, _emptyParagraphCollection, position);
@@ -1209,8 +1209,8 @@ namespace MS.Internal.Documents
                 FloaterParagraphResult floaterParagraphResult = (FloaterParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = floaterParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = floaterParagraphResult.FloatingElements;
-                Invariant.Assert(columns != null, "Columns collection is null.");
-                Invariant.Assert(nestedFloatingElements != null, "Paragraph collection is null.");
+                Invariant.Assert(columns is not null, "Columns collection is null.");
+                Invariant.Assert(nestedFloatingElements is not null, "Paragraph collection is null.");
                 if (nestedFloatingElements.Count > 0 || columns.Count > 0)
                 {
                     rect = GetRectangleFromTextPosition(columns, nestedFloatingElements, position);
@@ -1223,8 +1223,8 @@ namespace MS.Internal.Documents
                 FigureParagraphResult figureParagraphResult = (FigureParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = figureParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = figureParagraphResult.FloatingElements;
-                Invariant.Assert(columns != null, "Columns collection is null.");
-                Invariant.Assert(nestedFloatingElements != null, "Paragraph collection is null.");
+                Invariant.Assert(columns is not null, "Columns collection is null.");
+                Invariant.Assert(nestedFloatingElements is not null, "Paragraph collection is null.");
                 if (nestedFloatingElements.Count > 0 || columns.Count > 0)
                 {
                     rect = GetRectangleFromTextPosition(columns, nestedFloatingElements, position);
@@ -1251,7 +1251,7 @@ namespace MS.Internal.Documents
         private Rect GetRectangleFromTextPosition(ReadOnlyCollection<ColumnResult> columns, ReadOnlyCollection<ParagraphResult> floatingElements, ITextPointer position)
         {
             Rect rect = Rect.Empty;
-            Invariant.Assert(floatingElements != null);
+            Invariant.Assert(floatingElements is not null);
 
             // Figure out which column contains text position.
             int columnIndex = GetColumnFromPosition(columns, position);
@@ -1346,7 +1346,7 @@ namespace MS.Internal.Documents
         {
             Geometry geometry = null;
             bool success = false;
-            if (floatingElements != null && floatingElements.Count > 0)
+            if (floatingElements is not null && floatingElements.Count > 0)
             {
                 geometry = GetTightBoundingGeometryFromTextPositionsInFloatingElements(floatingElements, startPosition, endPosition, paragraphTopSpace, visibleRect, out success);
             }
@@ -1450,8 +1450,8 @@ namespace MS.Internal.Documents
         /// <param name="position">Position of an object/character.</param>
         private bool IsAtCaretUnitBoundary(ReadOnlyCollection<ParagraphResult> paragraphs, ReadOnlyCollection<ParagraphResult> floatingElements, ITextPointer position)
         {
-            Invariant.Assert(paragraphs != null, "Paragraph collection is null");
-            Invariant.Assert(floatingElements != null, "Floating element collection is null");
+            Invariant.Assert(paragraphs is not null, "Paragraph collection is null");
+            Invariant.Assert(floatingElements is not null, "Floating element collection is null");
 
             bool isAtCaretUnitBoundary = false;
             bool isFloatingPara;
@@ -1471,7 +1471,7 @@ namespace MS.Internal.Documents
                 }
             }
 
-            if (paragraph != null)
+            if (paragraph is not null)
             {
                 isAtCaretUnitBoundary = IsAtCaretUnitBoundary(paragraph, position);
             }
@@ -1492,7 +1492,7 @@ namespace MS.Internal.Documents
                 // a) ContainerParagraph - go to collection of nested paragraphs.
                 ReadOnlyCollection<ParagraphResult> nestedParagraphs = ((ContainerParagraphResult)paragraph).Paragraphs;
                 // Paragraphs collection may be null in case of empty List.
-                Invariant.Assert(nestedParagraphs != null, "Paragraph collection is null.");
+                Invariant.Assert(nestedParagraphs is not null, "Paragraph collection is null.");
                 if (nestedParagraphs.Count > 0)
                 {
                     isAtCaretUnitBoundary = IsAtCaretUnitBoundary(nestedParagraphs, _emptyParagraphCollection, position);
@@ -1506,7 +1506,7 @@ namespace MS.Internal.Documents
             else if (paragraph is TableParagraphResult)
             {
                 ReadOnlyCollection<ParagraphResult> nestedParagraphs = ((TableParagraphResult)paragraph).GetParagraphsFromPosition(position);
-                Invariant.Assert(nestedParagraphs != null, "Paragraph collection is null.");
+                Invariant.Assert(nestedParagraphs is not null, "Paragraph collection is null.");
                 if (nestedParagraphs.Count > 0)
                 {
                     isAtCaretUnitBoundary = IsAtCaretUnitBoundary(nestedParagraphs, _emptyParagraphCollection, position);
@@ -1517,8 +1517,8 @@ namespace MS.Internal.Documents
                 SubpageParagraphResult subpageParagraphResult = (SubpageParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = subpageParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = subpageParagraphResult.FloatingElements;
-                Invariant.Assert(columns != null, "Column collection is null.");
-                Invariant.Assert(nestedFloatingElements != null, "Paragraph collection is null.");
+                Invariant.Assert(columns is not null, "Column collection is null.");
+                Invariant.Assert(nestedFloatingElements is not null, "Paragraph collection is null.");
                 if (columns.Count > 0 || nestedFloatingElements.Count > 0)
                 {
                     isAtCaretUnitBoundary = IsAtCaretUnitBoundary(columns, nestedFloatingElements, position);
@@ -1529,8 +1529,8 @@ namespace MS.Internal.Documents
                 FigureParagraphResult figureParagraphResult = (FigureParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = figureParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = figureParagraphResult.FloatingElements;
-                Invariant.Assert(columns != null, "Column collection is null.");
-                Invariant.Assert(nestedFloatingElements != null, "Paragraph collection is null.");
+                Invariant.Assert(columns is not null, "Column collection is null.");
+                Invariant.Assert(nestedFloatingElements is not null, "Paragraph collection is null.");
                 if (columns.Count > 0 || nestedFloatingElements.Count > 0)
                 {
                     isAtCaretUnitBoundary = IsAtCaretUnitBoundary(columns, nestedFloatingElements, position);
@@ -1541,8 +1541,8 @@ namespace MS.Internal.Documents
                 FloaterParagraphResult floaterParagraphResult = (FloaterParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = floaterParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = floaterParagraphResult.FloatingElements;
-                Invariant.Assert(columns != null, "Column collection is null.");
-                Invariant.Assert(nestedFloatingElements != null, "Paragraph collection is null.");
+                Invariant.Assert(columns is not null, "Column collection is null.");
+                Invariant.Assert(nestedFloatingElements is not null, "Paragraph collection is null.");
                 if (columns.Count > 0 || nestedFloatingElements.Count > 0)
                 {
                     isAtCaretUnitBoundary = IsAtCaretUnitBoundary(columns, nestedFloatingElements, position);
@@ -1575,8 +1575,8 @@ namespace MS.Internal.Documents
         /// <param name="direction">Direction in which we seek next caret position</param>
         private ITextPointer GetNextCaretUnitPosition(ReadOnlyCollection<ParagraphResult> paragraphs, ReadOnlyCollection<ParagraphResult> floatingElements, ITextPointer position, LogicalDirection direction)
         {
-            Invariant.Assert(paragraphs != null, "Paragraph collection is null");
-            Invariant.Assert(floatingElements != null, "Floating element collection is null");
+            Invariant.Assert(paragraphs is not null, "Paragraph collection is null");
+            Invariant.Assert(floatingElements is not null, "Floating element collection is null");
             ITextPointer nextCaretPosition = position;
 
             bool isFloatingPara;
@@ -1596,7 +1596,7 @@ namespace MS.Internal.Documents
                 }
             }
 
-            if (paragraph != null)
+            if (paragraph is not null)
             {
                 nextCaretPosition = GetNextCaretUnitPosition(paragraph, position, direction);
             }
@@ -1618,7 +1618,7 @@ namespace MS.Internal.Documents
                 // a) ContainerParagraph - go to collection of nested paragraphs.
                 ReadOnlyCollection<ParagraphResult> nestedParagraphs = ((ContainerParagraphResult)paragraph).Paragraphs;
                 // Paragraphs collection may be null in case of empty List.
-                Invariant.Assert(nestedParagraphs != null, "Paragraph collection is null.");
+                Invariant.Assert(nestedParagraphs is not null, "Paragraph collection is null.");
                 if (nestedParagraphs.Count > 0)
                 {
                     nextCaretPosition = GetNextCaretUnitPosition(nestedParagraphs, _emptyParagraphCollection, position, direction);
@@ -1633,7 +1633,7 @@ namespace MS.Internal.Documents
             else if (paragraph is TableParagraphResult)
             {
                 ReadOnlyCollection<ParagraphResult> nestedParagraphs = ((TableParagraphResult)paragraph).GetParagraphsFromPosition(position);
-                Invariant.Assert(nestedParagraphs != null, "Paragraph collection is null.");
+                Invariant.Assert(nestedParagraphs is not null, "Paragraph collection is null.");
                 if (nestedParagraphs.Count > 0)
                 {
                     nextCaretPosition = GetNextCaretUnitPosition(nestedParagraphs, _emptyParagraphCollection, position, direction);
@@ -1644,8 +1644,8 @@ namespace MS.Internal.Documents
                 SubpageParagraphResult subpageParagraphResult = (SubpageParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = subpageParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = subpageParagraphResult.FloatingElements;
-                Invariant.Assert(columns != null, "Column collection is null.");
-                Invariant.Assert(nestedFloatingElements != null, "Paragraph collection is null.");
+                Invariant.Assert(columns is not null, "Column collection is null.");
+                Invariant.Assert(nestedFloatingElements is not null, "Paragraph collection is null.");
                 if (columns.Count > 0 || nestedFloatingElements.Count > 0)
                 {
                     nextCaretPosition = GetNextCaretUnitPosition(columns, nestedFloatingElements, position, direction);
@@ -1656,8 +1656,8 @@ namespace MS.Internal.Documents
                 FigureParagraphResult figureParagraphResult = (FigureParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = figureParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = figureParagraphResult.FloatingElements;
-                Invariant.Assert(columns != null, "Column collection is null.");
-                Invariant.Assert(nestedFloatingElements != null, "Paragraph collection is null.");
+                Invariant.Assert(columns is not null, "Column collection is null.");
+                Invariant.Assert(nestedFloatingElements is not null, "Paragraph collection is null.");
                 if (columns.Count > 0 || nestedFloatingElements.Count > 0)
                 {
                     nextCaretPosition = GetNextCaretUnitPosition(columns, nestedFloatingElements, position, direction);
@@ -1668,8 +1668,8 @@ namespace MS.Internal.Documents
                 FloaterParagraphResult floaterParagraphResult = (FloaterParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = floaterParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = floaterParagraphResult.FloatingElements;
-                Invariant.Assert(columns != null, "Column collection is null.");
-                Invariant.Assert(nestedFloatingElements != null, "Paragraph collection is null.");
+                Invariant.Assert(columns is not null, "Column collection is null.");
+                Invariant.Assert(nestedFloatingElements is not null, "Paragraph collection is null.");
                 if (columns.Count > 0 || nestedFloatingElements.Count > 0)
                 {
                     nextCaretPosition = GetNextCaretUnitPosition(columns, nestedFloatingElements, position, direction);
@@ -1701,8 +1701,8 @@ namespace MS.Internal.Documents
         /// <param name="position">Position of an object/character.</param>
         private ITextPointer GetBackspaceCaretUnitPosition(ReadOnlyCollection<ParagraphResult> paragraphs, ReadOnlyCollection<ParagraphResult> floatingElements, ITextPointer position)
         {
-            Invariant.Assert(paragraphs != null, "Paragraph collection is null");
-            Invariant.Assert(floatingElements != null, "Floating element collection is null");
+            Invariant.Assert(paragraphs is not null, "Paragraph collection is null");
+            Invariant.Assert(floatingElements is not null, "Floating element collection is null");
             ITextPointer backspaceCaretPosition = position;
 
             bool isFloatingPara;
@@ -1722,7 +1722,7 @@ namespace MS.Internal.Documents
                 }
             }
 
-            if (paragraph != null)
+            if (paragraph is not null)
             {
                 backspaceCaretPosition = GetBackspaceCaretUnitPosition(paragraph, position);
             }
@@ -1742,7 +1742,7 @@ namespace MS.Internal.Documents
                 // a) ContainerParagraph - go to collection of nested paragraphs.
                 ReadOnlyCollection<ParagraphResult> nestedParagraphs = ((ContainerParagraphResult)paragraph).Paragraphs;
                 // Paragraphs collection may be null in case of empty List.
-                Invariant.Assert(nestedParagraphs != null, "Paragraph collection is null.");
+                Invariant.Assert(nestedParagraphs is not null, "Paragraph collection is null.");
                 if (nestedParagraphs.Count > 0)
                 {
                     backspaceCaretPosition = GetBackspaceCaretUnitPosition(nestedParagraphs, _emptyParagraphCollection, position);
@@ -1756,7 +1756,7 @@ namespace MS.Internal.Documents
             else if (paragraph is TableParagraphResult)
             {
                 ReadOnlyCollection<ParagraphResult> nestedParagraphs = ((TableParagraphResult)paragraph).GetParagraphsFromPosition(position);
-                Invariant.Assert(nestedParagraphs != null, "Paragraph collection is null.");
+                Invariant.Assert(nestedParagraphs is not null, "Paragraph collection is null.");
                 if (nestedParagraphs.Count > 0)
                 {
                     backspaceCaretPosition = GetBackspaceCaretUnitPosition(nestedParagraphs, _emptyParagraphCollection, position);
@@ -1767,8 +1767,8 @@ namespace MS.Internal.Documents
                 SubpageParagraphResult subpageParagraphResult = (SubpageParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = subpageParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = subpageParagraphResult.FloatingElements;
-                Invariant.Assert(columns != null, "Column collection is null.");
-                Invariant.Assert(nestedFloatingElements != null, "Paragraph collection is null.");
+                Invariant.Assert(columns is not null, "Column collection is null.");
+                Invariant.Assert(nestedFloatingElements is not null, "Paragraph collection is null.");
                 if (columns.Count > 0 || nestedFloatingElements.Count > 0)
                 {
                     backspaceCaretPosition = GetBackspaceCaretUnitPosition(columns, nestedFloatingElements, position);
@@ -1779,8 +1779,8 @@ namespace MS.Internal.Documents
                 FigureParagraphResult figureParagraphResult = (FigureParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = figureParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = figureParagraphResult.FloatingElements;
-                Invariant.Assert(columns != null, "Column collection is null.");
-                Invariant.Assert(nestedFloatingElements != null, "Paragraph collection is null.");
+                Invariant.Assert(columns is not null, "Column collection is null.");
+                Invariant.Assert(nestedFloatingElements is not null, "Paragraph collection is null.");
                 if (columns.Count > 0 || nestedFloatingElements.Count > 0)
                 {
                     backspaceCaretPosition = GetBackspaceCaretUnitPosition(columns, nestedFloatingElements, position);
@@ -1791,8 +1791,8 @@ namespace MS.Internal.Documents
                 FloaterParagraphResult floaterParagraphResult = (FloaterParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = floaterParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = floaterParagraphResult.FloatingElements;
-                Invariant.Assert(columns != null, "Column collection is null.");
-                Invariant.Assert(nestedFloatingElements != null, "Paragraph collection is null.");
+                Invariant.Assert(columns is not null, "Column collection is null.");
+                Invariant.Assert(nestedFloatingElements is not null, "Paragraph collection is null.");
                 if (columns.Count > 0 || nestedFloatingElements.Count > 0)
                 {
                     backspaceCaretPosition = GetBackspaceCaretUnitPosition(columns, nestedFloatingElements, position);
@@ -1836,7 +1836,7 @@ namespace MS.Internal.Documents
             Rect columnBox;
             bool foundHit = false;
 
-            Invariant.Assert(columns != null, "Column collection is null");
+            Invariant.Assert(columns is not null, "Column collection is null");
             // Figure out which column is the closest horizontally to the input pixel position.
             // There are following assumptions made:
             // * column[N].LayoutBox.Left > column[N+1].LayoutBox.Left
@@ -1968,7 +1968,7 @@ namespace MS.Internal.Documents
             Rect paragraphBox;
             bool foundHit = false;
 
-            Invariant.Assert(paragraphs != null, "Paragraph collection is null");
+            Invariant.Assert(paragraphs is not null, "Paragraph collection is null");
             // Figure out which paragraph is the closest vertically to the input pixel position.
             // There are following assumptions made:
             // * paragraph[N].LayoutBox.Top < paragraph[N+1].LayoutBox.Top
@@ -2091,7 +2091,7 @@ namespace MS.Internal.Documents
         /// <param name="snapToText">If snapToText is true, we must match the point to some floating element.</param>
         private int GetParagraphFromPointInFloatingElements(ReadOnlyCollection<ParagraphResult> floatingElements, Point point, bool snapToText)
         {
-            Invariant.Assert(floatingElements != null, "Paragraph collection is null");
+            Invariant.Assert(floatingElements is not null, "Paragraph collection is null");
             double closestDistance = Double.MaxValue;
             int closestIndex = -1;
             for (int paragraphIndex = 0; paragraphIndex < floatingElements.Count; paragraphIndex++)
@@ -2124,7 +2124,7 @@ namespace MS.Internal.Documents
         private int GetColumnFromPosition(ReadOnlyCollection<ColumnResult> columns, ITextPointer position)
         {
             // Column collection cannot be null
-            Invariant.Assert(columns != null, "Column collection is null");
+            Invariant.Assert(columns is not null, "Column collection is null");
 
             // If there is just one column, there is no point to check if it contains 
             // the position, because range for this column  is the same as range for
@@ -2174,8 +2174,8 @@ namespace MS.Internal.Documents
         /// <remarks> If paragraph count is 0, index returned is 0 which is equal to paragraphs.Count</remarks>
         private static int GetParagraphFromPosition(ReadOnlyCollection<ParagraphResult> paragraphs, ReadOnlyCollection<ParagraphResult> floatingElements, ITextPointer position, out bool isFloatingPara)
         {
-            Invariant.Assert(paragraphs != null, "Paragraph collection is null.");
-            Invariant.Assert(floatingElements != null, "Floating element collection is null.");
+            Invariant.Assert(paragraphs is not null, "Paragraph collection is null.");
+            Invariant.Assert(floatingElements is not null, "Floating element collection is null.");
             isFloatingPara = false;
 
             // Search floating elements first 
@@ -2200,7 +2200,7 @@ namespace MS.Internal.Documents
         /// <remarks> If paragraph count is 0, index returned is 0 which is equal to paragraphs.Count</remarks>
         private static int GetParagraphFromPosition(ReadOnlyCollection<ParagraphResult> paragraphs, ITextPointer position)
         {
-            Invariant.Assert(paragraphs != null, "Paragraph collection is null.");
+            Invariant.Assert(paragraphs is not null, "Paragraph collection is null.");
 
             // Iterate through paragraph to find out placement of ITextPointer.
             // Apply strict containment rules.
@@ -2271,8 +2271,8 @@ namespace MS.Internal.Documents
         /// <param name="position">Any oriented text position on the line.</param>
         private TextSegment GetLineRangeFromPosition(ReadOnlyCollection<ParagraphResult> paragraphs, ReadOnlyCollection<ParagraphResult> floatingElements, ITextPointer position)
         {
-            Invariant.Assert(paragraphs != null, "Paragraph collection is null");
-            Invariant.Assert(floatingElements != null, "Floating element collection is null");
+            Invariant.Assert(paragraphs is not null, "Paragraph collection is null");
+            Invariant.Assert(floatingElements is not null, "Floating element collection is null");
             TextSegment lineRange = TextSegment.Null;
 
             bool isFloatingPara;
@@ -2292,7 +2292,7 @@ namespace MS.Internal.Documents
                 }
             }
 
-            if (paragraph != null)
+            if (paragraph is not null)
             {
                 lineRange = GetLineRangeFromPosition(paragraph, position);
             }
@@ -2318,7 +2318,7 @@ namespace MS.Internal.Documents
                 // a) ContainerParagraph - process nested paragraphs.
                 ReadOnlyCollection<ParagraphResult> nestedParagraphs = ((ContainerParagraphResult)paragraph).Paragraphs;
                 // Paragraphs collection may be null in case of empty List.
-                Invariant.Assert(nestedParagraphs != null, "Paragraph collection is null.");
+                Invariant.Assert(nestedParagraphs is not null, "Paragraph collection is null.");
                 if (nestedParagraphs.Count > 0)
                 {
                     lineRange = GetLineRangeFromPosition(nestedParagraphs, _emptyParagraphCollection, position);
@@ -2329,7 +2329,7 @@ namespace MS.Internal.Documents
                 // b) TextParagraph - find line index of a line containing input text position 
                 //    and then return its range.
                 ReadOnlyCollection<LineResult> lines = ((TextParagraphResult)paragraph).Lines;
-                Invariant.Assert(lines != null, "Lines collection is null");
+                Invariant.Assert(lines is not null, "Lines collection is null");
                 if (!((TextParagraphResult)paragraph).HasTextContent)
                 {
                     // Paragraph has no lines.
@@ -2351,7 +2351,7 @@ namespace MS.Internal.Documents
                 // c) TableParagraph - process nested paragraphs.
                 ReadOnlyCollection<ParagraphResult> nestedParagraphs = ((TableParagraphResult)paragraph).GetParagraphsFromPosition(position);
                 // Paragraphs collection may be null in case of empty List.
-                Invariant.Assert(nestedParagraphs != null, "Paragraph collection is null.");
+                Invariant.Assert(nestedParagraphs is not null, "Paragraph collection is null.");
                 if (nestedParagraphs.Count > 0)
                 {
                     lineRange = GetLineRangeFromPosition(nestedParagraphs, _emptyParagraphCollection, position);
@@ -2362,8 +2362,8 @@ namespace MS.Internal.Documents
                 SubpageParagraphResult subpageParagraphResult = (SubpageParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = subpageParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = subpageParagraphResult.FloatingElements;
-                Invariant.Assert(columns != null, "Column collection is null.");
-                Invariant.Assert(nestedFloatingElements != null, "Paragraph collection is null.");
+                Invariant.Assert(columns is not null, "Column collection is null.");
+                Invariant.Assert(nestedFloatingElements is not null, "Paragraph collection is null.");
                 if (columns.Count > 0 || nestedFloatingElements.Count > 0)
                 {
                     lineRange = GetLineRangeFromPosition(columns, nestedFloatingElements, position);
@@ -2374,8 +2374,8 @@ namespace MS.Internal.Documents
                 FigureParagraphResult figureParagraphResult = (FigureParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = figureParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = figureParagraphResult.FloatingElements;
-                Invariant.Assert(columns != null, "Column collection is null.");
-                Invariant.Assert(nestedFloatingElements != null, "Paragraph collection is null.");
+                Invariant.Assert(columns is not null, "Column collection is null.");
+                Invariant.Assert(nestedFloatingElements is not null, "Paragraph collection is null.");
                 if (columns.Count > 0 || nestedFloatingElements.Count > 0)
                 {
                     lineRange = GetLineRangeFromPosition(columns, nestedFloatingElements, position);
@@ -2386,8 +2386,8 @@ namespace MS.Internal.Documents
                 FloaterParagraphResult floaterParagraphResult = (FloaterParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = floaterParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = floaterParagraphResult.FloatingElements;
-                Invariant.Assert(columns != null, "Column collection is null.");
-                Invariant.Assert(nestedFloatingElements != null, "Paragraph collection is null.");
+                Invariant.Assert(columns is not null, "Column collection is null.");
+                Invariant.Assert(nestedFloatingElements is not null, "Paragraph collection is null.");
                 if (columns.Count > 0 || nestedFloatingElements.Count > 0)
                 {
                     lineRange = GetLineRangeFromPosition(columns, nestedFloatingElements, position);
@@ -2397,7 +2397,7 @@ namespace MS.Internal.Documents
             {
                 // UIElement paragraph result - return content range between BlockUIContainer.ContentStart and ContentEnd
                 BlockUIContainer blockUIContainer = paragraph.Element as BlockUIContainer;
-                if (blockUIContainer != null)
+                if (blockUIContainer is not null)
                 {
                     lineRange = new TextSegment(blockUIContainer.ContentStart.CreatePointer(LogicalDirection.Forward), blockUIContainer.ContentEnd.CreatePointer(LogicalDirection.Backward));
                 }
@@ -2441,7 +2441,7 @@ namespace MS.Internal.Documents
         /// </returns>
         private ITextPointer GetPositionAtNextLine(ReadOnlyCollection<ParagraphResult> paragraphs, ITextPointer position, double suggestedX, ref int count, out bool positionFound)
         {
-            Invariant.Assert(paragraphs != null, "Paragraph collection is empty.");
+            Invariant.Assert(paragraphs is not null, "Paragraph collection is empty.");
 
             // If no position found in table, return original position.
             ITextPointer positionOut = position;
@@ -2466,7 +2466,7 @@ namespace MS.Internal.Documents
                     Rect paragraphBox = paragraphs[paragraphIndex].LayoutBox;
                     ReadOnlyCollection<ParagraphResult> nestedParagraphs = ((ContainerParagraphResult)paragraphs[paragraphIndex]).Paragraphs;
                     // Paragraphs collection may be null in case of empty List.
-                    Invariant.Assert(nestedParagraphs != null, "Paragraph collection is null.");
+                    Invariant.Assert(nestedParagraphs is not null, "Paragraph collection is null.");
                     if (nestedParagraphs.Count > 0)
                     {
                         positionOut = GetPositionAtNextLine(nestedParagraphs, position, suggestedX, ref count, out positionFound);
@@ -2481,7 +2481,7 @@ namespace MS.Internal.Documents
 
                     // Get index of the line that contains position.
                     ReadOnlyCollection<LineResult> lines = ((TextParagraphResult)paragraphs[paragraphIndex]).Lines;
-                    Invariant.Assert(lines != null, "Lines collection is null");
+                    Invariant.Assert(lines is not null, "Lines collection is null");
                     if (!((TextParagraphResult)paragraphs[paragraphIndex]).HasTextContent)
                     {
                         // TextParagraph has no lines
@@ -2573,12 +2573,12 @@ namespace MS.Internal.Documents
                     CellParaClient cpcCur = cpcStart;
                     Rect paragraphBox = paragraphs[paragraphIndex].LayoutBox;
 
-                    while (count != 0 && cpcCur != null && positionFound)
+                    while (count != 0 && cpcCur is not null && positionFound)
                     {
                         SubpageParagraphResult subpageParagraphResult = (SubpageParagraphResult)cpcCur.CreateParagraphResult();
                         ReadOnlyCollection<ParagraphResult> nestedParagraphs = subpageParagraphResult.Columns[0].Paragraphs;
 
-                        Invariant.Assert(nestedParagraphs != null, "Paragraph collection is null.");
+                        Invariant.Assert(nestedParagraphs is not null, "Paragraph collection is null.");
                         // Paragraphs collection may be null in case of empty List.
                         if (nestedParagraphs.Count > 0)
                         {
@@ -2640,7 +2640,7 @@ namespace MS.Internal.Documents
 
             // Do not return null from this point. If positionOut was set to null at any point during the code, we should have
             // set it to the original position
-            Invariant.Assert(positionOut != null);
+            Invariant.Assert(positionOut is not null);
             return positionOut;
         }
 
@@ -2681,8 +2681,8 @@ namespace MS.Internal.Documents
                     FigureParagraphResult figureParagraphResult = (FigureParagraphResult)paragraph;
                     ReadOnlyCollection<ColumnResult> columns = figureParagraphResult.Columns;
                     ReadOnlyCollection<ParagraphResult> nestedFloatingElements = figureParagraphResult.FloatingElements;
-                    Invariant.Assert(columns != null, "Column collection is null.");
-                    Invariant.Assert(nestedFloatingElements != null, "Paragraph collection is null.");
+                    Invariant.Assert(columns is not null, "Column collection is null.");
+                    Invariant.Assert(nestedFloatingElements is not null, "Paragraph collection is null.");
                     if (columns.Count > 0 || nestedFloatingElements.Count > 0)
                     {
                         positionOut = GetPositionAtNextLine(columns, nestedFloatingElements, position, suggestedX - figureParagraphResult.ContentOffset.X, ref count, out newSuggestedX, out positionFoundInNestedPara);
@@ -2694,15 +2694,15 @@ namespace MS.Internal.Documents
                     FloaterParagraphResult floaterParagraphResult = (FloaterParagraphResult)paragraph;
                     ReadOnlyCollection<ColumnResult> columns = floaterParagraphResult.Columns;
                     ReadOnlyCollection<ParagraphResult> nestedFloatingElements = floaterParagraphResult.FloatingElements;
-                    Invariant.Assert(columns != null, "Column collection is null.");
-                    Invariant.Assert(nestedFloatingElements != null, "Paragraph collection is null.");
+                    Invariant.Assert(columns is not null, "Column collection is null.");
+                    Invariant.Assert(nestedFloatingElements is not null, "Paragraph collection is null.");
                     if (columns.Count > 0 || nestedFloatingElements.Count > 0)
                     {
                         positionOut = GetPositionAtNextLine(columns, nestedFloatingElements, position, suggestedX - floaterParagraphResult.ContentOffset.X, ref count, out newSuggestedX, out positionFoundInNestedPara);
                     }
                 }
             }
-            Invariant.Assert(positionOut != null);
+            Invariant.Assert(positionOut is not null);
             return positionOut;
         }
 
@@ -2753,7 +2753,7 @@ namespace MS.Internal.Documents
 
                             ITextPointer siblingColumnPosition = GetPositionAtNextLineFromSiblingColumn(columns, columnIndex, suggestedX, ref newSuggestedX, ref count);
 
-                            if (siblingColumnPosition != null)
+                            if (siblingColumnPosition is not null)
                             {
                                 positionOut = siblingColumnPosition;
                             }
@@ -2762,7 +2762,7 @@ namespace MS.Internal.Documents
                 }
             }
 
-            Invariant.Assert(positionOut != null);
+            Invariant.Assert(positionOut is not null);
             return positionOut;
         }
 
@@ -2810,7 +2810,7 @@ namespace MS.Internal.Documents
                     ReadOnlyCollection<ParagraphResult> nestedParagraphs = ((ContainerParagraphResult)paragraphs[paragraphIndex]).Paragraphs;
                     // Paragraphs collection may be null in case of empty List.
 
-                    Invariant.Assert(nestedParagraphs != null, "Paragraph collection is null.");
+                    Invariant.Assert(nestedParagraphs is not null, "Paragraph collection is null.");
                     if (nestedParagraphs.Count > 0)
                     {
                         int nesteParagraphIndex = (count > 0) ? 0 : nestedParagraphs.Count - 1;
@@ -2845,12 +2845,12 @@ namespace MS.Internal.Documents
                         cpcCur = tableResult.GetCellBelow(suggestedX, int.MinValue, int.MinValue);
                     }
 
-                    while (count != 0 && cpcCur != null)
+                    while (count != 0 && cpcCur is not null)
                     {
                         SubpageParagraphResult subpageParagraphResult = (SubpageParagraphResult)cpcCur.CreateParagraphResult();
                         ReadOnlyCollection<ParagraphResult> nestedParagraphs = subpageParagraphResult.Columns[0].Paragraphs;
                         // Paragraphs collection may be null in case of empty List.
-                        Invariant.Assert(nestedParagraphs != null, "Paragraph collection is null.");
+                        Invariant.Assert(nestedParagraphs is not null, "Paragraph collection is null.");
                         if (nestedParagraphs.Count > 0)
                         {
                             int nesteParagraphIndex = (count > 0) ? 0 : nestedParagraphs.Count - 1;
@@ -2875,7 +2875,7 @@ namespace MS.Internal.Documents
                     SubpageParagraphResult subpageParagraphResult = (SubpageParagraphResult)paragraphs[paragraphIndex];
                     ReadOnlyCollection<ParagraphResult> nestedParagraphs = subpageParagraphResult.Columns[0].Paragraphs;
 
-                    Invariant.Assert(nestedParagraphs != null, "Paragraph collection is null.");
+                    Invariant.Assert(nestedParagraphs is not null, "Paragraph collection is null.");
                     if (nestedParagraphs.Count > 0)
                     {
                         int nesteParagraphIndex = (count > 0) ? 0 : nestedParagraphs.Count - 1;
@@ -2898,7 +2898,7 @@ namespace MS.Internal.Documents
                         // We need to get a position in this paragraph
                         Rect paragraphBox = paragraphs[paragraphIndex].LayoutBox;
                         BlockUIContainer blockUIContainer = paragraphs[paragraphIndex].Element as BlockUIContainer;
-                        if (blockUIContainer != null)
+                        if (blockUIContainer is not null)
                         {
                             if (DoubleUtil.LessThanOrClose(suggestedX, paragraphBox.Width / 2))
                             {
@@ -2955,7 +2955,7 @@ namespace MS.Internal.Documents
             // update count value by the line count.
 
             ReadOnlyCollection<LineResult> lines = paragraph.Lines;
-            Invariant.Assert(lines != null, "Lines collection is null");
+            Invariant.Assert(lines is not null, "Lines collection is null");
             if (!paragraph.HasTextContent)
             {
                 // Paragraph has no text content, which means it either has no lines at all or just figures and floaters. 
@@ -3073,7 +3073,7 @@ namespace MS.Internal.Documents
                 double currentSuggestedX = columnSuggestedX + columns[columnIndex].LayoutBox.Left;
                 ReadOnlyCollection<ParagraphResult> paragraphs = columns[columnIndex].Paragraphs;
                 // Paragraphs collection may be null in case of empty List.
-                Invariant.Assert(paragraphs != null, "Paragraph collection is null.");
+                Invariant.Assert(paragraphs is not null, "Paragraph collection is null.");
                 if (paragraphs.Count > 0)
                 {
                     // Process paragraphs starting from the first or last nested paragraph 
@@ -3114,7 +3114,7 @@ namespace MS.Internal.Documents
         private bool ContainsCore(ITextPointer position)
         {
             ReadOnlyCollection<TextSegment> segments = this.TextSegmentsCore;
-            Invariant.Assert(segments != null, "TextSegment collection is empty.");
+            Invariant.Assert(segments is not null, "TextSegment collection is empty.");
             return Contains(position, segments);
         }
 
@@ -3128,7 +3128,7 @@ namespace MS.Internal.Documents
         /// <returns>True if needs to continue search. False if all glyph runs have been retrieved.</returns>
         private bool GetGlyphRunsFromParagraphs(List<GlyphRun> glyphRuns, ITextPointer start, ITextPointer end, ReadOnlyCollection<ParagraphResult> paragraphs)
         {
-            Invariant.Assert(paragraphs != null, "Paragraph collection is null.");
+            Invariant.Assert(paragraphs is not null, "Paragraph collection is null.");
 
             bool cont = true;
             // Iterate through columns and get all glyph runs between Start and End
@@ -3154,7 +3154,7 @@ namespace MS.Internal.Documents
                 else if (paragraph is ContainerParagraphResult)
                 {
                     ReadOnlyCollection<ParagraphResult> nestedParagraphs = ((ContainerParagraphResult)paragraph).Paragraphs;
-                    Invariant.Assert(nestedParagraphs != null, "Paragraph collection is null.");
+                    Invariant.Assert(nestedParagraphs is not null, "Paragraph collection is null.");
                     if (nestedParagraphs.Count > 0)
                     {
                         cont = GetGlyphRunsFromParagraphs(glyphRuns, start, end, nestedParagraphs);
@@ -3181,7 +3181,7 @@ namespace MS.Internal.Documents
         /// <param name="success">True if the range starts in one of the floating elements</param>
         private void GetGlyphRunsFromFloatingElements(List<GlyphRun> glyphRuns, ITextPointer start, ITextPointer end, ReadOnlyCollection<ParagraphResult> floatingElements, out bool success)
         {
-            Invariant.Assert(floatingElements != null, "Paragraph collection is null.");
+            Invariant.Assert(floatingElements is not null, "Paragraph collection is null.");
             success = false;
             // Iterate through columns and get all glyph runs between Start and End
             for (int index = 0; index < floatingElements.Count; index++)
@@ -3197,8 +3197,8 @@ namespace MS.Internal.Documents
                         FigureParagraphResult figureParagraphResult = (FigureParagraphResult)paragraph;
                         ReadOnlyCollection<ColumnResult> columns = figureParagraphResult.Columns;
                         ReadOnlyCollection<ParagraphResult> nestedFloatingElements = figureParagraphResult.FloatingElements;
-                        Invariant.Assert(columns != null, "Column collection is null.");
-                        Invariant.Assert(nestedFloatingElements != null, "Paragraph collection is null.");
+                        Invariant.Assert(columns is not null, "Column collection is null.");
+                        Invariant.Assert(nestedFloatingElements is not null, "Paragraph collection is null.");
                         if (columns.Count > 0 || nestedFloatingElements.Count > 0)
                         {
                             GetGlyphRuns(glyphRuns, start, endThisPara, columns, nestedFloatingElements);
@@ -3209,8 +3209,8 @@ namespace MS.Internal.Documents
                         FloaterParagraphResult floaterParagraphResult = (FloaterParagraphResult)paragraph;
                         ReadOnlyCollection<ColumnResult> columns = floaterParagraphResult.Columns;
                         ReadOnlyCollection<ParagraphResult> nestedFloatingElements = floaterParagraphResult.FloatingElements;
-                        Invariant.Assert(columns != null, "Column collection is null.");
-                        Invariant.Assert(nestedFloatingElements != null, "Paragraph collection is null.");
+                        Invariant.Assert(columns is not null, "Column collection is null.");
+                        Invariant.Assert(nestedFloatingElements is not null, "Paragraph collection is null.");
                         if (columns.Count > 0 || nestedFloatingElements.Count > 0)
                         {
                             GetGlyphRuns(glyphRuns, start, endThisPara, columns, nestedFloatingElements);
@@ -3257,7 +3257,7 @@ namespace MS.Internal.Documents
                 while (columnIndexStart <= columnIndexEnd)
                 {
                     ReadOnlyCollection<ParagraphResult> paragraphs = columns[columnIndexStart].Paragraphs;
-                    if (paragraphs != null && paragraphs.Count > 0)
+                    if (paragraphs is not null && paragraphs.Count > 0)
                     {
                         GetGlyphRunsFromParagraphs(glyphRuns, start, end, paragraphs);
                     }
@@ -3285,7 +3285,7 @@ namespace MS.Internal.Documents
             {
                 ITextPointer segmentEnd = _textContainer.End;
                 BackgroundFormatInfo backgroundFormatInfo = _owner.StructuralCache.BackgroundFormatInfo;
-                if (backgroundFormatInfo != null && backgroundFormatInfo.CPInterrupted != -1)
+                if (backgroundFormatInfo is not null && backgroundFormatInfo.CPInterrupted != -1)
                 {
                     segmentEnd = _textContainer.Start.CreatePointer(backgroundFormatInfo.CPInterrupted, LogicalDirection.Backward);
                 }
@@ -3299,7 +3299,7 @@ namespace MS.Internal.Documents
 
                 // Merge ranges from all columns.
                 ReadOnlyCollection<ColumnResult> columns = Columns;
-                Invariant.Assert(columns != null, "Column collection is empty.");
+                Invariant.Assert(columns is not null, "Column collection is empty.");
                 for (int index = 0; index < columns.Count; index++)
                 {
                     textContentRange.Merge(columns[index].TextContentRange);
@@ -3307,7 +3307,7 @@ namespace MS.Internal.Documents
 
                 textSegments = textContentRange.GetTextSegments();
             }
-            Invariant.Assert(textSegments != null);
+            Invariant.Assert(textSegments is not null);
             return textSegments;
         }
 
@@ -3455,7 +3455,7 @@ namespace MS.Internal.Documents
         /// <param name="subpageOffset">Subpage offset.</param>
         private static void TransformFromSubpage(Geometry geometry, Vector subpageOffset)
         {
-            if (geometry != null)
+            if (geometry is not null)
             {
                 if (!DoubleUtil.IsZero(subpageOffset.X) || !DoubleUtil.IsZero(subpageOffset.Y))
                 {
@@ -3478,7 +3478,7 @@ namespace MS.Internal.Documents
         {
             TextElement textElement = paragraphResult.Element as TextElement;
 
-            if (textElement != null)
+            if (textElement is not null)
             {
                 if (textPointer.LogicalDirection == LogicalDirection.Forward && textPointer.CompareTo(textElement.ElementStart) == 0)
                 {
@@ -3507,7 +3507,7 @@ namespace MS.Internal.Documents
         private Rect GetRectangleFromContentEdge(ParagraphResult paragraphResult, ITextPointer textPointer)
         {
             TextElement textElement = paragraphResult.Element as TextElement;
-            if (textElement != null)
+            if (textElement is not null)
             {
                 // We enable this only for BlockUIContainer, it would be wrong to return layout box Rect from other elements' Content start/end
                 Invariant.Assert(textElement is BlockUIContainer, "Expecting BlockUIContainer");

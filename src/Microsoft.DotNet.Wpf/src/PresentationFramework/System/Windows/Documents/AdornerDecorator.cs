@@ -37,7 +37,7 @@ namespace System.Windows.Documents
                     this.RemoveVisualChild(IntChild);
                     this.RemoveVisualChild(AdornerLayer);                    
                     IntChild = value;
-                    if(value != null)
+                    if(value is not null)
                     {
                         this.AddVisualChild(value);
                         this.AddVisualChild(AdornerLayer);                        
@@ -122,7 +122,7 @@ namespace System.Windows.Documents
         protected override Size MeasureOverride(Size constraint)
         {
                 Size desiredSize = base.MeasureOverride(constraint);
-                if (VisualTreeHelper.GetParent(_adornerLayer) != null)
+                if (VisualTreeHelper.GetParent(_adornerLayer) is not null)
                 {
                     // We don't really care about the size of the AdornerLayer-- we'll
                     // always just make the AdornerDecorator the full desiredSize.  But
@@ -141,7 +141,7 @@ namespace System.Windows.Documents
         {
                 Size inkSize = base.ArrangeOverride(finalSize);
 
-                if (VisualTreeHelper.GetParent(_adornerLayer) != null)
+                if (VisualTreeHelper.GetParent(_adornerLayer) is not null)
                 {
                     _adornerLayer.Arrange(new Rect(finalSize));
                 }
@@ -191,7 +191,7 @@ namespace System.Windows.Documents
         {
             get 
             { 
-                if (base.Child != null)
+                if (base.Child is not null)
                 {
                     return 2; // One for the child and one for the adorner layer.
                 }

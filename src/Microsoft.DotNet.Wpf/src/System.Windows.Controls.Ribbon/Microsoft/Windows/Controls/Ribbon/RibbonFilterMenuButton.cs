@@ -50,7 +50,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             RibbonToggleButton filterToggleButton = this.Template.FindName(RibbonMenuButton.ToggleButtonTemplatePartName, this) as RibbonToggleButton;
 
-            if (filterToggleButton != null)
+            if (filterToggleButton is not null)
             {
                 filterToggleButton.Loaded += new RoutedEventHandler(OnFilterToggleButtonLoaded);
             }
@@ -71,12 +71,12 @@ namespace Microsoft.Windows.Controls.Ribbon
             // fire before its template is applied.  filterToggleButton.Loaded will fire again
             // after its template is applied.  Therefore, only treat this as handled and remove
             // our handler if filterToggleButton's template is available.
-            if (_currentFilterItem != null)
+            if (_currentFilterItem is not null)
             {
                 filterToggleButton.Loaded -= new RoutedEventHandler(OnFilterToggleButtonLoaded);
 
                 RibbonGallery parentGallery = this.TemplatedParent as RibbonGallery;
-                if (parentGallery != null)
+                if (parentGallery is not null)
                 {
                     Binding currentFilterBinding = new Binding("CurrentFilter") { Source = parentGallery };
                     filterToggleButton.SetBinding(RibbonToggleButton.ContentProperty, currentFilterBinding);

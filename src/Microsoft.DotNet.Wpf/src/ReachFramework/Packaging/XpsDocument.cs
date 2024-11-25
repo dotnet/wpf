@@ -111,7 +111,7 @@ namespace System.Windows.Xps.Packaging
                                  )
                   )
         {
-            if( path != null )
+            if( path is not null )
             {
               this.Uri = new Uri(path, UriKind.RelativeOrAbsolute);
             }
@@ -733,7 +733,7 @@ namespace System.Windows.Xps.Packaging
                 // Only add signatures that meet the policy for
                 // signed Document Sequences
                 //
-                if( reachSignature.SignedDocumentSequence != null )
+                if( reachSignature.SignedDocumentSequence is not null )
                 {
                      _reachSignatures.Add( reachSignature );
                 }
@@ -756,7 +756,7 @@ namespace System.Windows.Xps.Packaging
             // Add thumbnail
             //
             EnsureThumbnail();
-            if( _thumbnail != null )
+            if( _thumbnail is not null )
             {
                 dependentList[_thumbnail.Uri] = _thumbnail.Uri;
             }
@@ -823,7 +823,7 @@ namespace System.Windows.Xps.Packaging
             XmlReader xmlReader = new XmlTextReader( stream );
             bool containsVersionExtensiblity = false;
             while( xmlReader.Read() );
-            if (xmlReader.NameTable.Get(XpsS0Markup.VersionExtensiblityNamespace) != null)
+            if (xmlReader.NameTable.Get(XpsS0Markup.VersionExtensiblityNamespace) is not null)
             {
                 containsVersionExtensiblity = true;
             }  
@@ -898,7 +898,7 @@ namespace System.Windows.Xps.Packaging
         DisposeXpsDocument(
             )
         {
-            if(_opcPackage != null)
+            if(_opcPackage is not null)
             {
                 _opcPackage.Close();
             }
@@ -1004,7 +1004,7 @@ namespace System.Windows.Xps.Packaging
             PackageSerializationManager serializationManager = null;
 
             XpsPackagingPolicy packagingPolicy = new XpsPackagingPolicy(this);
-            if (packagingPolicy != null)
+            if (packagingPolicy is not null)
             {
                 serializationManager = new XpsSerializationManager(packagingPolicy,  bBatchMode);
             }

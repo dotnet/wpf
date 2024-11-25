@@ -246,7 +246,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
         private bool IsGIFData(Stream inkdata)
         {
-            Debug.Assert(inkdata != null);
+            Debug.Assert(inkdata is not null);
             long currentPosition = inkdata.Position;
             try
             {
@@ -304,7 +304,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 #endif
         private void DecodeRawISF(Stream inputStream)
         {
-            Debug.Assert(inputStream != null);
+            Debug.Assert(inputStream is not null);
 
             KnownTagCache.KnownTagIndex isfTag;
             uint remainingBytesInStream;
@@ -661,7 +661,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                                         localBytesDecoded = StrokeSerializer.DecodeStroke(inputStream, bytesDecodedInCurrentTag, guidList, strokeDescriptor, currentStylusPointDescription, activeDrawingAttributes, currentTabletToInkTransform, out localStroke);
 #endif
 
-                                        if (localStroke != null)
+                                        if (localStroke is not null)
                                         {
                                             _coreStrokes.AddWithoutEvent(localStroke);
                                             strokeIndex++;
@@ -1633,7 +1633,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             stylusPointPropertyInfos.Add(GetStylusPointPropertyInfo(KnownIds.NormalPressure, (KnownTagCache.KnownTagIndex)((uint)KnownIdCache.KnownGuidBaseIndex + (uint)KnownIdCache.OriginalISFIdIndex.NormalPressure), block));
 
             int pressureIndex = -1;
-            if (tags != null)
+            if (tags is not null)
             {
                 for (int i = 0; i < tags.Count; i++)
                 {
@@ -2051,7 +2051,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 #endif
 
 
-            if (data != null)
+            if (data is not null)
             {
                 // First write the encoded size of the buffer
                 cbWrote += SerializationHelper.Encode(strm, (uint)(data.Length + SerializationHelper.VarSize((uint)strokes.Count)));
@@ -2108,7 +2108,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <returns></returns>
         private bool IsBase64Data(Stream data)
         {
-            Debug.Assert(data != null);
+            Debug.Assert(data is not null);
             long currentPosition = data.Position;
             try
             {
@@ -2733,7 +2733,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <returns></returns>
         internal static int[] GetStrokeIds(StrokeCollection strokes)
         {
-            System.Diagnostics.Debug.Assert(strokes != null);
+            System.Diagnostics.Debug.Assert(strokes is not null);
 
             int[] strokeIds = new int[strokes.Count];
             for (int x = 0; x < strokeIds.Length; x++)

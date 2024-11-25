@@ -90,7 +90,7 @@ namespace Microsoft.Windows.Automation.Peers
             if (String.IsNullOrEmpty(helpText))
             {
                 RibbonToolTip toolTip = ((RibbonTextBox)Owner).ToolTip as RibbonToolTip;
-                if (toolTip != null)
+                if (toolTip is not null)
                 {
                     helpText = toolTip.Description;
                 }
@@ -108,7 +108,7 @@ namespace Microsoft.Windows.Automation.Peers
             if (String.IsNullOrEmpty(acceleratorKey))
             {
                 RoutedUICommand uiCommand = ((RibbonTextBox)Owner).Command as RoutedUICommand;
-                if (uiCommand != null)
+                if (uiCommand is not null)
                 {
                     acceleratorKey = uiCommand.Text;
                 }

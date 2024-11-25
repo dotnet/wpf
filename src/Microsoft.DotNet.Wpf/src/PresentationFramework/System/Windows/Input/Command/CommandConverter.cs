@@ -73,9 +73,9 @@ namespace System.Windows.Input
             // Example: <Button Command="Copy"/>
             if (destinationType == typeof(string) )
             {
-                RoutedCommand command = context != null ? context.Instance as RoutedCommand : null;
+                RoutedCommand command = context is not null ? context.Instance as RoutedCommand : null;
 
-                if (command != null && command.OwnerType != null && IsKnownType(command.OwnerType))
+                if (command is not null && command.OwnerType is not null && IsKnownType(command.OwnerType))
                 {
                     return true;
                 }
@@ -95,7 +95,7 @@ namespace System.Windows.Input
         ///<returns>instance of Command</returns>
         public override object ConvertFrom( ITypeDescriptorContext context, CultureInfo culture, object source )
         {
-            if (source != null && source is string)
+            if (source is not null && source is string)
             {
                 if ((string)source != String.Empty)
                 {
@@ -110,7 +110,7 @@ namespace System.Windows.Input
                     // Find the command (this is shared with CommandValueSerializer).
                     ICommand command = ConvertFromHelper( ownerType, localName );
 
-                    if (command != null)
+                    if (command is not null)
                     {
                         return command;
                     }
@@ -138,19 +138,19 @@ namespace System.Windows.Input
             }
 
 
-            if( command is null && ownerType != null ) // not a known command
+            if( command is null && ownerType is not null ) // not a known command
 
             {
                 // Get them from Properties
                 PropertyInfo propertyInfo = ownerType.GetProperty(localName, BindingFlags.Public | BindingFlags.Static);
-                if (propertyInfo != null)
+                if (propertyInfo is not null)
                     command = propertyInfo.GetValue(null, null) as ICommand;
 
                 if (command is null)
                 {
                     // Get them from Fields (ScrollViewer.PageDownCommand is a static readonly field
                     FieldInfo fieldInfo = ownerType.GetField(localName, BindingFlags.Static | BindingFlags.Public);
-                    if (fieldInfo != null)
+                    if (fieldInfo is not null)
                         command = fieldInfo.GetValue(null) as ICommand;
                 }
             }
@@ -182,7 +182,7 @@ namespace System.Windows.Input
             {
                 RoutedCommand command = value as RoutedCommand;
 
-                if (command != null && command.OwnerType != null && IsKnownType(command.OwnerType))
+                if (command is not null && command.OwnerType is not null && IsKnownType(command.OwnerType))
                 {
                     return command.Name;
                 }
@@ -214,7 +214,7 @@ namespace System.Windows.Input
         private Type GetTypeFromContext( ITypeDescriptorContext context, string typeName )
         {
             // Parser Context must exist to get the namespace info from prefix, if not, we assume it is known command.
-            if (null != context && typeName != null)
+            if (null != context && typeName is not null)
             {
                 IXamlTypeResolver xamlTypeResolver = (IXamlTypeResolver)context.GetService(typeof(IXamlTypeResolver));
 
@@ -740,7 +740,7 @@ namespace System.Windows.Input
             #if DEBUG
             if( knownCommand is null )
             {
-                if( ownerType != null )
+                if( ownerType is not null )
                     VerifyCommandDoesntExist( ownerType, localName );
                 else
                 {

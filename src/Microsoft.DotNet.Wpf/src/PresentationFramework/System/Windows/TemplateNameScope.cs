@@ -113,7 +113,7 @@ namespace System.Windows
                 // the shared values (assuming this is an FE/FCE), and set them
                 // directly onto the element.
 
-                if( fe != null || fce != null )
+                if( fe is not null || fce is not null )
                 {
                     SetTemplateParentValues( name, scopedElement );
                 }
@@ -148,7 +148,7 @@ namespace System.Windows
 
                 // Update the TemplatedParent, IsTemplatedParentAnFE, and TemplateChildIndex.
 
-                if( fe != null )
+                if( fe is not null )
                 {
                     fe._templatedParent = _templatedParent;
                     fe.IsTemplatedParentAnFE = _isTemplatedParentAnFE;
@@ -172,11 +172,11 @@ namespace System.Windows
                 FrameworkTemplate.TemplateChildLoadedFlags templateChildLoadedFlags
                         = templateChildLoadedDictionary[ childIndex ] as FrameworkTemplate.TemplateChildLoadedFlags;
 
-                if( templateChildLoadedFlags != null )
+                if( templateChildLoadedFlags is not null )
                 {
                     if( templateChildLoadedFlags.HasLoadedChangedHandler || templateChildLoadedFlags.HasUnloadedChangedHandler )
                     {
-                        BroadcastEventHelper.AddHasLoadedChangeHandlerFlagInAncestry((fe != null) ? (DependencyObject)fe : (DependencyObject)fce);
+                        BroadcastEventHelper.AddHasLoadedChangeHandlerFlagInAncestry((fe is not null) ? (DependencyObject)fe : (DependencyObject)fce);
                     }
                 }
 
@@ -209,7 +209,7 @@ namespace System.Windows
         object INameScope.FindName(string name)
         {
             // _templatedParent is null if template.LoadContent() was responsible
-            if (_templatedParent != null)
+            if (_templatedParent is not null)
             {
                 FrameworkObject fo = new FrameworkObject(_templatedParent);
                 

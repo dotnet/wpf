@@ -156,7 +156,7 @@ namespace MS.Internal.PtsHost
         {
             IInputElement ie = null;
 
-            if(_pageContextOfThisPage.FloatingElementList != null)
+            if(_pageContextOfThisPage.FloatingElementList is not null)
             {
                 for(int index = 0; index < _pageContextOfThisPage.FloatingElementList.Count && ie is null; index++)
                 {
@@ -258,7 +258,7 @@ namespace MS.Internal.PtsHost
                         for (int index = 0; index < arrayColumnDesc.Length; index++)
                         {
                             List<Rect> trackRectangles = PtsHelper.GetRectanglesInTrack(PtsContext, e, start, length, ref arrayColumnDesc[index]);
-                            Invariant.Assert(trackRectangles != null);
+                            Invariant.Assert(trackRectangles is not null);
                             if (trackRectangles.Count != 0)
                             {
                                 rectangles.AddRange(trackRectangles);
@@ -271,7 +271,7 @@ namespace MS.Internal.PtsHost
             }
 
             // Rectangles must be non-null
-            Invariant.Assert(rectangles != null);
+            Invariant.Assert(rectangles is not null);
             return rectangles;
         }
 
@@ -527,7 +527,7 @@ namespace MS.Internal.PtsHost
                     elementOwner, ElementEdge.AfterEnd));
             }
 
-            Invariant.Assert(textContentRange != null);
+            Invariant.Assert(textContentRange is not null);
             return textContentRange;
         }
 
@@ -695,7 +695,7 @@ namespace MS.Internal.PtsHost
             {
                 List<ParagraphResult> floatingElements = new List<ParagraphResult>(0);
                 List<BaseParaClient> floatingElementList = _pageContextOfThisPage.FloatingElementList;
-                if (floatingElementList != null)
+                if (floatingElementList is not null)
                 {
                     for (int i = 0; i < floatingElementList.Count; i++)
                     {

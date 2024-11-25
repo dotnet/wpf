@@ -75,7 +75,7 @@ namespace System.Windows.Data
             get { return _source; }
             set
             {
-                if ((_domSetDocument != null) || _source != value)
+                if ((_domSetDocument is not null) || _source != value)
                 {
                     _domSetDocument = null;
                     _source = value;
@@ -95,7 +95,7 @@ namespace System.Windows.Data
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool ShouldSerializeSource()
         {
-            return (_domSetDocument is null) && (_source != null);
+            return (_domSetDocument is null) && (_source is not null);
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace System.Windows.Data
             get { return _document; }
             set
             {
-                if ((_domSetDocument is null) || _source != null || _document != value)
+                if ((_domSetDocument is null) || _source is not null || _document != value)
                 {
                     _domSetDocument = value;
 
@@ -164,7 +164,7 @@ namespace System.Windows.Data
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool ShouldSerializeXPath()
         {
-            return (_xPath != null) && (_xPath.Length != 0);
+            return (_xPath is not null) && (_xPath.Length != 0);
         }
 
         /// <summary>
@@ -230,7 +230,7 @@ namespace System.Windows.Data
         public bool ShouldSerializeXmlSerializer()
         {
             // serialize InlineData only if the Xml DOM used was originally a inline Xml data island
-            return (DocumentForSerialization != null);
+            return (DocumentForSerialization is not null);
         }
 
         #endregion
@@ -280,7 +280,7 @@ namespace System.Windows.Data
                                         IsAsynchronous ? "asynchronous" : "synchronous"));
             }
 
-            if (_source != null)
+            if (_source is not null)
             {
                 // load DOM from external source
                 Debug.Assert(_domSetDocument is null, "Should not be possible to be using Source and user-set Doc at the same time.");
@@ -290,7 +290,7 @@ namespace System.Windows.Data
             else
             {
                 XmlDocument doc = null;
-                if (_domSetDocument != null)
+                if (_domSetDocument is not null)
                 {
                     DiscardInline();
                     doc = _domSetDocument;
@@ -307,13 +307,13 @@ namespace System.Windows.Data
 
                 // Doesn't matter if the doc is set programmatically or from inline,
                 // here we create a new collection for it and make it active.
-                if (IsAsynchronous && doc != null)
+                if (IsAsynchronous && doc is not null)
                 {
                     // process node collection on a worker thread ?
                     ThreadPool.QueueUserWorkItem(new WaitCallback(BuildNodeCollectionAsynch),
                                                  doc);
                 }
-                else if (doc != null || Data != null)
+                else if (doc is not null || Data is not null)
                 {
                     // process the doc synchronously if we're in synchronous mode,
                     // or if the doc is empty.  But don't process an empty doc
@@ -358,7 +358,7 @@ namespace System.Windows.Data
             Uri sourceUri = this.Source;
             if (sourceUri.IsAbsoluteUri == false)
             {
-                Uri baseUri = (_baseUri != null) ? _baseUri : BindUriHelper.BaseUri;
+                Uri baseUri = (_baseUri is not null) ? _baseUri : BindUriHelper.BaseUri;
                 sourceUri = BindUriHelper.GetResolvedUri(baseUri, sourceUri);
             }
 
@@ -400,7 +400,7 @@ namespace System.Windows.Data
             public void WriteXml(XmlWriter writer)
             {
                 XmlDocument doc = _host.DocumentForSerialization;
-                if (doc != null)
+                if (doc is not null)
                     doc.Save(writer);
             }
 
@@ -438,10 +438,10 @@ namespace System.Windows.Data
             {
                 // allow inline serialization only if the original XML data was inline
                 // or the user has assigned own DOM to our Document property
-                if (_tryInlineDoc || (_savedDocument != null) || (_domSetDocument != null))
+                if (_tryInlineDoc || (_savedDocument is not null) || (_domSetDocument is not null))
                 {
                     // if inline or assigned doc hasn't been parsed yet, wait for it
-                    if (_waitForInlineDoc != null)
+                    if (_waitForInlineDoc is not null)
                         _waitForInlineDoc.WaitOne();
                     return _document;
                 }
@@ -465,7 +465,7 @@ namespace System.Windows.Data
             if (!_tryInlineDoc)
             {
                 _savedDocument = null;
-                if (_waitForInlineDoc != null)
+                if (_waitForInlineDoc is not null)
                     _waitForInlineDoc.Set();
                 return;
             }
@@ -510,7 +510,7 @@ namespace System.Windows.Data
 
                 // If serializer had to wait for the inline doc, it's available now.
                 // If there was an error, null will be returned for DocumentForSerialization.
-                if (_waitForInlineDoc != null)
+                if (_waitForInlineDoc is not null)
                     _waitForInlineDoc.Set();
             }
 
@@ -518,7 +518,7 @@ namespace System.Windows.Data
             if (TraceData.IsEnabled)
             {
                 XmlNode root = doc.DocumentElement;
-                if (root != null && root.NamespaceURI == xmlReader.LookupNamespace(String.Empty))
+                if (root is not null && root.NamespaceURI == xmlReader.LookupNamespace(String.Empty))
                 {
                     TraceData.TraceAndNotify(TraceEventType.Error, TraceData.XmlNamespaceNotSet);
                 }
@@ -615,7 +615,7 @@ namespace System.Windows.Data
                 throw;
             }
 
-            if (ex != null)
+            if (ex is not null)
             {
                 if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.ProviderQuery))
                 {
@@ -651,7 +651,7 @@ namespace System.Windows.Data
         private void BuildNodeCollection(XmlDocument doc)
         {
             XmlDataCollection collection = null;
-            if (doc != null)
+            if (doc is not null)
             {
                 if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.XmlBuildCollection))
                 {
@@ -665,7 +665,7 @@ namespace System.Windows.Data
                 //we always create a new DataCollection
                 collection = new XmlDataCollection(this);
 
-                if (nodes != null)
+                if (nodes is not null)
                 {
                     collection.SynchronizeCollection(nodes);
                 }
@@ -705,12 +705,12 @@ namespace System.Windows.Data
         {
             if (_document != doc)
             {
-                if (_document != null)
+                if (_document is not null)
                     UnHook();
 
                 _document = doc;
 
-                if (_document != null)
+                if (_document is not null)
                     Hook();
 
                 OnPropertyChanged(new PropertyChangedEventArgs("Document"));
@@ -725,7 +725,7 @@ namespace System.Windows.Data
         {
             _tryInlineDoc = false;
             _savedDocument = null;
-            if (_waitForInlineDoc != null)
+            if (_waitForInlineDoc is not null)
                 _waitForInlineDoc.Set();
         }
 
@@ -769,17 +769,17 @@ namespace System.Windows.Data
 
         private XmlNodeList GetResultNodeList(XmlDocument doc)
         {
-            Debug.Assert(doc != null);
+            Debug.Assert(doc is not null);
 
             XmlNodeList nodes = null;
-            if (doc.DocumentElement != null)
+            if (doc.DocumentElement is not null)
             {
                 // if no XPath is specified, use the root node by default
                 string xpath = (string.IsNullOrEmpty(XPath)) ? "/" : XPath;
 
                 try
                 {
-                    if (XmlNamespaceManager != null)
+                    if (XmlNamespaceManager is not null)
                     {
                         nodes = doc.SelectNodes(xpath, XmlNamespaceManager);
                     }

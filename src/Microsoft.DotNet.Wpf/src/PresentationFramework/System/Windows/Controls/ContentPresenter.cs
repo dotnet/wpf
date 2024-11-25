@@ -109,7 +109,7 @@ namespace System.Windows.Controls
             // If the default value is non-null then wire it to the current instance.
             PropertyMetadata metadata = TemplateProperty.GetMetadata(DependencyObjectType);
             DataTemplate defaultValue = (DataTemplate) metadata.DefaultValue;
-            if (defaultValue != null)
+            if (defaultValue is not null)
             {
                 OnTemplateChanged(this, new DependencyPropertyChangedEventArgs(TemplateProperty, metadata, null, defaultValue));
             }
@@ -190,11 +190,11 @@ namespace System.Windows.Controls
             {
                 mismatch = false;       // do not change templates when disconnecting
             }
-            else if (ctrl.ContentTemplate != null)
+            else if (ctrl.ContentTemplate is not null)
             {
                 mismatch = false;       // explicit template - matches by fiat
             }
-            else if (ctrl.ContentTemplateSelector != null)
+            else if (ctrl.ContentTemplateSelector is not null)
             {
                 mismatch = true;        // template selector - always re-select
             }
@@ -467,7 +467,7 @@ namespace System.Windows.Controls
             // OnPreApplyTemplate.  At this point, if Language has changed (and if
             // we're actually using it), invalidate the template.  This will cause
             // DoDefaultExpansion to run again with the new language.
-            if (_language != null && _language != this.Language)
+            if (_language is not null && _language != this.Language)
             {
                 _templateIsCurrent = false;
             }
@@ -535,7 +535,7 @@ namespace System.Windows.Controls
             // no ContentTemplate set, try ContentTemplateSelector
             if (template is null)
             {
-                if (ContentTemplateSelector != null)
+                if (ContentTemplateSelector is not null)
                 {
                     template = ContentTemplateSelector.SelectTemplate(content, this);
                 }
@@ -606,11 +606,11 @@ namespace System.Windows.Controls
                     Content = item;
                     _contentIsItem = true;
                 }
-                if (itemTemplate != null)
+                if (itemTemplate is not null)
                     SetValue(ContentTemplateProperty, itemTemplate);
-                if (itemTemplateSelector != null)
+                if (itemTemplateSelector is not null)
                     SetValue(ContentTemplateSelectorProperty, itemTemplateSelector);
-                if (stringFormat != null)
+                if (stringFormat is not null)
                     SetValue(ContentStringFormatProperty, stringFormat);
             }
         }
@@ -914,13 +914,13 @@ namespace System.Windows.Controls
                 DataTemplate template;
 
                 template = StringFormattingTemplateField.GetValue(this);
-                if (template != null && template == Template)
+                if (template is not null && template == Template)
                 {
                     return true;
                 }
 
                 template = AccessTextFormattingTemplateField.GetValue(this);
-                if (template != null && template == Template)
+                if (template is not null && template == Template)
                 {
                     return true;
                 }
@@ -1047,7 +1047,7 @@ namespace System.Windows.Controls
                 {
                     ContentPresenter cp = (ContentPresenter)container;
                     Visual result = DefaultExpansion(cp.Content, cp);
-                    return (result != null);
+                    return (result is not null);
                 }
                 finally
                 {
@@ -1065,7 +1065,7 @@ namespace System.Windows.Controls
 
                 TextBlock textBlock = CreateTextBlock(container);
                 textBlock.IsContentPresenterContainer = true; // this is done so that the TextBlock does not steal away the logical child
-                if( container != null )
+                if( container is not null )
                 {
                     StyleHelper.AddCustomTemplateRoot(
                         container,
@@ -1085,7 +1085,7 @@ namespace System.Windows.Controls
 
                 Inline inline;
 
-                if ((inline = content as Inline) != null)
+                if ((inline = content as Inline) is not null)
                 {
                     textBlock.Inlines.Add(inline);
                 }
@@ -1097,7 +1097,7 @@ namespace System.Windows.Controls
                     System.Globalization.CultureInfo culture = language.GetSpecificCulture();
                     container.CacheLanguage(language);
 
-                    if ((stringFormat = container.ContentStringFormat) != null)
+                    if ((stringFormat = container.ContentStringFormat) is not null)
                     {
                         try
                         {
@@ -1114,13 +1114,13 @@ namespace System.Windows.Controls
                     {
                         TypeConverter tc = TypeDescriptor.GetConverter(ReflectionHelper.GetReflectionType(content));
                         TypeContext context = new TypeContext(content);
-                        if (tc != null && (tc.CanConvertTo(context, typeof(String))))
+                        if (tc is not null && (tc.CanConvertTo(context, typeof(String))))
                         {
                             textBlock.Text = (string)tc.ConvertTo(context, culture, content, typeof(string));
                         }
                         else
                         {
-                            Debug.Assert(!(tc != null && tc.CanConvertTo(typeof(UIElement))));  // this is handled by a different template
+                            Debug.Assert(!(tc is not null && tc.CanConvertTo(typeof(UIElement))));  // this is handled by a different template
                             textBlock.Text = String.Format(culture, "{0}", content);
                         }
                     }
@@ -1161,7 +1161,7 @@ namespace System.Windows.Controls
                 DataTemplate template = null;
 
                 // Lookup template for typeof(Content) in resource dictionaries.
-                if (item != null)
+                if (item is not null)
                 {
                     template = (DataTemplate)FrameworkElement.FindTemplateResourceInternal(container, item, typeof(DataTemplate));
                 }
@@ -1172,7 +1172,7 @@ namespace System.Windows.Controls
                     TypeConverter tc = null;
                     string s;
 
-                    if ((s = item as string) != null)
+                    if ((s = item as string) is not null)
                         template = ((ContentPresenter)container).SelectTemplateForString(s);
                     else if (item is UIElement)
                         template = UIElementContentTemplate;
@@ -1180,8 +1180,8 @@ namespace System.Windows.Controls
                         template = ((ContentPresenter)container).SelectTemplateForXML();
                     else if (item is Inline)
                         template = DefaultContentTemplate;
-                    else if (item != null &&
-                                (tc = TypeDescriptor.GetConverter(ReflectionHelper.GetReflectionType(item))) != null &&
+                    else if (item is not null &&
+                                (tc = TypeDescriptor.GetConverter(ReflectionHelper.GetReflectionType(item))) is not null &&
                                 tc.CanConvertTo(typeof(UIElement)))
                         template = UIElementContentTemplate;
                     else

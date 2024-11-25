@@ -31,15 +31,15 @@ namespace System.Windows
                         BooleanBoxes.Box(oldValue), 
                         BooleanBoxes.Box(!oldValue));
             
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.RaiseIsStylusCaptureWithinChanged(args);
             }
-            else if (ce != null)
+            else if (ce is not null)
             {
                 ce.RaiseIsStylusCaptureWithinChanged(args);
             }
-            else if (uie3D != null)
+            else if (uie3D is not null)
             {
                 uie3D.RaiseIsStylusCaptureWithinChanged(args);
             }

@@ -108,7 +108,7 @@ namespace System.Windows.Media.Effects
             PixelShader newV = (PixelShader) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 DUCE.IResource targetResource = (DUCE.IResource)target;
                 using (CompositionEngineLock.Acquire())
@@ -191,7 +191,7 @@ namespace System.Windows.Media.Effects
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_SHADEREFFECT))
                 {
                     PixelShader vPixelShader = PixelShader;
-                    if (vPixelShader != null) ((DUCE.IResource)vPixelShader).AddRefOnChannel(channel);
+                    if (vPixelShader is not null) ((DUCE.IResource)vPixelShader).AddRefOnChannel(channel);
 
                     AddRefOnChannelAnimations(channel);
 
@@ -208,7 +208,7 @@ namespace System.Windows.Media.Effects
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
                     PixelShader vPixelShader = PixelShader;
-                    if (vPixelShader != null) ((DUCE.IResource)vPixelShader).ReleaseOnChannel(channel);
+                    if (vPixelShader is not null) ((DUCE.IResource)vPixelShader).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
 }

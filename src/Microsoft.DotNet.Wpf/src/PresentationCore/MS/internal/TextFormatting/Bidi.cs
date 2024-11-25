@@ -777,7 +777,7 @@ namespace MS.Internal.TextFormatting
                 return 0;
             }
 
-            if (stateIn != null)
+            if (stateIn is not null)
             {
                 lastStrongClass = stateIn.LastStrongClass;
 
@@ -1622,7 +1622,7 @@ namespace MS.Internal.TextFormatting
             // return the maximun that we could resolve so far and the last strong (fixed)
             // class saved
 
-            if (stateOut != null)
+            if (stateOut is not null)
             {
                 stateOut.LastStrongClass = lastStrongClass;
                 stateOut.LastNumberClass = lastNumericClass;
@@ -1765,8 +1765,8 @@ namespace MS.Internal.TextFormatting
             int                     runCount         = 0;
             int                     wordCount;
 
-            Invariant.Assert(levels != null && levels.Count >= cchText);
-            Invariant.Assert(characterClass != null && characterClass.Count >= cchText);
+            Invariant.Assert(levels is not null && levels.Count >= cchText);
+            Invariant.Assert(characterClass is not null && characterClass.Count >= cchText);
 
             cchResolved = 0;
 
@@ -1903,7 +1903,7 @@ namespace MS.Internal.TextFormatting
             // Done with the state
 
 
-            if (stateIn != null)
+            if (stateIn is not null)
             {
                 if (!levelsStack.Init(stateIn.LevelStack))
                 {
@@ -1971,7 +1971,7 @@ namespace MS.Internal.TextFormatting
                 bidiLevel       = baseLevel;
                 nonBidiLevel    = (byte) (baseLevel + 1);
                 lastPathClass   = basePathClass = 3;
-                if (stateIn != null )
+                if (stateIn is not null )
                     lastStrongClass = stateIn.LastStrongClass;
                 else
                     lastStrongClass = DirectionClass.Right;
@@ -1981,13 +1981,13 @@ namespace MS.Internal.TextFormatting
                 nonBidiLevel    = baseLevel;
                 bidiLevel       = (byte) (baseLevel + 1);
                 lastPathClass   = basePathClass = 2;
-                if (stateIn != null )
+                if (stateIn is not null )
                     lastStrongClass = stateIn.LastStrongClass;
                 else
                     lastStrongClass = DirectionClass.Left;
             }
 
-            if (stateIn != null )
+            if (stateIn is not null )
             {
                 if ((FastPathClass[(int) lastStrongClass] & 0x02) == 0x02) // Strong Left or Right
                 {
@@ -2103,7 +2103,7 @@ namespace MS.Internal.TextFormatting
             {
                 cchResolved = cchText;
 
-                if (state != null)
+                if (state is not null)
                 {
                     state.LastStrongClass = lastStrongClass;
                 }
@@ -2357,7 +2357,7 @@ namespace MS.Internal.TextFormatting
 
             runCount++;
 
-            if (stateOut != null)
+            if (stateOut is not null)
             {
                 stateOut.LevelStack     = levelsStack.GetData();
                 stateOut.OverrideLevels = overrideStatus;
@@ -2401,8 +2401,8 @@ namespace MS.Internal.TextFormatting
                 // or need to save it for a possible next call
 
                 bool incompleteRun = ((runCount - 1) == counter) && ((flags & Flags.IncompleteText) != 0)
-                                     && (stateOut != null);
-                bool continuingAnalysis = (counter == 0) && (stateIn != null);
+                                     && (stateOut is not null);
+                bool continuingAnalysis = (counter == 0) && (stateIn is not null);
 
                 int runLengthResolved;
 

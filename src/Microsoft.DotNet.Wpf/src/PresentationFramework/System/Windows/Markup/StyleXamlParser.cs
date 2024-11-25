@@ -162,7 +162,7 @@ namespace System.Windows.Markup
             {
                 NamespaceMapEntry[] namespaceMaps = XamlTypeMapper.GetNamespaceMapEntries(xamlUnknownTagStartNode.XmlNamespace);
 
-                if (namespaceMaps != null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly)
+                if (namespaceMaps is not null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly)
                 {
                     localElementFullName = $"{namespaceMaps[0].ClrNamespace}.{xamlUnknownTagStartNode.Value}";
                 }
@@ -230,7 +230,7 @@ namespace System.Windows.Markup
         {
 #if PBTCOMPILER
                 NamespaceMapEntry[] namespaceMaps = XamlTypeMapper.GetNamespaceMapEntries(xamlUnknownTagEndNode.XmlNamespace);
-                bool localTag = namespaceMaps != null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly;
+                bool localTag = namespaceMaps is not null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly;
 
                 if (!localTag || !IsLocalPass1)
                 {
@@ -266,7 +266,7 @@ namespace System.Windows.Markup
             {
                 //  These are attributes on a non-local tag ...
                 namespaceMaps = XamlTypeMapper.GetNamespaceMapEntries(xamlUnknownAttributeNode.XmlNamespace);
-                localAttrib = namespaceMaps != null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly;
+                localAttrib = namespaceMaps is not null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly;
             }
 
             if (localAttrib)
@@ -281,7 +281,7 @@ namespace System.Windows.Markup
 
                     string ownerTagName = localAttribName.Substring(0, lastIndex);
 
-                    if (namespaceMaps != null)
+                    if (namespaceMaps is not null)
                     {
                         if (namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly)
                         {
@@ -293,7 +293,7 @@ namespace System.Windows.Markup
                         TypeAndSerializer typeAndSerializer = XamlTypeMapper.GetTypeOnly(xamlUnknownAttributeNode.XmlNamespace,
                                                                                  ownerTagName);
 
-                        if (typeAndSerializer != null)
+                        if (typeAndSerializer is not null)
                         {
                             Type ownerTagType = typeAndSerializer.ObjectType;
                             localTagFullName = ownerTagType.FullName;
@@ -301,7 +301,7 @@ namespace System.Windows.Markup
                         else
                         {
                             namespaceMaps = XamlTypeMapper.GetNamespaceMapEntries(xamlUnknownAttributeNode.XmlNamespace);
-                            if (namespaceMaps != null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly)
+                            if (namespaceMaps is not null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly)
                             {
                                 localTagFullName = $"{namespaceMaps[0].ClrNamespace}.{ownerTagName}";
                             }
@@ -335,7 +335,7 @@ namespace System.Windows.Markup
             if ((_styleModeStack.Mode == StyleMode.Setters || _styleModeStack.Mode == StyleMode.TriggerBase) &&
                 !xamlEndAttributesNode.IsCompact)
             {
-                if (_setterOrTriggerValueNode != null)
+                if (_setterOrTriggerValueNode is not null)
                 {
                     ProcessPropertyValueNode();
                 }
@@ -354,12 +354,12 @@ namespace System.Windows.Markup
         {
             string member = xamlPropertyNode.Value;
             MemberInfo dpInfo = GetPropertyOrEventInfo(xamlPropertyNode, ref member);
-            if (dpInfo != null)
+            if (dpInfo is not null)
             {
                 // Note: Should we enforce that all DP fields should end with a 
                 // "Property" or "PropertyKey" postfix here?
 
-                if (BamlRecordWriter != null)
+                if (BamlRecordWriter is not null)
                 {
                     short typeId;
                     short propertyId = MapTable.GetAttributeOrTypeId(BamlRecordWriter.BinaryWriter,
@@ -417,19 +417,19 @@ namespace System.Windows.Markup
             {
                 targetType = XamlTypeMapper.GetTypeFromBaseString(target, ParserContext, false);
             }
-            else if (_styleTargetTypeString != null)
+            else if (_styleTargetTypeString is not null)
             {
                 targetType = XamlTypeMapper.GetTypeFromBaseString(_styleTargetTypeString, ParserContext, false);
                 target = _styleTargetTypeString;
             }
-            else if (_styleTargetTypeType != null)
+            else if (_styleTargetTypeType is not null)
             {
                 targetType = _styleTargetTypeType;
                 target = targetType.Name;
             }
 
             MemberInfo memberInfo = null;
-            if (targetType != null)
+            if (targetType is not null)
             {
                 string objectName = propOrEvent;
                 memberInfo = XamlTypeMapper.GetClrInfo(
@@ -440,12 +440,12 @@ namespace System.Windows.Markup
                                     ref objectName) as MemberInfo;
             }
 
-            if (memberInfo != null)
+            if (memberInfo is not null)
             {
                 if (!_inEventSetter)
                 {
                     PropertyInfo pi = memberInfo as PropertyInfo;
-                    if (pi != null)
+                    if (pi is not null)
                     {
                         // For trigger condition only allow if public or internal getter
                         if (_inSetterDepth < 0 && _styleModeStack.Mode == StyleMode.TriggerBase)
@@ -480,7 +480,7 @@ namespace System.Windows.Markup
                 if (!IsLocalPass1)
 #endif
             {
-                if (targetType != null)
+                if (targetType is not null)
                 {
                     ThrowException(nameof(SR.StyleNoPropOrEvent),
                                    (_inEventSetter ? "Event" : "Property"),
@@ -544,7 +544,7 @@ namespace System.Windows.Markup
         /// </summary>
         private void ProcessPropertyValueNode()
         {
-            if (_setterOrTriggerPropertyInfo != null)
+            if (_setterOrTriggerPropertyInfo is not null)
             {
                 // Now we have PropertyInfo or a MethodInfo for the property setter.
                 // Get the type of the property from this which will be used
@@ -579,7 +579,7 @@ namespace System.Windows.Markup
         {
             if (xamlDefAttributeNode.Name == BamlMapTable.NameString)
             {
-                if (BamlRecordWriter != null)
+                if (BamlRecordWriter is not null)
                 {
                     BamlRecordWriter.WriteDefAttribute(xamlDefAttributeNode);
                 }
@@ -724,7 +724,7 @@ namespace System.Windows.Markup
 
             // Handle custom serializers within the style section by creating an instance
             // of that serializer and handing off control.
-            if (xamlElementStartNode.SerializerType != null && depth > 0)
+            if (xamlElementStartNode.SerializerType is not null && depth > 0)
             {
                  XamlSerializer serializer;
                  if (xamlElementStartNode.SerializerType == typeof(XamlStyleSerializer))
@@ -1204,7 +1204,7 @@ namespace System.Windows.Markup
         /// </summary>
         public override void WriteClrEvent(XamlClrEventNode xamlClrEventNode)
         {
-            if (_previousXamlParser != null)
+            if (_previousXamlParser is not null)
             {
                 if (_styleModeStack.Mode != StyleMode.Setters)
                 {
@@ -1429,7 +1429,7 @@ namespace System.Windows.Markup
                 if (InDeferLoadedSection &&
                     !_defNameFound)
                 {
-                    if (BamlRecordWriter != null && xamlPropertyNode.ValueElementType is null)
+                    if (BamlRecordWriter is not null && xamlPropertyNode.ValueElementType is null)
                     {
                         ThrowException(nameof(SR.ParserNoType), 
                                        xamlPropertyNode.ValueTypeFullName,
@@ -1464,7 +1464,7 @@ namespace System.Windows.Markup
             // If there is an associated treebuilder, tell it about the error.  There may not
             // be a treebuilder, if this parser was built from a serializer for the purpose of
             // converting directly to baml, rather than converting to an object tree.
-            if (TreeBuilder != null)
+            if (TreeBuilder is not null)
             {
                 TreeBuilder.XamlTreeBuildError(e);
             }
@@ -1538,7 +1538,7 @@ namespace System.Windows.Markup
         /// </summary>
         bool InDeferLoadedSection
         {
-            get { return BamlRecordWriter != null && BamlRecordWriter.InDeferLoadedSection; }
+            get { return BamlRecordWriter is not null && BamlRecordWriter.InDeferLoadedSection; }
         }
 
         /// <summary>

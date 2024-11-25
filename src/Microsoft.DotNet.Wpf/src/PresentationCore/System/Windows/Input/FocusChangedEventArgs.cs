@@ -31,10 +31,10 @@ namespace System.Windows.Input
         /// </param>
         public KeyboardFocusChangedEventArgs(KeyboardDevice keyboard, int timestamp, IInputElement oldFocus, IInputElement newFocus) : base(keyboard, timestamp)
         {
-            if (oldFocus != null && !InputElement.IsValid(oldFocus))
+            if (oldFocus is not null && !InputElement.IsValid(oldFocus))
                 throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, oldFocus.GetType()));
 
-            if (newFocus != null && !InputElement.IsValid(newFocus))
+            if (newFocus is not null && !InputElement.IsValid(newFocus))
                 throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, newFocus.GetType()));
 
             _oldFocus = oldFocus;

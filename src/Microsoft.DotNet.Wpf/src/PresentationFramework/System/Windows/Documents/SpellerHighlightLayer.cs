@@ -85,7 +85,7 @@ namespace System.Windows.Documents
         // specified text.
         internal void FireChangedEvent(ITextPointer start, ITextPointer end)
         {
-            if (Changed != null)
+            if (Changed is not null)
             {
                 Changed(this, new SpellerHighlightChangedEventArgs(start, end));
             }

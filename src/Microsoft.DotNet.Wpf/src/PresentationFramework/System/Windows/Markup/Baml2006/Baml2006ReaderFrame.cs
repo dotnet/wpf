@@ -23,7 +23,7 @@ namespace System.Windows.Baml2006
         {
             XamlType = source.XamlType;
             Member = source.Member;
-            if (source._namespaces != null)
+            if (source._namespaces is not null)
             {
                 _namespaces = new Dictionary<string, string>(source._namespaces);
             }
@@ -57,7 +57,7 @@ namespace System.Windows.Baml2006
 
         public bool TryGetNamespaceByPrefix(string prefix, out string xamlNs)
         {
-            if (_namespaces != null && _namespaces.TryGetValue(prefix, out xamlNs))
+            if (_namespaces is not null && _namespaces.TryGetValue(prefix, out xamlNs))
             {
                 return true;
             }
@@ -67,7 +67,7 @@ namespace System.Windows.Baml2006
 
         public bool TryGetPrefixByNamespace(string xamlNs, out string prefix)
         {
-            if (_namespaces != null)
+            if (_namespaces is not null)
             {
                 foreach (KeyValuePair<string, string> pair in _namespaces)
                 {
@@ -89,7 +89,7 @@ namespace System.Windows.Baml2006
         {
             XamlType = null;
             Member = null;
-            if (_namespaces != null)
+            if (_namespaces is not null)
             {
                 _namespaces.Clear();
             }

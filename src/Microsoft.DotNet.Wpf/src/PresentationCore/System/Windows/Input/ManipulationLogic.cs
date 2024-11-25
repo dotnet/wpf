@@ -165,7 +165,7 @@ namespace System.Windows.Input
 
         private static ManipulationDelta ConvertDelta(ManipulationDelta2D delta, ManipulationDelta add)
         {
-            if (add != null)
+            if (add is not null)
             {
                 return new ManipulationDelta(
                     new Vector(delta.TranslationX + add.Translation.X, delta.TranslationY + add.Translation.Y),
@@ -226,7 +226,7 @@ namespace System.Windows.Input
         /// </summary>
         private ManipulationCompletedEventArgs GetManipulationCompletedArguments(ManipulationInertiaStartingEventArgs e)
         {
-            Debug.Assert(_lastManipulationBeforeInertia != null);
+            Debug.Assert(_lastManipulationBeforeInertia is not null);
             return new ManipulationCompletedEventArgs(
                 _manipulationDevice,
                 LastTimestamp,
@@ -291,7 +291,7 @@ namespace System.Windows.Input
 
         private void ClearTimer()
         {
-            if (_inertiaTimer != null)
+            if (_inertiaTimer is not null)
             {
                 _inertiaTimer.Stop();
                 _inertiaTimer = null;
@@ -313,7 +313,7 @@ namespace System.Windows.Input
         /// </summary>
         internal void PushEventsToDevice()
         {
-            if (_generatedEvent != null)
+            if (_generatedEvent is not null)
             {
                 InputEventArgs generatedEvent = _generatedEvent;
                 _generatedEvent = null;
@@ -327,7 +327,7 @@ namespace System.Windows.Input
         /// <param name="unusedManipulation">The total unused manipulation.</param>
         internal void RaiseBoundaryFeedback(ManipulationDelta unusedManipulation, bool requestedComplete)
         {
-            bool hasUnusedManipulation = (unusedManipulation != null);
+            bool hasUnusedManipulation = (unusedManipulation is not null);
             if ((!hasUnusedManipulation || requestedComplete) && HasPendingBoundaryFeedback)
             {
                 // Create a "zero" message to end currently pending feedback
@@ -339,7 +339,7 @@ namespace System.Windows.Input
                 HasPendingBoundaryFeedback = true;
             }
 
-            if (unusedManipulation != null)
+            if (unusedManipulation is not null)
             {
                 PushEvent(new ManipulationBoundaryFeedbackEventArgs(_manipulationDevice, LastTimestamp, _currentContainer, unusedManipulation));
             }
@@ -391,7 +391,7 @@ namespace System.Windows.Input
 
                         _manipulationProcessor = new ManipulationProcessor2D(ConvertMode(_mode), ConvertPivot(_pivot));
 
-                        if (parameters != null)
+                        if (parameters is not null)
                         {
                             int count = parameters.Count;
                             for (int i = 0; i < parameters.Count; i++)
@@ -447,7 +447,7 @@ namespace System.Windows.Input
             set
             {
                 _mode = value;
-                if (_manipulationProcessor != null)
+                if (_manipulationProcessor is not null)
                 {
                     _manipulationProcessor.SupportedManipulations = ConvertMode(_mode);
                 }
@@ -487,7 +487,7 @@ namespace System.Windows.Input
             set
             {
                 _pivot = value;
-                if (_manipulationProcessor != null)
+                if (_manipulationProcessor is not null)
                 {
                     _manipulationProcessor.Pivot = ConvertPivot(value);
                 }
@@ -496,7 +496,7 @@ namespace System.Windows.Input
 
         private static ManipulationPivot2D ConvertPivot(ManipulationPivot pivot)
         {
-            if (pivot != null)
+            if (pivot is not null)
             {
                 Point center = pivot.Center;
                 return new ManipulationPivot2D()
@@ -512,7 +512,7 @@ namespace System.Windows.Input
 
         internal void SetManipulationParameters(ManipulationParameters2D parameter)
         {
-            if (_manipulationProcessor != null)
+            if (_manipulationProcessor is not null)
             {
                 _manipulationProcessor.SetParameters(parameter);
             }
@@ -531,7 +531,7 @@ namespace System.Windows.Input
             // End the manipulation if the element is not
             // visible anymore
             UIElement uie = _currentContainer as UIElement;
-            if (uie != null)
+            if (uie is not null)
             {
                 if (!uie.IsVisible)
                 {
@@ -541,7 +541,7 @@ namespace System.Windows.Input
             else
             {
                 UIElement3D uie3D = _currentContainer as UIElement3D;
-                if (uie3D != null &&
+                if (uie3D is not null &&
                     !uie3D.IsVisible)
                 {
                     return;
@@ -575,17 +575,17 @@ namespace System.Windows.Input
             // remember the new container
             _currentContainer = newContainer;
 
-            if (newContainer != null)
+            if (newContainer is not null)
             {
                 // get the new root
                 PresentationSource presentationSource = PresentationSource.CriticalFromVisual((Visual)newContainer);
-                if (presentationSource != null)
+                if (presentationSource is not null)
                 {
                     _root = presentationSource.RootVisual as UIElement;
                 }
 
                 // subscribe to LayoutUpdated
-                if (_containerLayoutUpdated != null)
+                if (_containerLayoutUpdated is not null)
                 {
                     SubscribeToLayoutUpdated();
                 }
@@ -600,7 +600,7 @@ namespace System.Windows.Input
                 _containerLayoutUpdated += value;
 
                 // if this is the first handler, try to subscribe to LayoutUpdated event
-                if (wasNull && _containerLayoutUpdated != null)
+                if (wasNull && _containerLayoutUpdated is not null)
                 {
                     SubscribeToLayoutUpdated();
                 }
@@ -621,7 +621,7 @@ namespace System.Windows.Input
         private void SubscribeToLayoutUpdated()
         {
             UIElement container = _currentContainer as UIElement;
-            if (container != null)
+            if (container is not null)
             {
                 container.LayoutUpdated += OnLayoutUpdated;
             }
@@ -630,7 +630,7 @@ namespace System.Windows.Input
         private void UnsubscribeFromLayoutUpdated()
         {
             UIElement container = _currentContainer as UIElement;
-            if (container != null)
+            if (container is not null)
             {
                 container.LayoutUpdated -= OnLayoutUpdated;
             }
@@ -644,7 +644,7 @@ namespace System.Windows.Input
         /// <param name="e"></param>
         private void OnLayoutUpdated(object sender, EventArgs e)
         {
-            Debug.Assert(_containerLayoutUpdated != null);
+            Debug.Assert(_containerLayoutUpdated is not null);
 
             //check position and size and update the cached values
             if (UpdateCachedPositionAndSize())
@@ -694,12 +694,12 @@ namespace System.Windows.Input
 
         internal bool IsManipulationActive
         {
-            get { return _manipulationProcessor != null; }
+            get { return _manipulationProcessor is not null; }
         }
 
         private bool IsInertiaActive
         {
-            get { return _inertiaProcessor != null; }
+            get { return _inertiaProcessor is not null; }
         }
 
         private ManipulationDevice _manipulationDevice;

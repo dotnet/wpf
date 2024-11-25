@@ -271,7 +271,7 @@ namespace System.Windows.Documents
         private static void OnWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Table table = ((TableColumn) d).Table;
-            if(table != null)
+            if(table is not null)
             {
                 table.InvalidateColumns();
             }
@@ -283,7 +283,7 @@ namespace System.Windows.Documents
         private static void OnBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Table table = ((TableColumn) d).Table;
-            if(table != null)
+            if(table is not null)
             {
                 table.InvalidateColumns();
             }

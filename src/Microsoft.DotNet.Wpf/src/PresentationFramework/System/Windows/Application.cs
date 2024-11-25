@@ -238,7 +238,7 @@ namespace System.Windows
             VerifyAccess();
             object service = null;
 
-            if (ServiceProvider != null)
+            if (ServiceProvider is not null)
             {
                 service = ServiceProvider.GetService(serviceType);
             }
@@ -306,7 +306,7 @@ namespace System.Windows
             ResourceDictionary resources = _resources;
             object resource = null;
 
-            if (resources != null)
+            if (resources is not null)
             {
                 resource = resources[resourceKey];
             }
@@ -339,7 +339,7 @@ namespace System.Windows
             ResourceDictionary resources = _resources;
             object resource = null;
 
-            if (resources != null)
+            if (resources is not null)
             {
                 resource = resources[resourceKey];
             }
@@ -551,8 +551,8 @@ namespace System.Windows
             // The callers should have already done the parameter validation.
             // So the code here uses assert instead of throwing exception.
             //
-            Debug.Assert(stream != null, "stream should not be null.");
-            Debug.Assert(pc != null, "pc should not be null.");
+            Debug.Assert(stream is not null, "stream should not be null.");
+            Debug.Assert(pc is not null, "pc should not be null.");
 
             if (s_NestedBamlLoadInfo is null)
             {
@@ -707,7 +707,7 @@ namespace System.Windows
             //
             Stream stream = null;
 
-            if (sooPart != null)
+            if (sooPart is not null)
             {
                 try
                 {
@@ -735,7 +735,7 @@ namespace System.Windows
             }
 
             // When stream is not null, sooPart cannot be null either
-            Debug.Assert( ((stream != null) && (sooPart is null)) != true,  "When stream is not null, sooPart cannot be null either");
+            Debug.Assert( ((stream is not null) && (sooPart is null)) != true,  "When stream is not null, sooPart cannot be null either");
 
             return (stream is null) ? null : new StreamResourceInfo(stream, sooPart.ContentType);
         }
@@ -926,7 +926,7 @@ namespace System.Windows
                     _resources = value;
                 }
 
-                if (oldValue != null)
+                if (oldValue is not null)
                 {
                     // This app is no longer an owner for the old RD
                     oldValue.RemoveOwner(this);
@@ -934,7 +934,7 @@ namespace System.Windows
 
                 if(_reloadFluentDictionary && !_resourcesInitialized)
                 {
-                    if(value != null && ThemeMode != ThemeMode.None)
+                    if(value is not null && ThemeMode != ThemeMode.None)
                     {
                         value.MergedDictionaries.Insert(0, ThemeManager.GetThemeDictionary(ThemeMode));
                     }
@@ -942,7 +942,7 @@ namespace System.Windows
                     invalidateResources = true;
                 }
 
-                if (value != null)
+                if (value is not null)
                 {
                     if (!value.ContainsOwner(this))
                     {
@@ -1042,7 +1042,7 @@ namespace System.Windows
             // We want to make sure that StaticResource resolution checks the .Resources
             // Ie.  The Ambient search should look at Resources if it is set.
             // Even if it wasn't set from XAML (eg. the Ctor (or derived Ctor) added stuff)
-            return (propertyName == "Resources" && _resources != null);
+            return (propertyName == "Resources" && _resources is not null);
         }
 
         // Says if App.Resources has any implicit styles
@@ -1282,7 +1282,7 @@ namespace System.Windows
             VerifyAccess();
 
             StartupEventHandler handler = (StartupEventHandler)Events[EVENT_STARTUP];
-            if (handler != null)
+            if (handler is not null)
             {
                 handler(this, e);
             }
@@ -1305,7 +1305,7 @@ namespace System.Windows
             VerifyAccess();
 
             ExitEventHandler handler = (ExitEventHandler)Events[EVENT_EXIT];
-            if (handler != null)
+            if (handler is not null)
             {
                 handler(this, e);
             }
@@ -1327,7 +1327,7 @@ namespace System.Windows
         protected virtual void OnActivated(EventArgs e)
         {
             VerifyAccess();
-            if (Activated != null)
+            if (Activated is not null)
             {
                 Activated(this, e);
             }
@@ -1350,7 +1350,7 @@ namespace System.Windows
         protected virtual void OnDeactivated(EventArgs e)
         {
             VerifyAccess();
-            if (Deactivated != null)
+            if (Deactivated is not null)
             {
                 Deactivated(this, e);
             }
@@ -1376,7 +1376,7 @@ namespace System.Windows
             VerifyAccess();
 
             SessionEndingCancelEventHandler handler = (SessionEndingCancelEventHandler)Events[EVENT_SESSIONENDING];
-            if (handler != null)
+            if (handler is not null)
             {
                 handler(this, e);
             }
@@ -1395,7 +1395,7 @@ namespace System.Windows
         protected virtual void OnNavigating(NavigatingCancelEventArgs e)
         {
             VerifyAccess();
-            if (Navigating != null)
+            if (Navigating is not null)
             {
                 Navigating(this, e);
             }
@@ -1416,7 +1416,7 @@ namespace System.Windows
         protected virtual void OnNavigated(NavigationEventArgs e)
         {
             VerifyAccess();
-            if (Navigated != null)
+            if (Navigated is not null)
             {
                 Navigated(this, e);
             }
@@ -1436,7 +1436,7 @@ namespace System.Windows
         protected virtual void OnNavigationProgress(NavigationProgressEventArgs e)
         {
             VerifyAccess();
-            if (NavigationProgress != null)
+            if (NavigationProgress is not null)
             {
                 NavigationProgress(this, e);
             }
@@ -1456,7 +1456,7 @@ namespace System.Windows
         protected virtual void OnNavigationFailed(NavigationFailedEventArgs e)
         {
             VerifyAccess();
-            if (NavigationFailed != null)
+            if (NavigationFailed is not null)
             {
                 NavigationFailed(this, e);
             }
@@ -1477,7 +1477,7 @@ namespace System.Windows
         protected virtual void OnLoadCompleted(NavigationEventArgs e)
         {
             VerifyAccess();
-            if (LoadCompleted != null)
+            if (LoadCompleted is not null)
             {
                 LoadCompleted(this, e);
             }
@@ -1498,7 +1498,7 @@ namespace System.Windows
         protected virtual void OnNavigationStopped(NavigationEventArgs e)
         {
             VerifyAccess();
-            if (NavigationStopped != null)
+            if (NavigationStopped is not null)
             {
                 NavigationStopped(this, e);
             }
@@ -1520,7 +1520,7 @@ namespace System.Windows
         protected virtual void OnFragmentNavigation(FragmentNavigationEventArgs e)
         {
             VerifyAccess();
-            if (FragmentNavigation != null)
+            if (FragmentNavigation is not null)
             {
                 FragmentNavigation(this, e);
             }
@@ -1566,7 +1566,7 @@ namespace System.Windows
         {
             Debug.Assert(CheckAccess(), "This should only be called on the Application thread");
 
-            if (StartupUri != null)
+            if (StartupUri is not null)
             {
                 if (StartupUri.IsAbsoluteUri == false)
                 {
@@ -1669,12 +1669,12 @@ namespace System.Windows
                 // this will always be null in the browser hosted case since we we don't
                 // support Activate, Deactivate, and SessionEnding events in the
                 // browser scenario and thus we never create this hwndsource.
-                if (_parkingHwnd != null)
+                if (_parkingHwnd is not null)
                 {
                     _parkingHwnd.Dispose();
                 }
 
-                if (_events != null)
+                if (_events is not null)
                 {
                     _events.Dispose();
                 }
@@ -1723,7 +1723,7 @@ namespace System.Windows
                 throw new InvalidOperationException(SR.Format(SR.CannotCallRunMultipleTimes, this.GetType().FullName));
             }
 
-            if (window != null)
+            if (window is not null)
             {
                 if (window.CheckAccess() == false)
                 {
@@ -1930,7 +1930,7 @@ namespace System.Windows
             private get
             {
                 VerifyAccess();
-                if (_serviceProvider != null)
+                if (_serviceProvider is not null)
                 {
                     return _serviceProvider;
                 }
@@ -2004,7 +2004,7 @@ namespace System.Windows
         {
             get
             {
-                if (_parkingHwnd != null)
+                if (_parkingHwnd is not null)
                 {
                     return _parkingHwnd.Handle;
                 }
@@ -2383,7 +2383,7 @@ namespace System.Windows
             {
                 using (RegistryKey soundKey = Registry.CurrentUser.OpenSubKey(regPath))
                 {
-                    if (soundKey != null)
+                    if (soundKey is not null)
                     {
                         soundFile = (string)(soundKey.GetValue(""));
                     }
@@ -2419,24 +2419,24 @@ namespace System.Windows
         {
             bool isRootElement = false;
 
-            Invariant.Assert(curComponentUri != null, "curComponentUri should not be null");
+            Invariant.Assert(curComponentUri is not null, "curComponentUri should not be null");
 
-            if (s_NestedBamlLoadInfo != null && s_NestedBamlLoadInfo.Count > 0)
+            if (s_NestedBamlLoadInfo is not null && s_NestedBamlLoadInfo.Count > 0)
             {
                 //
                 // Get the top LoadBamlSynInfo from the stack.
                 //
                 NestedBamlLoadInfo loadBamlSyncInfo = s_NestedBamlLoadInfo.Peek() as NestedBamlLoadInfo;
 
-                if (loadBamlSyncInfo != null && loadBamlSyncInfo.BamlUri != null &&
-                    loadBamlSyncInfo.BamlStream != null &&
+                if (loadBamlSyncInfo is not null && loadBamlSyncInfo.BamlUri is not null &&
+                    loadBamlSyncInfo.BamlStream is not null &&
                     BindUriHelper.DoSchemeAndHostMatch(loadBamlSyncInfo.BamlUri, curComponentUri))
                 {
                     string fileInBamlConvert = loadBamlSyncInfo.BamlUri.LocalPath;
                     string fileCurrent = curComponentUri.LocalPath;
 
-                    Invariant.Assert(fileInBamlConvert != null, "fileInBamlConvert should not be null");
-                    Invariant.Assert(fileCurrent != null, "fileCurrent should not be null");
+                    Invariant.Assert(fileInBamlConvert is not null, "fileInBamlConvert should not be null");
+                    Invariant.Assert(fileCurrent is not null, "fileCurrent should not be null");
 
                     if (string.Equals(fileInBamlConvert, fileCurrent, StringComparison.OrdinalIgnoreCase))
                     {

@@ -71,7 +71,7 @@ namespace System.Windows.Media.Converters
         /// </Summary>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType != null)
+            if (destinationType is not null)
                 return ConvertToCore(context, culture, value, destinationType);
 
             // Pass unhandled cases to base class (which will throw exceptions for null value or destinationType.)

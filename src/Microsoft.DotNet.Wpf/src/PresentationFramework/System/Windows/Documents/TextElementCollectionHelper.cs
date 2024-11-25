@@ -42,7 +42,7 @@ namespace System.Windows.Documents
             {
                 for (int i = 0; i < _cleanParentList.Length; i++)
                 {
-                    if (_cleanParentList[i] != null)
+                    if (_cleanParentList[i] is not null)
                     {
                         ParentCollectionPair pair = (ParentCollectionPair)_cleanParentList[i].Target;
 

@@ -211,8 +211,8 @@ namespace ABI.WinRT.Interop
 
         public static ObjectReference<Vftbl> FromAbi(IntPtr thisPtr) => ObjectReference<Vftbl>.FromAbi(thisPtr);
 
-        public static implicit operator IErrorInfo(IObjectReference obj) => (obj != null) ? new IErrorInfo(obj) : null;
-        public static implicit operator IErrorInfo(ObjectReference<Vftbl> obj) => (obj != null) ? new IErrorInfo(obj) : null;
+        public static implicit operator IErrorInfo(IObjectReference obj) => (obj is not null) ? new IErrorInfo(obj) : null;
+        public static implicit operator IErrorInfo(ObjectReference<Vftbl> obj) => (obj is not null) ? new IErrorInfo(obj) : null;
         protected readonly ObjectReference<Vftbl> _obj;
         public IntPtr ThisPtr => _obj.ThisPtr;
         public ObjectReference<I> AsInterface<I>() => _obj.As<I>();
@@ -300,8 +300,8 @@ namespace ABI.WinRT.Interop
 
         public static ObjectReference<Vftbl> FromAbi(IntPtr thisPtr) => ObjectReference<Vftbl>.FromAbi(thisPtr);
 
-        public static implicit operator ILanguageExceptionErrorInfo(IObjectReference obj) => (obj != null) ? new ILanguageExceptionErrorInfo(obj) : null;
-        public static implicit operator ILanguageExceptionErrorInfo(ObjectReference<Vftbl> obj) => (obj != null) ? new ILanguageExceptionErrorInfo(obj) : null;
+        public static implicit operator ILanguageExceptionErrorInfo(IObjectReference obj) => (obj is not null) ? new ILanguageExceptionErrorInfo(obj) : null;
+        public static implicit operator ILanguageExceptionErrorInfo(ObjectReference<Vftbl> obj) => (obj is not null) ? new ILanguageExceptionErrorInfo(obj) : null;
         protected readonly ObjectReference<Vftbl> _obj;
         public IntPtr ThisPtr => _obj.ThisPtr;
         public ObjectReference<I> AsInterface<I>() => _obj.As<I>();
@@ -371,8 +371,8 @@ namespace ABI.WinRT.Interop
 
         public static ObjectReference<Vftbl> FromAbi(IntPtr thisPtr) => ObjectReference<Vftbl>.FromAbi(thisPtr);
 
-        public static implicit operator ISupportErrorInfo(IObjectReference obj) => (obj != null) ? new ISupportErrorInfo(obj) : null;
-        public static implicit operator ISupportErrorInfo(ObjectReference<Vftbl> obj) => (obj != null) ? new ISupportErrorInfo(obj) : null;
+        public static implicit operator ISupportErrorInfo(IObjectReference obj) => (obj is not null) ? new ISupportErrorInfo(obj) : null;
+        public static implicit operator ISupportErrorInfo(ObjectReference<Vftbl> obj) => (obj is not null) ? new ISupportErrorInfo(obj) : null;
         protected readonly ObjectReference<Vftbl> _obj;
         public IntPtr ThisPtr => _obj.ThisPtr;
         public ObjectReference<I> AsInterface<I>() => _obj.As<I>();
@@ -405,8 +405,8 @@ namespace ABI.WinRT.Interop
 
         public static ObjectReference<Vftbl> FromAbi(IntPtr thisPtr) => ObjectReference<Vftbl>.FromAbi(thisPtr);
 
-        public static implicit operator IRestrictedErrorInfo(IObjectReference obj) => (obj != null) ? new IRestrictedErrorInfo(obj) : null;
-        public static implicit operator IRestrictedErrorInfo(ObjectReference<Vftbl> obj) => (obj != null) ? new IRestrictedErrorInfo(obj) : null;
+        public static implicit operator IRestrictedErrorInfo(IObjectReference obj) => (obj is not null) ? new IRestrictedErrorInfo(obj) : null;
+        public static implicit operator IRestrictedErrorInfo(ObjectReference<Vftbl> obj) => (obj is not null) ? new IRestrictedErrorInfo(obj) : null;
         protected readonly ObjectReference<Vftbl> _obj;
         public IntPtr ThisPtr => _obj.ThisPtr;
         public ObjectReference<I> AsInterface<I>() => _obj.As<I>();

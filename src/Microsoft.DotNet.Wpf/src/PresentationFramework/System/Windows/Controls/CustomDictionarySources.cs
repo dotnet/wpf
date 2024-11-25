@@ -102,7 +102,7 @@ namespace System.Windows.Controls
             ValidateUri(item);
             _uriList.Insert(index, item);
             
-            if (Speller != null)
+            if (Speller is not null)
             {
                 Speller.OnDictionaryUriAdded(item);
             }
@@ -113,7 +113,7 @@ namespace System.Windows.Controls
             Uri uri = _uriList[index];
             _uriList.RemoveAt(index);
             
-            if (Speller != null)
+            if (Speller is not null)
             {
                 Speller.OnDictionaryUriRemoved(uri);
             }
@@ -136,12 +136,12 @@ namespace System.Windows.Controls
             {
                 ValidateUri(value);
                 Uri oldUri = _uriList[index];
-                if (Speller != null)
+                if (Speller is not null)
                 {
                     Speller.OnDictionaryUriRemoved(oldUri);
                 }                
                 _uriList[index] = value;
-                if (Speller != null)
+                if (Speller is not null)
                 {
                     Speller.OnDictionaryUriAdded(value);
                 }
@@ -165,7 +165,7 @@ namespace System.Windows.Controls
                 _uriList.Add(item);
             }
 
-            if (Speller != null)
+            if (Speller is not null)
             {
                 Speller.OnDictionaryUriAdded(item);
             }
@@ -174,7 +174,7 @@ namespace System.Windows.Controls
         void ICollection<Uri>.Clear()
         {
             _uriList.Clear();
-            if (Speller != null)
+            if (Speller is not null)
             {
                 Speller.OnDictionaryUriCollectionCleared();
             }
@@ -209,7 +209,7 @@ namespace System.Windows.Controls
         bool ICollection<Uri>.Remove(Uri item)
         {
             bool removed = _uriList.Remove(item);
-            if (removed && (Speller != null))
+            if (removed && (Speller is not null))
             {
                 Speller.OnDictionaryUriRemoved(item);
             }

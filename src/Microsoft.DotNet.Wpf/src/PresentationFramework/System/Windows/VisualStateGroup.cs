@@ -138,7 +138,7 @@ namespace System.Windows
 
         internal void RaiseCurrentStateChanging(FrameworkElement stateGroupsRoot, VisualState oldState, VisualState newState, FrameworkElement control)
         {
-            if (CurrentStateChanging != null)
+            if (CurrentStateChanging is not null)
             {
                 CurrentStateChanging(stateGroupsRoot, new VisualStateChangedEventArgs(oldState, newState, control, stateGroupsRoot));
             }
@@ -146,7 +146,7 @@ namespace System.Windows
 
         internal void RaiseCurrentStateChanged(FrameworkElement stateGroupsRoot, VisualState oldState, VisualState newState, FrameworkElement control)
         {
-            if (CurrentStateChanged != null)
+            if (CurrentStateChanged is not null)
             {
                 CurrentStateChanged(stateGroupsRoot, new VisualStateChangedEventArgs(oldState, newState, control, stateGroupsRoot));
             }

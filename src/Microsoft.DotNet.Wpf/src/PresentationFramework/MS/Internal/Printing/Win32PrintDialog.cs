@@ -59,8 +59,8 @@ namespace MS.Internal.Printing
             //
             IntPtr owner = IntPtr.Zero;
 
-            if ((System.Windows.Application.Current != null) &&
-                (System.Windows.Application.Current.MainWindow != null))
+            if ((System.Windows.Application.Current is not null) &&
+                (System.Windows.Application.Current.MainWindow is not null))
             {
                 System.Windows.Interop.WindowInteropHelper helper =
                     new System.Windows.Interop.WindowInteropHelper(System.Windows.Application.Current.MainWindow);
@@ -110,7 +110,7 @@ namespace MS.Internal.Printing
                     string message = System.Windows.SR.PrintDialogInstallPrintSupportMessageBox;
                     string caption = System.Windows.SR.PrintDialogInstallPrintSupportCaption;
 
-                    bool isRtlCaption = caption != null && caption.Length > 0 && caption[0] == RightToLeftMark;
+                    bool isRtlCaption = caption is not null && caption.Length > 0 && caption[0] == RightToLeftMark;
                     System.Windows.MessageBoxOptions mbOptions = isRtlCaption ? System.Windows.MessageBoxOptions.RtlReading : System.Windows.MessageBoxOptions.None;
 
                     int type =
@@ -286,7 +286,7 @@ namespace MS.Internal.Printing
             // We could avoid the exception if we had access to
             // MS.Internal.Printing.Configuration.NativeMethods.BindPTProviderThunk
 
-            string printerName = (this._printQueue != null) ? this._printQueue.FullName : string.Empty;
+            string printerName = (this._printQueue is not null) ? this._printQueue.FullName : string.Empty;
 
             try
             {

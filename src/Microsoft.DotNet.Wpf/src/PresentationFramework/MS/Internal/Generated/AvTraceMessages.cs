@@ -1387,7 +1387,7 @@ namespace MS.Internal
 
         static public bool IsEnabled
         {
-            get { return _avTrace != null && _avTrace.IsEnabled; }
+            get { return _avTrace is not null && _avTrace.IsEnabled; }
         }
 
         /// <summary> Is there a Tracesource?  (See comment on AvTrace.IsEnabledOverride.) </summary>
@@ -1515,7 +1515,7 @@ namespace MS.Internal
 
         static public bool IsEnabled
         {
-            get { return _avTrace != null && _avTrace.IsEnabled; }
+            get { return _avTrace is not null && _avTrace.IsEnabled; }
         }
 
         /// <summary> Is there a Tracesource?  (See comment on AvTrace.IsEnabledOverride.) </summary>
@@ -1755,7 +1755,7 @@ namespace MS.Internal
 
         static public bool IsEnabled
         {
-            get { return _avTrace != null && _avTrace.IsEnabled; }
+            get { return _avTrace is not null && _avTrace.IsEnabled; }
         }
 
         /// <summary> Is there a Tracesource?  (See comment on AvTrace.IsEnabledOverride.) </summary>
@@ -2051,7 +2051,7 @@ namespace MS.Internal
 
         static public bool IsEnabled
         {
-            get { return _avTrace != null && _avTrace.IsEnabled; }
+            get { return _avTrace is not null && _avTrace.IsEnabled; }
         }
 
         /// <summary> Is there a Tracesource?  (See comment on AvTrace.IsEnabledOverride.) </summary>
@@ -2137,7 +2137,7 @@ namespace MS.Internal
 
         static public bool IsEnabled
         {
-            get { return _avTrace != null && _avTrace.IsEnabled; }
+            get { return _avTrace is not null && _avTrace.IsEnabled; }
         }
 
         /// <summary> Is there a Tracesource?  (See comment on AvTrace.IsEnabledOverride.) </summary>
@@ -2299,7 +2299,7 @@ namespace MS.Internal
 
         static public bool IsEnabled
         {
-            get { return _avTrace != null && _avTrace.IsEnabled; }
+            get { return _avTrace is not null && _avTrace.IsEnabled; }
         }
 
         /// <summary> Is there a Tracesource?  (See comment on AvTrace.IsEnabledOverride.) </summary>

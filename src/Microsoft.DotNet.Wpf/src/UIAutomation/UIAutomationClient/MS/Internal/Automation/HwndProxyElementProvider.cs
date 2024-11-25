@@ -1371,7 +1371,7 @@ namespace MS.Internal.Automation
                 else
                 {
                     IRawElementProviderSimple proxyProvider = ProxyManager.ProxyProviderFromHwnd(hwnd, 0, UnsafeNativeMethods.OBJID_CLIENT);
-                    if (proxyProvider != null)
+                    if (proxyProvider is not null)
                     {
                         uiFragmentRoots.Add((IRawElementProviderSimple)proxyProvider);
                         addedProvider = true;
@@ -1383,7 +1383,7 @@ namespace MS.Internal.Automation
                 if (!addedProvider)
                 {
                     IRawElementProviderSimple nonClientProvider = ProxyManager.GetNonClientProvider(hwnd.h);
-                    if (nonClientProvider != null)
+                    if (nonClientProvider is not null)
                     {
                         uiFragmentRoots.Add(nonClientProvider);
                         addedProvider = true;
@@ -2131,7 +2131,7 @@ namespace MS.Internal.Automation
                 {
                     // We're in menu mode - see if there's a registered menu focus handler:
                     IRawElementProviderSimple provider = ProxyManager.GetUser32FocusedMenuProvider(gti.hwndMenuOwner);
-                    if (provider != null)
+                    if (provider is not null)
                     {
                         Debug.Assert(provider is IRawElementProviderFragment, "Expecting a fragment provider");
                         return provider as IRawElementProviderFragment;

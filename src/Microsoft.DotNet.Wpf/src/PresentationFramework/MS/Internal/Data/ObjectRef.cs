@@ -149,7 +149,7 @@ namespace MS.Internal.Data
             {
                 // look in container's template (if any) first
                 FrameworkElement fe = d as FrameworkElement;
-                if (fe != null && fe.TemplateInternal != null)
+                if (fe is not null && fe.TemplateInternal is not null)
                 {
                     o = Helper.FindNameInTemplate(_name, d);
 
@@ -169,7 +169,7 @@ namespace MS.Internal.Data
             }
 
             FrameworkObject fo = new FrameworkObject(d);
-            while (o is null && fo.DO != null)
+            while (o is null && fo.DO is not null)
             {
                 DependencyObject scopeOwner;
                 o = fo.FindName(_name, out scopeOwner);
@@ -191,7 +191,7 @@ namespace MS.Internal.Data
                         parent = Helper.FindMentor(d.InheritanceContext);
                     }
 
-                    if (parent != null)
+                    if (parent is not null)
                     {
                         o = null;
                         fo.Reset(parent);
@@ -222,7 +222,7 @@ namespace MS.Internal.Data
                     if (dd is null)
                     {
                         Panel panel = fo.FrameworkParent.DO as Panel;
-                        if (panel != null && panel.IsItemsHost)
+                        if (panel is not null && panel.IsItemsHost)
                         {
                             dd = panel;
                         }
@@ -236,7 +236,7 @@ namespace MS.Internal.Data
                     if (dd is null && scopeOwner is null)
                     {
                         ContentControl cc = LogicalTreeHelper.GetParent(fo.DO) as ContentControl;
-                        if (cc != null && cc.Content == fo.DO && cc.InheritanceBehavior == InheritanceBehavior.Default)
+                        if (cc is not null && cc.Content == fo.DO && cc.InheritanceBehavior == InheritanceBehavior.Default)
                         {
                             dd = cc;
                         }
@@ -265,7 +265,7 @@ namespace MS.Internal.Data
 
                         // if it's attached to a ContentPresenter, move to the CP
                         ContentPresenter cp = VisualTreeHelper.IsVisualType(dd) ? VisualTreeHelper.GetParent(dd) as ContentPresenter : null;
-                        dd = (cp != null && cp.TemplateInternal.CanBuildVisualTree) ? cp : null;
+                        dd = (cp is not null && cp.TemplateInternal.CanBuildVisualTree) ? cp : null;
                     }
 
                     fo.Reset(dd);
@@ -366,7 +366,7 @@ namespace MS.Internal.Data
             object o = GetDataObjectImpl(d, args);
             DependencyObject el = o as DependencyObject;
 
-            if (el != null && ReturnsDataContext)
+            if (el is not null && ReturnsDataContext)
             {
                 // for generated wrappers, use the ItemForContainer property instead
                 // of DataContext, since it's always set by the generator
@@ -461,7 +461,7 @@ namespace MS.Internal.Data
         private object GetPreviousData(DependencyObject d)
         {
             // move up to the next containing DataContext scope
-            for (; d != null; d = FrameworkElement.GetFrameworkParent(d))
+            for (; d is not null; d = FrameworkElement.GetFrameworkParent(d))
             {
                 if (BindingExpression.HasLocalDataContext(d))
                 {
@@ -478,7 +478,7 @@ namespace MS.Internal.Data
                     FrameworkElement parent, child;
                     ContentPresenter cp;
 
-                    if ((cp = d as ContentPresenter) != null)
+                    if ((cp = d as ContentPresenter) is not null)
                     {
                         child = cp;
                         parent = cp.TemplatedParent as FrameworkElement;
@@ -490,10 +490,10 @@ namespace MS.Internal.Data
                     else
                     {
                         child = d as FrameworkElement;
-                        parent = ((child != null) ? child.Parent : null) as System.Windows.Controls.Primitives.GridViewRowPresenterBase;
+                        parent = ((child is not null) ? child.Parent : null) as System.Windows.Controls.Primitives.GridViewRowPresenterBase;
                     }
 
-                    if (child != null && parent != null &&
+                    if (child is not null && parent is not null &&
                         ItemsControl.EqualsEx(child.DataContext, parent.DataContext))
                     {
                         d = parent;
@@ -515,7 +515,7 @@ namespace MS.Internal.Data
             // parent is the layout element, and the layout's ItemsOwner
             // is the govening ItemsControl.
             Visual v = d as Visual;
-            DependencyObject layout = (v != null) ? VisualTreeHelper.GetParent(v) : null;
+            DependencyObject layout = (v is not null) ? VisualTreeHelper.GetParent(v) : null;
             ItemsControl ic = ItemsControl.GetItemsOwner(layout);
             if (ic is null)
             {
@@ -527,7 +527,7 @@ namespace MS.Internal.Data
             // now look up the wrapper's previous sibling within the
             // layout's children collection
             Visual v2 = layout as Visual;
-            int count = (v2 != null) ? v2.InternalVisualChildrenCount : 0;
+            int count = (v2 is not null) ? v2.InternalVisualChildrenCount : 0;
             int j = -1;
             Visual prevChild = null;   //child at j-1th index
             if (count != 0)
@@ -566,7 +566,7 @@ namespace MS.Internal.Data
             FrameworkObject fo = new FrameworkObject(d);
             fo.Reset(fo.GetPreferVisualParent(true).DO);
 
-            while (fo.DO != null)
+            while (fo.DO is not null)
             {
                 if (isTracing)
                 {
@@ -650,7 +650,7 @@ namespace MS.Internal.Data
         /// <param name="args">See ObjectRefArgs </param>
         internal override object GetObject(DependencyObject d, ObjectRefArgs args)
         {
-            return (_element != null) ? _element.Target : _object;
+            return (_element is not null) ? _element.Target : _object;
         }
 
         /// <summary>

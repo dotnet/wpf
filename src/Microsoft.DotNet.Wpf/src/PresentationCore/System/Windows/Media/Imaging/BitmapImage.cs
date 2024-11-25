@@ -94,7 +94,7 @@ namespace System.Windows.Media.Imaging
             }
 
             // If the Uri is relative, use delay creation as the BaseUri could be set at a later point
-            if (UriSource != null && !UriSource.IsAbsoluteUri && CacheOption != BitmapCacheOption.OnLoad)
+            if (UriSource is not null && !UriSource.IsAbsoluteUri && CacheOption != BitmapCacheOption.OnLoad)
             {
                 DelayCreation = true;
             }
@@ -169,7 +169,7 @@ namespace System.Windows.Media.Imaging
 
             return (
                 // UriSource not null
-                UriSource != null &&
+                UriSource is not null &&
 
                 // But rest are defaults
                 StreamSource is null &&
@@ -196,9 +196,9 @@ namespace System.Windows.Media.Imaging
         {
             ReadPreamble();
 
-            if (UriSource != null)
+            if (UriSource is not null)
             {
-                if (_baseUri != null)
+                if (_baseUri is not null)
                 {
                     return BindUriHelper.UriToString(new Uri(_baseUri, UriSource));
                 }
@@ -233,7 +233,7 @@ namespace System.Windows.Media.Imaging
             //
             if (_isDownloading)
             {
-                Debug.Assert(_decoder != null);
+                Debug.Assert(_decoder is not null);
                 _decoder.DownloadProgress += OnDownloadProgress;
                 _decoder.DownloadCompleted += OnDownloadCompleted;
                 _decoder.DownloadFailed += OnDownloadFailed;
@@ -245,16 +245,16 @@ namespace System.Windows.Media.Imaging
         /// Check the cache for an existing BitmapImage
         private BitmapImage CheckCache(Uri uri)
         {
-            if (uri != null)
+            if (uri is not null)
             {
                 WeakReference bitmapWeakReference = ImagingCache.CheckImageCache(uri) as WeakReference;
 
-                if (bitmapWeakReference != null)
+                if (bitmapWeakReference is not null)
                 {
                     BitmapImage bitmapImage = (bitmapWeakReference.Target as BitmapImage);
 
                     // See if this bitmap was already in the image cache.
-                    if (bitmapImage != null)
+                    if (bitmapImage is not null)
                     {
                         return bitmapImage;
                     }
@@ -271,7 +271,7 @@ namespace System.Windows.Media.Imaging
         /// Insert BitmapImage in cache
         private void InsertInCache(Uri uri)
         {
-            if (uri != null)
+            if (uri is not null)
             {
                 //
                 // Keeping the image bits alive in the cache can bloat working set by 40-50mb in
@@ -300,7 +300,7 @@ namespace System.Windows.Media.Imaging
         {
             _bitmapInit.EnsureInitializedComplete();
             Uri uri = UriSource;
-            if (_baseUri != null)
+            if (_baseUri is not null)
                 uri = new Uri(_baseUri, UriSource);
 
             if ((CreateOptions & BitmapCreateOptions.IgnoreImageCache) != 0)
@@ -310,7 +310,7 @@ namespace System.Windows.Media.Imaging
 
             BitmapImage bitmapImage = CheckCache(uri);
 
-            if (bitmapImage != null &&
+            if (bitmapImage is not null &&
                 bitmapImage.CheckAccess() &&
                 bitmapImage.SourceRect.Equals(SourceRect) &&
                 bitmapImage.DecodePixelWidth == DecodePixelWidth &&
@@ -371,7 +371,7 @@ namespace System.Windows.Media.Imaging
                 }
                 else
                 {
-                    Debug.Assert(decoder.SyncObject != null);
+                    Debug.Assert(decoder.SyncObject is not null);
                 }
             }
             else
@@ -516,8 +516,8 @@ namespace System.Windows.Media.Imaging
             // apply the profile so bits are color-corrected.
             //
             if ((CreateOptions & BitmapCreateOptions.IgnoreColorProfile) == 0 &&
-                frame.ColorContexts != null &&
-                frame.ColorContexts[0] != null &&
+                frame.ColorContexts is not null &&
+                frame.ColorContexts[0] is not null &&
                 frame.ColorContexts[0].IsValid && 
                 source.Format.Format != PixelFormatEnum.Extended
                 )
@@ -541,7 +541,7 @@ namespace System.Windows.Media.Imaging
                     destinationColorContext = null;
                 }
 
-                if (destinationColorContext != null)
+                if (destinationColorContext is not null)
                 {
                     bool conversionSuccess = false;
                     bool badColorContext = false;
@@ -620,7 +620,7 @@ namespace System.Windows.Media.Imaging
             }
 
             // If CacheOption == OnLoad, no need to keep the stream around
-            if (decoder != null && CacheOption == BitmapCacheOption.OnLoad)
+            if (decoder is not null && CacheOption == BitmapCacheOption.OnLoad)
             {
                 decoder.CloseStream();
             }

@@ -27,13 +27,13 @@ namespace System.Windows.Automation.Peers
         public ListViewAutomationPeer(ListView owner)
             : base(owner)
         {
-            Invariant.Assert(owner != null);
+            Invariant.Assert(owner is not null);
         }
 
         ///
         override protected AutomationControlType GetAutomationControlTypeCore()
         {
-            if (_viewAutomationPeer != null)
+            if (_viewAutomationPeer is not null)
             {
                 return _viewAutomationPeer.GetAutomationControlType();
             }
@@ -53,10 +53,10 @@ namespace System.Windows.Automation.Peers
         override public object GetPattern(PatternInterface patternInterface)
         {
             object ret = null;
-            if (_viewAutomationPeer != null)
+            if (_viewAutomationPeer is not null)
             {
                 ret = _viewAutomationPeer.GetPattern(patternInterface);
-                if (ret != null)
+                if (ret is not null)
                 {
                     return ret;
                 }
@@ -76,7 +76,7 @@ namespace System.Windows.Automation.Peers
 
             List<AutomationPeer> ret = base.GetChildrenCore();
 
-            if (_viewAutomationPeer != null)
+            if (_viewAutomationPeer is not null)
             {
                 //If a custom view doesn't want to implement GetChildren details
                 //just return null, we'll use the base.GetChildren as the return value

@@ -144,7 +144,7 @@ namespace MS.Internal.AppModel
 
                         // Get resource from resource manager wrapper.
                         stream = _rmWrapper.GetStream(newName);
-                        if (stream != null)
+                        if (stream is not null)
                         {
                             // Remember that we have .baml for next time GetStreamCore is called.
                             _name = newName;

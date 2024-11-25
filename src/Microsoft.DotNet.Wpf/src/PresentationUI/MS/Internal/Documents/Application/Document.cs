@@ -137,7 +137,7 @@ internal abstract class Document : IChainOfDependenciesNode<Document>, IDisposab
             ThrowIfDisposed();
             _isDisposed = true;
 #endif
-            if (_dependency != null)
+            if (_dependency is not null)
             {
                 _dependency.Dispose();
                 _dependency = null;

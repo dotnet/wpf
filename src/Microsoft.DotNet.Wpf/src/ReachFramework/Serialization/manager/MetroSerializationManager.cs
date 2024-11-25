@@ -516,7 +516,7 @@ namespace System.Windows.Xps.Serialization
 
             TypeCacheItem cacheItem = GetTypeCacheItem(serializedObject);
 
-            if(cacheItem != null)
+            if(cacheItem is not null)
             {
                 Type serializerType = cacheItem.SerializerType;
 
@@ -626,7 +626,7 @@ namespace System.Windows.Xps.Serialization
 
             TypeDependencyPropertiesCacheItem item = GetTypeDependencyPropertiesCacheItem(serializableObject);
 
-            if(item != null)
+            if(item is not null)
             {
                 TypeDependencyPropertyCache[]  dependencyProperties        = item.GetSerializableDependencyProperties();
                 int[]                          serializableIndeces         = new int[dependencyProperties.Length];
@@ -730,7 +730,7 @@ namespace System.Windows.Xps.Serialization
                     //
                     TypeConverter typeConverter = _serializationManager.GetTypeConverter(serializableObject);
 
-                    if(typeConverter != null)
+                    if(typeConverter is not null)
                     {
                         typeCacheItem = new TypeCacheItem(type, typeConverter);
 
@@ -776,7 +776,7 @@ namespace System.Windows.Xps.Serialization
                 //
                 DependencyObject objectAsDependencyObject = serializableObject as DependencyObject;
 
-                if (objectAsDependencyObject != null)
+                if (objectAsDependencyObject is not null)
                 {
                     //
                     // First we have to figure out if this dependency
@@ -849,7 +849,7 @@ namespace System.Windows.Xps.Serialization
                                       }
                                   }
 
-                                  if (propertyInfo != null)
+                                  if (propertyInfo is not null)
                                   {
                                        Debug.Assert(propertyInfo.PropertyType == dependencyProperty.PropertyType, 
                                         "The property type of the CLR wrapper must match that of the DependencyProperty itself.");
@@ -880,7 +880,7 @@ namespace System.Windows.Xps.Serialization
                                   }
                               }
 
-                              if(memberInfo != null && 
+                              if(memberInfo is not null && 
                                  TypeDependencyPropertyCache.
                                  CanSerializeProperty(memberInfo,
                                                       this,
@@ -974,7 +974,7 @@ namespace System.Windows.Xps.Serialization
                     //
                     TypeConverter typeConverter = _serializationManager.GetTypeConverter(serializableObjectType);
 
-                    if(typeConverter != null)
+                    if(typeConverter is not null)
                     {
                         typeCacheItem = new TypeCacheItem(serializableObjectType, typeConverter);
 
@@ -1072,7 +1072,7 @@ namespace System.Windows.Xps.Serialization
         ReachSerializer
         CreateReachSerializer(Type serializerType)
         {
-            MS.Internal.Invariant.Assert(serializerType != null);
+            MS.Internal.Invariant.Assert(serializerType is not null);
             MS.Internal.Invariant.Assert(serializerType.IsSubclassOf(typeof(ReachSerializer)));
 
             object[] args = new object[] { _serializationManager };

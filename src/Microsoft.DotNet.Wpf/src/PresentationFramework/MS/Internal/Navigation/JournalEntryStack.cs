@@ -29,7 +29,7 @@ namespace System.Windows.Navigation
 
         internal void OnCollectionChanged()
         {
-            if (CollectionChanged != null)
+            if (CollectionChanged is not null)
             {
                 CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             }
@@ -124,7 +124,7 @@ namespace System.Windows.Navigation
                 _next += _delta;
                 if ((_filter is null) || _filter(_current))
                 {
-                    Debug.Assert(_current != null, "If we are returning true, our current cannot be null");
+                    Debug.Assert(_current is not null, "If we are returning true, our current cannot be null");
                     return true;
                 }
             }
@@ -164,7 +164,7 @@ namespace System.Windows.Navigation
         {
             _ieble = ieble;
             INotifyCollectionChanged ichildnotify = ieble as INotifyCollectionChanged;
-            if (ichildnotify != null)
+            if (ichildnotify is not null)
             {
                 ichildnotify.CollectionChanged += new NotifyCollectionChangedEventHandler(PropogateCollectionChanged);
             }
@@ -177,7 +177,7 @@ namespace System.Windows.Navigation
 
         internal void PropogateCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (CollectionChanged != null)
+            if (CollectionChanged is not null)
             {
                 CollectionChanged(this, e);
             }

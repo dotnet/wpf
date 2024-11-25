@@ -259,7 +259,7 @@ namespace MS.Internal
                 {
                     ReferenceAssembly asmReference = _mc.ReferenceAssemblyList[i] as ReferenceAssembly;
 
-                    if (asmReference != null)
+                    if (asmReference is not null)
                     {
                         if (string.Equals(asmReference.AssemblyName, assemblyName, StringComparison.OrdinalIgnoreCase))
                         {
@@ -328,7 +328,7 @@ namespace MS.Internal
         {
             bool isXmlException = false;
 
-            while (e != null)
+            while (e is not null)
             {
                 if (e is System.Xml.XmlException)
                 {

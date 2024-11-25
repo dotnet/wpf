@@ -41,7 +41,7 @@ namespace System.ComponentModel
         /// </summary>
         private DependencyPropertyDescriptor(PropertyDescriptor property, string name, Type componentType, DependencyProperty dp, bool isAttached) : base(name, null) 
         {
-            Debug.Assert(property != null || !isAttached, "Demand-load of property descriptor is only supported for direct properties");
+            Debug.Assert(property is not null || !isAttached, "Demand-load of property descriptor is only supported for direct properties");
 
             _property = property;
             _componentType = componentType;
@@ -91,7 +91,7 @@ namespace System.ComponentModel
             bool isAttached = false;
 
             DependencyObjectPropertyDescriptor idpd = property as DependencyObjectPropertyDescriptor;
-            if (idpd != null) 
+            if (idpd is not null) 
             {
                 dp = idpd.DependencyProperty;
                 isAttached = idpd.IsAttached;
@@ -100,14 +100,14 @@ namespace System.ComponentModel
             {
                 #pragma warning suppress 6506 // Property is obviously not null.
                 DependencyPropertyAttribute dpa = property.Attributes[typeof(DependencyPropertyAttribute)] as DependencyPropertyAttribute;
-                if (dpa != null)
+                if (dpa is not null)
                 {
                     dp = dpa.DependencyProperty;
                     isAttached = dpa.IsAttached;
                 }
             }
 
-            if (dp != null) 
+            if (dp is not null) 
             {
                 dpd = new DependencyPropertyDescriptor(property, property.Name, property.ComponentType, dp, isAttached);
 
@@ -143,7 +143,7 @@ namespace System.ComponentModel
 
             DependencyPropertyDescriptor dpd = null;
 
-            if (ownerType.GetProperty(dependencyProperty.Name) != null)
+            if (ownerType.GetProperty(dependencyProperty.Name) is not null)
             {
                 // For direct properties we don't want to get the property descriptor
                 // yet because it is very expensive.  Delay it until needed.
@@ -179,7 +179,7 @@ namespace System.ComponentModel
                 // We should never release internal properties to the user
 
                 PropertyDescriptor prop = DependencyObjectProvider.GetAttachedPropertyDescriptor(dependencyProperty, targetType);
-                if (prop != null)
+                if (prop is not null)
                 {
                     dpd = FromProperty(prop);
                 }
@@ -241,7 +241,7 @@ namespace System.ComponentModel
                 // We should never release internal properties to the user
 
                 PropertyDescriptor prop = DependencyObjectProvider.GetAttachedPropertyDescriptor(dependencyProperty, targetType);
-                if (prop != null) 
+                if (prop is not null) 
                 {
                     dpd = FromProperty(prop);
                 }
@@ -264,7 +264,7 @@ namespace System.ComponentModel
             ArgumentNullException.ThrowIfNull(targetType);
 
             DependencyProperty dp = DependencyProperty.FromName(name, ownerType);
-            if (dp != null) 
+            if (dp is not null) 
             {
                 return FromProperty(dp, targetType);
             }
@@ -287,7 +287,7 @@ namespace System.ComponentModel
             ArgumentNullException.ThrowIfNull(targetType);
 
             DependencyProperty dp = DependencyProperty.FromName(name, ownerType);
-            if (dp != null)
+            if (dp is not null)
             {
                 if (ignorePropertyType)
                 {
@@ -315,7 +315,7 @@ namespace System.ComponentModel
         public override bool Equals(object obj) 
         {
             DependencyPropertyDescriptor dp = obj as DependencyPropertyDescriptor;
-            if (dp != null && dp._dp == _dp && dp._componentType == _componentType)
+            if (dp is not null && dp._dp == _dp && dp._componentType == _componentType)
             {
                 return true;
             }

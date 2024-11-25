@@ -72,7 +72,7 @@ namespace System.Windows.Media
             // with its Value.  (Note that when GetAsPathGeometry *isn't* a no-op
             // it applies the transform to the figures and returns with a Geometry
             // with an identity Transform.)
-            if (origTransform != null && !origTransform.IsIdentity)
+            if (origTransform is not null && !origTransform.IsIdentity)
             {
                 newTransform.Matrix = origTransform.Value;
             }

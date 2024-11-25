@@ -23,7 +23,7 @@ namespace System.Windows.Input
         ///     The input report being processed.
         /// </param>
         public InputReportEventArgs(InputDevice inputDevice, 
-                                    InputReport report) : base(inputDevice, ((report != null) ? report.Timestamp : -1))
+                                    InputReport report) : base(inputDevice, ((report is not null) ? report.Timestamp : -1))
         {
             ArgumentNullException.ThrowIfNull(report);
 

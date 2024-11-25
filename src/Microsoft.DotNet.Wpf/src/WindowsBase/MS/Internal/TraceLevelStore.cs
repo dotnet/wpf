@@ -115,8 +115,8 @@ namespace MS.Internal
             {
 #if DEBUG
                 WeakReference wr = _element as WeakReference;
-                object element = (wr != null) ? wr.Target : _element;
-                if (element != null)
+                object element = (wr is not null) ? wr.Target : _element;
+                if (element is not null)
                 {
                     int hashcode = element.GetHashCode();
                     Debug.Assert(hashcode == _hashcode, "hashcodes disagree");
@@ -137,9 +137,9 @@ namespace MS.Internal
                         return false;
 
                     wr = this._element as WeakReference;
-                    object s1 = (wr != null) ? wr.Target : this._element;
+                    object s1 = (wr is not null) ? wr.Target : this._element;
                     wr = that._element as WeakReference;
-                    object s2 = (wr != null) ? wr.Target : that._element;
+                    object s2 = (wr is not null) ? wr.Target : that._element;
 
                     if (s1!=null && s2!=null)
                         return (s1 == s2);

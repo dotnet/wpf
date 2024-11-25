@@ -174,7 +174,7 @@ namespace System.Windows.Input.StylusPlugIns
             // shut down our dynamic rendering thread gracefully when the app dispatcher is being shut down.
             DispatcherShutdownStartedEventManager.AddListener(Dispatcher.CurrentDispatcher, this);
 
-            Debug.Assert(__inkingDispatcher != null); // We should have a valid ref here
+            Debug.Assert(__inkingDispatcher is not null); // We should have a valid ref here
         }
 
         // Finalizer - clean up thread
@@ -248,7 +248,7 @@ namespace System.Windows.Input.StylusPlugIns
                 _disposed = true;
 
                 // Free up the thread
-                if (__inkingDispatcher != null && !Environment.HasShutdownStarted)
+                if (__inkingDispatcher is not null && !Environment.HasShutdownStarted)
                 {
                     try
                     {

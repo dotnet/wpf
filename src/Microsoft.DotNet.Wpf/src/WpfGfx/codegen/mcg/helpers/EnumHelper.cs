@@ -152,9 +152,9 @@ namespace MS.Internal.MilCodeGen.Helpers
                 McgEnumValue enumValue = enumChild as McgEnumValue;
                 McgBlockCommentedEnumValues block = enumChild as McgBlockCommentedEnumValues;
 
-                if (enumValue != null)
+                if (enumValue is not null)
                 {
-                    if (enumValue.Comment != null)
+                    if (enumValue.Comment is not null)
                     {
                         cs.BeginBlock(1);
                         cs.Write(FormatEnumValue(enumValue));
@@ -167,7 +167,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                 }
                 else
                 {
-                    Debug.Assert(block != null);
+                    Debug.Assert(block is not null);
 
                     cs.BeginBlock(2);
                     cs.Write(
@@ -181,7 +181,7 @@ namespace MS.Internal.MilCodeGen.Helpers
 
                     foreach (McgEnumValue ev in block.Values)
                     {
-                        if (ev.Comment != null)
+                        if (ev.Comment is not null)
                         {
                             cs.BeginBlock(1);
                             cs.Write(FormatEnumValue(ev));
@@ -207,7 +207,7 @@ namespace MS.Internal.MilCodeGen.Helpers
         private static string FormatEnumValue(McgEnumValue enumValue)
         {
             string comment = String.Empty;
-            if (enumValue.Comment != null)
+            if (enumValue.Comment is not null)
             {
                 comment =
                         [[inline]]
@@ -217,7 +217,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                         [[/inline]];
             }
 
-            if (enumValue.Value != null)
+            if (enumValue.Value is not null)
             {
                 return comment +
                     [[inline]]

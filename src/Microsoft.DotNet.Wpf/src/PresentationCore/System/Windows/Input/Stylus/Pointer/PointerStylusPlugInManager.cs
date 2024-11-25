@@ -166,7 +166,7 @@ namespace System.Windows.Input.StylusPointer
                 elementHasCapture = false;  // force true hittesting to be done!
             }
 
-            if (!elementHasCapture && inputReport.Data != null && inputReport.Data.Length >= pointLength)
+            if (!elementHasCapture && inputReport.Data is not null && inputReport.Data.Length >= pointLength)
             {
                 int[] data = inputReport.Data;
                 System.Diagnostics.Debug.Assert(data.Length % pointLength == 0);
@@ -255,13 +255,13 @@ namespace System.Windows.Input.StylusPointer
             RawStylusInput originalRSI = rawStylusInputReport.RawStylusInput;
             // See if we have a plugin for the target of this input.
             StylusPlugInCollection targetPIC = null;
-            StylusPlugInCollection targetRtiPIC = (originalRSI != null) ? originalRSI.Target : null;
+            StylusPlugInCollection targetRtiPIC = (originalRSI is not null) ? originalRSI.Target : null;
             bool updateEventPoints = false;
 
             // Make sure we use UIElement for target if non NULL and hit ContentElement.
             UIElement newTarget = InputElement.GetContainingUIElement(rawStylusInputReport.StylusDevice.DirectlyOver as DependencyObject) as UIElement;
 
-            if (newTarget != null)
+            if (newTarget is not null)
             {
                 targetPIC = FindPlugInCollection(newTarget);
             }
@@ -270,7 +270,7 @@ namespace System.Windows.Input.StylusPointer
             using (Dispatcher.CurrentDispatcher.DisableProcessing())
             {
                 // See if we hit the wrong PlugInCollection on the pen thread and clean things up if we did.
-                if (targetRtiPIC != null && targetRtiPIC != targetPIC && originalRSI != null)
+                if (targetRtiPIC is not null && targetRtiPIC != targetPIC && originalRSI is not null)
                 {
                     // Fire custom data not confirmed events for both pre and post since bad target...
                     foreach (RawStylusInputCustomData customData in originalRSI.CustomDataList)
@@ -286,7 +286,7 @@ namespace System.Windows.Input.StylusPointer
 
                 // See if we need to build up an RSI to send to the plugincollection (due to a mistarget).
                 bool sendRawStylusInput = false;
-                if (targetPIC != null && rawStylusInputReport.RawStylusInput is null)
+                if (targetPIC is not null && rawStylusInputReport.RawStylusInput is null)
                 {
                     // NOTE: (This applies when RTI is back in) Info will not change (it gets rebuilt instead so keeping ref is fine)
                     //    The transformTabletToView matrix and plugincollection rects though can change based
@@ -307,7 +307,7 @@ namespace System.Windows.Input.StylusPointer
                 StylusPlugInCollection currentTarget = stylusDevice.CurrentVerifiedTarget;
                 if (targetPIC != currentTarget)
                 {
-                    if (currentTarget != null)
+                    if (currentTarget is not null)
                     {
                         // Fire leave event.  If we never had a plugin for this event then create a temp one.
                         if (originalRSI is null)
@@ -321,7 +321,7 @@ namespace System.Windows.Input.StylusPointer
                         currentTarget.FireEnterLeave(false, originalRSI, true);
                     }
 
-                    if (targetPIC != null)
+                    if (targetPIC is not null)
                     {
                         // Fire Enter event
                         targetPIC.FireEnterLeave(true, rawStylusInputReport.RawStylusInput, true);
@@ -346,7 +346,7 @@ namespace System.Windows.Input.StylusPointer
                 }
 
                 // Now fire PrePreviewCustomData events.
-                if (targetPIC != null)
+                if (targetPIC is not null)
                 {
                     // Send custom data pre event
                     foreach (RawStylusInputCustomData customData in rawStylusInputReport.RawStylusInput.CustomDataList)
@@ -371,17 +371,17 @@ namespace System.Windows.Input.StylusPointer
             StylusPlugInCollection newPlugInCollection = null;
 
             // Find new target plugin collection
-            if (directlyOver != null)
+            if (directlyOver is not null)
             {
                 UIElement uiElement = InputElement.GetContainingUIElement(directlyOver as DependencyObject) as UIElement;
-                if (uiElement != null)
+                if (uiElement is not null)
                 {
                     newPlugInCollection = FindPlugInCollection(uiElement);
                 }
             }
 
             // Fire Leave event to old pluginCollection if we need to.
-            if (currentPlugInCollection != null && currentPlugInCollection != newPlugInCollection)
+            if (currentPlugInCollection is not null && currentPlugInCollection != newPlugInCollection)
             {
                 // NOTE: input report points for mouse are in avalon measured units and not device!
                 RawStylusInput tempRawStylusInput = new RawStylusInput(inputReport, currentPlugInCollection.ViewToElement, currentPlugInCollection);
@@ -391,7 +391,7 @@ namespace System.Windows.Input.StylusPointer
                 // Indicate we've used a stylus plugin
                 StylusLogic.CurrentStylusLogic.Statistics.FeaturesUsed |= Tracing.StylusTraceLogger.FeatureFlags.StylusPluginsUsed;
             }
-            if (newPlugInCollection != null)
+            if (newPlugInCollection is not null)
             {
                 // NOTE: input report points for mouse are in avalon measured units and not device!
                 RawStylusInput rawStylusInput = new RawStylusInput(inputReport, newPlugInCollection.ViewToElement, newPlugInCollection);
@@ -449,7 +449,7 @@ namespace System.Windows.Input.StylusPointer
             StylusPlugInCollection currentPic = stylusDevice.CurrentVerifiedTarget;
 
             // Fire Leave event if we need to.
-            if (currentPic != null && currentPic != pic)
+            if (currentPic is not null && currentPic != pic)
             {
                 // Create new RawStylusInput to send
                 GeneralTransformGroup transformTabletToView = new GeneralTransformGroup();
@@ -466,7 +466,7 @@ namespace System.Windows.Input.StylusPointer
                 stylusDevice.CurrentVerifiedTarget = null;
             }
 
-            if (pic != null)
+            if (pic is not null)
             {
                 // NOTE: Comment not applicable without RTI.  Info will not change (it gets rebuilt instead so keeping ref is fine)
                 //    The transformTabletToView matrix and plugincollection rects though can change based 
@@ -536,7 +536,7 @@ namespace System.Windows.Input.StylusPointer
                     mouseDevice = InputManager.UnsecureCurrent.PrimaryMouseDevice;
 
                     // Mouse set directly over to null when truly deactivating.
-                    if (mouseDevice is null || mouseDevice.DirectlyOver != null)
+                    if (mouseDevice is null || mouseDevice.DirectlyOver is not null)
                         return;
 
                     leftButtonDown = mouseDevice.LeftButton == MouseButtonState.Pressed;
@@ -555,7 +555,7 @@ namespace System.Windows.Input.StylusPointer
 
                     // Only look at mouse input reports that truly come from a mouse (and is not an up or deactivate) and it
                     // must be pressed state if a move (we don't fire stylus inair moves currently)
-                    if (mouseEventArgs.StylusDevice != null &&
+                    if (mouseEventArgs.StylusDevice is not null &&
                         e.StagingItem.Input.RoutedEvent != Mouse.PreviewMouseUpEvent)
                         return;
 
@@ -592,8 +592,8 @@ namespace System.Windows.Input.StylusPointer
                     source = PresentationSource.CriticalFromVisual(directlyOverVisual);
                 }
 
-                if ((source != null) &&
-                    (source.CompositionTarget != null) &&
+                if ((source is not null) &&
+                    (source.CompositionTarget is not null) &&
                     !source.CompositionTarget.IsDisposed)
                 {
                     IInputElement directlyOver = mouseDevice.DirectlyOver;

@@ -109,12 +109,12 @@ namespace System.Windows
             {
                 walk = FrameworkElement.GetFrameworkParent(walk);
 
-                if (walk != null && ownerType.IsInstanceOfType(walk)) 
+                if (walk is not null && ownerType.IsInstanceOfType(walk)) 
                 {
                     return true;
                 }
             }
-            while (_includeDescendants && walk != null);
+            while (_includeDescendants && walk is not null);
 
             return false;
         }

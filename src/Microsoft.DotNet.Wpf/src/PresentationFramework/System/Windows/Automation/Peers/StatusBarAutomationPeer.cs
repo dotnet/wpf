@@ -44,7 +44,7 @@ namespace System.Windows.Automation.Peers
         {
             List<AutomationPeer> list = new List<AutomationPeer>();
             ItemsControl itemscontrol = Owner as ItemsControl;
-            if (itemscontrol != null)
+            if (itemscontrol is not null)
             {
                 foreach (object obj in itemscontrol.Items)
                 {
@@ -57,7 +57,7 @@ namespace System.Windows.Automation.Peers
                     {
                         StatusBarItem item = itemscontrol.ItemContainerGenerator.ContainerFromItem(obj) as StatusBarItem;
 
-                        if (item != null)
+                        if (item is not null)
                         {
                             //If the item is a string or TextBlock or StatusBarItem
                             //StatusBarItemAutomationPeer will be created to show the text
@@ -70,7 +70,7 @@ namespace System.Windows.Automation.Peers
                             else
                             {
                                 List<AutomationPeer> childList = GetChildrenAutomationPeer(item);
-                                if (childList != null)
+                                if (childList is not null)
                                 {
                                     foreach (AutomationPeer ap in childList)
                                     {
@@ -92,7 +92,7 @@ namespace System.Windows.Automation.Peers
         /// </summary>
         private List<AutomationPeer> GetChildrenAutomationPeer(Visual parent)
         {
-            Invariant.Assert(parent != null);
+            Invariant.Assert(parent is not null);
 
             List<AutomationPeer> children = null;
 
@@ -122,9 +122,9 @@ namespace System.Windows.Automation.Peers
             for (int i = 0; i < count && !done; i++)
             {
                 Visual child = parent.InternalGetVisualChild(i);
-                if (child != null
+                if (child is not null
                     && child.CheckFlagsAnd(VisualFlags.IsUIElement)
-                    && (peer = CreatePeerForElement((UIElement)child)) != null)
+                    && (peer = CreatePeerForElement((UIElement)child)) is not null)
                 {
                     done = callback(peer);
                 }

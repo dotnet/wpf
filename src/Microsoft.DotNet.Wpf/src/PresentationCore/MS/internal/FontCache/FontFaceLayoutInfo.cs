@@ -327,13 +327,13 @@ namespace MS.Internal.FontCache
             switch (tableTag)
             {
                 case OpenTypeTags.GSUB:
-                    if (Gsub() != null)
+                    if (Gsub() is not null)
                     {
                         return _gsubCache;
                     }
                     break;
                 case OpenTypeTags.GPOS:
-                    if (Gpos() != null)
+                    if (Gpos() is not null)
                     {
                         return _gposCache;
                     }
@@ -469,7 +469,7 @@ namespace MS.Internal.FontCache
                 _typographyAvailabilities = TypographyAvailabilities.None;
                 return;
             }
-            else if (complexScripts != null)
+            else if (complexScripts is not null)
             {
                 // This is the bits for localized form we would want to set
                 // if both bits for localized form were set, we can end the loop earlier
@@ -512,7 +512,7 @@ namespace MS.Internal.FontCache
                 _typographyAvailabilities = TypographyAvailabilities.None;
                 return;
             }
-            else if (complexScripts != null)
+            else if (complexScripts is not null)
             {
                 typography |= TypographyAvailabilities.FastTextTypographyAvailable;
             }
@@ -546,7 +546,7 @@ namespace MS.Internal.FontCache
                 _typographyAvailabilities = TypographyAvailabilities.None;
                 return;
             }
-            else if (complexScripts != null)
+            else if (complexScripts is not null)
             {
                 for (int i = 0; i < complexScripts.Length; i++)
                 {

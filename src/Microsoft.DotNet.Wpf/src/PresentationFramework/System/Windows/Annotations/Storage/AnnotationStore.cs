@@ -252,7 +252,7 @@ namespace System.Windows.Annotations.Storage
                 Flush();
             }
 
-            if (authorChanged != null)
+            if (authorChanged is not null)
             {
                 authorChanged(this, args);
             }
@@ -282,7 +282,7 @@ namespace System.Windows.Annotations.Storage
                 Flush();
             }
 
-            if (anchorChanged != null)
+            if (anchorChanged is not null)
             {
                 anchorChanged(this, args);
             }
@@ -312,7 +312,7 @@ namespace System.Windows.Annotations.Storage
                 Flush();
             }
 
-            if (cargoChanged != null)
+            if (cargoChanged is not null)
             {
                 cargoChanged(this, args);
             }
@@ -337,7 +337,7 @@ namespace System.Windows.Annotations.Storage
                 Flush();
             }
 
-            if (storeContentChanged != null)
+            if (storeContentChanged is not null)
             {
                 storeContentChanged(this, e);
             }

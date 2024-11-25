@@ -40,10 +40,10 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         public override TextRun GetTextRun(int textSourceCharacterIndex)
         {
-            Debug.Assert(Context != null, "TextFormatter host is not initialized.");
+            Debug.Assert(Context is not null, "TextFormatter host is not initialized.");
             Debug.Assert(textSourceCharacterIndex >= 0, "Character index must be non-negative.");
             TextRun run = Context.GetTextRun(textSourceCharacterIndex);
-            if (run.Properties != null)
+            if (run.Properties is not null)
             {
                 run.Properties.PixelsPerDip = PixelsPerDip;
             }
@@ -56,7 +56,7 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         public override TextSpan<CultureSpecificCharacterBufferRange> GetPrecedingText(int textSourceCharacterIndexLimit)
         {
-            Debug.Assert(Context != null, "TextFormatter host is not initialized.");
+            Debug.Assert(Context is not null, "TextFormatter host is not initialized.");
             Debug.Assert(textSourceCharacterIndexLimit >= 0, "Character index must be non-negative.");
             return Context.GetPrecedingText(textSourceCharacterIndexLimit);
         }
@@ -70,7 +70,7 @@ namespace MS.Internal.PtsHost
             int textSourceCharacterIndex
             )
         {
-            Debug.Assert(Context != null, "TextFormatter host is not initialized.");
+            Debug.Assert(Context is not null, "TextFormatter host is not initialized.");
             Debug.Assert(textSourceCharacterIndex>= 0, "Character index must be non-negative.");
             return Context.GetTextEffectCharacterIndexFromTextSourceCharacterIndex(textSourceCharacterIndex);
         }

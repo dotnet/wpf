@@ -51,10 +51,10 @@ namespace System.Windows.Automation.Peers
             DataGridColumnHeadersPresenter columnsHeaderPresenter = this.OwningDataGrid.ColumnHeadersPresenter;
 
             // Add ColumnsHeaderPresenter if it is visible
-            if (columnsHeaderPresenter != null && columnsHeaderPresenter.IsVisible)
+            if (columnsHeaderPresenter is not null && columnsHeaderPresenter.IsVisible)
             {
                 AutomationPeer columnsHeaderPresenterPeer = FrameworkElementAutomationPeer.CreatePeerForElement(columnsHeaderPresenter);
-                if (columnsHeaderPresenterPeer != null)
+                if (columnsHeaderPresenterPeer is not null)
                 {
                     if (children is null)
                     {
@@ -93,11 +93,11 @@ namespace System.Windows.Automation.Peers
                 case PatternInterface.Scroll:
                     {
                         ScrollViewer scrollViewer = this.OwningDataGrid.InternalScrollHost;
-                        if (scrollViewer != null)
+                        if (scrollViewer is not null)
                         {
                             AutomationPeer scrollPeer = UIElementAutomationPeer.CreatePeerForElement(scrollViewer);
                             IScrollProvider scrollProvider = scrollPeer as IScrollProvider;
-                            if (scrollPeer != null && scrollProvider != null)
+                            if (scrollPeer is not null && scrollProvider is not null)
                             {
                                 scrollPeer.EventsSource = this;
                                 return scrollProvider;
@@ -157,10 +157,10 @@ namespace System.Windows.Automation.Peers
                 this.OwningDataGrid.UpdateLayout();
 
                 DataGridItemAutomationPeer itemPeer = this.FindOrCreateItemAutomationPeer(item) as DataGridItemAutomationPeer;
-                if (itemPeer != null)
+                if (itemPeer is not null)
                 {
                     DataGridCellItemAutomationPeer cellItemPeer = itemPeer.GetOrCreateCellItemPeer(dataGridColumn);
-                    if (cellItemPeer != null)
+                    if (cellItemPeer is not null)
                     {
                         return ProviderFromPeer(cellItemPeer);
                     }
@@ -243,15 +243,15 @@ namespace System.Windows.Automation.Peers
             {
                 List<IRawElementProviderSimple> providers = new List<IRawElementProviderSimple>();
                 DataGridColumnHeadersPresenter dataGridColumnHeadersPresenter = this.OwningDataGrid.ColumnHeadersPresenter;
-                if (dataGridColumnHeadersPresenter != null)
+                if (dataGridColumnHeadersPresenter is not null)
                 {
                     DataGridColumnHeadersPresenterAutomationPeer dataGridColumnHeadersPresenterPeer = dataGridColumnHeadersPresenter.GetAutomationPeer()  as DataGridColumnHeadersPresenterAutomationPeer;
-                    if (dataGridColumnHeadersPresenterPeer != null)
+                    if (dataGridColumnHeadersPresenterPeer is not null)
                     {
                         for (int i = 0; i < this.OwningDataGrid.Columns.Count; i++)
                         {
                             AutomationPeer peer = dataGridColumnHeadersPresenterPeer.FindOrCreateItemAutomationPeer(this.OwningDataGrid.Columns[i]);
-                            if (peer != null)
+                            if (peer is not null)
                             {
                                 providers.Add(ProviderFromPeer(peer));
                             }
@@ -281,7 +281,7 @@ namespace System.Windows.Automation.Peers
                 {
                     DataGridItemAutomationPeer dataGridItemAutomationPeer = FindOrCreateItemAutomationPeer(item) as DataGridItemAutomationPeer;
                     AutomationPeer rowHeaderAutomationPeer = dataGridItemAutomationPeer.RowHeaderAutomationPeer;
-                    if (rowHeaderAutomationPeer != null)
+                    if (rowHeaderAutomationPeer is not null)
                     {
                         providers.Add(ProviderFromPeer(rowHeaderAutomationPeer));
                     }
@@ -315,7 +315,7 @@ namespace System.Windows.Automation.Peers
             if (cellInfo.IsValid)
             {
                 DataGridItemAutomationPeer dataGridItemAutomationPeer = FindOrCreateItemAutomationPeer(cellInfo.Item) as DataGridItemAutomationPeer;
-                if (dataGridItemAutomationPeer != null)
+                if (dataGridItemAutomationPeer is not null)
                 {
                     return dataGridItemAutomationPeer.GetOrCreateCellItemPeer(cellInfo.Column);
                 }
@@ -334,7 +334,7 @@ namespace System.Windows.Automation.Peers
                 this.OwningDataGrid.SelectedCells.Count == 1 && e.AddedCells.Count == 1)
             {
                 DataGridCellItemAutomationPeer cellPeer = GetCellItemPeer(e.AddedCells[0]);
-                if (cellPeer != null)
+                if (cellPeer is not null)
                 {
                     cellPeer.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementSelected);
                 }
@@ -347,7 +347,7 @@ namespace System.Windows.Automation.Peers
                     for (i = 0; i < e.AddedCells.Count; i++)
                     {
                         DataGridCellItemAutomationPeer cellPeer = GetCellItemPeer(e.AddedCells[i]);
-                        if (cellPeer != null)
+                        if (cellPeer is not null)
                         {
                             cellPeer.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementAddedToSelection);
                         }
@@ -359,7 +359,7 @@ namespace System.Windows.Automation.Peers
                     for (i = 0; i < e.RemovedCells.Count; i++)
                     {
                         DataGridCellItemAutomationPeer cellPeer = GetCellItemPeer(e.RemovedCells[i]);
-                        if (cellPeer != null)
+                        if (cellPeer is not null)
                         {
                             cellPeer.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection);
                         }
@@ -373,7 +373,7 @@ namespace System.Windows.Automation.Peers
         internal void RaiseAutomationRowInvokeEvents(DataGridRow row)
         {
             DataGridItemAutomationPeer dataGridItemAutomationPeer = FindOrCreateItemAutomationPeer(row.Item) as DataGridItemAutomationPeer;
-            if (dataGridItemAutomationPeer != null)
+            if (dataGridItemAutomationPeer is not null)
             {
                 dataGridItemAutomationPeer.RaiseAutomationEvent(AutomationEvents.InvokePatternOnInvoked);
             }
@@ -384,10 +384,10 @@ namespace System.Windows.Automation.Peers
         internal void RaiseAutomationCellInvokeEvents(DataGridColumn column, DataGridRow row)
         {
             DataGridItemAutomationPeer dataGridItemAutomationPeer = FindOrCreateItemAutomationPeer(row.Item) as DataGridItemAutomationPeer;
-            if (dataGridItemAutomationPeer != null)
+            if (dataGridItemAutomationPeer is not null)
             {
                 DataGridCellItemAutomationPeer cellPeer = dataGridItemAutomationPeer.GetOrCreateCellItemPeer(column);
-                if (cellPeer != null)
+                if (cellPeer is not null)
                 {
                     cellPeer.RaiseAutomationEvent(AutomationEvents.InvokePatternOnInvoked);
                 }
@@ -407,7 +407,7 @@ namespace System.Windows.Automation.Peers
                 numSelected == 1 && numAdded == 1)
             {
                 ItemAutomationPeer peer = FindOrCreateItemAutomationPeer(this.OwningDataGrid.SelectedItem);
-                if (peer != null)
+                if (peer is not null)
                 {
                     peer.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementSelected);
                 }
@@ -420,7 +420,7 @@ namespace System.Windows.Automation.Peers
                     for (i = 0; i < e.AddedItems.Count; i++)
                     {
                         ItemAutomationPeer peer = FindOrCreateItemAutomationPeer(e.AddedItems[i]);
-                        if (peer != null)
+                        if (peer is not null)
                         {
                             peer.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementAddedToSelection);
                         }
@@ -432,7 +432,7 @@ namespace System.Windows.Automation.Peers
                     for (i = 0; i < e.RemovedItems.Count; i++)
                     {
                         ItemAutomationPeer peer = FindOrCreateItemAutomationPeer(e.RemovedItems[i]);
-                        if (peer != null)
+                        if (peer is not null)
                         {
                             peer.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection);
                         }
@@ -446,15 +446,15 @@ namespace System.Windows.Automation.Peers
             ArgumentNullException.ThrowIfNull(cellProviders);
 
             // Add selected cells to selection
-            if (this.OwningDataGrid.SelectedCells != null)
+            if (this.OwningDataGrid.SelectedCells is not null)
             {
                 foreach (DataGridCellInfo cellInfo in this.OwningDataGrid.SelectedCells)
                 {
                     DataGridItemAutomationPeer itemPeer = this.FindOrCreateItemAutomationPeer(cellInfo.Item) as DataGridItemAutomationPeer;
-                    if (itemPeer != null)
+                    if (itemPeer is not null)
                     {
                         IRawElementProviderSimple provider = ProviderFromPeer(itemPeer.GetOrCreateCellItemPeer(cellInfo.Column));
-                        if (provider != null)
+                        if (provider is not null)
                         {
                             cellProviders.Add(provider);
                         }
@@ -468,12 +468,12 @@ namespace System.Windows.Automation.Peers
             ArgumentNullException.ThrowIfNull(itemProviders);
 
             // Add selected items to selection
-            if (this.OwningDataGrid.SelectedItems != null)
+            if (this.OwningDataGrid.SelectedItems is not null)
             {
                 foreach (object item in this.OwningDataGrid.SelectedItems)
                 {
                     IRawElementProviderSimple provider = ProviderFromPeer(FindOrCreateItemAutomationPeer(item));
-                    if (provider != null)
+                    if (provider is not null)
                     {
                         itemProviders.Add(provider);
                     }

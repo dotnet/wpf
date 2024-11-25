@@ -76,7 +76,7 @@ namespace System.Windows.Media
             if (destinationType == typeof(string))
             {
                 // When invoked by the serialization engine we can convert to string only for some instances
-                if (context != null && context.Instance != null)
+                if (context is not null && context.Instance is not null)
                 {
                     if (!(context.Instance is Transform))
                     {
@@ -117,7 +117,7 @@ namespace System.Windows.Media
 
             String source = value as string;
 
-            if (source != null)
+            if (source is not null)
             {
                 return Transform.Parse(source);
             }
@@ -141,14 +141,14 @@ namespace System.Windows.Media
         /// <param name="destinationType"> The type to which this will convert the Transform instance. </param>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType != null && value is Transform)
+            if (destinationType is not null && value is Transform)
             {
                 Transform instance = (Transform)value;
 
                 if (destinationType == typeof(string))
                 {
                     // When invoked by the serialization engine we can convert to string only for some instances
-                    if (context != null && context.Instance != null)
+                    if (context is not null && context.Instance is not null)
                     {
                         #pragma warning suppress 6506 // instance is obviously not null
                         if (!instance.CanSerializeToString())

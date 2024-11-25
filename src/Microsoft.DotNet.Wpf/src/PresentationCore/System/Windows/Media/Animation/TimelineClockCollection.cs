@@ -37,10 +37,10 @@ namespace System.Windows.Media.Animation
             {
 //                 _owner.VerifyAccess();
                 ClockGroup clockGroup = _owner as ClockGroup;
-                if (clockGroup != null)
+                if (clockGroup is not null)
                 {
                     List<Clock> childList = clockGroup.InternalChildren;
-                    if (childList != null)
+                    if (childList is not null)
                     {
                         return childList.Count;
                     }
@@ -129,11 +129,11 @@ namespace System.Windows.Media.Animation
 
             ClockGroup clockGroup = _owner as ClockGroup;
 
-            if (clockGroup != null)
+            if (clockGroup is not null)
             {
                 List<Clock> list = clockGroup.InternalChildren;
 
-                if (list != null)
+                if (list is not null)
                 {
                     // Get free parameter validation from Array.Copy
                     list.CopyTo(array, index);
@@ -164,12 +164,12 @@ namespace System.Windows.Media.Animation
             List<Clock> list = null;
             ClockGroup clockGroup = _owner as ClockGroup;
 
-            if (clockGroup != null)
+            if (clockGroup is not null)
             {
                 list = clockGroup.InternalChildren;
             }
 
-            if (list != null)
+            if (list is not null)
             {
                 return list.GetEnumerator();
             }
@@ -290,7 +290,7 @@ namespace System.Windows.Media.Animation
                 List<Clock> list = null;
                 ClockGroup clockGroup = _owner as ClockGroup;
 
-                if (clockGroup != null)
+                if (clockGroup is not null)
                 {
                     list = clockGroup.InternalChildren;
                 }
@@ -397,7 +397,7 @@ namespace System.Windows.Media.Animation
 
                 ClockGroup clockGroup = _owner as ClockGroup;
 
-                if (clockGroup != null && clockGroup.InternalChildren != null)
+                if (clockGroup is not null && clockGroup.InternalChildren is not null)
                 {
                     throw new InvalidOperationException(SR.Timing_EnumeratorInvalidated);
                 }
@@ -430,7 +430,7 @@ namespace System.Windows.Media.Animation
         /// </param>
         internal ClockCollection(Clock owner)
         {
-            Debug.Assert(owner != null, "ClockCollection must have a non-null owner.");
+            Debug.Assert(owner is not null, "ClockCollection must have a non-null owner.");
             _owner = owner;
         }
 

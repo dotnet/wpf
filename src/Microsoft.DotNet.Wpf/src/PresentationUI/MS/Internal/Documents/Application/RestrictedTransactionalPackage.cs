@@ -48,12 +48,12 @@ internal sealed class RestrictedTransactionalPackage : TransactionalPackage
     {
         ArgumentNullException.ThrowIfNull(target);
 
-        if (TempPackage != null)
+        if (TempPackage is not null)
         {
             foreach (PackagePart part in TempPackage.GetParts())
             {
                 // Ensure that all parts being modified are permitted.
-                if ((part != null) && (!IsValidContentType(part.ContentType)))
+                if ((part is not null) && (!IsValidContentType(part.ContentType)))
                 {
                     throw new NotSupportedException(SR.PackagePartTypeNotWritable);
                 }

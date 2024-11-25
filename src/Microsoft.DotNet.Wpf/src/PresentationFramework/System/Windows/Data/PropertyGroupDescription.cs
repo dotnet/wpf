@@ -202,7 +202,7 @@ namespace System.Windows.Data
             {
                 value = xmlValue;
             }
-            else if (item != null)
+            else if (item is not null)
             {
                 using (_propertyPath.SetContext(item))
                 {
@@ -215,7 +215,7 @@ namespace System.Windows.Data
             }
 
             // apply the converter to the value
-            if (Converter != null)
+            if (Converter is not null)
             {
                 value = Converter.Convert(value, typeof(object), level, culture);
             }
@@ -231,7 +231,7 @@ namespace System.Windows.Data
             string s1 = groupName as string;
             string s2 = itemName as string;
 
-            if (s1 != null && s2 != null)
+            if (s1 is not null && s2 is not null)
             {
                 return String.Equals(s1, s2, StringComparison);
             }

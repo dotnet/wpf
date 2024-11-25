@@ -35,7 +35,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal static void EndScope(Category category)
         {
-            Debug.Assert(_instance != null);
+            Debug.Assert(_instance is not null);
             if (_instance._IsEnabled(category))
             {
                 _instance._EndScope();
@@ -59,7 +59,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal static void StopTimer(string name, Category category)
         {
-            Debug.Assert(_instance != null);
+            Debug.Assert(_instance is not null);
             if (_instance._IsEnabled(category))
             {
                 _instance._StopTimer(name);
@@ -116,7 +116,7 @@ namespace MS.Internal.PtsHost
         ~TextPanelDebug()
         {
             Console.WriteLine("> TextPanelDebug Summary ------------------------------------------");
-            if (_counters != null)
+            if (_counters is not null)
             {
                 Console.WriteLine("> Counters:");
                 foreach (string name in _counters.Keys)
@@ -124,7 +124,7 @@ namespace MS.Internal.PtsHost
                     Console.WriteLine(">     " + name + ": " + (int)_counters[name]);
                 }
             }
-            if (_timers != null)
+            if (_timers is not null)
             {
                 Console.WriteLine("> Timers:");
                 foreach (string name in _timers.Keys)
@@ -177,9 +177,9 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         private void _StopTimer(string name)
         {
-            Debug.Assert(_timers != null);
+            Debug.Assert(_timers is not null);
             Stopwatch stopwatch = _timers.ContainsKey(name) ? (Stopwatch)_timers[name] : null;
-            Debug.Assert(stopwatch != null);
+            Debug.Assert(stopwatch is not null);
             stopwatch.Stop();
         }
 

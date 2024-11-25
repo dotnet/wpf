@@ -185,12 +185,12 @@ namespace System.Windows.Media
             }
 
             MilMatrix3x2D geometryMatrix;
-            if (pGeometryMatrix != null)
+            if (pGeometryMatrix is not null)
             {
                 geometryMatrix = CompositionResourceManager.MatrixToMilMatrix3x2D(ref (*pGeometryMatrix));
             }
 
-            Debug.Assert(pWorldMatrix != null);
+            Debug.Assert(pWorldMatrix is not null);
             MilMatrix3x2D worldMatrix =
                 CompositionResourceManager.MatrixToMilMatrix3x2D(ref (*pWorldMatrix));
 
@@ -238,7 +238,7 @@ namespace System.Windows.Media
             Geometry copy = Clone();
             Transform internalTransform = Transform;
 
-            if (transform != null && !transform.IsIdentity)
+            if (transform is not null && !transform.IsIdentity)
             {
                 if (internalTransform is null || internalTransform.IsIdentity)
                 {
@@ -263,7 +263,7 @@ namespace System.Windows.Media
         public bool ShouldSerializeTransform()
         {
             Transform transform = Transform;
-            return transform != null && !(transform.IsIdentity);
+            return transform is not null && !(transform.IsIdentity);
         }
 
         #region Public Methods
@@ -410,7 +410,7 @@ namespace System.Windows.Media
                 double[] dashArray = null;
 
                 // If we have a pen, populate the CMD struct
-                if (pen != null)
+                if (pen is not null)
                 {
                     pen.GetBasicPenData(&penData, out dashArray);
                 }
@@ -463,7 +463,7 @@ namespace System.Windows.Media
             MIL_PEN_DATA penData;
             double[] dashArray = null;
 
-            if (pen != null)
+            if (pen is not null)
             {
                 pen.GetBasicPenData(&penData, out dashArray);
             }
@@ -714,7 +714,7 @@ namespace System.Windows.Media
                     GCHandle handle = new GCHandle();
 
                     // Pin the pDashArray, if we have one.
-                    if (dashArray != null)
+                    if (dashArray is not null)
                     {
                         handle = GCHandle.Alloc(dashArray, GCHandleType.Pinned);
                     }
@@ -914,16 +914,16 @@ namespace System.Windows.Media
             Matrix matrix = Matrix.Identity;
             Transform internalTransform = Transform;
 
-            if (internalTransform != null && !internalTransform.IsIdentity)
+            if (internalTransform is not null && !internalTransform.IsIdentity)
             {
                 matrix = internalTransform.Value;
 
-                if (transform != null && !transform.IsIdentity)
+                if (transform is not null && !transform.IsIdentity)
                 {
                     matrix *= transform.Value;
                 }
             }
-            else if (transform != null && !transform.IsIdentity)
+            else if (transform is not null && !transform.IsIdentity)
             {
                 matrix = transform.Value;
             }

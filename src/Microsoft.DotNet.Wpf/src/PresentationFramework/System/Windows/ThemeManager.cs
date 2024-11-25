@@ -206,7 +206,7 @@ internal static class ThemeManager
 
     internal static bool IsFluentThemeDictionaryIncluded()
     {
-        return Application.Current != null && LastIndexOfFluentThemeDictionary(Application.Current.Resources) != -1;
+        return Application.Current is not null && LastIndexOfFluentThemeDictionary(Application.Current.Resources) != -1;
     }
 
     #endregion
@@ -417,7 +417,7 @@ internal static class ThemeManager
 
         for (int i = rd.MergedDictionaries.Count - 1; i >= 0; i--)
         {
-            if (rd.MergedDictionaries[i].Source != null)
+            if (rd.MergedDictionaries[i].Source is not null)
             {
                 if (rd.MergedDictionaries[i].Source.ToString().StartsWith(FluentThemeResourceDictionaryUri,
                                                                             StringComparison.OrdinalIgnoreCase))
@@ -437,7 +437,7 @@ internal static class ThemeManager
 
         for (int i = rd.MergedDictionaries.Count - 1; i >= 0; i--)
         {
-            if (rd.MergedDictionaries[i].Source != null)
+            if (rd.MergedDictionaries[i].Source is not null)
             {
                 if (rd.MergedDictionaries[i].Source.ToString().StartsWith(FluentThemeResourceDictionaryUri,
                                                                             StringComparison.OrdinalIgnoreCase))
@@ -461,7 +461,7 @@ internal static class ThemeManager
                 "SystemUsesLightTheme", null) as int?;
         }
 
-        return useLightTheme != null && useLightTheme != 0;
+        return useLightTheme is not null && useLightTheme != 0;
     }
 
     #endregion

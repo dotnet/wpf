@@ -231,7 +231,7 @@ namespace MS.Internal.AutomationProxies
                 return Rect.Empty;
             }
 
-            if (parent != null && parent._parent != null)
+            if (parent is not null && parent._parent is not null)
             {
                 //
                 // Builds prior to Vista 5359 failed to correctly account for RTL scrollbar layouts.

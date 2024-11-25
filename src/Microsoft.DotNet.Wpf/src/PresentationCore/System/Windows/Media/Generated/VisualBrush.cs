@@ -101,10 +101,10 @@ namespace System.Windows.Media
                 // only be done on UIElement.
                 //
                 UIElement element = (UIElement)oldV;
-                Debug.Assert(element != null);
+                Debug.Assert(element is not null);
                 element.LayoutUpdated -= target.OnLayoutUpdated;
 
-                Debug.Assert(target._DispatcherLayoutResult != null);
+                Debug.Assert(target._DispatcherLayoutResult is not null);
                 Debug.Assert(target._DispatcherLayoutResult.Status == System.Windows.Threading.DispatcherOperationStatus.Pending);
                 bool abortStatus = target._DispatcherLayoutResult.Abort();
                 Debug.Assert(abortStatus);
@@ -115,7 +115,7 @@ namespace System.Windows.Media
             Visual newV = (Visual) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 DUCE.IResource targetResource = (DUCE.IResource)target;
                 using (CompositionEngineLock.Acquire())
@@ -248,7 +248,7 @@ namespace System.Windows.Media
                 }
 
                 // Obtain handles for properties that implement DUCE.IResource
-                DUCE.ResourceHandle  hVisual = vVisual != null ? ((DUCE.IResource)vVisual).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                DUCE.ResourceHandle  hVisual = vVisual is not null ? ((DUCE.IResource)vVisual).GetHandle(channel) : DUCE.ResourceHandle.Null;
 
                 // Obtain handles for animated properties
                 DUCE.ResourceHandle hOpacityAnimations = GetAnimationResourceHandle(OpacityProperty, channel);
@@ -301,11 +301,11 @@ namespace System.Windows.Media
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_VISUALBRUSH))
                 {
                     Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
+                    if (vTransform is not null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
                     Transform vRelativeTransform = RelativeTransform;
-                    if (vRelativeTransform != null) ((DUCE.IResource)vRelativeTransform).AddRefOnChannel(channel);
+                    if (vRelativeTransform is not null) ((DUCE.IResource)vRelativeTransform).AddRefOnChannel(channel);
                     Visual vVisual = Visual;
-                    if (vVisual != null) vVisual.AddRefOnChannelForCyclicBrush(this, channel);
+                    if (vVisual is not null) vVisual.AddRefOnChannelForCyclicBrush(this, channel);
                     AddRefOnChannelAnimations(channel);
 
 
@@ -321,11 +321,11 @@ namespace System.Windows.Media
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
                     Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
+                    if (vTransform is not null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
                     Transform vRelativeTransform = RelativeTransform;
-                    if (vRelativeTransform != null) ((DUCE.IResource)vRelativeTransform).ReleaseOnChannel(channel);
+                    if (vRelativeTransform is not null) ((DUCE.IResource)vRelativeTransform).ReleaseOnChannel(channel);
                     Visual vVisual = Visual;
-                    if (vVisual != null) vVisual.ReleaseOnChannelForCyclicBrush(this, channel);
+                    if (vVisual is not null) vVisual.ReleaseOnChannelForCyclicBrush(this, channel);
                     ReleaseOnChannelAnimations(channel);
 }
 }

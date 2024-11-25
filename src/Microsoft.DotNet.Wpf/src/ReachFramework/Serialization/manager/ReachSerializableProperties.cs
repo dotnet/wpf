@@ -421,13 +421,13 @@ namespace System.Windows.Xps.Serialization
             // Null property value is always serialized 
             // in simple attribute="*null" notation
             //
-            if (Value != null)
+            if (Value is not null)
             {
                 //
                 // If the property has a DesignerSerializationOptions.SerializeAsAttribute 
                 // then obviously we do not use complex notation
                 //
-                if(!(DesignerSerializationOptionsAttribute != null && 
+                if(!(DesignerSerializationOptionsAttribute is not null && 
                      (DesignerSerializationOptionsAttribute.DesignerSerializationOptions == 
                       DesignerSerializationOptions.SerializeAsAttribute)))
 
@@ -515,7 +515,7 @@ namespace System.Windows.Xps.Serialization
             { 
                 PropertyInfo info = null;
 
-                if (_propertyInfo != null)
+                if (_propertyInfo is not null)
                 {
                     info = (PropertyInfo)_propertyInfo.PropertyInfo;
                 }
@@ -554,7 +554,7 @@ namespace System.Windows.Xps.Serialization
             { 
                 DesignerSerializationVisibility visibility = DesignerSerializationVisibility.Visible;
 
-                if (_propertyInfo != null)
+                if (_propertyInfo is not null)
                 {
                     visibility = _propertyInfo.Visibility;
                 }
@@ -575,7 +575,7 @@ namespace System.Windows.Xps.Serialization
             { 
                 Type type = null;
 
-                if (_propertyInfo != null)
+                if (_propertyInfo is not null)
                 {
                     type =  _propertyInfo.SerializerTypeForProperty;
                 }
@@ -596,7 +596,7 @@ namespace System.Windows.Xps.Serialization
             { 
                 TypeConverter converter = null;
 
-                if (_propertyInfo != null)
+                if (_propertyInfo is not null)
                 {
                     converter = _propertyInfo.TypeConverterForProperty;
                 }
@@ -616,7 +616,7 @@ namespace System.Windows.Xps.Serialization
             { 
                 DefaultValueAttribute defValAttr = null;
 
-                if (_propertyInfo != null)
+                if (_propertyInfo is not null)
                 {
                     defValAttr = _propertyInfo.DefaultValueAttr;
                 }
@@ -636,7 +636,7 @@ namespace System.Windows.Xps.Serialization
             { 
                 DesignerSerializationOptionsAttribute designerSerFlagAttr = null;
 
-                if (_propertyInfo != null)
+                if (_propertyInfo is not null)
                 {
                     designerSerFlagAttr = _propertyInfo.DesignerSerializationOptionsAttr;
                 }
@@ -657,8 +657,8 @@ namespace System.Windows.Xps.Serialization
             { 
                 bool isReadOnly = false;
 
-                if ( (_propertyInfo != null) &&
-                     (((PropertyInfo)_propertyInfo.PropertyInfo) != null) )
+                if ( (_propertyInfo is not null) &&
+                     (((PropertyInfo)_propertyInfo.PropertyInfo) is not null) )
                 {
                     isReadOnly = !((PropertyInfo)_propertyInfo.PropertyInfo).CanWrite;
                 }
@@ -766,13 +766,13 @@ namespace System.Windows.Xps.Serialization
             // Null property value is always serialized 
             // in simple attribute="*null" notation
             //
-            if (Value != null)
+            if (Value is not null)
             {
                 //
                 // If the property has a DesignerSerializationOptions.SerializeAsAttribute 
                 // then obviously we do not use complex notation
                 //
-                if(!(DesignerSerializationOptionsAttribute != null && 
+                if(!(DesignerSerializationOptionsAttribute is not null && 
                      (DesignerSerializationOptionsAttribute.DesignerSerializationOptions == 
                       DesignerSerializationOptions.SerializeAsAttribute)))
 
@@ -798,7 +798,7 @@ namespace System.Windows.Xps.Serialization
                         {
                             Expression expr = this.Value as Expression;
 
-                            if (expr != null)
+                            if (expr is not null)
                             {
                                 this.Value = ((DependencyObject)this.TargetObject).GetValue((DependencyProperty)this.DependencyProperty);
                                 isComplex = this.IsComplexProperty(serializationManager);
@@ -858,7 +858,7 @@ namespace System.Windows.Xps.Serialization
             { 
                 MemberInfo memberInfo = null;
 
-                if (this.PropertyInfo != null)
+                if (this.PropertyInfo is not null)
                 {
                     memberInfo = ((TypeDependencyPropertyCache)TypePropertyCache).MemberInfo;
                 }
@@ -878,7 +878,7 @@ namespace System.Windows.Xps.Serialization
             { 
                 Object dependencyProperty = null;
 
-                if (this.PropertyInfo != null)
+                if (this.PropertyInfo is not null)
                 {
                     dependencyProperty = ((TypeDependencyPropertyCache)TypePropertyCache).DependencyProperty;
                 }

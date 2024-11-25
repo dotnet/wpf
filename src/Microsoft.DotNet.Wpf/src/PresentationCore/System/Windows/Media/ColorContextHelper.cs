@@ -102,7 +102,7 @@ namespace System.Windows.Media
 
             // If the buffer is null, this function will return FALSE because it didn't actually copy anything. That's fine and that's
             // what we want.
-            if (!UnsafeNativeMethodsMilCoreApi.Mscms.GetColorProfileFromHandle(_profileHandle, buffer, ref bufferSize) && buffer != null)
+            if (!UnsafeNativeMethodsMilCoreApi.Mscms.GetColorProfileFromHandle(_profileHandle, buffer, ref bufferSize) && buffer is not null)
             {
                 HRESULT.Check(Marshal.GetHRForLastWin32Error());
             }

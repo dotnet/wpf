@@ -130,7 +130,7 @@ namespace MS.Internal.Text
             // if none of the number substitution properties have changed, we may be able to
             // initialize the _numberSubstitution field to a known default value
             FrameworkContentElement fce = target as FrameworkContentElement;
-            if (fce != null)
+            if (fce is not null)
             {
                 if (!fce.HasNumberSubstitutionChanged)
                 {
@@ -140,7 +140,7 @@ namespace MS.Internal.Text
             else
             {
                 FrameworkElement fe = target as FrameworkElement;
-                if (fe != null && !fe.HasNumberSubstitutionChanged)
+                if (fe is not null && !fe.HasNumberSubstitutionChanged)
                 {
                     _numberSubstitution = FrameworkElement.DefaultNumberSubstitution;
                 }               
@@ -157,7 +157,7 @@ namespace MS.Internal.Text
                 if (!position.IsNull)
                 {
                     TextDecorationCollection highlightDecorations = GetHighlightTextDecorations(position);
-                    if (highlightDecorations != null)
+                    if (highlightDecorations is not null)
                     {
                         // Highlights (if present) take precedence over property value TextDecorations.
                         _textDecorations = highlightDecorations;
@@ -240,7 +240,7 @@ namespace MS.Internal.Text
             //
 #if UNUSED_IME_HIGHLIGHT_LAYER
             TextDecorationCollection imeTextDecorations = highlights.GetHighlightValue(highlightPosition, LogicalDirection.Forward, typeof(FrameworkTextComposition)) as TextDecorationCollection;
-            if (imeTextDecorations != null)
+            if (imeTextDecorations is not null)
             {
                 textDecorations = imeTextDecorations;
             }
@@ -254,10 +254,10 @@ namespace MS.Internal.Text
         // ------------------------------------------------------------------
         private static TypographyProperties GetTypographyProperties(DependencyObject element)
         {
-            Debug.Assert(element != null);
+            Debug.Assert(element is not null);
 
             TextBlock tb = element as TextBlock;
-            if (tb != null)
+            if (tb is not null)
             {
                 if(!tb.IsTypographyDefaultValue)
                 {
@@ -270,7 +270,7 @@ namespace MS.Internal.Text
             }
 
             TextBox textBox = element as TextBox;
-            if (textBox != null)
+            if (textBox is not null)
             {
                 if (!textBox.IsTypographyDefaultValue)
                 {
@@ -283,13 +283,13 @@ namespace MS.Internal.Text
             }
 
             TextElement te = element as TextElement;
-            if (te != null)
+            if (te is not null)
             {
                 return te.TypographyPropertiesGroup;
             }
 
             FlowDocument fd = element as FlowDocument;
-            if (fd != null)
+            if (fd is not null)
             {
                return fd.TypographyPropertiesGroup;
             }

@@ -70,7 +70,7 @@ namespace System.Windows
         {
             string stringValue = value as string;
 
-            if (stringValue != null)
+            if (stringValue is not null)
             {
                 stringValue = stringValue.Trim();
 
@@ -132,7 +132,7 @@ namespace System.Windows
             object value, 
             Type destinationType)
         {
-            if (   value != null
+            if (   value is not null
                 && value is KeyTime)
             {
                 KeyTime keyTime = (KeyTime)value;

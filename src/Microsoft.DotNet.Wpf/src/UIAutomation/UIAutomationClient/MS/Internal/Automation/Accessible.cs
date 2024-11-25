@@ -20,7 +20,7 @@ namespace MS.Internal.Automation
     {
         internal Accessible(IAccessible acc, object child)
         {
-            Debug.Assert(acc != null, "null IAccessible");
+            Debug.Assert(acc is not null, "null IAccessible");
             _acc = acc;
             _child = child;
         }

@@ -66,10 +66,10 @@ namespace System.Windows.Threading
             if(count > 0)
             {
                 PriorityChain<T> chain = _priorityChains.Values[count - 1];
-                Debug.Assert(chain != null, "PriorityQueue.Dequeue: a chain should exist.");
+                Debug.Assert(chain is not null, "PriorityQueue.Dequeue: a chain should exist.");
 
                 PriorityItem<T> item = chain.Head;
-                Debug.Assert(item != null, "PriorityQueue.Dequeue: a priority item should exist.");
+                Debug.Assert(item is not null, "PriorityQueue.Dequeue: a priority item should exist.");
 
                 RemoveItem(item);
 
@@ -90,10 +90,10 @@ namespace System.Windows.Threading
             if(count > 0)
             {
                 PriorityChain<T> chain = _priorityChains.Values[count - 1];
-                Debug.Assert(chain != null, "PriorityQueue.Peek: a chain should exist.");
+                Debug.Assert(chain is not null, "PriorityQueue.Peek: a chain should exist.");
 
                 PriorityItem<T> item = chain.Head;
-                Debug.Assert(item != null, "PriorityQueue.Peek: a priority item should exist.");
+                Debug.Assert(item is not null, "PriorityQueue.Peek: a priority item should exist.");
 
                 data = item.Data;
             }
@@ -103,8 +103,8 @@ namespace System.Windows.Threading
         
         public void RemoveItem(PriorityItem<T> item)
         {
-            Debug.Assert(item != null, "PriorityQueue.RemoveItem: invalid item.");
-            Debug.Assert(item.Chain != null, "PriorityQueue.RemoveItem: a chain should exist.");
+            Debug.Assert(item is not null, "PriorityQueue.RemoveItem: invalid item.");
+            Debug.Assert(item.Chain is not null, "PriorityQueue.RemoveItem: a chain should exist.");
 
             PriorityChain<T> chain = item.Chain;
 
@@ -186,13 +186,13 @@ namespace System.Windows.Threading
             }
             else
             {
-                Debug.Assert(chain.Tail != null, "PriorityQueue.InsertItemInPriorityChain: both the head and the tail should not be null.");
+                Debug.Assert(chain.Tail is not null, "PriorityQueue.InsertItemInPriorityChain: both the head and the tail should not be null.");
 
                 PriorityItem<T> after = null;
 
                 // Search backwards along the sequential chain looking for an
                 // item already in this list.
-                for(after = item.SequentialPrev; after != null; after = after.SequentialPrev)
+                for(after = item.SequentialPrev; after is not null; after = after.SequentialPrev)
                 {
                     if(after.Chain == chain)
                     {
@@ -206,7 +206,7 @@ namespace System.Windows.Threading
 
         internal void InsertItemInPriorityChain(PriorityItem<T> item, PriorityChain<T> chain, PriorityItem<T> after)
         {
-            Debug.Assert(chain != null, "PriorityQueue.InsertItemInPriorityChain: a chain must be provided.");
+            Debug.Assert(chain is not null, "PriorityQueue.InsertItemInPriorityChain: a chain must be provided.");
             Debug.Assert(item.Chain is null && item.PriorityPrev is null && item.PriorityNext is null, "PriorityQueue.InsertItemInPriorityChain: item must not already be in a priority chain.");
 
             item.Chain = chain;
@@ -215,9 +215,9 @@ namespace System.Windows.Threading
             {
                 // Note: passing null for after means insert at the head.
 
-                if(chain.Head != null)
+                if(chain.Head is not null)
                 {
-                    Debug.Assert(chain.Tail != null, "PriorityQueue.InsertItemInPriorityChain: both the head and the tail should not be null.");
+                    Debug.Assert(chain.Tail is not null, "PriorityQueue.InsertItemInPriorityChain: both the head and the tail should not be null.");
 
                     chain.Head.PriorityPrev = item;
                     item.PriorityNext = chain.Head;
@@ -234,7 +234,7 @@ namespace System.Windows.Threading
             {
                 item.PriorityPrev = after;
 
-                if(after.PriorityNext != null)
+                if(after.PriorityNext is not null)
                 {
                     item.PriorityNext = after.PriorityNext;
                     after.PriorityNext.PriorityPrev = item;
@@ -253,11 +253,11 @@ namespace System.Windows.Threading
 
         private void RemoveItemFromPriorityChain(PriorityItem<T> item)
         {
-            Debug.Assert(item != null, "PriorityQueue.RemoveItemFromPriorityChain: invalid item.");
-            Debug.Assert(item.Chain != null, "PriorityQueue.RemoveItemFromPriorityChain: a chain should exist.");
+            Debug.Assert(item is not null, "PriorityQueue.RemoveItemFromPriorityChain: invalid item.");
+            Debug.Assert(item.Chain is not null, "PriorityQueue.RemoveItemFromPriorityChain: a chain should exist.");
 
             // Step 1: Fix up the previous link
-            if(item.PriorityPrev != null)
+            if(item.PriorityPrev is not null)
             {
                 Debug.Assert(item.Chain.Head != item, "PriorityQueue.RemoveItemFromPriorityChain: the head should not point to this item.");
 
@@ -271,7 +271,7 @@ namespace System.Windows.Threading
             }
 
             // Step 2: Fix up the next link
-            if(item.PriorityNext != null)
+            if(item.PriorityNext is not null)
             {
                 Debug.Assert(item.Chain.Tail != item, "PriorityQueue.RemoveItemFromPriorityChain: the tail should not point to this item.");
 
@@ -316,9 +316,9 @@ namespace System.Windows.Threading
             {
                 // Note: passing null for after means insert at the head.
 
-                if(_head != null)
+                if(_head is not null)
                 {
-                    Debug.Assert(_tail != null, "PriorityQueue.InsertItemInSequentialChain: both the head and the tail should not be null.");
+                    Debug.Assert(_tail is not null, "PriorityQueue.InsertItemInSequentialChain: both the head and the tail should not be null.");
 
                     _head.SequentialPrev = item;
                     item.SequentialNext = _head;
@@ -335,7 +335,7 @@ namespace System.Windows.Threading
             {
                 item.SequentialPrev = after;
 
-                if(after.SequentialNext != null)
+                if(after.SequentialNext is not null)
                 {
                     item.SequentialNext = after.SequentialNext;
                     after.SequentialNext.SequentialPrev = item;
@@ -354,10 +354,10 @@ namespace System.Windows.Threading
 
         private void RemoveItemFromSequentialChain(PriorityItem<T> item)
         {
-            Debug.Assert(item != null, "PriorityQueue.RemoveItemFromSequentialChain: invalid item.");
+            Debug.Assert(item is not null, "PriorityQueue.RemoveItemFromSequentialChain: invalid item.");
 
             // Step 1: Fix up the previous link
-            if(item.SequentialPrev != null)
+            if(item.SequentialPrev is not null)
             {
                 Debug.Assert(_head != item, "PriorityQueue.RemoveItemFromSequentialChain: the head should not point to this item.");
 
@@ -371,7 +371,7 @@ namespace System.Windows.Threading
             }
 
             // Step 2: Fix up the next link
-            if(item.SequentialNext != null)
+            if(item.SequentialNext is not null)
             {
                 Debug.Assert(_tail != item, "PriorityQueue.RemoveItemFromSequentialChain: the tail should not point to this item.");
 

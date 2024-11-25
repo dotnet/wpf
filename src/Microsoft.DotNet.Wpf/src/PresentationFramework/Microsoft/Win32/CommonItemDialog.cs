@@ -388,7 +388,7 @@ namespace Microsoft.Win32
             if (!string.IsNullOrEmpty(DefaultDirectory))
             {
                 IShellItem defaultDirectory = ShellUtil.GetShellItemForPath(DefaultDirectory);
-                if (defaultDirectory != null)
+                if (defaultDirectory is not null)
                 {
                     dialog.SetDefaultFolder(defaultDirectory);
                 }
@@ -397,7 +397,7 @@ namespace Microsoft.Win32
             if (!string.IsNullOrEmpty(InitialDirectory))
             {
                 IShellItem initialDirectory = ShellUtil.GetShellItemForPath(InitialDirectory);
-                if (initialDirectory != null)
+                if (initialDirectory is not null)
                 {
                     // Setting both of these so the dialog doesn't display errors when a remembered folder is missing.
                     if (string.IsNullOrEmpty(DefaultDirectory))
@@ -411,7 +411,7 @@ namespace Microsoft.Win32
             if (!string.IsNullOrEmpty(RootDirectory))
             {
                 IShellItem rootDirectory = ShellUtil.GetShellItemForPath(RootDirectory);
-                if (rootDirectory != null && dialog is IFileDialog2 dialog2)
+                if (rootDirectory is not null && dialog is IFileDialog2 dialog2)
                 {
                     dialog2.SetNavigationRoot(rootDirectory);
                 }
@@ -424,12 +424,12 @@ namespace Microsoft.Win32
             dialog.SetOptions(options);
 
             IList<FileDialogCustomPlace> places = CustomPlaces;
-            if (places != null && places.Count != 0)
+            if (places is not null && places.Count != 0)
             {
                 foreach (FileDialogCustomPlace customPlace in places)
                 {
                     IShellItem shellItem = ResolveCustomPlace(customPlace);
-                    if (shellItem != null)
+                    if (shellItem is not null)
                     {
                         try
                         {

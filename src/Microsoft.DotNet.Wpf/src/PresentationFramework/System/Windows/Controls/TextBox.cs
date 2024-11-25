@@ -212,7 +212,7 @@ namespace System.Windows.Controls
 
             TextPointer textPointer = GetTextPositionFromPointInternal(point, snapToText);
 
-            if (textPointer != null)
+            if (textPointer is not null)
             {
                 // offset corresponds to insertion position
                 int offset = textPointer.Offset;
@@ -404,7 +404,7 @@ namespace System.Windows.Controls
             endOfLine = GetEndPositionOfLine(lineIndex);
 
             // startOfLine/endOfLine will be null if no layout is available.
-            if (startOfLine != null && endOfLine != null)
+            if (startOfLine is not null && endOfLine is not null)
             {
                 text = TextRangeBase.GetTextInternal(startOfLine, endOfLine);
             }
@@ -448,7 +448,7 @@ namespace System.Windows.Controls
             {
                 // Get next insertion position
                 textPointer = textPointer.GetNextInsertionPosition(LogicalDirection.Forward);
-                Invariant.Assert(textPointer != null);
+                Invariant.Assert(textPointer is not null);
 
                 // Backward gravity for trailing edge
                 textPointer = textPointer.GetPositionAtOffset(0, LogicalDirection.Backward);
@@ -1020,10 +1020,10 @@ namespace System.Windows.Controls
             //  always call base.OnPropertyChanged, otherwise Property Engine will not work.
             base.OnPropertyChanged(e);
 
-            if (this.RenderScope != null)
+            if (this.RenderScope is not null)
             {
                 FrameworkPropertyMetadata fmetadata = e.Property.GetMetadata(typeof(TextBox)) as FrameworkPropertyMetadata;
-                if (fmetadata != null)
+                if (fmetadata is not null)
                 {
                     // We need to check for TextAlignmentProperty specifically since a local value change might require a render
                     // update even though e.IsAValueChange is false (see TextBoxView.CalculatedTextAlignment).
@@ -1042,7 +1042,7 @@ namespace System.Windows.Controls
                         }
 
                         if (Speller.IsSpellerAffectingProperty(e.Property) &&
-                            this.TextEditor.Speller != null)
+                            this.TextEditor.Speller is not null)
                         {
                             this.TextEditor.Speller.ResetErrors();
                         }
@@ -1051,7 +1051,7 @@ namespace System.Windows.Controls
             }
 
             TextBoxAutomationPeer peer = UIElementAutomationPeer.FromElement(this) as TextBoxAutomationPeer;
-            if (peer != null)
+            if (peer is not null)
             {
                 if (e.Property == TextProperty)
                 {
@@ -1177,7 +1177,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal override void DoLineUp()
         {
-            if (this.ScrollViewer != null)
+            if (this.ScrollViewer is not null)
             {
                 ScrollViewer.ScrollToVerticalOffset(VerticalOffset - GetLineHeight());
             }
@@ -1188,7 +1188,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal override void DoLineDown()
         {
-            if (this.ScrollViewer != null)
+            if (this.ScrollViewer is not null)
             {
                 ScrollViewer.ScrollToVerticalOffset(VerticalOffset + GetLineHeight());
             }
@@ -1244,7 +1244,7 @@ namespace System.Windows.Controls
                     if (FrameworkCompatibilityPreferences.GetKeepTextBoxDisplaySynchronizedWithTextProperty())
                     {
                         newTextValue = _newTextValue as String;
-                        resetText = (newTextValue != null && newTextValue != Text);
+                        resetText = (newTextValue is not null && newTextValue != Text);
                     }
 
                     _isInsideTextContentChange = false;
@@ -1496,7 +1496,7 @@ namespace System.Windows.Controls
         {
             TextBox textBox = d as TextBox;
 
-            if (textBox != null && (textBox.TextWrapping == TextWrapping.Wrap || textBox.TextWrapping == TextWrapping.WrapWithOverflow))
+            if (textBox is not null && (textBox.TextWrapping == TextWrapping.Wrap || textBox.TextWrapping == TextWrapping.WrapWithOverflow))
             {
                 return ScrollBarVisibility.Disabled;
             }
@@ -1636,7 +1636,7 @@ namespace System.Windows.Controls
             else if (hasExpression)
             {
                 BindingExpressionBase beb = BindingOperations.GetBindingExpression(this, TextProperty);
-                resetCaret = (beb != null) && beb.IsInUpdate && beb.IsInTransfer;
+                resetCaret = (beb is not null) && beb.IsInUpdate && beb.IsInTransfer;
             }
 
             if (resetCaret)
@@ -1677,7 +1677,7 @@ namespace System.Windows.Controls
             if (hasExpression)
             {
                 UndoManager undoManager = TextEditor._GetUndoManager();
-                if (undoManager != null)
+                if (undoManager is not null)
                 {
                     if (undoManager.IsEnabled)
                         undoManager.Clear();

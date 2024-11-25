@@ -86,11 +86,11 @@ namespace System.Windows.Controls
         /// <param name="property"></param>
         private void ApplyContentBinding(DependencyObject target, DependencyProperty property)
         {
-            if (ContentBinding != null)
+            if (ContentBinding is not null)
             {
                 BindingOperations.SetBinding(target, property, ContentBinding);
             }
-            else if (Binding != null)
+            else if (Binding is not null)
             {
                 BindingOperations.SetBinding(target, property, Binding);
             }
@@ -121,10 +121,10 @@ namespace System.Windows.Controls
                 else if (string.Equals(propertyName, "TargetName", StringComparison.Ordinal))
                 {
                     TextBlock outerBlock = cell.Content as TextBlock;
-                    if (outerBlock != null && outerBlock.Inlines.Count > 0)
+                    if (outerBlock is not null && outerBlock.Inlines.Count > 0)
                     {
                         Hyperlink link = outerBlock.Inlines.FirstInline as Hyperlink;
-                        if (link != null)
+                        if (link is not null)
                         {
                             link.TargetName = TargetName;
                         }
@@ -216,14 +216,14 @@ namespace System.Windows.Controls
         protected override object PrepareCellForEdit(FrameworkElement editingElement, RoutedEventArgs editingEventArgs)
         {
             TextBox textBox = editingElement as TextBox;
-            if (textBox != null)
+            if (textBox is not null)
             {
                 textBox.Focus();
 
                 string originalValue = textBox.Text;
 
                 TextCompositionEventArgs textArgs = editingEventArgs as TextCompositionEventArgs;
-                if (textArgs != null)
+                if (textArgs is not null)
                 {
                     // If text input started the edit, then replace the text with what was typed.
                     string inputText = textArgs.Text;
@@ -252,7 +252,7 @@ namespace System.Windows.Controls
         /// <param name="uneditedValue">The original, unedited value of the cell.</param>
         protected override void CancelCellEdit(FrameworkElement editingElement, object uneditedValue)
         {
-            DataGridHelper.CacheFlowDirection(editingElement, editingElement != null ? editingElement.Parent as DataGridCell : null);
+            DataGridHelper.CacheFlowDirection(editingElement, editingElement is not null ? editingElement.Parent as DataGridCell : null);
             
             base.CancelCellEdit(editingElement, uneditedValue);
         }
@@ -264,7 +264,7 @@ namespace System.Windows.Controls
         /// <returns>false if there is a validation error. true otherwise.</returns>
         protected override bool CommitCellEdit(FrameworkElement editingElement)
         {
-            DataGridHelper.CacheFlowDirection(editingElement, editingElement != null ? editingElement.Parent as DataGridCell : null);
+            DataGridHelper.CacheFlowDirection(editingElement, editingElement is not null ? editingElement.Parent as DataGridCell : null);
 
             return base.CommitCellEdit(editingElement);
         }
@@ -285,10 +285,10 @@ namespace System.Windows.Controls
             }
             else if (DataGridHelper.IsImeProcessed(e as KeyEventArgs))
             {
-                if (DataGridOwner != null)
+                if (DataGridOwner is not null)
                 {
                     DataGridCell cell = DataGridOwner.CurrentCellContainer; 
-                    if (cell != null && !cell.IsEditing)
+                    if (cell is not null && !cell.IsEditing)
                     {
                         Debug.Assert(e.RoutedEvent == Keyboard.PreviewKeyDownEvent, "We should only reach here on the PreviewKeyDown event because the TextBox within is expected to handle the preview event and hence trump the successive KeyDown event.");
                         

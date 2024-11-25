@@ -66,14 +66,14 @@ namespace System.Windows.Markup
                 throw new ArgumentException(SR.TextRange_InvalidParameterValue, "typeDescriptorContext");
             }
             IRootObjectProvider rootProvider = typeDescriptorContext.GetService(typeof(IRootObjectProvider)) as IRootObjectProvider;
-            if (rootProvider != null && source is String)
+            if (rootProvider is not null && source is String)
             {
                 IProvideValueTarget ipvt = typeDescriptorContext.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
-                if (ipvt != null)
+                if (ipvt is not null)
                 {
                     EventSetter setter = ipvt.TargetObject as EventSetter;
                     string handlerName;
-                    if(setter != null && (handlerName = source as string) != null)
+                    if(setter is not null && (handlerName = source as string) is not null)
                     {
                         handlerName = handlerName.Trim();
                         return Delegate.CreateDelegate(setter.Event.HandlerType, rootProvider.RootObject, handlerName);

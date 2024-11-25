@@ -64,7 +64,7 @@ namespace Microsoft.Windows.Automation.Peers
             if (String.IsNullOrEmpty(helpText))
             {
                 RibbonToolTip toolTip = ((RibbonGallery)Owner).ToolTip as RibbonToolTip;
-                if (toolTip != null)
+                if (toolTip is not null)
                 {
                     helpText = toolTip.Description;
                 }
@@ -88,7 +88,7 @@ namespace Microsoft.Windows.Automation.Peers
 #if IN_RIBBON_GALLERY
             // If this is an InRibbonGallery, then we do not want the filter peer or the
             // RibbonGalleryCategory peers in the tree.  Add only the RibbonGalleryItem peers.
-            if (owner.ParentInRibbonGallery != null &&
+            if (owner.ParentInRibbonGallery is not null &&
                 owner.ParentInRibbonGallery.IsInInRibbonMode)
             {
                 foreach (AutomationPeer categoryPeer in base.GetChildrenCore())
@@ -116,7 +116,7 @@ namespace Microsoft.Windows.Automation.Peers
             if (owner.CanUserFilter)
             {
                 UIElement filterHost = null;
-                if (owner.FilterPaneContent != null || owner.FilterPaneContentTemplate != null)
+                if (owner.FilterPaneContent is not null || owner.FilterPaneContentTemplate is not null)
                 {
                     filterHost = owner.FilterContentPane;
                 }
@@ -125,7 +125,7 @@ namespace Microsoft.Windows.Automation.Peers
                     filterHost = owner.FilterMenuButton;
                 }
 
-                if (filterHost != null)
+                if (filterHost is not null)
                 {
                     if (children is null)
                     {
@@ -174,10 +174,10 @@ namespace Microsoft.Windows.Automation.Peers
 
                 // With alization in effect RibbonGalleryItemDataAP would be exposed to client not the Peer directly associated with UI
                 // and Selection must return the relevant peer(RibbonGalleryItemDataAP) stored in EventSource.
-                if (peer.EventsSource != null)
+                if (peer.EventsSource is not null)
                     peer = peer.EventsSource;
                 
-                if (peer != null)
+                if (peer is not null)
                 {
                     selectedProviders.Add(ProviderFromPeer(peer)); 
                 }

@@ -142,7 +142,7 @@ namespace System.Windows.Documents
         /// </remarks>
         internal static void PasteXml(TextRange range, TextElement fragment)
         {
-            Invariant.Assert(fragment != null);
+            Invariant.Assert(fragment is not null);
 
             // Check a special case for pasing a single embedded element
             if (PasteSingleEmbeddedElement(range, fragment))
@@ -235,13 +235,13 @@ namespace System.Windows.Documents
                                 continue;
                             }
                         }
-                        else if (nextElement != null)
+                        else if (nextElement is not null)
                         {
                             // This code is a generic version of the more specific Hyperlink code
                             // directly above.  That code should be folded into this.
 
                             TextElementEditingBehaviorAttribute att = (TextElementEditingBehaviorAttribute)Attribute.GetCustomAttribute(nextElement.GetType(), typeof(TextElementEditingBehaviorAttribute));
-                            if (att != null && !att.IsTypographicOnly)
+                            if (att is not null && !att.IsTypographicOnly)
                             {
                                 if (IsPartialNonTypographic(textReader, rangeEnd))
                                 {
@@ -463,7 +463,7 @@ namespace System.Windows.Documents
                 // This code is a generic version of the more specific Hyperlink code
                 // directly above.  That code should be folded into this.
                 TextElementEditingBehaviorAttribute att = (TextElementEditingBehaviorAttribute)Attribute.GetCustomAttribute(thisElement.ParentType, typeof(TextElementEditingBehaviorAttribute));
-                if (att != null && !att.IsTypographicOnly)
+                if (att is not null && !att.IsTypographicOnly)
                 {
                     if (TextPointerBase.IsAtNonMergeableInlineStart(range.Start))
                     {
@@ -738,7 +738,7 @@ namespace System.Windows.Documents
                 if (value != DependencyProperty.UnsetValue)
                 {
                     string stringValue = DPTypeDescriptorContext.GetStringValue(property, value);
-                    if (stringValue != null)
+                    if (stringValue is not null)
                     {
                         stringValue = FilterNaNStringValueForDoublePropertyType(stringValue, property.PropertyType);
 
@@ -803,7 +803,7 @@ namespace System.Windows.Documents
                 {
                     string stringValue = DPTypeDescriptorContext.GetStringValue(property, innerValue);
 
-                    if (stringValue != null)
+                    if (stringValue is not null)
                     {
                         stringValue = FilterNaNStringValueForDoublePropertyType(stringValue, property.PropertyType);
 
@@ -914,7 +914,7 @@ namespace System.Windows.Documents
         private static void WriteNoninheritableProperty(XmlWriter xmlWriter, DependencyProperty property, object propertyValue, Type propertyOwnerType, bool onlyAffected, DependencyObject complexProperties, object localValue)
         {
             bool write = false;
-            if (propertyValue != null &&
+            if (propertyValue is not null &&
                 propertyValue != DependencyProperty.UnsetValue)
             {
                 if (!onlyAffected)
@@ -933,7 +933,7 @@ namespace System.Windows.Documents
             {
                 string stringValue = DPTypeDescriptorContext.GetStringValue(property, propertyValue);
 
-                if (stringValue != null)
+                if (stringValue is not null)
                 {
                     stringValue = FilterNaNStringValueForDoublePropertyType(stringValue, property.PropertyType);
 
@@ -979,7 +979,7 @@ namespace System.Windows.Documents
                     object propertyValue = context.ReadLocalValue(locallySetProperty);
                     string stringValue = DPTypeDescriptorContext.GetStringValue(locallySetProperty, propertyValue);
 
-                    if (stringValue != null)
+                    if (stringValue is not null)
                     {
                         stringValue = FilterNaNStringValueForDoublePropertyType(stringValue, locallySetProperty.PropertyType);
 
@@ -1018,11 +1018,11 @@ namespace System.Windows.Documents
                 }
                 // Serialize the property
                 object propertyValue = current.GetValue(textPointer.Parent);
-                if (propertyValue != null)
+                if (propertyValue is not null)
                 {
                     string stringValue = CLRTypeDescriptorContext.GetStringValue(current, propertyValue);
 
-                    if (stringValue != null)
+                    if (stringValue is not null)
                     {
                         stringValue = FilterNaNStringValueForDoublePropertyType(stringValue, current.PropertyType);
 
@@ -1127,13 +1127,13 @@ namespace System.Windows.Documents
             {
                 DependencyProperty property = elementProperties[i];
                 object propertyValue = element.ReadLocalValue(property);
-                if (propertyValue != null && propertyValue != DependencyProperty.UnsetValue)
+                if (propertyValue is not null && propertyValue != DependencyProperty.UnsetValue)
                 {
                     System.ComponentModel.TypeConverter typeConverter = System.ComponentModel.TypeDescriptor.GetConverter(property.PropertyType);
-                    Invariant.Assert(typeConverter != null, "typeConverter==null: is not expected for atomic elements");
+                    Invariant.Assert(typeConverter is not null, "typeConverter==null: is not expected for atomic elements");
                     Invariant.Assert(typeConverter.CanConvertTo(typeof(string)), "type is expected to be convertable into string type");
                     string stringValue = (string)typeConverter.ConvertTo(/*ITypeDescriptorContext:*/null, CultureInfo.InvariantCulture, propertyValue, typeof(string));
-                    Invariant.Assert(stringValue != null, "expecting non-null stringValue");
+                    Invariant.Assert(stringValue is not null, "expecting non-null stringValue");
                     xmlWriter.WriteAttributeString(property.Name, stringValue);
                 }
             }
@@ -1153,17 +1153,17 @@ namespace System.Windows.Documents
         /// </param>
         private static void WriteEmbeddedObject(object embeddedObject, XmlWriter xmlWriter, WpfPayload wpfPayload)
         {
-            if (wpfPayload != null && embeddedObject is Image)
+            if (wpfPayload is not null && embeddedObject is Image)
             {
                 // Writing in WPF mode: need to create an image with a Source referring into a package
                 Image image = (Image)embeddedObject;
 
-                if (image.Source != null && !string.IsNullOrEmpty(image.Source.ToString()))
+                if (image.Source is not null && !string.IsNullOrEmpty(image.Source.ToString()))
                 {
                     // Add the image to the Image collection in the package
                     // and define the reference to image into the package
                     string imageSource = wpfPayload.AddImage(image);
-                    if (imageSource != null)
+                    if (imageSource is not null)
                     {
                         Type elementTypeStandardized = typeof(Image);
 
@@ -1234,7 +1234,7 @@ namespace System.Windows.Documents
                 if (uiContainer is BlockUIContainer)
                 {
                     embeddedElement = ((BlockUIContainer)uiContainer).Child as FrameworkElement;
-                    if (embeddedElement != null)
+                    if (embeddedElement is not null)
                     {
                         ((BlockUIContainer)uiContainer).Child = null;
                     }
@@ -1242,13 +1242,13 @@ namespace System.Windows.Documents
                 else if (uiContainer is InlineUIContainer)
                 {
                     embeddedElement = ((InlineUIContainer)uiContainer).Child as FrameworkElement;
-                    if (embeddedElement != null)
+                    if (embeddedElement is not null)
                     {
                         ((InlineUIContainer)uiContainer).Child = null;
                     }
                 }
 
-                if (embeddedElement != null)
+                if (embeddedElement is not null)
                 {
                     range.InsertEmbeddedUIElement(embeddedElement);
                     return true;
@@ -1376,7 +1376,7 @@ namespace System.Windows.Documents
         private static void CorrectLeadingNestedLists(Section fragment)
         {
             List list = fragment.Blocks.FirstBlock as List;
-            while (list != null)
+            while (list is not null)
             {
                 ListItem listItem = list.ListItems.FirstListItem;
                 if (listItem is null)
@@ -1384,7 +1384,7 @@ namespace System.Windows.Documents
                     return;
                 }
 
-                if (listItem.NextListItem != null)
+                if (listItem.NextListItem is not null)
                 {
                     return;
                 }
@@ -1458,7 +1458,7 @@ namespace System.Windows.Documents
         private static void MergeParagraphsAtPosition(TextPointer position, bool mergingOnFragmentStart)
         {
             TextPointer navigator = position;
-            while (navigator != null && !(navigator.Parent is Paragraph))
+            while (navigator is not null && !(navigator.Parent is Paragraph))
             {
                 if (navigator.GetPointerContext(LogicalDirection.Backward) == TextPointerContext.ElementEnd)
                 {
@@ -1470,13 +1470,13 @@ namespace System.Windows.Documents
                 }
             }
 
-            if (navigator != null)
+            if (navigator is not null)
             {
                 Invariant.Assert(navigator.Parent is Paragraph, "We suppose have a first paragraph found");
                 Paragraph firstParagraph = (Paragraph)navigator.Parent;
 
                 navigator = position;
-                while (navigator != null && !(navigator.Parent is Paragraph))
+                while (navigator is not null && !(navigator.Parent is Paragraph))
                 {
                     if (navigator.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.ElementStart)
                     {
@@ -1488,7 +1488,7 @@ namespace System.Windows.Documents
                     }
                 }
 
-                if (navigator != null)
+                if (navigator is not null)
                 {
                     Invariant.Assert(navigator.Parent is Paragraph, "We suppose a second paragraph found");
                     Paragraph secondParagraph = (Paragraph)navigator.Parent;
@@ -1611,7 +1611,7 @@ namespace System.Windows.Documents
             // Advance start pointer to enter pasted fragment
             start = start.GetNextContextPosition(LogicalDirection.Forward);
 
-            while (start != null && start.CompareTo(end) < 0)
+            while (start is not null && start.CompareTo(end) < 0)
             {
                 TextPointerContext passedContext = start.GetPointerContext(LogicalDirection.Backward);
                 if (passedContext == TextPointerContext.ElementStart)
@@ -1706,7 +1706,7 @@ namespace System.Windows.Documents
                 // Check for special case, when range start and end are at Hyperlink boundaries.
                 // Need to expand commonAncestor to Hyperlink element start, so that Hyperlink wrapper is written.
                 ITextPointer hyperlinkStart = GetHyperlinkStart(range);
-                if (hyperlinkStart != null)
+                if (hyperlinkStart is not null)
                 {
                     commonAncestor = hyperlinkStart;
                 }
@@ -1742,7 +1742,7 @@ namespace System.Windows.Documents
             while (typeof(TextElement).IsAssignableFrom(navigator.ParentType))
             {
                 TextElementEditingBehaviorAttribute behaviorAttribute = (TextElementEditingBehaviorAttribute)Attribute.GetCustomAttribute(navigator.ParentType, typeof(TextElementEditingBehaviorAttribute));
-                if (behaviorAttribute != null && !behaviorAttribute.IsTypographicOnly)
+                if (behaviorAttribute is not null && !behaviorAttribute.IsTypographicOnly)
                 {
                     return false;
                 }
@@ -1904,7 +1904,7 @@ namespace System.Windows.Documents
                 while (hyperlinkNavigation.CompareTo(hyperlinkEnd) < 0)
                 {
                     InlineUIContainer inlineUIContainer = hyperlinkNavigation.GetAdjacentElement(LogicalDirection.Forward) as InlineUIContainer;
-                    if (inlineUIContainer != null && !(inlineUIContainer.Child is Image))
+                    if (inlineUIContainer is not null && !(inlineUIContainer.Child is Image))
                     {
                         hyperlinkInvalid = true;
                         break;

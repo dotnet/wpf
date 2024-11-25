@@ -38,8 +38,8 @@ namespace System.Windows.Controls
         {
             return SR.Format(SR.ToStringFormatString_GridViewRowPresenter,
                 this.GetType(),
-                (Content != null) ? Content.ToString() : String.Empty,
-                (Columns != null) ? Columns.Count : 0);
+                (Content is not null) ? Content.ToString() : String.Empty,
+                (Columns is not null) ? Columns.Count : 0);
         }
 
         #endregion
@@ -90,8 +90,8 @@ namespace System.Windows.Controls
             // keeping the existing ContentPresenters
             //
 
-            Type oldType = (e.OldValue != null) ? e.OldValue.GetType() : null;
-            Type newType = (e.NewValue != null) ? e.NewValue.GetType() : null;
+            Type oldType = (e.OldValue is not null) ? e.OldValue.GetType() : null;
+            Type newType = (e.NewValue is not null) ? e.NewValue.GetType() : null;
 
             // DisconnectedItem doesn't count as a real type change
             if (e.NewValue == BindingExpressionBase.DisconnectedItem)
@@ -263,7 +263,7 @@ namespace System.Windows.Controls
 
                 // build the whole collection from draft.
                 GridViewColumnCollection columns = Columns;
-                if (columns != null)
+                if (columns is not null)
                 {
                     foreach (GridViewColumn column in columns.ColumnCollection)
                     {
@@ -284,7 +284,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal override void OnColumnPropertyChanged(GridViewColumn column, string propertyName)
         {
-            Debug.Assert(column != null);
+            Debug.Assert(column is not null);
             int index;
 
             // ActualWidth change is a noise to RowPresenter, so filter it out.
@@ -310,10 +310,10 @@ namespace System.Windows.Controls
                 else if (GridViewColumn.c_DisplayMemberBindingName.Equals(propertyName))
                 {
                     FrameworkElement cell = InternalChildren[index] as FrameworkElement;
-                    if (cell != null)
+                    if (cell is not null)
                     {
                         BindingBase binding = column.DisplayMemberBinding;
-                        if (binding != null && cell is TextBlock)
+                        if (binding is not null && cell is TextBlock)
                         {
                             cell.SetBinding(TextBlock.TextProperty, binding);
                         }
@@ -326,7 +326,7 @@ namespace System.Windows.Controls
                 else
                 {
                     ContentPresenter cp = InternalChildren[index] as ContentPresenter;
-                    if (cp != null)
+                    if (cp is not null)
                     {
                         if (GridViewColumn.CellTemplateProperty.Name.Equals(propertyName))
                         {
@@ -408,7 +408,7 @@ namespace System.Windows.Controls
             {
                 List<UIElement> list = new List<UIElement>();
                 GridViewColumnCollection columns = Columns;
-                if (columns != null)
+                if (columns is not null)
                 {
                     UIElementCollection children = InternalChildren;
                     List<int> indexList = columns.IndexList;
@@ -418,7 +418,7 @@ namespace System.Windows.Controls
                         for (int i = 0, count = columns.Count; i < count; ++i)
                         {
                             UIElement cell = children[indexList[i]];
-                            if (cell != null)
+                            if (cell is not null)
                             {
                                 list.Add(cell);
                             }
@@ -445,14 +445,14 @@ namespace System.Windows.Controls
             // assume GridViewRowPresenter is in Item's template
             _viewItem = this.TemplatedParent as FrameworkElement;
 
-            if (_viewItem != null)
+            if (_viewItem is not null)
             {
                 ItemsControl itemsControl = ItemsControl.ItemsControlFromItemContainer(_viewItem) as ItemsControl;
 
-                if (itemsControl != null)
+                if (itemsControl is not null)
                 {
                     ScrollViewer scrollViewer = itemsControl.ScrollHost as ScrollViewer;
-                    if (scrollViewer != null)
+                    if (scrollViewer is not null)
                     {
                         // check if Virtualizing Panel do works
                         if (itemsControl.ItemsHost is VirtualizingPanel &&
@@ -481,7 +481,7 @@ namespace System.Windows.Controls
 
             bool result = true;
 
-            if (_viewItem != null && _viewPort != null)
+            if (_viewItem is not null && _viewPort is not null)
             {
                 Rect viewPortBounds = new Rect(new Point(), _viewPort.RenderSize);
                 Rect itemBounds = new Rect(new Point(), _viewItem.RenderSize);
@@ -533,7 +533,7 @@ namespace System.Windows.Controls
             bool desiredWidthChanged = false; // whether the shared minimum width has been changed since last layout
 
             GridViewColumnCollection columns = Columns;
-            if(columns != null)
+            if(columns is not null)
             {
                 foreach (GridViewColumn column in columns)
                 {
@@ -576,14 +576,14 @@ namespace System.Windows.Controls
 
         private FrameworkElement CreateCell(GridViewColumn column)
         {
-            Debug.Assert(column != null, "column shouldn't be null");
+            Debug.Assert(column is not null, "column shouldn't be null");
 
             FrameworkElement cell;
             BindingBase binding;
 
             // Priority: DisplayMemberBinding > CellTemplate > CellTemplateSelector
 
-            if ((binding = column.DisplayMemberBinding) != null)
+            if ((binding = column.DisplayMemberBinding) is not null)
             {
                 cell = new TextBlock();
 
@@ -600,11 +600,11 @@ namespace System.Windows.Controls
 
                 DataTemplate dt;
                 DataTemplateSelector dts;
-                if ((dt = column.CellTemplate) != null)
+                if ((dt = column.CellTemplate) is not null)
                 {
                     cp.ContentTemplate = dt;
                 }
-                if ((dts = column.CellTemplateSelector) != null)
+                if ((dts = column.CellTemplateSelector) is not null)
                 {
                     cp.ContentTemplateSelector = dts;
                 }
@@ -615,7 +615,7 @@ namespace System.Windows.Controls
             // copy alignment properties from ListViewItem
             // for perf reason, not use binding here
             ContentControl parent;
-            if ((parent = TemplatedParent as ContentControl) != null)
+            if ((parent = TemplatedParent as ContentControl) is not null)
             {
                 cell.VerticalAlignment = parent.VerticalContentAlignment;
                 cell.HorizontalAlignment = parent.HorizontalContentAlignment;
@@ -647,7 +647,7 @@ namespace System.Windows.Controls
             {
                 cell = (FrameworkElement)children[i];
 
-                if ((cellAsCP = cell as ContentPresenter) != null)
+                if ((cellAsCP = cell as ContentPresenter) is not null)
                 {
                     cellAsCP.Content = Content;
                 }
@@ -657,7 +657,7 @@ namespace System.Windows.Controls
                     cell.DataContext = Content;
                 }
 
-                if (parent != null)
+                if (parent is not null)
                 {
                     cell.VerticalAlignment = parent.VerticalContentAlignment;
                     cell.HorizontalAlignment = parent.HorizontalContentAlignment;

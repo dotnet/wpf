@@ -106,7 +106,7 @@ namespace MS.Internal.Automation
                 return null;
             }
 
-            if (response.RequestedData != null && propIndex != response.RequestedData.GetLength(0))
+            if (response.RequestedData is not null && propIndex != response.RequestedData.GetLength(0))
             {
                 Debug.Assert(false, "Internal error: mismatch between count of property buckets and nodes claiming them");
                 return null;

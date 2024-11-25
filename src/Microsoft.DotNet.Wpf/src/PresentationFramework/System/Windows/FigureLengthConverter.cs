@@ -110,7 +110,7 @@ namespace System.Windows
             CultureInfo cultureInfo, 
             object source)
         {
-            if (source != null)
+            if (source is not null)
             {
                 if (source is string)
                 {
@@ -149,7 +149,7 @@ namespace System.Windows
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (    value != null
+            if (    value is not null
                 &&  value is FigureLength )
             {
                 FigureLength fl = (FigureLength)value;

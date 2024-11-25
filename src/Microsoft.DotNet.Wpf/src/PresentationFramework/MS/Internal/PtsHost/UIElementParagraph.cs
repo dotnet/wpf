@@ -72,7 +72,7 @@ namespace MS.Internal.PtsHost
         /// </param>
         internal override bool InvalidateStructure(int startPosition)
         {
-            if (_uiElementIsland != null)
+            if (_uiElementIsland is not null)
             {
                 _uiElementIsland.DesiredSizeChanged -= new DesiredSizeChangedEventHandler(OnUIElementDesiredSizeChanged);
                 _uiElementIsland.Dispose();
@@ -129,12 +129,12 @@ namespace MS.Internal.PtsHost
             else
             {
                 dvr = margin;
-                if (mcsNew != null)
+                if (mcsNew is not null)
                 {
                     dvr += mcsNew.Margin;
                 }
             }
-            if (mcsNew != null)
+            if (mcsNew is not null)
             {
                 mcsNew.Dispose();
             }
@@ -208,7 +208,7 @@ namespace MS.Internal.PtsHost
                 fsfmtr.fForcedProgress = PTS.FromBoolean(fAtMaxWidth == PTS.False);
 
                 // Format UIElement
-                if (((BlockUIContainer)Element).Child != null)
+                if (((BlockUIContainer)Element).Child is not null)
                 {
                     EnsureUIElementIsland();
                     FormatUIElement(durAvailable, out fsbbox);
@@ -295,7 +295,7 @@ namespace MS.Internal.PtsHost
                 cPolygons = cVertices = 0;
 
                 // Format UIElement
-                if (((BlockUIContainer)Element).Child != null)
+                if (((BlockUIContainer)Element).Child is not null)
                 {
                     EnsureUIElementIsland();
                     FormatUIElement(durAvailable, out fsbbox);
@@ -360,7 +360,7 @@ namespace MS.Internal.PtsHost
             int margin;
             MbpInfo mbp = MbpInfo.FromElement(Element, StructuralCache.TextFormatterHost.PixelsPerDip);
             MarginCollapsingState.CollapseBottomMargin(PtsContext, mbp, null, out mcsNew, out margin);
-            if (mcsNew != null)
+            if (mcsNew is not null)
             {
                 pmcsclientOut = mcsNew.Handle;
             }
@@ -462,7 +462,7 @@ namespace MS.Internal.PtsHost
         {
             try
             {
-                if (_uiElementIsland != null)
+                if (_uiElementIsland is not null)
                 {
                     _uiElementIsland.DesiredSizeChanged -= new DesiredSizeChangedEventHandler(OnUIElementDesiredSizeChanged);
                     _uiElementIsland.Dispose();

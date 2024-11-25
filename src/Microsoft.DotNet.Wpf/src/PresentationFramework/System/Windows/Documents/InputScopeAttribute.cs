@@ -56,7 +56,7 @@ namespace System.Windows.Documents
         // This returns InputScopes in the array that is allocated by CoTaskMemAlloc.
         public void GetInputScopes(out IntPtr ppinputscopes, out int count)
         {
-            if (_inputScope != null)
+            if (_inputScope is not null)
             {
                 int offset = 0;
                 count = _inputScope.Names.Count;
@@ -128,11 +128,11 @@ namespace System.Windows.Documents
         {
             desc = null;
 
-            if (_inputScope != null)
+            if (_inputScope is not null)
             {
                 desc = _inputScope.RegularExpression;
             }
-            return desc != null ? NativeMethods.S_OK : NativeMethods.S_FALSE;
+            return desc is not null ? NativeMethods.S_OK : NativeMethods.S_FALSE;
         }
 
         // A method of ITfInputScope.
@@ -140,11 +140,11 @@ namespace System.Windows.Documents
         {
             desc = null;
             
-            if (_inputScope != null)
+            if (_inputScope is not null)
             {
                 desc = _inputScope.SrgsMarkup;
             }
-            return desc != null ? NativeMethods.S_OK : NativeMethods.S_FALSE;
+            return desc is not null ? NativeMethods.S_OK : NativeMethods.S_FALSE;
         }
 
         // A method of ITfInputScope.

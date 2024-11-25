@@ -63,7 +63,7 @@ namespace System.Windows.Documents
             {
                 TextServicesDisplayAttribute  attr;
                 attr = GetDisplayAttribute(guidatom);
-                if (attr != null)
+                if (attr is not null)
                 {
                     ITextPointer start;
                     ITextPointer end;
@@ -98,7 +98,7 @@ namespace System.Windows.Documents
             //
 
 #if UNUSED_IME_HIGHLIGHT_LAYER
-            if (_highlightLayer != null)
+            if (_highlightLayer is not null)
             {
                 this.TextStore.TextContainer.Highlights.RemoveLayer(_highlightLayer);
                 _highlightLayer = null;
@@ -109,7 +109,7 @@ namespace System.Windows.Documents
             // Remove any existing composition adorner for display attribute.
             //
 
-            if (_compositionAdorner != null)
+            if (_compositionAdorner is not null)
             {
                 _compositionAdorner.Uninitialize();
                 _compositionAdorner = null;
@@ -134,12 +134,12 @@ namespace System.Windows.Documents
                     guidAtom = GetInt32Value(ecReadOnly, displayAttributeProperty, attributeRanges[0]);
                     displayAttribute = GetDisplayAttribute(guidAtom);
 
-                    if (displayAttribute != null && !displayAttribute.IsEmptyAttribute())
+                    if (displayAttribute is not null && !displayAttribute.IsEmptyAttribute())
                     {
                         // Set a matching highlight for the attribute range.
                         ConvertToTextPosition(attributeRanges[0], out start, out end);
 
-                        if (start != null)
+                        if (start is not null)
                         {
 #if UNUSED_IME_HIGHLIGHT_LAYER
                         // Demand create the highlight layer.
@@ -169,13 +169,13 @@ namespace System.Windows.Documents
                 }
 
 #if UNUSED_IME_HIGHLIGHT_LAYER
-                if (_highlightLayer != null)
+                if (_highlightLayer is not null)
                 {
                     this.TextStore.TextContainer.Highlights.AddLayer(_highlightLayer);
                 }
 #endif
 
-                if (_compositionAdorner != null)
+                if (_compositionAdorner is not null)
                 {
                     // Update the layout to get the acurated rectangle from calling GetRectangleFromTextPosition
                     this.TextStore.RenderScope.UpdateLayout();
@@ -194,7 +194,7 @@ namespace System.Windows.Documents
         // Updates composition display attribute adorner on-screen location.
         internal void OnLayoutUpdated()
         {
-            if (_compositionAdorner != null)
+            if (_compositionAdorner is not null)
             {
                 _compositionAdorner.InvalidateAdorner();
             }
@@ -225,7 +225,7 @@ namespace System.Windows.Documents
 
             attr = (TextServicesDisplayAttribute)_attributes[guidatom];
 
-            if (attr != null)
+            if (attr is not null)
                 return attr;
 
             //
@@ -260,7 +260,7 @@ namespace System.Windows.Documents
 
             Guid clsid;
             dam.GetDisplayAttributeInfo(ref guid, out dai, out clsid);
-            if (dai != null)
+            if (dai is not null)
             {
                 dai.GetAttributeInfo(out tfattr);
                 attr = new TextServicesDisplayAttribute(tfattr);

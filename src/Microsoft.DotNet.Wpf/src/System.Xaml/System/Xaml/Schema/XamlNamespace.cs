@@ -36,7 +36,7 @@ namespace System.Xaml.Schema
             // For now we just ignore failures, including swalloing assembly load exceptions.
             // Any types in this namespace will be treated as unknown. But it would be useful to
             // surface errors here through tracing or an event.
-            if (_assemblyNamespaces != null)
+            if (_assemblyNamespaces is not null)
             {
                 Initialize();
             }
@@ -48,7 +48,7 @@ namespace System.Xaml.Schema
             _typeCache = XamlSchemaContext.CreateDictionary<string, XamlType>();
         }
 
-        public bool IsResolved => _assemblyNamespaces != null;
+        public bool IsResolved => _assemblyNamespaces is not null;
 
         public ICollection<XamlType> GetAllXamlTypes() => _allPublicTypes ??= LookupAllTypes();
 
@@ -157,8 +157,8 @@ namespace System.Xaml.Schema
             for (int n = 0; n < typeArgs.Length; n++)
             {
                 // Checking for nulls and unknowns is done in public API layer before we ever get here
-                Debug.Assert(typeArgs[n] != null);
-                Debug.Assert(typeArgs[n].UnderlyingType != null);
+                Debug.Assert(typeArgs[n] is not null);
+                Debug.Assert(typeArgs[n].UnderlyingType is not null);
 
                 clrTypeArgs[n] = typeArgs[n].UnderlyingType;
             }
@@ -169,7 +169,7 @@ namespace System.Xaml.Schema
         {
             // The only external mutation we allow is adding new namespaces. So the count of
             // namespaces also serves as a revision number.
-            get => (_assemblyNamespaces != null) ? _assemblyNamespaces.Count : 0;
+            get => (_assemblyNamespaces is not null) ? _assemblyNamespaces.Count : 0;
         }
 
         private Type TryGetType(string typeName)
@@ -254,7 +254,7 @@ namespace System.Xaml.Schema
                 string longName = $"{assemblyNamespacePair.ClrNamespace}.{shortName}";
 
                 Type type = asm.GetType(longName);
-                if (type != null)
+                if (type is not null)
                 {
                     return type;
                 }

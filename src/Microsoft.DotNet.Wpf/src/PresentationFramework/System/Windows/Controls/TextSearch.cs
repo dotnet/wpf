@@ -427,14 +427,14 @@ namespace System.Windows.Controls
             {
                 object item = itemCollection[currentIndex];
 
-                if (item != null)
+                if (item is not null)
                 {
                     string itemString = GetPrimaryText(item, primaryTextBinding, itemsControl);
                     bool isTextSearchCaseSensitive = itemsControl.IsTextSearchCaseSensitive;
 
                     // See if the current item matches the newPrefix, if so we can
                     // stop searching and accept this item as the match.
-                    if (itemString != null && itemString.StartsWith(newPrefix, !isTextSearchCaseSensitive, cultureInfo))
+                    if (itemString is not null && itemString.StartsWith(newPrefix, !isTextSearchCaseSensitive, cultureInfo))
                     {
                         // Accept the new prefix as the current prefix.
                         wasNewCharUsed = true;
@@ -455,7 +455,7 @@ namespace System.Windows.Controls
                     {
                         if (!firstItem && prefix != String.Empty)
                         {
-                            if (itemString != null)
+                            if (itemString is not null)
                             {
                                 if (fallbackMatchIndex == -1 && itemString.StartsWith(prefix, !isTextSearchCaseSensitive, cultureInfo))
                                 {
@@ -485,7 +485,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            if (primaryTextBinding != null)
+            if (primaryTextBinding is not null)
             {
                 // Clean up the binding for the primary text path.
                 TextValueBindingExpression.ClearValue(itemsControl);
@@ -583,7 +583,7 @@ namespace System.Windows.Controls
 
             DependencyObject itemDO = item as DependencyObject;
 
-            if (itemDO != null)
+            if (itemDO is not null)
             {
                 string primaryText = (string)itemDO.GetValue(TextProperty);
 
@@ -594,7 +594,7 @@ namespace System.Windows.Controls
             }
 
             // Here hopefully they've supplied a path into their object which we can use.
-            if (primaryTextBinding != null && primaryTextBindingHome != null)
+            if (primaryTextBinding is not null && primaryTextBindingHome is not null)
             {
                 // Take the binding that we hooked up at the beginning of the search
                 // and apply it to the current item.  Then, read the value of the
@@ -615,18 +615,18 @@ namespace System.Windows.Controls
             FrameworkElement fe = o as FrameworkElement;
 
             // Try to return FrameworkElement.GetPlainText()
-            if (fe != null)
+            if (fe is not null)
             {
                 string text = fe.GetPlainText();
 
-                if (text != null)
+                if (text is not null)
                 {
                     return text;
                 }
             }
 
             // Try to convert the item to a string
-            return (o != null) ? o.ToString() : String.Empty;
+            return (o is not null) ? o.ToString() : String.Empty;
         }
 
         /// <summary>
@@ -691,7 +691,7 @@ namespace System.Windows.Controls
                 _charsEntered.Clear();
             }
 
-            if(_timeoutTimer != null)
+            if(_timeoutTimer is not null)
             {
                 _timeoutTimer.Stop();
             }
@@ -735,7 +735,7 @@ namespace System.Windows.Controls
 
         private void CauseTimeOut()
         {
-            if (_timeoutTimer != null)
+            if (_timeoutTimer is not null)
             {
                 _timeoutTimer.Stop();
                 OnTimeout(_timeoutTimer, EventArgs.Empty);
@@ -758,7 +758,7 @@ namespace System.Windows.Controls
 
             string text = (string)element.GetValue(TextProperty);
 
-            if (text != null && text != String.Empty)
+            if (text is not null && text != String.Empty)
             {
                 return text;
             }
@@ -779,7 +779,7 @@ namespace System.Windows.Controls
 
 #if DEBUG
                 // Also need to invalidate the property CurrentPrefixProperty on the instance to which we are attached.
-                Debug.Assert(_attachedTo != null);
+                Debug.Assert(_attachedTo is not null);
 
                 _attachedTo.SetValue(CurrentPrefixProperty, _prefix);
 #endif
@@ -794,7 +794,7 @@ namespace System.Windows.Controls
                 _isActive = value;
 
 #if DEBUG
-                Debug.Assert(_attachedTo != null);
+                Debug.Assert(_attachedTo is not null);
 
                 _attachedTo.SetValue(IsActiveProperty, _isActive);
 #endif
@@ -815,7 +815,7 @@ namespace System.Windows.Controls
             object o = element.GetValue(FrameworkElement.LanguageProperty);
             CultureInfo culture = null;
 
-            if (o != null)
+            if (o is not null)
             {
                 XmlLanguage language = (XmlLanguage) o;
                 try

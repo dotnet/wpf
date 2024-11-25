@@ -25,10 +25,10 @@ public sealed class SkipStoryboardToFill : ControllableStoryboardAction
     /// </summary>
     internal override void Invoke( FrameworkElement containingFE, FrameworkContentElement containingFCE, Storyboard storyboard )
     {
-        Debug.Assert( containingFE != null || containingFCE != null,
+        Debug.Assert( containingFE is not null || containingFCE is not null,
             "Caller of internal function failed to verify that we have a FE or FCE - we have neither." );
 
-        if( containingFE != null )
+        if( containingFE is not null )
         {
             storyboard.SkipToFill(containingFE);
         }

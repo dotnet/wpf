@@ -122,17 +122,17 @@ namespace System.Windows.Annotations
             }
 
             writer.WriteAttributeString(AnnotationXmlConstants.Attributes.Id, XmlConvert.ToString(_id));
-            if (_name != null)
+            if (_name is not null)
             {
                 writer.WriteAttributeString(AnnotationXmlConstants.Attributes.ResourceName, _name);
             }
 
             // Use the actual field here to avoid creating the collection for no reason
-            if (_locators != null)
+            if (_locators is not null)
             {
                 foreach (ContentLocatorBase locator in _locators)
                 {
-                    if (locator != null)
+                    if (locator is not null)
                     {
                         if (locator is ContentLocatorGroup)
                         {
@@ -147,11 +147,11 @@ namespace System.Windows.Annotations
             }
 
             // Use the actual field here to avoid creating the collection for no reason
-            if (_contents != null)
+            if (_contents is not null)
             {
                 foreach (XmlElement content in _contents)
                 {
-                    if (content != null)
+                    if (content is not null)
                     {
                         content.WriteTo(writer);
                     }
@@ -272,7 +272,7 @@ namespace System.Windows.Annotations
                 bool changed = false;
                 if (_name is null)
                 {
-                    if (value != null)
+                    if (value is not null)
                     {
                         changed = true;
                     }
@@ -433,7 +433,7 @@ namespace System.Windows.Annotations
         /// </summary>
         private void ReadAttributes(XmlReader reader)
         {
-            Invariant.Assert(reader != null, "No reader passed in.");
+            Invariant.Assert(reader is not null, "No reader passed in.");
 
             // Use a temporary variable to determine if a Guid value
             // was actually provided.  The member variable is set in
@@ -504,7 +504,7 @@ namespace System.Windows.Annotations
         /// </summary>
         private void FireResourceChanged(string name)
         {
-            if (_propertyChanged != null)
+            if (_propertyChanged is not null)
             {
                 _propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(name));
             }

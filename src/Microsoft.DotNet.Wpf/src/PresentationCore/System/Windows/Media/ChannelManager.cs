@@ -90,7 +90,7 @@ namespace System.Windows.Media
                 // Close the synchronous channels.
                 //
                 
-                if (_freeSyncChannels != null)
+                if (_freeSyncChannels is not null)
                 {
                     while (_freeSyncChannels.Count > 0) 
                     {
@@ -99,7 +99,7 @@ namespace System.Windows.Media
                     _freeSyncChannels = null;
                 }
 
-                if (_syncServiceChannel != null)
+                if (_syncServiceChannel is not null)
                 {
                     _syncServiceChannel.Close();
 
@@ -112,13 +112,13 @@ namespace System.Windows.Media
             /// </summary>
             internal void RemoveChannels()
             {
-                if (_asyncChannel != null)
+                if (_asyncChannel is not null)
                 {
                     _asyncChannel.Close();
                     _asyncChannel = null;
                 }
 
-                if (_asyncOutOfBandChannel != null)
+                if (_asyncOutOfBandChannel is not null)
                 {
                     _asyncOutOfBandChannel.Close();
                     _asyncOutOfBandChannel = null;
@@ -198,7 +198,7 @@ namespace System.Windows.Media
             /// </summary>
             internal void ReleaseSyncChannel(DUCE.Channel channel)
             {
-                Invariant.Assert(_freeSyncChannels != null);
+                Invariant.Assert(_freeSyncChannels is not null);
 
                 //
                 // A decision needs to be made whether or not we're interested

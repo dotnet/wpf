@@ -84,7 +84,7 @@ namespace System.Windows.Controls
         {
             VerifyAccess();
             _internalEventArg = SetPreprocess(index, column);
-            if (_internalEventArg != null) // the new column is equals to the old one. 
+            if (_internalEventArg is not null) // the new column is equals to the old one. 
             {
                 base.SetItem(index, column);
             }
@@ -220,7 +220,7 @@ namespace System.Windows.Controls
 
         private void OnInternalCollectionChanged()
         {
-            if (_internalCollectionChanged != null && _internalEventArg != null)
+            if (_internalCollectionChanged is not null && _internalEventArg is not null)
             {
                 _internalCollectionChanged(this, _internalEventArg);
                 // This class member is used as parameter, so clear it after used.
@@ -233,7 +233,7 @@ namespace System.Windows.Controls
         {
             GridViewColumn column = sender as GridViewColumn;
 
-            if (_internalCollectionChanged != null && column != null)
+            if (_internalCollectionChanged is not null && column is not null)
             {
                 _internalCollectionChanged(this, new GridViewColumnCollectionChangedEventArgs(column, e.PropertyName));
             }

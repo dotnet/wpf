@@ -137,7 +137,7 @@ namespace System.Windows.Ink
                     }
                     finally
                     {
-                        if (strokeInfo != null)
+                        if (strokeInfo is not null)
                         {
                             //detach from event handlers, or else we leak.
                             strokeInfo.Detach();
@@ -472,7 +472,7 @@ namespace System.Windows.Ink
 
         private void UpdateStrokeCollection(Stroke original, StrokeCollection toReplace, ref int index)
         {
-            System.Diagnostics.Debug.Assert(original != null && toReplace != null);
+            System.Diagnostics.Debug.Assert(original is not null && toReplace is not null);
             System.Diagnostics.Debug.Assert(index >= 0 && index < this.Count);
             if (toReplace.Count == 0)
             {

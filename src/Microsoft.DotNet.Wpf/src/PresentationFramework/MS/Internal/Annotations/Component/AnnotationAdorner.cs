@@ -122,7 +122,7 @@ namespace MS.Internal.Annotations.Component
         /// </summary>        
         protected override int VisualChildrenCount
         {
-            get { return _annotationComponent != null ? 1 : 0; }
+            get { return _annotationComponent is not null ? 1 : 0; }
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace MS.Internal.Annotations.Component
         {
             Size childConstraint = new Size(Double.PositiveInfinity, Double.PositiveInfinity);
 
-            Invariant.Assert(_annotationComponent != null, "AnnotationAdorner should only have one child - the annotation component.");
+            Invariant.Assert(_annotationComponent is not null, "AnnotationAdorner should only have one child - the annotation component.");
 
             ((UIElement)_annotationComponent).Measure(childConstraint);
 
@@ -147,7 +147,7 @@ namespace MS.Internal.Annotations.Component
         /// <param name="finalSize">The location reserved for this element by the parent</param>
         protected override Size ArrangeOverride(Size finalSize)
         {
-            Invariant.Assert(_annotationComponent != null, "AnnotationAdorner should only have one child - the annotation component.");
+            Invariant.Assert(_annotationComponent is not null, "AnnotationAdorner should only have one child - the annotation component.");
 
             ((UIElement)_annotationComponent).Arrange(new Rect(((UIElement)_annotationComponent).DesiredSize));
 

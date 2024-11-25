@@ -232,7 +232,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             get
             {
                 IEnumerable<RibbonTab> tabs = Tabs;
-                if (tabs != null)
+                if (tabs is not null)
                 {
                     foreach (RibbonTab tab in tabs)
                     {
@@ -328,7 +328,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 // On DoubleClick maximize/restore the window
                 RibbonWindow ribbonWindow = Window.GetWindow(this) as RibbonWindow; 
-                if( ribbonWindow != null )
+                if( ribbonWindow is not null )
                 {
 #if RIBBON_IN_FRAMEWORK
                     if (SystemCommands.MaximizeWindowCommand.CanExecute(null, ribbonWindow))
@@ -370,7 +370,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 this.ReleaseMouseCapture();
                 if (IsMouseOver)
                 {
-                    if (e.ChangedButton == MouseButton.Left && this.Ribbon != null)
+                    if (e.ChangedButton == MouseButton.Left && this.Ribbon is not null)
                     {
                         // Selects the first tab in this contextual group.
                         this.Ribbon.NotifyMouseClickedOnContextualTabGroup(this);
@@ -380,7 +380,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     {
                         // Show SystemMenu
                         RibbonWindow ribbonWindow = Window.GetWindow(this) as RibbonWindow;
-                        if (ribbonWindow != null)
+                        if (ribbonWindow is not null)
                         {
 #if RIBBON_IN_FRAMEWORK
                             if (SystemCommands.ShowSystemMenuCommand.CanExecute(null, ribbonWindow))
@@ -421,11 +421,11 @@ namespace Microsoft.Windows.Controls.Ribbon
                 {
                     Header = item;
                 }
-                if (itemTemplate != null)
+                if (itemTemplate is not null)
                     SetValue(HeaderTemplateProperty, itemTemplate);
-                if (itemTemplateSelector != null)
+                if (itemTemplateSelector is not null)
                     SetValue(HeaderTemplateSelectorProperty, itemTemplateSelector);
-                if (itemStringFormat != null)
+                if (itemStringFormat is not null)
                     SetValue(HeaderStringFormatProperty, itemStringFormat);
             }
         }
@@ -455,12 +455,12 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private void UpdateTabs(bool clear)
         {
-            if (Ribbon != null)
+            if (Ribbon is not null)
             {
                 for (int i = 0; i < Ribbon.Items.Count; i++)
                 {
                     RibbonTab tab = Ribbon.ItemContainerGenerator.ContainerFromIndex(i) as RibbonTab;
-                    if (tab != null && tab.IsContextualTab && Object.Equals(tab.ContextualTabGroupHeader, Header))
+                    if (tab is not null && tab.IsContextualTab && Object.Equals(tab.ContextualTabGroupHeader, Header))
                     {
                         if (!clear)
                         {
@@ -483,7 +483,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private void CoerceTabsVisibility()
         {
             IEnumerable<RibbonTab> tabs = Tabs;
-            if (tabs != null)
+            if (tabs is not null)
             {
                 foreach (RibbonTab tab in tabs)
                 {
@@ -518,13 +518,13 @@ namespace Microsoft.Windows.Controls.Ribbon
             public IEnumerator<RibbonTab> GetEnumerator()
             {
                 Ribbon ribbon = ContextualTabGroup.Ribbon;
-                if (ribbon != null)
+                if (ribbon is not null)
                 {
                     int itemCount = ribbon.Items.Count;
                     for (int i = 0; i < itemCount; i++)
                     {
                         RibbonTab tab = ribbon.ItemContainerGenerator.ContainerFromIndex(i) as RibbonTab;
-                        if (tab != null &&
+                        if (tab is not null &&
                             tab.IsContextualTab &&
                             object.ReferenceEquals(ContextualTabGroup, tab.ContextualTabGroup))
                         {

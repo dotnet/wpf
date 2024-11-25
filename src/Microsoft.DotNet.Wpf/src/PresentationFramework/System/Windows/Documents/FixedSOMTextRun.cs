@@ -40,7 +40,7 @@ namespace System.Windows.Documents
         int IComparable.CompareTo(object comparedObj)
         {
             FixedSOMTextRun otherRun = comparedObj as FixedSOMTextRun;
-            Debug.Assert(otherRun != null);
+            Debug.Assert(otherRun is not null);
             int result = 0;
 
             if (_fixedBlock.IsRTL)
@@ -134,7 +134,7 @@ namespace System.Windows.Documents
             run._defaultCharWidth = gtf.XHeight > 0 ? gtf.XHeight * glyphs.FontRenderingEmSize : glyphRun.AdvanceWidths[startIndex];
 
             Transform trans = transform.AffineTransform;
-            if (trans != null &&
+            if (trans is not null &&
                 !(trans.Value.IsIdentity))
             {
                 Matrix mat = trans.Value;
@@ -163,7 +163,7 @@ namespace System.Windows.Documents
                 });
             }
 
-            if (s == "" && glyphs.Indices != null && glyphs.Indices.Length > 0)
+            if (s == "" && glyphs.Indices is not null && glyphs.Indices.Length > 0)
             {
                 run._isWhiteSpace = false;
             }
@@ -189,7 +189,7 @@ namespace System.Windows.Documents
             Rect rect = _boundingRect;
             rect.Inflate(-1,-1);
             dc.DrawRectangle(null, pen , rect);
-            if (label != null && debugVisual == DrawDebugVisual.TextRuns)
+            if (label is not null && debugVisual == DrawDebugVisual.TextRuns)
             {
                 base.RenderLabel(dc, label);
             }
@@ -218,7 +218,7 @@ namespace System.Windows.Documents
                 SolidColorBrush thisBrush = this.Foreground as SolidColorBrush;
                 SolidColorBrush otherBrush = run.Foreground as SolidColorBrush;
                 if ((run.Foreground is null && this.Foreground is null) ||
-                     thisBrush != null && otherBrush != null && thisBrush.Color == otherBrush.Color && thisBrush.Opacity == otherBrush.Opacity)
+                     thisBrush is not null && otherBrush is not null && thisBrush.Color == otherBrush.Color && thisBrush.Opacity == otherBrush.Opacity)
                 {
                     return true;    
                 }
@@ -228,7 +228,7 @@ namespace System.Windows.Documents
 
         public override void SetRTFProperties(FixedElement element)
         {
-            if (_cultureInfo != null)
+            if (_cultureInfo is not null)
             {
                 element.SetValue(FrameworkElement.LanguageProperty, XmlLanguage.GetLanguage(_cultureInfo.IetfLanguageTag));
             }
@@ -245,7 +245,7 @@ namespace System.Windows.Documents
                 element.SetValue(FrameworkElement.FlowDirectionProperty, FlowDirection.LeftToRight);
             }
 
-            if (_fontFamily != null)
+            if (_fontFamily is not null)
             {
                 element.SetValue(TextElement.FontFamilyProperty, new FontFamily(_fontFamily));
             }

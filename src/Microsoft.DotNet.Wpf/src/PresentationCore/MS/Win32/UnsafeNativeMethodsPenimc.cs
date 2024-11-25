@@ -225,7 +225,7 @@ namespace MS.Win32.Penimc
         /// <param name="manager">The manager to release the lock for.</param>'
         internal static void ReleaseManagerExternalLock()
         {
-            if (_pimcManagerThreadStatic != null)
+            if (_pimcManagerThreadStatic is not null)
             {
                 ReleaseManagerExternalLockImpl(_pimcManagerThreadStatic);
             }

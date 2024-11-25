@@ -63,7 +63,7 @@ namespace System.Xaml.MS.Impl
             {
                 return _hashCode;
             }
-            _hashCode = (_memberInfo1 != null)
+            _hashCode = (_memberInfo1 is not null)
                 ? HashCode(_memberInfo1)
                 : HashCode(_memberInfo2);
 

@@ -247,7 +247,7 @@ namespace System.Windows
             {
                 WritePreamble();
 
-                if (value != null)
+                if (value is not null)
                 {
                     ChangedInternal += value;
                 }
@@ -256,7 +256,7 @@ namespace System.Windows
             {
                 WritePreamble();
 
-                if (value != null)
+                if (value is not null)
                 {
                     ChangedInternal -= value;
                 }
@@ -464,7 +464,7 @@ namespace System.Windows
                 DependencyProperty dp =
                     DependencyProperty.RegisteredPropertyList.List[effectiveValues[i].PropertyIndex];
 
-                if (dp != null)
+                if (dp is not null)
                 {
                     EntryIndex entryIndex = new EntryIndex(i);
                     PropertyMetadata metadata = dp.GetMetadata(DependencyObjectType);
@@ -561,12 +561,12 @@ namespace System.Windows
                 DependencyObject context = SingletonContext;
 
                 contextAsFreezable = context as Freezable;
-                if (contextAsFreezable != null)
+                if (contextAsFreezable is not null)
                 {
                     contextAsFreezable.GetChangeHandlersAndInvalidateSubProperties(ref calledHandlers);
                 }
 
-                if (SingletonContextProperty != null)
+                if (SingletonContextProperty is not null)
                 {
                     context.InvalidateSubProperty(SingletonContextProperty);
                 }
@@ -583,14 +583,14 @@ namespace System.Windows
                     FreezableContextPair currentContext = contextList[i];
 
                     DependencyObject currentDO = (DependencyObject)currentContext.Owner.Target;
-                    if (currentDO != null)
+                    if (currentDO is not null)
                     {
                         // we only want to grab change handlers once per context reference - so skip
                         // until we find a new one
                         if (currentDO != lastDO)
                         {
                             contextAsFreezable = currentDO as Freezable;
-                            if (contextAsFreezable != null)
+                            if (contextAsFreezable is not null)
                             {
                                 contextAsFreezable.GetChangeHandlersAndInvalidateSubProperties(ref calledHandlers);
                             }
@@ -598,7 +598,7 @@ namespace System.Windows
                             lastDO = currentDO;
                         }
 
-                        if (currentContext.Property != null)
+                        if (currentContext.Property is not null)
                         {
                             currentDO.InvalidateSubProperty(currentContext.Property);
                         }
@@ -694,17 +694,17 @@ namespace System.Windows
             //    changed handlers, otherwise we will leave the freezable in an
             //    inconsistent state.
             //
-            if (newValue != null)
+            if (newValue is not null)
             {
                 EnsureConsistentDispatchers(this, newValue);
             }
 
-            if (oldValue != null)
+            if (oldValue is not null)
             {
                 RemoveSelfAsInheritanceContext(oldValue, property);
             }
 
-            if (newValue != null)
+            if (newValue is not null)
             {
                 ProvideSelfAsInheritanceContext(newValue, property);
             }
@@ -728,7 +728,7 @@ namespace System.Windows
         // SetFreezableContextCore directly.  What situations would remain for subclasses to need to call it?
         static protected internal bool Freeze(Freezable freezable, bool isChecking)
         {
-            if (freezable != null)
+            if (freezable is not null)
             {
                 return freezable.Freeze(isChecking);
             }
@@ -797,7 +797,7 @@ namespace System.Windows
             GetChangeHandlersAndInvalidateSubProperties(ref calledHandlers);
 
             // Fire all of the change handlers
-            if (calledHandlers != null)
+            if (calledHandlers is not null)
             {
                 for (int i = 0, count = calledHandlers.Count; i < count; i++)
                 {
@@ -913,7 +913,7 @@ namespace System.Windows
                 DependencyProperty dp = DependencyProperty.RegisteredPropertyList.List[srcEntry.PropertyIndex];
 
                 // We need to skip ReadOnly properties otherwise SetValue will fail
-                if ((dp != null) && !dp.ReadOnly)
+                if ((dp is not null) && !dp.ReadOnly)
                 {
                     object sourceValue;
 
@@ -966,7 +966,7 @@ namespace System.Windows
 
                     Freezable valueAsFreezable = sourceValue as Freezable;
 
-                    if (valueAsFreezable != null)
+                    if (valueAsFreezable is not null)
                     {
                         Freezable valueAsFreezableClone;
 
@@ -1027,14 +1027,14 @@ namespace System.Windows
         // Throws if owner/child are not context free and on different dispatchers.
         private static void EnsureConsistentDispatchers(DependencyObject owner, DependencyObject child)
         {
-            Debug.Assert(owner != null && child != null,
+            Debug.Assert(owner is not null && child is not null,
                 "Caller should guard against passing null owner/child.");
 
             // It is illegal to set a DependencyObject from one Dispatcher into a owner
             // being serviced by a different Dispatcher (i.e., they need to be on
             // the same thread or be context free (Dispatcher is null))
-            if (owner.Dispatcher != null &&
-                child.Dispatcher != null &&
+            if (owner.Dispatcher is not null &&
+                child.Dispatcher is not null &&
                 owner.Dispatcher != child.Dispatcher)
             {
                 throw new InvalidOperationException(
@@ -1059,7 +1059,7 @@ namespace System.Windows
         /// </summary>
         private void RemoveContextInformation(DependencyObject context, DependencyProperty property)
         {
-            Debug.Assert(context != null);
+            Debug.Assert(context is not null);
 
             bool failed = true;
 
@@ -1084,7 +1084,7 @@ namespace System.Windows
                     FreezableContextPair entry = list[i];
 
                     object owner = entry.Owner.Target;
-                    if (owner != null)
+                    if (owner is not null)
                     {
                         if (failed && entry.Property == property && owner == context)
                         {
@@ -1122,7 +1122,7 @@ namespace System.Windows
         private void RemoveSingletonContext()
         {
             Debug.Assert(Freezable_UsingSingletonContext);
-            Debug.Assert(SingletonContext != null);
+            Debug.Assert(SingletonContext is not null);
 
             if (HasHandlers)
             {
@@ -1163,7 +1163,7 @@ namespace System.Windows
         /// <param name="property">The property of the DependencyObject this object maps to or null if none.</param>
         internal override void AddInheritanceContext(DependencyObject context, DependencyProperty property)
         {
-            Debug.Assert(context != null);
+            Debug.Assert(context is not null);
 
             // Debug_VerifyContextIsValid(context, property);
 
@@ -1189,7 +1189,7 @@ namespace System.Windows
         /// <param name="property">The property of the DependencyObject this object maps to or null if none.</param>
         internal override void RemoveInheritanceContext(DependencyObject context, DependencyProperty property)
         {
-            Debug.Assert(context != null);
+            Debug.Assert(context is not null);
 
             if (!IsFrozenInternal)
             {
@@ -1213,7 +1213,7 @@ namespace System.Windows
         /// </summary>
         internal void AddContextInformation(DependencyObject context, DependencyProperty property)
         {
-            Debug.Assert(context != null);
+            Debug.Assert(context is not null);
 
             if (Freezable_UsingSingletonContext)
             {
@@ -1270,7 +1270,7 @@ namespace System.Windows
         private void AddSingletonContext(DependencyObject context, DependencyProperty property)
         {
             Debug.Assert(!Freezable_UsingSingletonContext && !Freezable_UsingContextList);
-            Debug.Assert(context != null);
+            Debug.Assert(context is not null);
 
             if (HasHandlers)
             {
@@ -1301,7 +1301,7 @@ namespace System.Windows
         /// <param name="property">The property of the DependencyObject this object maps to or null if none.</param>
         private void AddContextToList(DependencyObject context, DependencyProperty property)
         {
-            Debug.Assert(context != null);
+            Debug.Assert(context is not null);
 
             FrugalObjectList<FreezableContextPair> list = ContextList;
             int count = list.Count;
@@ -1322,7 +1322,7 @@ namespace System.Windows
             for (int i = 0; i < count; i++)
             {
                 DependencyObject currentContext = (DependencyObject)list[i].Owner.Target;
-                if (currentContext != null)
+                if (currentContext is not null)
                 {
                     if (currentContext == context)
                     {
@@ -1417,7 +1417,7 @@ namespace System.Windows
         /// <param name="handler">Handler to add</param>
         private void HandlerAdd(EventHandler handler)
         {
-            Debug.Assert(handler != null);
+            Debug.Assert(handler is not null);
 
             if (Freezable_UsingSingletonHandler)
             {
@@ -1442,7 +1442,7 @@ namespace System.Windows
         {
             bool failed = true;
 
-            Debug.Assert(handler != null);
+            Debug.Assert(handler is not null);
 
             if (Freezable_UsingSingletonHandler)
             {
@@ -1552,7 +1552,7 @@ namespace System.Windows
         private void AddSingletonHandler(EventHandler handler)
         {
             Debug.Assert(!Freezable_UsingHandlerList && !Freezable_UsingSingletonHandler);
-            Debug.Assert(handler != null);
+            Debug.Assert(handler is not null);
 
             if (HasContextInformation)
             {
@@ -1766,7 +1766,7 @@ namespace System.Windows
                         {
                             DependencyObject currentContext = (DependencyObject)list[i].Owner.Target;
 
-                            if (currentContext != null && currentContext.CanBeInheritanceContext)
+                            if (currentContext is not null && currentContext.CanBeInheritanceContext)
                             {
                                 // This is the first and only valid inheritance context we should find
                                 return currentContext;
@@ -1945,7 +1945,7 @@ namespace System.Windows
                 Invariant.Assert(!cloneAsFreezable.HasHandlers, "CloneCore should not have handlers attached on construction.");
 
                 IList originalAsIList = original as IList;
-                if (originalAsIList != null)
+                if (originalAsIList is not null)
                 {
                     // we've already checked that original and clone are the same type
                     IList cloneAsIList = clone as IList;
@@ -1956,7 +1956,7 @@ namespace System.Windows
                     {
                         Freezable originalItemAsFreezable = originalAsIList[i] as Freezable;
                         Freezable cloneItemAsFreezable = cloneAsIList[i] as Freezable;
-                        if (isDeepClone && cloneItemAsFreezable != null && cloneItemAsFreezable != null)
+                        if (isDeepClone && cloneItemAsFreezable is not null && cloneItemAsFreezable is not null)
                         {
                             Invariant.Assert(originalItemAsFreezable != cloneItemAsFreezable, "CloneCore didn't clone the elements in the list correctly.");
                         }
@@ -1969,7 +1969,7 @@ namespace System.Windows
         {
             if (Invariant.Strict)
             {
-                Invariant.Assert(newInstance != null, "{0} should not return null.", methodName);
+                Invariant.Assert(newInstance is not null, "{0} should not return null.", methodName);
                 Invariant.Assert(newInstance.GetType() == original.GetType(),
                     String.Format(System.Globalization.CultureInfo.InvariantCulture,
                         "{0} should return instance of same type. (Expected= '{1}', Actual='{2}')",
@@ -2023,7 +2023,7 @@ namespace System.Windows
         {
             if (Invariant.Strict)
             {
-                Invariant.Assert(owner != null,
+                Invariant.Assert(owner is not null,
                     "We should not have null owners in the ContextList/SingletonContext.");
 
                 if (property is null)

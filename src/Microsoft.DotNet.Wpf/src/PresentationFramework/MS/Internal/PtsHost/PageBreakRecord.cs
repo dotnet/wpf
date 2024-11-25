@@ -35,7 +35,7 @@ namespace MS.Internal.PtsHost
         /// <param name="pageNumber">Page number.</param>
         internal PageBreakRecord(PtsContext ptsContext, IntPtr br, int pageNumber)
         {
-            Invariant.Assert(ptsContext != null, "Invalid PtsContext object.");
+            Invariant.Assert(ptsContext is not null, "Invalid PtsContext object.");
             Invariant.Assert(br != IntPtr.Zero, "Invalid break record object.");
 
             _br = br;
@@ -143,7 +143,7 @@ namespace MS.Internal.PtsHost
                 // Hence it is OK to access _ptsContext during finalization.
                 // See: http://blogs.msdn.com/cbrumme/archive/2004/02/20/77460.aspx
                 ptsContext = _ptsContext.Target as PtsContext;
-                if (ptsContext != null && !ptsContext.Disposed)
+                if (ptsContext is not null && !ptsContext.Disposed)
                 {
                     // Notify PtsContext that BreakRecord is not used anymore, so all
                     // associated resources can by destroyed.

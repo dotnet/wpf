@@ -41,7 +41,7 @@ namespace MS.Internal.Documents
         /// </param>
         internal DocumentPageTextView(DocumentPageView owner, ITextContainer textContainer)
         {
-            Invariant.Assert(owner != null && textContainer != null);
+            Invariant.Assert(owner is not null && textContainer is not null);
             _owner = owner;
             _page = owner.DocumentPageInternal;
             _textContainer = textContainer;
@@ -50,7 +50,7 @@ namespace MS.Internal.Documents
             {
                 _pageTextView = ((IServiceProvider)_page).GetService(typeof(ITextView)) as ITextView;
             }
-            if (_pageTextView != null)
+            if (_pageTextView is not null)
             {
                 _pageTextView.Updated += new EventHandler(HandlePageTextViewUpdated);
             }
@@ -67,7 +67,7 @@ namespace MS.Internal.Documents
         /// </param>
         internal DocumentPageTextView(FlowDocumentView owner, ITextContainer textContainer)
         {
-            Invariant.Assert(owner != null && textContainer != null);
+            Invariant.Assert(owner is not null && textContainer is not null);
             _owner = owner;
             _page = owner.DocumentPage;
             _textContainer = textContainer;
@@ -76,7 +76,7 @@ namespace MS.Internal.Documents
             {
                 _pageTextView = ((IServiceProvider)_page).GetService(typeof(ITextView)) as ITextView;
             }
-            if (_pageTextView != null)
+            if (_pageTextView is not null)
             {
                 _pageTextView.Updated += new EventHandler(HandlePageTextViewUpdated);
             }
@@ -133,7 +133,7 @@ namespace MS.Internal.Documents
             }
 
             rect = _pageTextView.GetRawRectangleFromTextPosition(position, out pageTextViewTransform);
-            Invariant.Assert(pageTextViewTransform != null);
+            Invariant.Assert(pageTextViewTransform is not null);
             ancestorTransform = GetTransformToAncestor();
             transform = GetAggregateTransform(pageTextViewTransform, ancestorTransform);
             return rect;
@@ -155,7 +155,7 @@ namespace MS.Internal.Documents
             if (!IsPageMissing)
             {
                 geometry = _pageTextView.GetTightBoundingGeometryFromTextPositions(startPosition, endPosition);
-                if (geometry != null)
+                if (geometry is not null)
                 {
                     Transform transform = GetTransformToAncestor().AffineTransform;
                     CaretElement.AddTransformToGeometry(geometry, transform);
@@ -227,7 +227,7 @@ namespace MS.Internal.Documents
                 // Transfrom offset to _pageTextView's coordinate position, obtain position from _pageTextView and convert back
                 offset = TransformToDescendant(offset);
                 positionOut = _pageTextView.GetTextPositionFromPoint(offset, true);
-                Invariant.Assert(positionOut != null);
+                Invariant.Assert(positionOut is not null);
                 Rect rect = _pageTextView.GetRectangleFromTextPosition(position);
                 newSuggestedOffset = TransformToAncestor(new Point(rect.X, rect.Y));
             }
@@ -356,7 +356,7 @@ namespace MS.Internal.Documents
             {
                 _pageTextView = ((IServiceProvider)_page).GetService(typeof(ITextView)) as ITextView;
             }
-            if (_pageTextView != null)
+            if (_pageTextView is not null)
             {
                 _pageTextView.Updated += new EventHandler(HandlePageTextViewUpdated);
             }
@@ -371,7 +371,7 @@ namespace MS.Internal.Documents
         /// </summary>
         internal void OnPageDisconnected()
         {
-            if (_pageTextView != null)
+            if (_pageTextView is not null)
             {
                 _pageTextView.Updated -= new EventHandler(HandlePageTextViewUpdated);
             }
@@ -399,7 +399,7 @@ namespace MS.Internal.Documents
             {
                 _owner.UpdateLayout();
             }
-            return (_pageTextView != null && _pageTextView.Validate());
+            return (_pageTextView is not null && _pageTextView.Validate());
         }
 
         /// <summary>
@@ -454,7 +454,7 @@ namespace MS.Internal.Documents
         {
             FlowDocumentView owner = _owner as FlowDocumentView;
 
-            if (owner != null && owner.Document != null)
+            if (owner is not null && owner.Document is not null)
             {
                 owner.Document.StructuralCache.ThrottleBackgroundFormatting();
             }
@@ -501,7 +501,7 @@ namespace MS.Internal.Documents
                 {
                     return true;
                 }
-                return (_pageTextView != null && _pageTextView.IsValid);
+                return (_pageTextView is not null && _pageTextView.IsValid);
             }
         }
 
@@ -512,7 +512,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_pageTextView != null)
+                if (_pageTextView is not null)
                 {
                     return _pageTextView.RendersOwnSelection;
                 }
@@ -559,7 +559,7 @@ namespace MS.Internal.Documents
         /// </summary>
         private void HandlePageTextViewUpdated(object sender, EventArgs e)
         {
-            Invariant.Assert(_pageTextView != null);
+            Invariant.Assert(_pageTextView is not null);
             if (sender == _pageTextView)
             {
                 OnUpdated(EventArgs.Empty);
@@ -589,7 +589,7 @@ namespace MS.Internal.Documents
             Invariant.Assert(IsValid && !IsPageMissing);
             // NOTE: TransformToAncestor is safe (will never throw an exception).
             GeneralTransform transform = _page.Visual.TransformToAncestor(_owner);
-            if (transform != null)
+            if (transform is not null)
             {
                 point = transform.Transform(point);
             }
@@ -604,10 +604,10 @@ namespace MS.Internal.Documents
             Invariant.Assert(IsValid && !IsPageMissing);
             // NOTE: TransformToAncestor is safe (will never throw an exception).
             GeneralTransform transform = _page.Visual.TransformToAncestor(_owner);
-            if (transform != null)
+            if (transform is not null)
             {
                 transform = transform.Inverse;
-                if (transform != null)
+                if (transform is not null)
                 {
                     point = transform.Transform(point);
                 }
@@ -630,7 +630,7 @@ namespace MS.Internal.Documents
         {
             double newOffset = offset;
             pagesMoved = 0;
-            if (_owner is IScrollInfo && ((IScrollInfo)_owner).ScrollOwner != null)
+            if (_owner is IScrollInfo && ((IScrollInfo)_owner).ScrollOwner is not null)
             {
                 IScrollInfo scrollInfo = (IScrollInfo)_owner;
                 double viewportHeight = scrollInfo.ViewportHeight;

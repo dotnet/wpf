@@ -46,7 +46,7 @@ namespace System.Windows.Media.Imaging
         {
             _bitmapInit.BeginInit();
 
-            Debug.Assert(source != null);
+            Debug.Assert(source is not null);
             _source = source;
             WicSourceHandle = _source.WicSourceHandle;
             IsSourceCached = _source.IsSourceCached;
@@ -175,12 +175,12 @@ namespace System.Windows.Media.Imaging
         {
             _bitmapInit.BeginInit();
 
-            Debug.Assert(sourceBitmapFrameEncode._source != null);
+            Debug.Assert(sourceBitmapFrameEncode._source is not null);
             _source = sourceBitmapFrameEncode._source;
             _thumbnail = sourceBitmapFrameEncode._thumbnail;
             _readOnlycolorContexts = sourceBitmapFrameEncode.ColorContexts;
 
-            if (sourceBitmapFrameEncode.InternalMetadata != null)
+            if (sourceBitmapFrameEncode.InternalMetadata is not null)
             {
                 InternalMetadata = sourceBitmapFrameEncode.InternalMetadata.Clone();
             }

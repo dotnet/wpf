@@ -157,7 +157,7 @@ namespace System.Windows.Baml2006
                 return schema.GetXamlType(_typeConverterType).TypeConverter;
             }
 
-            if (_typeConverterType != null)
+            if (_typeConverterType is not null)
             {
                 return schema.GetTypeConverter(_typeConverterType);
             }
@@ -177,7 +177,7 @@ namespace System.Windows.Baml2006
 
         protected override XamlValueConverter<XamlDeferringLoader> LookupDeferringLoader()
         {
-            if (_deferringLoader != null)
+            if (_deferringLoader is not null)
             {
                 WpfSharedBamlSchemaContext schema = System.Windows.Markup.XamlReader.BamlSharedSchemaContext;
                 return schema.GetDeferringLoader(_deferringLoader);
@@ -192,7 +192,7 @@ namespace System.Windows.Baml2006
 
         protected override XamlType LookupType()
         {
-            if (DependencyProperty != null)
+            if (DependencyProperty is not null)
             {
                 return System.Windows.Markup.XamlReader.BamlSharedSchemaContext.GetXamlType(DependencyProperty.PropertyType);
             }

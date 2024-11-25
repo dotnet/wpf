@@ -412,7 +412,7 @@ namespace System.Printing
             System.Runtime.Serialization.StreamingContext   context
             )
         {
-            if (info != null)
+            if (info is not null)
             {
                 info.AddValue("PrinterName", printerName);
             }
@@ -579,7 +579,7 @@ namespace System.Printing
             System.Runtime.Serialization.StreamingContext   context
             )
         {
-            if (info != null)
+            if (info is not null)
             {
                 info.AddValue("ServerName", serverName);
             }
@@ -733,7 +733,7 @@ namespace System.Printing
             System.Runtime.Serialization.StreamingContext       context
             )
         {
-            if (info != null)
+            if (info is not null)
             {
                 info.AddValue("CommittedAttributes", committedAttributes);
                 info.AddValue("FailedAttributes",   failedAttributes);
@@ -938,7 +938,7 @@ namespace System.Printing
             System.Runtime.Serialization.StreamingContext    context
             )
         {
-            if( info != null )
+            if( info is not null )
             {
                 info.AddValue("JobId", jobId );
             }

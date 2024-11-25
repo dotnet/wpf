@@ -138,7 +138,7 @@ namespace System.Windows.Input
 
             TextCompositionManager compmgr = InputManager.Current.PrimaryKeyboardDevice.TextCompositionManager;
 
-            if (rangeResult != null)
+            if (rangeResult is not null)
             {
                 string result = StringFromITfRange(rangeResult, ecReadOnly);
                 if (result.Length > 0)
@@ -169,7 +169,7 @@ namespace System.Windows.Input
                 }
             }
 
-            if (rangeComposition != null)
+            if (rangeComposition is not null)
             {
                 string comp = StringFromITfRange(rangeComposition, ecReadOnly);
                 if (comp.Length > 0)

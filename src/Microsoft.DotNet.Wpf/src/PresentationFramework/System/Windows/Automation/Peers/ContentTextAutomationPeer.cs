@@ -36,7 +36,7 @@ namespace System.Windows.Automation.Peers
             if (EventMap.HasRegisteredEvent(AutomationEvents.ActiveTextPositionChanged))
             {
                 IRawElementProviderSimple provider = ProviderFromPeer(this);
-                if (provider != null)
+                if (provider is not null)
                 {
                     ActiveTextPositionChangedEventArgs args = new ActiveTextPositionChangedEventArgs(TextRangeFromTextPointers(rangeStart, rangeEnd));
                     AutomationInteropProvider.RaiseAutomationEvent(

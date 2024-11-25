@@ -82,7 +82,7 @@ namespace System.Windows.Controls
         {
             HeaderedContentControl ctrl = (HeaderedContentControl) d;
 
-            ctrl.SetValue(HasHeaderPropertyKey, (e.NewValue != null) ? BooleanBoxes.TrueBox : BooleanBoxes.FalseBox);
+            ctrl.SetValue(HasHeaderPropertyKey, (e.NewValue is not null) ? BooleanBoxes.TrueBox : BooleanBoxes.FalseBox);
             ctrl.OnHeaderChanged(e.OldValue, e.NewValue);
         }
 
@@ -346,11 +346,11 @@ namespace System.Windows.Controls
                     HeaderIsItem = true;
                 }
 
-                if (itemTemplate != null)
+                if (itemTemplate is not null)
                     SetValue(HeaderTemplateProperty, itemTemplate);
-                if (itemTemplateSelector != null)
+                if (itemTemplateSelector is not null)
                     SetValue(HeaderTemplateSelectorProperty, itemTemplateSelector);
-                if (stringFormat != null)
+                if (stringFormat is not null)
                     SetValue(HeaderStringFormatProperty, stringFormat);
             }
             else

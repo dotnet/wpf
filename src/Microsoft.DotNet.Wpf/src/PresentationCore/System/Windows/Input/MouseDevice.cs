@@ -78,7 +78,7 @@ namespace System.Windows.Input
         protected MouseButtonState GetButtonState(MouseButton mouseButton)
         {
             // StylusDevice could have been disposed internally here.
-            if ( _stylusDevice != null && _stylusDevice.IsValid)
+            if ( _stylusDevice is not null && _stylusDevice.IsValid)
                 return _stylusDevice.GetMouseButtonState(mouseButton, this);
             else
                 return GetButtonStateFromSystem(mouseButton);
@@ -92,7 +92,7 @@ namespace System.Windows.Input
         /// </returns>
         protected Point GetScreenPosition()
         {
-            if (_stylusDevice != null)
+            if (_stylusDevice is not null)
                 return _stylusDevice.GetMouseScreenPosition(this);
             else
                 return GetScreenPositionFromSystem();
@@ -128,7 +128,7 @@ namespace System.Windows.Input
                 try
                 {
                     PresentationSource activeSource = CriticalActiveSource;
-                    if (activeSource != null)
+                    if (activeSource is not null)
                     {
                         ptScreen = PointUtil.ClientToScreen(_lastPosition, activeSource);
                     }
@@ -155,7 +155,7 @@ namespace System.Windows.Input
             try
             {
                 PresentationSource activeSource = CriticalActiveSource;
-                if (activeSource != null)
+                if (activeSource is not null)
                 {
                     ptClient = GetClientPosition(activeSource);
                 }
@@ -237,10 +237,10 @@ namespace System.Windows.Input
         {
             get
             {
-                if (_rawMouseOver != null)
+                if (_rawMouseOver is not null)
                 {
                     IInputElement rawMouseOver = (IInputElement)_rawMouseOver.Target;
-                    if (rawMouseOver != null)
+                    if (rawMouseOver is not null)
                     {
                         return rawMouseOver;
                     }
@@ -306,7 +306,7 @@ namespace System.Windows.Input
 
             // Validate that elt is either a UIElement, a ContentElement or a UIElement3D.
             DependencyObject eltDO = element as DependencyObject;
-            if (eltDO != null && !InputElement.IsValid(element))
+            if (eltDO is not null && !InputElement.IsValid(element))
             {
                 throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, eltDO.GetType()));
             }
@@ -358,28 +358,28 @@ namespace System.Windows.Input
                 // the new element (if taking capture) or the existing capture
                 // element (if releasing capture).
                 IMouseInputProvider mouseInputProvider = null;
-                if (element != null)
+                if (element is not null)
                 {
                     DependencyObject containingVisual = InputElement.GetContainingVisual(eltDO);
-                    if (containingVisual != null)
+                    if (containingVisual is not null)
                     {
                         PresentationSource captureSource = PresentationSource.CriticalFromVisual(containingVisual);
-                        if (captureSource != null)
+                        if (captureSource is not null)
                         {
                             mouseInputProvider = captureSource.GetInputProvider(typeof(MouseDevice)) as IMouseInputProvider;
                         }
                     }
                 }
-                else if (_mouseCapture != null)
+                else if (_mouseCapture is not null)
                 {
                     mouseInputProvider = _providerCapture;
                 }
 
                 // If we found a mouse input provider, ask it to either capture
                 // or release the mouse for us.
-                if(mouseInputProvider != null)
+                if(mouseInputProvider is not null)
                 {
-                    if (element != null)
+                    if (element is not null)
                     {
                         // CaptureMouse can raise a MouseMove event in some cases
                         // and listeners that query Mouse.Captured should not see the old
@@ -430,7 +430,7 @@ namespace System.Windows.Input
             while (inputProviders.MoveNext())
             {
                 IMouseInputProvider provider = inputProviders.Current as IMouseInputProvider;
-                if (provider != null )
+                if (provider is not null )
                 {
                     mouseInputProvider = provider;
                     break;
@@ -473,7 +473,7 @@ namespace System.Windows.Input
 //             VerifyAccess();
 
             // Override the cursor if one is set.
-            if (_overrideCursor != null)
+            if (_overrideCursor is not null)
             {
                 cursor = _overrideCursor;
             }
@@ -486,7 +486,7 @@ namespace System.Windows.Input
             IMouseInputProvider mouseInputProvider = FindMouseInputProviderForCursor();
 
             // If we found one, set the cursor
-            if (mouseInputProvider != null)
+            if (mouseInputProvider is not null)
                 return mouseInputProvider.SetCursor(cursor);
             else
                 return false;
@@ -556,19 +556,19 @@ namespace System.Windows.Input
 //             VerifyAccess();
 
             // Validate that relativeTo is either a UIElement, a ContentElement or a UIElement3D.
-            if (relativeTo != null && !InputElement.IsValid(relativeTo))
+            if (relativeTo is not null && !InputElement.IsValid(relativeTo))
             {
                 throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, relativeTo.GetType()));
             }
 
             PresentationSource relativePresentationSource = null;
 
-            if (relativeTo != null)
+            if (relativeTo is not null)
             {
                 DependencyObject dependencyObject = relativeTo as  DependencyObject;
                 DependencyObject containingVisual = InputElement.GetContainingVisual(dependencyObject);
 
-                if (containingVisual != null)
+                if (containingVisual is not null)
                 {
                     relativePresentationSource = PresentationSource.CriticalFromVisual(containingVisual);
                 }
@@ -612,7 +612,7 @@ namespace System.Windows.Input
         /// </summary>
         internal void ReevaluateMouseOver(DependencyObject element, DependencyObject oldParent, bool isCoreParent)
         {
-            if (element != null)
+            if (element is not null)
             {
                 if (isCoreParent)
                 {
@@ -660,7 +660,7 @@ namespace System.Windows.Input
             // tree state.  This is because it is possible (even likely) that
             // Synchronize() would have already done this if we hit-tested to a
             // different element.
-            if (_mouseOverTreeState != null && !_mouseOverTreeState.IsEmpty)
+            if (_mouseOverTreeState is not null && !_mouseOverTreeState.IsEmpty)
             {
                 UIElement.MouseOverProperty.OnOriginValueChanged(_mouseOver as DependencyObject, _mouseOver as DependencyObject, ref _mouseOverTreeState);
             }
@@ -672,7 +672,7 @@ namespace System.Windows.Input
         /// </summary>
         internal void ReevaluateCapture(DependencyObject element, DependencyObject oldParent, bool isCoreParent)
         {
-            if (element != null)
+            if (element is not null)
             {
                 if (isCoreParent)
                 {
@@ -752,7 +752,7 @@ namespace System.Windows.Input
             // tree state.  This is because it is possible (even likely) that
             // we would have already killed capture if the capture criteria was
             // no longer met.
-            if (_mouseCaptureWithinTreeState != null && !_mouseCaptureWithinTreeState.IsEmpty)
+            if (_mouseCaptureWithinTreeState is not null && !_mouseCaptureWithinTreeState.IsEmpty)
             {
                 UIElement.MouseCaptureWithinProperty.OnOriginValueChanged(_mouseCapture as DependencyObject, _mouseCapture as DependencyObject, ref _mouseCaptureWithinTreeState);
             }
@@ -891,7 +891,7 @@ namespace System.Windows.Input
 
             // Simulate a mouse move
             PresentationSource activeSource = CriticalActiveSource;
-            if (activeSource != null && activeSource.CompositionTarget != null && !activeSource.CompositionTarget.IsDisposed)
+            if (activeSource is not null && activeSource.CompositionTarget is not null && !activeSource.CompositionTarget.IsDisposed)
             {
                 int timeStamp = Environment.TickCount;
                 Point ptClient = GetClientPosition();
@@ -907,7 +907,7 @@ namespace System.Windows.Input
                 report._isSynchronize = true;
 
                 InputReportEventArgs inputReportEventArgs;
-                if (_stylusDevice != null)
+                if (_stylusDevice is not null)
                 {
                     // if we have a current stylusdevice .. use it
                     inputReportEventArgs = new InputReportEventArgs(_stylusDevice, report);
@@ -966,7 +966,7 @@ namespace System.Windows.Input
                 using(Dispatcher.DisableProcessing()) // Disable reentrancy due to locks taken
                 {
                     // Adjust the handlers we use to track everything.
-                    if(oldMouseOver != null)
+                    if(oldMouseOver is not null)
                     {
                         o = oldMouseOver as DependencyObject;
                         if (o is UIElement uie)
@@ -991,7 +991,7 @@ namespace System.Windows.Input
                             uie3D.IsHitTestVisibleChanged -= _overIsHitTestVisibleChangedEventHandler;
                         }
                     }
-                    if(_mouseOver != null)
+                    if(_mouseOver is not null)
                     {
                         o = _mouseOver as DependencyObject;
                         if (o is UIElement uie)
@@ -1024,12 +1024,12 @@ namespace System.Windows.Input
                 UIElement.MouseOverProperty.OnOriginValueChanged(oldMouseOver as DependencyObject, _mouseOver as DependencyObject, ref _mouseOverTreeState);
 
                 // Invalidate the IsMouseDirectlyOver property.
-                if (oldMouseOver != null)
+                if (oldMouseOver is not null)
                 {
                     o = oldMouseOver as DependencyObject;
                     o.SetValue(UIElement.IsMouseDirectlyOverPropertyKey, false); // Same property for ContentElements
                 }
-                if (_mouseOver != null)
+                if (_mouseOver is not null)
                 {
                     o = _mouseOver as DependencyObject;
                     o.SetValue(UIElement.IsMouseDirectlyOverPropertyKey, true); // Same property for ContentElements
@@ -1047,7 +1047,7 @@ namespace System.Windows.Input
                 // Update the critical pieces of data.
                 IInputElement oldMouseCapture = _mouseCapture;
                 _mouseCapture = mouseCapture;
-                if (_mouseCapture != null)
+                if (_mouseCapture is not null)
                 {
                     _providerCapture = providerCapture;
                 }
@@ -1060,7 +1060,7 @@ namespace System.Windows.Input
                 using (Dispatcher.DisableProcessing()) // Disable reentrancy due to locks taken
                 {
                     // Adjust the handlers we use to track everything.
-                    if (oldMouseCapture != null)
+                    if (oldMouseCapture is not null)
                     {
                         o = oldMouseCapture as DependencyObject;
                         if (o is UIElement uie)
@@ -1085,7 +1085,7 @@ namespace System.Windows.Input
                             uie3D.IsHitTestVisibleChanged -= _captureIsHitTestVisibleChangedEventHandler;
                         }
                     }
-                    if (_mouseCapture != null)
+                    if (_mouseCapture is not null)
                     {
                         o = _mouseCapture as DependencyObject;
                         if (o is UIElement uie)
@@ -1118,19 +1118,19 @@ namespace System.Windows.Input
                 UIElement.MouseCaptureWithinProperty.OnOriginValueChanged(oldMouseCapture as DependencyObject, _mouseCapture as DependencyObject, ref _mouseCaptureWithinTreeState);
 
                 // Invalidate the IsMouseCaptured properties.
-                if (oldMouseCapture != null)
+                if (oldMouseCapture is not null)
                 {
                     o = oldMouseCapture as DependencyObject;
                     o.SetValue(UIElement.IsMouseCapturedPropertyKey, false); // Same property for ContentElements
                 }
-                if (_mouseCapture != null)
+                if (_mouseCapture is not null)
                 {
                     o = _mouseCapture as DependencyObject;
                     o.SetValue(UIElement.IsMouseCapturedPropertyKey, true); // Same property for ContentElements
                 }
 
                 // Send the LostMouseCapture and GotMouseCapture events.
-                if (oldMouseCapture != null)
+                if (oldMouseCapture is not null)
                 {
                     MouseEventArgs lostCapture = new MouseEventArgs(this, timestamp, _stylusDevice);
                     lostCapture.RoutedEvent=Mouse.LostMouseCaptureEvent;
@@ -1138,7 +1138,7 @@ namespace System.Windows.Input
                     //ProcessInput has a linkdemand
                     _inputManager.ProcessInput(lostCapture);
                 }
-                if (_mouseCapture != null)
+                if (_mouseCapture is not null)
                 {
                     MouseEventArgs gotCapture = new MouseEventArgs(this, timestamp, _stylusDevice);
                     gotCapture.RoutedEvent=Mouse.GotMouseCaptureEvent;
@@ -1223,7 +1223,7 @@ namespace System.Windows.Input
                                 inputDevice = inputReportEventArgs.Device as StylusDevice;
                             }
 
-                            if (inputDevice != null)
+                            if (inputDevice is not null)
                             {
                                 e.StagingItem.SetData(_tagStylusDevice, inputDevice);
                             }
@@ -1240,7 +1240,7 @@ namespace System.Windows.Input
                         // event is from the visual manager that we think is active.
                         if ((rawMouseInputReport.Actions & RawMouseActions.Deactivate) == RawMouseActions.Deactivate)
                         {
-                            if (_mouseOver != null)
+                            if (_mouseOver is not null)
                             {
                                 // Push back this event, and cancel the current processing.
                                 e.PushInput(e.StagingItem);
@@ -1314,13 +1314,13 @@ namespace System.Windows.Input
             {
                 // All mouse event processing should only happen if we still have an active input source.
 
-                if (_inputSource != null)
+                if (_inputSource is not null)
                 {
                     if (e.StagingItem.Input.RoutedEvent == Mouse.PreviewMouseDownEvent)
                     {
                         MouseButtonEventArgs mouseButtonEventArgs = e.StagingItem.Input as MouseButtonEventArgs;
 
-                        if (_mouseCapture != null && !_isPhysicallyOver)
+                        if (_mouseCapture is not null && !_isPhysicallyOver)
                         {
                             // The mouse is not physically over the capture point (or
                             // subtree), so raise the PreviewMouseDownOutsideCapturedElement
@@ -1336,7 +1336,7 @@ namespace System.Windows.Input
                     {
                         MouseButtonEventArgs mouseButtonEventArgs = e.StagingItem.Input as MouseButtonEventArgs;
 
-                        if (_mouseCapture != null && !_isPhysicallyOver)
+                        if (_mouseCapture is not null && !_isPhysicallyOver)
                         {
                             // The mouse is not physically over the capture point (or
                             // subtree), so raise the PreviewMouseUpOutsideCapturedElement
@@ -1432,7 +1432,7 @@ namespace System.Windows.Input
                             // All mouse information is now restricted to this presentation source.
                             _inputSource = rawMouseInputReport.InputSource;
 
-                            if (toDeactivate != null)
+                            if (toDeactivate is not null)
                             {
                                 toDeactivate.NotifyDeactivate();
                             }
@@ -1476,7 +1476,7 @@ namespace System.Windows.Input
                             Point ptRelativeToOver = InputElement.TranslatePoint(ptRoot, rawMouseInputReport.InputSource.RootVisual, (DependencyObject)_mouseOver, out mouseOverAvailable);
 
                             IInputElement mouseOver = _mouseOver; // assume mouse is still over whatever it was before
-                            IInputElement rawMouseOver = (_rawMouseOver != null) ? (IInputElement)_rawMouseOver.Target : null;
+                            IInputElement rawMouseOver = (_rawMouseOver is not null) ? (IInputElement)_rawMouseOver.Target : null;
                             bool isPhysicallyOver = _isPhysicallyOver;
                             bool isGlobalChange = ArePointsClose(ptClient, _lastPosition) == false;  // determine if the mouse actually physically moved
 
@@ -1517,7 +1517,7 @@ namespace System.Windows.Input
                                             {
                                                 mouseOver = InputElement.GetContainingInputElement(mouseOver as DependencyObject);
                                             }
-                                            if ((rawMouseOver != null) && !InputElement.IsValid(rawMouseOver))
+                                            if ((rawMouseOver is not null) && !InputElement.IsValid(rawMouseOver))
                                             {
                                                 rawMouseOver = InputElement.GetContainingInputElement(rawMouseOver as DependencyObject);
                                             }
@@ -1556,7 +1556,7 @@ namespace System.Windows.Input
                                     case CaptureMode.SubTree:
                                         {
                                             IInputElement mouseCapture = InputElement.GetContainingInputElement(_mouseCapture as DependencyObject);
-                                            if (mouseCapture != null)
+                                            if (mouseCapture is not null)
                                             {
                                                 // We need to re-hit-test to get the "real" UIElement we are over.
                                                 // This allows us to have our capture-to-subtree span multiple windows.
@@ -1565,7 +1565,7 @@ namespace System.Windows.Input
                                                 GlobalHitTest(true, ptClient, _inputSource, out mouseOver, out rawMouseOver);
                                             }
 
-                                            if (mouseOver != null && !InputElement.IsValid(mouseOver) )
+                                            if (mouseOver is not null && !InputElement.IsValid(mouseOver) )
                                                 mouseOver = InputElement.GetContainingInputElement(mouseOver as DependencyObject);
 
                                             // Make sure that the element we hit is acutally underneath
@@ -1575,18 +1575,18 @@ namespace System.Windows.Input
                                             // Note that we support the child being in a completely different window.
                                             // So we use the GetUIParent method instead of just looking at
                                             // visual/content parents.
-                                            if (mouseOver != null)
+                                            if (mouseOver is not null)
                                             {
                                                 IInputElement ieTest = mouseOver;
                                                 UIElement eTest = null;
                                                 ContentElement ceTest = null;
                                                 UIElement3D e3DTest = null;
 
-                                                while (ieTest != null && ieTest != mouseCapture)
+                                                while (ieTest is not null && ieTest != mouseCapture)
                                                 {
                                                     eTest = ieTest as UIElement;
 
-                                                    if (eTest != null)
+                                                    if (eTest is not null)
                                                     {
                                                         ieTest = InputElement.GetContainingInputElement(eTest.GetUIParent(true));
                                                     }
@@ -1594,7 +1594,7 @@ namespace System.Windows.Input
                                                     {
                                                         ceTest = ieTest as ContentElement;
 
-                                                        if (ceTest != null)
+                                                        if (ceTest is not null)
                                                         {
                                                             ieTest = InputElement.GetContainingInputElement(ceTest.GetUIParent(true));
                                                         }
@@ -1627,7 +1627,7 @@ namespace System.Windows.Input
                                                 rawMouseOver = null;
                                             }
 
-                                            if (rawMouseOver != null)
+                                            if (rawMouseOver is not null)
                                             {
                                                 if (mouseOver == rawMouseOver)
                                                 {
@@ -1685,11 +1685,11 @@ namespace System.Windows.Input
                                     ChangeMouseOver(mouseOver, e.StagingItem.Input.Timestamp);
                                 }
 
-                                if ((_rawMouseOver is null) && (rawMouseOver != null))
+                                if ((_rawMouseOver is null) && (rawMouseOver is not null))
                                 {
                                     _rawMouseOver = new WeakReference(rawMouseOver);
                                 }
-                                else if (_rawMouseOver != null)
+                                else if (_rawMouseOver is not null)
                                 {
                                     _rawMouseOver.Target = rawMouseOver;
                                 }
@@ -1775,7 +1775,7 @@ namespace System.Windows.Input
             {
                 // All mouse event processing should only happen if we still have an active input source.
 
-                if (_inputSource != null)
+                if (_inputSource is not null)
                 {
                     // During the PreviewMouseDown event, we update the click count, if there are
                     // multiple "quick" clicks in approximately the "same" location (as defined
@@ -1917,7 +1917,7 @@ namespace System.Windows.Input
                             // wheel events are treated as if they came from the
                             // element with keyboard focus
                             DependencyObject focus = Keyboard.FocusedElement as DependencyObject;
-                            if (focus != null)
+                            if (focus is not null)
                             {
                                 previewWheel.Source = focus;
                             }
@@ -2043,7 +2043,7 @@ namespace System.Windows.Input
             // The CLR throws a null-ref exception if it tries to unbox a
             // null.  So we have to special case that.
             object o = e.StagingItem.GetData(_tagNonRedundantActions);
-            if (o != null)
+            if (o is not null)
             {
                 actions = (RawMouseActions) o;
             }
@@ -2076,7 +2076,7 @@ namespace System.Windows.Input
 
             // Note: this only works for HWNDs for now.
             HwndSource source = inputSource as HwndSource;
-            if (source != null && source.CompositionTarget != null && !source.IsHandleNull)
+            if (source is not null && source.CompositionTarget is not null && !source.IsHandleNull)
             {
                 Point ptScreen = PointUtil.ClientToScreen(ptClient, source);
                 IntPtr hwndHit = IntPtr.Zero ;
@@ -2096,7 +2096,7 @@ namespace System.Windows.Input
                     // See if this is one of our windows.
                     sourceHit = HwndSource.CriticalFromHwnd(hwndHit);
                 }
-                if (sourceHit != null && sourceHit.Dispatcher == inputSource.CompositionTarget.Dispatcher)
+                if (sourceHit is not null && sourceHit.Dispatcher == inputSource.CompositionTarget.Dispatcher)
                 {
                     Point ptClientHit = PointUtil.ScreenToClient(ptScreen, sourceHit);
 
@@ -2128,10 +2128,10 @@ namespace System.Windows.Input
 
             // Hit-test starting from the root UIElement.
             // Note: this restricts us to windows with UIElement as the root (not just visuals).
-            if (inputSource != null)
+            if (inputSource is not null)
             {
                 UIElement root = inputSource.RootVisual as UIElement;
-                if(root != null)
+                if(root is not null)
                 {
                     Point rootPt = clientUnits ? PointUtil.ClientToRoot(pt, inputSource) : pt;
                     root.InputHitTest(rootPt, out enabledHit, out originalHit);
@@ -2141,8 +2141,8 @@ namespace System.Windows.Input
 
         internal bool IsSameSpot(Point newPosition, StylusDevice stylusDevice)
         {
-            int doubleClickDeltaX = (stylusDevice != null)?stylusDevice.DoubleTapDeltaX:_doubleClickDeltaX;
-            int doubleClickDeltaY = (stylusDevice != null)?stylusDevice.DoubleTapDeltaY:_doubleClickDeltaY;
+            int doubleClickDeltaX = (stylusDevice is not null)?stylusDevice.DoubleTapDeltaX:_doubleClickDeltaX;
+            int doubleClickDeltaY = (stylusDevice is not null)?stylusDevice.DoubleTapDeltaY:_doubleClickDeltaY;
 
             // Is the delta coordinates of this click close enough to the last click?
             return (Math.Abs(newPosition.X - _lastClick.X) < doubleClickDeltaX) &&
@@ -2154,7 +2154,7 @@ namespace System.Windows.Input
             // How long since the last click?
             int timeSpan = timeStamp - _lastClickTime;
 
-            int doubleClickDeltaTime = (stylusDevice != null)?stylusDevice.DoubleTapDeltaTime:_doubleClickDeltaTime;
+            int doubleClickDeltaTime = (stylusDevice is not null)?stylusDevice.DoubleTapDeltaTime:_doubleClickDeltaTime;
 
             // Is the delta coordinates of this click close enough to the last click?
             bool isSameSpot = IsSameSpot(downPt, stylusDevice);
@@ -2197,7 +2197,7 @@ namespace System.Windows.Input
         {
             get
             {
-                return _inputSource != null;
+                return _inputSource is not null;
             }
         }
 

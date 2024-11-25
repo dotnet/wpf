@@ -51,7 +51,7 @@ namespace MS.Internal.Data
         {
             ArgumentNullException.ThrowIfNull(args);
 
-            if (CollectionChanged != null)
+            if (CollectionChanged is not null)
                 CollectionChanged(this, args);
         }
         #endregion INotifyCollectionChanged
@@ -77,7 +77,7 @@ namespace MS.Internal.Data
         // a group description has changed somewhere in the tree - notify host
         protected override void OnGroupByChanged()
         {
-            if (GroupDescriptionChanged != null)
+            if (GroupDescriptionChanged is not null)
                 GroupDescriptionChanged(this, EventArgs.Empty);
         }
 
@@ -183,7 +183,7 @@ namespace MS.Internal.Data
                 // belongs to.  Move the item within those groups
 
                 CollectionViewGroupInternal parentGroup = lsi.ParentGroup;
-                if (parentGroup != null)
+                if (parentGroup is not null)
                 {
                     // 90% case - item belongs to a single group
                     MoveWithinSubgroup(item, parentGroup, list, oldIndex, newIndex);
@@ -204,7 +204,7 @@ namespace MS.Internal.Data
             // root group needs to adjust the bounds of the search to exclude the
             // placeholder and new item (if any)
             IEditableCollectionView iecv = _view as IEditableCollectionView;
-            if (iecv != null)
+            if (iecv is not null)
             {
                 if (iecv.NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtBeginning)
                 {
@@ -251,7 +251,7 @@ namespace MS.Internal.Data
                     ArrayList names = (ic is null) ? null : new ArrayList(ic);
 
                     // find subgroups whose names still match
-                    for (GroupTreeNode child = node.FirstChild; child != null; child = child.Sibling)
+                    for (GroupTreeNode child = node.FirstChild; child is not null; child = child.Sibling)
                     {
                         if (names is null)
                         {
@@ -300,7 +300,7 @@ namespace MS.Internal.Data
             }
 
             // recursively handle children
-            for (GroupTreeNode child = node.FirstChild; child != null; child = child.Sibling)
+            for (GroupTreeNode child = node.FirstChild; child is not null; child = child.Sibling)
             {
                 RestoreGrouping(lsi, child, level + 1, deleteList);
             }
@@ -311,7 +311,7 @@ namespace MS.Internal.Data
             CollectionViewGroupInternal parentGroup = lsi.ParentGroup;
             GroupTreeNode node;
 
-            if (parentGroup != null)
+            if (parentGroup is not null)
             {
                 // 90% case - item belongs to only one group.   Construct tree
                 // the fast way
@@ -420,8 +420,8 @@ namespace MS.Internal.Data
 
             // create subgroups for each of the explicit names
             ObservableCollection<object> explicitNames =
-                        (groupDescription != null) ? groupDescription.GroupNames : null;
-            if (explicitNames != null)
+                        (groupDescription is not null) ? groupDescription.GroupNames : null;
+            if (explicitNames is not null)
             {
                 for (int k = 0, n = explicitNames.Count; k < n; ++k)
                 {
@@ -444,7 +444,7 @@ namespace MS.Internal.Data
                 group = null;       // users don't see the synthetic group
             }
 
-            if (parentDescription != null)
+            if (parentDescription is not null)
             {
 #if GROUPDESCRIPTION_HAS_SUBGROUP
                 // a. Use the parent description's subgroup description
@@ -453,7 +453,7 @@ namespace MS.Internal.Data
 
 #if GROUPDESCRIPTION_HAS_SELECTOR
                 // b. Call the parent description's selector
-                if (result is null && parentDescription.SubgroupSelector != null)
+                if (result is null && parentDescription.SubgroupSelector is not null)
                 {
                     result = parentDescription.SubgroupSelector(group, level);
                 }
@@ -461,7 +461,7 @@ namespace MS.Internal.Data
             }
 
             // c. Call the global chooser
-            if (result is null && GroupBySelector != null)
+            if (result is null && GroupBySelector is not null)
             {
                 result = GroupBySelector(group, level);
             }
@@ -484,7 +484,7 @@ namespace MS.Internal.Data
             if (name == UseAsItemDirectly)
             {
                 // the item belongs to the group itself (not to any subgroups)
-                if (lsi != null)
+                if (lsi is not null)
                 {
                     lsi.AddParentGroup(group);
                 }
@@ -524,7 +524,7 @@ namespace MS.Internal.Data
 
             // find the desired subgroup using the map
             object groupNameKey = GetGroupNameKey(name, group);
-            if (((subgroup = group.GetSubgroupFromMap(groupNameKey) as CollectionViewGroupInternal) != null) &&
+            if (((subgroup = group.GetSubgroupFromMap(groupNameKey) as CollectionViewGroupInternal) is not null) &&
                 group.GroupBy.NamesMatch(subgroup.Name, name))
             {
                 // Try best to set the LastIndex. If not possible reset it to 0.
@@ -609,7 +609,7 @@ namespace MS.Internal.Data
 
             // find the desired subgroup using the map
             object groupNameKey = GetGroupNameKey(name, group);
-            if (((subgroup = group.GetSubgroupFromMap(groupNameKey)) != null) &&
+            if (((subgroup = group.GetSubgroupFromMap(groupNameKey)) is not null) &&
                 group.GroupBy.NamesMatch(subgroup.Name, name))
             {
                 // Recursively call the MoveWithinSubgroups method on subgroup.
@@ -662,10 +662,10 @@ namespace MS.Internal.Data
         {
             object groupNameKey = name;
             PropertyGroupDescription pgd = group.GroupBy as PropertyGroupDescription;
-            if (pgd != null)
+            if (pgd is not null)
             {
                 string nameStr = name as string;
-                if (nameStr != null)
+                if (nameStr is not null)
                 {
                     if (pgd.StringComparison == StringComparison.OrdinalIgnoreCase ||
                         pgd.StringComparison == StringComparison.InvariantCultureIgnoreCase)
@@ -723,7 +723,7 @@ namespace MS.Internal.Data
 
             // find the desired subgroup using the map
             object groupNameKey = GetGroupNameKey(name, group);
-            if (((subgroup = group.GetSubgroupFromMap(groupNameKey) as CollectionViewGroupInternal) != null) &&
+            if (((subgroup = group.GetSubgroupFromMap(groupNameKey) as CollectionViewGroupInternal) is not null) &&
                 group.GroupBy.NamesMatch(subgroup.Name, name))
             {
                 // Recursively call the RemoveFromSubgroups method on subgroup.
@@ -780,7 +780,7 @@ namespace MS.Internal.Data
                 for (int k = group.Items.Count - 1; k >= 0; --k)
                 {
                     CollectionViewGroupInternal subgroup = group.Items[k] as CollectionViewGroupInternal;
-                    if (subgroup != null)
+                    if (subgroup is not null)
                     {
                         RemoveItemFromSubgroupsByExhaustiveSearch(subgroup, item);
                     }
@@ -797,7 +797,7 @@ namespace MS.Internal.Data
         // get the group name(s) for the given item
         object GetGroupName(object item, GroupDescription groupDescription, int level)
         {
-            if (groupDescription != null)
+            if (groupDescription is not null)
             {
                 return groupDescription.GroupNameFromItem(item, level, Culture);
             }

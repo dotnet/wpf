@@ -103,7 +103,7 @@ namespace System.Windows
                 // When used as an element trigger, we don't actually need to seal
                 //  to ensure cross-thread usability.  However, if we *are* fixed on
                 //  listening to an event already, don't allow this change.
-                if( _routedEventHandler != null )
+                if( _routedEventHandler is not null )
                 {
                     // Recycle the Seal error message.
                     throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "EventTrigger"));
@@ -189,7 +189,7 @@ namespace System.Windows
             for (int i=0; i<_actions.Count; i++)
             {
                 DependencyObject action = _actions[i] as DependencyObject;
-                if (action != null && action.InheritanceContext == this)
+                if (action is not null && action.InheritanceContext == this)
                 {
                     action.OnInheritanceContextChanged(args);
                 }
@@ -203,7 +203,7 @@ namespace System.Windows
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool ShouldSerializeActions()
         {
-            return ( _actions != null && _actions.Count > 0 );
+            return ( _actions is not null && _actions.Count > 0 );
         }
 
         ///////////////////////////////////////////////////////////////////////
@@ -222,7 +222,7 @@ namespace System.Windows
                 throw new InvalidOperationException(SR.EventTriggerDoesNotEnterExit);
             }
 
-            if (_routedEvent != null && _actions != null && _actions.Count > 0)
+            if (_routedEvent is not null && _actions is not null && _actions.Count > 0)
             {
                 _actions.Seal(this);  // TriggerActions need a link back to me to fetch the childId corresponding the sourceId string.
             }
@@ -273,7 +273,7 @@ namespace System.Windows
         internal static void ProcessTriggerCollection( FrameworkElement triggersHost )
         {
             TriggerCollection triggerCollection = TriggerCollectionField.GetValue(triggersHost);
-            if( triggerCollection != null )
+            if( triggerCollection is not null )
             {
                 // Don't seal the collection, because we allow it to change.  We will,
                 // however, seal each of the triggers.
@@ -303,7 +303,7 @@ namespace System.Windows
             // triggerBase.Seal();
             
             EventTrigger eventTrigger = triggerBase as EventTrigger;
-            if( eventTrigger != null )
+            if( eventTrigger is not null )
             {
                 Debug.Assert( eventTrigger._routedEventHandler is null && eventTrigger._source is null);
                 
@@ -335,7 +335,7 @@ namespace System.Windows
         {
             TriggerCollection triggerCollection = TriggerCollectionField.GetValue(triggersHost);
 
-            if( triggerCollection != null )
+            if( triggerCollection is not null )
             {
                 for( int i = 0; i < triggerCollection.Count; i++ )
                 {
@@ -356,7 +356,7 @@ namespace System.Windows
         {
             EventTrigger eventTrigger = triggerBase as EventTrigger;
             
-            if( eventTrigger != null )
+            if( eventTrigger is not null )
             {
                 eventTrigger._source.RemoveHandler( eventTrigger.RoutedEvent, eventTrigger._routedEventHandler);
                 eventTrigger._routedEventHandler = null;

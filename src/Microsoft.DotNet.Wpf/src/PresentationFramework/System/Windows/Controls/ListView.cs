@@ -87,7 +87,7 @@ namespace System.Windows.Controls
 
             ViewBase oldView = (ViewBase)e.OldValue;
             ViewBase newView = (ViewBase)e.NewValue;
-            if (newView != null)
+            if (newView is not null)
             {
                 if (newView.IsUsed)
                 {
@@ -106,14 +106,14 @@ namespace System.Windows.Controls
 
             //Switch ViewAutomationPeer in ListViewAutomationPeer
             ListViewAutomationPeer lvPeer = UIElementAutomationPeer.FromElement(listView) as ListViewAutomationPeer;
-            if (lvPeer != null)
+            if (lvPeer is not null)
             {
-                if (lvPeer.ViewAutomationPeer != null)
+                if (lvPeer.ViewAutomationPeer is not null)
                 {
                     lvPeer.ViewAutomationPeer.ViewDetached();
                 }
 
-                if (newView != null)
+                if (newView is not null)
                 {
                     lvPeer.ViewAutomationPeer = newView.GetAutomationPeer(listView);
                 }
@@ -125,7 +125,7 @@ namespace System.Windows.Controls
                 lvPeer.InvalidatePeer();
             }
 
-            if (oldView != null)
+            if (oldView is not null)
             {
                 oldView.IsUsed = false;
             }
@@ -151,10 +151,10 @@ namespace System.Windows.Controls
             base.PrepareContainerForItemOverride(element, item);
 
             ListViewItem lvi = element as ListViewItem;
-            if (lvi != null)
+            if (lvi is not null)
             {
                 ViewBase view = View;
-                if (view != null)
+                if (view is not null)
                 {
                     // update default style key
                     lvi.SetDefaultStyleKey(view.ItemContainerDefaultStyleKey);
@@ -201,7 +201,7 @@ namespace System.Windows.Controls
             base.OnItemsChanged(e);
 
             ListViewAutomationPeer lvPeer = UIElementAutomationPeer.FromElement(this) as ListViewAutomationPeer;
-            if (lvPeer != null && lvPeer.ViewAutomationPeer != null)
+            if (lvPeer is not null && lvPeer.ViewAutomationPeer is not null)
             {
                 lvPeer.ViewAutomationPeer.ItemsChanged(e);
             }
@@ -223,7 +223,7 @@ namespace System.Windows.Controls
         protected override AutomationPeer OnCreateAutomationPeer()
         {
             ListViewAutomationPeer lvPeer = new ListViewAutomationPeer(this);
-            if (lvPeer != null && View != null)
+            if (lvPeer is not null && View is not null)
             {
                 lvPeer.ViewAutomationPeer = View.GetAutomationPeer(this);
             }
@@ -246,7 +246,7 @@ namespace System.Windows.Controls
         {
             ViewBase newView = View;
 
-            if (newView != null)
+            if (newView is not null)
             {
                 // update default style key of ListView
                 DefaultStyleKey = newView.DefaultStyleKey;
@@ -270,7 +270,7 @@ namespace System.Windows.Controls
         {
             // If the ListView does not have a template generated tree then its
             // View.Header is not reachable via a tree walk.
-            if (!HasTemplateGeneratedSubTree && View != null)
+            if (!HasTemplateGeneratedSubTree && View is not null)
             {
                 View.OnThemeChanged();
             }

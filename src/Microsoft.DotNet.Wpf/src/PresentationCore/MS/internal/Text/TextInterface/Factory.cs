@@ -349,7 +349,7 @@ namespace MS.Internal.Text.TextInterface
             protected override bool ReleaseHandle()
             {
                 FontCollectionLoader wpfFontCollectionLoader = _managedFactory._wpfFontCollectionLoader;
-                if (wpfFontCollectionLoader != null)
+                if (wpfFontCollectionLoader is not null)
                 {
                     IntPtr pIDWriteFontCollectionLoaderMirror = Marshal.GetComInterfaceForObject(
                                                             wpfFontCollectionLoader,
@@ -361,7 +361,7 @@ namespace MS.Internal.Text.TextInterface
                 }
 
                 FontFileLoader wpfFontFileLoader = _managedFactory._wpfFontFileLoader;
-                if (wpfFontFileLoader != null)
+                if (wpfFontFileLoader is not null)
                 {
                     IntPtr pIDWriteFontFileLoaderMirror = Marshal.GetComInterfaceForObject(
                                                             wpfFontFileLoader,

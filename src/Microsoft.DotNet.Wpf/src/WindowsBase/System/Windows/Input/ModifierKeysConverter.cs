@@ -65,7 +65,7 @@ namespace System.Windows.Input
             if (destinationType == typeof(string))
             {
                 // When invoked by the serialization engine we can convert to string only for known type
-                if (context != null && context.Instance != null && 
+                if (context is not null && context.Instance is not null && 
 					context.Instance is ModifierKeys)
                 {
                     return (IsDefinedModifierKeys((ModifierKeys)context.Instance));

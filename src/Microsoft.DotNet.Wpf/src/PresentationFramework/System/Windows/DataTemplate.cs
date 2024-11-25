@@ -42,7 +42,7 @@ namespace System.Windows
         public DataTemplate(object dataType)
         {
             Exception ex = TemplateKey.ValidateDataType(dataType, "dataType");
-            if (ex != null)
+            if (ex is not null)
                 throw ex;
 
             _dataType = dataType;
@@ -72,7 +72,7 @@ namespace System.Windows
             set
             {
                 Exception ex = TemplateKey.ValidateDataType(value, "value");
-                if (ex != null)
+                if (ex is not null)
                     throw ex;
 
                 CheckSealed();
@@ -113,7 +113,7 @@ namespace System.Windows
         {
             get
             {
-                return (DataType != null) ? new DataTemplateKey(DataType) : null;
+                return (DataType is not null) ? new DataTemplateKey(DataType) : null;
             }
         }
 

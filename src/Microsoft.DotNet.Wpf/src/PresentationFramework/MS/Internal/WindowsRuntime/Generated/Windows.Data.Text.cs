@@ -528,7 +528,7 @@ namespace ABI.Windows.Data.Text
         }
         public static ObjectReference<Vftbl> FromAbi(IntPtr thisPtr) => ObjectReference<Vftbl>.FromAbi(thisPtr);
 
-        public static implicit operator IAlternateWordForm(IObjectReference obj) => (obj != null) ? new IAlternateWordForm(obj) : null;
+        public static implicit operator IAlternateWordForm(IObjectReference obj) => (obj is not null) ? new IAlternateWordForm(obj) : null;
         protected readonly ObjectReference<Vftbl> _obj;
         public IObjectReference ObjRef { get => _obj; }
         public IntPtr ThisPtr => _obj.ThisPtr;
@@ -969,7 +969,7 @@ namespace ABI.Windows.Data.Text
         }
         public static ObjectReference<Vftbl> FromAbi(IntPtr thisPtr) => ObjectReference<Vftbl>.FromAbi(thisPtr);
 
-        public static implicit operator IUnicodeCharactersStatics(IObjectReference obj) => (obj != null) ? new IUnicodeCharactersStatics(obj) : null;
+        public static implicit operator IUnicodeCharactersStatics(IObjectReference obj) => (obj is not null) ? new IUnicodeCharactersStatics(obj) : null;
         protected readonly ObjectReference<Vftbl> _obj;
         public IObjectReference ObjRef { get => _obj; }
         public IntPtr ThisPtr => _obj.ThisPtr;
@@ -1212,7 +1212,7 @@ namespace ABI.Windows.Data.Text
         }
         public static ObjectReference<Vftbl> FromAbi(IntPtr thisPtr) => ObjectReference<Vftbl>.FromAbi(thisPtr);
 
-        public static implicit operator IWordSegment(IObjectReference obj) => (obj != null) ? new IWordSegment(obj) : null;
+        public static implicit operator IWordSegment(IObjectReference obj) => (obj is not null) ? new IWordSegment(obj) : null;
         protected readonly ObjectReference<Vftbl> _obj;
         public IObjectReference ObjRef { get => _obj; }
         public IntPtr ThisPtr => _obj.ThisPtr;
@@ -1380,7 +1380,7 @@ namespace ABI.Windows.Data.Text
         }
         public static ObjectReference<Vftbl> FromAbi(IntPtr thisPtr) => ObjectReference<Vftbl>.FromAbi(thisPtr);
 
-        public static implicit operator IWordsSegmenter(IObjectReference obj) => (obj != null) ? new IWordsSegmenter(obj) : null;
+        public static implicit operator IWordsSegmenter(IObjectReference obj) => (obj is not null) ? new IWordsSegmenter(obj) : null;
         protected readonly ObjectReference<Vftbl> _obj;
         public IObjectReference ObjRef { get => _obj; }
         public IntPtr ThisPtr => _obj.ThisPtr;
@@ -1514,7 +1514,7 @@ namespace ABI.Windows.Data.Text
         }
         public static ObjectReference<Vftbl> FromAbi(IntPtr thisPtr) => ObjectReference<Vftbl>.FromAbi(thisPtr);
 
-        public static implicit operator IWordsSegmenterFactory(IObjectReference obj) => (obj != null) ? new IWordsSegmenterFactory(obj) : null;
+        public static implicit operator IWordsSegmenterFactory(IObjectReference obj) => (obj is not null) ? new IWordsSegmenterFactory(obj) : null;
         protected readonly ObjectReference<Vftbl> _obj;
         public IObjectReference ObjRef { get => _obj; }
         public IntPtr ThisPtr => _obj.ThisPtr;

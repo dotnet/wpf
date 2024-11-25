@@ -54,7 +54,7 @@ namespace MS.Internal.Documents
             int height, 
             BoundsSpecified specified )
         {            
-            if (Parent != null)
+            if (Parent is not null)
             {
                 //Force a 1-pixel height, with the width of our immediate parent
                 base.SetBoundsCore(Parent.Location.X, y, Parent.Size.Width, 1, specified);

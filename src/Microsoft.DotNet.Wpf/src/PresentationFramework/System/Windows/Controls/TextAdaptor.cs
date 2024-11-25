@@ -44,12 +44,12 @@ namespace MS.Internal.Automation
         /// <param name="textContainer">ITextContainer</param>
         internal TextAdaptor(AutomationPeer textPeer, ITextContainer textContainer)
         {
-            Invariant.Assert(textContainer != null, "Invalid ITextContainer");
+            Invariant.Assert(textContainer is not null, "Invalid ITextContainer");
             Invariant.Assert(textPeer is TextAutomationPeer || textPeer is ContentTextAutomationPeer, "Invalid AutomationPeer");
             _textPeer = textPeer;
             _textContainer = textContainer;
             _textContainer.Changed += new TextContainerChangedEventHandler(OnTextContainerChanged);
-            if (_textContainer.TextSelection != null)
+            if (_textContainer.TextSelection is not null)
             {
                 _textContainer.TextSelection.Changed += new EventHandler(OnTextSelectionChanged);
             }
@@ -60,7 +60,7 @@ namespace MS.Internal.Automation
         /// </summary>
         public void Dispose()
         {
-            if (_textContainer != null && _textContainer.TextSelection != null)
+            if (_textContainer is not null && _textContainer.TextSelection is not null)
             {
                 _textContainer.TextSelection.Changed -= new EventHandler(OnTextSelectionChanged);
             }
@@ -142,7 +142,7 @@ namespace MS.Internal.Automation
                     ITextPointer last = (lineRange.End.CompareTo(end) >= 0) ? end : lineRange.End;
                     Rect lineRect = Rect.Empty;
                     Geometry geometry = textView.GetTightBoundingGeometryFromTextPositions(first, last);
-                    if (geometry != null)
+                    if (geometry is not null)
                     {
                         lineRect = geometry.Bounds;
                         if (clipToView)
@@ -173,7 +173,7 @@ namespace MS.Internal.Automation
         internal ITextView GetUpdatedTextView()
         {
             ITextView textView = _textContainer.TextView;
-            if (textView != null)
+            if (textView is not null)
             {
                 if (!textView.IsValid)
                 {
@@ -181,7 +181,7 @@ namespace MS.Internal.Automation
                     {
                         textView = null;
                     }
-                    if (textView != null && !textView.IsValid)
+                    if (textView is not null && !textView.IsValid)
                     {
                         textView = null;
                     }
@@ -202,7 +202,7 @@ namespace MS.Internal.Automation
         internal void Select(ITextPointer start, ITextPointer end)
         {
             // Update the selection range
-            if (_textContainer.TextSelection != null)
+            if (_textContainer.TextSelection is not null)
             {
                 _textContainer.TextSelection.Select(start, end);
             }
@@ -223,7 +223,7 @@ namespace MS.Internal.Automation
             }
 
             ITextView textView = GetUpdatedTextView();
-            if (textView != null && !rangeBounds.IsEmpty)
+            if (textView is not null && !rangeBounds.IsEmpty)
             {
                 // Find out the visible portion of the range.
                 Rect visibleRect = GetVisibleRectangle(textView);
@@ -240,10 +240,10 @@ namespace MS.Internal.Automation
                 // in order to satisfy the requested alignment.
                 UIElement renderScope = textView.RenderScope;
                 Visual visual = renderScope;
-                while (visual != null)
+                while (visual is not null)
                 {
                     IScrollInfo isi = visual as IScrollInfo;
-                    if (isi != null)
+                    if (isi is not null)
                     {
                         // Transform the bounding rectangle into the IScrollInfo coordinates.
                         if (visual != renderScope)
@@ -266,7 +266,7 @@ namespace MS.Internal.Automation
                 }
 
                 FrameworkElement fe = renderScope as FrameworkElement;
-                if (fe != null)
+                if (fe is not null)
                 {
                     fe.BringIntoView(rangeVisibleBounds);
                 }
@@ -277,7 +277,7 @@ namespace MS.Internal.Automation
                 ITextPointer pointer = alignToTop ? start.CreatePointer() : end.CreatePointer();
                 pointer.MoveToElementEdge(alignToTop ? ElementEdge.AfterStart : ElementEdge.AfterEnd);
                 FrameworkContentElement element = pointer.GetAdjacentElement(LogicalDirection.Backward) as FrameworkContentElement;
-                if (element != null)
+                if (element is not null)
                 {
                     element.BringIntoView();
                 }
@@ -347,14 +347,14 @@ namespace MS.Internal.Automation
             Rect visibleRect = new Rect(textView.RenderScope.RenderSize);
             Visual visual = VisualTreeHelper.GetParent(textView.RenderScope) as Visual;
 
-            while (visual != null && visibleRect != Rect.Empty)
+            while (visual is not null && visibleRect != Rect.Empty)
             {
-                if (VisualTreeHelper.GetClip(visual) != null)
+                if (VisualTreeHelper.GetClip(visual) is not null)
                 {
                     GeneralTransform transform = textView.RenderScope.TransformToAncestor(visual).Inverse;
                     // Safer version of transform to descendent (doing the inverse ourself), 
                     // we want the rect inside of our space. (Which is always rectangular and much nicer to work with).
-                    if (transform != null)
+                    if (transform is not null)
                     {
                         Rect rectBounds = VisualTreeHelper.GetClip(visual).Bounds;
                         rectBounds = transform.TransformBounds(rectBounds);
@@ -401,10 +401,10 @@ namespace MS.Internal.Automation
         private Point ObsoleteClientToScreen(Point point, Visual visual)
         {
             PresentationSource presentationSource = PresentationSource.CriticalFromVisual(visual);
-            if (presentationSource != null)
+            if (presentationSource is not null)
             {
                 GeneralTransform transform = visual.TransformToAncestor(presentationSource.RootVisual);
-                if (transform != null)
+                if (transform is not null)
                 {
                     point = transform.Transform(point);
                 }
@@ -442,13 +442,13 @@ namespace MS.Internal.Automation
         {
             PresentationSource presentationSource = PresentationSource.CriticalFromVisual(visual);
             point = PointUtil.ScreenToClient(point, presentationSource);
-            if (presentationSource != null)
+            if (presentationSource is not null)
             {
                 GeneralTransform transform = visual.TransformToAncestor(presentationSource.RootVisual);
-                if (transform != null)
+                if (transform is not null)
                 {
                     transform = transform.Inverse;
-                    if (transform != null)
+                    if (transform is not null)
                     {
                         point = transform.Transform(point);
                     }
@@ -516,7 +516,7 @@ namespace MS.Internal.Automation
         {
             ITextRangeProvider[] ranges = null;
             ITextView textView = GetUpdatedTextView();
-            if (textView != null)
+            if (textView is not null)
             {
                 List<TextSegment> visibleTextSegments = new List<TextSegment>();
 
@@ -587,7 +587,7 @@ namespace MS.Internal.Automation
             }
 
             TextRangeAdaptor range = null;
-            if (childElement != null)
+            if (childElement is not null)
             {
                 ITextPointer rangeStart = null;
                 ITextPointer rangeEnd = null;
@@ -641,7 +641,7 @@ namespace MS.Internal.Automation
                     }
                 }
                 // Create range
-                if (rangeStart != null && rangeEnd != null)
+                if (rangeStart is not null && rangeEnd is not null)
                 {
                     range = new TextRangeAdaptor(this, rangeStart, rangeEnd, _textPeer);
                 }
@@ -665,12 +665,12 @@ namespace MS.Internal.Automation
         {
             TextRangeAdaptor range = null;
             ITextView textView = GetUpdatedTextView();
-            if (textView != null)
+            if (textView is not null)
             {
                 // Convert the screen point to the element space coordinates.
                 location = ScreenToClient(location, textView.RenderScope);
                 ITextPointer position = textView.GetTextPositionFromPoint(location, true);
-                if (position != null)
+                if (position is not null)
                 {
                     range = new TextRangeAdaptor(this, position, position, _textPeer);
                 }

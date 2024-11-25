@@ -164,7 +164,7 @@ namespace Microsoft.Build.Tasks.Windows
                return false;
             }
 
-            if (OutputResourcesFile != null && OutputResourcesFile.Length > 1)
+            if (OutputResourcesFile is not null && OutputResourcesFile.Length > 1)
             {
                 // Every task should generate only one .resources.
                 Log.LogErrorWithCodeFromResources(nameof(SR.MoreResourcesFiles));

@@ -26,7 +26,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             for (int i = 0; i < Children.Count; i++)
             {
                 UIElement child = Children[i];
-                Debug.Assert(child != null, "child not expected to be null");
+                Debug.Assert(child is not null, "child not expected to be null");
                 Debug.Assert(RibbonQuickAccessToolBar.GetIsOverflowItem(child) == true, "child expected to have IsOverflowItem == true");
 
                 Size infinity = new Size(Double.PositiveInfinity, availableSize.Height);

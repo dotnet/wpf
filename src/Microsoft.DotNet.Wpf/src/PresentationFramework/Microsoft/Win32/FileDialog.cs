@@ -271,7 +271,7 @@ namespace Microsoft.Win32
 
             set
             {
-                if (value != null)
+                if (value is not null)
                 {
                     // Use Ordinal here as per FxCop CA1307
                     if (value.StartsWith(".", StringComparison.Ordinal)) // Allow calling code to provide
@@ -430,7 +430,7 @@ namespace Microsoft.Win32
         /// </summary>
         protected override void OnItemOk(CancelEventArgs e)
         {
-            if (FileOk != null)
+            if (FileOk is not null)
             {
                 FileOk(this, e);
             }
@@ -721,14 +721,14 @@ namespace Microsoft.Win32
             // because other functions process files in order accepting the first
             // valid extension they find.  It's a little strange if DefaultExt
             // is not in the filters list, but I guess it's legal.
-            if (_defaultExtension != null)
+            if (_defaultExtension is not null)
             {
                 extensions.Add(_defaultExtension);
             }
 
             // If we have filters, extract the extensions from the currently selected
             // filter and add them to the extensions list.
-            if (filter != null)
+            if (filter is not null)
             {
                 // Filter strings are '|' delimited, so we split on them
                 string[] tokens = filter.Split('|', StringSplitOptions.RemoveEmptyEntries);

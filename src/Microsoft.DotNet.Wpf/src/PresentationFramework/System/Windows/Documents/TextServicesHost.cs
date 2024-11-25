@@ -141,7 +141,7 @@ namespace System.Windows.Documents
             // Advise TransitoryExtension Sink and store the cookie.
             guid = UnsafeNativeMethods.IID_ITfTransitoryExtensionSink;
             source = textstore.DocumentManager as UnsafeNativeMethods.ITfSource;
-            if (source != null)
+            if (source is not null)
             {
                 // DocumentManager only supports ITfSource on Longhorn, XP does not support it
                 source.AdviseSink(ref guid, textstore, out transitoryExtensionSinkCookie);
@@ -166,7 +166,7 @@ namespace System.Windows.Documents
             {
                 UnsafeNativeMethods.ITfSource source;
                 source = textstore.DocumentManager as UnsafeNativeMethods.ITfSource;
-                if (source != null)
+                if (source is not null)
                 {
                     // DocumentManager only supports ITfSource on Longhorn, XP does not support it
                     source.UnadviseSink(textstore.TransitoryExtensionSinkCookie);
@@ -241,7 +241,7 @@ namespace System.Windows.Documents
             }
 
             textstore.DocumentManager.GetBase(out context);
-            if (context != null)
+            if (context is not null)
             {
                 if (textstore.EditSinkCookie != UnsafeNativeMethods.TF_INVALID_COOKIE)
                 {

@@ -72,7 +72,7 @@ namespace System.Windows.Documents
             ArgumentNullException.ThrowIfNull(value);
 
             TableCell cell = value as TableCell;
-            if (cell != null)
+            if (cell is not null)
             {
                 Cells.Add(cell);
                 return;
@@ -100,19 +100,19 @@ namespace System.Windows.Documents
         {
             DependencyObject oldParent = this.Parent;
 
-            if (newParent != null && !(newParent is TableRowGroup))
+            if (newParent is not null && !(newParent is TableRowGroup))
             {
                 throw new InvalidOperationException(SR.Format(SR.TableInvalidParentNodeType, newParent.GetType().ToString()));
             }
 
-            if (oldParent != null)
+            if (oldParent is not null)
             {
                 ((TableRowGroup)oldParent).Rows.InternalRemove(this);
             }
 
             base.OnNewParent(newParent);
 
-            if (newParent != null)
+            if (newParent is not null)
             {
                 ((TableRowGroup)newParent).Rows.InternalAdd(this);
             }
@@ -170,7 +170,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal void OnEnterParentTree()
         {
-            if (Table != null)
+            if (Table is not null)
             {
                 Table.OnStructureChanged();
             }
@@ -189,7 +189,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal void OnAfterExitParentTree(TableRowGroup rowGroup)
         {
-            if (rowGroup.Table != null)
+            if (rowGroup.Table is not null)
             {
                 Table.OnStructureChanged();
             }
@@ -200,7 +200,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal void ValidateStructure(RowSpanVector rowSpanVector)
         {
-            Debug.Assert(rowSpanVector != null);
+            Debug.Assert(rowSpanVector is not null);
 
             SetFlags(!rowSpanVector.Empty(), Flags.HasForeignCells);
             SetFlags(false, Flags.HasRealCells);
@@ -247,7 +247,7 @@ namespace System.Windows.Documents
 
             bool isLastRowOfAnySpan = false;
             rowSpanVector.GetSpanCells(out _spannedCells, out isLastRowOfAnySpan);
-            Debug.Assert(_spannedCells != null);
+            Debug.Assert(_spannedCells is not null);
 
             if ((_formatCellCount > 0) ||
                isLastRowOfAnySpan == true)
@@ -284,7 +284,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// Table owner accessor
         /// </summary>
-        internal Table Table { get { return (RowGroup != null ? RowGroup.Table : null); } }
+        internal Table Table { get { return (RowGroup is not null ? RowGroup.Table : null); } }
 
         /// <summary>
         /// Returns the row's cell collection

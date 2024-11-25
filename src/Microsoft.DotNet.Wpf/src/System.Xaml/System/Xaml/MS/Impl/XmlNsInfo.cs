@@ -122,7 +122,7 @@ namespace System.Xaml.MS.Impl
                 // We don't scoop RefOnly assemblies out of the AppDomain; they'll always be rooted
                 // in XamlSchemaContext._referenceAssemblies or _xmlnsInfoForUnreferencedAssemblies.
                 // So they should never be collected.
-                Debug.Assert(Assembly != null, "RefOnly assemblies shouldn't be GCed");
+                Debug.Assert(Assembly is not null, "RefOnly assemblies shouldn't be GCed");
                 _attributeData = Assembly.GetCustomAttributesData();
             }
         }
@@ -456,7 +456,7 @@ namespace System.Xaml.MS.Impl
                         IncrementSubsumeCount(ns);
                         ns = GetNewNs(ns);
                     }
-                    while (ns != null);
+                    while (ns is not null);
                 }
             }
 
@@ -471,7 +471,7 @@ namespace System.Xaml.MS.Impl
 
                 // If one namespace subsumes the other, favor the subsumer
                 string newNs = GetNewNs(ns1);
-                while (newNs != null)
+                while (newNs is not null)
                 {
                     if (newNs == ns2)
                     {
@@ -480,7 +480,7 @@ namespace System.Xaml.MS.Impl
                     newNs = GetNewNs(newNs);
                 }
                 newNs = GetNewNs(ns2);
-                while (newNs != null)
+                while (newNs is not null)
                 {
                     if (newNs == ns1)
                     {
@@ -492,7 +492,7 @@ namespace System.Xaml.MS.Impl
                 // Favor namespaces that aren't subsumed over ones that are
                 if (GetNewNs(ns1) is null)
                 {
-                    if (GetNewNs(ns2) != null)
+                    if (GetNewNs(ns2) is not null)
                     {
                         return Prefer_NS1;
                     }

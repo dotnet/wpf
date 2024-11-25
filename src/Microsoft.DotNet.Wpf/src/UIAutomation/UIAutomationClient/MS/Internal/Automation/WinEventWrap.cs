@@ -34,7 +34,7 @@ namespace MS.Internal.Automation
         // ctor that takes an array of events
         internal WinEventWrap(int [] eventIds) 
         { 
-            Debug.Assert(eventIds != null && eventIds.Length > 0, "eventIds is invalid");
+            Debug.Assert(eventIds is not null && eventIds.Length > 0, "eventIds is invalid");
             _eventIds = (int [])eventIds.Clone();
             _hHooks = new IntPtr[_eventIds.Length];
             Init();
@@ -143,7 +143,7 @@ namespace MS.Internal.Automation
                     _hHooks[i] = IntPtr.Zero;
                 }
             }
-            if (_qEvents != null)
+            if (_qEvents is not null)
             {
                 _qEvents.Clear();
             }

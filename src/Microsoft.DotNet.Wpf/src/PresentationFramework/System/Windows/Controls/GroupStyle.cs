@@ -78,7 +78,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if (PropertyChanged != null)
+            if (PropertyChanged is not null)
             {
                 PropertyChanged(this, e);
             }

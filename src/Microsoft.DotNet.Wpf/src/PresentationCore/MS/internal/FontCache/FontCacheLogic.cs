@@ -559,7 +559,7 @@ namespace MS.Internal.FontCache
         internal static ElementCacher GetServerCache()
         {
             // the current cache is up to date
-            if (_serverCache != null && !_serverCache.IsObsolete())
+            if (_serverCache is not null && !_serverCache.IsObsolete())
                 return _serverCache;
 
             // we know that connecting to the service will likely fail
@@ -569,7 +569,7 @@ namespace MS.Internal.FontCache
             lock (_sharedCacheLock)
             {
                 // repeat the checks from above within the lock
-                if (_serverCache != null && !_serverCache.IsObsolete())
+                if (_serverCache is not null && !_serverCache.IsObsolete())
                     return _serverCache;
 
                 if (!_tryToConnect)
@@ -583,7 +583,7 @@ namespace MS.Internal.FontCache
 
                 int errorCode = 0;
                 string serverSectionName = null;
-                if (_serverCache != null)
+                if (_serverCache is not null)
                 {
                     // Server port is open, but the cache is obsolete. Get a new section name.
                     Debug.Assert(_serverCache.IsObsolete());
@@ -608,7 +608,7 @@ namespace MS.Internal.FontCache
                         serverSectionName = _ipcMngr.GetServerSectionName(timeouts[i], out errorCode);
 
                         //If we succeeded, we can stop here
-                        if (serverSectionName != null)
+                        if (serverSectionName is not null)
                             break;//success
 
                         if ((i + 1) >= timeouts.Length)
@@ -646,7 +646,7 @@ namespace MS.Internal.FontCache
                 //Attempt to open the cache.  Update _serverCache if successful,
                 //but keep using the old cache if there is an error.
                 ElementCacher c = OpenServerCache(serverSectionName);
-                if (c != null)
+                if (c is not null)
                     _serverCache = c;
                 else
                 {
@@ -664,7 +664,7 @@ namespace MS.Internal.FontCache
             if (c is null || c.IsObsolete())
                 c = RenewCache(c);
 
-            Debug.Assert(c != null);
+            Debug.Assert(c is not null);
             return c;
         }
 
@@ -713,7 +713,7 @@ namespace MS.Internal.FontCache
 
                 _currentCache = c;
 
-                if (oldCache != null)
+                if (oldCache is not null)
                     oldCache.MarkObsolete();
                 return c;
             }
@@ -740,7 +740,7 @@ namespace MS.Internal.FontCache
             if (!e.IsAppSpecific)
             {
                 c = GetServerCache();
-                if (c != null)
+                if (c is not null)
                 {
                     if (c.ReadOnlyLookup(e))
                         return;

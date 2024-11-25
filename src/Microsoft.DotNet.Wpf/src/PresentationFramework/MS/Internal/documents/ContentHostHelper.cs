@@ -58,7 +58,7 @@ namespace MS.Internal.Documents
                 {
                     ich = GetICHFromFlowDocument((TextElement)contentElement, (FlowDocument)parent);
                 }
-                else if (textContainer.TextView != null && textContainer.TextView.RenderScope is IContentHost)
+                else if (textContainer.TextView is not null && textContainer.TextView.RenderScope is IContentHost)
                 {
                     // TextBlock hosted in ControlTemplate
                     ich = (IContentHost)textContainer.TextView.RenderScope;
@@ -91,7 +91,7 @@ namespace MS.Internal.Documents
             List<DocumentPageView> pageViews;
             ITextView textView = flowDocument.StructuralCache.TextContainer.TextView;
 
-            if (textView != null)
+            if (textView is not null)
             {
                 // If FlowDocument is hosted by FlowDocumentScrollViewer, the RenderScope
                 // is FlowDocumentView object which hosts PageVisual representing the content.
@@ -115,7 +115,7 @@ namespace MS.Internal.Documents
                         if (pageViews[i].DocumentPage is FlowDocumentPage)
                         {
                             textView = (ITextView)((IServiceProvider)pageViews[i].DocumentPage).GetService(typeof(ITextView));
-                            if (textView != null && textView.IsValid)
+                            if (textView is not null && textView.IsValid)
                             {
                                 // Check if the page contains ContentElement. Check Start and End
                                 // position, which will give desired results in most of the cases.
@@ -146,8 +146,8 @@ namespace MS.Internal.Documents
         /// <returns>Whether collection of DocumentPageViews has been updated.</returns>
         private static void FindDocumentPageViews(Visual root, List<DocumentPageView> pageViews)
         {
-            Invariant.Assert(root != null);
-            Invariant.Assert(pageViews != null);
+            Invariant.Assert(root is not null);
+            Invariant.Assert(pageViews is not null);
 
             if (root is DocumentPageView)
             {
@@ -166,9 +166,9 @@ namespace MS.Internal.Documents
                 {
                     Visual child = root.InternalGetVisualChild(i);
                     fe = child as FrameworkElement;
-                    if (fe != null)
+                    if (fe is not null)
                     {
-                        if (fe.TemplatedParent != null)
+                        if (fe.TemplatedParent is not null)
                         {
                             if (fe is DocumentPageView)
                             {

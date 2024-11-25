@@ -66,10 +66,10 @@ namespace System.Windows.Media
 
             contentBounds = Rect.Empty;
             DrawingImage di = ImageSource as DrawingImage;
-            if (di != null)
+            if (di is not null)
             {
                 Drawing drawing = di.Drawing;
-                if (drawing != null)
+                if (drawing is not null)
                 {
                     contentBounds = drawing.Bounds;
                 }

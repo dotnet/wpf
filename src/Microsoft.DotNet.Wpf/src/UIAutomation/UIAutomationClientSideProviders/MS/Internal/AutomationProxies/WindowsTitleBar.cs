@@ -210,7 +210,7 @@ namespace MS.Internal.AutomationProxies
                 if (!Misc.IsBitSet(ti.rgstate[i], NativeMethods.STATE_SYSTEM_INVISIBLE) || i == _systemMenu)
                 {
                     el = CreateTitleBarChild (i);
-                    if (el != null)
+                    if (el is not null)
                         return el;
                 }
             }

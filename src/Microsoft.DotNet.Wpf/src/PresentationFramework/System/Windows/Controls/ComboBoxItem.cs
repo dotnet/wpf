@@ -108,7 +108,7 @@ namespace System.Windows.Controls
 
             ComboBox parent = ParentComboBox;
 
-            if (parent != null)
+            if (parent is not null)
             {
                 parent.NotifyComboBoxItemMouseDown(this);
             }
@@ -126,7 +126,7 @@ namespace System.Windows.Controls
 
             ComboBox parent = ParentComboBox;
 
-            if (parent != null)
+            if (parent is not null)
             {
                 parent.NotifyComboBoxItemMouseUp(this);
             }
@@ -144,7 +144,7 @@ namespace System.Windows.Controls
 
             ComboBox parent = ParentComboBox;
 
-            if (parent != null)
+            if (parent is not null)
             {
                 parent.NotifyComboBoxItemEnter(this);
             }
@@ -194,7 +194,7 @@ namespace System.Windows.Controls
             
             ComboBox parent = ParentComboBox;
 
-            if (parent != null)
+            if (parent is not null)
             {
                 parent.NotifyComboBoxItemEnter(this);
             }

@@ -172,7 +172,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
 
         private void OnScrollChange()
         {
-            if (ScrollOwner != null) { ScrollOwner.InvalidateScrollInfo(); }
+            if (ScrollOwner is not null) { ScrollOwner.InvalidateScrollInfo(); }
         }
 
         internal static double ComputeScrollOffsetWithMinimalScroll(

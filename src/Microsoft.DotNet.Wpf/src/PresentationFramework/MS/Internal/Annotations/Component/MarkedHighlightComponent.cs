@@ -100,7 +100,7 @@ namespace MS.Internal.Annotations.Component
             get
             {
                 ArrayList list = new ArrayList();
-                if (_attachedAnnotation != null)
+                if (_attachedAnnotation is not null)
                 {
                     list.Add(_attachedAnnotation);
                 }
@@ -150,7 +150,7 @@ namespace MS.Internal.Annotations.Component
         {
             get
             {
-                return _attachedAnnotation != null ? (_attachedAnnotation.Parent as UIElement) : null;
+                return _attachedAnnotation is not null ? (_attachedAnnotation.Parent as UIElement) : null;
             }
         }
 
@@ -205,7 +205,7 @@ namespace MS.Internal.Annotations.Component
         /// <param name="attachedAnnotation">The attached annotation to be added to the component</param>
         public void AddAttachedAnnotation(IAttachedAnnotation attachedAnnotation)
         {
-            if (_attachedAnnotation != null)
+            if (_attachedAnnotation is not null)
             {
                 throw new ArgumentException(SR.MoreThanOneAttachedAnnotation);
             }
@@ -341,7 +341,7 @@ namespace MS.Internal.Annotations.Component
         /// <param name="index">tab index to be set</param>
         internal void SetTabIndex(int index)
         {
-            if (_DPHost != null)
+            if (_DPHost is not null)
                 KeyboardNavigation.SetTabIndex(_DPHost, index);
         }
         #endregion Internal Methods
@@ -367,12 +367,12 @@ namespace MS.Internal.Annotations.Component
             if (marker is null)
                 return;
 
-            Debug.Assert(anchor != null, "undefined anchor");
-            Debug.Assert(marker.Data != null || marker.Data == Geometry.Empty, "undefined geometry");
+            Debug.Assert(anchor is not null, "undefined anchor");
+            Debug.Assert(marker.Data is not null || marker.Data == Geometry.Empty, "undefined geometry");
 
             //marker.Data must be a GeometryGroup with 3 children
             GeometryGroup geometry = marker.Data as GeometryGroup;
-            Debug.Assert(geometry != null, "unexpected geometry type");
+            Debug.Assert(geometry is not null, "unexpected geometry type");
             Debug.Assert(geometry.Children.Count == 3, "unexpected geometry children count");
 
 
@@ -414,20 +414,20 @@ namespace MS.Internal.Annotations.Component
             topTailTransform.Children.Add(tailScale);
             topTailTransform.Children.Add(topOffset);
 
-            if (geometry.Children[0] != null)
+            if (geometry.Children[0] is not null)
                 geometry.Children[0].Transform = topTailTransform;
 
-            if (geometry.Children[1] != null)
+            if (geometry.Children[1] is not null)
                 geometry.Children[1].Transform = bodyTransform;
-            if (geometry.Children[2] != null)
+            if (geometry.Children[2] is not null)
                 geometry.Children[2].Transform = bottomTailTransform;
 
             //add transform to base anchor if needed
-            if (baseAnchor != null)
+            if (baseAnchor is not null)
             {
                 ITextView startView = TextSelectionHelper.GetDocumentPageTextView(baseAnchor);
                 ITextView endView = TextSelectionHelper.GetDocumentPageTextView(anchor);
-                if (startView != endView && startView.RenderScope != null && endView.RenderScope != null)
+                if (startView != endView && startView.RenderScope is not null && endView.RenderScope is not null)
                 {
                     geometry.Transform = (Transform)endView.RenderScope.TransformToVisual(startView.RenderScope);
                 }
@@ -440,7 +440,7 @@ namespace MS.Internal.Annotations.Component
         /// <param name="selected">true - selected/false - unselected</param>
         private void SetSelected(bool selected)
         {
-            Debug.Assert(_uiParent != null, "No selection container");
+            Debug.Assert(_uiParent is not null, "No selection container");
             byte oldState = _state;
 
             if (selected && _uiParent.IsFocused)
@@ -459,9 +459,9 @@ namespace MS.Internal.Annotations.Component
         /// </summary>
         private void RemoveHighlightMarkers()
         {
-            if (_leftMarker != null)
+            if (_leftMarker is not null)
                 Children.Remove(_leftMarker);
-            if (_rightMarker != null)
+            if (_rightMarker is not null)
                 Children.Remove(_rightMarker);
             _leftMarker = null;
             _rightMarker = null;
@@ -482,7 +482,7 @@ namespace MS.Internal.Annotations.Component
             }
 
             ITextContainer textContainer = anchor.Start.TextContainer;
-            Debug.Assert(textContainer != null, "TextAnchor does not belong to a TextContainer");
+            Debug.Assert(textContainer is not null, "TextAnchor does not belong to a TextContainer");
 
             HighlightAnchor.AddAttachedAnnotation(_attachedAnnotation);
 
@@ -497,7 +497,7 @@ namespace MS.Internal.Annotations.Component
 
             //register for selection changed
             _selection = textContainer.TextSelection as ITextRange;
-            if (_selection != null)
+            if (_selection is not null)
             {
                 //find the container's parent as well so we can listen to mouseMove events
                 _uiParent = PathNode.GetParent(textContainer.Parent) as UIElement;
@@ -505,7 +505,7 @@ namespace MS.Internal.Annotations.Component
                 RegisterComponent();
 
                 //register for container's parent GotFocus/LostFocus
-                if (_uiParent != null)
+                if (_uiParent is not null)
                 {
                     _uiParent.GotKeyboardFocus += new KeyboardFocusChangedEventHandler(OnContainerGotFocus);
                     _uiParent.LostKeyboardFocus += new KeyboardFocusChangedEventHandler(OnContainerLostFocus);
@@ -522,12 +522,12 @@ namespace MS.Internal.Annotations.Component
         private void CleanUpAnchor()
         {
             //unregister for selection changed
-            if (_selection != null)
+            if (_selection is not null)
             {
                 UnregisterComponent();
 
                 //unregister for container focus events
-                if (_uiParent != null)
+                if (_uiParent is not null)
                 {
                     _uiParent.GotKeyboardFocus -= new KeyboardFocusChangedEventHandler(OnContainerGotFocus);
                     _uiParent.LostKeyboardFocus -= new KeyboardFocusChangedEventHandler(OnContainerLostFocus);
@@ -538,7 +538,7 @@ namespace MS.Internal.Annotations.Component
             _presentationContext.RemoveFromHost(this, false);
 
             //clear highlight if any
-            if (HighlightAnchor != null)
+            if (HighlightAnchor is not null)
             {
                 HighlightAnchor.RemoveAttachedAnnotation(_attachedAnnotation);
                 Children.Remove(HighlightAnchor);
@@ -556,7 +556,7 @@ namespace MS.Internal.Annotations.Component
         {
             if (_state == 0)
             {
-                if (_highlightAnchor != null)
+                if (_highlightAnchor is not null)
                     _highlightAnchor.Activate(false);
                 MarkerBrush = new SolidColorBrush(DefaultMarkerColor);
                 StrokeThickness = MarkerStrokeThickness;
@@ -564,7 +564,7 @@ namespace MS.Internal.Annotations.Component
             }
             else
             {
-                if (_highlightAnchor != null)
+                if (_highlightAnchor is not null)
                     _highlightAnchor.Activate(true);
                 MarkerBrush = new SolidColorBrush(DefaultActiveMarkerColor);
                 StrokeThickness = ActiveMarkerStrokeThickness;
@@ -613,7 +613,7 @@ namespace MS.Internal.Annotations.Component
                 _selection.Changed += componentsRegister.SelectionHandler;
 
                 //register with the container's mousemove event
-                if (_uiParent != null)
+                if (_uiParent is not null)
                 {
                     _uiParent.MouseMove += componentsRegister.MouseMoveHandler;
                 }
@@ -630,13 +630,13 @@ namespace MS.Internal.Annotations.Component
         private void UnregisterComponent()
         {
             ComponentsRegister componentsRegister = (ComponentsRegister)_documentHandlers[_selection];
-            Debug.Assert(componentsRegister != null, "The selection is not registered");
+            Debug.Assert(componentsRegister is not null, "The selection is not registered");
             componentsRegister.Remove(this);
             if (componentsRegister.Components.Count == 0)
             {
                 _documentHandlers.Remove(_selection);
                 _selection.Changed -= componentsRegister.SelectionHandler;
-                if (_uiParent != null)
+                if (_uiParent is not null)
                 {
                     _uiParent.MouseMove -= componentsRegister.MouseMoveHandler;
                 }
@@ -656,7 +656,7 @@ namespace MS.Internal.Annotations.Component
             }
 
             TextAnchor anchor = ((IHighlightRange)HighlightAnchor).Range;
-            Debug.Assert(anchor != null, "wrong attachedAnchor");
+            Debug.Assert(anchor is not null, "wrong attachedAnchor");
 
             ITextPointer start = anchor.Start.CreatePointer(LogicalDirection.Forward);
             ITextPointer end = anchor.End.CreatePointer(LogicalDirection.Backward);
@@ -725,7 +725,7 @@ namespace MS.Internal.Annotations.Component
         private void OnContainerGotFocus(Object sender, KeyboardFocusChangedEventArgs args)
         {
             //check if we need to activate the SN again
-            if ((HighlightAnchor != null) && HighlightAnchor.IsSelected(_selection))
+            if ((HighlightAnchor is not null) && HighlightAnchor.IsSelected(_selection))
                 SetSelected(true);
         }
 
@@ -763,7 +763,7 @@ namespace MS.Internal.Annotations.Component
             set
             {
                 _highlightAnchor = value;
-                if (_highlightAnchor != null)
+                if (_highlightAnchor is not null)
                 {
                     //set the default colors
                     _highlightAnchor.DefaultBackground = DefaultAnchorBackground;
@@ -790,7 +790,7 @@ namespace MS.Internal.Annotations.Component
         /// <returns>positive value means LeftToRight, negative value means RightToLeft</returns>
         private static FlowDirection GetTextFlowDirection(ITextPointer pointer)
         {
-            Invariant.Assert(pointer != null, "Null pointer passed.");
+            Invariant.Assert(pointer is not null, "Null pointer passed.");
             Invariant.Assert(pointer.IsAtInsertionPosition, "Pointer is not an insertion position");
 
             int sign = 0;
@@ -821,7 +821,7 @@ namespace MS.Internal.Annotations.Component
                 ITextPointer nextPointer = pointer.GetNextInsertionPosition(direction);
 
                 // There may be no more insertion positions in this document
-                if (nextPointer != null)
+                if (nextPointer is not null)
                 {
                     // Backward gravity for trailing edge
                     nextPointer = nextPointer.CreatePointer(direction == LogicalDirection.Backward ? LogicalDirection.Forward : LogicalDirection.Backward);
@@ -889,17 +889,17 @@ namespace MS.Internal.Annotations.Component
         private static void OnSelectionChanged(object sender, EventArgs args)
         {
             ITextRange selection = sender as ITextRange;
-            Debug.Assert(selection != null, "Unexpected sender of Changed event");
+            Debug.Assert(selection is not null, "Unexpected sender of Changed event");
 
             //get all the anchors
             ComponentsRegister componentsRegister = (ComponentsRegister)_documentHandlers[selection];
-            //Debug.Assert(stateHandler != null, "The selection is not registered");
+            //Debug.Assert(stateHandler is not null, "The selection is not registered");
             if (componentsRegister is null)
             {
                 return;
             }
             List<MarkedHighlightComponent> components = componentsRegister.Components;
-            Debug.Assert(components != null, "No SN registered for this selection");
+            Debug.Assert(components is not null, "No SN registered for this selection");
 
             //get the state and deactivate. We do not want to activate now -
             //the activation should happen after all deactivation is done in order to
@@ -907,7 +907,7 @@ namespace MS.Internal.Annotations.Component
             bool[] active = new bool[components.Count];
             for (int i = 0; i < components.Count; i++)
             {
-                Debug.Assert(components[i].HighlightAnchor != null, "Missing highlight anchor component");
+                Debug.Assert(components[i].HighlightAnchor is not null, "Missing highlight anchor component");
                 active[i] = components[i].HighlightAnchor.IsSelected(selection);
                 if (!active[i])
                     components[i].SetSelected(false);
@@ -928,7 +928,7 @@ namespace MS.Internal.Annotations.Component
         /// <param name="args">mouse event params</param>
         private static void OnMouseMove(object sender, MouseEventArgs args)
         {
-            Debug.Assert(sender != null, "undefined sender");
+            Debug.Assert(sender is not null, "undefined sender");
 
             //the sender must provide ITextView service in order to have this feature working
             IServiceProvider service = sender as IServiceProvider;
@@ -944,7 +944,7 @@ namespace MS.Internal.Annotations.Component
             //now convert it to a text position
             ITextPointer pos = textView.GetTextPositionFromPoint(currentPosition, false);
 
-            if (pos != null)
+            if (pos is not null)
                 CheckAllHighlightRanges(pos);
         }
 
@@ -955,7 +955,7 @@ namespace MS.Internal.Annotations.Component
         /// <param name="pos">the text pointer to be checked</param>
         private static void CheckAllHighlightRanges(ITextPointer pos)
         {
-            Debug.Assert(pos != null, "null text pointer");
+            Debug.Assert(pos is not null, "null text pointer");
 
             ITextContainer container = pos.TextContainer;
             ITextRange selection = container.TextSelection as ITextRange;
@@ -969,7 +969,7 @@ namespace MS.Internal.Annotations.Component
                 return;
 
             List<MarkedHighlightComponent> components = registry.Components;
-            Debug.Assert((components != null) && (components.Count > 0), "invalid component registry");
+            Debug.Assert((components is not null) && (components.Count > 0), "invalid component registry");
 
             for (int i = 0; i < components.Count; i++)
             {
@@ -996,8 +996,8 @@ namespace MS.Internal.Annotations.Component
         {
             public ComponentsRegister(EventHandler selectionHandler, MouseEventHandler mouseMoveHandler)
             {
-                Debug.Assert(selectionHandler != null, "SelectionHandler handler can not be null");
-                Debug.Assert(mouseMoveHandler != null, "MouseMoveHandler handler can not be null");
+                Debug.Assert(selectionHandler is not null, "SelectionHandler handler can not be null");
+                Debug.Assert(mouseMoveHandler is not null, "MouseMoveHandler handler can not be null");
                 _components = new List<MarkedHighlightComponent>();
                 _selectionHandler = selectionHandler;
                 _mouseMoveHandler = mouseMoveHandler;
@@ -1010,14 +1010,14 @@ namespace MS.Internal.Annotations.Component
             /// <param name="component">Component to be added</param>
             public void Add(MarkedHighlightComponent component)
             {
-                Debug.Assert(component != null, "component is null");
-                Debug.Assert(_components != null, "_components are null");
+                Debug.Assert(component is not null, "component is null");
+                Debug.Assert(_components is not null, "_components are null");
 
                 //if this is the first component set KeyboardNavigation mode of the host
                 if (_components.Count == 0)
                 {
                     UIElement host = component.PresentationContext.Host;
-                    if (host != null)
+                    if (host is not null)
                     {
                         KeyboardNavigation.SetTabNavigation(host, KeyboardNavigationMode.Local);
                         KeyboardNavigation.SetControlTabNavigation(host, KeyboardNavigationMode.Local);
@@ -1045,8 +1045,8 @@ namespace MS.Internal.Annotations.Component
             /// <param name="component">component to be removed</param>
             public void Remove(MarkedHighlightComponent component)
             {
-                Debug.Assert(component != null, "component is null");
-                Debug.Assert(_components != null, "_components are null");
+                Debug.Assert(component is not null, "component is null");
+                Debug.Assert(_components is not null, "_components are null");
 
                 int ind = 0;
                 for (; ind < _components.Count; ind++)
@@ -1101,16 +1101,16 @@ namespace MS.Internal.Annotations.Component
             /// both = Start and End TPs are equal. </remarks>
             private int Compare(IAnnotationComponent first, IAnnotationComponent second)
             {
-                Debug.Assert(first != null, "first component is null");
-                Debug.Assert((first.AttachedAnnotations != null) && (first.AttachedAnnotations.Count > 0), "first AttachedAnchor is null");
-                Debug.Assert(second != null, "second component is null");
-                Debug.Assert((second.AttachedAnnotations != null) && (second.AttachedAnnotations.Count > 0), "second AttachedAnchor is null");
+                Debug.Assert(first is not null, "first component is null");
+                Debug.Assert((first.AttachedAnnotations is not null) && (first.AttachedAnnotations.Count > 0), "first AttachedAnchor is null");
+                Debug.Assert(second is not null, "second component is null");
+                Debug.Assert((second.AttachedAnnotations is not null) && (second.AttachedAnnotations.Count > 0), "second AttachedAnchor is null");
 
                 TextAnchor firstAnchor = ((IAttachedAnnotation)first.AttachedAnnotations[0]).FullyAttachedAnchor as TextAnchor;
                 TextAnchor secondAnchor = ((IAttachedAnnotation)second.AttachedAnnotations[0]).FullyAttachedAnchor as TextAnchor;
 
-                Debug.Assert(firstAnchor != null, " first TextAnchor is null");
-                Debug.Assert(secondAnchor != null, " second TextAnchor is null");
+                Debug.Assert(firstAnchor is not null, " first TextAnchor is null");
+                Debug.Assert(secondAnchor is not null, " second TextAnchor is null");
 
                 int res = firstAnchor.Start.CompareTo(secondAnchor.Start);
                 if (res == 0)

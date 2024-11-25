@@ -102,9 +102,9 @@ internal sealed class DocumentStream : StreamProxy, IDisposable
         DocumentStream result;
         FileStream target = null;
 
-        bool isFileSource = (_xpsFileToken != null);
+        bool isFileSource = (_xpsFileToken is not null);
 
-        Invariant.Assert(copiesToken != null, "No target file to which to copy.");
+        Invariant.Assert(copiesToken is not null, "No target file to which to copy.");
 
         ThrowIfInvalidXpsFileForSave(copiesToken.Location);
 
@@ -232,7 +232,7 @@ internal sealed class DocumentStream : StreamProxy, IDisposable
         DocumentStream result = null;
 
         FileStream temporary = null;
-        bool isFileSource = (_xpsFileToken != null);
+        bool isFileSource = (_xpsFileToken is not null);
 
         //----------------------------------------------------------------------
         // Open File in Same Location (if possible)
@@ -255,7 +255,7 @@ internal sealed class DocumentStream : StreamProxy, IDisposable
 
         //----------------------------------------------------------------------
         // File Was Opened
-        if ((temporary != null) && (tempToken != null))
+        if ((temporary is not null) && (tempToken is not null))
         {
             //------------------------------------------------------------------
             // Copy Data
@@ -416,7 +416,7 @@ internal sealed class DocumentStream : StreamProxy, IDisposable
 
         //----------------------------------------------------------------------
         // Release Existing Locks (so we open with write)
-        if (Target != null)
+        if (Target is not null)
         {
             Target.Close();
         }
@@ -452,7 +452,7 @@ internal sealed class DocumentStream : StreamProxy, IDisposable
 
         if (!success)
         {
-            if (exception != null)
+            if (exception is not null)
             {
                 Trace.SafeWrite(
                     Trace.File,
@@ -470,7 +470,7 @@ internal sealed class DocumentStream : StreamProxy, IDisposable
         }
 
         Invariant.Assert(
-            fs != null,
+            fs is not null,
             "ReOpenWriteable: Can no longer open file.");
 
         if (success)
@@ -675,7 +675,7 @@ internal sealed class DocumentStream : StreamProxy, IDisposable
             Trace.File,
             "{0}({1}).Dispose({2}) called {3} delete.",
             this,
-            (_xpsFileToken != null) ? _xpsFileToken.Location.ToString() : string.Empty,
+            (_xpsFileToken is not null) ? _xpsFileToken.Location.ToString() : string.Empty,
             disposing,
             DeleteOnClose && disposing ? "should" : "should not");
 
@@ -794,14 +794,14 @@ internal sealed class DocumentStream : StreamProxy, IDisposable
                     exception);
                 break;
             }
-            if (tempToken != null)
+            if (tempToken is not null)
             {
                 break;
             }
 
 #if DEBUG
             Invariant.Assert(
-                ((i != 3) || (temporary != null) || (inSameFolder)),
+                ((i != 3) || (temporary is not null) || (inSameFolder)),
                 "Unable to create a temp file.\n"
                 + "Unless IE Cache is read-only we have a defect.");
 #endif

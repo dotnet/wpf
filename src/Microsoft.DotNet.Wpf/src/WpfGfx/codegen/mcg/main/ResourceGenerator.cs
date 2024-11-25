@@ -78,7 +78,7 @@ namespace MS.Internal.MilCodeGen.Main
 
             ProcessArgs(args, out resourceModel);
 
-            if (resourceModel != null)
+            if (resourceModel is not null)
             {
                 //
                 // For each concrete subclass of "GeneratorBase":

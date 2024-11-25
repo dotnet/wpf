@@ -446,7 +446,7 @@ namespace System.Windows.Media
             {
                 return true;
             }
-            else if (obj1 != null && obj2 != null)
+            else if (obj1 is not null && obj2 is not null)
             {
                 #pragma warning disable 6506
                 return (
@@ -591,7 +591,7 @@ namespace System.Windows.Media
 
         private void FromStream(Stream stm, string filename)
         {
-            Debug.Assert(stm != null);
+            Debug.Assert(stm is not null);
 
             int bufferSize = _bufferSizeIncrement;
 

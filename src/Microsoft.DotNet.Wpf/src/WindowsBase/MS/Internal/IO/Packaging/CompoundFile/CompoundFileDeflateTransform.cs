@@ -317,7 +317,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             Invariant.Assert(size >= 0, "Cannot allocate negative number of bytes");
 
             // verify we have room
-            if (buffer != null)
+            if (buffer is not null)
             {
                 // do we have room?
                 if (buffer.Length < size)

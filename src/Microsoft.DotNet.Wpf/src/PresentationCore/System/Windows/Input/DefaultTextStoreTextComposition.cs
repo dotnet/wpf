@@ -64,7 +64,7 @@ namespace System.Windows.Input
             UnsafeNativeMethods.ITfContextOwnerCompositionServices compositionService = context as UnsafeNativeMethods.ITfContextOwnerCompositionServices;
             UnsafeNativeMethods.ITfCompositionView composition = GetComposition(context);
             
-            if (composition != null)
+            if (composition is not null)
             {
                 // Terminate composition if there is a composition view.
                 compositionService.TerminateComposition(composition);

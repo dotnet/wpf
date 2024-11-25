@@ -293,7 +293,7 @@ namespace MS.Internal
                         result = criticalAction.DynamicInvoke(args);
                     }
                 }
-                catch (TargetInvocationException ex) when (ex.InnerException != null)
+                catch (TargetInvocationException ex) when (ex.InnerException is not null)
                 {
                     throw ex.InnerException;
                 }
@@ -312,7 +312,7 @@ namespace MS.Internal
                     }
                     finally
                     {
-                        if (dispatcherProcessingDisabled != null)
+                        if (dispatcherProcessingDisabled is not null)
                         {
                             dispatcherProcessingDisabled.Value.Dispose();
                         }

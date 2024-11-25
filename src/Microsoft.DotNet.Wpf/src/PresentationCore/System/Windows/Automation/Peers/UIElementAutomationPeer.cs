@@ -93,7 +93,7 @@ namespace System.Windows.Automation.Peers
                         return (true);
                     });
 
-            if (root != null)
+            if (root is not null)
             {
                 root.Hwnd = hwnd;
             }
@@ -108,7 +108,7 @@ namespace System.Windows.Automation.Peers
         {
             bool done = false;
 
-            if(parent != null)
+            if(parent is not null)
             {
                 AutomationPeer peer = null;
                 int count = VisualTreeHelper.GetChildrenCount(parent);
@@ -116,15 +116,15 @@ namespace System.Windows.Automation.Peers
                 {
                     DependencyObject child = VisualTreeHelper.GetChild(parent, i);
                     
-                    if(     child != null
+                    if(     child is not null
                         &&  child is UIElement 
-                        &&  (peer = CreatePeerForElement((UIElement)child)) != null  )
+                        &&  (peer = CreatePeerForElement((UIElement)child)) is not null  )
                     {
                         done = callback(peer);
                     }
-                    else if ( child != null
+                    else if ( child is not null
                         &&    child is UIElement3D
-                        &&    (peer = UIElement3DAutomationPeer.CreatePeerForElement(((UIElement3D)child))) != null )
+                        &&    (peer = UIElement3DAutomationPeer.CreatePeerForElement(((UIElement3D)child))) is not null )
                     {
                         done = callback(peer);
                     }
@@ -273,21 +273,21 @@ namespace System.Windows.Automation.Peers
 
             DependencyObject parent = VisualTreeHelper.GetParent(owner);
             
-            while (parent != null && 
+            while (parent is not null && 
                    !DoubleUtil.AreClose(boundingRect, Rect.Empty) && 
                    !DoubleUtil.AreClose(boundingRect.Height, 0) && 
                    !DoubleUtil.AreClose(boundingRect.Width, 0))
             {
                 Visual visualParent = parent as Visual;
-                if (visualParent != null)
+                if (visualParent is not null)
                 {
                     Geometry clipGeometry = VisualTreeHelper.GetClip(visualParent);
-                    if (clipGeometry != null)
+                    if (clipGeometry is not null)
                     {
                         GeneralTransform transform = owner.TransformToAncestor(visualParent).Inverse;
                         // Safer version of transform to descendent (doing the inverse ourself and saves us changing the co-ordinate space of the owner's bounding rectangle), 
                         // we want the rect inside of our space. (Which is always rectangular and much nicer to work with)
-                        if (transform != null)
+                        if (transform is not null)
                         {
                             Rect clipBounds = clipGeometry.Bounds;
                             clipBounds = transform.TransformBounds(clipBounds);
@@ -386,7 +386,7 @@ namespace System.Windows.Automation.Peers
         override protected AutomationPeer GetLabeledByCore()
         {
             UIElement element = AutomationProperties.GetLabeledBy(_owner);
-            if (element != null)
+            if (element is not null)
                 return element.GetAutomationPeer();
 
             return null;
@@ -427,11 +427,11 @@ namespace System.Windows.Automation.Peers
                 // If a value has been set for <see cref="UIElement.PositionAndSizeOfSetController"/>
                 // forward the call to that element, otherwise return the default value.
                 UIElement element = _owner.PositionAndSizeOfSetController;
-                if (element != null)
+                if (element is not null)
                 {
                     AutomationPeer peer = UIElementAutomationPeer.FromElement(element);
                     peer = peer.EventsSource ?? peer;
-                    if (peer != null)
+                    if (peer is not null)
                     {
                         try
                         {
@@ -462,11 +462,11 @@ namespace System.Windows.Automation.Peers
                 // If a value has been set for <see cref="UIElement.PositionAndSizeOfSetController"/>
                 // forward the call to that element, otherwise return the default value.
                 UIElement element = _owner.PositionAndSizeOfSetController;
-                if (element != null)
+                if (element is not null)
                 {
                     AutomationPeer peer = UIElementAutomationPeer.FromElement(element);
                     peer = peer.EventsSource ?? peer;
-                    if (peer != null)
+                    if (peer is not null)
                     {
                         try
                         {

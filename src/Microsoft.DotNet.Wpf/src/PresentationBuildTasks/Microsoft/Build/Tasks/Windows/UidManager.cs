@@ -765,7 +765,7 @@ namespace Microsoft.Build.Tasks.Windows
             Int64 index;
 
             ParseUid(value, out uidSequence, out index);
-            if (uidSequence != null)
+            if (uidSequence is not null)
             {
                 if (_sequenceMaxIds.Contains(uidSequence))
                 {
@@ -787,7 +787,7 @@ namespace Microsoft.Build.Tasks.Windows
             string availableUid;
 
             // copy the ID if available
-            if (uid.FrameworkElementName != null
+            if (uid.FrameworkElementName is not null
              && (!_uidTable.Contains(uid.FrameworkElementName))
              )
             {
@@ -958,7 +958,7 @@ namespace Microsoft.Build.Tasks.Windows
         {
             try {
                 // we need to add a new namespace
-                if (_collector.NamespaceAddedForMissingUid != null)
+                if (_collector.NamespaceAddedForMissingUid is not null)
                 {
                     // write to the beginning of the root element
                     WriteTillSourcePosition(

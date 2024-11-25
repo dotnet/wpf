@@ -37,7 +37,7 @@ namespace MS.Internal
         internal override bool TryGetValueFromXmlNode(object item, string name, out object value)
         {
             XmlNode node = item as XmlNode;
-            if (node != null)
+            if (node is not null)
             {
                 value = SelectStringValue(node, name, null);
                 return true;
@@ -53,9 +53,9 @@ namespace MS.Internal
         internal override IComparer PrepareXmlComparer(IEnumerable collection, SortDescriptionCollection sort, CultureInfo culture)
         {
             XmlDataCollection xdc = collection as XmlDataCollection;
-            if (xdc != null)
+            if (xdc is not null)
             {
-                Invariant.Assert(sort != null);
+                Invariant.Assert(sort is not null);
                 return new XmlNodeComparer(sort, xdc.XmlNamespaceManager, culture);
             }
             return null;
@@ -65,7 +65,7 @@ namespace MS.Internal
         internal override bool IsEmptyXmlDataCollection(object parent)
         {
             XmlDataCollection xdc = parent as XmlDataCollection;
-            return (xdc != null) ? xdc.Count > 0 : false;
+            return (xdc is not null) ? xdc.Count > 0 : false;
         }
 
         // when item is an XmlNode, get its tag name (using the target DO as context
@@ -74,7 +74,7 @@ namespace MS.Internal
         {
             System.Xml.XmlNode node = (System.Xml.XmlNode)item;
             XmlNamespaceManager namespaceManager = GetXmlNamespaceManager(target);
-            if (namespaceManager != null)
+            if (namespaceManager is not null)
             {
                 string prefix = namespaceManager.LookupPrefix(node.NamespaceURI);
                 if (prefix != string.Empty)
@@ -89,13 +89,13 @@ namespace MS.Internal
         {
             string innerTextString = innerText as string;
 
-            if (innerTextString != null)
+            if (innerTextString is not null)
             {
                 index = 0;
                 foreach (object item in items)
                 {
                     XmlNode node = item as XmlNode;
-                    if (node != null && node.InnerText == innerTextString)
+                    if (node is not null && node.InnerText == innerTextString)
                         return node;
                     ++index;
                 }
@@ -110,7 +110,7 @@ namespace MS.Internal
         {
             XmlNode node = item as XmlNode;
 
-            if (node != null)
+            if (node is not null)
             {
                 return node.InnerText;
             }
@@ -129,7 +129,7 @@ namespace MS.Internal
 
             result = node.SelectSingleNode(query, namespaceManager);
 
-            if (result != null)
+            if (result is not null)
             {
                 strValue = ExtractString(result);
             }
@@ -171,7 +171,7 @@ namespace MS.Internal
             if (nsmgr is null)
             {
                 XmlDataProvider xdp = Helper.XmlDataProviderForElement(target);
-                nsmgr = (xdp != null) ? xdp.XmlNamespaceManager : null;
+                nsmgr = (xdp is not null) ? xdp.XmlNamespaceManager : null;
             }
 
             return nsmgr;

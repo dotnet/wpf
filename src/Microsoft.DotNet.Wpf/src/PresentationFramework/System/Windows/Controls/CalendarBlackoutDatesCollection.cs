@@ -140,7 +140,7 @@ namespace System.Windows.Controls
                     //Moving backwards.
                     currentDate = DateTimeHelper.AddDays(range.Start, dayInterval );
                 }
-            } while (currentDate != null && ((range = GetContainingDateRange((DateTime)currentDate)) != null));
+            } while (currentDate is not null && ((range = GetContainingDateRange((DateTime)currentDate)) is not null));
 
 
 
@@ -257,7 +257,7 @@ namespace System.Windows.Controls
         /// <param name="item"></param>
         private void RegisterItem(CalendarDateRange item)
         {
-            if (item != null)
+            if (item is not null)
             {
                 item.Changing += new EventHandler<CalendarDateRangeChangingEventArgs>(Item_Changing);
                 item.PropertyChanged += new PropertyChangedEventHandler(Item_PropertyChanged);
@@ -269,7 +269,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void UnRegisterItem(CalendarDateRange item)
         {
-            if (item != null)
+            if (item is not null)
             {
                 item.Changing -= new EventHandler<CalendarDateRangeChangingEventArgs>(Item_Changing);
                 item.PropertyChanged -= new PropertyChangedEventHandler(Item_PropertyChanged);
@@ -284,7 +284,7 @@ namespace System.Windows.Controls
         private void Item_Changing(object sender, CalendarDateRangeChangingEventArgs e)
         {
             CalendarDateRange item = sender as CalendarDateRange;
-            if (item != null)
+            if (item is not null)
             {
                 if (!IsValid(e.Start, e.End))
                 {
@@ -327,7 +327,7 @@ namespace System.Windows.Controls
             foreach (object child in _owner.SelectedDates)
             {
                 DateTime? day = child as DateTime?;
-                Debug.Assert(day != null);
+                Debug.Assert(day is not null);
                 if (DateTimeHelper.InRange(day.Value, start, end))
                 {
                     return false;

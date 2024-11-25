@@ -44,9 +44,9 @@ namespace MS.Internal
         public override bool Equals(object o)
         {
             Pair other = o as Pair;
-            return other != null &&
-                (_first != null ? _first.Equals(other._first) : other._first is null) &&
-                (_second != null ? _second.Equals(other._second) : other._second is null);
+            return other is not null &&
+                (_first is not null ? _first.Equals(other._first) : other._first is null) &&
+                (_second is not null ? _second.Equals(other._second) : other._second is null);
         }
 
         private object _first;

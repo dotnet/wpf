@@ -142,11 +142,11 @@ namespace System.Windows.Annotations.Storage
                     XPathNavigator editor = GetAnnotationNodeForId(newAnnotation.Id);
 
                     // we are making sure that the newAnnotation doesn't already exist in the store
-                    if (editor != null)
+                    if (editor is not null)
                         throw new ArgumentException(SR.AnnotationAlreadyExists, "newAnnotation");
 
                     // we are making sure that the newAnnotation doesn't already exist in the store map
-                    if (_storeAnnotationsMap.FindAnnotation(newAnnotation.Id) != null)
+                    if (_storeAnnotationsMap.FindAnnotation(newAnnotation.Id) is not null)
                         throw new ArgumentException(SR.AnnotationAlreadyExists, "newAnnotation");
 
                     // simply add the annotation to the map to save on performance
@@ -189,7 +189,7 @@ namespace System.Windows.Annotations.Storage
                     annotation = _storeAnnotationsMap.FindAnnotation(annotationId);
 
                     XPathNavigator editor = GetAnnotationNodeForId(annotationId);
-                    if (editor != null)
+                    if (editor is not null)
                     {
                         // Only deserialize the annotation if its not already in our map
                         if (annotation is null)
@@ -213,7 +213,7 @@ namespace System.Windows.Annotations.Storage
             }
 
             // Only fire notification if we actually removed an annotation
-            if (annotation != null)
+            if (annotation is not null)
             {
                 OnStoreContentChanged(new StoreContentChangedEventArgs(StoreContentAction.Deleted, annotation));
             }
@@ -255,7 +255,7 @@ namespace System.Windows.Annotations.Storage
                     query += @"/child::*[1]/self::";
                     for (int i = 0; i < anchorLocator.Parts.Count; i++)
                     {
-                        if (anchorLocator.Parts[i] != null)
+                        if (anchorLocator.Parts[i] is not null)
                         {
                             if (i > 0)
                             {
@@ -264,7 +264,7 @@ namespace System.Windows.Annotations.Storage
 
                             string fragment = anchorLocator.Parts[i].GetQueryFragment(_namespaceManager);
 
-                            if (fragment != null)
+                            if (fragment is not null)
                             {
                                 query += fragment;
                             }
@@ -332,13 +332,13 @@ namespace System.Windows.Annotations.Storage
                     annotation = _storeAnnotationsMap.FindAnnotation(annotationId);
 
                     // If there is no pre-existing instance, we deserialize and create an instance.
-                    if (annotation != null)
+                    if (annotation is not null)
                     {
                         return annotation;
                     }
 
                     XPathNavigator editor = GetAnnotationNodeForId(annotationId);
-                    if (editor != null)
+                    if (editor is not null)
                     {
                         annotation = (Annotation)_serializer.Deserialize(editor.ReadSubtree());
 
@@ -552,7 +552,7 @@ namespace System.Windows.Annotations.Storage
         /// <exception cref="ArgumentException">queryExpression is empty string</exception>
         private List<Guid> FindAnnotationIds(string queryExpression)
         {
-            Invariant.Assert(queryExpression != null && queryExpression.Length > 0,
+            Invariant.Assert(queryExpression is not null && queryExpression.Length > 0,
                           "Invalid query expression");
 
             Guid annId;
@@ -567,7 +567,7 @@ namespace System.Windows.Annotations.Storage
                 XPathNavigator navigator = _document.CreateNavigator();
                 XPathNodeIterator iterator = navigator.Select(queryExpression, _namespaceManager);
 
-                if (iterator != null && iterator.Count > 0)
+                if (iterator is not null && iterator.Count > 0)
                 {
                     retObj = new List<Guid>(iterator.Count);
                     foreach (XPathNavigator node in iterator)
@@ -691,7 +691,7 @@ namespace System.Windows.Annotations.Storage
         private IList<Annotation> InternalGetAnnotations(string query, ContentLocator anchorLocator)
         {
             // anchorLocator being null is handled appropriately below
-            Invariant.Assert(query != null, "Parameter 'query' is null.");
+            Invariant.Assert(query is not null, "Parameter 'query' is null.");
 
             lock (SyncRoot)
             {
@@ -801,7 +801,7 @@ namespace System.Windows.Annotations.Storage
             // check compatible namespaces
             foreach (KeyValuePair<Uri, IList<Uri>> item in knownNamespaces)
             {
-                if (item.Value != null)
+                if (item.Value is not null)
                 {
                     foreach (Uri name in item.Value)
                     {
@@ -836,11 +836,11 @@ namespace System.Windows.Annotations.Storage
             }
 
             //add external namespaces
-            if (knownNamespaces != null)
+            if (knownNamespaces is not null)
             {
                 foreach (Uri knownNamespace in knownNamespaces.Keys)
                 {
-                    Debug.Assert(knownNamespace != null, "null knownNamespace");
+                    Debug.Assert(knownNamespace is not null, "null knownNamespace");
                     supportedNamespaces.Add(knownNamespace.ToString());
                 }
             }
@@ -851,15 +851,15 @@ namespace System.Windows.Annotations.Storage
 
             // Declare compatibility.
             // Skip the Framework ones because they are all null in this version
-            if (knownNamespaces != null)
+            if (knownNamespaces is not null)
             {
                 foreach (KeyValuePair<Uri, IList<Uri>> item in knownNamespaces)
                 {
-                    if (item.Value != null)
+                    if (item.Value is not null)
                     {
                         foreach (Uri name in item.Value)
                         {
-                            Debug.Assert(name != null, "null compatible namespace");
+                            Debug.Assert(name is not null, "null compatible namespace");
                             reader.DeclareNamespaceCompatibility(item.Key.ToString(), name.ToString());
                         }//foreach
                     }//if

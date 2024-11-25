@@ -88,7 +88,7 @@ namespace System.Windows
             PropertyInfo propertyInfo = targetProperty as PropertyInfo;
 
             // Allow targetProperty to be null or ResourceDictionary.Source
-            if (dictionary is null || (targetProperty != null && propertyInfo != SourceProperty))
+            if (dictionary is null || (targetProperty is not null && propertyInfo != SourceProperty))
             {
                 throw new InvalidOperationException(SR.ThemeDictionaryExtension_Source);
             }
@@ -187,8 +187,8 @@ namespace System.Windows
 
         private static void Register(ResourceDictionary dictionary, string assemblyName)
         {
-            Debug.Assert(dictionary != null, "dictionary should not be null");
-            Debug.Assert(assemblyName != null, "assemblyName should not be null");
+            Debug.Assert(dictionary is not null, "dictionary should not be null");
+            Debug.Assert(assemblyName is not null, "assemblyName should not be null");
 
             if (_themeDictionaryInfos is null)
             {
@@ -228,7 +228,7 @@ namespace System.Windows
         {
             // Update all resource dictionaries
 
-            if (_themeDictionaryInfos != null)
+            if (_themeDictionaryInfos is not null)
             {
                 for (int i = 0; i < _themeDictionaryInfos.Count; i++)
                 {

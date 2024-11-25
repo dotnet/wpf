@@ -66,7 +66,7 @@ namespace System.Windows.Controls
             if (!(value is UIElement))
                 throw new ArgumentException (SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value");
 
-            if (this.Child != null)
+            if (this.Child is not null)
                 throw new ArgumentException(SR.Format(SR.CanOnlyHaveOneChild, this.GetType(), value.GetType()));
 
             this.Child = (UIElement)value;
@@ -196,7 +196,7 @@ namespace System.Windows.Controls
             Size desiredSize = AdornedElement.RenderSize;
             UIElement child = Child;
 
-            if (child != null)
+            if (child is not null)
                 child.Measure(desiredSize);
 
             return desiredSize;
@@ -211,7 +211,7 @@ namespace System.Windows.Controls
         {
             UIElement child = Child;
 
-            if (child != null)
+            if (child is not null)
                 child.Arrange(new Rect(arrangeBounds));
 
             return arrangeBounds;
@@ -227,11 +227,11 @@ namespace System.Windows.Controls
                     // find the TemplatedAdorner
                     FrameworkElement templateParent = this.TemplatedParent as FrameworkElement;
 
-                    if (templateParent != null)
+                    if (templateParent is not null)
                     {
                         _templatedAdorner = VisualTreeHelper.GetParent(templateParent) as TemplatedAdorner;
 
-                        if (_templatedAdorner != null && _templatedAdorner.ReferenceElement is null)
+                        if (_templatedAdorner is not null && _templatedAdorner.ReferenceElement is null)
                         {
                             _templatedAdorner.ReferenceElement = this;
                         }

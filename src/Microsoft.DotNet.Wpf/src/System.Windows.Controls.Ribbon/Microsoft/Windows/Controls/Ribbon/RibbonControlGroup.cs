@@ -88,7 +88,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             for (int i = 0; i < Items.Count; i++)
             {
                 DependencyObject child = ItemContainerGenerator.ContainerFromIndex(i);
-                if (child != null)
+                if (child is not null)
                 {
                     RibbonHelper.TransferPseudoInheritedProperties(this, child);
                 }
@@ -110,10 +110,10 @@ namespace Microsoft.Windows.Controls.Ribbon
                 for (int i = 0; i < itemCount; i++)
                 {
                     RibbonControl ribbonControl = controlGroup.ItemContainerGenerator.ContainerFromIndex(i) as RibbonControl;
-                    if (ribbonControl != null && ribbonControl.Visibility != Visibility.Collapsed)
+                    if (ribbonControl is not null && ribbonControl.Visibility != Visibility.Collapsed)
                     {
                         UIElement contentChild = ribbonControl.ContentChild;
-                        if (contentChild != null && contentChild.Visibility != Visibility.Collapsed)
+                        if (contentChild is not null && contentChild.Visibility != Visibility.Collapsed)
                         {
                             RibbonControlSizeDefinition currentLargeCsd = RibbonControlService.GetDefaultControlSizeDefinition(contentChild);
                             if (currentLargeCsd is null)
@@ -122,7 +122,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                                 currentLargeCsd = RibbonControlService.GetDefaultControlSizeDefinition(contentChild);
                             }
 
-                            if (currentLargeCsd != null)
+                            if (currentLargeCsd is not null)
                             {
                                 childFound = true;
                                 if (imageSize == RibbonImageSize.Collapsed)

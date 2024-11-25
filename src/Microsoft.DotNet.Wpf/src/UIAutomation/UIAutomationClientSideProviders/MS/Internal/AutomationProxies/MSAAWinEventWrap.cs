@@ -101,7 +101,7 @@ namespace MS.Internal.AutomationProxies
                     _hHooks[i] = IntPtr.Zero;
                 }
             }
-            if (_qEvents != null)
+            if (_qEvents is not null)
             {
                 _qEvents.Clear();
             }

@@ -237,19 +237,19 @@ namespace MS.Internal
         {
             bool result = false;
 
-            if (contentType != null)
+            if (contentType is not null)
             {
                 if (!allowParameterValuePairs)
                 {
                     //Return false if this content type object has parameters
-                    if (_parameterDictionary != null && _parameterDictionary.Count > 0)
+                    if (_parameterDictionary is not null && _parameterDictionary.Count > 0)
                         return false;
 
                     //Return false if the content type object passed in has parameters
                     Dictionary<string, string>.Enumerator contentTypeEnumerator;
                     contentTypeEnumerator = contentType.ParameterValuePairs;
                     contentTypeEnumerator.MoveNext();
-                    if (contentTypeEnumerator.Current.Key != null)
+                    if (contentTypeEnumerator.Current.Key is not null)
                         return false;
                 }
 
@@ -283,7 +283,7 @@ namespace MS.Internal
                 stringBuilder.Append('/');
                 stringBuilder.Append(_subType);
 
-                if (_parameterDictionary != null && _parameterDictionary.Count > 0)
+                if (_parameterDictionary is not null && _parameterDictionary.Count > 0)
                 {   
                     foreach (string paramterKey in _parameterDictionary.Keys)
                     {

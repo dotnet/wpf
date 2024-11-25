@@ -230,8 +230,8 @@ namespace MS.Internal.Ink.InkSerializedFormat
             uint n = 0;
             for(n = 0; n < countOfInts; ++n)
             {
-                Debug.Assert(intReader != null);
-                Debug.Assert(shortReader != null);
+                Debug.Assert(intReader is not null);
+                Debug.Assert(shortReader is not null);
 
                 maxByte = Math.Max(input[n], maxByte);
                 maxShort = Math.Max((ushort)shortReader.ReadUInt16Reverse(Native.BitsPerShort), maxShort);
@@ -243,7 +243,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             //   Upto half of byte data
             for(; n < countOfShorts; ++n)
             {
-                Debug.Assert(shortReader != null);
+                Debug.Assert(shortReader is not null);
                 maxByte = Math.Max(input[n], maxByte);
                 maxShort = Math.Max((ushort)shortReader.ReadUInt16Reverse(Native.BitsPerShort), maxShort);
             }
@@ -533,7 +533,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             uint bitData = 0;
             BitStreamReader reader = new BitStreamReader(input, inputIndex);
 
-            if(dtxf != null)
+            if(dtxf is not null)
             {
                 while (!reader.EndOfStream)
                 {

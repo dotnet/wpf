@@ -278,7 +278,7 @@ namespace MS.Internal.AutomationProxies
             {
                 // create a provider associated with this event and check whether the provider supports the selection item pattern.
                 MsaaNativeProvider provider = (MsaaNativeProvider)MsaaNativeProvider.Create(hwnd, idChild, idObject);
-                if (provider != null && provider.IsPatternSupported(SelectionItemPattern.Pattern))
+                if (provider is not null && provider.IsPatternSupported(SelectionItemPattern.Pattern))
                 {
                     // fire the event
                     AutomationEventArgs eventArgs = new AutomationEventArgs(eventId);
@@ -297,7 +297,7 @@ namespace MS.Internal.AutomationProxies
             {
                 // create a provider associated with this event and check whether it supports the pattern, if specified.
                 MsaaNativeProvider provider = (MsaaNativeProvider)MsaaNativeProvider.Create(hwnd, idChild, idObject);
-                if (provider != null && (pattern==null || provider.IsPatternSupported(pattern)))
+                if (provider is not null && (pattern==null || provider.IsPatternSupported(pattern)))
                 {
                     // get the new property value from the provider.
                     object newValue = ((IRawElementProviderSimple)provider).GetPropertyValue(property.Id);
@@ -331,7 +331,7 @@ namespace MS.Internal.AutomationProxies
                     case NativeMethods.EVENT_OBJECT_SHOW:
                         // src element is child. runtime id is child.
                         srcElement = (IRawElementProviderFragment)MsaaNativeProvider.Create(hwnd, idChild, idObject);
-                        if(srcElement != null)
+                        if(srcElement is not null)
                         {
                             runtimeId = srcElement.GetRuntimeId();
                             type = StructureChangeType.ChildAdded;
@@ -352,7 +352,7 @@ namespace MS.Internal.AutomationProxies
                     case NativeMethods.EVENT_OBJECT_HIDE:
                         // src element is parent. runtime id is child.
                         srcElement = (IRawElementProviderFragment)MsaaNativeProvider.Create(hwnd, idChild, idObject);
-                        if(srcElement != null)
+                        if(srcElement is not null)
                         {
                             runtimeId = srcElement.GetRuntimeId();
                             srcElement = (IRawElementProviderFragment)srcElement.Navigate(NavigateDirection.Parent);
@@ -364,7 +364,7 @@ namespace MS.Internal.AutomationProxies
                         Debug.Assert(eventId == NativeMethods.EVENT_OBJECT_REORDER);
                         // src element is parent. runtime id is parent.
                         srcElement = (IRawElementProviderFragment)MsaaNativeProvider.Create(hwnd, idChild, idObject);
-                        if(srcElement != null)
+                        if(srcElement is not null)
                         {
                             runtimeId = srcElement.GetRuntimeId();
                             type = StructureChangeType.ChildrenReordered;
@@ -372,7 +372,7 @@ namespace MS.Internal.AutomationProxies
                         break;
                 }
 
-                if (srcElement != null)
+                if (srcElement is not null)
                 {
                     // fire the event
                     StructureChangedEventArgs eventArgs = new StructureChangedEventArgs(type, runtimeId);

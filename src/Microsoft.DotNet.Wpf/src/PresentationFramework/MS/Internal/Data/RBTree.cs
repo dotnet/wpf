@@ -429,7 +429,7 @@ namespace MS.Internal.Data
         internal void RemoveNode(int index)
         {
             LeftChild = DeleteNode(this, LeftChild, index);
-            if (LeftChild != null)
+            if (LeftChild is not null)
                 LeftChild.IsRed = false;
         }
 
@@ -457,7 +457,7 @@ namespace MS.Internal.Data
 
         internal int IndexOf(T item, Func<T, T, bool> AreEqual)
         {
-            if (Comparison != null)
+            if (Comparison is not null)
             {
                 RBFinger<T> finger = Find(item, Comparison);
                 while (finger.Found && !AreEqual(finger.Item, item))
@@ -505,7 +505,7 @@ namespace MS.Internal.Data
 
             RBFinger<T> finger = FindIndex(index, true);
             RemoveAt(ref finger);
-            if (LeftChild != null)
+            if (LeftChild is not null)
                 LeftChild.IsRed = false;
 
             Verify(size - 1);
@@ -540,7 +540,7 @@ namespace MS.Internal.Data
             }
             else
             {
-                while (node.RightChild != null)
+                while (node.RightChild is not null)
                     node = node.RightChild;
                 if (node.Size < MaxSize)
                 {
@@ -598,7 +598,7 @@ namespace MS.Internal.Data
             RBFinger<T> finger = Find(item, Comparison);
             if (finger.Found)
                 RemoveAt(ref finger);
-            if (LeftChild != null)
+            if (LeftChild is not null)
                 LeftChild.IsRed = false;
             return finger.Found;
         }

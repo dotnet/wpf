@@ -51,7 +51,7 @@ namespace System.Windows.Input
         void DisposeHelper()
         {
             // NOTE: PenThreadWorker deals with already being disposed logic.
-            if (_penThreadWorker != null)
+            if (_penThreadWorker is not null)
             {
                 _penThreadWorker.Dispose();
             }

@@ -123,7 +123,7 @@ namespace System.Windows.Data
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool ShouldSerializeObjectType()
         {
-            return (_mode == SourceMode.FromType) && (ObjectType != null);
+            return (_mode == SourceMode.FromType) && (ObjectType is not null);
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace System.Windows.Data
         {
             get
             {
-                 return (_instanceProvider != null) ? _instanceProvider : _objectInstance;
+                 return (_instanceProvider is not null) ? _instanceProvider : _objectInstance;
             }
             set
             {
@@ -165,7 +165,7 @@ namespace System.Windows.Data
                     return;
                 }
 
-                if (value != null)
+                if (value is not null)
                 {
                     _constructorParameters.SetReadOnly(true);
                     _constructorParameters.ClearInternal();
@@ -195,7 +195,7 @@ namespace System.Windows.Data
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool ShouldSerializeObjectInstance()
         {
-            return (_mode == SourceMode.FromInstance) && (ObjectInstance != null);
+            return (_mode == SourceMode.FromInstance) && (ObjectInstance is not null);
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace System.Windows.Data
         // else just return the value.
         private object TryInstanceProvider(object value)
         {
-            if (_instanceProvider != null)  // was using provider for source
+            if (_instanceProvider is not null)  // was using provider for source
             {
                 // stop listening to old provider
                 _instanceProvider.DataChanged -= _sourceDataChangedHandler;
@@ -332,7 +332,7 @@ namespace System.Windows.Data
 
             _instanceProvider = value as DataSourceProvider;
 
-            if (_instanceProvider != null)
+            if (_instanceProvider is not null)
             {
                 // start listening to new provider
                 _instanceProvider.DataChanged += _sourceDataChangedHandler;
@@ -356,7 +356,7 @@ namespace System.Windows.Data
             _objectInstance = value;
 
             // set the objectType by looking at the new value
-            SetObjectType((value != null) ? value.GetType() : null);
+            SetObjectType((value is not null) ? value.GetType() : null);
 
             // raise this change event AFTER both oType and oInstance are updated
             OnPropertyChanged(s_instance);
@@ -414,7 +414,7 @@ namespace System.Windows.Data
                 {
                     data = InvokeMethodOnInstance(out e);
 
-                    if (e != null && exInstantiation != null)
+                    if (e is not null && exInstantiation is not null)
                     {
                         // if InvokeMethod failed, we prefer to surface the instantiation error, if any.
                         // (although this can be confusing if the user wanted to call a static method)
@@ -449,7 +449,7 @@ namespace System.Windows.Data
             // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
             #pragma warning disable 56500
 
-            Debug.Assert(_objectType != null);
+            Debug.Assert(_objectType is not null);
 
             try
             {
@@ -497,7 +497,7 @@ namespace System.Windows.Data
             #pragma warning restore 56500
             #pragma warning restore 1634, 1691
 
-            if (e != null || error != null)
+            if (e is not null || error is not null)
             {
                 // report known errors through TraceData (instead of throwing exceptions)
                 if (TraceData.IsEnabled)
@@ -522,7 +522,7 @@ namespace System.Windows.Data
             string  error   = null; // string that describes known error
             e = null;
 
-            Debug.Assert(_objectType != null);
+            Debug.Assert(_objectType is not null);
 
             object[] parameters = new object[_methodParameters.Count];
             _methodParameters.CopyTo(parameters, 0);
@@ -587,7 +587,7 @@ namespace System.Windows.Data
             #pragma warning restore 56500
             #pragma warning restore 1634, 1691
 
-            if (e != null || error != null)
+            if (e is not null || error is not null)
             {
                 // report known errors through TraceData (instead of throwing exceptions)
                 if (TraceData.IsEnabled)

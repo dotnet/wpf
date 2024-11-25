@@ -30,14 +30,14 @@ namespace System.Xaml.Schema
         internal ClrAttachedProperty(string name, MethodInfo getter, MethodInfo setter, XamlType declaringType)
             : base(name, declaringType)
         {
-            Debug.Assert(getter != null || setter != null);
+            Debug.Assert(getter is not null || setter is not null);
 
             if (getter is null && setter is null)
             {
                 throw new XamlSchemaException(SR.Format(SR.SetOnlyProperty, declaringType.Name, name));
             }
 
-            _isPublic = (getter != null) ? getter.IsPublic : setter.IsPublic;
+            _isPublic = (getter is not null) ? getter.IsPublic : setter.IsPublic;
             _isReadOnly = (setter is null);
             _isStatic = false;
             _isAttachable = true;
@@ -60,7 +60,7 @@ namespace System.Xaml.Schema
         {
             get 
             {
-                if (ClrBindingGetterMethodInfo != null)
+                if (ClrBindingGetterMethodInfo is not null)
                 {
                     return ClrBindingGetterMethodInfo.ReturnType;
                 }
@@ -81,7 +81,7 @@ namespace System.Xaml.Schema
 
         protected override object[] LookupCustomAttributes(Type attrType)
         {
-            if (ClrBindingGetterMethodInfo != null)
+            if (ClrBindingGetterMethodInfo is not null)
             {
                 return ClrBindingGetterMethodInfo.GetCustomAttributes(attrType, true);
             }
@@ -90,7 +90,7 @@ namespace System.Xaml.Schema
 
         protected override XamlType LookupTargetType()
         {
-            MethodInfo mi = (ClrBindingGetterMethodInfo != null)
+            MethodInfo mi = (ClrBindingGetterMethodInfo is not null)
                 ? ClrBindingGetterMethodInfo 
                 : ClrBindingSetterMethodInfo;
             ParameterInfo[] parameters = mi.GetParameters();

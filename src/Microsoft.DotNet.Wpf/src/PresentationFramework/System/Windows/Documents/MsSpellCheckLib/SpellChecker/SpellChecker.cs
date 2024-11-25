@@ -60,7 +60,7 @@ namespace System.Windows.Documents
             {
                 _speller.Value = SpellCheckerFactory.CreateSpellChecker(_languageTag, shouldSuppressCOMExceptions);
 
-                return (_speller.Value != null);
+                return (_speller.Value is not null);
             }
 
             #endregion // Constructor and Initialization
@@ -89,7 +89,7 @@ namespace System.Windows.Documents
                 IEnumString suggestions = _speller.Value.Suggest(word);
 
                 return
-                    suggestions != null ?
+                    suggestions is not null ?
                         suggestions.ToList(shouldSuppressCOMExceptions:false, shouldReleaseCOMObject:true) :
                         null;
             }
@@ -221,7 +221,7 @@ namespace System.Windows.Documents
             private List<string> GetOptionIdsImpl()
             {
                 IEnumString optionIds = _speller.Value.OptionIds;
-                return (optionIds != null) ? optionIds.ToList(false, true) : null;
+                return (optionIds is not null) ? optionIds.ToList(false, true) : null;
             }
 
             private List<string> GetOptionIdsImplWithRetries(bool suppressCOMExceptions)
@@ -303,7 +303,7 @@ namespace System.Windows.Documents
             private OptionDescription GetOptionDescriptionImpl(string optionId)
             {
                 IOptionDescription iod = _speller.Value.GetOptionDescription(optionId);
-                return (iod != null) ? OptionDescription.Create(iod, false, true) : null;
+                return (iod is not null) ? OptionDescription.Create(iod, false, true) : null;
             }
 
             private OptionDescription GetOptionDescriptionImplWithRetries(string optionId, bool suppressCOMExceptions)
@@ -331,7 +331,7 @@ namespace System.Windows.Documents
             private List<SpellingError> CheckImpl(string text)
             {
                 IEnumSpellingError errors = _speller.Value.Check(text);
-                return (errors != null) ? errors.ToList(this, text, false, true) : null;
+                return (errors is not null) ? errors.ToList(this, text, false, true) : null;
             }
 
             private List<SpellingError> CheckImplWithRetries(string text, bool suppressCOMExceptions)
@@ -359,7 +359,7 @@ namespace System.Windows.Documents
             public List<SpellingError> ComprehensiveCheckImpl(string text)
             {
                 IEnumSpellingError errors = _speller.Value.ComprehensiveCheck(text);
-                return (errors != null) ? errors.ToList(this, text, false, true) : null;
+                return (errors is not null) ? errors.ToList(this, text, false, true) : null;
             }
 
             public List<SpellingError> ComprehensiveCheckImplWithRetries(string text, bool shouldSuppressCOMExceptions = true)
@@ -392,7 +392,7 @@ namespace System.Windows.Documents
             public bool HasErrorsImpl(string text)
             {
                 IEnumSpellingError errors = _speller.Value.ComprehensiveCheck(text);
-                return (errors != null) ? errors.HasErrors(false, true) : false;
+                return (errors is not null) ? errors.HasErrors(false, true) : false;
             }
 
             public bool HasErrorsImplWithRetries(string text, bool shouldSuppressCOMExceptions = true)
@@ -431,7 +431,7 @@ namespace System.Windows.Documents
                 List<HasErrorsResult> hasErrorsCache = _hasErrorsCache;
 
                 // search the MRU cache for the text
-                int cacheSize = (hasErrorsCache != null) ? hasErrorsCache.Count : 0;
+                int cacheSize = (hasErrorsCache is not null) ? hasErrorsCache.Count : 0;
                 int index;
                 for (index = 0; index < cacheSize; ++index)
                 {
@@ -488,7 +488,7 @@ namespace System.Windows.Documents
 
             private uint? add_SpellCheckerChangedImpl(ISpellCheckerChangedEventHandler handler)
             {
-                return (handler != null) ? (uint?)null : _speller.Value.add_SpellCheckerChanged(handler);
+                return (handler is not null) ? (uint?)null : _speller.Value.add_SpellCheckerChanged(handler);
             }
 
             private uint? addSpellCheckerChangedImplWithRetries(ISpellCheckerChangedEventHandler handler, bool suppressCOMExceptions)
@@ -541,11 +541,11 @@ namespace System.Windows.Documents
                 _hasErrorsCache = null;     // cached HasErrors results are no longer valid
 
                 // Re-register callbacks with ISpellChecker
-                if (_changed != null)
+                if (_changed is not null)
                 {
                     lock (_changed)
                     {
-                        if (_changed != null)
+                        if (_changed is not null)
                         {
                             _eventCookie = add_SpellCheckerChanged(_spellCheckerChangedEventHandler);
                         }
@@ -614,7 +614,7 @@ namespace System.Windows.Documents
                 if (_disposed) return;
 
                 _disposed = true;
-                if (_speller?.Value != null)
+                if (_speller?.Value is not null)
                 {
                     try
                     {

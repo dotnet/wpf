@@ -241,13 +241,13 @@ namespace System.Windows.Documents
                     // If PageStream is non null, it is not PPS. Otherwise, need to check LinkTargets collection
                     // of PageContent
                     //
-                    if (pageContent.PageStream != null)
+                    if (pageContent.PageStream is not null)
                     {
                         fixedPage = GetFixedPage(i);
-                        if (fixedPage != null)
+                        if (fixedPage is not null)
                         {
                             uiElementRet = ((IFixedNavigate)fixedPage).FindElementByID(elementID, out rootFixedPage);
-                            if (uiElementRet != null)
+                            if (uiElementRet is not null)
                             {
                                 break;
                             }
@@ -258,7 +258,7 @@ namespace System.Windows.Documents
                         if (pageContent.ContainsID(elementID))
                         {
                             fixedPage = GetFixedPage(i);
-                            if (fixedPage != null)
+                            if (fixedPage is not null)
                             {
                                 uiElementRet = ((IFixedNavigate)fixedPage).FindElementByID(elementID, out rootFixedPage);
                                 if (uiElementRet is null)
@@ -346,7 +346,7 @@ namespace System.Windows.Documents
                     return DocumentPage.Missing;
                 }
 
-                Debug.Assert(page != null);
+                Debug.Assert(page is not null);
                 Size fixedSize = ComputePageSize(page);
 
                 // Always measure with fixed size instead of using constraint
@@ -432,7 +432,7 @@ namespace System.Windows.Documents
             GetPageAsyncRequest asyncRequest;
             if (_asyncOps.TryGetValue(userState,out asyncRequest))
             {
-                if (asyncRequest != null)
+                if (asyncRequest is not null)
                 {
                     asyncRequest.Cancelled = true;
                     asyncRequest.PageContent.GetPageRootAsyncCancel();
@@ -465,11 +465,11 @@ namespace System.Windows.Documents
             if (element != this)
             {
                 DependencyObject el = element;
-                while (el != null)
+                while (el is not null)
                 {
                     fixedPage = el as FixedPage;
 
-                    if (fixedPage != null)
+                    if (fixedPage is not null)
                     {
                         pageIndex = GetIndexOfPage(fixedPage);
                         if (pageIndex >= 0)
@@ -497,7 +497,7 @@ namespace System.Windows.Documents
                 FixedPosition fixedPosition;
                 FlowPosition flowPosition=null;
                 System.Windows.Shapes.Path p = element as System.Windows.Shapes.Path;
-                if (element is Glyphs || element is Image || (p != null &&  p.Fill is ImageBrush))
+                if (element is Glyphs || element is Image || (p is not null &&  p.Fill is ImageBrush))
                 {
                     fixedPosition = new FixedPosition(fixedPage.CreateFixedNode(pageIndex, (UIElement)element), 0);
                     flowPosition = FixedContainer.FixedTextBuilder.CreateFlowPosition(fixedPosition);
@@ -509,7 +509,7 @@ namespace System.Windows.Documents
                 fixedTextPointer = new FixedTextPointer(true, LogicalDirection.Forward, flowPosition);
             }
 
-            return (fixedTextPointer != null) ? fixedTextPointer : ContentPosition.Missing;
+            return (fixedTextPointer is not null) ? fixedTextPointer : ContentPosition.Missing;
         }
 
 
@@ -708,7 +708,7 @@ namespace System.Windows.Documents
         //
         internal void EnsurePageSize(FixedPage fp)
         {
-            Debug.Assert(fp != null);
+            Debug.Assert(fp is not null);
 
             double width = fp.Width;
 
@@ -859,10 +859,10 @@ namespace System.Windows.Documents
             if (PageCount > 0)
             {
                 DocumentPage docPage = GetPage(0);
-                if (docPage != null)
+                if (docPage is not null)
                 {
                     FixedPage page = docPage.Visual as FixedPage;
-                    if (page != null)
+                    if (page is not null)
                     {
                         this.Language = page.Language;
                     }
@@ -883,7 +883,7 @@ namespace System.Windows.Documents
                     baseUri.Host.Equals(BaseUriHelper.SiteOfOriginBaseUri.Host) != true)
                 {
                     Uri structureUri = GetStructureUriFromRelationship(baseUri, _structureRelationshipName);
-                    if (structureUri != null)
+                    if (structureUri is not null)
                     {
                         ContentType mimeType;
                         ValidateAndLoadPartFromAbsoluteUri(structureUri, true, "DocumentStructure", out mimeType);
@@ -912,7 +912,7 @@ namespace System.Windows.Documents
                 {
                     Uri structureUri = GetStructureUriFromRelationship(baseUri, _storyFragmentsRelationshipName);
 
-                    if (structureUri != null)
+                    if (structureUri is not null)
                     {
                         ContentType mimeType;
                         o = ValidateAndLoadPartFromAbsoluteUri(structureUri, false, null, out mimeType);
@@ -974,10 +974,10 @@ namespace System.Windows.Documents
         static private Uri GetStructureUriFromRelationship(Uri contentUri, string relationshipName)
         {
             Uri absTargetUri = null;
-            if (contentUri != null && relationshipName != null)
+            if (contentUri is not null && relationshipName is not null)
             {
                 Uri partUri = PackUriHelper.GetPartUri(contentUri);
-                if (partUri != null)
+                if (partUri is not null)
                 {
                     Uri packageUri = PackUriHelper.GetPackageUri(contentUri);
                     Package package = PreloadedPackages.GetPackage(packageUri);
@@ -987,7 +987,7 @@ namespace System.Windows.Documents
                         package = PackageStore.GetPackage(packageUri);
                     }
 
-                    if (package != null)
+                    if (package is not null)
                     {
                         PackagePart part = package.GetPart(partUri);
                         PackageRelationshipCollection resources = part.GetRelationshipsByType(relationshipName);
@@ -998,7 +998,7 @@ namespace System.Windows.Documents
                             targetUri = PackUriHelper.ResolvePartUri(partUri, relationShip.TargetUri);
                         }
 
-                        if (targetUri != null)
+                        if (targetUri is not null)
                         {
                             absTargetUri = PackUriHelper.Create(packageUri, targetUri);
                         }
@@ -1024,7 +1024,7 @@ namespace System.Windows.Documents
         {
             FixedPage fp = null;
             FixedDocumentPage fdp = GetPage(pageNumber) as FixedDocumentPage;
-            if (fdp != null && fdp != DocumentPage.Missing)
+            if (fdp is not null && fdp != DocumentPage.Missing)
             {
                 fp = fdp.FixedPage;
             }
@@ -1036,9 +1036,9 @@ namespace System.Windows.Documents
         //---------------------------------------
         private void OnHighlightChanged(object sender, HighlightChangedEventArgs args)
         {
-            Debug.Assert(sender != null);
-            Debug.Assert(args != null);
-            Debug.Assert(args.Ranges != null);
+            Debug.Assert(sender is not null);
+            Debug.Assert(args is not null);
+            Debug.Assert(args.Ranges is not null);
 
             DocumentsTrace.FixedTextOM.Highlight.Trace($"HightlightMoved From {0}-{0} To {0}-{0}");
             Debug.Assert(args.Ranges.Count > 0 && ((TextSegment)args.Ranges[0]).Start.CompareTo(((TextSegment)args.Ranges[0]).End) < 0);
@@ -1054,7 +1054,7 @@ namespace System.Windows.Documents
             // If this document is part of a FixedDocumentSequence, we should use
             // the highlights that have been set on the sequence.
             FixedDocumentSequence parent = this.Parent as FixedDocumentSequence;
-            if (parent != null)
+            if (parent is not null)
                 highlights = parent.TextContainer.Highlights;
             else
                 highlights = this.FixedContainer.Highlights;
@@ -1121,7 +1121,7 @@ namespace System.Windows.Documents
                     //look for annotation highlight
                     AnnotationHighlightLayer.HighlightSegment highlightSegment = highlights.GetHighlightValue(highlightRangeStart,
                         LogicalDirection.Forward, typeof(HighlightComponent)) as AnnotationHighlightLayer.HighlightSegment;
-                    if (highlightSegment != null)
+                    if (highlightSegment is not null)
                     {
                         //this is a visible annotation highlight
                         highlightTransitionPosition = highlights.GetNextHighlightChangePosition(highlightTransitionPosition, LogicalDirection.Forward);
@@ -1180,7 +1180,7 @@ namespace System.Windows.Documents
             {
                 HighlightVisual hv = HighlightVisual.GetHighlightVisual(SyncGetPage(i, false /*forceReload*/));
 
-                if (hv != null)
+                if (hv is not null)
                 {
                     hv.InvalidateHighlights();
                 }
@@ -1359,7 +1359,7 @@ namespace System.Windows.Documents
         internal FixedDocumentPage(FixedDocument panel, FixedPage page, Size fixedSize, int index) :
             base(page, fixedSize, new Rect(fixedSize), new Rect(fixedSize))
         {
-            Debug.Assert(panel != null && page != null);
+            Debug.Assert(panel is not null && page is not null);
             _panel = panel;
             _page = page;
             _index = index;

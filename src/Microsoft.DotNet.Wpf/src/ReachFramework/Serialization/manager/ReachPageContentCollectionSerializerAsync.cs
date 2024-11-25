@@ -80,7 +80,7 @@ namespace System.Windows.Xps.Serialization
                     PageContentCollectionSerializerContext thisContext = 
                     context as PageContentCollectionSerializerContext;
 
-                    if(thisContext != null)
+                    if(thisContext is not null)
                     {
                         SerializeNextPageContent(thisContext.Enumerator,
                                                  thisContext.ObjectContext);

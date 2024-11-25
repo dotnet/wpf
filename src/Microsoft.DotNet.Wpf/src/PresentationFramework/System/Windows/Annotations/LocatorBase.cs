@@ -116,7 +116,7 @@ namespace System.Windows.Annotations
         /// </summary>
         internal void FireLocatorChanged(string name)
         {
-            if (_propertyChanged != null)
+            if (_propertyChanged is not null)
             {
                 _propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(name));
             }

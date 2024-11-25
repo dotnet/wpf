@@ -83,7 +83,7 @@ namespace MS.Internal.IO.Packaging
                 if (string.Equals(idValue, dataObject.Id, StringComparison.Ordinal))
                 {
                     // anticipate duplicate ID's and throw if any found
-                    if (node != null)
+                    if (node is not null)
                         throw new XmlException(SR.DuplicateObjectId);
 
                     node = dataObject.GetXml();
@@ -175,16 +175,16 @@ namespace MS.Internal.IO.Packaging
                         foundMatch = true;
                         XmlNode local = nodeList[0] as XmlElement;
 
-                        if (local != null)
+                        if (local is not null)
                         {
                             XmlNode temp = local;
 
                             // climb the tree towards the root until we find our namespace
-                            while ((temp != null) && (temp.NamespaceURI.Length == 0))
+                            while ((temp is not null) && (temp.NamespaceURI.Length == 0))
                                 temp = temp.ParentNode;
 
                             // only match if the target is in the XAdES namespace
-                            if ((temp != null) && (string.Equals(temp.NamespaceURI, _XAdESNameSpace, StringComparison.Ordinal)))
+                            if ((temp is not null) && (string.Equals(temp.NamespaceURI, _XAdESNameSpace, StringComparison.Ordinal)))
                             {
                                 node = local as XmlElement;
                                 // continue searching, to find duplicates from different objects
@@ -210,10 +210,10 @@ namespace MS.Internal.IO.Packaging
 
             using (RegistryKey securityRegKey = Registry.LocalMachine.OpenSubKey(_NetFxSecurityKey, false))
             {
-                if (securityRegKey != null)
+                if (securityRegKey is not null)
                 {
                     object regValue = securityRegKey.GetValue(regValueName);
-                    if (regValue != null)
+                    if (regValue is not null)
                     {
                         RegistryValueKind valueKind = securityRegKey.GetValueKind(regValueName);
                         if (valueKind == RegistryValueKind.DWord || valueKind == RegistryValueKind.QWord)

@@ -59,10 +59,10 @@ namespace System.Windows.Controls
             //
             // ItemValueStorage:  restore saved values for this item onto the new container
             //
-            if (_expander != null)
+            if (_expander is not null)
             {
                 ItemsControl itemsControl = ParentItemsControl;
-                if (itemsControl != null && VirtualizingPanel.GetIsVirtualizingWhenGrouping(itemsControl))
+                if (itemsControl is not null && VirtualizingPanel.GetIsVirtualizingWhenGrouping(itemsControl))
                 {
                     Helper.SetItemValuesOnContainer(itemsControl, _expander, itemsControl.ItemContainerGenerator.ItemFromContainer(this));
                 }
@@ -74,13 +74,13 @@ namespace System.Windows.Controls
         private static void OnExpanded(object sender, RoutedEventArgs e)
         {
             GroupItem groupItem = sender as GroupItem;
-            if (groupItem != null && groupItem._expander != null && groupItem._expander.IsExpanded)
+            if (groupItem is not null && groupItem._expander is not null && groupItem._expander.IsExpanded)
             {
                 ItemsControl itemsControl = groupItem.ParentItemsControl;
-                if (itemsControl != null && VirtualizingPanel.GetIsVirtualizing(itemsControl) && VirtualizingPanel.GetVirtualizationMode(itemsControl) == VirtualizationMode.Recycling)
+                if (itemsControl is not null && VirtualizingPanel.GetIsVirtualizing(itemsControl) && VirtualizingPanel.GetVirtualizationMode(itemsControl) == VirtualizationMode.Recycling)
                 {
                     ItemsPresenter itemsHostPresenter = groupItem.ItemsHostPresenter;
-                    if (itemsHostPresenter != null)
+                    if (itemsHostPresenter is not null)
                     {
                         // In case a GroupItem that wasn't previously expanded is now
                         // recycled to represent an entity that is expanded, we face a situation
@@ -98,7 +98,7 @@ namespace System.Windows.Controls
         {
             base.OnTemplateChangedInternal(oldTemplate, newTemplate);
 
-            if (_expander != null)
+            if (_expander is not null)
             {
                 _expander.Expanded -= new RoutedEventHandler(OnExpanded);
                 _expander = null;
@@ -123,7 +123,7 @@ namespace System.Windows.Controls
         internal override string GetPlainText()
         {
             System.Windows.Data.CollectionViewGroup cvg = Content as System.Windows.Data.CollectionViewGroup;
-            if (cvg != null && cvg.Name != null)
+            if (cvg is not null && cvg.Name is not null)
             {
                 return cvg.Name.ToString();
             }
@@ -155,15 +155,15 @@ namespace System.Windows.Controls
                 return;     // user-declared GroupItem - ignore (bug 108423)
 
             // If a GroupItem is being recycled set back IsItemsHost
-            if (_itemsHost != null)
+            if (_itemsHost is not null)
             {
                 _itemsHost.IsItemsHost = true;
             }
 
-            bool isVirtualizingWhenGrouping = (parentItemsControl != null && VirtualizingPanel.GetIsVirtualizingWhenGrouping(parentItemsControl));
+            bool isVirtualizingWhenGrouping = (parentItemsControl is not null && VirtualizingPanel.GetIsVirtualizingWhenGrouping(parentItemsControl));
 
             // Release any previous containers. Also ensures Items and GroupStyle are hooked up correctly
-            if (Generator != null)
+            if (Generator is not null)
             {
                 if (!isVirtualizingWhenGrouping)
                 {
@@ -184,14 +184,14 @@ namespace System.Windows.Controls
             // no ContainerStyle set, try ContainerStyleSelector
             if (style is null)
             {
-                if (groupStyle.ContainerStyleSelector != null)
+                if (groupStyle.ContainerStyleSelector is not null)
                 {
                     style = groupStyle.ContainerStyleSelector.SelectStyle(item, this);
                 }
             }
 
             // apply the style, if found
-            if (style != null)
+            if (style is not null)
             {
                 // verify style is appropriate before applying it
                 if (!style.TargetType.IsInstanceOfType(this))
@@ -226,7 +226,7 @@ namespace System.Windows.Controls
             {
                 Helper.SetItemValuesOnContainer(parentItemsControl, this, item);
 
-                if (_expander != null)
+                if (_expander is not null)
                 {
                     Helper.SetItemValuesOnContainer(parentItemsControl, _expander, item);
                 }
@@ -241,11 +241,11 @@ namespace System.Windows.Controls
             //
             // ItemValueStorage:  save off values for this container if we're a virtualizing Group.
             //
-            if (parentItemsControl != null && VirtualizingPanel.GetIsVirtualizingWhenGrouping(parentItemsControl))
+            if (parentItemsControl is not null && VirtualizingPanel.GetIsVirtualizingWhenGrouping(parentItemsControl))
             {
                 Helper.StoreItemValues((IContainItemStorage)parentItemsControl, this, item);
 
-                if (_expander != null)
+                if (_expander is not null)
                 {
                     Helper.StoreItemValues((IContainItemStorage)parentItemsControl, _expander, item);
                 }
@@ -255,7 +255,7 @@ namespace System.Windows.Controls
                 // the ItemValueStorage DP for this container.
 
                 VirtualizingPanel vp = _itemsHost as VirtualizingPanel;
-                if (vp != null)
+                if (vp is not null)
                 {
                     vp.OnClearChildrenInternal();
                 }
@@ -292,7 +292,7 @@ namespace System.Windows.Controls
                 FrameworkElement headerElement = HeaderElement;
                 Size pixelHeaderSize = new Size();
 
-                if (this.IsVisible && headerElement != null)
+                if (this.IsVisible && headerElement is not null)
                 {
                     pixelHeaderSize = headerElement.DesiredSize;
                     Helper.ApplyCorrectionFactorToPixelHeaderSize(ParentItemsControl, this, _itemsHost, ref pixelHeaderSize);
@@ -379,11 +379,11 @@ namespace System.Windows.Controls
                 {
                     parent = VisualTreeHelper.GetParent(parent);
                     ItemsControl parentItemsControl = parent as ItemsControl;
-                    if (parentItemsControl != null)
+                    if (parentItemsControl is not null)
                     {
                         return parentItemsControl;
                     }
-                } while (parent != null);
+                } while (parent is not null);
 
                 return null;
             }
@@ -394,7 +394,7 @@ namespace System.Windows.Controls
             get
             {
                 DependencyObject parentPanel = VisualTreeHelper.GetParent(this);
-                if (parentPanel != null)
+                if (parentPanel is not null)
                 {
                     DependencyObject owner = ItemsControl.GetItemsOwnerInternal(parentPanel);
                     return owner as IContainItemStorage;
@@ -417,7 +417,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_expander != null)
+                if (_expander is not null)
                 {
                     return Helper.FindTemplatedDescendant<ItemsPresenter>(_expander, _expander);
                 }
@@ -434,7 +434,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_expander != null)
+                if (_expander is not null)
                 {
                     return _expander.GetTemplateChild(ExpanderHeaderPartName) as FrameworkElement;
                 }
@@ -448,11 +448,11 @@ namespace System.Windows.Controls
             get
             {
                 FrameworkElement headerElement = null;
-                if (_header != null)
+                if (_header is not null)
                 {
                     headerElement = _header;
                 }
-                else if (_expander != null)
+                else if (_expander is not null)
                 {
                     // Look for Expander. We special case for Expander since its a very common usage of grouping.
                     headerElement = ExpanderHeader;

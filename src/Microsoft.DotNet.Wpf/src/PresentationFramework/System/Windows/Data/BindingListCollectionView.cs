@@ -188,7 +188,7 @@ namespace System.Windows.Data
         /// </summary>
         public override void DetachFromSourceCollection()
         {
-            if (InternalList != null && InternalList.SupportsChangeNotification)
+            if (InternalList is not null && InternalList.SupportsChangeNotification)
             {
                 InternalList.ListChanged -= new ListChangedEventHandler(OnListChanged);
             }
@@ -244,7 +244,7 @@ namespace System.Windows.Data
                 {
                     if (_sort is null)
                     {
-                        bool allowAdvancedSorting = _blv != null && _blv.SupportsAdvancedSorting;
+                        bool allowAdvancedSorting = _blv is not null && _blv.SupportsAdvancedSorting;
                         _sort = new BindingListSortDescriptionCollection(allowAdvancedSorting);
                         ((INotifyCollectionChanged)_sort).CollectionChanged += new NotifyCollectionChangedEventHandler(SortDescriptionsChanged);
                     }
@@ -327,7 +327,7 @@ namespace System.Windows.Data
         {
             get
             {
-                return ((_blv != null) && _blv.SupportsFiltering);
+                return ((_blv is not null) && _blv.SupportsFiltering);
             }
         }
 
@@ -519,7 +519,7 @@ namespace System.Windows.Data
                 }
 
                 // now make the change and raise the events
-                if (args != null)
+                if (args is not null)
                 {
                     _newItemPlaceholderPosition = value;
 
@@ -590,7 +590,7 @@ namespace System.Windows.Data
             MoveCurrentTo(newItem);
 
             ISupportInitialize isi = newItem as ISupportInitialize;
-            if (isi != null)
+            if (isi is not null)
             {
                 isi.BeginInit();
             }
@@ -600,7 +600,7 @@ namespace System.Windows.Data
             if (!IsDataView)
             {
                 IEditableObject ieo = newItem as IEditableObject;
-                if (ieo != null)
+                if (ieo is not null)
                 {
                     ieo.BeginEdit();
                 }
@@ -673,11 +673,11 @@ namespace System.Windows.Data
                 {
                     ProcessPendingChanges();
 
-                    if (ican != null)
+                    if (ican is not null)
                     {
                         ican.EndNew(_newItemIndex);
                     }
-                    else if ((ieo = _newItem as IEditableObject) != null)
+                    else if ((ieo = _newItem as IEditableObject) is not null)
                     {
                         ieo.EndEdit();
                     }
@@ -691,7 +691,7 @@ namespace System.Windows.Data
             {
                 int delta = (NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtBeginning) ? 1 : 0;
                 NotifyCollectionChangedEventArgs args = ProcessCommitNew(_newItemIndex, _newItemIndex + delta);
-                if (args != null)
+                if (args is not null)
                 {
                     base.OnCollectionChanged(InternalList, args);
                 }
@@ -720,11 +720,11 @@ namespace System.Windows.Data
                 {
                     ProcessPendingChanges();
 
-                    if (ican != null)
+                    if (ican is not null)
                     {
                         ican.CancelNew(_newItemIndex);
                     }
-                    else if ((ieo = _newItem as IEditableObject) != null)
+                    else if ((ieo = _newItem as IEditableObject) is not null)
                     {
                         ieo.CancelEdit();
                     }
@@ -749,7 +749,7 @@ namespace System.Windows.Data
             SetNewItem(NoNewItem);  // leave "adding-new" mode
 
             IEditableObject ieo = newItem as IEditableObject;
-            if (ieo != null)
+            if (ieo is not null)
             {
                 if (cancel)
                 {
@@ -762,7 +762,7 @@ namespace System.Windows.Data
             }
 
             ISupportInitialize isi = newItem as ISupportInitialize;
-            if (isi != null)
+            if (isi is not null)
             {
                 isi.EndInit();
             }
@@ -982,7 +982,7 @@ namespace System.Windows.Data
             SetEditItem(item);
 
             IEditableObject ieo = item as IEditableObject;
-            if (ieo != null)
+            if (ieo is not null)
             {
                 ieo.BeginEdit();
             }
@@ -1005,7 +1005,7 @@ namespace System.Windows.Data
             object editItem = _editItem;
             SetEditItem(null);
 
-            if (ieo != null)
+            if (ieo is not null)
             {
                 BindingOperations.AccessCollection(InternalList,
                     () =>
@@ -1043,7 +1043,7 @@ namespace System.Windows.Data
             IEditableObject ieo = _editItem as IEditableObject;
             SetEditItem(null);
 
-            if (ieo != null)
+            if (ieo is not null)
             {
                 ieo.CancelEdit();
             }
@@ -1056,7 +1056,7 @@ namespace System.Windows.Data
             IEditableObject ieo = _editItem as IEditableObject;
             SetEditItem(null);
 
-            if (ieo != null)
+            if (ieo is not null)
             {
                 ieo.CancelEdit();
             }
@@ -1080,7 +1080,7 @@ namespace System.Windows.Data
         /// </summary>
         public bool IsEditingItem
         {
-            get { return (_editItem != null); }
+            get { return (_editItem is not null); }
         }
 
         /// <summary>
@@ -1321,7 +1321,7 @@ namespace System.Windows.Data
                     true);
             }
 
-            if ((_sort != null) && (_sort.Count > 0) && (CollectionProxy != null) && (CollectionProxy.Count > 0))
+            if ((_sort is not null) && (_sort.Count > 0) && (CollectionProxy is not null) && (CollectionProxy.Count > 0))
             {
                 // convert Avalon SortDescription collection to .Net
                 // (i.e. string property names become PropertyDescriptors)
@@ -1457,7 +1457,7 @@ namespace System.Windows.Data
             _cachedList = new ArrayList(InternalList);
             LiveShapingList lsList = _shadowList as LiveShapingList;
 
-            if (lsList != null)
+            if (lsList is not null)
                 lsList.LiveShapingDirty -= new EventHandler(OnLiveShapingDirty);
 
             if (_isGrouping && IsLiveGrouping == true)
@@ -2051,7 +2051,7 @@ namespace System.Windows.Data
                 break;
             }
 
-            if (forwardedArgs != null)
+            if (forwardedArgs is not null)
             {
                 base.OnCollectionChanged(sender, forwardedArgs);
             }
@@ -2153,7 +2153,7 @@ namespace System.Windows.Data
         {
             get
             {
-                if (_shadowList != null)
+                if (_shadowList is not null)
                     return _shadowList;
                 else
                     return InternalList;
@@ -2170,7 +2170,7 @@ namespace System.Windows.Data
 
         private bool IsCustomFilterSet
         {
-            get { return ((_blv != null) && !String.IsNullOrEmpty(_customFilter)); }
+            get { return ((_blv is not null) && !String.IsNullOrEmpty(_customFilter)); }
         }
 
         // can the group name(s) for an item change after we've grouped the item?
@@ -2200,11 +2200,11 @@ namespace System.Windows.Data
             ITypedList itl;
             Type itemType;
 
-            if ((itl = InternalList as ITypedList) != null)
+            if ((itl = InternalList as ITypedList) is not null)
             {
                 pdc = itl.GetItemProperties(null);
             }
-            else if ((itemType = GetItemType(true)) != null)
+            else if ((itemType = GetItemType(true)) is not null)
             {
                 pdc = TypeDescriptor.GetProperties(itemType);
             }
@@ -2243,7 +2243,7 @@ namespace System.Windows.Data
             // initialize the synthetic top level group
             _group.Initialize();
 
-            _isGrouping = (_group.GroupBy != null);
+            _isGrouping = (_group.GroupBy is not null);
         }
 
 
@@ -2257,14 +2257,14 @@ namespace System.Windows.Data
 
             // reset the grouping comparer
             IComparer comparer = ActiveComparer;
-            if (comparer != null)
+            if (comparer is not null)
             {
                 _group.ActiveComparer = comparer;
             }
             else
             {
                 CollectionViewGroupInternal.IListComparer ilc = _group.ActiveComparer as CollectionViewGroupInternal.IListComparer;
-                if (ilc != null)
+                if (ilc is not null)
                 {
                     ilc.ResetList(list);
                 }
@@ -2503,7 +2503,7 @@ namespace System.Windows.Data
         // perform the deferred work, if any
         private void DoDeferredActions()
         {
-            if (_deferredActions != null)
+            if (_deferredActions is not null)
             {
                 List<Action> deferredActions = _deferredActions;
                 _deferredActions = null;

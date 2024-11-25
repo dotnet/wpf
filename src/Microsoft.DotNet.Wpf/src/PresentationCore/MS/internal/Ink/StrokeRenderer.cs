@@ -41,8 +41,8 @@ namespace MS.Internal.Ink
                                                                out Geometry geometry,
                                                                out Rect bounds)
         {
-            Debug.Assert(iterator != null);
-            Debug.Assert(drawingAttributes != null);
+            Debug.Assert(iterator is not null);
+            Debug.Assert(drawingAttributes is not null);
 
             StreamGeometry streamGeometry = new StreamGeometry();
             streamGeometry.FillRule = FillRule.Nonzero;
@@ -213,7 +213,7 @@ namespace MS.Internal.Ink
                                                    out Geometry geometry,
                                                    out Rect bounds)
         {
-            Debug.Assert(iterator != null && drawingAttributes != null);
+            Debug.Assert(iterator is not null && drawingAttributes is not null);
 
             //we can use our new algorithm for identity only.
             Matrix stylusTipTransform = drawingAttributes.StylusTipTransform;
@@ -754,10 +754,10 @@ namespace MS.Internal.Ink
 #endif
                                                     )
         {
-            Debug.Assert(pointBuffer1 != null);
-            Debug.Assert(pointBuffer2 != null);
-            Debug.Assert(pointBuffer3 != null);
-            Debug.Assert(context != null);
+            Debug.Assert(pointBuffer1 is not null);
+            Debug.Assert(pointBuffer2 is not null);
+            Debug.Assert(pointBuffer3 is not null);
+            Debug.Assert(context is not null);
             
             
             //see if we need to render a quad - if there is not at least a 70% overlap
@@ -866,8 +866,8 @@ namespace MS.Internal.Ink
         /// </summary>
         private static void AddFigureToStreamGeometryContext(StreamGeometryContext context, List<Point> points, bool isBezierFigure)
         {
-            Debug.Assert(context != null);
-            Debug.Assert(points != null);
+            Debug.Assert(context is not null);
+            Debug.Assert(points is not null);
             Debug.Assert(points.Count > 0);
 
             context.BeginFigure(points[points.Count - 1], //start point
@@ -894,8 +894,8 @@ namespace MS.Internal.Ink
         /// </summary>
         private static void AddPolylineFigureToStreamGeometryContext(StreamGeometryContext context, List<Point> abPoints, List<Point> dcPoints)
         {
-            Debug.Assert(context != null);
-            Debug.Assert(abPoints != null && dcPoints != null);
+            Debug.Assert(context is not null);
+            Debug.Assert(abPoints is not null && dcPoints is not null);
             Debug.Assert(abPoints.Count > 0 && dcPoints.Count > 0);
 
             context.BeginFigure(abPoints[0], //start point
@@ -916,9 +916,9 @@ namespace MS.Internal.Ink
         /// </summary>
         private static void AddArcToFigureToStreamGeometryContext(StreamGeometryContext context, List<Point> abPoints, List<Point> dcPoints, List<Point> polyLinePoints)
         {
-            Debug.Assert(context != null);
-            Debug.Assert(abPoints != null && dcPoints != null);
-            Debug.Assert(polyLinePoints != null);
+            Debug.Assert(context is not null);
+            Debug.Assert(abPoints is not null && dcPoints is not null);
+            Debug.Assert(polyLinePoints is not null);
             //Debug.Assert(abPoints.Count > 0 && dcPoints.Count > 0);
             if (abPoints.Count == 0 || dcPoints.Count == 0)
             {

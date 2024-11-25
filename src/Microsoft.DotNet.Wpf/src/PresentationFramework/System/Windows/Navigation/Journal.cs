@@ -180,7 +180,7 @@ namespace System.Windows.Navigation
         {
             get
             {
-                return GetGoBackEntry() != null;
+                return GetGoBackEntry() is not null;
             }
         }
 
@@ -281,7 +281,7 @@ namespace System.Windows.Navigation
         {
             ArgumentNullException.ThrowIfNull(journalEntry);
             Debug.Assert(journalEntry.ContentId != 0);
-            Debug.Assert(!(journalEntry.IsAlive() && journalEntry.JEGroupState.JournalDataStreams != null),
+            Debug.Assert(!(journalEntry.IsAlive() && journalEntry.JEGroupState.JournalDataStreams is not null),
                 "Keep-alive content state should not be serialized.");
 
             if (_currentEntryIndex > -1 && _currentEntryIndex < TotalCount)
@@ -476,12 +476,12 @@ namespace System.Windows.Navigation
                     Debug.Assert(je.GetType().IsSerializable);
                     // There can be keep-alive JEs creates for child frames.
                     DataStreams jds = je.JEGroupState.JournalDataStreams;
-                    if (jds != null)
+                    if (jds is not null)
                     {
                         jds.PrepareForSerialization();
                     }
 
-                    if (je.RootViewerState != null)
+                    if (je.RootViewerState is not null)
                     {
                         je.RootViewerState.PrepareForSerialization();
                     }
@@ -498,7 +498,7 @@ namespace System.Windows.Navigation
                 "This method should be called only in steady state.");
 
             JournalEntry theEntry = _journalEntryList[index];
-            Debug.Assert(theEntry != null, "Journal list state is messed up");
+            Debug.Assert(theEntry is not null, "Journal list state is messed up");
 
             // Increase version always, see note above the data member declaration
             _version++;
@@ -542,7 +542,7 @@ namespace System.Windows.Navigation
         {
             BackStack.OnCollectionChanged();
             ForwardStack.OnCollectionChanged();
-            if (_backForwardStateChange != null)
+            if (_backForwardStateChange is not null)
             {
                 _backForwardStateChange(this, EventArgs.Empty);
             }
@@ -628,7 +628,7 @@ namespace System.Windows.Navigation
             if (entry is null)
                 return false;
             // Fallback to entry.IsNavigable if the Filter hasn't been specified
-            return (Filter != null) ? Filter(entry) : entry.IsNavigable();
+            return (Filter is not null) ? Filter(entry) : entry.IsNavigable();
         }
         #endregion
 

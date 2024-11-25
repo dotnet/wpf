@@ -124,7 +124,7 @@ namespace System.Windows.Xps.Packaging
             if( validSubsetNode )
             {
                 XpsFontSerializationService fontService = (XpsFontSerializationService)GetService(typeof(XpsFontSerializationService));
-                if( fontService != null )
+                if( fontService is not null )
                 {
                     XpsFontSubsetter fontSubsetter = fontService.FontSubsetter;
                     subsetComplete = fontSubsetter.CommitFontSubsetsSignal(signal);

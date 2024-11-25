@@ -47,7 +47,7 @@ namespace System.Windows.Automation.Peers
                 if (value)
                     return;
                 AutomationPeer wrapperPeer = WrapperPeer;
-                if (wrapperPeer != null)
+                if (wrapperPeer is not null)
                 {
                     wrapperPeer.AncestorsInvalid = false;
                 }
@@ -86,11 +86,11 @@ namespace System.Windows.Automation.Peers
         {
             get
             {
-                if (this.OwningCalendar != null)
+                if (this.OwningCalendar is not null)
                 {
                     AutomationPeer peer = FrameworkElementAutomationPeer.CreatePeerForElement(this.OwningCalendar);
 
-                    if (peer != null)
+                    if (peer is not null)
                     {
                         return ProviderFromPeer(peer);
                     }
@@ -125,7 +125,7 @@ namespace System.Windows.Automation.Peers
             get
             {
                 Button owningButton = OwningButton;
-                if (owningButton != null)
+                if (owningButton is not null)
                 {
                     return FrameworkElementAutomationPeer.CreatePeerForElement(owningButton) as FrameworkElementAutomationPeer;
                 }
@@ -140,7 +140,7 @@ namespace System.Windows.Automation.Peers
         protected override string GetAcceleratorKeyCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.GetAcceleratorKey();
             }
@@ -155,7 +155,7 @@ namespace System.Windows.Automation.Peers
         protected override string GetAccessKeyCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.GetAccessKey();
             }
@@ -175,7 +175,7 @@ namespace System.Windows.Automation.Peers
         protected override string GetAutomationIdCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.GetAutomationId();
             }
@@ -190,7 +190,7 @@ namespace System.Windows.Automation.Peers
         protected override Rect GetBoundingRectangleCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.GetBoundingRectangle();
             }
@@ -205,7 +205,7 @@ namespace System.Windows.Automation.Peers
         protected override List<AutomationPeer> GetChildrenCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.GetChildren();
             }
@@ -220,13 +220,13 @@ namespace System.Windows.Automation.Peers
         protected override string GetClassNameCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
-            return (wrapperPeer != null) ? wrapperPeer.GetClassName() : (IsDayButton)? "CalendarDayButton" : "CalendarButton";
+            return (wrapperPeer is not null) ? wrapperPeer.GetClassName() : (IsDayButton)? "CalendarDayButton" : "CalendarButton";
         }
 
         protected override Point GetClickablePointCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.GetClickablePoint();
             }
@@ -252,7 +252,7 @@ namespace System.Windows.Automation.Peers
         protected override string GetItemStatusCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.GetItemStatus();
             }
@@ -267,7 +267,7 @@ namespace System.Windows.Automation.Peers
         protected override string GetItemTypeCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.GetItemType();
             }
@@ -282,7 +282,7 @@ namespace System.Windows.Automation.Peers
         protected override AutomationPeer GetLabeledByCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.GetLabeledBy();
             }
@@ -297,7 +297,7 @@ namespace System.Windows.Automation.Peers
         protected override AutomationLiveSetting GetLiveSettingCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.GetLiveSetting();
             }
@@ -337,7 +337,7 @@ namespace System.Windows.Automation.Peers
         protected override AutomationOrientation GetOrientationCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.GetOrientation();
             }
@@ -364,7 +364,7 @@ namespace System.Windows.Automation.Peers
                 case PatternInterface.Invoke:
                 case PatternInterface.GridItem:
                     {
-                        if (owningButton != null)
+                        if (owningButton is not null)
                         {
                             result = this;
                         }
@@ -372,7 +372,7 @@ namespace System.Windows.Automation.Peers
                     }
                 case PatternInterface.TableItem:
                     {
-                        if (IsDayButton && owningButton != null)
+                        if (IsDayButton && owningButton is not null)
                         {
                             result = this;
                         }
@@ -384,7 +384,7 @@ namespace System.Windows.Automation.Peers
                         break;
                     }
                 case PatternInterface.VirtualizedItem:
-                    if (VirtualizedItemPatternIdentifiers.Pattern != null)
+                    if (VirtualizedItemPatternIdentifiers.Pattern is not null)
                     {
                         if (owningButton is null)
                         {
@@ -420,7 +420,7 @@ namespace System.Windows.Automation.Peers
         protected override int GetPositionInSetCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.GetPositionInSet();
             }
@@ -444,7 +444,7 @@ namespace System.Windows.Automation.Peers
         protected override int GetSizeOfSetCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.GetSizeOfSet();
             }
@@ -462,7 +462,7 @@ namespace System.Windows.Automation.Peers
             AutomationPeer wrapperPeer = WrapperPeer;
             AutomationHeadingLevel headingLevel = AutomationHeadingLevel.None;
 
-            if(wrapperPeer != null)
+            if(wrapperPeer is not null)
             {
                 headingLevel = wrapperPeer.GetHeadingLevel();
             }
@@ -477,13 +477,13 @@ namespace System.Windows.Automation.Peers
         internal override Rect GetVisibleBoundingRectCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
-            return (wrapperPeer != null) ? wrapperPeer.GetVisibleBoundingRect() : GetBoundingRectangle();
+            return (wrapperPeer is not null) ? wrapperPeer.GetVisibleBoundingRect() : GetBoundingRectangle();
         }
 
         protected override bool HasKeyboardFocusCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.HasKeyboardFocus();
             }
@@ -498,7 +498,7 @@ namespace System.Windows.Automation.Peers
         protected override bool IsContentElementCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.IsContentElement();
             }
@@ -513,7 +513,7 @@ namespace System.Windows.Automation.Peers
         protected override bool IsControlElementCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.IsControlElement();
             }
@@ -528,7 +528,7 @@ namespace System.Windows.Automation.Peers
         protected override bool IsDialogCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.IsDialog();
             }
@@ -543,7 +543,7 @@ namespace System.Windows.Automation.Peers
         protected override bool IsEnabledCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.IsEnabled();
             }
@@ -558,7 +558,7 @@ namespace System.Windows.Automation.Peers
         protected override bool IsKeyboardFocusableCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.IsKeyboardFocusable();
             }
@@ -573,7 +573,7 @@ namespace System.Windows.Automation.Peers
         protected override bool IsOffscreenCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.IsOffscreen();
             }
@@ -588,7 +588,7 @@ namespace System.Windows.Automation.Peers
         protected override bool IsPasswordCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.IsPassword();
             }
@@ -603,7 +603,7 @@ namespace System.Windows.Automation.Peers
         protected override bool IsRequiredForFormCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.IsRequiredForForm();
             }
@@ -618,7 +618,7 @@ namespace System.Windows.Automation.Peers
         protected override void SetFocusCore()
         {
             UIElementAutomationPeer wrapperPeer = WrapperPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 wrapperPeer.SetFocus();
             }
@@ -640,7 +640,7 @@ namespace System.Windows.Automation.Peers
             get
             {
                 Button owningButton = OwningButton;
-                if (owningButton != null)
+                if (owningButton is not null)
                 {
                     return (int)owningButton.GetValue(Grid.ColumnProperty);
                 }
@@ -659,7 +659,7 @@ namespace System.Windows.Automation.Peers
             get
             {
                 Button owningButton = OwningButton;
-                if (owningButton != null)
+                if (owningButton is not null)
                 {
                     return (int)owningButton.GetValue(Grid.ColumnSpanProperty);
                 }
@@ -689,7 +689,7 @@ namespace System.Windows.Automation.Peers
             get
             {
                 Button owningButton = OwningButton;
-                if (owningButton != null)
+                if (owningButton is not null)
                 {
                     if (IsDayButton)
                     {
@@ -718,7 +718,7 @@ namespace System.Windows.Automation.Peers
             get
             {
                 Button owningButton = OwningButton;
-                if (owningButton != null)
+                if (owningButton is not null)
                 {
                     if (IsDayButton)
                     {
@@ -825,7 +825,7 @@ namespace System.Windows.Automation.Peers
                     this.OwningCalendar.SelectedDate = Date;
                 }
             }
-            else if (owningButton != null && owningButton.IsEnabled)
+            else if (owningButton is not null && owningButton.IsEnabled)
             {
                 owningButton.Focus();
             }
@@ -841,13 +841,13 @@ namespace System.Windows.Automation.Peers
         /// <returns>The table item's column headers</returns>
         IRawElementProviderSimple[] ITableItemProvider.GetColumnHeaderItems()
         {
-            if (IsDayButton && OwningButton != null)
+            if (IsDayButton && OwningButton is not null)
             {
-                if (this.OwningCalendar != null && this.OwningCalendarProvider != null)
+                if (this.OwningCalendar is not null && this.OwningCalendarProvider is not null)
                 {
                     IRawElementProviderSimple[] headers = ((ITableProvider)FrameworkElementAutomationPeer.CreatePeerForElement(this.OwningCalendar)).GetColumnHeaders();
 
-                    if (headers != null)
+                    if (headers is not null)
                     {
                         int column = ((IGridItemProvider)this).Column;
                         return new IRawElementProviderSimple[] { headers[column] };
@@ -912,7 +912,7 @@ namespace System.Windows.Automation.Peers
         override internal void AddToParentProxyWeakRefCache()
         {
             CalendarAutomationPeer owningCalendarPeer = FrameworkElementAutomationPeer.CreatePeerForElement(OwningCalendar) as CalendarAutomationPeer;
-            if (owningCalendarPeer != null)
+            if (owningCalendarPeer is not null)
             {
                 owningCalendarPeer.AddProxyToWeakRefStorage(this.ElementProxyWeakReference, this);
             }
@@ -935,7 +935,7 @@ namespace System.Windows.Automation.Peers
         private bool IsItemInAutomationTree()
         {
             AutomationPeer parent = this.GetParent();
-            if (this.Index != -1 && parent != null && parent.Children != null && this.Index < parent.Children.Count && parent.Children[this.Index] == this)
+            if (this.Index != -1 && parent is not null && parent.Children is not null && this.Index < parent.Children.Count && parent.Children[this.Index] == this)
                 return true;
             else return false;
         }
@@ -944,7 +944,7 @@ namespace System.Windows.Automation.Peers
         {
             // To avoid the situation on legacy systems which may not have new unmanaged core. this check with old unmanaged core
             // avoids throwing exception and provide older behavior returning default values for items which are virtualized rather than throwing exception.
-            if (VirtualizedItemPatternIdentifiers.Pattern != null)
+            if (VirtualizedItemPatternIdentifiers.Pattern is not null)
                 throw new ElementNotAvailableException(SR.VirtualizedElement);
         }
 

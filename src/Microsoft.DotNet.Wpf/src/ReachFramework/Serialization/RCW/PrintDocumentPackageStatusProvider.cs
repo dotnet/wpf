@@ -16,13 +16,13 @@ namespace System.Windows.Xps.Serialization.RCW
             _jobIdAcquiredEvent = null;
 
             IConnectionPointContainer connectionPointContainer = docPackageTarget as IConnectionPointContainer;
-            if (connectionPointContainer != null)
+            if (connectionPointContainer is not null)
             {
                 IConnectionPoint connectionPoint = null;
                 Guid riid = typeof(IPrintDocumentPackageStatusEvent).GUID;
                 connectionPointContainer.FindConnectionPoint(ref riid, out connectionPoint);
 
-                if (connectionPoint != null)
+                if (connectionPoint is not null)
                 {
                     _connectionPoint = connectionPoint;
                     int cookie = -1;
@@ -52,7 +52,7 @@ namespace System.Windows.Xps.Serialization.RCW
         UnAdvise(
             )
         {
-            if (_connectionPoint != null && _cookie != null)
+            if (_connectionPoint is not null && _cookie is not null)
             {
                 _connectionPoint.Unadvise(_cookie.Value);
             }

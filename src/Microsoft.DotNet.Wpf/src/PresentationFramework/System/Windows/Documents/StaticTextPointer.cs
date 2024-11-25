@@ -31,7 +31,7 @@ namespace System.Windows.Documents
         internal StaticTextPointer(ITextContainer textContainer, object handle0, int handle1)
         {
             _textContainer = textContainer;
-            _generation = (textContainer != null) ? textContainer.Generation : 0;
+            _generation = (textContainer is not null) ? textContainer.Generation : 0;
             _handle0 = handle0;
             _handle1 = handle1;
         }
@@ -133,7 +133,7 @@ namespace System.Windows.Documents
         // Asserts this StaticTextPointer is synchronized to the current tree generation.
         internal void AssertGeneration()
         {
-            if (_textContainer != null)
+            if (_textContainer is not null)
             {
                 Invariant.Assert(_generation == _textContainer.Generation, "StaticTextPointer not synchronized to tree generation!");
             }

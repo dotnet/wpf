@@ -92,7 +92,7 @@ namespace System.Windows.Xps.Serialization
 
             Matrix mat = Matrix.Identity;
 
-            if (transform != null)
+            if (transform is not null)
             {
                 mat = transform.Value;
             }
@@ -251,16 +251,16 @@ namespace System.Windows.Xps.Serialization
         /// </summary>
         public void DrawGeometry(Brush brush, Pen pen, Geometry geometry)
         {
-            if (geometry != null)
+            if (geometry is not null)
             {
-                if (brush != null)
+                if (brush is not null)
                 {
                     Rect bounds = geometry.Bounds;
 
                     brush = ReduceBrush(brush, bounds);
                 }
                 
-                if ((pen != null) && (pen.Brush != null))
+                if ((pen is not null) && (pen.Brush is not null))
                 {
                     Rect bounds = Rect.Empty;
 
@@ -287,7 +287,7 @@ namespace System.Windows.Xps.Serialization
         /// </summary>
         public void DrawImage(ImageSource image, Rect rectangle)
         {
-            if (image != null)
+            if (image is not null)
             {
                 DrawingImage drawingImage;
                 D3DImage d3dimage;
@@ -297,11 +297,11 @@ namespace System.Windows.Xps.Serialization
                     // Apparently, IMetroDrawingContext.DrawImage only handles BitmapSources...
                     _dc.DrawImage(image, rectangle);
                 }
-                else if ((drawingImage = image as DrawingImage) != null)
+                else if ((drawingImage = image as DrawingImage) is not null)
                 {
                     DrawGeometry(new DrawingBrush(drawingImage.Drawing), null, new RectangleGeometry(rectangle));
                 }
-                else if ((d3dimage = image as D3DImage) != null)
+                else if ((d3dimage = image as D3DImage) is not null)
                 {
                     _dc.DrawImage(d3dimage.CopyBackBuffer(), rectangle);
                 }
@@ -367,7 +367,7 @@ namespace System.Windows.Xps.Serialization
             Effect effect
             )
         {
-            Debug.Assert(visual != null);
+            Debug.Assert(visual is not null);
 
             // Compute the bounding box of the visual and its descendants
             Rect bounds = VisualTreeHelper.GetContentBounds(visual);
@@ -377,7 +377,7 @@ namespace System.Windows.Xps.Serialization
                 return;
 
             // transform clip to visual space
-            if (clip != null)
+            if (clip is not null)
             {
                 Matrix worldToVisualTransform = visualToWorldTransform;
                 worldToVisualTransform.Invert();
@@ -419,7 +419,7 @@ namespace System.Windows.Xps.Serialization
             BitmapSource bitmap;
 
             // If we have an Effect, we may need to inflate the bounds to account for the effect's output.
-            if (effect != null)
+            if (effect is not null)
             {
                 bounds = effect.GetRenderBounds(bounds);
             }
@@ -439,7 +439,7 @@ namespace System.Windows.Xps.Serialization
                 );
 
 
-            if (bitmap != null)
+            if (bitmap is not null)
             {
                 _dc.Push(bitmapToVisualTransform, null, 1.0, null, Rect.Empty, /*onePrimitive=*/true, null, null, null, EdgeMode.Unspecified);
                 _dc.DrawImage(bitmap, new Rect(0, 0, bitmap.Width, bitmap.Height));
@@ -454,7 +454,7 @@ namespace System.Windows.Xps.Serialization
         /// </summary>
         public void DrawGlyphRun(Brush foreground, GlyphRun glyphRun)
         {
-            if (glyphRun != null)
+            if (glyphRun is not null)
             {
                 foreground = ReduceBrush(foreground, glyphRun.ComputeInkBoundingBox());
 
@@ -893,7 +893,7 @@ namespace System.Windows.Xps.Serialization
 
         public DrawingFlattenDrawingContext(DrawingContext context)
         {
-            Debug.Assert(context != null);
+            Debug.Assert(context is not null);
 
             _context = context;
         }
@@ -942,7 +942,7 @@ namespace System.Windows.Xps.Serialization
                 pushCount++;
             }
 
-            if (clip != null)
+            if (clip is not null)
             {
                 _context.PushClip(clip);
                 pushCount++;
@@ -954,7 +954,7 @@ namespace System.Windows.Xps.Serialization
                 pushCount++;
             }
 
-            if (opacityMask != null)
+            if (opacityMask is not null)
             {
                 _context.PushOpacityMask(opacityMask);
                 pushCount++;

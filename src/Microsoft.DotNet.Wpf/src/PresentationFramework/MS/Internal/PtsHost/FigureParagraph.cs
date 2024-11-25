@@ -59,7 +59,7 @@ namespace MS.Internal.PtsHost
         {
             base.Dispose();
 
-            if (_mainTextSegment != null)
+            if (_mainTextSegment is not null)
             {
                 _mainTextSegment.Dispose();
                 _mainTextSegment = null;
@@ -422,7 +422,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal override void ClearUpdateInfo()
         {
-            if (_mainTextSegment != null)
+            if (_mainTextSegment is not null)
             {
                 _mainTextSegment.ClearUpdateInfo();
             }
@@ -439,7 +439,7 @@ namespace MS.Internal.PtsHost
         internal override bool InvalidateStructure(int startPosition)
         {
             Debug.Assert(ParagraphEndCharacterPosition >= startPosition);
-            if (_mainTextSegment != null)
+            if (_mainTextSegment is not null)
             {
                 if (_mainTextSegment.InvalidateStructure(startPosition))
                 {
@@ -455,7 +455,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal override void InvalidateFormatCache()
         {
-            if (_mainTextSegment != null)
+            if (_mainTextSegment is not null)
             {
                 _mainTextSegment.InvalidateFormatCache();
             }

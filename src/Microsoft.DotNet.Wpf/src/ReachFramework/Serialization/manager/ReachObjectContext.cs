@@ -135,7 +135,7 @@ namespace System.Windows.Xps.Serialization
             object currentObject = null;
 
             for(currentObject = serializationManager.GraphContextStack[stackIndex];
-                currentObject != null;
+                currentObject is not null;
                 currentObject = serializationManager.GraphContextStack[++stackIndex])
             {
                 SerializableObjectContext currentObjectContext = currentObject as SerializableObjectContext;
@@ -172,7 +172,7 @@ namespace System.Windows.Xps.Serialization
                 // Namespace related creation within the context
                 //
                 MetroSerializationNamespaceTable parentNamespaceTable =
-                serializableObjectParentContext != null ? serializableObjectParentContext.NamespaceTable : null;
+                serializableObjectParentContext is not null ? serializableObjectParentContext.NamespaceTable : null;
 
                 if (serializableObjectContext.NamespaceTable is null)
                 {
@@ -360,7 +360,7 @@ namespace System.Windows.Xps.Serialization
             _isReadOnlyValue = false;
             _namespaceTable  = null;
 
-            if (_propertiesCollection != null)
+            if (_propertiesCollection is not null)
             {
                 _propertiesCollection.Clear();
             }

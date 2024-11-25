@@ -64,7 +64,7 @@ namespace System.Windows.Documents
         /// <param name="userState">Unique identifier for the asynchronous task.</param>
         /// <exception cref="ArgumentException">
         /// Throws ArgumentException if the ContentPosition does not exist within 
-        /// this element’s tree.
+        /// this elementï¿½s tree.
         /// </exception>
         public virtual void GetPageNumberAsync(ContentPosition contentPosition, object userState)
         {
@@ -170,7 +170,7 @@ namespace System.Windows.Documents
         /// <param name="e">Event arguments for the GetPageNumberCompleted event.</param>
         protected virtual void OnGetPageNumberCompleted(GetPageNumberCompletedEventArgs e)
         {
-            if (this.GetPageNumberCompleted != null)
+            if (this.GetPageNumberCompleted is not null)
             {
                 this.GetPageNumberCompleted(this, e);
             }
@@ -182,7 +182,7 @@ namespace System.Windows.Documents
         /// <param name="e">Event arguments for the PaginationProgress event.</param>
         protected virtual void OnPaginationProgress(PaginationProgressEventArgs e)
         {
-            if (this.PaginationProgress != null)
+            if (this.PaginationProgress is not null)
             {
                 this.PaginationProgress(this, e);
             }
@@ -194,7 +194,7 @@ namespace System.Windows.Documents
         /// <param name="e">Event arguments for the PaginationCompleted event.</param>
         protected virtual void OnPaginationCompleted(EventArgs e)
         {
-            if (this.PaginationCompleted != null)
+            if (this.PaginationCompleted is not null)
             {
                 this.PaginationCompleted(this, e);
             }

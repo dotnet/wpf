@@ -59,7 +59,7 @@ namespace MS.Internal.Controls
             {
                 for (; this.loc < this.size && fetched < celt; ++(this.loc))
                 {
-                    if (this.arr[this.loc] != null)
+                    if (this.arr[this.loc] is not null)
                     {
                         Marshal.WriteIntPtr(rgelt, Marshal.GetIUnknownForObject(this.arr[this.loc]));
                         rgelt = (IntPtr)((long)rgelt + (long)sizeof(IntPtr));

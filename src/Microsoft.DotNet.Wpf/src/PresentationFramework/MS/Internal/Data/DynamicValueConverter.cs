@@ -44,12 +44,12 @@ namespace MS.Internal.Data
         {
             object result = DependencyProperty.UnsetValue;  // meaning: failure to convert
 
-            if (value != null)
+            if (value is not null)
             {
                 Type sourceType = value.GetType();
                 EnsureConverter(sourceType, targetType);
 
-                if (_converter != null)
+                if (_converter is not null)
                 {
                     result = _converter.Convert(value, targetType, parameter, culture);
                 }
@@ -69,12 +69,12 @@ namespace MS.Internal.Data
         {
             object result = DependencyProperty.UnsetValue;  // meaning: failure to convert
 
-            if (value != null)
+            if (value is not null)
             {
                 Type targetType = value.GetType();
                 EnsureConverter(sourceType, targetType);
 
-                if (_converter != null)
+                if (_converter is not null)
                 {
                     result = _converter.ConvertBack(value, sourceType, parameter, culture);
                 }
@@ -97,7 +97,7 @@ namespace MS.Internal.Data
             {
                 // types have changed - get a new converter
 
-                if (sourceType != null && targetType != null)
+                if (sourceType is not null && targetType is not null)
                 {
                     // DefaultValueConverter.Create() is more sophisticated to find correct type converters,
                     // e.g. if source/targetType is object or well-known system types.
@@ -106,7 +106,7 @@ namespace MS.Internal.Data
                     {
                         _engine = DataBindEngine.CurrentDataBindEngine;
                     }
-                    Invariant.Assert(_engine != null);
+                    Invariant.Assert(_engine is not null);
                     _converter = _engine.GetDefaultValueConverter(sourceType, targetType, _targetToSourceNeeded);
                 }
                 else

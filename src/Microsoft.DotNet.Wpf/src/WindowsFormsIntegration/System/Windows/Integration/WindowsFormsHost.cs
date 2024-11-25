@@ -87,7 +87,7 @@ namespace System.Windows.Forms.Integration
         /// </summary>
         private void SyncChildImeEnabledContext()
         {
-            if (SWF.ImeModeConversion.IsCurrentConversionTableSupported && this.Child != null && this.Child.IsHandleCreated)
+            if (SWF.ImeModeConversion.IsCurrentConversionTableSupported && this.Child is not null && this.Child.IsHandleCreated)
             {
                 Debug.WriteLineIf(HostUtils.ImeMode.Level >= TraceLevel.Info, "Inside SyncChildImeEnabledContext(), this = " + this);
                 Debug.Indent();
@@ -144,12 +144,12 @@ namespace System.Windows.Forms.Integration
             IntPtr result = IntPtr.Zero;
 
             WindowsFormsHostAutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(this) as WindowsFormsHostAutomationPeer;
-            if(peer != null)
+            if(peer is not null)
             {
                 // get the element proxy
                 IRawElementProviderSimple el = peer.GetProvider();
 
-                if (el != null)
+                if (el is not null)
                 {
                     //This requires FullTrust but we already have it.
                     result = AutomationInteropProvider.ReturnRawElementProvider(Handle, wparam, lparam, el);
@@ -182,7 +182,7 @@ namespace System.Windows.Forms.Integration
         {
             if (newScale != _currentScale)
             {
-                if (Child != null)
+                if (Child is not null)
                 {
                     Child.Scale(new System.Drawing.SizeF((float)(newScale.X / _currentScale.X), (float)(newScale.Y / _currentScale.Y)));
                 }
@@ -221,7 +221,7 @@ namespace System.Windows.Forms.Integration
         {
             InvalidOperationException exception = new InvalidOperationException(SR.Host_CannotRotateWindowsFormsHost);
             LayoutExceptionEventArgs args = new LayoutExceptionEventArgs(exception);
-            if (_layoutError != null)
+            if (_layoutError is not null)
             {
                 _layoutError(this, args);
             }
@@ -288,7 +288,7 @@ namespace System.Windows.Forms.Integration
             Size returnSize = Convert.ToSystemWindowsSize(Child.Size, _currentScale, dpi.DpiScaleX, dpi.DpiScaleY);
             returnSize.Width = Math.Min(returnSize.Width, finalSize.Width);
             returnSize.Height = Math.Min(returnSize.Height, finalSize.Height);
-            if (HostContainerInternal.BackgroundImage != null)
+            if (HostContainerInternal.BackgroundImage is not null)
             {
                 _propertyMap.OnPropertyChanged(this, "Background", this.Background);
             }
@@ -318,7 +318,7 @@ namespace System.Windows.Forms.Integration
 #pragma warning disable 56526
                 Control oldChild = Child;
                 SWF.Form form = value as SWF.Form;
-                if (form != null)
+                if (form is not null)
                 {
                     if (form.TopLevel)
                     {  //WinOS #1030878 - Can't host top-level forms
@@ -330,7 +330,7 @@ namespace System.Windows.Forms.Integration
                     }
                 }
                 _hostContainerInternal.Child = value;
-                if (Child != null)
+                if (Child is not null)
                 {
                     _propertyMap.ApplyAll();
 
@@ -348,17 +348,17 @@ namespace System.Windows.Forms.Integration
 
         private void OnChildChanged(Control oldChild)
         {
-            if (oldChild != null)
+            if (oldChild is not null)
             {
                 oldChild.GotFocus -= new EventHandler(this.OnChildGotFocus);
             }
 
-            if (this.Child != null)
+            if (this.Child is not null)
             {
                 this.Child.GotFocus += new EventHandler(this.OnChildGotFocus);
             }
 
-            if (ChildChanged != null)
+            if (ChildChanged is not null)
             {
                 ChildChanged(this, new ChildChangedEventArgs(oldChild));
             }
@@ -399,7 +399,7 @@ namespace System.Windows.Forms.Integration
             if (backgroundBrush is null)
             {
                 SW.FrameworkElement frameworkElement = dependencyObject as SW.FrameworkElement;
-                if (frameworkElement != null)
+                if (frameworkElement is not null)
                 {
                     DependencyObject parentElement = VisualTreeHelper.GetParent(frameworkElement);
                     backgroundBrush = FindBackgroundParent(parentElement);
@@ -416,7 +416,7 @@ namespace System.Windows.Forms.Integration
         internal void PaintBackground()
         {
             SWM.Brush parentBrush = FindBackgroundParent(this);
-            if (parentBrush != null)
+            if (parentBrush is not null)
             {
                 if (_cachedBackbrush != parentBrush)
                 {
@@ -487,7 +487,7 @@ namespace System.Windows.Forms.Integration
             // for 4.0 compat, create a Winforms.NativeWindow to swallow exceptions during WndProc
             if (!CoreCompatibilityPreferences.TargetsAtLeast_Desktop_V4_5)
             {
-                if (_dummyNativeWindow != null)
+                if (_dummyNativeWindow is not null)
                 {
                     _dummyNativeWindow.Dispose();
                 }
@@ -514,7 +514,7 @@ namespace System.Windows.Forms.Integration
             //This line shouldn't be necessary since the list cleans itself, but it's good to be tidy.
             ApplicationInterop.ThreadWindowsFormsHostList.Remove(this);
 
-            if (HostContainerInternal != null)
+            if (HostContainerInternal is not null)
             {
                 HostContainerInternal.Dispose();
             }
@@ -538,11 +538,11 @@ namespace System.Windows.Forms.Integration
             {
                 if (disposing)
                 {
-                    if (_hostContainerInternal != null)
+                    if (_hostContainerInternal is not null)
                     {
                         try
                         {
-                            if (_dummyNativeWindow != null)
+                            if (_dummyNativeWindow is not null)
                             {
                                 _dummyNativeWindow.Dispose();
                             }
@@ -551,7 +551,7 @@ namespace System.Windows.Forms.Integration
                         }
                         finally
                         {
-                            if (Child != null)
+                            if (Child is not null)
                             {
                                 Child.Dispose();
                             }
@@ -710,7 +710,7 @@ namespace System.Windows.Forms.Integration
             base.OnPropertyChanged(e);
 
             // Invoke method currently set to handle this event
-            if (_propertyMap != null)
+            if (_propertyMap is not null)
             {
                 _propertyMap.OnPropertyChanged(this, e.Property.Name, e.NewValue);
             }
@@ -941,7 +941,7 @@ namespace System.Windows.Forms.Integration
                             // However, we don't want them to wrap in the Adapter, which always has only
                             // one immediate child
                             if ((keyCode == Keys.Left || keyCode == Keys.Right || keyCode == Keys.Down || keyCode == Keys.Up)
-                                && (this.ActiveControl != null && this.ActiveControl.Parent == this))
+                                && (this.ActiveControl is not null && this.ActiveControl.Parent == this))
                             {
                                 SWF.Control c = this.ActiveControl.Parent;
                                 return c.SelectNextControl(this.ActiveControl, keyCode == Keys.Right || keyCode == Keys.Down, false, false, false);
@@ -1045,11 +1045,11 @@ namespace System.Windows.Forms.Integration
 
 #if DEBUG
             string compName = "";
-            if (e.AffectedControl != null)
+            if (e.AffectedControl is not null)
             {
                 compName = e.AffectedControl.Name;
             }
-            else if (e.AffectedComponent != null)
+            else if (e.AffectedComponent is not null)
             {
                 compName = e.AffectedComponent.ToString();
             }
@@ -1115,8 +1115,8 @@ namespace System.Windows.Forms.Integration
         private void CallOnParentRightToLeftChanged(Control control)
         {
             MethodInfo methodInfo = typeof(SWF.Control).GetMethod("OnParentRightToLeftChanged", BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(EventArgs) }, null);
-            Debug.Assert(methodInfo != null, "Couldn't find OnParentRightToLeftChanged method!");
-            if (methodInfo != null)
+            Debug.Assert(methodInfo is not null, "Couldn't find OnParentRightToLeftChanged method!");
+            if (methodInfo is not null)
             {
                 methodInfo.Invoke(control, new object[] { EventArgs.Empty });
             }

@@ -86,7 +86,7 @@ namespace System.Windows.Baml2006
         {
             XamlMember result = base.LookupContentProperty();
             WpfXamlMember wpfMember = result as WpfXamlMember;
-            if (wpfMember != null)
+            if (wpfMember is not null)
             {
                 result = wpfMember.AsContentProperty;
             }
@@ -123,21 +123,21 @@ namespace System.Windows.Baml2006
             XamlMember member = FindKnownMember(name, isAttached);
 
             // Return the known member if we have one
-            if (member != null)
+            if (member is not null)
             {
                 return member;
             }
 
             // Look for members backed by DPs
             member = FindDependencyPropertyBackedProperty(name, isAttached, skipReadOnlyCheck);
-            if (member != null)
+            if (member is not null)
             {
                 return member;
             }
 
             // Look for members backed by RoutedEvents
             member = FindRoutedEventBackedProperty(name, isAttached, skipReadOnlyCheck);
-            if (member != null)
+            if (member is not null)
             {
                 return member;
             }
@@ -156,10 +156,10 @@ namespace System.Windows.Baml2006
             // If the base class finds one and it's declared type is a known type,
             // try looking for a known property.
             WpfKnownType wpfKnownType;
-            if (member != null && (wpfKnownType = member.DeclaringType as WpfKnownType) != null)
+            if (member is not null && (wpfKnownType = member.DeclaringType as WpfKnownType) is not null)
             {
                 XamlMember knownMember = FindKnownMember(wpfKnownType, name, isAttached);
-                if (knownMember != null)
+                if (knownMember is not null)
                 {
                     return knownMember;
                 }
@@ -211,14 +211,14 @@ namespace System.Windows.Baml2006
                 {
                     WpfXamlType wpfXamlType = type as WpfXamlType;
                     XamlMember xamlMember = FindKnownMember(wpfXamlType, name, isAttachable);
-                    if (xamlMember != null)
+                    if (xamlMember is not null)
                     {
                         return xamlMember;
                     }
 
                     type = type.BaseType;
                 }
-                while (type != null);
+                while (type is not null);
             }
             return null;
         }
@@ -228,7 +228,7 @@ namespace System.Windows.Baml2006
             RoutedEvent re = EventManager.GetRoutedEventFromName(
                 name, UnderlyingType);
             XamlMember xamlMember = null;
-            if (re != null)
+            if (re is not null)
             {
                 // Try looking for a known member first instead of creating a new WpfXamlMember
                 WpfXamlType wpfXamlType = null;
@@ -241,7 +241,7 @@ namespace System.Windows.Baml2006
                     wpfXamlType = System.Windows.Markup.XamlReader.GetWpfSchemaContext().GetXamlType(re.OwnerType) as WpfXamlType;
                 }
 
-                if (wpfXamlType != null)
+                if (wpfXamlType is not null)
                 {
                     xamlMember = FindKnownMember(wpfXamlType, name, isAttachable);
                 }
@@ -297,7 +297,7 @@ namespace System.Windows.Baml2006
 
             // If it's a dependency property, return a wrapping XamlMember
             DependencyProperty property;
-            if ((property = DependencyProperty.FromName(name, this.UnderlyingType)) != null)
+            if ((property = DependencyProperty.FromName(name, this.UnderlyingType)) is not null)
             {
                 // Try looking for a known member first instead of creating a new WpfXamlMember
                 WpfXamlType wpfXamlType = null;
@@ -310,7 +310,7 @@ namespace System.Windows.Baml2006
                     wpfXamlType = System.Windows.Markup.XamlReader.GetWpfSchemaContext().GetXamlType(property.OwnerType) as WpfXamlType;
                 }
 
-                if (wpfXamlType != null)
+                if (wpfXamlType is not null)
                 {
                     xamlMember = FindKnownMember(wpfXamlType, name, isAttachable);
                 }
@@ -385,7 +385,7 @@ namespace System.Windows.Baml2006
         private XamlMember GetAttachedRoutedEvent(string name, RoutedEvent re)
         {
             XamlMember memberFromBase = base.LookupAttachableMember(name);
-            if (memberFromBase != null)
+            if (memberFromBase is not null)
             {
                 return new WpfXamlMember(re, (MethodInfo)memberFromBase.UnderlyingMember, SchemaContext, UseV3Rules);
             }
@@ -395,7 +395,7 @@ namespace System.Windows.Baml2006
         private XamlMember GetRoutedEvent(string name, RoutedEvent re, bool skipReadOnlyCheck)
         {
             XamlMember memberFromBase = base.LookupMember(name, skipReadOnlyCheck);
-            if (memberFromBase != null)
+            if (memberFromBase is not null)
             {
                 return new WpfXamlMember(re, (EventInfo)memberFromBase.UnderlyingMember, SchemaContext, UseV3Rules);
             }
@@ -405,7 +405,7 @@ namespace System.Windows.Baml2006
         private XamlMember GetAttachedDependencyProperty(string name, DependencyProperty property)
         {
             XamlMember memberFromBase = base.LookupAttachableMember(name);
-            if (memberFromBase != null)
+            if (memberFromBase is not null)
             {
                 return new WpfXamlMember(property,
                     memberFromBase.Invoker.UnderlyingGetter,
@@ -418,10 +418,10 @@ namespace System.Windows.Baml2006
         private XamlMember GetRegularDependencyProperty(string name, DependencyProperty property, bool skipReadOnlyCheck)
         {
             XamlMember memberFromBase = base.LookupMember(name, skipReadOnlyCheck);
-            if (memberFromBase != null)
+            if (memberFromBase is not null)
             {
                 PropertyInfo propertyInfo = memberFromBase.UnderlyingMember as PropertyInfo;
-                if (propertyInfo != null)
+                if (propertyInfo is not null)
                 {
                     return new WpfXamlMember(property, propertyInfo, SchemaContext, UseV3Rules);
                 }
@@ -443,14 +443,14 @@ namespace System.Windows.Baml2006
             // Look in the cache first
             if (!isAttachable || wpfXamlType.IsBamlScenario)
             {
-                if (wpfXamlType._members != null && wpfXamlType.Members.TryGetValue(name, out xamlMember))
+                if (wpfXamlType._members is not null && wpfXamlType.Members.TryGetValue(name, out xamlMember))
                 {
                     return xamlMember;
                 }
             }
             else
             {
-                if (wpfXamlType._attachableMembers != null && wpfXamlType.AttachableMembers.TryGetValue(name, out xamlMember))
+                if (wpfXamlType._attachableMembers is not null && wpfXamlType.AttachableMembers.TryGetValue(name, out xamlMember))
                 {
                     return xamlMember;
                 }
@@ -458,7 +458,7 @@ namespace System.Windows.Baml2006
 
             WpfKnownType knownType = wpfXamlType as WpfKnownType;
             // Only look for known properties on a known type
-            if (knownType != null)
+            if (knownType is not null)
             {
                 // if it is a Baml Senario BAML doesn't really care if it was attachable or not
                 // so look for the property in AttachableMembers also if it wasn't found in Members.
@@ -471,7 +471,7 @@ namespace System.Windows.Baml2006
                     xamlMember = System.Windows.Markup.XamlReader.BamlSharedSchemaContext.CreateKnownAttachableMember(wpfXamlType.Name, name);
                 }
 
-                if (xamlMember != null)
+                if (xamlMember is not null)
                 {
                     return knownType.CacheAndReturnXamlMember(xamlMember);
                 }

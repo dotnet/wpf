@@ -78,7 +78,7 @@ namespace MS.Internal.Controls
 
             if (connectionPoint is null || cookie == 0)
             {
-                if (connectionPoint != null)
+                if (connectionPoint is not null)
                 {
                     Marshal.FinalReleaseComObject(connectionPoint);
                 }
@@ -104,7 +104,7 @@ namespace MS.Internal.Controls
         /// </summary>
         internal void Disconnect()
         {
-            if (connectionPoint != null && cookie != 0)
+            if (connectionPoint is not null && cookie != 0)
             {
                 try
                 {

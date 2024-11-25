@@ -71,7 +71,7 @@ namespace System.Windows
                                            CultureInfo cultureInfo, 
                                            object source)
         {
-            if (source != null)
+            if (source is not null)
             {
                 return new ThemeMode(source.ToString());
             }

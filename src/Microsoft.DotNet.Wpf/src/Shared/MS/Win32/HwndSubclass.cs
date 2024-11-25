@@ -316,7 +316,7 @@ namespace MS.Win32
                 // Pass this message to our delegate function.  Do this under
                 // the exception filter/handlers of the dispatcher for this thread.
                 Dispatcher dispatcher = Dispatcher.FromThread(Thread.CurrentThread);
-                if(dispatcher != null && !dispatcher.HasShutdownFinished)
+                if(dispatcher is not null && !dispatcher.HasShutdownFinished)
                 {
                     if (_dispatcherOperationCallback is null)
                         _dispatcherOperationCallback = new DispatcherOperationCallback(this.DispatcherCallbackOperation);
@@ -340,7 +340,7 @@ namespace MS.Win32
                              param);
 
 
-                    if (result != null)
+                    if (result is not null)
                     {
                         handled = param.handled;
                         retval = param.retVal;
@@ -419,7 +419,7 @@ namespace MS.Win32
             {
                 HwndWrapperHook hook= _hook.Target as HwndWrapperHook;
 
-                if (hook != null)
+                if (hook is not null)
                 {
                     // make the call
                     param.retVal = hook(param.hwnd, param.msg, param.wParam, param.lParam, ref param.handled);

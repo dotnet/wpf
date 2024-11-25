@@ -87,7 +87,7 @@ namespace System.Windows.Documents
 #endif
 
 //             VerifyAccess();
-            if (_asyncOp != null)
+            if (_asyncOp is not null)
             {
                 _asyncOp.Wait();
             }
@@ -120,7 +120,7 @@ namespace System.Windows.Documents
 
 //             VerifyAccess();
 
-            if (_asyncOp != null)
+            if (_asyncOp is not null)
             {
                 return;
             }
@@ -132,7 +132,7 @@ namespace System.Windows.Documents
             }
 
 
-            if (p != null)
+            if (p is not null)
             {
                 _NotifyPageCompleted(p, null, false, null);
             }
@@ -141,7 +141,7 @@ namespace System.Windows.Documents
                 Dispatcher dispatcher = this.Dispatcher;
                 Uri uriToLoad = _ResolveUri();
 
-                if (uriToLoad != null || _child != null)
+                if (uriToLoad is not null || _child is not null)
                 {
                     _asyncOp = new PageContentAsyncResult(new AsyncCallback(_RequestPageCallback), null, dispatcher, uriToLoad, uriToLoad, _child);
                     _asyncOp.DispatcherOperation = dispatcher.BeginInvoke(DispatcherPriority.Normal, new DispatcherOperationCallback(_asyncOp.Dispatch), null);
@@ -159,7 +159,7 @@ namespace System.Windows.Documents
 #endif
 //             VerifyAccess();
             // Important: do not throw if no outstanding GetPageRootAsyncCall
-            if (_asyncOp != null)
+            if (_asyncOp is not null)
             {
                 _asyncOp.Cancel();
                 _asyncOp = null;
@@ -191,7 +191,7 @@ namespace System.Windows.Documents
                 throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(FixedPage)), "value");
             }
 
-            if (_child != null)
+            if (_child is not null)
             {
                 throw new InvalidOperationException(SR.Format(SR.CanOnlyHaveOneChild, typeof(PageContent), value));
             }
@@ -284,7 +284,7 @@ namespace System.Windows.Documents
             {
                 ArgumentNullException.ThrowIfNull(value);
 
-                if (_child != null)
+                if (_child is not null)
                 {
                     throw new InvalidOperationException(SR.Format(SR.CanOnlyHaveOneChild, typeof(PageContent), value));
                 }
@@ -302,7 +302,7 @@ namespace System.Windows.Documents
         public bool ShouldSerializeChild(XamlDesignerSerializationManager manager)
         {
             bool shouldSerialize = false;
-            if (manager != null)
+            if (manager is not null)
             {
                 shouldSerialize = (manager.XmlWriter is null);
             }
@@ -365,7 +365,7 @@ namespace System.Windows.Documents
                 return true;
             }
 
-            if (_pageRef != null)
+            if (_pageRef is not null)
             {
                 FixedPage c = (FixedPage)_pageRef.Target;
                 if (c == pageVisual)
@@ -381,7 +381,7 @@ namespace System.Windows.Documents
             Uri uriToLoad = _ResolveUri();
             Stream pageStream = null;
 
-            if (uriToLoad != null)
+            if (uriToLoad is not null)
             {
                 pageStream = WpfWebRequestHelper.CreateRequestAndGetResponseStream(uriToLoad);
                 if (pageStream is null)
@@ -488,7 +488,7 @@ namespace System.Windows.Documents
 
         private void _NotifyPageCompleted(FixedPage result, Exception error, bool cancelled, object userToken)
         {
-            if (GetPageRootCompleted != null)
+            if (GetPageRootCompleted is not null)
             {
                 GetPageRootCompletedEventArgs e = new GetPageRootCompletedEventArgs(result, error, cancelled, userToken);
                 GetPageRootCompleted(this, e);
@@ -499,7 +499,7 @@ namespace System.Windows.Documents
         {
             Uri uriToNavigate = this.Source;
 
-            if (uriToNavigate != null)
+            if (uriToNavigate is not null)
             {
                 uriToNavigate = BindUriHelper.GetUriToNavigate(this, ((IUriContext)this).BaseUri, uriToNavigate);
             }
@@ -509,7 +509,7 @@ namespace System.Windows.Documents
         private void _RequestPageCallback(IAsyncResult ar)
         {
             PageContentAsyncResult par = (PageContentAsyncResult)ar;
-            if (par == _asyncOp && par.Result != null)
+            if (par == _asyncOp && par.Result is not null)
             {
                 //par.Result.IsTreeSeparator = true;
                 LogicalTreeHelper.AddLogicalChild(this, par.Result);
@@ -531,7 +531,7 @@ namespace System.Windows.Documents
             Stream pageStream;
             try
             {
-                if (_child != null)
+                if (_child is not null)
                 {
                     p = _child;
                 }
@@ -539,7 +539,7 @@ namespace System.Windows.Documents
                 {
                     Uri uriToLoad = _ResolveUri();
 
-                    if (uriToLoad != null)
+                    if (uriToLoad is not null)
                     {
                         _LoadPageImpl(((IUriContext)this).BaseUri, uriToLoad, out p, out pageStream);
 
@@ -555,7 +555,7 @@ namespace System.Windows.Documents
                     }
                 }
 
-                if (p != null)
+                if (p is not null)
                 {
                     LogicalTreeHelper.AddLogicalChild(this, p);
                     _pageRef = new WeakReference(p);
@@ -576,7 +576,7 @@ namespace System.Windows.Documents
         private FixedPage _GetLoadedPage()
         {
             FixedPage p = null;
-            if (_pageRef != null)
+            if (_pageRef is not null)
             {
                 p = (FixedPage)_pageRef.Target;
             }
@@ -621,7 +621,7 @@ namespace System.Windows.Documents
                 throw new ApplicationException(SR.PageContentUnsupportedMimeType);
             }
 
-            if (o != null && !(o is FixedPage))
+            if (o is not null && !(o is FixedPage))
             {
                 throw new ApplicationException(SR.Format(SR.PageContentUnsupportedPageType, o.GetType()));
             }

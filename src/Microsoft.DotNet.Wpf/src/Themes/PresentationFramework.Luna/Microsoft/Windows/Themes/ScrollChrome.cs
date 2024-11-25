@@ -298,7 +298,7 @@ namespace Microsoft.Windows.Themes
             if ((bounds.Width > 0.0) && (bounds.Height > 2.0))
             {
                 Pen pen = Shadow;
-                if (pen != null)
+                if (pen is not null)
                 {
                     dc.DrawRoundedRectangle(
                         null,
@@ -318,7 +318,7 @@ namespace Microsoft.Windows.Themes
             {
                 Brush brush = Fill;
                 Pen pen = OuterBorder;
-                if (pen != null)
+                if (pen is not null)
                 {
                     dc.DrawRoundedRectangle(
                         brush,
@@ -332,7 +332,7 @@ namespace Microsoft.Windows.Themes
                 if ((bounds.Width >= 2.0) && (bounds.Height >= 2.0))
                 {
                     pen = InnerBorder;
-                    if ((pen != null) || (brush != null))
+                    if ((pen is not null) || (brush is not null))
                     {
                         dc.DrawRoundedRectangle(
                             brush,
@@ -352,7 +352,7 @@ namespace Microsoft.Windows.Themes
             {
                 Brush brush = Glyph;
 
-                if ((brush != null) && (glyph != ScrollGlyph.None))
+                if ((brush is not null) && (glyph != ScrollGlyph.None))
                 {
                     switch (glyph)
                     {
@@ -389,7 +389,7 @@ namespace Microsoft.Windows.Themes
                 for (int i = 0; i < 8; i += 2)
                 {
                     dc.DrawRectangle(brush, null, new Rect(x + i, y, 1.0, height));
-                    if (glyphShadow != null)
+                    if (glyphShadow is not null)
                     {
                         dc.DrawRectangle(glyphShadow, null, new Rect(x + i + 1, y + 1, 1.0, height));
                     }
@@ -411,7 +411,7 @@ namespace Microsoft.Windows.Themes
                 for (int i = 0; i < 8; i += 2)
                 {
                     dc.DrawRectangle(brush, null, new Rect(x, y + i, width, 1.0));
-                    if (glyphShadow != null)
+                    if (glyphShadow is not null)
                     {
                         dc.DrawRectangle(glyphShadow, null, new Rect(x + 1, y + i + 1, width, 1.0));
                     }

@@ -68,7 +68,7 @@ namespace MS.Internal.MilCodeGen.Runtime
 
         public void Append(string[] parameters)
         {
-            if (parameters != null)
+            if (parameters is not null)
             {
                 for (int i = 0; i < parameters.Length; i++)
                 {

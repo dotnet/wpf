@@ -88,10 +88,10 @@ namespace MS.Internal
             foreach (object key in _hashTable.Keys)
             {
                 WeakHashtable.EqualityWeakReference objRef = key as WeakHashtable.EqualityWeakReference;
-                if (objRef != null)
+                if (objRef is not null)
                 {
                     T obj = objRef.Target as T;
-                    if (obj != null)
+                    if (obj is not null)
                     {
                         yield return obj;
                     }

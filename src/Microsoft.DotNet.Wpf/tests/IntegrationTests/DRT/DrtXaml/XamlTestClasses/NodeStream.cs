@@ -93,7 +93,7 @@ namespace Test.NodeStream
             {
                 return false;
             }
-            return (Value.Prefix != null && Value.Prefix.Equals(ns.Value.Prefix)) && (Value.Namespace != null && Value.Namespace.Equals(ns.Value.Namespace));
+            return (Value.Prefix is not null && Value.Prefix.Equals(ns.Value.Prefix)) && (Value.Namespace is not null && Value.Namespace.Equals(ns.Value.Namespace));
         }
 
         public override int GetHashCode()
@@ -104,7 +104,7 @@ namespace Test.NodeStream
         public override string ToString()
         {
             string s = "(NS ";
-            if (Value.Prefix != null && Value.Prefix.Length > 0)
+            if (Value.Prefix is not null && Value.Prefix.Length > 0)
             {
                 s += "\"" + Value.Prefix + "\" ";
             }
@@ -248,7 +248,7 @@ namespace Test.NodeStream
 
         public bool Equals(Arguments o)
         {
-            if (Y != null && !Y.Equals(o.Y))
+            if (Y is not null && !Y.Equals(o.Y))
             {
                 return false;
             }
@@ -346,7 +346,7 @@ namespace Test.NodeStream
             {
                 ConstructorArguments1 a = (ConstructorArguments1)value;
                 ConstructorInfo ci = typeof(ConstructorArguments1).GetConstructor(new Type[] { typeof(string) });
-                if (ci != null)
+                if (ci is not null)
                 {
                     return new InstanceDescriptor(ci, new object[] { a.X }, true);
                 }
@@ -376,7 +376,7 @@ namespace Test.NodeStream
             {
                 ConstructorArguments2 a = (ConstructorArguments2)value;
                 ConstructorInfo ci = typeof(ConstructorArguments2).GetConstructor(new Type[] { typeof(string), typeof(string) });
-                if (ci != null)
+                if (ci is not null)
                 {
                     return new InstanceDescriptor(ci, new object[] { a.X, a.Y }, true);
                 }
@@ -406,7 +406,7 @@ namespace Test.NodeStream
             {
                 FactoryArguments1 a = (FactoryArguments1)value;
                 MethodInfo mi = typeof(FactoryArguments1).GetMethod("Factory", new Type[] { typeof(string) });
-                if (mi != null)
+                if (mi is not null)
                 {
                     return new InstanceDescriptor(mi, new object[] { a.X }, true);
                 }
@@ -436,7 +436,7 @@ namespace Test.NodeStream
             {
                 FactoryArguments2 a = (FactoryArguments2)value;
                 MethodInfo mi = typeof(FactoryArguments2).GetMethod("Factory", new Type[] { typeof(string), typeof(string) });
-                if (mi != null)
+                if (mi is not null)
                 {
                     return new InstanceDescriptor(mi, new object[] { a.X, a.Y }, true);
                 }

@@ -95,10 +95,10 @@ namespace Microsoft.Windows.Controls.Ribbon
             galleryItem.RibbonGalleryCategory = this;
 
             RibbonGallery gallery = RibbonGallery;
-            if (gallery != null)
+            if (gallery is not null)
             {
                 object selectedItem = gallery.SelectedItem;
-                if (selectedItem != null)
+                if (selectedItem is not null)
                 {
                     // Set IsSelected to true on GalleryItems that match the SelectedItem
                     if (RibbonGallery.VerifyEqual(item, selectedItem))
@@ -114,7 +114,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 else
                 {
                     object selectedValue = gallery.SelectedValue;
-                    if (selectedValue != null)
+                    if (selectedValue is not null)
                     {
                         // Set SelectedItem if the item's value matches the SelectedValue
                         object itemValue = gallery.GetSelectableValueFromItem(item);
@@ -180,7 +180,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             get
             {
                 RibbonGalleryItemsPanel galleryItemsPanel = ItemsHostSite as RibbonGalleryItemsPanel;
-                if (galleryItemsPanel != null)
+                if (galleryItemsPanel is not null)
                 {
                     return galleryItemsPanel.MaxColumnWidth;
                 }
@@ -200,7 +200,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 SynchronizeWithCurrentItem();
 
-                if (_itemsPresenter != null)
+                if (_itemsPresenter is not null)
                 {
                     ItemsHostSite = (Panel)(ItemsPanel.FindName(RibbonGalleryCategory.ItemsHostPanelName, _itemsPresenter));
                 }
@@ -226,7 +226,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (e.Property == MinColumnCountProperty || e.Property == MaxColumnCountProperty || e.Property == IsSharedColumnSizeScopeProperty || e.Property == ColumnsStretchToFillProperty)
             {
                 RibbonGallery gallery = galleryCategory.RibbonGallery;
-                if (gallery != null)
+                if (gallery is not null)
                 {
                     gallery.InvalidateMeasureOnAllCategoriesPanel();
                 }
@@ -454,7 +454,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         internal void AddCurrentItemChangedListener()
         {
-            if (RibbonGallery != null && RibbonGallery.IsSynchronizedWithCurrentItemInternal)
+            if (RibbonGallery is not null && RibbonGallery.IsSynchronizedWithCurrentItemInternal)
             {
                 CollectionView = Items;
 
@@ -466,7 +466,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         internal void RemoveCurrentItemChangedListener()
         {
             // Stop listening for currency changes on the immediate CollectionView for the Category
-            if (CollectionView != null)
+            if (CollectionView is not null)
             {
                 CurrentChangedEventManager.RemoveListener(CollectionView, this);
                 CollectionView = null;
@@ -497,11 +497,11 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private void SynchronizeWithCurrentItem()
         {
-            if (RibbonGallery != null && RibbonGallery.IsSynchronizedWithCurrentItemInternal)
+            if (RibbonGallery is not null && RibbonGallery.IsSynchronizedWithCurrentItemInternal)
             {
                 if (ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
                 {
-                    if (RibbonGallery != null && RibbonGallery.SelectedItem is null)
+                    if (RibbonGallery is not null && RibbonGallery.SelectedItem is null)
                     {
                         // Since there isn't already a SelectedItem 
                         // synchronize it to match CurrentItem
@@ -521,7 +521,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
 
             RibbonGalleryItem galleryItem = this.ItemContainerGenerator.ContainerFromItem(CollectionView.CurrentItem) as RibbonGalleryItem;
-            if (galleryItem != null)
+            if (galleryItem is not null)
             {
                 // This is fast path to have the SelectedItem set
                 galleryItem.IsSelected = true;
@@ -547,22 +547,22 @@ namespace Microsoft.Windows.Controls.Ribbon
             { 
                 case NotifyCollectionChangedAction.Remove:
                 case NotifyCollectionChangedAction.Replace:
-                    if (RibbonGallery != null)
+                    if (RibbonGallery is not null)
                     {
                         object selectedItem = RibbonGallery.SelectedItem;
                         object highlightedItem = RibbonGallery.HighlightedItem;
-                        if (selectedItem != null || highlightedItem != null)
+                        if (selectedItem is not null || highlightedItem is not null)
                         {
                             for (int i = 0; i < e.OldItems.Count; i++)
                             {
-                                if (selectedItem != null && RibbonGallery.VerifyEqual(selectedItem, e.OldItems[i]))
+                                if (selectedItem is not null && RibbonGallery.VerifyEqual(selectedItem, e.OldItems[i]))
                                 {
                                     // Synchronize SelectedItem if it is one of 
                                     // the items being removed or replaced.
                                     RibbonGallery.ForceCoerceSelectedItem();
                                     break;
                                 }
-                                if (highlightedItem != null && RibbonGallery.VerifyEqual(highlightedItem, e.OldItems[i]))
+                                if (highlightedItem is not null && RibbonGallery.VerifyEqual(highlightedItem, e.OldItems[i]))
                                 {
                                     // Synchronize HighlightedItem if it is one of 
                                     // the items being removed or replaced.
@@ -575,14 +575,14 @@ namespace Microsoft.Windows.Controls.Ribbon
                     }
                     break;
                 case NotifyCollectionChangedAction.Reset:
-                    if (RibbonGallery != null)
+                    if (RibbonGallery is not null)
                     {
-                        if (RibbonGallery.SelectedItem != null)
+                        if (RibbonGallery.SelectedItem is not null)
                         {
                             // Synchronize SelectedItem after a Reset operation.
                             RibbonGallery.ForceCoerceSelectedItem();
                         }
-                        if (RibbonGallery.HighlightedItem != null)
+                        if (RibbonGallery.HighlightedItem is not null)
                         {
                             // Synchronize HighlightedItem after a Reset operation.
                             RibbonGallery.ForceCoerceHighlightedItem();
@@ -593,7 +593,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     break;
 
                 case NotifyCollectionChangedAction.Add:
-                    if (RibbonGallery != null)
+                    if (RibbonGallery is not null)
                     {
                         RibbonGallery.IsMaxColumnWidthValid = false;
                     }
@@ -644,7 +644,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static object CoerceHeaderVisibility(DependencyObject d, object baseValue)
         {
             RibbonGalleryCategory category = (RibbonGalleryCategory)d;
-            if (category.RibbonGallery != null)
+            if (category.RibbonGallery is not null)
             {
                 // Don't use Header when in InRibbonGalleryMode
                 if (category.RibbonGallery.IsInInRibbonGalleryMode())

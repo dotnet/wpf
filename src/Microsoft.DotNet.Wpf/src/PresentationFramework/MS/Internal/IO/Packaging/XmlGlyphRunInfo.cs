@@ -38,7 +38,7 @@ namespace MS.Internal.IO.Packaging
             _glyphsNode = glyphsNode as XmlElement;
             // Assert that XmlFixedPageInfo (only caller) has correctly identified glyph runs
             // prior to invoking this constructor.
-            Debug.Assert(_glyphsNode != null 
+            Debug.Assert(_glyphsNode is not null 
                 && string.Equals(_glyphsNode.LocalName, _glyphRunName, StringComparison.Ordinal)
                 && string.Equals(_glyphsNode.NamespaceURI, ElementTableKey.FixedMarkupNamespace, StringComparison.Ordinal));
         }
@@ -165,11 +165,11 @@ namespace MS.Internal.IO.Packaging
                 if (_languageID is null)
                 {
                     for (XmlElement currentNode = _glyphsNode; 
-                         currentNode != null && _languageID is null; 
+                         currentNode is not null && _languageID is null; 
                          currentNode = (currentNode.ParentNode as XmlElement))
                     {
                         string languageString = currentNode.GetAttribute(_xmlLangAttribute);
-                        if (languageString != null && languageString.Length > 0)
+                        if (languageString is not null && languageString.Length > 0)
                         {
                             // We need to handle languageString "und" specially. 
                             // we should set language ID to zero. 

@@ -53,11 +53,11 @@ namespace System.Windows.Automation.Peers
             {
                 // Get a reference to DocumentViewer's ScrollViewer
                 DocumentViewer owner = (DocumentViewer)Owner;
-                if (owner.ScrollViewer != null)
+                if (owner.ScrollViewer is not null)
                 {
                     // Get a reference to ScrollViewer's AutomationPeer.
                     AutomationPeer scrollPeer = UIElementAutomationPeer.CreatePeerForElement(owner.ScrollViewer);
-                    if (scrollPeer != null && scrollPeer is IScrollProvider)
+                    if (scrollPeer is not null && scrollPeer is IScrollProvider)
                     {
                         scrollPeer.EventsSource = this;
                         returnValue = scrollPeer;

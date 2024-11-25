@@ -67,7 +67,7 @@ namespace MS.Internal.SchemaPP.Main
 
             ArrayList al = new ArrayList();
 
-            while ((line = input.ReadLine()) != null)
+            while ((line = input.ReadLine()) is not null)
             {
                 line = line.TrimEnd(new char[] { ' ' });
                 

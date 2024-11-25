@@ -89,7 +89,7 @@ static class WpfWebRequestHelper
         }
         
         HttpWebRequest httpRequest = request as HttpWebRequest;
-        if (httpRequest != null)
+        if (httpRequest is not null)
         {
             if (string.IsNullOrEmpty(httpRequest.UserAgent))
             {
@@ -122,7 +122,7 @@ static class WpfWebRequestHelper
     static internal void ConfigCachePolicy(WebRequest request, bool isRefresh)
     {
         HttpWebRequest httpRequest = request as HttpWebRequest;
-        if (httpRequest != null)
+        if (httpRequest is not null)
         {
             // Setting CachePolicy to the default level if it is null.
             if (request.CachePolicy is null || request.CachePolicy.Level != RequestCacheLevel.Default)

@@ -65,7 +65,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             double endContextualTabX = 0.0;
 
             RibbonContextualTabGroupItemsControl groupHeaderItemsControl = Ribbon.ContextualTabGroupItemsControl;
-            if (groupHeaderItemsControl != null && groupHeaderItemsControl.Visibility == Visibility.Visible)
+            if (groupHeaderItemsControl is not null && groupHeaderItemsControl.Visibility == Visibility.Visible)
             {
                 // A dummy measure to ensure containers are generated.
                 // We need to know FirstContextualTabHeader and LastContextualTabHeader
@@ -76,13 +76,13 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
 
                 // Calculate start and end positions
                 RibbonContextualTabGroup firstContextualTab = groupHeaderItemsControl.FirstContextualTabHeader;
-                if (firstContextualTab != null)
+                if (firstContextualTab is not null)
                 {
                     startContextualTabX = Math.Min(CalculateContextualTabGroupStartX(firstContextualTab), availableSize.Width); 
                 }
 
                 RibbonContextualTabGroup lastContextualTab = groupHeaderItemsControl.LastContextualTabHeader;
-                if (lastContextualTab != null)
+                if (lastContextualTab is not null)
                 {
                     endContextualTabX = Math.Min(CalculateContextualTabGroupEndX(lastContextualTab), availableSize.Width);
                 }
@@ -96,7 +96,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             FrameworkElement qat = Ribbon.QatTopHost as FrameworkElement;
             FrameworkElement titleHost = Ribbon.TitleHost as FrameworkElement;
 
-            if (qat != null && titleHost != null)
+            if (qat is not null && titleHost is not null)
             {
                 double availableToQat = 0.0, availableToTitle;
                 double leftSpace, rightSpace;
@@ -182,10 +182,10 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
 
             // Arrange ContextualTabHeaders
             RibbonContextualTabGroupItemsControl tabGroups = Ribbon.ContextualTabGroupItemsControl;
-            if (tabGroups != null && tabGroups.Visibility == Visibility.Visible)
+            if (tabGroups is not null && tabGroups.Visibility == Visibility.Visible)
             {
                 RibbonContextualTabGroup firstContextualTab = tabGroups.FirstContextualTabHeader;
-                if (firstContextualTab != null)
+                if (firstContextualTab is not null)
                 {
                     startContextualTabX = Math.Min(CalculateContextualTabGroupStartX(firstContextualTab), finalSize.Width);
                 }
@@ -197,7 +197,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             // Arrange QuickAccessToolbar
             double qatDesiredWidth = 0.0;
             UIElement qat = Ribbon.QatTopHost;
-            if (qat != null)
+            if (qat is not null)
             {
                 qatDesiredWidth = qat.DesiredSize.Width;
                 qat.Arrange(new Rect(0, 0.0, qatDesiredWidth, qat.DesiredSize.Height));
@@ -207,7 +207,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
 
             // Arrange the title
             UIElement titleHost = Ribbon.TitleHost;
-            if (titleHost != null)
+            if (titleHost is not null)
             {
                 x = 0.0;
                 width = titleHost.DesiredSize.Width;
@@ -248,7 +248,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             // A visible CTG can have some of its tabs Collapsed. 
             // We should start from the first visible Tab in this CTG.
             RibbonTab firstTab = groupHeader.FirstVisibleTab;
-            if (firstTab != null && firstTab.RibbonTabHeader != null && Ribbon != null)
+            if (firstTab is not null && firstTab.RibbonTabHeader is not null && Ribbon is not null)
             {
                 RibbonTabHeader tabHeader = firstTab.RibbonTabHeader;
                 GeneralTransform transformRibbonTabToRibbon = tabHeader.TransformToAncestor(Ribbon);
@@ -268,7 +268,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
 
             foreach (RibbonTab tab in groupHeader.Tabs)
             {
-                if (tab.Visibility == Visibility.Visible && tab.RibbonTabHeader != null)
+                if (tab.Visibility == Visibility.Visible && tab.RibbonTabHeader is not null)
                 {
                     endX += tab.RibbonTabHeader.DesiredSize.Width;
                 }

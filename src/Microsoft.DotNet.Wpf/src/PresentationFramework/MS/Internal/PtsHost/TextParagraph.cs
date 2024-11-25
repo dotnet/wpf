@@ -71,7 +71,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         public override void Dispose()
         {
-            if(_attachedObjects != null)
+            if(_attachedObjects is not null)
             {
                 foreach(AttachedObject obj in _attachedObjects)
                 {
@@ -80,7 +80,7 @@ namespace MS.Internal.PtsHost
                 _attachedObjects = null;
             }
 
-            if (_inlineObjects != null)
+            if (_inlineObjects is not null)
             {
                 foreach (InlineObject obj in _inlineObjects)
                 {
@@ -201,7 +201,7 @@ namespace MS.Internal.PtsHost
         {
             _textRunCache = new TextRunCache();
             TextFormatter textFormatter = StructuralCache.TextFormatterHost.TextFormatter;
-            TextLineBreak textLineBreak = lineBreakRecord != null ? lineBreakRecord.TextLineBreak : null;
+            TextLineBreak textLineBreak = lineBreakRecord is not null ? lineBreakRecord.TextLineBreak : null;
 
             OptimalTextSource optimalTextSource = new OptimalTextSource(StructuralCache.TextFormatterHost, ParagraphStartCharacterPosition, durTrack, textParaClient, _textRunCache);
             StructuralCache.TextFormatterHost.Context = optimalTextSource;
@@ -550,7 +550,7 @@ namespace MS.Internal.PtsHost
 
             TextLineBreak textLineBreak = line.GetTextLineBreak();
 
-            if(textLineBreak != null)
+            if(textLineBreak is not null)
             {
 #pragma warning disable 56518
                 // Disable PRESharp warning 6518. Line is an UnmamangedHandle, that adds itself
@@ -734,7 +734,7 @@ namespace MS.Internal.PtsHost
 
             TextLineBreak textLineBreak = line.GetTextLineBreak();
 
-            if(textLineBreak != null)
+            if(textLineBreak is not null)
             {
 #pragma warning disable 56518
                 // Disable PRESharp warning 6518. Line is an UnmamangedHandle, that adds itself
@@ -801,7 +801,7 @@ namespace MS.Internal.PtsHost
         {
             // Get dtr list for the text presenter
             DtrList dtrs = StructuralCache.DtrsFromRange(ParagraphStartCharacterPosition, LastFormatCch);
-            if (dtrs != null)
+            if (dtrs is not null)
             {
                 // Union all dtrs. Note: there are no overlapping entries in the list of DTRs.
                 dcpStart = dtrs[0].StartIndex - ParagraphStartCharacterPosition;
@@ -1082,7 +1082,7 @@ namespace MS.Internal.PtsHost
         internal List<InlineObject> InlineObjectsFromRange(int dcpStart, int dcpLast)
         {
             List<InlineObject> objects = null;
-            if (_inlineObjects != null)
+            if (_inlineObjects is not null)
             {
                 objects = new List<InlineObject>(_inlineObjects.Count);
                 for (int i = 0; i < _inlineObjects.Count; i++)
@@ -1167,7 +1167,7 @@ namespace MS.Internal.PtsHost
             base.ClearUpdateInfo();
 
             // Clear update info of all floaters and figures
-            if (_attachedObjects != null)
+            if (_attachedObjects is not null)
             {
                 for (int index=0; index < _attachedObjects.Count; index++)
                 {
@@ -1205,14 +1205,14 @@ namespace MS.Internal.PtsHost
                 // Get element owner of the first figure or floater, whichever comes first
                 AnchoredBlock objectElement = null;
 
-                if(_attachedObjects != null && _attachedObjects.Count > 0)
+                if(_attachedObjects is not null && _attachedObjects.Count > 0)
                 {
                     objectElement = (AnchoredBlock)(_attachedObjects[0].Element);
                 }
 
                 // If figure/floater starts at the beginning of paragraph and element owner did
                 // not change, treat the paragraph as valid.
-                if (objectElement != null)
+                if (objectElement is not null)
                 {
                     if (startPosition == objectElement.ElementStartOffset)
                     {
@@ -1234,7 +1234,7 @@ namespace MS.Internal.PtsHost
             InvalidateTextFormatCache();
 
             // Invalidate structure of floaters and figures
-            if (_attachedObjects != null)
+            if (_attachedObjects is not null)
             {
                 for (int index=0; index < _attachedObjects.Count; index++)
                 {
@@ -1258,7 +1258,7 @@ namespace MS.Internal.PtsHost
             InvalidateTextFormatCache();
 
             // Invalidate structure of floaters and figures
-            if (_attachedObjects != null)
+            if (_attachedObjects is not null)
             {
                 for (int index=0; index < _attachedObjects.Count; index++)
                 {
@@ -1381,7 +1381,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal bool HasFiguresFloatersOrInlineObjects()
         {
-            if(HasFiguresOrFloaters() || (_inlineObjects != null && _inlineObjects.Count > 0))
+            if(HasFiguresOrFloaters() || (_inlineObjects is not null && _inlineObjects.Count > 0))
             {
                 return true;
             }
@@ -1394,7 +1394,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal bool HasFiguresOrFloaters()
         {
-            return _attachedObjects != null && _attachedObjects.Count > 0;
+            return _attachedObjects is not null && _attachedObjects.Count > 0;
         }
 
 
@@ -1406,7 +1406,7 @@ namespace MS.Internal.PtsHost
         {
             int cpCur = dcpFirst;
 
-            for(int index = 0; _attachedObjects != null && index < _attachedObjects.Count; index++)                
+            for(int index = 0; _attachedObjects is not null && index < _attachedObjects.Count; index++)                
             {
                 AttachedObject attachedObject = _attachedObjects[index];
 
@@ -1430,7 +1430,7 @@ namespace MS.Internal.PtsHost
                 textContentRange.Merge(new TextContentRange(cpCur, dcpLast, StructuralCache.TextContainer));
             }
 
-            for(int index = 0; arrayAttachedObjectDesc != null && index < arrayAttachedObjectDesc.Length; index++)
+            for(int index = 0; arrayAttachedObjectDesc is not null && index < arrayAttachedObjectDesc.Length; index++)
             {
                 PTS.FSATTACHEDOBJECTDESCRIPTION attachedObject = arrayAttachedObjectDesc[index];
                 BaseParaClient paraClient;
@@ -1510,7 +1510,7 @@ namespace MS.Internal.PtsHost
         private void EnsureLineProperties()
         {
             // We also need to recreate line properties if DPI has changed.
-            if (_lineProperties is null || (_lineProperties != null && _lineProperties.DefaultTextRunProperties.PixelsPerDip != StructuralCache.TextFormatterHost.PixelsPerDip))
+            if (_lineProperties is null || (_lineProperties is not null && _lineProperties.DefaultTextRunProperties.PixelsPerDip != StructuralCache.TextFormatterHost.PixelsPerDip))
             {
                 // For default text properties always set background to null.
                 // REASON: If element associated with the text run is block element, ignore background
@@ -1666,7 +1666,7 @@ namespace MS.Internal.PtsHost
             int cchDeleted,                  
             int cchDiff) where T : EmbeddedObject
         {
-            if (objectsCached != null)
+            if (objectsCached is not null)
             {
                 // Find the first and last affected object
                 int first = 0;

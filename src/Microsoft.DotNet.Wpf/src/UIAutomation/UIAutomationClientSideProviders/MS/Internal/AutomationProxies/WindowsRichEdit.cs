@@ -228,12 +228,12 @@ namespace MS.Internal.AutomationProxies
         ITextRangeProvider [] ITextProvider.GetSelection()
         {
             // we must have called EnsureTextDocument() before arriving here.
-            Debug.Assert(_document != null);
+            Debug.Assert(_document is not null);
 
             // clone a range from the documents selection
             ITextRange range = null;
             ITextSelection selection = _document.Selection;
-            if (selection != null)
+            if (selection is not null)
             {
                 // duplicate the selection range since we don't want their modifications to affect the selection
                 range = selection.GetDuplicate();
@@ -268,7 +268,7 @@ namespace MS.Internal.AutomationProxies
         ITextRangeProvider ITextProvider.RangeFromPoint(Point screenLocation)
         {
             // we must have called EnsureTextDocument() before arriving here.
-            Debug.Assert(_document != null);
+            Debug.Assert(_document is not null);
 
             // TextPattern has verified that the point is inside our client area so we don't need to check for that.
 
@@ -299,7 +299,7 @@ namespace MS.Internal.AutomationProxies
             //    }
             //}
 
-            return range != null ? new WindowsRichEditRange(range, this) : null;
+            return range is not null ? new WindowsRichEditRange(range, this) : null;
         }
 
         #endregion TextPattern Methods
@@ -311,7 +311,7 @@ namespace MS.Internal.AutomationProxies
             get
             {
                 // we must have called EnsureTextDocument() before arriving here.
-                Debug.Assert(_document != null);
+                Debug.Assert(_document is not null);
 
                 // create a text range that covers the entire main story.
                 ITextRange range = _document.Range(0, 0);
@@ -536,7 +536,7 @@ namespace MS.Internal.AutomationProxies
                     {
                         sbText.Append(text.Substring(start, embeddedObjectOffset - start));
                         range.SetRange(embeddedObjectOffset, end);
-                        if (range.GetEmbeddedObject(out embeddedObject) == NativeMethods.S_OK && embeddedObject != null)
+                        if (range.GetEmbeddedObject(out embeddedObject) == NativeMethods.S_OK && embeddedObject is not null)
                         {
                             GetEmbeddedObjectText(embeddedObject, sbText);
                         }
@@ -571,7 +571,7 @@ namespace MS.Internal.AutomationProxies
             string text;
 
             IAccessible acc = embeddedObject as IAccessible;
-            if (acc != null)
+            if (acc is not null)
             {
                 text = acc.get_accName(NativeMethods.CHILD_SELF);
                 if (!string.IsNullOrEmpty(text))
@@ -587,7 +587,7 @@ namespace MS.Internal.AutomationProxies
             int hr = NativeMethods.S_FALSE;
             IDataObject dataObject = null;
             IOleObject oleObject = embeddedObject as IOleObject;
-            if (oleObject != null)
+            if (oleObject is not null)
             {
                 // Try IOleObject::GetClipboardData (which returns an IDataObject) first...
                 hr = oleObject.GetClipboardData(0, out dataObject);
@@ -704,7 +704,7 @@ namespace MS.Internal.AutomationProxies
 
             EnsureTextDocument();
             ITextSelection textSelection = _document.Selection;
-            if (textSelection != null)
+            if (textSelection is not null)
             {
                 raiseTextSelectionEvent =
                     (_raiseEventsOldSelectionStart != textSelection.Start

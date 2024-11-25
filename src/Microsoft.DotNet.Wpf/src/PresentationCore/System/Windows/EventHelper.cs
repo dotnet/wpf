@@ -27,7 +27,7 @@ namespace System.Windows
             {
                 Tuple<T, Delegate[]> oldTuple = field;
                 T combinedDelegate = (T)Delegate.Combine(oldTuple?.Item1, value);
-                Tuple<T, Delegate[]> newTuple = combinedDelegate != null ? Tuple.Create(combinedDelegate, combinedDelegate.GetInvocationList()) : null;
+                Tuple<T, Delegate[]> newTuple = combinedDelegate is not null ? Tuple.Create(combinedDelegate, combinedDelegate.GetInvocationList()) : null;
                 if (Interlocked.CompareExchange(ref field, newTuple, oldTuple) == oldTuple)
                 {
                     break;
@@ -44,7 +44,7 @@ namespace System.Windows
             {
                 Tuple<T, Delegate[]> oldTuple = field;
                 T delegateWithRemoval = (T)Delegate.Remove(oldTuple?.Item1, value);
-                Tuple<T, Delegate[]> newTuple = delegateWithRemoval != null ? Tuple.Create(delegateWithRemoval, delegateWithRemoval.GetInvocationList()) : null;
+                Tuple<T, Delegate[]> newTuple = delegateWithRemoval is not null ? Tuple.Create(delegateWithRemoval, delegateWithRemoval.GetInvocationList()) : null;
                 if (Interlocked.CompareExchange(ref field, newTuple, oldTuple) == oldTuple)
                 {
                     break;

@@ -376,7 +376,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
             // This if block tests to see if the field's type is a collection (which implies that
             // it is an McgResource), and that this type has an unmanaged resource.
-            return (resource != null) &&
+            return (resource is not null) &&
                    resource.IsCollection &&
                    !resource.HasUnmanagedResource;
         }
@@ -404,7 +404,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
             // McgResource, it can't have an unmanaged resource.  If it *is*, we check to see if
             // it *does* have an unmanaged resource.  Since this is the whole point of this method,
             // we return this result.
-            return (collectionType != null) && resource.IsCollectionOfHandles;
+            return (collectionType is not null) && resource.IsCollectionOfHandles;
         }
 
         /// <summary>
@@ -606,7 +606,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                     Hashtable hashtable = new Hashtable();
                     foreach(McgResource resource in Resources)
                     {
-                        if (resource.Realization != null && !hashtable.Contains(resource.Realization.TypeName))
+                        if (resource.Realization is not null && !hashtable.Contains(resource.Realization.TypeName))
                         {
                             hashtable.Add(resource.Realization.TypeName, resource.Realization);
                         }
@@ -722,7 +722,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                 XmlNodeList xmlNamespaces = enumBlock.SelectNodes("Namespaces/Namespace");
                 string[] namespaces = null;
 
-                if (xmlNamespaces != null)
+                if (xmlNamespaces is not null)
                 {
                     namespaces = new string[xmlNamespaces.Count];
 
@@ -894,7 +894,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                 XmlNodeList xmlNamespaces = resourceBlock.SelectNodes("Namespaces/Namespace");
                 string[] namespaces = null;
 
-                if (xmlNamespaces != null)
+                if (xmlNamespaces is not null)
                 {
                     namespaces = new string[xmlNamespaces.Count];
 
@@ -979,7 +979,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                 XmlNodeList xmlNamespaces = xmlRenderDataInstructions[0].SelectNodes("Namespaces/Namespace");
                 string[] namespaces = null;
 
-                if (xmlNamespaces != null)
+                if (xmlNamespaces is not null)
                 {
                     namespaces = new string[xmlNamespaces.Count];
 
@@ -1155,9 +1155,9 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                 XmlAttribute name = node.Attributes["Name"];
                 McgCommand type = FindCommand(
                     McgStruct.CreateFullName(
-                        (domain != null) ? domain.Value : null,
-                        (target != null) ? target.Value : null,
-                        (name != null) ? name.Value : null
+                        (domain is not null) ? domain.Value : null,
+                        (target is not null) ? target.Value : null,
+                        (name is not null) ? name.Value : null
                         ));
 
                 type.Initialize(
@@ -1231,7 +1231,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                             McgField field = FindField(rdFields, ToString(noOpGroupMemberNode, "FieldName"));
 
                             // The field name must match a real field
-                            Debug.Assert(field != null);
+                            Debug.Assert(field is not null);
 
                             rdNoOpGroupMembers.Add(field);
                         }
@@ -1251,7 +1251,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
         /// </summary>
         private void AddGenerationControl(int iSection, McgType type)
         {
-            Debug.Assert((GenerationControl != null) && (iSection < GenerationControl.Length));
+            Debug.Assert((GenerationControl is not null) && (iSection < GenerationControl.Length));
 
             if (GenerationControl[iSection] is null)
             {
@@ -1267,7 +1267,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
         /// </summary>
         public bool ShouldGenerate(CodeSections section, McgType type)
         {
-            return (GenerationControl[(int)section] != null) && (GenerationControl[(int)section].IndexOf(type) >= 0);
+            return (GenerationControl[(int)section] is not null) && (GenerationControl[(int)section].IndexOf(type) >= 0);
         }
 
         /// <summary>
@@ -1300,7 +1300,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
                 foreach (XmlNode node in generateElements)
                 {
-                    if (node.Attributes != null)
+                    if (node.Attributes is not null)
                     {
                         string sName = node.Attributes["Name"].Value;
                         McgType type = FindType(sName);
@@ -1330,9 +1330,9 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
                         type.IsOldStyle = type.IsOldStyle || fGenerateOldStyle;
 
-                        if (nativeDestinationDir != null)
+                        if (nativeDestinationDir is not null)
                         {
-                            if (type.NativeDestinationDir != null)
+                            if (type.NativeDestinationDir is not null)
                             {
                                 ThrowValidationException(
                                     String.Format("duplicate NativeDestinationDir: '{0}'", type.Name));
@@ -1341,9 +1341,9 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                             type.NativeDestinationDir = nativeDestinationDir;
                         }
 
-                        if (managedDestinationDir != null)
+                        if (managedDestinationDir is not null)
                         {
-                            if (type.ManagedDestinationDir != null)
+                            if (type.ManagedDestinationDir is not null)
                             {
                                 ThrowValidationException(
                                     String.Format("duplicate ManagedDestinationDir: '{0}'", type.Name));
@@ -1352,9 +1352,9 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                             type.ManagedDestinationDir = managedDestinationDir;
                         }
 
-                        if (converterDestinationDir != null)
+                        if (converterDestinationDir is not null)
                         {
-                            if (type.ConverterDestinationDir != null)
+                            if (type.ConverterDestinationDir is not null)
                             {
                                 ThrowValidationException(
                                     String.Format("duplicate ConverterDestinationDir: '{0}'", type.Name));
@@ -1364,9 +1364,9 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                         }
 
 
-                        if (managedSharedDestinationDir != null)
+                        if (managedSharedDestinationDir is not null)
                         {
-                            if (type.ManagedSharedDestinationDir != null)
+                            if (type.ManagedSharedDestinationDir is not null)
                             {
                                 ThrowValidationException(
                                     String.Format("duplicate ManagedSharedDestinationDir: '{0}'", type.Name));
@@ -1422,7 +1422,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
                 foreach (XmlNode node in templateElements)
                 {
-                    if (node.Attributes != null)
+                    if (node.Attributes is not null)
                     {
                         string sName = node.Attributes["Name"].Value;
 
@@ -1468,7 +1468,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
             Debug.Assert(typeNodes.Count <= 1); // schema enforces this
 
-            if (typeAttribute != null && typeNodes.Count == 1)
+            if (typeAttribute is not null && typeNodes.Count == 1)
             {
                 ThrowValidationException(fieldNode, "Duplicate type descriptions");
                 return null;
@@ -1478,7 +1478,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                 ThrowValidationException(fieldNode, "Missing type description");
                 return null;
             }
-            else if (typeAttribute != null)
+            else if (typeAttribute is not null)
             {
                 return FindType(typeAttribute);
             }
@@ -1759,7 +1759,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
         /// </summary>
         private void AddType(McgType type)
         {
-            if (_types[type.Name] != null)
+            if (_types[type.Name] is not null)
             {
                 Helpers.CodeGenHelpers.ThrowValidationException(String.Format(
                     "Duplicate type: {0}",
@@ -1773,7 +1773,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
         /// </summary>
         internal static string ToString(XmlNode xn, string attr)
         {
-            if (xn.Attributes[attr] != null)
+            if (xn.Attributes[attr] is not null)
             {
                 string value = xn.Attributes[attr].Value;
 
@@ -1794,7 +1794,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
         /// </summary>
         internal static string ToString(XmlNode xn, string attr, string defaultValue)
         {
-            if (xn.Attributes[attr] != null)
+            if (xn.Attributes[attr] is not null)
             {
                 return xn.Attributes[attr].Value;
             }
@@ -1905,7 +1905,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
         /// </summary>
         private void AddCommand(McgCommand command)
         {
-            if (_commandLookupTable[command.FullName] != null)
+            if (_commandLookupTable[command.FullName] is not null)
             {
                 Helpers.CodeGenHelpers.ThrowValidationException(String.Format(
                     "Duplicate command: {0}",

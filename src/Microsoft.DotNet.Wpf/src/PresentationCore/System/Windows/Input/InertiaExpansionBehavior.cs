@@ -97,7 +97,7 @@ namespace System.Windows.Input
 
         internal static void ApplyParameters(InertiaExpansionBehavior behavior, InertiaProcessor2D processor, Vector initialVelocity)
         {
-            if (behavior != null && behavior.CanUseForInertia())
+            if (behavior is not null && behavior.CanUseForInertia())
             {
                 InertiaExpansionBehavior2D behavior2D = new InertiaExpansionBehavior2D();
                 if (behavior._isInitialVelocitySet)

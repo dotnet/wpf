@@ -92,7 +92,7 @@ namespace System.Windows.Markup
             BamlRecord record = startRecord;
             short      ownerTypeId = 0;
 
-            while (record != null)
+            while (record is not null)
             {
                 if (record.RecordType == BamlRecordType.ElementStart)
                 {
@@ -128,7 +128,7 @@ namespace System.Windows.Markup
                         {
                             object dataType = parserContext.XamlTypeMapper.GetDictionaryKey(propertyRecord.Value, parserContext);
                             Exception ex = TemplateKey.ValidateDataType(dataType, null);
-                            if (ex != null)
+                            if (ex is not null)
                             {
                                 ThrowException(nameof(SR.TemplateBadDictionaryKey),
                                                parserContext.LineNumber,

@@ -183,7 +183,7 @@ namespace System.Windows.Input
             {
                 VerifyAccess();
 
-                Debug.Assert(_stylusDeviceCollection != null);
+                Debug.Assert(_stylusDeviceCollection is not null);
                 return _stylusDeviceCollection;
             }
         }
@@ -344,7 +344,7 @@ namespace System.Windows.Input
                 IPimcTablet3 tablet = _tabletInfo.PimcTablet;
                 _tabletInfo.PimcTablet = null;
 
-                if (tablet != null)
+                if (tablet is not null)
                 {
                     // Balance calls in PenThreadWorker.GetTabletInfoHelper and CPimcTablet::Init.
                     PenThread.WorkerReleaseTabletLocks(tablet, _tabletInfo.WispTabletKey);
@@ -355,7 +355,7 @@ namespace System.Windows.Input
                 StylusDeviceCollection styluses = _stylusDeviceCollection;
                 _stylusDeviceCollection = null;
 
-                if (styluses != null)
+                if (styluses is not null)
                 {
                     styluses.Dispose();
                 }

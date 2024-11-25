@@ -78,10 +78,10 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            if (value != null)
+            if (value is not null)
             {
                 string stringValue = value as string;
-                if (stringValue != null)
+                if (stringValue is not null)
                 {
                     return FromString(stringValue, culture);
                 }
@@ -118,7 +118,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (value != null && value is RibbonControlLength)
+            if (value is not null && value is RibbonControlLength)
             {
                 RibbonControlLength length = (RibbonControlLength)value;
 

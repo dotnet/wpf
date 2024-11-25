@@ -356,7 +356,7 @@ namespace MS.Internal.IO.Packaging
                     // filter, else to indicate filtering is completed.
                     //
 
-                    if (_currentStream != null)
+                    if (_currentStream is not null)
                     {
                         // Close the stream for the previous PackagePart.
                         _currentStream.Close();
@@ -370,10 +370,10 @@ namespace MS.Internal.IO.Packaging
 
                         // Find the filter's CLSID based on the MIME content type.
                         string filterClsid = GetFilterClsid(contentType, currentPart.Uri);
-                        if (filterClsid != null)
+                        if (filterClsid is not null)
                         {
                             _currentFilter = GetFilterFromClsid(new Guid(filterClsid));
-                            if (_currentFilter != null)
+                            if (_currentFilter is not null)
                             {
                                 _currentStream = currentPart.GetSeekableStream();
                                 ManagedIStream stream = new ManagedIStream(_currentStream);
@@ -429,7 +429,7 @@ namespace MS.Internal.IO.Packaging
                             break;
                         }
 
-                        if (_currentStream != null)
+                        if (_currentStream is not null)
                         {
                             _currentStream.Close();
                             _currentStream = null;
@@ -499,7 +499,7 @@ namespace MS.Internal.IO.Packaging
         {
             // Find the file type guid associated with the mime content or (as a second choice) with the extension.
             string fileTypeGuid = null;
-            if (contentType != null && !ContentType.Empty.AreTypeAndSubTypeEqual(contentType))
+            if (contentType is not null && !ContentType.Empty.AreTypeAndSubTypeEqual(contentType))
             {
                 fileTypeGuid = FileTypeGuidFromMimeType(contentType);
             }
@@ -507,7 +507,7 @@ namespace MS.Internal.IO.Packaging
             {
                 string extension = GetPartExtension(partUri);
 
-                if (extension != null)
+                if (extension is not null)
                 {
                     fileTypeGuid = FileTypeGuidFromFileExtension(extension);
                 }
@@ -556,7 +556,7 @@ namespace MS.Internal.IO.Packaging
         private string FileTypeGuidFromMimeType(ContentType contentType)
         {
             // This method is invoked only if contentType has been found to be non-empty.
-            Debug.Assert(contentType != null && contentType.ToString().Length > 0);
+            Debug.Assert(contentType is not null && contentType.ToString().Length > 0);
 
             // Get the string in value Extension of key \HKEY_CLASSES_ROOT\MIME\Database\Content Type\<MIME type>.
             RegistryKey mimeContentType = FindSubkey(Registry.ClassesRoot, _mimeContentTypeKey);
@@ -582,7 +582,7 @@ namespace MS.Internal.IO.Packaging
         private string FileTypeGuidFromFileExtension(string dottedExtensionName)
         {
             // This method is invoked only if the part name has been found to have an extension.
-            Debug.Assert(dottedExtensionName != null);
+            Debug.Assert(dottedExtensionName is not null);
 
             // Extract \HKEY_CLASSES_ROOT\<extension>\PersistentHandler and return its default value.
             RegistryKey persistentHandlerKey =
@@ -597,7 +597,7 @@ namespace MS.Internal.IO.Packaging
         private string GetPartExtension(Uri partUri)
         {
             // partUri is the part's path as exposed by its part uri, so it cannot be null.
-            Invariant.Assert(partUri != null);
+            Invariant.Assert(partUri is not null);
 
             string path = InternalPackUriHelper.GetStringForPartUri(partUri);
             string extension = Path.GetExtension(path);
@@ -610,7 +610,7 @@ namespace MS.Internal.IO.Packaging
         //This method replaces null entries in pathWithGaps by stopGaps items in order of occurance
         private static string[] MakeRegistryPath(string[] pathWithGaps, params string[] stopGaps)
         {
-            Debug.Assert(pathWithGaps != null && stopGaps != null);
+            Debug.Assert(pathWithGaps is not null && stopGaps is not null);
 
             string[] path = (string[]) pathWithGaps.Clone();
             int nextStopGapToUse = 0;

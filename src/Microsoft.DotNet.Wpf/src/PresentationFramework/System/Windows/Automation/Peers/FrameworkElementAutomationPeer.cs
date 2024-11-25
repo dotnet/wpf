@@ -55,7 +55,7 @@ namespace System.Windows.Automation.Peers
             if (string.IsNullOrEmpty(result))
             {
                 AutomationPeer labelAutomationPeer = GetLabeledByCore();
-                if (labelAutomationPeer != null)
+                if (labelAutomationPeer is not null)
                     result = labelAutomationPeer.GetName();
 
                 if (string.IsNullOrEmpty(result))
@@ -72,13 +72,13 @@ namespace System.Windows.Automation.Peers
             if (string.IsNullOrEmpty(result))
             {
                 object toolTip = ((FrameworkElement)Owner).ToolTip;
-                if (toolTip != null)
+                if (toolTip is not null)
                 {
                     result = toolTip as string;
                     if (string.IsNullOrEmpty(result))
                     {
                         FrameworkElement toolTipElement = toolTip as FrameworkElement;
-                        if (toolTipElement != null)
+                        if (toolTipElement is not null)
                             result = toolTipElement.GetPlainText();
                     }
                 }

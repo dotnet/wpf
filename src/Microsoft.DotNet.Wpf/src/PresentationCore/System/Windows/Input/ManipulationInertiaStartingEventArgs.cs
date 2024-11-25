@@ -211,22 +211,22 @@ namespace System.Windows.Input
 
         internal bool CanBeginInertia()
         {
-            if (_inertiaParameters != null && _inertiaParameters.Count > 0)
+            if (_inertiaParameters is not null && _inertiaParameters.Count > 0)
             {
                 return true;
             }
 
-            if (_translationBehavior != null && _translationBehavior.CanUseForInertia())
+            if (_translationBehavior is not null && _translationBehavior.CanUseForInertia())
             {
                 return true;
             }
 
-            if (_rotationBehavior != null && _rotationBehavior.CanUseForInertia())
+            if (_rotationBehavior is not null && _rotationBehavior.CanUseForInertia())
             {
                 return true;
             }
 
-            if (_expansionBehavior != null && _expansionBehavior.CanUseForInertia())
+            if (_expansionBehavior is not null && _expansionBehavior.CanUseForInertia())
             {
                 return true;
             }
@@ -245,7 +245,7 @@ namespace System.Windows.Input
             InertiaRotationBehavior.ApplyParameters(_rotationBehavior, processor, velocities.AngularVelocity);
             InertiaExpansionBehavior.ApplyParameters(_expansionBehavior, processor, velocities.ExpansionVelocity);
 
-            if (_inertiaParameters != null)
+            if (_inertiaParameters is not null)
             {
                 for (int i = 0, count = _inertiaParameters.Count; i < count; i++)
                 {

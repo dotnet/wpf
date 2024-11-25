@@ -14,7 +14,7 @@ namespace System.Windows.Threading
         }
         
         public T Data {get{return _data;}}
-        public bool IsQueued { get { return _chain != null; } }
+        public bool IsQueued { get { return _chain is not null; } }
 
         // Note: not used
         // public DispatcherPriority Priority { get { return _chain.Priority; } } // NOTE: should be Priority

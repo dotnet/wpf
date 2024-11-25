@@ -53,7 +53,7 @@ namespace System.Windows.Automation.Peers
         {
             List<AutomationPeer> list = base.GetChildrenCore();
             List<AutomationPeer> newList = null;
-            if (list != null) 
+            if (list is not null) 
             {
                 newList = new List<AutomationPeer>(list.Count);
                 //GVHRP contains 2 extra column headers, one is dummy header, the other is floating header
@@ -63,7 +63,7 @@ namespace System.Windows.Automation.Peers
                     if (peer is UIElementAutomationPeer)
                     {
                         GridViewColumnHeader header = ((UIElementAutomationPeer)peer).Owner as GridViewColumnHeader;
-                        if (header != null && header.Role == GridViewColumnHeaderRole.Normal)
+                        if (header is not null && header.Role == GridViewColumnHeaderRole.Normal)
                         {
                             //Because GVHRP uses inverse sequence to store column headers, we need to use insert here
                             newList.Insert(0, peer);

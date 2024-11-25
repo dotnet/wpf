@@ -105,11 +105,11 @@ namespace System.Windows.Media.Imaging
             QueueEntry entry;
 
             // If there is already a download for this uri, just add the decoder to the list
-            if (uri != null)
+            if (uri is not null)
             {
                 lock (_syncLock)
                 {
-                    if (_uriTable[uri] != null)
+                    if (_uriTable[uri] is not null)
                     {
                         entry = (QueueEntry)_uriTable[uri];
                         entry.decoders.Add(new WeakReference(decoder));
@@ -179,7 +179,7 @@ namespace System.Windows.Media.Imaging
             entry.lastPercent = 0;
 
             // Add the entry to the table if we know the uri
-            if (uri != null)
+            if (uri is not null)
             {
                 lock (_syncLock)
                 {
@@ -190,7 +190,7 @@ namespace System.Windows.Media.Imaging
             if (stream is null)
             {
                 entry.webRequest = WpfWebRequestHelper.CreateRequest(uri);
-                if (uriCachePolicy != null)
+                if (uriCachePolicy is not null)
                 {
                     entry.webRequest.CachePolicy = uriCachePolicy;
                 }
@@ -323,7 +323,7 @@ namespace System.Windows.Media.Imaging
                     foreach (WeakReference decoderReference in entry.decoders)
                     {
                         LateBoundBitmapDecoder decoder = decoderReference.Target as LateBoundBitmapDecoder;
-                        if (decoder != null)
+                        if (decoder is not null)
                         {
                             //
                             // Marshal events to UI thread
@@ -344,7 +344,7 @@ namespace System.Windows.Media.Imaging
                 }
 
                 // Delete entry from uri table
-                if (entry.inputUri != null)
+                if (entry.inputUri is not null)
                 {
                     lock (_syncLock)
                     {
@@ -372,7 +372,7 @@ namespace System.Windows.Media.Imaging
                             foreach (WeakReference decoderReference in entry.decoders)
                             {
                                 LateBoundBitmapDecoder decoder = decoderReference.Target as LateBoundBitmapDecoder;
-                                if (decoder != null)
+                                if (decoder is not null)
                                 {
                                     //
                                     // Marshal events to UI thread
@@ -403,7 +403,7 @@ namespace System.Windows.Media.Imaging
             )
         {
             Dispatcher dispatcher = decoder.Dispatcher;
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 dispatcher.BeginInvoke(DispatcherPriority.Normal, doc, arg);
             }
@@ -428,7 +428,7 @@ namespace System.Windows.Media.Imaging
                 foreach (WeakReference decoderReference in entry.decoders)
                 {
                     LateBoundBitmapDecoder decoder = decoderReference.Target as LateBoundBitmapDecoder;
-                    if (decoder != null)
+                    if (decoder is not null)
                     {
                         MarshalEvents(
                             decoder,
@@ -438,7 +438,7 @@ namespace System.Windows.Media.Imaging
                     }
                 }
 
-                if (entry.inputUri != null)
+                if (entry.inputUri is not null)
                 {
                     lock (_syncLock)
                     {

@@ -20,21 +20,21 @@ namespace System.Windows
     {
         public override bool CanConvertToString(object value, IValueSerializerContext context)
         {
-            return ValueSerializer.GetSerializerFor(typeof(Type), context) != null;
+            return ValueSerializer.GetSerializerFor(typeof(Type), context) is not null;
         }
 
         public override bool CanConvertFromString(string value, IValueSerializerContext context)
         {
-            return ValueSerializer.GetSerializerFor(typeof(Type), context) != null;
+            return ValueSerializer.GetSerializerFor(typeof(Type), context) is not null;
         }
 
         public override string ConvertToString(object value, IValueSerializerContext context)
         {
             DependencyProperty property = value as DependencyProperty;
-            if (property != null)
+            if (property is not null)
             {
                 ValueSerializer typeSerializer = ValueSerializer.GetSerializerFor(typeof(Type), context);
-                if (typeSerializer != null)
+                if (typeSerializer is not null)
                 {
                     return typeSerializer.ConvertToString(property.OwnerType, context) + "." + property.Name;
                 }
@@ -46,7 +46,7 @@ namespace System.Windows
         public override IEnumerable<Type> TypeReferences(object value, IValueSerializerContext context)
         {
             DependencyProperty property = value as DependencyProperty;
-            if (property != null)
+            if (property is not null)
             {
                 return new Type[] { property.OwnerType };
             }
@@ -59,14 +59,14 @@ namespace System.Windows
         public override object ConvertFromString(string value, IValueSerializerContext context)
         {
             ValueSerializer typeSerializer = ValueSerializer.GetSerializerFor(typeof(Type), context);
-            if (typeSerializer != null)
+            if (typeSerializer is not null)
             {
                 int dotIndex = value.IndexOf('.');
                 if (dotIndex >= 0)
                 {
                     string typeName = value.Substring(0, dotIndex - 1);
                     Type ownerType = typeSerializer.ConvertFromString(typeName, context) as Type;
-                    if (ownerType != null)
+                    if (ownerType is not null)
                     {
                         return DependencyProperty.FromName(typeName, ownerType);
                     }

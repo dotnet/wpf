@@ -54,7 +54,7 @@ namespace Microsoft.Windows.Automation.Peers
         protected override string GetNameCore()
         {
             AutomationPeer ribbonGroupPeer = GetParent();
-            if (ribbonGroupPeer != null)
+            if (ribbonGroupPeer is not null)
             {
                 return ribbonGroupPeer.GetName();
             }

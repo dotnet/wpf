@@ -112,7 +112,7 @@ namespace Test.Elements
             var unknownNameList = new List<string>();
             var nameValueTable = ExpressionServices.GetNameValueTable(nameResolver, text, out unknownNameList);
 
-            if (unknownNameList != null && unknownNameList.Count > 0)
+            if (unknownNameList is not null && unknownNameList.Count > 0)
             {
                 object fixup = nameResolver.GetFixupToken(unknownNameList);
                 return fixup;
@@ -156,7 +156,7 @@ namespace Test.Elements
             List<string> unknownNameList;
             var nameValueTable = ExpressionServices.GetNameValueTable(nameResolver, Expression, out unknownNameList);
 
-            if (unknownNameList != null && unknownNameList.Count > 0)
+            if (unknownNameList is not null && unknownNameList.Count > 0)
             {
                 object fixup = nameResolver.GetFixupToken(unknownNameList);
                 return fixup;
@@ -373,7 +373,7 @@ namespace Test.Elements
                         throw new InvalidOperationException(String.Format("Invalid Character '{0}'", cur));
                     }
                 }
-                if (returnToken != null)
+                if (returnToken is not null)
                 {
                     yield return returnToken;
                 }

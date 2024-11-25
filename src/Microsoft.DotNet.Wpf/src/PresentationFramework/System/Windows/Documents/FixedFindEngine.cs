@@ -34,11 +34,11 @@ namespace System.Windows.Documents
                                            bool matchKashida,
                                            bool matchAlefHamza)
         {
-            Debug.Assert(start != null);
-            Debug.Assert(end != null);
+            Debug.Assert(start is not null);
+            Debug.Assert(end is not null);
             Debug.Assert( ((start is DocumentSequenceTextPointer) && (end is DocumentSequenceTextPointer)) ||
                           ((start is FixedTextPointer) && (end is FixedTextPointer)) );
-            Debug.Assert(findPattern != null);
+            Debug.Assert(findPattern is not null);
             
             if (findPattern.Length == 0)
             {
@@ -47,7 +47,7 @@ namespace System.Windows.Documents
 
             IDocumentPaginatorSource paginatorSource = start.TextContainer.Parent as IDocumentPaginatorSource;
             DynamicDocumentPaginator paginator = paginatorSource.DocumentPaginator as DynamicDocumentPaginator;
-            Debug.Assert(paginator != null);
+            Debug.Assert(paginator is not null);
             
             int pageNumber = -1;
             int endPageNumber = -1;
@@ -75,7 +75,7 @@ namespace System.Windows.Documents
             FixedDocumentSequence documentSequence = paginatorSource as FixedDocumentSequence;
             DynamicDocumentPaginator childPaginator = null;
 
-            if (documentSequence != null)
+            if (documentSequence is not null)
             {
                 documentSequence.TranslatePageNumber(pageNumber, out childPaginator, out translatedPageNumber);
             }
@@ -87,8 +87,8 @@ namespace System.Windows.Documents
                     
                 _GetFirstPageSearchPointers(start, end, translatedPageNumber, matchLast, out firstSearchPageStart, out firstSearchPageEnd);
 
-                Debug.Assert(firstSearchPageStart != null);
-                Debug.Assert(firstSearchPageEnd != null);
+                Debug.Assert(firstSearchPageStart is not null);
+                Debug.Assert(firstSearchPageEnd is not null);
 
                 //Need to search the first page using TextFindEngine to start exactly from the requested search location to avoid false positives
                 result = TextFindEngine.InternalFind( firstSearchPageStart, 
@@ -112,7 +112,7 @@ namespace System.Windows.Documents
 
                         translatedPageNumber = pageNumber;
                         childPaginator = null;
-                        if (documentSequence != null)
+                        if (documentSequence is not null)
                         {
                             documentSequence.TranslatePageNumber(pageNumber, out childPaginator, out translatedPageNumber);
                             fixedDoc = (FixedDocument) childPaginator.Source;
@@ -122,7 +122,7 @@ namespace System.Windows.Documents
                             fixedDoc = paginatorSource as FixedDocument;
                         }
                         
-                        Debug.Assert(fixedDoc != null);
+                        Debug.Assert(fixedDoc is not null);
                         
                         String pageString = _GetPageString(fixedDoc, translatedPageNumber, replaceAlefWithAlefHamza);
 
@@ -145,7 +145,7 @@ namespace System.Windows.Documents
                         if ( _FoundOnPage(pageString, findPattern, cultureInfo, compareOptions) )
                         {
                             //Update end or start pointer depending on search direction
-                            if (documentSequence != null)
+                            if (documentSequence is not null)
                             {
                                 ChildDocumentBlock childBlock = documentSequence.TextContainer.FindChildBlock(fixedDoc.DocumentReference);
                                 if (matchLast)
@@ -186,7 +186,7 @@ namespace System.Windows.Documents
                                                   matchAlefHamza);
 
                             //If the result is null, this means we had a false positive
-                            if (result != null)
+                            if (result is not null)
                             {
                                 return result;
                             }
@@ -198,7 +198,7 @@ namespace System.Windows.Documents
             else
             {
                 //Make sure fast search result and slow search result are consistent
-                FixedDocument fixedDoc = childPaginator != null ? childPaginator.Source as FixedDocument : paginatorSource as FixedDocument;
+                FixedDocument fixedDoc = childPaginator is not null ? childPaginator.Source as FixedDocument : paginatorSource as FixedDocument;
                 String pageString = _GetPageString(fixedDoc, translatedPageNumber, replaceAlefWithAlefHamza);
                 if (pageString is null ||
                     _FoundOnPage(pageString, findPattern, cultureInfo, compareOptions))
@@ -231,7 +231,7 @@ namespace System.Windows.Documents
             //Exact location will be determined in TextFindEngine.InternalFind
 
             string[] tokens = findPattern.Split(null);
-            if (tokens != null)
+            if (tokens is not null)
             {
                 foreach (string token in tokens)
                 {
@@ -299,7 +299,7 @@ namespace System.Windows.Documents
                 //The page in question is the last page
                 //Need to search between the start of the last page and the end pointer
                 DocumentSequenceTextPointer endAsDSTP = end as DocumentSequenceTextPointer;
-                if (endAsDSTP != null)
+                if (endAsDSTP is not null)
                 {
                     FlowPosition pageStartFlowPosition = ((FixedTextContainer)(endAsDSTP.ChildBlock.ChildContainer)).FixedTextBuilder.GetPageStartFlowPosition(pageNumber);
                     firstSearchPageStart = new DocumentSequenceTextPointer(endAsDSTP.ChildBlock, 
@@ -308,7 +308,7 @@ namespace System.Windows.Documents
                 else
                 {
                     FixedTextPointer endAsFTP = end as FixedTextPointer;
-                    Debug.Assert(endAsFTP != null);
+                    Debug.Assert(endAsFTP is not null);
                     firstSearchPageStart = new FixedTextPointer(false, LogicalDirection.Forward, endAsFTP.FixedTextContainer.FixedTextBuilder.GetPageStartFlowPosition(pageNumber));
                 }
                
@@ -319,7 +319,7 @@ namespace System.Windows.Documents
                 //The page in question is the first page
                 //Need to search between the start pointer and the end of the first page
                 DocumentSequenceTextPointer startAsDSTP = start as DocumentSequenceTextPointer;
-                if (startAsDSTP != null)
+                if (startAsDSTP is not null)
                 {
                     FlowPosition pageEndFlowPosition = ((FixedTextContainer)startAsDSTP.ChildBlock.ChildContainer).FixedTextBuilder.GetPageEndFlowPosition(pageNumber);
                     firstSearchPageEnd = new DocumentSequenceTextPointer( startAsDSTP.ChildBlock,
@@ -328,7 +328,7 @@ namespace System.Windows.Documents
                 else
                 {
                     FixedTextPointer startAsFTP = start as FixedTextPointer;
-                    Debug.Assert(startAsFTP != null);
+                    Debug.Assert(startAsFTP is not null);
                     firstSearchPageEnd = new FixedTextPointer(false, LogicalDirection.Backward, startAsFTP.FixedTextContainer.FixedTextBuilder.GetPageEndFlowPosition(pageNumber));
                 }
                 firstSearchPageStart = start;
@@ -339,7 +339,7 @@ namespace System.Windows.Documents
         {
             String pageString = null;
             
-            Debug.Assert(doc != null);
+            Debug.Assert(doc is not null);
             Debug.Assert(translatedPageNo >= 0 && translatedPageNo < doc.PageCount);
             
             PageContent pageContent = doc.Pages[translatedPageNo];
@@ -349,7 +349,7 @@ namespace System.Windows.Documents
             {
                 reverseRTL = false;
             }
-            if (pageStream != null)
+            if (pageStream is not null)
             {
                 pageString = _ConstructPageString(pageStream, reverseRTL);
 
@@ -365,7 +365,7 @@ namespace System.Windows.Documents
 
         private static String _ConstructPageString(Stream pageStream, bool reverseRTL)
         {
-            Debug.Assert(pageStream != null);
+            Debug.Assert(pageStream is not null);
             
             XmlTextReader xmlTextReader = new XmlTextReader(pageStream);
 

@@ -70,14 +70,14 @@ namespace MS.Internal.Data
             {
                 bool oldIsBottomLevel = IsBottomLevel;
 
-                if (_groupBy != null)
+                if (_groupBy is not null)
                 {
                     PropertyChangedEventManager.RemoveHandler(_groupBy, OnGroupByChanged, String.Empty);
                 }
 
                 _groupBy = value;
 
-                if (_groupBy != null)
+                if (_groupBy is not null)
                 {
                     PropertyChangedEventManager.AddHandler(_groupBy, OnGroupByChanged, String.Empty);
                 }
@@ -90,11 +90,11 @@ namespace MS.Internal.Data
                         static state =>
                         {
                             for (CollectionViewGroupInternal group = (CollectionViewGroupInternal)state;
-                                 group != null;
+                                 group is not null;
                                  group = group.Parent)
                             {
                                 CollectionViewGroupRoot root = group as CollectionViewGroupRoot;
-                                if (root != null)
+                                if (root is not null)
                                 {
                                     return root.View;
                                 }
@@ -197,7 +197,7 @@ namespace MS.Internal.Data
                 }
 
                 CollectionViewGroupInternal subGroup = item as CollectionViewGroupInternal;
-                if (subGroup != null)
+                if (subGroup is not null)
                 {
                     subGroup.Clear();
 
@@ -227,7 +227,7 @@ namespace MS.Internal.Data
             FullCount = 1;
             ProtectedItemCount = 0;
 
-            if (_groupBy != null)
+            if (_groupBy is not null)
             {
                 // This group has subgroups.  Disconnect from GroupDescription events
                 PropertyChangedEventManager.RemoveHandler(_groupBy, OnGroupByChanged, String.Empty);
@@ -237,7 +237,7 @@ namespace MS.Internal.Data
                 for (int i = 0, n = ProtectedItems.Count; i < n; ++i)
                 {
                     CollectionViewGroupInternal subGroup = ProtectedItems[i] as CollectionViewGroupInternal;
-                    if (subGroup != null)
+                    if (subGroup is not null)
                     {
                         subGroup.Clear();
                     }
@@ -245,7 +245,7 @@ namespace MS.Internal.Data
             }
 
             ProtectedItems.Clear();
-            if (_nameToGroupMap != null)
+            if (_nameToGroupMap is not null)
             {
                 _nameToGroupMap.Clear();
             }
@@ -259,7 +259,7 @@ namespace MS.Internal.Data
             for (int k = 0, n = Items.Count; k < n; ++k)
             {
                 CollectionViewGroupInternal subgroup = Items[k] as CollectionViewGroupInternal;
-                if (subgroup != null)
+                if (subgroup is not null)
                 {
                     int subgroupIndex = subgroup.LeafIndexOf(item);
                     if (subgroupIndex < 0)
@@ -299,7 +299,7 @@ namespace MS.Internal.Data
 
             // accumulate the number of predecessors at each level
             for (CollectionViewGroupInternal group = this;
-                    group != null;
+                    group is not null;
                     item = group, group = group.Parent, index = -1)
             {
                 // accumulate the number of predecessors at the level of item
@@ -329,7 +329,7 @@ namespace MS.Internal.Data
             for (int k = 0, n = Items.Count; k < n; ++k)
             {
                 CollectionViewGroupInternal subgroup = Items[k] as CollectionViewGroupInternal;
-                if (subgroup != null)
+                if (subgroup is not null)
                 {
                     // current item is a group - either drill in, or skip over
                     if (index < subgroup.ItemCount)
@@ -374,7 +374,7 @@ namespace MS.Internal.Data
             // when group sorting is not declared,
             // never insert the new item/group before the explicit subgroups
             int low = 0;
-            if (_groupComparer is null && GroupBy != null)
+            if (_groupComparer is null && GroupBy is not null)
             {
                 low = GroupBy.GroupNames.Count;
             }
@@ -395,10 +395,10 @@ namespace MS.Internal.Data
             if (_groupComparer is null)
             {
                 // group sorting is not declared - find the position using the seed
-                if (comparer != null)
+                if (comparer is not null)
                 {
                     IListComparer ilc = comparer as IListComparer;
-                    if (ilc != null)
+                    if (ilc is not null)
                     {
                         // reset the IListComparer before each search.  This cannot be done
                         // any less frequently (e.g. in Root.AddToSubgroups), due to the
@@ -409,7 +409,7 @@ namespace MS.Internal.Data
                     for (index = low; index < high; ++index)
                     {
                         CollectionViewGroupInternal subgroup = ProtectedItems[index] as CollectionViewGroupInternal;
-                        object seed1 = (subgroup != null) ? subgroup.SeedItem : ProtectedItems[index];
+                        object seed1 = (subgroup is not null) ? subgroup.SeedItem : ProtectedItems[index];
                         if (seed1 == DependencyProperty.UnsetValue)
                             continue;
                         if (comparer.Compare(seed, seed1) < 0)
@@ -513,7 +513,7 @@ namespace MS.Internal.Data
         // the group's description has changed - notify parent
         protected virtual void OnGroupByChanged()
         {
-            if (Parent != null)
+            if (Parent is not null)
                 Parent.OnGroupByChanged();
         }
 
@@ -522,7 +522,7 @@ namespace MS.Internal.Data
         /// </summary>
         internal void AddSubgroupToMap(object nameKey, CollectionViewGroupInternal subgroup)
         {
-            Debug.Assert(subgroup != null);
+            Debug.Assert(subgroup is not null);
             if (nameKey is null)
             {
                 // use null name place holder.
@@ -544,7 +544,7 @@ namespace MS.Internal.Data
         /// </summary>
         private void RemoveSubgroupFromMap(CollectionViewGroupInternal subgroup)
         {
-            Debug.Assert(subgroup != null);
+            Debug.Assert(subgroup is not null);
             if (_nameToGroupMap is null)
             {
                 return;
@@ -555,14 +555,14 @@ namespace MS.Internal.Data
             foreach (object key in _nameToGroupMap.Keys)
             {
                 WeakReference weakRef = _nameToGroupMap[key] as WeakReference;
-                if (weakRef != null &&
+                if (weakRef is not null &&
                     weakRef.Target == subgroup)
                 {
                     keyToBeRemoved = key;
                     break;
                 }
             }
-            if (keyToBeRemoved != null)
+            if (keyToBeRemoved is not null)
             {
                 _nameToGroupMap.Remove(keyToBeRemoved);
             }
@@ -574,7 +574,7 @@ namespace MS.Internal.Data
         /// </summary>
         internal CollectionViewGroupInternal GetSubgroupFromMap(object nameKey)
         {
-            if (_nameToGroupMap != null)
+            if (_nameToGroupMap is not null)
             {
                 if (nameKey is null)
                 {
@@ -583,7 +583,7 @@ namespace MS.Internal.Data
                 }
                 // Find and return the subgroup
                 WeakReference weakRef = _nameToGroupMap[nameKey] as WeakReference;
-                if (weakRef != null)
+                if (weakRef is not null)
                 {
                     return (weakRef.Target as CollectionViewGroupInternal);
                 }
@@ -604,7 +604,7 @@ namespace MS.Internal.Data
                     (Action)delegate ()
                     {
                         _mapCleanupScheduled = false;
-                        if (_nameToGroupMap != null)
+                        if (_nameToGroupMap is not null)
                         {
                             ArrayList keysToBeRemoved = new ArrayList();
                             foreach (object key in _nameToGroupMap.Keys)
@@ -662,7 +662,7 @@ namespace MS.Internal.Data
                     return 0;
 
                 // advance the index until seeing one x or y
-                int n = (_list != null) ? _list.Count : 0;
+                int n = (_list is not null) ? _list.Count : 0;
                 for (; _index < n; ++_index)
                 {
                     object z = _list[_index];
@@ -722,7 +722,7 @@ namespace MS.Internal.Data
             using (EmptyGroupRemover remover = EmptyGroupRemover.Create(isNeeded: changeLeafCount && delta < 0))
             {
                 for (CollectionViewGroupInternal group = this;
-                        group != null;
+                        group is not null;
                         group = group._parentGroup)
                 {
                     group.FullCount += delta;
@@ -874,13 +874,13 @@ namespace MS.Internal.Data
 
             public void Dispose()
             {
-                if (_toRemove != null)
+                if (_toRemove is not null)
                 {
                     foreach (CollectionViewGroupInternal group in _toRemove)
                     {
                         CollectionViewGroupInternal parent = group.Parent;
 
-                        if (parent != null)
+                        if (parent is not null)
                         {
                             // remove the subgroup unless it is one of the explicit groups
                             if (!group.IsExplicit)

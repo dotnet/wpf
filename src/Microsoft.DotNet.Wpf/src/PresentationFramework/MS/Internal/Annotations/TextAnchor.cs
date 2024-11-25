@@ -49,7 +49,7 @@ namespace System.Windows.Annotations
         /// <param name="anchor"></param>
         internal TextAnchor(TextAnchor anchor)
         {
-            Invariant.Assert(anchor != null, "Anchor to clone is null.");
+            Invariant.Assert(anchor is not null, "Anchor to clone is null.");
 
             foreach (TextSegment segment in anchor.TextSegments)
             {
@@ -140,8 +140,8 @@ namespace System.Windows.Annotations
         /// <param name="end">end pointer for the new text segment</param>
         internal void AddTextSegment(ITextPointer start, ITextPointer end)
         {
-            Invariant.Assert(start != null, "Non-null start required to create segment.");
-            Invariant.Assert(end != null, "Non-null end required to create segment.");
+            Invariant.Assert(start is not null, "Non-null start required to create segment.");
+            Invariant.Assert(end is not null, "Non-null end required to create segment.");
 
             TextSegment newSegment = CreateNormalizedSegment(start, end);
 
@@ -190,7 +190,7 @@ namespace System.Windows.Annotations
         /// <param name="textSegments">set of segments to test against</param>
         internal bool IsOverlapping(ICollection<TextSegment> textSegments)
         {
-            Invariant.Assert(textSegments != null, "TextSegments must not be null.");
+            Invariant.Assert(textSegments is not null, "TextSegments must not be null.");
 
             textSegments = SortTextSegments(textSegments, false);
 
@@ -256,8 +256,8 @@ namespace System.Windows.Annotations
         /// </summary>
         internal static TextAnchor ExclusiveUnion(TextAnchor anchor, TextAnchor otherAnchor)
         {
-            Invariant.Assert(anchor != null, "anchor must not be null.");
-            Invariant.Assert(otherAnchor != null, "otherAnchor must not be null.");
+            Invariant.Assert(anchor is not null, "anchor must not be null.");
+            Invariant.Assert(otherAnchor is not null, "otherAnchor must not be null.");
 
             foreach (TextSegment segment in otherAnchor.TextSegments)
             {
@@ -280,8 +280,8 @@ namespace System.Windows.Annotations
         /// <remarks>Note: textSegments is expected to be ordered and contain no overlapping segments</remarks>
         internal static TextAnchor TrimToRelativeComplement(TextAnchor anchor, ICollection<TextSegment> textSegments)
         {
-            Invariant.Assert(anchor != null, "Anchor must not be null.");
-            Invariant.Assert(textSegments != null, "TextSegments must not be null.");
+            Invariant.Assert(anchor is not null, "Anchor must not be null.");
+            Invariant.Assert(textSegments is not null, "TextSegments must not be null.");
 
             textSegments = SortTextSegments(textSegments, true);
 
@@ -382,8 +382,8 @@ namespace System.Windows.Annotations
         /// <param name="textSegments">collection of text segments to intersect with</param>
         internal static TextAnchor TrimToIntersectionWith(TextAnchor anchor, ICollection<TextSegment> textSegments)
         {
-            Invariant.Assert(anchor != null, "Anchor must not be null.");
-            Invariant.Assert(textSegments != null, "TextSegments must not be null.");
+            Invariant.Assert(anchor is not null, "Anchor must not be null.");
+            Invariant.Assert(textSegments is not null, "TextSegments must not be null.");
 
             textSegments = SortTextSegments(textSegments, true);
             TextSegment currentSegment, otherSegment = TextSegment.Null;
@@ -592,7 +592,7 @@ namespace System.Windows.Annotations
         /// IsOverlapping 0-length segments are OK - then excludeZeroLength is false</param>
         private static ICollection<TextSegment> SortTextSegments(ICollection<TextSegment> textSegments, bool excludeZeroLength)
         {
-            Invariant.Assert(textSegments != null, "TextSegments must not be null.");
+            Invariant.Assert(textSegments is not null, "TextSegments must not be null.");
 
             List<TextSegment> orderedList = new List<TextSegment>(textSegments.Count);
             orderedList.AddRange(textSegments);

@@ -117,7 +117,7 @@ namespace MS.Internal.Printing.Configuration
                 throw new ArgumentOutOfRangeException("feature");
             }
 
-            return (_pcRootFeatures[(int)feature] != null);
+            return (_pcRootFeatures[(int)feature] is not null);
         }
 
         #endregion Public Methods

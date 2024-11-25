@@ -210,7 +210,7 @@ namespace System.Windows.Controls
             ItemsControl owner = templatedParent as ItemsControl;
             ItemContainerGenerator generator;
 
-            if (owner != null)
+            if (owner is not null)
             {
                 // top-level presenter - get information from ItemsControl
                 generator = owner.ItemContainerGenerator;
@@ -221,10 +221,10 @@ namespace System.Windows.Controls
                 GroupItem parentGI = templatedParent as GroupItem;
                 ItemsPresenter parentIP = FromGroupItem(parentGI);
 
-                if (parentIP != null)
+                if (parentIP is not null)
                     owner = parentIP.Owner;
 
-                generator = (parentGI != null) ? parentGI.Generator : null;
+                generator = (parentGI is not null) ? parentGI.Generator : null;
             }
 
             _owner = owner;
@@ -232,8 +232,8 @@ namespace System.Windows.Controls
 
             // create the panel, based either on ItemsControl.ItemsPanel or GroupStyle.Panel
             ItemsPanelTemplate template = null;
-            GroupStyle groupStyle = (_generator != null) ? _generator.GroupStyle : null;
-            if (groupStyle != null)
+            GroupStyle groupStyle = (_generator is not null) ? _generator.GroupStyle : null;
+            if (groupStyle is not null)
             {
                 // If GroupStyle.Panel is set then we dont honor ItemsControl.IsVirtualizing
                 template = groupStyle.Panel;
@@ -253,7 +253,7 @@ namespace System.Windows.Controls
             else
             {
                 // Its a leaf-level ItemsPresenter, therefore pick ItemsControl.ItemsPanel
-                template = (_owner != null) ? _owner.ItemsPanel : null;
+                template = (_owner is not null) ? _owner.ItemsPanel : null;
             }
             Template = template;
         }
@@ -263,12 +263,12 @@ namespace System.Windows.Controls
             if (generator == _generator)
                 return;
 
-            if (_generator != null)
+            if (_generator is not null)
                 _generator.PanelChanged -= new EventHandler(OnPanelChanged);
 
             _generator = generator;
 
-            if (_generator != null)
+            if (_generator is not null)
                 _generator.PanelChanged += new EventHandler(OnPanelChanged);
         }
 
@@ -284,12 +284,12 @@ namespace System.Windows.Controls
             //
 
             ScrollViewer parent = Parent as ScrollViewer;
-            if (parent != null)
+            if (parent is not null)
             {
                 // If our logical parent is a ScrollViewer then the visual parent is a ScrollContentPresenter.
                 ScrollContentPresenter scp = VisualTreeHelper.GetParent(this) as ScrollContentPresenter;
 
-                if (scp != null)
+                if (scp is not null)
                 {
                     scp.HookupScrollingComponents();
                 }
@@ -308,12 +308,12 @@ namespace System.Windows.Controls
             Panel oldPanel = (this.VisualChildrenCount > 0) ? this.GetVisualChild(0) as Panel : null;
             Type type = null;
 
-            if( Template != null )
+            if( Template is not null )
             {
                 // Get the type of the template content's root
 
                 // Is this a FEF-based template?
-                if( Template.VisualTree != null )
+                if( Template.VisualTree is not null )
                 {
                     type = Template.VisualTree.Type;
                 }
@@ -326,7 +326,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            if (oldPanel != null && oldPanel.GetType() == type)
+            if (oldPanel is not null && oldPanel.GetType() == type)
             {
                 oldPanel.IsItemsHost = false;
             }

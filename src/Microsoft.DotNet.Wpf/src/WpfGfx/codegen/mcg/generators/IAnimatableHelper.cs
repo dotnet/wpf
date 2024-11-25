@@ -84,7 +84,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                     #pragma warning restore 56506
                         }
 
-                        if (clock != null
+                        if (clock is not null
                             && !AnimationStorage.IsAnimationValid(dp, clock.Timeline))
                         {
                     #pragma warning disable 56506 // Suppress presharp warning: Parameter 'dp' to this public method must be validated:  A null-dereference can occur here.
@@ -156,7 +156,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                     #pragma warning restore 56506
                         }
 
-                        if (   animation != null
+                        if (   animation is not null
                             && !AnimationStorage.IsAnimationValid(dp, animation))
                         {
                             throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, animation.GetType(), dp.Name, dp.PropertyType), "animation");
@@ -240,7 +240,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                         {
                             AnimationStorage storage = AnimationStorage.GetStorage(this, dp);
 
-                            if (storage != null)
+                            if (storage is not null)
                             {
                                 storage.EvaluateAnimatedValue(metadata, ref entry);                      
                             }

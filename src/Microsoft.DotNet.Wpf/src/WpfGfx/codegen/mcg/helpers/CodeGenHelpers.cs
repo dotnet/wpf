@@ -248,7 +248,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                     McgResource resourceType = type as McgResource;
 
                     // If it's an McgResource, we have to handle reference types and collections
-                    if(resourceType != null)
+                    if(resourceType is not null)
                     {
                         // Currently, collections are accounted for by storing just their size inline
                         if (resourceType.IsCollection) 
@@ -305,7 +305,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                                 {
                                     McgEnum enumType = type as McgEnum;
 
-                                    if (enumType != null)
+                                    if (enumType is not null)
                                     {
                                         parameterList.Append(enumType.KernelAccessibleType + " " + field.Name + ";");
                                         constructedParam = true;
@@ -392,7 +392,7 @@ namespace MS.Internal.MilCodeGen.Helpers
             else if ((parameterType & ParameterType.RenderDataCallParamList) != 0)
             {            
                 // Field is a resource that can not be passed by value.
-                if(resourceType != null && !resourceType.IsValueType)
+                if(resourceType is not null && !resourceType.IsValueType)
                 {                   
                     paramString = "_renderData.AddDependentResource(" + fieldName + ")";
                 }
@@ -410,7 +410,7 @@ namespace MS.Internal.MilCodeGen.Helpers
             else if ((parameterType & ParameterType.ManagedImportsParamList) != 0)
             {
                 // If it's not a value type, then we can pass by handle
-                if ((resourceType != null) && !resourceType.IsValueType)
+                if ((resourceType is not null) && !resourceType.IsValueType)
                 {
                     paramString = DuceHandle.ManagedTypeName + " h" + propertyName;
                 }
@@ -440,7 +440,7 @@ namespace MS.Internal.MilCodeGen.Helpers
             }            
             else if ((parameterType & ParameterType.UnmanagedParamList) != 0)
             {
-                if ((resourceType != null) && !resourceType.IsValueType)
+                if ((resourceType is not null) && !resourceType.IsValueType)
                 {
                     paramString = DuceHandle.UnmanagedTypeName + " h" + GeneratorMethods.FirstCap(name);
                 }
@@ -459,7 +459,7 @@ namespace MS.Internal.MilCodeGen.Helpers
             {
                 Debug.Assert((parameterType & ParameterType.UnmanagedCallParamList) != 0);
 
-                if ((resourceType != null) && !resourceType.IsValueType)
+                if ((resourceType is not null) && !resourceType.IsValueType)
                 {
                     paramString = "h" + GeneratorMethods.FirstCap(name);
                 }
@@ -842,7 +842,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                         McgResource resourceType = type as McgResource;
 
                         // If it's an McgResource, we have to handle reference types and collections
-                        if (resourceType != null && !resourceType.IsValueType)
+                        if (resourceType is not null && !resourceType.IsValueType)
                         {
                             entry.Name = "h" + field.Name;
                             entry.IsHandle = true;

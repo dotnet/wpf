@@ -103,7 +103,7 @@ public sealed class BeginStoryboard : TriggerAction
         {
             ThrowIfSealed();
 
-            if(value != null && !System.Windows.Markup.NameValidationHelper.IsValidIdentifierName(value))
+            if(value is not null && !System.Windows.Markup.NameValidationHelper.IsValidIdentifierName(value))
             {
                 // Duplicate the error string thrown from DependencyObject.SetValueValidateParams
                 throw new ArgumentException(SR.Format(SR.InvalidPropertyValue, value, "Name"));
@@ -177,26 +177,26 @@ public sealed class BeginStoryboard : TriggerAction
 
     internal sealed override void Invoke( FrameworkElement fe, FrameworkContentElement fce, Style targetStyle, FrameworkTemplate frameworkTemplate, Int64 layer )
     {
-        Debug.Assert( fe != null || fce != null, "Caller of internal function failed to verify that we have a FE or FCE - we have neither." );
+        Debug.Assert( fe is not null || fce is not null, "Caller of internal function failed to verify that we have a FE or FCE - we have neither." );
 
         INameScope nameScope = null;
-        if( targetStyle != null )
+        if( targetStyle is not null )
         {
             nameScope = targetStyle;
         }
         else
         {
-            Debug.Assert( frameworkTemplate != null );
+            Debug.Assert( frameworkTemplate is not null );
             nameScope = frameworkTemplate;
         }
 
 
-        Begin( (fe != null ) ? (DependencyObject)fe : (DependencyObject)fce, nameScope, layer );
+        Begin( (fe is not null ) ? (DependencyObject)fe : (DependencyObject)fce, nameScope, layer );
     }
 
     internal sealed override void Invoke( FrameworkElement fe )
     {
-        Debug.Assert( fe != null, "Invoke needs an object as starting point");
+        Debug.Assert( fe is not null, "Invoke needs an object as starting point");
 
         Begin( fe, null, Storyboard.Layers.ElementEventTrigger );
     }
@@ -208,7 +208,7 @@ public sealed class BeginStoryboard : TriggerAction
             throw new InvalidOperationException(SR.Storyboard_StoryboardReferenceRequired);
         }
 
-        if( Name != null )
+        if( Name is not null )
         {
             Storyboard.BeginCommon(targetObject, nameScope, _handoffBehavior, true /* == is controllable */, layer );
         }

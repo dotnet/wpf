@@ -111,7 +111,7 @@ namespace MS.Internal.Data
                     {
                         // we stored a weak reference - decode it now
                         WeakReference wr = value as WeakReference;
-                        if (wr != null)
+                        if (wr is not null)
                         {
                             value = wr.Target;
                         }
@@ -168,7 +168,7 @@ namespace MS.Internal.Data
             {
                 // new entry needed - add a listener
                 INotifyPropertyChanged inpc = item as INotifyPropertyChanged;
-                if (inpc != null)
+                if (inpc is not null)
                 {
                     PropertyChangedEventManager.AddHandler(inpc, OnPropertyChanged, pd.Name);
                 }
@@ -305,7 +305,7 @@ namespace MS.Internal.Data
         {
             public ValueTableKey(object item, PropertyDescriptor pd)
             {
-                Invariant.Assert(item != null && pd != null);
+                Invariant.Assert(item is not null && pd is not null);
 
                 // store weak references to item and pd, so as not to affect their
                 // GC behavior.  But remember their hashcode.
@@ -335,7 +335,7 @@ namespace MS.Internal.Data
                     return true;    // this allows deletion of stale keys
 
                 ValueTableKey that = o as ValueTableKey;
-                if (that != null)
+                if (that is not null)
                 {
                     object item = this.Item;
                     PropertyDescriptor descriptor = this.PropertyDescriptor;

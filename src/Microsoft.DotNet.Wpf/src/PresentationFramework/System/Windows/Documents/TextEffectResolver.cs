@@ -190,7 +190,7 @@ namespace System.Windows.Documents
         {
             TextEffectCollection textEffects = DynamicPropertyReader.GetTextEffects(_element);
 
-            if (textEffects != null)
+            if (textEffects is not null)
             {
                 for (int i = 0; i < textEffects.Count; i++)
                 {
@@ -212,7 +212,7 @@ namespace System.Windows.Documents
             get 
             {
                 TextEffectCollection textEffects = DynamicPropertyReader.GetTextEffects(_element);
-                if (textEffects != null)
+                if (textEffects is not null)
                 {
                     for (int i = 0; i < textEffects.Count; i++)
                     {

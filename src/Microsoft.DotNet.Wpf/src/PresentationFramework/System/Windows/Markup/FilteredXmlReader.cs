@@ -279,7 +279,7 @@ internal class FilteredXmlReader : XmlTextReader
     //  attribute, look for it on the current node.
     private void CheckForUidAttribute()
     {
-        if( base.GetAttribute(uidQualifiedName) != null ) // Do NOT use base[uidQualifiedName], that just comes right back to us.
+        if( base.GetAttribute(uidQualifiedName) is not null ) // Do NOT use base[uidQualifiedName], that just comes right back to us.
             haveUid = true;
         else
             haveUid = false;

@@ -35,8 +35,8 @@ namespace System.Windows.Documents
             FixedSOMPageElement compared = comparedObj as FixedSOMPageElement;
             FixedSOMPageElement This = this as FixedSOMPageElement;
             
-            Debug.Assert(compared != null);
-            Debug.Assert(This != null);
+            Debug.Assert(compared is not null);
+            Debug.Assert(This is not null);
             if (compared is null)
             {
                 throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, comparedObj.GetType(), typeof(FixedSOMContainer)), "comparedObj");
@@ -214,14 +214,14 @@ namespace System.Windows.Documents
             foreach (FixedSOMSemanticBox box in _semanticBoxes)
             {
                 FixedSOMElement element = box as FixedSOMElement;
-                if (element != null)
+                if (element is not null)
                 {
                     _fixedNodes.Add(element.FixedNode);
                 }
                 else
                 {
                     FixedSOMContainer container = box as FixedSOMContainer;
-                    Debug.Assert(container != null);
+                    Debug.Assert(container is not null);
                     List<FixedNode> nodes = container.FixedNodes;
                     foreach (FixedNode node in nodes)
                     {

@@ -108,7 +108,7 @@ namespace System.Windows.Xps.Packaging
         void
         CommitInternal()
         {
-            if (_partEditor != null)
+            if (_partEditor is not null)
             {
                 _partEditor.Close();
 
@@ -135,7 +135,7 @@ namespace System.Windows.Xps.Packaging
         INode.Flush(
             )
         {
-            if( _partEditor != null )
+            if( _partEditor is not null )
             {
                 //
                 // Flush the part editor
@@ -165,7 +165,7 @@ namespace System.Windows.Xps.Packaging
         void
         IDisposable.Dispose()
         {
-            if (_partEditor != null)
+            if (_partEditor is not null)
             {
                 _partEditor.Close();
             }

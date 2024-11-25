@@ -67,7 +67,7 @@ namespace System.Windows.Documents
 
             // Get a pointer at a position PRECEDING to range.End (because in case of TableCellRange it points immediately after the last selected cell).
             TextPointer lastCellPointer = (TextPointer)range.TextSegments[0].End.GetNextInsertionPosition(LogicalDirection.Backward);
-            Invariant.Assert(lastCellPointer != null, "lastCellPointer cannot be null here. Even empty table cells have a potential insertion position.");
+            Invariant.Assert(lastCellPointer is not null, "lastCellPointer cannot be null here. Even empty table cells have a potential insertion position.");
 
             TableCell lastCell = GetTableCellFromPosition(lastCellPointer);
             if (lastCell is null)
@@ -110,7 +110,7 @@ namespace System.Windows.Documents
         internal static Table GetTableFromPosition(TextPointer position)
         {
             TextElement element = position.Parent as TextElement;
-            while (element != null && !(element is Table))
+            while (element is not null && !(element is Table))
             {
                 element = element.Parent as TextElement;
             }
@@ -122,7 +122,7 @@ namespace System.Windows.Documents
         private static TableRow GetTableRowFromPosition(TextPointer position)
         {
             TextElement element = position.Parent as TextElement;
-            while (element != null && !(element is TableRow))
+            while (element is not null && !(element is TableRow))
             {
                 element = element.Parent as TextElement;
             }
@@ -134,7 +134,7 @@ namespace System.Windows.Documents
         internal static TableCell GetTableCellFromPosition(TextPointer position)
         {
             TextElement element = position.Parent as TextElement;
-            while (element != null && !(element is TableCell))
+            while (element is not null && !(element is TableCell))
             {
                 element = element.Parent as TextElement;
             }
@@ -247,7 +247,7 @@ namespace System.Windows.Documents
                 return false;
             }
 
-            return anchorCell != null && movingCell != null;
+            return anchorCell is not null && movingCell is not null;
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace System.Windows.Documents
                 return null;
             }
 
-            if (anchorCell != null && movingCell != null)
+            if (anchorCell is not null && movingCell is not null)
             {
                 // Two cells found on selection corners and they belong to the same RowGroup -
                 // build cell selection
@@ -313,9 +313,9 @@ namespace System.Windows.Documents
                 return BuildCellSelection(anchorCell, movingCell);
             }
             else if (
-                anchorRow != null || movingRow != null ||
-                anchorRowGroup != null || movingRowGroup != null ||
-                anchorTable != null || movingTable != null)
+                anchorRow is not null || movingRow is not null ||
+                anchorRowGroup is not null || movingRowGroup is not null ||
+                anchorTable is not null || movingTable is not null)
             {
                 // Crossed table boundary
                 isTableCellRange = false;
@@ -359,7 +359,7 @@ namespace System.Windows.Documents
                     }
                 }
 
-                if (segmentStartCell != null && segmentEndCell != null)
+                if (segmentStartCell is not null && segmentEndCell is not null)
                 {
                     Invariant.Assert(segmentStartCell.Row == segmentEndCell.Row, "Inconsistent Rows for segmentStartCell and segmentEndCell");
                     Invariant.Assert(segmentStartCell.Index <= segmentEndCell.Index, "Index of segmentStartCell must be <= index of segentEndCell");
@@ -379,15 +379,15 @@ namespace System.Windows.Documents
             {
                 textSegments.Add(
                     NewNormalizedTextSegment(
-                        anchorRow != null ? anchorRow.ContentStart : anchorPosition,
-                        movingRow != null ? movingRow.ContentEnd : movingPosition));
+                        anchorRow is not null ? anchorRow.ContentStart : anchorPosition,
+                        movingRow is not null ? movingRow.ContentEnd : movingPosition));
             }
             else
             {
                 textSegments.Add(
                     NewNormalizedTextSegment(
-                        movingRow != null ? movingRow.ContentStart : movingPosition,
-                        anchorRow != null ? anchorRow.ContentEnd : anchorPosition));
+                        movingRow is not null ? movingRow.ContentStart : movingPosition,
+                        anchorRow is not null ? anchorRow.ContentEnd : anchorPosition));
             }
 
             return textSegments;
@@ -445,7 +445,7 @@ namespace System.Windows.Documents
                 // movingCell is a diagonally oppoosite cell from which we need to find next movingPosition.
                 // Note that movingCell is a cell *included* into selection (not the "next position after the last selected cell").
 
-                Invariant.Assert(anchorCell != null && movingCell != null, "anchorCell != null && movingCell != null");
+                Invariant.Assert(anchorCell is not null && movingCell is not null, "anchorCell is not null && movingCell is not null");
                 Invariant.Assert(anchorCell.Row.RowGroup == movingCell.Row.RowGroup, "anchorCell.Row.RowGroup == movingCell.Row.RowGroup");
 
                 if (direction == LogicalDirection.Backward && movingCell == anchorCell)
@@ -523,7 +523,7 @@ namespace System.Windows.Documents
                     }
 
                     // Calculate movingPosition that would represent this movingCell
-                    if (movingCell != null)
+                    if (movingCell is not null)
                     {
                         if (movingCell.ColumnIndex >= anchorCell.ColumnIndex)
                         {
@@ -595,7 +595,7 @@ namespace System.Windows.Documents
             Invariant.Assert(!selection.IsTableCellRange);
 
             TableCell cell = GetTableCellFromPosition(selection.MovingPosition);
-            Invariant.Assert(cell != null);
+            Invariant.Assert(cell is not null);
             TableRow row = cell.Row;
 
             return (direction == LogicalDirection.Forward) ? row.ContentEnd.GetNextInsertionPosition(LogicalDirection.Forward) :
@@ -631,7 +631,7 @@ namespace System.Windows.Documents
         {
             // Inserting tables in lists is currently disabled, so check that we are not in a list
             TextElement ancestor = insertionPosition.Parent as TextElement;
-            while (ancestor != null)
+            while (ancestor is not null)
             {
                 if (ancestor is List || ancestor is Inline && !TextSchema.IsMergeableInline(ancestor.GetType()))
                 {
@@ -655,7 +655,7 @@ namespace System.Windows.Documents
             // Split current paragraph at insertion position
             insertionPosition = insertionPosition.InsertParagraphBreak(); // REVIEW: This will throw exception for hyperlink ancestor.
             paragraph = insertionPosition.Paragraph;
-            Invariant.Assert(paragraph != null, "Expecting non-null paragraph at insertionPosition");
+            Invariant.Assert(paragraph is not null, "Expecting non-null paragraph at insertionPosition");
 
             // Build a table with a given number of rows and columns
             Table table = new Table();
@@ -708,7 +708,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal static TextPointer EnsureInsertionPosition(TextPointer position)
         {
-            Invariant.Assert(position != null, "null check: position");
+            Invariant.Assert(position is not null, "null check: position");
 
             // Normalize the pointer
             position = position.GetInsertionPosition(position.LogicalDirection);
@@ -779,14 +779,14 @@ namespace System.Windows.Documents
             // Find a next insertion position within the scope of the parent table.
             TextPointer nextInsertionPosition = rowEndPosition;
 
-            while (nextInsertionPosition != null &&
+            while (nextInsertionPosition is not null &&
                 nextInsertionPosition.IsAtRowEnd && // the following insertion position may be IsAtRowEnd again
                 currentTable == TextRangeEditTables.GetTableFromPosition(nextInsertionPosition))
             {
                 nextInsertionPosition = nextInsertionPosition.GetNextInsertionPosition(LogicalDirection.Forward);
             }
 
-            if (nextInsertionPosition != null &&
+            if (nextInsertionPosition is not null &&
                 currentTable == TextRangeEditTables.GetTableFromPosition(nextInsertionPosition))
             {
                 // We found an insertion position within the scope of the table.
@@ -818,7 +818,7 @@ namespace System.Windows.Documents
             }
 
             DependencyObject parent = position.Parent;
-            if (parent != null)
+            if (parent is not null)
             {
                 if (parent is Table)
                 {
@@ -977,7 +977,7 @@ namespace System.Windows.Documents
                         /*includeCellAtMovingPosition*/false,
                         out isTableCellRange);
 
-                    if (isTableCellRange && textSegments != null)
+                    if (isTableCellRange && textSegments is not null)
                     {
                         // It is cell selection. Create the content of all selected cells
                         for (int i = 0; i < textSegments.Count; i++)
@@ -993,34 +993,34 @@ namespace System.Windows.Documents
                         // crossed row boundaries
 
                         // Find start row
-                        if (startCell != null)
+                        if (startCell is not null)
                         {
                             startRow = startCell.Row;
                         }
-                        else if (startRow != null)
+                        else if (startRow is not null)
                         {
                             // do nothing here. we already have a start row for deletion.
                         }
-                        else if (startRowGroup != null)
+                        else if (startRowGroup is not null)
                         {
                             startRow = startRowGroup.Rows[0];
                         }
 
                         // Find end row
-                        if (endCell != null)
+                        if (endCell is not null)
                         {
                             endRow = startCell.Row;
                         }
-                        else if (endRow != null)
+                        else if (endRow is not null)
                         {
                             // do nothing here. we already have an end row for deletion.
                         }
-                        else if (endRowGroup != null)
+                        else if (endRowGroup is not null)
                         {
                             endRow = endRowGroup.Rows[endRowGroup.Rows.Count - 1];
                         }
 
-                        Invariant.Assert(startRow != null && endRow != null, "startRow and endRow cannot be null, since our range is within one table");
+                        Invariant.Assert(startRow is not null && endRow is not null, "startRow and endRow cannot be null, since our range is within one table");
                         TextRange rowsSegment = new TextRange(startRow.ContentStart, endRow.ContentEnd);
                         TextRangeEditTables.DeleteRows(rowsSegment); // it will take care of rowspans
                     }
@@ -1030,7 +1030,7 @@ namespace System.Windows.Documents
                     // Table boundary is crossed on one or both of edges.
                     // So we must delete half(s) of crossed table(s)
 
-                    if (startRow != null)
+                    if (startRow is not null)
                     {
                         // Table boundary is crossed on start edge.
                         // So we need to delete all rows from start to the end of this table.
@@ -1043,7 +1043,7 @@ namespace System.Windows.Documents
                         TextRangeEditTables.DeleteRows(rowsSegment); // it will take care of rowspans
                     }
 
-                    if (endRow != null)
+                    if (endRow is not null)
                     {
                         // Table boundary is crossed on end egde.
                         // So we need to delete all rows from start of the table to this endRow.
@@ -1075,7 +1075,7 @@ namespace System.Windows.Documents
         {
             TableCell cell = GetTableCellFromPosition((TextPointer)textSegment.Start);
             TextPointer end = ((TextPointer)textSegment.End).GetNextInsertionPosition(LogicalDirection.Backward);
-            while (cell != null)
+            while (cell is not null)
             {
                 cell.Blocks.Clear();
                 cell.Blocks.Add(new Paragraph());
@@ -1116,7 +1116,7 @@ namespace System.Windows.Documents
         internal static TextRange InsertRows(TextRange textRange, int rowCount)
         {
             // Parameters validation
-            Invariant.Assert(textRange != null, "null check: textRange");
+            Invariant.Assert(textRange is not null, "null check: textRange");
 
             // Identify the current row
             TextPointer currentRowPosition = rowCount > 0 ? textRange.End : textRange.Start;
@@ -1131,7 +1131,7 @@ namespace System.Windows.Documents
 
             // Correct all spannedCells to include new rows
             TableCell[] spannedCells = currentRow.SpannedCells;
-            if (spannedCells != null)
+            if (spannedCells is not null)
             {
                 for (int i = 0; i < spannedCells.Length; i++)
                 {
@@ -1219,7 +1219,7 @@ namespace System.Windows.Documents
         internal static bool DeleteRows(TextRange textRange)
         {
             // Parameter validation
-            Invariant.Assert(textRange != null, "null check: textRange");
+            Invariant.Assert(textRange is not null, "null check: textRange");
 
             TableRow startRow = GetTableRowFromPosition(textRange.Start);
             TableRow endRow = GetTableRowFromPosition(textRange.End);
@@ -1301,13 +1301,13 @@ namespace System.Windows.Documents
 
         private static void CorrectRowSpansOnDeleteRows(TableRow nextRow, int deletedRowsCount)
         {
-            Invariant.Assert(nextRow != null, "null check: nextRow");
+            Invariant.Assert(nextRow is not null, "null check: nextRow");
             Invariant.Assert(nextRow.Index >= deletedRowsCount, "nextRow.Index is expected to be >= deletedRowsCount");
 
             TableCellCollection nextRowCells = nextRow.Cells;
 
             TableCell[] spannedCells = nextRow.SpannedCells;
-            if (spannedCells != null)
+            if (spannedCells is not null)
             {
                 int cellIndex = 0;
                 for (int i = 0; i < spannedCells.Length; i++)
@@ -1395,7 +1395,7 @@ namespace System.Windows.Documents
                             }
                         }
 
-                        if (cellInsertAfter != null)
+                        if (cellInsertAfter is not null)
                         {
                             if (cellInsertAfter.ColumnSpan == 1)
                             {
@@ -1427,7 +1427,7 @@ namespace System.Windows.Documents
         {
             int cCols = Math.Abs(columnCount);
 
-            Invariant.Assert(textRange != null, "null check: textRange");
+            Invariant.Assert(textRange is not null, "null check: textRange");
 
             TableCell startCell;
             TableCell endCell;
@@ -1506,7 +1506,7 @@ namespace System.Windows.Documents
                         }
                     }
 
-                    if (cellDelete != null)
+                    if (cellDelete is not null)
                     {
                         if (cellDelete.ColumnSpan == 1)
                         {
@@ -1532,7 +1532,7 @@ namespace System.Windows.Documents
         /// </param>
         internal static bool DeleteColumns(TextRange textRange)
         {
-            Invariant.Assert(textRange != null, "null check: textRange");
+            Invariant.Assert(textRange is not null, "null check: textRange");
 
             TableCell startCell;
             TableCell endCell;
@@ -1687,7 +1687,7 @@ namespace System.Windows.Documents
         {
             internal TableColumnResizeInfo(ITextView textView, Table table, int columnIndex, Rect columnRect, double tableAutofitWidth, double[] columnWidths)
             {
-                Invariant.Assert(table != null, "null check: table");
+                Invariant.Assert(table is not null, "null check: table");
                 Invariant.Assert(columnIndex >= 0 && columnIndex < table.ColumnCount, "ColumnIndex validity check");
 
                 _table = table;
@@ -1726,7 +1726,7 @@ namespace System.Windows.Documents
             // Updates a horizontal position of column resizinng adorner
             internal void UpdateAdorner(Point mouseMovePoint)
             {
-                if (_tableColResizeAdorner != null)
+                if (_tableColResizeAdorner is not null)
                 {
                     double xPosAdorner = mouseMovePoint.X;
 
@@ -1748,7 +1748,7 @@ namespace System.Windows.Documents
                 int columnIndex = _columnIndex;
                 Table table = this.Table;
 
-                Invariant.Assert(table != null, "Table is not expected to be null");
+                Invariant.Assert(table is not null, "Table is not expected to be null");
                 Invariant.Assert(table.ColumnCount > 0, "ColumnCount is expected to be > 0");
 
                 _columnWidths[columnIndex] += dx;
@@ -1762,7 +1762,7 @@ namespace System.Windows.Documents
 
                 UndoManager undoManager = table.TextContainer.UndoManager;
 
-                if(undoManager != null && undoManager.IsEnabled)
+                if(undoManager is not null && undoManager.IsEnabled)
                 {
                     IParentUndoUnit columnResizeUndoUnit = new ColumnResizeUndoUnit(table.ContentStart, columnIndex, _columnWidths, dx);
 
@@ -1777,7 +1777,7 @@ namespace System.Windows.Documents
             // Must be called to remove table resizing adorned from a render scope
             internal void DisposeAdorner()
             {
-                if (_tableColResizeAdorner != null)
+                if (_tableColResizeAdorner is not null)
                 {
                     _tableColResizeAdorner.Uninitialize();
                     _tableColResizeAdorner = null;
@@ -1821,7 +1821,7 @@ namespace System.Windows.Documents
         /// </returns>
         internal static TextRange MergeCells(TextRange textRange)
         {
-            Invariant.Assert(textRange != null, "null check: textRange");
+            Invariant.Assert(textRange is not null, "null check: textRange");
 
             TableCell startCell;
             TableCell endCell;
@@ -1852,7 +1852,7 @@ namespace System.Windows.Documents
                 startCell.ColumnIndex, // leftColumn
                 endCell.ColumnIndex + endCell.ColumnSpan - 1); // rightColumn
 
-            if (result != null)
+            if (result is not null)
             {
                 textRange.Select(textRange.Start, textRange.End);
             }
@@ -1872,7 +1872,7 @@ namespace System.Windows.Documents
         /// </returns>
         internal static TextRange SplitCell(TextRange textRange, int splitCountHorizontal, int splitCountVertical)
         {
-            Invariant.Assert(textRange != null, "null check: textRange");
+            Invariant.Assert(textRange is not null, "null check: textRange");
 
             TableCell startCell;
             TableCell endCell;
@@ -2069,7 +2069,7 @@ namespace System.Windows.Documents
                 return false;
             }
 
-            if (anchorTable != null || movingTable != null)
+            if (anchorTable is not null || movingTable is not null)
             {
                 // We crossed table boundary, so need to clear anchor/movingCells
                 //Invariant.Assert(anchorTable is null || movingTable is null || anchorTable != movingTable);
@@ -2081,7 +2081,7 @@ namespace System.Windows.Documents
             {
                 // We did not cross table boundary. Make sure that anchor/movingCells set consistently
 
-                if (anchorCell != null && movingCell != null)
+                if (anchorCell is not null && movingCell is not null)
                 {
                     // Both ends cross cell boundaries.
                     // The cell at movingPosition may require a correction - excluding it from
@@ -2098,7 +2098,7 @@ namespace System.Windows.Documents
                         movingCell = movingCell.Row.Cells[movingCell.Index - 1];
                     }
                 }
-                else if (anchorCell != null && movingCell is null && movingPosition.IsAtRowEnd)
+                else if (anchorCell is not null && movingCell is null && movingPosition.IsAtRowEnd)
                 {
                     // Special case when movingPosition is after the very last cell in row
                     TableRow movingCellRow = movingPosition.Parent as TableRow;
@@ -2116,13 +2116,13 @@ namespace System.Windows.Documents
 
             // Null anchor/movingCells indicate that the range IsTableCellRange,
             // so they must be non-null only if they both belong to the same table.
-            //Invariant.Assert(anchorCell is null && movingCell is null || anchorCell != null && movingCell != null && anchorCell.Table == movingCell.Table);
+            //Invariant.Assert(anchorCell is null && movingCell is null || anchorCell is not null && movingCell is not null && anchorCell.Table == movingCell.Table);
 
             return
-                anchorCell != null || movingCell != null ||
-                anchorRow != null || movingRow != null ||
-                anchorRowGroup != null || movingRowGroup != null ||
-                anchorTable != null || movingTable != null;
+                anchorCell is not null || movingCell is not null ||
+                anchorRow is not null || movingRow is not null ||
+                anchorRowGroup is not null || movingRowGroup is not null ||
+                anchorTable is not null || movingTable is not null;
         }
 
         private static bool FindTableElements(
@@ -2148,7 +2148,7 @@ namespace System.Windows.Documents
 
             // Find minimal common ancestor
             TextElement commonAncestor = anchorPosition.Parent as TextElement;
-            while (commonAncestor != null && !commonAncestor.Contains(movingPosition))
+            while (commonAncestor is not null && !commonAncestor.Contains(movingPosition))
             {
                 commonAncestor = commonAncestor.Parent as TextElement;
             }
@@ -2157,10 +2157,10 @@ namespace System.Windows.Documents
             FindTableElements(commonAncestor, movingPosition, out movingCell, out movingRow, out movingRowGroup, out movingTable);
 
             return
-                anchorCell != null || movingCell != null ||
-                anchorRow != null || movingRow != null ||
-                anchorRowGroup != null || movingRowGroup != null ||
-                anchorTable != null || movingTable != null;
+                anchorCell is not null || movingCell is not null ||
+                anchorRow is not null || movingRow is not null ||
+                anchorRowGroup is not null || movingRowGroup is not null ||
+                anchorTable is not null || movingTable is not null;
         }
 
         private static void FindTableElements(
@@ -2181,7 +2181,7 @@ namespace System.Windows.Documents
             // Walk up from anchorElement towards the root
             while (element != commonAncestor)
             {
-                Invariant.Assert(element != null, "Not expecting null for element: otherwise it must hit commonAncestor which must be null in this case...");
+                Invariant.Assert(element is not null, "Not expecting null for element: otherwise it must hit commonAncestor which must be null in this case...");
 
                 // We are crossing element boundary, so store it if it is table element
                 if (element is TableCell)
@@ -2226,7 +2226,7 @@ namespace System.Windows.Documents
         // No cell is created in a new row
         private static TableRow CopyRow(TableRow currentRow)
         {
-            Invariant.Assert(currentRow != null, "null check: currentRow");
+            Invariant.Assert(currentRow is not null, "null check: currentRow");
 
             TableRow newRow = new TableRow();
 
@@ -2250,7 +2250,7 @@ namespace System.Windows.Documents
         // The new cell as added to a newRow (at the endPosition of its Cells collection).
         private static TableCell AddCellCopy(TableRow newRow, TableCell currentCell, int cellInsertionIndex, bool copyRowSpan, bool copyColumnSpan)
         {
-            Invariant.Assert(currentCell != null, "null check: currentCell");
+            Invariant.Assert(currentCell is not null, "null check: currentCell");
 
             TableCell newCell = new TableCell();
 
@@ -2286,14 +2286,14 @@ namespace System.Windows.Documents
             }
 
             // Copy a paragraph for a cell
-            if (currentCell.Blocks.FirstBlock != null)
+            if (currentCell.Blocks.FirstBlock is not null)
             {
                 Paragraph newParagraph = new Paragraph();
 
                 // Transfer all known formatting properties that a locally set on a sourceBlock
                 Paragraph sourceParagraph = currentCell.Blocks.FirstBlock as Paragraph;
 
-                if (sourceParagraph != null)
+                if (sourceParagraph is not null)
                 {
                     DependencyProperty[] inheritableProperties = TextSchema.GetInheritableProperties(typeof(Paragraph));
                     DependencyProperty[] nonInheritableProperties = TextSchema.GetNoninheritableProperties(typeof(Paragraph));
@@ -2339,7 +2339,7 @@ namespace System.Windows.Documents
         // Merges a rectangular cell range producing one cell spanned all cells included into the range
         private static TextRange MergeCellRange(TableRowGroup rowGroup, int topRow, int bottomRow, int leftColumn, int rightColumn)
         {
-            Invariant.Assert(rowGroup != null, "null check: rowGroup");
+            Invariant.Assert(rowGroup is not null, "null check: rowGroup");
             Invariant.Assert(topRow >= 0, "topRow must be >= 0");
             Invariant.Assert(bottomRow >= 0, "bottomRow must be >= 0");
             Invariant.Assert(leftColumn >= 0, "leftColumn must be >= 0");
@@ -2435,8 +2435,8 @@ namespace System.Windows.Documents
                 // Extend spans in the top-left cell
                 if (rowIndex == topRow)
                 {
-                    Invariant.Assert(firstCell != null, "firstCell is not expected to be null");
-                    Invariant.Assert(lastCell != null, "lastCell is not expected to be null");
+                    Invariant.Assert(firstCell is not null, "firstCell is not expected to be null");
+                    Invariant.Assert(lastCell is not null, "lastCell is not expected to be null");
                     Invariant.Assert(firstCell.ColumnIndex == leftColumn, "expecting: firstCell.ColumnIndex == leftColumn");
                     int rowSpan = bottomRow - topRow + 1;
                     int columnSpan = rightColumn - leftColumn + 1;
@@ -2458,9 +2458,9 @@ namespace System.Windows.Documents
                 }
                 else
                 {
-                    if (firstCell != null)
+                    if (firstCell is not null)
                     {
-                        Invariant.Assert(lastCell != null, "lastCell is not expected to be null");
+                        Invariant.Assert(lastCell is not null, "lastCell is not expected to be null");
                         if (firstCell.Index == 0 && lastCell.Index == lastCell.Row.Cells.Count - 1)
                         {
                             // Before deleting row, must go through all other rowspan cells that cross this row

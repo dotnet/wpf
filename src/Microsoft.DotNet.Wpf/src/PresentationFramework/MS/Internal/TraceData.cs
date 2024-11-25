@@ -100,11 +100,11 @@ namespace MS.Internal
                 object o = parameters[i];
                 string s = o as string;
                 traceBuilder.Append(" ");
-                if (s != null)
+                if (s is not null)
                 {
                     traceBuilder.Append(s);
                 }
-                else if (o != null)
+                else if (o is not null)
                 {
                     traceBuilder.Append(o.GetType().Name);
                     traceBuilder.Append(":");
@@ -151,9 +151,9 @@ namespace MS.Internal
             else if (o is Binding)
             {
                 Binding binding = o as Binding;
-                if (binding.Path != null)
+                if (binding.Path is not null)
                     traceBuilder.AppendFormat("Path={0}", binding.Path.Path );
-                else if (binding.XPath != null)
+                else if (binding.XPath is not null)
                     traceBuilder.AppendFormat("XPath={0}", binding.XPath );
                 else
                     traceBuilder.Append("(no path)");
@@ -192,7 +192,7 @@ namespace MS.Internal
             else
             {
                 FrameworkElement fe = o as FrameworkElement;
-                if (fe != null)
+                if (fe is not null)
                 {
                     traceBuilder.AppendFormat("'{0}' (Name='{1}')", fe.GetType().Name, fe.Name);
                 }
@@ -221,17 +221,17 @@ namespace MS.Internal
         /// <returns>a string that describes TargetElement and TargetProperty</returns>
         static public void DescribeTarget(AvTraceBuilder traceBuilder, DependencyObject targetElement, DependencyProperty targetProperty)
         {
-            if (targetElement != null)
+            if (targetElement is not null)
             {
                 traceBuilder.Append("target element is ");
                 DescribeSourceObject(traceBuilder, targetElement);
-                if (targetProperty != null)
+                if (targetProperty is not null)
                 {
                     traceBuilder.Append("; ");
                 }
             }
 
-            if (targetProperty != null)
+            if (targetProperty is not null)
             {
                 traceBuilder.AppendFormat("target property is '{0}' (type '{1}')", targetProperty.Name, targetProperty.PropertyType.Name);
             }
@@ -306,12 +306,12 @@ namespace MS.Internal
         /// <param name="exception">If not null, used as both a trace and event parameter.</param>
         public static void TraceAndNotify(TraceEventType eventType, AvTraceDetails traceDetails, BindingExpressionBase binding, Exception exception = null)
         {
-            object[] traceParameters = (exception != null) ? new object[] { binding, exception } : new object[] { binding };
+            object[] traceParameters = (exception is not null) ? new object[] { binding, exception } : new object[] { binding };
             string traceOutput = _avTrace.Trace(eventType, traceDetails.Id, traceDetails.Message, traceDetails.Labels, traceParameters);
 
-            if (traceOutput != null && BindingDiagnostics.IsEnabled)
+            if (traceOutput is not null && BindingDiagnostics.IsEnabled)
             {
-                object[] eventParameters = (exception != null) ? new object[] { exception } : null;
+                object[] eventParameters = (exception is not null) ? new object[] { exception } : null;
                 BindingDiagnostics.NotifyBindingFailed(new BindingFailedEventArgs(eventType, traceDetails.Id, traceOutput, binding, eventParameters));
             }
         }
@@ -323,7 +323,7 @@ namespace MS.Internal
         /// <param name="exception">If not null, used as both a trace and event parameter.</param>
         public static void TraceAndNotify(TraceEventType eventType, AvTraceDetails traceDetails, Exception exception = null)
         {
-            object[] parameters = (exception != null) ? new object[] { exception } : null;
+            object[] parameters = (exception is not null) ? new object[] { exception } : null;
             TraceData.TraceAndNotify(eventType, traceDetails, null, parameters, parameters);
         }
 
@@ -336,7 +336,7 @@ namespace MS.Internal
         {
             string traceOutput = _avTrace.Trace(eventType, traceDetails.Id, traceDetails.Message, traceDetails.Labels, traceParameters);
 
-            if (traceOutput != null && BindingDiagnostics.IsEnabled)
+            if (traceOutput is not null && BindingDiagnostics.IsEnabled)
             {
                 BindingDiagnostics.NotifyBindingFailed(new BindingFailedEventArgs(eventType, traceDetails.Id, traceOutput, binding, eventParameters));
             }

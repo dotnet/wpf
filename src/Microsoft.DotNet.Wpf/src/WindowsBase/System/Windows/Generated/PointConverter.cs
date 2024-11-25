@@ -90,7 +90,7 @@ namespace System.Windows
 
             String source = value as string;
 
-            if (source != null)
+            if (source is not null)
             {
                 return Point.Parse(source);
             }
@@ -114,7 +114,7 @@ namespace System.Windows
         /// <param name="destinationType"> The type to which this will convert the Point instance. </param>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType != null && value is Point)
+            if (destinationType is not null && value is Point)
             {
                 Point instance = (Point)value;
 

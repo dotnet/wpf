@@ -50,7 +50,7 @@ namespace MS.Internal.Automation
                     delegate(ITextPointer tp)
                     {
                         TextEffectCollection effects = tp.GetValue(TextElement.TextEffectsProperty) as TextEffectCollection;
-                        return (effects != null && effects.Count > 0) ? AnimationStyle.Other : AnimationStyle.None;
+                        return (effects is not null && effects.Count > 0) ? AnimationStyle.Other : AnimationStyle.None;
                     },
                     delegate(object val1, object val2) { return (AnimationStyle)val1 == (AnimationStyle)val2; })
                 );
@@ -281,7 +281,7 @@ namespace MS.Internal.Automation
                     delegate(ITextPointer tp)
                     {
                         bool readOnly = false;
-                        if (tp.TextContainer.TextSelection != null)
+                        if (tp.TextContainer.TextSelection is not null)
                         {
                             readOnly = tp.TextContainer.TextSelection.TextEditor.IsReadOnly;
                         }
@@ -458,9 +458,9 @@ namespace MS.Internal.Automation
         /// </summary>
         internal TextRangeAdaptor(TextAdaptor textAdaptor, ITextPointer start, ITextPointer end, AutomationPeer textPeer)
         {
-            Invariant.Assert(textAdaptor != null, "Invalid textAdaptor.");
-            Invariant.Assert(textPeer != null, "Invalid textPeer.");
-            Invariant.Assert(start != null && end != null, "Invalid range.");
+            Invariant.Assert(textAdaptor is not null, "Invalid textAdaptor.");
+            Invariant.Assert(textPeer is not null, "Invalid textPeer.");
+            Invariant.Assert(start is not null && end is not null, "Invalid range.");
             Invariant.Assert(start.CompareTo(end) <= 0, "Invalid range, end < start.");
 
             _textAdaptor = textAdaptor;
@@ -596,7 +596,7 @@ namespace MS.Internal.Automation
                     // a) they are not currently in the view, or
                     // b) containing line cannot be found.
                     textView = _textAdaptor.GetUpdatedTextView();
-                    if (textView != null && textView.IsValid)
+                    if (textView is not null && textView.IsValid)
                     {
                         bool snapEndPosition = true;
                         if (expandStart && textView.Contains(_start))
@@ -665,7 +665,7 @@ namespace MS.Internal.Automation
                     // If page is found, move the start position to the beginning of the first range of that page
                     // and move the end position to the end of the last range of that page.
                     textView = _textAdaptor.GetUpdatedTextView();
-                    if (textView != null && textView.IsValid)
+                    if (textView is not null && textView.IsValid)
                     {
                         if (expandStart && textView.Contains(_start))
                         {
@@ -676,7 +676,7 @@ namespace MS.Internal.Automation
                                 pageTextView = ((MultiPageTextView)textView).GetPageTextViewFromPosition(_start);
                             }
                             ReadOnlyCollection<TextSegment> textSegments = pageTextView.TextSegments;
-                            if (textSegments != null && textSegments.Count > 0)
+                            if (textSegments is not null && textSegments.Count > 0)
                             {
                                 if (_start.CompareTo(textSegments[0].Start) != 0)
                                 {
@@ -693,7 +693,7 @@ namespace MS.Internal.Automation
                                 pageTextView = ((MultiPageTextView)textView).GetPageTextViewFromPosition(_end);
                             }
                             ReadOnlyCollection<TextSegment> textSegments = pageTextView.TextSegments;
-                            if (textSegments != null && textSegments.Count > 0)
+                            if (textSegments is not null && textSegments.Count > 0)
                             {
                                 if (_end.CompareTo(textSegments[textSegments.Count - 1].End) != 0)
                                 {
@@ -782,7 +782,7 @@ namespace MS.Internal.Automation
                     // a) they are not currently in the view, or
                     // b) containing line cannot be found.
                     textView = _textAdaptor.GetUpdatedTextView();
-                    if (textView != null && textView.IsValid && textView.Contains(position))
+                    if (textView is not null && textView.IsValid && textView.Contains(position))
                     {
                         TextSegment lineRange = textView.GetLineRange(position);
                         if (!lineRange.IsNull)
@@ -905,7 +905,7 @@ namespace MS.Internal.Automation
                     // If page is found, move the start position to the beginning of the first range of that page
                     // and move the end position to the end of the last range of that page.
                     textView = _textAdaptor.GetUpdatedTextView();
-                    if (textView != null && textView.IsValid && textView.Contains(position))
+                    if (textView is not null && textView.IsValid && textView.Contains(position))
                     {
                         ITextView pageTextView = textView;
                         if (textView is MultiPageTextView)
@@ -915,7 +915,7 @@ namespace MS.Internal.Automation
                         }
                         ReadOnlyCollection<TextSegment> textSegments = pageTextView.TextSegments;
 
-                        if (textSegments != null && textSegments.Count > 0)
+                        if (textSegments is not null && textSegments.Count > 0)
                         {
                             //When comparing, we need to take into account if the pointer is not right at 
                             //the end of the page (or beginning) because of normalization
@@ -1084,7 +1084,7 @@ namespace MS.Internal.Automation
                     // a) it is not currently in the view, or
                     // b) containing line cannot be found.
                     textView = _textAdaptor.GetUpdatedTextView();
-                    if (textView != null && textView.IsValid && textView.Contains(position))
+                    if (textView is not null && textView.IsValid && textView.Contains(position))
                     {
                         // ITextPointer.MoveToLineBoundary can't handle Table row end positions.
                         // Mimic TextEditor's caret navigation code and move into the preceding
@@ -1128,7 +1128,7 @@ namespace MS.Internal.Automation
                     // b) containing page cannot be found.
                     // Page movement is possible only in multi-page scenario.
                     textView = _textAdaptor.GetUpdatedTextView();
-                    if (textView != null && textView.IsValid && textView.Contains(position))
+                    if (textView is not null && textView.IsValid && textView.Contains(position))
                     {
                         if (textView is MultiPageTextView)
                         {
@@ -1257,7 +1257,7 @@ namespace MS.Internal.Automation
         private static int ColorFromBrush(object brush)
         {
             SolidColorBrush solidBrush = brush as SolidColorBrush;
-            Color color = (solidBrush != null) ? solidBrush.Color : Colors.Black;
+            Color color = (solidBrush is not null) ? solidBrush.Color : Colors.Black;
             return (0 + (color.R << 16) + (color.G << 8) + color.B);
         }
 
@@ -1266,16 +1266,16 @@ namespace MS.Internal.Automation
         /// </summary>
         private static string GetFontFamilyName(FontFamily fontFamily, ITextPointer context)
         {
-            if (fontFamily != null)
+            if (fontFamily is not null)
             {
                 // Typical case: return the family name/URI used to construct the FontFamily.
-                if (fontFamily.Source != null)
+                if (fontFamily.Source is not null)
                     return fontFamily.Source;
 
                 // Use the target font specified by the first family map with a compatible language.
-                if (fontFamily.FamilyMaps != null)
+                if (fontFamily.FamilyMaps is not null)
                 {
-                    XmlLanguage textLanguage = (context != null) ?
+                    XmlLanguage textLanguage = (context is not null) ?
                         (XmlLanguage)context.GetValue(FrameworkElement.LanguageProperty) :
                         null;
 
@@ -1286,7 +1286,7 @@ namespace MS.Internal.Automation
                             return familyMap.Target;
 
                         // Does the language match the text culture or a parent culture?
-                        if (textLanguage != null && familyMap.Language.RangeIncludes(textLanguage))
+                        if (textLanguage is not null && familyMap.Language.RangeIncludes(textLanguage))
                             return familyMap.Target;
                     }
                 }
@@ -1311,7 +1311,7 @@ namespace MS.Internal.Automation
             {
                 if (decor.Location == location)
                 {
-                    if (decor.Pen != null)
+                    if (decor.Pen is not null)
                     {
                         color = ColorFromBrush(decor.Pen.Brush);
                         // Ignore other decorations and their coloring if there're more at the same location.
@@ -1344,7 +1344,7 @@ namespace MS.Internal.Automation
                         // TextDecoration anyway. Hence, it seems would be too much bang for a buck if we try 
                         // to guess out the other dozen by analyzing TextDecoration.Pen. Let's keep it simple 
                         // and make difference only between solid and dashed lines. 
-                        if (decor.Pen != null)
+                        if (decor.Pen is not null)
                         {
                             lineStyle = (decor.Pen.DashStyle.Dashes.Count > 1) ? TextDecorationLineStyle.Dash : TextDecorationLineStyle.Single;
                         }
@@ -1391,7 +1391,7 @@ namespace MS.Internal.Automation
             }
             else
             {
-                Invariant.Assert(elementStart != null && elementEnd != null);
+                Invariant.Assert(elementStart is not null && elementEnd is not null);
                 AutomationPeer peerParent = GetEnclosingAutomationPeer(elementStart, elementEnd);
                 GetAutomationPeersFromRange(peerParent, elementStart, elementEnd);
             }
@@ -1688,7 +1688,7 @@ namespace MS.Internal.Automation
                     }
                     else
                     {
-                        if (attrEnd != null)
+                        if (attrEnd is not null)
                         {
                             attrStart = position.CreatePointer(LogicalDirection.Forward);
                             break;
@@ -1719,7 +1719,7 @@ namespace MS.Internal.Automation
                     }
                     else
                     {
-                        if (attrStart != null)
+                        if (attrStart is not null)
                         {
                             attrEnd = position.CreatePointer(LogicalDirection.Backward);
                             break;
@@ -1731,7 +1731,7 @@ namespace MS.Internal.Automation
                     }
                 }
             }
-            if (attrStart != null && attrEnd != null)
+            if (attrStart is not null && attrEnd is not null)
             {
                 resultRange = new TextRangeAdaptor(_textAdaptor, attrStart, attrEnd, _textPeer);
             }
@@ -1772,7 +1772,7 @@ namespace MS.Internal.Automation
                 findFlags |= FindFlags.FindInReverse;
             }
             ITextRange findResult = TextFindEngine.Find(_start, _end, text, findFlags, CultureInfo.CurrentCulture);
-            if (findResult != null && !findResult.IsEmpty)
+            if (findResult is not null && !findResult.IsEmpty)
             {
                 range = new TextRangeAdaptor(_textAdaptor, findResult.Start, findResult.End, _textPeer);
             }
@@ -1839,9 +1839,9 @@ namespace MS.Internal.Automation
             Normalize();
 
             AutomationPeer peer = GetEnclosingAutomationPeer(_start, _end);
-            Invariant.Assert(peer != null);
+            Invariant.Assert(peer is not null);
             IRawElementProviderSimple provider = ProviderFromPeer(peer);
-            Invariant.Assert(provider != null);
+            Invariant.Assert(provider is not null);
             return provider;
         }
 
@@ -2089,7 +2089,7 @@ namespace MS.Internal.Automation
 
             IRawElementProviderSimple[] elements = null;
             AutomationPeer peer = GetEnclosingAutomationPeer(_start, _end);
-            Invariant.Assert(peer != null);
+            Invariant.Assert(peer is not null);
             List<AutomationPeer> peers = GetAutomationPeersFromRange(peer, _start, _end);
             if (peers.Count > 0)
             {

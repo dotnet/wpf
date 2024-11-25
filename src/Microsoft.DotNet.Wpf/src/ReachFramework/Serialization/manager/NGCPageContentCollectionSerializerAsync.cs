@@ -82,7 +82,7 @@ namespace System.Windows.Xps.Serialization
                     NgcPageContentCollectionSerializerContext thisContext = 
                     context as NgcPageContentCollectionSerializerContext;
 
-                    if(thisContext != null)
+                    if(thisContext is not null)
                     {
                         SerializeNextPageContent(thisContext.Enumerator,
                                                  thisContext.ObjectContext);

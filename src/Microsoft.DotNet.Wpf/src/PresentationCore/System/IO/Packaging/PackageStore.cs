@@ -64,7 +64,7 @@ namespace System.IO.Packaging
             {
                 Package package = null;
 
-                if (_packages != null && _packages.Contains(uri))
+                if (_packages is not null && _packages.Contains(uri))
                 {
                     package = (Package) _packages[uri];
                 }
@@ -133,7 +133,7 @@ namespace System.IO.Packaging
 
             lock (_globalLock)
             {
-                if (_packages != null)
+                if (_packages is not null)
                 {
                     // If the key doesn't exist, it is no op
                     _packages.Remove(uri);

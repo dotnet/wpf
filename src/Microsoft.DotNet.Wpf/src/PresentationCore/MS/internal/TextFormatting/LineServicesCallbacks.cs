@@ -142,7 +142,7 @@ namespace MS.Internal.TextFormatting
 
                     if (cchText <= cchTextBuffer)
                     {
-                        Invariant.Assert(pwchTextBuffer != null);
+                        Invariant.Assert(pwchTextBuffer is not null);
 
                         int j = lsrun.OffsetToFirstChar + lsrunOffset;
                         for (int i = 0; i < cchText; i++, j++)
@@ -190,11 +190,11 @@ namespace MS.Internal.TextFormatting
                     case Plsrun.Text:
                         {
                             Debug.Assert(TextStore.IsContent(plsrun), "Unrecognizable run!");
-                            Debug.Assert(lsrun.RunProp != null, "invalid lsrun!");
+                            Debug.Assert(lsrun.RunProp is not null, "invalid lsrun!");
 
                             lschp.idObj = (ushort)TextStore.ObjectId.Text_chp;
 
-                            if (    lsrun.Shapeable != null
+                            if (    lsrun.Shapeable is not null
                                 &&  lsrun.Shapeable.IsShapingRequired)
                             {
                                 lschp.flags |= LsChp.Flags.fGlyphBased;
@@ -233,9 +233,9 @@ namespace MS.Internal.TextFormatting
                     ||  lsrun.Type == Plsrun.InlineObject)
                 {
                     // Run properties trigger repositioning
-                    Debug.Assert(lsrun.RunProp != null);
+                    Debug.Assert(lsrun.RunProp is not null);
 
-                    if (    lsrun.RunProp != null
+                    if (    lsrun.RunProp is not null
                         &&  lsrun.RunProp.BaselineAlignment != BaselineAlignment.Baseline)
                     {
                         FullText.VerticalAdjust = true;
@@ -273,7 +273,7 @@ namespace MS.Internal.TextFormatting
             )
         {
             // TextDecorations can be null.
-            if (textDecorations != null)
+            if (textDecorations is not null)
             {
                 // enumerate through all the TextDecoration and fill Chp accordingly.
                 for (int i = 0; i < textDecorations.Count; i++)
@@ -335,7 +335,7 @@ namespace MS.Internal.TextFormatting
                         lspap.grpf |= LsPap.Flags.fFmiForceBreakAsNext;
                     }
 
-                    if (pap.Hyphenator != null)
+                    if (pap.Hyphenator is not null)
                     {
                         lspap.grpf |= LsPap.Flags.fFmiAllowHyphenation;
                     }
@@ -346,7 +346,7 @@ namespace MS.Internal.TextFormatting
                     lspap.cpFirstContent = store.CpFirst;
                     lspap.cpFirst = lspap.cpFirstContent;
 
-                    if (FullText.TextMarkerStore != null)
+                    if (FullText.TextMarkerStore is not null)
                     {
                         lspap.grpf |= LsPap.Flags.fFmiAnm;
                     }
@@ -495,7 +495,7 @@ namespace MS.Internal.TextFormatting
             {
                 TextFormatterImp formatter;
 
-                if (FullText != null)
+                if (FullText is not null)
                 {
                     lsrun = FullText.StoreFrom(plsrun).GetRun(plsrun);
                     formatter = FullText.Formatter;
@@ -514,7 +514,7 @@ namespace MS.Internal.TextFormatting
                     // FullTextState property is only used in this Assert. 
                     // Put both the property and the assert under #if DEBUG to avoid
                     // FxCop violations
-                    Debug.Assert(Draw.CurrentLine.FullTextState != null);
+                    Debug.Assert(Draw.CurrentLine.FullTextState is not null);
                     #endif
                     lsrun = Draw.CurrentLine.GetRun(plsrun);
                     formatter = Draw.CurrentLine.Formatter;
@@ -522,7 +522,7 @@ namespace MS.Internal.TextFormatting
 
                 if (lsrun.Type == Plsrun.Text)
                 {
-                    Debug.Assert(lsrun.Shapeable != null && stringLength > 0);
+                    Debug.Assert(lsrun.Shapeable is not null && stringLength > 0);
                     lsrun.Shapeable.GetAdvanceWidthsUnshaped(charString, stringLength, TextFormatterImp.ToIdeal, charWidths);
 
                     totalWidth = 0;
@@ -537,7 +537,7 @@ namespace MS.Internal.TextFormatting
                         && totalWidth <= maxWidth
                         );
 
-                    if (totalWidth <= maxWidth && FullText != null)
+                    if (totalWidth <= maxWidth && FullText is not null)
                     {
                         int cpLimit = lsrun.OffsetToFirstCp + stringLengthFitted;
                         if (cpLimit > FullText.CpMeasured)
@@ -621,7 +621,7 @@ namespace MS.Internal.TextFormatting
                 FullTextState fullTextState = FullText;
                 TextStore markerStore = fullTextState.TextMarkerStore;
                 TextStore store = fullTextState.TextStore;
-                Debug.Assert(markerStore != null, "No marker store, yet autonumbering is specified!");
+                Debug.Assert(markerStore is not null, "No marker store, yet autonumbering is specified!");
 
                 int lscp = TextStore.LscpFirstMarker;
                 int lsrunLength;
@@ -699,7 +699,7 @@ namespace MS.Internal.TextFormatting
                 double underlinePositionInEm;
                 double underlineThicknessInEm;
 
-                if (lsrun.Shapeable != null)
+                if (lsrun.Shapeable is not null)
                 {
                     underlinePositionInEm = lsrun.Shapeable.UnderlinePosition;
                     underlineThicknessInEm = lsrun.Shapeable.UnderlineThickness;
@@ -798,7 +798,7 @@ namespace MS.Internal.TextFormatting
             out double  strikeThroughThicknessInEm
             )
         {
-            if (lsrun.Shapeable != null)
+            if (lsrun.Shapeable is not null)
             {
                 strikeThroughPositionInEm = lsrun.Shapeable.StrikethroughPosition;
                 strikeThroughThicknessInEm = lsrun.Shapeable.StrikethroughThickness;
@@ -1066,7 +1066,7 @@ namespace MS.Internal.TextFormatting
 
             // Draw paragraph-level text decorations (if any).
             TextDecorationCollection textDecorations = currentLine.TextDecorations;
-            if (textDecorations != null)
+            if (textDecorations is not null)
             {
                 DrawTextDecorationCollection(
                     lsrun,
@@ -1086,7 +1086,7 @@ namespace MS.Internal.TextFormatting
 
             // Draw run-level text decorations (if any).
             textDecorations = lsrun.RunProp.TextDecorations;
-            if (textDecorations != null)
+            if (textDecorations is not null)
             {
                 DrawTextDecorationCollection(
                     lsrun,
@@ -1121,7 +1121,7 @@ namespace MS.Internal.TextFormatting
             LsTFlow                   textFlow
             )
         {
-            Invariant.Assert(textDecorations != null);
+            Invariant.Assert(textDecorations is not null);
 
             foreach (TextDecoration td in textDecorations)
             {
@@ -1241,7 +1241,7 @@ namespace MS.Internal.TextFormatting
             // Resolve the final thickness of the text decoration
             //
             double penThickness = 1.0;
-            if (textDecoration.Pen != null)
+            if (textDecoration.Pen is not null)
             {
                 penThickness = textDecoration.Pen.Thickness;
             }
@@ -1299,7 +1299,7 @@ namespace MS.Internal.TextFormatting
 
             DrawingContext drawingContext = Draw.DrawingContext;
 
-            if (drawingContext != null)
+            if (drawingContext is not null)
             {      
                 
                 
@@ -1470,7 +1470,7 @@ namespace MS.Internal.TextFormatting
                     currentLine.IsJustified
                     );
 
-                if (glyphRun != null)
+                if (glyphRun is not null)
                 {
                     DrawingContext drawingContext = Draw.DrawingContext;
 
@@ -1536,8 +1536,8 @@ namespace MS.Internal.TextFormatting
                     // same bidi level
                     lsrunFirst.BidiLevel == lsrunSecond.BidiLevel
                     // both are shapeable and equals
-                    && lsrunFirst.Shapeable != null
-                    && lsrunSecond.Shapeable != null
+                    && lsrunFirst.Shapeable is not null
+                    && lsrunSecond.Shapeable is not null
                     && lsrunFirst.Shapeable.CanShapeTogether(lsrunSecond.Shapeable)
                     ) ? 1 : 0;
 
@@ -1619,7 +1619,7 @@ namespace MS.Internal.TextFormatting
             ref int                     glyphCount              // [out] glyph buffer length and returning actual glyph count
             )
         {
-            Invariant.Assert(puGlyphsBuffer != null && piGlyphPropsBuffer != null);
+            Invariant.Assert(puGlyphsBuffer is not null && piGlyphPropsBuffer is not null);
 
             LsErr lserr = LsErr.None;
             LSRun lsrunFirst = null;
@@ -1629,7 +1629,7 @@ namespace MS.Internal.TextFormatting
                 LSRun[] lsruns = RemapLSRuns(plsplsruns, plsrunCount);
                 lsrunFirst = lsruns[0];
 
-                Debug.Assert(lsrunFirst.Shapeable != null);
+                Debug.Assert(lsrunFirst.Shapeable is not null);
                 Debug.Assert(cchText > 0); // LineServices should not pass in zero character count;
 
                 bool isRightToLeft = ((lsrunFirst.BidiLevel & 1) != 0);
@@ -1789,7 +1789,7 @@ namespace MS.Internal.TextFormatting
             {
                 Plsrun plsrun = (Plsrun)plsplsruns[i];
                 lsruns[i] = store.GetRun(plsrun);
-                Debug.Assert(TextStore.IsContent(plsrun) && lsruns[i] != null);
+                Debug.Assert(TextStore.IsContent(plsrun) && lsruns[i] is not null);
             }
             return lsruns;
         }
@@ -1825,7 +1825,7 @@ namespace MS.Internal.TextFormatting
                 TextMetrics.FullTextLine currentLine = Draw.CurrentLine;
                 lsrun = currentLine.GetRun(plsrun);
 
-                Debug.Assert(TextStore.IsContent(plsrun) && lsrun.Shapeable != null);
+                Debug.Assert(TextStore.IsContent(plsrun) && lsrun.Shapeable is not null);
 
                 GlyphRun glyphRun = ComputeShapedGlyphRun(
                     lsrun,
@@ -1842,7 +1842,7 @@ namespace MS.Internal.TextFormatting
                     currentLine.IsJustified
                     );
 
-                if (glyphRun != null)
+                if (glyphRun is not null)
                 {
                     DrawingContext drawingContext = Draw.DrawingContext;
 
@@ -2385,7 +2385,7 @@ namespace MS.Internal.TextFormatting
                 lsrun = store.GetRun(plsrun);
                 TextEmbeddedObject textObject = lsrun.TextRun as TextEmbeddedObject;
 
-                Debug.Assert(textObject != null);
+                Debug.Assert(textObject is not null);
 
                 int cpInline = store.GetExternalCp(lscpInline);
 
@@ -2478,7 +2478,7 @@ namespace MS.Internal.TextFormatting
 
                 TextEmbeddedObject textObject = lsrun.TextRun as TextEmbeddedObject;
 
-                Debug.Assert(textObject != null);
+                Debug.Assert(textObject is not null);
                 Debug.Assert(textFlow != LsTFlow.lstflowWS || runDirection != 0);
 
                 if ((baseDirection ^ runDirection) != 0)
@@ -2531,7 +2531,7 @@ namespace MS.Internal.TextFormatting
 
                 DrawingContext drawingContext = Draw.DrawingContext;                
                 
-                if (drawingContext != null)
+                if (drawingContext is not null)
                 {
                     // snapping for inline object
                     Draw.SetGuidelineY(baselineOrigin.Y);
@@ -2690,7 +2690,7 @@ namespace MS.Internal.TextFormatting
                         );
                 }
                 
-                if (glyphRun != null)
+                if (glyphRun is not null)
                 {
                     // 
                     // Add this glyph run into the enumeration list
@@ -2777,7 +2777,7 @@ namespace MS.Internal.TextFormatting
 
                 }
 
-                if (glyphRun != null)
+                if (glyphRun is not null)
                 {                    
                     IndexedGlyphRuns.Add(
                         new IndexedGlyphRun(
@@ -3137,7 +3137,7 @@ namespace MS.Internal.TextFormatting
             }
 
 #if CHECK_GLYPHS
-            if (   lsrun._glyphs != null
+            if (   lsrun._glyphs is not null
                 && glyphCount <= lsrun._glyphs.Length)
             {
                 for (int i = 0; i < glyphCount; i++)
@@ -3178,7 +3178,7 @@ namespace MS.Internal.TextFormatting
             GlyphRun glyphRun = null;
             if (lsrun.Type == Plsrun.Text)
             {
-                Debug.Assert(lsrun.Shapeable != null);
+                Debug.Assert(lsrun.Shapeable is not null);
                 Point runOrigin    = new Point();
                 int nominalX = 0;
                 int nominalY = 0;

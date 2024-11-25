@@ -56,7 +56,7 @@ namespace System.Windows.Input
         /// <returns></returns>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object source)
         {
-            if (source is string && source != null)
+            if (source is string && source is not null)
             {
                 string fullName = ((string)source).Trim();
                 string mouseActionToken;
@@ -85,7 +85,7 @@ namespace System.Windows.Input
                     // mouseAction Converter will throw Exception, if it fails, 
                     // so we don't need to check once more for bogus 
                     // MouseAction values
-                    if (mouseAction != null)
+                    if (mouseAction is not null)
                     {
                         if (modifiersToken != String.Empty)
                         {
@@ -94,7 +94,7 @@ namespace System.Windows.Input
                             {
                                 object modifierKeys = modifierKeysConverter.ConvertFrom(context, culture, modifiersToken);
 
-                                if (modifierKeys != null && modifierKeys is ModifierKeys)
+                                if (modifierKeys is not null && modifierKeys is ModifierKeys)
                                 {
                                     return new MouseGesture((MouseAction)mouseAction, (ModifierKeys)modifierKeys);
                                 }
@@ -122,10 +122,10 @@ namespace System.Windows.Input
             if (destinationType == typeof(string))
             {
                 // When invoked by the serialization engine we can convert to string only for known type
-                if (context != null && context.Instance != null)
+                if (context is not null && context.Instance is not null)
                 {
                     MouseGesture mouseGesture = context.Instance as MouseGesture;
-                    if (mouseGesture != null)
+                    if (mouseGesture is not null)
                     {
                         return (ModifierKeysConverter.IsDefinedModifierKeys(mouseGesture.Modifiers) 
                                && MouseActionConverter.IsDefinedMouseAction(mouseGesture.MouseAction));
@@ -153,7 +153,7 @@ namespace System.Windows.Input
                     return String.Empty;
 
                 MouseGesture mouseGesture = value as MouseGesture;
-                if (mouseGesture != null)
+                if (mouseGesture is not null)
                 {
                     string strGesture = "";
 

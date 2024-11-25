@@ -87,26 +87,26 @@ namespace System.Windows.Media
 
         internal void VerifyAPIReadOnly()
         {
-            Debug.Assert(_owner != null);
+            Debug.Assert(_owner is not null);
             _owner.VerifyAPIReadOnly();
         }
 
         internal void VerifyAPIReadOnly(Visual other)
         {
-            Debug.Assert(_owner != null);
+            Debug.Assert(_owner is not null);
             _owner.VerifyAPIReadOnly(other);
         }
 
         internal void VerifyAPIReadWrite()
         {
-            Debug.Assert(_owner != null);
+            Debug.Assert(_owner is not null);
             _owner.VerifyAPIReadWrite();
             VerifyNotReadOnly();
         }
 
         internal void VerifyAPIReadWrite(Visual other)
         {
-            Debug.Assert(_owner != null);
+            Debug.Assert(_owner is not null);
             _owner.VerifyAPIReadWrite(other);
             VerifyNotReadOnly();
         }
@@ -254,11 +254,11 @@ namespace System.Windows.Media
         {
             get
             {
-                return _items != null ? _items.Length : 0;
+                return _items is not null ? _items.Length : 0;
             }
             set
             {
-                int currentCapacity = _items != null ? _items.Length : 0;
+                int currentCapacity = _items is not null ? _items.Length : 0;
                 if (value != currentCapacity)
                 {
                     if (value < _size)
@@ -270,7 +270,7 @@ namespace System.Windows.Media
                         Visual[] newItems = new Visual[value];
                         if (_size > 0)
                         {
-                            Debug.Assert(_items != null);
+                            Debug.Assert(_items is not null);
                             Array.Copy(_items, 0, newItems, 0, _size);
                         }
                         _items = newItems;
@@ -351,17 +351,17 @@ namespace System.Windows.Media
 
                 Visual child = _items[index];
 
-                if ((value is null) && (child != null))
+                if ((value is null) && (child is not null))
                 {
                     DisconnectChild(index);
                 }
-                else if (value != null)
+                else if (value is not null)
                 {
-                    if (child != null)
+                    if (child is not null)
                     {
                         throw new System.ArgumentException(SR.VisualCollection_EntryInUse);
                     }
-                    if ((value._parent != null) // Only a visual that isn't a visual parent or
+                    if ((value._parent is not null) // Only a visual that isn't a visual parent or
                         || value.IsRootElement) // are a root node of a visual target can be set into the collection.
                     {
                         throw new System.ArgumentException(SR.VisualCollection_VisualHasParent);
@@ -400,7 +400,7 @@ namespace System.Windows.Media
                 throw new InvalidOperationException(SR.CannotModifyVisualChildrenDuringTreeWalk);
             }
 
-            Debug.Assert(value != null);
+            Debug.Assert(value is not null);
             Debug.Assert(_items[index] is null);
             Debug.Assert(value._parent is null);
             Debug.Assert(!value.IsRootElement);
@@ -418,7 +418,7 @@ namespace System.Windows.Media
         /// </summary>
         private void DisconnectChild(int index)
         {
-            Debug.Assert(_items[index] != null);
+            Debug.Assert(_items[index] is not null);
 
             Visual child = _items[index];
 
@@ -461,8 +461,8 @@ namespace System.Windows.Media
         {
             VerifyAPIReadWrite(visual);
 
-            if ((visual != null) &&
-                ((visual._parent != null)   // Only visuals that are not connected to another tree
+            if ((visual is not null) &&
+                ((visual._parent is not null)   // Only visuals that are not connected to another tree
                  || visual.IsRootElement))  // or a visual target can be added.
             {
                 throw new System.ArgumentException(SR.VisualCollection_VisualHasParent);
@@ -475,7 +475,7 @@ namespace System.Windows.Media
             }
             int addedPosition = _size++;
             Debug.Assert(_items[addedPosition] is null);
-            if (visual != null)
+            if (visual is not null)
             {
                 ConnectChild(addedPosition, visual);
             }
@@ -543,7 +543,7 @@ namespace System.Windows.Media
         {
             int indexToRemove = -1;
 
-            if (visual != null)
+            if (visual is not null)
             {
                 if (visual._parent != _owner)
                 {
@@ -553,7 +553,7 @@ namespace System.Windows.Media
                     return; 
                 }
 
-                Debug.Assert(visual._parent != null);
+                Debug.Assert(visual._parent is not null);
 
                 indexToRemove = visual._parentIndex;
                 DisconnectChild(indexToRemove);
@@ -579,7 +579,7 @@ namespace System.Windows.Media
                 for (int i = indexToRemove; i < _size; i++)
                 {
                     Visual  child = _items[i+1];
-                    if (child != null)
+                    if (child is not null)
                     {
                         child._parentIndex = i;
                     }
@@ -666,7 +666,7 @@ namespace System.Windows.Media
 
             for (int i=0; i < _size; i++)
             {
-                if (_items[i] != null)
+                if (_items[i] is not null)
                 {
                     Debug.Assert(_items[i]._parent == _owner);
                     DisconnectChild(i);
@@ -708,8 +708,8 @@ namespace System.Windows.Media
             ArgumentOutOfRangeException.ThrowIfNegative(index);
             ArgumentOutOfRangeException.ThrowIfGreaterThan(index, _size);
 
-            if ((visual != null) &&
-                ((visual._parent != null)   // Only visuals that are not connected to another tree
+            if ((visual is not null) &&
+                ((visual._parent is not null)   // Only visuals that are not connected to another tree
                  || visual.IsRootElement))  // or a visual target can be added.
             {
                 throw new System.ArgumentException(SR.VisualCollection_VisualHasParent);
@@ -723,7 +723,7 @@ namespace System.Windows.Media
             for (int i = _size-1; i >= index; i--)
             {
                 Visual child = _items[i];
-                if (child != null)
+                if (child is not null)
                 {
                     child._parentIndex = i+1;
                 }
@@ -732,7 +732,7 @@ namespace System.Windows.Media
             _items[index] = null;
 
             _size++;
-            if (visual != null)
+            if (visual is not null)
             {
                 ConnectChild(index, visual);
             }
@@ -794,7 +794,7 @@ namespace System.Windows.Media
             {
                 for (int i = index; i < index + count; i++)
                 {
-                    if (_items[i] != null)
+                    if (_items[i] is not null)
                     {
                         DisconnectChild(i);
                         _items[i] = null;
@@ -805,7 +805,7 @@ namespace System.Windows.Media
                 for (int i = index; i < _size; i++)
                 {
                     Visual child = _items[i + count];
-                    if (child != null)
+                    if (child is not null)
                     {
                         child._parentIndex = i;
                     }
@@ -829,14 +829,14 @@ namespace System.Windows.Media
             int newIndex;
             int oldIndex;
 
-            Invariant.Assert(visual != null, "we don't support moving a null visual");
+            Invariant.Assert(visual is not null, "we don't support moving a null visual");
 
             if (visual._parent == _owner)
             {
                 oldIndex = visual._parentIndex;
-                newIndex = destination != null ? destination._parentIndex : _size;
+                newIndex = destination is not null ? destination._parentIndex : _size;
 
-                Debug.Assert(visual._parent != null);
+                Debug.Assert(visual._parent is not null);
                 Debug.Assert(destination is null || destination._parent == visual._parent);
                 Debug.Assert(newIndex >= 0 && newIndex <= _size, "New index is invalid");
 
@@ -851,7 +851,7 @@ namespace System.Windows.Media
                         for (int i = oldIndex; i < newIndex; i++)
                         {
                             Visual child = _items[i + 1];
-                            if (child != null)
+                            if (child is not null)
                             {
                                 child._parentIndex = i;
                             }
@@ -867,7 +867,7 @@ namespace System.Windows.Media
                         for (int i = oldIndex; i > newIndex; i--)
                         {
                             Visual child = _items[i - 1];
-                            if (child != null)
+                            if (child is not null)
                             {
                                 child._parentIndex = i;
                             }

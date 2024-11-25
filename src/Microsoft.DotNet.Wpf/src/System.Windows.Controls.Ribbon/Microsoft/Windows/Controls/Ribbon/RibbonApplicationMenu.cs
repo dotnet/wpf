@@ -232,7 +232,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (UsesItemContainerTemplate)
             {
                 DataTemplate itemContainerTemplate = ItemContainerTemplateSelector.SelectTemplate(currentItem, this);
-                if (itemContainerTemplate != null)
+                if (itemContainerTemplate is not null)
                 {
                     object itemContainer = itemContainerTemplate.LoadContent();
                     if (itemContainer is RibbonApplicationMenuItem || itemContainer is RibbonApplicationSplitMenuItem || itemContainer is RibbonSeparator || itemContainer is RibbonGallery)
@@ -294,7 +294,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             base.OnApplyTemplate();
 
             // Cleanup the previous template elements
-            if (_popup != null)
+            if (_popup is not null)
             {
                 _popup.Opened -= new EventHandler(this.OnPopupOpened);
             }
@@ -305,7 +305,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             _footerPaneHost = this.GetTemplateChild(FooterPaneTemplateName) as ContentPresenter;
             _auxiliaryPaneHost = this.GetTemplateChild(AuxiliaryPaneTemplateName) as ContentPresenter;
 
-            if (_popup != null)
+            if (_popup is not null)
             {
                 _popup.Opened += new EventHandler(this.OnPopupOpened);
             }
@@ -342,7 +342,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private void OnPopupOpened(object sender, EventArgs e)
         {
             // Position the inner ToggleButton to render on top of main ToggleButton
-            if (_popupToggleButton != null && PartToggleButton != null)
+            if (_popupToggleButton is not null && PartToggleButton is not null)
             {
                 double currentXPosition = Canvas.GetLeft(_popupToggleButton);
                 if (double.IsNaN(currentXPosition))
@@ -396,7 +396,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         internal bool AuxiliaryPaneMoveFocus(FocusNavigationDirection direction)
         {
             UIElement auxiliaryPaneHost = AuxiliaryPaneHost;
-            if (auxiliaryPaneHost != null &&
+            if (auxiliaryPaneHost is not null &&
                 auxiliaryPaneHost.IsVisible &&
                 auxiliaryPaneHost.IsEnabled &&
                 auxiliaryPaneHost.MoveFocus(new TraversalRequest(direction)))
@@ -412,7 +412,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         internal bool FooterPaneMoveFocus(FocusNavigationDirection direction)
         {
             UIElement footerPaneHost = FooterPaneHost;
-            if (footerPaneHost != null &&
+            if (footerPaneHost is not null &&
                 footerPaneHost.IsVisible &&
                 footerPaneHost.IsEnabled &&
                 footerPaneHost.MoveFocus(new TraversalRequest(direction)))
@@ -428,7 +428,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         internal bool ItemsPaneMoveFocus(FocusNavigationDirection direction)
         {
             UIElement subMenuScrollViewer = SubMenuScrollViewer;
-            if (subMenuScrollViewer != null &&
+            if (subMenuScrollViewer is not null &&
                 subMenuScrollViewer.MoveFocus(new TraversalRequest(direction)))
             {
                 return true;
@@ -445,10 +445,10 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (e.Key == Key.Down)
             {
                 DependencyObject element = e.OriginalSource as DependencyObject;
-                if (element != null)
+                if (element is not null)
                 {
                     UIElement footerPaneHost = FooterPaneHost;
-                    if (footerPaneHost != null &&
+                    if (footerPaneHost is not null &&
                         footerPaneHost.IsKeyboardFocusWithin &&
                         TreeHelper.IsVisualAncestorOf(footerPaneHost, element))
                     {
@@ -471,7 +471,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             else if (e.Key == Key.Up)
             {
                 UIElement popupChild = _popup.TryGetChild();
-                if (popupChild != null &&
+                if (popupChild is not null &&
                     !popupChild.IsKeyboardFocusWithin)
                 {
                     // If the popup does not have focus with in then try moving focus to
@@ -486,10 +486,10 @@ namespace Microsoft.Windows.Controls.Ribbon
                 else
                 {
                     DependencyObject element = e.OriginalSource as DependencyObject;
-                    if (element != null)
+                    if (element is not null)
                     {
                         UIElement auxilaryPaneHost = AuxiliaryPaneHost;
-                        if (auxilaryPaneHost != null && 
+                        if (auxilaryPaneHost is not null && 
                             auxilaryPaneHost.IsKeyboardFocusWithin && 
                             TreeHelper.IsVisualAncestorOf(auxilaryPaneHost, element))
                         {
@@ -514,12 +514,12 @@ namespace Microsoft.Windows.Controls.Ribbon
                 e.Key == Key.Right)
             {
                 DependencyObject element = e.OriginalSource as DependencyObject;
-                if (element != null)
+                if (element is not null)
                 {
                     if ((e.Key == Key.Left) == (FlowDirection == FlowDirection.LeftToRight))
                     {
                         UIElement auxilaryPaneHost = AuxiliaryPaneHost;
-                        if (auxilaryPaneHost != null &&
+                        if (auxilaryPaneHost is not null &&
                             auxilaryPaneHost.IsKeyboardFocusWithin &&
                             TreeHelper.IsVisualAncestorOf(auxilaryPaneHost, element))
                         {
@@ -527,7 +527,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                             // of auxiliary pane, then move focus to nearest element to the left of
                             // auxiliarypane.
                             DependencyObject nextFocus = RibbonHelper.PredictFocus(element, FocusNavigationDirection.Left);
-                            if (nextFocus != null &&
+                            if (nextFocus is not null &&
                                 !TreeHelper.IsVisualAncestorOf(auxilaryPaneHost, nextFocus))
                             {
                                 if (RibbonHelper.Focus(nextFocus))
@@ -540,7 +540,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     else if (e.Key == Key.Left)
                     {
                         ScrollViewer subMenuScrollViewer = SubMenuScrollViewer;
-                        if (subMenuScrollViewer != null &&
+                        if (subMenuScrollViewer is not null &&
                             subMenuScrollViewer.IsKeyboardFocusWithin &&
                             TreeHelper.IsVisualAncestorOf(subMenuScrollViewer, element))
                         {
@@ -552,11 +552,11 @@ namespace Microsoft.Windows.Controls.Ribbon
                             {
                                 menuItem = TreeHelper.FindVisualAncestor<RibbonMenuItem>(element);
                             }
-                            if (menuItem != null &&
+                            if (menuItem is not null &&
                                 !menuItem.CanOpenSubMenu)
                             {
                                 DependencyObject nextFocus = menuItem.PredictFocus(FocusNavigationDirection.Right);
-                                if (nextFocus != null)
+                                if (nextFocus is not null)
                                 {
                                     if (RibbonHelper.Focus(nextFocus))
                                     {

@@ -32,7 +32,7 @@ namespace System.Xaml.Schema
         internal ClrEvent(string name, EventInfo ei, XamlType declaringType, bool isStatic)
             : base(ei.Name, declaringType)
         {
-            Debug.Assert(ei != null);
+            Debug.Assert(ei is not null);
             Debug.Assert(ei.Name == name);
 
             MethodInfo mi = ei.GetAddMethod(true);

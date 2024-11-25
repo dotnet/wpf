@@ -147,7 +147,7 @@ namespace System.Windows.Input
             // dragged out into a floating widow. We want to prevent the MainWindow (focus scope) to point to the 
             // element in the floating window as its logical FocusedElement.
             
-            if (validate && focusedElement != null)
+            if (validate && focusedElement is not null)
             {
                 DependencyObject focusScope = element;
 
@@ -218,12 +218,12 @@ namespace System.Windows.Input
             DependencyObject oldVisual = (DependencyObject)e.OldValue;
             DependencyObject newVisual = (DependencyObject)e.NewValue;
 
-            if (oldVisual != null)
+            if (oldVisual is not null)
             {
                 oldVisual.ClearValue(UIElement.IsFocusedPropertyKey);
             }
 
-            if (newVisual != null)
+            if (newVisual is not null)
             {
                 // set IsFocused on the element.  The element may redirect Keyboard focus
                 // in response to this (e.g. Editable ComboBox redirects to the
@@ -253,13 +253,13 @@ namespace System.Windows.Input
                 Visual oldVisual = GetNearestVisual(args.OldValue);
                 Visual newVisual = GetNearestVisual(args.NewValue);
 
-                if (oldVisual != null)
+                if (oldVisual is not null)
                 {
                     oldVisual.ClearValue(UIElement.IsFocusedPropertyKey);
 
                     // reverse-inherit:  clear the property on all parents that aren't also in the
                     // new focused element ancestry
-                    while (oldVisual != null)
+                    while (oldVisual is not null)
                     {
                         oldVisual.ClearValue(FocusedElementProperty);
                         oldVisual = VisualTreeHelper.GetParent(oldVisual);
@@ -271,12 +271,12 @@ namespace System.Windows.Input
                     }
                 }
 
-                if (newVisual != null)
+                if (newVisual is not null)
                 {
                     newVisual.SetValue(UIElement.IsFocusedPropertyKey, BooleanBoxes.TrueBox);
 
                     // reverse-inherit:  set the property on all parents
-                    while (newVisual != null)
+                    while (newVisual is not null)
                     {
                         newVisual.SetValue(FocusedElementProperty, newFocusedElement);
                         newVisual = VisualTreeHelper.GetParent(newVisual);
@@ -300,13 +300,13 @@ namespace System.Windows.Input
         private static Visual GetNearestVisual(object value)
         {
             Visual visual = null;
-            if (value != null)
+            if (value is not null)
             {
                 visual = value as Visual;
                 if (visual is null)
                 {
                     ContentElement ce = value as ContentElement;
-                    if (ce != null)
+                    if (ce is not null)
                     {
                         visual = ce.GetUIParent() as Visual;
                     }
@@ -325,10 +325,10 @@ namespace System.Windows.Input
             DependencyObject dependencyObject = element;
             
             ContentElement ce = element as ContentElement;
-            if (ce != null)
+            if (ce is not null)
                 dependencyObject = ce.GetUIParent();
             
-            while (dependencyObject != null)
+            while (dependencyObject is not null)
             {
                 parent = dependencyObject; 
                 dependencyObject = VisualTreeHelper.GetParent(dependencyObject);
@@ -348,10 +348,10 @@ namespace System.Windows.Input
 
             // Step 1: Walk up the logical tree
             UIElement uiElement = d as UIElement;
-            if (uiElement != null)
+            if (uiElement is not null)
             {
                 DependencyObject logicalParent = uiElement.GetUIParentCore();
-                if (logicalParent != null)
+                if (logicalParent is not null)
                 {
                     return GetFocusScope(logicalParent);
                 }
@@ -359,10 +359,10 @@ namespace System.Windows.Input
             else
             {
                 ContentElement ce = d as ContentElement;
-                if (ce != null)
+                if (ce is not null)
                 {
                     DependencyObject logicalParent = ce.GetUIParent(true);
-                    if (logicalParent != null)
+                    if (logicalParent is not null)
                     {
                         return _GetFocusScope(logicalParent);
                     }
@@ -370,10 +370,10 @@ namespace System.Windows.Input
                 else
                 {
                     UIElement3D uiElement3D = d as UIElement3D;
-                    if (uiElement3D != null)
+                    if (uiElement3D is not null)
                     {
                         DependencyObject logicalParent = uiElement3D.GetUIParentCore();
-                        if (logicalParent != null)
+                        if (logicalParent is not null)
                         {
                             return GetFocusScope(logicalParent);
                         }
@@ -385,7 +385,7 @@ namespace System.Windows.Input
             if (d is Visual || d is Visual3D)
             {
                 DependencyObject visualParent = VisualTreeHelper.GetParent(d);
-                if (visualParent != null)
+                if (visualParent is not null)
                 {
                     return _GetFocusScope(visualParent);
                 }

@@ -86,7 +86,7 @@ namespace MS.Internal.Media3D
         // Computes an axis aligned bounding box that contains the given set of points.
         internal static Rect3D ComputeAxisAlignedBoundingBox(Point3DCollection positions)
         {
-            if (positions != null)
+            if (positions is not null)
             {
                 FrugalStructList<Point3D> points = positions._collection;
 
@@ -385,7 +385,7 @@ namespace MS.Internal.Media3D
 
         internal static Matrix3D GetWorldToViewportTransform3D(Camera camera, Rect viewport)
         {
-            Debug.Assert(camera != null, "Caller is responsible for ensuring camera is not null.");
+            Debug.Assert(camera is not null, "Caller is responsible for ensuring camera is not null.");
             
             return camera.GetViewMatrix() *
                 camera.GetProjectionMatrix(M3DUtil.GetAspectRatio(viewport.Size)) *
@@ -523,7 +523,7 @@ namespace MS.Internal.Media3D
             DependencyObject dependencyObject = visual3DStart;
             Matrix3D worldTransform = Matrix3D.Identity;
        
-            while (dependencyObject != null)
+            while (dependencyObject is not null)
             {
                 Visual3D visual3D = dependencyObject as Visual3D;
 
@@ -535,7 +535,7 @@ namespace MS.Internal.Media3D
                 
                 Transform3D transform = (Transform3D)visual3D.GetValue(Visual3D.TransformProperty);
 
-                if (transform != null)
+                if (transform is not null)
                 {
                     transform.Append(ref worldTransform);
                 }
@@ -543,7 +543,7 @@ namespace MS.Internal.Media3D
                 dependencyObject = VisualTreeHelper.GetParent(dependencyObject);      
             }
 
-            if (dependencyObject != null)
+            if (dependencyObject is not null)
             {
                 viewport = (Viewport3DVisual)dependencyObject;
             }
@@ -563,7 +563,7 @@ namespace MS.Internal.Media3D
         {
             matrix = GetWorldTransformationMatrix(visual3D, out viewport);
 
-            if (viewport != null)
+            if (viewport is not null)
             {
                 matrix *= GetWorldToViewportTransform3D(viewport.Camera, viewport.Viewport);
                 return true;

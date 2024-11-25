@@ -55,13 +55,13 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             base.OnApplyTemplate();
 
-            if (_headerButton != null)
+            if (_headerButton is not null)
             {
                 _headerButton.Click -= new RoutedEventHandler(OnHeaderClicked);
             }
             _headerButton = GetTemplateChild(RibbonSplitButton.HeaderButtonTemplatePartName) as ButtonBase;
 
-            if (_headerButton != null)
+            if (_headerButton is not null)
             {
                 _headerButton.Click += new RoutedEventHandler(OnHeaderClicked);
             }
@@ -229,7 +229,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void OnDropDownToolTipPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             RibbonSplitButton splitButton = (RibbonSplitButton)d;
-            if (splitButton.PartToggleButton != null)
+            if (splitButton.PartToggleButton is not null)
             {
                 splitButton.PartToggleButton.CoerceValue(FrameworkElement.ToolTipProperty);
             }
@@ -403,7 +403,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (!IsCheckable && AutomationPeer.ListenerExists(AutomationEvents.InvokePatternOnInvoked))
             {
                 RibbonSplitButtonAutomationPeer peer = UIElementAutomationPeer.FromElement(this) as RibbonSplitButtonAutomationPeer;
-                if (peer != null)
+                if (peer is not null)
                 {
                     peer.RaiseInvokeAutomationEvent();
                 }
@@ -416,7 +416,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (splitButton.IsCheckable)
             {
                 RibbonSplitButtonAutomationPeer peer = UIElementAutomationPeer.FromElement(splitButton) as RibbonSplitButtonAutomationPeer;
-                if (peer != null)
+                if (peer is not null)
                 {
                     peer.RaiseToggleStatePropertyChangedEvent((bool)e.OldValue, (bool)e.NewValue);
                 }
@@ -430,7 +430,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private void SetBorderThickess()
         {
-            if (PartToggleButton != null && _headerButton != null && ControlSizeDefinition != null )
+            if (PartToggleButton is not null && _headerButton is not null && ControlSizeDefinition is not null )
             {
                 if (ControlSizeDefinition.ImageSize == RibbonImageSize.Large)
                 {
@@ -524,14 +524,14 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             Image imagePart = null;
             RibbonButton button = _headerButton as RibbonButton;
-            if (button != null)
+            if (button is not null)
             {
                 imagePart = button.Image;
             }
             else
             {
                 RibbonToggleButton toggleButton = _headerButton as RibbonToggleButton;
-                if (toggleButton != null)
+                if (toggleButton is not null)
                 {
                     imagePart = toggleButton.Image;
                 }

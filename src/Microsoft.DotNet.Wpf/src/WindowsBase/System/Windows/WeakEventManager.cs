@@ -265,7 +265,7 @@ namespace System.Windows
 
         private void AddListener(object source, IWeakEventListener listener, Delegate handler)
         {
-            object sourceKey = (source != null) ? source : StaticSource;
+            object sourceKey = (source is not null) ? source : StaticSource;
 
             using (Table.WriteLock)
             {
@@ -288,7 +288,7 @@ namespace System.Windows
                 }
 
                 // add a target to the list of listeners
-                if (handler != null)
+                if (handler is not null)
                 {
                     list.AddHandler(handler);
                 }
@@ -304,13 +304,13 @@ namespace System.Windows
 
         private void RemoveListener(object source, object target, Delegate handler)
         {
-            object sourceKey = (source != null) ? source : StaticSource;
+            object sourceKey = (source is not null) ? source : StaticSource;
 
             using (Table.WriteLock)
             {
                 ListenerList list = (ListenerList)Table[this, sourceKey];
 
-                if (list != null)
+                if (list is not null)
                 {
                     // make sure list is ready for writing
                     if (ListenerList.PrepareForWriting(ref list))
@@ -319,7 +319,7 @@ namespace System.Windows
                     }
 
                     // remove the target from the list of listeners
-                    if (handler != null)
+                    if (handler is not null)
                     {
                         list.RemoveHandler(handler);
                     }
@@ -345,7 +345,7 @@ namespace System.Windows
         protected void DeliverEvent(object sender, EventArgs args)
         {
             ListenerList list;
-            object sourceKey = (sender != null) ? sender : StaticSource;
+            object sourceKey = (sender is not null) ? sender : StaticSource;
 
             // get the list of listeners
             using (Table.ReadLock)
@@ -410,7 +410,7 @@ namespace System.Windows
             {
                 ListenerList list = (ListenerList)data;
 
-                if (ListenerList.PrepareForWriting(ref list) && source != null)
+                if (ListenerList.PrepareForWriting(ref list) && source is not null)
                 {
                     Table[this, source] = list;
                 }
@@ -424,7 +424,7 @@ namespace System.Windows
             // if the list is no longer needed, stop listening to the event
             if (removeList)
             {
-                if (source != null) // source may have been GC'd
+                if (source is not null) // source may have been GC'd
                 {
                     StopListening(source);
 
@@ -527,8 +527,8 @@ namespace System.Windows
             }
 
             public object Target { get { return _target.Target; } }
-            public Delegate Handler { get { return (_handler != null) ? (Delegate)_handler.Target : null; } }
-            public bool HasHandler { get { return _handler != null; } }
+            public Delegate Handler { get { return (_handler is not null) ? (Delegate)_handler.Target : null; } }
+            public bool HasHandler { get { return _handler is not null; } }
 
             WeakReference _target;
             WeakReference _handler;
@@ -779,7 +779,7 @@ namespace System.Windows
                     if (listener.HasHandler)
                     {
                         EventHandler handler = (EventHandler)listener.Handler;
-                        if (handler != null)
+                        if (handler is not null)
                         {
                             handler(sender, args);
                         }
@@ -788,7 +788,7 @@ namespace System.Windows
                     {
                         // legacy (4.0)
                         IWeakEventListener iwel = target as IWeakEventListener;
-                        if (iwel != null)
+                        if (iwel is not null)
                         {
                             bool handled = iwel.ReceiveWeakEvent(managerType, sender, args);
 
@@ -846,17 +846,17 @@ namespace System.Windows
                 for (int k=0, n=Count; k<n; ++k)
                 {
                     Listener listener = GetListener(k);
-                    if (listener.Target != null)
+                    if (listener.Target is not null)
                     {
                         if (listener.HasHandler)
                         {
                             Delegate handler = listener.Handler;
-                            if (handler != null)
+                            if (handler is not null)
                             {
                                 newList.AddHandler(handler);
                             }
                         }
-                        else if ((iwel = listener.Target as IWeakEventListener) != null)
+                        else if ((iwel = listener.Target as IWeakEventListener) is not null)
                         {
                             newList.Add(iwel);
                         }
@@ -906,10 +906,10 @@ namespace System.Windows
                 for (int k=0, n=Count; k<n; ++k)
                 {
                     Listener listener = GetListener(k);
-                    if (listener.Target != null)
+                    if (listener.Target is not null)
                     {
                         EventHandler<TEventArgs> handler = (EventHandler<TEventArgs>)listener.Handler;
-                        if (handler != null)
+                        if (handler is not null)
                         {
                             handler(sender, args);
                         }

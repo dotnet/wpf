@@ -91,7 +91,7 @@ namespace MS.Internal.Csp
             {
                 Project project = Project.Build(projectParams);
 
-                if (project != null)
+                if (project is not null)
                 {
                     projectReturnValue = project.ExecuteMain(projectParams.MainClass, projectParams.ProjectArgs);
                 }
@@ -282,7 +282,7 @@ namespace MS.Internal.Csp
 
                     case "-main:":
                     {
-                        if (projParamsOut.MainClass != null)
+                        if (projParamsOut.MainClass is not null)
                         {
                             _Usage();
                             return _rc_usageError;
@@ -410,7 +410,7 @@ namespace MS.Internal.Csp
             {
                 String inputLine;
 
-                while ((inputLine = sr.ReadLine()) != null)
+                while ((inputLine = sr.ReadLine()) is not null)
                 {
                     if (inputLine.Trim() != "")
                     {

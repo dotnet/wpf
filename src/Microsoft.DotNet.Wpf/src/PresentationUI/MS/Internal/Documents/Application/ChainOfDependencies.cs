@@ -41,7 +41,7 @@ internal static class ChainOfDependencies<T> where T : IChainOfDependenciesNode<
     {
         T last = member;
 
-        if (member.Dependency != null)
+        if (member.Dependency is not null)
         {
             last = GetLast(member.Dependency);
         }
@@ -64,7 +64,7 @@ internal static class ChainOfDependencies<T> where T : IChainOfDependenciesNode<
 
         T nextInChain = member.Dependency;
 
-        if (nextInChain != null)
+        if (nextInChain is not null)
         {
             satisfied = OrderByLeastDependent(nextInChain, action);
         }
@@ -101,7 +101,7 @@ internal static class ChainOfDependencies<T> where T : IChainOfDependenciesNode<
 
         if (satisfied)
         {
-            if (nextInChain != null)
+            if (nextInChain is not null)
             {
                 satisfied = OrderByMostDependent(nextInChain, action);
             }

@@ -638,7 +638,7 @@ namespace Microsoft.Build.Tasks.Windows
             {
                 XmlElement nodeGroup = root.ChildNodes[i] as XmlElement;
 
-                if (nodeGroup != null && string.Equals(nodeGroup.Name, groupName, StringComparison.OrdinalIgnoreCase))
+                if (nodeGroup is not null && string.Equals(nodeGroup.Name, groupName, StringComparison.OrdinalIgnoreCase))
                 {
                     //
                     // This is ItemGroup element.
@@ -651,7 +651,7 @@ namespace Microsoft.Build.Tasks.Windows
                         {
                             XmlElement nodeItem = nodeGroup.ChildNodes[j] as XmlElement;
 
-                            if (nodeItem != null && string.Equals(nodeItem.Name, sItemName, StringComparison.OrdinalIgnoreCase))
+                            if (nodeItem is not null && string.Equals(nodeItem.Name, sItemName, StringComparison.OrdinalIgnoreCase))
                             {
                                 // This is the item that need to remove.
                                 // Add it into the temporary array list.
@@ -674,7 +674,7 @@ namespace Microsoft.Build.Tasks.Windows
                                 // Remove this item from its parent node.
                                 // the parent node should be nodeGroup.
                                 //
-                                if (item != null)
+                                if (item is not null)
                                 {
                                     nodeGroup.RemoveChild(item);
                                 }

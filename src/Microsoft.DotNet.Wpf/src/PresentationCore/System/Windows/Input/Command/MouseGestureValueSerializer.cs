@@ -46,7 +46,7 @@ namespace System.Windows.Input
             bool result = false;
             MouseGesture mouseGesture = value as MouseGesture;
 
-            if(mouseGesture != null)
+            if(mouseGesture is not null)
             {
                 if(ModifierKeysConverter.IsDefinedModifierKeys(mouseGesture.Modifiers)
                    && MouseActionConverter.IsDefinedMouseAction(mouseGesture.MouseAction))
@@ -67,7 +67,7 @@ namespace System.Windows.Input
         public override object ConvertFromString(string value, IValueSerializerContext context) 
         {
             TypeConverter converter = TypeDescriptor.GetConverter(typeof(MouseGesture));
-            if (converter != null)
+            if (converter is not null)
                 return converter.ConvertFromString(value);
             else
                 return base.ConvertFromString(value, context);
@@ -82,7 +82,7 @@ namespace System.Windows.Input
         public override string ConvertToString(object value, IValueSerializerContext context) 
         {
             TypeConverter converter = TypeDescriptor.GetConverter(typeof(MouseGesture));
-            if (converter != null)
+            if (converter is not null)
                 return converter.ConvertToInvariantString(value);
             else
                 return base.ConvertToString(value, context);

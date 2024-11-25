@@ -73,7 +73,7 @@ namespace System.Windows.Documents
             ComputeMeasurementGlyphRunAndOrigin();
             if (_measurementGlyphRun is null)
                 return null;
-            Debug.Assert(_glyphRunProperties != null);
+            Debug.Assert(_glyphRunProperties is not null);
 
             return _measurementGlyphRun;
         }
@@ -111,7 +111,7 @@ namespace System.Windows.Documents
         {
             base.ArrangeOverride(finalSize);
 
-            if (_measurementGlyphRun != null)
+            if (_measurementGlyphRun is not null)
                 _measurementGlyphRun.ComputeInkBoundingBox();
 
             return finalSize;
@@ -175,7 +175,7 @@ namespace System.Windows.Documents
                     return;
                 }
             }
-            else if (_measurementGlyphRun != null)
+            else if (_measurementGlyphRun is not null)
             {
                 return;
             }
@@ -234,11 +234,11 @@ namespace System.Windows.Documents
                 caretStopCount = glyphRunProperties.unicodeString.Length + 1;
             else
             {
-                if (glyphRunProperties.clusterMap != null && glyphRunProperties.clusterMap.Length != 0)
+                if (glyphRunProperties.clusterMap is not null && glyphRunProperties.clusterMap.Length != 0)
                     caretStopCount = glyphRunProperties.clusterMap.Length + 1;
                 else
                 {
-                    Debug.Assert(glyphRunProperties.glyphIndices != null);
+                    Debug.Assert(glyphRunProperties.glyphIndices is not null);
                     caretStopCount = glyphRunProperties.glyphIndices.Length + 1;
                 }
             }
@@ -308,7 +308,7 @@ namespace System.Windows.Documents
             LayoutDependentGlyphRunProperties glyphRunProperties = null;
             Uri uri = FontUri;
 
-            if (uri != null)
+            if (uri is not null)
             {
                 // Indices and UnicodeString cannot both be empty.
                 if (String.IsNullOrEmpty(UnicodeString) && String.IsNullOrEmpty(Indices))
@@ -580,7 +580,7 @@ namespace System.Windows.Documents
                                     parsedGlyphData.glyphIndex = GetGlyphFromCharacter(fontFace, unicodeString[parsedCharacterCount]);
                                 }
 
-                                if (!wasInCluster && clusterMap != null)
+                                if (!wasInCluster && clusterMap is not null)
                                 {
                                     // fill out cluster map at the start of each cluster
                                     if (inCluster)
@@ -662,7 +662,7 @@ namespace System.Windows.Documents
             #endregion
 
             // fill the remaining glyphs with defaults, assuming 1:1 mapping
-            if (unicodeString != null)
+            if (unicodeString is not null)
             {
                 while (parsedCharacterCount < unicodeString.Length)
                 {

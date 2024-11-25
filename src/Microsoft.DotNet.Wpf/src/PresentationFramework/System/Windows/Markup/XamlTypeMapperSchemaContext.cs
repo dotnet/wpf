@@ -37,7 +37,7 @@ namespace System.Windows.Markup
                 _sharedSchemaContext = (WpfSharedXamlSchemaContext)XamlReader.GetWpfSchemaContext();
 
                 // Copy all the NamespaceMapEntrys from our parent into _nsDefinitions
-                if (typeMapper._namespaceMaps != null)
+                if (typeMapper._namespaceMaps is not null)
                 {
                     _nsDefinitions = new Dictionary<string, FrugalObjectList<string>>();
                     foreach (NamespaceMapEntry mapEntry in _typeMapper._namespaceMaps)
@@ -76,7 +76,7 @@ namespace System.Windows.Markup
                 {
                     lock (syncObject)
                     {
-                        if (_nsDefinitions != null || _piNamespaces != null)
+                        if (_nsDefinitions is not null || _piNamespaces is not null)
                         {
                             // Use shared schema context, to avoid redundant reflection
                             List<string> resultList = new List<string>(_sharedSchemaContext.GetAllXamlNamespaces());
@@ -110,8 +110,8 @@ namespace System.Windows.Markup
                     return true;
                 }
                 // Otherwise, if we have a map or a PI for the namespace, then treat it as known
-                if (_nsDefinitions != null && _nsDefinitions.ContainsKey(xamlNamespace) ||
-                    _piNamespaces != null && SyncContainsKey(_piNamespaces, xamlNamespace))
+                if (_nsDefinitions is not null && _nsDefinitions.ContainsKey(xamlNamespace) ||
+                    _piNamespaces is not null && SyncContainsKey(_piNamespaces, xamlNamespace))
                 {
                     compatibleNamespace = xamlNamespace;
                     return true;
@@ -129,7 +129,7 @@ namespace System.Windows.Markup
             {
                 // Copy the ctor-provided namespace mappings into the result
                 Hashtable result = new Hashtable();
-                if (_typeMapper._namespaceMaps != null)
+                if (_typeMapper._namespaceMaps is not null)
                 {
                     foreach (NamespaceMapEntry mapEntry in _typeMapper._namespaceMaps)
                     {
@@ -284,7 +284,7 @@ namespace System.Windows.Markup
             // Should be called within lock (syncObject)
             private void AddKnownNamespaces(List<string> nsList)
             {
-                if (_nsDefinitions != null)
+                if (_nsDefinitions is not null)
                 {
                     foreach (string ns in _nsDefinitions.Keys)
                     {
@@ -294,7 +294,7 @@ namespace System.Windows.Markup
                         }
                     }
                 }
-                if (_piNamespaces != null)
+                if (_piNamespaces is not null)
                 {
                     foreach (string ns in _piNamespaces.Keys)
                     {
@@ -344,12 +344,12 @@ namespace System.Windows.Markup
                 // First look through the user-provided namespace mappings
                 XamlType result;
                 FrugalObjectList<string> clrNsList;
-                if (_nsDefinitions != null && _nsDefinitions.TryGetValue(xamlNamespace, out clrNsList))
+                if (_nsDefinitions is not null && _nsDefinitions.TryGetValue(xamlNamespace, out clrNsList))
                 {
                     for (int i = 0; i < clrNsList.Count; i++)
                     {
                         result = base.GetXamlType(clrNsList[i], name, typeArguments);
-                        if (result != null)
+                        if (result is not null)
                         {
                             return result;
                         }
@@ -358,7 +358,7 @@ namespace System.Windows.Markup
 
                 // Then look for a PI
                 string piMappingClrNs;
-                if (_piNamespaces != null && SyncTryGetValue(_piNamespaces, xamlNamespace, out piMappingClrNs))
+                if (_piNamespaces is not null && SyncTryGetValue(_piNamespaces, xamlNamespace, out piMappingClrNs))
                 {
                     return base.GetXamlType(piMappingClrNs, name, typeArguments);
                 }

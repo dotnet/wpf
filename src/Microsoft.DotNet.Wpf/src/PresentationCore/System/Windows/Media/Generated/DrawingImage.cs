@@ -105,7 +105,7 @@ namespace System.Windows.Media
             Drawing newV = (Drawing) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 DUCE.IResource targetResource = (DUCE.IResource)target;
                 using (CompositionEngineLock.Acquire())
@@ -188,7 +188,7 @@ namespace System.Windows.Media
                 Drawing vDrawing = Drawing;
 
                 // Obtain handles for properties that implement DUCE.IResource
-                DUCE.ResourceHandle hDrawing = vDrawing != null ? ((DUCE.IResource)vDrawing).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                DUCE.ResourceHandle hDrawing = vDrawing is not null ? ((DUCE.IResource)vDrawing).GetHandle(channel) : DUCE.ResourceHandle.Null;
 
                 // Pack & send command packet
                 DUCE.MILCMD_DRAWINGIMAGE data;
@@ -210,7 +210,7 @@ namespace System.Windows.Media
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_DRAWINGIMAGE))
                 {
                     Drawing vDrawing = Drawing;
-                    if (vDrawing != null) ((DUCE.IResource)vDrawing).AddRefOnChannel(channel);
+                    if (vDrawing is not null) ((DUCE.IResource)vDrawing).AddRefOnChannel(channel);
 
                     AddRefOnChannelAnimations(channel);
 
@@ -227,7 +227,7 @@ namespace System.Windows.Media
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
                     Drawing vDrawing = Drawing;
-                    if (vDrawing != null) ((DUCE.IResource)vDrawing).ReleaseOnChannel(channel);
+                    if (vDrawing is not null) ((DUCE.IResource)vDrawing).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
 }

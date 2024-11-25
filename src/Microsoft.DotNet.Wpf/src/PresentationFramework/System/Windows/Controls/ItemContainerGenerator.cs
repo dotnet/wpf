@@ -111,7 +111,7 @@ namespace System.Windows.Controls
                         if (_itemsGenerated >= 0)   // this implies that tracing is enabled
                         {
                             DependencyObject d = Host as DependencyObject;
-                            if (d != null)
+                            if (d is not null)
                                 label = (string)d.GetValue(FrameworkElement.NameProperty);
                             if (label is null || label.Length == 0)
                                 label = Host.GetHashCode().ToString(CultureInfo.InvariantCulture);
@@ -131,7 +131,7 @@ namespace System.Windows.Controls
                         break;
                 }
 
-                if (StatusChanged != null)
+                if (StatusChanged is not null)
                     StatusChanged(this, EventArgs.Empty);
             }
         }
@@ -148,7 +148,7 @@ namespace System.Windows.Controls
             get
             {
                 // lazy creation
-                if (_itemsReadOnly is null && _items != null)
+                if (_itemsReadOnly is null && _items is not null)
                 {
                     _itemsReadOnly = new ReadOnlyCollection<object>(new ListOfObject(_items));
                 }
@@ -176,11 +176,11 @@ namespace System.Windows.Controls
 
             // if panel came from an ItemsPresenter, use its generator
             ItemsPresenter ip = ItemsPresenter.FromPanel(panel);
-            if (ip != null)
+            if (ip is not null)
                 return ip.Generator;
 
             // if panel came from a style, use the main generator
-            if (panel.TemplatedParent != null)
+            if (panel.TemplatedParent is not null)
                 return this;
 
             // otherwise the panel doesn't have a generator
@@ -210,7 +210,7 @@ namespace System.Windows.Controls
         /// </remarks>
         IDisposable IItemContainerGenerator.StartAt(GeneratorPosition position, GeneratorDirection direction, bool allowStartAtRealizedItem)
         {
-            if (_generator != null)
+            if (_generator is not null)
                 throw new InvalidOperationException(SR.GenerationInProgress);
 
             _generator = new Generator(this, position, direction, allowStartAtRealizedItem);
@@ -420,7 +420,7 @@ namespace System.Windows.Controls
             }
 
             // if we created any new blocks, insert them in the list
-            if (predecessor != null)
+            if (predecessor is not null)
                 blockT.InsertAfter(predecessor);
             if (blockX != blockR)
                 blockX.InsertAfter(blockT);
@@ -445,12 +445,12 @@ namespace System.Windows.Controls
             try
             {
                 // de-initialize the containers that are being removed
-                if (itemMap != null)
+                if (itemMap is not null)
                 {
                     for (ItemBlock block = itemMap.Next;  block != itemMap;  block = block.Next)
                     {
                         RealizedItemBlock rib = block as RealizedItemBlock;
-                        if (rib != null)
+                        if (rib is not null)
                         {
                             for (int offset = 0; offset < rib.ContainerCount; ++offset)
                             {
@@ -480,7 +480,7 @@ namespace System.Windows.Controls
                 SetAlternationCount();
 
                 // tell generators what happened
-                if (MapChanged != null)
+                if (MapChanged is not null)
                 {
                     MapChanged(null, -1, 0, uib, 0, 0);
                 }
@@ -536,7 +536,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            if (_itemMap != null)
+            if (_itemMap is not null)
             {
                 int itemIndex = 0;      // number of items we've skipped over
 
@@ -710,7 +710,7 @@ namespace System.Windows.Controls
             index -= startBlock.ItemCount;
             rib = startBlock as RealizedItemBlock;
 
-            if (rib != null)
+            if (rib is not null)
             {
                 startOffset = _startIndexForUIFromItem - index;
                 if (startOffset >= rib.ItemCount)
@@ -736,7 +736,7 @@ namespace System.Windows.Controls
             while (true)
             {
                 // search the current block (only need to search realized blocks)
-                if (rib != null)
+                if (rib is not null)
                 {
                     for (; offset < endOffset; ++offset)
                     {
@@ -748,7 +748,7 @@ namespace System.Windows.Controls
                             item = rib.ItemAt(offset);
                             container = rib.ContainerAt(offset);
                         }
-                        else if (!returnLocalIndex && IsGrouping && ((group = rib.ItemAt(offset) as CollectionViewGroup) != null))
+                        else if (!returnLocalIndex && IsGrouping && ((group = rib.ItemAt(offset) as CollectionViewGroup) is not null))
                         {
                             // found a group;  see if the group contains the item
                             GroupItem groupItem = (GroupItem)rib.ContainerAt(offset);
@@ -795,7 +795,7 @@ namespace System.Windows.Controls
                 // check for termination
                 if (block == startBlock)
                 {
-                    if (rib != null)
+                    if (rib is not null)
                     {
                         endOffset = startOffset;    // search first part of block
                     }
@@ -870,7 +870,7 @@ namespace System.Windows.Controls
             for (int offset = 0; offset < end; ++offset)
             {
                 CollectionViewGroup group;
-                if ((group = rib.ItemAt(offset) as CollectionViewGroup) != null)
+                if ((group = rib.ItemAt(offset) as CollectionViewGroup) is not null)
                 {
                     // found a group, count the group
                     count += group.ItemCount;
@@ -927,12 +927,12 @@ namespace System.Windows.Controls
                     DependencyObject container = block.ContainerAt(index);
                     GroupItem groupItem = container as GroupItem;
 
-                    if (groupItem != null)
+                    if (groupItem is not null)
                     {
                         container = groupItem.Generator.ContainerFromIndex(subIndex);
                     }
 #if DEBUG
-                    object item = (Parent is null) && (container != null) ?
+                    object item = (Parent is null) && (container is not null) ?
                                 container.ReadLocalValue(ItemForItemContainerProperty) : null;
                     Debug.Assert(item is null || ItemsControl.EqualsEx(item, target),
                         "Generator's data structure is corrupt - ContainerFromIndex found wrong item");
@@ -1024,7 +1024,7 @@ namespace System.Windows.Controls
             for (ItemBlock block = _itemMap.Next;  block != _itemMap;  block = block.Next)
             {
                 RealizedItemBlock rib = block as RealizedItemBlock;
-                if (rib != null)
+                if (rib is not null)
                 {
                     for (int offset=0; offset<rib.ItemCount; ++offset)
                     {
@@ -1159,7 +1159,7 @@ namespace System.Windows.Controls
             SetAlternationCount();
 
             // propagate to subgroups, if necessary
-            if (IsGrouping && GroupStyle != null)
+            if (IsGrouping && GroupStyle is not null)
             {
                 ItemBlock block = _itemMap.Next;
                 while (block != _itemMap)
@@ -1167,7 +1167,7 @@ namespace System.Windows.Controls
                     for (int offset = 0;  offset < block.ContainerCount;  ++offset)
                     {
                         GroupItem gi = ((RealizedItemBlock)block).ContainerAt(offset) as GroupItem;
-                        if (gi != null)
+                        if (gi is not null)
                         {
                             gi.Generator.ChangeAlternationCount();
                         }
@@ -1267,7 +1267,7 @@ namespace System.Windows.Controls
                 if (_items != value)
                 {
                     INotifyCollectionChanged incc = _items as INotifyCollectionChanged;
-                    if (_items != Host.View && incc != null)
+                    if (_items != Host.View && incc is not null)
                     {
                         CollectionChangedEventManager.RemoveHandler(incc, OnCollectionChanged);
                     }
@@ -1276,7 +1276,7 @@ namespace System.Windows.Controls
                     _itemsReadOnly = null;
 
                     incc = _items as INotifyCollectionChanged;
-                    if (_items != Host.View && incc != null)
+                    if (_items != Host.View && incc is not null)
                     {
                         CollectionChangedEventManager.AddHandler(incc, OnCollectionChanged);
                     }
@@ -1303,7 +1303,7 @@ namespace System.Windows.Controls
 
         internal void OnPanelChanged()
         {
-            if (PanelChanged != null)
+            if (PanelChanged is not null)
                 PanelChanged(this, EventArgs.Empty);
         }
 
@@ -1395,7 +1395,7 @@ namespace System.Windows.Controls
 
                     object item = items[itemIndex];
 
-                    if (uBlock != null)
+                    if (uBlock is not null)
                     {
                         // We don't have a realized container for this item.  Try to use a recycled container
                         // if possible, otherwise generate a new container.
@@ -1427,7 +1427,7 @@ namespace System.Windows.Controls
                         }
 
                         // add the (item, container) to the current block
-                        if (container != null)
+                        if (container is not null)
                         {
                             ItemContainerGenerator.LinkContainerToItem(container, item);
 
@@ -1469,7 +1469,7 @@ namespace System.Windows.Controls
             /// <summary> Dispose this generator. </summary>
             void IDisposable.Dispose()
             {
-                if (_factory != null)
+                if (_factory is not null)
                 {
                     _factory.MapChanged -= new MapChangedHandler(OnMapChanged);
                     _done = true;
@@ -1517,7 +1517,7 @@ namespace System.Windows.Controls
                             ItemBlock newBlock, int newOffset, int deltaCount)
             {
                 // Case A.  Items were moved within the map data structure
-                if (block != null)
+                if (block is not null)
                 {
                     // if the move affects this generator, update the cached state
                     if (block == _cachedState.Block && offset <= _cachedState.Offset &&
@@ -1533,7 +1533,7 @@ namespace System.Windows.Controls
                 {
                     // if the item occurs before my block, update my item count
                     if (offset < _cachedState.Count ||
-                        (offset == _cachedState.Count && newBlock != null && newBlock != _cachedState.Block))
+                        (offset == _cachedState.Count && newBlock is not null && newBlock != _cachedState.Block))
                     {
                         _cachedState.Count += count;
                         _cachedState.ItemIndex += count;
@@ -1593,7 +1593,7 @@ namespace System.Windows.Controls
 
             void IDisposable.Dispose()
             {
-                if (_factory != null)
+                if (_factory is not null)
                 {
                     _factory._isGeneratingBatches = false;
                     _factory.SetStatus(GeneratorStatus.ContainersGenerated);
@@ -1721,7 +1721,7 @@ namespace System.Windows.Controls
             // if we're realizing the leftmost item and there's room in the
             // previous block, move it there
             if (offset == 0 &&
-                (prevR = block.Prev as RealizedItemBlock) != null &&
+                (prevR = block.Prev as RealizedItemBlock) is not null &&
                 prevR.ItemCount < ItemBlock.BlockSize)
             {
                 newBlock = prevR;
@@ -1733,7 +1733,7 @@ namespace System.Windows.Controls
             // if we're realizing the rightmost item and there's room in the
             // next block, move it there
             else if (offset == block.ItemCount - 1 &&
-                (nextR = block.Next as RealizedItemBlock) != null &&
+                (nextR = block.Next as RealizedItemBlock) is not null &&
                 nextR.ItemCount < ItemBlock.BlockSize)
             {
                 newBlock = nextR;
@@ -1783,7 +1783,7 @@ namespace System.Windows.Controls
 
         void RemoveAndCoalesceBlocksIfNeeded(ItemBlock block)
         {
-            if (block != null && block != _itemMap && block.ItemCount == 0)
+            if (block is not null && block != _itemMap && block.ItemCount == 0)
             {
                 block.Remove();
 
@@ -1806,13 +1806,13 @@ namespace System.Windows.Controls
             RealizedItemBlock ribDst = newBlock as RealizedItemBlock;
 
             // when both blocks are Realized, entries must be physically copied
-            if (ribSrc != null && ribDst != null)
+            if (ribSrc is not null && ribDst is not null)
             {
                 ribDst.CopyEntries(ribSrc, offset, count, newOffset);
             }
             // when the source block is Realized, clear the vacated entries -
             // to avoid leaks.  (No need if it's now empty - the block will get GC'd).
-            else if (ribSrc != null && ribSrc.ItemCount > count)
+            else if (ribSrc is not null && ribSrc.ItemCount > count)
             {
                 ribSrc.ClearEntries(offset, count);
             }
@@ -1822,7 +1822,7 @@ namespace System.Windows.Controls
             newBlock.ItemCount += count;
 
             // tell generators what happened
-            if (MapChanged != null)
+            if (MapChanged is not null)
                 MapChanged(block, offset, count, newBlock, newOffset, deltaCount);
         }
 
@@ -1985,7 +1985,7 @@ namespace System.Windows.Controls
                 GroupItem groupItem = (GroupItem)Peer;
                 CollectionViewGroup group = groupItem.ReadLocalValue(ItemForItemContainerProperty) as CollectionViewGroup;
 
-                if (group != null)
+                if (group is not null)
                 {
                     if (group.IsBottomLevel)
                     {
@@ -2009,7 +2009,7 @@ namespace System.Windows.Controls
             GroupStyle = groupStyle;
             ItemsInternal = items;
 
-            if ((Level == 0) && (Host != null))
+            if ((Level == 0) && (Host is not null))
             {
                 // Notify the host of a change in IsGrouping
                 Host.SetIsGrouping(IsGrouping);
@@ -2020,13 +2020,13 @@ namespace System.Windows.Controls
         {
             int alternationCount;
 
-            if (IsGrouping && GroupStyle != null)
+            if (IsGrouping && GroupStyle is not null)
             {
                 if (GroupStyle.IsAlternationCountSet)
                 {
                     alternationCount = GroupStyle.AlternationCount;
                 }
-                else if (_parent != null)
+                else if (_parent is not null)
                 {
                     alternationCount = _parent._alternationCount;
                 }
@@ -2070,11 +2070,11 @@ namespace System.Windows.Controls
         {
             // Discard placeholder container.
             UnlinkContainerFromItem(groupItem, group);
-            if (_emptyGroupItems != null)
+            if (_emptyGroupItems is not null)
                 _emptyGroupItems.Remove(groupItem);
 
             // inform layout as if the group just got added
-            if (ItemsChanged != null)
+            if (ItemsChanged is not null)
             {
                 GeneratorPosition position = PositionFromIndex(ItemsInternal.IndexOf(group));
                 ItemsChanged(this, new ItemsChangedEventArgs(NotifyCollectionChangedAction.Add, position, 1, 0));
@@ -2095,7 +2095,7 @@ namespace System.Windows.Controls
                     ((IItemContainerGenerator)this).Remove(position, 1);
 
                     // inform layout as if the group just got removed
-                    if (ItemsChanged != null)
+                    if (ItemsChanged is not null)
                     {
                         ItemsChanged(this, new ItemsChangedEventArgs(NotifyCollectionChangedAction.Remove, position, 1, 1));
                     }
@@ -2191,7 +2191,7 @@ namespace System.Windows.Controls
                 UnrealizedItemBlock uib;
                 RealizedItemBlock rib = block as RealizedItemBlock;
 
-                if (rib != null)
+                if (rib is not null)
                 {
                     // compare realized items with item for which we are searching
                     offsetFromBlockStart = rib.OffsetOfItem(item);
@@ -2202,7 +2202,7 @@ namespace System.Windows.Controls
                         break;
                     }
                 }
-                else if ((uib = block as UnrealizedItemBlock) != null)
+                else if ((uib = block as UnrealizedItemBlock) is not null)
                 {
                     // if the item isn't realized, we can't find it
                     // directly.  Instead, look for indirect evidence that it
@@ -2212,7 +2212,7 @@ namespace System.Windows.Controls
 #if DEBUG
                     // Sanity check - make sure data structure is OK so far.
                     rib = block.Prev as RealizedItemBlock;
-                    if (rib != null && rib.ContainerCount > 0)
+                    if (rib is not null && rib.ContainerCount > 0)
                     {
                         Debug.Assert(ItemsControl.EqualsEx(rib.ItemAt(rib.ContainerCount - 1),
                                                     ItemsInternal[correctIndex - 1]),
@@ -2222,7 +2222,7 @@ namespace System.Windows.Controls
 
                     bool itemIsInCurrentBlock = false;
                     rib = block.Next as RealizedItemBlock;
-                    if (rib != null && rib.ContainerCount > 0)
+                    if (rib is not null && rib.ContainerCount > 0)
                     {
                         // if the index of the next realized item is off by one,
                         // the deleted item likely comes from the current
@@ -2479,7 +2479,7 @@ namespace System.Windows.Controls
 
             // if it's an unrealized block, add the item by bumping the count
             UnrealizedItemBlock uib = block as UnrealizedItemBlock;
-            if (uib != null)
+            if (uib is not null)
             {
                 MoveItems(uib, offsetFromBlockStart, 1, uib, offsetFromBlockStart+1, 0);
                 ++ uib.ItemCount;
@@ -2487,7 +2487,7 @@ namespace System.Windows.Controls
 
             // if the item can be added to a previous unrealized block, do so
             else if ((offsetFromBlockStart== 0 || block == _itemMap) &&
-                    ((uib = block.Prev as UnrealizedItemBlock) != null))
+                    ((uib = block.Prev as UnrealizedItemBlock) is not null))
             {
                 ++ uib.ItemCount;
             }
@@ -2500,7 +2500,7 @@ namespace System.Windows.Controls
 
                 // split the current realized block, if necessary
                 RealizedItemBlock rib;
-                if (offsetFromBlockStart > 0 && (rib = block as RealizedItemBlock) != null)
+                if (offsetFromBlockStart > 0 && (rib = block as RealizedItemBlock) is not null)
                 {
                     RealizedItemBlock newBlock = new RealizedItemBlock();
                     MoveItems(rib, offsetFromBlockStart, rib.ItemCount - offsetFromBlockStart, newBlock, 0, offsetFromBlockStart);
@@ -2514,13 +2514,13 @@ namespace System.Windows.Controls
             }
 
             // tell generators what happened
-            if (MapChanged != null)
+            if (MapChanged is not null)
             {
                 MapChanged(null, index, +1, uib, 0, 0);
             }
 
             // tell layout what happened
-            if (ItemsChanged != null)
+            if (ItemsChanged is not null)
             {
                 ItemsChanged(this, new ItemsChangedEventArgs(NotifyCollectionChangedAction.Add, position, 1, 0));
             }
@@ -2541,7 +2541,7 @@ namespace System.Windows.Controls
             GetBlockAndPosition(item, itemIndex, true, out position, out block, out offsetFromBlockStart, out correctIndex);
 
             RealizedItemBlock rib = block as RealizedItemBlock;
-            if (rib != null)
+            if (rib is not null)
             {
                 containerCount = 1;
                 container = rib.ContainerAt(offsetFromBlockStart);
@@ -2550,7 +2550,7 @@ namespace System.Windows.Controls
             // remove the item, and remove the block if it's now empty
             MoveItems(block, offsetFromBlockStart + 1, block.ItemCount - offsetFromBlockStart - 1, block, offsetFromBlockStart, 0);
             --block.ItemCount;
-            if (rib != null)
+            if (rib is not null)
             {
                 // fix up the alternation index before removing an empty block, while
                 // we still have a valid block and offset
@@ -2559,20 +2559,20 @@ namespace System.Windows.Controls
             RemoveAndCoalesceBlocksIfNeeded(block);
 
             // tell generators what happened
-            if (MapChanged != null)
+            if (MapChanged is not null)
             {
                 MapChanged(null, itemIndex, -1, null, 0, 0);
             }
 
             // tell layout what happened
-            if (ItemsChanged != null)
+            if (ItemsChanged is not null)
             {
                 ItemsChanged(this, new ItemsChangedEventArgs(NotifyCollectionChangedAction.Remove, position, 1, containerCount));
             }
 
             // unhook the container.  Do this after layout has (presumably) removed it from
             // the UI, so that it doesn't inherit DataContext falsely.
-            if (container != null)
+            if (container is not null)
             {
                 UnlinkContainerFromItem(container, item);
             }
@@ -2585,7 +2585,7 @@ namespace System.Windows.Controls
 
                 // the group could be null if the parent generator has already
                 // unhooked its container
-                if (group != null)
+                if (group is not null)
                 {
                     Parent.OnSubgroupBecameEmpty(group);
                 }
@@ -2605,7 +2605,7 @@ namespace System.Windows.Controls
             // be made to the _itemsMap as we are replacing an unrealized item with another unrealized
             // item in the same place.
             RealizedItemBlock rib = block as RealizedItemBlock;
-            if (rib != null)
+            if (rib is not null)
             {
                 DependencyObject container = rib.ContainerAt(offsetFromBlockStart);
 
@@ -2624,7 +2624,7 @@ namespace System.Windows.Controls
                     rib.RealizeItem(offsetFromBlockStart, newItem, newContainer);
                     LinkContainerToItem(newContainer, newItem);
 
-                    if (ItemsChanged != null)
+                    if (ItemsChanged is not null)
                     {
                         ItemsChanged(this, new ItemsChangedEventArgs(NotifyCollectionChangedAction.Replace, position, 1, 1));
                     }
@@ -2659,7 +2659,7 @@ namespace System.Windows.Controls
             GeneratorPosition oldPosition = position;
 
             RealizedItemBlock rib = block as RealizedItemBlock;
-            if (rib != null)
+            if (rib is not null)
             {
                 containerCount = 1;
                 container = rib.ContainerAt(offsetFromBlockStart);
@@ -2696,7 +2696,7 @@ namespace System.Windows.Controls
 
             // if it's an unrealized block, add the item by bumping the count
             uib = block as UnrealizedItemBlock;
-            if (uib != null)
+            if (uib is not null)
             {
                 MoveItems(uib, offsetFromBlockStart, 1, uib, offsetFromBlockStart+1, 0);
                 ++ uib.ItemCount;
@@ -2704,7 +2704,7 @@ namespace System.Windows.Controls
 
             // if the item can be added to a previous unrealized block, do so
             else if ((offsetFromBlockStart == 0 || block == _itemMap) &&
-                    ((uib = block.Prev as UnrealizedItemBlock) != null))
+                    ((uib = block.Prev as UnrealizedItemBlock) is not null))
             {
                 ++ uib.ItemCount;
             }
@@ -2716,7 +2716,7 @@ namespace System.Windows.Controls
                 uib.ItemCount = 1;
 
                 // split the current realized block, if necessary
-                if (offsetFromBlockStart > 0 && (rib = block as RealizedItemBlock) != null)
+                if (offsetFromBlockStart > 0 && (rib = block as RealizedItemBlock) is not null)
                 {
                     RealizedItemBlock newBlock = new RealizedItemBlock();
                     MoveItems(rib, offsetFromBlockStart, rib.ItemCount - offsetFromBlockStart, newBlock, 0, offsetFromBlockStart);
@@ -2733,14 +2733,14 @@ namespace System.Windows.Controls
             DependencyObject parent = VisualTreeHelper.GetParentInternal(container);
 
             // tell layout what happened
-            if (ItemsChanged != null)
+            if (ItemsChanged is not null)
             {
                 ItemsChanged(this, new ItemsChangedEventArgs(NotifyCollectionChangedAction.Move, position, oldPosition, 1, containerCount));
             }
 
             // unhook the container.  Do this after layout has (presumably) removed it from
             // the UI, so that it doesn't inherit DataContext falsely.
-            if (container != null)
+            if (container is not null)
             {
                 if (parent is null || VisualTreeHelper.GetParentInternal(container) != parent)
                 {
@@ -2773,7 +2773,7 @@ namespace System.Windows.Controls
             ((IItemContainerGenerator)this).RemoveAll();
 
             // tell layout what happened
-            if (ItemsChanged != null)
+            if (ItemsChanged is not null)
             {
                 GeneratorPosition position = new GeneratorPosition(0, 0);
                 ItemsChanged(this, new ItemsChangedEventArgs(NotifyCollectionChangedAction.Reset, position, 0, 0));

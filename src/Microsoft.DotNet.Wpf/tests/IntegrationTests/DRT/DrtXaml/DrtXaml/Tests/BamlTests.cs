@@ -129,7 +129,7 @@ namespace DrtXaml.Tests
             foreach (UIElement element in mw.Children)
             {
                 TextBlock textBlock = element as TextBlock;
-                if (textBlock != null)
+                if (textBlock is not null)
                 {
                     string actual = textBlock.Text;
                     string expected = textBlock.Tag as string;

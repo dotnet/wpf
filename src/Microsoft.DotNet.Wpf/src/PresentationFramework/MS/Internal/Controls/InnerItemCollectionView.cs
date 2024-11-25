@@ -123,7 +123,7 @@ namespace MS.Internal.Controls
 
                 // try setting model parent, be prepared to rollback item from ItemCollection
                 bool isAddSuccessful = true;
-                if (node != null)
+                if (node is not null)
                 {
                     isAddSuccessful = false;
                     try
@@ -185,7 +185,7 @@ namespace MS.Internal.Controls
 
             // try setting model parent, be prepared to rollback item from ItemCollection
             bool isAddSuccessful = true;
-            if (node != null)
+            if (node is not null)
             {
                 isAddSuccessful = false;
                 try
@@ -259,7 +259,7 @@ namespace MS.Internal.Controls
 
             // try setting model parent, be prepared to rollback item from ItemCollection
             bool isAddSuccessful = true;
-            if (node != null)
+            if (node is not null)
             {
                 isAddSuccessful = false;
                 try
@@ -448,7 +448,7 @@ namespace MS.Internal.Controls
             if (ItemsControl.EqualsEx(CurrentItem, item))
             {
                 // also check that we're not fooled by a false null CurrentItem
-                if (item != null || IsCurrentInView)
+                if (item is not null || IsCurrentInView)
                     return IsCurrentInView;
             }
 
@@ -510,7 +510,7 @@ namespace MS.Internal.Controls
             // force currency off the collection (gives user a chance to save dirty information)
             OnCurrentChanging();
 
-            if (SortDescriptions.Count > 0 || Filter != null)
+            if (SortDescriptions.Count > 0 || Filter is not null)
             {
                 // filter the view list
                 if (Filter is null)
@@ -529,7 +529,7 @@ namespace MS.Internal.Controls
                 }
 
                 // sort the view list
-                if (_sort != null && _sort.Count > 0 && ViewCount > 0)
+                if (_sort is not null && _sort.Count > 0 && ViewCount > 0)
                 {
                     SortFieldComparer.SortHelper(_viewList, new SortFieldComparer(_sort, Culture));
                 }
@@ -547,7 +547,7 @@ namespace MS.Internal.Controls
             {
                 _MoveCurrentToPosition(ViewCount);
             }
-            else if (oldCurrentItem != null) // set currency back to old current item, or first if not found
+            else if (oldCurrentItem is not null) // set currency back to old current item, or first if not found
             {
                 int index = _viewList.IndexOf(oldCurrentItem);
                 if (index < 0)
@@ -711,7 +711,7 @@ namespace MS.Internal.Controls
             // NOTE: model tree spec would allow reparenting if the parent does not change
             //  but this code will throw: this is a efficient way to catch
             //  an attempt to add the same element twice to the collection
-            if (LogicalTreeHelper.GetParent(node) != null)
+            if (LogicalTreeHelper.GetParent(node) is not null)
             {
                 throw new InvalidOperationException(SR.ReparentModelChildIllegal);
             }
@@ -722,7 +722,7 @@ namespace MS.Internal.Controls
         void SetModelParent(object item)
         {
             // to avoid the unnecessary, expensive code in AddLogicalChild, check for DO first
-            if ((ModelParentFE != null) && (item is DependencyObject))
+            if ((ModelParentFE is not null) && (item is DependencyObject))
                 LogicalTreeHelper.AddLogicalChild(ModelParentFE, null, item);
         }
 
@@ -731,21 +731,21 @@ namespace MS.Internal.Controls
         {
             // ClearModelParent is also called for items that are not a DependencyObject;
             // to avoid the unnecessary, expensive code in RemoveLogicalChild, check for DO first
-            if ((ModelParentFE != null) && (item is DependencyObject))
+            if ((ModelParentFE is not null) && (item is DependencyObject))
                 LogicalTreeHelper.RemoveLogicalChild(ModelParentFE, null, item);
         }
 
         // set new SortDescription collection; rehook collection change notification handler
         private void SetSortDescriptions(SortDescriptionCollection descriptions)
         {
-            if (_sort != null)
+            if (_sort is not null)
             {
                 ((INotifyCollectionChanged)_sort).CollectionChanged -= new NotifyCollectionChangedEventHandler(SortDescriptionsChanged);
             }
 
             _sort = descriptions;
 
-            if (_sort != null)
+            if (_sort is not null)
             {
                 Invariant.Assert(_sort.Count == 0, "must be empty SortDescription collection");
                 ((INotifyCollectionChanged)_sort).CollectionChanged += new NotifyCollectionChangedEventHandler(SortDescriptionsChanged);

@@ -178,7 +178,7 @@ namespace System.Windows.Input
         public override bool Matches(object targetElement, InputEventArgs inputEventArgs)
         {
             KeyEventArgs keyEventArgs = inputEventArgs as KeyEventArgs;
-            if(keyEventArgs != null && IsDefinedKey(keyEventArgs.Key))
+            if(keyEventArgs is not null && IsDefinedKey(keyEventArgs.Key))
             {
                 return ( ( (int)Key == (int)keyEventArgs.RealKey ) && ( this.Modifiers == Keyboard.Modifiers ) );
             }
@@ -279,7 +279,7 @@ namespace System.Windows.Input
 
                 KeyGesture keyGesture = CreateFromResourceStrings(keyGestureToken, keyDisplayString);
 
-                if (keyGesture != null)
+                if (keyGesture is not null)
                 {
                     gestures.Add(keyGesture);
                 }

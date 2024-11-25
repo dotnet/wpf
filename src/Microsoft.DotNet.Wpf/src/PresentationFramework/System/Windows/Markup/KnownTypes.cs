@@ -4759,9 +4759,9 @@ namespace System.Windows.Markup
         {
             // Paramater validation
 
-            Debug.Assert(asmFramework != null, "asmFramework must not be null");
-            Debug.Assert(asmCore != null, "asmCore must not be null");
-            Debug.Assert(asmBase != null, "asmBase must not be null");
+            Debug.Assert(asmFramework is not null, "asmFramework must not be null");
+            Debug.Assert(asmCore is not null, "asmCore must not be null");
+            Debug.Assert(asmBase is not null, "asmBase must not be null");
 
             if (!_initialized)
             {

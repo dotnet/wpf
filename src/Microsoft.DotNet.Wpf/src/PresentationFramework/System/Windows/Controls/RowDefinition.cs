@@ -101,7 +101,7 @@ namespace System.Windows.Controls
 
             if (_size > 0)
             {
-                Debug.Assert(_items != null);
+                Debug.Assert(_items is not null);
                 Array.Copy(_items, 0, array, index, _size);
             }
         }
@@ -123,7 +123,7 @@ namespace System.Windows.Controls
 
             if (_size > 0)
             {
-                Debug.Assert(_items != null);
+                Debug.Assert(_items is not null);
                 Array.Copy(_items, 0, array, index, _size);
             }
         }
@@ -163,7 +163,7 @@ namespace System.Windows.Controls
 
             for (int i = 0; i < _size; ++i)
             {
-                Debug.Assert(   _items[i] != null
+                Debug.Assert(   _items[i] is not null
                             &&  _items[i].Parent == _owner );
 
                 PrivateDisconnectChild(_items[i]);
@@ -178,7 +178,7 @@ namespace System.Windows.Controls
         bool IList.Contains(object value)
         {
             RowDefinition item = value as RowDefinition;
-            if (    item != null
+            if (    item is not null
                 &&  item.Parent == _owner  )
             {
                 Debug.Assert(_items[item.Index] == item);
@@ -193,7 +193,7 @@ namespace System.Windows.Controls
         /// </summary>
         public bool Contains(RowDefinition value)    //  bool ICollection<T>.Contains(T item)
         {
-            if (    value != null
+            if (    value is not null
                 &&  value.Parent == _owner  )
             {
                 Debug.Assert(_items[value.Index] == value);
@@ -332,7 +332,7 @@ namespace System.Windows.Controls
             {
                 for (int i = index + count - 1; i >= index; --i)
                 {
-                    Debug.Assert(   _items[i] != null
+                    Debug.Assert(   _items[i] is not null
                                 &&  _items[i].Parent == _owner );
 
                     PrivateDisconnectChild(_items[i]);
@@ -341,7 +341,7 @@ namespace System.Windows.Controls
                 _size -= count;
                 for (int i = index; i < _size; ++i)
                 {
-                    Debug.Assert(   _items[i + count] != null
+                    Debug.Assert(   _items[i + count] is not null
                                 &&  _items[i + count].Parent == _owner );
 
                     _items[i] = _items[i + count];
@@ -562,7 +562,7 @@ namespace System.Windows.Controls
                 throw new ArgumentException(SR.Format(SR.GridCollection_MustBeCertainType, "RowDefinitionCollection", "RowDefinition"));
             }
 
-            if (item.Parent != null)
+            if (item.Parent is not null)
             {
                 throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, "value", "RowDefinitionCollection"));
             }
@@ -597,7 +597,7 @@ namespace System.Windows.Controls
         /// </remarks>
         private void PrivateConnectChild(int index, DefinitionBase value)
         {
-            Debug.Assert(value != null && value.Index == -1);
+            Debug.Assert(value is not null && value.Index == -1);
             Debug.Assert(_items[index] is null);
 
             // add the value into collection's array
@@ -615,7 +615,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void PrivateDisconnectChild(DefinitionBase value)
         {
-            Debug.Assert(value != null);
+            Debug.Assert(value is not null);
 
             value.OnExitParentTree();
 
@@ -648,7 +648,7 @@ namespace System.Windows.Controls
 
             for (int i = _size - 1; i >= index; --i)
             {
-                Debug.Assert(   _items[i] != null
+                Debug.Assert(   _items[i] is not null
                             &&  _items[i].Parent == _owner );
 
                 _items[i + 1] = _items[i];
@@ -679,7 +679,7 @@ namespace System.Windows.Controls
 
             for (int i = index; i < _size; ++i)
             {
-                Debug.Assert(   _items[i + 1] != null
+                Debug.Assert(   _items[i + 1] is not null
                             &&  _items[i + 1].Parent == _owner    );
 
                 _items[i] = _items[i + 1];
@@ -762,7 +762,7 @@ namespace System.Windows.Controls
             {
                 _collection = collection;
                 _index = -1;
-                _version = _collection != null ? _collection._version : -1;
+                _version = _collection is not null ? _collection._version : -1;
                 _currentElement = collection;
             }
 

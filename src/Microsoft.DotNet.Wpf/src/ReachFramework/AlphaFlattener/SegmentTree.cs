@@ -72,19 +72,19 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             if ((_min >= x0) && (_max <= x1)) // [_min.._max] is within [x0..x1]
             {
-                if (_sList != null)
+                if (_sList is not null)
                 {
                     _sList.Remove(index);
                 }
             }
             else
             {
-                if ((_left != null) && (x0 <= _left._max) && (x1 >= _left._min)) // overlap with left
+                if ((_left is not null) && (x0 <= _left._max) && (x1 >= _left._min)) // overlap with left
                 {
                     _left.Remove(index, x0, x1);
                 }
 
-                if ((_right != null) && (x0 <= _right._max) && (x1 >= _right._min)) // overlap with right
+                if ((_right is not null) && (x0 <= _right._max) && (x1 >= _right._min)) // overlap with right
                 {
                     _right.Remove(index, x0, x1);
                 }
@@ -104,12 +104,12 @@ namespace Microsoft.Internal.AlphaFlattener
             }
             else
             {
-                if ((_left != null) && (x0 <= _left._max) && (x1 >= _left._min)) // overlap with left
+                if ((_left is not null) && (x0 <= _left._max) && (x1 >= _left._min)) // overlap with left
                 {
                     _left.Insert(index, x0, x1);
                 }
 
-                if ((_right != null) && (x0 <= _right._max) && (x1 >= _right._min)) // overlap with right
+                if ((_right is not null) && (x0 <= _right._max) && (x1 >= _right._min)) // overlap with right
                 {
                     _right.Insert(index, x0, x1);
                 }
@@ -118,7 +118,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public void ReportIntersection(DisplayList dl, int index, double x)
         {
-            if (_sList != null)
+            if (_sList is not null)
             {
                 foreach (int i in _sList)
                 {
@@ -129,12 +129,12 @@ namespace Microsoft.Internal.AlphaFlattener
                 }
             }
 
-            if ((_left != null) && (x >= _left._min) && (x <= _left._max))
+            if ((_left is not null) && (x >= _left._min) && (x <= _left._max))
             {
                 _left.ReportIntersection(dl, index, x);
             }
 
-            if ((_right != null) && (x >= _right._min) && (x <= _right._max))
+            if ((_right is not null) && (x >= _right._min) && (x <= _right._max))
             {
                 _right.ReportIntersection(dl, index, x);
             }

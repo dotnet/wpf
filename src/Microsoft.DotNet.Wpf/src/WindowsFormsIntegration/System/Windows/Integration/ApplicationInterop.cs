@@ -106,7 +106,7 @@ namespace System.Windows.Forms.Integration
             bool handled = false;
 
             SWF.Control control = SWF.Control.FromChildHandle(m.HWnd);
-            if (control != null)
+            if (control is not null)
             {
                 //CSS The WM_SYSCHAR special case is a workaround for a bug VSWhidbey 575729, which
                 //makes IsInputChar not get called with WM_SYSCHAR messages.
@@ -216,7 +216,7 @@ namespace System.Windows.Forms.Integration
                     break;
                 }
             }
-            Debug.Assert(windowFilter != null);
+            Debug.Assert(windowFilter is not null);
             return windowFilter;
         }
 
@@ -229,7 +229,7 @@ namespace System.Windows.Forms.Integration
         public static void ModelessWindowClosed(object sender, EventArgs e)
         {
             ModelessWindowFilter windowFilter = WindowFilterList.FindFilter(sender as SW.Window);
-            if (windowFilter != null)
+            if (windowFilter is not null)
             {
                 SWF.Application.RemoveMessageFilter(windowFilter);
                 WindowFilterList.FilterList.Remove(windowFilter);
@@ -344,7 +344,7 @@ namespace System.Windows.Forms.Integration
                     {
                         //tempValue will be null if it's not alive
                         T tempValue = obj.Target as T;
-                        if (tempValue != null)
+                        if (tempValue is not null)
                         {
                             targets.Add(tempValue);
                         }
@@ -405,7 +405,7 @@ namespace System.Windows.Forms.Integration
             foreach (WindowsFormsHost wfh in this.SnapshotListOfTargets)
             {
                 rootWindow = FindRootVisual(wfh) as SW.Window;
-                if (rootWindow != null)
+                if (rootWindow is not null)
                 {
                     if (rootWindow.IsActive)
                     {
@@ -417,7 +417,7 @@ namespace System.Windows.Forms.Integration
 
         private static SWM.Visual FindRootVisual(SWM.Visual x)
         {
-            return (PresentationSource.FromVisual(x) != null) ? (PresentationSource.FromVisual(x)).RootVisual : null;
+            return (PresentationSource.FromVisual(x) is not null) ? (PresentationSource.FromVisual(x)).RootVisual : null;
         }
     }
 }

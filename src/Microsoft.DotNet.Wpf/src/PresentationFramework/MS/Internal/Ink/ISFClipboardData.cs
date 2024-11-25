@@ -58,7 +58,7 @@ namespace MS.Internal.Ink
         // Checks if there is stroke data in this instance
         protected override bool CanCopy()
         {
-            return (Strokes != null && Strokes.Count != 0);
+            return (Strokes is not null && Strokes.Count != 0);
         }
 
         // Copies the internal strokes to the IDataObject
@@ -88,7 +88,7 @@ namespace MS.Internal.Ink
 
             StrokeCollection newStrokes = null;
             bool fSucceeded = false;
-            if ( stream != null && stream != Stream.Null )
+            if ( stream is not null && stream != Stream.Null )
             {
                 try
                 {

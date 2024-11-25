@@ -43,7 +43,7 @@ namespace System.Windows.Documents
             FormatState previousFormatState = Top();
             FormatState formatState;
 
-            formatState = previousFormatState != null ? new FormatState(previousFormatState) : new FormatState();
+            formatState = previousFormatState is not null ? new FormatState(previousFormatState) : new FormatState();
 
             Add(formatState);
         }

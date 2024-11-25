@@ -256,7 +256,7 @@ namespace System.Windows.Controls
                 throw new InvalidOperationException(SR.ItemsSourceInUse);
             }
 
-            if (_internalView != null)
+            if (_internalView is not null)
             {
                 _internalView.Clear();
             }
@@ -448,7 +448,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected override void RefreshOverride()
         {
-            if (_collectionView != null)
+            if (_collectionView is not null)
             {
                 if (_collectionView.NeedsRefresh)
                 {
@@ -602,7 +602,7 @@ namespace System.Windows.Controls
                 if (MySortDescriptions is null)
                 {
                     MySortDescriptions = new SortDescriptionCollection();
-                    if (_collectionView != null)
+                    if (_collectionView is not null)
                     {
                         // no need to do this under the monitor - we haven't hooked up events yet
                         CloneList(MySortDescriptions, _collectionView.SortDescriptions);
@@ -647,7 +647,7 @@ namespace System.Windows.Controls
             set
             {
                 MyFilter = value;
-                if (_collectionView != null)
+                if (_collectionView is not null)
                     _collectionView.Filter = value;
             }
         }
@@ -688,7 +688,7 @@ namespace System.Windows.Controls
                 if (MyGroupDescriptions is null)
                 {
                     MyGroupDescriptions = new ObservableCollection<GroupDescription>();
-                    if (_collectionView != null)
+                    if (_collectionView is not null)
                     {
                         // no need to do this under the monitor - we haven't hooked up events yet
                         CloneList(MyGroupDescriptions, _collectionView.GroupDescriptions);
@@ -719,12 +719,12 @@ namespace System.Windows.Controls
         public override IDisposable DeferRefresh()
         {
             // if already deferred (level > 0) and there is a _collectionView, there should be a _deferInnerRefresh
-            Debug.Assert(_deferLevel == 0 || _collectionView is null || _deferInnerRefresh != null);
+            Debug.Assert(_deferLevel == 0 || _collectionView is null || _deferInnerRefresh is not null);
 
             // if not already deferred, there should NOT be a _deferInnerRefresh
             Debug.Assert(_deferLevel != 0 || _deferInnerRefresh is null);
 
-            if (_deferLevel == 0 && _collectionView != null)
+            if (_deferLevel == 0 && _collectionView is not null)
             {
                 _deferInnerRefresh = _collectionView.DeferRefresh();
             }
@@ -883,7 +883,7 @@ namespace System.Windows.Controls
             get
             {
                 IEditableCollectionView ecv = _collectionView as IEditableCollectionView;
-                if (ecv != null)
+                if (ecv is not null)
                 {
                     return ecv.NewItemPlaceholderPosition;
                 }
@@ -895,7 +895,7 @@ namespace System.Windows.Controls
             set
             {
                 IEditableCollectionView ecv = _collectionView as IEditableCollectionView;
-                if (ecv != null)
+                if (ecv is not null)
                 {
                     ecv.NewItemPlaceholderPosition = value;
                 }
@@ -914,7 +914,7 @@ namespace System.Windows.Controls
             get
             {
                 IEditableCollectionView ecv = _collectionView as IEditableCollectionView;
-                if (ecv != null)
+                if (ecv is not null)
                 {
                     return ecv.CanAddNew;
                 }
@@ -934,7 +934,7 @@ namespace System.Windows.Controls
         object  IEditableCollectionView.AddNew()
         {
             IEditableCollectionView ecv = _collectionView as IEditableCollectionView;
-            if (ecv != null)
+            if (ecv is not null)
             {
                 return ecv.AddNew();
             }
@@ -953,7 +953,7 @@ namespace System.Windows.Controls
         void    IEditableCollectionView.CommitNew()
         {
             IEditableCollectionView ecv = _collectionView as IEditableCollectionView;
-            if (ecv != null)
+            if (ecv is not null)
             {
                 ecv.CommitNew();
             }
@@ -970,7 +970,7 @@ namespace System.Windows.Controls
         void    IEditableCollectionView.CancelNew()
         {
             IEditableCollectionView ecv = _collectionView as IEditableCollectionView;
-            if (ecv != null)
+            if (ecv is not null)
             {
                 ecv.CancelNew();
             }
@@ -988,7 +988,7 @@ namespace System.Windows.Controls
             get
             {
                 IEditableCollectionView ecv = _collectionView as IEditableCollectionView;
-                if (ecv != null)
+                if (ecv is not null)
                 {
                     return ecv.IsAddingNew;
                 }
@@ -1008,7 +1008,7 @@ namespace System.Windows.Controls
             get
             {
                 IEditableCollectionView ecv = _collectionView as IEditableCollectionView;
-                if (ecv != null)
+                if (ecv is not null)
                 {
                     return ecv.CurrentAddItem;
                 }
@@ -1032,7 +1032,7 @@ namespace System.Windows.Controls
             get
             {
                 IEditableCollectionView ecv = _collectionView as IEditableCollectionView;
-                if (ecv != null)
+                if (ecv is not null)
                 {
                     return ecv.CanRemove;
                 }
@@ -1051,7 +1051,7 @@ namespace System.Windows.Controls
         void    IEditableCollectionView.RemoveAt(int index)
         {
             IEditableCollectionView ecv = _collectionView as IEditableCollectionView;
-            if (ecv != null)
+            if (ecv is not null)
             {
                 ecv.RemoveAt(index);
             }
@@ -1067,7 +1067,7 @@ namespace System.Windows.Controls
         void    IEditableCollectionView.Remove(object item)
         {
             IEditableCollectionView ecv = _collectionView as IEditableCollectionView;
-            if (ecv != null)
+            if (ecv is not null)
             {
                 ecv.Remove(item);
             }
@@ -1091,7 +1091,7 @@ namespace System.Windows.Controls
         void    IEditableCollectionView.EditItem(object item)
         {
             IEditableCollectionView ecv = _collectionView as IEditableCollectionView;
-            if (ecv != null)
+            if (ecv is not null)
             {
                 ecv.EditItem(item);
             }
@@ -1108,7 +1108,7 @@ namespace System.Windows.Controls
         void    IEditableCollectionView.CommitEdit()
         {
             IEditableCollectionView ecv = _collectionView as IEditableCollectionView;
-            if (ecv != null)
+            if (ecv is not null)
             {
                 ecv.CommitEdit();
             }
@@ -1125,7 +1125,7 @@ namespace System.Windows.Controls
         void    IEditableCollectionView.CancelEdit()
         {
             IEditableCollectionView ecv = _collectionView as IEditableCollectionView;
-            if (ecv != null)
+            if (ecv is not null)
             {
                 ecv.CancelEdit();
             }
@@ -1148,7 +1148,7 @@ namespace System.Windows.Controls
             get
             {
                 IEditableCollectionView ecv = _collectionView as IEditableCollectionView;
-                if (ecv != null)
+                if (ecv is not null)
                 {
                     return ecv.CanCancelEdit;
                 }
@@ -1167,7 +1167,7 @@ namespace System.Windows.Controls
             get
             {
                 IEditableCollectionView ecv = _collectionView as IEditableCollectionView;
-                if (ecv != null)
+                if (ecv is not null)
                 {
                     return ecv.IsEditingItem;
                 }
@@ -1187,7 +1187,7 @@ namespace System.Windows.Controls
             get
             {
                 IEditableCollectionView ecv = _collectionView as IEditableCollectionView;
-                if (ecv != null)
+                if (ecv is not null)
                 {
                     return ecv.CurrentEditItem;
                 }
@@ -1212,7 +1212,7 @@ namespace System.Windows.Controls
             get
             {
                 IEditableCollectionViewAddNewItem ani = _collectionView as IEditableCollectionViewAddNewItem;
-                if (ani != null)
+                if (ani is not null)
                 {
                     return ani.CanAddNewItem;
                 }
@@ -1232,7 +1232,7 @@ namespace System.Windows.Controls
         object  IEditableCollectionViewAddNewItem.AddNewItem(object newItem)
         {
             IEditableCollectionViewAddNewItem ani = _collectionView as IEditableCollectionViewAddNewItem;
-            if (ani != null)
+            if (ani is not null)
             {
                 return ani.AddNewItem(newItem);
             }
@@ -1254,7 +1254,7 @@ namespace System.Windows.Controls
             get
             {
                 ICollectionViewLiveShaping cvls = _collectionView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.CanChangeLiveSorting : false;
+                return (cvls is not null) ? cvls.CanChangeLiveSorting : false;
             }
         }
 
@@ -1266,7 +1266,7 @@ namespace System.Windows.Controls
             get
             {
                 ICollectionViewLiveShaping cvls = _collectionView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.CanChangeLiveFiltering : false;
+                return (cvls is not null) ? cvls.CanChangeLiveFiltering : false;
             }
         }
 
@@ -1278,7 +1278,7 @@ namespace System.Windows.Controls
             get
             {
                 ICollectionViewLiveShaping cvls = _collectionView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.CanChangeLiveGrouping : false;
+                return (cvls is not null) ? cvls.CanChangeLiveGrouping : false;
             }
         }
 
@@ -1294,13 +1294,13 @@ namespace System.Windows.Controls
             get
             {
                 ICollectionViewLiveShaping cvls = _collectionView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.IsLiveSorting : null;
+                return (cvls is not null) ? cvls.IsLiveSorting : null;
             }
             set
             {
                 MyIsLiveSorting = value;
                 ICollectionViewLiveShaping cvls = _collectionView as ICollectionViewLiveShaping;
-                if (cvls != null && cvls.CanChangeLiveSorting)
+                if (cvls is not null && cvls.CanChangeLiveSorting)
                     cvls.IsLiveSorting = value;
             }
         }
@@ -1316,13 +1316,13 @@ namespace System.Windows.Controls
             get
             {
                 ICollectionViewLiveShaping cvls = _collectionView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.IsLiveFiltering : null;
+                return (cvls is not null) ? cvls.IsLiveFiltering : null;
             }
             set
             {
                 MyIsLiveFiltering = value;
                 ICollectionViewLiveShaping cvls = _collectionView as ICollectionViewLiveShaping;
-                if (cvls != null && cvls.CanChangeLiveFiltering)
+                if (cvls is not null && cvls.CanChangeLiveFiltering)
                     cvls.IsLiveFiltering = value;
             }
         }
@@ -1338,13 +1338,13 @@ namespace System.Windows.Controls
             get
             {
                 ICollectionViewLiveShaping cvls = _collectionView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.IsLiveGrouping : null;
+                return (cvls is not null) ? cvls.IsLiveGrouping : null;
             }
             set
             {
                 MyIsLiveGrouping = value;
                 ICollectionViewLiveShaping cvls = _collectionView as ICollectionViewLiveShaping;
-                if (cvls != null && cvls.CanChangeLiveGrouping)
+                if (cvls is not null && cvls.CanChangeLiveGrouping)
                     cvls.IsLiveGrouping = value;
             }
         }
@@ -1375,7 +1375,7 @@ namespace System.Windows.Controls
                 {
                     MyLiveSortingProperties = new ObservableCollection<string>();
                     ICollectionViewLiveShaping icvls = _collectionView as ICollectionViewLiveShaping;
-                    if (icvls != null)
+                    if (icvls is not null)
                     {
                         // no need to do this under the monitor - we haven't hooked up events yet
                         CloneList(MyLiveSortingProperties, icvls.LiveSortingProperties);
@@ -1408,7 +1408,7 @@ namespace System.Windows.Controls
                 {
                     MyLiveFilteringProperties = new ObservableCollection<string>();
                     ICollectionViewLiveShaping icvls = _collectionView as ICollectionViewLiveShaping;
-                    if (icvls != null)
+                    if (icvls is not null)
                     {
                         // no need to do this under the monitor - we haven't hooked up events yet
                         CloneList(MyLiveFilteringProperties, icvls.LiveFilteringProperties);
@@ -1445,7 +1445,7 @@ namespace System.Windows.Controls
                 {
                     MyLiveGroupingProperties = new ObservableCollection<string>();
                     ICollectionViewLiveShaping icvls = _collectionView as ICollectionViewLiveShaping;
-                    if (icvls != null)
+                    if (icvls is not null)
                     {
                         // no need to do this under the monitor - we haven't hooked up events yet
                         CloneList(MyLiveGroupingProperties, icvls.LiveGroupingProperties);
@@ -1472,7 +1472,7 @@ namespace System.Windows.Controls
             get
             {
                 IItemProperties iip = _collectionView as IItemProperties;
-                if (iip != null)
+                if (iip is not null)
                 {
                     return iip.ItemProperties;
                 }
@@ -1509,7 +1509,7 @@ namespace System.Windows.Controls
             // Allow this while refresh is deferred.
 
             // If we're switching from Normal mode, first make sure it's legal.
-            if (!IsUsingItemsSource && (_internalView != null) && (_internalView.RawCount > 0))
+            if (!IsUsingItemsSource && (_internalView is not null) && (_internalView.RawCount > 0))
             {
                 throw new InvalidOperationException(SR.CannotUseItemsSource);
             }
@@ -1563,7 +1563,7 @@ namespace System.Windows.Controls
         {
             Debug.Assert(_isInitializing == false);
             _isInitializing = true;
-            if (_collectionView != null)            // disconnect from collectionView to cut extraneous events
+            if (_collectionView is not null)            // disconnect from collectionView to cut extraneous events
                 UnhookCollectionView(_collectionView);
         }
 
@@ -1572,7 +1572,7 @@ namespace System.Windows.Controls
             Debug.Assert(_isInitializing == true);
             EnsureCollectionView();
             _isInitializing = false;                // now we allow collectionView to be hooked up again
-            if (_collectionView != null)
+            if (_collectionView is not null)
             {
                 HookCollectionView(_collectionView);
                 Refresh();                          // apply any sort or filter for the first time
@@ -1591,7 +1591,7 @@ namespace System.Windows.Controls
         internal override void GetCollectionChangedSources(int level, Action<int, object, bool?, List<string>> format, List<string> sources)
         {
             format(level, this, false, sources);
-            if (_collectionView != null)
+            if (_collectionView is not null)
             {
                 _collectionView.GetCollectionChangedSources(level+1, format, sources);
             }
@@ -1638,7 +1638,7 @@ namespace System.Windows.Controls
         // EnsureCollectionView() will set _collectionView to the InternalView if the mode is correct.
         bool EnsureCollectionView()
         {
-            if (_collectionView is null && !IsUsingItemsSource && _internalView != null)
+            if (_collectionView is null && !IsUsingItemsSource && _internalView is not null)
             {
                 // If refresh is not necessary, fake initialization so that SetCollectionView
                 // doesn't raise a refresh event.
@@ -1658,7 +1658,7 @@ namespace System.Windows.Controls
                 if (!_isInitializing)
                     HookCollectionView(_collectionView);
             }
-            return (_collectionView != null);
+            return (_collectionView is not null);
         }
 
         void EnsureInternalView()
@@ -1676,7 +1676,7 @@ namespace System.Windows.Controls
             if (_collectionView == view)
                 return;
 
-            if (_collectionView != null)
+            if (_collectionView is not null)
             {
                 // Unhook events first, to avoid unnecessary refresh while it is still the active view.
                 if (!_isInitializing)
@@ -1694,7 +1694,7 @@ namespace System.Windows.Controls
             _collectionView = view;
             InvalidateEnumerableWrapper();
 
-            if (_collectionView != null)
+            if (_collectionView is not null)
             {
                 _deferInnerRefresh = _collectionView.DeferRefresh();
 
@@ -1757,7 +1757,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            if (_collectionView.CanFilter && MyFilter != null)
+            if (_collectionView.CanFilter && MyFilter is not null)
                 _collectionView.Filter = MyFilter;
 
             if (_collectionView.CanGroup)
@@ -1778,17 +1778,17 @@ namespace System.Windows.Controls
             }
 
             ICollectionViewLiveShaping cvls = _collectionView as ICollectionViewLiveShaping;
-            if (cvls != null)
+            if (cvls is not null)
             {
-                if (MyIsLiveSorting != null && cvls.CanChangeLiveSorting)
+                if (MyIsLiveSorting is not null && cvls.CanChangeLiveSorting)
                 {
                     cvls.IsLiveSorting = MyIsLiveSorting;
                 }
-                if (MyIsLiveFiltering != null && cvls.CanChangeLiveFiltering)
+                if (MyIsLiveFiltering is not null && cvls.CanChangeLiveFiltering)
                 {
                     cvls.IsLiveFiltering = MyIsLiveFiltering;
                 }
-                if (MyIsLiveGrouping != null && cvls.CanChangeLiveGrouping)
+                if (MyIsLiveGrouping is not null && cvls.CanChangeLiveGrouping)
                 {
                     cvls.IsLiveGrouping = MyIsLiveGrouping;
                 }
@@ -1803,34 +1803,34 @@ namespace System.Windows.Controls
             PropertyChangedEventManager.AddHandler(view, OnViewPropertyChanged, String.Empty);
 
             SortDescriptionCollection sort = view.SortDescriptions;
-            if (sort != null && sort != SortDescriptionCollection.Empty)
+            if (sort is not null && sort != SortDescriptionCollection.Empty)
             {
                 CollectionChangedEventManager.AddHandler(sort, OnInnerSortDescriptionsChanged);
             }
 
             ObservableCollection<GroupDescription> group = view.GroupDescriptions;
-            if (group != null)
+            if (group is not null)
             {
                 CollectionChangedEventManager.AddHandler(group, OnInnerGroupDescriptionsChanged);
             }
 
             ICollectionViewLiveShaping iclvs = view as ICollectionViewLiveShaping;
-            if (iclvs != null)
+            if (iclvs is not null)
             {
                 ObservableCollection<string> liveSortingProperties = iclvs.LiveSortingProperties;
-                if (liveSortingProperties != null)
+                if (liveSortingProperties is not null)
                 {
                     CollectionChangedEventManager.AddHandler(liveSortingProperties, OnInnerLiveSortingChanged);
                 }
 
                 ObservableCollection<string> liveFilteringProperties = iclvs.LiveFilteringProperties;
-                if (liveFilteringProperties != null)
+                if (liveFilteringProperties is not null)
                 {
                     CollectionChangedEventManager.AddHandler(liveFilteringProperties, OnInnerLiveFilteringChanged);
                 }
 
                 ObservableCollection<string> liveGroupingProperties = iclvs.LiveGroupingProperties;
-                if (liveGroupingProperties != null)
+                if (liveGroupingProperties is not null)
                 {
                     CollectionChangedEventManager.AddHandler(liveGroupingProperties, OnInnerLiveGroupingChanged);
                 }
@@ -1845,34 +1845,34 @@ namespace System.Windows.Controls
             PropertyChangedEventManager.RemoveHandler(view, OnViewPropertyChanged, String.Empty);
 
             SortDescriptionCollection sort = view.SortDescriptions;
-            if (sort != null && sort != SortDescriptionCollection.Empty)
+            if (sort is not null && sort != SortDescriptionCollection.Empty)
             {
                 CollectionChangedEventManager.RemoveHandler(sort, OnInnerSortDescriptionsChanged);
             }
 
             ObservableCollection<GroupDescription> group = view.GroupDescriptions;
-            if (group != null)
+            if (group is not null)
             {
                 CollectionChangedEventManager.RemoveHandler(group, OnInnerGroupDescriptionsChanged);
             }
 
             ICollectionViewLiveShaping iclvs = view as ICollectionViewLiveShaping;
-            if (iclvs != null)
+            if (iclvs is not null)
             {
                 ObservableCollection<string> liveSortingProperties = iclvs.LiveSortingProperties;
-                if (liveSortingProperties != null)
+                if (liveSortingProperties is not null)
                 {
                     CollectionChangedEventManager.RemoveHandler(liveSortingProperties, OnInnerLiveSortingChanged);
                 }
 
                 ObservableCollection<string> liveFilteringProperties = iclvs.LiveFilteringProperties;
-                if (liveFilteringProperties != null)
+                if (liveFilteringProperties is not null)
                 {
                     CollectionChangedEventManager.RemoveHandler(liveFilteringProperties, OnInnerLiveFilteringChanged);
                 }
 
                 ObservableCollection<string> liveGroupingProperties = iclvs.LiveGroupingProperties;
-                if (liveGroupingProperties != null)
+                if (liveGroupingProperties is not null)
                 {
                     CollectionChangedEventManager.RemoveHandler(liveGroupingProperties, OnInnerLiveGroupingChanged);
                 }
@@ -1880,7 +1880,7 @@ namespace System.Windows.Controls
 
             // cancel any pending AddNew or EditItem transactions
             IEditableCollectionView iev = _collectionView as IEditableCollectionView;
-            if (iev != null)
+            if (iev is not null)
             {
                 if (iev.IsAddingNew)
                 {
@@ -1952,7 +1952,7 @@ namespace System.Windows.Controls
                 throw new InvalidOperationException(SR.ItemsSourceInUse);
             EnsureInternalView();
             EnsureCollectionView();
-            Debug.Assert(_collectionView != null);
+            Debug.Assert(_collectionView is not null);
             VerifyRefreshNotDeferred();
         }
 
@@ -1963,9 +1963,9 @@ namespace System.Windows.Controls
             if (_deferLevel == 0)
             {
                 // if there is a _collectionView, there should be a _deferInnerRefresh
-                Debug.Assert(_collectionView is null || _deferInnerRefresh != null);
+                Debug.Assert(_collectionView is null || _deferInnerRefresh is not null);
 
-                if (_deferInnerRefresh != null)
+                if (_deferInnerRefresh is not null)
                 {
                     // set _deferInnerRefresh to null before calling Dispose,
                     // in case Dispose throws an exception.
@@ -2007,7 +2007,7 @@ namespace System.Windows.Controls
                 return;
 
             // if we have an inner collection view, keep its .SortDescriptions collection it up-to-date
-            if (_collectionView != null && _collectionView.CanSort)
+            if (_collectionView is not null && _collectionView.CanSort)
             {
                 using (SortDescriptionsMonitor.Enter())
                 {
@@ -2040,7 +2040,7 @@ namespace System.Windows.Controls
                 return;
 
             // if we have an inner collection view, keep its .SortDescriptions collection it up-to-date
-            if (_collectionView != null && _collectionView.CanGroup)
+            if (_collectionView is not null && _collectionView.CanGroup)
             {
                 using (GroupDescriptionsMonitor.Enter())
                 {
@@ -2075,7 +2075,7 @@ namespace System.Windows.Controls
 
             // if we have an inner collection view, keep its LiveSortingProperties collection in sync
             ICollectionViewLiveShaping icvls = _collectionView as ICollectionViewLiveShaping;
-            if (icvls != null)
+            if (icvls is not null)
             {
                 using (LiveSortingMonitor.Enter())
                 {
@@ -2094,7 +2094,7 @@ namespace System.Windows.Controls
 
             // keep this ItemColl.LiveSortingProperties in sync with inner collection view's
             ICollectionViewLiveShaping icvls = _collectionView as ICollectionViewLiveShaping;
-            if (icvls != null)
+            if (icvls is not null)
             {
                 using (LiveSortingMonitor.Enter())
                 {
@@ -2114,7 +2114,7 @@ namespace System.Windows.Controls
 
             // if we have an inner collection view, keep its LiveFilteringProperties collection in sync
             ICollectionViewLiveShaping icvls = _collectionView as ICollectionViewLiveShaping;
-            if (icvls != null)
+            if (icvls is not null)
             {
                 using (LiveFilteringMonitor.Enter())
                 {
@@ -2133,7 +2133,7 @@ namespace System.Windows.Controls
 
             // keep this ItemColl.LiveFilteringProperties in sync with inner collection view's
             ICollectionViewLiveShaping icvls = _collectionView as ICollectionViewLiveShaping;
-            if (icvls != null)
+            if (icvls is not null)
             {
                 using (LiveFilteringMonitor.Enter())
                 {
@@ -2153,7 +2153,7 @@ namespace System.Windows.Controls
 
             // if we have an inner collection view, keep its LiveGroupingProperties collection in sync
             ICollectionViewLiveShaping icvls = _collectionView as ICollectionViewLiveShaping;
-            if (icvls != null)
+            if (icvls is not null)
             {
                 using (LiveGroupingMonitor.Enter())
                 {
@@ -2172,7 +2172,7 @@ namespace System.Windows.Controls
 
             // keep this ItemColl.LiveGroupingProperties in sync with inner collection view's
             ICollectionViewLiveShaping icvls = _collectionView as ICollectionViewLiveShaping;
-            if (icvls != null)
+            if (icvls is not null)
             {
                 using (LiveGroupingMonitor.Enter())
                 {
@@ -2279,7 +2279,7 @@ namespace System.Windows.Controls
 
         private bool IsShapingActive
         {
-            get { return _shapingStorage != null; }
+            get { return _shapingStorage is not null; }
         }
 
         private void EnsureShapingStorage()
@@ -2524,7 +2524,7 @@ namespace System.Windows.Controls
 
             public void Dispose()
             {
-                if (_itemCollection != null)
+                if (_itemCollection is not null)
                 {
                     _itemCollection.EndDefer();
                     _itemCollection = null;

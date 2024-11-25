@@ -110,7 +110,7 @@ namespace MS.Internal.AutomationProxies
                     el = new WindowsTab(hwnd, null, -1);
                     break;
             }
-            if (el != null)
+            if (el is not null)
             {
                 el.DispatchEvents (eventId, idProp, idObject, idChild);
             }
@@ -405,7 +405,7 @@ namespace MS.Internal.AutomationProxies
                 else
             {
                 ArrayList list = new ArrayList();
-                for (ProxySimple child = GetFirstChild(); child != null; child = GetNextSibling(child))
+                for (ProxySimple child = GetFirstChild(); child is not null; child = GetNextSibling(child))
                 {
                     if (((ISelectionItemProvider) child).IsSelected)
                     {

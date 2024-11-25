@@ -326,7 +326,7 @@ namespace System.Windows
 
                 _resources = value;
 
-                if (_resources != null)
+                if (_resources is not null)
                 {
                     // A Style ResourceDictionary can be accessed across threads
                     _resources.CanBeAccessedAcrossThreads = true;
@@ -347,12 +347,12 @@ namespace System.Windows
         /// </summary>
         internal object FindResource(object resourceKey, bool allowDeferredResourceReference, bool mustReturnDeferredResourceReference)
         {
-            if ((_resources != null) && _resources.Contains(resourceKey))
+            if ((_resources is not null) && _resources.Contains(resourceKey))
             {
                 bool canCache;
                 return _resources.FetchResource(resourceKey, allowDeferredResourceReference, mustReturnDeferredResourceReference, out canCache);
             }
-            if (_basedOn != null)
+            if (_basedOn is not null)
             {
                 return _basedOn.FindResource(resourceKey, allowDeferredResourceReference, mustReturnDeferredResourceReference);
             }
@@ -361,12 +361,12 @@ namespace System.Windows
 
         internal ResourceDictionary FindResourceDictionary(object resourceKey)
         {
-            Debug.Assert(resourceKey != null, "Argument cannot be null");
-            if (_resources != null && _resources.Contains(resourceKey))
+            Debug.Assert(resourceKey is not null, "Argument cannot be null");
+            if (_resources is not null && _resources.Contains(resourceKey))
             {
                 return _resources;
             }
-            if (_basedOn != null)
+            if (_basedOn is not null)
             {
                 return _basedOn.FindResourceDictionary(resourceKey);
             }
@@ -514,7 +514,7 @@ namespace System.Windows
                 throw new InvalidOperationException(SR.Format(SR.NullPropertyIllegal, "TargetType"));
             }
 
-            if (_basedOn != null)
+            if (_basedOn is not null)
             {
                 if(DefaultTargetType != _basedOn.TargetType &&
                     !_basedOn.TargetType.IsAssignableFrom(_targetType))
@@ -524,13 +524,13 @@ namespace System.Windows
             }
 
             // Seal setters
-            if (_setters != null)
+            if (_setters is not null)
             {
                 _setters.Seal();
             }
 
             // Seal triggers
-            if (_visualTriggers != null)
+            if (_visualTriggers is not null)
             {
                 _visualTriggers.Seal();
             }
@@ -540,13 +540,13 @@ namespace System.Windows
             CheckForCircularBasedOnReferences();
 
             // Seal BasedOn Style chain
-            if (_basedOn != null)
+            if (_basedOn is not null)
             {
                 _basedOn.Seal();
             }
 
             // Seal the ResourceDictionary
-            if (_resources != null)
+            if (_resources is not null)
             {
                 _resources.IsReadOnly = true;
             }
@@ -601,7 +601,7 @@ namespace System.Windows
             Stack basedOnHierarchy = new Stack(10);  // 10 because that's the default value (see MSDN) and the perf team wants us to specify something.
             Style latestBasedOn = this;
 
-            while( latestBasedOn != null )
+            while( latestBasedOn is not null )
             {
                 if( basedOnHierarchy.Contains( latestBasedOn ) )
                 {
@@ -650,15 +650,15 @@ namespace System.Windows
             for (int i = 0; i < style.Setters.Count; i++)
             {
                 SetterBase setterBase = style.Setters[i];
-                Debug.Assert(setterBase != null, "Setter collection must contain non-null instances of SetterBase");
+                Debug.Assert(setterBase is not null, "Setter collection must contain non-null instances of SetterBase");
 
                 // Setters are folded into the PropertyValues table only for the current style. The
                 // processing of BasedOn Style properties will occur in subsequent call to ProcessSelfStyle
                 Setter setter = setterBase as Setter;
-                if (setter != null)
+                if (setter is not null)
                 {
                     // Style Setters are not allowed to have a child target name - since there are no child nodes in a Style.
-                    if( setter.TargetName != null )
+                    if( setter.TargetName is not null )
                     {
                         throw new InvalidOperationException(SR.Format(SR.SetterOnStyleNotAllowedToHaveTarget, setter.TargetName));
                     }
@@ -746,7 +746,7 @@ namespace System.Windows
 
             ProcessVisualTriggers(style._basedOn);
 
-            if (style._visualTriggers != null)
+            if (style._visualTriggers is not null)
             {
                 // Merge in "self" and child TriggerBase PropertyValues while walking
                 // back up the tree. "Based-on" style rules are always added first
@@ -824,9 +824,9 @@ namespace System.Windows
 
                     // Set things up to handle EventTrigger
                     EventTrigger eventTrigger = trigger as EventTrigger;
-                    if( eventTrigger != null )
+                    if( eventTrigger is not null )
                     {
-                        if( eventTrigger.SourceName != null && eventTrigger.SourceName.Length > 0 )
+                        if( eventTrigger.SourceName is not null && eventTrigger.SourceName.Length > 0 )
                         {
                             throw new InvalidOperationException(SR.Format(SR.EventTriggerOnStyleNotAllowedToHaveTarget, eventTrigger.SourceName));
                         }
@@ -947,7 +947,7 @@ namespace System.Windows
         // Special equality check that takes into account 'null'
         private static bool IsEqual(object a, object b)
         {
-            return (a != null) ? a.Equals(b) : (b is null);
+            return (a is not null) ? a.Equals(b) : (b is null);
         }
 
         internal bool IsBasedOnModified { get { return IsModified(BasedOnID); } }

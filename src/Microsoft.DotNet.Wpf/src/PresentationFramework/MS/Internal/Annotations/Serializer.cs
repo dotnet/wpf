@@ -43,18 +43,18 @@ namespace MS.Internal.Annotations
         /// <param name="type">the type to be serialized by this instance</param>
         public Serializer(Type type)
         {
-            Invariant.Assert(type != null);
+            Invariant.Assert(type is not null);
 
             // Find the XmlRootAttribute for the type
             object[] attributes = type.GetCustomAttributes(false);
             foreach (object obj in attributes)
             {
                 _attribute = obj as XmlRootAttribute;
-                if (_attribute != null)
+                if (_attribute is not null)
                     break;
             }
 
-            Invariant.Assert(_attribute != null, "Internal Serializer used for a type with no XmlRootAttribute.");
+            Invariant.Assert(_attribute is not null, "Internal Serializer used for a type with no XmlRootAttribute.");
 
             // Get the default constructor for the type
             _ctor = type.GetConstructor(Array.Empty<Type>());
@@ -67,10 +67,10 @@ namespace MS.Internal.Annotations
         /// <param name="obj">object to serialize</param>
         public void Serialize(XmlWriter writer, object obj)
         {
-            Invariant.Assert(writer != null && obj != null);
+            Invariant.Assert(writer is not null && obj is not null);
 
             IXmlSerializable serializable = obj as IXmlSerializable;
-            Invariant.Assert(serializable != null, "Internal Serializer used for a type that isn't IXmlSerializable.");
+            Invariant.Assert(serializable is not null, "Internal Serializer used for a type that isn't IXmlSerializable.");
 
             writer.WriteStartElement(_attribute.ElementName, _attribute.Namespace);
             serializable.WriteXml(writer);
@@ -88,7 +88,7 @@ namespace MS.Internal.Annotations
         /// for with values retrieved from the reader</returns>
         public object Deserialize(XmlReader reader)
         {
-            Invariant.Assert(reader != null);
+            Invariant.Assert(reader is not null);
 
             IXmlSerializable serializable = (IXmlSerializable)_ctor.Invoke(Array.Empty<object>());
 

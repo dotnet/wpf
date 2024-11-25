@@ -47,7 +47,7 @@ namespace MS.Internal.Annotations.Storage
         /// <param name="cargoChanged">delegate used to register for CargoChanged events on all annotations</param>
         internal StoreAnnotationsMap(AnnotationAuthorChangedEventHandler authorChanged, AnnotationResourceChangedEventHandler anchorChanged, AnnotationResourceChangedEventHandler cargoChanged)
         {
-            Debug.Assert(authorChanged != null && anchorChanged != null && cargoChanged != null,
+            Debug.Assert(authorChanged is not null && anchorChanged is not null && cargoChanged is not null,
                          "Author and Anchor and Cargo must not be null");
 
             _authorChanged = authorChanged;
@@ -130,7 +130,7 @@ namespace MS.Internal.Annotations.Storage
                     foreach (ContentLocatorBase locator in resource.ContentLocators)
                     {
                         ContentLocator ContentLocator = locator as ContentLocator;
-                        if (ContentLocator != null)
+                        if (ContentLocator is not null)
                         {
                             if (ContentLocator.StartsWith(anchorLocator))
                             {
@@ -140,7 +140,7 @@ namespace MS.Internal.Annotations.Storage
                         else
                         {
                             ContentLocatorGroup ContentLocatorGroup = locator as ContentLocatorGroup;
-                            if (ContentLocatorGroup != null)
+                            if (ContentLocatorGroup is not null)
                             {
                                 foreach (ContentLocator list in ContentLocatorGroup.Locators)
                                 {

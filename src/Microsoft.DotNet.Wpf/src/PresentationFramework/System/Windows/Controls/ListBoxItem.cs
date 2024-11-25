@@ -94,7 +94,7 @@ namespace System.Windows.Controls
             bool isSelected = (bool) e.NewValue;
 
             Selector parentSelector = listItem.ParentSelector;
-            if (parentSelector != null)
+            if (parentSelector is not null)
             {
                 parentSelector.RaiseIsSelectedChangedAutomationEvent(listItem, isSelected);
             }
@@ -280,7 +280,7 @@ namespace System.Windows.Controls
             if (Selector.UiGetIsSelectable(this) && Focus())
             {
                 ListBox parent = ParentListBox;
-                if (parent != null)
+                if (parent is not null)
                 {
                     parent.NotifyListItemClicked(this, mouseButton);
                 }
@@ -294,7 +294,7 @@ namespace System.Windows.Controls
         protected override void OnMouseEnter(MouseEventArgs e)
         {
             // abort any drag operation we have queued.
-            if (parentNotifyDraggedOperation != null)
+            if (parentNotifyDraggedOperation is not null)
             {
                 parentNotifyDraggedOperation.Abort();
                 parentNotifyDraggedOperation = null;
@@ -304,7 +304,7 @@ namespace System.Windows.Controls
             {
                 ListBox parent = ParentListBox;
 
-                if (parent != null && Mouse.LeftButton == MouseButtonState.Pressed)
+                if (parent is not null && Mouse.LeftButton == MouseButtonState.Pressed)
                 {
                     parent.NotifyListItemMouseDragged(this);
                 }
@@ -319,7 +319,7 @@ namespace System.Windows.Controls
         protected override void OnMouseLeave(MouseEventArgs e)
         {
             // abort any drag operation we have queued.
-            if (parentNotifyDraggedOperation != null)
+            if (parentNotifyDraggedOperation is not null)
             {
                 parentNotifyDraggedOperation.Abort();
                 parentNotifyDraggedOperation = null;
@@ -354,7 +354,7 @@ namespace System.Windows.Controls
 
             // If earlier, we decided to set focus to the old parent ListBox, do it here
             // after calling base so that the state for IsKeyboardFocusWithin is updated correctly.
-            if (oldItemsControl != null)
+            if (oldItemsControl is not null)
             {
                 oldItemsControl.Focus();
             }

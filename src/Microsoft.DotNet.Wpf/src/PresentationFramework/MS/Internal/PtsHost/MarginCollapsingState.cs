@@ -43,7 +43,7 @@ namespace MS.Internal.PtsHost
             // Create new margin collapsing info
             mcsNew = new MarginCollapsingState(ptsContext, mbp.MarginTop);
             // collapse margins, if current margin collapsing exists
-            if (mcsCurrent != null)
+            if (mcsCurrent is not null)
             {
                 mcsNew.Collapse(mcsCurrent);
             }
@@ -88,7 +88,7 @@ namespace MS.Internal.PtsHost
 
             // If the current margin collapsing state does not exist, we are done.
             // Otherwise, get current border and padding and decide if to collapse margin.
-            if (mcsCurrent != null)
+            if (mcsCurrent is not null)
             {
                 if (mbp.BPBottom != 0)
                 {

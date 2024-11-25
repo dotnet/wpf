@@ -217,14 +217,14 @@ namespace System.Windows.Controls
             // After the content is rendered we want to check if there is an element that needs to be focused
             // If there is - set focus to it
             DependencyObject doContent = Content as DependencyObject;
-            if (doContent != null)
+            if (doContent is not null)
             {
                 IInputElement focusedElement = FocusManager.GetFocusedElement(doContent) as IInputElement;
-                if (focusedElement != null)
+                if (focusedElement is not null)
                     focusedElement.Focus();
             }
 
-            if (ContentRendered != null)
+            if (ContentRendered is not null)
             {
                 ContentRendered(this, args);
             }
@@ -256,9 +256,9 @@ namespace System.Windows.Controls
             // source, e.g, SetValue, DataBinding, Style..., we should use NavService.Source.
             if (frame._sourceUpdatedFromNavService)
             {
-                Invariant.Assert(frame._navigationService != null, "_navigationService should never be null here");
+                Invariant.Assert(frame._navigationService is not null, "_navigationService should never be null here");
                 // Turn this Assert on after fix the issue that NavService.Source is not absolute for SiteOfOrigin.
-                //Invariant.Assert(frame._navigationService.Source != null ? !frame._navigationService.Source.IsAbsoluteUri : true, "NavService's Source should always be relative");
+                //Invariant.Assert(frame._navigationService.Source is not null ? !frame._navigationService.Source.IsAbsoluteUri : true, "NavService's Source should always be relative");
                 return frame._navigationService.Source;
             }
 
@@ -448,7 +448,7 @@ namespace System.Windows.Controls
                     }
                     break;
                 case JournalOwnership.OwnsJournal:
-                    Debug.Assert(_ownJournalScope != null);
+                    Debug.Assert(_ownJournalScope is not null);
                     switch (newValue)
                     {
                         case JournalOwnership.Automatic:
@@ -608,7 +608,7 @@ namespace System.Windows.Controls
         {
             // Post the firing of ContentRendered as Input priority work item so
             // that ContentRendered will be fired after render query empties.
-            if (_contentRenderedCallback != null)
+            if (_contentRenderedCallback is not null)
             {
                 // Content was changed again before the previous rendering completed (or at least
                 // before the Dispatcher got to Input priority callbacks).
@@ -627,40 +627,40 @@ namespace System.Windows.Controls
 
         private void OnQueryGoBack(object sender, CanExecuteRoutedEventArgs e)
         {
-            Debug.Assert(sender == this && _ownJournalScope != null);
+            Debug.Assert(sender == this && _ownJournalScope is not null);
             e.CanExecute = _ownJournalScope.CanGoBack;
             e.Handled = true;
         }
         private void OnGoBack(object sender, ExecutedRoutedEventArgs e)
         {
-            Debug.Assert(sender == this && _ownJournalScope != null);
+            Debug.Assert(sender == this && _ownJournalScope is not null);
             _ownJournalScope.GoBack();
             e.Handled = true;
         }
 
         private void OnQueryGoForward(object sender, CanExecuteRoutedEventArgs e)
         {
-            Debug.Assert(sender == this && _ownJournalScope != null);
+            Debug.Assert(sender == this && _ownJournalScope is not null);
             e.CanExecute = _ownJournalScope.CanGoForward;
             e.Handled = true;
         }
         private void OnGoForward(object sender, ExecutedRoutedEventArgs e)
         {
-            Debug.Assert(sender == this && _ownJournalScope != null);
+            Debug.Assert(sender == this && _ownJournalScope is not null);
             _ownJournalScope.GoForward();
             e.Handled = true;
         }
 
         private void OnNavigateJournal(object sender, ExecutedRoutedEventArgs e)
         {
-            Debug.Assert(sender == this && _ownJournalScope != null);
+            Debug.Assert(sender == this && _ownJournalScope is not null);
 
             // The following checks are needed because anyone could send the NavigateJournal command.
             FrameworkElement journalEntryUIElem = e.Parameter as FrameworkElement;
-            if (journalEntryUIElem != null)
+            if (journalEntryUIElem is not null)
             {
                 JournalEntry je = journalEntryUIElem.DataContext as JournalEntry;
-                if (je != null)
+                if (je is not null)
                 {
                     if (_ownJournalScope.NavigateToEntry(je))
                     {
@@ -672,19 +672,19 @@ namespace System.Windows.Controls
 
         private void OnQueryRefresh(object sender, CanExecuteRoutedEventArgs e)
         {
-            Debug.Assert(sender == this && _ownJournalScope != null);
-            e.CanExecute = Content != null;
+            Debug.Assert(sender == this && _ownJournalScope is not null);
+            e.CanExecute = Content is not null;
         }
         private void OnRefresh(object sender, ExecutedRoutedEventArgs e)
         {
-            Debug.Assert(sender == this && _ownJournalScope != null);
+            Debug.Assert(sender == this && _ownJournalScope is not null);
             _navigationService.Refresh();
             e.Handled = true;
         }
 
         private void OnBrowseStop(object sender, ExecutedRoutedEventArgs e)
         {
-            Debug.Assert(sender == this && _ownJournalScope != null);
+            Debug.Assert(sender == this && _ownJournalScope is not null);
             _ownJournalScope.StopLoading();
             e.Handled = true;
         }
@@ -717,7 +717,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal override string GetPlainText()
         {
-            if (this.Source != null)
+            if (this.Source is not null)
             {
                 return Source.ToString();
             }
@@ -736,8 +736,8 @@ namespace System.Windows.Controls
         {
             // When uri of NavigationService is valid and can be used to
             // relaod, we do not serialize content
-            Invariant.Assert(_navigationService != null, "_navigationService should never be null here");
-            return ( !_navigationService.CanReloadFromUri && Content != null);
+            Invariant.Assert(_navigationService is not null, "_navigationService should never be null here");
+            return ( !_navigationService.CanReloadFromUri && Content is not null);
         }
 
         #endregion Overding ContentControl implementation
@@ -747,7 +747,7 @@ namespace System.Windows.Controls
 
         private static void OnParentNavigationServiceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Debug.Assert(d as Frame != null && ((Frame)d).NavigationService != null);
+            Debug.Assert(d as Frame is not null && ((Frame)d).NavigationService is not null);
             ((Frame) d).NavigationService.OnParentNavigationServiceChanged();
         }
 
@@ -760,7 +760,7 @@ namespace System.Windows.Controls
 
             // Get the root element of the style
             Visual v = TemplateChild;
-            if (v != null)
+            if (v is not null)
             {
                 NavigationService.VisualTreeAvailable(v);
             }
@@ -791,13 +791,13 @@ namespace System.Windows.Controls
         /// </summary>
         private JournalNavigationScope GetJournal(bool create)
         {
-            Invariant.Assert(_ownJournalScope != null ^ _journalOwnership != JournalOwnership.OwnsJournal);
+            Invariant.Assert(_ownJournalScope is not null ^ _journalOwnership != JournalOwnership.OwnsJournal);
 
-            if (_ownJournalScope != null)
+            if (_ownJournalScope is not null)
                 return _ownJournalScope;
 
             JournalNavigationScope jns = GetParentJournal(create);
-            if (jns != null)
+            if (jns is not null)
             {
                 SetCurrentValueInternal(JournalOwnershipProperty, JournalOwnership.UsesParentJournal);
                 return jns;
@@ -819,7 +819,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                bool canGoFwd = _ownJournalScope != null && _ownJournalScope.CanGoForward;
+                bool canGoFwd = _ownJournalScope is not null && _ownJournalScope.CanGoForward;
                 Debug.Assert(canGoFwd == (bool)GetValue(CanGoForwardProperty));
                 return canGoFwd;
             }
@@ -834,7 +834,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                bool canGoBack = _ownJournalScope != null && _ownJournalScope.CanGoBack;
+                bool canGoBack = _ownJournalScope is not null && _ownJournalScope.CanGoBack;
                 Debug.Assert(canGoBack == (bool)GetValue(CanGoBackProperty));
                 return canGoBack;
             }
@@ -1202,7 +1202,7 @@ namespace System.Windows.Controls
 
             internal override void PrepareForSerialization()
             {
-                if (JournalEntry != null)
+                if (JournalEntry is not null)
                 {
                     if (JournalEntry.IsAlive()) // not serializable
                     {
@@ -1215,7 +1215,7 @@ namespace System.Windows.Controls
                         Debug.Assert(JournalEntry.GetType().IsSerializable);
                     }
                 }
-                if (Journal != null)
+                if (Journal is not null)
                 {
                     Journal.PruneKeepAliveEntries();
                 }
@@ -1240,7 +1240,7 @@ namespace System.Windows.Controls
             state.NavSvcGuid = _navigationService.GuidId;
 
             state.JournalOwnership = _journalOwnership;
-            if (_ownJournalScope != null)
+            if (_ownJournalScope is not null)
             {
                 Debug.Assert(_journalOwnership == JournalOwnership.OwnsJournal);
                 // No need to make a copy here because this Frame object will be discarded.
@@ -1264,11 +1264,11 @@ namespace System.Windows.Controls
             JournalOwnership = state.JournalOwnership;
             if(_journalOwnership == JournalOwnership.OwnsJournal)
             {
-                Invariant.Assert(state.Journal != null);
+                Invariant.Assert(state.Journal is not null);
                 _ownJournalScope.Journal = state.Journal;
             }
 
-            if(state.JournalEntry != null)
+            if(state.JournalEntry is not null)
             {
                 state.JournalEntry.Navigate(this, NavigationMode.Back);
             }
@@ -1286,7 +1286,7 @@ namespace System.Windows.Controls
         {
             base.OnPreApplyTemplate();
 
-            if (_ownJournalScope != null)
+            if (_ownJournalScope is not null)
             {
                 // This causes the Journal instance to be created. BackStackProperty and ForwardStackProperty
                 // should be set before the navigation chrome data-binds to them but after any Journal is
@@ -1302,13 +1302,13 @@ namespace System.Windows.Controls
             // If the frame does not have a template generated tree then its
             // content is not reachable via a tree walk.
             DependencyObject d;
-            if (!HasTemplateGeneratedSubTree && (d = Content as DependencyObject) != null)
+            if (!HasTemplateGeneratedSubTree && (d = Content as DependencyObject) is not null)
             {
                 FrameworkElement fe;
                 FrameworkContentElement fce;
                 Helper.DowncastToFEorFCE(d, out fe, out fce, false);
 
-                if (fe != null || fce != null)
+                if (fe is not null || fce is not null)
                 {
                     TreeWalkHelper.InvalidateOnResourcesChange(fe, fce, ResourcesChangeInfo.ThemeChangeInfo);
                 }
@@ -1328,7 +1328,7 @@ namespace System.Windows.Controls
         {
             JournalNavigationScope jns = null;
             NavigationService parentNS = _navigationService.ParentNavigationService;
-            if (parentNS != null)
+            if (parentNS is not null)
             {
                 jns = parentNS.INavigatorHost.GetJournal(create);
             }
@@ -1343,7 +1343,7 @@ namespace System.Windows.Controls
             {
                 // Entries created for this frame in the parent's journal have to be removed.
                 JournalNavigationScope parentJns = GetParentJournal(false/*don't create*/);
-                if (parentJns != null)
+                if (parentJns is not null)
                 {
                     parentJns.Journal.RemoveEntries(_navigationService.GuidId);
                 }
@@ -1372,7 +1372,7 @@ namespace System.Windows.Controls
         private void SwitchToParentJournal()
         {
             Debug.Assert(_ownJournalScope is null ^ _journalOwnership == JournalOwnership.OwnsJournal);
-            if (_ownJournalScope != null)
+            if (_ownJournalScope is not null)
             {
                 _ownJournalScope = null;
                 _navigationService.InvalidateJournalNavigationScope();

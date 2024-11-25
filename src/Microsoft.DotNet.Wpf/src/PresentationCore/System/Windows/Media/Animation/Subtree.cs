@@ -79,10 +79,10 @@ namespace System.Windows.Media.Animation
                 else
                 {
                     // Start with the root's first child
-                    if (_rootClock != null)
+                    if (_rootClock is not null)
                     {
                         ClockGroup rootClockGroup = _rootClock as ClockGroup;
-                        if (rootClockGroup != null)
+                        if (rootClockGroup is not null)
                         {
                             _currentClock = rootClockGroup.FirstChild;
                         }
@@ -96,7 +96,7 @@ namespace System.Windows.Media.Animation
                 // Next time we won't be getting started anymore
                 _flags &= ~SubtreeFlag.Reset;
             }
-            else if (_currentClock != null)
+            else if (_currentClock is not null)
             {
                 // The next clock is possibly the first child of the current clock
                 ClockGroup currentClockGroup = _currentClock as ClockGroup;
@@ -126,7 +126,7 @@ namespace System.Windows.Media.Animation
                 _currentClock = nextClock;
             }
 
-            return _currentClock != null;
+            return _currentClock is not null;
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace System.Windows.Media.Animation
             }
 
             // Skip trying to iterate if we are already past the end
-            if (_currentClock != null)
+            if (_currentClock is not null)
             {
                 Clock nextClock = _currentClock;
 
@@ -229,7 +229,7 @@ namespace System.Windows.Media.Animation
                         _currentClock = nextClock;
                         currentClockGroup = _currentClock as ClockGroup;
 } 
-                    while ((nextClock = _currentClock.FirstChild) != null);
+                    while ((nextClock = _currentClock.FirstChild) is not null);
                 }
 
                 // Don't process the root, unless specifically requested
@@ -239,7 +239,7 @@ namespace System.Windows.Media.Animation
                 }
             }
 
-            return _currentClock != null;
+            return _currentClock is not null;
         }
 
         #endregion // Methods

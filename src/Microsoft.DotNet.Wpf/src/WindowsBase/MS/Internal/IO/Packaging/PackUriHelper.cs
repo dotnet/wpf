@@ -59,7 +59,7 @@ namespace MS.Internal.IO.Packaging
 
         internal static bool IsPackUri(Uri uri)
         {
-            return uri != null && 
+            return uri is not null && 
                 string.Compare(uri.Scheme, System.IO.Packaging.PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase) == 0;
         }
 
@@ -85,14 +85,14 @@ namespace MS.Internal.IO.Packaging
 
             string partUriString;
             Exception exception = GetExceptionIfPartUriInvalid(partUri, out partUriString);
-            if (exception != null)
+            if (exception is not null)
             {
-                Debug.Assert(partUriString != null && partUriString.Length == 0);
+                Debug.Assert(partUriString is not null && partUriString.Length == 0);
                 throw exception;
             }
             else
             {
-                Debug.Assert(partUriString != null && partUriString.Length > 0);
+                Debug.Assert(partUriString is not null && partUriString.Length > 0);
                 return new ValidatedPartUri(partUriString);
             }
         }
@@ -100,7 +100,7 @@ namespace MS.Internal.IO.Packaging
         //Returns the part name in its escaped string form.
         internal static string GetStringForPartUri(Uri partUri)
         {
-            Debug.Assert(partUri != null, "Null reference check for this uri parameter should have been made earlier");
+            Debug.Assert(partUri is not null, "Null reference check for this uri parameter should have been made earlier");
             if (!(partUri is ValidatedPartUri))
                 partUri = ValidatePartUri(partUri);
 
@@ -153,7 +153,7 @@ namespace MS.Internal.IO.Packaging
             Exception argumentException = null;
 
             argumentException = GetExceptionIfAbsoluteUri(partUri);
-            if (argumentException != null)
+            if (argumentException is not null)
                 return argumentException;
 
             string partName = GetStringForPartUriFromAnyUri(partUri);
@@ -167,15 +167,15 @@ namespace MS.Internal.IO.Packaging
                 return new ArgumentException(SR.PartUriShouldStartWithForwardSlash);
 
             argumentException = GetExceptionIfPartNameStartsWithTwoSlashes(partName);
-            if (argumentException != null)
+            if (argumentException is not null)
                 return argumentException;
 
             argumentException = GetExceptionIfPartNameEndsWithSlash(partName);
-            if (argumentException != null)
+            if (argumentException is not null)
                 return argumentException;
             
             argumentException = GetExceptionIfFragmentPresent(partName);
-            if (argumentException != null)
+            if (argumentException is not null)
                 return argumentException;
 
             //We test if the URI is wellformed and refined.
@@ -249,7 +249,7 @@ namespace MS.Internal.IO.Packaging
         //Returns the part name in its escaped string form from an Absolute [must be pack://] or a Relative URI
         private static string GetStringForPartUriFromAnyUri(Uri partUri)
         {
-            Debug.Assert(partUri != null, "Null reference check for this uri parameter should have been made earlier");
+            Debug.Assert(partUri is not null, "Null reference check for this uri parameter should have been made earlier");
             Debug.Assert(!(partUri is ValidatedPartUri), "This method should only be called when we have not already validated the part uri");
 
             Uri safeUnescapedUri;
@@ -284,7 +284,7 @@ namespace MS.Internal.IO.Packaging
         //2. String with just the begining "/"
         private static bool IsPartNameEmpty(string partName)
         {
-            Debug.Assert(partName != null, "Null reference check for this partName parameter should have been made earlier");
+            Debug.Assert(partName is not null, "Null reference check for this partName parameter should have been made earlier");
 
             // Uri.GetComponents may return a single forward slash when there is no absolute path.  
             // This is Whidbey PS399695.  Until that is changed, we check for both cases - either an entirely empty string,
@@ -454,7 +454,7 @@ namespace MS.Internal.IO.Packaging
             private ValidatedPartUri(string partUriString, bool isNormalized, bool computeIsRelationship, bool isRelationshipPartUri)
                 : base(partUriString, UriKind.Relative)
             {
-                Debug.Assert(partUriString != null && partUriString.Length > 0);
+                Debug.Assert(partUriString is not null && partUriString.Length > 0);
 
                 _partUriString = partUriString;
                 _isNormalized = isNormalized;

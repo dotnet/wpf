@@ -61,7 +61,7 @@ namespace System.Windows.Media
         public bool TryGetValue(int key, out CharacterMetrics value)
         {
             value = GetValue(key);
-            return value != null;
+            return value is not null;
         }
 
         #endregion
@@ -122,7 +122,7 @@ namespace System.Windows.Media
             // Suppress PRESharp warning that item.Value can be null; apparently PRESharp
             // doesn't understand short circuit evaluation of operator &&.
 #pragma warning suppress 56506
-            return item.Value != null && item.Value.Equals(GetValue(item.Key));
+            return item.Value is not null && item.Value.Equals(GetValue(item.Key));
         }
 
         /// <summary>
@@ -139,19 +139,19 @@ namespace System.Windows.Media
                 throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, "index", "array"));
 
             CharacterMetrics[][] pageTable = _pageTable;
-            if (pageTable != null)
+            if (pageTable is not null)
             {
                 int k = index;
 
                 for (int i = 0; i < pageTable.Length; ++i)
                 {
                     CharacterMetrics[] page = pageTable[i];
-                    if (page != null)
+                    if (page is not null)
                     {
                         for (int j = 0; j < page.Length; ++j)
                         {
                             CharacterMetrics metrics = page[j];
-                            if (metrics != null)
+                            if (metrics is not null)
                             {
                                 if (k >= array.Length)
                                     throw new ArgumentException(SR.Format(SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, "array"));
@@ -173,7 +173,7 @@ namespace System.Windows.Media
         [CLSCompliant(false)]
         public bool Remove(KeyValuePair<int, CharacterMetrics> item)
         {
-            return item.Value != null && RemoveValue(item.Key, item.Value);
+            return item.Value is not null && RemoveValue(item.Key, item.Value);
         }
 
         bool SC.ICollection.IsSynchronized
@@ -199,7 +199,7 @@ namespace System.Windows.Media
                 throw new ArgumentException(SR.Format(SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, "array"));
 
             SC.DictionaryEntry[] typedArray = array as SC.DictionaryEntry[];
-            if (typedArray != null)
+            if (typedArray is not null)
             {
                 // it's an array of the exact type
                 foreach (KeyValuePair<int, CharacterMetrics> item in this)
@@ -242,7 +242,7 @@ namespace System.Windows.Media
         /// </summary>
         public bool ContainsKey(int key)
         {
-            return GetValue(key) != null;
+            return GetValue(key) is not null;
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace System.Windows.Media
 
         bool SC.IDictionary.Contains(object key)
         {
-            return key is int && GetValue((int)key) != null;
+            return key is int && GetValue((int)key) is not null;
         }
 
         void SC.IDictionary.Remove(object key)
@@ -341,7 +341,7 @@ namespace System.Windows.Media
 
         internal CharacterMetrics[] GetPage(int i)
         {
-            return (_pageTable != null) ? _pageTable[i] : null;
+            return (_pageTable is not null) ? _pageTable[i] : null;
         }
 
         private CharacterMetrics[] GetPageFromUnicodeScalar(int unicodeScalar)
@@ -350,7 +350,7 @@ namespace System.Windows.Media
 
             CharacterMetrics[] page;
 
-            if (_pageTable != null)
+            if (_pageTable is not null)
             {
                 page = _pageTable[i];
                 if (page is null)
@@ -377,7 +377,7 @@ namespace System.Windows.Media
             CharacterMetrics[] page = GetPageFromUnicodeScalar(key);
             int i = key & PageMask;
 
-            if (failIfExists && page[i] != null)
+            if (failIfExists && page[i] is not null)
                 throw new ArgumentException(SR.Format(SR.CollectionDuplicateKey, key));
 
             page[i] = value;
@@ -388,10 +388,10 @@ namespace System.Windows.Media
         {
             CharacterMetrics metrics = null;
 
-            if (key >= 0 && key <= FontFamilyMap.LastUnicodeScalar && _pageTable != null)
+            if (key >= 0 && key <= FontFamilyMap.LastUnicodeScalar && _pageTable is not null)
             {
                 CharacterMetrics[] page = _pageTable[key >> PageShift];
-                if (page != null)
+                if (page is not null)
                     metrics = page[key & PageMask];
             }
 
@@ -400,15 +400,15 @@ namespace System.Windows.Media
 
         private bool RemoveValue(int key, CharacterMetrics value)
         {
-            if (key >= 0 && key <= FontFamilyMap.LastUnicodeScalar && _pageTable != null)
+            if (key >= 0 && key <= FontFamilyMap.LastUnicodeScalar && _pageTable is not null)
             {
                 CharacterMetrics[] page = _pageTable[key >> PageShift];
-                if (page != null)
+                if (page is not null)
                 {
                     int i = key & PageMask;
                     CharacterMetrics metrics = page[i];
 
-                    if (metrics != null && (value is null || metrics.Equals(value)))
+                    if (metrics is not null && (value is null || metrics.Equals(value)))
                     {
                         page[i] = null;
                         _count = 0;
@@ -422,19 +422,19 @@ namespace System.Windows.Media
         private CharacterMetrics GetNextValue(ref int unicodeScalar)
         {
             CharacterMetrics[][] pageTable = _pageTable;
-            if (pageTable != null)
+            if (pageTable is not null)
             {
                 int j = (unicodeScalar + 1) & PageMask;
 
                 for (int i = (unicodeScalar + 1) >> PageShift; i < PageCount; ++i)
                 {
                     CharacterMetrics[] page = pageTable[i];
-                    if (page != null)
+                    if (page is not null)
                     {
                         for (; j < PageSize; ++j)
                         {
                             CharacterMetrics metrics = page[j];
-                            if (metrics != null)
+                            if (metrics is not null)
                             {
                                 unicodeScalar = (i << PageShift) | j;
                                 return metrics;
@@ -455,16 +455,16 @@ namespace System.Windows.Media
             int c = 0;
 
             CharacterMetrics[][] pageTable = _pageTable;
-            if (pageTable != null)
+            if (pageTable is not null)
             {
                 for (int i = 0; i < pageTable.Length; ++i)
                 {
                     CharacterMetrics[] page = pageTable[i];
-                    if (page != null)
+                    if (page is not null)
                     {
                         for (int j = 0; j < page.Length; ++j)
                         {
-                            if (page[j] != null)
+                            if (page[j] is not null)
                                 ++c;
                         }
                     }
@@ -503,7 +503,7 @@ namespace System.Windows.Media
             int value;
 
             string s = key as string;
-            if (s != null)
+            if (s is not null)
             {
                 int i = 0;
                 if (!FontFamilyMap.ParseHexNumber(s, ref i, out value) || i < s.Length)
@@ -527,7 +527,7 @@ namespace System.Windows.Media
         private CharacterMetrics ConvertValue(object value)
         {
             CharacterMetrics metrics = value as CharacterMetrics;
-            if (metrics != null)
+            if (metrics is not null)
                 return metrics;
 
             ArgumentNullException.ThrowIfNull(value);
@@ -558,7 +558,7 @@ namespace System.Windows.Media
                 {
                     _value = _dictionary.GetNextValue(ref _unicodeScalar);
                 }
-                return _value != null;
+                return _value is not null;
             }
 
             void SC.IEnumerator.Reset()
@@ -588,7 +588,7 @@ namespace System.Windows.Media
 
             private KeyValuePair<int, CharacterMetrics> GetCurrentEntry()
             {
-                if (_value != null)
+                if (_value is not null)
                     return new KeyValuePair<int, CharacterMetrics>(_unicodeScalar, _value);
                 else
                     throw new InvalidOperationException(SR.Enumerator_VerifyContext);

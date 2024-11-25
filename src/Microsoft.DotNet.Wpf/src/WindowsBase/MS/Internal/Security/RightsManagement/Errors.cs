@@ -29,7 +29,7 @@ namespace MS.Internal.Security.RightsManagement
         internal static string GetLocalizedFailureCodeMessageWithDefault(RightsManagementFailureCode failureCode)
         {
             string errorMessage = GetLocalizedFailureCodeMessage(failureCode);
-            if (errorMessage != null)
+            if (errorMessage is not null)
             {
                 return errorMessage;
             }
@@ -57,7 +57,7 @@ namespace MS.Internal.Security.RightsManagement
             }
 
             string errorMessage = GetLocalizedFailureCodeMessage((RightsManagementFailureCode)hr);
-            if (errorMessage != null)
+            if (errorMessage is not null)
             {
                 throw new RightsManagementException((RightsManagementFailureCode)hr, errorMessage);
             }

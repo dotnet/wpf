@@ -337,7 +337,7 @@ namespace MS.Internal.Printing
                         }
                     }
                 }
-                if (printQueue != null)
+                if (printQueue is not null)
                 {
                     printQueue.InPartialTrust = true;
                 }
@@ -518,11 +518,11 @@ namespace MS.Internal.Printing
                         // a DEVNAMES structure for this as well as convert the PrintTicket to a
                         // DEVMODE.
                         //
-                        if (_dialog.PrintQueue != null)
+                        if (_dialog.PrintQueue is not null)
                         {
                             pdex.hDevNames = AllocateAndInitializeDevNames(_dialog.PrintQueue.FullName);
 
-                            if (_dialog.PrintTicket != null)
+                            if (_dialog.PrintTicket is not null)
                             {
                                 pdex.hDevMode = AllocateAndInitializeDevMode(
                                     _dialog.PrintQueue.FullName,
@@ -595,11 +595,11 @@ namespace MS.Internal.Printing
                         // a DEVNAMES structure for this as well as convert the PrintTicket to a
                         // DEVMODE.
                         //
-                        if (_dialog.PrintQueue != null)
+                        if (_dialog.PrintQueue is not null)
                         {
                             pdex.hDevNames = AllocateAndInitializeDevNames(_dialog.PrintQueue.FullName);
 
-                            if (_dialog.PrintTicket != null)
+                            if (_dialog.PrintTicket is not null)
                             {
                                 pdex.hDevMode = AllocateAndInitializeDevMode(
                                     _dialog.PrintQueue.FullName,

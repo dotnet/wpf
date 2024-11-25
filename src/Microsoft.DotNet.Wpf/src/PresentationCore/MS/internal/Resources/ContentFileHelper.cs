@@ -26,7 +26,7 @@ namespace MS.Internal.Resources
                 _contentFiles = GetContentFiles(BaseUriHelper.ResourceAssembly);
             }
 
-            if (_contentFiles != null && _contentFiles.Count > 0)
+            if (_contentFiles is not null && _contentFiles.Count > 0)
             {                
                 if (_contentFiles.Contains(partName))
                 {
@@ -61,7 +61,7 @@ namespace MS.Internal.Resources
                                    asm,
                                    typeof(AssemblyAssociatedContentFileAttribute));
 
-            if (assemblyAttributes != null && assemblyAttributes.Length > 0)
+            if (assemblyAttributes is not null && assemblyAttributes.Length > 0)
             {
                 contentFiles = new HashSet<string>(assemblyAttributes.Length, StringComparer.OrdinalIgnoreCase);
 

@@ -41,8 +41,8 @@ namespace System.Windows
             DependencyObject        parent,
             bool                    isAddOperation)
         {
-            Debug.Assert(fe != null || fce != null, "Node with the tree change notification must be an FE or an FCE.");
-            Debug.Assert(parent != null, "Must have a parent that the current node is connected to or disconnected from.");
+            Debug.Assert(fe is not null || fce is not null, "Node with the tree change notification must be an FE or an FCE.");
+            Debug.Assert(parent is not null, "Must have a parent that the current node is connected to or disconnected from.");
 
             // If the tree change is for a non-FE/FCE parent then we need to find
             // the nearest FE/FCE parent inorder to propagate inheritance correctly.
@@ -73,7 +73,7 @@ namespace System.Windows
             fo.Reset(fo.TemplatedParent);
             fo.HasTemplateChanged = false;
 
-            DependencyObject d = (fe != null) ? (DependencyObject)fe : (DependencyObject)fce;
+            DependencyObject d = (fe is not null) ? (DependencyObject)fe : (DependencyObject)fce;
 
             // during a tree walk to invalidate inherited properties, we typically
             // call UpdateStyle from FE/FCE.InvalidateTreeDependentProperties.  But
@@ -81,7 +81,7 @@ namespace System.Windows
             // for inherited properties before we've updated the inheritance parent;
             // so do the updatestyle here before we record old values so that we
             // capture any updates provided by styles.
-            if (fe != null)
+            if (fe is not null)
             {
                 if (fe.IsInitialized && !fe.HasLocalStyle)
                 {
@@ -243,8 +243,8 @@ namespace System.Windows
             bool                                 isSelfInheritanceParent,
             bool                                 wasSelfInheritanceParent)
         {
-            Debug.Assert(fe != null || fce != null, "Must have non-null current node");
-            DependencyObject d = fe != null ? (DependencyObject)fe : (DependencyObject)fce;
+            Debug.Assert(fe is not null || fce is not null, "Must have non-null current node");
+            DependencyObject d = fe is not null ? (DependencyObject)fe : (DependencyObject)fce;
             FrameworkObject fo = new FrameworkObject(fe, fce);
 
             // Pull up the parent's InheritableProperties cache
@@ -252,7 +252,7 @@ namespace System.Windows
 
             // Loop through all cached inheritable
             // to see if they should be invalidated.
-            int inheritablePropertiesCount = parentInheritableProperties  != null ? parentInheritableProperties.Count : 0;
+            int inheritablePropertiesCount = parentInheritableProperties  is not null ? parentInheritableProperties.Count : 0;
 
             FrugalObjectList<DependencyProperty> currentInheritableProperties = null;
             if (HasChildren(fe, fce))
@@ -281,7 +281,7 @@ namespace System.Windows
 
                     // If a change is detected then add the inheritable property to
                     // the current list so that it can be used to invalidate further children
-                    if (changed && currentInheritableProperties != null)
+                    if (changed && currentInheritableProperties is not null)
                     {
                         Debug.Assert(!currentInheritableProperties.Contains(inheritableProperty), "InheritableProperties list should not have duplicates");
 
@@ -318,7 +318,7 @@ namespace System.Windows
             bool                        isSelfInheritanceParent,
             bool                        wasSelfInheritanceParent)
         {
-            Debug.Assert(d != null, "Must have non-null current node");
+            Debug.Assert(d is not null, "Must have non-null current node");
 
             // This must be an inherited dependency property
             Debug.Assert(fMetadata.IsInherited == true, "This must be an inherited dependency property");
@@ -455,7 +455,7 @@ namespace System.Windows
             FrameworkContentElement fce,
             ResourcesChangeInfo     info)
         {
-            Debug.Assert(fe != null || fce != null, "Node with the resources change notification must be an FE or an FCE.");
+            Debug.Assert(fe is not null || fce is not null, "Node with the resources change notification must be an FE or an FCE.");
 
             // Here we are syncing the window's Theme mode if resource dictionary changes.
             // The IgnoreWindowResourcesChange is a flag set to make sure the ThemeMode change does not cause an infinite loop of resource changes.
@@ -479,7 +479,7 @@ namespace System.Windows
             fo.Reset(fo.TemplatedParent);
             fo.HasTemplateChanged = false;
 
-            DependencyObject d = (fe != null) ? (DependencyObject)fe : (DependencyObject)fce;
+            DependencyObject d = (fe is not null) ? (DependencyObject)fe : (DependencyObject)fce;
 
             if (HasChildren(fe, fce))
             {
@@ -524,7 +524,7 @@ namespace System.Windows
             ResourcesChangeInfo info,
             bool raiseResourceChangedEvent)
         {
-            Debug.Assert(d != null, "Must have non-null current node");
+            Debug.Assert(d is not null, "Must have non-null current node");
 
             bool containsTypeOfKey = info.Contains(d.DependencyObjectType.SystemType, true /*isImplicitStyleKey*/);
             bool isSystemResourcesChange = info.IsThemeChange;
@@ -557,7 +557,7 @@ namespace System.Windows
                 if (info.IsImplicitDataTemplateChange)
                 {
                     ContentPresenter contentPresenter = fe as ContentPresenter;
-                    if (contentPresenter != null)
+                    if (contentPresenter is not null)
                     {
                         contentPresenter.ReevaluateTemplate();
                     }
@@ -689,7 +689,7 @@ namespace System.Windows
             DependencyObject    d,
             ResourcesChangeInfo info)
         {
-            Debug.Assert(d != null, "Must have non-null current node");
+            Debug.Assert(d is not null, "Must have non-null current node");
 
             // Find properties that have resource reference value
             LocalValueEnumerator localValues = d.GetLocalValueEnumerator();
@@ -713,7 +713,7 @@ namespace System.Windows
                 {
                     // Is this a resource reference?
                     ResourceReferenceExpression resource = localValues.Current.Value as ResourceReferenceExpression;
-                    if (resource != null)
+                    if (resource is not null)
                     {
                         // Record this property if it is referring
                         // to a resource that is being changed
@@ -752,7 +752,7 @@ namespace System.Windows
             ResourcesChangeInfo info,
             bool                containsTypeOfKey)
         {
-            Debug.Assert(d != null, "Must have non-null current node");
+            Debug.Assert(d is not null, "Must have non-null current node");
 
             FrameworkObject fo = new FrameworkObject(d);
 
@@ -775,7 +775,7 @@ namespace System.Windows
                     fe.UpdateStyleProperty();
                 }
 
-                if (fe.Style != null && fe.Style.HasResourceReferences)
+                if (fe.Style is not null && fe.Style.HasResourceReferences)
                 {
                     // Check for resource references contained within associated Style.
                     // If found, invalidate all properties that are being driven by a resource.
@@ -788,7 +788,7 @@ namespace System.Windows
                     }
                 }
 
-                if (fe.TemplateInternal != null && fe.TemplateInternal.HasContainerResourceReferences)
+                if (fe.TemplateInternal is not null && fe.TemplateInternal.HasContainerResourceReferences)
                 {
                     // Check for resource references contained within associated Template.
                     // If found, invalidate all properties that are being driven by a resource
@@ -821,7 +821,7 @@ namespace System.Windows
                     // It it is then ThemeStyle would already have been invalidated and hence there isn't
                     // a need to duplicate it here.
                     Style themeStyle = fe.ThemeStyle;
-                    if (themeStyle != null && themeStyle.HasResourceReferences)
+                    if (themeStyle is not null && themeStyle.HasResourceReferences)
                     {
                         if (themeStyle != fe.Style)
                         {
@@ -850,7 +850,7 @@ namespace System.Windows
                     fce.UpdateStyleProperty();
                 }
 
-                if (fce.Style != null && fce.Style.HasResourceReferences)
+                if (fce.Style is not null && fce.Style.HasResourceReferences)
                 {
                     // Check for resource references contained within associated Style.
                     // If found, invalidate all properties that are being driven by a resource
@@ -888,7 +888,7 @@ namespace System.Windows
                     // It it is then ThemeStyle would already have been invalidated and hence there isn't
                     // a need to duplicate it here.
                     Style themeStyle = fce.ThemeStyle;
-                    if (themeStyle != null && themeStyle.HasResourceReferences)
+                    if (themeStyle is not null && themeStyle.HasResourceReferences)
                     {
                         if (themeStyle != fce.Style)
                         {
@@ -946,7 +946,7 @@ namespace System.Windows
             InheritablePropertyChangeInfo info,
             bool                          visitedViaVisualTree)
         {
-            Debug.Assert(d != null, "Must have non-null current node");
+            Debug.Assert(d is not null, "Must have non-null current node");
 
             DependencyProperty dp = info.Property;
             EffectiveValueEntry oldEntry = info.OldEntry;
@@ -971,7 +971,7 @@ namespace System.Windows
                     DependencyObject parent = FrameworkElement.GetFrameworkParent(d);
                     InheritanceBehavior parentInheritanceBehavior = InheritanceBehavior.Default;
 
-                    if (parent != null)
+                    if (parent is not null)
                     {
                         FrameworkObject parentFO = new FrameworkObject(parent, true);
                         parentInheritanceBehavior = parentFO.InheritanceBehavior;
@@ -1014,10 +1014,10 @@ namespace System.Windows
                     if (visitedViaVisualTree && d is FrameworkElement)
                     {
                         DependencyObject logicalParent = LogicalTreeHelper.GetParent(d);
-                        if (logicalParent != null)
+                        if (logicalParent is not null)
                         {
                             DependencyObject visualParent = VisualTreeHelper.GetParent(d);
-                            if (visualParent != null && visualParent != logicalParent)
+                            if (visualParent is not null && visualParent != logicalParent)
                             {
                                 // Consider the following logical tree configuration. In this case we want
                                 // to RibbonToggleButton to pick up the new DataContext flowing in from
@@ -1134,7 +1134,7 @@ namespace System.Windows
             FrameworkPropertyMetadata metadata = dp.GetMetadata(d.DependencyObjectType) as FrameworkPropertyMetadata;
 
             // Check for correct type of metadata
-            if (metadata != null)
+            if (metadata is not null)
             {
                 FrameworkObject fo = new FrameworkObject(d);
 
@@ -1186,7 +1186,7 @@ namespace System.Windows
             FrameworkPropertyMetadata metadata = dp.GetMetadata(fe.DependencyObjectType) as FrameworkPropertyMetadata;
 
             // Check for correct type of metadata
-            if (metadata != null)
+            if (metadata is not null)
             {
                 if (fe.InheritanceBehavior != InheritanceBehavior.Default && !metadata.OverridesInheritanceBehavior)
                 {
@@ -1217,7 +1217,7 @@ namespace System.Windows
             FrameworkPropertyMetadata metadata = dp.GetMetadata(fce.DependencyObjectType) as FrameworkPropertyMetadata;
 
             // Check for correct type of metadata
-            if (metadata != null)
+            if (metadata is not null)
             {
                 if (fce.InheritanceBehavior != InheritanceBehavior.Default && !metadata.OverridesInheritanceBehavior)
                 {
@@ -1273,12 +1273,12 @@ namespace System.Windows
         internal static bool HasChildren(FrameworkElement fe, FrameworkContentElement fce)
         {
             // See if we have logical or visual children, in which case this is a real tree invalidation.
-            return ( (fe != null && (fe.HasLogicalChildren ||
+            return ( (fe is not null && (fe.HasLogicalChildren ||
                                                fe.HasVisualChildren ||
-                                               (Popup.RegisteredPopupsField.GetValue(fe) != null)
+                                               (Popup.RegisteredPopupsField.GetValue(fe) is not null)
                                               )
                          ) ||
-                        (fce != null && fce.HasLogicalChildren)
+                        (fce is not null && fce.HasLogicalChildren)
                       );
         }
 

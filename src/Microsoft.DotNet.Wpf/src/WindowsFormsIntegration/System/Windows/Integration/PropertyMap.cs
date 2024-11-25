@@ -153,7 +153,7 @@ namespace System.Windows.Forms.Integration
 
         private void ThrowIfPropertyDoesntExistOnSource(string propertyName)
         {
-            if (SourceObject != null)
+            if (SourceObject is not null)
             {
                 if (GetProperty(propertyName) is null)
                 {
@@ -174,7 +174,7 @@ namespace System.Windows.Forms.Integration
             {
                 ThrowIfPropertyDoesntExistOnSource(propertyName);
                 PropertyInfo property = GetProperty(propertyName);
-                if (property != null)
+                if (property is not null)
                 {
                     RunTranslator(this[propertyName], SourceObject, propertyName, property.GetValue(SourceObject, null));
                 }
@@ -335,7 +335,7 @@ namespace System.Windows.Forms.Integration
             catch (Exception ex)
             {
                 PropertyMappingExceptionEventArgs args = new PropertyMappingExceptionEventArgs(ex, propertyName, value);
-                if (_propertyMappingError != null)
+                if (_propertyMappingError is not null)
                 {
                     _propertyMappingError(SourceObject, args);
                 }

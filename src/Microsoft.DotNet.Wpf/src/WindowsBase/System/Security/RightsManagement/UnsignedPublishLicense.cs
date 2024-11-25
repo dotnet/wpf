@@ -87,7 +87,7 @@ namespace System.Security.RightsManagement
             // based on the user identity that was used to build the secure environment
             ContentUser contentOwner;
 
-            if (_owner != null)
+            if (_owner is not null)
             {
                 contentOwner = _owner; 
             }
@@ -257,7 +257,7 @@ namespace System.Security.RightsManagement
                                                                                                                                          :this ()
         {
             Invariant.Assert(!boundLicenseHandle.IsInvalid);
-            Invariant.Assert(publishLicenseTemplate != null);
+            Invariant.Assert(publishLicenseTemplate is not null);
             
             using(IssuanceLicense issuanceLicense = new IssuanceLicense(
                                         DateTime.MinValue,  // validFrom, - default 

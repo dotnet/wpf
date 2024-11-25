@@ -121,7 +121,7 @@ namespace MS.Internal.Printing.Configuration
             BorderlessOption option = baseOption as BorderlessOption;
 
             // validate the option is complete before adding it to the collection
-            if (option._optionName != null)
+            if (option._optionName is not null)
             {
                 int enumValue = PrintSchemaMapper.SchemaNameToEnumValueWithArray(
                                     PrintSchemaTags.Keywords.PageBorderlessKeys.BorderlessNames,

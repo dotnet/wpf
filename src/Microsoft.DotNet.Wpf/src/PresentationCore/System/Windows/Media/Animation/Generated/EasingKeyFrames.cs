@@ -96,7 +96,7 @@ namespace System.Windows.Media.Animation
         protected override Byte InterpolateValueCore(Byte baseValue, double keyFrameProgress)
         {
             IEasingFunction easingFunction = EasingFunction;
-            if (easingFunction != null)
+            if (easingFunction is not null)
             {
                 keyFrameProgress = easingFunction.Ease(keyFrameProgress);
             }
@@ -221,7 +221,7 @@ namespace System.Windows.Media.Animation
         protected override Color InterpolateValueCore(Color baseValue, double keyFrameProgress)
         {
             IEasingFunction easingFunction = EasingFunction;
-            if (easingFunction != null)
+            if (easingFunction is not null)
             {
                 keyFrameProgress = easingFunction.Ease(keyFrameProgress);
             }
@@ -346,7 +346,7 @@ namespace System.Windows.Media.Animation
         protected override Decimal InterpolateValueCore(Decimal baseValue, double keyFrameProgress)
         {
             IEasingFunction easingFunction = EasingFunction;
-            if (easingFunction != null)
+            if (easingFunction is not null)
             {
                 keyFrameProgress = easingFunction.Ease(keyFrameProgress);
             }
@@ -471,7 +471,7 @@ namespace System.Windows.Media.Animation
         protected override Double InterpolateValueCore(Double baseValue, double keyFrameProgress)
         {
             IEasingFunction easingFunction = EasingFunction;
-            if (easingFunction != null)
+            if (easingFunction is not null)
             {
                 keyFrameProgress = easingFunction.Ease(keyFrameProgress);
             }
@@ -596,7 +596,7 @@ namespace System.Windows.Media.Animation
         protected override Int16 InterpolateValueCore(Int16 baseValue, double keyFrameProgress)
         {
             IEasingFunction easingFunction = EasingFunction;
-            if (easingFunction != null)
+            if (easingFunction is not null)
             {
                 keyFrameProgress = easingFunction.Ease(keyFrameProgress);
             }
@@ -721,7 +721,7 @@ namespace System.Windows.Media.Animation
         protected override Int32 InterpolateValueCore(Int32 baseValue, double keyFrameProgress)
         {
             IEasingFunction easingFunction = EasingFunction;
-            if (easingFunction != null)
+            if (easingFunction is not null)
             {
                 keyFrameProgress = easingFunction.Ease(keyFrameProgress);
             }
@@ -846,7 +846,7 @@ namespace System.Windows.Media.Animation
         protected override Int64 InterpolateValueCore(Int64 baseValue, double keyFrameProgress)
         {
             IEasingFunction easingFunction = EasingFunction;
-            if (easingFunction != null)
+            if (easingFunction is not null)
             {
                 keyFrameProgress = easingFunction.Ease(keyFrameProgress);
             }
@@ -971,7 +971,7 @@ namespace System.Windows.Media.Animation
         protected override Point InterpolateValueCore(Point baseValue, double keyFrameProgress)
         {
             IEasingFunction easingFunction = EasingFunction;
-            if (easingFunction != null)
+            if (easingFunction is not null)
             {
                 keyFrameProgress = easingFunction.Ease(keyFrameProgress);
             }
@@ -1096,7 +1096,7 @@ namespace System.Windows.Media.Animation
         protected override Point3D InterpolateValueCore(Point3D baseValue, double keyFrameProgress)
         {
             IEasingFunction easingFunction = EasingFunction;
-            if (easingFunction != null)
+            if (easingFunction is not null)
             {
                 keyFrameProgress = easingFunction.Ease(keyFrameProgress);
             }
@@ -1221,7 +1221,7 @@ namespace System.Windows.Media.Animation
         protected override Quaternion InterpolateValueCore(Quaternion baseValue, double keyFrameProgress)
         {
             IEasingFunction easingFunction = EasingFunction;
-            if (easingFunction != null)
+            if (easingFunction is not null)
             {
                 keyFrameProgress = easingFunction.Ease(keyFrameProgress);
             }
@@ -1346,7 +1346,7 @@ namespace System.Windows.Media.Animation
         protected override Rotation3D InterpolateValueCore(Rotation3D baseValue, double keyFrameProgress)
         {
             IEasingFunction easingFunction = EasingFunction;
-            if (easingFunction != null)
+            if (easingFunction is not null)
             {
                 keyFrameProgress = easingFunction.Ease(keyFrameProgress);
             }
@@ -1471,7 +1471,7 @@ namespace System.Windows.Media.Animation
         protected override Rect InterpolateValueCore(Rect baseValue, double keyFrameProgress)
         {
             IEasingFunction easingFunction = EasingFunction;
-            if (easingFunction != null)
+            if (easingFunction is not null)
             {
                 keyFrameProgress = easingFunction.Ease(keyFrameProgress);
             }
@@ -1596,7 +1596,7 @@ namespace System.Windows.Media.Animation
         protected override Single InterpolateValueCore(Single baseValue, double keyFrameProgress)
         {
             IEasingFunction easingFunction = EasingFunction;
-            if (easingFunction != null)
+            if (easingFunction is not null)
             {
                 keyFrameProgress = easingFunction.Ease(keyFrameProgress);
             }
@@ -1721,7 +1721,7 @@ namespace System.Windows.Media.Animation
         protected override Size InterpolateValueCore(Size baseValue, double keyFrameProgress)
         {
             IEasingFunction easingFunction = EasingFunction;
-            if (easingFunction != null)
+            if (easingFunction is not null)
             {
                 keyFrameProgress = easingFunction.Ease(keyFrameProgress);
             }
@@ -1846,7 +1846,7 @@ namespace System.Windows.Media.Animation
         protected override Vector InterpolateValueCore(Vector baseValue, double keyFrameProgress)
         {
             IEasingFunction easingFunction = EasingFunction;
-            if (easingFunction != null)
+            if (easingFunction is not null)
             {
                 keyFrameProgress = easingFunction.Ease(keyFrameProgress);
             }
@@ -1971,7 +1971,7 @@ namespace System.Windows.Media.Animation
         protected override Vector3D InterpolateValueCore(Vector3D baseValue, double keyFrameProgress)
         {
             IEasingFunction easingFunction = EasingFunction;
-            if (easingFunction != null)
+            if (easingFunction is not null)
             {
                 keyFrameProgress = easingFunction.Ease(keyFrameProgress);
             }

@@ -86,10 +86,10 @@ namespace System.Windows.Controls
                 //  start with getting SharedSizeGroup value.
                 //  this property is NOT inhereted which should result in better overall perf.
                 string sharedSizeGroupId = SharedSizeGroup;
-                if (sharedSizeGroupId != null)
+                if (sharedSizeGroupId is not null)
                 {
                     SharedSizeScope privateSharedSizeScope = PrivateSharedSizeScope;
-                    if (privateSharedSizeScope != null)
+                    if (privateSharedSizeScope is not null)
                     {
                         _sharedState = privateSharedSizeScope.EnsureSharedState(sharedSizeGroupId);
                         _sharedState.AddMember(this);
@@ -104,7 +104,7 @@ namespace System.Windows.Controls
         internal void OnExitParentTree()
         {
             _offset = 0;
-            if (_sharedState != null)
+            if (_sharedState is not null)
             {
                 _sharedState.RemoveMember(this);
                 _sharedState = null;
@@ -121,7 +121,7 @@ namespace System.Windows.Controls
             LayoutWasUpdated = true;
 
             //  defer verification for shared definitions
-            if (_sharedState != null)   {   _sharedState.EnsureDeferredValidation(grid);    }
+            if (_sharedState is not null)   {   _sharedState.EnsureDeferredValidation(grid);    }
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace System.Windows.Controls
 
             if (definition.InParentLogicalTree)
             {
-                if (definition._sharedState != null)
+                if (definition._sharedState is not null)
                 {
                     definition._sharedState.Invalidate();
                 }
@@ -257,7 +257,7 @@ namespace System.Windows.Controls
         internal static void OnIsSharedSizeScopePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             //  is it possible to optimize here something like this:
-            //  if ((bool)d.GetValue(Grid.IsSharedSizeScopeProperty) == (d.GetLocalValue(PrivateSharedSizeScopeProperty) != null)
+            //  if ((bool)d.GetValue(Grid.IsSharedSizeScopeProperty) == (d.GetLocalValue(PrivateSharedSizeScopeProperty) is not null)
             //  { /* do nothing */ }
             if ((bool) e.NewValue)
             {
@@ -285,7 +285,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal bool IsShared
         {
-            get { return (_sharedState != null); }
+            get { return (_sharedState is not null); }
         }
 
         /// <summary>
@@ -293,7 +293,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal GridLength UserSize
         {
-            get { return (_sharedState != null ? _sharedState.UserSize : UserSizeValueCache); }
+            get { return (_sharedState is not null ? _sharedState.UserSize : UserSizeValueCache); }
         }
 
         /// <summary>
@@ -384,7 +384,7 @@ namespace System.Windows.Controls
             {
                 double minSize = _minSize;
                 if (    UseSharedMinimum
-                    &&  _sharedState != null
+                    &&  _sharedState is not null
                     &&  minSize < _sharedState.MinSize  )
                 {
                     minSize = _sharedState.MinSize;
@@ -401,7 +401,7 @@ namespace System.Windows.Controls
             get
             {
                 double minSize = _minSize;
-                if (    _sharedState != null
+                if (    _sharedState is not null
                     &&  (UseSharedMinimum || !LayoutWasUpdated)
                     &&  minSize < _sharedState.MinSize  )
                 {
@@ -517,7 +517,7 @@ namespace System.Windows.Controls
             {
                 string sharedSizeGroupId = (string) e.NewValue;
 
-                if (definition._sharedState != null)
+                if (definition._sharedState is not null)
                 {
                     //  if definition is already registered AND shared size group id is changing,
                     //  then un-register the definition from the current shared size state object.
@@ -525,10 +525,10 @@ namespace System.Windows.Controls
                     definition._sharedState = null;
                 }
 
-                if ((definition._sharedState is null) && (sharedSizeGroupId != null))
+                if ((definition._sharedState is null) && (sharedSizeGroupId is not null))
                 {
                     SharedSizeScope privateSharedSizeScope = definition.PrivateSharedSizeScope;
-                    if (privateSharedSizeScope != null)
+                    if (privateSharedSizeScope is not null)
                     {
                         //  if definition is not registered and both: shared size group id AND private shared scope
                         //  are available, then register definition.
@@ -599,7 +599,7 @@ namespace System.Windows.Controls
             {
                 SharedSizeScope privateSharedSizeScope = (SharedSizeScope) e.NewValue;
 
-                if (definition._sharedState != null)
+                if (definition._sharedState is not null)
                 {
                     //  if definition is already registered And shared size scope is changing,
                     //  then un-register the definition from the current shared size state object.
@@ -607,10 +607,10 @@ namespace System.Windows.Controls
                     definition._sharedState = null;
                 }
 
-                if ((definition._sharedState is null) && (privateSharedSizeScope != null))
+                if ((definition._sharedState is null) && (privateSharedSizeScope is not null))
                 {
                     string sharedSizeGroup = definition.SharedSizeGroup;
-                    if (sharedSizeGroup != null)
+                    if (sharedSizeGroup is not null)
                     {
                         //  if definition is not registered and both: shared size group id AND private shared scope
                         //  are available, then register definition.
@@ -714,7 +714,7 @@ namespace System.Windows.Controls
             internal SharedSizeState EnsureSharedState(string sharedSizeGroup)
             {
                 //  check that sharedSizeGroup is not default
-                Debug.Assert(sharedSizeGroup != null);
+                Debug.Assert(sharedSizeGroup is not null);
 
                 SharedSizeState sharedState = _registry[sharedSizeGroup] as SharedSizeState;
                 if (sharedState is null)
@@ -747,7 +747,7 @@ namespace System.Windows.Controls
             /// </summary>
             internal SharedSizeState(SharedSizeScope sharedSizeScope, string sharedSizeGroupId)
             {
-                Debug.Assert(sharedSizeScope != null && sharedSizeGroupId != null);
+                Debug.Assert(sharedSizeScope is not null && sharedSizeGroupId is not null);
                 _sharedSizeScope = sharedSizeScope;
                 _sharedSizeGroupId = sharedSizeGroupId;
                 _registry = new List<DefinitionBase>();

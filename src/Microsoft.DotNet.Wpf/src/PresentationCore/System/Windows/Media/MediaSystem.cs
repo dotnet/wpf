@@ -116,7 +116,7 @@ namespace System.Windows.Media
         {
 #if PRERELEASE
             RegistryKey key = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Avalon.Graphics");
-            if (key != null)
+            if (key is not null)
             {
                 object keyValue = key.GetValue("AnimationSmoothing");
 
@@ -278,15 +278,15 @@ namespace System.Windows.Media
             DispatcherObject reference,
             DispatcherObject other)
         {
-            Debug.Assert(reference != null, "The reference object can not be null.");
+            Debug.Assert(reference is not null, "The reference object can not be null.");
 
             // DispatcherObjects may be created with the option of becoming unbound.
             // An unbound DO may be created without a Dispatcher or may detach from
             // its Dispatcher (e.g., a Freezable).  Unbound DOs return null for their
             // Dispatcher and should be accepted anywhere.
-            if (other != null &&
-                reference.Dispatcher != null &&
-                other.Dispatcher != null &&
+            if (other is not null &&
+                reference.Dispatcher is not null &&
+                other.Dispatcher is not null &&
                 reference.Dispatcher != other.Dispatcher)
             {
                 throw new ArgumentException(SR.MediaSystem_ApiInvalidContext);

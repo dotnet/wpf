@@ -4163,7 +4163,7 @@ namespace MS.Win32 {
 
 
                 if (throwException && (connectionPoint is null || cookie == 0)) {
-                    if (connectionPoint != null) {
+                    if (connectionPoint is not null) {
                         Marshal.ReleaseComObject(connectionPoint);
                     }
 
@@ -4195,7 +4195,7 @@ namespace MS.Win32 {
             /// this method will do nothing.
             /// </devdoc>
             public void Disconnect(bool release) {
-                if (connectionPoint != null && cookie != 0) {
+                if (connectionPoint is not null && cookie != 0) {
                     connectionPoint.Unadvise(cookie);
                     cookie = 0;
 
@@ -6580,7 +6580,7 @@ namespace MS.Win32 {
         ///     we need to append the fragment to the end of the path.
         /// </devdoc>
         internal static string GetLocalPath(string fileName) {
-            System.Diagnostics.Debug.Assert(fileName != null && fileName.Length > 0, "Cannot get local path, fileName is not valid");
+            System.Diagnostics.Debug.Assert(fileName is not null && fileName.Length > 0, "Cannot get local path, fileName is not valid");
 
             Uri uri = new Uri(fileName, true);
             return uri.LocalPath + uri.Fragment;

@@ -94,9 +94,9 @@ namespace System.Windows.Automation.Peers
             ArgumentOutOfRangeException.ThrowIfNegative(height);
 
             GridViewColumnHeader header = Owner as GridViewColumnHeader;
-            if (header != null)
+            if (header is not null)
             {
-                if (header.Column != null)
+                if (header.Column is not null)
                 {
                     header.Column.Width = width;
                 }

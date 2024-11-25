@@ -59,10 +59,10 @@ namespace System.Windows.Input
             if (destinationType == typeof(string))
             {
                 // When invoked by the serialization engine we can convert to string only for known type
-                if (context != null && context.Instance != null)
+                if (context is not null && context.Instance is not null)
                 {
                     KeyGesture keyGesture = context.Instance as KeyGesture;
-                    if (keyGesture != null)
+                    if (keyGesture is not null)
                     {
                         return (ModifierKeysConverter.IsDefinedModifierKeys(keyGesture.Modifiers)
                                 && IsDefinedKey(keyGesture.Key));
@@ -81,7 +81,7 @@ namespace System.Windows.Input
         /// <returns></returns>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object source)
         {
-            if (source != null && source is string)
+            if (source is not null && source is string)
             {
                 string fullName = ((string)source).Trim();
                 if (fullName.Length == 0)
@@ -118,10 +118,10 @@ namespace System.Windows.Input
 
                 ModifierKeys modifiers = ModifierKeys.None;
                 object resultkey = keyConverter.ConvertFrom(context, culture, keyToken);
-                if (resultkey != null)
+                if (resultkey is not null)
                 {
                     object temp = modifierKeysConverter.ConvertFrom(context, culture, modifiersToken);
-                    if (temp != null)
+                    if (temp is not null)
                     {
                         modifiers = (ModifierKeys)temp;
                     }
@@ -145,10 +145,10 @@ namespace System.Windows.Input
 
             if (destinationType == typeof(string))
             {
-                if (value != null)
+                if (value is not null)
                 {
                     KeyGesture keyGesture = value as KeyGesture;
-                    if (keyGesture != null)
+                    if (keyGesture is not null)
                     {
                         if (keyGesture.Key == Key.None)
                             return String.Empty;

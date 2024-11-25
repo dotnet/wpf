@@ -208,7 +208,7 @@ namespace Microsoft.Windows.Themes
             {
                 Brush brush = Fill;
                 Pen pen = Border;
-                if (pen != null)
+                if (pen is not null)
                 {
                     dc.DrawRectangle(
                         brush,
@@ -224,7 +224,7 @@ namespace Microsoft.Windows.Themes
             if ((bounds.Width > 0.0) && (bounds.Height > 0.0))
             {
                 Brush brush = Glyph;
-                if ((brush != null) && (_scrollGlyph != ScrollGlyph.None))
+                if ((brush is not null) && (_scrollGlyph != ScrollGlyph.None))
                 {
                     switch (_scrollGlyph)
                     {

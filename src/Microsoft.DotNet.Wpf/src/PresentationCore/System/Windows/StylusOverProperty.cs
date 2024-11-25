@@ -41,15 +41,15 @@ namespace System.Windows
             StylusEventArgs stylusEventArgs = new StylusEventArgs(Stylus.CurrentStylusDevice, Environment.TickCount);
             stylusEventArgs.RoutedEvent = oldValue ? Stylus.StylusLeaveEvent : Stylus.StylusEnterEvent;
 
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.RaiseEvent(stylusEventArgs);
             }
-            else if (ce != null)
+            else if (ce is not null)
             {
                 ce.RaiseEvent(stylusEventArgs);
             }
-            else if (uie3D != null)
+            else if (uie3D is not null)
             {
                 uie3D.RaiseEvent(stylusEventArgs);
             }

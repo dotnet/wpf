@@ -49,7 +49,7 @@ namespace Microsoft.Windows.Themes
             bool isClickable = IsClickable && IsEnabled;
             bool isPressed = isClickable && IsPressed;
             ListSortDirection? sortDirection = SortDirection;
-            bool isSorted = sortDirection != null;
+            bool isSorted = sortDirection is not null;
             bool horizontal = Orientation == Orientation.Horizontal;
             Brush background = EnsureControlBrush();
             Brush light = SystemColors.ControlLightBrush;
@@ -61,7 +61,7 @@ namespace Microsoft.Windows.Themes
             Brush darkDarkRight = null;
             if (!horizontal)
             {
-                if (SeparatorVisibility == Visibility.Visible && SeparatorBrush != null)
+                if (SeparatorVisibility == Visibility.Visible && SeparatorBrush is not null)
                 {
                     darkDarkRight = SeparatorBrush;
                     usingSeparatorBrush = true;
@@ -79,7 +79,7 @@ namespace Microsoft.Windows.Themes
             Brush darkDarkBottom = null;
             if (horizontal)
             {
-                if (SeparatorVisibility == Visibility.Visible && SeparatorBrush != null)
+                if (SeparatorVisibility == Visibility.Visible && SeparatorBrush is not null)
                 {
                     darkDarkBottom = SeparatorBrush;
                     usingSeparatorBrush = true;

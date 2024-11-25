@@ -34,7 +34,7 @@ namespace System.Windows.Input
         {
             DependencyObject container = null;
 
-            if(o != null)
+            if(o is not null)
             {
                 if(o is UIElement)
                 {
@@ -47,14 +47,14 @@ namespace System.Windows.Input
                 else if(o is ContentElement contentElement)
                 {
                     DependencyObject parent = ContentOperations.GetParent(contentElement);
-                    if(parent != null)
+                    if(parent is not null)
                     {
                         container = GetContainingUIElement(parent, onlyTraverse2D);
                     }
                     else
                     {
                         parent = contentElement.GetUIParentCore();
-                        if(parent != null)
+                        if(parent is not null)
                         {
                             container = GetContainingUIElement(parent, onlyTraverse2D);
                         }
@@ -63,7 +63,7 @@ namespace System.Windows.Input
                 else if (o is Visual v)
                 {
                     DependencyObject parent = VisualTreeHelper.GetParent(v);
-                    if(parent != null)
+                    if(parent is not null)
                     {
                         container = GetContainingUIElement(parent, onlyTraverse2D);
                     }
@@ -71,7 +71,7 @@ namespace System.Windows.Input
                 else if (!onlyTraverse2D && o is Visual3D v3D)
                 {
                     DependencyObject parent = VisualTreeHelper.GetParent(v3D);
-                    if (parent != null)
+                    if (parent is not null)
                     {
                         container = GetContainingUIElement(parent, onlyTraverse2D);
                     }
@@ -94,7 +94,7 @@ namespace System.Windows.Input
         {
             IInputElement container = null;
 
-            if(o != null)
+            if(o is not null)
             {
                 if(o is UIElement uiElement)
                 {
@@ -111,7 +111,7 @@ namespace System.Windows.Input
                 else if(o is Visual v)
                 {
                     DependencyObject parent = VisualTreeHelper.GetParent(v);
-                    if(parent != null)
+                    if(parent is not null)
                     {
                         container = GetContainingInputElement(parent, onlyTraverse2D);
                     }
@@ -119,7 +119,7 @@ namespace System.Windows.Input
                 else if (!onlyTraverse2D && o is Visual3D v3D)
                 {
                     DependencyObject parent = VisualTreeHelper.GetParent(v3D);
-                    if (parent != null)
+                    if (parent is not null)
                     {
                         container = GetContainingInputElement(parent, onlyTraverse2D);
                     }
@@ -141,7 +141,7 @@ namespace System.Windows.Input
         {
             DependencyObject v = null;
 
-            if(o != null)
+            if(o is not null)
             {
                 if(o is UIElement uiElement)
                 {
@@ -154,14 +154,14 @@ namespace System.Windows.Input
                 else if(o is ContentElement contentElement)
                 {
                     DependencyObject parent = ContentOperations.GetParent(contentElement);
-                    if(parent != null)
+                    if(parent is not null)
                     {
                         v = GetContainingVisual(parent);
                     }
                     else
                     {
                         parent = contentElement.GetUIParentCore();
-                        if(parent != null)
+                        if(parent is not null)
                         {
                             v = GetContainingVisual(parent);
                         }
@@ -192,7 +192,7 @@ namespace System.Windows.Input
             DependencyObject rootVisual = GetContainingVisual(o);
             DependencyObject parentVisual;
                        
-            while(rootVisual != null && ((parentVisual = VisualTreeHelper.GetParent(rootVisual)) != null))
+            while(rootVisual is not null && ((parentVisual = VisualTreeHelper.GetParent(rootVisual)) is not null))
             {
                 // if we are not supposed to transition from 2D to 3D and the root 
                 // is a Visual and the parent is a Visual3D break
@@ -228,13 +228,13 @@ namespace System.Windows.Input
             
             Visual vFrom = vFromAsDO as Visual;
 
-            if (vFromAsDO != null && vFrom is null)
+            if (vFromAsDO is not null && vFrom is null)
             {
                 // must be a Visual3D - get it's 2D visual parent
                 vFrom = VisualTreeHelper.GetContainingVisual2D(vFromAsDO);
             }
 
-            if(vFrom != null && rootFrom != null)
+            if(vFrom is not null && rootFrom is not null)
             {
                 GeneralTransform gUp;
                 Matrix mUp;
@@ -256,13 +256,13 @@ namespace System.Windows.Input
 
                 // If no element was specified to translate to, we leave the coordinates
                 // translated to the root.
-                if(to != null)
+                if(to is not null)
                 {
                     // Get the containing and root visuals we are going to.
                     DependencyObject vTo = InputElement.GetContainingVisual(to);
                     Visual rootTo = InputElement.GetRootVisual(to) as Visual;
 
-                    if(vTo != null && rootTo != null)
+                    if(vTo is not null && rootTo is not null)
                     {
                         // If both are under the same root visual, we can easily translate the point
                         // between them by translating up to the root, and then back down.
@@ -276,8 +276,8 @@ namespace System.Windows.Input
                             HwndSource sourceTo = PresentationSource.CriticalFromVisual(rootTo) as HwndSource;
 
 
-                            if(sourceFrom != null && sourceFrom.CriticalHandle != IntPtr.Zero && sourceFrom.CompositionTarget != null &&
-                               sourceTo != null && sourceTo.CriticalHandle != IntPtr.Zero && sourceTo.CompositionTarget != null)
+                            if(sourceFrom is not null && sourceFrom.CriticalHandle != IntPtr.Zero && sourceFrom.CompositionTarget is not null &&
+                               sourceTo is not null && sourceTo.CriticalHandle != IntPtr.Zero && sourceTo.CompositionTarget is not null)
                             {
                                 // Translate the point into client coordinates.
                                 ptTranslated = PointUtil.RootToClient(ptTranslated, sourceFrom);
@@ -318,7 +318,7 @@ namespace System.Windows.Input
                         {
                             ptTranslated = mDown.Transform(ptTranslated);
                         }
-                        else if (gDown != null)
+                        else if (gDown is not null)
                         {
                             if (gDown.TryTransform(ptTranslated, out ptTranslated) == false)
                             {

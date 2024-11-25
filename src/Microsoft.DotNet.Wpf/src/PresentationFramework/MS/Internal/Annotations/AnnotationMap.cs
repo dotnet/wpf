@@ -81,7 +81,7 @@ namespace MS.Internal.Annotations
                 return _emptyList;
             }
 
-            Debug.Assert(list != null, $"there should be an attached annotation list for the annotationId: {annotationId}");
+            Debug.Assert(list is not null, $"there should be an attached annotation list for the annotationId: {annotationId}");
             return list;
         }
 

@@ -28,7 +28,7 @@ namespace System.Windows.Input.Manipulations
         /// <param name="paramName"></param>
         public static void CheckFinite(float value, string paramName)
         {
-            Debug.Assert(paramName != null);
+            Debug.Assert(paramName is not null);
             if (!IsFinite(value))
             {
                 throw Exceptions.ValueMustBeFinite(paramName, value);
@@ -52,7 +52,7 @@ namespace System.Windows.Input.Manipulations
         /// <param name="paramName"></param>
         public static void CheckFiniteOrNaN(float value, string paramName)
         {
-            Debug.Assert(paramName != null);
+            Debug.Assert(paramName is not null);
             if (!IsFiniteOrNaN(value))
             {
                 throw Exceptions.ValueMustBeFiniteOrNaN(paramName, value);

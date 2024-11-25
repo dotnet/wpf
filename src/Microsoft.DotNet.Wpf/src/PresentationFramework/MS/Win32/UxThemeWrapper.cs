@@ -188,7 +188,7 @@ namespace MS.Win32
                     // contrast in the static constructor
                     bool isActive = !SystemParameters.HighContrast && SafeNativeMethods.IsUxThemeActive();
 
-                    if (isActive && (needName || themeState.ThemeName != null))
+                    if (isActive && (needName || themeState.ThemeName is not null))
                     {
                         // avoid AI -> AU -> AI transition;   get theme name now
                         // (see implementation note 3)
@@ -231,7 +231,7 @@ namespace MS.Win32
                     else if (currentState.IsActive == newState.IsActive &&
                                 (!newState.IsActive ||
                                  newState.ThemeName is null ||
-                                 currentState.ThemeName != null)
+                                 currentState.ThemeName is not null)
                             )
                     {
                         // another thread updated the state while we were in this
@@ -286,7 +286,7 @@ namespace MS.Win32
                 {
                 }
 
-                if (appSettings != null)
+                if (appSettings is not null)
                 {
                     string s = appSettings["ThemeNameOverride"];
                     if (!String.IsNullOrEmpty(s))

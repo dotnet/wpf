@@ -135,7 +135,7 @@ namespace System.Windows.Controls
         {
             if (ValidateMaxPagesAcross(pagesAcross))
             {
-                if (_documentScrollInfo != null)
+                if (_documentScrollInfo is not null)
                 {
                     _documentScrollInfo.FitColumns(pagesAcross);
                 }
@@ -889,9 +889,9 @@ namespace System.Windows.Controls
             AttachContent();
 
             // Update the toolbar with our current document state.
-            if (_findToolbar != null)
+            if (_findToolbar is not null)
             {
-                _findToolbar.DocumentLoaded = (Document != null) ? true : false;
+                _findToolbar.DocumentLoaded = (Document is not null) ? true : false;
             }
 
             // We do not automatically go to the first page on the _first_ content
@@ -932,7 +932,7 @@ namespace System.Windows.Controls
         protected override void OnPreviousPageCommand()
         {
             //Scroll to the previous row.
-            if (_documentScrollInfo != null)
+            if (_documentScrollInfo is not null)
             {
                 _documentScrollInfo.ScrollToPreviousRow();
             }
@@ -944,7 +944,7 @@ namespace System.Windows.Controls
         protected override void OnNextPageCommand()
         {
             //Scroll to the previous row.
-            if (_documentScrollInfo != null)
+            if (_documentScrollInfo is not null)
             {
                 _documentScrollInfo.ScrollToNextRow();
             }
@@ -956,7 +956,7 @@ namespace System.Windows.Controls
         protected override void OnFirstPageCommand()
         {
             //Scroll to the top of the document.
-            if (_documentScrollInfo != null)
+            if (_documentScrollInfo is not null)
             {
                 _documentScrollInfo.MakePageVisible( 0 );
             }
@@ -968,7 +968,7 @@ namespace System.Windows.Controls
         protected override void OnLastPageCommand()
         {
             //Scroll to the bottom of the document.
-            if (_documentScrollInfo != null)
+            if (_documentScrollInfo is not null)
             {
                 _documentScrollInfo.MakePageVisible( PageCount - 1 );
             }
@@ -984,7 +984,7 @@ namespace System.Windows.Controls
             if (CanGoToPage(pageNumber))
             {
                 //Scroll to the specified page in the document.
-                if (_documentScrollInfo != null)
+                if (_documentScrollInfo is not null)
                 {
                     // CanGoToPage should have guaranteed that this assert is always true.
                     Invariant.Assert(pageNumber > 0, "PageNumber must be positive.");
@@ -998,7 +998,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnViewThumbnailsCommand()
         {
-            if (_documentScrollInfo != null)
+            if (_documentScrollInfo is not null)
             {
                 _documentScrollInfo.ViewThumbnails();
             }
@@ -1009,7 +1009,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnFitToWidthCommand()
         {
-            if (_documentScrollInfo != null)
+            if (_documentScrollInfo is not null)
             {
                 _documentScrollInfo.FitToPageWidth();
             }
@@ -1020,7 +1020,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnFitToHeightCommand()
         {
-            if (_documentScrollInfo != null)
+            if (_documentScrollInfo is not null)
             {
                 _documentScrollInfo.FitToPageHeight();
             }
@@ -1031,7 +1031,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnFitToMaxPagesAcrossCommand()
         {
-            if (_documentScrollInfo != null)
+            if (_documentScrollInfo is not null)
             {
                 _documentScrollInfo.FitColumns(MaxPagesAcross);
             }
@@ -1045,7 +1045,7 @@ namespace System.Windows.Controls
         {
             if (ValidateMaxPagesAcross(pagesAcross))
             {
-                if (_documentScrollInfo != null)
+                if (_documentScrollInfo is not null)
                 {
                     _documentScrollInfo.FitColumns(pagesAcross);
                 }
@@ -1082,7 +1082,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnScrollPageUpCommand()
         {
-            if (_documentScrollInfo != null)
+            if (_documentScrollInfo is not null)
             {
                 _documentScrollInfo.PageUp();
             }
@@ -1093,7 +1093,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnScrollPageDownCommand()
         {
-            if (_documentScrollInfo != null)
+            if (_documentScrollInfo is not null)
             {
                 _documentScrollInfo.PageDown();
             }
@@ -1104,7 +1104,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnScrollPageLeftCommand()
         {
-            if (_documentScrollInfo != null)
+            if (_documentScrollInfo is not null)
             {
                 _documentScrollInfo.PageLeft();
             }
@@ -1115,7 +1115,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnScrollPageRightCommand()
         {
-            if (_documentScrollInfo != null)
+            if (_documentScrollInfo is not null)
             {
                 _documentScrollInfo.PageRight();
             }
@@ -1126,7 +1126,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnMoveUpCommand()
         {
-            if (_documentScrollInfo != null)
+            if (_documentScrollInfo is not null)
             {
                 _documentScrollInfo.LineUp();
             }
@@ -1137,7 +1137,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnMoveDownCommand()
         {
-            if (_documentScrollInfo != null)
+            if (_documentScrollInfo is not null)
             {
                 _documentScrollInfo.LineDown();
             }
@@ -1148,7 +1148,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnMoveLeftCommand()
         {
-            if (_documentScrollInfo != null)
+            if (_documentScrollInfo is not null)
             {
                 _documentScrollInfo.LineLeft();
             }
@@ -1159,7 +1159,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnMoveRightCommand()
         {
-            if (_documentScrollInfo != null)
+            if (_documentScrollInfo is not null)
             {
                 _documentScrollInfo.LineRight();
             }
@@ -1235,7 +1235,7 @@ namespace System.Windows.Controls
             //it'll reflect the unchanged-ness of the collection.
             _pageViewCollectionChanged = false;
 
-            if (_documentScrollInfo != null && _documentScrollInfo.PageViews != null)
+            if (_documentScrollInfo is not null && _documentScrollInfo.PageViews is not null)
             {
                 //Return the current collection.
                 pageViews = _documentScrollInfo.PageViews;
@@ -1376,7 +1376,7 @@ namespace System.Windows.Controls
         {
             FrameworkElement grid = _documentScrollInfo as FrameworkElement;
 
-            if (grid != null)
+            if (grid is not null)
             {
                 //Calculate the bounds of the DocumentGrid relative to the bounds of DocumentViewer
                 Transform tr = this.TransformToDescendant(grid) as Transform;
@@ -1423,7 +1423,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (TextEditor != null)
+                if (TextEditor is not null)
                 {
                     return TextEditor.Selection;
                 }
@@ -1738,8 +1738,8 @@ namespace System.Windows.Controls
         private static void QueryEnabledHandler(object target, CanExecuteRoutedEventArgs args)
         {
             DocumentViewer dv = target as DocumentViewer;
-            Invariant.Assert(dv != null, "Target of QueryEnabledEvent must be DocumentViewer.");
-            Invariant.Assert(args != null, "args cannot be null.");
+            Invariant.Assert(dv is not null, "Target of QueryEnabledEvent must be DocumentViewer.");
+            Invariant.Assert(args is not null, "args cannot be null.");
 
             // If the target is not a DocumentViewer we silently return (but note that
             // we have Asserted this above.)
@@ -1766,7 +1766,7 @@ namespace System.Windows.Controls
             else if (args.Command == ApplicationCommands.Find)
             {
                 //Find can only operate if we have a TextEditor.
-                args.CanExecute = dv.TextEditor != null;
+                args.CanExecute = dv.TextEditor is not null;
             }
             else if (args.Command == ComponentCommands.ScrollPageUp ||
                 args.Command == ComponentCommands.MoveUp)
@@ -1825,7 +1825,7 @@ namespace System.Windows.Controls
             else if (args.Command == NavigationCommands.GoToPage)
             {
                 // This command is always enabled as long as there is a document loaded.
-                args.CanExecute = (dv.Document != null);
+                args.CanExecute = (dv.Document is not null);
             }
             else
             {
@@ -1844,8 +1844,8 @@ namespace System.Windows.Controls
         private static void ExecutedRoutedEventHandler(object target, ExecutedRoutedEventArgs args)
         {
             DocumentViewer dv = target as DocumentViewer;
-            Invariant.Assert(dv != null, "Target of ExecuteEvent must be DocumentViewer.");
-            Invariant.Assert(args != null, "args cannot be null.");
+            Invariant.Assert(dv is not null, "Target of ExecuteEvent must be DocumentViewer.");
+            Invariant.Assert(args is not null, "args cannot be null.");
 
             // If the target is not a DocumentViewer we silently return (but note that
             // we have Asserted this above.)
@@ -2069,7 +2069,7 @@ namespace System.Windows.Controls
                 //If IDocumentScrollInfo is a FrameworkElement we can give it a
                 //Name for automation.
                 FrameworkElement fe = _documentScrollInfo as FrameworkElement;
-                if (fe != null)
+                if (fe is not null)
                 {
                     fe.Name = "DocumentGrid";
                     fe.Focusable = false;
@@ -2095,7 +2095,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void AttachContent()
         {
-            _documentScrollInfo.Content = (Document != null) ? Document.DocumentPaginator as DynamicDocumentPaginator : null;
+            _documentScrollInfo.Content = (Document is not null) ? Document.DocumentPaginator as DynamicDocumentPaginator : null;
             IsSelectionEnabled = true;
         }
 
@@ -2124,7 +2124,7 @@ namespace System.Windows.Controls
             _scrollViewer = contentHost;
             _scrollViewer.Focusable = false;
 
-            Invariant.Assert(_documentScrollInfo != null, "IDocumentScrollInfo cannot be null.");
+            Invariant.Assert(_documentScrollInfo is not null, "IDocumentScrollInfo cannot be null.");
             //Make the IDSI the child of the ScrollViewer.
             _scrollViewer.Content = _documentScrollInfo;
             _scrollViewer.ScrollInfo = _documentScrollInfo;
@@ -2149,7 +2149,7 @@ namespace System.Windows.Controls
             ContentControl findHost = this.Template.FindName(_findToolBarHostName, this) as ContentControl;
 
             // Only create and hook up the toolbar, if we found a place to put it.
-            if (findHost != null)
+            if (findHost is not null)
             {
                if( _findToolbar is null )
                {
@@ -2160,7 +2160,7 @@ namespace System.Windows.Controls
                     _findToolbar.FindClicked += new EventHandler(OnFindInvoked);
 
                     //set initial DocumentLoaded state.
-                    _findToolbar.DocumentLoaded = (Document != null) ? true : false;
+                    _findToolbar.DocumentLoaded = (Document is not null) ? true : false;
                 }
 
                 // Now insert the toolbar, if it isn't already parented elsewhere.
@@ -2184,18 +2184,18 @@ namespace System.Windows.Controls
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordXPS, EventTrace.Event.WClientDRXFindBegin);
             try
             {
-                if (_findToolbar != null && TextEditor != null)
+                if (_findToolbar is not null && TextEditor is not null)
                 {
                     ITextRange findResult = Find(_findToolbar);
 
                     // If we found something, select it.
-                    if ((findResult != null) && (!findResult.IsEmpty))
+                    if ((findResult is not null) && (!findResult.IsEmpty))
                     {
                         //Give ourselves focus, this ensures that the selection
                         //will be made visible after it's made.
                         this.Focus();
 
-                        if (_documentScrollInfo != null)
+                        if (_documentScrollInfo is not null)
                         {
                             _documentScrollInfo.MakeSelectionVisible();
                         }
@@ -2218,7 +2218,7 @@ namespace System.Windows.Controls
                             _findToolbar.SearchText);
 
                         Window wnd = null;
-                        if (Application.Current != null && Application.Current.CheckAccess())
+                        if (Application.Current is not null && Application.Current.CheckAccess())
                         {
                             wnd = Application.Current.MainWindow;
                         }
@@ -2244,7 +2244,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void GoToFind()
         {
-            if (_findToolbar != null)
+            if (_findToolbar is not null)
             {
                 _findToolbar.GoToTextBox();
             }
@@ -2404,7 +2404,7 @@ namespace System.Windows.Controls
 
             // If the HorizontalOffset has changed and it isn't due to a change that originated
             // from our IDocumentScrollInfo object, then set the new offset value on the IDocumentScrollInfo.
-            if (!dv._internalIDSIChange && (dv._documentScrollInfo != null))
+            if (!dv._internalIDSIChange && (dv._documentScrollInfo is not null))
             {
                 dv._documentScrollInfo.SetHorizontalOffset(newOffset);
             }
@@ -2424,7 +2424,7 @@ namespace System.Windows.Controls
 
             // If the VerticalOffset has changed and it isn't due to a change that originated
             // from our IDocumentScrollInfo object, then set the new offset value on the IDocumentScrollInfo.
-            if ( !dv._internalIDSIChange && (dv._documentScrollInfo != null))
+            if ( !dv._internalIDSIChange && (dv._documentScrollInfo is not null))
             {
                 dv._documentScrollInfo.SetVerticalOffset(newOffset);
             }
@@ -2476,7 +2476,7 @@ namespace System.Windows.Controls
             DocumentViewer dv = (DocumentViewer) d;
 
             // If the ShowPageBorders has changed, then set the new value on the IDocumentScrollInfo.
-            if (dv._documentScrollInfo != null)
+            if (dv._documentScrollInfo is not null)
             {
                 dv._documentScrollInfo.ShowPageBorders = (bool) e.NewValue;
             }
@@ -2508,7 +2508,7 @@ namespace System.Windows.Controls
             DocumentViewer dv = (DocumentViewer)d;
 
             // If the ZoomPercentage has changed, then update the IDocumentScrollInfo.
-            if (dv._documentScrollInfo != null)
+            if (dv._documentScrollInfo is not null)
             {
                 double newZoom = (double) e.NewValue;
                 if (!dv._internalIDSIChange)
@@ -2585,7 +2585,7 @@ namespace System.Windows.Controls
             DocumentViewer dv = (DocumentViewer)d;
 
             // If the VerticalPageSpacing has changed, then set the new value on IDocumentScrollInfo.
-            if (dv._documentScrollInfo != null)
+            if (dv._documentScrollInfo is not null)
             {
                 dv._documentScrollInfo.VerticalPageSpacing = (double) e.NewValue;
             }
@@ -2601,7 +2601,7 @@ namespace System.Windows.Controls
             DocumentViewer dv = (DocumentViewer)d;
 
             // If the HorizontalPageSpacing has changed, then set the new value on IDocumentScrollInfo.
-            if (dv._documentScrollInfo != null)
+            if (dv._documentScrollInfo is not null)
             {
                 dv._documentScrollInfo.HorizontalPageSpacing = (double) e.NewValue;
             }

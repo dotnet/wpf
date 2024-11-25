@@ -109,7 +109,7 @@ namespace System.Windows.Diagnostics
         internal static void OnVisualChildChanged(DependencyObject parent, DependencyObject child, bool isAdded)
         {
             EventHandler<VisualTreeChangeEventArgs> visualTreeChanged = VisualDiagnostics.s_visualTreeChanged;
-            if (visualTreeChanged != null && EnableHelper.IsVisualTreeChangeEnabled)
+            if (visualTreeChanged is not null && EnableHelper.IsVisualTreeChangeEnabled)
             {
                 int index;
                 VisualTreeChangeType changeType;
@@ -163,14 +163,14 @@ namespace System.Windows.Diagnostics
         {
             int index = -1;
             Visual asVisual = child as Visual;
-            if (asVisual != null)
+            if (asVisual is not null)
             {
                 index = asVisual._parentIndex;
             }
             else
             {
                 Visual3D asVisual3D = child as Visual3D;
-                if (asVisual3D != null)
+                if (asVisual3D is not null)
                 {
                     index = asVisual3D.ParentIndex;
                 }
@@ -223,7 +223,7 @@ namespace System.Windows.Diagnostics
 
         internal static bool IsEnvironmentVariableSet(string value, string environmentVariable)
         {
-            if (value != null)
+            if (value is not null)
             {
                 return IsEnvironmentValueSet(value);
             }
@@ -322,7 +322,7 @@ namespace System.Windows.Diagnostics
             {
                 // if the outer change was type (a), OnVisualChildChanged saved
                 // the presentation source in s_ActiveHwndSource
-                return  (s_ActiveHwndSource != null) && (d != null) &&
+                return  (s_ActiveHwndSource is not null) && (d is not null) &&
                         (s_ActiveHwndSource != PresentationSource.FromDependencyObject(d));
             }
 
@@ -348,7 +348,7 @@ namespace System.Windows.Diagnostics
             {
                 RegistryKey key = Registry.LocalMachine.OpenSubKey(c_devmodeRegKey);
 
-                if (key != null)
+                if (key is not null)
                 {
                     using (key)
                     {

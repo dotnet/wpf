@@ -53,7 +53,7 @@ namespace MS.Internal.Xaml.Runtime
             set
             {
                 _transparentRuntime.LineInfo = value;
-                if (_elevatedRuntime != null)
+                if (_elevatedRuntime is not null)
                 {
                     _elevatedRuntime.LineInfo = value;
                 }

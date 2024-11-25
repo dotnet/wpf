@@ -28,7 +28,7 @@ namespace System.Windows.Documents
         // Constructor, called when a change block is opening.
         internal ChangeBlockUndoRecord(ITextContainer textContainer, string actionDescription)
         {
-            if (textContainer.UndoManager != null)
+            if (textContainer.UndoManager is not null)
             {
                 _undoManager = textContainer.UndoManager;
 
@@ -36,13 +36,13 @@ namespace System.Windows.Documents
                 {
                     // Don't bother opening an undo unit if the owning control is
                     // still being initialized (ie, programmatic load by parser).
-                    if (textContainer.TextView != null)
+                    if (textContainer.TextView is not null)
                     {
                         // Don't bother opening a new undo unit if we're already nested
                         // inside another.
                         if (_undoManager.OpenedUnit is null)
                         {
-                            if (textContainer.TextSelection != null)
+                            if (textContainer.TextSelection is not null)
                             {
                                 _parentUndoUnit = new TextParentUndoUnit(textContainer.TextSelection);
                             }
@@ -78,7 +78,7 @@ namespace System.Windows.Documents
         internal void OnEndChange()
         {
             // Commit our undo unit.
-            if (_parentUndoUnit != null)
+            if (_parentUndoUnit is not null)
             {
                 IParentUndoUnit openedUnit;
 
@@ -98,8 +98,8 @@ namespace System.Windows.Documents
                     {
                         ((TextParentUndoUnit)_parentUndoUnit).RecordRedoSelectionState();
                     }
-                    Invariant.Assert(_undoManager != null);
-                    _undoManager.Close(_parentUndoUnit, (_parentUndoUnit.LastUnit != null) ? UndoCloseAction.Commit : UndoCloseAction.Discard);
+                    Invariant.Assert(_undoManager is not null);
+                    _undoManager.Close(_parentUndoUnit, (_parentUndoUnit.LastUnit is not null) ? UndoCloseAction.Commit : UndoCloseAction.Discard);
                 }
             }
         }

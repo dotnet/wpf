@@ -556,7 +556,7 @@ namespace System.Windows.Input.StylusPointer
             // Validate that element is either a UIElement, a ContentElement or a UIElement3D.
             DependencyObject doStylusCapture = element as DependencyObject;
 
-            if (doStylusCapture != null && !InputElement.IsValid(element))
+            if (doStylusCapture is not null && !InputElement.IsValid(element))
             {
                 throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, doStylusCapture.GetType()));
             }
@@ -634,7 +634,7 @@ namespace System.Windows.Input.StylusPointer
                 {
                     int timeStamp = Environment.TickCount;
 
-                    if (_currentStylusPoints != null &&
+                    if (_currentStylusPoints is not null &&
                         _currentStylusPoints.Count > 0 &&
                         StylusPointDescription.AreCompatible(PointerTabletDevice.StylusPointDescription, _currentStylusPoints.Description))
                     {
@@ -710,18 +710,18 @@ namespace System.Windows.Input.StylusPointer
             VerifyAccess();
 
             // Validate that relativeTo is either a UIElement, a ContentElement or a UIElement3D.
-            if (relativeTo != null && !InputElement.IsValid(relativeTo))
+            if (relativeTo is not null && !InputElement.IsValid(relativeTo))
             {
                 throw new InvalidOperationException();
             }
 
             PresentationSource relativePresentationSource = null;
 
-            if (relativeTo != null)
+            if (relativeTo is not null)
             {
                 DependencyObject dependencyObject = relativeTo as DependencyObject;
                 DependencyObject containingVisual = InputElement.GetContainingVisual(dependencyObject);
-                if (containingVisual != null)
+                if (containingVisual is not null)
                 {
                     relativePresentationSource = PresentationSource.CriticalFromVisual(containingVisual);
                 }
@@ -807,7 +807,7 @@ namespace System.Windows.Input.StylusPointer
                 // guarantees that ViewToElement is invertible.
                 GeneralTransform transformToElement = rsir.RawStylusInput.Target.ViewToElement.Inverse;
 
-                Debug.Assert(transformToElement != null);
+                Debug.Assert(transformToElement is not null);
 
                 _currentStylusPoints = rsir.RawStylusInput.GetStylusPoints(transformToElement);
             }
@@ -893,7 +893,7 @@ namespace System.Windows.Input.StylusPointer
         /// <returns>The captured plug in collection or null if no capture exists</returns>
         internal override StylusPlugInCollection GetCapturedPlugInCollection(ref bool elementHasCapture)
         {
-            elementHasCapture = (_stylusCapture != null);
+            elementHasCapture = (_stylusCapture is not null);
             return _stylusCapturePlugInCollection;
         }
 
@@ -926,7 +926,7 @@ namespace System.Windows.Input.StylusPointer
                     {
                         IInputElement stylusCapture = InputElement.GetContainingInputElement(_stylusCapture as DependencyObject);
 
-                        if (stylusCapture != null && inputSource != null)
+                        if (stylusCapture is not null && inputSource is not null)
                         {
                             // We need to re-hit-test to get the "real" UIElement we are over.
                             // This allows us to have our capture-to-subtree span multiple windows.
@@ -935,7 +935,7 @@ namespace System.Windows.Input.StylusPointer
                             stylusOver = StylusDevice.GlobalHitTest(inputSource, position);
                         }
 
-                        if (stylusOver != null && !InputElement.IsValid(stylusOver))
+                        if (stylusOver is not null && !InputElement.IsValid(stylusOver))
                             stylusOver = InputElement.GetContainingInputElement(stylusOver as DependencyObject);
 
                         // Make sure that the element we hit is acutally underneath
@@ -945,17 +945,17 @@ namespace System.Windows.Input.StylusPointer
                         // Note that we support the child being in a completely different window.
                         // So we use the GetUIParent method instead of just looking at
                         // visual/content parents.
-                        if (stylusOver != null)
+                        if (stylusOver is not null)
                         {
                             IInputElement ieTest = stylusOver;
                             UIElement eTest = null;
                             ContentElement ceTest = null;
 
-                            while (ieTest != null && ieTest != stylusCapture)
+                            while (ieTest is not null && ieTest != stylusCapture)
                             {
                                 eTest = ieTest as UIElement;
 
-                                if (eTest != null)
+                                if (eTest is not null)
                                 {
                                     ieTest = InputElement.GetContainingInputElement(eTest.GetUIParent(true));
                                 }
@@ -1028,14 +1028,14 @@ namespace System.Windows.Input.StylusPointer
                 // for the penthread hittesting code.
                 _stylusCapturePlugInCollection = null;
 
-                if (stylusCapture != null)
+                if (stylusCapture is not null)
                 {
                     UIElement uiElement = InputElement.GetContainingUIElement(stylusCapture as DependencyObject) as UIElement;
-                    if (uiElement != null)
+                    if (uiElement is not null)
                     {
                         PresentationSource source = PresentationSource.CriticalFromVisual(uiElement as Visual);
 
-                        if (source != null)
+                        if (source is not null)
                         {
                             PointerStylusPlugInManager manager;
 
@@ -1050,14 +1050,14 @@ namespace System.Windows.Input.StylusPointer
                 _pointerLogic.UpdateStylusCapture(this, oldStylusCapture, _stylusCapture, timestamp);
 
                 // Send the LostStylusCapture and GotStylusCapture events.
-                if (oldStylusCapture != null)
+                if (oldStylusCapture is not null)
                 {
                     StylusEventArgs lostCapture = new StylusEventArgs(StylusDevice, timestamp);
                     lostCapture.RoutedEvent = Stylus.LostStylusCaptureEvent;
                     lostCapture.Source = oldStylusCapture;
                     InputManager.UnsecureCurrent.ProcessInput(lostCapture);
                 }
-                if (_stylusCapture != null)
+                if (_stylusCapture is not null)
                 {
                     StylusEventArgs gotCapture = new StylusEventArgs(StylusDevice, timestamp);
                     gotCapture.RoutedEvent = Stylus.GotStylusCaptureEvent;
@@ -1069,7 +1069,7 @@ namespace System.Windows.Input.StylusPointer
                 // it is inrange).
                 if (_pointerLogic.CurrentStylusDevice == this || InRange)
                 {
-                    if (_stylusCapture != null)
+                    if (_stylusCapture is not null)
                     {
                         IInputElement inputElementHit = _stylusCapture;
 
@@ -1112,12 +1112,12 @@ namespace System.Windows.Input.StylusPointer
         /// </summary>
         internal override void UpdateEventStylusPoints(RawStylusInputReport report, bool resetIfNoOverride)
         {
-            if (report.RawStylusInput != null && report.RawStylusInput.StylusPointsModified)
+            if (report.RawStylusInput is not null && report.RawStylusInput.StylusPointsModified)
             {
                 GeneralTransform transformToElement = report.RawStylusInput.Target.ViewToElement.Inverse;
                 //note that RawStylusInput.Target (of type StylusPluginCollection)
                 //guarantees that ViewToElement is invertible
-                Debug.Assert(transformToElement != null);
+                Debug.Assert(transformToElement is not null);
 
                 _currentStylusPoints = report.RawStylusInput.GetStylusPoints(transformToElement);
             }

@@ -196,7 +196,7 @@ namespace System.Windows
             fileDropListCollection = new StringCollection();
 
             fileDropList = GetDataInternal(DataFormats.FileDrop) as string[];
-            if (fileDropList != null)
+            if (fileDropList is not null)
             {
                 fileDropListCollection.AddRange(fileDropList);
             }
@@ -234,7 +234,7 @@ namespace System.Windows
 
             text = (string)GetDataInternal(DataFormats.ConvertToDataFormats(format));
 
-            if (text != null)
+            if (text is not null)
             {
                 return text;
             }
@@ -517,7 +517,7 @@ namespace System.Windows
 
         internal static bool IsClipboardPopulated()
         {
-            return (GetDataObjectInternal() != null);
+            return (GetDataObjectInternal() is not null);
         }
 
         #endregion Internal Methods
@@ -617,7 +617,7 @@ namespace System.Windows
             {
                 dataObject = (IDataObject)oleDataObject;
             }
-            else if (oleDataObject != null)
+            else if (oleDataObject is not null)
             {
                 // Wrap any COM objects or objects that don't implement <see cref="T:System.Windows.IDataObject"/>.
                 // In the case of COM objects, this protects us from a <see cref="T:System.InvalidOperationException"/> from the marshaler 
@@ -669,7 +669,7 @@ namespace System.Windows
 
             dataObject = Clipboard.GetDataObject();
 
-            if (dataObject != null)
+            if (dataObject is not null)
             {
                 bool autoConvert;
 

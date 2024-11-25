@@ -92,7 +92,7 @@ namespace WinRT
             string restrictedCapabilitySid = null;
             bool hasOtherLanguageException = false;
 
-            if (useGlobalErrorState && getRestrictedErrorInfo != null)
+            if (useGlobalErrorState && getRestrictedErrorInfo is not null)
             {
                 Marshal.ThrowExceptionForHR(getRestrictedErrorInfo(out IntPtr restrictedErrorInfoPtr));
 
@@ -164,7 +164,7 @@ namespace WinRT
 
         public static unsafe void SetErrorInfo(Exception ex)
         {
-            if (getRestrictedErrorInfo != null && setRestrictedErrorInfo != null && roOriginateLanguageException != null)
+            if (getRestrictedErrorInfo is not null && setRestrictedErrorInfo is not null && roOriginateLanguageException is not null)
             {
                 // If the exception has information for an IRestrictedErrorInfo, use that
                 // as our error so as to propagate the error through WinRT end-to-end.
@@ -204,7 +204,7 @@ namespace WinRT
         public static void ReportUnhandledError(Exception ex)
         {
             SetErrorInfo(ex);
-            if (getRestrictedErrorInfo != null && roReportUnhandledError != null)
+            if (getRestrictedErrorInfo is not null && roReportUnhandledError is not null)
             {
                 Marshal.ThrowExceptionForHR(getRestrictedErrorInfo(out IntPtr ppRestrictedErrorInfo));
                 using var restrictedErrorRef = ObjectReference<IUnknownVftbl>.Attach(ref ppRestrictedErrorInfo);
@@ -263,7 +263,7 @@ namespace WinRT
             bool hasRestrictedLanguageErrorObject = false)
         {
             IDictionary dict = ex.Data;
-            if (dict != null)
+            if (dict is not null)
             {
                 dict.Add("Description", description);
                 dict.Add("RestrictedDescription", restrictedError);
@@ -283,7 +283,7 @@ namespace WinRT
         {
             restrictedErrorObject = null;
             IDictionary dict = ex.Data;
-            if (dict != null && dict.Contains("__HasRestrictedLanguageErrorObject"))
+            if (dict is not null && dict.Contains("__HasRestrictedLanguageErrorObject"))
             {
                 if (dict.Contains("__RestrictedErrorObjectReference"))
                 {
@@ -299,7 +299,7 @@ namespace WinRT
         public static Exception AttachRestrictedErrorInfo(Exception e)
         {
             // If there is no exception, then the restricted error info doesn't apply to it
-            if (e != null)
+            if (e is not null)
             {
                 try
                 {
@@ -359,7 +359,7 @@ namespace WinRT
         internal static Exception GetExceptionForHR(this Exception innerException, int hresult, string messageResource)
         {
             Exception e;
-            if (innerException != null)
+            if (innerException is not null)
             {
                 string message = innerException.Message ?? messageResource;
                 e = new Exception(message, innerException);

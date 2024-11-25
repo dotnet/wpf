@@ -413,7 +413,7 @@ namespace Microsoft.Windows.Themes
             // Calculate 3D highlights and shadows for solid color brushes that are not the control color
             // Don't recompute colors for the sunken styles (Sunken and RadioButton)
             if (decorator.BorderStyle != ClassicBorderStyle.Sunken && decorator.BorderStyle != ClassicBorderStyle.RadioButton &&
-                controlBrush != null && (controlColor = controlBrush.Color) != SystemColors.ControlColor && controlColor.A > 0x00)
+                controlBrush is not null && (controlColor = controlBrush.Color) != SystemColors.ControlColor && controlColor.A > 0x00)
             {
                 // If we haven't cached the colors, or if the background color changed, compute the new colors
                 if (decorator._brushCache is null || controlColor != decorator._brushCache.LightBrush.Color)
@@ -657,7 +657,7 @@ namespace Microsoft.Windows.Themes
 
             Size desired;
             UIElement child = Child;
-            if (child != null)
+            if (child is not null)
             {
                 Size childConstraint = new Size();
 
@@ -706,7 +706,7 @@ namespace Microsoft.Windows.Themes
         protected override Size ArrangeOverride(Size finalSize)
         {
             UIElement child = Child;
-            if (child != null)
+            if (child is not null)
             {
                 Thickness border = BorderThickness;
 
@@ -829,7 +829,7 @@ namespace Microsoft.Windows.Themes
 
             // Fill the Background
             Brush background = Background;
-            if (background != null && bounds.Width > 0.0 && bounds.Height > 0.0)
+            if (background is not null && bounds.Width > 0.0 && bounds.Height > 0.0)
             {
                 drawingContext.DrawRectangle(background, null, bounds);
             }
@@ -921,7 +921,7 @@ namespace Microsoft.Windows.Themes
         private static bool IsSimpleBorderBrush(Brush borderBrush)
         {
             SolidColorBrush solidBrush = borderBrush as SolidColorBrush;
-            return (solidBrush != null && (solidBrush.Color.A == 0xFF || solidBrush.Color.A == 0x00));
+            return (solidBrush is not null && (solidBrush.Color.A == 0xFF || solidBrush.Color.A == 0x00));
         }
 
         // Draws a border around the control
@@ -936,7 +936,7 @@ namespace Microsoft.Windows.Themes
             // If we don't have enough space for the entire border, just fill the area with the brush
             if (borderSize.Width > bounds.Width || borderSize.Height > bounds.Height)
             {
-                if(borderBrush != null && bounds.Width > 0.0 && bounds.Height > 0.0)
+                if(borderBrush is not null && bounds.Width > 0.0 && bounds.Height > 0.0)
                 {
                     dc.DrawRectangle(borderBrush, null, bounds);
                 }
@@ -1147,7 +1147,7 @@ namespace Microsoft.Windows.Themes
         private Geometry GetShadow1(Rect bounds)
         {
             // Assumed to always be called after GetHighlight1
-            Debug.Assert(_tabCache != null, "_tabCache is null.  GetShadow1 should only be called after GetHighlight1");
+            Debug.Assert(_tabCache is not null, "_tabCache is null.  GetShadow1 should only be called after GetHighlight1");
 
             if (_tabCache.Shadow1 is null)
             {
@@ -1160,7 +1160,7 @@ namespace Microsoft.Windows.Themes
         private Geometry GetHighlight2(Rect bounds)
         {
             // Assumed to always be called after GetHighlight1
-            Debug.Assert(_tabCache != null, "_tabCache is null.  GetHighlight2 should only be called after GetHighlight1");
+            Debug.Assert(_tabCache is not null, "_tabCache is null.  GetHighlight2 should only be called after GetHighlight1");
             
             if (_tabCache.Highlight2 is null)
             {
@@ -1173,7 +1173,7 @@ namespace Microsoft.Windows.Themes
         private Geometry GetShadow2(Rect bounds)
         {
             // Assumed to always be called after GetHighlight1
-            Debug.Assert(_tabCache != null, "_tabCache is null.  GetHighlight2 should only be called after GetHighlight1");
+            Debug.Assert(_tabCache is not null, "_tabCache is null.  GetHighlight2 should only be called after GetHighlight1");
 
             if (_tabCache.Shadow2 is null)
             {
@@ -1346,7 +1346,7 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                return _brushCache != null ? _brushCache.LightBrush : SystemColors.ControlLightBrush;
+                return _brushCache is not null ? _brushCache.LightBrush : SystemColors.ControlLightBrush;
             }
         }
 
@@ -1355,7 +1355,7 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                return _brushCache != null ? _brushCache.LightLightBrush : SystemColors.ControlLightLightBrush;
+                return _brushCache is not null ? _brushCache.LightLightBrush : SystemColors.ControlLightLightBrush;
             }
         }
 
@@ -1364,7 +1364,7 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                return _brushCache != null ? _brushCache.DarkBrush : SystemColors.ControlDarkBrush;
+                return _brushCache is not null ? _brushCache.DarkBrush : SystemColors.ControlDarkBrush;
             }
         }
 
@@ -1373,7 +1373,7 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                return _brushCache != null ? _brushCache.DarkDarkBrush : SystemColors.ControlDarkDarkBrush;
+                return _brushCache is not null ? _brushCache.DarkDarkBrush : SystemColors.ControlDarkDarkBrush;
             }
         }
 

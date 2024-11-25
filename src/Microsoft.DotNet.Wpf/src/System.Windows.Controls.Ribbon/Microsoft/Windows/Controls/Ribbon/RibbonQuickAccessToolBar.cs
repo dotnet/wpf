@@ -192,7 +192,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             // Raise UI Automation Events
             RibbonQuickAccessToolBarAutomationPeer peer = UIElementAutomationPeer.FromElement(qat) as RibbonQuickAccessToolBarAutomationPeer;
-            if (peer != null)
+            if (peer is not null)
             {
                 peer.RaiseExpandCollapseAutomationEvent(!(bool)e.OldValue, !(bool)e.NewValue);
             }
@@ -296,12 +296,12 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             base.OnApplyTemplate();
 
-            if (_mainPanel != null)
+            if (_mainPanel is not null)
             {
                 _mainPanel.Children.Clear();
             }
 
-            if (_overflowPanel != null)
+            if (_overflowPanel is not null)
             {
                 _overflowPanel.Children.Clear();
             }
@@ -310,7 +310,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             _overflowPanel = GetTemplateChild(OverflowPanelTemplatePartName) as RibbonQuickAccessToolBarOverflowPanel;
             _overflowPopup = GetTemplateChild(OverflowPopupTemplatePartName) as Popup;
             _overflowButton = GetTemplateChild(OverflowButtonTemplatePartName) as RibbonToggleButton;
-            if (_overflowButton != null)
+            if (_overflowButton is not null)
             {
                 _overflowButton.ToolTipTitle = _overflowButtonToolTipText;
             }
@@ -318,7 +318,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             // Set KeyTipAutoGenerationElements property on self.
             IEnumerable<DependencyObject> keyTipAutoGenerationElements = new KeyTipAutoGenerationElements(this);
             KeyTipService.SetKeyTipAutoGenerationElements(this, keyTipAutoGenerationElements);
-            if (_overflowPanel != null)
+            if (_overflowPanel is not null)
             {
                 // Set KeyTipAutoGenerationElements property on overflow panel which helps
                 // auto generation of keytips on elements of overflow.
@@ -335,7 +335,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             InvalidateMeasure();
 
             RibbonQuickAccessToolBarPanel toolBarPanel = this.MainPanel;
-            if (toolBarPanel != null)
+            if (toolBarPanel is not null)
             {
                 toolBarPanel.InvalidateMeasure();
             }
@@ -526,7 +526,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             foreach (object o in this.Items)
             {
                 DependencyObject dependencyObject = o as DependencyObject;
-                if (dependencyObject != null)
+                if (dependencyObject is not null)
                 {
                     object currentID = RibbonControlService.GetQuickAccessToolBarId(dependencyObject);
                     if (object.Equals(currentID, targetID))
@@ -589,7 +589,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 for (int i = 0; i < itemCount; i++)
                 {
                     RibbonControl ribbonControl = QuickAccessToolBar.ItemContainerGenerator.ContainerFromIndex(i) as RibbonControl;
-                    if (ribbonControl != null)
+                    if (ribbonControl is not null)
                     {
                         if (GetIsOverflowItem(ribbonControl))
                         {
@@ -599,7 +599,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         else if (ribbonControl.IsVisible)
                         {
                             UIElement contentChild = ribbonControl.ContentChild;
-                            if (contentChild != null &&
+                            if (contentChild is not null &&
                                 contentChild.IsVisible &&
                                 PropertyHelper.IsDefaultValue(contentChild, KeyTipService.KeyTipProperty))
                             {
@@ -615,12 +615,12 @@ namespace Microsoft.Windows.Controls.Ribbon
                     for (int i = overflowStartIndex; i < itemCount; i++)
                     {
                         RibbonControl ribbonControl = QuickAccessToolBar.ItemContainerGenerator.ContainerFromIndex(i) as RibbonControl;
-                        if (ribbonControl != null &&
+                        if (ribbonControl is not null &&
                             ribbonControl.Visibility == Visibility.Visible &&
                             GetIsOverflowItem(ribbonControl))
                         {
                             UIElement contentChild = ribbonControl.ContentChild;
-                            if (contentChild != null &&
+                            if (contentChild is not null &&
                                 contentChild.Visibility == Visibility.Visible &&
                                 PropertyHelper.IsDefaultValue(contentChild, KeyTipService.KeyTipProperty))
                             {
@@ -680,7 +680,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 {
                     IsOverflowOpen = true;
                     UIElement popupChild = _overflowPopup.TryGetChild();
-                    if (popupChild != null)
+                    if (popupChild is not null)
                     {
                         KeyTipService.SetIsKeyTipScope(popupChild, true);
                         e.TargetKeyTipScope = popupChild;

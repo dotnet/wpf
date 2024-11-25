@@ -113,7 +113,7 @@ namespace MS.Internal.Documents
                     // view the document.
                     RightsManagementLicense license = GetUseLicense();
 
-                    if (license != null &&
+                    if (license is not null &&
                         license.HasPermission(RightsManagementPermissions.AllowView))
                     {
                         Trace.SafeWrite(
@@ -263,7 +263,7 @@ namespace MS.Internal.Documents
             _credManagerDialog = new CredentialManagerDialog(accountList, userAccount, this);
             result = _credManagerDialog.ShowDialog();
 
-            if (_credManagerDialog != null)
+            if (_credManagerDialog is not null)
             {
                 _credManagerDialog.Dispose();
             }
@@ -313,7 +313,7 @@ namespace MS.Internal.Documents
             EnrollmentAccountType enrollmentAccountType = EnrollmentAccountType.None;
 
             // skip first page if already enrolled
-            if (_rmProvider.CurrentUser != null || _rmProvider.GetDefaultCredentials() != null)
+            if (_rmProvider.CurrentUser is not null || _rmProvider.GetDefaultCredentials() is not null)
             {
                 result = DialogResult.OK;
             }
@@ -371,7 +371,7 @@ namespace MS.Internal.Documents
             {
                 rmEnrollmentPage3.ShowDialog();
 
-                rtn = (_rmProvider.CurrentUser != null);
+                rtn = (_rmProvider.CurrentUser is not null);
             }
 
             // Since we've called the enrollment, the current SecureEnvironment is not reliable.
@@ -390,7 +390,7 @@ namespace MS.Internal.Documents
             // A null license means the user has no rights to the document, and
             // this should never have been called.
             Invariant.Assert(
-                rmLicense != null,
+                rmLicense is not null,
                 "Permissions dialog requested with no rights on the document.");
 
             // If this is the owner call ShowPublishing instead.
@@ -404,7 +404,7 @@ namespace MS.Internal.Documents
                 RMPermissionsDialog rmPermissionsPage = new RMPermissionsDialog(rmLicense);
                 rmPermissionsPage.ShowDialog();
 
-                if (rmPermissionsPage != null)
+                if (rmPermissionsPage is not null)
                 {
                     rmPermissionsPage.Dispose();
                 }
@@ -476,7 +476,7 @@ namespace MS.Internal.Documents
 
                     // If a template exists on the publishing dialog then user has selected
                     // a template rather than individual settings.
-                    if (rmPublish.Template != null)
+                    if (rmPublish.Template is not null)
                     {
                         publishingSuccess = ProcessRMTemplate(rmPublish.Template, out exitDialog);
                         publishLicenseChanged = true;
@@ -519,7 +519,7 @@ namespace MS.Internal.Documents
                     DocumentManager docManager = DocumentManager.CreateDefault();
                     bool saveSuccess = false;
 
-                    if (docManager != null)
+                    if (docManager is not null)
                     {
                         if (rmPublish.IsSaveAs)
                         {
@@ -545,7 +545,7 @@ namespace MS.Internal.Documents
             }
             finally
             {
-                if (rmPublish != null)
+                if (rmPublish is not null)
                 {
                     rmPublish.Dispose();
                 }
@@ -568,7 +568,7 @@ namespace MS.Internal.Documents
             RightsManagementUser user = _userMap[defaultAccount];
 
             //if found set default
-            if (user != null)
+            if (user is not null)
             {
                 _rmProvider.SetDefaultCredentials(user);
             }
@@ -583,13 +583,13 @@ namespace MS.Internal.Documents
             RightsManagementUser user = _userMap[accountName];
 
             //if found remove (if this user isn't in use, if it is in use warn user)
-            if (user != null && !user.Equals(_rmProvider.CurrentUser))
+            if (user is not null && !user.Equals(_rmProvider.CurrentUser))
             {
                 try
                 {
                     _rmProvider.RemoveCredentials(user);
 
-                    if (_credManagerDialog != null)
+                    if (_credManagerDialog is not null)
                     {
                         //Set the data source for the listbox
                         _credManagerDialog.SetCredentialManagementList(
@@ -625,7 +625,7 @@ namespace MS.Internal.Documents
         {
             ShowEnrollment();
 
-            if (_credManagerDialog != null)
+            if (_credManagerDialog is not null)
             {
                 //Set the data source for the listbox
                 _credManagerDialog.SetCredentialManagementList(
@@ -693,7 +693,7 @@ namespace MS.Internal.Documents
 
             RightsManagementUser user = _rmProvider.GetDefaultCredentials();
 
-            if (user != null)
+            if (user is not null)
             {
                 userAccount = RightsManagementResourceHelper.GetCredentialManagementResources(user);
             }
@@ -895,7 +895,7 @@ namespace MS.Internal.Documents
 
             // If there already is a user selected there is no need to select
             // credentials again
-            if (_rmProvider.CurrentUser != null)
+            if (_rmProvider.CurrentUser is not null)
             {
                 return true;
             }
@@ -919,7 +919,7 @@ namespace MS.Internal.Documents
                 user = _rmProvider.CurrentUser;
 
                 // If the enrollment was successful
-                if (user != null)
+                if (user is not null)
                 {
                     // Set the enrolled user as the default user in the registry
                     _rmProvider.SetDefaultCredentials(user);
@@ -928,7 +928,7 @@ namespace MS.Internal.Documents
             }
 
             // Now we will see if this user account has rights for the document
-            while (user != null)
+            while (user is not null)
             {
                 if (!initialized)
                 {
@@ -964,7 +964,7 @@ namespace MS.Internal.Documents
                     RightsManagementLicense license = GetUseLicense();
 
                     // Check if the user has permissions to view the document
-                    if (license != null &&
+                    if (license is not null &&
                         license.HasPermission(RightsManagementPermissions.AllowView))
                     {
                         foundCredentials = true;
@@ -1037,7 +1037,7 @@ namespace MS.Internal.Documents
                 _rmProvider.CurrentUseLicense is null)
             {
                 Invariant.Assert(
-                    _rmProvider.CurrentUser != null,
+                    _rmProvider.CurrentUser is not null,
                     "No user for whom to get a license.");
 
                 try
@@ -1214,7 +1214,7 @@ namespace MS.Internal.Documents
         /// <param name="args">The event arguments</param>
         private void RaiseRMStatusChange(RightsManagementStatusEventArgs args)
         {
-            if (RMStatusChange != null)
+            if (RMStatusChange is not null)
             {
                 RMStatusChange(this, args);
             }
@@ -1239,7 +1239,7 @@ namespace MS.Internal.Documents
         /// <param name="args">The event arguments</param>
         private void RaiseRMPolicyChange(RightsManagementPolicyEventArgs args)
         {
-            if (RMPolicyChange != null)
+            if (RMPolicyChange is not null)
             {
                 RMPolicyChange(this, args);
             }
@@ -1261,7 +1261,7 @@ namespace MS.Internal.Documents
         /// <param name="args">The event arguments</param>
         private void RaisePublishLicenseChange(EventArgs args)
         {
-            if (PublishLicenseChange != null)
+            if (PublishLicenseChange is not null)
             {
                 PublishLicenseChange(this, args);
             }
@@ -1312,7 +1312,7 @@ namespace MS.Internal.Documents
             // doing anything else
             if (publishLicenseChanged)
             {
-                if (licenses != null && licenses.Count > 0)
+                if (licenses is not null && licenses.Count > 0)
                 {
                     try
                     {
@@ -1443,7 +1443,7 @@ namespace MS.Internal.Documents
 
             // If a template exists on the publishing dialog then user has selected
             // a template rather than individual settings.
-            if (templateFilename != null)
+            if (templateFilename is not null)
             {
                 // Save the path local to this method to guarantee it does not
                 // change between the assert and the file access

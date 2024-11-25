@@ -139,7 +139,7 @@ namespace MS.Internal.Automation
             if (((_eventListener.TreeScope & TreeScope.Children) != 0 || (_eventListener.TreeScope & TreeScope.Descendants) != 0))
             {
                 elParent = TreeWalker.RawViewWalker.GetParent(el);
-                if (elParent != null && Misc.Compare(elParent, elThis))
+                if (elParent is not null && Misc.Compare(elParent, elThis))
                     return true;
             }
 
@@ -147,7 +147,7 @@ namespace MS.Internal.Automation
             if (((_eventListener.TreeScope & TreeScope.Parent) != 0 || (_eventListener.TreeScope & TreeScope.Ancestors) != 0))
             {
                 elParent = TreeWalker.RawViewWalker.GetParent(elThis);
-                if (elParent != null && Misc.Compare(elParent, el))
+                if (elParent is not null && Misc.Compare(elParent, el))
                     return true;
             }
 
@@ -266,7 +266,7 @@ namespace MS.Internal.Automation
             if( ! Misc.Compare( el, elPossibleParent ) )
             {
                 AutomationElement elPossibleChild = TreeWalker.RawViewWalker.GetParent(el);
-                while( elPossibleChild != null )
+                while( elPossibleChild is not null )
                 {
                     if( Misc.Compare( elPossibleChild, elPossibleParent ) )
                     {

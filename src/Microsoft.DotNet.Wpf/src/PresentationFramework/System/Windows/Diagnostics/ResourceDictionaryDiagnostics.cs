@@ -184,7 +184,7 @@ namespace System.Windows.Diagnostics
                 }
 
                 // if we found stale entries, remove them now
-                if (toRemove != null)
+                if (toRemove is not null)
                 {
                     RemoveEntries(uri, list, toRemove);
                 }
@@ -196,7 +196,7 @@ namespace System.Windows.Diagnostics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void AddResourceDictionaryForUri(Uri uri, ResourceDictionary rd)
         {
-            if (uri != null && IsEnabled)
+            if (uri is not null && IsEnabled)
             {
                 AddResourceDictionaryForUriImpl(uri, rd);
             }
@@ -226,7 +226,7 @@ namespace System.Windows.Diagnostics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void RemoveResourceDictionaryForUri(Uri uri, ResourceDictionary rd)
         {
-            if (uri != null && IsEnabled)
+            if (uri is not null && IsEnabled)
             {
                 RemoveResourceDictionaryForUriImpl(uri, rd);
             }
@@ -236,7 +236,7 @@ namespace System.Windows.Diagnostics
         {
             lock (_dictionariesFromUriLock)
             {
-                if (_dictionariesFromUri != null)
+                if (_dictionariesFromUri is not null)
                 {
                     List<WeakReference<ResourceDictionary>> list;
                     if (_dictionariesFromUri.TryGetValue(uri, out list))
@@ -308,7 +308,7 @@ namespace System.Windows.Diagnostics
             foreach (Object o in list)
             {
                 T owner = o as T;
-                if (owner != null)
+                if (owner is not null)
                 {
                     result.Add(owner);
                 }
@@ -332,7 +332,7 @@ namespace System.Windows.Diagnostics
 
         internal static bool HasStaticResourceResolvedListeners
         {
-            get { return IsEnabled && (StaticResourceResolved != null); }
+            get { return IsEnabled && (StaticResourceResolved is not null); }
         }
 
         internal static bool ShouldIgnoreProperty(object targetProperty)
@@ -358,7 +358,7 @@ namespace System.Windows.Diagnostics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void RecordLookupResult(object key, ResourceDictionary rd)
         {
-            if (IsEnabled && _lookupResultStack != null)
+            if (IsEnabled && _lookupResultStack is not null)
             {
                 RecordLookupResultImpl(key, rd);
             }
@@ -429,7 +429,7 @@ namespace System.Windows.Diagnostics
             // simple case - no deferred content, no lookup optimizations
             if (result.Requester.GetType() == typeof(StaticResourceExtension))
             {
-                Debug.Assert(result.Dictionary != null, "simple lookup resolved incorrectly");
+                Debug.Assert(result.Dictionary is not null, "simple lookup resolved incorrectly");
                 return;
             }
 
@@ -451,10 +451,10 @@ namespace System.Windows.Diagnostics
                 wrDict.TryGetTarget(out cachedDict);
             }
 
-            if (result.Dictionary != null)
+            if (result.Dictionary is not null)
             {
                 // The first time the class requests a value, cache the dictionary
-                if (cachedDict != null)
+                if (cachedDict is not null)
                 {
                     Debug.Assert(cachedDict == result.Dictionary, "conflicting dictionaries for a StaticResource reference");
                 }
@@ -464,7 +464,7 @@ namespace System.Windows.Diagnostics
             else
             {
                 // for subsequent (optimized) requests, use the dictionary from the cache
-                Debug.Assert(cachedDict != null, "no dictionary found for StaticResource reference");
+                Debug.Assert(cachedDict is not null, "no dictionary found for StaticResource reference");
                 result.Key = requester.ResourceKey;
                 result.Dictionary = cachedDict;
             }
@@ -473,7 +473,7 @@ namespace System.Windows.Diagnostics
         internal static void OnStaticResourceResolved(object targetObject, object targetProperty, LookupResult result)
         {
             EventHandler<StaticResourceResolvedEventArgs> handler = StaticResourceResolved;
-            if (handler != null && result.Dictionary != null)
+            if (handler is not null && result.Dictionary is not null)
             {
                 handler(null, new StaticResourceResolvedEventArgs(
                                     targetObject,
@@ -492,7 +492,7 @@ namespace System.Windows.Diagnostics
 
             // ignore if cleanup is not needed, already requested, or not requestable
             if (_resultCache is null ||
-                _cleanupOperation != null ||
+                _cleanupOperation is not null ||
                 (d = targetObject as DispatcherObject) is null ||
                 (dispatcher = d.Dispatcher) is null)
             {
@@ -523,7 +523,7 @@ namespace System.Windows.Diagnostics
                 }
             }
 
-            if (toRemove != null)
+            if (toRemove is not null)
             {
                 foreach (WeakReferenceKey<StaticResourceExtension> wrKey in toRemove)
                 {

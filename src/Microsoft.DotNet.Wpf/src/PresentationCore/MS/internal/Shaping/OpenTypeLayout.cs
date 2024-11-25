@@ -124,7 +124,7 @@ namespace MS.Internal.Shaping
         public FontTable(byte[] data)
         {
             m_data = data;
-            if (data != null)
+            if (data is not null)
             {
                 m_length = (uint)data.Length;
             }
@@ -154,21 +154,21 @@ namespace MS.Internal.Shaping
         }
         public short GetShort(int offset)
         {
-            Invariant.Assert(m_data != null);
+            Invariant.Assert(m_data is not null);
 
             if ((offset + 1) >= m_length) throw new FileFormatException();
             return (short)((m_data[offset]<<8) + m_data[offset+1]);
         }
         public uint GetUInt(int offset)
         {
-            Invariant.Assert(m_data != null);
+            Invariant.Assert(m_data is not null);
 
             if ((offset + 3) >= m_length) throw new FileFormatException();
             return (uint)((m_data[offset]<<24) + (m_data[offset+1]<<16) + (m_data[offset+2]<<8) + m_data[offset+3]);
         }
         public ushort GetOffset(int offset)
         {
-            Invariant.Assert(m_data != null);
+            Invariant.Assert(m_data is not null);
 
             if ((offset+1)>=m_length) throw new FileFormatException();
             return (ushort)((m_data[offset]<<8) + m_data[offset+1]);
@@ -1290,7 +1290,7 @@ namespace MS.Internal.Shaping
         ///<param name="glyphRunLength">In: Size of a glyph run</param>
         public unsafe void AllocateCachePointers(int glyphRunLength)
         {
-            if (_cachePointers != null && _cachePointers.Length >= glyphRunLength) return;
+            if (_cachePointers is not null && _cachePointers.Length >= glyphRunLength) return;
 
             _cachePointers = new ushort[glyphRunLength];
         }

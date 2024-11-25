@@ -90,7 +90,7 @@ namespace System.Windows.Media
             MediaPlayer newV = (MediaPlayer) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 DUCE.IResource targetResource = (DUCE.IResource)target;
                 using (CompositionEngineLock.Acquire())
@@ -195,7 +195,7 @@ namespace System.Windows.Media
                 MediaPlayer vPlayer = Player;
 
                 // Obtain handles for properties that implement DUCE.IResource
-                DUCE.ResourceHandle hPlayer = vPlayer != null ? ((DUCE.IResource)vPlayer).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                DUCE.ResourceHandle hPlayer = vPlayer is not null ? ((DUCE.IResource)vPlayer).GetHandle(channel) : DUCE.ResourceHandle.Null;
 
                 // Obtain handles for animated properties
                 DUCE.ResourceHandle hRectAnimations = GetAnimationResourceHandle(RectProperty, channel);
@@ -225,7 +225,7 @@ namespace System.Windows.Media
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_VIDEODRAWING))
                 {
                     MediaPlayer vPlayer = Player;
-                    if (vPlayer != null) ((DUCE.IResource)vPlayer).AddRefOnChannel(channel);
+                    if (vPlayer is not null) ((DUCE.IResource)vPlayer).AddRefOnChannel(channel);
 
                     AddRefOnChannelAnimations(channel);
 
@@ -242,7 +242,7 @@ namespace System.Windows.Media
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
                     MediaPlayer vPlayer = Player;
-                    if (vPlayer != null) ((DUCE.IResource)vPlayer).ReleaseOnChannel(channel);
+                    if (vPlayer is not null) ((DUCE.IResource)vPlayer).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
 }

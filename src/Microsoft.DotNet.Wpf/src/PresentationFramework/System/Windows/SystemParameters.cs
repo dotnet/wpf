@@ -78,7 +78,7 @@ namespace System.Windows
         private static void OnPropertiesChanged(params string[] propertyNames)
         {
             System.ComponentModel.PropertyChangedEventHandler handler = StaticPropertyChanged;
-            if (handler != null)
+            if (handler is not null)
             {
                 for (int i=0; i<propertyNames.Length; ++i)
                 {

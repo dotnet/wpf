@@ -232,7 +232,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 // and outputSize doesn't match, as this is passed directly to unmanaged code
                 // and could result in bytes being written past the end of output buffer
                 //
-                if (output != null && outputSize != output.Length)
+                if (output is not null && outputSize != output.Length)
                 {
                     //we don't raise any information that could be used to attack our ISF code
                     //a simple 'ISF Operation Failed' is sufficient since the user can't do 

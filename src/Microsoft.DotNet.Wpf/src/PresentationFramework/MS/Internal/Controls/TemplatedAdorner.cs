@@ -45,8 +45,8 @@ namespace MS.Internal.Controls
 
         public TemplatedAdorner(UIElement adornedElement, ControlTemplate adornerTemplate) : base(adornedElement)
         {
-            Debug.Assert(adornedElement != null, "adornedElement should not be null");
-            Debug.Assert(adornerTemplate != null, "adornerTemplate should not be null");
+            Debug.Assert(adornedElement is not null, "adornedElement should not be null");
+            Debug.Assert(adornerTemplate is not null, "adornerTemplate should not be null");
 
             Control control = new Control();
 
@@ -76,13 +76,13 @@ namespace MS.Internal.Controls
                 return transform;
 
             GeneralTransformGroup group = new GeneralTransformGroup();
-            if(transform != null)
+            if(transform is not null)
             {
                 group.Children.Add(transform);
             }
 
             GeneralTransform t = this.TransformToDescendant(ReferenceElement);
-            if (t != null)
+            if (t is not null)
             {
                 group.Children.Add(t);
             }
@@ -131,7 +131,7 @@ namespace MS.Internal.Controls
         /// </summary>
         protected override int VisualChildrenCount
         {
-            get { return _child != null ? 1 : 0; }
+            get { return _child is not null ? 1 : 0; }
         }
 
         /// <summary>
@@ -139,9 +139,9 @@ namespace MS.Internal.Controls
         /// </summary>
         protected override Size MeasureOverride(Size constraint)
         {
-            Debug.Assert(_child != null, "_child should not be null");
+            Debug.Assert(_child is not null, "_child should not be null");
 
-            if (ReferenceElement != null && AdornedElement != null &&
+            if (ReferenceElement is not null && AdornedElement is not null &&
                 AdornedElement.IsMeasureValid &&
                 !DoubleUtil.AreClose(ReferenceElement.DesiredSize, AdornedElement.DesiredSize)
                 )
@@ -166,7 +166,7 @@ namespace MS.Internal.Controls
 
             finalSize = base.ArrangeOverride(size);
 
-            if (_child != null)
+            if (_child is not null)
             {
                 _child.Arrange(new Rect(new Point(), finalSize));
             }

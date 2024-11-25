@@ -98,7 +98,7 @@ namespace System.Windows.Data
         public static BindingBase GetBindingBase(DependencyObject target, DependencyProperty dp)
         {
             BindingExpressionBase b = GetBindingExpressionBase(target, dp);
-            return (b != null) ? b.ParentBindingBase : null;
+            return (b is not null) ? b.ParentBindingBase : null;
         }
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace System.Windows.Data
             BindingExpressionBase expr = GetBindingExpressionBase(target, dp);
 
             PriorityBindingExpression pb = expr as PriorityBindingExpression;
-            if (pb != null)
+            if (pb is not null)
                 expr = pb.ActiveBindingExpression;
 
             return expr as BindingExpression;
@@ -492,14 +492,14 @@ namespace System.Windows.Data
         // Raise the CollectionRegistering event
         internal static void OnCollectionRegistering(IEnumerable collection, object parent)
         {
-            if (CollectionRegistering != null)
+            if (CollectionRegistering is not null)
                 CollectionRegistering(null, new CollectionRegisteringEventArgs(collection, parent));
         }
 
         // Raise the CollectionViewRegistering event
         internal static void OnCollectionViewRegistering(CollectionView view)
         {
-            if (CollectionViewRegistering != null)
+            if (CollectionViewRegistering is not null)
                 CollectionViewRegistering(null, new CollectionViewRegisteringEventArgs(view));
         }
 
@@ -578,7 +578,7 @@ namespace System.Windows.Data
         internal static void LogException(Exception ex)
         {
             ExceptionLogger logger = _exceptionLogger;
-            if (logger != null)
+            if (logger is not null)
             {
                 logger.LogException(ex);
             }

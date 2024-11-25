@@ -100,11 +100,11 @@ namespace MS.Internal.AutomationProxies
                 // delegate work to the WindowsListBox implementation of ISelection
                 ProxySimple list = CreateListBox ();
 
-                if (list != null)
+                if (list is not null)
                 {
                     ISelectionProvider selection = list.GetPatternProvider (iid) as ISelectionProvider;
 
-                    if (selection != null)
+                    if (selection is not null)
                     {
                         return selection;
                     }
@@ -783,7 +783,7 @@ namespace MS.Internal.AutomationProxies
 
             }
 
-            if (el != null)
+            if (el is not null)
             {
                 el.DispatchEvents (eventId, idProp, idObject, idChild);
             }

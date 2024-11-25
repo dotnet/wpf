@@ -71,7 +71,7 @@ namespace System.Windows.Documents
                 }
             }
             else if ((This.Selection.IsEmpty || e.TargetElement is TextElement) &&
-                     e.TargetElement != null)
+                     e.TargetElement is not null)
             {
                 // Targeted element has its own ContextMenu, don't override it.
                 contextMenu = (ContextMenu)e.TargetElement.GetValue(FrameworkElement.ContextMenuProperty);
@@ -81,14 +81,14 @@ namespace System.Windows.Documents
                 // If the menu was invoked from the keyboard, walk up the tree
                 // from the selection.Start looking for a custom menu.
                 TextPointer start = GetContentPosition(This.Selection.Start) as TextPointer;
-                if (start != null)
+                if (start is not null)
                 {
                     TextElement element = start.Parent as TextElement;
 
-                    while (element != null)
+                    while (element is not null)
                     {
                         contextMenu = (ContextMenu)element.GetValue(FrameworkElement.ContextMenuProperty);
-                        if (contextMenu != null)
+                        if (contextMenu is not null)
                         {
                             startPositionCustomElementMenu = true;
                             break;
@@ -141,7 +141,7 @@ namespace System.Windows.Documents
             This.IsContextMenuOpen = true;
 
             // If it's not null, someone's overriding our default -- don't mess with it.
-            if (contextMenu != null && !startPositionCustomElementMenu)
+            if (contextMenu is not null && !startPositionCustomElementMenu)
             {
                 // If the user previously raised the ContextMenu with the keyboard,
                 // we've left h/v offsets non-zero, and they need to be cleared now
@@ -175,7 +175,7 @@ namespace System.Windows.Documents
 
             SpellingError spellingError = (contextMenu is EditorContextMenu) ? This.GetSpellingErrorAtSelection() : null;
 
-            if (spellingError != null)
+            if (spellingError is not null)
             {
                 // If we have a matching speller error at the selection
                 // start, position relative to the end of the error.
@@ -197,7 +197,7 @@ namespace System.Windows.Documents
 
             // Calculate coordinats for the ContextMenu.
             // They must be set relative to UIScope - as EditorContextMenu constructor assumes.
-            if (position != null && position.CreatePointer(direction).HasValidLayout)
+            if (position is not null && position.CreatePointer(direction).HasValidLayout)
             {
                 double horizontalOffset;
                 double verticalOffset;
@@ -241,11 +241,11 @@ namespace System.Windows.Documents
         {
             UIElement placementTarget = ((ContextMenu)sender).PlacementTarget;
 
-            if (placementTarget != null)
+            if (placementTarget is not null)
             {
                 TextEditor This = TextEditor._GetTextEditor(placementTarget);
 
-                if (This != null)
+                if (This is not null)
                 {
                     This.IsContextMenuOpen = false;
                     This.Selection.UpdateCaretAndHighlight();
@@ -270,10 +270,10 @@ namespace System.Windows.Documents
 
             // Clip to the child render scope.
             FrameworkElement element = This.TextView.RenderScope as FrameworkElement;
-            if (element != null)
+            if (element is not null)
             {
                 GeneralTransform transform = element.TransformToAncestor(This.UiScope);
-                if (transform != null)
+                if (transform is not null)
                 {
                     ClipToElement(element, transform, ref horizontalOffset, ref verticalOffset);
                 }
@@ -283,13 +283,13 @@ namespace System.Windows.Documents
             // This is unintuitive -- you might expect parents to have increasingly
             // larger viewports.  But any parent that behaves like a ScrollViewer
             // will have a smaller view port that we need to clip against.
-            for (Visual visual = This.UiScope; visual != null; visual = VisualTreeHelper.GetParent(visual) as Visual)
+            for (Visual visual = This.UiScope; visual is not null; visual = VisualTreeHelper.GetParent(visual) as Visual)
             {
                 element = visual as FrameworkElement;
-                if (element != null)
+                if (element is not null)
                 {
                     GeneralTransform transform = visual.TransformToDescendant(This.UiScope);
-                    if (transform != null)
+                    if (transform is not null)
                     {
                         ClipToElement(element, transform, ref horizontalOffset, ref verticalOffset);
                     }
@@ -299,7 +299,7 @@ namespace System.Windows.Documents
             // Clip to the window client rect.
             PresentationSource source = PresentationSource.CriticalFromVisual(This.UiScope);
             IWin32Window window = source as IWin32Window;
-            if (window != null)
+            if (window is not null)
             {
                 IntPtr hwnd = IntPtr.Zero;
                 hwnd = window.Handle;
@@ -317,7 +317,7 @@ namespace System.Windows.Documents
 
                 // Convert to local coordinates.
                 GeneralTransform transform = compositionTarget.RootVisual.TransformToDescendant(This.UiScope);
-                if (transform != null)
+                if (transform is not null)
                 {
                     transform.TryTransform(minPoint, out minPoint);
                     transform.TryTransform(maxPoint, out maxPoint);
@@ -340,7 +340,7 @@ namespace System.Windows.Documents
 
             Geometry clip = VisualTreeHelper.GetClip(element);
 
-            if (clip != null)
+            if (clip is not null)
             {
                 Rect bounds = clip.Bounds;
                 minPoint = new Point(bounds.X, bounds.Y);
@@ -626,7 +626,7 @@ namespace System.Windows.Documents
 
             private void DelayReleaseCandidateList()
             {
-                if (CandidateList != null)
+                if (CandidateList is not null)
                 {
                     Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(ReleaseCandidateList), null);
                 }
@@ -635,7 +635,7 @@ namespace System.Windows.Documents
 
             private object ReleaseCandidateList(object o)
             {
-                if (CandidateList != null)
+                if (CandidateList is not null)
                 {
                     Marshal.ReleaseComObject(CandidateList);
                     _candidateList = null;
@@ -683,7 +683,7 @@ namespace System.Windows.Documents
             // This is called when the item is selected.
             internal override void OnClickCore(bool userInitiated)
             {
-                Invariant.Assert(_menu.CandidateList != null);
+                Invariant.Assert(_menu.CandidateList is not null);
 
                 try
                 {

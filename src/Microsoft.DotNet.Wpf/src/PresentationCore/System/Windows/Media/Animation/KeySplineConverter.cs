@@ -103,7 +103,7 @@ namespace System.Windows
         {
             KeySpline keySpline = value as KeySpline;
 
-            if (keySpline != null && destinationType != null)
+            if (keySpline is not null && destinationType is not null)
             {
                 if (destinationType == typeof(InstanceDescriptor))
                 {
@@ -129,7 +129,7 @@ namespace System.Windows
                         keySpline.ControlPoint1.Y,
                         keySpline.ControlPoint2.X,
                         keySpline.ControlPoint2.Y,
-                        cultureInfo != null ? cultureInfo.TextInfo.ListSeparator : CultureInfo.InvariantCulture.TextInfo.ListSeparator);
+                        cultureInfo is not null ? cultureInfo.TextInfo.ListSeparator : CultureInfo.InvariantCulture.TextInfo.ListSeparator);
 #pragma warning restore 56506
                 }
             }

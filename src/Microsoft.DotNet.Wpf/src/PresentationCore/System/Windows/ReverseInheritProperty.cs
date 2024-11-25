@@ -53,14 +53,14 @@ namespace System.Windows
 
             // Determine if one needs to raise notifications of elements
             // affected by the origin change irrespective of other origins
-            bool setOriginCacheFlag = ((originChangedAction != null) &&
+            bool setOriginCacheFlag = ((originChangedAction is not null) &&
                                        (FlagOldOriginCache != CoreFlags.None) &&
                                        (FlagNewOriginCache != CoreFlags.None));
 
             // Step #1
             // Update the cache flags for all elements in the ancestry 
             // of the element that got turned off and record the changed nodes
-            if (oldOrigin != null)
+            if (oldOrigin is not null)
             {
                 SetCacheFlagInAncestry(oldOrigin, false, treeStateLocalCopy, true, setOriginCacheFlag);
             }
@@ -68,11 +68,11 @@ namespace System.Windows
             // Step #2
             // Update the cache flags for all elements in the ancestry 
             // of the element that got turned on and record the changed nodes
-            if (newOrigin != null)
+            if (newOrigin is not null)
             {
                 SetCacheFlagInAncestry(newOrigin, true, null, true, setOriginCacheFlag);
             }
-            int otherCount = (otherOrigins != null) ? otherOrigins.Count : 0;
+            int otherCount = (otherOrigins is not null) ? otherOrigins.Count : 0;
             for (int i = 0; i < otherCount; i++)
             {
                 // setOriginCacheFlag is false, because these flags should not be affected by other origins
@@ -81,19 +81,19 @@ namespace System.Windows
 
             // Step #3
             // Fire value changed on elements in the ancestry of the element that got turned off.
-            if (oldOrigin != null)
+            if (oldOrigin is not null)
             {
                 FirePropertyChangeInAncestry(oldOrigin, true /* oldValue */, treeStateLocalCopy, originChangedAction);
             }
 
             // Step #4
             // Fire value changed on elements in the ancestry of the element that got turned on.
-            if (newOrigin != null)
+            if (newOrigin is not null)
             {
                 FirePropertyChangeInAncestry(newOrigin, false /* oldValue */, null, originChangedAction);
             }
 
-            if (oldTreeState is null && treeStateLocalCopy != null)
+            if (oldTreeState is null && treeStateLocalCopy is not null)
             {
                 // Now that we have applied the old tree state, throw it away.
                 treeStateLocalCopy.Clear();
@@ -148,11 +148,11 @@ namespace System.Windows
                     DependencyObject coreParent = DeferredElementTreeState.GetInputElementParent(element, treeState);
                     DependencyObject logicalParent = DeferredElementTreeState.GetLogicalParent(element, treeState);
                     
-                    if (coreParent != null)
+                    if (coreParent is not null)
                     {
                         SetCacheFlagInAncestry(coreParent, newValue, treeState, shortCircuit, setOriginCacheFlag);
                     }                
-                    if (logicalParent != null && logicalParent != coreParent)
+                    if (logicalParent is not null && logicalParent != coreParent)
                     {
                         SetCacheFlagInAncestry(logicalParent, newValue, treeState, shortCircuit, setOriginCacheFlag);
                     }
@@ -204,7 +204,7 @@ namespace System.Windows
                         // if either FlagOldOriginCache or FlagNewOriginCache
                         // are set, then the origin change has affected this node
                         // and hence originChangedAction should be executed.
-                        Debug.Assert(originChangedAction != null);
+                        Debug.Assert(originChangedAction is not null);
                         originChangedAction(element, oldValue);
                     }
                 }
@@ -222,11 +222,11 @@ namespace System.Windows
                     DependencyObject coreParent = DeferredElementTreeState.GetInputElementParent(element, treeState);
                     DependencyObject logicalParent = DeferredElementTreeState.GetLogicalParent(element, treeState);
 
-                    if (coreParent != null)
+                    if (coreParent is not null)
                     {
                         FirePropertyChangeInAncestry(coreParent, oldValue, treeState, originChangedAction);
                     }
-                    if (logicalParent != null && logicalParent != coreParent)
+                    if (logicalParent is not null && logicalParent != coreParent)
                     {
                         FirePropertyChangeInAncestry(logicalParent, oldValue, treeState, originChangedAction);
                     }
@@ -238,15 +238,15 @@ namespace System.Windows
 
         private static bool BlockReverseInheritance(UIElement uie, ContentElement ce, UIElement3D uie3D)
         {
-            if (uie != null)
+            if (uie is not null)
             {
                 return uie.BlockReverseInheritance();
             }
-            else if (ce != null)
+            else if (ce is not null)
             {
                 return ce.BlockReverseInheritance();
             }
-            else if (uie3D != null)
+            else if (uie3D is not null)
             {
                 return uie3D.BlockReverseInheritance();
             }
@@ -258,15 +258,15 @@ namespace System.Windows
 
         private static void SetFlag(UIElement uie, ContentElement ce, UIElement3D uie3D, CoreFlags flag, bool value)
         {
-            if (uie != null)
+            if (uie is not null)
             {
                 uie.WriteFlag(flag, value);
             }
-            else if (ce != null)
+            else if (ce is not null)
             {
                 ce.WriteFlag(flag, value);
             }
-            else if (uie3D != null)
+            else if (uie3D is not null)
             {
                 uie3D.WriteFlag(flag, value);
             }
@@ -276,15 +276,15 @@ namespace System.Windows
 
         private static bool IsFlagSet(UIElement uie, ContentElement ce, UIElement3D uie3D, CoreFlags flag)
         {
-            if (uie != null)
+            if (uie is not null)
             {
                 return uie.ReadFlag(flag);
             }
-            else if (ce != null)
+            else if (ce is not null)
             {
                 return ce.ReadFlag(flag);
             }
-            else if (uie3D != null)
+            else if (uie3D is not null)
             {
                 return uie3D.ReadFlag(flag);
             }
@@ -297,8 +297,8 @@ namespace System.Windows
         private static void CastElement(DependencyObject o, out UIElement uie, out ContentElement ce, out UIElement3D uie3D)
         {
             uie = o as UIElement;
-            ce = (uie != null) ? null : o as ContentElement;
-            uie3D = (uie != null || ce != null) ? null : o as UIElement3D;
+            ce = (uie is not null) ? null : o as ContentElement;
+            uie3D = (uie is not null || ce is not null) ? null : o as UIElement3D;
         }
 
         /////////////////////////////////////////////////////////////////////

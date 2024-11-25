@@ -60,7 +60,7 @@ namespace MS.Internal.Documents
             textBoxPermissionsContact.Text = user.Name;            
 
             // Check if referral info is already specified in a license
-            if (grantDictionary != null && grantDictionary.Count != 0)
+            if (grantDictionary is not null && grantDictionary.Count != 0)
             {
                 IEnumerator<RightsManagementLicense> licenseEnumerator =
                     grantDictionary.Values.GetEnumerator();
@@ -84,7 +84,7 @@ namespace MS.Internal.Documents
                 }
             }
 
-            if (grantDictionary != null)
+            if (grantDictionary is not null)
             {
                 _isAlreadyProtected = true;
                 radioButtonPermissions.Checked = true;
@@ -141,7 +141,7 @@ namespace MS.Internal.Documents
             _canSave = false;
 
             DocumentManager documentManager = DocumentManager.CreateDefault();
-            if (documentManager != null)
+            if (documentManager is not null)
             {
                 _canSave = documentManager.CanSave;
             }
@@ -249,7 +249,7 @@ namespace MS.Internal.Documents
             // Enumerate through all the rows that correspond with users
             foreach (DataGridViewRow row in rightsTable.Rows)
             {
-                if (row != null)
+                if (row is not null)
                 {
                     RightsManagementLicense rmLicense = new RightsManagementLicense();
 
@@ -260,7 +260,7 @@ namespace MS.Internal.Documents
                     rmLicense.ValidFrom = DateTime.MinValue;
                     rmLicense.ValidUntil = DateTime.MaxValue;
 
-                    if (ReferralUri != null)
+                    if (ReferralUri is not null)
                     {
                         rmLicense.ReferralInfoName = textBoxPermissionsContact.Text;
                         rmLicense.ReferralInfoUri = ReferralUri;
@@ -333,11 +333,11 @@ namespace MS.Internal.Documents
                 _registryLocationForRMTemplates))
             {
                 // Ensure key exists
-                if (defaultRMKey != null)
+                if (defaultRMKey is not null)
                 {
                     // If the requested key is available then attempt to get the value.
                     object keyValue = defaultRMKey.GetValue(_registryValueNameForRMTemplatePath);
-                    if ((keyValue != null) &&
+                    if ((keyValue is not null) &&
                         (defaultRMKey.GetValueKind(_registryValueNameForRMTemplatePath) == RegistryValueKind.String))
                     {
                         path = (string)keyValue;
@@ -380,7 +380,7 @@ namespace MS.Internal.Documents
             List<Uri> templateList = new List<Uri>();
 
             // Only look for files if a path was found in the registry.
-            if (_templatePath != null)
+            if (_templatePath is not null)
             {
                 // Save the path local to this method to guarantee it does not
                 // change between the assert and the file access
@@ -695,7 +695,7 @@ namespace MS.Internal.Documents
             PeoplePickerWrapper picker = new PeoplePickerWrapper();
             String[] userNames = picker.Show(this.Handle);
 
-            if (userNames != null && userNames.Length > 0)
+            if (userNames is not null && userNames.Length > 0)
             {
                 textBoxUserName.Text =
                     string.Join(
@@ -807,7 +807,7 @@ namespace MS.Internal.Documents
         {
             Button button = sender as Button;
 
-            if (button != null)
+            if (button is not null)
             {
                 button.FlatStyle = FlatStyle.Standard;
             }
@@ -823,7 +823,7 @@ namespace MS.Internal.Documents
         {
             Button button = sender as Button;
 
-            if (button != null)
+            if (button is not null)
             {
                 button.FlatStyle = FlatStyle.Flat;
             }
@@ -1025,7 +1025,7 @@ namespace MS.Internal.Documents
             {
                 List<ServerSideTemplate> templates = new List<ServerSideTemplate>();
 
-                if (files != null)
+                if (files is not null)
                 {
                     foreach (Uri file in files)
                     {

@@ -282,7 +282,7 @@ namespace System.Windows.Data
         protected virtual void OnQueryFinished(object newData, Exception error,
                                                 DispatcherOperationCallback completionWork, object callbackArguments)
         {
-            Invariant.Assert(Dispatcher != null);
+            Invariant.Assert(Dispatcher is not null);
             // check if we're already on the dispatcher thread
             if (Dispatcher.CheckAccess())
             {
@@ -308,7 +308,7 @@ namespace System.Windows.Data
         /// </summary>
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if (PropertyChanged != null)
+            if (PropertyChanged is not null)
             {
                 PropertyChanged(this, e);
             }
@@ -373,7 +373,7 @@ namespace System.Windows.Data
         {
             bool errorChanged = (_error != error);
             _error = error;
-            if (error != null)
+            if (error is not null)
             {
                 newData = null;
                 _initialLoadCalled = false; // allow again InitialLoad after an error
@@ -381,12 +381,12 @@ namespace System.Windows.Data
 
             _data = newData;
 
-            if (completionWork != null)
+            if (completionWork is not null)
                 completionWork(callbackArgs);
 
             // notify any listeners
             OnPropertyChanged(new PropertyChangedEventArgs("Data"));
-            if (DataChanged != null)
+            if (DataChanged is not null)
             {
                 DataChanged(this, EventArgs.Empty);
             }
@@ -415,7 +415,7 @@ namespace System.Windows.Data
             public void Dispose()
             {
                 GC.SuppressFinalize(this);
-                if (_provider != null)
+                if (_provider is not null)
                 {
                     _provider.EndDefer();
                     _provider = null;

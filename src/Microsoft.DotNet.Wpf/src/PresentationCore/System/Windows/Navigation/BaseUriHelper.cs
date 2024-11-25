@@ -219,7 +219,7 @@ namespace System.Windows.Navigation
 
             byte[] keyToken = ParseAssemblyKey(assemblyKey);
 
-            if (keyToken != null)
+            if (keyToken is not null)
             {
                 asmName.SetPublicKeyToken(keyToken);
             }
@@ -240,7 +240,7 @@ namespace System.Windows.Navigation
         //
         internal static void GetAssemblyNameAndPart(Uri uri, out string partName, out string assemblyName, out string assemblyVersion, out string assemblyKey)
         {
-            Invariant.Assert(uri != null && uri.IsAbsoluteUri == false, "This method accepts relative uri only.");
+            Invariant.Assert(uri is not null && uri.IsAbsoluteUri == false, "This method accepts relative uri only.");
 
             string original = uri.ToString(); // only relative Uri here (enforced by Package)
 
@@ -338,7 +338,7 @@ namespace System.Windows.Navigation
 
                     Assembly assembly = ResourceAssembly;
 
-                    if (assembly != null)
+                    if (assembly is not null)
                     {
                         return (string.Equals(SafeSecurityHelper.GetAssemblyPartialName(assembly), assemblyName, StringComparison.OrdinalIgnoreCase));
                     }
@@ -447,7 +447,7 @@ namespace System.Windows.Navigation
             AssemblyName currAssemblyName = new AssemblyName(assemblyInfo.FullName);
             string version = currAssemblyName.Version?.ToString();
             
-            if (uri != null && !string.IsNullOrEmpty(version))
+            if (uri is not null && !string.IsNullOrEmpty(version))
             {
                 if (uri.IsAbsoluteUri)
                 {
@@ -465,7 +465,7 @@ namespace System.Windows.Navigation
                 }
 
 
-                if (source != null)
+                if (source is not null)
                 {
                     string appendedUri;
                     string assemblyName;
@@ -505,7 +505,7 @@ namespace System.Windows.Navigation
 
                         appendedUri = uriStringBuilder.ToString();
 
-                        if (baseUri != null)
+                        if (baseUri is not null)
                         {
                             return new Uri(baseUri, appendedUri);
                         }
@@ -545,12 +545,12 @@ namespace System.Windows.Navigation
             //
             doCurrent = element;
 
-                while (doCurrent != null)
+                while (doCurrent is not null)
                 {
                     // Try to get BaseUri property value from current node.
                     baseUri = doCurrent.GetValue(BaseUriProperty) as Uri;
 
-                    if (baseUri != null)
+                    if (baseUri is not null)
                     {
                         // Got the right node which is the closest to original element.
                         // Stop searching here.
@@ -559,14 +559,14 @@ namespace System.Windows.Navigation
 
                     IUriContext uriContext = doCurrent as IUriContext;
 
-                    if (uriContext != null)
+                    if (uriContext is not null)
                     {
                         // If the element implements IUriContext, and if the BaseUri
                         // is not null, just take the BaseUri from there.
                         // and stop the search loop.
                         baseUri = uriContext.BaseUri;
 
-                        if (baseUri != null)
+                        if (baseUri is not null)
                             break;
                     }
 
@@ -576,7 +576,7 @@ namespace System.Windows.Navigation
 
                     UIElement uie = doCurrent as UIElement;
 
-                    if (uie != null)
+                    if (uie is not null)
                     {
                         // Do the tree walk up
                         doCurrent = uie.GetUIParent(true);
@@ -585,7 +585,7 @@ namespace System.Windows.Navigation
                     {
                         ContentElement ce = doCurrent as ContentElement;
 
-                        if (ce != null)
+                        if (ce is not null)
                         {
                             doCurrent = ce.Parent;
                         }
@@ -593,7 +593,7 @@ namespace System.Windows.Navigation
                         {
                             Visual vis = doCurrent as Visual;
 
-                            if (vis != null)
+                            if (vis is not null)
                             {
                                 // Try the Visual tree search
                                 doCurrent = VisualTreeHelper.GetParent(vis);

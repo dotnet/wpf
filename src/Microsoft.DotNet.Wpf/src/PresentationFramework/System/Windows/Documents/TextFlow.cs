@@ -861,7 +861,7 @@ namespace System.Windows.Documents
                 if (CheckFlags(Flags.FormattedOnce))
                 {
                     FrameworkPropertyMetadata fmetadata = e.Metadata as FrameworkPropertyMetadata;
-                    if (fmetadata != null)
+                    if (fmetadata is not null)
                     {
                         bool affectsRender = (fmetadata.AffectsRender &&
                             (e.IsAValueChange || !fmetadata.SubPropertiesDoNotAffectRender));
@@ -970,7 +970,7 @@ namespace System.Windows.Documents
             {
                 ie = _documentPage.InputHitTestCore(point);
             }
-            return (ie != null) ? ie : this;
+            return (ie is not null) ? ie : this;
         }
 
         /// <summary>
@@ -997,7 +997,7 @@ namespace System.Windows.Documents
                 rectangles = _documentPage.GetRectanglesCore(child, false);
             }
 
-            Invariant.Assert(rectangles != null);
+            Invariant.Assert(rectangles is not null);
             return new ReadOnlyCollection<Rect>(rectangles);
         }
 
@@ -1014,7 +1014,7 @@ namespace System.Windows.Documents
                 {
                     // Return data from document page
                     hostedElements = _documentPage.HostedElementsCore as IEnumerator<IInputElement>;
-                    Debug.Assert(hostedElements != null);
+                    Debug.Assert(hostedElements is not null);
                 }
                 else
                 {
@@ -1075,7 +1075,7 @@ namespace System.Windows.Documents
 
         internal void SetTextContainer(TextContainer textContainer)
         {
-            if (_structuralCache != null && textContainer == _structuralCache.TextContainer)
+            if (_structuralCache is not null && textContainer == _structuralCache.TextContainer)
             {
                 return;
             }
@@ -1126,7 +1126,7 @@ namespace System.Windows.Documents
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool ShouldSerializeBlocks(XamlDesignerSerializationManager manager) 
         {
-            return manager != null && manager.XmlWriter is null;
+            return manager is not null && manager.XmlWriter is null;
         }
 
 
@@ -1186,7 +1186,7 @@ namespace System.Windows.Documents
                 //   but we have not yet received a matching Changed event.
                 //
                 // So, it is possible to receive hittesting request on dirty layout.
-                bool layoutValid = _documentPage != null &&  
+                bool layoutValid = _documentPage is not null &&  
                     CheckFlags(Flags.FormattedOnce) &&
                     !_structuralCache.ForceReformat &&
                     (_structuralCache.DtrList is null || _structuralCache.BackgroundFormatInfo.DoesFinalDTRCoverRestOfText) &&
@@ -1201,7 +1201,7 @@ namespace System.Windows.Documents
         //-------------------------------------------------------------------
         // Number of lines formatted during page formatting.
         //-------------------------------------------------------------------
-        internal int FormattedLinesCount { get { return (_documentPage != null) ? _documentPage.FormattedLinesCount : 0; } }
+        internal int FormattedLinesCount { get { return (_documentPage is not null) ? _documentPage.FormattedLinesCount : 0; } }
 
         //-------------------------------------------------------------------
         // Typography properties group
@@ -1270,8 +1270,8 @@ namespace System.Windows.Documents
         // ------------------------------------------------------------------
         private void OnHighlightChanged(object sender, HighlightChangedEventArgs args)
         {
-            Invariant.Assert(args != null);
-            Invariant.Assert(args.Ranges != null);
+            Invariant.Assert(args is not null);
+            Invariant.Assert(args.Ranges is not null);
             Invariant.Assert(CheckFlags(Flags.FormattedOnce), "Unexpected Highlights.Changed callback before first format!");
 
             // The only supported highlight type for TextFlow is SpellerHightlight.
@@ -1315,7 +1315,7 @@ namespace System.Windows.Documents
                     _structuralCache.AddDirtyTextRange(new DirtyTextRange(dtrStart, dtrDelta, dtrDelta));
                 }
 
-                Debug.Assert(_structuralCache.DtrList != null, "Unexpected empty delta!");
+                Debug.Assert(_structuralCache.DtrList is not null, "Unexpected empty delta!");
 
                 // Force remeasure process, because most likely desired size is going to change.
                 InvalidateMeasure();
@@ -1347,7 +1347,7 @@ namespace System.Windows.Documents
         // ------------------------------------------------------------------
         private void OnTextContainerChange(object sender, TextContainerChangeEventArgs args)
         {
-            Invariant.Assert(args != null);
+            Invariant.Assert(args is not null);
             Invariant.Assert(sender == _structuralCache.TextContainer);
 
             // Skip caches/DTRs invalidation if one of following conditions is true:
@@ -1449,7 +1449,7 @@ namespace System.Windows.Documents
             TextFlow textFlow = sender as TextFlow;
             ContentElement child = args.TargetObject as ContentElement;
 
-            if (textFlow != null && child != null)
+            if (textFlow is not null && child is not null)
             {
                 // Handle original event.
                 args.Handled = true;
@@ -1457,7 +1457,7 @@ namespace System.Windows.Documents
                 // Retrieve the first rectangle representing the child and 
                 // raise a new BrightIntoView event with such rectangle.
                 ReadOnlyCollection<Rect> rects = textFlow.GetRectanglesCore(child);
-                Invariant.Assert(rects != null, "Rect collection cannot be null.");
+                Invariant.Assert(rects is not null, "Rect collection cannot be null.");
                 if (rects.Count > 0)
                 {
                     textFlow.BringIntoView(rects[0]);
@@ -1494,7 +1494,7 @@ namespace System.Windows.Documents
             // notify NameTable about the change and remeasure content.
             // Treat this notification as OnChildUIElementChanged.
             UIElement uiChild = source as UIElement;
-            if (uiChild != null)
+            if (uiChild is not null)
             {
                 OnChildUIElementChanged(uiChild);
             }
@@ -1530,15 +1530,15 @@ namespace System.Windows.Documents
 
             Visual visual = VisualTreeHelper.GetParent(this) as Visual;
 
-            while(visual != null && visibleRect != Rect.Empty)
+            while(visual is not null && visibleRect != Rect.Empty)
             {                
-                if(VisualTreeHelper.GetClip(visual) != null)
+                if(VisualTreeHelper.GetClip(visual) is not null)
                 {
                     GeneralTransform transform = this.TransformToAncestor(visual).Inverse;
                     
                     // Safer version of transform to descendent (doing the inverse ourself), 
                     // we want the rect inside of our space. (Which is always rectangular and much nicer to work with)
-                    if(transform != null)
+                    if(transform is not null)
                     {                       
                         Rect rectBounds = VisualTreeHelper.GetClip(visual).Bounds;
                         rectBounds = transform.TransformBounds(rectBounds);

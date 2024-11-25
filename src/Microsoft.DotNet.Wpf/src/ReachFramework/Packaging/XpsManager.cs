@@ -87,7 +87,7 @@ namespace System.Windows.Xps.Packaging
         {
             bool streaming = false;
             _ownsPackage = false;
-            if( metroPackage != null )
+            if( metroPackage is not null )
             {
                 //streaming = metroPackage.InStreamingCreation();
             }
@@ -380,7 +380,7 @@ namespace System.Windows.Xps.Packaging
         {
             PrintTicket printTicket = null;
             PackagePart printTicketPart = GetPrintTicketPart(partUri);
-            if( printTicketPart != null )
+            if( printTicketPart is not null )
             {
                  printTicket = new PrintTicket(printTicketPart.GetStream());
             }
@@ -600,14 +600,14 @@ namespace System.Windows.Xps.Packaging
             foreach (PackageRelationship rel in
                      documentPart.GetRelationshipsByType(XpsS0Markup.SignatureDefinitionRelationshipName))
             {
-                if (SigDefRel != null)
+                if (SigDefRel is not null)
                 {
                     throw new InvalidDataException(SR.ReachPackaging_MoreThanOneSigDefParts);
                 }
 
                 SigDefRel = rel;
             }
-            if (SigDefRel != null)
+            if (SigDefRel is not null)
             {
                 sigDefPart = _metroPackage.GetPart(PackUriHelper.ResolvePartUri(SigDefRel.SourceUri, SigDefRel.TargetUri));
             }
@@ -625,7 +625,7 @@ namespace System.Windows.Xps.Packaging
             Package package = _metroPackage;
 
 
-            if (propertiesPartRelationship != null)
+            if (propertiesPartRelationship is not null)
             {
                 Uri propertiesPartUri = 
                     PackUriHelper.ResolvePartUri(propertiesPartRelationship.SourceUri, 
@@ -647,7 +647,7 @@ namespace System.Windows.Xps.Packaging
             PackageRelationship thumbNailRel = null;
             PackagePart         thumbNailPart = null;
             PackageRelationshipCollection thumbnailCollection = null;
-            if( parent != null )
+            if( parent is not null )
             {
                 thumbnailCollection = parent.
                     GetRelationshipsByType(XpsS0Markup.ThumbnailRelationshipName);
@@ -660,13 +660,13 @@ namespace System.Windows.Xps.Packaging
 
             foreach( PackageRelationship rel in thumbnailCollection )
             {
-                if( thumbNailRel != null )
+                if( thumbNailRel is not null )
                 {
                     throw new InvalidDataException(SR.ReachPackaging_MoreThanOneThumbnailPart);
                 }
                 thumbNailRel =  rel;
             }
-            if (thumbNailRel != null)
+            if (thumbNailRel is not null)
             {
                 thumbNailPart = _metroPackage.GetPart(PackUriHelper.ResolvePartUri(thumbNailRel.SourceUri, thumbNailRel.TargetUri));
             }
@@ -692,14 +692,14 @@ namespace System.Windows.Xps.Packaging
             foreach (PackageRelationship rel in
                      documentPart.GetRelationshipsByType(printTicketRelName))
             {
-                if (printTicketRel != null)
+                if (printTicketRel is not null)
                 {
                     throw new InvalidDataException(SR.ReachPackaging_MoreThanOnePrintTicketPart);
                 }
 
                 printTicketRel = rel;
             }
-            if (printTicketRel != null)
+            if (printTicketRel is not null)
             {
                 Uri printTicketUri = PackUriHelper.ResolvePartUri(documentUri, printTicketRel.TargetUri);
                 printTicketPart = _metroPackage.GetPart(printTicketUri);
@@ -729,7 +729,7 @@ namespace System.Windows.Xps.Packaging
         AddThumbnail(XpsImageType imageType, INode parent, XpsThumbnail oldThumbnail )
         {
             XpsThumbnail newThumbnail = null;
-            if( oldThumbnail != null )
+            if( oldThumbnail is not null )
             {
                 throw new XpsPackagingException(SR.ReachPackaging_AlreadyHasThumbnail);
             }    
@@ -751,7 +751,7 @@ namespace System.Windows.Xps.Packaging
         {
             XpsThumbnail thumbnail = null;
             PackagePart thumbNailPart = GetThumbnailPart(part);
-            if( thumbNailPart != null )
+            if( thumbNailPart is not null )
             {
                 thumbnail = new XpsThumbnail(this,
                                             parent,
@@ -785,7 +785,7 @@ namespace System.Windows.Xps.Packaging
             PackagePart propertiesPart = GetDocumentPropertiesPart();
             if( (restrictions & XpsDigSigPartAlteringRestrictions.CoreMetadata) != 0 )
             {
-                if( propertiesPart != null )
+                if( propertiesPart is not null )
                 {
                     dependents[propertiesPart.Uri] = propertiesPart.Uri;
                 }
@@ -876,7 +876,7 @@ namespace System.Windows.Xps.Packaging
                 dsm.CertificateOption = CertificateEmbeddingOption.NotEmbedded;
             }
 
-            if( id != null )
+            if( id is not null )
             {
                signature = dsm.Sign(partList,  certificate, relationshipSelectors, id );
             }
@@ -1259,7 +1259,7 @@ namespace System.Windows.Xps.Packaging
             PackageRelationship propertiesPartRelationship = null;
             foreach (PackageRelationship rel in _metroPackage.GetRelationshipsByType(XpsS0Markup.CorePropertiesRelationshipType))
             {
-                if (propertiesPartRelationship != null)
+                if (propertiesPartRelationship is not null)
                 {
                     throw new InvalidDataException(SR.ReachPackaging_MoreThanOneMetaDataParts);
                 }
@@ -1418,13 +1418,13 @@ namespace System.Windows.Xps.Packaging
             Package         package
             )
         {
-            Debug.Assert(package != null, "package cannot be null");
+            Debug.Assert(package is not null, "package cannot be null");
             PackageRelationship startingPartRelationship = null;
             PackagePart startingPart = null;
 
             foreach (PackageRelationship rel in package.GetRelationshipsByType(XpsS0Markup.ReachPackageStartingPartRelationshipType))
             {
-                if (startingPartRelationship != null)
+                if (startingPartRelationship is not null)
                 {
                     throw new InvalidDataException(SR.ReachPackaging_MoreThanOneStartingParts);
                 }
@@ -1432,7 +1432,7 @@ namespace System.Windows.Xps.Packaging
                 startingPartRelationship = rel;
             }
 
-            if (startingPartRelationship != null)
+            if (startingPartRelationship is not null)
             {
                 Uri startPartUri = PackUriHelper.ResolvePartUri(startingPartRelationship.SourceUri, 
                                                                 startingPartRelationship.TargetUri);
@@ -1463,7 +1463,7 @@ namespace System.Windows.Xps.Packaging
             PackagePart     startingPart
             )
         {
-            Debug.Assert(package != null, "package cannot be null");
+            Debug.Assert(package is not null, "package cannot be null");
 
             //
             // null is a valid value for startingPart; it will effectively remove starting part

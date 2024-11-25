@@ -251,7 +251,7 @@ namespace MS.Internal.Data
             if (dict.Count == 0)
             {
                 foundDirt = true;
-                if (source != null)     // source may have been GC'd
+                if (source is not null)     // source may have been GC'd
                 {
                     this.Remove(source);
                 }
@@ -298,7 +298,7 @@ namespace MS.Internal.Data
         // Add a listener to the given property
         private void PrivateAddListener(object source, IWeakEventListener listener, PropertyDescriptor pd)
         {
-            Debug.Assert(listener != null && source != null && pd != null,
+            Debug.Assert(listener is not null && source is not null && pd is not null,
                 "Listener, source, and pd of event cannot be null");
             AddListener(source, pd, listener, null);
         }
@@ -306,7 +306,7 @@ namespace MS.Internal.Data
         // Remove a listener to the given property
         private void PrivateRemoveListener(object source, IWeakEventListener listener, PropertyDescriptor pd)
         {
-            Debug.Assert(listener != null && source != null && pd != null,
+            Debug.Assert(listener is not null && source is not null && pd is not null,
                 "Listener, source, and pd of event cannot be null");
             RemoveListener(source, pd, listener, null);
         }
@@ -361,11 +361,11 @@ namespace MS.Internal.Data
             {
                 HybridDictionary dict = (HybridDictionary)this[source];
 
-                if (dict != null)
+                if (dict is not null)
                 {
                     ValueChangedRecord record = (ValueChangedRecord)dict[pd];
 
-                    if (record != null)
+                    if (record is not null)
                     {
                         // remove a listener from the list
                         record.Remove(listener, handler);
@@ -441,7 +441,7 @@ namespace MS.Internal.Data
                 if (ListenerList.PrepareForWriting(ref list))
                     _listeners = (ListenerList<ValueChangedEventArgs>)list;
 
-                if (handler != null)
+                if (handler is not null)
                 {
                     _listeners.AddHandler(handler);
                     if (!HasIgnorableListeners && IsIgnorable(handler.Target))
@@ -463,7 +463,7 @@ namespace MS.Internal.Data
                 if (ListenerList.PrepareForWriting(ref list))
                     _listeners = (ListenerList<ValueChangedEventArgs>)list;
 
-                if (handler != null)
+                if (handler is not null)
                 {
                     _listeners.RemoveHandler(handler);
                 }
@@ -492,7 +492,7 @@ namespace MS.Internal.Data
             // remove the callback from the PropertyDescriptor
             public void StopListening()
             {
-                if (_source != null)
+                if (_source is not null)
                 {
                     _pd.RemoveValueChanged(_source, new EventHandler(OnValueChanged));
                     _source = null;

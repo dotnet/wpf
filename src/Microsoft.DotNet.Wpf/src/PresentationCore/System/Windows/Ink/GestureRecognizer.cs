@@ -241,7 +241,7 @@ namespace System.Windows.Ink
             // Since the constructor might create a null _nativeRecognizer, 
             // here we have to make sure we do have some thing to dispose. 
             // Otherwise just no-op.
-            if ( _nativeRecognizer != null )
+            if ( _nativeRecognizer is not null )
             {
                 _nativeRecognizer.Dispose();
                 _nativeRecognizer = null;

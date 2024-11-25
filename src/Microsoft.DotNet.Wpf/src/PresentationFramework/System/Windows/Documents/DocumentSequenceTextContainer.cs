@@ -42,7 +42,7 @@ namespace System.Windows.Documents
 
         internal DocumentSequenceTextContainer(DependencyObject parent)
         {
-            Debug.Assert(parent != null);
+            Debug.Assert(parent is not null);
             Debug.Assert(parent is FixedDocumentSequence);
 
             _parent = (FixedDocumentSequence)parent;
@@ -93,12 +93,12 @@ namespace System.Windows.Documents
             _changeBlockLevel--;
 
             if (_changeBlockLevel == 0 &&
-                _changes != null)
+                _changes is not null)
             {
                 changes = _changes;
                 _changes = null;
 
-                if (this.Changed != null && !skipEvents)
+                if (this.Changed is not null && !skipEvents)
                 {
                     Changed(this, changes);
                 }
@@ -187,7 +187,7 @@ namespace System.Windows.Documents
         {
             int blocks = 0;
             ChildDocumentBlock cdb = this._doclistHead;
-            while (cdb != null)
+            while (cdb is not null)
             {
                 blocks++;
                 cdb = cdb.NextBlock;
@@ -230,7 +230,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                Debug.Assert(_start != null);
+                Debug.Assert(_start is not null);
                 return _start;
             }
         }
@@ -243,7 +243,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                Debug.Assert(_end != null);
+                Debug.Assert(_end is not null);
                 return _end;
             }
         }
@@ -379,7 +379,7 @@ namespace System.Windows.Documents
         internal DocumentSequenceTextPointer MapChildPositionToParent(ITextPointer tp)
         {
             ChildDocumentBlock cdb = this._doclistHead;
-            while (cdb != null)
+            while (cdb is not null)
             {
                 if (cdb.ChildContainer == tp.TextContainer)
                 {
@@ -395,9 +395,9 @@ namespace System.Windows.Documents
         // Return null if cannot find
         internal ChildDocumentBlock FindChildBlock(DocumentReference docRef)
         {
-            Debug.Assert(docRef != null);
+            Debug.Assert(docRef is not null);
             ChildDocumentBlock cdb = _doclistHead.NextBlock;
-            while (cdb != null)
+            while (cdb is not null)
             {
                 if (cdb.DocRef == docRef)
                 {
@@ -426,7 +426,7 @@ namespace System.Windows.Documents
             // Assuming block1 is before block2
             int count = 0;
             ChildDocumentBlock cdb = block1;
-            while (cdb != null)
+            while (cdb is not null)
             {
                 if (cdb == block2)
                 {
@@ -439,7 +439,7 @@ namespace System.Windows.Documents
             // Now block2 has to be before block1
             count = 0;
             cdb = block1;
-            while (cdb != null)
+            while (cdb is not null)
             {
                 if (cdb == block2)
                 {
@@ -511,7 +511,7 @@ namespace System.Windows.Documents
         //---------------------------------------------------------------------
         private void _Initialize()
         {
-            Debug.Assert(_parent != null);
+            Debug.Assert(_parent is not null);
 
             // Create Start Block/Container/Position
             _doclistHead = new ChildDocumentBlock(this, new NullTextContainer());
@@ -558,7 +558,7 @@ namespace System.Windows.Documents
             try
             {
                 // Contact any listeners.
-                if (this.Changing != null)
+                if (this.Changing is not null)
                 {
                     Changing(this, EventArgs.Empty);
                 }
@@ -571,7 +571,7 @@ namespace System.Windows.Documents
 
                 _changes.AddChange(precursorTextChange, DocumentSequenceTextPointer.GetOffsetToPosition(_start, startPosition), symbolCount, false /* collectTextChanges */);
 
-                if (this.Change != null)
+                if (this.Change is not null)
                 {
                     Invariant.Assert(precursorTextChange == PrecursorTextChangeType.ContentAdded || precursorTextChange == PrecursorTextChangeType.ContentRemoved);
                     TextChangeType textChange = (precursorTextChange == PrecursorTextChangeType.ContentAdded) ?
@@ -659,9 +659,9 @@ namespace System.Windows.Documents
 
         private void _OnHighlightChanged(object sender, HighlightChangedEventArgs args)
         {
-            Debug.Assert(sender != null);
-            Debug.Assert(args != null);
-            Debug.Assert(args.Ranges != null);
+            Debug.Assert(sender is not null);
+            Debug.Assert(args is not null);
+            Debug.Assert(args.Ranges is not null);
 #if DEBUG
             {
                 Highlights highlights = this.Highlights;
@@ -747,7 +747,7 @@ namespace System.Windows.Documents
                 lastBlock = cdbScan;
                 cdbScan = tsScan.ChildBlock;
 
-                if (lastBlock != null && cdbScan != lastBlock && !(lastBlock.ChildContainer is NullTextContainer) && rangeArray.Count != 0)
+                if (lastBlock is not null && cdbScan != lastBlock && !(lastBlock.ChildContainer is NullTextContainer) && rangeArray.Count != 0)
                 {
                     // This range is in a different block, so take care of old blocks first
                     lastBlock.ChildHighlightLayer.RaiseHighlightChangedEvent(new ReadOnlyCollection<TextSegment>(rangeArray));
@@ -1004,7 +1004,7 @@ namespace System.Windows.Documents
                     // into a position in the scope of the DocumentSequence.
                     ITextPointer dynamicTextPointer = textPosition.CreateDynamicTextPointer(LogicalDirection.Forward);
                     ITextPointer parentTextPointer = ((DocumentSequenceTextContainer)this.TextContainer).MapChildPositionToParent(dynamicTextPointer);
-                    Debug.Assert(parentTextPointer != null);
+                    Debug.Assert(parentTextPointer is not null);
                     parentPosition = parentTextPointer.CreateStaticPointer();
                 }
 
@@ -1027,7 +1027,7 @@ namespace System.Windows.Documents
                 if (!textPosition.IsNull)
                 {
                     DocumentSequenceTextPointer parentChangePosition = textPosition.CreateDynamicTextPointer(LogicalDirection.Forward) as DocumentSequenceTextPointer;
-                    Debug.Assert(parentChangePosition != null);
+                    Debug.Assert(parentChangePosition is not null);
 
                     // If the DocSequence position translates into a position in a different FixedDocument than
                     // the original request, we return an end of the original FixedDocument (which end depends on direction)

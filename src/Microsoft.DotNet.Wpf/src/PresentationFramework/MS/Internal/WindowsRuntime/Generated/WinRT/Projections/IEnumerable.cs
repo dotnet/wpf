@@ -155,8 +155,8 @@ namespace MS.Internal.WindowsRuntime.ABI.System.Collections.Generic
         }
         public static Guid PIID = Vftbl.PIID;
 
-        public static implicit operator IEnumerable<T>(IObjectReference obj) => (obj != null) ? new IEnumerable<T>(obj) : null;
-        public static implicit operator IEnumerable<T>(ObjectReference<Vftbl> obj) => (obj != null) ? new IEnumerable<T>(obj) : null;
+        public static implicit operator IEnumerable<T>(IObjectReference obj) => (obj is not null) ? new IEnumerable<T>(obj) : null;
+        public static implicit operator IEnumerable<T>(ObjectReference<Vftbl> obj) => (obj is not null) ? new IEnumerable<T>(obj) : null;
         protected readonly ObjectReference<Vftbl> _obj;
         public IObjectReference ObjRef { get => _obj; }
 
@@ -559,8 +559,8 @@ namespace MS.Internal.WindowsRuntime.ABI.System.Collections.Generic
         }
         public static Guid PIID = Vftbl.PIID;
 
-        public static implicit operator IEnumerator<T>(IObjectReference obj) => (obj != null) ? new IEnumerator<T>(obj) : null;
-        public static implicit operator IEnumerator<T>(ObjectReference<Vftbl> obj) => (obj != null) ? new IEnumerator<T>(obj) : null;
+        public static implicit operator IEnumerator<T>(IObjectReference obj) => (obj is not null) ? new IEnumerator<T>(obj) : null;
+        public static implicit operator IEnumerator<T>(ObjectReference<Vftbl> obj) => (obj is not null) ? new IEnumerator<T>(obj) : null;
         protected readonly ObjectReference<Vftbl> _obj;
         public IObjectReference ObjRef { get => _obj; }
 

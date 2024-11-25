@@ -214,7 +214,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                     McgResource resource =
                         _ResourceModel.FindType(targetName) as McgResource;
 
-                    Debug.Assert(resource != null, String.Format("{0} is not a valid resource name.", targetName));
+                    Debug.Assert(resource is not null, String.Format("{0} is not a valid resource name.", targetName));
 
                     return resource.DuceClass;
                 }
@@ -295,7 +295,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
         {
             get
             {
-                if (_allFields != null)
+                if (_allFields is not null)
                 {
                     return _allFields;
                 }
@@ -321,7 +321,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
             get
             {
                 McgStruct extends = _extends as McgStruct;
-                while (extends != null && extends.Extends != null)
+                while (extends is not null && extends.Extends is not null)
                 {
                     McgStruct structExtends = extends.Extends;
 
@@ -350,7 +350,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                 {
                     McgStruct potentialExtender = type as McgStruct;
 
-                    if (potentialExtender != null && potentialExtender.Extends == this)
+                    if (potentialExtender is not null && potentialExtender.Extends == this)
                     {
                         // Found someone who extends this class.
                         return false;
@@ -372,7 +372,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
                 McgResource fieldResource = field.Type as McgResource;
 
-                if (fieldResource != null && !fieldResource.IsValueType)
+                if (fieldResource is not null && !fieldResource.IsValueType)
                 {
                     return true;
                 }
@@ -451,7 +451,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
         {
             ArrayList fields = new ArrayList();
 
-            if (Extends != null)
+            if (Extends is not null)
             {
                 if (containingTypes.Contains(Extends))
                 {

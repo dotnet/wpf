@@ -56,7 +56,7 @@ namespace System.Windows.Documents
         internal CompositionAdorner(ITextView textView, ArrayList attributeRanges)
             : base(textView.RenderScope)
         {
-            Debug.Assert(textView != null && textView.RenderScope != null);
+            Debug.Assert(textView is not null && textView.RenderScope is not null);
 
             // TextView to which this CompositionAdorner is attached as adorner and it will
             // als be used for GetRectangleFromTextPosition/GetLineRange
@@ -102,7 +102,7 @@ namespace System.Windows.Documents
 
             group.Children.Add(translation);
 
-            if (transform != null)
+            if (transform is not null)
             {
                 group.Children.Add(transform);
             }
@@ -349,7 +349,7 @@ namespace System.Windows.Documents
 
             // Invalidate the CompositionAdorner to update the rendering.
             AdornerLayer adornerLayer = VisualTreeHelper.GetParent(this) as AdornerLayer;
-            if (adornerLayer != null)
+            if (adornerLayer is not null)
             {
                 adornerLayer.Update(AdornedElement);
                 adornerLayer.InvalidateArrange();
@@ -365,7 +365,7 @@ namespace System.Windows.Documents
 
             _adornerLayer = AdornerLayer.GetAdornerLayer(textView.RenderScope);
 
-            if (_adornerLayer != null)
+            if (_adornerLayer is not null)
             {
                 // Add the CompositionAdorner to the scoping of AdornerLayer
                 _adornerLayer.Add(this);
@@ -377,7 +377,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal void Uninitialize()
         {
-            if (_adornerLayer != null)
+            if (_adornerLayer is not null)
             {
                 // Remove CompositionAdorner form the socping of AdornerLayer
                 _adornerLayer.Remove(this);

@@ -52,7 +52,7 @@ namespace MS.Internal.Printing.Configuration
             SafeHandle handle = this.Handle;
             this.Handle = null;
 
-            if (handle != null)
+            if (handle is not null)
             {
                 handle.Dispose();
             }

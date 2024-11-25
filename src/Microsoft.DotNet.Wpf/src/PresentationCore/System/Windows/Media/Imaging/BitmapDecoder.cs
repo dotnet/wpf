@@ -86,7 +86,7 @@ namespace System.Windows.Media.Imaging
             }
 
             BitmapDecoder decoder = CheckCache(bitmapUri, out clsId);
-            if (decoder != null)
+            if (decoder is not null)
             {
                 _decoderHandle = decoder.InternalDecoder;
             }
@@ -229,7 +229,7 @@ namespace System.Windows.Media.Imaging
             // of BitmapDecoder (such as JpegBitmapDecoder), those subclasses are constructed in
             // CreateFromUriOrStream, which also gets uriStream from SetupDecoderFromUriOrStream.
             //
-            if (_uriStream != null)
+            if (_uriStream is not null)
             {
                 _uriStream.Close();
             }
@@ -258,9 +258,9 @@ namespace System.Windows.Media.Imaging
             UnmanagedMemoryStream unmanagedMemoryStream = null;
             SafeFileHandle safeFilehandle = null;
 
-            if (uri != null)
+            if (uri is not null)
             {
-                finalUri = (baseUri != null) ?
+                finalUri = (baseUri is not null) ?
                                System.Windows.Navigation.BaseUriHelper.GetResolvedUri(baseUri, uri) :
                                uri;
 
@@ -279,17 +279,17 @@ namespace System.Windows.Media.Imaging
             }
 
             // try to retrieve the cached decoder
-            if (cachedDecoder != null)
+            if (cachedDecoder is not null)
             {
                 decoderHandle = cachedDecoder.InternalDecoder;
             }
-            else if ((finalUri != null) && (finalUri.IsAbsoluteUri) && (stream is null) &&
+            else if ((finalUri is not null) && (finalUri.IsAbsoluteUri) && (stream is null) &&
                      ((finalUri.Scheme == Uri.UriSchemeHttp) ||
                       (finalUri.Scheme == Uri.UriSchemeHttps)))
             {
                 return new LateBoundBitmapDecoder(baseUri, uri, stream, createOptions, cacheOption, uriCachePolicy);
             }
-            else if ((stream != null) && (!stream.CanSeek))
+            else if ((stream is not null) && (!stream.CanSeek))
             {
                 return new LateBoundBitmapDecoder(baseUri, uri, stream, createOptions, cacheOption, uriCachePolicy);
             }
@@ -895,9 +895,9 @@ namespace System.Windows.Media.Imaging
                 return base.ToString();
             }
 
-            if (_uri != null)
+            if (_uri is not null)
             {
-                if (_baseUri != null)
+                if (_baseUri is not null)
                 {
                     Uri uri = new Uri(_baseUri, _uri);
                     return BindUriHelper.UriToString(uri);
@@ -948,7 +948,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                Debug.Assert(_syncObject != null);
+                Debug.Assert(_syncObject is not null);
                 return _syncObject;
             }
         }
@@ -979,7 +979,7 @@ namespace System.Windows.Media.Imaging
                     {
                         IList<ColorContext> colorContextList = ColorContext.GetColorContextsHelper(GetColorContexts);
 
-                        if (colorContextList != null)
+                        if (colorContextList is not null)
                         {
                             _readOnlycolorContexts = new ReadOnlyCollection<ColorContext>(colorContextList);
                         }
@@ -1027,7 +1027,7 @@ namespace System.Windows.Media.Imaging
             isOriginalWritable = false;
             uriStream = null;
 
-            if ((uri != null) && (stream != null))
+            if ((uri is not null) && (stream is not null))
             {
                 // In this case we expect the Uri to be http(s)
                 Debug.Assert((uri.Scheme == Uri.UriSchemeHttp) || (uri.Scheme == Uri.UriSchemeHttps));
@@ -1035,7 +1035,7 @@ namespace System.Windows.Media.Imaging
             }
 
             // Uri
-            if (uri != null)
+            if (uri is not null)
             {
                 if (uri.IsAbsoluteUri)
                 {
@@ -1102,7 +1102,7 @@ namespace System.Windows.Media.Imaging
             }
 
             // We need to use the stream created from the Uri.
-            if (bitmapStream != null)
+            if (bitmapStream is not null)
             {
                 stream = bitmapStream;
             }
@@ -1156,7 +1156,7 @@ namespace System.Windows.Media.Imaging
                 }
 
                 // We have a SafeHandle.
-                if (safeFilehandle != null)
+                if (safeFilehandle is not null)
                 {
                     using (FactoryMaker myFactory = new FactoryMaker())
                     {
@@ -1288,7 +1288,7 @@ namespace System.Windows.Media.Imaging
                     ));
             }
 
-            if (mimeTypes != null)
+            if (mimeTypes is not null)
             {
                 decoderMimeTypes = mimeTypes.ToString();
             }
@@ -1357,13 +1357,13 @@ namespace System.Windows.Media.Imaging
             clsId = Guid.Empty;
             string mimeTypes;
 
-            if (uri != null)
+            if (uri is not null)
             {
                 WeakReference weakRef = ImagingCache.CheckDecoderCache(uri) as WeakReference;
-                if (weakRef != null)
+                if (weakRef is not null)
                 {
                     BitmapDecoder bitmapDecoder = weakRef.Target as BitmapDecoder;
-                    if ((bitmapDecoder != null) && bitmapDecoder.CheckAccess())
+                    if ((bitmapDecoder is not null) && bitmapDecoder.CheckAccess())
                     {
                         lock (bitmapDecoder.SyncObject)
                         {
@@ -1389,7 +1389,7 @@ namespace System.Windows.Media.Imaging
         {
             _isBuiltInDecoder = true;
 
-            if (decoder != null)
+            if (decoder is not null)
             {
                 SetupFrames(decoder, null);
                 //
@@ -1416,7 +1416,7 @@ namespace System.Windows.Media.Imaging
             }
 
 
-            if ((_uri != null) && (decoder is null) && _shouldCacheDecoder)
+            if ((_uri is not null) && (decoder is null) && _shouldCacheDecoder)
             {
                 // Add this decoder to the decoder cache
                 ImagingCache.AddToDecoderCache(
@@ -1431,7 +1431,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         internal void CloseStream()
         {
-            if (_uriStream != null)
+            if (_uriStream is not null)
             {
                 _uriStream.Close();
                 _uriStream = null;
@@ -1467,7 +1467,7 @@ namespace System.Windows.Media.Imaging
 
                 BitmapFrameDecode bfd = null;
 
-                if ((frames != null) && (frames.Count == (i + 1)))
+                if ((frames is not null) && (frames.Count == (i + 1)))
                 {
                     // If we already have a frames collection, get the BitmapFrame from it
                     bfd = frames[i] as BitmapFrameDecode;
@@ -1588,7 +1588,7 @@ namespace System.Windows.Media.Imaging
         /// Returns whether decoder can be converted to a string
         internal bool CanConvertToString()
         {
-            return (_uri != null);
+            return (_uri is not null);
         }
 
         #endregion

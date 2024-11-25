@@ -68,18 +68,18 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             RibbonMenuItem menuItemParent = itemsControl as RibbonMenuItem;
 
             // ParentItemsControl should be either RibbonMenuButton or RibbonMenuItem
-            if (menuButtonParent != null || menuItemParent != null)
+            if (menuButtonParent is not null || menuItemParent is not null)
             {
                 if (newIsItemsHost)
                 {
                     IItemContainerGenerator generator = itemsControl.ItemContainerGenerator as IItemContainerGenerator;
-                    if (generator != null && generator.GetItemContainerGeneratorForPanel(this) == generator)
+                    if (generator is not null && generator.GetItemContainerGeneratorForPanel(this) == generator)
                     {
-                        if (menuButtonParent != null)
+                        if (menuButtonParent is not null)
                         {
                             menuButtonParent.InternalItemsHost = this;
                         }
-                        else if (menuItemParent != null)
+                        else if (menuItemParent is not null)
                         {
                             menuItemParent.InternalItemsHost = this;
                         }
@@ -87,11 +87,11 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
                 }
                 else
                 {
-                    if (menuButtonParent != null && menuButtonParent.InternalItemsHost == this)
+                    if (menuButtonParent is not null && menuButtonParent.InternalItemsHost == this)
                     {
                         menuButtonParent.InternalItemsHost = null;
                     }
-                    else if (menuItemParent != null && menuItemParent.InternalItemsHost == this)
+                    else if (menuItemParent is not null && menuItemParent.InternalItemsHost == this)
                     {
                         menuItemParent.InternalItemsHost = null;
                     }
@@ -166,7 +166,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
                         InvalidateRegisteredLayoutProvidersList.Add(starLayoutInfoProvider);
                         starLayoutTarget = null;
                     }
-                    if (starLayoutTarget != null)
+                    if (starLayoutTarget is not null)
                     {
                         // Remeasure with surplusHeight added
                         desiredSize.Height -= starLayoutTarget.DesiredSize.Height;
@@ -267,7 +267,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             foreach (IProvideStarLayoutInfoBase starProvider in _registeredStarLayoutProviders)
             {
                 UIElement starLayoutTarget = starProvider.TargetElement;
-                if (starLayoutTarget != null)
+                if (starLayoutTarget is not null)
                 {
                     targets.Add(starLayoutTarget);
                 }
@@ -298,7 +298,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         internal void ReInsertFirstGallery(InRibbonGallery irg)
         {
             RibbonGallery firstGallery = irg.FirstGallery;
-            if (firstGallery != null &&
+            if (firstGallery is not null &&
                 _firstRibbonGalleryReInsertIndex >= 0)
             {
                 Debug.Assert(_firstRibbonGalleryReInsertIndex <= InternalChildren.Count);

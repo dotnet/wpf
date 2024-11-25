@@ -54,7 +54,7 @@ namespace System.Windows.Media
             c1.sRgbColor.r = 0;
             c1.sRgbColor.g = 0;
             c1.sRgbColor.b = 0;
-            if (c1.context != null)
+            if (c1.context is not null)
             {
                 c1.nativeColorValue = new float[c1.context.NumChannels];
                 for (int i = 0; i < c1.nativeColorValue.Length; i++)
@@ -381,7 +381,7 @@ namespace System.Windows.Media
         ///</summary>
         public float[] GetNativeColorValues()
         {
-            if (context != null)
+            if (context is not null)
             {
                 return (float[])nativeColorValue.Clone();
             }
@@ -1090,7 +1090,7 @@ namespace System.Windows.Media
         ///
         private void ComputeScRgbValues()
         {
-            if (this.context != null)
+            if (this.context is not null)
             {
                 Color c2 = Color.FromRgb(0, 0, 0);
 

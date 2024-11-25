@@ -76,7 +76,7 @@ namespace System.Windows.Documents
             ArgumentNullException.ThrowIfNull(value);
 
             TableRowGroup rowGroup = value as TableRowGroup;
-            if (rowGroup != null)
+            if (rowGroup is not null)
             {
                 RowGroups.Add(rowGroup);
                 return;
@@ -260,7 +260,7 @@ namespace System.Windows.Documents
         {
             if (!_initializing)
             {
-                if (TableStructureChanged != null)
+                if (TableStructureChanged is not null)
                 {
                     TableStructureChanged(this, EventArgs.Empty);
                 }
@@ -269,7 +269,7 @@ namespace System.Windows.Documents
 
                 // Table structure changes affect number of rows and colums. Need to notify peer about it.
                 TableAutomationPeer peer = ContentElementAutomationPeer.FromElement(this) as TableAutomationPeer;
-                if (peer != null)
+                if (peer is not null)
                 {
                     peer.OnStructureInvalidated();
                 }
@@ -430,7 +430,7 @@ namespace System.Windows.Documents
         {
             internal TableChildrenCollectionEnumeratorSimple(Table table)
             {
-                Debug.Assert(table != null);
+                Debug.Assert(table is not null);
                 _table = table;
                 _version = _table._version;
                 _columns = ((IEnumerable)_table._columns).GetEnumerator();
@@ -473,7 +473,7 @@ namespace System.Windows.Documents
                             break;
                     }
 
-                    if (currentChild != null)  
+                    if (currentChild is not null)  
                     { 
                         _currentChild = currentChild;
                         break;

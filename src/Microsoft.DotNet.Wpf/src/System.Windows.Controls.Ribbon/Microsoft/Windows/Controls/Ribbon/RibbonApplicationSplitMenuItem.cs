@@ -65,7 +65,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (UsesItemContainerTemplate)
             {
                 DataTemplate itemContainerTemplate = ItemContainerTemplateSelector.SelectTemplate(currentItem, this);
-                if (itemContainerTemplate != null)
+                if (itemContainerTemplate is not null)
                 {
                     object itemContainer = itemContainerTemplate.LoadContent();
                     if (itemContainer is RibbonApplicationMenuItem || itemContainer is RibbonApplicationSplitMenuItem || itemContainer is RibbonSeparator || itemContainer is RibbonGallery)

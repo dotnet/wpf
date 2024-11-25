@@ -78,10 +78,10 @@ namespace Microsoft.Windows.Automation.Peers
                 throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
             }
 
-            if (OwningSplitButton.HeaderButton != null)
+            if (OwningSplitButton.HeaderButton is not null)
             {
                 ToggleButtonAutomationPeer headerButtonAutomationPeer = CreatePeerForElement(OwningSplitButton.HeaderButton) as ToggleButtonAutomationPeer;
-                if (headerButtonAutomationPeer != null)
+                if (headerButtonAutomationPeer is not null)
                 {
                     ((IToggleProvider)headerButtonAutomationPeer).Toggle();
                 }
@@ -111,10 +111,10 @@ namespace Microsoft.Windows.Automation.Peers
                 throw new InvalidOperationException(Microsoft.Windows.Controls.SR.UIA_OperationCannotBePerformed);
             }
 
-            if (OwningSplitButton.HeaderButton != null)
+            if (OwningSplitButton.HeaderButton is not null)
             {
                 ButtonAutomationPeer headerButtonAutomationPeer = CreatePeerForElement(OwningSplitButton.HeaderButton) as ButtonAutomationPeer;
-                if (headerButtonAutomationPeer != null)
+                if (headerButtonAutomationPeer is not null)
                 {
                     ((IInvokeProvider)headerButtonAutomationPeer).Invoke();
                 }

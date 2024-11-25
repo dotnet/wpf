@@ -103,7 +103,7 @@ namespace System.Windows.Media
 
             String source = value as string;
 
-            if (source != null)
+            if (source is not null)
             {
                 return Int32Collection.Parse(source);
             }
@@ -127,7 +127,7 @@ namespace System.Windows.Media
         /// <param name="destinationType"> The type to which this will convert the Int32Collection instance. </param>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType != null && value is Int32Collection)
+            if (destinationType is not null && value is Int32Collection)
             {
                 Int32Collection instance = (Int32Collection)value;
 

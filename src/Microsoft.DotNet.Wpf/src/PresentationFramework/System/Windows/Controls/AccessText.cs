@@ -110,7 +110,7 @@ namespace System.Windows.Controls
             get
             {
                 // future note: AccessKey should be string type to support char pairs like surrogate symbols and marked letters (two unicode chars)
-                return (_accessKey != null && _accessKey.Text.Length > 0) ? _accessKey.Text[0] : (char)0;
+                return (_accessKey is not null && _accessKey.Text.Length > 0) ? _accessKey.Text[0] : (char)0;
             }
         }
 
@@ -451,7 +451,7 @@ namespace System.Windows.Controls
         internal static bool HasCustomSerialization(object o)
         {
             Run accessKey = o as Run;
-            return accessKey != null && HasCustomSerializationStorage.GetValue(accessKey);
+            return accessKey is not null && HasCustomSerializationStorage.GetValue(accessKey);
         }
 
         #endregion Internal methods
@@ -542,7 +542,7 @@ namespace System.Windows.Controls
         internal static void SerializeCustom(XmlWriter xmlWriter, object o)
         {
             Run inlineScope = o as Run;
-            if (inlineScope != null)
+            if (inlineScope is not null)
             {
                 xmlWriter.WriteString(AccessKeyMarker + inlineScope.Text);
             }
@@ -690,7 +690,7 @@ namespace System.Windows.Controls
 
         private void RegisterAccessKey()
         {
-            if (_currentlyRegistered != null)
+            if (_currentlyRegistered is not null)
             {
                 AccessKeyManager.Unregister(_currentlyRegistered, this);
                 _currentlyRegistered = null;

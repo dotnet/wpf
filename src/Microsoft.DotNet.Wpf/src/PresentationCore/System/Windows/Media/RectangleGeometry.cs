@@ -142,7 +142,7 @@ namespace System.Windows.Media
         {
             RectangleGeometry rectGeometry2 = geometry as RectangleGeometry;
 
-            if (rectGeometry2 != null)
+            if (rectGeometry2 is not null)
             {
                 RectangleGeometry rectGeometry1 = this;
                 Rect rect1 = rectGeometry1.Rect;

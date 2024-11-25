@@ -54,7 +54,7 @@ namespace MS.Internal.TextFormatting
             IList<double> realValues
             )
         {
-            Debug.Assert(realValues != null);
+            Debug.Assert(realValues is not null);
             _emSize = emSize;            
             InitArrays(realValues.Count);            
 
@@ -72,7 +72,7 @@ namespace MS.Internal.TextFormatting
         {
             get
             {
-                if (_shortList != null)
+                if (_shortList is not null)
                 {
                     return _shortList.Length;
                 }
@@ -93,7 +93,7 @@ namespace MS.Internal.TextFormatting
             get
             {
                 // Let underlying array do boundary check
-                if (_shortList != null)
+                if (_shortList is not null)
                 {                    
                     return ThousandthOfEmToReal(_shortList[index]);
                 }
@@ -106,7 +106,7 @@ namespace MS.Internal.TextFormatting
             set
             {
                 // Let underlying array do boundary check
-                if (_shortList != null)
+                if (_shortList is not null)
                 {
                     short sValue;
                     if (RealToThousandthOfEm(value, out sValue))
@@ -154,7 +154,7 @@ namespace MS.Internal.TextFormatting
         public void Clear()
         {
             // zero the stored values
-            if (_shortList != null)
+            if (_shortList is not null)
             {
                 for (int i = 0; i < _shortList.Length; i++)
                 {

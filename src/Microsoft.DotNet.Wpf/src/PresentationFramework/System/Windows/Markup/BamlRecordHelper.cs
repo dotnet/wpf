@@ -53,7 +53,7 @@ namespace System.Windows.Markup
         // Does the given Baml Record have a Debug Baml Record in its Next link.
         internal static bool HasDebugExtensionRecord(bool isDebugBamlStream, BamlRecord bamlRecord)
         {
-            if (isDebugBamlStream && (bamlRecord.Next != null))
+            if (isDebugBamlStream && (bamlRecord.Next is not null))
             {
                 if (IsDebugBamlRecordType(bamlRecord.Next.RecordType))
                 {

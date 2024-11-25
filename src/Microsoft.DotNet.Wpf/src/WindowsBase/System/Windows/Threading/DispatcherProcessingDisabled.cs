@@ -17,7 +17,7 @@ namespace System.Windows.Threading
         /// </summary>
         public void Dispose()
         {
-            if(_dispatcher != null)
+            if(_dispatcher is not null)
             {
                 _dispatcher.VerifyAccess();
                 

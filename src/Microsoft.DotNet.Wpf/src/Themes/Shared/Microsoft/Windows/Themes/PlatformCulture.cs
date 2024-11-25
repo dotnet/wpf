@@ -27,7 +27,7 @@ namespace Microsoft.Windows.Themes
                 {
                     _platformCulture = MS.Internal.PlatformCulture.Value;
                 }
-                Debug.Assert(_platformCulture != null);
+                Debug.Assert(_platformCulture is not null);
 
                 return _platformCulture.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
             }

@@ -52,7 +52,7 @@ namespace MS.Internal.ComponentModel
         {
             DependencyPropertyAttribute da = value as DependencyPropertyAttribute;
 
-            if (da != null && 
+            if (da is not null && 
                 object.ReferenceEquals(da._dp, _dp) && 
                 da._isAttached == _isAttached) 
             {

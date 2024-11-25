@@ -619,7 +619,7 @@ namespace System.Windows.Interop
             bool? enableMultiMonitorDisplayClipping =
                 System.Windows.CoreCompatibilityPreferences.EnableMultiMonitorDisplayClipping;
 
-            if (enableMultiMonitorDisplayClipping != null)
+            if (enableMultiMonitorDisplayClipping is not null)
             {
                 // The flag is explicitly set by the user in application manifest
                 mode |= RenderingMode.IsDisableMultimonDisplayClippingValid;
@@ -706,7 +706,7 @@ namespace System.Windows.Interop
                     //
                     MediaContext.UnregisterICompositionTarget(Dispatcher, this);
 
-                    if (_notificationWindowHelper != null &&
+                    if (_notificationWindowHelper is not null &&
                         _notificationWindowHelper.DetachHwndTarget(this))
                     {
                         _notificationWindowHelper.Dispose();
@@ -880,7 +880,7 @@ namespace System.Windows.Interop
             if (IsPerMonitorDpiScalingEnabled)
             {
                 var hwndSource = HwndSource.FromHwnd(_hWnd);
-                if (hwndSource != null)
+                if (hwndSource is not null)
                 {
                     var oldDpi = CurrentDpiScale;
                     var newDpi =
@@ -921,7 +921,7 @@ namespace System.Windows.Interop
                 if (oldDpi != newDpi)
                 {
                     var hwndSource = HwndSource.FromHwnd(_hWnd);
-                    if (hwndSource != null)
+                    if (hwndSource is not null)
                     {
                         // During DPI change (and at other times), the parent
                         // is expected to layout the child. At this point, that layout process
@@ -1352,7 +1352,7 @@ namespace System.Windows.Interop
         {
             UnsafeNativeMethods.InvalidateRect(_hWnd.MakeHandleRef(this), IntPtr.Zero, true);
             DispatcherTimer sourceDT = (DispatcherTimer)s;
-            if (sourceDT != null)
+            if (sourceDT is not null)
             {
                 Debug.Assert(_restoreDT == sourceDT);
 
@@ -1429,7 +1429,7 @@ namespace System.Windows.Interop
                 if(peer is null)
                     peer = uiroot.CreateGenericRootAutomationPeer();
 
-                if(peer != null)
+                if(peer is not null)
                     peer.Hwnd = handle;
             }
 
@@ -1440,7 +1440,7 @@ namespace System.Windows.Interop
                 peer = UIElementAutomationPeer.GetRootAutomationPeer(root, handle);
             }
 
-            if (peer != null)
+            if (peer is not null)
             {
                 peer.AddToAutomationEventList();
             }
@@ -1725,7 +1725,7 @@ namespace System.Windows.Interop
             // output is the index that will be set to the visual flags.
             var dpiFlags = DpiUtil.UpdateDpiScalesAndGetIndex(newDpi.PixelsPerInchX, newDpi.PixelsPerInchY);
 
-            if (RootVisual != null)
+            if (RootVisual is not null)
             {
                 // Propagate the visual flags from the RootVisual.
                 RecursiveUpdateDpiFlagAndInvalidateMeasure(RootVisual, new DpiRecursiveChangeArgs(dpiFlags, oldDpi, newDpi));
@@ -1821,13 +1821,13 @@ namespace System.Windows.Interop
             for (int i = 0; i < childrenCount; i++)
             {
                 DependencyObject child = VisualTreeHelper.GetChild(d, i);
-                if (child != null)
+                if (child is not null)
                 {
                     RecursiveUpdateDpiFlagAndInvalidateMeasure(child, args);
                 }
             }
             Visual visual = d as Visual;
-            if (visual != null)
+            if (visual is not null)
             {
                 visual.SetDpiScaleVisualFlags(args);
                 UIElement element = d as UIElement;
@@ -2312,7 +2312,7 @@ namespace System.Windows.Interop
             {
                 base.RootVisual = value;
 
-                if (value != null)
+                if (value is not null)
                 {
                     // Update the static array that stores the actual DpiScales.
                     // output is the index that will be set to the visual flags.
@@ -2605,7 +2605,7 @@ namespace System.Windows.Interop
                 MonitorPowerEvent = null;
 
                 _hwndTargetCount = 0;
-                if (_notificationHwnd != null)
+                if (_notificationHwnd is not null)
                 {
                     _notificationHwnd.Dispose();
                     _notificationHwnd = null;
@@ -2618,7 +2618,7 @@ namespace System.Windows.Interop
             /// </SecurityNode>
             public void AttachHwndTarget(HwndTarget hwndTarget)
             {
-                Debug.Assert(hwndTarget != null);
+                Debug.Assert(hwndTarget is not null);
                 MonitorPowerEvent += hwndTarget.OnMonitorPowerEvent;
                 if (_hwndTargetCount > 0)
                 {
@@ -2639,7 +2639,7 @@ namespace System.Windows.Interop
             /// </SecurityNode>
             public bool DetachHwndTarget(HwndTarget hwndTarget)
             {
-                Debug.Assert(hwndTarget != null);
+                Debug.Assert(hwndTarget is not null);
                 MonitorPowerEvent -= hwndTarget.OnMonitorPowerEvent;
                 _hwndTargetCount--;
                 Debug.Assert(_hwndTargetCount >= 0);
@@ -2677,7 +2677,7 @@ namespace System.Windows.Interop
                                             // Monitor is on
                                             _monitorOn = true;
                                         }
-                                        if (MonitorPowerEvent != null)
+                                        if (MonitorPowerEvent is not null)
                                         {
                                             MonitorPowerEvent(null, new MonitorPowerEventArgs(_monitorOn));
                                         }

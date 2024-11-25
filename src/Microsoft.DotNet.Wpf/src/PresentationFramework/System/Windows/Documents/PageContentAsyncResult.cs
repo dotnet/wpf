@@ -133,7 +133,7 @@ namespace System.Windows.Documents
         //---------------------------------------------------------------------
         internal object Dispatch(object arg)
         {
-            if (this._exception != null)
+            if (this._exception is not null)
             {
                 // force finish if there was any exception
                 this._getpageStatus = GetPageStatus.Finished;
@@ -143,7 +143,7 @@ namespace System.Windows.Documents
                 case GetPageStatus.Loading:
                     try
                     {
-                        if (this._child != null)
+                        if (this._child is not null)
                         {
                             this._completedSynchronously = true;
                             this._result = this._child;
@@ -182,7 +182,7 @@ namespace System.Windows.Documents
 
                 case GetPageStatus.Finished:
                     _isCompleted = true;
-                    if (_callback != null)
+                    if (_callback is not null)
                     {
                         _callback(this);
                     }
@@ -245,7 +245,7 @@ namespace System.Windows.Documents
         #region Private Methods
         private void _OnPaserFinished(object sender, EventArgs args)
         {
-            if (_pendingStream != null)
+            if (_pendingStream is not null)
             {
                 _pendingStream.Close();
                 _pendingStream = null;

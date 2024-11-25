@@ -74,16 +74,16 @@ namespace MS.Internal.ReachFramework
 
             BitmapFrame bmpd = value as BitmapFrame;
 
-            if (bmpd != null)
+            if (bmpd is not null)
             {
                 BitmapCodecInfo codec = null;
 
-                if (bmpd.Decoder != null)
+                if (bmpd.Decoder is not null)
                 {
                     codec = bmpd.Decoder.CodecInfo;
                 }
 
-                if (codec != null)
+                if (codec is not null)
                 {
                     encoder = BitmapEncoder.Create(codec.ContainerFormat);
                     string extension = "";
@@ -109,7 +109,7 @@ namespace MS.Internal.ReachFramework
                         encoder = null;
                     }
 
-                    if (encoder != null)
+                    if (encoder is not null)
                     {
                         bitmapName = bitmapName + '.' + extension;
                     }
@@ -350,7 +350,7 @@ namespace System.Windows.Xps.Serialization
         /// <param name="treeWalkProgress">Used to detect visual tree cycles caused by VisualBrush</param>
         internal VisualTreeFlattener(IMetroDrawingContext dc, Size pageSize, TreeWalkProgress treeWalkProgress)
         {
-            Debug.Assert(treeWalkProgress != null);
+            Debug.Assert(treeWalkProgress is not null);
             
             // DrawingContextFlattener flattens calls to DrawingContext
             _dcf = new DrawingContextFlattener(dc, pageSize, treeWalkProgress);
@@ -365,7 +365,7 @@ namespace System.Windows.Xps.Serialization
         /// <param name="pageSize">Raw size of parent fixed page in pixels.  Does not account for margins</param>
         internal VisualTreeFlattener(System.Xml.XmlWriter resWriter, System.Xml.XmlWriter bodyWriter, PackageSerializationManager manager, Size pageSize, TreeWalkProgress treeWalkProgress)
         {
-            Debug.Assert(treeWalkProgress != null);
+            Debug.Assert(treeWalkProgress is not null);
                         
             VisualSerializer dc = new VisualSerializer(resWriter, bodyWriter, manager);
 
@@ -391,14 +391,14 @@ namespace System.Windows.Xps.Serialization
 
             DrawingGroup dg = drawing as DrawingGroup;
             
-            if (dg != null)
+            if (dg is not null)
             {
                 if (Utility.IsTransparent(dg.Opacity))
                 {
                     return 0;
                 }
 
-                if ((dg.Transform != null) || (dg.ClipGeometry != null) || (!Utility.IsOne(dg.Opacity)))
+                if ((dg.Transform is not null) || (dg.ClipGeometry is not null) || (!Utility.IsOne(dg.Opacity)))
                 {
                     return 2;
                 }
@@ -460,7 +460,7 @@ namespace System.Windows.Xps.Serialization
             // Check for invisible Visual subtree.
             {
                 // Skip invalid transformation
-                if (trans != null && !Utility.IsValid(trans.Value))
+                if (trans is not null && !Utility.IsValid(trans.Value))
                 {
                     return false;
                 }
@@ -472,7 +472,7 @@ namespace System.Windows.Xps.Serialization
                 }
 
                 // Skip complete clipped subtree
-                if ((clip != null) && !Utility.IsRenderVisible(clip.Bounds))
+                if ((clip is not null) && !Utility.IsRenderVisible(clip.Bounds))
                 {
                     return false;
                 }
@@ -487,7 +487,7 @@ namespace System.Windows.Xps.Serialization
             }
 
             // Ignore opaque opacity mask
-            if ((mask != null) && Utility.IsBrushOpaque(mask))
+            if ((mask is not null) && Utility.IsBrushOpaque(mask))
             {
                 mask = null;
             }
@@ -498,7 +498,7 @@ namespace System.Windows.Xps.Serialization
             // 1. It is FrameworkElement and Name is non empty.
             // 2. It is not FixedPage(because NameProperty of FixedPage is already reserved)
             // 3. It is not from template. TemplatedParent is null.
-            if (fe != null && !String.IsNullOrEmpty(fe.Name) &&
+            if (fe is not null && !String.IsNullOrEmpty(fe.Name) &&
                 !(visual is System.Windows.Documents.FixedPage) &&
                  fe.TemplatedParent is null)
             {
@@ -520,7 +520,7 @@ namespace System.Windows.Xps.Serialization
             UIElement uiElement = visual as UIElement;
             Uri navigateUri = null;
 
-            if (uiElement != null)
+            if (uiElement is not null)
             {
                 navigateUri = FixedPage.GetNavigateUri(uiElement);
             }
@@ -531,11 +531,11 @@ namespace System.Windows.Xps.Serialization
             // Rasterize all Viewport3DVisuals, and Visuals with Effects applied
             bool walkChildren;
 
-            if (effect != null || visual is Viewport3DVisual)
+            if (effect is not null || visual is Viewport3DVisual)
             {
                 // rasterization also handles opacity and children
                 Matrix worldTransform = _dcf.Transform;
-                if (trans != null)
+                if (trans is not null)
                 {
                     worldTransform.Prepend(trans.Value);
                 }
@@ -547,11 +547,11 @@ namespace System.Windows.Xps.Serialization
                 if (inheritedClipping is null || !inheritedClipping.IsEmpty())
                 {
                     // transform current clip to world space
-                    if (clip != null)
+                    if (clip is not null)
                     {
                         Matrix clipToWorldSpace = _dcf.Transform;
 
-                        if (trans != null)
+                        if (trans is not null)
                         {
                             clipToWorldSpace.Prepend(trans.Value);
                         }
@@ -595,11 +595,11 @@ namespace System.Windows.Xps.Serialization
                 {
                     FixedPage fixedPage = visual as FixedPage;
 
-                    if (fixedPage != null)
+                    if (fixedPage is not null)
                     {
                         SolidColorBrush colorBrush = fixedPage.Background as SolidColorBrush;
 
-                        if (colorBrush != null)
+                        if (colorBrush is not null)
                         {
                             Color color = colorBrush.Color;
 
@@ -677,7 +677,7 @@ namespace System.Windows.Xps.Serialization
             {
                 GeometryDrawing gd = d as GeometryDrawing;
 
-                if (gd != null)
+                if (gd is not null)
                 {
                     _dcf.DrawGeometry(gd.Brush, gd.Pen, gd.Geometry);
 
@@ -688,7 +688,7 @@ namespace System.Windows.Xps.Serialization
             {
                 GlyphRunDrawing gd = d as GlyphRunDrawing;
 
-                if (gd != null)
+                if (gd is not null)
                 {
                     _dcf.DrawGlyphRun(gd.ForegroundBrush, gd.GlyphRun);
 
@@ -699,7 +699,7 @@ namespace System.Windows.Xps.Serialization
             {
                 ImageDrawing id = d as ImageDrawing;
 
-                if (id != null)
+                if (id is not null)
                 {
                     _dcf.DrawImage(id.ImageSource, id.Rect);
 
@@ -709,7 +709,7 @@ namespace System.Windows.Xps.Serialization
             
             DrawingGroup dg = d as DrawingGroup;
 
-            if (dg != null)
+            if (dg is not null)
             {
                 if (Utility.IsRenderVisible(dg))
                 {
@@ -736,7 +736,7 @@ namespace System.Windows.Xps.Serialization
                         EdgeMode.Unspecified
                         );
 
-                    if (dg.Transform != null)
+                    if (dg.Transform is not null)
                     {
                         drawingToWorldTransform.Prepend(dg.Transform.Value);
                     }
@@ -772,7 +772,7 @@ namespace System.Windows.Xps.Serialization
             // Check for testing hooks
             FrameworkElement el = visual as FrameworkElement;
 
-            if (el != null)
+            if (el is not null)
             {
                 bool testhook = false;
 
@@ -782,7 +782,7 @@ namespace System.Windows.Xps.Serialization
                 {
                     string key = e.Key as string;
 
-                    if (key != null)
+                    if (key is not null)
                     {
                         if (key == "Destination")
                         {
@@ -804,7 +804,7 @@ namespace System.Windows.Xps.Serialization
 
             PackageSerializationManager manager = null;
 
-            if (fileName != null)
+            if (fileName is not null)
             {
                 manager = new MS.Internal.ReachFramework.LooseFileSerializationManager(fileName);
             }

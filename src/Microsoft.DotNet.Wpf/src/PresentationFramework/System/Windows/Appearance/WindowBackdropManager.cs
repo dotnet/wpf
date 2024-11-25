@@ -97,7 +97,7 @@ internal static class WindowBackdropManager
         if (hwnd != IntPtr.Zero)
         {
             var windowSource = HwndSource.FromHwnd(hwnd);
-            if (windowSource.CompositionTarget != null)
+            if (windowSource.CompositionTarget is not null)
             {
                 // TODO : Save the previous background color and reapply in RestoreBackground 
                 windowSource.CompositionTarget.BackgroundColor = Colors.Transparent;
@@ -112,7 +112,7 @@ internal static class WindowBackdropManager
         if (hwnd != IntPtr.Zero)
         {
             var windowSource = HwndSource.FromHwnd(hwnd);
-            if (windowSource?.Handle != IntPtr.Zero && windowSource.CompositionTarget != null)
+            if (windowSource?.Handle != IntPtr.Zero && windowSource.CompositionTarget is not null)
             {
                 windowSource.CompositionTarget.BackgroundColor = SystemColors.WindowColor;
                 return true;

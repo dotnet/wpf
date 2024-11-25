@@ -62,7 +62,7 @@ namespace System.Windows.Media.Animation
             }
 #endif // DEBUG
 
-            Debug.Assert(timeline != null);
+            Debug.Assert(timeline is not null);
 
             // 
             // Store a frozen copy of the timeline
@@ -88,7 +88,7 @@ namespace System.Windows.Media.Animation
             // Set the NeedsTicksWhenActive only if we have someone listening
             // to an event.
 
-            SetFlag(ClockFlags.NeedsTicksWhenActive, _eventHandlersStore != null);  
+            SetFlag(ClockFlags.NeedsTicksWhenActive, _eventHandlersStore is not null);  
                                                                                                 
             //
             // Cache values that won't change as the clock ticks
@@ -587,9 +587,9 @@ namespace System.Windows.Media.Animation
 
             ClockGroup clockGroup = clock as ClockGroup;
 
-            if (   clock._parent != null
-                || (   clockGroup != null
-                    && clockGroup.InternalChildren != null ))
+            if (   clock._parent is not null
+                || (   clockGroup is not null
+                    && clockGroup.InternalChildren is not null ))
             {
                 // The derived class is trying to fool us -- we require a new,
                 // fresh, unassociated clock here
@@ -631,7 +631,7 @@ namespace System.Windows.Media.Animation
                     HasDescendantsWithUnresolvedDuration = !HasResolvedDuration;  // Keep track of when our duration is resolved
 
                     Clock current = _parent;  // Traverse up the parent chain and verify that no unsupported behavior is specified
-                    while (current != null)
+                    while (current is not null)
                     {
                         Debug.Assert(!current.IsTimeManager);  // We should not yet be connected to the TimeManager
                         if (current._timeline.AutoReverse || current._timeline.AccelerationRatio > 0
@@ -1185,7 +1185,7 @@ namespace System.Windows.Media.Animation
         // We do this whenever a discontinuous interactive action (seek/begin/stop) is performed.
         internal virtual void ResetNodesWithSlip()
         {
-            if (_syncData != null)
+            if (_syncData is not null)
             {
                 _syncData.IsInSyncPeriod = false;  // Reset sync tracking
             }
@@ -1424,7 +1424,7 @@ namespace System.Windows.Media.Animation
             get
             {
                 Debug.Assert(!IsTimeManager);
-                Debug.Assert(_parent != null && !_parent.IsTimeManager);
+                Debug.Assert(_parent is not null && !_parent.IsTimeManager);
 
                 List<Clock> parentChildren = _parent.InternalChildren;
                 if (_childIndex == parentChildren.Count - 1)
@@ -1797,7 +1797,7 @@ namespace System.Windows.Media.Animation
         private void AdjustBeginTime()
         {
             Debug.Assert(IsRoot);  // root clocks only; non-roots have constant begin time
-            Debug.Assert(_rootData != null);
+            Debug.Assert(_rootData is not null);
 
             // Process the effects of Seek, Begin, and Pause; delay request if not all durations are resolved in this subtree.
             if (_rootData.PendingSeekDestination.HasValue && !HasDescendantsWithUnresolvedDuration)
@@ -2678,7 +2678,7 @@ namespace System.Windows.Media.Animation
                 expirationTime = _beginTime + effectiveDuration;
 
                 // Precaution against slipping at the last frame of media: don't permit the clock to finish this tick yet
-                if (_syncData != null && _syncData.IsInSyncPeriod && !_syncData.SyncClockHasReachedEffectiveDuration)
+                if (_syncData is not null && _syncData.IsInSyncPeriod && !_syncData.SyncClockHasReachedEffectiveDuration)
                 {
                     expirationTime += TimeSpan.FromMilliseconds(50);  // This compensation is roughly one frame of video
                 }
@@ -2870,7 +2870,7 @@ namespace System.Windows.Media.Animation
                 relativeBeginTime, _currentDuration, _appliedSpeedRatio))
             {
                 HasDiscontinuousTimeMovementOccured = true;
-                if (_syncData != null)
+                if (_syncData is not null)
                 {
                     _syncData.SyncClockDiscontinuousEvent = true;  // Notify the syncing node of discontinuity
                 }
@@ -2914,7 +2914,7 @@ namespace System.Windows.Media.Animation
             }
 
             // Now take potential SlipBehavior into account:
-            if (_syncData != null && _syncData.IsInSyncPeriod && _parent.CurrentState != ClockState.Stopped)  // We are already in a slip zone
+            if (_syncData is not null && _syncData.IsInSyncPeriod && _parent.CurrentState != ClockState.Stopped)  // We are already in a slip zone
             {
                 Debug.Assert(parentTime.HasValue);  // If parent isn't stopped, it must have valid time and speed
                 Debug.Assert(parentSpeed.HasValue);
@@ -2940,7 +2940,7 @@ namespace System.Windows.Media.Animation
             // move back to the exact beginning of the tick period.  We handle cases where
             // we seek (HasSeekOccuredAfterLastTick) in a special way, by not synchronizing with the beginning.
             // Also, if the parent has been paused prior to this tick, we cannot enter the sync zone, so skip the call.
-            if (_syncData != null && !_syncData.IsInSyncPeriod && _parent.CurrentState != ClockState.Stopped &&
+            if (_syncData is not null && !_syncData.IsInSyncPeriod && _parent.CurrentState != ClockState.Stopped &&
                 (!parentIntervalCollection.IsEmptyOfRealPoints || HasSeekOccuredAfterLastTick))
             {
                 Debug.Assert(parentTime.HasValue);  // Cannot be true unless parent is stopped
@@ -3090,8 +3090,8 @@ namespace System.Windows.Media.Animation
 
             if (IsRoot)  // We are a root child, use time manager time
             {
-                Debug.Assert(_rootData != null, "A root Clock must have the _rootData structure initialized.");
-                HasSeekOccuredAfterLastTick = seekedAlignedToLastTick || (_rootData.PendingSeekDestination != null);  // We may have a seek request pending
+                Debug.Assert(_rootData is not null, "A root Clock must have the _rootData structure initialized.");
+                HasSeekOccuredAfterLastTick = seekedAlignedToLastTick || (_rootData.PendingSeekDestination is not null);  // We may have a seek request pending
 
                 // We don't have a TimeManager that is on, so we are off, nothing more to compute
                 if (_timeManager is null || _timeManager.InternalIsStopped)
@@ -3169,7 +3169,7 @@ namespace System.Windows.Media.Animation
                                       TimeSpan currentParentTimePT)
         {
             Debug.Assert(!IsTimeManager);
-            Debug.Assert(_parent != null);
+            Debug.Assert(_parent is not null);
             Debug.Assert(_parent.CurrentState != ClockState.Stopped);
             
             // Parent is not stopped, so its TIC cannot be empty
@@ -3180,7 +3180,7 @@ namespace System.Windows.Media.Animation
             Debug.Assert(_syncData.SyncClock == this || _syncData.SyncClock._parent == this);
             Debug.Assert(CanSlip || _timeline is ParallelTimeline && ((ParallelTimeline)_timeline).SlipBehavior == SlipBehavior.Slip);
 
-            Debug.Assert(_syncData != null);
+            Debug.Assert(_syncData is not null);
             Debug.Assert(!_syncData.IsInSyncPeriod);
 
             // Verify our limitations on slip functionality, but don't throw here for perf
@@ -3302,8 +3302,8 @@ namespace System.Windows.Media.Animation
                                      TimeSpan currentParentTimePT, double currentParentSpeed)
         {
             Debug.Assert(!IsTimeManager);
-            Debug.Assert(_parent != null);
-            Debug.Assert(_syncData != null);
+            Debug.Assert(_parent is not null);
+            Debug.Assert(_syncData is not null);
             Debug.Assert(_syncData.IsInSyncPeriod);
 
             // SyncData points to our child if we have SlipBehavior, for CanSlip nodes it points to the node itself
@@ -3406,7 +3406,7 @@ namespace System.Windows.Media.Animation
                 Clock current = subtree.Current;
                 Debug.Assert(!current.IsRoot, "Root nodes never should reset their Slip amounts with ResetSlipOnSubtree(), even when seeking.");
 
-                if (current._syncData != null)
+                if (current._syncData is not null)
                 {
                     current._syncData.IsInSyncPeriod = false;
                     current._syncData.SyncClockDiscontinuousEvent = true;
@@ -3499,11 +3499,11 @@ namespace System.Windows.Media.Animation
         /// <param name="key">The unique key representing the event to fire</param>
         private void FireEvent(EventPrivateKey key)
         {
-            if (_eventHandlersStore != null)
+            if (_eventHandlersStore is not null)
             {
                 EventHandler handler = (EventHandler)_eventHandlersStore.Get(key);
 
-                if (handler != null)
+                if (handler is not null)
                 {
                     handler(this, null);
                 }
@@ -3557,7 +3557,7 @@ namespace System.Windows.Media.Animation
         {
             Debug.Assert(!IsTimeManager);
 
-            if (_eventHandlersStore != null)
+            if (_eventHandlersStore is not null)
             {
                 _eventHandlersStore.Remove(key, handler);
 
@@ -3656,7 +3656,7 @@ namespace System.Windows.Media.Animation
             // ComputeLocalState so that the begin will be picked up on the 
             // next tick.  Note that if _timeline.BeginTime is null we won't
             // start the clock.
-            if (_timeline.BeginTime != null)
+            if (_timeline.BeginTime is not null)
             {
                 RootBeginPending = true;
             }
@@ -3704,7 +3704,7 @@ namespace System.Windows.Media.Animation
             }
 
             Clock current = _parent;  // Propagate the fact that we will need an update sooner up the chain
-            while (current != null && current.InternalNextTickNeededTime != TimeSpan.Zero)
+            while (current is not null && current.InternalNextTickNeededTime != TimeSpan.Zero)
             {
                 current.InternalNextTickNeededTime = TimeSpan.Zero;
 
@@ -3717,7 +3717,7 @@ namespace System.Windows.Media.Animation
                 current = current._parent;  
             }
 
-            if (_timeManager != null)
+            if (_timeManager is not null)
             {
                 // If we get here from within a Tick, this will force MediaContext to perform another subsequent Tick
                 // on the TimeManager.  This will apply the requested interactive operations, so their results will
@@ -3807,7 +3807,7 @@ namespace System.Windows.Media.Animation
                     subtree.Current._timeManager = timeManager;
                 }
 
-                if (timeManager != null)
+                if (timeManager is not null)
                 {
                     // If we are joining a new time manager, issue any deferred calls
                     subtree.Reset();
@@ -3842,7 +3842,7 @@ namespace System.Windows.Media.Animation
         // This wrapper is invoked anytime we invalidate the _beginTime
         private void UpdateSyncBeginTime()
         {
-            if (_syncData != null)
+            if (_syncData is not null)
             {
                 _syncData.UpdateClockBeginTime();
             }
@@ -3878,7 +3878,7 @@ namespace System.Windows.Media.Animation
             {
                 Debug.Assert(!IsTimeManager);
 
-                return (_timeManager != null) && (_timeManager.State != TimeState.Stopped);
+                return (_timeManager is not null) && (_timeManager.State != TimeState.Stopped);
             }
         }
 
@@ -3996,7 +3996,7 @@ namespace System.Windows.Media.Animation
         {
             internal SyncData(Clock syncClock)
             {
-                Debug.Assert(syncClock != null);
+                Debug.Assert(syncClock is not null);
                 Debug.Assert(syncClock.GetCanSlip());
                 Debug.Assert(syncClock.IsRoot || syncClock._timeline.BeginTime.HasValue);  // Only roots may later validate their _beginTime
 
@@ -4248,7 +4248,7 @@ namespace System.Windows.Media.Animation
                     {
                         WeakReference weakRef = (WeakReference)_objectTable[idTable[index]];
                         Clock clock = (Clock)weakRef.Target;
-                        if (clock != null)
+                        if (clock is not null)
                         {
                             clock.BuildInfo(builder, 0, true);
                             clockCount++;
@@ -4288,11 +4288,11 @@ namespace System.Windows.Media.Animation
             // Recurse into the children
             ClockGroup thisGroup = this as ClockGroup;
 
-            if (thisGroup != null)
+            if (thisGroup is not null)
             {
                 depth++;
                 List<Clock> children = thisGroup.InternalChildren;
-                if (children != null)
+                if (children is not null)
                 {
                     for (int childIndex = 0; childIndex < children.Count; childIndex++)
                     {
@@ -4322,7 +4322,7 @@ namespace System.Windows.Media.Animation
             {
                 Clock child = (Clock)children[index].Target;
 
-                if (child != null)
+                if (child is not null)
                 {
                     child.BuildInfoRecursive(builder, 1);
                 }
@@ -4367,7 +4367,7 @@ namespace System.Windows.Media.Animation
             lock (_debugLockObject)
             {
                 object handleReference = _objectTable[id];
-                if (handleReference != null)
+                if (handleReference is not null)
                 {
                     WeakReference weakRef = (WeakReference)handleReference;
                     clock = (Clock)weakRef.Target;

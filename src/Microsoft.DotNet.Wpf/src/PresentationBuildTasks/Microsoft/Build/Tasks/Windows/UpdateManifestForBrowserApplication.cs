@@ -96,7 +96,7 @@ namespace Microsoft.Build.Tasks.Windows
                 }
                 finally
                 {
-                    if (manifestReader != null)
+                    if (manifestReader is not null)
                     {
                         // Close the manifest reader
                         manifestReader.Close();
@@ -130,7 +130,7 @@ namespace Microsoft.Build.Tasks.Windows
                 }
                 finally
                 {
-                    if (manifestWriter != null)
+                    if (manifestWriter is not null)
                     {
                         // Close the manifest writer
                         manifestWriter.Close();

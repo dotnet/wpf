@@ -28,8 +28,8 @@ namespace System.Xaml.Schema
         internal ClrAttachableEvent(string name, MethodInfo addHandler, MethodInfo removeHandler, XamlType declaringType) : 
             base(name, declaringType)
         {
-            Debug.Assert(addHandler != null);
-            Debug.Assert(removeHandler != null);
+            Debug.Assert(addHandler is not null);
+            Debug.Assert(removeHandler is not null);
             
             AddHandler = addHandler;
             RemoveHandler = removeHandler;

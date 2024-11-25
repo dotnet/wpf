@@ -130,7 +130,7 @@ internal sealed class DocumentManager
         {
             IDisposable disposable = controller as IDisposable;
 
-            if (disposable != null)
+            if (disposable is not null)
             {
                 disposable.Dispose();
             }
@@ -324,7 +324,7 @@ internal sealed class DocumentManager
     private static bool DispatchEnableEdit
         (IDocumentController controller, Document document)
     {
-        if ((document.Dependency != null) && (document.Dependency.Workspace is null))
+        if ((document.Dependency is not null) && (document.Dependency.Workspace is null))
         {
             Trace.SafeWrite(
                 Trace.File,
@@ -344,7 +344,7 @@ internal sealed class DocumentManager
     private static bool DispatchOpen
         (IDocumentController controller, Document document)
     {
-        if ((document.Dependency != null) && (document.Dependency.Source is null))
+        if ((document.Dependency is not null) && (document.Dependency.Source is null))
         {
             Trace.SafeWrite(
                 Trace.File,
@@ -364,7 +364,7 @@ internal sealed class DocumentManager
     private static bool DispatchRebind
     (IDocumentController controller, Document document)
     {
-        if ((document.Dependency != null) && (document.Dependency.Source is null))
+        if ((document.Dependency is not null) && (document.Dependency.Source is null))
         {
             Trace.SafeWrite(
                 Trace.File,
@@ -385,7 +385,7 @@ internal sealed class DocumentManager
     private static bool DispatchSaveAsPreperation
         (IDocumentController controller, Document document)
     {
-        if ((document.Dependency != null) && (document.Dependency.Destination is null))
+        if ((document.Dependency is not null) && (document.Dependency.Destination is null))
         {
             Trace.SafeWrite(
                 Trace.File,
@@ -405,7 +405,7 @@ internal sealed class DocumentManager
     private static bool DispatchSaveCommit
         (IDocumentController controller, Document document)
     {
-        if ((document.Dependency != null) && (document.Dependency.Destination is null))
+        if ((document.Dependency is not null) && (document.Dependency.Destination is null))
         {
             Trace.SafeWrite(
                 Trace.File,
@@ -426,7 +426,7 @@ internal sealed class DocumentManager
     private static bool DispatchSavePreperation
         (IDocumentController controller, Document document)
     {
-        if ((document.Dependency != null) && (document.Dependency.Destination is null))
+        if ((document.Dependency is not null) && (document.Dependency.Destination is null))
         {
             Trace.SafeWrite(
                 Trace.File,

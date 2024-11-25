@@ -300,7 +300,7 @@ namespace MS.Internal.Data
             get
             {
                 EnsureSnapshot();
-                return (_view != null) ? _view.IsEmpty : true;
+                return (_view is not null) ? _view.IsEmpty : true;
             }
         }
 
@@ -342,7 +342,7 @@ namespace MS.Internal.Data
         /// </summary>
         public override bool PassesFilter(object item)
         {
-            if (_view.CanFilter && _view.Filter != null)
+            if (_view.CanFilter && _view.Filter is not null)
                 return _view.Filter(item);
 
             return true;
@@ -554,7 +554,7 @@ namespace MS.Internal.Data
 
             // we're done with an enumerator - dispose it
             IDisposable id = ie as IDisposable;
-            if (id != null)
+            if (id is not null)
             {
                 id.Dispose();
             }
@@ -672,7 +672,7 @@ namespace MS.Internal.Data
 
             public void Dispose()
             {
-                if (_parent != null)
+                if (_parent is not null)
                 {
                     _parent.EndIgnoreEvents();
                     _parent = null;

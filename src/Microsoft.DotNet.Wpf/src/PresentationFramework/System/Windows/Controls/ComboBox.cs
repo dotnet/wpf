@@ -223,7 +223,7 @@ namespace System.Windows.Controls
 
             // Fire accessibility event
             ComboBoxAutomationPeer peer = UIElementAutomationPeer.FromElement(comboBox) as ComboBoxAutomationPeer;
-            if(peer != null)
+            if(peer is not null)
             {
                 peer.RaiseExpandCollapseAutomationEvent(oldValue, newValue);
             }
@@ -234,10 +234,10 @@ namespace System.Windows.Controls
                 Mouse.Capture(comboBox, CaptureMode.SubTree);
 
                 // Select text if editable
-                if (comboBox.IsEditable && comboBox.EditableTextBoxSite != null)
+                if (comboBox.IsEditable && comboBox.EditableTextBoxSite is not null)
                     comboBox.EditableTextBoxSite.SelectAll();
 
-                if (comboBox._clonedElement != null && VisualTreeHelper.GetParent(comboBox._clonedElement) is null)
+                if (comboBox._clonedElement is not null && VisualTreeHelper.GetParent(comboBox._clonedElement) is null)
                 {
                     comboBox.Dispatcher.BeginInvoke(
                         DispatcherPriority.Loaded,
@@ -246,7 +246,7 @@ namespace System.Windows.Controls
                             ComboBox cb = (ComboBox)arg;
                             cb.UpdateSelectionBoxItem();
 
-                            if (cb._clonedElement != null)
+                            if (cb._clonedElement is not null)
                             {
                                 cb._clonedElement.CoerceValue(FrameworkElement.FlowDirectionProperty);
                             }
@@ -287,7 +287,7 @@ namespace System.Windows.Controls
                 {
                     if (comboBox.IsEditable)
                     {
-                        if (comboBox.EditableTextBoxSite != null && !comboBox.EditableTextBoxSite.IsKeyboardFocusWithin)
+                        if (comboBox.EditableTextBoxSite is not null && !comboBox.EditableTextBoxSite.IsKeyboardFocusWithin)
                         {
                             comboBox.Focus();
                         }
@@ -502,7 +502,7 @@ namespace System.Windows.Controls
             ComboBox comboBox = (ComboBox)o;
             ComboBoxItem highlightedElement;
             return (!comboBox.IsDropDownOpen && comboBox.IsKeyboardFocusWithin) ||
-                   ((highlightedElement = comboBox.HighlightedElement) != null && highlightedElement.Content == comboBox._clonedElement);
+                   ((highlightedElement = comboBox.HighlightedElement) is not null && highlightedElement.Content == comboBox._clonedElement);
         }
 
         #endregion
@@ -570,7 +570,7 @@ namespace System.Windows.Controls
             if (IsDropDownOpen)
             {
                 ItemInfo selectedInfo = InternalSelectedInfo;
-                if (selectedInfo != null)
+                if (selectedInfo is not null)
                 {
                     NavigateToItem(selectedInfo, ItemNavigateArgs.Empty);
                 }
@@ -582,7 +582,7 @@ namespace System.Windows.Controls
                 ||  AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection)   )
             {
                 ComboBoxAutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(this) as ComboBoxAutomationPeer;
-                if (peer != null)
+                if (peer is not null)
                     peer.RaiseSelectionEvents(e);
             }
         }
@@ -627,7 +627,7 @@ namespace System.Windows.Controls
             ComboBoxAutomationPeer peer = UIElementAutomationPeer.FromElement(cb) as ComboBoxAutomationPeer;
             // Raise the propetyChangeEvent for Value if Automation Peer exist, the new Value must
             // be the one in SelctionBoxItem(selected value is the one user will care about)
-            if (peer != null)
+            if (peer is not null)
                 peer.RaiseValuePropertyChangedEvent((string)e.OldValue, (string)e.NewValue);
 
             cb.TextUpdated((string)e.NewValue, false);
@@ -698,7 +698,7 @@ namespace System.Windows.Controls
                     // Try searching for an item matching the new text
                     if (IsTextSearchEnabled)
                     {
-                        if (_updateTextBoxOperation != null)
+                        if (_updateTextBoxOperation is not null)
                         {
                             // cancel any pending async update of the textbox
                             _updateTextBoxOperation.Abort();
@@ -733,8 +733,8 @@ namespace System.Windows.Controls
                                     // it doesn't get confused with the IME's undo stack.
                                     MS.Internal.Documents.UndoManager undoManager =
                                         EditableTextBoxSite.TextContainer.UndoManager;
-                                    if (undoManager != null &&
-                                        undoManager.OpenedUnit != null &&
+                                    if (undoManager is not null &&
+                                        undoManager.OpenedUnit is not null &&
                                         undoManager.OpenedUnit.GetType() != typeof(TextParentUndoUnit))
                                     {
                                         _updateTextBoxOperation = Dispatcher.BeginInvoke(DispatcherPriority.Normal,
@@ -777,7 +777,7 @@ namespace System.Windows.Controls
                     {
                         SetCurrentValueInternal(TextProperty, newText);
                     }
-                    else if (EditableTextBoxSite != null)
+                    else if (EditableTextBoxSite is not null)
                     {
                         EditableTextBoxSite.Text = newText;
                     }
@@ -846,7 +846,7 @@ namespace System.Windows.Controls
                     string text = Text;
 
                     // Copy ComboBox.Text to the editable TextBox
-                    if (EditableTextBoxSite != null && EditableTextBoxSite.Text != text)
+                    if (EditableTextBoxSite is not null && EditableTextBoxSite.Text != text)
                     {
                         EditableTextBoxSite.Text = text;
                         EditableTextBoxSite.SelectAll();
@@ -878,14 +878,14 @@ namespace System.Windows.Controls
             // (this handles the case of ComboBoxItem)
             ContentControl contentControl = item as ContentControl;
 
-            if (contentControl != null)
+            if (contentControl is not null)
             {
                 item = contentControl.Content;
                 itemTemplate = contentControl.ContentTemplate;
                 stringFormat = contentControl.ContentStringFormat;
             }
 
-            if (_clonedElement != null)
+            if (_clonedElement is not null)
             {
                 _clonedElement.LayoutUpdated -= CloneLayoutUpdated;
                 _clonedElement = null;
@@ -898,12 +898,12 @@ namespace System.Windows.Controls
                 // Instead, try to extract some useful text from the visual.
                 DependencyObject logicalElement = item as DependencyObject;
 
-                if (logicalElement != null)
+                if (logicalElement is not null)
                 {
                     // If the item is a UIElement, create a copy using a visual brush
                     _clonedElement = logicalElement as UIElement;
 
-                    if (_clonedElement != null)
+                    if (_clonedElement is not null)
                     {
                         // Create visual copy of selected element
                         VisualBrush visualBrush = new VisualBrush(_clonedElement);
@@ -1073,7 +1073,7 @@ namespace System.Windows.Controls
             // If we're an editable combobox, forward focus to the TextBox element
             if (!e.Handled)
             {
-                if (comboBox.IsEditable && comboBox.EditableTextBoxSite != null)
+                if (comboBox.IsEditable && comboBox.EditableTextBoxSite is not null)
                 {
                     if (e.OriginalSource == comboBox)
                     {
@@ -1102,7 +1102,7 @@ namespace System.Windows.Controls
             }
 
             ComboBoxItem cbi = info.Container as ComboBoxItem;
-            HighlightedInfo = (cbi != null) ? info : null;
+            HighlightedInfo = (cbi is not null) ? info : null;
 
             // When IsEditable is 'true', we'll always want to commit the selection. e.g. when user press KeyUp/Down.
             // However, when IsEditable is 'false' and Dropdown is open, we could get here when user navigate to
@@ -1221,7 +1221,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                if (_autoScrollTimer != null)
+                if (_autoScrollTimer is not null)
                 {
                     _autoScrollTimer.Stop();
                     _autoScrollTimer = null;
@@ -1239,7 +1239,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (IsEditable && EditableTextBoxSite != null)
+                if (IsEditable && EditableTextBoxSite is not null)
                 {
                     return EditableTextBoxSite.HasEffectiveKeyboardFocus;
                 }
@@ -1260,7 +1260,7 @@ namespace System.Windows.Controls
         internal void NotifyComboBoxItemMouseUp(ComboBoxItem comboBoxItem)
         {
             object item = ItemContainerGenerator.ItemFromContainer(comboBoxItem);
-            if (item != null)
+            if (item is not null)
             {
                 SelectionChange.SelectJustThisItem(NewItemInfo(item, comboBoxItem), true /* assumeInItemsCollection */);
             }
@@ -1607,11 +1607,11 @@ namespace System.Windows.Controls
             TextElement textElement;
             string strValue = String.Empty;
 
-            if ((text = d as TextBlock) != null)
+            if ((text = d as TextBlock) is not null)
             {
                 strValue = text.Text;
             }
-            else if ((visual = d as Visual) != null)
+            else if ((visual = d as Visual) is not null)
             {
                 int count = VisualTreeHelper.GetChildrenCount(visual);
                 for(int i = 0; i < count; i++)
@@ -1619,7 +1619,7 @@ namespace System.Windows.Controls
                     strValue += ExtractString((DependencyObject)(VisualTreeHelper.GetChild(visual, i)));
                 }
             }
-            else if ((textElement = d as TextElement) != null)
+            else if ((textElement = d as TextElement) is not null)
             {
                 strValue += TextRangeBase.GetTextInternal(textElement.ContentStart, textElement.ContentEnd);
             }
@@ -1635,7 +1635,7 @@ namespace System.Windows.Controls
         {
             base.OnApplyTemplate();
 
-            if (_dropDownPopup != null)
+            if (_dropDownPopup is not null)
             {
                 _dropDownPopup.Closed -= OnPopupClosed;
             }
@@ -1644,14 +1644,14 @@ namespace System.Windows.Controls
             _dropDownPopup = GetTemplateChild(PopupTemplateName) as Popup;
 
             // EditableTextBoxSite should have been set by now if it's in the visual tree
-            if (EditableTextBoxSite != null)
+            if (EditableTextBoxSite is not null)
             {
                 EditableTextBoxSite.TextChanged += new TextChangedEventHandler(OnEditableTextBoxTextChanged);
                 EditableTextBoxSite.SelectionChanged += new RoutedEventHandler(OnEditableTextBoxSelectionChanged);
                 EditableTextBoxSite.PreviewTextInput += new TextCompositionEventHandler(OnEditableTextBoxPreviewTextInput);
             }
 
-            if (_dropDownPopup != null)
+            if (_dropDownPopup is not null)
             {
                 _dropDownPopup.Closed += OnPopupClosed;
             }
@@ -1666,7 +1666,7 @@ namespace System.Windows.Controls
             // This is called when a template is applied but before the new template has been inflated.
 
             // If we had a style before, detach from event handlers
-            if (EditableTextBoxSite != null)
+            if (EditableTextBoxSite is not null)
             {
                 EditableTextBoxSite.TextChanged -= new TextChangedEventHandler(OnEditableTextBoxTextChanged);
                 EditableTextBoxSite.SelectionChanged -= new RoutedEventHandler(OnEditableTextBoxSelectionChanged);
@@ -1745,7 +1745,7 @@ namespace System.Windows.Controls
                 Visual originalSource = e.OriginalSource as Visual;
                 Visual textBox = comboBox.EditableTextBoxSite;
 
-                if (originalSource != null && textBox != null
+                if (originalSource is not null && textBox is not null
                     && textBox.IsAncestorOf(originalSource))
                 {
                     if (comboBox.IsDropDownOpen && !comboBox.StaysOpenOnEdit)
@@ -1794,7 +1794,7 @@ namespace System.Windows.Controls
             // The mouse moved, see if we're over the items host yet
             if (comboBox.IsDropDownOpen)
             {
-                bool isMouseOverItemsHost = comboBox.ItemsHost != null ? comboBox.ItemsHost.IsMouseOver : false;
+                bool isMouseOverItemsHost = comboBox.ItemsHost is not null ? comboBox.ItemsHost.IsMouseOver : false;
 
                 // When mouse enters items host, start tracking mouse movements
                 if (isMouseOverItemsHost && !comboBox.HasMouseEnteredItemsHost)
@@ -1859,7 +1859,7 @@ namespace System.Windows.Controls
 
             SetCurrentValueInternal(IsDropDownOpenProperty, BooleanBoxes.Box(openDropDown));
 
-            if (openDropDown == false && commitSelection && (infoToSelect != null))
+            if (openDropDown == false && commitSelection && (infoToSelect is not null))
             {
                 SelectionChange.SelectJustThisItem(infoToSelect, true /* assumeInItemsCollection */);
             }
@@ -1868,7 +1868,7 @@ namespace System.Windows.Controls
         private void CommitSelection()
         {
             ItemInfo infoToSelect = HighlightedInfo;
-            if (infoToSelect != null)
+            if (infoToSelect is not null)
             {
                 SelectionChange.SelectJustThisItem(infoToSelect, true /* assumeInItemsCollection */);
             }
@@ -1938,11 +1938,11 @@ namespace System.Windows.Controls
             get
             {
                 Panel itemsHost = ItemsHost;
-                if (itemsHost != null)
+                if (itemsHost is not null)
                 {
                     HwndSource source = PresentationSource.CriticalFromVisual(itemsHost) as HwndSource;
 
-                    if (source != null && !source.IsDisposed && source.RootVisual != null)
+                    if (source is not null && !source.IsDisposed && source.RootVisual is not null)
                     {
                         return source.RootVisual.IsAncestorOf(itemsHost);
                     }
@@ -1957,16 +1957,16 @@ namespace System.Windows.Controls
             get { return _highlightedInfo; }
             set
             {
-                ComboBoxItem cbi = (_highlightedInfo != null) ? _highlightedInfo.Container as ComboBoxItem : null;
-                if (cbi != null)
+                ComboBoxItem cbi = (_highlightedInfo is not null) ? _highlightedInfo.Container as ComboBoxItem : null;
+                if (cbi is not null)
                 {
                     cbi.SetIsHighlighted(false);
                 }
 
                 _highlightedInfo = value;
 
-                cbi = (_highlightedInfo != null) ? _highlightedInfo.Container as ComboBoxItem : null;
-                if (cbi != null)
+                cbi = (_highlightedInfo is not null) ? _highlightedInfo.Container as ComboBoxItem : null;
+                if (cbi is not null)
                 {
                     cbi.SetIsHighlighted(true);
                 }

@@ -246,7 +246,7 @@ namespace MS.Internal.WindowsRuntime
             {
                 if (!_disposed)
                 {
-                    if (_inputPane != null)
+                    if (_inputPane is not null)
                     {
                         try
                         {

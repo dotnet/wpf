@@ -67,10 +67,10 @@ namespace MS.Internal.Annotations.Anchoring
         /// <param name="parent">parent of the selection</param>
         internal AttachedAnnotation(LocatorManager manager, Annotation annotation, AnnotationResource anchor, Object attachedAnchor, AttachmentLevel attachmentLevel, DependencyObject parent)
         {
-            Debug.Assert(manager != null, "LocatorManager can not be null");
-            Debug.Assert(annotation != null, "Annotation can not be null");
-            Debug.Assert(anchor != null, "Anchor can not be null");
-            Debug.Assert(attachedAnchor != null, "AttachedAnchor can not be null");
+            Debug.Assert(manager is not null, "LocatorManager can not be null");
+            Debug.Assert(annotation is not null, "Annotation can not be null");
+            Debug.Assert(anchor is not null, "Anchor can not be null");
+            Debug.Assert(attachedAnchor is not null, "AttachedAnchor can not be null");
 
             _annotation = annotation;
             _anchor = anchor;
@@ -237,7 +237,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <param name="parent">optional, the parent of the attached annotation</param>
         internal void Update(object attachedAnchor, AttachmentLevel attachmentLevel, DependencyObject parent)
         {
-            Debug.Assert(attachedAnchor != null, "AttachedAnchor can not be null");
+            Debug.Assert(attachedAnchor is not null, "AttachedAnchor can not be null");
             Debug.Assert(attachmentLevel > AttachmentLevel.Unresolved && attachmentLevel <= AttachmentLevel.Incomplete,
                          "Undefined attachment level");
 
@@ -245,7 +245,7 @@ namespace MS.Internal.Annotations.Anchoring
             _attachmentLevel = attachmentLevel;
             _selectionProcessor = _locatorManager.GetSelectionProcessor(attachedAnchor.GetType());
             // Use optional parent if available
-            if (parent != null)
+            if (parent is not null)
             {
                 _parent = parent;
             }
@@ -253,7 +253,7 @@ namespace MS.Internal.Annotations.Anchoring
             {
                 _parent = _selectionProcessor.GetParent(_attachedAnchor);
             }
-            Debug.Assert(_selectionProcessor != null, SR.Format(SR.NoProcessorForSelectionType, attachedAnchor.GetType()));
+            Debug.Assert(_selectionProcessor is not null, SR.Format(SR.NoProcessorForSelectionType, attachedAnchor.GetType()));
         }
 
 
@@ -281,10 +281,10 @@ namespace MS.Internal.Annotations.Anchoring
         private AnnotationStore GetStore()
         {
             // indirect via the parent element & DP
-            if (this.Parent != null)
+            if (this.Parent is not null)
             {
                 AnnotationService service = AnnotationService.GetService(this.Parent);
-                if (service != null)
+                if (service is not null)
                     return service.Store;
             }
 

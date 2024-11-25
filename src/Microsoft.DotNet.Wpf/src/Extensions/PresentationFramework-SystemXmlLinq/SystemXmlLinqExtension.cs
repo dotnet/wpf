@@ -37,7 +37,7 @@ namespace MS.Internal
         internal override string GetXElementTagName(object item)
         {
             XName name = ((XElement)item).Name;
-            return (name != null) ? name.ToString() : null;
+            return (name is not null) ? name.ToString() : null;
         }
 
         // XLinq exposes two synthetic properties - Elements and Descendants -

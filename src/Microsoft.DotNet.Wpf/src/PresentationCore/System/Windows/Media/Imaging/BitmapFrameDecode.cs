@@ -53,7 +53,7 @@ namespace System.Windows.Media.Imaging
             _isMetadataCached = false;
             _frameSource = null;
 
-            Debug.Assert(decoder != null);
+            Debug.Assert(decoder is not null);
             _decoder = decoder;
             _syncObject = decoder.SyncObject;
             _createOptions = createOptions;
@@ -143,7 +143,7 @@ namespace System.Windows.Media.Imaging
 
             WicSourceHandle = source.WicSourceHandle;
 
-            Debug.Assert(decoder != null);
+            Debug.Assert(decoder is not null);
             _decoder = decoder;
             _createOptions = createOptions;
             _cacheOption = cacheOption;
@@ -259,7 +259,7 @@ namespace System.Windows.Media.Imaging
                     {
                         IList<ColorContext> colorContextList = ColorContext.GetColorContextsHelper(GetColorContexts);
 
-                        if (colorContextList != null)
+                        if (colorContextList is not null)
                         {
                             _readOnlycolorContexts = new ReadOnlyCollection<ColorContext>(colorContextList);
                         }
@@ -295,7 +295,7 @@ namespace System.Windows.Media.Imaging
         {
             ReadPreamble();
 
-            if (_decoder != null)
+            if (_decoder is not null)
             {
                 _decoder.CheckOriginalWritable();
             }
@@ -335,7 +335,7 @@ namespace System.Windows.Media.Imaging
         {
             ReadPreamble();
 
-            if (_decoder != null)
+            if (_decoder is not null)
             {
                 return _decoder.ToString();
             }
@@ -374,7 +374,7 @@ namespace System.Windows.Media.Imaging
             _readOnlycolorContexts = sourceBitmapFrameDecode._readOnlycolorContexts;
 
             _decoder = sourceBitmapFrameDecode._decoder;
-            if (_decoder != null && _decoder.IsDownloading)
+            if (_decoder is not null && _decoder.IsDownloading)
             {
                 // UpdateDecoder must be called when download completes and the real decoder
                 // is created. Normally _decoder will call UpdateDecoder, but in this case the
@@ -448,7 +448,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         internal void UpdateDecoder(BitmapDecoder decoder)
         {
-            Debug.Assert(_decoder != null);
+            Debug.Assert(_decoder is not null);
             _decoder = decoder;
             _syncObject = decoder.SyncObject;
             WicSourceHandle = null;
@@ -667,7 +667,7 @@ namespace System.Windows.Media.Imaging
                     {
                         SafeMILHandle metadataHandle = new SafeMILHandle(metadata);
 
-                        _metadata = new BitmapMetadata(metadataHandle, true, _decoder != null ? _decoder.IsMetadataFixedSize : false, _syncObject);
+                        _metadata = new BitmapMetadata(metadataHandle, true, _decoder is not null ? _decoder.IsMetadataFixedSize : false, _syncObject);
                         _metadata.Freeze();
                     }
 
@@ -708,12 +708,12 @@ namespace System.Windows.Media.Imaging
                     _decoder = ((LateBoundBitmapDecoder)_decoder).Decoder;
                     _syncObject = _decoder.SyncObject;
 
-                    Debug.Assert(_decoder.InternalDecoder != null);
+                    Debug.Assert(_decoder.InternalDecoder is not null);
                 }
 
                 IntPtr frameDecode = IntPtr.Zero;
 
-                Debug.Assert(_syncObject != null);
+                Debug.Assert(_syncObject is not null);
                 lock (_syncObject)
                 {
                     HRESULT.Check(UnsafeNativeMethods.WICBitmapDecoder.GetFrame(

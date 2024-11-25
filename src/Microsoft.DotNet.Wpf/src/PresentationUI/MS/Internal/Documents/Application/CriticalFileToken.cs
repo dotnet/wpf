@@ -64,7 +64,7 @@ internal sealed class CriticalFileToken
         }
         else
         {
-            if (((object)b) != null)
+            if (((object)b) is not null)
             {
                 result = a._location.ToString().Equals(
                 b._location.ToString(),

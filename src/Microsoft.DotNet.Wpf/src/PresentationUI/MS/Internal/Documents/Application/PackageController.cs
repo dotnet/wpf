@@ -33,7 +33,7 @@ internal class PackageController : IDocumentController
     {
         PackageDocument doc = (PackageDocument)document;
 
-        if (doc.Workspace != null)
+        if (doc.Workspace is not null)
         {
             doc.Package.EnableEditMode(doc.Workspace);
         }
@@ -168,7 +168,7 @@ internal class PackageController : IDocumentController
         PackageDocument packageDoc = (PackageDocument)document;
         RightsDocument rightsDoc = document.Dependency as RightsDocument;
 
-        if (rightsDoc != null)
+        if (rightsDoc is not null)
         {
             bool isDestinationProtected = rightsDoc.IsDestinationProtected();
             bool isSourceProtected = rightsDoc.IsSourceProtected();

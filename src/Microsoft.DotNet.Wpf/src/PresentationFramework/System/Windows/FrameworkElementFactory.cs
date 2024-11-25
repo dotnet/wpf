@@ -83,12 +83,12 @@ namespace System.Windows
                     throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "FrameworkElementFactory"));
                 }
 
-                if (_text != null)
+                if (_text is not null)
                 {
                     throw new InvalidOperationException(SR.FrameworkElementFactoryCannotAddText);
                 }
 
-                if ( value != null ) // We allow null up until Seal
+                if ( value is not null ) // We allow null up until Seal
                 {
                     // If non-null, must be derived from one of the supported types
                     if (!typeof(FrameworkElement).IsAssignableFrom(value) &&
@@ -107,11 +107,11 @@ namespace System.Windows
                 // an instance of that type than using Activator.CreateInstance.  So in that case
                 // save the delegate for later creation.
                 WpfKnownType knownType = null;
-                if (_type != null)
+                if (_type is not null)
                 {
                     knownType = XamlReader.BamlSharedSchemaContext.GetKnownXamlType(_type) as WpfKnownType;
                 }
-                _knownTypeFactory = (knownType != null) ? knownType.DefaultConstructor : null;
+                _knownTypeFactory = (knownType is not null) ? knownType.DefaultConstructor : null;
             }
         }
 
@@ -128,7 +128,7 @@ namespace System.Windows
                     throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "FrameworkElementFactory"));
                 }
 
-                if (_firstChild != null)
+                if (_firstChild is not null)
                 {
                     throw new InvalidOperationException(SR.FrameworkElementFactoryCannotAddText);
                 }
@@ -174,12 +174,12 @@ namespace System.Windows
 
             ArgumentNullException.ThrowIfNull(child);
 
-            if (child._parent != null)
+            if (child._parent is not null)
             {
                 throw new ArgumentException(SR.FrameworkElementFactoryAlreadyParented);
             }
 
-            if (_text != null)
+            if (_text is not null)
             {
                 throw new InvalidOperationException(SR.FrameworkElementFactoryCannotAddText);
             }
@@ -239,11 +239,11 @@ namespace System.Windows
             DynamicResourceExtension dynamicResourceExtension = value as DynamicResourceExtension;
             object resourceKey = null;
 
-            if( resourceExpression != null )
+            if( resourceExpression is not null )
             {
                 resourceKey = resourceExpression.ResourceKey;
             }
-            else if( dynamicResourceExtension != null )
+            else if( dynamicResourceExtension is not null )
             {
                 resourceKey = dynamicResourceExtension.ResourceKey;
             }
@@ -359,7 +359,7 @@ namespace System.Windows
                 throw new ArgumentException(SR.HandlerTypeIllegal);
             }
 
-            if (_eventHandlersStore != null)
+            if (_eventHandlersStore is not null)
             {
                 _eventHandlersStore.RemoveRoutedEventHandler(routedEvent, handler);
 
@@ -467,7 +467,7 @@ namespace System.Windows
             // Not expecting InvalidCastException - Type.set should have
             //  verified that it is a FrameworkElement or FrameworkContentElement.
 
-            if (_knownTypeFactory != null)
+            if (_knownTypeFactory is not null)
             {
                 return _knownTypeFactory.Invoke() as DependencyObject;
             }
@@ -555,7 +555,7 @@ namespace System.Windows
                 throw new InvalidOperationException(SR.NullTypeIllegal);
             }
 
-            if (_firstChild != null)
+            if (_firstChild is not null)
             {
                 // This factory has children, it must implement IAddChild so that these
                 // children can be added to the logical tree
@@ -567,7 +567,7 @@ namespace System.Windows
 
             ApplyAutoAliasRules();
 
-            if ((_childName != null) && (_childName != String.Empty))
+            if ((_childName is not null) && (_childName != String.Empty))
             {
                 // ChildName provided
                 if (!IsChildNameValid(_childName))
@@ -605,17 +605,17 @@ namespace System.Windows
             _sealed = true;
 
             // Convert ChildName to Template-specific ChildIndex, if applicable
-            if ((_childName != null) && (_childName != String.Empty) &&
-                _frameworkTemplate != null )
+            if ((_childName is not null) && (_childName != String.Empty) &&
+                _frameworkTemplate is not null )
             {
                 _childIndex = StyleHelper.CreateChildIndexFromChildName(_childName, _frameworkTemplate);
             }
 
             // Seal all children
             FrameworkElementFactory child = _firstChild;
-            while (child != null)
+            while (child is not null)
             {
-                if (_frameworkTemplate != null)
+                if (_frameworkTemplate is not null)
                 {
                     child.Seal(_frameworkTemplate);
                 }
@@ -645,12 +645,12 @@ namespace System.Windows
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordXamlBaml, EventTrace.Level.Verbose, EventTrace.Event.WClientParseFefCrInstBegin);
 
             FrameworkElement containerAsFE = container as FrameworkElement;
-            bool isContainerAnFE = containerAsFE != null;
+            bool isContainerAnFE = containerAsFE is not null;
 
             DependencyObject treeNode = null;
             // If we have text, just add it to the parent.  Otherwise create the child
             // subtree
-            if (_text != null)
+            if (_text is not null)
             {
                 // of FrameworkContentElement parent.  This is the logical equivalent
                 // to what happens when adding a child to a visual collection.
@@ -685,11 +685,11 @@ namespace System.Windows
                     // If it's neither of those, we have special support for Visual3D
 
                     treeNodeVisual3D = treeNode as Visual3D;
-                    if (treeNodeVisual3D != null)
+                    if (treeNodeVisual3D is not null)
                         treeNodeIsVisual3D = true;
                 }
 
-                Debug.Assert( treeNodeFO.IsValid || (treeNodeVisual3D != null),
+                Debug.Assert( treeNodeFO.IsValid || (treeNodeVisual3D is not null),
                     "We should not be trying to instantiate a node that is neither FrameworkElement nor FrameworkContentElement.  A type check should have been done when Type is set");
 
                 // And here's the bool we'll use to make the decision.
@@ -722,7 +722,7 @@ namespace System.Windows
                     // needs to be done before any properties are invalidated.
                     if (_childIndex != -1)
                     {
-                        Debug.Assert( _frameworkTemplate != null );
+                        Debug.Assert( _frameworkTemplate is not null );
 
                         StyleHelper.CreateInstanceDataForChild(dataField, container, treeNode, _childIndex,
                             _frameworkTemplate.HasInstanceValues, ref _frameworkTemplate.ChildRecordFromChildIndex);
@@ -738,7 +738,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    if (_childName != null)
+                    if (_childName is not null)
                     {
                         // Add this instance to the child index chain so that it may
                         // be tracked by the style
@@ -798,7 +798,7 @@ namespace System.Windows
                     // came from FrameworkElementFactory.SetValue or VisulaTrigger.SetValue
                     // so that they can get picked up.
 
-                    Debug.Assert( _frameworkTemplate != null );
+                    Debug.Assert( _frameworkTemplate is not null );
                     StyleHelper.InvalidatePropertiesOnTemplateNode(
                                 container,
                                 treeNodeFO,
@@ -825,7 +825,7 @@ namespace System.Windows
                             // If it's a freezable that can't be frozen, it's probably not sharable,
                             // so we make a copy of it.
                             Freezable freezableValue = o as Freezable;
-                            if (freezableValue != null && !freezableValue.CanFreeze)
+                            if (freezableValue is not null && !freezableValue.CanFreeze)
                             {
                                 o = freezableValue.Clone();
                             }
@@ -833,7 +833,7 @@ namespace System.Windows
                             // Or, if it's a markup extension, get the value
                             // to set on this property from the MarkupExtension itself.
                             MarkupExtension me = o as MarkupExtension;
-                            if (me != null)
+                            if (me is not null)
                             {
                                 ProvideValueServiceProvider serviceProvider = new ProvideValueServiceProvider();
                                 serviceProvider.SetData( treeNodeVisual3D, propertyValue.Property );
@@ -855,7 +855,7 @@ namespace System.Windows
 
                 // Build child tree from factories
                 FrameworkElementFactory childFactory = _firstChild;
-                while (childFactory != null)
+                while (childFactory is not null)
                 {
                     childFactory.InstantiateTree(
                         dataField,
@@ -891,16 +891,16 @@ namespace System.Windows
             RowDefinition childNodeRowDefinition = null;
 
             if (    childFrameworkObject.IsFCE
-                &&  (parentGrid = parent as Grid) != null
-                &&  (   (childNodeColumnDefinition = childFrameworkObject.FCE as ColumnDefinition) != null
-                    ||  (childNodeRowDefinition = childFrameworkObject.FCE as RowDefinition) != null  )
+                &&  (parentGrid = parent as Grid) is not null
+                &&  (   (childNodeColumnDefinition = childFrameworkObject.FCE as ColumnDefinition) is not null
+                    ||  (childNodeRowDefinition = childFrameworkObject.FCE as RowDefinition) is not null  )
                 )
             {
-                if (childNodeColumnDefinition != null)
+                if (childNodeColumnDefinition is not null)
                 {
                     parentGrid.ColumnDefinitions.Add(childNodeColumnDefinition);
                 }
-                else if (childNodeRowDefinition != null)
+                else if (childNodeRowDefinition is not null)
                 {
                     parentGrid.RowDefinitions.Add(childNodeRowDefinition);
                 }
@@ -954,7 +954,7 @@ namespace System.Windows
             // If we have children, get this object's IAddChild, because it's going to be a parent.
 
             IAddChild iAddChild = null;
-            if( childFactory != null )
+            if( childFactory is not null )
             {
                 iAddChild = frameworkObject.DO as IAddChild;
                 if (iAddChild is null)
@@ -966,10 +966,10 @@ namespace System.Windows
 
             // Build the children.
 
-            while (childFactory != null)
+            while (childFactory is not null)
             {
 
-                if (childFactory._text != null)
+                if (childFactory._text is not null)
                 {
                     iAddChild.AddText(childFactory._text);
 
@@ -1009,7 +1009,7 @@ namespace System.Windows
             bool treeNodeIsFE, FrameworkElement treeNodeFE, FrameworkContentElement treeNodeFCE,
             List<DependencyObject> affectedChildren, ref List<DependencyObject> noChildIndexChildren )
         {
-            if (childID != null)
+            if (childID is not null)
             {
                 // If a child ID exists, then, a valid child index exists as well
                 if( treeNodeIsFE )
@@ -1114,10 +1114,10 @@ namespace System.Windows
             // a logical subtree from the style, since there would be a conflict.
             // Throw an exception in this case.
             FrameworkContentElement logicalParent = parent as FrameworkContentElement;
-            if (logicalParent != null)
+            if (logicalParent is not null)
             {
                 IEnumerator childEnumerator = logicalParent.LogicalChildren;
-                if (childEnumerator != null && childEnumerator.MoveNext())
+                if (childEnumerator is not null && childEnumerator.MoveNext())
                 {
                     throw new InvalidOperationException(SR.Format(SR.AlreadyHasLogicalChildren,
                                                           parent.GetType().Name));
@@ -1132,7 +1132,7 @@ namespace System.Windows
             }
             else
             {
-                if (treeNodeFE != null)
+                if (treeNodeFE is not null)
                 {
                     addChildParent.AddChild(treeNodeFE);
                 }
@@ -1180,7 +1180,7 @@ namespace System.Windows
                 if (!String.IsNullOrEmpty(prefix) && !IsValueDefined(ContentPresenter.ContentProperty))
                 {
                     // find source properties, using prefix
-                    Debug.Assert(_frameworkTemplate != null, "ContentPresenter is an FE and can only have a FrameworkTemplate");
+                    Debug.Assert(_frameworkTemplate is not null, "ContentPresenter is an FE and can only have a FrameworkTemplate");
                     Type targetType = _frameworkTemplate.TargetTypeInternal;
 
                     DependencyProperty dpContent = DependencyProperty.FromName(prefix, targetType);
@@ -1195,7 +1195,7 @@ namespace System.Windows
                     }
 
                     // auto-alias the Content property
-                    if (dpContent != null)
+                    if (dpContent is not null)
                     {
                         SetValue(ContentPresenter.ContentProperty, new TemplateBindingExtension(dpContent));
                     }
@@ -1205,11 +1205,11 @@ namespace System.Windows
                         !IsValueDefined(ContentPresenter.ContentTemplateSelectorProperty) &&
                         !IsValueDefined(ContentPresenter.ContentStringFormatProperty))
                     {
-                        if (dpContentTemplate != null)
+                        if (dpContentTemplate is not null)
                             SetValue(ContentPresenter.ContentTemplateProperty, new TemplateBindingExtension(dpContentTemplate));
-                        if (dpContentTemplateSelector != null)
+                        if (dpContentTemplateSelector is not null)
                             SetValue(ContentPresenter.ContentTemplateSelectorProperty, new TemplateBindingExtension(dpContentTemplateSelector));
-                        if (dpContentStringFormat != null)
+                        if (dpContentStringFormat is not null)
                             SetValue(ContentPresenter.ContentStringFormatProperty, new TemplateBindingExtension(dpContentStringFormat));
                     }
                 }
@@ -1223,13 +1223,13 @@ namespace System.Windows
                 if (!IsValueDefined(GridViewRowPresenter.ContentProperty))
                 {
                     // find source property
-                    Debug.Assert(_frameworkTemplate != null, "GridViewRowPresenter is an FE and can only have a FrameworkTemplate");
+                    Debug.Assert(_frameworkTemplate is not null, "GridViewRowPresenter is an FE and can only have a FrameworkTemplate");
                     Type targetType = _frameworkTemplate.TargetTypeInternal;
 
                     DependencyProperty dpContent = DependencyProperty.FromName("Content", targetType);
 
                     // auto-alias the Content property
-                    if (dpContent != null)
+                    if (dpContent is not null)
                     {
                         SetValue(GridViewRowPresenter.ContentProperty, new TemplateBindingExtension(dpContent));
                     }

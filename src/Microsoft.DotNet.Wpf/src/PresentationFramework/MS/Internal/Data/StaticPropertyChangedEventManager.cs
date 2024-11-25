@@ -154,7 +154,7 @@ namespace MS.Internal.Data
         // Add a listener to the named property (empty means "any property")
         private void PrivateAddHandler(Type type, EventHandler<PropertyChangedEventArgs> handler, string propertyName)
         {
-            Debug.Assert(handler != null && type != null && propertyName != null,
+            Debug.Assert(handler is not null && type is not null && propertyName is not null,
                 "Handler, type, and propertyName of event cannot be null");
 
             using (WriteLock)
@@ -179,14 +179,14 @@ namespace MS.Internal.Data
         // Remove a handler to the named property (empty means "any property")
         private void PrivateRemoveHandler(Type type, EventHandler<PropertyChangedEventArgs> handler, string propertyName)
         {
-            Debug.Assert(handler != null && type != null && propertyName != null,
+            Debug.Assert(handler is not null && type is not null && propertyName is not null,
                 "Handler, type, and propertyName of event cannot be null");
 
             using (WriteLock)
             {
                 TypeRecord tr = (TypeRecord)this[type];
 
-                if (tr != null)
+                if (tr is not null)
                 {
                     tr.RemoveHandler(handler, propertyName);
 
@@ -276,7 +276,7 @@ namespace MS.Internal.Data
             public void StartListening()
             {
                 EventInfo spcEvent = _type.GetEvent(StaticPropertyChanged, BindingFlags.Public | BindingFlags.Static);
-                if (spcEvent != null)
+                if (spcEvent is not null)
                 {
                     Delegate d = Delegate.CreateDelegate(spcEvent.EventHandlerType, this, OnStaticPropertyChangedMethodInfo);
                     spcEvent.AddEventHandler(null, d);
@@ -286,7 +286,7 @@ namespace MS.Internal.Data
             public void StopListening()
             {
                 EventInfo spcEvent = _type.GetEvent(StaticPropertyChanged, BindingFlags.Public | BindingFlags.Static);
-                if (spcEvent != null)
+                if (spcEvent is not null)
                 {
                     Delegate d = Delegate.CreateDelegate(spcEvent.EventHandlerType, this, OnStaticPropertyChangedMethodInfo);
                     spcEvent.RemoveEventHandler(null, d);
@@ -329,7 +329,7 @@ namespace MS.Internal.Data
             {
                 PropertyRecord pr = (PropertyRecord)_dict[propertyName];
 
-                if (pr != null)
+                if (pr is not null)
                 {
                     pr.RemoveHandler(handler);
 
@@ -359,7 +359,7 @@ namespace MS.Internal.Data
 
                     if (genericListeners is null)
                     {
-                        if (listeners != null)
+                        if (listeners is not null)
                         {
                             list = listeners;           // only specific listeners
                         }
@@ -370,7 +370,7 @@ namespace MS.Internal.Data
                     }
                     else
                     {
-                        if (listeners != null)
+                        if (listeners is not null)
                         {
                             // there are both specific and generic listeners -
                             // combine the two lists.
@@ -606,7 +606,7 @@ namespace MS.Internal.Data
             {
                 string eventName = $"{_propertyName}Changed";
                 EventInfo eventInfo = type.GetEvent(eventName, BindingFlags.Public | BindingFlags.Static);
-                if (eventInfo != null)
+                if (eventInfo is not null)
                 {
                     Delegate d = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, OnStaticPropertyChangedMethodInfo);
                     eventInfo.AddEventHandler(null, d);
@@ -617,7 +617,7 @@ namespace MS.Internal.Data
             {
                 string eventName = $"{_propertyName}Changed";
                 EventInfo eventInfo = type.GetEvent(eventName, BindingFlags.Public | BindingFlags.Static);
-                if (eventInfo != null)
+                if (eventInfo is not null)
                 {
                     Delegate d = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, OnStaticPropertyChangedMethodInfo);
                     eventInfo.RemoveEventHandler(null, d);

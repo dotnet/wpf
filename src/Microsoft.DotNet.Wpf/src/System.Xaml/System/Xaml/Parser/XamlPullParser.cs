@@ -268,7 +268,7 @@ namespace MS.Internal.Xaml.Parser
                 case ScannerNodeType.ENDTAG:
                     // <Foo></Foo> if foo has no default constructor we need to output SM _Initialization V "" EM
                     XamlType currentType = _context.CurrentType;
-                    bool hasTypeConverter = currentType.TypeConverter != null;
+                    bool hasTypeConverter = currentType.TypeConverter is not null;
                     bool isConstructable = currentType.IsConstructible && !currentType.ConstructionRequiresArguments;
                     if (!hasContent && hasTypeConverter && !isConstructable)
                     {
@@ -482,7 +482,7 @@ namespace MS.Internal.Xaml.Parser
                     // then a TypeConverter
                     if (nodeType == ScannerNodeType.TEXT)
                     {
-                        if (currentType.ContentProperty != null && CanAcceptString(currentType.ContentProperty))
+                        if (currentType.ContentProperty is not null && CanAcceptString(currentType.ContentProperty))
                         {
                             isContentProperty = true;
                         }
@@ -490,7 +490,7 @@ namespace MS.Internal.Xaml.Parser
                         // Constructor.  Otherwise we can consider a TypeConverter on the TEXT.
                         else if (!_context.CurrentForcedToUseConstructor
                                 && !_xamlScanner.TextContent.IsEmpty
-                                && currentType.TypeConverter != null)
+                                && currentType.TypeConverter is not null)
                         {
                             isTextInitialization = true;
                         }
@@ -513,7 +513,7 @@ namespace MS.Internal.Xaml.Parser
                     if (isContentProperty && !_context.CurrentInUnknownContent)
                     {
                         XamlMember contentProperty = currentType.ContentProperty;
-                        if (contentProperty != null)
+                        if (contentProperty is not null)
                         {
                             bool isVisible = _context.IsVisible(
                                 contentProperty, _context.CurrentTypeIsRoot ? _context.CurrentType : null);
@@ -541,7 +541,7 @@ namespace MS.Internal.Xaml.Parser
 
                 // Now we are ready for the given element.
                 // so now emit the saved prefix definitions.
-                if (savedPrefixDefinitions != null)
+                if (savedPrefixDefinitions is not null)
                 {
                     for (int i = 0; i < savedPrefixDefinitions.Count; i++)
                     {
@@ -676,7 +676,7 @@ namespace MS.Internal.Xaml.Parser
                 // If this is TEXT and the current Property has a TypeConverter
                 // Then emit the TEXT now.
                 if (nodeType == ScannerNodeType.TEXT
-                    && _context.CurrentMember.TypeConverter != null)
+                    && _context.CurrentMember.TypeConverter is not null)
                 {
                     yield return new XamlNode(XamlNodeType.Value, trimmed);
                 }
@@ -721,7 +721,7 @@ namespace MS.Internal.Xaml.Parser
                     {
                         // Now we are ready for the given element.
                         // now emit the saved prefix definitions.
-                        if (_savedPrefixDefinitions != null)
+                        if (_savedPrefixDefinitions is not null)
                         {
                             for (int i = 0; i < _savedPrefixDefinitions.Count; i++)
                             {
@@ -837,7 +837,7 @@ namespace MS.Internal.Xaml.Parser
                 _context.CurrentForcedToUseConstructor = true;
             }
             XamlType memberXamlType = member.Type;
-            _context.CurrentInContainerDirective = member.IsDirective && (memberXamlType != null && (memberXamlType.IsCollection || memberXamlType.IsDictionary));
+            _context.CurrentInContainerDirective = member.IsDirective && (memberXamlType is not null && (memberXamlType.IsCollection || memberXamlType.IsDictionary));
 
             var startMember = new XamlNode(XamlNodeType.StartMember, member);
             return startMember;
@@ -1023,7 +1023,7 @@ namespace MS.Internal.Xaml.Parser
                 }
                 // If the collection is R/W and there is a type converter and we have Text
                 // use the type converter rather than the GO; SM _items;
-                else if (propertyType.TypeConverter != null && !currentProperty.IsReadOnly
+                else if (propertyType.TypeConverter is not null && !currentProperty.IsReadOnly
                     && _xamlScanner.NodeType == ScannerNodeType.TEXT)
                 {
                     emitPreamble = false;
@@ -1032,7 +1032,7 @@ namespace MS.Internal.Xaml.Parser
                 // isn't assignable to the Collection then "Get" the collection.
                 else if (valueElementType is null || !valueElementType.CanAssignTo(propertyType))
                 {
-                    if (valueElementType != null)
+                    if (valueElementType is not null)
                     {
                         // Unless: the Value is a Markup extension, in which case it is
                         // assumed that the ProvideValue() type will be AssignableFrom
@@ -1080,7 +1080,7 @@ namespace MS.Internal.Xaml.Parser
             else
             {
                 // Force unknown members to behave as whitespace significant collections in order to preserve as much information as possible.
-                if (_context.CurrentMember != null && _context.CurrentMember.IsUnknown)
+                if (_context.CurrentMember is not null && _context.CurrentMember.IsUnknown)
                 {
                     return false;
                 }
@@ -1105,7 +1105,7 @@ namespace MS.Internal.Xaml.Parser
                         {
                             prop = _context.CurrentType.ContentProperty;
                         }
-                        if (prop != null && prop.Type != null && prop.Type.IsWhitespaceSignificantCollection)
+                        if (prop is not null && prop.Type is not null && prop.Type.IsWhitespaceSignificantCollection)
                         {
                             return false;
                         }
@@ -1118,7 +1118,7 @@ namespace MS.Internal.Xaml.Parser
                     else if (text.IsSpacePreserved && _xamlScanner.PeekNodeType == ScannerNodeType.ENDTAG)
                     {
                         // ...it's by itself in a PE with no other children
-                        if (prop != null)
+                        if (prop is not null)
                         {
                             if (_context.CurrentPreviousChildType is null)
                             {
@@ -1126,7 +1126,7 @@ namespace MS.Internal.Xaml.Parser
                             }
                         }
                         // ...it's in an element with a string content property
-                        else if (_context.CurrentType.ContentProperty != null)
+                        else if (_context.CurrentType.ContentProperty is not null)
                         {
                             prop = _context.CurrentType.ContentProperty;
                             // For backcompat we need to support CPs of type object here.
@@ -1144,7 +1144,7 @@ namespace MS.Internal.Xaml.Parser
                             }
                         }
                         // ...it's in a type-convertible element
-                        else if (_context.CurrentType.TypeConverter != null && !_context.CurrentForcedToUseConstructor)
+                        else if (_context.CurrentType.TypeConverter is not null && !_context.CurrentForcedToUseConstructor)
                         {
                             return false;
                         }

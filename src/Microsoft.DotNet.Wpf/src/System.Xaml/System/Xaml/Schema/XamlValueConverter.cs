@@ -71,11 +71,11 @@ namespace System.Xaml.Schema
         protected virtual TConverterBase CreateInstance()
         {
             if (ConverterType == typeof(EnumConverter) &&
-                TargetType.UnderlyingType != null && TargetType.UnderlyingType.IsEnum)
+                TargetType.UnderlyingType is not null && TargetType.UnderlyingType.IsEnum)
             {
                 return (TConverterBase)(object)new EnumConverter(TargetType.UnderlyingType);
             }
-            else if (ConverterType != null)
+            else if (ConverterType is not null)
             {
                 if (!typeof(TConverterBase).IsAssignableFrom(ConverterType))
                 {
@@ -91,9 +91,9 @@ namespace System.Xaml.Schema
 
         private string GetDefaultName()
         {
-            if (ConverterType != null)
+            if (ConverterType is not null)
             {
-                if (TargetType != null)
+                if (TargetType is not null)
                 {
                     return $"{ConverterType.Name}({TargetType.Name})";
                 }
@@ -118,11 +118,11 @@ namespace System.Xaml.Schema
         public override int GetHashCode()
         {
             int result = Name.GetHashCode();
-            if (ConverterType != null)
+            if (ConverterType is not null)
             {
                 result ^= ConverterType.GetHashCode();
             }
-            if (TargetType != null)
+            if (TargetType is not null)
             {
                 result ^= TargetType.GetHashCode();
             }

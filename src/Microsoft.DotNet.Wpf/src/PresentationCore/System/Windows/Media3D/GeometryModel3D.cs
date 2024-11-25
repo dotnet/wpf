@@ -81,7 +81,7 @@ namespace System.Windows.Media.Media3D
         {
             Geometry3D geometry = Geometry;
             
-            if (geometry != null)
+            if (geometry is not null)
             {
                 // If our Geometry3D hit test intersects anything we should return "this" Model3D
                 // as the HitTestResult.ModelHit.
@@ -89,12 +89,12 @@ namespace System.Windows.Media.Media3D
 
                 FaceType facesToHit = FaceType.None;
 
-                if (Material != null)
+                if (Material is not null)
                 {
                     facesToHit |= FaceType.Front;
                 }
                 
-                if (BackMaterial != null)
+                if (BackMaterial is not null)
                 {
                     facesToHit |= FaceType.Back;
                 }

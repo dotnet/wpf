@@ -57,7 +57,7 @@ namespace MS.Internal.Documents.Application
                 // simply to return is worse
                 // also we can not cache this decision because the values
                 // may change when RM is on / off
-                if (_rmProperties != null)
+                if (_rmProperties is not null)
                 {
                     return _rmProperties;
                 }
@@ -297,7 +297,7 @@ namespace MS.Internal.Documents.Application
             }
 
             // Refresh file information before showing the dialog.
-            if (_fileInfo != null)
+            if (_fileInfo is not null)
             {
                 // We intentionally `swallow exceptions here, since any failure
                 // will make _fileInfo invalid as determined by the property
@@ -319,7 +319,7 @@ namespace MS.Internal.Documents.Application
             DocumentPropertiesDialog dialog = null;
             dialog = new DocumentPropertiesDialog();
             dialog.ShowDialog();
-            if (dialog != null)
+            if (dialog is not null)
             {
                 dialog.Dispose();
             }
@@ -387,7 +387,7 @@ namespace MS.Internal.Documents.Application
         {
             get
             {
-                return ((_fileInfo != null) && (_fileInfo.Exists));
+                return ((_fileInfo is not null) && (_fileInfo.Exists));
             }
         }
 

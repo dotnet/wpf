@@ -213,7 +213,7 @@ namespace System.Windows.Shell
         private void NotifyDependencyPropertyChanged(DependencyPropertyChangedEventArgs e)
         {
             DependencyPropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
+            if (handler is not null)
             {
                 handler(this, e);
             }

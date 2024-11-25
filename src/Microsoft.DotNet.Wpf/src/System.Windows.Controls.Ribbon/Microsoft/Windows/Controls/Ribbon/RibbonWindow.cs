@@ -76,7 +76,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         internal void OnTitleChanged(EventArgs e)
         {
-            if (TitleChanged != null)
+            if (TitleChanged is not null)
             {
                 TitleChanged(this, e);
             }
@@ -93,7 +93,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             // Hook up events to the system icon.
             _icon = GetTemplateChild(_iconTemplateName) as Image;
 
-            if (_icon != null)
+            if (_icon is not null)
             {
                 _icon.MouseLeftButtonDown += new MouseButtonEventHandler(IconMouseLeftButtonDown);
                 _icon.MouseRightButtonDown += new MouseButtonEventHandler(IconMouseRightButtonDown);
@@ -108,7 +108,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             base.OnMouseLeftButtonDown(e);
 
             if (FlowDirection == FlowDirection.RightToLeft &&
-                _icon != null &&
+                _icon is not null &&
                 _icon.IsVisible)
             {
                 int currentTickCount = Environment.TickCount;
@@ -170,7 +170,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void MinimizeWindowCanExecute(object sender, CanExecuteRoutedEventArgs args)
         {
             RibbonWindow rw = sender as RibbonWindow;
-            if (rw != null &&
+            if (rw is not null &&
                 rw.WindowState != WindowState.Minimized)
             {
                 args.CanExecute = true;
@@ -180,7 +180,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void MinimizeWindowExecuted(object sender, ExecutedRoutedEventArgs args)
         {
             RibbonWindow rw = sender as RibbonWindow;
-            if (rw != null)
+            if (rw is not null)
             {
 #if RIBBON_IN_FRAMEWORK
                 SystemCommands.MinimizeWindow(rw);
@@ -194,7 +194,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void MaximizeWindowCanExecute(object sender, CanExecuteRoutedEventArgs args)
         {
             RibbonWindow rw = sender as RibbonWindow;
-            if (rw != null
+            if (rw is not null
                 && rw.WindowState != WindowState.Maximized)
             {
                 args.CanExecute = true;
@@ -204,7 +204,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void MaximizeWindowExecuted(object sender, ExecutedRoutedEventArgs args)
         {
             RibbonWindow rw = sender as RibbonWindow;
-            if (rw != null)
+            if (rw is not null)
             {
 #if RIBBON_IN_FRAMEWORK
                 SystemCommands.MaximizeWindow(rw);
@@ -218,7 +218,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void RestoreWindowCanExecute(object sender, CanExecuteRoutedEventArgs args)
         {
             RibbonWindow rw = sender as RibbonWindow;
-            if (rw != null &&
+            if (rw is not null &&
                 rw.WindowState != WindowState.Normal)
             {
                 args.CanExecute = true;
@@ -228,7 +228,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void RestoreWindowExecuted(object sender, ExecutedRoutedEventArgs args)
         {
             RibbonWindow rw = sender as RibbonWindow;
-            if (rw != null)
+            if (rw is not null)
             {
 #if RIBBON_IN_FRAMEWORK
                 SystemCommands.RestoreWindow(rw);
@@ -247,7 +247,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void CloseWindowExecuted(object sender, ExecutedRoutedEventArgs args)
         {
             RibbonWindow rw = sender as RibbonWindow;
-            if (rw != null)
+            if (rw is not null)
             {
 #if RIBBON_IN_FRAMEWORK
                 SystemCommands.CloseWindow(rw);
@@ -266,19 +266,19 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void SystemMenuExecuted(object sender, ExecutedRoutedEventArgs args)
         {
             RibbonWindow rw = sender as RibbonWindow;
-            if (rw != null)
+            if (rw is not null)
             {
                 // For right-clicks, display the system menu from the point of the mouse click.
                 // For left-clicks, display the system menu in the top-left corner of the client area.
                 Point devicePoint;
                 MouseButtonEventArgs e = args.Parameter as MouseButtonEventArgs;
-                if (e != null)
+                if (e is not null)
                 {
                     // This is the right-click handler.  The presence of a MouseButtonEventArgs as args.Parameter
                     // indicates we are handling right-click.
                     devicePoint = rw.PointToScreen(e.GetPosition(rw));
                 }
-                else if (rw._clientAreaBorder != null) 
+                else if (rw._clientAreaBorder is not null) 
                 {
                     // This is the left-click handler.  We can only handle it correctly if the _clientAreaBorder
                     // template part is defined, because that is where we want to position the system menu.
@@ -309,7 +309,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         internal void ChangeIconVisibility(Visibility newVisibility)
         {
-            if (_icon != null)
+            if (_icon is not null)
             {
                 _icon.Visibility = newVisibility;
             }

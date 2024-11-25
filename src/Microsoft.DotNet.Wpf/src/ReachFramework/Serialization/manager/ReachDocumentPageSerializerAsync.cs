@@ -178,12 +178,12 @@ namespace System.Windows.Xps.Serialization
             XmlWriter.WriteStartElement(XpsS0Markup.FixedPage);
 
             String xmlnsForType = SerializationManager.GetXmlNSForType(typeof(FixedPage));
-            if (xmlnsForType != null)
+            if (xmlnsForType is not null)
             {
                 XmlWriter.WriteAttributeString(XpsS0Markup.Xmlns, xmlnsForType);
                 XmlWriter.WriteAttributeString(XpsS0Markup.XmlnsX, XpsS0Markup.XmlnsXSchema);
 
-                if (SerializationManager.Language != null)
+                if (SerializationManager.Language is not null)
                 {
                     XmlWriter.WriteAttributeString(XpsS0Markup.XmlLang, SerializationManager.Language.ToString());
                 }
@@ -225,7 +225,7 @@ namespace System.Windows.Xps.Serialization
             //
             // Serialize the data for the PrintTicket
             //
-            if (printTicket != null)
+            if (printTicket is not null)
             {
                 PrintTicketSerializerAsync serializer = new PrintTicketSerializerAsync(SerializationManager);
                 serializer.SerializeObject(printTicket);
@@ -239,7 +239,7 @@ namespace System.Windows.Xps.Serialization
         {
             ReachSerializer serializer = SerializationManager.GetSerializer(child);
 
-            if (serializer != null)
+            if (serializer is not null)
             {
                 serializer.SerializeObject(child);
             }
@@ -253,7 +253,7 @@ namespace System.Windows.Xps.Serialization
         {
             ReachFixedPageSerializerContext thisContext = context as ReachFixedPageSerializerContext;
 
-            if(thisContext != null)
+            if(thisContext is not null)
             {
                 ((XpsSerializationManager)SerializationManager).PackagingPolicy.PreCommitCurrentPage();
 

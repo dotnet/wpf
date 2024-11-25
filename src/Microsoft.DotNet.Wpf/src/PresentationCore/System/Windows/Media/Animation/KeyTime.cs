@@ -192,7 +192,7 @@ namespace System.Windows.Media.Animation
         {
             // If we don't have a value (uniform, or paced) then use the type
             // to determine the hash code
-            if (_value != null)
+            if (_value is not null)
             {
                 return _value.GetHashCode();
             }

@@ -39,7 +39,7 @@ internal static class ModuleInitializer
         Assembly assemblyApp = Assembly.GetEntryAssembly();
 
         // Check if the Application has explicitly set DisableDpiAwareness attribute.
-        if (assemblyApp != null && Attribute.IsDefined(assemblyApp, typeof(System.Windows.Media.DisableDpiAwarenessAttribute)))
+        if (assemblyApp is not null && Attribute.IsDefined(assemblyApp, typeof(System.Windows.Media.DisableDpiAwarenessAttribute)))
         {
             disableDpiAware = true;
         }

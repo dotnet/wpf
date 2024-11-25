@@ -62,7 +62,7 @@ namespace System.Windows.Media
             VisualTreeUtils.AsNonNullVisual(reference, out visual, out visual3D);
 
             // x86 branch prediction skips the branch on first encounter.  We favor 2D.
-            if (visual3D != null)
+            if (visual3D is not null)
             {
                 return visual3D.InternalVisual2DOr3DChildrenCount;
             }
@@ -85,7 +85,7 @@ namespace System.Windows.Media
             VisualTreeUtils.AsNonNullVisual(reference, out visual, out visual3D);
 
             // x86 branch prediction skips the branch on first encounter.  We favor 2D.
-            if (visual3D != null)
+            if (visual3D is not null)
             {
                 return visual3D.InternalGet2DOr3DVisualChild(childIndex);
             }
@@ -115,7 +115,7 @@ namespace System.Windows.Media
             {
                 throw new NullReferenceException("dpiInfo cannot be null");
             }
-            if (visual.InternalVisualParent != null)
+            if (visual.InternalVisualParent is not null)
             {
                 throw new InvalidOperationException("UpdateDPI should only be called on the root of a Visual tree");
             }
@@ -134,7 +134,7 @@ namespace System.Windows.Media
             VisualTreeUtils.AsNonNullVisual(reference, out visual, out visual3D);
 
             // x86 branch prediction skips the branch on first encounter.  We favor 2D.
-            if (visual3D != null)
+            if (visual3D is not null)
             {
                 return visual3D.InternalVisualParent;
             }
@@ -156,12 +156,12 @@ namespace System.Windows.Media
 
             VisualTreeUtils.AsVisualInternal(reference, out visual, out visual3D);
 
-            if (visual != null)
+            if (visual is not null)
             {
                 return visual.InternalVisualParent;
             }
 
-            if (visual3D != null)
+            if (visual3D is not null)
             {
                 return visual3D.InternalVisualParent;
             }
@@ -178,11 +178,11 @@ namespace System.Windows.Media
         {
             Visual visual = null;
 
-            while (reference != null)
+            while (reference is not null)
             {
                 visual = reference as Visual;
 
-                if (visual != null) break;
+                if (visual is not null) break;
 
                 reference = VisualTreeHelper.GetParent(reference);
             }
@@ -197,11 +197,11 @@ namespace System.Windows.Media
         {
             Visual3D visual3D = null;
 
-            while (reference != null)
+            while (reference is not null)
             {
                 visual3D = reference as Visual3D;
 
-                if (visual3D != null) break;
+                if (visual3D is not null) break;
 
                 reference = VisualTreeHelper.GetParent(reference);
             }
@@ -217,7 +217,7 @@ namespace System.Windows.Media
             VisualTreeUtils.AsNonNullVisual(reference, out visual, out visual3D);
 
             // x86 branch prediction skips the branch on first encounter.  We favor 2D.
-            if (visual3D != null)
+            if (visual3D is not null)
             {
                 return visual3D.IsAncestorOf(descendant);
             }
@@ -239,7 +239,7 @@ namespace System.Windows.Media
             // or we find the ancestor, or we reach a node of the given type.
             DependencyObject current = descendant;
 
-            while ((current != null) && (current != ancestor) && !stopType.IsInstanceOfType(current))
+            while ((current is not null) && (current != ancestor) && !stopType.IsInstanceOfType(current))
             {
                 if (current is Visual visual)
                 {
@@ -266,7 +266,7 @@ namespace System.Windows.Media
             VisualTreeUtils.AsNonNullVisual(reference, out visual, out visual3D);
 
             // x86 branch prediction skips the branch on first encounter.  We favor 2D.
-            if (visual3D != null)
+            if (visual3D is not null)
             {
                 return visual3D.FindCommonVisualAncestor(otherVisual);
             }

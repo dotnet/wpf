@@ -68,7 +68,7 @@ namespace System.Windows
         {
             get
             {
-                return (_typeInTargetAssembly != null) ? _typeInTargetAssembly.Assembly : null;
+                return (_typeInTargetAssembly is not null) ? _typeInTargetAssembly.Assembly : null;
             }
         }
 
@@ -103,10 +103,10 @@ namespace System.Windows
         {
             ComponentResourceKey key = o as ComponentResourceKey;
 
-            if (key != null)
+            if (key is not null)
             {
-                return ((key._typeInTargetAssembly != null) ? key._typeInTargetAssembly.Equals(this._typeInTargetAssembly) : (this._typeInTargetAssembly is null)) &&
-                    ((key._resourceId != null) ? key._resourceId.Equals(this._resourceId) : (this._resourceId is null));
+                return ((key._typeInTargetAssembly is not null) ? key._typeInTargetAssembly.Equals(this._typeInTargetAssembly) : (this._typeInTargetAssembly is null)) &&
+                    ((key._resourceId is not null) ? key._resourceId.Equals(this._resourceId) : (this._resourceId is null));
             }
 
             return false;
@@ -117,7 +117,7 @@ namespace System.Windows
         /// </summary>
         public override int GetHashCode()
         {
-            return ((_typeInTargetAssembly != null) ? _typeInTargetAssembly.GetHashCode() : 0) ^ ((_resourceId != null) ? _resourceId.GetHashCode() : 0);
+            return ((_typeInTargetAssembly is not null) ? _typeInTargetAssembly.GetHashCode() : 0) ^ ((_resourceId is not null) ? _resourceId.GetHashCode() : 0);
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace System.Windows
         /// </summary>
         /// <returns>the string representation of the key</returns>
         public override string ToString() =>
-            string.Create(null, stackalloc char[256], $"TargetType={((_typeInTargetAssembly != null) ? _typeInTargetAssembly.FullName : "null")} ID={((_resourceId != null) ? _resourceId.ToString() : "null")}");
+            string.Create(null, stackalloc char[256], $"TargetType={((_typeInTargetAssembly is not null) ? _typeInTargetAssembly.FullName : "null")} ID={((_resourceId is not null) ? _resourceId.ToString() : "null")}");
 
         private Type _typeInTargetAssembly;
         private bool _typeInTargetAssemblyInitialized;

@@ -104,7 +104,7 @@ namespace MS.Internal
 
         public bool IsEnabledOverride
         {
-            get { return _traceSource != null; }
+            get { return _traceSource is not null; }
         }
 
         //
@@ -275,7 +275,7 @@ namespace MS.Internal
 
             int formatIndex = 0;
 
-            if (parameters != null && labels != null && labels.Length > 0)
+            if (parameters is not null && labels is not null && labels.Length > 0)
             {
                 int i = 1, j = 0;
                 for( ; i < labels.Length && j < parameters.Length; i++, j++ )
@@ -321,7 +321,7 @@ namespace MS.Internal
                 // It's OK if we terminate because we have more lables than parameters;
                 // this is used by traces to have out-values in the Stop message.
 
-                if( TraceExtraMessages != null && j < parameters.Length)
+                if( TraceExtraMessages is not null && j < parameters.Length)
                 {
                     TraceExtraMessages( traceBuilder, parameters, j );
                 }
@@ -457,7 +457,7 @@ namespace MS.Internal
         {
             try
             {
-                return (value != null) ? value.GetHashCode() : 0;
+                return (value is not null) ? value.GetHashCode() : 0;
             }
             catch( Exception e )
             {
@@ -545,7 +545,7 @@ namespace MS.Internal
             for (int i = 0; i < args.Length; ++i)
             {
                 string s = args[i] as string;
-                argstrs[i] = (s != null) ? s : AvTrace.ToStringHelper(args[i]);
+                argstrs[i] = (s is not null) ? s : AvTrace.ToStringHelper(args[i]);
             }
             _sb.AppendFormat( CultureInfo.InvariantCulture, message, argstrs );
         }

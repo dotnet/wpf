@@ -38,7 +38,7 @@ internal class PackageDocument : Document
     {
         get
         {
-            Invariant.Assert(Dependency != null);
+            Invariant.Assert(Dependency is not null);
             return Dependency.Destination;
         }
     }
@@ -50,7 +50,7 @@ internal class PackageDocument : Document
     {
         get
         {
-            Invariant.Assert(Dependency != null);
+            Invariant.Assert(Dependency is not null);
             return Dependency.Source;
         }
     }
@@ -62,7 +62,7 @@ internal class PackageDocument : Document
     {
         get
         {
-            Invariant.Assert(Dependency != null);
+            Invariant.Assert(Dependency is not null);
             return Dependency.Workspace;
         }
     }
@@ -92,7 +92,7 @@ internal class PackageDocument : Document
         {
             if (disposing)
             {
-                if (Package != null)
+                if (Package is not null)
                 {
                     Package.Close();
                     Package = null;

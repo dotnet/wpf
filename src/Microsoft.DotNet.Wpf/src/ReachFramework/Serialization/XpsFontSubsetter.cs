@@ -151,7 +151,7 @@ namespace System.Windows.Xps.Serialization
                  FEMCacheItem cacheItem = AcquireCacheItem(
                                             glyphRun.GlyphTypeface
                                             );
-                if (cacheItem != null)
+                if (cacheItem is not null)
                 {
                     cacheItem.CurrentPageReferences = true;
                     if( _commitPolicy == FontSubsetterCommitPolicies.None &&
@@ -195,7 +195,7 @@ namespace System.Windows.Xps.Serialization
             {
                 foreach (FEMCacheItem item in _fontEmbeddingManagerCache.Values)
                 {
-                    if (item != null)
+                    if (item is not null)
                     {
                         item.AddRelationship();
                         item.CurrentPageReferences = false;
@@ -209,7 +209,7 @@ namespace System.Windows.Xps.Serialization
             {
                 foreach (FEMCacheItem item in _fontEmbeddingManagerCache.Values)
                 {
-                    if (item != null)
+                    if (item is not null)
                     {
                         item.AddRestrictedRelationship();
                     }
@@ -231,7 +231,7 @@ namespace System.Windows.Xps.Serialization
                 {
                     foreach (FEMCacheItem item in _fontEmbeddingManagerCache.Values)
                     {
-                        if (item != null && _commitPolicy != FontSubsetterCommitPolicies.None)
+                        if (item is not null && _commitPolicy != FontSubsetterCommitPolicies.None)
                         {
                             item.Commit();
                             //

@@ -39,7 +39,7 @@ namespace Microsoft.Internal.AlphaFlattener
         
             List<int> l = obj as List<int>;
 
-            if (l != null)
+            if (l is not null)
             {
                 s = "<";
 
@@ -123,7 +123,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 Console.Write(LeftPad(info.underlay.Count, 3));
             }
 
-            if (info.overlap != null)
+            if (info.overlap is not null)
             {
                 Console.Write(' ' + LeftPad(info.overlap.Count, 3));
 
@@ -148,7 +148,7 @@ namespace Microsoft.Internal.AlphaFlattener
             
             Geometry clip = p.Clip;
 
-            if (clip != null)
+            if (clip is not null)
             {
                 Console.Write(LeftPad(clip.Bounds, 0));
             }
@@ -171,7 +171,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 GlyphPrimitive gp = p as GlyphPrimitive;
 
-                if (gp != null)
+                if (gp is not null)
                 {
                     IList<char> chars = gp.GlyphRun.Characters;
                                 
@@ -190,15 +190,15 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 GeometryPrimitive gp = p as GeometryPrimitive;
 
-                if ((gp != null) && (gp.Brush != null) && (gp.Pen is null))
+                if ((gp is not null) && (gp.Brush is not null) && (gp.Pen is null))
                 {
                     Brush b = gp.Brush.Brush;
 
-                    if (b != null)
+                    if (b is not null)
                     {
                         SolidColorBrush sb = b as SolidColorBrush;
 
-                        if (sb != null)
+                        if (sb is not null)
                         {
                             Console.Write(" SolidColorBrush({0})", sb.Color);
                         }
@@ -206,7 +206,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 }
             }
 
-            if (extra != null)
+            if (extra is not null)
             {
                 Console.Write(' ');
                 Console.Write(LeftPad(extra, 0));
@@ -225,14 +225,14 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             GeometryPrimitive gp = p as GeometryPrimitive;
 
-            if (gp != null)
+            if (gp is not null)
             {
-                if ((gp.Brush != null) && (gp.Pen is null))
+                if ((gp.Brush is not null) && (gp.Pen is null))
                 {
                     return gp.Brush.IsWhite();
                 }
 
-                if ((gp.Pen != null) && (gp.Brush is null))
+                if ((gp.Pen is not null) && (gp.Brush is null))
                 {
                     return gp.Pen.StrokeBrush.IsWhite();
                 }
@@ -274,7 +274,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 }
             }
 
-            if ((p.Clip != null) && Utility.IsRectangle(p.Clip))
+            if ((p.Clip is not null) && Utility.IsRectangle(p.Clip))
             {
                 Rect bounds = p.Clip.Bounds;
 

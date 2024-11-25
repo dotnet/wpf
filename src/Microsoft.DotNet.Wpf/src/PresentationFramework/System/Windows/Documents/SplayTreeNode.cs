@@ -184,7 +184,7 @@ namespace System.Windows.Documents
 
             previousNode = this.LeftChildNode;
 
-            if (previousNode != null)
+            if (previousNode is not null)
             {
                 // Return the max node of the left child.
                 while (true)
@@ -215,7 +215,7 @@ namespace System.Windows.Documents
                 }
             }
 
-            if (previousNode != null)
+            if (previousNode is not null)
             {
                 // Splay to keep the tree balanced.
                 previousNode.Splay();
@@ -237,7 +237,7 @@ namespace System.Windows.Documents
 
             nextNode = this.RightChildNode;
 
-            if (nextNode != null)
+            if (nextNode is not null)
             {
                 // Return the min node of the right child.
                 while (true)
@@ -268,7 +268,7 @@ namespace System.Windows.Documents
                 }
             }
 
-            if (nextNode != null)
+            if (nextNode is not null)
             {
                 // Splay to keep the tree balanced.
                 nextNode.Splay();
@@ -343,7 +343,7 @@ namespace System.Windows.Documents
 
                 // Add the parent start edge.
                 TextTreeTextElementNode elementNode = node as TextTreeTextElementNode;
-                if (elementNode != null)
+                if (elementNode is not null)
                 {
                     charOffset += elementNode.IMELeftEdgeCharCount;
                 }
@@ -407,7 +407,7 @@ namespace System.Windows.Documents
             Invariant.Assert(this.RightChildNode is null, "Can't insert node with right children!");
 
             leftSubTree = insertBefore ? location.GetPreviousNode() : location;
-            if (leftSubTree != null)
+            if (leftSubTree is not null)
             {
                 rightSubTree = leftSubTree.Split();
                 containingNode = leftSubTree.ParentNode;
@@ -426,7 +426,7 @@ namespace System.Windows.Documents
 
             // Hook up the new tree to the containing node.
             this.ParentNode = containingNode;
-            if (containingNode != null)
+            if (containingNode is not null)
             {
                 containingNode.ContainedNode = this;
             }
@@ -447,21 +447,21 @@ namespace System.Windows.Documents
             leftSubTree = this.LeftChildNode;
             rightSubTree = this.RightChildNode;
 
-            if (leftSubTree != null)
+            if (leftSubTree is not null)
             {
                 leftSubTree.ParentNode = null;
             }
-            if (rightSubTree != null)
+            if (rightSubTree is not null)
             {
                 rightSubTree.ParentNode = null;
             }
 
             root = Join(leftSubTree, rightSubTree);
-            if (containerNode != null)
+            if (containerNode is not null)
             {
                 containerNode.ContainedNode = root;
             }
-            if (root != null)
+            if (root is not null)
             {
                 root.ParentNode = containerNode;
             }
@@ -480,7 +480,7 @@ namespace System.Windows.Documents
 
             Invariant.Assert(root.Role == SplayTreeNodeRole.LocalRoot);
 
-            if (leftSubTree != null)
+            if (leftSubTree is not null)
             {
                 leftSubTree.ParentNode = root;
                 root.LeftSymbolCount = leftSubTree.LeftSymbolCount + leftSubTree.SymbolCount;
@@ -492,7 +492,7 @@ namespace System.Windows.Documents
                 root.LeftCharCount = 0;
             }
 
-            if (rightSubTree != null)
+            if (rightSubTree is not null)
             {
                 rightSubTree.ParentNode = root;
             }
@@ -509,7 +509,7 @@ namespace System.Windows.Documents
             Invariant.Assert(leftSubTree is null || leftSubTree.ParentNode is null);
             Invariant.Assert(rightSubTree is null || rightSubTree.ParentNode is null);
 
-            if (leftSubTree != null)
+            if (leftSubTree is not null)
             {
                 // Get max of leftSubTree, and splay it.
                 maxNode = leftSubTree.GetMaxSibling();
@@ -521,12 +521,12 @@ namespace System.Windows.Documents
                 // Then merge the two trees.
                 // No change to any LeftSymbolCounts.
                 maxNode.RightChildNode = rightSubTree;
-                if (rightSubTree != null)
+                if (rightSubTree is not null)
                 {
                     rightSubTree.ParentNode = maxNode;
                 }
             }
-            else if (rightSubTree != null)
+            else if (rightSubTree is not null)
             {
                 maxNode = rightSubTree;
                 Invariant.Assert(maxNode.Role == SplayTreeNodeRole.LocalRoot);
@@ -550,7 +550,7 @@ namespace System.Windows.Documents
             Invariant.Assert(this.Role == SplayTreeNodeRole.LocalRoot, "location should be local root!");
 
             rightSubTree = this.RightChildNode;
-            if (rightSubTree != null)
+            if (rightSubTree is not null)
             {
                 rightSubTree.ParentNode = null;
                 this.RightChildNode = null;
@@ -842,11 +842,11 @@ namespace System.Windows.Documents
             SplayTreeNode rightChildNode;
             SplayTreeNode rightChildNodeChild;
 
-            Invariant.Assert(this.RightChildNode != null, "Can't rotate left with null right child!");
+            Invariant.Assert(this.RightChildNode is not null, "Can't rotate left with null right child!");
 
             rightChildNode = this.RightChildNode;
             this.RightChildNode = rightChildNode.LeftChildNode;
-            if (rightChildNode.LeftChildNode != null)
+            if (rightChildNode.LeftChildNode is not null)
             {
                 rightChildNode.LeftChildNode.ParentNode = this;
             }
@@ -907,11 +907,11 @@ namespace System.Windows.Documents
             SplayTreeNode leftChildNode;
             SplayTreeNode leftChildNodeChild;
 
-            Invariant.Assert(this.LeftChildNode != null, "Can't rotate right with null left child!");
+            Invariant.Assert(this.LeftChildNode is not null, "Can't rotate right with null left child!");
 
             leftChildNode = this.LeftChildNode;
             this.LeftChildNode = leftChildNode.RightChildNode;
-            if (leftChildNode.RightChildNode != null)
+            if (leftChildNode.RightChildNode is not null)
             {
                 leftChildNode.RightChildNode.ParentNode = this;
             }

@@ -82,7 +82,7 @@ namespace System.Windows.Documents
         /// <exception cref="System.ArgumentException">
         /// Throws an ArgumentException if start and end are not
         /// positioned within the same document, or if start is positioned
-        /// after end, or if start is null but end != null.
+        /// after end, or if start is null but end is not null.
         /// </exception>
         /// <remarks>
         /// This method extracts the TextElement from its current position,
@@ -96,16 +96,16 @@ namespace System.Windows.Documents
         {
             TextContainer tree;
 
-            if (start != null)
+            if (start is not null)
             {
                 ValidationHelper.VerifyPositionPair(start, end);
             }
-            else if (end != null)
+            else if (end is not null)
             {
                 throw new ArgumentException(SR.TextElement_UnmatchedEndPointer);
             }
 
-            if (start != null)
+            if (start is not null)
             {
                 // start/end must be equally scoped.  But we want to discount
                 // this TextElement when considering scoping -- it will be
@@ -203,7 +203,7 @@ namespace System.Windows.Documents
                     }
                 }
             }
-            else if (start != null)
+            else if (start is not null)
             {
                 //
                 // Case 3: insert this TextElement to a new tree (this is no current tree).
@@ -806,7 +806,7 @@ namespace System.Windows.Documents
 
             TextElement te = value as TextElement;
 
-            if (te != null)
+            if (te is not null)
             {
                 TextSchema.ValidateChild(/*parent:*/this, /*child:*/te, true /* throwIfIllegalChild */, true /* throwIfIllegalHyperlinkDescendent */);
                 Append(te);
@@ -814,12 +814,12 @@ namespace System.Windows.Documents
             else
             {
                 UIElement uie = value as UIElement;
-                if (uie != null)
+                if (uie is not null)
                 {
                     InlineUIContainer inlineContainer = this as InlineUIContainer;
-                    if (inlineContainer != null)
+                    if (inlineContainer is not null)
                     {
-                        if (inlineContainer.Child != null)
+                        if (inlineContainer.Child is not null)
                         {
                             throw new ArgumentException(SR.Format(SR.TextSchema_ThisInlineUIContainerHasAChildUIElementAlready, this.GetType().Name, ((InlineUIContainer)this).Child.GetType().Name, value.GetType().Name));
                         }
@@ -829,9 +829,9 @@ namespace System.Windows.Documents
                     else
                     {
                         BlockUIContainer blockContainer = this as BlockUIContainer;
-                        if (blockContainer != null)
+                        if (blockContainer is not null)
                         {
-                            if (blockContainer.Child != null)
+                            if (blockContainer.Child is not null)
                             {
                                 throw new ArgumentException(SR.Format(SR.TextSchema_ThisBlockUIContainerHasAChildUIElementAlready, this.GetType().Name, ((BlockUIContainer)this).Child.GetType().Name, value.GetType().Name));
                             }
@@ -952,7 +952,7 @@ namespace System.Windows.Documents
                     // If the modified property affects layout we have some additional
                     // bookkeeping to take care of.
                     FrameworkPropertyMetadata fmetadata = e.Metadata as FrameworkPropertyMetadata;
-                    if (fmetadata != null)
+                    if (fmetadata is not null)
                     {
                         bool affectsMeasureOrArrange = fmetadata.AffectsMeasure || fmetadata.AffectsArrange || fmetadata.AffectsParentMeasure || fmetadata.AffectsParentArrange;
                         bool affectsRender = (fmetadata.AffectsRender &&
@@ -1109,7 +1109,7 @@ namespace System.Windows.Documents
                         // child.Current could be FrameworkElement, FrameworkContentElement,
                         //  or anything else.  Only recursively call self for FE & FCE.
                         TextElement child = children.Current as TextElement;
-                        if (child != null)
+                        if (child is not null)
                         {
                             child.DeepEndInit();
                         }
@@ -1239,7 +1239,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _textElementNode != null;
+                return _textElementNode is not null;
             }
         }
 
@@ -1426,7 +1426,7 @@ namespace System.Windows.Documents
                 }
 
                 TextTreeTextElementNode node = _textElementNode.GetNextNode() as TextTreeTextElementNode;
-                return (node != null) ? node.TextElement : null;
+                return (node is not null) ? node.TextElement : null;
             }
         }
 
@@ -1444,7 +1444,7 @@ namespace System.Windows.Documents
                 }
 
                 TextTreeTextElementNode node = _textElementNode.GetPreviousNode() as TextTreeTextElementNode;
-                return (node != null) ? node.TextElement : null;
+                return (node is not null) ? node.TextElement : null;
             }
         }
 
@@ -1462,7 +1462,7 @@ namespace System.Windows.Documents
                 }
 
                 TextTreeTextElementNode node = _textElementNode.GetFirstContainedNode() as TextTreeTextElementNode;
-                return (node != null) ? node.TextElement : null;
+                return (node is not null) ? node.TextElement : null;
             }
         }
 
@@ -1480,7 +1480,7 @@ namespace System.Windows.Documents
                 }
 
                 TextTreeTextElementNode node = _textElementNode.GetLastContainedNode() as TextTreeTextElementNode;
-                return (node != null) ? node.TextElement : null;
+                return (node is not null) ? node.TextElement : null;
             }
         }
 
@@ -1593,7 +1593,7 @@ namespace System.Windows.Documents
         private static bool IsValidFontFamily(object o)
         {
             FontFamily value = o as FontFamily;
-            return (value != null);
+            return (value is not null);
         }
 
         /// <summary>

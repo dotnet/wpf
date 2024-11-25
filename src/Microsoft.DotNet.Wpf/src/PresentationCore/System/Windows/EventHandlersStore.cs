@@ -97,7 +97,7 @@ namespace System.Windows
 
             // Get the entry corresponding to the given key
             Delegate existingDelegate = (Delegate) this[key];
-            if (existingDelegate != null)
+            if (existingDelegate is not null)
             {
                 existingDelegate = Delegate.Remove(existingDelegate, handler);
                 if (existingDelegate is null)
@@ -191,7 +191,7 @@ namespace System.Windows
             
             // Get the entry corresponding to the given RoutedEvent
             FrugalObjectList<RoutedEventHandlerInfo> handlers = (FrugalObjectList<RoutedEventHandlerInfo>)this[routedEvent];
-            if (handlers != null && handlers.Count > 0)
+            if (handlers is not null && handlers.Count > 0)
             {
                 if ((handlers.Count == 1) && (handlers[0].Handler == handler))
                 {
@@ -230,7 +230,7 @@ namespace System.Windows
 
             FrugalObjectList<RoutedEventHandlerInfo> handlers = (FrugalObjectList<RoutedEventHandlerInfo>)this[routedEvent];
 
-            return handlers != null && handlers.Count != 0;
+            return handlers is not null && handlers.Count != 0;
         }
 
         /// <summary>
@@ -241,7 +241,7 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(routedEvent);
 
             FrugalObjectList<RoutedEventHandlerInfo> handlers = this[routedEvent];
-            if (handlers != null)
+            if (handlers is not null)
             {
                 return handlers.ToArray();
             }
@@ -254,7 +254,7 @@ namespace System.Windows
         {            
             get
             {
-                Debug.Assert(key != null, "Search key cannot be null");
+                Debug.Assert(key is not null, "Search key cannot be null");
 
                 object list = _entries[key.GlobalIndex];
                 if (list == DependencyProperty.UnsetValue)
@@ -272,7 +272,7 @@ namespace System.Windows
         {
             get
             {
-                Debug.Assert(key != null, "Search key cannot be null");
+                Debug.Assert(key is not null, "Search key cannot be null");
 
                 object existingDelegate = _entries[key.GlobalIndex];
                 if (existingDelegate == DependencyProperty.UnsetValue)

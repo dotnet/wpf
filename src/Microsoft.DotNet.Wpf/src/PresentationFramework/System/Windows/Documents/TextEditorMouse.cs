@@ -147,12 +147,12 @@ namespace System.Windows.Documents
                 {
                     // Transform point to TextView.RenderScope coordinates.
                     transform = textEditor.UiScope.TransformToDescendant(textEditor.TextView.RenderScope);
-                    if (transform != null)
+                    if (transform is not null)
                     {
                         transform.TryTransform(point, out point);
                     }
                     position = textEditor.TextView.GetTextPositionFromPoint(point, true);
-                    interactiveArea = (position != null);
+                    interactiveArea = (position is not null);
                 }
             }
             return interactiveArea;
@@ -249,7 +249,7 @@ namespace System.Windows.Documents
             {
                 // Set up resize information, and create adorner
                 This._tableColResizeInfo = TextRangeEditTables.StartColumnResize(This.TextView, mouseDownPoint);
-                Invariant.Assert(This._tableColResizeInfo != null);
+                Invariant.Assert(This._tableColResizeInfo is not null);
 
                 This._mouseCapturingInProgress = true;
                 try
@@ -358,7 +358,7 @@ namespace System.Windows.Documents
             // REVIEW:benwest: should this call be in the change block?
             TextEditorMouse.UpdateCursor(This, mousePoint);
 
-            if (This._tableColResizeInfo != null)
+            if (This._tableColResizeInfo is not null)
             {
                 // Apply resizing and dispose table resizing adorner
                 using (This.Selection.DeclareChangeBlock())
@@ -467,7 +467,7 @@ namespace System.Windows.Documents
             TextEditorMouse.UpdateCursor(This, mouseMovePoint);
 
             // For bug 1547567, remove when resolved.
-            Invariant.Assert(This.Selection != null);
+            Invariant.Assert(This.Selection is not null);
 
             // We're only interested in moves when the left button is down.
             if (e.LeftButton != MouseButtonState.Pressed)
@@ -485,7 +485,7 @@ namespace System.Windows.Documents
             // Scale back any background layout in progress.
             This.TextView.ThrottleBackgroundTasksForUserInput();
 
-            if (This._tableColResizeInfo != null)
+            if (This._tableColResizeInfo is not null)
             {
                 This._tableColResizeInfo.UpdateAdorner(mouseMovePoint);
             }
@@ -495,13 +495,13 @@ namespace System.Windows.Documents
                 e.Handled = true;
 
                 // For bug 1547567, remove when resolved.
-                Invariant.Assert(This.Selection != null);
+                Invariant.Assert(This.Selection is not null);
 
                 // Find a text position for this mouse point
                 ITextPointer snappedCursorPosition = This.TextView.GetTextPositionFromPoint(mouseMovePoint, /*snapToText:*/true);
 
                 // For bug 1547567, remove when resolved.
-                Invariant.Assert(This.Selection != null);
+                Invariant.Assert(This.Selection is not null);
 
                 if (snappedCursorPosition is null)
                 {
@@ -512,7 +512,7 @@ namespace System.Windows.Documents
                     This.CancelExtendSelection();
 
                     // For bug 1547567, remove when resolved.
-                    Invariant.Assert(This.Selection != null);
+                    Invariant.Assert(This.Selection is not null);
 
                     if (!This._dragDropProcess.SourceOnMouseMove(mouseMovePoint))
                     {
@@ -522,7 +522,7 @@ namespace System.Windows.Documents
                         // get to farther text position - which would speed-up scrolling
                         // in particular direction.
                         FrameworkElement scroller = This._Scroller;
-                        if (scroller != null && This.UiScope is TextBoxBase)
+                        if (scroller is not null && This.UiScope is TextBoxBase)
                         {
                             ITextPointer acceleratedCursorPosition = null; // cursorPosition corrected to accelerate scrolling
 
@@ -563,7 +563,7 @@ namespace System.Windows.Documents
                             }
 
                             // Use acceleratedcursorPosition instead of real one to make scrolling reasonable faster
-                            if (acceleratedCursorPosition != null)
+                            if (acceleratedCursorPosition is not null)
                             {
                                 snappedCursorPosition = acceleratedCursorPosition;
                             }
@@ -573,7 +573,7 @@ namespace System.Windows.Documents
                         {
                             // Check end-of-container condition
                             if (snappedCursorPosition.GetNextInsertionPosition(LogicalDirection.Forward) is null &&
-                                snappedCursorPosition.ParentType != null) //  This check is a work around of bug that Parent can be null for some text boxes.
+                                snappedCursorPosition.ParentType is not null) //  This check is a work around of bug that Parent can be null for some text boxes.
                             {
                                 // We are at the end of text container. Check whether mouse is farther than a last character
                                 Rect lastCharacterRect = snappedCursorPosition.GetCharacterRect(LogicalDirection.Backward);
@@ -619,11 +619,11 @@ namespace System.Windows.Documents
             // GetParent returns a DO which could be a 2D or 3D Visual.  Since we are searching for a
             // ScrollViewer we cast it immediately to a Visual to avoid handling 3D objects.
             Visual scrollViewer = VisualTreeHelper.GetParent(This.UiScope) as Visual;
-            while (scrollViewer != null && !(scrollViewer is ScrollViewer))
+            while (scrollViewer is not null && !(scrollViewer is ScrollViewer))
             {
                 scrollViewer = VisualTreeHelper.GetParent(scrollViewer) as Visual;
             }
-            if (scrollViewer != null)
+            if (scrollViewer is not null)
             {
                 ((ScrollViewer)scrollViewer).AddHandler(ScrollViewer.ScrollChangedEvent, new ScrollChangedEventHandler(OnScrollChangedDuringGotFocus));
             }
@@ -642,7 +642,7 @@ namespace System.Windows.Documents
                 selection.Changed -= OnSelectionChangedDuringGotFocus;
             
                 // remove our scroll change handler
-                if (scrollViewer != null)
+                if (scrollViewer is not null)
                 {
                     ((ScrollViewer)scrollViewer).RemoveHandler(ScrollViewer.ScrollChangedEvent, new ScrollChangedEventHandler(OnScrollChangedDuringGotFocus));
                 }
@@ -671,7 +671,7 @@ namespace System.Windows.Documents
         {
             // Reverse the scroll
             ScrollViewer scrollViewer = e.OriginalSource as ScrollViewer;
-            if (scrollViewer != null)
+            if (scrollViewer is not null)
             {
                 scrollViewer.RemoveHandler(ScrollViewer.ScrollChangedEvent, new ScrollChangedEventHandler(OnScrollChangedDuringGotFocus));
                 scrollViewer.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset - e.HorizontalChange);
@@ -684,7 +684,7 @@ namespace System.Windows.Documents
         // the normal cursor.  Otherwise, show the EditCursors.
         private static void UpdateCursor(TextEditor This, Point mouseMovePoint)
         {
-            Invariant.Assert(This.TextView != null && This.TextView.IsValid);
+            Invariant.Assert(This.TextView is not null && This.TextView.IsValid);
 
             // Default cursor is editing IBeam
             Cursor cursor = Cursors.IBeam;
@@ -698,12 +698,12 @@ namespace System.Windows.Documents
             else
             {
                 // Check if this position belongs to selected area or is over an embedded UIElement
-                if (This.Selection != null && !This.UiScope.IsMouseCaptured)
+                if (This.Selection is not null && !This.UiScope.IsMouseCaptured)
                 {
                     if (This.Selection.IsEmpty)
                     {
                         UIElement uiElement = GetUIElementWhenMouseOver(This, mouseMovePoint);
-                        if (uiElement != null && uiElement.IsEnabled)
+                        if (uiElement is not null && uiElement.IsEnabled)
                         {
                             // Mouse is over an embedded UIElement which is enabled (UiScope may or may not have focus)
                             cursor = Cursors.Arrow;
@@ -776,7 +776,7 @@ namespace System.Windows.Documents
             CaretElement caretElement = textEditor.Selection.CaretElement;
 
             HitTestResult hitTestResult = VisualTreeHelper.HitTest(textEditor.UiScope, point);
-            if (hitTestResult != null)
+            if (hitTestResult is not null)
             {
                 bool check = false;
                 if(hitTestResult.VisualHit is Visual) check = ((Visual)hitTestResult.VisualHit).IsDescendantOf(renderScope);
@@ -791,7 +791,7 @@ namespace System.Windows.Documents
             }
 
             DependencyObject hitElement = textEditor.UiScope.InputHitTest(point) as DependencyObject;
-            while (hitElement != null)
+            while (hitElement is not null)
             {
                 if (hitElement == textContainerOwner ||
                     hitElement == renderScope || 

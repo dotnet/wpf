@@ -114,7 +114,7 @@ namespace MS.Internal.Printing.Configuration
             InputBinOption option = baseOption as InputBinOption;
 
             // Validate the option is complete before adding it to the collection
-            if (option._optionName != null)
+            if (option._optionName is not null)
             {
                 int enumValue = PrintSchemaMapper.SchemaNameToEnumValueWithArray(
                                     PrintSchemaTags.Keywords.InputBinKeys.InputBinNames,

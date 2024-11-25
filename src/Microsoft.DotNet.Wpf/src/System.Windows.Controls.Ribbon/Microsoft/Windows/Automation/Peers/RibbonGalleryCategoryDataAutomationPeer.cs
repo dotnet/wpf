@@ -59,7 +59,7 @@ namespace Microsoft.Windows.Automation.Peers
             }
 
             RibbonGalleryCategoryAutomationPeer wrapperPeer = GetWrapperPeer() as RibbonGalleryCategoryAutomationPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.GetPattern(patternInterface);
             }
@@ -77,7 +77,7 @@ namespace Microsoft.Windows.Automation.Peers
         void IScrollItemProvider.ScrollIntoView()
         {
             RibbonGalleryCategory category = GetWrapper() as RibbonGalleryCategory;
-            if (category != null)
+            if (category is not null)
             {
                 category.BringIntoView();
             }
@@ -92,10 +92,10 @@ namespace Microsoft.Windows.Automation.Peers
         {
             UIElement wrapper = null;
             ItemsControlAutomationPeer itemsControlAutomationPeer = ItemsControlAutomationPeer;
-            if (itemsControlAutomationPeer != null)
+            if (itemsControlAutomationPeer is not null)
             {
                 ItemsControl owner = (ItemsControl)(itemsControlAutomationPeer.Owner);
-                if (owner != null)
+                if (owner is not null)
                 {
                     wrapper = owner.ItemContainerGenerator.ContainerFromItem(Item) as UIElement;
                 }
@@ -107,7 +107,7 @@ namespace Microsoft.Windows.Automation.Peers
         {
             AutomationPeer wrapperPeer = null;
             UIElement wrapper = GetWrapper();
-            if (wrapper != null)
+            if (wrapper is not null)
             {
                 wrapperPeer = UIElementAutomationPeer.CreatePeerForElement(wrapper);
                 if (wrapperPeer is null)

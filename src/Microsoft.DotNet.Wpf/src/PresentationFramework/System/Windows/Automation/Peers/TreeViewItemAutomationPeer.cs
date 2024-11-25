@@ -67,7 +67,7 @@ namespace System.Windows.Automation.Peers
             ItemPeers = new ItemPeersStorage<ItemAutomationPeer>();
 
             TreeViewItem owner = Owner as TreeViewItem;
-            if (owner != null)
+            if (owner is not null)
             {
                 iterate(this, owner,
                     (IteratorCallback)delegate(AutomationPeer peer)
@@ -89,7 +89,7 @@ namespace System.Windows.Automation.Peers
         {
             bool done = false;
 
-            if (parent != null)
+            if (parent is not null)
             {
                 AutomationPeer peer = null;
                 int count = VisualTreeHelper.GetChildrenCount(parent);
@@ -97,18 +97,18 @@ namespace System.Windows.Automation.Peers
                 {
                     DependencyObject child = VisualTreeHelper.GetChild(parent, i);
 
-                    if (child != null
+                    if (child is not null
                         && child is UIElement)
                     {
                         if (child is TreeViewItem)
                         {
-                            object dataItem = (child as UIElement) != null ? (logicalParentAp.Owner as ItemsControl).GetItemOrContainerFromContainer(child as UIElement) : child;
+                            object dataItem = (child as UIElement) is not null ? (logicalParentAp.Owner as ItemsControl).GetItemOrContainerFromContainer(child as UIElement) : child;
                             peer = oldChildren[dataItem];
 
                             if (peer is null)
                             {
                                 peer = logicalParentAp.GetPeerFromWeakRefStorage(dataItem);
-                                if (peer != null)
+                                if (peer is not null)
                                 {
                                     // As cached peer is getting used it must be invalidated.
                                     peer.AncestorsInvalid = false;
@@ -122,10 +122,10 @@ namespace System.Windows.Automation.Peers
                             }
 
                             //perform hookup so the events sourced from wrapper peer are fired as if from the data item
-                            if (peer != null)
+                            if (peer is not null)
                             {
                                 AutomationPeer wrapperPeer = (peer as ItemAutomationPeer).GetWrapperPeer();
-                                if (wrapperPeer != null)
+                                if (wrapperPeer is not null)
                                 {
                                     wrapperPeer.EventsSource = peer;
                                 }
@@ -141,7 +141,7 @@ namespace System.Windows.Automation.Peers
                         {
                             peer = CreatePeerForElement((UIElement)child);
 
-                            if (peer != null)
+                            if (peer is not null)
                                 done = callback(peer);
                         }
 
@@ -169,7 +169,7 @@ namespace System.Windows.Automation.Peers
         {
             ItemAutomationPeer peer = ItemPeers[item];
             AutomationPeer parentPeer = this;
-            if (EventsSource as TreeViewDataItemAutomationPeer != null)
+            if (EventsSource as TreeViewDataItemAutomationPeer is not null)
             {
             	parentPeer = EventsSource as TreeViewDataItemAutomationPeer;
             }
@@ -181,16 +181,16 @@ namespace System.Windows.Automation.Peers
             {
                 peer = CreateItemAutomationPeer(item);
 
-                if(peer != null)
+                if(peer is not null)
                 {
                     peer.TrySetParentInfo(parentPeer);
                 }
             }
 
-            if(peer != null)
+            if(peer is not null)
             {
                 AutomationPeer wrapperPeer = (peer as ItemAutomationPeer).GetWrapperPeer();
-                if (wrapperPeer != null)
+                if (wrapperPeer is not null)
                 {
                     wrapperPeer.EventsSource = peer;
                 }
@@ -222,7 +222,7 @@ namespace System.Windows.Automation.Peers
             if (SelectionItemPatternIdentifiers.IsSelectedProperty.Id == propertyId)
             {
                 ISelectionItemProvider selectionItem = itemPeer.GetPattern(PatternInterface.SelectionItem) as ISelectionItemProvider;
-                if (selectionItem != null)
+                if (selectionItem is not null)
                     return selectionItem.IsSelected;
                 else
                     return null;
@@ -241,7 +241,7 @@ namespace System.Windows.Automation.Peers
         {
             // To ensure that the Updation of children should be initiated from DataPeer so as to have the right parent value stored for children
             TreeViewDataItemAutomationPeer dataPeer = EventsSource as TreeViewDataItemAutomationPeer;
-            if(dataPeer != null)
+            if(dataPeer is not null)
                 dataPeer.UpdateChildrenInternal(AutomationInteropProvider.ItemsInvalidateLimit);
             else
                 UpdateChildrenInternal(AutomationInteropProvider.ItemsInvalidateLimit);
@@ -260,7 +260,7 @@ namespace System.Windows.Automation.Peers
         internal void UpdateWeakRefStorageFromDataPeer()
         {
             // To use the already stored WeakRef collection of it's children Items which might be created when last time this item was realized.
-            if(EventsSource as TreeViewDataItemAutomationPeer != null)
+            if(EventsSource as TreeViewDataItemAutomationPeer is not null)
             {
                 if((EventsSource as TreeViewDataItemAutomationPeer).WeakRefElementProxyStorageCache is null)
                     (EventsSource as TreeViewDataItemAutomationPeer).WeakRefElementProxyStorageCache = WeakRefElementProxyStorage;
@@ -319,7 +319,7 @@ namespace System.Windows.Automation.Peers
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
         internal void RaiseExpandCollapseAutomationEvent(bool oldValue, bool newValue)
         {
-            if (EventsSource as TreeViewDataItemAutomationPeer != null)
+            if (EventsSource as TreeViewDataItemAutomationPeer is not null)
             {
                 (EventsSource as TreeViewDataItemAutomationPeer).RaiseExpandCollapseAutomationEvent(oldValue, newValue);
             }
@@ -347,7 +347,7 @@ namespace System.Windows.Automation.Peers
         {
             TreeView treeView = ((TreeViewItem)Owner).ParentTreeView;
             // If TreeView already has a selected item different from current - we cannot add to selection and throw
-            if (treeView is null || (treeView.SelectedItem != null && treeView.SelectedContainer != Owner))
+            if (treeView is null || (treeView.SelectedItem is not null && treeView.SelectedContainer != Owner))
             {
                 throw new InvalidOperationException(SR.UIA_OperationCannotBePerformed);
             }
@@ -381,10 +381,10 @@ namespace System.Windows.Automation.Peers
             get
             {
                 ItemsControl parent = ((TreeViewItem)Owner).ParentItemsControl;
-                if (parent != null)
+                if (parent is not null)
                 {
                     AutomationPeer peer = UIElementAutomationPeer.FromElement(parent);
-                    if (peer != null)
+                    if (peer is not null)
                         return ProviderFromPeer(peer);
                 }
 
@@ -401,7 +401,7 @@ namespace System.Windows.Automation.Peers
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
         internal void RaiseAutomationIsSelectedChanged(bool isSelected)
         {
-            if (EventsSource as TreeViewDataItemAutomationPeer != null)
+            if (EventsSource as TreeViewDataItemAutomationPeer is not null)
             {
                 (EventsSource as TreeViewDataItemAutomationPeer).RaiseAutomationIsSelectedChanged(isSelected);
             }
@@ -415,7 +415,7 @@ namespace System.Windows.Automation.Peers
         // Selection Events needs to be raised on DataItem Peers now when they exist.
         internal void RaiseAutomationSelectionEvent(AutomationEvents eventId)
         {
-            if (EventsSource != null)
+            if (EventsSource is not null)
             {
                 EventsSource.RaiseAutomationEvent(eventId);
             }

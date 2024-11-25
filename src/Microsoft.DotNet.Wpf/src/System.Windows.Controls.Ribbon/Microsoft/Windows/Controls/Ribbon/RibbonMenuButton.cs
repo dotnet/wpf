@@ -298,7 +298,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         internal virtual void TransferPseudoInheritedProperties()
         {
-            if (_partToggleButton != null && RibbonControlService.GetIsInControlGroup(this))
+            if (_partToggleButton is not null && RibbonControlService.GetIsInControlGroup(this))
             {
                 RibbonControlService.SetIsInControlGroup(_partToggleButton, true);
             }
@@ -549,7 +549,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (UsesItemContainerTemplate)
             {
                 DataTemplate itemContainerTemplate = ItemContainerTemplateSelector.SelectTemplate(currentItem, this);
-                if (itemContainerTemplate != null)
+                if (itemContainerTemplate is not null)
                 {
                     object itemContainer = itemContainerTemplate.LoadContent();
                     if (itemContainer is RibbonMenuItem || itemContainer is RibbonGallery || itemContainer is RibbonSeparator)
@@ -577,7 +577,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             else
             {
                 RibbonSeparator separator = element as RibbonSeparator;
-                if (separator != null)
+                if (separator is not null)
                 {
                     ValueSource vs = DependencyPropertyHelper.GetValueSource(separator, StyleProperty);
                     if (vs.BaseValueSource <= BaseValueSource.ImplicitStyleReference)
@@ -674,7 +674,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             // If a new template has just been generated then
             // be sure to clear any stale ItemsHost references
-            if (InternalItemsHost != null && !this.IsAncestorOf(InternalItemsHost))
+            if (InternalItemsHost is not null && !this.IsAncestorOf(InternalItemsHost))
             {
                 InternalItemsHost = null;
             }
@@ -682,14 +682,14 @@ namespace Microsoft.Windows.Controls.Ribbon
             CoerceValue(ControlSizeDefinitionProperty);
             base.OnApplyTemplate();
 
-            if (_resizeThumb != null)
+            if (_resizeThumb is not null)
             {
                 _resizeThumb.DragStarted -= new DragStartedEventHandler(OnPopupResizeStarted);
                 _resizeThumb.DragDelta -= new DragDeltaEventHandler(OnPopupResize);
             }
 
             _resizeThumb = GetTemplateChild(ResizeThumbTemplatePartName) as Thumb;
-            if (_resizeThumb != null)
+            if (_resizeThumb is not null)
             {
                 _resizeThumb.DragStarted += new DragStartedEventHandler(OnPopupResizeStarted);
                 _resizeThumb.DragDelta += new DragDeltaEventHandler(OnPopupResize);
@@ -709,7 +709,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             ItemContainerGenerator.StatusChanged += new EventHandler(OnItemContainerGeneratorStatusChanged);
 
             _submenuScrollViewer = GetTemplateChild(SubMenuScrollViewerTemplatePartName) as ScrollViewer;
-            if (_submenuScrollViewer != null)
+            if (_submenuScrollViewer is not null)
             {
                 KeyTipService.SetCanClipKeyTip(_submenuScrollViewer, false);
             }
@@ -721,7 +721,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             TemplateApplied = false;
             base.OnTemplateChanged(oldTemplate, newTemplate);
 
-            if ((oldTemplate != null) && (_partToggleButton != null))
+            if ((oldTemplate is not null) && (_partToggleButton is not null))
             {
                 RibbonHelper.ClearPseudoInheritedProperties(_partToggleButton);
                 _partToggleButton = null;
@@ -792,7 +792,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (focusedIndex < 0)
             {
                 UIElement popupChild = _popup.TryGetChild();
-                if (popupChild != null &&
+                if (popupChild is not null &&
                     popupChild.IsKeyboardFocusWithin)
                 {
                     // If the popup already has focus within,
@@ -855,7 +855,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
                 case Key.Tab:
                     if (IsDropDownOpen &&
-                        (IsFocused || (focusedElement != null && TreeHelper.IsVisualAncestorOf(this, focusedElement))))
+                        (IsFocused || (focusedElement is not null && TreeHelper.IsVisualAncestorOf(this, focusedElement))))
                     {
                         if ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
                         {
@@ -891,7 +891,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             FrameworkElement selectionItem = e.OriginalSource as FrameworkElement;
 
-            if (selectionItem != null)
+            if (selectionItem is not null)
             {
                 RibbonMenuButton menu = (RibbonMenuButton)sender;
 
@@ -937,14 +937,14 @@ namespace Microsoft.Windows.Controls.Ribbon
                 if (_ribbonCurrentSelection != value)
                 {
                     RibbonMenuItem selectedMenuItem = _ribbonCurrentSelection as RibbonMenuItem;
-                    if (selectedMenuItem != null)
+                    if (selectedMenuItem is not null)
                     {
                         selectedMenuItem.RibbonIsSelected = false;
                     }
                     else
                     {
                         RibbonGallery selectedGallery = _ribbonCurrentSelection as RibbonGallery;
-                        if (selectedGallery != null)
+                        if (selectedGallery is not null)
                         {
                             selectedGallery.RibbonIsSelected = false;
                         }
@@ -953,14 +953,14 @@ namespace Microsoft.Windows.Controls.Ribbon
                     _ribbonCurrentSelection = value;
 
                     selectedMenuItem = _ribbonCurrentSelection as RibbonMenuItem;
-                    if (selectedMenuItem != null)
+                    if (selectedMenuItem is not null)
                     {
                         selectedMenuItem.RibbonIsSelected = true;
                     }
                     else
                     {
                         RibbonGallery selectedGallery = _ribbonCurrentSelection as RibbonGallery;
-                        if (selectedGallery != null)
+                        if (selectedGallery is not null)
                         {
                             selectedGallery.RibbonIsSelected = true;
                         }
@@ -987,11 +987,11 @@ namespace Microsoft.Windows.Controls.Ribbon
             RibbonDropDownHelper.OnPopupResizeStarted(_itemsPresenter);
 
             // Clear selection and close submenus when resizing.
-            if (RibbonCurrentSelection != null)
+            if (RibbonCurrentSelection is not null)
             {
                 RibbonMenuItem selectedMenuItem = RibbonCurrentSelection as RibbonMenuItem;
                 RibbonCurrentSelection = null;
-                if (selectedMenuItem != null)
+                if (selectedMenuItem is not null)
                 {
                     selectedMenuItem.IsSubmenuOpen = false;
                 }
@@ -1048,7 +1048,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         internal void BringIndexIntoView(int index)
         {
-            if (_itemsHost != null)
+            if (_itemsHost is not null)
             {
                 _itemsHost.BringIndexIntoViewInternal(index);
             }
@@ -1056,7 +1056,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private void OnDropDownOpened(EventArgs e)
         {
-            if (DropDownOpened != null)
+            if (DropDownOpened is not null)
             {
                 DropDownOpened(this, e);
             }
@@ -1064,7 +1064,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private void OnDropDownClosed(EventArgs e)
         {
-            if (DropDownClosed != null)
+            if (DropDownClosed is not null)
             {
                 DropDownClosed(this, e);
             }
@@ -1104,7 +1104,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
                 // DropDownHeight refers to the initial Height of the popup
                 // The size of the popup can change dynamically by resizing.
-                if (_itemsPresenter != null && HasGallery)
+                if (_itemsPresenter is not null && HasGallery)
                 {
                     _itemsPresenter.Height = DropDownHeight;
                 }
@@ -1130,7 +1130,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             // Raise UI Automation Events
             RibbonMenuButtonAutomationPeer peer = UIElementAutomationPeer.FromElement(this) as RibbonMenuButtonAutomationPeer;
-            if (peer != null)
+            if (peer is not null)
             {
                 peer.RaiseExpandCollapseAutomationEvent(!(bool)e.OldValue, !(bool)e.NewValue);
             }
@@ -1258,10 +1258,10 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
 
             UIElement popupChild = _popup.TryGetChild();
-            if (popupChild != null)
+            if (popupChild is not null)
             {
                 Point targetTopLeftCorner;
-                if (_popup.PlacementTarget != null)
+                if (_popup.PlacementTarget is not null)
                 {
                     targetTopLeftCorner = _popup.PlacementTarget.PointToScreen(new Point());
                 }
@@ -1283,7 +1283,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             _screenBounds = RibbonDropDownHelper.GetScreenBounds(_itemsPresenter, _popup);
 
             // Also cache the PopupRoot if opened for the first time
-            if (_popupRoot is null && _itemsPresenter != null)
+            if (_popupRoot is null && _itemsPresenter is not null)
             {
                 _popupRoot = TreeHelper.FindVisualRoot(_itemsPresenter) as UIElement;
             }
@@ -1400,7 +1400,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         protected override void HandleMouseButton(MouseButtonEventArgs e)
         {
             FrameworkElement source = e.OriginalSource as FrameworkElement;
-            if (source != null && (source == this || source.TemplatedParent == this))
+            if (source is not null && (source == this || source.TemplatedParent == this))
             {
                 e.Handled = true;
             }
@@ -1489,13 +1489,13 @@ namespace Microsoft.Windows.Controls.Ribbon
 
                 // If HasPushedMenuMode=true...
                 PropertyInfo property = type.GetProperty("HasPushedMenuMode", BindingFlags.NonPublic | BindingFlags.Instance);
-                Debug.Assert(property != null);
-                if (property != null && (bool)property.GetValue(this, null) == true)
+                Debug.Assert(property is not null);
+                if (property is not null && (bool)property.GetValue(this, null) == true)
                 {
                     // ...call PopMenuMode.
                     MethodInfo method = type.GetMethod("PopMenuMode", BindingFlags.NonPublic | BindingFlags.Instance);
-                    Debug.Assert(method != null);
-                    if (method != null)
+                    Debug.Assert(method is not null);
+                    if (method is not null)
                     {
                         method.Invoke(this, null);
                     }
@@ -1528,7 +1528,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             base.OnGotKeyboardFocus(e);
 
             FrameworkElement ribbonCurrentSelection = RibbonCurrentSelection;
-            if (ribbonCurrentSelection != null &&
+            if (ribbonCurrentSelection is not null &&
                 IsDropDownOpen)
             {
                 // If the drop down is open and the ribbonCurrentSelection is valid
@@ -1539,7 +1539,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 // bubbling route.  Either of these can lead to a
                 // focus war resulting in StackOverflow. Don't start the war
                 UIElement popupChild = _popup.TryGetChild();
-                if (popupChild != null &&
+                if (popupChild is not null &&
                     this.IsEnabled &&
                     this.IsKeyboardFocusWithin &&
                     !popupChild.IsKeyboardFocusWithin)
@@ -1686,7 +1686,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 IsDropDownOpen = true;
                 RibbonHelper.NavigateToNextMenuItemOrGallery(this, -1, BringIndexIntoView);
                 UIElement popupChild = _popup.TryGetChild();
-                if (popupChild != null)
+                if (popupChild is not null)
                 {
                     KeyTipService.SetIsKeyTipScope(popupChild, true);
                     e.TargetKeyTipScope = popupChild;

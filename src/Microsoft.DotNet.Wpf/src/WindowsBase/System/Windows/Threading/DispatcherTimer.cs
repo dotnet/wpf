@@ -194,7 +194,7 @@ namespace System.Windows.Threading
                     updateWin32Timer = true;
 
                     // If the operation is in the queue, abort it.
-                    if(_operation != null)
+                    if(_operation is not null)
                     {
                         _operation.Abort();
                         _operation = null;
@@ -249,7 +249,7 @@ namespace System.Windows.Threading
         {
             lock(_instanceLock)
             {
-                if (_operation != null)
+                if (_operation is not null)
                 {
                     // Timer has already been restarted, e.g. Start was called form the Tick handler.
                     return;
@@ -281,7 +281,7 @@ namespace System.Windows.Threading
             lock(_instanceLock)
             {
                 // Simply promote the operation to it's desired priority.
-                if(_operation != null)
+                if(_operation is not null)
                 {
                     _operation.Priority = _priority;
                 }
@@ -295,7 +295,7 @@ namespace System.Windows.Threading
             
             // The dispatcher thread is calling us because item's priority
             // was changed from inactive to something else.
-            if(Tick != null)
+            if(Tick is not null)
             {
                 Tick(this, EventArgs.Empty);
             }

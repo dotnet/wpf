@@ -198,7 +198,7 @@ namespace System.Windows
                 return;
             }
 
-            if (_property != null)
+            if (_property is not null)
             {
                 // Ensure valid condition
                 if (!_property.IsValidValue(_value))
@@ -219,7 +219,7 @@ namespace System.Windows
                     _property,
                     LogicalOp.Equals,
                     _value,
-                    (_sourceName != null) ? _sourceName : StyleHelper.SelfName) };
+                    (_sourceName is not null) ? _sourceName : StyleHelper.SelfName) };
 
             // Set Condition for all property triggers
             for (int i = 0; i < PropertyValues.Count; i++)
@@ -236,7 +236,7 @@ namespace System.Windows
         // evaluate the current state of the trigger
         internal override bool GetCurrentState(DependencyObject container, UncommonField<HybridDictionary[]> dataField)
         {
-            Debug.Assert( TriggerConditions != null && TriggerConditions.Length == 1,
+            Debug.Assert( TriggerConditions is not null && TriggerConditions.Length == 1,
                 "This method assumes there is exactly one TriggerCondition." );
 
             Debug.Assert( TriggerConditions[0].SourceChildIndex == 0,
@@ -254,7 +254,7 @@ namespace System.Windows
         void ISupportInitialize.EndInit()
         {
             // Resolve all properties here
-            if (_unresolvedProperty != null)
+            if (_unresolvedProperty is not null)
             {
                 try
                 {
@@ -266,7 +266,7 @@ namespace System.Windows
                     _unresolvedProperty = null;
                 }
             }
-            if (_unresolvedValue != null)
+            if (_unresolvedValue is not null)
             {
                 try
                 {

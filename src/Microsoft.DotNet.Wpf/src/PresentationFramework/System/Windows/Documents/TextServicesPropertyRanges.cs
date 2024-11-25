@@ -103,7 +103,7 @@ namespace System.Windows.Documents
                 Marshal.ReleaseComObject(outRanges[0]);
             }
             Marshal.ReleaseComObject(ranges);
-            if (prop != null)
+            if (prop is not null)
                 Marshal.ReleaseComObject(prop);
         }
 

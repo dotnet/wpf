@@ -52,7 +52,7 @@ public class PriorityBinding : BindingBase, IAddChild
     void IAddChild.AddChild(Object value)
     {
         BindingBase binding = value as BindingBase;
-        if (binding != null)
+        if (binding is not null)
             Bindings.Add(binding);
         else
             throw new ArgumentException(SR.Format(SR.ChildHasWrongType, this.GetType().Name, "BindingBase", value.GetType().FullName), "value");
@@ -91,7 +91,7 @@ public class PriorityBinding : BindingBase, IAddChild
     [EditorBrowsable(EditorBrowsableState.Never)]
     public bool ShouldSerializeBindings()
     {
-        return (Bindings != null && Bindings.Count > 0);
+        return (Bindings is not null && Bindings.Count > 0);
     }
 
     //------------------------------------------------------

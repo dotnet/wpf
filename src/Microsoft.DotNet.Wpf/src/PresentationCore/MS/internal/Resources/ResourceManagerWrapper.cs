@@ -73,7 +73,7 @@ namespace MS.Internal.Resources
             if (stream is null)
             {
                 // Try to search the unlocalizable resource from Main assembly only.
-                if (ResourceSet != null)
+                if (ResourceSet is not null)
                 {
                     try
                     {
@@ -130,7 +130,7 @@ namespace MS.Internal.Resources
                 {
                     _resourceList = new ArrayList();
 
-                    if (this.ResourceManager != null)
+                    if (this.ResourceManager is not null)
                     {
                         CultureInfo ciNeutral = GetNeutralResourcesLanguage();
 
@@ -154,7 +154,7 @@ namespace MS.Internal.Resources
                         //
                         ResourceSet rsLoc = this.ResourceManager.GetResourceSet(ciNeutral, true, false);
 
-                        if (rsLoc != null)
+                        if (rsLoc is not null)
                         {
                             AddResourceNameToList(rsLoc, ref _resourceList);
 
@@ -162,7 +162,7 @@ namespace MS.Internal.Resources
                         }
                     }
 
-                    if (this.ResourceSet != null)
+                    if (this.ResourceSet is not null)
                     {
                         // This contains non-localizable resources in Main assembly.
 
@@ -193,7 +193,7 @@ namespace MS.Internal.Resources
 
             NeutralResourcesLanguageAttribute neutralLangAttr = Attribute.GetCustomAttribute(_assembly, typeof(NeutralResourcesLanguageAttribute)) as NeutralResourcesLanguageAttribute;
 
-            if (neutralLangAttr != null)
+            if (neutralLangAttr is not null)
             {
                 ciNeutral = new CultureInfo(neutralLangAttr.CultureName);
             }
@@ -211,7 +211,7 @@ namespace MS.Internal.Resources
 
             deResources = rs.GetEnumerator();
 
-            if (deResources != null)
+            if (deResources is not null)
             {
                 while (deResources.MoveNext())
                 {

@@ -105,15 +105,15 @@ namespace System.Windows.Input.StylusWisp
 
             key = Registry.ClassesRoot.OpenSubKey(subkeyToOpen);
 
-            if (key != null)
+            if (key is not null)
             {
                 valDefault = key.GetValue("");
             }
 
-            if (key != null)
+            if (key is not null)
             {
                 string sValDefault = valDefault as string;
-                if (sValDefault != null && sValDefault.LastIndexOf(valueToSearchFor, StringComparison.OrdinalIgnoreCase) != -1)
+                if (sValDefault is not null && sValDefault.LastIndexOf(valueToSearchFor, StringComparison.OrdinalIgnoreCase) != -1)
                 {
                     fRegistered = true;
                 }
@@ -294,7 +294,7 @@ namespace System.Windows.Input.StylusWisp
             uint count = 0;
             for (uint k = 0; k < tabletdevices.Length; k++)
             {
-                if (tabletdevices[k].PimcTablet != null) count++;
+                if (tabletdevices[k].PimcTablet is not null) count++;
             }
 
             TabletDevice[] tablets = new TabletDevice[count];
@@ -311,7 +311,7 @@ namespace System.Windows.Input.StylusWisp
                 int id = tabletdevices[iTablet].Id;
 
                 // First see if same index has not changed (typical case)
-                if (tabletsIndex < _tablets.Length && _tablets[tabletsIndex] != null && _tablets[tabletsIndex].Id == id)
+                if (tabletsIndex < _tablets.Length && _tablets[tabletsIndex] is not null && _tablets[tabletsIndex].Id == id)
                 {
                     tablets[tabletsIndex] = _tablets[tabletsIndex];
                     _tablets[tabletsIndex] = null; // clear to ignore on cleanup pass.
@@ -323,7 +323,7 @@ namespace System.Windows.Input.StylusWisp
                     TabletDevice tablet = null;
                     for (uint i = 0; i < _tablets.Length; i++)
                     {
-                        if (_tablets[i] != null && _tablets[i].Id == id)
+                        if (_tablets[i] is not null && _tablets[i].Id == id)
                         {
                             tablet = _tablets[i];
                             _tablets[i] = null; // clear it so we don't dispose it.
@@ -607,11 +607,11 @@ namespace System.Windows.Input.StylusWisp
         /////////////////////////////////////////////////////////////////////
         internal void DisposeTablets()
         {
-            if (_tablets != null)
+            if (_tablets is not null)
             {
                 for (int iTablet = 0, cTablets = _tablets.Length; iTablet < cTablets; iTablet++)
                 {
-                    if (_tablets[iTablet] != null)
+                    if (_tablets[iTablet] is not null)
                     {
                         WispTabletDevice removedTablet = _tablets[iTablet].TabletDeviceImpl.As<WispTabletDevice>();
 

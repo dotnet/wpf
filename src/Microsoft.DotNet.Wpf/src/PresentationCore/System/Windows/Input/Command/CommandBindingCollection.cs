@@ -158,7 +158,7 @@ namespace System.Windows.Input
             }
             set
             {
-                if (_innerCBList != null)
+                if (_innerCBList is not null)
                 {
                     _innerCBList[index] = value;
                 }
@@ -171,7 +171,7 @@ namespace System.Windows.Input
         /// <param name="commandBinding">commandBinding to add</param>
         public int Add(CommandBinding commandBinding) 
         {
-            if (commandBinding != null)
+            if (commandBinding is not null)
             {
                 _innerCBList ??= new Collections.Generic.List<CommandBinding>(1);
 
@@ -218,7 +218,7 @@ namespace System.Windows.Input
         /// <param name="commandBinding">item to insert</param>
         public void Insert(int index, CommandBinding commandBinding)
         {
-            if (commandBinding != null)
+            if (commandBinding is not null)
             {
                 _innerCBList?.Insert(index, commandBinding);
             }
@@ -234,7 +234,7 @@ namespace System.Windows.Input
         /// <param name="commandBinding">CommandBinding to remove</param>
         public void Remove(CommandBinding commandBinding) 
         {
-            if (_innerCBList != null && commandBinding != null)
+            if (_innerCBList is not null && commandBinding is not null)
                 _innerCBList.Remove(commandBinding);
         }
 
@@ -323,7 +323,7 @@ namespace System.Windows.Input
         /// <returns>true - if found, false - otherwise</returns>
         public bool Contains(CommandBinding commandBinding) 
         {
-             if (_innerCBList != null && commandBinding != null)
+             if (_innerCBList is not null && commandBinding is not null)
              {
                    return _innerCBList.Contains(commandBinding) ;
              }
@@ -347,7 +347,7 @@ namespace System.Windows.Input
         /// <returns></returns>
         public IEnumerator GetEnumerator()
         {
-            if (_innerCBList != null)
+            if (_innerCBList is not null)
                 return _innerCBList.GetEnumerator();
 
             System.Collections.Generic.List<CommandBinding> list = new System.Collections.Generic.List<CommandBinding>(0);
@@ -366,7 +366,7 @@ namespace System.Windows.Input
                 CommandBinding commandBinding = this[i];
                 if (commandBinding.Command is not RoutedCommand routedCommand) continue;
                 InputGestureCollection inputGestures = routedCommand.InputGesturesInternal;
-                if (inputGestures?.FindMatch(targetElement, inputEventArgs) != null)
+                if (inputGestures?.FindMatch(targetElement, inputEventArgs) is not null)
                 {
                     return routedCommand;
                 }

@@ -291,7 +291,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         {
                                             ReadPreamble();
                                             
-                                            return (IsFrozen || Dispatcher != null);
+                                            return (IsFrozen || Dispatcher is not null);
                                         }
                                     }
                                     
@@ -547,7 +547,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                                 OnFreezablePropertyChanged(_keyFrames[index], value);
                                                 _keyFrames[index] = value;
                                                                     
-                                                Debug.Assert(_keyFrames[index] != null);
+                                                Debug.Assert(_keyFrames[index] is not null);
                                                 
                                                 WritePostscript();
                                             }

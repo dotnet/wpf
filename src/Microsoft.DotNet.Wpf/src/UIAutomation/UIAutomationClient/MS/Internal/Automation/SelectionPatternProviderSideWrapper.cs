@@ -25,7 +25,7 @@ namespace MS.Internal.Automation
 
         private SelectionPatternProviderSideWrapper(ISelectionProvider target)
         {
-            Debug.Assert(target != null);
+            Debug.Assert(target is not null);
             _target = target;
         }
 

@@ -511,7 +511,7 @@ namespace System.Windows.Shapes
 
                 // Avoid creating the DashStyle if we can
                 double strokeDashOffset = StrokeDashOffset;
-                if (strokeDashArray != null || strokeDashOffset != 0.0)
+                if (strokeDashArray is not null || strokeDashOffset != 0.0)
                 {
                     _pen.DashStyle = new DashStyle(strokeDashArray, strokeDashOffset);
                 }
@@ -683,7 +683,7 @@ namespace System.Windows.Shapes
         {
             Geometry geometry = DefiningGeometry;
 
-            Debug.Assert(geometry != null);
+            Debug.Assert(geometry is not null);
 
             //
             // For the purposes of computing layout size, don't consider dashing. This will give us
@@ -695,11 +695,11 @@ namespace System.Windows.Shapes
             Pen pen = GetPen();
             DashStyle style = null;
             
-            if (pen != null)
+            if (pen is not null)
             {
                 style = pen.DashStyle;
 
-                if (style != null)
+                if (style is not null)
                 {
                     pen.DashStyle = null;
                 }
@@ -707,7 +707,7 @@ namespace System.Windows.Shapes
 
             Rect bounds = geometry.GetRenderBounds(pen);
 
-            if (style != null)
+            if (style is not null)
             {
                 pen.DashStyle = style;
             }
@@ -723,7 +723,7 @@ namespace System.Windows.Shapes
         {
             Geometry geometry = DefiningGeometry;
 
-            Debug.Assert(geometry != null);
+            Debug.Assert(geometry is not null);
 
             return geometry.Bounds;
         }
@@ -734,7 +734,7 @@ namespace System.Windows.Shapes
             {
                 _renderedGeometry = DefiningGeometry;
 
-                Debug.Assert(_renderedGeometry != null);
+                Debug.Assert(_renderedGeometry is not null);
 
                 if (Stretch != Stretch.None)
                 {

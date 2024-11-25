@@ -87,7 +87,7 @@ namespace System.Windows
             //   are using the two operations for differnt results.
 #pragma warning disable 1634, 1691
 #pragma warning disable 6507
-            if (text != null)
+            if (text is not null)
             {
                 //always return an ink object
                 //even if the string is empty
@@ -129,7 +129,7 @@ namespace System.Windows
 
             //if someone wants to convert to a string...
             StrokeCollection strokes = value as StrokeCollection;
-            if (strokes != null)
+            if (strokes is not null)
             {
                 if (destinationType == typeof(string))
                 {

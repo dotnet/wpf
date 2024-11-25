@@ -114,7 +114,7 @@ namespace System.Windows.Controls
                                 new StrokeCollectionDefaultValueFactory(),
                                 new PropertyChangedCallback(OnStrokesChanged)),
                         (ValidateValueCallback)delegate(object value)
-                            { return value != null; });
+                            { return value is not null; });
 
         /// <summary>
         /// Gets/Sets the Strokes property.
@@ -162,7 +162,7 @@ namespace System.Windows.Controls
             Size newSize = base.MeasureOverride(constraint);
 
             // If there are strokes in IP, we need to combine the size to final size.
-            if ( strokes != null && strokes.Count != 0 )
+            if ( strokes is not null && strokes.Count != 0 )
             {
                 // Get the bounds of the stroks
                 Rect boundingRect = StrokesBounds;
@@ -179,7 +179,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            if ( Child != null )
+            if ( Child is not null )
             {
                 _constraintSize = constraint;
             }
@@ -215,7 +215,7 @@ namespace System.Windows.Controls
             // We arrange our child as what Decorator does 
             // exceopt we are using the available size computed from our cached measure size.
             UIElement child = Child;
-            if ( child != null )
+            if ( child is not null )
             {
                 child.Arrange(new Rect(availableSize));
             } 
@@ -270,7 +270,7 @@ namespace System.Windows.Controls
                 {
                     return _renderer.RootVisual;
                 }
-                else if(base.Child != null)
+                else if(base.Child is not null)
                 {
                     return base.Child;
                 }
@@ -298,7 +298,7 @@ namespace System.Windows.Controls
                 // 3. only _renderer.RootVisual as the child
                 // 4. both base.Child and  _renderer.RootVisual
                 
-                if(base.Child != null)
+                if(base.Child is not null)
                 {
                     if ( _hasAddedRoot )
                     {
@@ -457,7 +457,7 @@ namespace System.Windows.Controls
 
         private void SetStrokesChangedHandlers(StrokeCollection newStrokes, StrokeCollection oldStrokes)
         {
-            Debug.Assert(newStrokes != null, "Cannot set a null to InkPresenter");
+            Debug.Assert(newStrokes is not null, "Cannot set a null to InkPresenter");
 
             // Remove the event handlers from the old stroke collection
             if ( null != oldStrokes )
@@ -488,10 +488,10 @@ namespace System.Windows.Controls
 
         private void SetStrokeChangedHandlers(StrokeCollection addedStrokes, StrokeCollection removedStrokes)
         {
-            Debug.Assert(addedStrokes != null, "The added StrokeCollection cannot be null.");
+            Debug.Assert(addedStrokes is not null, "The added StrokeCollection cannot be null.");
             int count, i;
 
-            if ( removedStrokes != null )
+            if ( removedStrokes is not null )
             {
                 // Deal with removed strokes first
                 count = removedStrokes.Count;
@@ -530,7 +530,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void StartListeningOnStrokeEvents(Stroke stroke)
         {
-            System.Diagnostics.Debug.Assert(stroke != null);
+            System.Diagnostics.Debug.Assert(stroke is not null);
             stroke.Invalidated += new EventHandler(OnStrokeChanged);
         }
 
@@ -539,7 +539,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void StopListeningOnStrokeEvents(Stroke stroke)
         {
-            System.Diagnostics.Debug.Assert(stroke != null);
+            System.Diagnostics.Debug.Assert(stroke is not null);
             stroke.Invalidated -= new EventHandler(OnStrokeChanged);
         }
 

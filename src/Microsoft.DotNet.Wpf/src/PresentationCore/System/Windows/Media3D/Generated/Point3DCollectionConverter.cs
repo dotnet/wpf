@@ -99,7 +99,7 @@ namespace System.Windows.Media.Media3D
 
             String source = value as string;
 
-            if (source != null)
+            if (source is not null)
             {
                 return Point3DCollection.Parse(source);
             }
@@ -123,7 +123,7 @@ namespace System.Windows.Media.Media3D
         /// <param name="destinationType"> The type to which this will convert the Point3DCollection instance. </param>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType != null && value is Point3DCollection)
+            if (destinationType is not null && value is Point3DCollection)
             {
                 Point3DCollection instance = (Point3DCollection)value;
 

@@ -165,8 +165,8 @@ namespace Microsoft.Internal.AlphaFlattener
 
         private PenProxy(Pen pen, BrushProxy brush)
         {
-            Debug.Assert(pen != null, "pen expected");
-            Debug.Assert(brush != null, "brush expected");
+            Debug.Assert(pen is not null, "pen expected");
+            Debug.Assert(brush is not null, "brush expected");
 
             _pen   = pen;
             _brush = brush;
@@ -240,7 +240,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public void PushOpacity(double opacity, BrushProxy opacityMask)
         {
-            if ((_brush.Brush != null) && (BrushProxy.IsOpaqueWhite(_brush.Brush) || BrushProxy.IsOpaqueBlack(_brush.Brush)))
+            if ((_brush.Brush is not null) && (BrushProxy.IsOpaqueWhite(_brush.Brush) || BrushProxy.IsOpaqueBlack(_brush.Brush)))
             {
                 _brush = _brush.Clone();
             }
@@ -270,8 +270,8 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <returns>May return null if Brush is an empty brush</returns>
         public static PenProxy CreatePen(Pen pen, Rect bounds)
         {
-            Debug.Assert(pen != null, "pen expected");
-            Debug.Assert(pen.Brush != null, "pen expected to have a brush");
+            Debug.Assert(pen is not null, "pen expected");
+            Debug.Assert(pen.Brush is not null, "pen expected to have a brush");
 
             if (IsNull(pen))
             {
@@ -303,8 +303,8 @@ namespace Microsoft.Internal.AlphaFlattener
         /// </remarks>
         public static PenProxy CreateUserPen(Pen pen, Rect bounds, Matrix brushToWorldTransformHint, TreeWalkProgress treeWalkProgress)
         {
-            Debug.Assert(pen != null, "pen expected");
-            Debug.Assert(pen.Brush != null, "pen expected to have a brush");
+            Debug.Assert(pen is not null, "pen expected");
+            Debug.Assert(pen.Brush is not null, "pen expected to have a brush");
 
             if (IsNull(pen))
             {
@@ -384,16 +384,16 @@ namespace Microsoft.Internal.AlphaFlattener
                 str = "^";
             }
 
-            if (_brush != null)
+            if (_brush is not null)
             {
                 str = str + _brush.GetType();
             }
-            else if (_brushList != null)
+            else if (_brushList is not null)
             {
                 str = str + "BrushList[" + _brushList.Count + "]";
             }
 
-            if (_opacityMask != null)
+            if (_opacityMask is not null)
             {
                 str = str + "^" + _opacityMask.ToString();
             }
@@ -531,7 +531,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="bp"></param>
         public void AddTo(BrushProxy bp)
         {
-            if (_brush != null)
+            if (_brush is not null)
             {
                 ArrayList list = bp._brushList;
 
@@ -564,12 +564,12 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             _opacity *= Utility.NormalizeOpacity(opacity);
 
-            if (opacityMask != null)
+            if (opacityMask is not null)
             {
                 _opacityMask = BrushProxy.BlendBrush(_opacityMask, opacityMask);
             }
 
-            if ((_opacityMask != null) && (_brush != null))
+            if ((_opacityMask is not null) && (_brush is not null))
             {
                 BrushProxy om = _opacityMask;
 
@@ -580,7 +580,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 _opacityMask = om;
 
-                if (result != null)
+                if (result is not null)
                 {
                     return result;
                 }
@@ -595,7 +595,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <returns>True if brush is totally opaque (opacity==1)</returns>
         public bool IsOpaque()
         {
-            if ((_opacityMask != null) && !_opacityMask.IsOpaque())
+            if ((_opacityMask is not null) && !_opacityMask.IsOpaque())
             {
                 return false;
             }
@@ -674,12 +674,12 @@ namespace Microsoft.Internal.AlphaFlattener
                 return IsDrawingOpaque(GetDrawingPrimitive(), new RectangleGeometry(vb), Matrix.Identity);
             }
 
-            if (_brush != null)
+            if (_brush is not null)
             {
                 Debug.Assert(false, "IsOpaque(" + _brush.GetType() + ") not handled");
             }
 
-            if ((_brushList != null) && (_brushList.Count != 0))
+            if ((_brushList is not null) && (_brushList.Count != 0))
             {
                 // Check the first brush
                 return (_brushList[0] as BrushProxy).IsOpaque();
@@ -770,7 +770,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 return _image.IsTransparent();
             }
 
-            if (_brush != null)
+            if (_brush is not null)
             {
                 Debug.Assert(false, "IsTransparent not handled " + _brush.GetType());
             }
@@ -795,7 +795,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                         Matrix mat = Matrix.Identity;
 
-                        if (_brush.Transform != null)
+                        if (_brush.Transform is not null)
                         {
                             mat = _brush.Transform.Value;
                         }
@@ -813,7 +813,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     }
                 }
 
-                if (_opacityMask != null)
+                if (_opacityMask is not null)
                 {
                     _opacityMask.ApplyTransform(trans);
                 }
@@ -860,14 +860,14 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 SolidColorBrush sA = _brush as SolidColorBrush;
 
-                if (sA != null)
+                if (sA is not null)
                 {
                     return BlendColorWithBrush(_opacityOnly, Utility.Scale(sA.Color, _opacity), brushB, false);
                 }
 
                 SolidColorBrush sB = brushB.Brush as SolidColorBrush;
 
-                if (sB != null)
+                if (sB is not null)
                 {
                     return BlendColorWithBrush(brushB._opacityOnly, Utility.Scale(sB.Color, brushB._opacity), this, true);
                 }
@@ -877,7 +877,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 {
                     BrushProxy bp = BlendImageBrush(brushB, true);
 
-                    if (bp != null)
+                    if (bp is not null)
                     {
                         return bp;
                     }
@@ -888,7 +888,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 {
                     BrushProxy bp = brushB.BlendImageBrush(this, false);
 
-                    if (bp != null)
+                    if (bp is not null)
                     {
                         return bp;
                     }
@@ -897,7 +897,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 // Blend compatible LinearGradientBrushes
                 BrushProxy p = BlendLinearGradientBrush(brushB);
 
-                if (p != null)
+                if (p is not null)
                 {
                     return p;
                 }
@@ -905,7 +905,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 // Blend compatible RadialGradientBrushes
                 p = BlendRadialGradientBrush(brushB);
 
-                if (p != null)
+                if (p is not null)
                 {
                     return p;
                 }
@@ -932,14 +932,14 @@ namespace Microsoft.Internal.AlphaFlattener
 
             RenderTargetBitmap brushImage = new RenderTargetBitmap(width, height, 96, 96, PixelFormats.Pbgra32);
 
-            if (this.BrushList != null)
+            if (this.BrushList is not null)
             {
                 foreach (BrushProxy b in this.BrushList)
                 {
                     brushImage.Render(new FillVisual(b, mat, width, height));
                 }
             }
-            else if (Brush != null)
+            else if (Brush is not null)
             {
                 brushImage.Render(new FillVisual(this, mat, width, height));
             }
@@ -1020,7 +1020,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 _beforeDrawing.A != 0 ||            // merge before/after brush color into brush
                 _afterDrawing.A != 0 ||
                 _drawingBrushChanged ||             // drawing Primitive has changed
-                (_brushList != null && _brush is null))   // combine brushlist into one brush
+                (_brushList is not null && _brush is null))   // combine brushlist into one brush
             {
                 _brush = BuildBrush();
 
@@ -1054,7 +1054,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             int depth = 0;
 
-            if (_brushList != null)
+            if (_brushList is not null)
             {
                 foreach (BrushProxy b in _brushList)
                 {
@@ -1083,7 +1083,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 depth = 2;
             }
 
-            if (_opacityMask != null)
+            if (_opacityMask is not null)
             {
                 depth += _opacityMask.GetBrushDepth();
             }
@@ -1105,7 +1105,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             double cost = 0;
 
-            if (_brushList != null)
+            if (_brushList is not null)
             {
                 // sum costs of individual brushes
                 foreach (BrushProxy brush in _brushList)
@@ -1122,7 +1122,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 {
                     LinearGradientBrush linearBrush = _brush as LinearGradientBrush;
 
-                    if (linearBrush != null)
+                    if (linearBrush is not null)
                     {
                         // Check for axis-aligned linear gradients. As an optimization we collapse one of the
                         // dimensions to 1 pixel during rasterization.
@@ -1156,11 +1156,11 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public bool IsWhite()
         {
-            if (_brush != null)
+            if (_brush is not null)
             {
                 SolidColorBrush scb = _brush as SolidColorBrush;
 
-                if (scb != null)
+                if (scb is not null)
                 {
                     Color c = scb.Color;
 
@@ -1176,7 +1176,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public void CloneRealBrush()
         {
-            if (_brush != null)
+            if (_brush is not null)
             {
                 _brush = _brush.CloneCurrentValue();
             }
@@ -1198,7 +1198,7 @@ namespace Microsoft.Internal.AlphaFlattener
             Debug.Assert(tileBrush.ViewportUnits == BrushMappingMode.Absolute);
             Rect viewport = tileBrush.Viewport;
 
-            if (tileBrush.Transform != null && !tileBrush.Transform.IsIdentity)
+            if (tileBrush.Transform is not null && !tileBrush.Transform.IsIdentity)
             {
                 viewport.Transform(tileBrush.Transform.Value);
             }
@@ -1224,12 +1224,12 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             bool result = false;
 
-            if (Brush != null)
+            if (Brush is not null)
             {
                 TileBrush tileBrush = Brush as TileBrush;
                 Debug.Assert(tileBrush.ViewportUnits == BrushMappingMode.Absolute);
 
-                if (tileBrush != null &&
+                if (tileBrush is not null &&
                     tileBrush.TileMode != TileMode.None &&
                     !IsViewportCoverBounds(bounds))
                 {
@@ -1250,9 +1250,9 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 DrawingBrush drawingBrush = _brush as DrawingBrush;
 
-                if (drawingBrush != null)
+                if (drawingBrush is not null)
                 {
-                    Debug.Assert(drawingBrush.Drawing != null, "DrawingBrush where Drawing is null should've been culled");
+                    Debug.Assert(drawingBrush.Drawing is not null, "DrawingBrush where Drawing is null should've been culled");
 
                     // Calculate transformation from Drawing to world space. This is needed to estimate
                     // size of Drawing objects in world space for rasterization bitmap dimensions.
@@ -1273,7 +1273,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="geo"></param>
         public void DrawGeometry(DrawingContext dc, Pen pen, Geometry geo)
         {
-            if (_brushList != null)
+            if (_brushList is not null)
             {
                 foreach (BrushProxy b in _brushList)
                 {
@@ -1284,20 +1284,20 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 UpdateRealBrush(true);
 
-                if (_opacityMask != null)
+                if (_opacityMask is not null)
                 {
                     dc.PushOpacityMask(_opacityMask.GetRealBrush());
                 }
 
                 dc.DrawGeometry(_brush, null, geo);
 
-                if (_opacityMask != null)
+                if (_opacityMask is not null)
                 {
                     dc.Pop();
                 }
             }
 
-            if (pen != null)
+            if (pen is not null)
             {
                 dc.DrawGeometry(null, pen, geo);
             }
@@ -1318,7 +1318,7 @@ namespace Microsoft.Internal.AlphaFlattener
             // rebuild DrawingBrush _brush from Primitive _drawing if it has changed
             if (_drawingBrushChanged)
             {
-                Debug.Assert(_drawing != null, "_drawing primitive changed, but it's null");
+                Debug.Assert(_drawing is not null, "_drawing primitive changed, but it's null");
 
                 // convert Primitive back to Drawing
                 DrawingGroup drawing = new DrawingGroup();
@@ -1381,7 +1381,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             Rect bounds = Rect.Empty;
 
-            // Remember that a brush list may still have _brush != null, due to building
+            // Remember that a brush list may still have _brush is not null, due to building
             // avalon brush from brush list and caching it.
             if (_brushList is null)
             {
@@ -1395,7 +1395,7 @@ namespace Microsoft.Internal.AlphaFlattener
             else
             {
                 // brush list: get union of children brush bounds
-                Debug.Assert(_brushList != null && _bounds.IsEmpty);
+                Debug.Assert(_brushList is not null && _bounds.IsEmpty);
 
                 foreach (BrushProxy child in _brushList)
                 {
@@ -1616,7 +1616,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             CanvasPrimitive cp = p as CanvasPrimitive;
 
-            if (cp != null)
+            if (cp is not null)
             {
                 // recursively check children opaqueness
                 transform = p.Transform * transform;
@@ -1681,7 +1681,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             CanvasPrimitive cp = p as CanvasPrimitive;
 
-            if (cp != null)
+            if (cp is not null)
             {
                 // recursively check children transparency
                 drawingToWorldTransformHint.Prepend(p.Transform);
@@ -1906,7 +1906,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 LinearGradientBrush b = brush as LinearGradientBrush;
 
-                if (b != null)
+                if (b is not null)
                 {
                     brushHandled = true;
 
@@ -1923,7 +1923,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 RadialGradientBrush b = brush as RadialGradientBrush;
 
-                if (b != null)
+                if (b is not null)
                 {
                     brushHandled = true;
 
@@ -1989,7 +1989,7 @@ namespace Microsoft.Internal.AlphaFlattener
             //
             if (!_opacityOnly && ! ScRgb)
             {
-                Debug.Assert(g.GradientStops != null);
+                Debug.Assert(g.GradientStops is not null);
 
                 bool colorOpaque = Utility.IsOpaque(color.ScA);
 
@@ -2202,7 +2202,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             TileBrush tA = brushA as TileBrush;
 
-            if ((tA != null) && (tA.Stretch == Stretch.Fill) && (tA.TileMode == TileMode.Tile))
+            if ((tA is not null) && (tA.Stretch == Stretch.Fill) && (tA.TileMode == TileMode.Tile))
             {
                 if (brushB is SolidColorBrush)
                 {
@@ -2222,7 +2222,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                     TileBrush tB = brushB as TileBrush;
 
-                    if ((tB != null) && (tB.Stretch == Stretch.Fill))
+                    if ((tB is not null) && (tB.Stretch == Stretch.Fill))
                     {
                         Rect viewportB = tB.Viewport;
 
@@ -2262,7 +2262,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                     LinearGradientBrush lB = brushB as LinearGradientBrush;
 
-                    if (lB != null)
+                    if (lB is not null)
                     {
                         double multiplier = 1;
 
@@ -2317,11 +2317,11 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             ImageBrush ib = _brush as ImageBrush;
 
-            if ((ib != null) && (brushB.Brush != null) && Supercede(ib, brushB.Brush)) // Check for compatibility
+            if ((ib is not null) && (brushB.Brush is not null) && Supercede(ib, brushB.Brush)) // Check for compatibility
             {
                 BitmapSource bs = (BitmapSource)(ib.ImageSource);
 
-                if (bs != null)
+                if (bs is not null)
                 {
                     // Increase resolution for small image, to avoid losing information when blend with another brush
                     int imageWidth = bs.PixelWidth;
@@ -2374,7 +2374,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                     BrushProxy bp = BrushProxy.CreateBrush(ibnew, _bounds);
 
-                    Debug.Assert(bp != null, "Blending visible ImageBrush with another brush should yield non-empty brush");
+                    Debug.Assert(bp is not null, "Blending visible ImageBrush with another brush should yield non-empty brush");
 
                     bp._opacityOnly = _opacityOnly & brushB._opacityOnly;
 
@@ -2403,7 +2403,7 @@ namespace Microsoft.Internal.AlphaFlattener
             GradientStopCollection gcA = a.GradientStops;
             GradientStopCollection gcB = b.GradientStops;
 
-            if ((gcA != null) && (gcB != null) && (gcA.Count == gcB.Count))
+            if ((gcA is not null) && (gcB is not null) && (gcA.Count == gcB.Count))
             {
                 for (int i = 0; i < gcA.Count; i++)
                 {
@@ -2521,7 +2521,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 // 4. GradientStops have the same stop positions
                 GradientStopCollection g = BlendGradientStops(lbA, _opacityOnly, lbB, brushB._opacityOnly);
 
-                if (g != null)
+                if (g is not null)
                 {
                     BrushProxy bp = this.Clone();
 
@@ -2580,7 +2580,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 // 5. GradientStops have the same stop positions
                 GradientStopCollection g = BlendGradientStops(rbA, _opacityOnly, rbB, brushB._opacityOnly);
 
-                if (g != null)
+                if (g is not null)
                 {
                     BrushProxy bp = this.Clone();
 
@@ -2608,7 +2608,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             SolidColorBrush sb = brush as SolidColorBrush;
 
-            if ((sb != null) && Utility.IsOpaque(sb.Opacity))
+            if ((sb is not null) && Utility.IsOpaque(sb.Opacity))
             {
                 Color c = sb.Color;
 
@@ -2625,7 +2625,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             SolidColorBrush sb = brush as SolidColorBrush;
 
-            if ((sb != null) && Utility.IsOpaque(sb.Opacity))
+            if ((sb is not null) && Utility.IsOpaque(sb.Opacity))
             {
                 Color c = sb.Color;
 
@@ -2650,7 +2650,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// </remarks>
         private static BrushProxy CreateBrushCore(Brush brush, Rect bounds)
         {
-            Debug.Assert(brush != null, "null brush");
+            Debug.Assert(brush is not null, "null brush");
 
             // empty bound requires that brush be absolute. zero area means empty brush.
             if (bounds.Width == 0 || bounds.Height == 0)
@@ -2691,14 +2691,14 @@ namespace Microsoft.Internal.AlphaFlattener
             //
             GradientBrush gb = brushProxy.Brush as GradientBrush;
 
-            if (gb != null)
+            if (gb is not null)
             {
                 Debug.Assert(gb.MappingMode == BrushMappingMode.Absolute, "absolute brush");
             }
 
             TileBrush tb = brushProxy.Brush as TileBrush;
 
-            if (tb != null)
+            if (tb is not null)
             {
                 // Viewport must be absolute, but Viewbox can be relative
                 Debug.Assert(tb.ViewportUnits == BrushMappingMode.Absolute, "absolute brush required for BrushProxy");
@@ -2760,7 +2760,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 BrushProxy result = CreateBrushCore(brush, bounds);
 
-                if (result != null)
+                if (result is not null)
                 {
                     result.OpacityOnly = true;
                 }
@@ -2822,7 +2822,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 return true;
             }
 
-            if (brush.Transform != null && !Utility.IsValid(brush.Transform.Value))
+            if (brush.Transform is not null && !Utility.IsValid(brush.Transform.Value))
             {
                 // non-invertible transform, ignore object
                 return true;
@@ -2830,7 +2830,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             SolidColorBrush solidBrush = brush as SolidColorBrush;
 
-            if (solidBrush != null)
+            if (solidBrush is not null)
             {
                 if (Utility.IsTransparent(solidBrush.Color.ScA))
                 {
@@ -2843,7 +2843,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             GradientBrush gradientBrush = brush as GradientBrush;
 
-            if (gradientBrush != null)
+            if (gradientBrush is not null)
             {
                 GradientStopCollection stops = gradientBrush.GradientStops;
 
@@ -2864,7 +2864,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 LinearGradientBrush linearBrush = brush as LinearGradientBrush;
 
-                if (linearBrush != null)
+                if (linearBrush is not null)
                 {
                     if (!Utility.IsRenderVisible(linearBrush.StartPoint) || !Utility.IsRenderVisible(linearBrush.EndPoint))
                     {
@@ -2877,7 +2877,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 RadialGradientBrush radialBrush = brush as RadialGradientBrush;
 
-                if (radialBrush != null)
+                if (radialBrush is not null)
                 {
                     if (!Utility.IsRenderVisible(radialBrush.Center) ||
                         !Utility.IsRenderVisible(radialBrush.GradientOrigin) ||
@@ -2897,7 +2897,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             TileBrush tileBrush = brush as TileBrush;
 
-            if (tileBrush != null)
+            if (tileBrush is not null)
             {
                 if (! Utility.IsRenderVisible(tileBrush.Viewport) ||
                     ! Utility.IsValidViewbox(tileBrush.Viewbox, tileBrush.Stretch != Stretch.None)
@@ -2941,12 +2941,12 @@ namespace Microsoft.Internal.AlphaFlattener
 
             GradientBrush gb = brush as GradientBrush;
 
-            if (gb != null)
+            if (gb is not null)
             {
                 // check for gradient brush where colors are similar enough to be a solid brush
                 GradientStopCollection gsc = gb.GradientStops;
 
-                Debug.Assert(gsc != null && gsc.Count > 0, "BrushProxy.IsEmpty should return true upon GradientBrush with zero stops");
+                Debug.Assert(gsc is not null && gsc.Count > 0, "BrushProxy.IsEmpty should return true upon GradientBrush with zero stops");
 
                 bool allTrans = true;
                 bool allSame = true;
@@ -2984,7 +2984,7 @@ namespace Microsoft.Internal.AlphaFlattener
             }
 
             BitmapCacheBrush bcb = brush as BitmapCacheBrush;
-            if (bcb != null)
+            if (bcb is not null)
             {
                 Debug.Assert(!bounds.IsEmpty, "Bounds must not be empty for BitmapCacheBrush");
 
@@ -3031,7 +3031,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                     Geometry visualClip = VisualTreeHelper.GetClip(visual);
 
-                    if (visualClip != null)
+                    if (visualClip is not null)
                     {
                         visualBounds.Intersect(visualClip.Bounds);
                     }
@@ -3062,7 +3062,7 @@ namespace Microsoft.Internal.AlphaFlattener
             
             VisualBrush vb = brush as VisualBrush;
 
-            if (vb != null)
+            if (vb is not null)
             {
                 Debug.Assert(!bounds.IsEmpty, "Bounds must not be empty for VisualBrush");
 
@@ -3126,7 +3126,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                     Geometry visualClip = VisualTreeHelper.GetClip(vb.Visual);
 
-                    if (visualClip != null)
+                    if (visualClip is not null)
                     {
                         visualBounds.Intersect(visualClip.Bounds);
                     }
@@ -3167,11 +3167,11 @@ namespace Microsoft.Internal.AlphaFlattener
 
             ImageBrush ib = brush as ImageBrush;
 
-            if (ib != null)
+            if (ib is not null)
             {
                 BitmapSource bitmapSource = ib.ImageSource as BitmapSource;
 
-                if (bitmapSource != null)
+                if (bitmapSource is not null)
                 {
                     // we can handle bitmap images
                     return brush;
@@ -3179,7 +3179,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 DrawingImage drawingImage = ib.ImageSource as DrawingImage;
 
-                if (drawingImage != null)
+                if (drawingImage is not null)
                 {
                     // convert to DrawingBrush to reduce number of ImageBrush.ImageSource types we need to handle
                     DrawingBrush db = Utility.CreateNonInheritingDrawingBrush(drawingImage.Drawing);
@@ -3239,7 +3239,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 return b;
             }
 
-            if (brushB._opacityMask != null)
+            if (brushB._opacityMask is not null)
             {
                 if (reverse)
                 {
@@ -3252,12 +3252,12 @@ namespace Microsoft.Internal.AlphaFlattener
             }
 
             // SolidColorBrush * BrushList
-            if (brushB._brushList != null)
+            if (brushB._brushList is not null)
             {
                 return brushB.BlendBrushList(BrushProxy.CreateColorBrush(colorA), !reverse);
             }
 
-            Debug.Assert(brushB.Brush != null, "null brush not expected");
+            Debug.Assert(brushB.Brush is not null, "null brush not expected");
 
             if (reverse)
             {
@@ -3465,16 +3465,16 @@ namespace Microsoft.Internal.AlphaFlattener
                     result |= BrushTypes.OpacityMaskOnly;
                 }
 
-                if (_opacityMask != null)
+                if (_opacityMask is not null)
                 {
                     result |= BrushTypes.HasOpacityMask;
                 }
 
-                if (_brushList != null)
+                if (_brushList is not null)
                 {
                     result |= BrushTypes.BrushList;
                 }
-                else if (_brush != null)
+                else if (_brush is not null)
                 {
                     if (_brush is SolidColorBrush)
                     {
@@ -3569,7 +3569,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             using (DrawingContext ctx = RenderOpen())
             {
-                if (brush.Brush != null)
+                if (brush.Brush is not null)
                 {
                     Brush b = brush.Brush.CloneCurrentValue();
 
@@ -3585,7 +3585,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     BrushProxy mask = brush.OpacityMask;
 
                     // Bug 1699894: OpacityMask is now supported by DrawingContext
-                    if (mask != null)
+                    if (mask is not null)
                     {
                         Brush mb = mask.GetRealBrush().CloneCurrentValue();
 
@@ -3611,7 +3611,7 @@ namespace Microsoft.Internal.AlphaFlattener
                         ctx.DrawRectangle(new SolidColorBrush(brush.AfterFill), null, rect);
                     }
 
-                    if (mask != null)
+                    if (mask is not null)
                     {
                         ctx.Pop();
                     }

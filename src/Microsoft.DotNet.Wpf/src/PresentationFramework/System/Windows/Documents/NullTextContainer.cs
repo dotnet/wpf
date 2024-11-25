@@ -180,7 +180,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                Debug.Assert(_start != null);
+                Debug.Assert(_start is not null);
                 return _start;
             }
         }
@@ -193,7 +193,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                Debug.Assert(_end != null);
+                Debug.Assert(_end is not null);
                 return _end;
             }
         }

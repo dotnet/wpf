@@ -35,7 +35,7 @@ namespace MS.Internal.IO.Packaging
         internal XmlFixedPageInfo(XmlNode fixedPageNode)
         {
             _pageNode = fixedPageNode;
-            Debug.Assert(_pageNode != null);
+            Debug.Assert(_pageNode is not null);
             if (_pageNode.LocalName != _fixedPageName || _pageNode.NamespaceURI != ElementTableKey.FixedMarkupNamespace)
             {
                 throw new ArgumentException(SR.Format(SR.UnexpectedXmlNodeInXmlFixedPageInfoConstructor,

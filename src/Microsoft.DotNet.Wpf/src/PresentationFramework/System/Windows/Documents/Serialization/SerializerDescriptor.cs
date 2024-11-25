@@ -197,7 +197,7 @@ namespace System.Windows.Documents.Serialization
                 sd = null;
             }
 
-            if (sd != null)
+            if (sd is not null)
             {
                 // This will be noted in the release notes as an unsupported API until 4479 is fixed.
                 // https://github.com/dotnet/wpf/issues/4479
@@ -205,7 +205,7 @@ namespace System.Windows.Documents.Serialization
                 Assembly plugIn = Assembly.ReflectionOnlyLoadFrom(sd._assemblyPath);
                 #pragma warning restore SYSLIB0018 // 'Assembly.ReflectionOnlyLoadFrom(string)' is obsolete: 'ReflectionOnly loading is not supported and throws PlatformNotSupportedException.'
                 if (typeof(System.Windows.Controls.Button).Assembly.GetName().Version == sd._winFXVersion &&
-                        plugIn != null &&
+                        plugIn is not null &&
                         plugIn.GetName().Version == sd._assemblyVersion)
                 {
                     sd._isLoadable = true;
@@ -337,7 +337,7 @@ namespace System.Windows.Documents.Serialization
         public override bool Equals(object obj)
         {
             SerializerDescriptor sd = obj as SerializerDescriptor;
-            if (sd != null)
+            if (sd is not null)
             {
                 return sd._displayName == _displayName
                 && sd._assemblyName == _assemblyName

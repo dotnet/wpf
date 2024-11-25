@@ -225,7 +225,7 @@ namespace System.Windows.Media.Animation
             double progress = animationClock.CurrentProgress.Value;
 
             IEasingFunction easingFunction = EasingFunction;
-            if (easingFunction != null)
+            if (easingFunction is not null)
             {
                 progress = easingFunction.Ease(progress);
             }
@@ -367,16 +367,16 @@ namespace System.Windows.Media.Animation
             _animationType = AnimationType.Automatic;
             _keyValues = null;
 
-            if (From != null)
+            if (From is not null)
             {
-                if (To != null)
+                if (To is not null)
                 {
                     _animationType = AnimationType.FromTo;
                     _keyValues = new Rotation3D[2];
                     _keyValues[0] = From;
                     _keyValues[1] = To;
                 }
-                else if (By != null)
+                else if (By is not null)
                 {
                     _animationType = AnimationType.FromBy;
                     _keyValues = new Rotation3D[2];
@@ -390,13 +390,13 @@ namespace System.Windows.Media.Animation
                     _keyValues[0] = From;
                 }
             }
-            else if (To != null)
+            else if (To is not null)
             {
                 _animationType = AnimationType.To;
                 _keyValues = new Rotation3D[1];
                 _keyValues[0] = To;
             }
-            else if (By != null)
+            else if (By is not null)
             {
                 _animationType = AnimationType.By;
                 _keyValues = new Rotation3D[1];
@@ -422,7 +422,7 @@ namespace System.Windows.Media.Animation
         {
             Rotation3D typedValue = (Rotation3D)value;
 
-            if (typedValue != null)
+            if (typedValue is not null)
             {
                 return AnimatedTypeHelpers.IsValidAnimationValueRotation3D(typedValue);
             }

@@ -41,7 +41,7 @@ namespace MS.Internal.Text
         // ------------------------------------------------------------------
         internal static Typeface GetTypeface(DependencyObject element)
         {
-            Debug.Assert(element != null);
+            Debug.Assert(element is not null);
 
             FontFamily  fontFamily  = (FontFamily)  element.GetValue(TextElement.FontFamilyProperty);
             FontStyle   fontStyle   = (FontStyle)   element.GetValue(TextElement.FontStyleProperty);
@@ -53,7 +53,7 @@ namespace MS.Internal.Text
 
         internal static Typeface GetModifiedTypeface(DependencyObject element, FontFamily fontFamily)
         {
-            Debug.Assert(element != null);
+            Debug.Assert(element is not null);
 
             FontStyle   fontStyle   = (FontStyle)   element.GetValue(TextElement.FontStyleProperty);
             FontWeight  fontWeight  = (FontWeight)  element.GetValue(TextElement.FontWeightProperty);
@@ -71,12 +71,12 @@ namespace MS.Internal.Text
         // ------------------------------------------------------------------
         internal static TextDecorationCollection GetTextDecorationsForInlineObject(DependencyObject element, TextDecorationCollection textDecorations)
         {
-            Debug.Assert(element != null);
+            Debug.Assert(element is not null);
 
             DependencyObject parent = LogicalTreeHelper.GetParent(element);
             TextDecorationCollection parentTextDecorations = null;
 
-            if (parent != null)
+            if (parent is not null)
             {
                 // Get parent text decorations if it is non-null
                 parentTextDecorations = GetTextDecorations(parent);
@@ -160,7 +160,7 @@ namespace MS.Internal.Text
         internal static bool GetKeepTogether(DependencyObject element)
         {
             Paragraph p = element as Paragraph;
-            return (p != null) ? p.KeepTogether : false;
+            return (p is not null) ? p.KeepTogether : false;
         }
 
         // ------------------------------------------------------------------
@@ -169,7 +169,7 @@ namespace MS.Internal.Text
         internal static bool GetKeepWithNext(DependencyObject element)
         {
             Paragraph p = element as Paragraph;
-            return (p != null) ? p.KeepWithNext : false;
+            return (p is not null) ? p.KeepWithNext : false;
         }
 
         // ------------------------------------------------------------------
@@ -178,7 +178,7 @@ namespace MS.Internal.Text
         internal static int GetMinWidowLines(DependencyObject element)
         {
             Paragraph p = element as Paragraph;
-            return (p != null) ? p.MinWidowLines : 0;
+            return (p is not null) ? p.MinWidowLines : 0;
         }
 
         // ------------------------------------------------------------------
@@ -187,7 +187,7 @@ namespace MS.Internal.Text
         internal static int GetMinOrphanLines(DependencyObject element)
         {
             Paragraph p = element as Paragraph;
-            return (p != null) ? p.MinOrphanLines : 0;
+            return (p is not null) ? p.MinOrphanLines : 0;
         }
 
         #endregion Block Properties
@@ -230,7 +230,7 @@ namespace MS.Internal.Text
         // ------------------------------------------------------------------
         internal static Brush GetBackgroundBrush(DependencyObject element)
         {
-            Debug.Assert(element != null);
+            Debug.Assert(element is not null);
             Brush backgroundBrush = null;
 
             // If 'element' is FrameworkElement, it is the host of the text content.
@@ -276,15 +276,15 @@ namespace MS.Internal.Text
         internal static BaselineAlignment GetBaselineAlignment(DependencyObject element)
         {
             Inline i = element as Inline;
-            BaselineAlignment baselineAlignment = (i != null) ? i.BaselineAlignment : BaselineAlignment.Baseline;
+            BaselineAlignment baselineAlignment = (i is not null) ? i.BaselineAlignment : BaselineAlignment.Baseline;
 
             // Walk up the tree to check if it inherits BaselineAlignment from a parent
-            while (i != null && BaselineAlignmentIsDefault(i))
+            while (i is not null && BaselineAlignmentIsDefault(i))
             {
                 i = i.Parent as Inline;
             }
 
-            if (i != null)
+            if (i is not null)
             {
                 // Found an Inline with non-default baseline alignment
                 baselineAlignment = i.BaselineAlignment;
@@ -348,7 +348,7 @@ namespace MS.Internal.Text
 
         private static bool BaselineAlignmentIsDefault(DependencyObject element)
         {
-            Invariant.Assert(element != null);
+            Invariant.Assert(element is not null);
 
             bool hasModifiers;
             if (element.GetValueSource(Inline.BaselineAlignmentProperty, null, out hasModifiers)

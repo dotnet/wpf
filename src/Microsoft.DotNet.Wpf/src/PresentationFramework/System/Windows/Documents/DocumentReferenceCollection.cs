@@ -161,7 +161,7 @@ namespace System.Windows.Documents
         // fire CollectionChanged event to any listeners
         private void OnCollectionChanged(NotifyCollectionChangedAction action, object item, int index)
         {
-            if (CollectionChanged != null)
+            if (CollectionChanged is not null)
             {
                 NotifyCollectionChangedEventArgs args;
                 args = new NotifyCollectionChangedEventArgs(action, item, index);

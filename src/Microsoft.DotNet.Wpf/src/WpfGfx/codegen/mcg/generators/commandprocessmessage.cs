@@ -191,7 +191,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 validator.WriteBlock(
                     [[inline]]
                         #ifdef DEBUG
-                        if (pCmd->[[entry.Name]] != NULL) 
+                        if (pCmd->[[entry.Name]] is not null) 
                         {
                             const [[resource.DuceClass]]* pResource = 
                                 static_cast<const [[resource.DuceClass]]*>(pHandleTable->GetResource(

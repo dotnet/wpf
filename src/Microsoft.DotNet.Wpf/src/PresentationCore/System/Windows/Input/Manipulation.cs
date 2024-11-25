@@ -36,15 +36,15 @@ namespace System.Windows.Input
         {
             ArgumentNullException.ThrowIfNull(element);
 
-            return GetActiveManipulationDevice(element) != null;
+            return GetActiveManipulationDevice(element) is not null;
         }
 
         private static ManipulationDevice GetActiveManipulationDevice(UIElement element)
         {
-            Debug.Assert(element != null, "element should be non-null.");
+            Debug.Assert(element is not null, "element should be non-null.");
 
             ManipulationDevice device = ManipulationDevice.GetManipulationDevice(element);
-            if ((device != null) && device.IsManipulationActive)
+            if ((device is not null) && device.IsManipulationActive)
             {
                 return device;
             }
@@ -62,7 +62,7 @@ namespace System.Windows.Input
             ArgumentNullException.ThrowIfNull(element);
 
             ManipulationDevice device = ManipulationDevice.GetManipulationDevice(element);
-            if (device != null)
+            if (device is not null)
             {
                 device.CompleteManipulation(/* withInertia = */ true);
             }
@@ -84,7 +84,7 @@ namespace System.Windows.Input
         internal static bool TryCompleteManipulation(UIElement element)
         {
             ManipulationDevice device = ManipulationDevice.GetManipulationDevice(element);
-            if (device != null)
+            if (device is not null)
             {
                 device.CompleteManipulation(/* withInertia = */ false);
                 return true;
@@ -103,7 +103,7 @@ namespace System.Windows.Input
             ArgumentNullException.ThrowIfNull(element);
 
             ManipulationDevice device = GetActiveManipulationDevice(element);
-            if (device != null)
+            if (device is not null)
             {
                 device.ManipulationMode = mode;
             }
@@ -123,7 +123,7 @@ namespace System.Windows.Input
             ArgumentNullException.ThrowIfNull(element);
 
             ManipulationDevice device = ManipulationDevice.GetManipulationDevice(element);
-            if (device != null)
+            if (device is not null)
             {
                 return device.ManipulationMode;
             }
@@ -144,7 +144,7 @@ namespace System.Windows.Input
             ArgumentNullException.ThrowIfNull(element);
 
             ManipulationDevice device = GetActiveManipulationDevice(element);
-            if (device != null)
+            if (device is not null)
             {
                 device.ManipulationContainer = container;
             }
@@ -165,7 +165,7 @@ namespace System.Windows.Input
             ArgumentNullException.ThrowIfNull(element);
 
             ManipulationDevice device = ManipulationDevice.GetManipulationDevice(element);
-            if (device != null)
+            if (device is not null)
             {
                 return device.ManipulationContainer;
             }
@@ -183,7 +183,7 @@ namespace System.Windows.Input
             ArgumentNullException.ThrowIfNull(element);
 
             ManipulationDevice device = GetActiveManipulationDevice(element);
-            if (device != null)
+            if (device is not null)
             {
                 device.ManipulationPivot = pivot;
             }
@@ -203,7 +203,7 @@ namespace System.Windows.Input
             ArgumentNullException.ThrowIfNull(element);
 
             ManipulationDevice device = ManipulationDevice.GetManipulationDevice(element);
-            if (device != null)
+            if (device is not null)
             {
                 return device.ManipulationPivot;
             }
@@ -250,7 +250,7 @@ namespace System.Windows.Input
         internal static bool TryRemoveManipulator(UIElement element, IManipulator manipulator)
         {
             ManipulationDevice device = ManipulationDevice.GetManipulationDevice(element);
-            if (device != null)
+            if (device is not null)
             {
                 device.RemoveManipulator(manipulator);
                 return true;
@@ -271,7 +271,7 @@ namespace System.Windows.Input
             ArgumentNullException.ThrowIfNull(parameter);
 
             ManipulationDevice device = GetActiveManipulationDevice(element);
-            if (device != null)
+            if (device is not null)
             {
                 device.SetManipulationParameters(parameter);
             }
@@ -298,10 +298,10 @@ namespace System.Windows.Input
         /// </remarks>
         internal static UIElement FindManipulationParent(Visual visual)
         {
-            while (visual != null)
+            while (visual is not null)
             {
                 UIElement element = visual as UIElement;
-                if ((element != null) && element.IsManipulationEnabled)
+                if ((element is not null) && element.IsManipulationEnabled)
                 {
                     return element;
                 }

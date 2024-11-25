@@ -63,7 +63,7 @@ namespace System.Windows.Documents
         {
             Invariant.Assert(eventId == NativeMethods.EVENT_SYSTEM_MOVESIZEEND);
              
-            if (_arTextStore != null)
+            if (_arTextStore is not null)
             {
                 for (int i = 0; i < _arTextStore.Count; i++)
                 {

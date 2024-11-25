@@ -114,7 +114,7 @@ namespace MS.Internal.ComponentModel
 
                         if (_dp.OwnerType == _targetType || _dp.OwnerType.IsAssignableFrom(_targetType) || DependencyProperty.FromName(_dp.Name, _targetType) != _dp) 
                         {
-                            if (DependencyObjectPropertyDescriptor.GetAttachedPropertyMethod(_dp) != null)
+                            if (DependencyObjectPropertyDescriptor.GetAttachedPropertyMethod(_dp) is not null)
                             {
                                 _isAttached = true;
                             }
@@ -147,7 +147,7 @@ namespace MS.Internal.ComponentModel
                     {
                         if (DependencyProperty.FromName(_dp.Name, _targetType) == _dp) 
                         {
-                            if (_targetType.GetProperty(_dp.Name, _dp.PropertyType) != null)
+                            if (_targetType.GetProperty(_dp.Name, _dp.PropertyType) is not null)
                             {
                                 _isDirect = true;
                                 _isAttachedChecked = true;

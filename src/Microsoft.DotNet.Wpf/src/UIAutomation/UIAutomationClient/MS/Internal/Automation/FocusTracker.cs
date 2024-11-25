@@ -80,7 +80,7 @@ namespace MS.Internal.Automation
             // If there is an hwnd then notify of a focus change
             if (hwnd != IntPtr.Zero)
             {
-                Debug.Assert(acc != null, "HandleFocusChange got hwnd and null IAccessible");
+                Debug.Assert(acc is not null, "HandleFocusChange got hwnd and null IAccessible");
 
                 // Create an event args and get the source logical element
                 AutomationFocusChangedEventArgs e = new InternalAutomationFocusChangedEventArgs(idObject, idChild, eventTime);
@@ -136,7 +136,7 @@ namespace MS.Internal.Automation
                 {
                     // menubar focus - see if there's a menubar pseudo-proxy registered...
                     ClientSideProviderFactoryCallback factory = ProxyManager.NonClientMenuBarProxyFactory;
-                    if (factory != null)
+                    if (factory is not null)
                     {
                         provider = factory(hwnd, idChild, idObject);
                     }
@@ -145,7 +145,7 @@ namespace MS.Internal.Automation
                 {
                     // system menu box focus - see if there's a sysmenu pseudo-proxy registered...
                     ClientSideProviderFactoryCallback factory = ProxyManager.NonClientSysMenuProxyFactory;
-                    if (factory != null)
+                    if (factory is not null)
                     {
                         provider = factory(hwnd, idChild, idObject);
                     }
@@ -162,17 +162,17 @@ namespace MS.Internal.Automation
                     provider = ProxyManager.ProxyProviderFromHwnd(NativeMethods.HWND.Cast(hwnd), idChild, idObject);
                 }
 
-                if(provider != null)
+                if(provider is not null)
                 {
                     // Ask the fragment root if any of its children really have the focus
                     IRawElementProviderFragmentRoot fragment = provider as IRawElementProviderFragmentRoot;
-                    if (fragment != null)
+                    if (fragment is not null)
                     {
                         // if we get back something that is different than what we started with and its not null
                         // use that instead.  This is here to get the subset link in the listview but could be usefull
                         // for listview subitems as well.
                         IRawElementProviderSimple realFocus = fragment.GetFocus();
-                        if(realFocus != null && !Object.ReferenceEquals(realFocus, provider))
+                        if(realFocus is not null && !Object.ReferenceEquals(realFocus, provider))
                         {
                             provider = realFocus;
                         }
@@ -232,7 +232,7 @@ namespace MS.Internal.Automation
             {
                 _fInMenu = false;
 
-                if (_accLastBeforeMenu != null)
+                if (_accLastBeforeMenu is not null)
                 {
                     HandleFocusChange(_hwndLastBeforeMenu, _accLastBeforeMenu, _idLastObject, _idLastChild, eventTime);
                 }
@@ -243,7 +243,7 @@ namespace MS.Internal.Automation
         private void OnEventObjectDestroy(int eventId, IntPtr hwnd, int idObject, int idChild, uint eventTime)
         {
             // Check if still alive. Ignore caret destroys - we're only interesed in 'real' objects here...
-            if (idObject != UnsafeNativeMethods.OBJID_CARET && _accCurrent != null)
+            if (idObject != UnsafeNativeMethods.OBJID_CARET && _accCurrent is not null)
             {
                 bool fDead = false;
 

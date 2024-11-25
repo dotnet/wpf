@@ -53,7 +53,7 @@ namespace MS.Internal.PtsHost
 
             _cchAllText = _structuralCache.TextContainer.SymbolCount;
 
-            if(_structuralCache.DtrList != null)
+            if(_structuralCache.DtrList is not null)
             {
                 int positionsAdded = 0;
 
@@ -192,7 +192,7 @@ namespace MS.Internal.PtsHost
             _throttleBackgroundTimer.Stop();
             _throttleBackgroundTimer = null;
 
-            if (_pendingBackgroundFormatter != null)
+            if (_pendingBackgroundFormatter is not null)
             {
                 BackgroundFormat(_pendingBackgroundFormatter, true /* ignoreThrottle */);
                 _pendingBackgroundFormatter = null;

@@ -109,7 +109,7 @@ namespace System.Windows.Markup
             }
             XamlSchemaContext schemaContext = ixsc.SchemaContext;
 
-            if (property != null)
+            if (property is not null)
             {
                 //Get XamlMember from dp
                 System.Xaml.XamlMember xamlProperty = 
@@ -120,7 +120,7 @@ namespace System.Windows.Markup
 
                 System.Xaml.Schema.XamlValueConverter<TypeConverter> typeConverter = null;
                 
-                if (xamlProperty != null)
+                if (xamlProperty is not null)
                 { 
                     // If we have a Baml2006SchemaContext and the property is of type Enum, we already know that the 
                     // type converter must be the EnumConverter.
@@ -152,7 +152,7 @@ namespace System.Windows.Markup
 
                 TypeConverter converter = null;
 
-                if (xamlProperty != null && xamlProperty.Type.UnderlyingType == typeof(Boolean))
+                if (xamlProperty is not null && xamlProperty.Type.UnderlyingType == typeof(Boolean))
                 {
                     if (source is String)
                     {
@@ -161,7 +161,7 @@ namespace System.Windows.Markup
                     else if (source is byte[])
                     {
                         byte[] bytes = source as byte[];
-                        if (bytes != null && bytes.Length == 1)
+                        if (bytes is not null && bytes.Length == 1)
                         {
                             return (bytes[0] != 0);
                         }

@@ -147,7 +147,7 @@ namespace MS.Internal.Documents
         {
             base.OnPrintCompleted();
 
-            if (_printCompleted != null)
+            if (_printCompleted is not null)
             {
                 _printCompleted(this, EventArgs.Empty);
             }
@@ -160,7 +160,7 @@ namespace MS.Internal.Documents
         {
             base.OnPrintCommand();
 
-            if (_printStarted != null && IsPrinting)
+            if (_printStarted is not null && IsPrinting)
             {
                 _printStarted(this, EventArgs.Empty);
             }
@@ -177,11 +177,11 @@ namespace MS.Internal.Documents
             // Hence need to raise changed events when Document property is changing.
             if (e.Property == DocumentProperty)
             {
-                if (_pageNumberChanged != null)
+                if (_pageNumberChanged is not null)
                 {
                     _pageNumberChanged(this, EventArgs.Empty);
                 }
-                if (_pageCountChanged != null)
+                if (_pageCountChanged is not null)
                 {
                     _pageCountChanged(this, EventArgs.Empty);
                 }
@@ -204,7 +204,7 @@ namespace MS.Internal.Documents
         /// </summary>
         private bool IsValidTextSelectionForDocument(ITextSelection textSelection, FlowDocument flowDocument)
         {
-            if (textSelection.Start != null && textSelection.Start.TextContainer == flowDocument.StructuralCache.TextContainer)
+            if (textSelection.Start is not null && textSelection.Start.TextContainer == flowDocument.StructuralCache.TextContainer)
             {
                 return true;
             }
@@ -218,10 +218,10 @@ namespace MS.Internal.Documents
         private object SetTextSelection(object arg)
         {
             ITextSelection newTextSelection = arg as ITextSelection;
-            if (newTextSelection != null && Document != null && IsValidTextSelectionForDocument(newTextSelection, Document))
+            if (newTextSelection is not null && Document is not null && IsValidTextSelectionForDocument(newTextSelection, Document))
             {
                 ITextSelection textSelection = Document.StructuralCache.TextContainer.TextSelection;
-                if (textSelection != null)
+                if (textSelection is not null)
                 {
                     textSelection.SetCaretToPosition(newTextSelection.AnchorPosition, newTextSelection.MovingPosition.LogicalDirection, true, true);
                     textSelection.ExtendToPosition(newTextSelection.MovingPosition);
@@ -260,7 +260,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IFlowDocumentViewer.PreviousPage()
         {
-            if (ScrollViewer != null)
+            if (ScrollViewer is not null)
             {
                 ScrollViewer.PageUp();
             }
@@ -271,7 +271,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IFlowDocumentViewer.NextPage()
         {
-            if (ScrollViewer != null)
+            if (ScrollViewer is not null)
             {
                 ScrollViewer.PageDown();
             }
@@ -282,7 +282,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IFlowDocumentViewer.FirstPage()
         {
-            if (ScrollViewer != null)
+            if (ScrollViewer is not null)
             {
                 ScrollViewer.ScrollToHome();
             }
@@ -293,7 +293,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IFlowDocumentViewer.LastPage()
         {
-            if (ScrollViewer != null)
+            if (ScrollViewer is not null)
             {
                 ScrollViewer.ScrollToEnd();
             }
@@ -338,7 +338,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IFlowDocumentViewer.GoToPage(int pageNumber)
         {
-            if (pageNumber == 1 && ScrollViewer != null)
+            if (pageNumber == 1 && ScrollViewer is not null)
             {
                 ScrollViewer.ScrollToHome();
             }
@@ -363,7 +363,7 @@ namespace MS.Internal.Documents
             }
             set
             {
-                if (value != null && Document != null)
+                if (value is not null && Document is not null)
                 {
                     // This need be called because the UI may not be ready when Contentposition is set.
                     Dispatcher.BeginInvoke(DispatcherPriority.Input, new DispatcherOperationCallback(BringContentPositionIntoView), value);
@@ -382,7 +382,7 @@ namespace MS.Internal.Documents
             }
             set
             {
-                if (value != null && Document != null)
+                if (value is not null && Document is not null)
                 {
                     // This need be called because the UI may not be ready when Contentposition is set.
                     Dispatcher.BeginInvoke(DispatcherPriority.Input, new DispatcherOperationCallback(SetTextSelection), value);
@@ -411,7 +411,7 @@ namespace MS.Internal.Documents
         /// </summary>
         int IFlowDocumentViewer.PageNumber
         {
-            get { return (Document != null) ? 1 : 0; }
+            get { return (Document is not null) ? 1 : 0; }
         }
 
         /// <summary>
@@ -419,7 +419,7 @@ namespace MS.Internal.Documents
         /// </summary>
         int IFlowDocumentViewer.PageCount
         {
-            get { return (Document != null) ? 1 : 0; }
+            get { return (Document is not null) ? 1 : 0; }
         }
 
         /// <summary>
@@ -482,7 +482,7 @@ namespace MS.Internal.Documents
         {
             base.OnPrintCompleted();
 
-            if (_printCompleted != null)
+            if (_printCompleted is not null)
             {
                 _printCompleted(this, EventArgs.Empty);
             }
@@ -495,7 +495,7 @@ namespace MS.Internal.Documents
         {
             base.OnPrintCommand();
 
-            if (_printStarted != null && IsPrinting)
+            if (_printStarted is not null && IsPrinting)
             {
                 _printStarted(this, EventArgs.Empty);
             }
@@ -555,12 +555,12 @@ namespace MS.Internal.Documents
         {
             ITextSelection newTextSelection = arg as ITextSelection;
             FlowDocument flowDocument = Document as FlowDocument;
-            if (newTextSelection != null && flowDocument != null &&
-                newTextSelection.AnchorPosition != null &&
+            if (newTextSelection is not null && flowDocument is not null &&
+                newTextSelection.AnchorPosition is not null &&
                 newTextSelection.AnchorPosition.TextContainer == flowDocument.StructuralCache.TextContainer)
             {
                 ITextSelection textSelection = flowDocument.StructuralCache.TextContainer.TextSelection;
-                if (textSelection != null)
+                if (textSelection is not null)
                 {
                     textSelection.SetCaretToPosition(newTextSelection.AnchorPosition, newTextSelection.MovingPosition.LogicalDirection, true, true);
                     textSelection.ExtendToPosition(newTextSelection.MovingPosition);
@@ -578,7 +578,7 @@ namespace MS.Internal.Documents
             // Hence need to raise changed events when those DPs are changing.
             if (_raisePageCountChanged)
             {
-                if (_pageCountChanged != null)
+                if (_pageCountChanged is not null)
                 {
                     _pageCountChanged(this, EventArgs.Empty);
                 }
@@ -586,7 +586,7 @@ namespace MS.Internal.Documents
             }
             if (_raisePageNumberChanged)
             {
-                if (_pageNumberChanged != null)
+                if (_pageNumberChanged is not null)
                 {
                     _pageNumberChanged(this, EventArgs.Empty);
                 }
@@ -713,7 +713,7 @@ namespace MS.Internal.Documents
             get { return ContentPosition; }
             set
             {
-                if (value != null && Document != null)
+                if (value is not null && Document is not null)
                 {
                     // This need be called because the UI may not be ready when Contentposition is set.
                     Dispatcher.BeginInvoke(DispatcherPriority.Input, new DispatcherOperationCallback(BringContentPositionIntoView), value);
@@ -732,7 +732,7 @@ namespace MS.Internal.Documents
             }
             set
             {
-                if (value != null && Document != null)
+                if (value is not null && Document is not null)
                 {
                     // This need be called because the UI may not be ready when Contentposition is set.
                     Dispatcher.BeginInvoke(DispatcherPriority.Input, new DispatcherOperationCallback(SetTextSelection), value);
@@ -900,7 +900,7 @@ namespace MS.Internal.Documents
         /// </summary>
         private static object CoerceCanGoToNextPage(DependencyObject d, object value)
         {
-            Invariant.Assert(d != null && d is ReaderTwoPageViewer);
+            Invariant.Assert(d is not null && d is ReaderTwoPageViewer);
 
             ReaderTwoPageViewer viewer = (ReaderTwoPageViewer)d;
             return (viewer.MasterPageNumber < viewer.PageCount - 1);

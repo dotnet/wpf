@@ -41,7 +41,7 @@ namespace DRT
 
             string name = null;
             FrameworkElement fe;
-            if ((fe = target as FrameworkElement) != null)
+            if ((fe = target as FrameworkElement) is not null)
             {
                 name = fe.Name;
             }
@@ -262,7 +262,7 @@ namespace DRT
 
         private void ResetInputStateHandler(object sender, EventArgs e)
         {
-            if (Mouse.Captured != null)
+            if (Mouse.Captured is not null)
             {
                 ConsoleOut.WriteLine("INVALID CONFIGURATION: Mouse capture left on, resetting.");
                 Mouse.Capture(null);

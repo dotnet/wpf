@@ -40,7 +40,7 @@ namespace System.Windows.Input.StylusWisp
         {
             get
             {
-                return _penContexts != null;
+                return _penContexts is not null;
             }
         }
 
@@ -48,7 +48,7 @@ namespace System.Windows.Input.StylusWisp
         {
             get
             {
-                return _penContexts != null ? _penContexts.SyncRoot : null;
+                return _penContexts is not null ? _penContexts.SyncRoot : null;
             }
         }
 
@@ -77,7 +77,7 @@ namespace System.Windows.Input.StylusWisp
                 {
                     PresentationSource presentationSource = PresentationSource.CriticalFromVisual(element as Visual);
 
-                    if (presentationSource != null)
+                    if (presentationSource is not null)
                     {
                         unhookPenContexts = false;
 
@@ -88,7 +88,7 @@ namespace System.Windows.Input.StylusWisp
                             PenContexts penContexts = StylusLogic.GetCurrentStylusLogicAs<WispLogic>().GetPenContextsFromHwnd(presentationSource);
 
                             // _penContexts must be non null or don't do anything.
-                            if (penContexts != null)
+                            if (penContexts is not null)
                             {
                                 _penContexts = penContexts;
 
@@ -121,7 +121,7 @@ namespace System.Windows.Input.StylusWisp
         internal override void Unhook()
         {
             // Are we currently unhooked?  If not then unhook.
-            if (_penContexts != null)
+            if (_penContexts is not null)
             {
                 lock (_penContexts.SyncRoot)
                 {

@@ -31,7 +31,7 @@ namespace System.Windows.Controls
         protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
             EventHandler<SelectionChangedEventArgs> handler = genericHandler as EventHandler<SelectionChangedEventArgs>;
-            if (handler != null)
+            if (handler is not null)
             {
                 handler(genericTarget, this);
             }

@@ -343,7 +343,7 @@ namespace System.Windows.Input
             {
                 stylusKey = Registry.CurrentUser.OpenSubKey(WispPenSystemEventParametersKey);
 
-                if (stylusKey != null)
+                if (stylusKey is not null)
                 {
                     obj = stylusKey.GetValue(WispDoubleTapDistanceValue);
                     _stylusDoubleTapDelta = (obj is null) ? _stylusDoubleTapDelta : (Int32)obj;      // The default double tap distance is 15 pixels (value is given in pixels)
@@ -357,7 +357,7 @@ namespace System.Windows.Input
 
                 touchKey = Registry.CurrentUser.OpenSubKey(WispTouchConfigKey);
 
-                if (touchKey != null)
+                if (touchKey is not null)
                 {
                     obj = touchKey.GetValue(WispTouchDoubleTapDistanceValue);
                     // min = 70%; max = 130%, these values are taken from Stylus\Biblio.txt - 2
@@ -369,11 +369,11 @@ namespace System.Windows.Input
             }
             finally
             {
-                if (stylusKey != null)
+                if (stylusKey is not null)
                 {
                     stylusKey.Close();
                 }
-                if (touchKey != null)
+                if (touchKey is not null)
                 {
                     touchKey.Close();
                 }
@@ -411,7 +411,7 @@ namespace System.Windows.Input
             var hwndSource = source as HwndSource;
             Matrix toDevice = Matrix.Identity;
 
-            if (hwndSource?.CompositionTarget != null)
+            if (hwndSource?.CompositionTarget is not null)
             {
                 // If we have not yet seen this DPI, store the matrix for it.
                 if (!_transformToDeviceMatrices.ContainsKey(hwndSource.CompositionTarget.CurrentDpiScale))
@@ -702,7 +702,7 @@ namespace System.Windows.Input
                 return false;
             }
 
-            if (currentStylusDevice != null &&
+            if (currentStylusDevice is not null &&
                 currentStylusDevice.CriticalActiveSource != presentationSource &&
                 currentStylusDevice.Captured is null)
             {
@@ -754,7 +754,7 @@ namespace System.Windows.Input
                 case FlickAction.Scroll:
                     // Process scroll command.
                     RoutedUICommand command = GetIsScrollUp(flickData) ? ComponentCommands.ScrollPageUp : ComponentCommands.ScrollPageDown;
-                    if (element != null)
+                    if (element is not null)
                     {
                         if (command.CanExecute(null, element))
                         {

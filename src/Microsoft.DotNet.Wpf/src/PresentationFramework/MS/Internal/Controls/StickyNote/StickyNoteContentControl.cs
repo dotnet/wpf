@@ -203,7 +203,7 @@ namespace MS.Internal.Controls.StickyNote
             public override void Save(XmlNode node)
             {
                 // make constant
-                Debug.Assert(node != null && !IsEmpty);
+                Debug.Assert(node is not null && !IsEmpty);
                 RichTextBox richTextBox = (RichTextBox)InnerControl;
 
                 TextRange rtbRange = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd);
@@ -230,7 +230,7 @@ namespace MS.Internal.Controls.StickyNote
             /// <param name="node"></param>
             public override void Load(XmlNode node)
             {
-                Debug.Assert(node != null);
+                Debug.Assert(node is not null);
                 RichTextBox richTextBox = (RichTextBox)InnerControl;
 
                 FlowDocument document = new FlowDocument();
@@ -375,7 +375,7 @@ namespace MS.Internal.Controls.StickyNote
             /// <param name="node"></param>
             public override void Save(XmlNode node)
             {
-                Debug.Assert(node != null && !IsEmpty);
+                Debug.Assert(node is not null && !IsEmpty);
 
                 StrokeCollection strokes = ((InkCanvas)InnerControl).Strokes;
                 using (MemoryStream buffer = new MemoryStream())
@@ -397,7 +397,7 @@ namespace MS.Internal.Controls.StickyNote
             /// <param name="node"></param>
             public override void Load(XmlNode node)
             {
-                Debug.Assert(node != null, "Try to load data from an invalid node");
+                Debug.Assert(node is not null, "Try to load data from an invalid node");
 
                 StrokeCollection strokes = null;
 

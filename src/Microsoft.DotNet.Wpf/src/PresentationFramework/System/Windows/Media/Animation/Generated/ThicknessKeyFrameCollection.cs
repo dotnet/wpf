@@ -230,7 +230,7 @@ namespace System.Windows.Media.Animation
             {
                 ReadPreamble();
 
-                return (IsFrozen || Dispatcher != null);
+                return (IsFrozen || Dispatcher is not null);
             }
         }
 
@@ -480,7 +480,7 @@ namespace System.Windows.Media.Animation
                     OnFreezablePropertyChanged(_keyFrames[index], value);
                     _keyFrames[index] = value;
 
-                    Debug.Assert(_keyFrames[index] != null);
+                    Debug.Assert(_keyFrames[index] is not null);
 
                     WritePostscript();
                 }

@@ -45,7 +45,7 @@ namespace MS.Internal.Documents
 
             ArgumentNullException.ThrowIfNull(item);
 
-            if (item.Parent != null)
+            if (item.Parent is not null)
             {
                 throw new System.ArgumentException(SR.TableCollectionInOtherCollection);
             }
@@ -110,7 +110,7 @@ namespace MS.Internal.Documents
             }
             ArgumentNullException.ThrowIfNull(item);
 
-            if (item.Parent != null)
+            if (item.Parent is not null)
             {
                 throw new System.ArgumentException(SR.TableCollectionInOtherCollection);
             }
@@ -258,7 +258,7 @@ namespace MS.Internal.Documents
         /// </remarks>
         internal override void PrivateConnectChild(int index, TElementType item)
         {
-            Debug.Assert(item != null && item.Index == -1);
+            Debug.Assert(item is not null && item.Index == -1);
             Debug.Assert(Items[index] is null);
 
             // If the TElementType is already parented correctly through a proxy, there's no need
@@ -420,7 +420,7 @@ namespace MS.Internal.Documents
 
                 ArgumentNullException.ThrowIfNull(value);
 
-                if (value.Parent != null)
+                if (value.Parent is not null)
                 {
                     throw new System.ArgumentException(SR.TableCollectionInOtherCollection);
                 }

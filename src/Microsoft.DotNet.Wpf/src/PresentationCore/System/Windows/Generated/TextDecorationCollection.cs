@@ -432,7 +432,7 @@ namespace System.Windows
             {
                 ReadPreamble();
 
-                return IsFrozen || Dispatcher != null;
+                return IsFrozen || Dispatcher is not null;
             }
         }
 
@@ -494,7 +494,7 @@ namespace System.Windows
             for (int i = 0; i < this.Count; i++)
             {
                 DependencyObject inheritanceChild = _collection[i];
-                if (inheritanceChild != null && inheritanceChild.InheritanceContext == this)
+                if (inheritanceChild is not null && inheritanceChild.InheritanceContext == this)
                 {
                     inheritanceChild.OnInheritanceContextChanged(args);
                 }
@@ -751,7 +751,7 @@ namespace System.Windows
 
             internal Enumerator(TextDecorationCollection list)
             {
-                Debug.Assert(list != null, "list may not be null.");
+                Debug.Assert(list is not null, "list may not be null.");
 
                 _list = list;
                 _version = list._version;
@@ -908,7 +908,7 @@ namespace System.Windows
             bool needsItemValidation = true;
             ICollection<TextDecoration> icollectionOfT = collection as ICollection<TextDecoration>;
 
-            if (icollectionOfT != null)
+            if (icollectionOfT is not null)
             {
                 _collection = new FrugalStructList<TextDecoration>(icollectionOfT);
             }
@@ -916,7 +916,7 @@ namespace System.Windows
             {
                 ICollection icollection = collection as ICollection;
 
-                if (icollection != null) // an IC but not and IC<T>
+                if (icollection is not null) // an IC but not and IC<T>
                 {
                     _collection = new FrugalStructList<TextDecoration>(icollection);
                 }

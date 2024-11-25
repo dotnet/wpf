@@ -358,7 +358,7 @@ namespace System.Windows.Markup.Localizer
 
         void ICollection.CopyTo(Array array, int index)
         {    
-            if (array != null && array.Rank != 1)
+            if (array is not null && array.Rank != 1)
             {
                 throw new ArgumentException(
                     SR.Format(

@@ -85,7 +85,7 @@ namespace System.Windows.Media
 
             String source = value as string;
 
-            if (source != null)
+            if (source is not null)
             {
                 return ColorCollection.Parse(source, cultureInfo);
             }
@@ -112,7 +112,7 @@ namespace System.Windows.Media
         /// <returns>converted value</returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo cultureInfo, object value, Type destinationType)
         {
-            if (destinationType != null && value is ColorCollection)
+            if (destinationType is not null && value is ColorCollection)
             {
                 ColorCollection instance = (ColorCollection)value;
 

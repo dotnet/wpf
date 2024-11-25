@@ -76,7 +76,7 @@ namespace System.Windows.Media.Converters
         /// </summary>
         public override object ConvertFromString(string value, IValueSerializerContext context)
         {
-            if (value != null)
+            if (value is not null)
             {
                 return Brush.Parse(value, context );
             }

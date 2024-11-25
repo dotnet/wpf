@@ -43,7 +43,7 @@ internal static class FilePresentation
 
         SaveFileDialog save = new SaveFileDialog();
 
-        if (fileToken != null)
+        if (fileToken is not null)
         {
             save.FileName = fileToken.Location.LocalPath;
         }
@@ -60,12 +60,12 @@ internal static class FilePresentation
 
         // Get the root browser window, if it exists.
         IWin32Window rbw = null;
-        if (DocumentApplicationDocumentViewer.Instance != null)
+        if (DocumentApplicationDocumentViewer.Instance is not null)
         {
             rbw = DocumentApplicationDocumentViewer.Instance.RootBrowserWindow;
         }
 
-        if (rbw != null)
+        if (rbw is not null)
         {
             dialogResult = save.ShowDialog(rbw);
         }

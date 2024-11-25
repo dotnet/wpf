@@ -84,7 +84,7 @@ namespace System.Windows.Input
         /// </summary>
         internal void Uninitialize()
         {
-            Debug.Assert(_ipp != null, "Uninitialize called without initializing");
+            Debug.Assert(_ipp is not null, "Uninitialize called without initializing");
 
             UnadviseNotifySink();            
             Marshal.ReleaseComObject(_ipp);
@@ -106,7 +106,7 @@ namespace System.Windows.Input
         {
             set
             {
-                if (_ipp != null)
+                if (_ipp is not null)
                 {
                     if (_ipp.ChangeCurrentLanguage(value) != 0)
                     {

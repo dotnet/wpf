@@ -37,7 +37,7 @@ namespace System.Windows.Navigation
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
 #pragma warning disable  6506
-            return (value != null) ? ((JournalEntryStack)value).GetLimitedJournalEntryStackEnumerable() : null;
+            return (value is not null) ? ((JournalEntryStack)value).GetLimitedJournalEntryStackEnumerable() : null;
 #pragma warning restore 6506
         }
 
@@ -113,12 +113,12 @@ namespace System.Windows.Navigation
         /// </summary>
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (values != null && values.Length == 2)
+            if (values is not null && values.Length == 2)
             {
                 JournalEntryStack backStack = values[0] as JournalEntryStack;
                 JournalEntryStack forwardStack = values[1] as JournalEntryStack;
 
-                if (backStack != null && forwardStack != null)
+                if (backStack is not null && forwardStack is not null)
                 {
                     LimitedJournalEntryStackEnumerable limitedBackStack = (LimitedJournalEntryStackEnumerable)backStack.GetLimitedJournalEntryStackEnumerable();
                     LimitedJournalEntryStackEnumerable limitedForwardStack = (LimitedJournalEntryStackEnumerable)forwardStack.GetLimitedJournalEntryStackEnumerable();
@@ -185,7 +185,7 @@ namespace System.Windows.Navigation
         internal void StacksChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             _items = null;
-            if (CollectionChanged != null)
+            if (CollectionChanged is not null)
             {
                 CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             }

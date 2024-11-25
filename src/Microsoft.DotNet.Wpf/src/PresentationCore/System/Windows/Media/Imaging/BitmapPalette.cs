@@ -162,10 +162,10 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         static internal BitmapPalette CreateFromBitmapSource(BitmapSource source)
         {
-            Debug.Assert(source != null);
+            Debug.Assert(source is not null);
 
             SafeMILHandle bitmapSource = source.WicSourceHandle;
-            Debug.Assert(bitmapSource != null && !bitmapSource.IsInvalid);
+            Debug.Assert(bitmapSource is not null && !bitmapSource.IsInvalid);
 
             SafeMILHandle unmanagedPalette = CreateInternalPalette();
 
@@ -199,7 +199,7 @@ namespace System.Windows.Media.Imaging
             else
             {
                 palette = BitmapPalettes.FromMILPaletteType(paletteType, hasAlpha);
-                Debug.Assert(palette != null);
+                Debug.Assert(palette is not null);
             }
 
             return palette;
@@ -244,7 +244,7 @@ namespace System.Windows.Media.Imaging
         /// Returns if the Palette has any alpha within its colors
         internal static bool DoesPaletteHaveAlpha(BitmapPalette palette)
         {
-            if (palette != null)
+            if (palette is not null)
             {
                 foreach (Color color in palette.Colors)
                 {
@@ -267,7 +267,7 @@ namespace System.Windows.Media.Imaging
                 HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreatePalette(
                             myFactory.ImagingFactoryPtr,
                             out palette));
-                Debug.Assert(palette != null && !palette.IsInvalid);
+                Debug.Assert(palette is not null && !palette.IsInvalid);
             }
 
             return palette;
@@ -280,7 +280,7 @@ namespace System.Windows.Media.Imaging
         /// TreatAsSafe - No inputs are provided, no information is exposed.
         unsafe private void UpdateUnmanaged()
         {
-            Debug.Assert(_palette != null && !_palette.IsInvalid);
+            Debug.Assert(_palette is not null && !_palette.IsInvalid);
 
             int numColors = Math.Min(256, _colors.Count);
 
@@ -309,7 +309,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         private void UpdateManaged()
         {
-            Debug.Assert(_palette != null && !_palette.IsInvalid);
+            Debug.Assert(_palette is not null && !_palette.IsInvalid);
 
             int numColors = 0;
             int cActualColors = 0;

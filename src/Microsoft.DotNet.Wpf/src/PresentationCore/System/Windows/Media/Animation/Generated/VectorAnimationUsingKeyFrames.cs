@@ -174,13 +174,13 @@ namespace System.Windows.Media.Animation
             _areKeyTimesValid = sourceAnimation._areKeyTimesValid;
 
             if (   _areKeyTimesValid 
-                && sourceAnimation._sortedResolvedKeyFrames != null)
+                && sourceAnimation._sortedResolvedKeyFrames is not null)
             {
                 // _sortedResolvedKeyFrames is an array of ResolvedKeyFrameEntry so the notion of CurrentValueClone doesn't apply
                 _sortedResolvedKeyFrames = (ResolvedKeyFrameEntry[])sourceAnimation._sortedResolvedKeyFrames.Clone(); 
             }
 
-            if (sourceAnimation._keyFrames != null)
+            if (sourceAnimation._keyFrames is not null)
             {
                 if (isCurrentValueClone)
                 {
@@ -229,7 +229,7 @@ namespace System.Windows.Media.Animation
         {
             VectorKeyFrame keyFrame = child as VectorKeyFrame;
 
-            if (keyFrame != null)
+            if (keyFrame is not null)
             {
                 KeyFrames.Add(keyFrame);
             }
@@ -554,7 +554,7 @@ namespace System.Windows.Media.Animation
         {
             ReadPreamble();
 
-            return _keyFrames != null 
+            return _keyFrames is not null 
                 && _keyFrames.Count > 0;
         }
 
@@ -655,7 +655,7 @@ namespace System.Windows.Media.Animation
                 bool hasTimeSpanKeyTime = false;
                 TimeSpan largestTimeSpanKeyTime = TimeSpan.Zero;
 
-                if (_keyFrames != null)
+                if (_keyFrames is not null)
                 {
                     Int32 keyFrameCount = _keyFrames.Count;
 
@@ -692,7 +692,7 @@ namespace System.Windows.Media.Animation
 
             int keyFrameCount = 0;
 
-            if (_keyFrames != null)
+            if (_keyFrames is not null)
             {
                 keyFrameCount = _keyFrames.Count;
             }
@@ -906,7 +906,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         private void ResolvePacedKeyTimes()
         {
-            Debug.Assert(_keyFrames != null && _keyFrames.Count > 2,
+            Debug.Assert(_keyFrames is not null && _keyFrames.Count > 2,
                 "Caller must guard against calling this method when there are insufficient keyframes.");
 
             // If the first key frame is paced its key time has already

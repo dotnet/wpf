@@ -79,7 +79,7 @@ namespace WinRT
 
         public static void DisposeMarshaler(object box)
         {
-            if (box != null)
+            if (box is not null)
                 DisposeMarshaler(((MarshalString)box));
         }
 
@@ -91,7 +91,7 @@ namespace WinRT
 
         public static void DisposeAbi(object abi)
         {
-            if (abi != null)
+            if (abi is not null)
                 DisposeAbi(((IntPtr)abi));
         }
 
@@ -120,7 +120,7 @@ namespace WinRT
         {
             public void Dispose()
             {
-                if (_marshalers != null)
+                if (_marshalers is not null)
                 {
                     foreach (var marshaler in _marshalers)
                     {
@@ -255,7 +255,7 @@ namespace WinRT
 
         public static void DisposeMarshalerArray(object box)
         {
-            if (box != null)
+            if (box is not null)
                 ((MarshalerArray)box).Dispose();
         }
 
@@ -335,7 +335,7 @@ namespace WinRT
 
         public static void DisposeMarshalerArray(object box)
         {
-            if (box != null)
+            if (box is not null)
                 ((MarshalerArray)box).Dispose();
         }
 
@@ -438,7 +438,7 @@ namespace WinRT
         {
             public void Dispose()
             {
-                if (_marshalers != null)
+                if (_marshalers is not null)
                 {
                     foreach (var marshaler in _marshalers)
                     {
@@ -620,7 +620,7 @@ namespace WinRT
         {
             public void Dispose()
             {
-                if (_marshalers != null)
+                if (_marshalers is not null)
                 {
                     foreach (var marshaler in _marshalers)
                     {
@@ -1029,7 +1029,7 @@ namespace WinRT
             else if (type.IsValueType || type == typeof(Type))
             {
                 AbiType = type.FindHelperType();
-                if (AbiType != null)
+                if (AbiType is not null)
                 {
                     // Could still be blittable and the 'ABI.*' type exists for other reasons (e.g. it's a mapped type)
                     if (AbiType.GetMethod("FromAbi", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static) is null)

@@ -162,7 +162,7 @@ namespace MS.Internal.AutomationProxies
             // return the appropriate placeholder for the given hwnd...
             // loop over all the band to find it.
         
-            for (RebarBandItem band = (RebarBandItem) GetFirstChild (); band != null; band = (RebarBandItem) GetNextSibling (band))
+            for (RebarBandItem band = (RebarBandItem) GetFirstChild (); band is not null; band = (RebarBandItem) GetNextSibling (band))
             {
                 if (band.HwndBand == hwnd)
                 {
@@ -523,10 +523,10 @@ namespace MS.Internal.AutomationProxies
 
                     // Hide windows that are intermediate containers from the control view
                     Accessible accThis = Accessible.Wrap(this.AccessibleObject);
-                    if ((accThis != null) && (accThis.ChildCount == 1))
+                    if ((accThis is not null) && (accThis.ChildCount == 1))
                     {
                         Accessible accWind = accThis.FirstChild;
-                        if ((accWind != null) && (accWind.Role == AccessibleRole.Window))
+                        if ((accWind is not null) && (accWind.Role == AccessibleRole.Window))
                         {
                             return false;
                         }

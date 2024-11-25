@@ -166,7 +166,7 @@ namespace System.Windows.Controls
             DataTemplate template;
             DataTemplateSelector templateSelector;
             ChooseCellTemplateAndSelector(isEditing, out template, out templateSelector);
-            if (template != null || templateSelector != null)
+            if (template is not null || templateSelector is not null)
             {
                 ContentPresenter contentPresenter = new ContentPresenter();
                 BindingOperations.SetBinding(contentPresenter, ContentPresenter.ContentProperty, new Binding());

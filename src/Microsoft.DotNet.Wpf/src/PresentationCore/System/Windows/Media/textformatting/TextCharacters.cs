@@ -210,7 +210,7 @@ namespace System.Windows.Media.TextFormatting
             // Get the actual text run properties in effect, after invoking any
             // text modifiers that may be in scope.
             TextRunProperties textRunProperties = _textRunProperties;
-            if (textModifierScope != null)
+            if (textModifierScope is not null)
             {
                 textRunProperties = textModifierScope.ModifyProperties(textRunProperties);
             }
@@ -229,7 +229,7 @@ namespace System.Windows.Media.TextFormatting
                     1.0,
                     double.MaxValue,    // widthMax
                     true,               // keepAWord
-                    digitCulture != null,
+                    digitCulture is not null,
                     CultureMapper.GetSpecificCulture(textRunProperties.CultureInfo),
                     textFormattingMode,
                     isSideways,
@@ -289,7 +289,7 @@ namespace System.Windows.Media.TextFormatting
             TextFormattingMode               textFormattingMode
             )
         {
-            Debug.Assert(shapeables != null);
+            Debug.Assert(shapeables is not null);
 
             shapeables.Add(
                 new TextShapeableCharacters(

@@ -111,7 +111,7 @@ namespace MS.Internal.AutomationProxies
                 return;
             }
 
-            if (el != null)
+            if (el is not null)
             {
                 el.DispatchEvents (eventId, idProp, idObject, idChild);
             }
@@ -176,7 +176,7 @@ namespace MS.Internal.AutomationProxies
             // start with the scrollbars
             ProxySimple ret = base.GetPreviousSibling (child);
 
-            if (ret != null)
+            if (ret is not null)
             {
                 return ret;
             }
@@ -230,7 +230,7 @@ namespace MS.Internal.AutomationProxies
             // start with the scrollbars
             ProxySimple ret = base.GetFirstChild ();
 
-            if (ret != null)
+            if (ret is not null)
             {
                 return ret;
             }
@@ -822,7 +822,7 @@ namespace MS.Internal.AutomationProxies
                         _nativeAcc = Accessible.CreateNativeFromEvent(_hwnd, NativeMethods.OBJID_CLIENT, childId);
                     }
                     //This is to check whether native IAccessible is implemented and only then expose the invoke pattern.
-                    if (_nativeAcc != null)
+                    if (_nativeAcc is not null)
                     {
                         return this;
                     }
@@ -893,9 +893,9 @@ namespace MS.Internal.AutomationProxies
                         break;
                     }
                     current = parent;
-                } while (parent != null);
+                } while (parent is not null);
 
-                if (parent != null)
+                if (parent is not null)
                 {
                     if ((bool)parent.GetElementProperty(AutomationElement.IsOffscreenProperty))
                     {
@@ -1006,7 +1006,7 @@ namespace MS.Internal.AutomationProxies
                 }
 
                 IRawElementProviderSimple container = ((ISelectionItemProvider)this).SelectionContainer;
-                bool selectionRequired = container != null ? ((ISelectionProvider)container).IsSelectionRequired : true;
+                bool selectionRequired = container is not null ? ((ISelectionProvider)container).IsSelectionRequired : true;
 
                 // For single selection containers that IsSelectionRequired == false and nothing is selected
                 // an AddToSelection is valid.
@@ -1245,7 +1245,7 @@ namespace MS.Internal.AutomationProxies
             //to display the subfolders and files of the selected folder on the right pane.
             void IInvokeProvider.Invoke()
             {
-                if (_nativeAcc != null)
+                if (_nativeAcc is not null)
                 {
                     SetFocus();
                     _nativeAcc.DoDefaultAction();
@@ -1306,7 +1306,7 @@ namespace MS.Internal.AutomationProxies
             private void CheckForElementAvailable()
             {
                 TreeViewItem current = this;
-                while ((current = current.GetParent() as TreeViewItem) != null)
+                while ((current = current.GetParent() as TreeViewItem) is not null)
                 {
                     if (!WindowsTreeView.IsItemExpanded (_hwnd, current._hItem))
                     {

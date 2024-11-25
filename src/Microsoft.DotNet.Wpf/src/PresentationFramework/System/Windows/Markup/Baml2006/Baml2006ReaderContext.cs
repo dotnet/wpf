@@ -52,7 +52,7 @@ namespace System.Windows.Baml2006
         {
             get
             {
-                if (KeyList != null && KeyList.Count > 0)
+                if (KeyList is not null && KeyList.Count > 0)
                 {
                     return KeyList[KeyList.Count - 1];
                 }

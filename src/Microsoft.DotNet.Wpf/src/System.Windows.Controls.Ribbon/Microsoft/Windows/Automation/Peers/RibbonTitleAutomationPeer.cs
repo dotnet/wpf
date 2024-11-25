@@ -49,7 +49,7 @@ namespace Microsoft.Windows.Automation.Peers
         protected override string GetNameCore()
         {
             ContentPresenter cp = Owner as ContentPresenter;
-            if (cp != null && cp.Content != null)
+            if (cp is not null && cp.Content is not null)
             {
                 return cp.Content.ToString();
             }

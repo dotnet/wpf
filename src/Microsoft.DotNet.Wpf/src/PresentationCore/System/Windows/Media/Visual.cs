@@ -486,7 +486,7 @@ namespace System.Windows.Media
             for (int i = 0; i < count; i++)
             {
                 Visual child = GetVisualChild(i);
-                if (child != null)
+                if (child is not null)
                 {
                     Rect bboxSubgraphChild = child.CalculateSubgraphBoundsOuterSpace(renderBounds);
 
@@ -560,7 +560,7 @@ namespace System.Windows.Media
                 Rect effectBounds;
 
                 Effect effect = EffectField.GetValue(this);
-                if (effect != null)
+                if (effect is not null)
                 {
                     // The Effect always deals in unit bounds, so transform the
                     // unit rect and then map back into the world space bounds
@@ -574,7 +574,7 @@ namespace System.Windows.Media
                 }
                 else
                 {
-                    Debug.Assert(BitmapEffectStateField.GetValue(this) != null);
+                    Debug.Assert(BitmapEffectStateField.GetValue(this) is not null);
                     // BitmapEffects are deprecated so they no longer affect bounds.
                 }
             }
@@ -582,7 +582,7 @@ namespace System.Windows.Media
             // Apply Clip.
 
             Geometry clip = ClipField.GetValue(this);
-            if (clip != null)
+            if (clip is not null)
             {
                 bboxSubgraph.Intersect(clip.Bounds);
             }
@@ -590,7 +590,7 @@ namespace System.Windows.Media
             // Apply Transform.
             Transform transform = TransformField.GetValue(this);
 
-            if ((transform != null) && (!transform.IsIdentity))
+            if ((transform is not null) && (!transform.IsIdentity))
             {
                 Matrix m = transform.Value;
                 MatrixUtil.TransformRect(ref bboxSubgraph, ref m);
@@ -666,7 +666,7 @@ namespace System.Windows.Media
             Dictionary<DUCE.Channel, int> channelsToCyclicBrushMap =
               ChannelsToCyclicBrushMapField.GetValue(this);
 
-            if (channelsToCyclicBrushMap != null)
+            if (channelsToCyclicBrushMap is not null)
             {
                 int references;
 
@@ -754,7 +754,7 @@ namespace System.Windows.Media
                     // disconnect the resource from the visual resource.
 
                     Transform transform = TransformField.GetValue(this);
-                    if ((transform != null)
+                    if ((transform is not null)
                         && (!CheckFlagsAnd(channel, VisualProxyFlags.IsTransformDirty)))
                     {
                         //
@@ -766,28 +766,28 @@ namespace System.Windows.Media
                     }
 
                     Effect effect = EffectField.GetValue(this);
-                    if ((effect != null)
+                    if ((effect is not null)
                         && (!CheckFlagsAnd(channel, VisualProxyFlags.IsEffectDirty)))
                     {
                         ((DUCE.IResource)effect).ReleaseOnChannel(channel);
                     }
 
                     Geometry clip = ClipField.GetValue(this);
-                    if ((clip != null)
+                    if ((clip is not null)
                         && (!CheckFlagsAnd(channel, VisualProxyFlags.IsClipDirty)))
                     {
                         ((DUCE.IResource)clip).ReleaseOnChannel(channel);
                     }
 
                     Brush opacityMask = OpacityMaskField.GetValue(this);
-                    if ((opacityMask != null)
+                    if ((opacityMask is not null)
                         && (!CheckFlagsAnd(channel, VisualProxyFlags.IsOpacityMaskDirty)))
                     {
                         ((DUCE.IResource)opacityMask).ReleaseOnChannel(channel);
                     }
 
                     CacheMode cacheMode = CacheModeField.GetValue(this);
-                    if ((cacheMode != null)
+                    if ((cacheMode is not null)
                         && (! CheckFlagsAnd(channel, VisualProxyFlags.IsCacheModeDirty)))
                     {
                         ((DUCE.IResource)cacheMode).ReleaseOnChannel(channel);
@@ -807,7 +807,7 @@ namespace System.Windows.Media
                     for (int i = 0; i < count; i++)
                     {
                         Visual visual = GetVisualChild(i);
-                        if (visual != null)
+                        if (visual is not null)
                         {
                             ((DUCE.IResource)visual).ReleaseOnChannel(channel);
                         }
@@ -905,7 +905,7 @@ namespace System.Windows.Media
             Dictionary<ICyclicBrush, int> cyclicBrushToChannelsMap =
                 CyclicBrushToChannelsMapField.GetValue(this);
 
-            Debug.Assert(cyclicBrushToChannelsMap != null);
+            Debug.Assert(cyclicBrushToChannelsMap is not null);
             Debug.Assert(cyclicBrushToChannelsMap.ContainsKey(cyclicBrush));
             Debug.Assert(cyclicBrushToChannelsMap[cyclicBrush] > 0);
 
@@ -928,7 +928,7 @@ namespace System.Windows.Media
             // Decrease the number of ICyclicBrush using the visual as root on this channel
             Dictionary<DUCE.Channel, int> channelsToCyclicBrushMap =
                 ChannelsToCyclicBrushMapField.GetValue(this);
-            Debug.Assert(channelsToCyclicBrushMap != null);
+            Debug.Assert(channelsToCyclicBrushMap is not null);
             Debug.Assert(channelsToCyclicBrushMap.ContainsKey(channel));
             Debug.Assert(channelsToCyclicBrushMap[channel] > 0);
 
@@ -1095,7 +1095,7 @@ namespace System.Windows.Media
                         for (int i = 0; i < childCount; i++)
                         {
                             Visual child = GetVisualChild(i);
-                            if (child != null)
+                            if (child is not null)
                             {
                                 Rect bboxSubgraphChild;
 
@@ -1115,14 +1115,14 @@ namespace System.Windows.Media
                     bboxSubgraph = _bboxSubgraph;
 
                     Geometry clip = ClipField.GetValue(this);
-                    if (clip != null)
+                    if (clip is not null)
                     {
                         bboxSubgraph.Intersect(clip.Bounds);
                     }
 
                     Transform transform = TransformField.GetValue(this);
 
-                    if ((transform != null) && (!transform.IsIdentity))
+                    if ((transform is not null) && (!transform.IsIdentity))
                     {
                         Matrix m = transform.Value;
                         MatrixUtil.TransformRect(ref bboxSubgraph, ref m);
@@ -1360,7 +1360,7 @@ namespace System.Windows.Media
             {
                 Brush opacityMask = OpacityMaskField.GetValue(this);
 
-                if (opacityMask != null)
+                if (opacityMask is not null)
                 {
                     //
                     // Set the new opacity mask resource on the visual.
@@ -1403,7 +1403,7 @@ namespace System.Windows.Media
             {
                 Transform transform = TransformField.GetValue(this);
 
-                if (transform != null)
+                if (transform is not null)
                 {
                     //
                     // Set the new transform resource on the visual.
@@ -1445,7 +1445,7 @@ namespace System.Windows.Media
             {
                 Effect effect = EffectField.GetValue(this);
 
-                if (effect != null)
+                if (effect is not null)
                 {
                     //
                     // Set the new effect resource on the visual.
@@ -1484,7 +1484,7 @@ namespace System.Windows.Media
             {
                 CacheMode cacheMode = CacheModeField.GetValue(this);
 
-                if (cacheMode != null)
+                if (cacheMode is not null)
                 {
                     //
                     // Set the new cache mode resource on the visual.
@@ -1527,7 +1527,7 @@ namespace System.Windows.Media
             {
                 Geometry clip = ClipField.GetValue(this);
 
-                if (clip != null)
+                if (clip is not null)
                 {
                     //
                     // Set the new clip resource on the composition node.
@@ -1569,7 +1569,7 @@ namespace System.Windows.Media
             {
                 Rect? scrollableArea = ScrollableAreaClipField.GetValue(this);
 
-                if (isOnChannel || (scrollableArea != null))
+                if (isOnChannel || (scrollableArea is not null))
                 {
                     DUCE.CompositionNode.SetScrollableAreaClip(
                         handle,
@@ -1632,7 +1632,7 @@ namespace System.Windows.Media
                 DoubleCollection guidelinesX = GuidelinesXField.GetValue(this);
                 DoubleCollection guidelinesY = GuidelinesYField.GetValue(this);
 
-                if (isOnChannel || (guidelinesX != null || guidelinesY != null))
+                if (isOnChannel || (guidelinesX is not null || guidelinesY is not null))
                 {
                     //
                     // Guidelines are null by default, so do not update them for new visuals.
@@ -1790,7 +1790,7 @@ namespace System.Windows.Media
             for (int i = 0; i < childCount; i++)
             {
                 Visual child = GetVisualChild(i);
-                if (child != null)
+                if (child is not null)
                 {
                     //
                     // Recurse if the child visual is dirty
@@ -1939,7 +1939,7 @@ namespace System.Windows.Media
 
             PointHitTestParameters pointParams = hitTestParameters as PointHitTestParameters;
 
-            if (pointParams != null)
+            if (pointParams is not null)
             {
                 // Because we call dynamic code during the hit testing walk we need to back up
                 // the original hit point in case the user's delegate throws an exception so that
@@ -1967,7 +1967,7 @@ namespace System.Windows.Media
             {
                 GeometryHitTestParameters geometryParams = hitTestParameters as GeometryHitTestParameters;
 
-                if (geometryParams != null)
+                if (geometryParams is not null)
                 {
                     // Because we call dynamic code during the hit testing walk we need to ensure
                     // that if the user's delegate throws an exception we restore the original
@@ -2026,7 +2026,7 @@ namespace System.Windows.Media
                 //
 
                 HitTestFilterBehavior filter = HitTestFilterBehavior.Continue;
-                if (filterCallback != null)
+                if (filterCallback is not null)
                 {
                     filter = filterCallback(this);
 
@@ -2049,7 +2049,7 @@ namespace System.Windows.Media
                 if (CheckFlagsAnd(VisualFlags.NodeHasEffect))
                 {
                     Effect imageEffect = EffectField.GetValue(this);
-                    if (imageEffect != null)
+                    if (imageEffect is not null)
                     {
                         GeneralTransform effectHitTestInverse = imageEffect.EffectMapping.Inverse;
 
@@ -2060,7 +2060,7 @@ namespace System.Windows.Media
 
                             // Convert to unit space
                             Point? unitHitPoint = Effect.WorldToUnit(originalHitPoint, _bboxSubgraph);
-                            if (unitHitPoint != null)
+                            if (unitHitPoint is not null)
                             {
                                 Point transformedPt = new Point();
 
@@ -2069,7 +2069,7 @@ namespace System.Windows.Media
                                 {
                                     // Convert back to world space
                                     Point? worldSpace = Effect.UnitToWorld(transformedPt, _bboxSubgraph);
-                                    if (worldSpace != null)
+                                    if (worldSpace is not null)
                                     {
                                         hitPoint = worldSpace.Value;
                                         ok = true;
@@ -2085,7 +2085,7 @@ namespace System.Windows.Media
                     }
                     else
                     {
-                        Debug.Assert(BitmapEffectStateField.GetValue(this) != null);
+                        Debug.Assert(BitmapEffectStateField.GetValue(this) is not null);
                         // BitmapEffects are deprecated so they no longer affect hit testing.
                     }
                 }
@@ -2101,7 +2101,7 @@ namespace System.Windows.Media
                     for (int i=childCount-1; i>=0; i--)
                     {
                         Visual child = GetVisualChild(i);
-                        if (child != null)
+                        if (child is not null)
                         {
                             // Hit the scollClip bounds first, which are in the child's outer-space.
                             Rect? scrollClip = ScrollableAreaClipField.GetValue(child);
@@ -2122,7 +2122,7 @@ namespace System.Windows.Media
 
                             // If we have a transform, apply the transform.
                             Transform childTransform = TransformField.GetValue(child);
-                            if (childTransform != null)
+                            if (childTransform is not null)
                             {
                                 Matrix inv = childTransform.Value;
 
@@ -2193,14 +2193,14 @@ namespace System.Windows.Media
             if (CheckFlagsAnd(VisualFlags.NodeHasEffect))
             {
                 Effect effect = EffectField.GetValue(this);
-                if (effect != null)
+                if (effect is not null)
                 {
                     GeneralTransform gt = effect.CoerceToUnitSpaceGeneralTransform(
                         effect.EffectMapping,
                         VisualDescendantBounds);
 
                     Transform affineTransform = gt.AffineTransform;
-                    if (affineTransform != null)
+                    if (affineTransform is not null)
                     {
                         Matrix cm = affineTransform.Value;
                         MatrixUtil.MultiplyMatrix(ref m, ref cm);
@@ -2216,12 +2216,12 @@ namespace System.Windows.Media
                     BitmapEffectState bitmapEffectState = BitmapEffectStateField.GetValue(this);
                     // If we have an effect on this node and it isn't an Effect, it must be a BitmapEffect.
                     // Since BitmapEffects are deprecated and ignored, they do not change a Visual's transform.
-                    Debug.Assert(bitmapEffectState != null);
+                    Debug.Assert(bitmapEffectState is not null);
                 }
             }
 
             Transform transform = TransformField.GetValue(this);
-            if (transform != null)
+            if (transform is not null)
             {
                 Matrix cm = transform.Value;
                 MatrixUtil.MultiplyMatrix(ref m, ref cm);
@@ -2249,7 +2249,7 @@ namespace System.Windows.Media
         {
             // we do not need parameter checks because they are done in HitTest()
             Geometry clip = VisualClip;
-            if (clip != null)
+            if (clip is not null)
             {
                 // HitTest with a Geometry and a clip should hit test with
                 // the intersection of the geometry and the clip, not the entire geometry
@@ -2276,7 +2276,7 @@ namespace System.Windows.Media
 
                 HitTestFilterBehavior filter = HitTestFilterBehavior.Continue;
 
-                if (filterCallback != null)
+                if (filterCallback is not null)
                 {
                     filter = filterCallback(this);
 
@@ -2302,7 +2302,7 @@ namespace System.Windows.Media
                     for (int i=childCount-1; i>=0; i--)
                     {
                         Visual child = GetVisualChild(i);
-                        if (child != null)
+                        if (child is not null)
                         {
                             // Hit the scollClip bounds first, which are in the child's outer-space.
                             Rect? scrollClip = ScrollableAreaClipField.GetValue(child);
@@ -2326,7 +2326,7 @@ namespace System.Windows.Media
                             inv.Translate(-child._offset.X, -child._offset.Y);
 
                             Transform childTransform = TransformField.GetValue(child);
-                            if (childTransform != null)
+                            if (childTransform is not null)
                             {
                                 Matrix m = childTransform.Value;
 
@@ -2375,9 +2375,9 @@ namespace System.Windows.Media
                 {
                     GeometryHitTestResult hitResult = HitTestCore(geometryParams);
 
-                    if (hitResult != null)
+                    if (hitResult is not null)
                     {
-                        Debug.Assert(resultCallback != null);
+                        Debug.Assert(resultCallback is not null);
 
                         return resultCallback(hitResult);
                     }
@@ -2400,7 +2400,7 @@ namespace System.Windows.Media
         {
             HitTestResult hitResult = HitTestCore(hitTestParameters);
 
-            if (hitResult != null)
+            if (hitResult is not null)
             {
                 return resultCallback(hitResult);
             }
@@ -2593,7 +2593,7 @@ namespace System.Windows.Media
                 return;
             }
 
-            if (child._parent != null)
+            if (child._parent is not null)
             {
                 throw new ArgumentException(SR.Visual_HasParent);
             }
@@ -2832,12 +2832,12 @@ namespace System.Windows.Media
                 Transform newTransform = value;
 
                 // Add changed notifications for the new transform if necessary.
-                if (newTransform != null && !newTransform.IsFrozen)
+                if (newTransform is not null && !newTransform.IsFrozen)
                 {
                     newTransform.Changed += TransformChangedHandler;
                 }
 
-                if (transform != null)
+                if (transform is not null)
                 {
                     //
                     // Remove changed notifications for the old transform if necessary.
@@ -2887,9 +2887,9 @@ namespace System.Windows.Media
                 // Legacy BitmapEffects and new Effects cannot be mixed because the new image effect
                 // pipeline may be used to emulate a legacy BitmapEffect.
                 BitmapEffectState bed = UserProvidedBitmapEffectData.GetValue(this);
-                if (bed != null)
+                if (bed is not null)
                 {
-                    if (value != null) // UIElement has a tendency to set a lot of properties to null even if it
+                    if (value is not null) // UIElement has a tendency to set a lot of properties to null even if it
                                        // never set a property to a different value in the first place.
                     {
                         // If a BitmapEffect is set, the user cannot set an Effect, since
@@ -2942,12 +2942,12 @@ namespace System.Windows.Media
                 Effect newEffect = value;
 
                 // Add changed notifications for the new Effect if necessary.
-                if (newEffect != null && !newEffect.IsFrozen)
+                if (newEffect is not null && !newEffect.IsFrozen)
                 {
                     newEffect.Changed += EffectChangedHandler;
                 }
 
-                if (imageEffect != null)
+                if (imageEffect is not null)
                 {
                     //
                     // Remove changed notifications for the old Effect if necessary.
@@ -2971,7 +2971,7 @@ namespace System.Windows.Media
                 // Set the new effect and mark it dirty
                 //
 
-                SetFlags(newEffect != null, VisualFlags.NodeHasEffect);
+                SetFlags(newEffect is not null, VisualFlags.NodeHasEffect);
 
                 EffectField.SetValue(this, newEffect);
 
@@ -2996,7 +2996,7 @@ namespace System.Windows.Media
 
                 BitmapEffectState bed = UserProvidedBitmapEffectData.GetValue(this);
 
-                if (bed != null)
+                if (bed is not null)
                 {
                     return bed.BitmapEffect;
                 }
@@ -3017,10 +3017,10 @@ namespace System.Windows.Media
                 Effect imageEffect = EffectField.GetValue(this);
                 BitmapEffectState bed = UserProvidedBitmapEffectData.GetValue(this);
                 if (   (bed is null)
-                    && (imageEffect != null))
+                    && (imageEffect is not null))
 
                 {
-                    if (value != null) // Allowing incoming value of null because UIElements tend
+                    if (value is not null) // Allowing incoming value of null because UIElements tend
                                        // to aggressively set this property to null even if it has never been set.
                     {
                         // If no BitmapEffect is set and an Effect is set, the Effect has been
@@ -3049,7 +3049,7 @@ namespace System.Windows.Media
 
                 if (newBitmapEffect is null)
                 {
-                    Debug.Assert(bed != null, "Must be non-null because otherwise the code would have earlied out where new value is compared against old value.");
+                    Debug.Assert(bed is not null, "Must be non-null because otherwise the code would have earlied out where new value is compared against old value.");
                     // The following line of code will effectively set the BitmapEffectInput property to null. This is strange behavior for WPF properties, but follows the
                     // original BitmapEffects implementation.
                     UserProvidedBitmapEffectData.SetValue(this, null);
@@ -3065,11 +3065,11 @@ namespace System.Windows.Media
                     bed.BitmapEffect = newBitmapEffect;
                 }
 
-                if (newBitmapEffect != null && !newBitmapEffect.IsFrozen)
+                if (newBitmapEffect is not null && !newBitmapEffect.IsFrozen)
                 {
                     newBitmapEffect.Changed += new EventHandler(BitmapEffectEmulationChanged);
                 }
-                if (oldBitmapEffect != null && !oldBitmapEffect.IsFrozen)
+                if (oldBitmapEffect is not null && !oldBitmapEffect.IsFrozen)
                 {
                     oldBitmapEffect.Changed -= new EventHandler(BitmapEffectEmulationChanged);
                 }
@@ -3095,7 +3095,7 @@ namespace System.Windows.Media
 
                 BitmapEffectState bed = UserProvidedBitmapEffectData.GetValue(this);
 
-                if (bed != null)
+                if (bed is not null)
                 {
                     return bed.BitmapEffectInput;
                 }
@@ -3115,9 +3115,9 @@ namespace System.Windows.Media
 
                 Effect imageEffect = EffectField.GetValue(this);
                 BitmapEffectState bed = UserProvidedBitmapEffectData.GetValue(this);
-                if ((bed is null) && (imageEffect != null))
+                if ((bed is null) && (imageEffect is not null))
                 {
-                    if (value != null) // Allowing null because parser and UIElement tend to set this property to null
+                    if (value is not null) // Allowing null because parser and UIElement tend to set this property to null
                                        // even if it has never been set to non-null.
                     {
                         // If no BitmapEffect is set and an Effect is set, the Effect has been
@@ -3154,11 +3154,11 @@ namespace System.Windows.Media
                 bed.BitmapEffectInput = newBitmapEffectInput;
 
 
-                if (newBitmapEffectInput != null && !newBitmapEffectInput.IsFrozen)
+                if (newBitmapEffectInput is not null && !newBitmapEffectInput.IsFrozen)
                 {
                     newBitmapEffectInput.Changed += new EventHandler(BitmapEffectEmulationChanged);
                 }
-                if (oldBitmapEffectInput != null && !oldBitmapEffectInput.IsFrozen)
+                if (oldBitmapEffectInput is not null && !oldBitmapEffectInput.IsFrozen)
                 {
                     oldBitmapEffectInput.Changed -= new EventHandler(BitmapEffectEmulationChanged);
                 }
@@ -3194,7 +3194,7 @@ namespace System.Windows.Media
                 VisualBitmapEffectInputInternal = null;
                 VisualEffectInternal = null;
             }
-            else if (currentBitmapEffectInput != null)
+            else if (currentBitmapEffectInput is not null)
             {
                 // If a BitmapEffectInput is specified, make sure the legacy effect is not being
                 // emulated using the Effect pipeline since the new pipeline does not support
@@ -3280,7 +3280,7 @@ namespace System.Windows.Media
 
                 if (newBitmapEffect is null)
                 {
-                    Debug.Assert(bitmapEffectState != null);
+                    Debug.Assert(bitmapEffectState is not null);
 
                     BitmapEffectStateField.SetValue(this, null);
                 }
@@ -3310,7 +3310,7 @@ namespace System.Windows.Media
             {
                 VerifyAPIReadOnly();
                 BitmapEffectState bitmapEffectState = BitmapEffectStateField.GetValue(this);
-                if (bitmapEffectState != null)
+                if (bitmapEffectState is not null)
                     return bitmapEffectState.BitmapEffectInput;
 
                 return null;
@@ -3364,12 +3364,12 @@ namespace System.Windows.Media
                 CacheMode newCacheMode = value;
 
                 // Add changed notifications for the new cache mode if necessary.
-                if (newCacheMode != null && !newCacheMode.IsFrozen)
+                if (newCacheMode is not null && !newCacheMode.IsFrozen)
                 {
                     newCacheMode.Changed += CacheModeChangedHandler;
                 }
 
-                if (cacheMode != null)
+                if (cacheMode is not null)
                 {
                     //
                     // Remove changed notifications for the old cache mode if necessary.
@@ -3456,18 +3456,18 @@ namespace System.Windows.Media
 
             Geometry oldClip = ClipField.GetValue(this);
             if ((oldClip == newClip) ||
-                (dontSetWhenClose && (oldClip != null) && (newClip != null) && oldClip.AreClose(newClip)))
+                (dontSetWhenClose && (oldClip is not null) && (newClip is not null) && oldClip.AreClose(newClip)))
             {
                 return;
             }
 
             // Add changed notifications for the new clip if necessary.
-            if (newClip != null && !newClip.IsFrozen)
+            if (newClip is not null && !newClip.IsFrozen)
             {
                 newClip.Changed += ClipChangedHandler;
             }
 
-            if (oldClip != null)
+            if (oldClip is not null)
             {
                 //
                 // Remove changed notifications for the old clip if necessary.
@@ -3744,12 +3744,12 @@ namespace System.Windows.Media
                 Brush newOpacityMask = value;
 
                 // Add changed notifications for the new opacity mask if necessary.
-                if (newOpacityMask != null && !newOpacityMask.IsFrozen)
+                if (newOpacityMask is not null && !newOpacityMask.IsFrozen)
                 {
                     newOpacityMask.Changed += OpacityMaskChangedHandler;
                 }
 
-                if (opacityMask != null)
+                if (opacityMask is not null)
                 {
                     //
                     // Remove changed notifications for the old opacity mask if necessary.
@@ -3805,13 +3805,13 @@ namespace System.Windows.Media
                 DoubleCollection newGuidelines = value;
 
                 // Add changed notifications for the new guidelines if necessary.
-                if (newGuidelines != null && !newGuidelines.IsFrozen)
+                if (newGuidelines is not null && !newGuidelines.IsFrozen)
                 {
                     newGuidelines.Changed += GuidelinesChangedHandler;
                 }
 
                 // Remove changed notifications for the old guidelines if necessary.
-                if (guidelines != null && !guidelines.IsFrozen)
+                if (guidelines is not null && !guidelines.IsFrozen)
                 {
                     guidelines.Changed -= GuidelinesChangedHandler;
                 }
@@ -3847,13 +3847,13 @@ namespace System.Windows.Media
                 DoubleCollection newGuidelines = value;
 
                 // Add changed notifications for the new guidelines if necessary.
-                if (newGuidelines != null && !newGuidelines.IsFrozen)
+                if (newGuidelines is not null && !newGuidelines.IsFrozen)
                 {
                     newGuidelines.Changed += GuidelinesChangedHandler;
                 }
 
                 // Remove changed notifications for the old guidelines if necessary.
-                if (guidelines != null && !guidelines.IsFrozen)
+                if (guidelines is not null && !guidelines.IsFrozen)
                 {
                     guidelines.Changed -= GuidelinesChangedHandler;
                 }
@@ -3969,7 +3969,7 @@ namespace System.Windows.Media
             // send the bit up if we need to.
             if(oldParent is null)
             {
-                Debug.Assert(_parent != null, "If oldParent is null, current parent should != null.");
+                Debug.Assert(_parent is not null, "If oldParent is null, current parent should is not null.");
 
                 if(CheckFlagsAnd(VisualFlags.SubTreeHoldsAncestorChanged))
                 {
@@ -4069,7 +4069,7 @@ namespace System.Windows.Media
                 // search should fail.  But it is safe to check.
                 AncestorChangedEventHandler newHandler = AncestorChangedEventField.GetValue(this);
 
-                if (newHandler != null)
+                if (newHandler is not null)
                 {
                     newHandler -= value;
 
@@ -4111,7 +4111,7 @@ namespace System.Windows.Media
                 // If there is a handler on this node, then fire it.
                 AncestorChangedEventHandler handler = AncestorChangedEventField.GetValue(eAsVisual);
 
-                if(handler != null)
+                if(handler is not null)
                 {
                     handler(eAsVisual, args);
                 }
@@ -4122,7 +4122,7 @@ namespace System.Windows.Media
                 for (int i = 0; i < count; i++)
                 {
                     DependencyObject childVisual = eAsVisual.InternalGet2DOr3DVisualChild(i);
-                    if (childVisual != null)
+                    if (childVisual is not null)
                     {
                         ProcessAncestorChangedNotificationRecursive(childVisual, args);
                     }
@@ -4143,7 +4143,7 @@ namespace System.Windows.Media
             VisualTreeUtils.AsNonNullVisual(descendant, out visual, out visual3D);
 
             // x86 branch prediction skips the branch on first encounter.  We favor 2D.
-            if(visual3D != null)
+            if(visual3D is not null)
             {
                 return visual3D.IsDescendantOf(this);
             }
@@ -4164,11 +4164,11 @@ namespace System.Windows.Media
             // of 2D parents or we find the ancestor.
             DependencyObject current = this;
 
-            while ((current != null) && (current != ancestor))
+            while ((current is not null) && (current != ancestor))
             {
                 Visual currentAsVisual = current as Visual;
 
-                if (currentAsVisual != null)
+                if (currentAsVisual is not null)
                 {
                     current = currentAsVisual._parent;
                 }
@@ -4176,7 +4176,7 @@ namespace System.Windows.Media
                 {
                     Visual3D currentAsVisual3D = current as Visual3D;
 
-                    if (currentAsVisual3D != null)
+                    if (currentAsVisual3D is not null)
                     {
                         current = currentAsVisual3D.InternalVisualParent;
                     }
@@ -4209,7 +4209,7 @@ namespace System.Windows.Media
 
                 // if the cast to currentParent failed and yet current._parent is not null then
                 // we have a 3D element.  Call SetFlagsToRoot on it instead.
-                if (current._parent != null && currentParent is null)
+                if (current._parent is not null && currentParent is null)
                 {
                     ((Visual3D)current._parent).SetFlagsToRoot(value, flag);
                     return;
@@ -4217,7 +4217,7 @@ namespace System.Windows.Media
 
                 current = currentParent;
             }
-            while (current != null);
+            while (current is not null);
         }
 
 
@@ -4246,13 +4246,13 @@ namespace System.Windows.Media
                 if (current is null)
                 {
                     Visual3D parentAsVisual3D = parent as Visual3D;
-                    if (parentAsVisual3D != null)
+                    if (parentAsVisual3D is not null)
                     {
                         return parentAsVisual3D.FindFirstAncestorWithFlagsAnd(flag);
                     }
                 }
             }
-            while (current != null);
+            while (current is not null);
 
             return null;
         }
@@ -4424,7 +4424,7 @@ namespace System.Windows.Media
 
             // If inverse was requested, TrySimpleTransformToAncestor can return null
             // add the transform only if it is not null
-            if (g1 != null)
+            if (g1 is not null)
             {
                 GeneralTransformGroup group = new GeneralTransformGroup();
                 group.Children.Add(g0);
@@ -4481,7 +4481,7 @@ namespace System.Windows.Media
                                                    out GeneralTransform generalTransform,
                                                    out Matrix simpleTransform)
         {
-            Debug.Assert(ancestor != null);
+            Debug.Assert(ancestor is not null);
 
             // flag to indicate if we have a case where we do multile 2D->3D->2D transitions
             bool embedded2Don3D = false;
@@ -4504,10 +4504,10 @@ namespace System.Windows.Media
             // If, as is commonly the case, this loop terminates without encountering a bitmap effect
             // we will simply use the Matrix.
 
-            while ((VisualTreeHelper.GetParent(g) != null) && (g != ancestor))
+            while ((VisualTreeHelper.GetParent(g) is not null) && (g != ancestor))
             {
                 Visual gAsVisual = g as Visual;
-                if (gAsVisual != null)
+                if (gAsVisual is not null)
                 {
                     if (gAsVisual.CheckFlagsAnd(VisualFlags.NodeHasEffect))
                     {
@@ -4518,14 +4518,14 @@ namespace System.Windows.Media
                         // before.
 
                         Effect imageEffect = EffectField.GetValue(gAsVisual);
-                        if (imageEffect != null)
+                        if (imageEffect is not null)
                         {
                             GeneralTransform gt = imageEffect.CoerceToUnitSpaceGeneralTransform(
                                 imageEffect.EffectMapping,
                                 gAsVisual.VisualDescendantBounds);
 
                             Transform affineTransform = gt.AffineTransform;
-                            if (affineTransform != null)
+                            if (affineTransform is not null)
                             {
                                 Matrix cm = affineTransform.Value;
                                 MatrixUtil.MultiplyMatrix(ref m, ref cm);
@@ -4546,7 +4546,7 @@ namespace System.Windows.Media
                     }
 
                     Transform transform = TransformField.GetValue(gAsVisual);
-                    if (transform != null)
+                    if (transform is not null)
                     {
                         Matrix cm = transform.Value;
                         MatrixUtil.MultiplyMatrix(ref m, ref cm);
@@ -4601,7 +4601,7 @@ namespace System.Windows.Media
             Debug.Assert((group is null) || (group.Children.Count > 0));
 
             // Do we have a group?
-            if (group != null)
+            if (group is not null)
             {
                 if (!m.IsIdentity)
                 {
@@ -4614,7 +4614,7 @@ namespace System.Windows.Media
                 }
 
                 // group can be null if it does not have an inverse
-                if (group != null)
+                if (group is not null)
                 {
                     group.Freeze();
                 }
@@ -4676,7 +4676,7 @@ namespace System.Windows.Media
         internal bool TrySimpleTransformToAncestor(Visual3D ancestor,
                                                    out GeneralTransform2DTo3D transformTo3D)
         {
-            Debug.Assert(ancestor != null);
+            Debug.Assert(ancestor is not null);
 
             // get the 3D object that contains this visual
             // this must be a Viewport2DVisual3D since this is the only 3D class that can contain 2D content as a child
@@ -4987,7 +4987,7 @@ namespace System.Windows.Media
             for (int i = 0; i < count; i++)
             {
                 Visual cv = InternalGetVisualChild(i);
-                if (cv != null)
+                if (cv is not null)
                 {
                     cv.RecursiveSetDpiScaleVisualFlags(args);
                 }
@@ -5075,10 +5075,10 @@ namespace System.Windows.Media
             Visual eAsVisual;
             Visual3D eAsVisual3D;
 
-            if (e != null)
+            if (e is not null)
             {
                 eAsVisual = e as Visual;
-                if (eAsVisual != null)
+                if (eAsVisual is not null)
                 {
                     eAsVisual.SetFlags(true, nodeFlag);
                 }
@@ -5091,7 +5091,7 @@ namespace System.Windows.Media
             while (null!=e)
             {
                 eAsVisual = e as Visual;
-                if (eAsVisual != null)
+                if (eAsVisual is not null)
                 {
                     // if the bit is already set, then we're done.
                     if(eAsVisual.CheckFlagsAnd(treeFlag))
@@ -5132,10 +5132,10 @@ namespace System.Windows.Media
 
             // This bit might not be set, but checking costs as much as setting
             // So it is faster to just clear it everytime.
-            if (e != null)
+            if (e is not null)
             {
                 eAsVisual = e as Visual;
-                if (eAsVisual != null)
+                if (eAsVisual is not null)
                 {
                     eAsVisual.SetFlags(false, nodeFlag);
                 }
@@ -5145,10 +5145,10 @@ namespace System.Windows.Media
                 }
             }
 
-            while (e != null)
+            while (e is not null)
             {
                 eAsVisual = e as Visual;
-                if (eAsVisual != null)
+                if (eAsVisual is not null)
                 {
                     if(eAsVisual.CheckFlagsAnd(nodeFlag))
                     {
@@ -5195,7 +5195,7 @@ namespace System.Windows.Media
             for (int i = 0; i < count; i++)
             {
                 Visual v = pe.GetVisualChild(i);
-                if (v != null && v.CheckFlagsAnd(flag))
+                if (v is not null && v.CheckFlagsAnd(flag))
                 {
                     return true;
                 }
@@ -5216,14 +5216,14 @@ namespace System.Windows.Media
             VisualFlags flags,
             VisualProxyFlags proxyFlags)
         {
-            while ((e != null) &&
+            while ((e is not null) &&
                    (!e.CheckFlagsAnd(flags) || !e.CheckFlagsOnAllChannels(proxyFlags)))
             {
                 if (e.CheckFlagsOr(VisualFlags.ShouldPostRender))
                 {
                     MediaContext mctx = MediaContext.From(e.Dispatcher);
 
-                    if (mctx.Channel != null)
+                    if (mctx.Channel is not null)
                     {
                         mctx.PostRender();
                     }
@@ -5238,7 +5238,7 @@ namespace System.Windows.Media
                     Dictionary<ICyclicBrush, int> cyclicBrushToChannelsMap =
                         CyclicBrushToChannelsMapField.GetValue(e);
 
-                    Debug.Assert(cyclicBrushToChannelsMap != null, "Visual brush roots need to have the visual brush to channels map!");
+                    Debug.Assert(cyclicBrushToChannelsMap is not null, "Visual brush roots need to have the visual brush to channels map!");
 
 
                     //
@@ -5296,7 +5296,7 @@ namespace System.Windows.Media
                 // BitmapEffects and the newer Effects
                 return
                     CheckFlagsAnd(VisualFlags.NodeHasEffect) &&
-                    BitmapEffectStateField.GetValue(this) != null;
+                    BitmapEffectStateField.GetValue(this) is not null;
             }
         }
 

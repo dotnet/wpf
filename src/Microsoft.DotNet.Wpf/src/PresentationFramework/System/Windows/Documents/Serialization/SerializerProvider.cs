@@ -50,19 +50,19 @@ namespace System.Windows.Documents.Serialization
 
             sd = CreateSystemSerializerDescriptor();
 
-            if (sd != null)
+            if (sd is not null)
             {
                 installedSerializers.Add(sd);
             }
 
             RegistryKey plugIns = _rootKey.CreateSubKey(_registryPath);
 
-            if ( plugIns != null )
+            if ( plugIns is not null )
             {
                 foreach ( string keyName in plugIns.GetSubKeyNames())
                 {
                     sd = SerializerDescriptor.CreateFromRegistry(plugIns, keyName);
-                    if (sd != null)
+                    if (sd is not null)
                     {
                         installedSerializers.Add(sd);
                     }
@@ -89,7 +89,7 @@ namespace System.Windows.Documents.Serialization
             RegistryKey plugIns = _rootKey.CreateSubKey(_registryPath);
             string serializerKey = $"{serializerDescriptor.DisplayName}/{serializerDescriptor.AssemblyName}/{serializerDescriptor.AssemblyVersion}/{serializerDescriptor.WinFXVersion}";
 
-            if (!overwrite && plugIns.OpenSubKey(serializerKey) != null)
+            if (!overwrite && plugIns.OpenSubKey(serializerKey) is not null)
             {
                 throw new ArgumentException(SR.SerializerProviderAlreadyRegistered, serializerKey);
             }

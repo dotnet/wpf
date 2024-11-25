@@ -50,7 +50,7 @@ namespace MS.Internal.Documents
             // destroy its parent yet. To workaround this case always check for the parent
             // of page visual and disconnect it, when necessary.
             Visual currentParent = VisualTreeHelper.GetParent(pageVisual) as Visual;
-            if (currentParent != null)
+            if (currentParent is not null)
             {
                 ContainerVisual pageVisualHost = currentParent as ContainerVisual;
                 if (pageVisualHost is null)
@@ -84,15 +84,15 @@ namespace MS.Internal.Documents
             set
             {
                 ContainerVisual pageVisualHost;
-                if (_pageVisual != null)
+                if (_pageVisual is not null)
                 {
                     pageVisualHost = VisualTreeHelper.GetParent(_pageVisual) as ContainerVisual;
-                    Invariant.Assert(pageVisualHost != null);
+                    Invariant.Assert(pageVisualHost is not null);
                     pageVisualHost.Children.Clear();
                     this.RemoveVisualChild(pageVisualHost);
                 }
                 _pageVisual = value;
-                if (_pageVisual != null)
+                if (_pageVisual is not null)
                 {
                     pageVisualHost = new ContainerVisual();
                     this.AddVisualChild(pageVisualHost);
@@ -139,7 +139,7 @@ namespace MS.Internal.Documents
         /// </summary>        
         protected override int VisualChildrenCount
         {
-            get { return _pageVisual != null ? 1 : 0; }
+            get { return _pageVisual is not null ? 1 : 0; }
         }
 
         #endregion VisualChildren

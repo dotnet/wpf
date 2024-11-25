@@ -105,7 +105,7 @@ namespace System.Windows.Controls.Primitives
         {
             get
             {
-                return (this.Owner != null) ? this.Owner.DisplayMode : CalendarMode.Month;
+                return (this.Owner is not null) ? this.Owner.DisplayMode : CalendarMode.Month;
             }
         }
 
@@ -137,7 +137,7 @@ namespace System.Windows.Controls.Primitives
         {
             get
             {
-                return (Owner != null) ? Owner.DisplayDate : DateTime.Today;
+                return (Owner is not null) ? Owner.DisplayDate : DateTime.Today;
             }
         }
 
@@ -153,17 +153,17 @@ namespace System.Windows.Controls.Primitives
         {
             base.OnApplyTemplate();
 
-            if (this._previousButton != null)
+            if (this._previousButton is not null)
             {
                 this._previousButton.Click -= new RoutedEventHandler(PreviousButton_Click);
             }
 
-            if (this._nextButton != null)
+            if (this._nextButton is not null)
             {
                 this._nextButton.Click -= new RoutedEventHandler(NextButton_Click);
             }
 
-            if (this._headerButton != null)
+            if (this._headerButton is not null)
             {
                 this._headerButton.Click -= new RoutedEventHandler(HeaderButton_Click);
             }
@@ -177,12 +177,12 @@ namespace System.Windows.Controls.Primitives
 
             // WPF Compat: Unlike SL, WPF is not able to get elements in template resources with GetTemplateChild()
             _dayTitleTemplate = null;
-            if (Template != null && Template.Resources.Contains(DayTitleTemplateResourceKey))
+            if (Template is not null && Template.Resources.Contains(DayTitleTemplateResourceKey))
             {
                 _dayTitleTemplate = Template.Resources[DayTitleTemplateResourceKey] as DataTemplate;
             }
 
-            if (this._previousButton != null)
+            if (this._previousButton is not null)
             {
                 // If the user does not provide a Content value in template, we provide a helper text that can be used in Accessibility
                 // this text is not shown on the UI, just used for Accessibility purposes
@@ -194,7 +194,7 @@ namespace System.Windows.Controls.Primitives
                 this._previousButton.Click += new RoutedEventHandler(PreviousButton_Click);
             }
 
-            if (this._nextButton != null)
+            if (this._nextButton is not null)
             {
                 // If the user does not provide a Content value in template, we provide a helper text that can be used in Accessibility
                 // this text is not shown on the UI, just used for Accessibility purposes
@@ -206,14 +206,14 @@ namespace System.Windows.Controls.Primitives
                 this._nextButton.Click += new RoutedEventHandler(NextButton_Click);
             }
 
-            if (this._headerButton != null)
+            if (this._headerButton is not null)
             {
                 this._headerButton.Click += new RoutedEventHandler(HeaderButton_Click);
             }
 
             PopulateGrids();
 
-            if (this.Owner != null)
+            if (this.Owner is not null)
             {
                 switch (this.Owner.DisplayMode)
                 {
@@ -296,7 +296,7 @@ namespace System.Windows.Controls.Primitives
         {
             DateTime selectedYear;
 
-            if (this.Owner != null)
+            if (this.Owner is not null)
             {
                 selectedYear = this.Owner.DisplayYear;
             }
@@ -312,7 +312,7 @@ namespace System.Windows.Controls.Primitives
             SetDecadeModePreviousButton(decade);
             SetDecadeModeNextButton(decadeEnd);
 
-            if (_yearView != null)
+            if (_yearView is not null)
             {
                 SetYearButtons(decade, decadeEnd);
             }
@@ -324,7 +324,7 @@ namespace System.Windows.Controls.Primitives
             SetMonthModePreviousButton();
             SetMonthModeNextButton();
 
-            if (_monthView != null)
+            if (_monthView is not null)
             {
                 SetMonthModeDayTitles();
                 SetMonthModeCalendarDayButtons();
@@ -338,7 +338,7 @@ namespace System.Windows.Controls.Primitives
             SetYearModePreviousButton();
             SetYearModeNextButton();
 
-            if (_yearView != null)
+            if (_yearView is not null)
             {
                 SetYearModeMonthButtons();
             }
@@ -348,13 +348,13 @@ namespace System.Windows.Controls.Primitives
         {
             // should be updated if we support MultiCalendar
             int count = ROWS * COLS;
-            if (MonthView != null)
+            if (MonthView is not null)
             {
                 UIElementCollection dayButtonsHost = MonthView.Children;
                 for (int childIndex = COLS; childIndex < count; childIndex++)
                 {
                     CalendarDayButton b = dayButtonsHost[childIndex] as CalendarDayButton;
-                    if (b != null)
+                    if (b is not null)
                     {
                         yield return b;
                     }
@@ -366,7 +366,7 @@ namespace System.Windows.Controls.Primitives
         {
             foreach (CalendarDayButton b in GetCalendarDayButtons())
             {
-                if (b != null && b.IsFocused)
+                if (b is not null && b.IsFocused)
                 {
                     return b;
                 }
@@ -379,7 +379,7 @@ namespace System.Windows.Controls.Primitives
         {
             foreach (CalendarDayButton b in GetCalendarDayButtons())
             {
-                if (b != null && b.DataContext is DateTime)
+                if (b is not null && b.DataContext is DateTime)
                 {
                     if (DateTimeHelper.CompareDays(date, (DateTime)b.DataContext) == 0)
                     {
@@ -397,7 +397,7 @@ namespace System.Windows.Controls.Primitives
 
             foreach (CalendarButton b in GetCalendarButtons())
             {
-                if (b != null && b.DataContext is DateTime)
+                if (b is not null && b.DataContext is DateTime)
                 {
                     if (mode == CalendarMode.Year)
                     {
@@ -423,7 +423,7 @@ namespace System.Windows.Controls.Primitives
         {
             foreach (CalendarButton b in GetCalendarButtons())
             {
-                if (b != null && b.IsFocused)
+                if (b is not null && b.IsFocused)
                 {
                     return b;
                 }
@@ -437,7 +437,7 @@ namespace System.Windows.Controls.Primitives
             foreach (UIElement element in this.YearView.Children)
             {
                 CalendarButton b = element as CalendarButton;
-                if (b != null)
+                if (b is not null)
                 {
                     yield return b;
                 }
@@ -470,7 +470,7 @@ namespace System.Windows.Controls.Primitives
                 }
             }
 
-            if (focusTarget != null && !focusTarget.IsFocused)
+            if (focusTarget is not null && !focusTarget.IsFocused)
             {
                 focusTarget.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
             }
@@ -487,7 +487,7 @@ namespace System.Windows.Controls.Primitives
             // Adjust the decade value if the mouse move selection is on,
             // such that if first or last year among the children are selected
             // then return the current selected decade as is.
-            if (_isMonthPressed && _yearView != null)
+            if (_isMonthPressed && _yearView is not null)
             {
                 UIElementCollection yearViewChildren = _yearView.Children;
                 int count = yearViewChildren.Count;
@@ -495,7 +495,7 @@ namespace System.Windows.Controls.Primitives
                 if (count > 0)
                 {
                     CalendarButton child = yearViewChildren[0] as CalendarButton;
-                    if (child != null &&
+                    if (child is not null &&
                         child.DataContext is DateTime &&
                         ((DateTime)child.DataContext).Year == selectedYear.Year)
                     {
@@ -506,7 +506,7 @@ namespace System.Windows.Controls.Primitives
                 if (count > 1)
                 {
                     CalendarButton child = yearViewChildren[count - 1] as CalendarButton;
-                    if (child != null &&
+                    if (child is not null &&
                         child.DataContext is DateTime &&
                         ((DateTime)child.DataContext).Year == selectedYear.Year)
                     {
@@ -519,7 +519,7 @@ namespace System.Windows.Controls.Primitives
 
         private void EndDrag(bool ctrl, DateTime selectedDate)
         {
-            if (this.Owner != null)
+            if (this.Owner is not null)
             {
                 this.Owner.CurrentDate = selectedDate;
 
@@ -547,7 +547,7 @@ namespace System.Windows.Controls.Primitives
         
         private void CellOrMonth_PreviewKeyDown(object sender, RoutedEventArgs e)
         {
-            Debug.Assert(e != null);
+            Debug.Assert(e is not null);
 
             if (this.Owner is null)
             {
@@ -565,7 +565,7 @@ namespace System.Windows.Controls.Primitives
             }
 
             CalendarDayButton b = sender as CalendarDayButton;
-            Debug.Assert(b != null);
+            Debug.Assert(b is not null);
 
             if (!(b.DataContext is DateTime))
             {
@@ -863,7 +863,7 @@ namespace System.Windows.Controls.Primitives
             {
                 // If the day is blacked out but also a trailing day we should be able to switch months
                 CalendarDayButton b = GetCalendarDayButton(selectedDate);
-                if (b != null && b.IsInactive && b.IsBlackedOut)
+                if (b is not null && b.IsInactive && b.IsBlackedOut)
                 {
                     this.Owner.OnDayClick(selectedDate);
                 }
@@ -873,12 +873,12 @@ namespace System.Windows.Controls.Primitives
         private void Month_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             CalendarButton b = sender as CalendarButton;
-            if (b != null)
+            if (b is not null)
             {
                 this._isMonthPressed = true;
                 Mouse.Capture(this, CaptureMode.SubTree);
 
-                if (this.Owner != null)
+                if (this.Owner is not null)
                 {
                     this.Owner.OnCalendarButtonPressed(b, false);
                 }
@@ -888,7 +888,7 @@ namespace System.Windows.Controls.Primitives
         private void Month_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             CalendarButton b = sender as CalendarButton;
-            if (b != null && this.Owner != null)
+            if (b is not null && this.Owner is not null)
             {
                 this.Owner.OnCalendarButtonPressed(b, true);
             }
@@ -897,9 +897,9 @@ namespace System.Windows.Controls.Primitives
         private void Month_MouseEnter(object sender, MouseEventArgs e)
         {
             CalendarButton b = sender as CalendarButton;
-            if (b != null)
+            if (b is not null)
             {
-                if (this._isMonthPressed && this.Owner != null)
+                if (this._isMonthPressed && this.Owner is not null)
                 {
                     this.Owner.OnCalendarButtonPressed(b, false);
                 }
@@ -909,7 +909,7 @@ namespace System.Windows.Controls.Primitives
         private void Month_Clicked(object sender, RoutedEventArgs e)
         {
             CalendarButton b = sender as CalendarButton;
-            if (b != null)
+            if (b is not null)
             {
                 this.Owner.OnCalendarButtonPressed(b, true);
             }
@@ -917,7 +917,7 @@ namespace System.Windows.Controls.Primitives
 
         private void HeaderButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.Owner != null)
+            if (this.Owner is not null)
             {
                 if (this.Owner.DisplayMode == CalendarMode.Month)
                 {
@@ -936,7 +936,7 @@ namespace System.Windows.Controls.Primitives
 
         private void PreviousButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.Owner != null)
+            if (this.Owner is not null)
             {
                 this.Owner.OnPreviousClick();
             }
@@ -944,7 +944,7 @@ namespace System.Windows.Controls.Primitives
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.Owner != null)
+            if (this.Owner is not null)
             {
                 this.Owner.OnNextClick();
             }
@@ -952,11 +952,11 @@ namespace System.Windows.Controls.Primitives
 
         private void PopulateGrids()
         {
-            if (_monthView != null)
+            if (_monthView is not null)
             {
                 for (int i = 0; i < COLS; i++)
                 {
-                    FrameworkElement titleCell = (this._dayTitleTemplate != null) ? (FrameworkElement)this._dayTitleTemplate.LoadContent() : new ContentControl();
+                    FrameworkElement titleCell = (this._dayTitleTemplate is not null) ? (FrameworkElement)this._dayTitleTemplate.LoadContent() : new ContentControl();
                     titleCell.SetValue(Grid.RowProperty, 0);
                     titleCell.SetValue(Grid.ColumnProperty, i);
                     this._monthView.Children.Add(titleCell);
@@ -984,7 +984,7 @@ namespace System.Windows.Controls.Primitives
                 }
             }
 
-            if (_yearView != null)
+            if (_yearView is not null)
             {
                 CalendarButton monthCell;
                 int count = 0;
@@ -1016,7 +1016,7 @@ namespace System.Windows.Controls.Primitives
 
         private void SetMonthModeDayTitles()
         {
-            if (_monthView != null)
+            if (_monthView is not null)
             {
                 string[] shortestDayNames = DateTimeHelper.GetDateFormat(DateTimeHelper.GetCulture(this)).ShortestDayNames;
                 
@@ -1024,9 +1024,9 @@ namespace System.Windows.Controls.Primitives
                 {
                     FrameworkElement daytitle = _monthView.Children[childIndex] as FrameworkElement;
                     
-                    if (daytitle != null && shortestDayNames != null && shortestDayNames.Length > 0)
+                    if (daytitle is not null && shortestDayNames is not null && shortestDayNames.Length > 0)
                     {
-                        if (this.Owner != null)
+                        if (this.Owner is not null)
                         {
                             daytitle.DataContext = shortestDayNames[(childIndex + (int)this.Owner.FirstDayOfWeek) % shortestDayNames.Length];
                         }
@@ -1054,7 +1054,7 @@ namespace System.Windows.Controls.Primitives
             {
                 CalendarDayButton childButton = _monthView.Children[childIndex] as CalendarDayButton;
 
-                Debug.Assert(childButton != null);
+                Debug.Assert(childButton is not null);
 
                 int dayOffset = childIndex - lastMonthToDisplay - COLS;
                 if ((!isMinMonth || (dayOffset >= 0)) && (!isMaxMonth || (dayOffset < daysInMonth)))
@@ -1075,7 +1075,7 @@ namespace System.Windows.Controls.Primitives
 
         private void SetMonthModeDayButtonState(CalendarDayButton childButton, DateTime? dateToAdd)
         {
-            if (this.Owner != null)
+            if (this.Owner is not null)
             {
                 if (dateToAdd.HasValue)
                 {
@@ -1193,11 +1193,11 @@ namespace System.Windows.Controls.Primitives
 
         private void SetMonthModeHeaderButton()
         {
-            if (this._headerButton != null)
+            if (this._headerButton is not null)
             {
                 this._headerButton.Content = DateTimeHelper.ToYearMonthPatternString(DisplayDate, DateTimeHelper.GetCulture(this));
 
-                if (this.Owner != null)
+                if (this.Owner is not null)
                 {
                     this._headerButton.IsEnabled = true;
                 }
@@ -1206,7 +1206,7 @@ namespace System.Windows.Controls.Primitives
 
         private void SetMonthModeNextButton()
         {
-            if (this.Owner != null && _nextButton != null)
+            if (this.Owner is not null && _nextButton is not null)
             {
                 DateTime firstDayOfMonth = DateTimeHelper.DiscardDayTime(DisplayDate);
 
@@ -1227,7 +1227,7 @@ namespace System.Windows.Controls.Primitives
 
         private void SetMonthModePreviousButton()
         {
-            if (this.Owner != null && _previousButton != null)
+            if (this.Owner is not null && _previousButton is not null)
             {
                 DateTime firstDayOfMonth = DateTimeHelper.DiscardDayTime(DisplayDate);
                 _previousButton.IsEnabled = (DateTimeHelper.CompareDays(this.Owner.DisplayDateStartInternal, firstDayOfMonth) < 0);
@@ -1245,7 +1245,7 @@ namespace System.Windows.Controls.Primitives
             foreach (object child in _yearView.Children)
             {
                 CalendarButton childButton = child as CalendarButton;
-                Debug.Assert(childButton != null);
+                Debug.Assert(childButton is not null);
                 year = decade + count;
 
                 if (year <= DateTime.MaxValue.Year && year >= DateTime.MinValue.Year)
@@ -1256,7 +1256,7 @@ namespace System.Windows.Controls.Primitives
                     childButton.SetContentInternal(DateTimeHelper.ToYearString(day, DateTimeHelper.GetCulture(this)));
                     childButton.Visibility = Visibility.Visible;
 
-                    if (this.Owner != null)
+                    if (this.Owner is not null)
                     {
                         childButton.HasSelectedDays = (Owner.DisplayDate.Year == year);
 
@@ -1292,7 +1292,7 @@ namespace System.Windows.Controls.Primitives
             foreach (object child in _yearView.Children)
             {
                 CalendarButton childButton = child as CalendarButton;
-                Debug.Assert(childButton != null);
+                Debug.Assert(childButton is not null);
 
                 // There should be no time component. Time is 12:00 AM
                 DateTime day = new DateTime(DisplayDate.Year, count + 1, 1);
@@ -1300,7 +1300,7 @@ namespace System.Windows.Controls.Primitives
                 childButton.SetContentInternal(DateTimeHelper.ToAbbreviatedMonthString(day, DateTimeHelper.GetCulture(this)));
                 childButton.Visibility = Visibility.Visible;
 
-                if (this.Owner != null)
+                if (this.Owner is not null)
                 {
                     childButton.HasSelectedDays = (DateTimeHelper.CompareYearMonth(day, this.Owner.DisplayDateInternal) == 0);
 
@@ -1323,7 +1323,7 @@ namespace System.Windows.Controls.Primitives
 
         private void SetYearModeHeaderButton()
         {
-            if (this._headerButton != null)
+            if (this._headerButton is not null)
             {
                 this._headerButton.IsEnabled = true;
                 this._headerButton.Content = DateTimeHelper.ToYearString(DisplayDate, DateTimeHelper.GetCulture(this));
@@ -1332,7 +1332,7 @@ namespace System.Windows.Controls.Primitives
 
         private void SetYearModeNextButton()
         {
-            if (this.Owner != null && _nextButton != null)
+            if (this.Owner is not null && _nextButton is not null)
             {
                 _nextButton.IsEnabled = (this.Owner.DisplayDateEndInternal.Year != DisplayDate.Year);
             }
@@ -1340,7 +1340,7 @@ namespace System.Windows.Controls.Primitives
 
         private void SetYearModePreviousButton()
         {
-            if (this.Owner != null && _previousButton != null)
+            if (this.Owner is not null && _previousButton is not null)
             {
                 _previousButton.IsEnabled = (this.Owner.DisplayDateStartInternal.Year != DisplayDate.Year);
             }
@@ -1352,7 +1352,7 @@ namespace System.Windows.Controls.Primitives
 
         private void SetDecadeModeHeaderButton(int decade)
         {
-            if (this._headerButton != null)
+            if (this._headerButton is not null)
             {
                 this._headerButton.Content = DateTimeHelper.ToDecadeRangeString(decade, this);
                 this._headerButton.IsEnabled = false;
@@ -1361,7 +1361,7 @@ namespace System.Windows.Controls.Primitives
 
         private void SetDecadeModeNextButton(int decadeEnd)
         {
-            if (this.Owner != null && _nextButton != null)
+            if (this.Owner is not null && _nextButton is not null)
             {
                 _nextButton.IsEnabled = (this.Owner.DisplayDateEndInternal.Year > decadeEnd);
             }
@@ -1369,7 +1369,7 @@ namespace System.Windows.Controls.Primitives
 
         private void SetDecadeModePreviousButton(int decade)
         {
-            if (this.Owner != null && _previousButton != null)
+            if (this.Owner is not null && _previousButton is not null)
             {
                 _previousButton.IsEnabled = (decade > this.Owner.DisplayDateStartInternal.Year);
             }
@@ -1383,7 +1383,7 @@ namespace System.Windows.Controls.Primitives
             DayOfWeek day = _calendar.GetDayOfWeek(firstOfMonth);
             int i;
 
-            if (this.Owner != null)
+            if (this.Owner is not null)
             {
                 i = ((day - this.Owner.FirstDayOfWeek + NUMBER_OF_DAYS_IN_WEEK) % NUMBER_OF_DAYS_IN_WEEK);
             }

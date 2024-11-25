@@ -137,7 +137,7 @@ namespace System.Windows.Media.Animation
             {
                 WeakReference currentRef = _list[_readIndex];
                 _current = (T)currentRef.Target;
-                if ( (object)_current != null)
+                if ( (object)_current is not null)
                 {
                     // Found a live object. First compress the list, which
                     // is necessary if we've previously seen GC'ed objects.

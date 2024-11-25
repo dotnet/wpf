@@ -40,7 +40,7 @@ namespace System.Windows.Media
         {
             ImageSource imageSource = value as ImageSource;
             #pragma warning disable 6506
-            return imageSource != null && imageSource.CanSerializeToString();
+            return imageSource is not null && imageSource.CanSerializeToString();
             #pragma warning restore 6506
         }
 
@@ -70,7 +70,7 @@ namespace System.Windows.Media
         public override string ConvertToString(object value, IValueSerializerContext context)
         {
             ImageSource imageSource = value as ImageSource;
-            if (imageSource != null)
+            if (imageSource is not null)
                 return imageSource.ConvertToString(null,  System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS);
             else
                 return base.ConvertToString(value, context);

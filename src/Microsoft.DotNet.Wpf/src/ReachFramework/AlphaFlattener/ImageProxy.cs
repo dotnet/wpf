@@ -60,7 +60,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public ImageProxy(BitmapSource image)
         {
-            Debug.Assert(image != null);
+            Debug.Assert(image is not null);
 
             _pixelWidth  = image.PixelWidth;
             _pixelHeight = image.PixelHeight;
@@ -160,7 +160,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="trans">Transformation from image to final destination</param>
         public void PushOpacity(double opacity, BrushProxy opacityMask, Rect rect, Matrix trans)
         {
-            if (opacityMask != null)
+            if (opacityMask is not null)
             {
                 rect.Transform(trans);
 
@@ -172,7 +172,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 TileBrush opacityBrush = opacityMask.Brush as TileBrush;
                 Rect viewport;
 
-                if (opacityBrush != null)
+                if (opacityBrush is not null)
                 {
                     Debug.Assert(opacityBrush.ViewportUnits == BrushMappingMode.Absolute, "TileBrush must have absolute viewport by this point");
 
@@ -333,11 +333,11 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 BitmapPalette palette = bitmap.Palette;
 
-                if (palette != null)
+                if (palette is not null)
                 {
                     IList<System.Windows.Media.Color> palColor = palette.Colors;
 
-                    if (palColor != null)
+                    if (palColor is not null)
                     {
                         foreach (Color c in palColor)
                         {
@@ -425,7 +425,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 return _image;
             }
-            else if (_image != null)
+            else if (_image is not null)
             {
                 return BitmapSource.Create(_pixelWidth, _pixelHeight, _image.DpiX, _image.DpiY, PixelFormats.Pbgra32, null, _pixels, _pixelWidth * 4);
             }

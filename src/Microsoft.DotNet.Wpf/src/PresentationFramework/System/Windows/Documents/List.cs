@@ -241,14 +241,14 @@ namespace System.Windows.Documents
 
                 // Add ListItem elements
                 Block block = firstBlock;
-                while (block != null)
+                while (block is not null)
                 {
                     ListItem listItem;
                     if (block is List)
                     {
                         // To wrap List into list item we pull it into previous ListItem (if any) as sublist
                         listItem = block.ElementStart.GetAdjacentElement(LogicalDirection.Backward) as ListItem;
-                        if (listItem != null)
+                        if (listItem is not null)
                         {
                             // Wrap the List into preceding ListItem
                             listItem.Reposition(listItem.ContentStart, block.ElementEnd);

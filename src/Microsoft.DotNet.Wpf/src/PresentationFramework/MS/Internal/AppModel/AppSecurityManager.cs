@@ -224,7 +224,7 @@ namespace MS.Internal.AppModel
                 targetZone = NativeMethods.URLZONE_INTERNET;
             }
 
-            if (sourceUri != null)
+            if (sourceUri is not null)
             {
                 sourceZone = MapUrlToZone(sourceUri);
             }
@@ -337,7 +337,7 @@ namespace MS.Internal.AppModel
         // Is ZoneElevation setting set to prompt ?     
         private static bool IsZoneElevationSettingPrompt(Uri target)
         {
-            Invariant.Assert(_secMgr != null);
+            Invariant.Assert(_secMgr is not null);
 
             // Was this due to a prompt ? 
 
@@ -388,11 +388,11 @@ namespace MS.Internal.AppModel
 
         internal static void ClearSecurityManager()
         {
-            if (_secMgr != null)
+            if (_secMgr is not null)
             {
                 lock (_lockObj)
                 {
-                    if (_secMgr != null)
+                    if (_secMgr is not null)
                     {
                         _secMgr.SetSecuritySite(null);
                         _secMgrSite = null;

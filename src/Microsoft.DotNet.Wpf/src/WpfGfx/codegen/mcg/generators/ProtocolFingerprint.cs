@@ -303,7 +303,7 @@ namespace MS.Internal.MilCodeGen.Generators
                         ^ (entry.IsHandle ? (uint)0x12344321 : (uint)0x43211235)
                         ^ (((uint)entry.Offset + Seed) * Seed);
 
-                    if (entry.Field != null)
+                    if (entry.Field is not null)
                     {
                         uiCommandHash ^= 
                             ((uint)entry.Field.Type.Name.GetHashCode() + Seed) * Seed;

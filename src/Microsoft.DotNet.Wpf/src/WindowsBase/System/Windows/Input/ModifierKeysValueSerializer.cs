@@ -65,7 +65,7 @@ namespace System.Windows.Input
         public override object ConvertFromString(string value, IValueSerializerContext context) 
         {
             TypeConverter converter = TypeDescriptor.GetConverter(typeof(ModifierKeys));
-            if (converter != null)
+            if (converter is not null)
                 return converter.ConvertFromString(value);
             else
                 return base.ConvertFromString(value, context);
@@ -80,7 +80,7 @@ namespace System.Windows.Input
         public override string ConvertToString(object value, IValueSerializerContext context) 
         {
             TypeConverter converter = TypeDescriptor.GetConverter(typeof(ModifierKeys));
-            if (converter != null)
+            if (converter is not null)
                 return converter.ConvertToInvariantString(value);
             else
                 return base.ConvertToString(value, context);

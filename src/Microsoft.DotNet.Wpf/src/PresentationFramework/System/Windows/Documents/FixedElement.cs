@@ -280,7 +280,7 @@ namespace System.Windows.Documents
                 else if (tpc == TextPointerContext.ElementStart)
                 {
                     object obj = pos.GetAdjacentElement(LogicalDirection.Forward);
-                    if (obj != null)
+                    if (obj is not null)
                     {
                         root.AddChild(obj);
                         pos.MoveToNextContextPosition(LogicalDirection.Forward);
@@ -297,7 +297,7 @@ namespace System.Windows.Documents
         {
             Image image = null; // return value
             Uri source = _object as Uri;
-            if (source != null)
+            if (source is not null)
             {
                 image = new Image();
                 image.Source = new System.Windows.Media.Imaging.BitmapImage(source);

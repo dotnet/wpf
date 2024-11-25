@@ -558,7 +558,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                Debug.Assert(_syncObject != null);
+                Debug.Assert(_syncObject is not null);
                 return _syncObject;
             }
         }
@@ -592,7 +592,7 @@ namespace System.Windows.Media.Imaging
             }
             set
             {
-                if (value != null)
+                if (value is not null)
                 {
                     IntPtr wicSource = IntPtr.Zero;
                     Guid _uuidWicBitmapSource = MILGuidData.IID_IWICBitmapSource;
@@ -792,7 +792,7 @@ namespace System.Windows.Media.Imaging
                 BitmapSourceSafeMILHandle /* CWICWrapperBitmap as IWICBitmapSource */ pCWICWrapperBitmap = null;
 
                 // if we've already cached the ptr, reuse it.
-                if (_convertedDUCEPtr != null && !_convertedDUCEPtr.IsInvalid)
+                if (_convertedDUCEPtr is not null && !_convertedDUCEPtr.IsInvalid)
                 {
                     // already in friendly format
                     Debug.Assert(_isSourceCached);
@@ -909,7 +909,7 @@ namespace System.Windows.Media.Imaging
                             }
                             finally
                             {
-                                if (pIWicConverter != null)
+                                if (pIWicConverter is not null)
                                     pIWicConverter.Close();
                             }
                         }
@@ -1118,10 +1118,10 @@ namespace System.Windows.Media.Imaging
                     destFmt = BitmapSource.GetClosestDUCEFormat(originalFmt, palette);
                 }
 
-                if (frame != null &&
+                if (frame is not null &&
                     (createOptions & BitmapCreateOptions.IgnoreColorProfile) == 0 &&
-                    frame.ColorContexts != null &&
-                    frame.ColorContexts[0] != null &&
+                    frame.ColorContexts is not null &&
+                    frame.ColorContexts[0] is not null &&
                     frame.ColorContexts[0].IsValid &&
                     !frame._isColorCorrected &&
                     PixelFormat.GetPixelFormat(wicSource).Format != PixelFormatEnum.Extended
@@ -1141,7 +1141,7 @@ namespace System.Windows.Media.Imaging
                         destinationColorContext = null;
                     }
 
-                    if (destinationColorContext != null)
+                    if (destinationColorContext is not null)
                     {
                         // NOTE: Never do this for a non-MIL pixel format, because the format converter has
                         // special knowledge to deal with the profile
@@ -1256,7 +1256,7 @@ namespace System.Windows.Media.Imaging
             // So this BitmapSource will get DownloadCompleted from both the link down the chain and
             // its clone at the same time. The first event should be handled normally, whilethe 
             // second event is a duplicate and should be silently ignored.
-            if (_weakBitmapSourceEventSink != null)
+            if (_weakBitmapSourceEventSink is not null)
             {
                 CleanUpWeakEventSink();
 
@@ -1303,7 +1303,7 @@ namespace System.Windows.Media.Imaging
             // So this BitmapSource will get DownloadFailed from both the link down the chain and
             // its clone at the same time. The first event should be handled normally, whilethe 
             // second event is a duplicate and should be silently ignored.
-            if (_weakBitmapSourceEventSink != null)
+            if (_weakBitmapSourceEventSink is not null)
             {
                 CleanUpWeakEventSink();
 
@@ -1376,7 +1376,7 @@ namespace System.Windows.Media.Imaging
         // BitmapFrameDecode's chain
         internal void UnregisterDownloadEventSource()
         {
-            if (_weakBitmapSourceEventSink != null)
+            if (_weakBitmapSourceEventSink is not null)
             {
                 CleanUpWeakEventSink();
             }
@@ -1469,22 +1469,22 @@ namespace System.Windows.Media.Imaging
             //
             if (ShouldCloneEventDelegates)
             {
-                if (sourceBitmap._downloadEvent != null)
+                if (sourceBitmap._downloadEvent is not null)
                 {
                     _downloadEvent = sourceBitmap._downloadEvent.Clone();
                 }
 
-                if (sourceBitmap._progressEvent != null)
+                if (sourceBitmap._progressEvent is not null)
                 {
                     _progressEvent = sourceBitmap._progressEvent.Clone();
                 }
 
-                if (sourceBitmap._failedEvent != null)
+                if (sourceBitmap._failedEvent is not null)
                 {
                     _failedEvent = sourceBitmap._failedEvent.Clone();
                 }
 
-                if (sourceBitmap._decodeFailedEvent != null)
+                if (sourceBitmap._decodeFailedEvent is not null)
                 {
                     _decodeFailedEvent = sourceBitmap._decodeFailedEvent.Clone();
                 }
@@ -1512,8 +1512,8 @@ namespace System.Windows.Media.Imaging
             // and the SourcePropertyChangedHook would have created a _weakBitmapSourceEventSink
             // object.
             //
-            if (_weakBitmapSourceEventSink != null &&
-                sourceBitmap._weakBitmapSourceEventSink != null)
+            if (_weakBitmapSourceEventSink is not null &&
+                sourceBitmap._weakBitmapSourceEventSink is not null)
             {
                 sourceBitmap._weakBitmapSourceEventSink.DetachSourceDownloadHandlers(
                     _weakBitmapSourceEventSink.EventSource);
@@ -1984,14 +1984,14 @@ namespace System.Windows.Media.Imaging
                 }
                 set
                 {
-                    if (_eventSource != null)
+                    if (_eventSource is not null)
                     {
                         DetachSourceDownloadHandlers(_eventSource);
                     }
 
                     _eventSource = value;
 
-                    if (_eventSource != null)
+                    if (_eventSource is not null)
                     {
                         AttachSourceDownloadHandlers();
                     }

@@ -242,7 +242,7 @@ internal class DataSpaceManager
         {
             get
             {
-                return (_baseStream != null && _baseStream.CanRead);
+                return (_baseStream is not null && _baseStream.CanRead);
             }
         }
 
@@ -250,7 +250,7 @@ internal class DataSpaceManager
         {
             get
             {
-                return (_baseStream != null && _baseStream.CanSeek);
+                return (_baseStream is not null && _baseStream.CanSeek);
             }
         }
 
@@ -258,7 +258,7 @@ internal class DataSpaceManager
         {
             get
             {
-                return (_baseStream != null && _baseStream.CanWrite);
+                return (_baseStream is not null && _baseStream.CanWrite);
             }
         }
 
@@ -335,7 +335,7 @@ internal class DataSpaceManager
         /////////////////////////////        
         internal  DirtyStateTrackingStream(Stream baseStream) 
         {
-            Debug.Assert(baseStream != null);
+            Debug.Assert(baseStream is not null);
 
             _baseStream = baseStream;
         }
@@ -344,7 +344,7 @@ internal class DataSpaceManager
         {
             get
             {
-                return (_baseStream != null && _dirty);
+                return (_baseStream is not null && _dirty);
             }
         }
 
@@ -373,7 +373,7 @@ internal class DataSpaceManager
             {
                 if (disposing)
                 {
-                    if (_baseStream != null)
+                    if (_baseStream is not null)
                         _baseStream.Close();
                 }
             }
@@ -1279,13 +1279,13 @@ internal class DataSpaceManager
 
                         int headerSize = KnownBytesInDataSpaceDefinitionHeader;
 
-                        if (definition.ExtraData != null)
+                        if (definition.ExtraData is not null)
                         {
                             checked { headerSize += definition.ExtraData.Length; }
                         }
                         definitionWriter.Write( headerSize );
                         definitionWriter.Write( definition.TransformStack.Count );
-                        if (definition.ExtraData != null)
+                        if (definition.ExtraData is not null)
                         {
                             definitionWriter.Write(definition.ExtraData);
                         }
@@ -1426,9 +1426,9 @@ internal class DataSpaceManager
                 //  bit to retrieve the original transform label.
                 string transformLabel = null;
                 TransformInstance transformInstance = GetTransformInstanceOf( transformDef );
-                Debug.Assert( transformInstance != null, "A transform instance should be available if its name is in the transformDefinitions hashtable");
+                Debug.Assert( transformInstance is not null, "A transform instance should be available if its name is in the transformDefinitions hashtable");
                 
-                if( transformInstance.transformEnvironment != null )
+                if( transformInstance.transformEnvironment is not null )
                 {
                     // We have a transform environment object - it has the transform label.
                     transformLabel = transformInstance.transformEnvironment.TransformLabel;
@@ -1455,7 +1455,7 @@ internal class DataSpaceManager
                         int headerLength = checked (KnownBytesInTransformDefinitionHeader +
                                                 CU.WriteByteLengthPrefixedDWordPaddedUnicodeString( null, transformInstance.typeName));
 
-                        if (transformInstance.ExtraData != null)
+                        if (transformInstance.ExtraData is not null)
                         {
                             Debug.Assert(transformInstance.ExtraData.Length > 0);
 
@@ -1469,7 +1469,7 @@ internal class DataSpaceManager
                             transformWriter, transformInstance.typeName);
 
                         // Write out the preserved unknown data if there are some
-                        if (transformInstance.ExtraData != null)
+                        if (transformInstance.ExtraData is not null)
                         {
                             transformWriter.Write(transformInstance.ExtraData);
                         }

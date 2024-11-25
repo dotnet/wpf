@@ -53,7 +53,7 @@ namespace Microsoft.Windows.Automation.Peers
         protected override string GetClassNameCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.GetClassName();
             }
@@ -72,10 +72,10 @@ namespace Microsoft.Windows.Automation.Peers
         {
             UIElement wrapper = null;
             ItemsControlAutomationPeer itemsControlAutomationPeer = ItemsControlAutomationPeer;
-            if (itemsControlAutomationPeer != null)
+            if (itemsControlAutomationPeer is not null)
             {
                 ItemsControl owner = (ItemsControl)(itemsControlAutomationPeer.Owner);
-                if (owner != null)
+                if (owner is not null)
                 {
                     wrapper = owner.ItemContainerGenerator.ContainerFromItem(Item) as UIElement;
                 }
@@ -87,7 +87,7 @@ namespace Microsoft.Windows.Automation.Peers
         {
             AutomationPeer wrapperPeer = null;
             UIElement wrapper = GetWrapper();
-            if (wrapper != null)
+            if (wrapper is not null)
             {
                 wrapperPeer = UIElementAutomationPeer.CreatePeerForElement(wrapper);
                 if (wrapperPeer is null)

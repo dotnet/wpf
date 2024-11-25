@@ -76,7 +76,7 @@ namespace MS.Internal.Controls
             }
             finally
             {
-                if (dc != null)
+                if (dc is not null)
                 {
                     dc.Close();
                 }
@@ -310,7 +310,7 @@ namespace MS.Internal.Controls
             // Add the union of the element rectangles. Then the group will do oddeven operation.
             Geometry outlineGeometry = null;
 
-            if (hatchGeometry != null)
+            if (hatchGeometry is not null)
             {
                 hatchGeometry.Freeze();
 
@@ -336,7 +336,7 @@ namespace MS.Internal.Controls
 #endif
 
             // At last, draw the hatch borders
-            if (outlineGeometry != null)
+            if (outlineGeometry is not null)
             {
                 drawingContext.DrawGeometry(null, _hatchPen, outlineGeometry);
             }

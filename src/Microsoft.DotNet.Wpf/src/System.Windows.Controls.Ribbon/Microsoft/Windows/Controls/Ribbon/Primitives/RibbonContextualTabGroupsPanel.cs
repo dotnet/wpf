@@ -35,16 +35,16 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             Size desiredSize = new Size();
 
             // Don't measure the child if tabs are not ready yet or Ribbon is collapsed.
-            if (Ribbon != null && !Ribbon.IsCollapsed)
+            if (Ribbon is not null && !Ribbon.IsCollapsed)
             {
                 double remainingSpace = availableSize.Width;
                 bool invalidateTHPanel = false;
                 RibbonTabHeadersPanel tabHeadersPanel = null;
-                if (Ribbon.RibbonTabHeaderItemsControl != null)
+                if (Ribbon.RibbonTabHeaderItemsControl is not null)
                 {
                     tabHeadersPanel = Ribbon.RibbonTabHeaderItemsControl.InternalItemsHost as RibbonTabHeadersPanel;
                 }
-                double tabHeadersPanelSpaceAvailable = (tabHeadersPanel != null) ? tabHeadersPanel.SpaceAvailable : 0.0; 
+                double tabHeadersPanelSpaceAvailable = (tabHeadersPanel is not null) ? tabHeadersPanel.SpaceAvailable : 0.0; 
 
                 foreach (RibbonContextualTabGroup tabGroupHeader in InternalChildren)
                 {
@@ -53,7 +53,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
                     tabGroupHeader.ArrangeX = 0;
                     tabGroupHeader.IdealDesiredWidth = 0.0;
 
-                    if (tabGroupHeader.Visibility == Visibility.Visible && tabGroupHeader.FirstVisibleTab != null && DoubleUtil.GreaterThanOrClose(remainingSpace, 0.0))
+                    if (tabGroupHeader.Visibility == Visibility.Visible && tabGroupHeader.FirstVisibleTab is not null && DoubleUtil.GreaterThanOrClose(remainingSpace, 0.0))
                     {
                         // Measure the maximum desired width 
                         // TabHeaders should be padded up more if needed. 
@@ -95,7 +95,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
 
                 if (WaitingForMeasure || invalidateTHPanel)
                 {
-                    if (tabHeadersPanel != null)
+                    if (tabHeadersPanel is not null)
                     {
                         tabHeadersPanel.InvalidateMeasure();
                     }
@@ -135,13 +135,13 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             {
                 // Calculate separatorHeight
                 double separatorHeight = 0.0;
-                if (Ribbon != null && Ribbon.RibbonTabHeaderItemsControl != null && Ribbon.RibbonTabHeaderItemsControl.InternalItemsHost != null)
+                if (Ribbon is not null && Ribbon.RibbonTabHeaderItemsControl is not null && Ribbon.RibbonTabHeaderItemsControl.InternalItemsHost is not null)
                 {
                     separatorHeight = Ribbon.RibbonTabHeaderItemsControl.InternalItemsHost.ActualHeight - RibbonContextualTabGroup.TabHeaderSeparatorHeightDelta;
                 }
 
                 Pen separatorPen = SeparatorPen;
-                if (separatorPen != null)
+                if (separatorPen is not null)
                 {
                     foreach (RibbonContextualTabGroup tabGroupHeader in InternalChildren)
                     {
@@ -176,10 +176,10 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             if (newIsItemsHost)
             {
                 RibbonContextualTabGroupItemsControl groupHeaderItemsControl = ParentItemsControl;
-                if (groupHeaderItemsControl != null)
+                if (groupHeaderItemsControl is not null)
                 {
                     IItemContainerGenerator generator = groupHeaderItemsControl.ItemContainerGenerator as IItemContainerGenerator;
-                    if (generator != null && generator.GetItemContainerGeneratorForPanel(this) == generator)
+                    if (generator is not null && generator.GetItemContainerGeneratorForPanel(this) == generator)
                     {
                         groupHeaderItemsControl.InternalItemsHost = this;
                     }
@@ -188,7 +188,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             else
             {
                 RibbonContextualTabGroupItemsControl groupHeaderItemsControl = ParentItemsControl;
-                if (groupHeaderItemsControl != null && groupHeaderItemsControl.InternalItemsHost == this)
+                if (groupHeaderItemsControl is not null && groupHeaderItemsControl.InternalItemsHost == this)
                 {
                     groupHeaderItemsControl.InternalItemsHost = null;
                 }
@@ -245,7 +245,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
                 if (_separatorPen is null)
                 {
                     Ribbon ribbon = Ribbon;
-                    if (ribbon != null && ribbon.BorderBrush != null)
+                    if (ribbon is not null && ribbon.BorderBrush is not null)
                     {
                         Brush b = ribbon.BorderBrush.Clone();
                         _separatorPen = new Pen(b, 1.0);

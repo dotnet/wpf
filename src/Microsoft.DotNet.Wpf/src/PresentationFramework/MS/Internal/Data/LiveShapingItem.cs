@@ -136,7 +136,7 @@ namespace MS.Internal.Data
                 {
                     // when the path is empty, react to any property change
                     INotifyPropertyChanged inpc = Item as INotifyPropertyChanged;
-                    if (inpc != null)
+                    if (inpc is not null)
                     {
                         PropertyChangedEventManager.AddHandler(inpc, OnPropertyChanged, String.Empty);
                     }

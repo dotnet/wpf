@@ -67,7 +67,7 @@ namespace System.Windows.Markup
         {
             string name = candidateName as string;
 
-            if( name != null )
+            if( name is not null )
             {
                 // Non-null string, ask the XAML validation code for blessing.
                 return IsValidIdentifierName(name);

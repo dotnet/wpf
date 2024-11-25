@@ -53,7 +53,7 @@ namespace System.Windows.Markup
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             // If a type was supplied, no context nor type name are needed
-            if (_type != null)
+            if (_type is not null)
             {
                 return _type;
             }

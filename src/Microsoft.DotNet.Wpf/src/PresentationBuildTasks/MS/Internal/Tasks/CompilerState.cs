@@ -92,7 +92,7 @@ namespace MS.Internal.Tasks
         internal bool SaveStateInformation(MarkupCompilePass1 mcPass1)
         {
             Debug.Assert(String.IsNullOrEmpty(_stateFilePath) != true, "StateFilePath must not be empty.");
-            Debug.Assert(mcPass1 != null, "A valid instance of MarkupCompilePass1 must be passed to method SaveCacheInformation.");
+            Debug.Assert(mcPass1 is not null, "A valid instance of MarkupCompilePass1 must be passed to method SaveCacheInformation.");
             Debug.Assert(_cacheInfoList.Length == (int)CompilerStateType.MaxCount, "The Cache string array should be already allocated.");
 
             // Transfer the cache related information from mcPass1 to this instance.
@@ -207,7 +207,7 @@ namespace MS.Internal.Tasks
         {
             string cacheString = String.Empty;
 
-            if (fileItemList != null && fileItemList.Length > 0)
+            if (fileItemList is not null && fileItemList.Length > 0)
             {
                 int iHashCode = 0;
 
@@ -235,7 +235,7 @@ namespace MS.Internal.Tasks
         {
             string fileNames = String.Empty;
 
-            if (fileItemList != null)
+            if (fileItemList is not null)
             {
                 StringBuilder sb = new StringBuilder();
                 

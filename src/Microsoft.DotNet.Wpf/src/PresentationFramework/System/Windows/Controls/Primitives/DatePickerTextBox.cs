@@ -91,7 +91,7 @@ namespace System.Windows.Controls.Primitives
             // is a good chance in future that the implementation will change when
             // a WatermarkTextBox control gets implemented. This is mostly to
             // mimc SL. Hence setting the binding in code rather than in control template.
-            if (elementContent != null)
+            if (elementContent is not null)
             {
                 Binding watermarkBinding = new Binding("Watermark");
                 watermarkBinding.Source = this;
@@ -134,7 +134,7 @@ namespace System.Windows.Controls.Primitives
             base.ChangeVisualState(useTransitions);
 
             // Update the WatermarkStates group
-            if (this.Watermark != null && string.IsNullOrEmpty(this.Text))
+            if (this.Watermark is not null && string.IsNullOrEmpty(this.Text))
             {
                 VisualStates.GoToState(this, useTransitions, VisualStates.StateWatermarked, VisualStates.StateUnwatermarked);
             }
@@ -173,10 +173,10 @@ namespace System.Windows.Controls.Primitives
 
         private void OnWatermarkChanged()
         {
-            if (elementContent != null)
+            if (elementContent is not null)
             {
                 Control watermarkControl = this.Watermark as Control;
-                if (watermarkControl != null)
+                if (watermarkControl is not null)
                 {
                     watermarkControl.IsTabStop = false;
                     watermarkControl.IsHitTestVisible = false;
@@ -192,7 +192,7 @@ namespace System.Windows.Controls.Primitives
         private static void OnWatermarkPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
         {
             DatePickerTextBox datePickerTextBox = sender as DatePickerTextBox;
-            Debug.Assert(datePickerTextBox != null, "The source is not an instance of a DatePickerTextBox!");
+            Debug.Assert(datePickerTextBox is not null, "The source is not an instance of a DatePickerTextBox!");
             datePickerTextBox.OnWatermarkChanged();
             datePickerTextBox.UpdateVisualState();
         }

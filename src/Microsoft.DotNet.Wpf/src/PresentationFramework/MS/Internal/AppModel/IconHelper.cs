@@ -100,7 +100,7 @@ namespace MS.Internal.AppModel
             bool asGoodAsItGets = false;
 
             var bf = image as BitmapFrame;
-            if (bf?.Decoder?.Frames != null)
+            if (bf?.Decoder?.Frames is not null)
             {
                 bf = GetBestMatch(bf.Decoder.Frames, size);
 
@@ -171,7 +171,7 @@ namespace MS.Internal.AppModel
         //  Creates and HICON from a bitmap frame
         private static NativeMethods.IconHandle CreateIconHandleFromBitmapFrame(BitmapFrame sourceBitmapFrame)
         {
-            Invariant.Assert(sourceBitmapFrame != null, "sourceBitmapFrame cannot be null here");
+            Invariant.Assert(sourceBitmapFrame is not null, "sourceBitmapFrame cannot be null here");
 
             BitmapSource bitmapSource = sourceBitmapFrame;
 
@@ -243,7 +243,7 @@ namespace MS.Internal.AppModel
 
                 // 2) Now create the mask bitmap which is monochrome
                 byte[] maskArray = GenerateMaskArray(width, height, colorArray);
-                Invariant.Assert(maskArray != null);
+                Invariant.Assert(maskArray is not null);
 
                 maskBitmap = UnsafeNativeMethods.CreateBitmap(width, height, 1, 1, maskArray);
                 if (maskBitmap.IsInvalid)
@@ -264,13 +264,13 @@ namespace MS.Internal.AppModel
             }
             finally
             {
-                if (colorBitmap != null)
+                if (colorBitmap is not null)
                 {
                     colorBitmap.Dispose();
                     colorBitmap = null;
                 }
 
-                if (maskBitmap != null)
+                if (maskBitmap is not null)
                 {
                     maskBitmap.Dispose();
                     maskBitmap = null;

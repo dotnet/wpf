@@ -57,7 +57,7 @@ namespace System.Windows.Media
 
         internal void RemoveFromChannel()
         {
-            if (_channel != null)
+            if (_channel is not null)
             {
                 _duceResource.ReleaseOnChannel(_channel);
             }
@@ -71,7 +71,7 @@ namespace System.Windows.Media
         {
             _channel = channel;
             
-            Debug.Assert(_channel != null);
+            Debug.Assert(_channel is not null);
             _duceResource.CreateOrAddRefOnChannel(this, _channel, DUCE.ResourceType.TYPE_GLYPHCACHE);
             SendCallbackEntryPoint();
         }

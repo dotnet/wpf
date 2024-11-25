@@ -61,7 +61,7 @@ namespace MS.Internal.Documents
             //it means no data was entered in the dialog so we will
             //return null.  Otherwise we need to extract the data
             //from the returned IDataObject object.
-            if (data != null)
+            if (data is not null)
             {                
                 //Get a MemoryStream that contains the data contained in the
                 //IDataObject (which is a raw form of a DsObjects struct).
@@ -123,7 +123,7 @@ namespace MS.Internal.Documents
             UnsafeNativeMethods.ICommonQuery commonQueryInstance = Activator.CreateInstance(commonQueryType)                     
                 as UnsafeNativeMethods.ICommonQuery;
 
-            Invariant.Assert(commonQueryInstance != null, "Unable to create an instance of ICommonQuery.");
+            Invariant.Assert(commonQueryInstance is not null, "Unable to create an instance of ICommonQuery.");
 
             //Set up the QueryInitParams -- this is essentially empty as we require no special flags,
             //default usernames, passwords or server information for our purposes.
@@ -236,13 +236,13 @@ namespace MS.Internal.Documents
                 emailCollection =
                         directoryEntry.Properties[_adEmailAddressKey];
 
-                if (emailCollection != null && emailCollection.Count > 0)
+                if (emailCollection is not null && emailCollection.Count > 0)
                 {
                     //We have a non-empty e-mail collection; we will add the
                     //first available e-mail address.
                     String address = emailCollection[0] as String;
 
-                    if (address != null)
+                    if (address is not null)
                     {
                         addresses.Add(address);
                     }

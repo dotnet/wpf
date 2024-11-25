@@ -156,7 +156,7 @@ namespace MS.Internal.Documents
             if (_contentRange is null)
             {
                 _contentRange = _paraClient.GetTextContentRange();
-                Invariant.Assert(_contentRange != null);
+                Invariant.Assert(_contentRange is not null);
             }
         }
 
@@ -266,7 +266,7 @@ namespace MS.Internal.Documents
                     // While getting children paragraph results, each paragraph is queried for text content
                     _paragraphs = ((ContainerParaClient)_paraClient).GetChildrenParagraphResults(out _hasTextContent);
                 }
-                Invariant.Assert(_paragraphs != null, "Paragraph collection is empty");
+                Invariant.Assert(_paragraphs is not null, "Paragraph collection is empty");
                 return _paragraphs;
             }
         }
@@ -455,7 +455,7 @@ namespace MS.Internal.Documents
                 {
                     _lines = ((TextParaClient)_paraClient).GetLineResults();
                 }
-                Invariant.Assert(_lines != null, "Lines collection is null");
+                Invariant.Assert(_lines is not null, "Lines collection is null");
                 return _lines;
             }
         }
@@ -526,7 +526,7 @@ namespace MS.Internal.Documents
             {
                 bool floatingElementsOnly = false;
                 TextParagraph textParagraph = _paraClient.Paragraph as TextParagraph;
-                Invariant.Assert(textParagraph != null);
+                Invariant.Assert(textParagraph is not null);
                 if (textParagraph.HasFiguresOrFloaters())
                 {
                     if (Lines.Count == 0)
@@ -722,7 +722,7 @@ namespace MS.Internal.Documents
                     // While getting children paras, query each one for text content and use the result to set _hasTextContent
                     _paragraphs = ((TableParaClient)_paraClient).GetChildrenParagraphResults(out _hasTextContent);
                 }
-                Invariant.Assert(_paragraphs != null, "Paragraph collection is empty");
+                Invariant.Assert(_paragraphs is not null, "Paragraph collection is empty");
                 return _paragraphs;
             }
         }
@@ -810,7 +810,7 @@ namespace MS.Internal.Documents
                     // Check each cell for text content when getting cell paragraph results
                     _cells = ((TableParaClient)_paraClient).GetChildrenParagraphResultsForRow(_index, out _hasTextContent);
                 }
-                Invariant.Assert(_cells != null, "Paragraph collection is empty");
+                Invariant.Assert(_cells is not null, "Paragraph collection is empty");
                 return _cells;
             }
         }
@@ -897,7 +897,7 @@ namespace MS.Internal.Documents
                 {
                     // Check subpage columns for text content
                     _columns = ((SubpageParaClient)_paraClient).GetColumnResults(out _hasTextContent);
-                    Invariant.Assert(_columns != null, "Columns collection is null");
+                    Invariant.Assert(_columns is not null, "Columns collection is null");
                 }
                 return _columns;
             }
@@ -929,7 +929,7 @@ namespace MS.Internal.Documents
                 if (_floatingElements is null)
                 {
                     _floatingElements = ((SubpageParaClient)_paraClient).FloatingElementResults;
-                    Invariant.Assert(_floatingElements != null, "Floating elements collection is null");
+                    Invariant.Assert(_floatingElements is not null, "Floating elements collection is null");
                 }
                 return _floatingElements;
             }
@@ -1013,7 +1013,7 @@ namespace MS.Internal.Documents
                 {
                     // Check figure's columns for text content
                     _columns = ((FigureParaClient)_paraClient).GetColumnResults(out _hasTextContent);
-                    Invariant.Assert(_columns != null, "Columns collection is null");
+                    Invariant.Assert(_columns is not null, "Columns collection is null");
                 }
                 return _columns;
             }
@@ -1044,7 +1044,7 @@ namespace MS.Internal.Documents
                 if (_floatingElements is null)
                 {
                     _floatingElements = ((FigureParaClient)_paraClient).FloatingElementResults;
-                    Invariant.Assert(_floatingElements != null, "Floating elements collection is null");
+                    Invariant.Assert(_floatingElements is not null, "Floating elements collection is null");
                 }
                 return _floatingElements;
             }
@@ -1185,7 +1185,7 @@ namespace MS.Internal.Documents
                 {
                     // Query floater's columns for text content
                     _columns = ((FloaterParaClient)_paraClient).GetColumnResults(out _hasTextContent);
-                    Invariant.Assert(_columns != null, "Columns collection is null");
+                    Invariant.Assert(_columns is not null, "Columns collection is null");
                 }
                 return _columns;
             }
@@ -1216,7 +1216,7 @@ namespace MS.Internal.Documents
                 if (_floatingElements is null)
                 {
                     _floatingElements = ((FloaterParaClient)_paraClient).FloatingElementResults;
-                    Invariant.Assert(_floatingElements != null, "Floating elements collection is null");
+                    Invariant.Assert(_floatingElements is not null, "Floating elements collection is null");
                 }
                 return _floatingElements;
             }

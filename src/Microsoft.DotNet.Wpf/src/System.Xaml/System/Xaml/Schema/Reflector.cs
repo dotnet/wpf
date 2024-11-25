@@ -44,14 +44,14 @@ namespace System.Xaml.Schema
 
         public bool IsAttributePresent(Type attributeType)
         {
-            if (CustomAttributeProvider != null)
+            if (CustomAttributeProvider is not null)
             {
                 return CustomAttributeProvider.IsDefined(attributeType, false);
             }
             try
             {
                 CustomAttributeData cad = GetAttribute(attributeType);
-                return (cad != null);
+                return (cad is not null);
             }
             catch (CustomAttributeFormatException)
             {
@@ -63,7 +63,7 @@ namespace System.Xaml.Schema
         // Returns null if attribute wasn't found, string.Empty if attribute string was null or empty
         public string GetAttributeString(Type attributeType, out bool checkedInherited)
         {
-            if (CustomAttributeProvider != null)
+            if (CustomAttributeProvider is not null)
             {
                 // Passes inherit=true for reasons explained in comment on XamlType.TryGetAttributeString
                 checkedInherited = true;
@@ -129,7 +129,7 @@ namespace System.Xaml.Schema
 
         public IReadOnlyDictionary<char,char> GetBracketCharacterAttributes(Type attributeType)
         {
-            if (CustomAttributeProvider != null)
+            if (CustomAttributeProvider is not null)
             {
                 object[] attributes = CustomAttributeProvider.GetCustomAttributes(attributeType, false);
                 if (attributes.Length == 0)
@@ -163,7 +163,7 @@ namespace System.Xaml.Schema
 
         public T? GetAttributeValue<T>(Type attributeType) where T : struct
         {
-            if (CustomAttributeProvider != null)
+            if (CustomAttributeProvider is not null)
             {
                 object[] attributes = CustomAttributeProvider.GetCustomAttributes(attributeType, false);
                 if (attributes.Length == 0)
@@ -201,7 +201,7 @@ namespace System.Xaml.Schema
 
         public Type GetAttributeType(Type attributeType)
         {
-            if (CustomAttributeProvider != null)
+            if (CustomAttributeProvider is not null)
             {
                 object[] attributes = CustomAttributeProvider.GetCustomAttributes(attributeType, false);
                 if (attributes.Length == 0)
@@ -242,7 +242,7 @@ namespace System.Xaml.Schema
 
         public Type[] GetAttributeTypes(Type attributeType, int count)
         {
-            if (CustomAttributeProvider != null)
+            if (CustomAttributeProvider is not null)
             {
                 object[] attributes = CustomAttributeProvider.GetCustomAttributes(attributeType, false);
                 if (attributes.Length == 0)
@@ -274,7 +274,7 @@ namespace System.Xaml.Schema
 
         public List<T> GetAllAttributeContents<T>(Type attributeType)
         {
-            if (CustomAttributeProvider != null)
+            if (CustomAttributeProvider is not null)
             {
                 object[] attributes = CustomAttributeProvider.GetCustomAttributes(attributeType, false);
                 if (attributes.Length == 0)

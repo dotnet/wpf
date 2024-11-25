@@ -268,7 +268,7 @@ namespace System.Windows.Markup
                                         out typeId))
             {
                 string serializerAssemblyName = string.Empty;
-                if (xamlElementNode.SerializerType != null)
+                if (xamlElementNode.SerializerType is not null)
                 {
                     serializerAssemblyName = xamlElementNode.SerializerType.Assembly.FullName;
                 }
@@ -522,7 +522,7 @@ namespace System.Windows.Markup
 
         private void TransferOldSharedData(IBamlDictionaryKey oldRecord, IBamlDictionaryKey newRecord)
         {
-            if ((oldRecord != null) && (newRecord != null))
+            if ((oldRecord is not null) && (newRecord is not null))
             {
                 newRecord.Shared = oldRecord.Shared;
                 newRecord.SharedSet = oldRecord.SharedSet;
@@ -531,15 +531,15 @@ namespace System.Windows.Markup
 
         private IBamlDictionaryKey FindBamlDictionaryKey(KeyDeferRecord record)
         {
-            if (record != null)
+            if (record is not null)
             {
-                if (record.RecordList != null)
+                if (record.RecordList is not null)
                 {
                     for (int i = 0; i < record.RecordList.Count; i++)
                     {
                         ValueDeferRecord valueDeferRecord = (ValueDeferRecord)record.RecordList[i];
                         IBamlDictionaryKey dictionaryKey = valueDeferRecord.Record as IBamlDictionaryKey;
-                        if (dictionaryKey != null)
+                        if (dictionaryKey is not null)
                         {
                             return dictionaryKey;
                         }
@@ -689,7 +689,7 @@ namespace System.Windows.Markup
             {
                 NamespaceMapEntry[] nsMapEntry = _xamlTypeMapper.GetNamespaceMapEntries(xamlXmlnsPropertyNode.XmlNamespace);
 
-                if (nsMapEntry != null && nsMapEntry.Length > 0)
+                if (nsMapEntry is not null && nsMapEntry.Length > 0)
                 {
                     ArrayList asmList = new ArrayList();
                     for (int i = 0; i < nsMapEntry.Length; i++)
@@ -815,7 +815,7 @@ namespace System.Windows.Markup
                                         out typeId))
             {
                 string serializerAssemblyName = string.Empty;
-                if (xamlKeyElementNode.SerializerType != null)
+                if (xamlKeyElementNode.SerializerType is not null)
                 {
                     serializerAssemblyName = xamlKeyElementNode.SerializerType.Assembly.FullName;
                 }
@@ -846,7 +846,7 @@ namespace System.Windows.Markup
                                                               xamlKeyElementNode.LineNumber,
                                                               xamlKeyElementNode.LinePosition));
 
-                if (keyRecord.Record != null)
+                if (keyRecord.Record is not null)
                 {
                     TransferOldSharedData(keyRecord.Record as IBamlDictionaryKey, bamlElement as IBamlDictionaryKey);
                     keyRecord.Record = null;
@@ -990,7 +990,7 @@ namespace System.Windows.Markup
                           out converterOrSerializerTypeId,
                           out converterOrSerializerType);
 
-                if (converterOrSerializerType != null)
+                if (converterOrSerializerType is not null)
                 {
                     if (isCustomSerializer)
                     {
@@ -1084,7 +1084,7 @@ namespace System.Windows.Markup
                         Type typeValue = _xamlTypeMapper.GetTypeFromBaseString(xamlPropertyNode.Value,
                                                                                ParserContext,
                                                                                true);
-                        Debug.Assert(typeValue != null);
+                        Debug.Assert(typeValue is not null);
                         if (!MapTable.GetTypeInfoId(BinaryWriter,
                                                     typeValue.Assembly.FullName,
                                                     typeValue.FullName,
@@ -1456,8 +1456,8 @@ namespace System.Windows.Markup
             BamlRecord    bamlRecord,
             XamlNode      xamlNode)
         {
-            int lineNumber = xamlNode != null ? xamlNode.LineNumber : 0;
-            int linePosition = xamlNode != null ? xamlNode.LinePosition : 0;
+            int lineNumber = xamlNode is not null ? xamlNode.LineNumber : 0;
+            int linePosition = xamlNode is not null ? xamlNode.LinePosition : 0;
 
             // If we are currently parsing a deferable content section, then queue
             // up the records for later writing
@@ -1559,7 +1559,7 @@ namespace System.Windows.Markup
                 //        possible for a single record to be stored first, and then later a
                 //        Key Element in complex property is found which overrides the
                 //        original key value.
-                if (keyRecord.RecordList != null &&
+                if (keyRecord.RecordList is not null &&
                     keyRecord.RecordList.Count > 0)
                 {
                     for (int j = 0; j < keyRecord.RecordList.Count; j++)
@@ -1619,7 +1619,7 @@ namespace System.Windows.Markup
                     KeyDeferRecord deferKeyRecord = (KeyDeferRecord)_deferKeys[keyIndex++];
                     Int64 position = BinaryWriter.Seek(0, SeekOrigin.Current);
                     IBamlDictionaryKey keyRecord;
-                    if (deferKeyRecord.RecordList != null &&
+                    if (deferKeyRecord.RecordList is not null &&
                         deferKeyRecord.RecordList.Count > 0)
                     {
                         ValueDeferRecord elementDeferRec = (ValueDeferRecord)(deferKeyRecord.RecordList[0]);
@@ -1629,8 +1629,8 @@ namespace System.Windows.Markup
                     {
                         keyRecord = (IBamlDictionaryKey)deferKeyRecord.Record;
                     }
-                    Debug.Assert(keyRecord != null, "Unknown key record type in defer load dictionary");
-                    if (keyRecord != null)
+                    Debug.Assert(keyRecord is not null, "Unknown key record type in defer load dictionary");
+                    if (keyRecord is not null)
                     {
                         keyRecord.UpdateValuePosition((Int32)(position-endOfKeys), BinaryWriter);
                     }
@@ -1671,7 +1671,7 @@ namespace System.Windows.Markup
             int lineNumber = valueDeferRecord.LineNumber;
             int linePosition = valueDeferRecord.LinePosition;
 
-            Debug.Assert(valueDeferRecord.Record != null &&
+            Debug.Assert(valueDeferRecord.Record is not null &&
                          valueDeferRecord.Record.RecordType == BamlRecordType.ElementStart &&
                          ((BamlElementStartRecord)valueDeferRecord.Record).TypeId == BamlMapTable.GetKnownTypeIdFromType(KnownTypes.Types[(int)KnownElements.StaticResourceExtension]),
                 "The first record in the list must be the ElementStart record for the StaticResourceExtension tag");
@@ -1683,7 +1683,7 @@ namespace System.Windows.Markup
 
             // Replace last record in the list with the StaticResource end record
             valueDeferRecord = _staticResourceRecordList[_staticResourceRecordList.Count-1];
-            Debug.Assert(valueDeferRecord.Record != null && valueDeferRecord.Record.RecordType == BamlRecordType.ElementEnd,
+            Debug.Assert(valueDeferRecord.Record is not null && valueDeferRecord.Record.RecordType == BamlRecordType.ElementEnd,
                 "The last record in the list must be the ElementEnd record for the StaticResourceExtension tag");
 
             BamlStaticResourceEndRecord bamlStaticResourceEnd =

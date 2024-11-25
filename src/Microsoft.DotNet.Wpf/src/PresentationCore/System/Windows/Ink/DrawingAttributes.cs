@@ -49,7 +49,7 @@ namespace System.Windows.Ink
         /// <param name="extendedProperties"></param>
         internal DrawingAttributes(ExtendedPropertyCollection extendedProperties)
         {
-            System.Diagnostics.Debug.Assert(extendedProperties != null);
+            System.Diagnostics.Debug.Assert(extendedProperties is not null);
             _extendedProperties = extendedProperties;
 
             Initialize();
@@ -60,7 +60,7 @@ namespace System.Windows.Ink
         /// </summary>
         private void Initialize()
         {
-            System.Diagnostics.Debug.Assert(_extendedProperties != null);
+            System.Diagnostics.Debug.Assert(_extendedProperties is not null);
             _extendedProperties.Changed +=
                 new ExtendedPropertiesChangedEventHandler(this.ExtendedPropertiesChanged_EventForwarder);
         }
@@ -608,7 +608,7 @@ namespace System.Windows.Ink
             }
             finally
             {
-                if ( this.AttributeChanged != null )
+                if ( this.AttributeChanged is not null )
                 {
                     this.AttributeChanged(this, e);
                 }
@@ -631,7 +631,7 @@ namespace System.Windows.Ink
                 throw new ArgumentNullException("e", SR.EventArgIsNull);
             }
 
-            if (this.PropertyDataChanged != null)
+            if (this.PropertyDataChanged is not null)
             {
                 this.PropertyDataChanged(this, e);
             }
@@ -648,7 +648,7 @@ namespace System.Windows.Ink
         /// <param name="e">The EventArgs specifying the name of the changed property.</param>
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if ( _propertyChanged != null )
+            if ( _propertyChanged is not null )
             {
                 _propertyChanged(this, e);
             }
@@ -794,8 +794,8 @@ namespace System.Windows.Ink
         /// <param name="args">The custom attributes that changed</param>
         private void ExtendedPropertiesChanged_EventForwarder(object sender, ExtendedPropertiesChangedEventArgs args)
         {
-            System.Diagnostics.Debug.Assert(sender != null);
-            System.Diagnostics.Debug.Assert(args != null);
+            System.Diagnostics.Debug.Assert(sender is not null);
+            System.Diagnostics.Debug.Assert(args is not null);
 
             //see if the EP that changed is a drawingattribute
             if (args.NewProperty is null)
@@ -803,7 +803,7 @@ namespace System.Windows.Ink
                 //a property was removed, see if it is a drawing attribute property
                 object defaultValueIfDrawingAttribute
                     = DrawingAttributes.GetDefaultDrawingAttributeValue(args.OldProperty.Id);
-                if (defaultValueIfDrawingAttribute != null)
+                if (defaultValueIfDrawingAttribute is not null)
                 {
                     ExtendedProperty newProperty =
                         new ExtendedProperty(   args.OldProperty.Id,
@@ -831,7 +831,7 @@ namespace System.Windows.Ink
                 //a property was added, see if it is a drawing attribute property
                 object defaultValueIfDrawingAttribute
                     = DrawingAttributes.GetDefaultDrawingAttributeValue(args.NewProperty.Id);
-                if (defaultValueIfDrawingAttribute != null)
+                if (defaultValueIfDrawingAttribute is not null)
                 {
                     if (!defaultValueIfDrawingAttribute.Equals(args.NewProperty.Value))
                     {
@@ -858,7 +858,7 @@ namespace System.Windows.Ink
                 //something was modified, see if it is a drawing attribute property
                 object defaultValueIfDrawingAttribute
                     = DrawingAttributes.GetDefaultDrawingAttributeValue(args.NewProperty.Id);
-                if (defaultValueIfDrawingAttribute != null)
+                if (defaultValueIfDrawingAttribute is not null)
                 {
                     //
                     // we only raise DA changed when the value actually changes
@@ -905,7 +905,7 @@ namespace System.Windows.Ink
                 // the EPC
                 //
                 object defaultValue = DrawingAttributes.GetDefaultDrawingAttributeValue(id);
-                if (defaultValue != null)
+                if (defaultValue is not null)
                 {
                     if (defaultValue.Equals(value))
                     {

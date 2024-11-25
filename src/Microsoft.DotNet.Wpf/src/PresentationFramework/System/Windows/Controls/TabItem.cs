@@ -98,7 +98,7 @@ namespace System.Windows.Controls
             bool isSelected = (bool)e.NewValue;
 
             TabControl parentTabControl = tabItem.TabControlParent;
-            if (parentTabControl != null)
+            if (parentTabControl is not null)
             {
                 parentTabControl.RaiseIsSelectedChangedAutomationEvent(tabItem, isSelected);
             }
@@ -190,7 +190,7 @@ namespace System.Windows.Controls
         private static object CoerceTabStripPlacement(DependencyObject d, object value)
         {
             TabControl tabControl = ((TabItem)d).TabControlParent;
-            return (tabControl != null) ? tabControl.TabStripPlacement : value;
+            return (tabControl is not null) ? tabControl.TabStripPlacement : value;
         }
 
         /// <summary>
@@ -295,7 +295,7 @@ namespace System.Windows.Controls
                 if (FrameworkAppContextSwitches.SelectionPropertiesCanLagBehindSelectionChangedEvent)
                 {
                     // old ("useless") behavior - retained for app-compat
-                    if (!IsSelected && TabControlParent != null)
+                    if (!IsSelected && TabControlParent is not null)
                     {
                         SetCurrentValueInternal(IsSelectedProperty, BooleanBoxes.TrueBox);
                         // If focus moved in result of selection - handle the event to prevent setting focus back on the new item
@@ -306,12 +306,12 @@ namespace System.Windows.Controls
                         else if (GetBoolField(BoolField.SetFocusOnContent))
                         {
                             TabControl parentTabControl = TabControlParent;
-                            if (parentTabControl != null)
+                            if (parentTabControl is not null)
                             {
                                 // Save the parent and check for null to make sure that SetCurrentValue didn't have a change handler
                                 // that removed the TabItem from the tree.
                                 ContentPresenter selectedContentPresenter = parentTabControl.SelectedContentPresenter;
-                                if (selectedContentPresenter != null)
+                                if (selectedContentPresenter is not null)
                                 {
                                     parentTabControl.UpdateLayout(); // Wait for layout
                                     bool success = selectedContentPresenter.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
@@ -328,7 +328,7 @@ namespace System.Windows.Controls
                 {
                     // new behavior.  Fixes the case when selection
                     // changes while focus is in the old SelectedContent
-                    if (!IsSelected && TabControlParent != null)
+                    if (!IsSelected && TabControlParent is not null)
                     {
                         SetCurrentValueInternal(IsSelectedProperty, BooleanBoxes.TrueBox);
                         // If focus moved in result of selection - handle the event to prevent setting focus back on the new item
@@ -341,12 +341,12 @@ namespace System.Windows.Controls
                     if (!e.Handled && GetBoolField(BoolField.SetFocusOnContent))
                     {
                         TabControl parentTabControl = TabControlParent;
-                        if (parentTabControl != null)
+                        if (parentTabControl is not null)
                         {
                             // Save the parent and check for null to make sure that SetCurrentValue didn't have a change handler
                             // that removed the TabItem from the tree.
                             ContentPresenter selectedContentPresenter = parentTabControl.SelectedContentPresenter;
-                            if (selectedContentPresenter != null)
+                            if (selectedContentPresenter is not null)
                             {
                                 parentTabControl.UpdateLayout(); // Wait for layout
                                 bool success = selectedContentPresenter.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
@@ -361,10 +361,10 @@ namespace System.Windows.Controls
                                     if (Keyboard.FocusedElement is DependencyObject focusedElement)
                                     {
                                         DependencyObject thisFocusScope = FocusManager.GetFocusScope(this);
-                                        if (thisFocusScope != null && Keyboard.FocusedElement is DependencyObject currentFocus)
+                                        if (thisFocusScope is not null && Keyboard.FocusedElement is DependencyObject currentFocus)
                                         {
                                             DependencyObject currentFocusScope = FocusManager.GetFocusScope(currentFocus);
-                                            if (currentFocusScope != thisFocusScope && thisFocusScope != null)
+                                            if (currentFocusScope != thisFocusScope && thisFocusScope is not null)
                                                 FocusManager.SetFocusedElement(thisFocusScope, this);
                                         }
                                     }
@@ -397,7 +397,7 @@ namespace System.Windows.Controls
             if (IsSelected)
             {
                 TabControl tabControl = TabControlParent;
-                if (tabControl != null)
+                if (tabControl is not null)
                 {
                     if (newContent == BindingExpressionBase.DisconnectedItem)
                     {
@@ -423,7 +423,7 @@ namespace System.Windows.Controls
             if (IsSelected)
             {
                 TabControl tabControl = TabControlParent;
-                if (tabControl != null)
+                if (tabControl is not null)
                 {
                     tabControl.SelectedContentTemplate = newContentTemplate;
                 }
@@ -443,7 +443,7 @@ namespace System.Windows.Controls
             if (IsSelected)
             {
                 TabControl tabControl = TabControlParent;
-                if (tabControl != null)
+                if (tabControl is not null)
                 {
                     tabControl.SelectedContentTemplateSelector = newContentTemplateSelector;
                 }

@@ -100,7 +100,7 @@ namespace System.Windows.Documents
 
             Invariant.Assert(This._dispatcher is null);
             This._dispatcher = Dispatcher.CurrentDispatcher;
-            Invariant.Assert(This._dispatcher != null);
+            Invariant.Assert(This._dispatcher is not null);
 
             threadLocalStore = TextEditor._ThreadLocalStore;
 
@@ -156,14 +156,14 @@ namespace System.Windows.Documents
         {
             TextEditorThreadLocalStore threadLocalStore;
 
-            if (This.TextView != null)
+            if (This.TextView is not null)
             {
                 This.TextView.ThrottleBackgroundTasksForUserInput();
             }
 
             threadLocalStore = TextEditor._ThreadLocalStore;
 
-            if (threadLocalStore.PendingInputItems != null)
+            if (threadLocalStore.PendingInputItems is not null)
             {
                 try
                 {
@@ -313,7 +313,7 @@ namespace System.Windows.Documents
 
             // Shift+Ctrl combination must be executed only when it's "pure" -
             // no mouse dragging/movement, no other key downs involved in a gesture.
-            if (This.TextView != null && !This.UiScope.IsMouseCaptured)
+            if (This.TextView is not null && !This.UiScope.IsMouseCaptured)
             {
                 if ((e.Key == Key.RightShift || e.Key == Key.LeftShift) && //
                     (e.KeyboardDevice.Modifiers & ModifierKeys.Control) != 0 && (e.KeyboardDevice.Modifiers & ModifierKeys.Alt) == 0)
@@ -385,13 +385,13 @@ namespace System.Windows.Documents
             // Consider event handled
             e.Handled = true;
 
-            if (This.TextView != null)
+            if (This.TextView is not null)
             {
                 This.TextView.ThrottleBackgroundTasksForUserInput();
             }
 
             // If this event is our Cicero TextStore composition, we always handles through ITextStore::SetText.
-            if (composition != null)
+            if (composition is not null)
             {
                 if (composition.Owner == This.TextStore)
                 {
@@ -408,7 +408,7 @@ namespace System.Windows.Documents
                 // We'll delay the event handling, batching it up with other
                 // input if layout is too slow to keep up with the input stream.
                 KeyboardDevice keyboard = e.Device as KeyboardDevice;
-                TextEditorTyping.ScheduleInput(This, new TextInputItem(This, e.Text, /*isInsertKeyToggled:*/keyboard != null ? keyboard.IsKeyToggled(Key.Insert) : false));
+                TextEditorTyping.ScheduleInput(This, new TextInputItem(This, e.Text, /*isInsertKeyToggled:*/keyboard is not null ? keyboard.IsKeyToggled(Key.Insert) : false));
             }
         }
 
@@ -440,7 +440,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            if (This.TextStore != null)
+            if (This.TextStore is not null)
             {
                 // Don't do actual reconversion, it just checks if the current selection is reconvertable.
                 args.CanExecute = This.TextStore.QueryRangeOrReconvertSelection( /*fDoReconvert:*/ false);
@@ -464,7 +464,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            if (This.TextStore != null)
+            if (This.TextStore is not null)
             {
                 This.TextStore.QueryRangeOrReconvertSelection( /*fDoReconvert:*/ true);
             }
@@ -485,15 +485,15 @@ namespace System.Windows.Documents
             This._OvertypeMode = !This._OvertypeMode;
 
             // Use Cicero's transitory extension for OverTyping.
-            if (TextServicesLoader.ServicesInstalled && (This.TextStore != null))
+            if (TextServicesLoader.ServicesInstalled && (This.TextStore is not null))
             {
                 TextServicesHost tsfHost = TextServicesHost.Current;
-                if (tsfHost != null)
+                if (tsfHost is not null)
                 {
                     if (This._OvertypeMode)
                     {
                         IInputElement element = target as IInputElement;
-                        if (element != null)
+                        if (element is not null)
                         {
                             PresentationSource.AddSourceChangedHandler(element, OnSourceChanged);
                         }
@@ -503,7 +503,7 @@ namespace System.Windows.Documents
                     else
                     {
                         IInputElement element = target as IInputElement;
-                        if (element != null)
+                        if (element is not null)
                         {
                             PresentationSource.RemoveSourceChangedHandler(element, OnSourceChanged);
                         }
@@ -656,14 +656,14 @@ namespace System.Windows.Documents
                         // If TextView is valid, we can get the backspace position from TextView and then
                         // delete the content from the backspace position to the current position.
                         // Otherwise, we move the selection to the previous insertion position then delete.
-                        if (This.TextView != null &&
+                        if (This.TextView is not null &&
                             position.HasValidLayout &&
                             position.GetPointerContext(LogicalDirection.Backward) == TextPointerContext.Text)
                         {
                             // Get the backspace caret unit position from TextView that support surrogate
                             // and all internal characters
                             backspacePosition = This.TextView.GetBackspaceCaretUnitPosition(position);
-                            Invariant.Assert(backspacePosition != null);
+                            Invariant.Assert(backspacePosition is not null);
 
                             // bug 1733868
                             // backspacePosition should always be less than position.
@@ -712,7 +712,7 @@ namespace System.Windows.Documents
 
                 // If backspace position is available from TextView, we can delete it directly
                 // without the normalization. Because we already normalized the backspace position.
-                if (backspacePosition != null)
+                if (backspacePosition is not null)
                 {
                     Invariant.Assert(backspacePosition.CompareTo(position) < 0);
                     // Delete the content from the backspace to the current position
@@ -750,7 +750,7 @@ namespace System.Windows.Documents
             Block paragraphOrBlockUIContainerToDelete = position.ParagraphOrBlockUIContainer;
 
             // Check if an empty paragraph or BlockUIContainer needs to be deleted.
-            if (paragraphOrBlockUIContainerToDelete != null)
+            if (paragraphOrBlockUIContainerToDelete is not null)
             {
                 if (directionOfDelete == LogicalDirection.Forward)
                 {
@@ -758,7 +758,7 @@ namespace System.Windows.Documents
                     // Note however, we dont treat sections as structural boundaries. So this check does not let us delete a last empty
                     // paragraph in a section. Investigate the section case more...
 
-                    if (paragraphOrBlockUIContainerToDelete.NextBlock != null &&
+                    if (paragraphOrBlockUIContainerToDelete.NextBlock is not null &&
                         paragraphOrBlockUIContainerToDelete is Paragraph && Paragraph.HasNoTextContent((Paragraph)paragraphOrBlockUIContainerToDelete) || // empty paragraph
                         paragraphOrBlockUIContainerToDelete is BlockUIContainer && paragraphOrBlockUIContainerToDelete.IsEmpty) // empty BlockUIContainer
                     {
@@ -767,7 +767,7 @@ namespace System.Windows.Documents
                 }
                 else
                 {
-                    if (paragraphOrBlockUIContainerToDelete.PreviousBlock != null &&
+                    if (paragraphOrBlockUIContainerToDelete.PreviousBlock is not null &&
                         paragraphOrBlockUIContainerToDelete is Paragraph && Paragraph.HasNoTextContent((Paragraph)paragraphOrBlockUIContainerToDelete) || // empty paragraph
                         paragraphOrBlockUIContainerToDelete is BlockUIContainer && paragraphOrBlockUIContainerToDelete.IsEmpty) // empty BlockUIContainer
                     {
@@ -795,7 +795,7 @@ namespace System.Windows.Documents
             if ((position is TextPointer) && TextPointerBase.IsAtParagraphOrBlockUIContainerStart(position))
             {
                 Block paragraphOrBlockUIContainer = ((TextPointer)position).ParagraphOrBlockUIContainer;
-                if (paragraphOrBlockUIContainer != null)
+                if (paragraphOrBlockUIContainer is not null)
                 {
                     FlowDirection flowDirection = paragraphOrBlockUIContainer.FlowDirection;
                     Thickness margin = paragraphOrBlockUIContainer.Margin;
@@ -1235,7 +1235,7 @@ namespace System.Windows.Documents
                     }
                     else
                     {
-                        Invariant.Assert(This.UiScope != null);
+                        Invariant.Assert(This.UiScope is not null);
                         UIElementPropertyUndoUnit.Add(This.TextContainer, This.UiScope, FrameworkElement.FlowDirectionProperty, FlowDirection.LeftToRight);
                         This.UiScope.SetValue(FrameworkElement.FlowDirectionProperty, FlowDirection.LeftToRight);
                     }
@@ -1251,7 +1251,7 @@ namespace System.Windows.Documents
                     }
                     else
                     {
-                        Invariant.Assert(This.UiScope != null);
+                        Invariant.Assert(This.UiScope is not null);
                         UIElementPropertyUndoUnit.Add(This.TextContainer, This.UiScope, FrameworkElement.FlowDirectionProperty, FlowDirection.RightToLeft);
                         This.UiScope.SetValue(FrameworkElement.FlowDirectionProperty, FlowDirection.RightToLeft);
                     }
@@ -1279,12 +1279,12 @@ namespace System.Windows.Documents
             }
 
             // If this event is our Cicero TextStore composition, we always handles through ITextStore::SetText.
-            if (This.TextStore != null && This.TextStore.IsComposing)
+            if (This.TextStore is not null && This.TextStore.IsComposing)
             {
                 return;
             }
 
-            if (This.ImmComposition != null && This.ImmComposition.IsComposition)
+            if (This.ImmComposition is not null && This.ImmComposition.IsComposition)
             {
                 return;
             }
@@ -1292,7 +1292,7 @@ namespace System.Windows.Documents
             // Consider event handled
             e.Handled = true;
 
-            if (This.TextView != null)
+            if (This.TextView is not null)
             {
                 This.TextView.ThrottleBackgroundTasksForUserInput();
             }
@@ -1312,7 +1312,7 @@ namespace System.Windows.Documents
         private static void OnQueryStatusTabForward(object sender, CanExecuteRoutedEventArgs args)
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
-            if (This != null && This.AcceptsTab)
+            if (This is not null && This.AcceptsTab)
             {
                 args.CanExecute = true;
             }
@@ -1328,7 +1328,7 @@ namespace System.Windows.Documents
         private static void OnQueryStatusTabBackward(object sender, CanExecuteRoutedEventArgs args)
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
-            if (This != null && This.AcceptsTab)
+            if (This is not null && This.AcceptsTab)
             {
                 args.CanExecute = true;
             }
@@ -1423,7 +1423,7 @@ namespace System.Windows.Documents
                 // From the end of row we go to the first cell of a next row
                 TableCell cell = null;
                 TableRow row = ((TextPointer)This.Selection.End).Parent as TableRow;
-                Invariant.Assert(row != null);
+                Invariant.Assert(row is not null);
                 TableRowGroup body = row.RowGroup;
                 int rowIndex = body.Rows.IndexOf(row);
 
@@ -1442,7 +1442,7 @@ namespace System.Windows.Documents
                     }
                 }
 
-                if (cell != null)
+                if (cell is not null)
                 {
                     This.Selection.Select(cell.ContentStart, cell.ContentEnd);
                 }
@@ -1451,7 +1451,7 @@ namespace System.Windows.Documents
 
             // Check if selection is within a table
             TextElement parent = ((TextPointer)This.Selection.Start).Parent as TextElement;
-            while (parent != null && !(parent is TableCell))
+            while (parent is not null && !(parent is TableCell))
             {
                 parent = parent.Parent as TextElement;
             }
@@ -1495,7 +1495,7 @@ namespace System.Windows.Documents
                     }
                 }
 
-                Invariant.Assert(cell != null);
+                Invariant.Assert(cell is not null);
                 This.Selection.Select(cell.ContentStart, cell.ContentEnd);
                 return true;
             }
@@ -1620,7 +1620,7 @@ namespace System.Windows.Documents
         {
             bool mouseInputPending = false;
             IWin32Window win32Window = PresentationSource.CriticalFromVisual(This.UiScope) as IWin32Window;
-            if (win32Window != null)
+            if (win32Window is not null)
             {
                 IntPtr hwnd = IntPtr.Zero;
                 hwnd = win32Window.Handle;
@@ -1641,7 +1641,7 @@ namespace System.Windows.Documents
             TextEditorThreadLocalStore threadLocalStore = TextEditor._ThreadLocalStore;
 
             Invariant.Assert(This is TextEditor);
-            Invariant.Assert(threadLocalStore.PendingInputItems != null);
+            Invariant.Assert(threadLocalStore.PendingInputItems is not null);
 
             try
             {
@@ -1800,9 +1800,9 @@ namespace System.Windows.Documents
         {
             UndoManager undoManager = This._GetUndoManager();
 
-            if (undoManager != null && undoManager.IsEnabled)
+            if (undoManager is not null && undoManager.IsEnabled)
             {
-                if (This._typingUndoUnit != null && undoManager.LastUnit == This._typingUndoUnit && !This._typingUndoUnit.Locked)
+                if (This._typingUndoUnit is not null && undoManager.LastUnit == This._typingUndoUnit && !This._typingUndoUnit.Locked)
                 {
                     undoManager.Reopen(This._typingUndoUnit);
                 }
@@ -1825,9 +1825,9 @@ namespace System.Windows.Documents
         {
             UndoManager undoManager = This._GetUndoManager();
 
-            if (undoManager != null && undoManager.IsEnabled)
+            if (undoManager is not null && undoManager.IsEnabled)
             {
-                if (This._typingUndoUnit != null && undoManager.LastUnit == This._typingUndoUnit && !This._typingUndoUnit.Locked)
+                if (This._typingUndoUnit is not null && undoManager.LastUnit == This._typingUndoUnit && !This._typingUndoUnit.Locked)
                 {
                     if (This._typingUndoUnit is TextParentUndoUnit)
                     {
@@ -1892,11 +1892,11 @@ namespace System.Windows.Documents
         // to display the "hand" cursor appropriately.
         private static void UpdateHyperlinkCursor(TextEditor This)
         {
-            if (This.UiScope is RichTextBox && This.TextView != null && This.TextView.IsValid)
+            if (This.UiScope is RichTextBox && This.TextView is not null && This.TextView.IsValid)
             {
                 TextPointer pointer = (TextPointer)This.TextView.GetTextPositionFromPoint(Mouse.GetPosition(This.TextView.RenderScope), false);
 
-                if (pointer != null &&
+                if (pointer is not null &&
                     pointer.Parent is TextElement &&
                     TextSchema.HasHyperlinkAncestor((TextElement)pointer.Parent))
                 {

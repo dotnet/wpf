@@ -201,7 +201,7 @@ namespace System.Windows
                 }
 
                 GetReadOnlyValueCallback getValueCallback = metadata.GetReadOnlyValueCallback;
-                if (getValueCallback != null)
+                if (getValueCallback is not null)
                 {
                     BaseValueSourceInternal valueSource;
                     entry = new EffectiveValueEntry(dp);
@@ -242,7 +242,7 @@ namespace System.Windows
                     if (metadata.IsInherited)
                     {
                         DependencyObject inheritanceParent = InheritanceParent;
-                        if (inheritanceParent != null)
+                        if (inheritanceParent is not null)
                         {
                             entryIndex = inheritanceParent.LookupEntry(dp.GlobalIndex);
 
@@ -374,7 +374,7 @@ namespace System.Windows
                     }
                 }
 
-                Debug.Assert(reference != null, "the only modified values that can have deferredreferences are (a) expression, (b) coerced control value");
+                Debug.Assert(reference is not null, "the only modified values that can have deferredreferences are (a) expression, (b) coerced control value");
                 if (reference is null)
                 {
                     return effectiveEntry;
@@ -608,7 +608,7 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(key);
 
             dp = key.DependencyProperty;
-            Debug.Assert(dp != null);
+            Debug.Assert(dp is not null);
 
             dp.VerifyReadOnlyKey(key);
 
@@ -665,7 +665,7 @@ namespace System.Windows
                 {
                     // 2nd most common is expression
                     newExpr = value as Expression;
-                    if (newExpr != null)
+                    if (newExpr is not null)
                     {
                         // For Expressions, perform additional validation
                         // Make sure Expression is "attachable"
@@ -717,7 +717,7 @@ namespace System.Windows
             // not an Expression, if applicable
 
             bool handled = false;
-            if ((currentExpr != null) && (newExpr is null))
+            if ((currentExpr is not null) && (newExpr is null))
             {
                 // Resolve deferred references because we haven't modified
                 // the expression code to work with DeferredReference yet.
@@ -753,7 +753,7 @@ namespace System.Windows
             {
                 // allow a control-value to coerce an expression value, when the
                 // expression didn't handle the value
-                if (coerceWithCurrentValue && currentExpr != null)
+                if (coerceWithCurrentValue && currentExpr is not null)
                 {
                     currentExpr = null;
                 }
@@ -761,7 +761,7 @@ namespace System.Windows
                 newEntry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Local);
 
                 // detach the old expression, if applicable
-                if (currentExpr != null)
+                if (currentExpr is not null)
                 {
                     // CALLBACK
                     DependencySource[] currentSources = currentExpr.GetSources();
@@ -834,7 +834,7 @@ namespace System.Windows
         internal bool ProvideSelfAsInheritanceContext( object value, DependencyProperty dp )
         {
             DependencyObject doValue = value as DependencyObject;
-            if (doValue != null)
+            if (doValue is not null)
             {
                 return ProvideSelfAsInheritanceContext(doValue, dp);
             }
@@ -854,7 +854,7 @@ namespace System.Windows
             // InheritanceContext as everyone else
 
 
-            if (doValue != null &&
+            if (doValue is not null &&
                 this.ShouldProvideInheritanceContext(doValue, dp) &&
                 (doValue is Freezable ||
                     (this.CanBeInheritanceContext &&
@@ -879,7 +879,7 @@ namespace System.Windows
         internal bool RemoveSelfAsInheritanceContext( object value, DependencyProperty dp )
         {
             DependencyObject doValue = value as DependencyObject;
-            if (doValue != null)
+            if (doValue is not null)
             {
                 return RemoveSelfAsInheritanceContext(doValue, dp);
             }
@@ -899,7 +899,7 @@ namespace System.Windows
             // InheritanceContext as everyone else
 
 
-            if (doValue != null &&
+            if (doValue is not null &&
                 this.ShouldProvideInheritanceContext(doValue, dp) &&
                 (doValue is Freezable ||
                     (this.CanBeInheritanceContext &&
@@ -984,7 +984,7 @@ namespace System.Windows
             Expression currentExpr = (oldEntry.IsExpression) ? (current as Expression) : null;
 
             // Inform value expression of detachment, if applicable
-            if (currentExpr != null)
+            if (currentExpr is not null)
             {
                 // CALLBACK
                 DependencySource[] currentSources = currentExpr.GetSources();
@@ -1053,13 +1053,13 @@ namespace System.Windows
             DependencySource[] currentSources = expr.GetSources();
 
             // Remove old
-            if (currentSources != null)
+            if (currentSources is not null)
             {
                 UpdateSourceDependentLists(d, dp, currentSources, expr, false);  // Remove
             }
 
             // Add new
-            if (newSources != null)
+            if (newSources is not null)
             {
                 UpdateSourceDependentLists(d, dp, newSources, expr, true);  // Add
             }
@@ -1148,7 +1148,7 @@ namespace System.Windows
             // if the target is a Freezable, call FireChanged to kick off
             // notifications to the Freezable's parent chain.
             Freezable freezable = this as Freezable;
-            if (freezable != null)
+            if (freezable is not null)
             {
                 freezable.FireChanged();
             }
@@ -1337,7 +1337,7 @@ namespace System.Windows
                     if (!found && metadata.IsInherited)
                     {
                         DependencyObject inheritanceParent = InheritanceParent;
-                        if (inheritanceParent != null)
+                        if (inheritanceParent is not null)
                         {
                             // Fetch the IsDeferredValue flag from the InheritanceParent
                             EntryIndex parentEntryIndex = inheritanceParent.LookupEntry(dp.GlobalIndex);
@@ -1408,7 +1408,7 @@ namespace System.Windows
             }
 
             // Coerce Value
-            if (metadata.CoerceValueCallback != null &&
+            if (metadata.CoerceValueCallback is not null &&
                 !(isClearValue && newEntry.FullValueSource == (FullValueSource)BaseValueSourceInternal.Default))
             {
                 // CALLBACK
@@ -1438,7 +1438,7 @@ namespace System.Windows
             // default value. Whereas metadata.CoerceValueCallback coerces all property values but the
             // default, because default values are meant to fit automatically fit into the coersion constraint.
 
-            if (dp.DesignerCoerceValueCallback != null)
+            if (dp.DesignerCoerceValueCallback is not null)
             {
                 // During a DesignerCoerceValueCallback the value obtained is stored in the same
                 // member as the metadata.CoerceValueCallback. In this case we do not store the
@@ -1726,11 +1726,11 @@ namespace System.Windows
 
                 DependencyProperty dp = args.Property;
                 object objectDependentsListMap = DependentListMapField.GetValue(this);
-                if (objectDependentsListMap != null)
+                if (objectDependentsListMap is not null)
                 {
                     FrugalMap dependentListMap = (FrugalMap)objectDependentsListMap;
                     object dependentList = dependentListMap[dp.GlobalIndex];
-                    Debug.Assert(dependentList != null, "dependentList should either be unset or non-null");
+                    Debug.Assert(dependentList is not null, "dependentList should either be unset or non-null");
 
                     if (dependentList != DependencyProperty.UnsetValue)
                     {
@@ -1744,7 +1744,7 @@ namespace System.Windows
                     // also notify "direct" dependents
                     dp = DirectDependencyProperty;
                     dependentList = dependentListMap[dp.GlobalIndex];
-                    Debug.Assert(dependentList != null, "dependentList should either be unset or non-null");
+                    Debug.Assert(dependentList is not null, "dependentList should either be unset or non-null");
 
                     if (dependentList != DependencyProperty.UnsetValue)
                     {
@@ -2037,7 +2037,7 @@ namespace System.Windows
             {
                 // Inform per-type/property invalidation listener, if exists
                 PropertyMetadata metadata = e.Metadata;
-                if ((metadata != null) && (metadata.PropertyChangedCallback != null))
+                if ((metadata is not null) && (metadata.PropertyChangedCallback is not null))
                 {
                     metadata.PropertyChangedCallback(this, e);
                 }
@@ -2091,7 +2091,7 @@ namespace System.Windows
                     }
 
                     GetReadOnlyValueCallback callback = metadata.GetReadOnlyValueCallback;
-                    if (callback != null)
+                    if (callback is not null)
                     {
                         BaseValueSourceInternal source;
                         callback(this, out source);
@@ -2110,7 +2110,7 @@ namespace System.Windows
                     if (metadata.IsInherited)
                     {
                         DependencyObject inheritanceParent = InheritanceParent;
-                        if (inheritanceParent != null && inheritanceParent.LookupEntry(dp.GlobalIndex).Found)
+                        if (inheritanceParent is not null && inheritanceParent.LookupEntry(dp.GlobalIndex).Found)
                         {
                             hasModifiers = false;
                             return BaseValueSourceInternal.Inherited;
@@ -2170,7 +2170,7 @@ namespace System.Windows
                 // if it is an expression whose value is a DeferredReference.
                 // So a little more work is needed before converting the value.
                 DeferredReference dr = value as DeferredReference;
-                if (dr != null)
+                if (dr is not null)
                 {
                     value = dr.GetValue(entry.BaseValueSourceInternal);
                 }
@@ -2204,7 +2204,7 @@ namespace System.Windows
             for (uint i=0; i<effectiveValuesCount; i++)
             {
                 DependencyProperty dp = DependencyProperty.RegisteredPropertyList.List[_effectiveValues[i].PropertyIndex];
-                if (dp != null)
+                if (dp is not null)
                 {
                     object localValue = ReadLocalValueEntry(new EntryIndex(i), dp, false /* allowDeferredReferences */);
                     if (localValue != DependencyProperty.UnsetValue)
@@ -2351,7 +2351,7 @@ namespace System.Windows
         {
             // Sources already validated to be on the same thread as Dependent (d)
 
-            if (sources != null)
+            if (sources is not null)
             {
                 // don't hold a reference on the dependent if the expression is doing
                 // the invalidations.  This helps avoid memory leaks
@@ -2378,7 +2378,7 @@ namespace System.Windows
 
                         FrugalMap dependentListMap;
                         object value = DependentListMapField.GetValue(source.DependencyObject);
-                        if (value != null)
+                        if (value is not null)
                         {
                             dependentListMap = (FrugalMap)value;
                         }
@@ -2389,7 +2389,7 @@ namespace System.Windows
 
                         // Get list of DependentList off of ID map of Source
                         object dependentListObj = dependentListMap[source.DependencyProperty.GlobalIndex];
-                        Debug.Assert(dependentListObj != null, "dependentList should either be unset or non-null");
+                        Debug.Assert(dependentListObj is not null, "dependentList should either be unset or non-null");
 
                         // Add/Remove new Dependent (this) to Source's list
                         if (add)
@@ -2432,7 +2432,7 @@ namespace System.Windows
         internal static void ValidateSources(DependencyObject d, DependencySource[] newSources, Expression expr)
         {
             // Make sure all Sources are owned by the same thread.
-            if (newSources != null)
+            if (newSources is not null)
             {
                 Dispatcher dispatcher = d.Dispatcher;
                 for (int i = 0; i < newSources.Length; i++)
@@ -2459,7 +2459,7 @@ namespace System.Windows
                             AlternativeExpressionStorageCallback getExpressionCore,
                             out AlternativeExpressionStorageCallback getExpression)
         {
-            Debug.Assert(getExpressionCore != null, "getExpressionCore cannot be null");
+            Debug.Assert(getExpressionCore is not null, "getExpressionCore cannot be null");
             Debug.Assert(_getExpressionCore is null, "The 'alternative Expression storage' feature has already been registered");
 
             _getExpressionCore = getExpressionCore;
@@ -2484,7 +2484,7 @@ namespace System.Windows
                 DependencyProperty dp =
                     DependencyProperty.RegisteredPropertyList.List[effectiveValues[i].PropertyIndex];
 
-                if (dp != null)
+                if (dp is not null)
                 {
                     EntryIndex entryIndex = new EntryIndex(i);
                     // The expression check only needs to be done when isChecking is true
@@ -2534,7 +2534,7 @@ namespace System.Windows
 
             if (entry.HasExpressionMarker)
             {
-                if (_getExpressionCore != null)
+                if (_getExpressionCore is not null)
                 {
                     return _getExpressionCore(d, dp, metadata);
                 }
@@ -2614,7 +2614,7 @@ namespace System.Windows
             // Fire the event that BindingExpression and
             // ResourceReferenceExpression will be listening to.
             EventHandler handlers = InheritanceContextChangedHandlersField.GetValue(this);
-            if (handlers != null)
+            if (handlers is not null)
             {
                 handlers(this, args);
             }
@@ -2630,7 +2630,7 @@ namespace System.Windows
                 for (uint i=0; i<effectiveValuesCount; i++)
                 {
                     DependencyProperty dp = DependencyProperty.RegisteredPropertyList.List[_effectiveValues[i].PropertyIndex];
-                    if (dp != null)
+                    if (dp is not null)
                     {
                         object localValue = ReadLocalValueEntry(new EntryIndex(i), dp, true /* allowDeferredReferences */);
                         if (localValue != DependencyProperty.UnsetValue)
@@ -2678,7 +2678,7 @@ namespace System.Windows
             {
                 // Get existing event hanlders
                 EventHandler handlers = InheritanceContextChangedHandlersField.GetValue(this);
-                if (handlers != null)
+                if (handlers is not null)
                 {
                     // combine to a multicast delegate
                     handlers = (EventHandler)Delegate.Combine(handlers, value);
@@ -2695,7 +2695,7 @@ namespace System.Windows
             {
                 // Get existing event hanlders
                 EventHandler handlers = InheritanceContextChangedHandlersField.GetValue(this);
-                if (handlers != null)
+                if (handlers is not null)
                 {
                     // Remove the given handler
                     handlers = (EventHandler)Delegate.Remove(handlers, value);
@@ -2852,7 +2852,7 @@ namespace System.Windows
         {
             IsInPropertyInitialization = false;
 
-            if (_effectiveValues != null)
+            if (_effectiveValues is not null)
             {
                 uint effectiveValuesCount = EffectiveValuesCount;
                 if (effectiveValuesCount != 0)
@@ -2899,7 +2899,7 @@ namespace System.Windows
             // For thread-safety, sealed DOs can't modify _contextStorage
             Debug.Assert(!DO_Sealed, "A Sealed DO cannot be modified");
 
-            if (_contextStorage != null)
+            if (_contextStorage is not null)
             {
                 Debug.Assert(!IsSelfInheritanceParent, "If the IsSelfInheritanceParent is set then the InheritanceParent should have been removed.");
 
@@ -2907,7 +2907,7 @@ namespace System.Windows
             }
             else
             {
-                if (newParent != null)
+                if (newParent is not null)
                 {
                     // Merge all the inheritable properties on the inheritanceParent into the EffectiveValues
                     // store on the current node because someone had set an effective value for an
@@ -2942,7 +2942,7 @@ namespace System.Windows
             // store on the current node because someone tried to set an effective value for an
             // inheritable property on this node.
             DependencyObject inheritanceParent = InheritanceParent;
-            if (inheritanceParent != null)
+            if (inheritanceParent is not null)
             {
                 MergeInheritableProperties(inheritanceParent);
 
@@ -2967,7 +2967,7 @@ namespace System.Windows
             // are cached on itself and hence we will not need the InheritanceParent pointer at all.
             if (!this.IsSelfInheritanceParent)
             {
-                if (parent != null)
+                if (parent is not null)
                 {
                     if (!parent.IsSelfInheritanceParent)
                     {
@@ -2991,7 +2991,7 @@ namespace System.Windows
         //
         private void MergeInheritableProperties(DependencyObject inheritanceParent)
         {
-            Debug.Assert(inheritanceParent != null, "Must have inheritanceParent");
+            Debug.Assert(inheritanceParent is not null, "Must have inheritanceParent");
             Debug.Assert(inheritanceParent.IsSelfInheritanceParent, "An inheritanceParent should always be one that has all the inheritable properties cached on self");
 
             EffectiveValueEntry[] parentEffectiveValues = inheritanceParent.EffectiveValues;
@@ -3003,7 +3003,7 @@ namespace System.Windows
                 DependencyProperty dp = DependencyProperty.RegisteredPropertyList.List[entry.PropertyIndex];
 
                 // There are UncommonFields also stored in the EffectiveValues cache. We need to exclude those.
-                if (dp != null)
+                if (dp is not null)
                 {
                     PropertyMetadata metadata = dp.GetMetadata(DependencyObjectType);
                     if (metadata.IsInherited)
@@ -3187,7 +3187,7 @@ namespace System.Windows
 
         internal void SetEffectiveValue(EntryIndex entryIndex, DependencyProperty dp, PropertyMetadata metadata, EffectiveValueEntry newEntry, EffectiveValueEntry oldEntry)
         {
-            if (metadata != null &&
+            if (metadata is not null &&
                 metadata.IsInherited &&
                 (newEntry.BaseValueSourceInternal != BaseValueSourceInternal.Inherited ||
                     newEntry.IsCoerced || newEntry.IsAnimated) &&
@@ -3254,7 +3254,7 @@ namespace System.Windows
             else
             {
                 InsertEntry(newEntry, entryIndex.Index);
-                if (metadata != null && metadata.IsInherited)
+                if (metadata is not null && metadata.IsInherited)
                 {
                     InheritableEffectiveValuesCount++;
                 }
@@ -3275,7 +3275,7 @@ namespace System.Windows
             // For thread-safety, sealed DOs can't modify _effectiveValues.
             Debug.Assert(!DO_Sealed, "A Sealed DO cannot be modified");
 
-            if (metadata != null &&
+            if (metadata is not null &&
                 metadata.IsInherited &&
                 valueSource != BaseValueSourceInternal.Inherited &&
                 !IsSelfInheritanceParent)
@@ -3294,7 +3294,7 @@ namespace System.Windows
                 entry = new EffectiveValueEntry();
                 entry.PropertyIndex = targetIndex;
                 InsertEntry(entry, entryIndex.Index);
-                if (metadata != null && metadata.IsInherited)
+                if (metadata is not null && metadata.IsInherited)
                 {
                     InheritableEffectiveValuesCount++;
                 }
@@ -3346,7 +3346,7 @@ namespace System.Windows
             if (entryIndex.Found)
             {
                 RemoveEntry(entryIndex.Index, dp);
-                if (metadata != null && metadata.IsInherited)
+                if (metadata is not null && metadata.IsInherited)
                 {
                     InheritableEffectiveValuesCount--;
                 }

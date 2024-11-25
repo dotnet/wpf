@@ -46,7 +46,7 @@ namespace MS.Utility
                 }
                 else
                 {
-                    if (_overFlow != null)
+                    if (_overFlow is not null)
                     {
                         return _overFlow[dType];
                     }
@@ -94,7 +94,7 @@ namespace MS.Utility
                 _activeDTypes.List[i] = null;
             }
 
-            if (_overFlow != null)
+            if (_overFlow is not null)
             {
                 _overFlow.Clear();
             }

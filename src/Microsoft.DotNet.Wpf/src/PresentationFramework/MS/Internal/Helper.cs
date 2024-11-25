@@ -93,13 +93,13 @@ namespace MS.Internal
 //            if ( isInWindowCollection )
 
             Application app = Application.Current;
-            if (app != null)
+            if (app is not null)
             {
                 // If the element is rooted to a Window and App exists, defer to App.
                 for (k = 0;  k < bestMatch;  ++k)
                 {
                     object appResource = Application.Current.FindResourceInternal(keys[k]);
-                    if (appResource != null)
+                    if (appResource is not null)
                     {
                         bestMatch = k;
                         resource = appResource;
@@ -118,7 +118,7 @@ namespace MS.Internal
                 for (k = 0;  k < bestMatch;  ++k)
                 {
                     object sysResource = SystemResources.FindResourceInternal(keys[k]);
-                    if (sysResource != null)
+                    if (sysResource is not null)
                     {
                         bestMatch = k;
                         resource = sysResource;
@@ -151,7 +151,7 @@ namespace MS.Internal
                 // Try logical parent.
                 DependencyObject parent = LogicalTreeHelper.GetParent(currentRoot);
 
-                if (parent != null)
+                if (parent is not null)
                 {
                     currentRoot = parent;
                 }
@@ -159,10 +159,10 @@ namespace MS.Internal
                 {
                     // Try visual parent
                     Visual visual = currentRoot as Visual;
-                    if (visual != null)
+                    if (visual is not null)
                     {
                         Visual parentVisual = VisualTreeHelper.GetParent(visual);
-                        if (parentVisual != null)
+                        if (parentVisual is not null)
                         {
                             currentRoot = parentVisual;
                             continue;
@@ -191,17 +191,17 @@ namespace MS.Internal
         internal static DependencyObject FindMentor(DependencyObject d)
         {
             // Find the nearest FE/FCE InheritanceContext
-            while (d != null)
+            while (d is not null)
             {
                 FrameworkElement fe;
                 FrameworkContentElement fce;
                 Helper.DowncastToFEorFCE(d, out fe, out fce, false);
 
-                if (fe != null)
+                if (fe is not null)
                 {
                     return fe;
                 }
-                else if (fce != null)
+                else if (fce is not null)
                 {
                     return fce;
                 }
@@ -379,7 +379,7 @@ namespace MS.Internal
             // the checks for UnsetValue and null are for perf:
             // they're redundant to the type checks, but they're cheaper
             return (templateSelector != DependencyProperty.UnsetValue &&
-                    templateSelector != null &&
+                    templateSelector is not null &&
                    (templateSelector is System.Windows.Controls.DataTemplateSelector ||
                     templateSelector is ResourceReferenceExpression));
         }
@@ -395,7 +395,7 @@ namespace MS.Internal
             // the checks for UnsetValue and null are for perf:
             // they're redundant to the type checks, but they're cheaper
             return (template != DependencyProperty.UnsetValue &&
-                    template != null &&
+                    template is not null &&
                     (template is FrameworkTemplate ||
                     template is ResourceReferenceExpression));
         }
@@ -406,7 +406,7 @@ namespace MS.Internal
         internal static object FindNameInTemplate(string name, DependencyObject templatedParent)
         {
             FrameworkElement fe = templatedParent as FrameworkElement;
-            Debug.Assert( fe != null );
+            Debug.Assert( fe is not null );
 
             return fe.TemplateInternal.FindName(name, fe);
         }
@@ -422,9 +422,9 @@ namespace MS.Internal
 
             // 1. Follow the TemplatedParent chain to the end.  This should be
             // the ItemContainer.
-            while (element != null)
+            while (element is not null)
             {
-                while (element != null)
+                while (element is not null)
                 {
                     d = element;
                     element= GetTemplatedParent(element);
@@ -443,7 +443,7 @@ namespace MS.Internal
                     if (d is System.Windows.Controls.ContentPresenter)
                     {
                         System.Windows.Controls.ComboBox cb = element as System.Windows.Controls.ComboBox;
-                        if (cb != null)
+                        if (cb is not null)
                         {
                             return cb;
                         }
@@ -451,7 +451,7 @@ namespace MS.Internal
                 }
 
                 Visual v = d as Visual;
-                if (v != null)
+                if (v is not null)
                 {
                     parent = VisualTreeHelper.GetParent(v);
 
@@ -467,10 +467,10 @@ namespace MS.Internal
 
             // 2. In an ItemsControl, the container's parent is the "ItemsHost"
             // panel, from which we get to the ItemsControl by public API.
-            if (parent != null)
+            if (parent is not null)
             {
                 System.Windows.Controls.ItemsControl ic = System.Windows.Controls.ItemsControl.GetItemsOwner(parent);
-                if (ic != null)
+                if (ic is not null)
                     return ic;
             }
 
@@ -482,9 +482,9 @@ namespace MS.Internal
             FrameworkElement fe;
             FrameworkContentElement fce;
             DowncastToFEorFCE(d, out fe, out fce, false);
-            if (fe != null)
+            if (fe is not null)
                 return fe.TemplatedParent;
-            else if (fce != null)
+            else if (fce is not null)
                 return fce.TemplatedParent;
 
             return null;
@@ -499,11 +499,11 @@ namespace MS.Internal
         internal static System.Windows.Data.XmlDataProvider XmlDataProviderForElement(DependencyObject d)
         {
             MS.Internal.Controls.IGeneratorHost host = Helper.GeneratorHostForElement(d);
-            System.Windows.Controls.ItemCollection ic = (host != null) ? host.View : null;
-            ICollectionView icv = (ic != null) ? ic.CollectionView : null;
-            MS.Internal.Data.XmlDataCollection xdc = (icv != null) ? icv.SourceCollection as MS.Internal.Data.XmlDataCollection : null;
+            System.Windows.Controls.ItemCollection ic = (host is not null) ? host.View : null;
+            ICollectionView icv = (ic is not null) ? ic.CollectionView : null;
+            MS.Internal.Data.XmlDataCollection xdc = (icv is not null) ? icv.SourceCollection as MS.Internal.Data.XmlDataCollection : null;
 
-            return (xdc != null) ? xdc.ParentXmlDataProvider : null;
+            return (xdc is not null) ? xdc.ParentXmlDataProvider : null;
         }
 
 #if CF_Envelope_Activation_Enabled
@@ -516,7 +516,7 @@ namespace MS.Internal
         {
             get
             {
-                return BindUriHelper.Container != null;
+                return BindUriHelper.Container is not null;
             }
         }
 #endif
@@ -528,7 +528,7 @@ namespace MS.Internal
         {
             UIElement child = (VisualTreeHelper.GetChildrenCount(element) > 0) ? VisualTreeHelper.GetChild(element, 0) as UIElement : null;
 
-            if (child != null)
+            if (child is not null)
             {
                 child.Measure(constraint);
                 return child.DesiredSize;
@@ -545,7 +545,7 @@ namespace MS.Internal
         {
             UIElement child = (VisualTreeHelper.GetChildrenCount(element) > 0) ? VisualTreeHelper.GetChild(element, 0) as UIElement : null;
 
-            if (child != null)
+            if (child is not null)
             {
                 child.Arrange(new Rect(arrangeSize));
             }
@@ -593,20 +593,20 @@ namespace MS.Internal
             Type targetType = targetObject.GetType();
             object targetProperty = provideValueTarget.TargetProperty;
 
-            if (targetProperty != null)
+            if (targetProperty is not null)
             {
                 targetDependencyProperty = targetProperty as DependencyProperty;
-                if (targetDependencyProperty != null)
+                if (targetDependencyProperty is not null)
                 {
                     // This is the DependencyProperty case
 
                     targetDependencyObject = targetObject as DependencyObject;
-                    Debug.Assert(targetDependencyObject != null, "DependencyProperties can only be set on DependencyObjects");
+                    Debug.Assert(targetDependencyObject is not null, "DependencyProperties can only be set on DependencyObjects");
                 }
                 else
                 {
                     MemberInfo targetMember = targetProperty as MemberInfo;
-                    if (targetMember != null)
+                    if (targetMember is not null)
                     {
                         // This is the Clr Property case
                         PropertyInfo propertyInfo = targetMember as PropertyInfo;
@@ -621,17 +621,17 @@ namespace MS.Internal
                         EventHandler<System.Windows.Markup.XamlSetMarkupExtensionEventArgs> setMarkupExtension
                             = LookupSetMarkupExtensionHandler(targetType);
 
-                        if (setMarkupExtension != null && propertyInfo != null)
+                        if (setMarkupExtension is not null && propertyInfo is not null)
                         {
                             System.Xaml.IXamlSchemaContextProvider scp = serviceProvider.GetService(typeof(System.Xaml.IXamlSchemaContextProvider)) as System.Xaml.IXamlSchemaContextProvider;
-                            if (scp != null)
+                            if (scp is not null)
                             {
                                 System.Xaml.XamlSchemaContext sc = scp.SchemaContext;
                                 System.Xaml.XamlType xt = sc.GetXamlType(targetType);
-                                if (xt != null)
+                                if (xt is not null)
                                 {
                                     System.Xaml.XamlMember member = xt.GetMember(propertyInfo.Name);
-                                    if (member != null)
+                                    if (member is not null)
                                     {
                                         var eventArgs = new System.Windows.Markup.XamlSetMarkupExtensionEventArgs(member, markupExtension, serviceProvider);
 
@@ -652,7 +652,7 @@ namespace MS.Internal
 
                         Type memberType;
 
-                        if (propertyInfo != null)
+                        if (propertyInfo is not null)
                         {
                             memberType = propertyInfo.PropertyType;
                         }
@@ -760,11 +760,11 @@ namespace MS.Internal
 
         internal static object ReadItemValue(DependencyObject owner, object item, int dpIndex)
         {
-            if (item != null)
+            if (item is not null)
             {
                 List<KeyValuePair<int, object>> itemValues = GetItemValues(owner, item);
 
-                if (itemValues != null)
+                if (itemValues is not null)
                 {
                     for (int i = 0; i < itemValues.Count; i++)
                     {
@@ -782,7 +782,7 @@ namespace MS.Internal
 
         internal static void StoreItemValue(DependencyObject owner, object item, int dpIndex, object value)
         {
-            if (item != null)
+            if (item is not null)
             {
                 List<KeyValuePair<int, object>> itemValues = EnsureItemValues(owner, item);
 
@@ -813,11 +813,11 @@ namespace MS.Internal
 
         internal static void ClearItemValue(DependencyObject owner, object item, int dpIndex)
         {
-            if (item != null)
+            if (item is not null)
             {
                 List<KeyValuePair<int, object>> itemValues = GetItemValues(owner, item);
 
-                if (itemValues != null)
+                if (itemValues is not null)
                 {
                     for (int i = 0; i < itemValues.Count; i++)
                     {
@@ -844,10 +844,10 @@ namespace MS.Internal
         internal static List<KeyValuePair<int, object>> GetItemValues(DependencyObject owner, object item,
                                                               WeakDictionary<object, List<KeyValuePair<int, object>>> itemValueStorage)
         {
-            Debug.Assert(item != null);
+            Debug.Assert(item is not null);
             List<KeyValuePair<int, object>> itemValues = null;
 
-            if (itemValueStorage != null)
+            if (itemValueStorage is not null)
             {
                 itemValueStorage.TryGetValue(item, out itemValues);
             }
@@ -909,7 +909,7 @@ namespace MS.Internal
                     }
                 }
 
-                if (dp != null)
+                if (dp is not null)
                 {
                     if (value != DependencyProperty.UnsetValue)
                     {
@@ -929,7 +929,7 @@ namespace MS.Internal
                     else if (container != container.GetValue(ItemContainerGenerator.ItemForItemContainerProperty))
                     {
                         // at this point we have
-                        //   a. a real property (dp != null)
+                        //   a. a real property (dp is not null)
                         //   b. with no saved value (value != Unset)
                         //   c. a generated container (container != item)
                         // If the container has a local or current value for the
@@ -1039,7 +1039,7 @@ namespace MS.Internal
 
         private static void ClearItemValueStorageRecursive(WeakDictionary<object, List<KeyValuePair<int, object>>> itemValueStorage, int[] dpIndices)
         {
-            if (itemValueStorage != null)
+            if (itemValueStorage is not null)
             {
                 foreach (List<KeyValuePair<int, object>> itemValuesList in itemValueStorage.Values)
                 {
@@ -1074,7 +1074,7 @@ namespace MS.Internal
             if (!VirtualizingStackPanel.IsVSP45Compat)
                 return;
 
-            bool shouldApplyItemsCorrectionFactor = itemsHost != null && itemsHost.IsVisible;
+            bool shouldApplyItemsCorrectionFactor = itemsHost is not null && itemsHost.IsVisible;
             if (shouldApplyItemsCorrectionFactor)
             {
                 Thickness itemsCorrectionFactor = GroupItem.DesiredPixelItemsSizeCorrectionFactorField.GetValue(virtualizingElement);
@@ -1099,7 +1099,7 @@ namespace MS.Internal
             if (!VirtualizingStackPanel.IsVSP45Compat)
                 return itemDesiredSizes;
 
-            if (itemsHost != null && itemsHost.IsVisible)
+            if (itemsHost is not null && itemsHost.IsVisible)
             {
                 Size itemPixelSize = itemDesiredSizes.PixelSize;
                 Size itemPixelSizeInViewport = itemDesiredSizes.PixelSizeInViewport;
@@ -1179,7 +1179,7 @@ namespace MS.Internal
             Rect parentRect = new Rect(new Point(), virtualizingElement.DesiredSize);
             bool remeasure = false;
 
-            if (itemsHost != null)
+            if (itemsHost is not null)
             {
                 Thickness itemsCorrectionFactor = new Thickness();
 
@@ -1218,13 +1218,13 @@ namespace MS.Internal
 
             if (remeasure)
             {
-                if (scrollingItemsControl != null)
+                if (scrollingItemsControl is not null)
                 {
                     itemsHost = scrollingItemsControl.ItemsHost;
-                    if (itemsHost != null)
+                    if (itemsHost is not null)
                     {
                         VirtualizingStackPanel vsp = itemsHost as VirtualizingStackPanel;
-                        if (vsp != null)
+                        if (vsp is not null)
                         {
                             vsp.AnchoredInvalidateMeasure();
                         }
@@ -1261,7 +1261,7 @@ namespace MS.Internal
 
         internal static void ClearVirtualizingElement(IHierarchicalVirtualizationAndScrollInfo virtualizingElement)
         {
-            Debug.Assert(virtualizingElement != null, "Must have a virtualizingElement to clear");
+            Debug.Assert(virtualizingElement is not null, "Must have a virtualizingElement to clear");
 
             virtualizingElement.ItemDesiredSizes = new HierarchicalVirtualizationItemDesiredSizes();
             virtualizingElement.MustDisableVirtualization = false;
@@ -1283,10 +1283,10 @@ namespace MS.Internal
             for (int i = 0; (i < count) && (found is null); i++)
             {
                 descendant = VisualTreeHelper.GetChild(searchStart, i) as FrameworkElement;
-                if (descendant != null && descendant.TemplatedParent == templatedParent)
+                if (descendant is not null && descendant.TemplatedParent == templatedParent)
                 {
                     T returnTypeElement = descendant as T;
-                    if (returnTypeElement != null)
+                    if (returnTypeElement is not null)
                     {
                         found = returnTypeElement;
                     }
@@ -1305,11 +1305,11 @@ namespace MS.Internal
         /// </summary>
         internal static T FindVisualAncestor<T>(DependencyObject element, Func<DependencyObject, bool> shouldContinueFunc) where T : DependencyObject
         {
-            while (element != null)
+            while (element is not null)
             {
                 element = VisualTreeHelper.GetParent(element);
                 T correctlyTyped = element as T;
-                if (correctlyTyped != null)
+                if (correctlyTyped is not null)
                 {
                     return correctlyTyped;
                 }
@@ -1345,7 +1345,7 @@ namespace MS.Internal
 
             // Includes pathStartElement
             // Includes pathEndElement conditionally
-            while (element != null)
+            while (element is not null)
             {
                 if (!includePathEnd &&
                     element == pathEndElement)
@@ -1353,7 +1353,7 @@ namespace MS.Internal
                     break;
                 }
                 UIElement uiElement = element as UIElement;
-                if (uiElement != null)
+                if (uiElement is not null)
                 {
                     //
                     //Please note that this method makes an internal call because
@@ -1383,7 +1383,7 @@ namespace MS.Internal
         internal static void InvalidateMeasureForSubtree(DependencyObject d)
         {
             UIElement element = d as UIElement;
-            if (element != null)
+            if (element is not null)
             {
                 if (element.MeasureDirty)
                 {
@@ -1403,7 +1403,7 @@ namespace MS.Internal
             for (int i=0; i<childrenCount; i++)
             {
                 DependencyObject child = VisualTreeHelper.GetChild(d, i);
-                if (child != null)
+                if (child is not null)
                 {
                     InvalidateMeasureForSubtree(child);
                 }
@@ -1423,7 +1423,7 @@ namespace MS.Internal
             {
                 return false;
             }
-            return FindAnyAncestor(element, delegate(DependencyObject d) { return d == ancestor; }) != null;
+            return FindAnyAncestor(element, delegate(DependencyObject d) { return d == ancestor; }) is not null;
         }
 
         /// <summary>
@@ -1433,10 +1433,10 @@ namespace MS.Internal
         internal static DependencyObject FindAnyAncestor(DependencyObject element,
             Predicate<DependencyObject> predicate)
         {
-            while (element != null)
+            while (element is not null)
             {
                 element = GetAnyParent(element);
-                if (element != null && predicate(element))
+                if (element is not null && predicate(element))
                 {
                     return element;
                 }

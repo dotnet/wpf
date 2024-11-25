@@ -195,7 +195,7 @@ namespace System.Windows.Xps.Serialization
 
                 bool   needEndVisual     = false;
 
-                if(fixedPageAsVisual != null)
+                if(fixedPageAsVisual is not null)
                 {
                     needEndVisual = SerializePageAsVisual(fixedPageAsVisual);
                 }
@@ -204,7 +204,7 @@ namespace System.Windows.Xps.Serialization
                 {
                     PrintTicket printTicket = ((IXpsSerializationManager)SerializationManager).FixedPagePrintTicket;
 
-                    if(printTicket != null)
+                    if(printTicket is not null)
                     {
                         PrintTicketSerializer serializer = new PrintTicketSerializer(SerializationManager);
                         serializer.SerializeObject(printTicket);
@@ -303,7 +303,7 @@ namespace System.Windows.Xps.Serialization
 
             attributeValue = GetValueOfAttributeAsString(serializablePropertyContext);
 
-            if ( (attributeValue != null) &&
+            if ( (attributeValue is not null) &&
                  (attributeValue.Length > 0) )
             {
                 //
@@ -332,7 +332,7 @@ namespace System.Windows.Xps.Serialization
             Object targetObjectContainingProperty = serializablePropertyContext.TargetObject;
             Object propertyValue                  = serializablePropertyContext.Value;
 
-            if(propertyValue != null)
+            if(propertyValue is not null)
             {
                 TypeConverter typeConverter = serializablePropertyContext.TypeConverter;
 

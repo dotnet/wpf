@@ -140,7 +140,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 throw new InvalidOperationException();
             }
 
-            if (sink != null)
+            if (sink is not null)
             {
                 Flattener.Convert(_root, sink, width, height, 96, 96, outputQuality);
             }
@@ -155,8 +155,8 @@ namespace Microsoft.Internal.AlphaFlattener
             }
 
             // Split if having both pen and brush
-            if ((brush != null) && (pen != null))
-            // if (!Utility.IsOpaque(_opacity) || (_opacityMask != null))
+            if ((brush is not null) && (pen is not null))
+            // if (!Utility.IsOpaque(_opacity) || (_opacityMask is not null))
             {
                 // Push a canvas to handle geometry with brush + pen properly
                 Push(Matrix.Identity, null, 1.0, null, Rect.Empty, false);
@@ -180,7 +180,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             int needBounds = 0; // 1 for fill, 2 for stroke
 
-            if (brush != null)
+            if (brush is not null)
             {
                 // Fix bug 1427695: Need bounds for non-SolidColorBrushes to enable rebuilding Brush from BrushProxy.
                 if (!(brush is SolidColorBrush))
@@ -189,7 +189,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 }
             }
 
-            if ((pen != null) && (pen.Brush != null))
+            if ((pen is not null) && (pen.Brush is not null))
             {
                 if (!(pen.Brush is SolidColorBrush))
                 {
@@ -197,11 +197,11 @@ namespace Microsoft.Internal.AlphaFlattener
                 }
             }
 
-            if (g.OpacityMask != null)
+            if (g.OpacityMask is not null)
             {
                 if (g.OpacityMask.BrushList is null && !(g.OpacityMask.Brush is SolidColorBrush))
                 {
-                    if (pen != null)
+                    if (pen is not null)
                     {
                         needBounds |= 2;
                     }
@@ -214,7 +214,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             Rect bounds = g.GetRectBounds((needBounds & 1) != 0);
 
-            if (brush != null)
+            if (brush is not null)
             {
                 g.Brush = BrushProxy.CreateBrush(brush, bounds);
             }
@@ -224,12 +224,12 @@ namespace Microsoft.Internal.AlphaFlattener
                 bounds = geometry.GetRenderBounds(pen);
             }
 
-            if ((pen != null) && (pen.Brush != null))
+            if ((pen is not null) && (pen.Brush is not null))
             {
                 g.Pen = PenProxy.CreatePen(pen, bounds);
             }
 
-            if (g.OpacityMask != null)
+            if (g.OpacityMask is not null)
             {
                 if (!g.OpacityMask.MakeBrushAbsolute(bounds))
                 {
@@ -241,7 +241,7 @@ namespace Microsoft.Internal.AlphaFlattener
             // Optimization: Unfold primitive DrawingBrush when possible to avoid rasterizing it.
             Primitive primitive = g.UnfoldDrawingBrush();
 
-            if (primitive != null)
+            if (primitive is not null)
             {
                 _root.Children.Add(primitive);
             }
@@ -277,7 +277,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             bool needBounds = false;
 
-            if (foreground != null && !(foreground is SolidColorBrush))
+            if (foreground is not null && !(foreground is SolidColorBrush))
             {
                 needBounds = true;
             }
@@ -291,7 +291,7 @@ namespace Microsoft.Internal.AlphaFlattener
             // Optimization: Unfold primitive DrawingBrush when possible to avoid rasterizing it.
             Primitive primitive = g.UnfoldDrawingBrush();
 
-            if (primitive != null)
+            if (primitive is not null)
             {
                 _root.Children.Add(primitive);
             }
@@ -358,7 +358,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     c.Opacity = 0; // Invisible
                 }
 
-                if (opacityMask != null)
+                if (opacityMask is not null)
                 {
                     double op;
 
@@ -449,14 +449,14 @@ namespace Microsoft.Internal.AlphaFlattener
         /// This an optional performance enhancement.</param>
         private byte[] GetDevmode(PrintTicket ticket, String ticketXMLString)
         {
-            Debug.Assert(ticket != null);
+            Debug.Assert(ticket is not null);
 
             // The cached devmode is not modified by internal printing code
             // and not exposed to client code so it is safe to pass the byte array
             // by reference instead of making a copy
             byte[] result = null;
 
-            if (ticketXMLString != null &&  m_printTicketCache.TryGetDevMode(ticketXMLString, out result))
+            if (ticketXMLString is not null &&  m_printTicketCache.TryGetDevMode(ticketXMLString, out result))
             {
             }
             // 10ms slowpath.
@@ -466,7 +466,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 result = ConvertPrintTicketToDevMode(ticket);
 
-                if (ticketXMLString != null)
+                if (ticketXMLString is not null)
                 {
                     m_printTicketCache.CacheDevMode(ticketXMLString, result);
                 }
@@ -501,7 +501,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 m_OutputQuality = ticket.OutputQuality;
 
-                if (ticketXMLString != null && m_printTicketCache.TryGetPageSize(ticketXMLString, out m_PageWidth, out m_PageHeight))
+                if (ticketXMLString is not null && m_printTicketCache.TryGetPageSize(ticketXMLString, out m_PageWidth, out m_PageHeight))
                 {
                 }
                 // 100ms slowpath.
@@ -519,7 +519,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     m_PageWidth = capabilities.OrientedPageMediaWidth.GetValueOrDefault(816);
                     m_PageHeight = capabilities.OrientedPageMediaHeight.GetValueOrDefault(1056);
 
-                    if(ticketXMLString != null)
+                    if(ticketXMLString is not null)
                     {
                         m_printTicketCache.CachePageSize(ticketXMLString, m_PageWidth, m_PageHeight);
                     }
@@ -647,7 +647,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 if (s_TestingHook is null)
                 {
-                    if (ticket != null)
+                    if (ticket is not null)
                     {
                         m_GDIExporter.StartPage(GetDevmode(ticket, printTicketXMLStr), Configuration.RasterizationDPI);
                     }
@@ -667,11 +667,11 @@ namespace Microsoft.Internal.AlphaFlattener
 
             ILegacyDevice ioc = m_GDIExporter;
 
-            if (s_TestingHook != null)
+            if (s_TestingHook is not null)
             {
                 DrawingContext dc = s_TestingHook as DrawingContext;
 
-                if (dc != null)
+                if (dc is not null)
                 {
                     // Send alpha flattening output to a DrawingContext for testing
                     ioc = new OutputContext(dc);
@@ -745,7 +745,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
         private void DisposePrintTicketConverter()
         {
-            if (m_Converter != null)
+            if (m_Converter is not null)
             {
                 m_Converter.Dispose();
                 m_Converter = null;
@@ -758,7 +758,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="obj"></param>
         static public void TestingHook(Object obj)
         {
-            if (obj != null)
+            if (obj is not null)
             {
                 s_TestingHook = obj as DrawingContext;
             }
@@ -821,7 +821,7 @@ namespace Microsoft.Internal.AlphaFlattener
             if(this.m_innerCache.TryGetValue(ticket, out packet))
             {
                 devMode = packet.DevMode;
-                if(devMode != null)
+                if(devMode is not null)
                 {
                     return true;
                 }

@@ -56,7 +56,7 @@ namespace MS.Internal.AppModel
                     // load main excutable assembly
                     Assembly asmApplication = Application.ResourceAssembly;
 
-                    if (asmApplication != null)
+                    if (asmApplication is not null)
                     {
                         _applicationResourceManagerWrapper = new ResourceManagerWrapper(asmApplication);
                     }
@@ -361,7 +361,7 @@ namespace MS.Internal.AppModel
 
             if ((rmwResult == ApplicationResourceManagerWrapper))
             {
-                if (rmwResult != null)
+                if (rmwResult is not null)
                 {
                     // If this is not a resource from a component then it might be
                     // a content file and not an application resource.

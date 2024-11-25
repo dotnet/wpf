@@ -50,10 +50,10 @@ namespace Microsoft.Windows.Automation.Peers
 
             // Add PartToggleButton to the children collection.  Partially fixes Dev11 42908.
             RibbonMenuButton owner = OwningMenuButton;
-            if (owner != null && owner.PartToggleButton != null )
+            if (owner is not null && owner.PartToggleButton is not null )
             {
                 AutomationPeer peer = CreatePeerForElement(owner.PartToggleButton);
-                if (peer != null)
+                if (peer is not null)
                 {
                     if (children is null)
                     {
@@ -102,10 +102,10 @@ namespace Microsoft.Windows.Automation.Peers
             }
 
             // Get ToggleButton.Content
-            if (String.IsNullOrEmpty(name) && owner.PartToggleButton != null)
+            if (String.IsNullOrEmpty(name) && owner.PartToggleButton is not null)
             {
                 AutomationPeer buttonPeer = UIElementAutomationPeer.CreatePeerForElement(owner.PartToggleButton);
-                if (buttonPeer != null)
+                if (buttonPeer is not null)
                 {
                     name = buttonPeer.GetName();
                 }
@@ -123,7 +123,7 @@ namespace Microsoft.Windows.Automation.Peers
             if (String.IsNullOrEmpty(helpText))
             {
                 RibbonToolTip toolTip = ((RibbonMenuButton)Owner).ToolTip as RibbonToolTip;
-                if (toolTip != null)
+                if (toolTip is not null)
                 {
                     helpText = toolTip.Description;
                 }

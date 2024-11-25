@@ -182,7 +182,7 @@ namespace System.Windows.Media.Media3D
             rayDirection.Normalize();
             
             // Account for the Camera.Transform we ignored during ray construction above.
-            if (transform != null && transform != Transform3D.Identity)
+            if (transform is not null && transform != Transform3D.Identity)
             {
                 Matrix3D m = transform.Value;
                 m.MultiplyPoint(ref rayOrigin);

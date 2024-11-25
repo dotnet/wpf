@@ -30,7 +30,7 @@ namespace System.Windows
         protected TemplateKey(TemplateType templateType, object dataType)
         {
             Exception ex = ValidateDataType(dataType, "dataType");
-            if (ex != null)
+            if (ex is not null)
                 throw ex;
 
             _dataType = dataType;
@@ -70,11 +70,11 @@ namespace System.Windows
             {
                 if (!_initializing)
                     throw new InvalidOperationException(SR.Format(SR.PropertyIsInitializeOnly, "DataType", this.GetType().Name));
-                if (_dataType != null && value != _dataType)
+                if (_dataType is not null && value != _dataType)
                     throw new InvalidOperationException(SR.Format(SR.PropertyIsImmutable, "DataType", this.GetType().Name));
 
                 Exception ex = ValidateDataType(value, "value");
-                if (ex != null)
+                if (ex is not null)
                     throw ex;
 
                 _dataType = value;
@@ -94,7 +94,7 @@ namespace System.Windows
 
             int hashcode = (int)_templateType;
 
-            if (_dataType != null)
+            if (_dataType is not null)
             {
                 hashcode += _dataType.GetHashCode();
             }
@@ -106,7 +106,7 @@ namespace System.Windows
         public override bool Equals(object o)
         {
             TemplateKey key = o as TemplateKey;
-            if (key != null)
+            if (key is not null)
             {
                 return  _templateType == key._templateType &&
                         Object.Equals(_dataType, key._dataType);
@@ -118,7 +118,7 @@ namespace System.Windows
         public override string ToString()
         {
             Type type = DataType as Type;
-            return (DataType != null)
+            return (DataType is not null)
                     ?   string.Create(TypeConverterHelper.InvariantEnglishUS, $"{this.GetType().Name}({DataType})")
                     :   string.Create(TypeConverterHelper.InvariantEnglishUS, $"{this.GetType().Name}(null)");
         }
@@ -131,7 +131,7 @@ namespace System.Windows
             get
             {
                 Type type = _dataType as Type;
-                if (type != null)
+                if (type is not null)
                 {
                     return type.Assembly;
                 }

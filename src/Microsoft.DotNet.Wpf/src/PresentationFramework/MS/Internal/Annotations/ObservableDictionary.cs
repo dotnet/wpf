@@ -349,7 +349,7 @@ namespace MS.Internal.Annotations
         /// </summary>
         private void FireDictionaryChanged()
         {
-            if (PropertyChanged != null)
+            if (PropertyChanged is not null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(null));
             }

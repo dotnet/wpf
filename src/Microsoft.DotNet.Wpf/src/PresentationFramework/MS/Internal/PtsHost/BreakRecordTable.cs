@@ -67,9 +67,9 @@ namespace MS.Internal.PtsHost
             // return the output BreakRecord.
             if (pageNumber > 0)
             {
-                Invariant.Assert(_breakRecords[pageNumber - 1] != null, "Invalid BreakRecordTable entry.");
+                Invariant.Assert(_breakRecords[pageNumber - 1] is not null, "Invalid BreakRecordTable entry.");
                 breakRecord = _breakRecords[pageNumber - 1].BreakRecord;
-                Invariant.Assert(breakRecord != null, "BreakRecord can be null only for the first page.");
+                Invariant.Assert(breakRecord is not null, "BreakRecord can be null only for the first page.");
             }
             return breakRecord;
         }
@@ -88,12 +88,12 @@ namespace MS.Internal.PtsHost
 
             if (pageNumber < _breakRecords.Count)
             {
-                Invariant.Assert(_breakRecords[pageNumber] != null, "Invalid BreakRecordTable entry.");
+                Invariant.Assert(_breakRecords[pageNumber] is not null, "Invalid BreakRecordTable entry.");
                 pageRef = _breakRecords[pageNumber].DocumentPage;
-                if (pageRef != null)
+                if (pageRef is not null)
                 {
                     documentPage = pageRef.Target as FlowDocumentPage;
-                    if (documentPage != null && documentPage.IsDisposed)
+                    if (documentPage is not null && documentPage.IsDisposed)
                     {
                         documentPage = null;
                     }
@@ -128,9 +128,9 @@ namespace MS.Internal.PtsHost
             // optimize this search.
             while (pageNumber < _breakRecords.Count)
             {
-                Invariant.Assert(_breakRecords[pageNumber] != null, "Invalid BreakRecordTable entry.");
+                Invariant.Assert(_breakRecords[pageNumber] is not null, "Invalid BreakRecordTable entry.");
                 textSegments = _breakRecords[pageNumber].TextSegments;
-                if (textSegments != null)
+                if (textSegments is not null)
                 {
                     if (TextDocumentView.Contains(contentPosition, textSegments))
                     {
@@ -256,12 +256,12 @@ namespace MS.Internal.PtsHost
             bool isClean;
 
             Invariant.Assert(pageNumber >= 0 && pageNumber <= _breakRecords.Count, "The previous BreakRecord does not exist.");
-            Invariant.Assert(page != null && page != DocumentPage.Missing, "Cannot update BRT with an invalid document page.");
+            Invariant.Assert(page is not null && page != DocumentPage.Missing, "Cannot update BRT with an invalid document page.");
             
             // Get TextView for DocumentPage. This TextView is used to access list of
             // content ranges. Those serve as optimalization in finding affeceted pages.
             textView = (ITextView)((IServiceProvider)page).GetService(typeof(ITextView));
-            Invariant.Assert(textView != null, "Cannot access ITextView for FlowDocumentPage.");
+            Invariant.Assert(textView is not null, "Cannot access ITextView for FlowDocumentPage.");
 
             // Get current state of BreakRecordTable
             isClean = this.IsClean;
@@ -283,13 +283,13 @@ namespace MS.Internal.PtsHost
             else
             {
                 // If old Page and/or BreakRecord are not changing, do not dispose them.
-                if (_breakRecords[pageNumber].BreakRecord != null && 
+                if (_breakRecords[pageNumber].BreakRecord is not null && 
                     _breakRecords[pageNumber].BreakRecord != entry.BreakRecord)
                 {
                     _breakRecords[pageNumber].BreakRecord.Dispose();
                 }
-                if (_breakRecords[pageNumber].DocumentPage != null && 
-                    _breakRecords[pageNumber].DocumentPage.Target != null &&
+                if (_breakRecords[pageNumber].DocumentPage is not null && 
+                    _breakRecords[pageNumber].DocumentPage.Target is not null &&
                     _breakRecords[pageNumber].DocumentPage.Target != entry.DocumentPage.Target)
                 {
                     ((FlowDocumentPage)_breakRecords[pageNumber].DocumentPage.Target).Dispose();
@@ -321,8 +321,8 @@ namespace MS.Internal.PtsHost
                 return true;
             if (pageNumber > _breakRecords.Count)
                 return false;
-            Invariant.Assert(_breakRecords[pageNumber - 1] != null, "Invalid BreakRecordTable entry.");
-            return (_breakRecords[pageNumber - 1].BreakRecord != null);
+            Invariant.Assert(_breakRecords[pageNumber - 1] is not null, "Invalid BreakRecordTable entry.");
+            return (_breakRecords[pageNumber - 1].BreakRecord is not null);
         }
 
         #endregion Internal Methods
@@ -352,7 +352,7 @@ namespace MS.Internal.PtsHost
             {
                 if (_breakRecords.Count == 0)
                     return false;
-                Invariant.Assert(_breakRecords[_breakRecords.Count - 1] != null, "Invalid BreakRecordTable entry.");
+                Invariant.Assert(_breakRecords[_breakRecords.Count - 1] is not null, "Invalid BreakRecordTable entry.");
                 return (_breakRecords[_breakRecords.Count - 1].BreakRecord is null);
             }
         }
@@ -382,9 +382,9 @@ namespace MS.Internal.PtsHost
 
             while (index >= start)
             {
-                Invariant.Assert(_breakRecords[index] != null, "Invalid BreakRecordTable entry.");
+                Invariant.Assert(_breakRecords[index] is not null, "Invalid BreakRecordTable entry.");
                 pageRef = _breakRecords[index].DocumentPage;
-                if (pageRef != null && pageRef.Target != null)
+                if (pageRef is not null && pageRef.Target is not null)
                 {
                     ((FlowDocumentPage)pageRef.Target).Dispose();
                 }
@@ -408,14 +408,14 @@ namespace MS.Internal.PtsHost
 
             while (index >= start)
             {
-                Invariant.Assert(_breakRecords[index] != null, "Invalid BreakRecordTable entry.");
+                Invariant.Assert(_breakRecords[index] is not null, "Invalid BreakRecordTable entry.");
                 // Dispose Page and BreakRecord before removing the entry.
                 pageRef = _breakRecords[index].DocumentPage;
-                if (pageRef != null && pageRef.Target != null)
+                if (pageRef is not null && pageRef.Target is not null)
                 {
                     ((FlowDocumentPage)pageRef.Target).Dispose();
                 }
-                if (_breakRecords[index].BreakRecord != null)
+                if (_breakRecords[index].BreakRecord is not null)
                 {
                     _breakRecords[index].BreakRecord.Dispose();
                 }
@@ -442,19 +442,19 @@ namespace MS.Internal.PtsHost
             pageStart = 0;
             while (pageStart < _breakRecords.Count)
             {
-                Invariant.Assert(_breakRecords[pageStart] != null, "Invalid BreakRecordTable entry.");
+                Invariant.Assert(_breakRecords[pageStart] is not null, "Invalid BreakRecordTable entry.");
 
                 // If the start position is before last position affecting the output break record,
                 // this page is affected.
                 dependentMax = _breakRecords[pageStart].DependentMax;
-                if (dependentMax != null)
+                if (dependentMax is not null)
                 {
                     if (start.CompareTo(dependentMax) <= 0)
                         break;
                 }
 
                 textSegments = _breakRecords[pageStart].TextSegments;
-                if (textSegments != null)
+                if (textSegments is not null)
                 {
                     affects = false;
                     foreach (TextSegment textSegment in textSegments)

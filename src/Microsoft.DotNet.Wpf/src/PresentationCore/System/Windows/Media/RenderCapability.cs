@@ -36,7 +36,7 @@ namespace System.Windows.Media
                 // The Dispatcher auto-creates if there is no Dispatcher associated with this
                 // thread, and the MediaContext does the same.  Thus, mediaContext should never
                 // be null.
-                Debug.Assert(mediaContext != null);
+                Debug.Assert(mediaContext is not null);
 
                 return mediaContext.Tier;
             }
@@ -163,7 +163,7 @@ namespace System.Windows.Media
                 // The Dispatcher auto-creates if there is no Dispatcher associated with this
                 // thread, and the MediaContext does the same.  Thus, mediaContext should never
                 // be null.
-                Debug.Assert(mediaContext != null);
+                Debug.Assert(mediaContext is not null);
 
                 mediaContext.TierChanged += value;
             }
@@ -174,7 +174,7 @@ namespace System.Windows.Media
                 // The Dispatcher auto-creates if there is no Dispatcher associated with this
                 // thread, and the MediaContext does the same.  Thus, mediaContext should never
                 // be null.
-                Debug.Assert(mediaContext != null);
+                Debug.Assert(mediaContext is not null);
 
                 mediaContext.TierChanged -= value;
             }

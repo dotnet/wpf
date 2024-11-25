@@ -101,7 +101,7 @@ namespace System.Windows
         /// Computes the hash code for this object.
         /// </summary>
         /// <returns>A 32-bit signed integer hash code.</returns>
-        public override int GetHashCode() => _value != null ? StringComparer.Ordinal.GetHashCode(_value) : 0;
+        public override int GetHashCode() => _value is not null ? StringComparer.Ordinal.GetHashCode(_value) : 0;
 
         /// <summary>
         /// Checks whether two ThemeMode objects are equal.

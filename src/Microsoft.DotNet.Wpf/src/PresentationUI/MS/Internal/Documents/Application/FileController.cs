@@ -42,7 +42,7 @@ internal class FileController : IDocumentController
             DocumentManager documentManager = DocumentManager.CreateDefault();
             
             // We can save to the source file if we could reopen it for write
-            if (documentManager != null)
+            if (documentManager is not null)
             { 
                 documentManager.CanSave = canWriteToSource;
             }
@@ -55,7 +55,7 @@ internal class FileController : IDocumentController
             }
         }
 
-        return (doc.WorkspaceProxy != null);
+        return (doc.WorkspaceProxy is not null);
     }
 
     /// <summary>
@@ -166,7 +166,7 @@ internal class FileController : IDocumentController
         while (!haveConsent && !cancelSave)
         {
             // If we have a location, check to see if it is read-only
-            if (saveToken != null)
+            if (saveToken is not null)
             {
                 if (DocumentStream.IsReadOnly(saveToken))
                 {
@@ -373,7 +373,7 @@ internal class FileController : IDocumentController
     {
         bool success = true;
         FileDocument doc = (FileDocument)document;
-        bool haveConsent = (doc.DestinationToken != null);
+        bool haveConsent = (doc.DestinationToken is not null);
 
         // Validate: If we have consent, if not return doing nothing.
         if (!haveConsent)

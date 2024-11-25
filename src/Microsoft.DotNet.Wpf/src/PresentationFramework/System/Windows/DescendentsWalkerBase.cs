@@ -34,7 +34,7 @@ namespace System.Windows
         {
             DependencyObject ancestor = d;
 
-            while ((ancestor != _startNode) && (ancestor != null))
+            while ((ancestor != _startNode) && (ancestor is not null))
             {
                 DependencyObject logicalParent;
 
@@ -43,13 +43,13 @@ namespace System.Windows
                     logicalParent = fe.Parent;
                     // FrameworkElement
                     DependencyObject dependencyObjectParent = VisualTreeHelper.GetParent(fe);
-                    if (dependencyObjectParent != null && logicalParent != null && dependencyObjectParent != logicalParent)
+                    if (dependencyObjectParent is not null && logicalParent is not null && dependencyObjectParent != logicalParent)
                     {
                         return _nodes.Contains(ancestor);
                     }
 
                     // Follow visual tree if not null otherwise we follow logical tree
-                    if (dependencyObjectParent != null)
+                    if (dependencyObjectParent is not null)
                     {
                         ancestor = dependencyObjectParent;
                         continue;
@@ -59,11 +59,11 @@ namespace System.Windows
                 {
                     // FrameworkContentElement
                     FrameworkContentElement ancestorFCE = ancestor as FrameworkContentElement;
-                    logicalParent = (ancestorFCE != null) ? ancestorFCE.Parent : null;
+                    logicalParent = (ancestorFCE is not null) ? ancestorFCE.Parent : null;
                 }
                 ancestor = logicalParent;
             }
-            return (ancestor != null);
+            return (ancestor is not null);
         }
 
 

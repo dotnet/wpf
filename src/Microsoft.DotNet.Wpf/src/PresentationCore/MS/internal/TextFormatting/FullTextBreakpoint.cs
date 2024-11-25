@@ -62,14 +62,14 @@ namespace MS.Internal.TextFormatting
             out int                     bestFitIndex            
             )
         {
-            Invariant.Assert(paragraphCache != null);
+            Invariant.Assert(paragraphCache is not null);
 
             // grab full text state from paragraph cache
             FullTextState fullText = paragraphCache.FullText;
-            Invariant.Assert(fullText != null);
+            Invariant.Assert(fullText is not null);
 
             FormatSettings settings = fullText.TextStore.Settings;
-            Invariant.Assert(settings != null);
+            Invariant.Assert(settings is not null);
 
             // update formatting parameters at line start
             settings.UpdateSettingsForCurrentLine(
@@ -78,13 +78,13 @@ namespace MS.Internal.TextFormatting
                 (firstCharIndex == fullText.TextStore.CpFirst)
                 );
 
-            Invariant.Assert(settings.Formatter != null);
+            Invariant.Assert(settings.Formatter is not null);
 
             // acquiring LS context
             TextFormatterContext context = settings.Formatter.AcquireContext(fullText, IntPtr.Zero);
 
             IntPtr previousBreakRecord = IntPtr.Zero;
-            if (settings.PreviousLineBreak != null)
+            if (settings.PreviousLineBreak is not null)
                 previousBreakRecord = settings.PreviousLineBreak.BreakRecord;
 
             // need not consider marker as tab since marker does not affect line metrics and it wasnt drawn.
@@ -109,7 +109,7 @@ namespace MS.Internal.TextFormatting
 
             if(lserr != LsErr.None)
             {
-                if(callbackException != null)
+                if(callbackException is not null)
                 {                        
                     // rethrow exception thrown in callbacks
                     throw callbackException;

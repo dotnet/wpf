@@ -235,7 +235,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
         private void CloseFile(ref FileCodeSink csFile)
         {
-            if (csFile != null)
+            if (csFile is not null)
             {
                 // Write the closing brace of the namespace block
                 csFile.WriteBlock("}");

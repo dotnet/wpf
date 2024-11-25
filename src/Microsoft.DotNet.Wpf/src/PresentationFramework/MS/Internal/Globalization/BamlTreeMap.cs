@@ -48,8 +48,8 @@ namespace MS.Internal.Globalization
             TextReader comments
             )
         {
-            Debug.Assert(tree != null, "Baml Tree is empty");
-            Debug.Assert(localizer != null, "BamlLocalizer is null");
+            Debug.Assert(tree is not null, "Baml Tree is empty");
+            Debug.Assert(localizer is not null, "BamlLocalizer is null");
 
             _tree = tree;
 
@@ -112,7 +112,7 @@ namespace MS.Internal.Globalization
         // construct the maps for enumeration
         internal void EnsureMap()
         {
-            if (_localizableResources != null)
+            if (_localizableResources is not null)
                 return; // map is already created.
 
             // create the table based on the treesize passed in
@@ -139,7 +139,7 @@ namespace MS.Internal.Globalization
                 // find the Uid of the current node
                 BamlLocalizableResourceKey key = GetKey(currentNode);
 
-                if (key != null)
+                if (key is not null)
                 {
                     if (currentNode.NodeType == BamlNodeType.StartElement)
                     {
@@ -155,7 +155,7 @@ namespace MS.Internal.Globalization
 
                             // Mark this element and its properties unidentifiable.
                             currentNode.Unidentifiable = true;
-                            if (currentNode.Children != null)
+                            if (currentNode.Children is not null)
                             {
                                 foreach (BamlTreeNode child in currentNode.Children)
                                 {
@@ -176,7 +176,7 @@ namespace MS.Internal.Globalization
 
                     if (_localizableResources.RootElementKey is null
                      && currentNode.NodeType == BamlNodeType.StartElement
-                     && currentNode.Parent != null
+                     && currentNode.Parent is not null
                      && currentNode.Parent.NodeType == BamlNodeType.StartDocument)
                     {
                         // remember the key to the root element so that
@@ -188,7 +188,7 @@ namespace MS.Internal.Globalization
                     // create the resource and add to the dictionary
                     BamlLocalizableResource resource = _localizableResourceBuilder.BuildFromNode(key, currentNode);
 
-                    if (resource != null)
+                    if (resource is not null)
                     {
                         _localizableResources.Add(key, resource);
                     }
@@ -216,7 +216,7 @@ namespace MS.Internal.Globalization
                 case BamlNodeType.StartElement:
                     {
                         BamlStartElementNode elementNode = (BamlStartElementNode)node;
-                        if (elementNode.Uid != null)
+                        if (elementNode.Uid is not null)
                         {
                             key = new BamlLocalizableResourceKey(
                                 elementNode.Uid,
@@ -232,7 +232,7 @@ namespace MS.Internal.Globalization
                         BamlPropertyNode propertyNode = (BamlPropertyNode)node;
                         BamlStartElementNode parent = (BamlStartElementNode)propertyNode.Parent;
 
-                        if (parent.Uid != null)
+                        if (parent.Uid is not null)
                         {
                             string uid;
                             if (propertyNode.Index <= 0)
@@ -262,7 +262,7 @@ namespace MS.Internal.Globalization
                         BamlLiteralContentNode literalNode = (BamlLiteralContentNode)node;
                         BamlStartElementNode parent = (BamlStartElementNode)node.Parent;
 
-                        if (parent.Uid != null)
+                        if (parent.Uid is not null)
                         {
                             key = new BamlLocalizableResourceKey(
                                 parent.Uid,
@@ -362,7 +362,7 @@ namespace MS.Internal.Globalization
             _commentsIndex = 0;
 
             XmlDocument doc = null;
-            if (_commentingText != null)
+            if (_commentingText is not null)
             {
                 doc = new XmlDocument();
 
@@ -513,7 +513,7 @@ namespace MS.Internal.Globalization
             }
 
             string className = null;
-            if (_externalResolver != null)
+            if (_externalResolver is not null)
             {
                 // it is a formatting tag not resolved before. need to ask for client's help
                 className = _externalResolver.ResolveFormattingTagToClass(formattingTag);
@@ -549,7 +549,7 @@ namespace MS.Internal.Globalization
             }
 
             string assemblyName = null;
-            if (_externalResolver != null)
+            if (_externalResolver is not null)
             {
                 // it is a class not resolved before. need to ask for client's help
                 assemblyName = _externalResolver.ResolveAssemblyFromClass(className);
@@ -582,7 +582,7 @@ namespace MS.Internal.Globalization
 
             for (int i = 0; i < _comments.Length; i++)
             {
-                if (_comments[i] != null && _comments[i].ElementId == node.Uid)
+                if (_comments[i] is not null && _comments[i].ElementId == node.Uid)
                 {
                     return _comments[i];
                 }
@@ -591,12 +591,12 @@ namespace MS.Internal.Globalization
             ElementComments comment = new ElementComments();
             comment.ElementId = node.Uid;
 
-            if (_commentsDocument != null)
+            if (_commentsDocument is not null)
             {
                 // select the xmlNode containing the comments
                 XmlElement element = FindElementByID(_commentsDocument, node.Uid);
 
-                if (element != null)
+                if (element is not null)
                 {
                     // parse the comments
                     string locAttribute = element.GetAttribute(LocComments.LocLocalizabilityAttribute);
@@ -607,7 +607,7 @@ namespace MS.Internal.Globalization
                 }
             }
 
-            if (node.Children != null)
+            if (node.Children is not null)
             {
                 //
                 // The baml itself might contain comments too
@@ -650,7 +650,7 @@ namespace MS.Internal.Globalization
         {
             // Have considered using XPATH. However, XPATH doesn't have a way to escape single quote within
             // single quotes, here we iterate through the document by ourselves
-            if (doc != null && doc.DocumentElement != null)
+            if (doc is not null && doc.DocumentElement is not null)
             {
                 foreach (XmlNode node in doc.DocumentElement.ChildNodes)
                 {

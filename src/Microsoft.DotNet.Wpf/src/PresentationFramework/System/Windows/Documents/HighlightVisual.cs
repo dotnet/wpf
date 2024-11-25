@@ -93,7 +93,7 @@ namespace System.Windows.Documents
                 Size pageSize = _panel.ComputePageSize(_page);
                 Rect clipRect = new Rect(new Point(0, 0), pageSize);
                 dc.PushClip(new RectangleGeometry(clipRect));
-                if (highlights != null)
+                if (highlights is not null)
                 {
                     _UpdateHighlightBackground(dc, highlights);
                     _UpdateHighlightForeground(dc, highlights);
@@ -101,7 +101,7 @@ namespace System.Windows.Documents
                 dc.Pop(); //clip
             }
 
-            if (_rubberbandSelector != null &&
+            if (_rubberbandSelector is not null &&
                 _rubberbandSelector.Page == _page)
             {
                 Rect r = _rubberbandSelector.SelectionRect;
@@ -153,12 +153,12 @@ namespace System.Windows.Documents
 
             Adorner[] adorners = al.GetAdorners(page);
 
-            if (adorners != null)
+            if (adorners is not null)
             {
                 foreach (Adorner ad in adorners)
                 {
                     hv = ad as HighlightVisual;
-                    if (hv != null)
+                    if (hv is not null)
                     {
                         return hv;
                     }
@@ -173,7 +173,7 @@ namespace System.Windows.Documents
 
         private void _UpdateHighlightBackground(DrawingContext dc, ArrayList highlights)
         {
-            Debug.Assert(highlights != null);
+            Debug.Assert(highlights is not null);
 
             PathGeometry highlightGeometry = null;
             Brush highlightBrush = null;
@@ -226,7 +226,7 @@ namespace System.Windows.Documents
                 
                 
                 // can add cases for new types of highlights
-                if (fh.Element.Clip != null)
+                if (fh.Element.Clip is not null)
                 {
                     Rect clipRect = fh.Element.Clip.Bounds;
                     backgroundRect.Intersect(clipRect);
@@ -242,13 +242,13 @@ namespace System.Windows.Documents
                 // used to cut down on calls to Geometry.Combine for complex geometries
                 // involving multiple non-intersecting paths
 
-                Debug.Assert(bg != null);
+                Debug.Assert(bg is not null);
                 if (bg != highlightBrush || backgroundRect.Top > combinedRect.Bottom + .1 || backgroundRect.Bottom + .1 < combinedRect.Top
                     || backgroundRect.Left > combinedRect.Right + .1 || backgroundRect.Right + .1 < combinedRect.Left)
                 {
-                    if (highlightBrush != null)
+                    if (highlightBrush is not null)
                     {
-                        Debug.Assert(highlightGeometry != null);
+                        Debug.Assert(highlightGeometry is not null);
                         highlightGeometry.FillRule = FillRule.Nonzero;
                         dc.DrawGeometry(highlightBrush, null, highlightGeometry);
                     }
@@ -264,9 +264,9 @@ namespace System.Windows.Documents
                 }
             }
 
-            if (highlightBrush != null)
+            if (highlightBrush is not null)
             {
-                Debug.Assert(highlightGeometry != null);
+                Debug.Assert(highlightGeometry is not null);
                 highlightGeometry.FillRule = FillRule.Nonzero;
                 dc.DrawGeometry(highlightBrush, null, highlightGeometry);
             }
@@ -305,7 +305,7 @@ namespace System.Windows.Documents
                 GeneralTransform transform = fh.Element.TransformToAncestor(_page);
 
                 Transform t = transform.AffineTransform;
-                if (t != null)
+                if (t is not null)
                 {
                     dc.PushTransform(t);
                 }

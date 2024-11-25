@@ -57,8 +57,8 @@ namespace MS.Internal.Globalization
             Stream output
             )
         {
-            Debug.Assert(output != null, "The output stream given is null");
-            Debug.Assert(tree != null && tree.Root != null, "The tree to be serialized is null.");
+            Debug.Assert(output is not null, "The output stream given is null");
+            Debug.Assert(tree is not null && tree.Root is not null, "The tree to be serialized is null.");
 
             _writer = new BamlWriter(output);
             _bamlTreeStack = new Stack<BamlTreeNode>();
@@ -79,9 +79,9 @@ namespace MS.Internal.Globalization
                 else
                 {
                     BamlStartElementNode elementNode = currentNode as BamlStartElementNode;
-                    Debug.Assert(elementNode != null);
+                    Debug.Assert(elementNode is not null);
 
-                    if (elementNode != null)
+                    if (elementNode is not null)
                     {
                         localizer.RaiseErrorNotifyEvent(
                             new BamlLocalizerErrorNotifyEventArgs(

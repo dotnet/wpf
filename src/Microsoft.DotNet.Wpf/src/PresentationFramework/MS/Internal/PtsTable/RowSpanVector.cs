@@ -76,7 +76,7 @@ namespace MS.Internal.PtsTable
             int start = cell.ColumnIndex;
 
             #if DEBUG
-            Debug.Assert(cell != null
+            Debug.Assert(cell is not null
                         &&  cell.ColumnIndex != -1
                         &&  cell.RowSpan > 1
                         &&  _index != -1    );
@@ -179,7 +179,7 @@ namespace MS.Internal.PtsTable
 
                 do
                 {
-                    Debug.Assert(_entries[i].Cell != null);
+                    Debug.Assert(_entries[i].Cell is not null);
                     Debug.Assert(i >= j);
                     
                     cells[i] = _entries[i].Cell;

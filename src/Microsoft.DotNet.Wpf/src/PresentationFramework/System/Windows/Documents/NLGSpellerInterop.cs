@@ -80,7 +80,7 @@ namespace System.Windows.Documents
             {
                 if (exceptionThrown)
                 {
-                    if (_textChunk != null)
+                    if (_textChunk is not null)
                     {
                         Marshal.ReleaseComObject(_textChunk);
                         _textChunk = null;
@@ -120,7 +120,7 @@ namespace System.Windows.Documents
             if (_isDisposed)
                 throw new ObjectDisposedException(SR.TextEditorSpellerInteropHasBeenDisposed);
 
-            if (_textChunk != null)
+            if (_textChunk is not null)
             {
                 Marshal.ReleaseComObject(_textChunk);
                 _textChunk = null;
@@ -154,14 +154,14 @@ namespace System.Windows.Documents
 
             _textChunk.get_Context(out textContext);
 
-            if (textContext != null)
+            if (textContext is not null)
             {
                 try
                 {
                     IProcessingOptions options;
 
                     textContext.get_Options(out options);
-                    if (options != null)
+                    if (options is not null)
                     {
                         try
                         {
@@ -233,7 +233,7 @@ namespace System.Windows.Documents
                         {
                             segmentCount += sentence.Segments.Count;
 
-                            if (segmentCallback != null)
+                            if (segmentCallback is not null)
                             {
                                 // Iterate over segments.
                                 for (int i = 0; continueIteration && (i < sentence.Segments.Count); i++ )
@@ -243,7 +243,7 @@ namespace System.Windows.Documents
                             }
 
                             // Make another callback when we're done with the entire sentence.
-                            if (sentenceCallback != null)
+                            if (sentenceCallback is not null)
                             {
                                 continueIteration = sentenceCallback(sentence, data);
                             }
@@ -273,7 +273,7 @@ namespace System.Windows.Documents
         internal override void UnloadDictionary(object dictionary)
         {
             ILexicon lexicon = dictionary as ILexicon;
-            Invariant.Assert(lexicon != null);
+            Invariant.Assert(lexicon is not null);
 
             ITextContext textContext = null;
             try
@@ -285,7 +285,7 @@ namespace System.Windows.Documents
             {
                 Marshal.ReleaseComObject(lexicon);
 
-                if (textContext != null)
+                if (textContext is not null)
                 {
                     Marshal.ReleaseComObject(textContext);
                 }
@@ -348,7 +348,7 @@ namespace System.Windows.Documents
             }
             finally
             {
-                if (textContext != null)
+                if (textContext is not null)
                 {
                     Marshal.ReleaseComObject(textContext);
                 }
@@ -430,7 +430,7 @@ namespace System.Windows.Documents
                     break;
             }
 
-            if (option != null)
+            if (option is not null)
             {
                 switch (spellingReform)
                 {
@@ -748,7 +748,7 @@ namespace System.Windows.Documents
                     throw new ObjectDisposedException("NLGSpellerInterop.SpellerSegment");
                 }
 
-                if (_subSegments != null)
+                if (_subSegments is not null)
                 {
                     foreach (SpellerSegment subSegment in _subSegments)
                     {
@@ -759,7 +759,7 @@ namespace System.Windows.Documents
                     _subSegments = null;
                 }
 
-                if (_textSegment != null)
+                if (_textSegment is not null)
                 {
                     Marshal.ReleaseComObject(_textSegment);
                     _textSegment = null;
@@ -903,7 +903,7 @@ namespace System.Windows.Documents
                     throw new ObjectDisposedException("NLGSpellerInterop.SpellerSentence");
                 }
 
-                if (_segments != null)
+                if (_segments is not null)
                 {
                     foreach (SpellerSegment segment in _segments)
                     {
@@ -988,7 +988,7 @@ namespace System.Windows.Documents
             }
             finally
             {
-                if ((exception) &&(lexicon != null))
+                if ((exception) &&(lexicon is not null))
                 {
                     Marshal.ReleaseComObject(lexicon);
                 }

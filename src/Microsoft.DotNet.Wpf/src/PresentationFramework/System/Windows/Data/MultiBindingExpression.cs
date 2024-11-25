@@ -167,7 +167,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
     {
         FrameworkPropertyMetadata fwMetaData = dp.GetMetadata(d.DependencyObjectType) as FrameworkPropertyMetadata;
 
-        if ((fwMetaData != null && !fwMetaData.IsDataBindingAllowed) || dp.ReadOnly)
+        if ((fwMetaData is not null && !fwMetaData.IsDataBindingAllowed) || dp.ReadOnly)
             throw new ArgumentException(SR.Format(SR.PropertyNotBindable, dp.Name), "dp");
 
         // create the BindingExpression
@@ -185,7 +185,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         if (target is null)
             return;
 
-        Debug.Assert(ParentMultiBinding.Converter != null || !String.IsNullOrEmpty(EffectiveStringFormat),
+        Debug.Assert(ParentMultiBinding.Converter is not null || !String.IsNullOrEmpty(EffectiveStringFormat),
                 "MultiBindingExpression should not exist if its bind does not have a valid converter.");
 
         bool isExtendedTraceEnabled = TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.AttachToContext);
@@ -282,7 +282,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
                 for ( int i = 0; i < MutableBindingExpressions.Count; i++ )
                 {
                     validationError = MutableBindingExpressions[i].ValidationError;
-                    if (validationError != null)
+                    if (validationError is not null)
                         break;
                 }
             }
@@ -399,7 +399,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
     internal override void DetachOverride()
     {
         DependencyObject target = TargetElement;
-        if (target != null && IsUpdateOnLostFocus)
+        if (target is not null && IsUpdateOnLostFocus)
         {
             LostFocusEventManager.RemoveHandler(target, OnLostFocus);
         }
@@ -412,7 +412,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         {
             BindingExpressionBase b = MutableBindingExpressions[i];
 
-            if (b != null)
+            if (b is not null)
             {
                 b.Detach();
                 MutableBindingExpressions.RemoveAt(i);
@@ -467,7 +467,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         int index = MutableBindingExpressions.IndexOf(bindingExpression);
         DependencyObject target = TargetElement;
 
-        if (index >= 0 && target != null)
+        if (index >= 0 && target is not null)
         {
             // detach and clean up the old binding
             bindingExpression.Detach();
@@ -634,7 +634,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
             BindingExpressionBase bindExpr = MutableBindingExpressions[i];
             BindingExpression be = bindExpr as BindingExpression;
 
-            if (be != null && be.UseDefaultValueConverter)
+            if (be is not null && be.UseDefaultValueConverter)
                 _tempTypes[i] = be.ConverterSourceType;
             else
                 _tempTypes[i] = TargetProperty.PropertyType;
@@ -662,7 +662,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
                 {
                     result = false;
                 }
-                else if ((values = value as object[]) != null)
+                else if ((values = value as object[]) is not null)
                 {
                     for (int i=0; i<values.Length; ++i)
                     {
@@ -758,7 +758,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         bindingGroup.SetValue(this, value);
 
         object[] values = value as object[];
-        if (values != null)
+        if (values is not null)
         {
             int count = MutableBindingExpressions.Count;
             if (values.Length < count)
@@ -928,7 +928,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
                     bool childResult = bindExpr.ValidateAndConvertProposedValue(out childValues);
 
                     // append child's values to our values
-                    if (childValues != null)
+                    if (childValues is not null)
                     {
                         for (int k=0, n=childValues.Count; k<n; ++k)
                         {
@@ -1048,11 +1048,11 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         for (int i = 0; i < n; ++i)
         {
             BindingExpressionBase bindExpr = MutableBindingExpressions[i];
-            if (bindExpr != null)
+            if (bindExpr is not null)
             {
                 DependencySource[] sources = bindExpr.GetSources();
 
-                if (sources != null)
+                if (sources is not null)
                 {
                     for (int j = 0; j < sources.Length; ++j)
                     {
@@ -1179,7 +1179,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         }
 
         // apply the converter
-        if (Converter != null)
+        if (Converter is not null)
         {
             // MultiValueConverters are always user-defined, so don't catch exceptions (bug 992237)
             preFormattedValue = Converter.Convert(_tempValues, TargetProperty.PropertyType, ParentMultiBinding.ConverterParameter, culture);
@@ -1199,7 +1199,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
                                     this);
             }
         }
-        else if (EffectiveStringFormat != null)
+        else if (EffectiveStringFormat is not null)
         {
             // preFormattedValue = _tempValues;
             // But check for child binding conversion errors
@@ -1374,7 +1374,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         if (NotifyOnTargetUpdated)
         {
             DependencyObject target = TargetElement;
-            if (target != null)
+            if (target is not null)
             {
                 // while attaching a normal (not style-defined) BindingExpression,
                 // we must defer raising the event until after the
@@ -1397,7 +1397,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         if (NotifyOnSourceUpdated)
         {
             DependencyObject target = TargetElement;
-            if (target != null)
+            if (target is not null)
             {
                 BindingExpression.OnSourceUpdated(target, TargetProperty);
             }

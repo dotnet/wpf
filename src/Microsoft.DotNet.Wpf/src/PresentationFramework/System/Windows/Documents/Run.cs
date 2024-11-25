@@ -56,19 +56,19 @@ namespace System.Windows.Documents
         /// </param>
         public Run(string text, TextPointer insertionPosition)
         {
-            if (insertionPosition != null)
+            if (insertionPosition is not null)
             {
                 insertionPosition.TextContainer.BeginChange();
             }
             try
             {
-                if (insertionPosition != null)
+                if (insertionPosition is not null)
                 {
                     // This will throw InvalidOperationException if schema validity is violated.
                     insertionPosition.InsertInline(this);
                 }
 
-                if (text != null)
+                if (text is not null)
                 {
                     // No need to duplicate the string data in TextProperty here. TextContainer will
                     // set the property to a deferred reference.
@@ -77,7 +77,7 @@ namespace System.Windows.Documents
             }
             finally
             {
-                if (insertionPosition != null)
+                if (insertionPosition is not null)
                 {
                     insertionPosition.TextContainer.EndChange();
                 }
@@ -203,7 +203,7 @@ namespace System.Windows.Documents
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeText(XamlDesignerSerializationManager manager) 
         {
-            return manager != null && manager.XmlWriter is null;
+            return manager is not null && manager.XmlWriter is null;
         }
 
         #endregion Internal Methods
@@ -274,13 +274,13 @@ namespace System.Windows.Documents
             // We need to clear undo stack if we are in a RichTextBox and the value comes from
             // data binding or some other expression.
             FlowDocument document = run.TextContainer.Parent as FlowDocument;
-            if (document != null)
+            if (document is not null)
             {
                 RichTextBox rtb = document.Parent as RichTextBox;
-                if (rtb != null && run.HasExpression(run.LookupEntry(Run.TextProperty.GlobalIndex), Run.TextProperty))
+                if (rtb is not null && run.HasExpression(run.LookupEntry(Run.TextProperty.GlobalIndex), Run.TextProperty))
                 {
                     UndoManager undoManager = rtb.TextEditor._GetUndoManager();
-                    if (undoManager != null && undoManager.IsEnabled)
+                    if (undoManager is not null && undoManager.IsEnabled)
                     {
                         undoManager.Clear();
                     }

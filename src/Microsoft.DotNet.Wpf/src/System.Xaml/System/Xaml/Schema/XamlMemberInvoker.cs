@@ -130,7 +130,7 @@ namespace System.Xaml.Schema
 
             // Invoke the method if we found one
             MethodInfo shouldSerializeMethod = _shouldSerializeMethod.Value;
-            if (shouldSerializeMethod != null)
+            if (shouldSerializeMethod is not null)
             {
                 bool result;
                 if (_member.IsAttachable)

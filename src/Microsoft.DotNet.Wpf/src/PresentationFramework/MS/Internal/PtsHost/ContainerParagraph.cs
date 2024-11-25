@@ -62,7 +62,7 @@ namespace MS.Internal.PtsHost
         public override void Dispose()
         {
             BaseParagraph paraChild = _firstChild;
-            while (paraChild != null)
+            while (paraChild is not null)
             {
                 BaseParagraph para = paraChild;
                 paraChild = paraChild.Next;
@@ -92,15 +92,15 @@ namespace MS.Internal.PtsHost
             out int fSuccessful,                // OUT: does segment contain any paragraph?
             out IntPtr firstParaName)           // OUT: name of the first paragraph in segment
         {
-            if (_ur != null)
+            if (_ur is not null)
             {
                 // Determine if synchronization point has been reached. (If paras are deleted outright, first para may be sync para.
                 int cpCurrent = TextContainerHelper.GetCPFromElement(StructuralCache.TextContainer, Element, ElementEdge.AfterStart);
 
-                if (_ur.SyncPara != null && cpCurrent == _ur.SyncPara.ParagraphStartCharacterPosition)
+                if (_ur.SyncPara is not null && cpCurrent == _ur.SyncPara.ParagraphStartCharacterPosition)
                 {
                     _ur.SyncPara.Previous = null;
-                    if (_ur.Next != null && _ur.Next.FirstPara == _ur.SyncPara)
+                    if (_ur.Next is not null && _ur.Next.FirstPara == _ur.SyncPara)
                     {
                         _ur.SyncPara.SetUpdateInfo(_ur.Next.ChangeType, false);
                     }
@@ -116,7 +116,7 @@ namespace MS.Internal.PtsHost
             }
 
             // If the first paragraph already exists, return it and exit.
-            if (_firstChild != null)
+            if (_firstChild is not null)
             {
                 // PTS may decide to swith to full format when in update mode.
                 // In this case UpdGetFirstChangeInSegment will not be called.
@@ -132,7 +132,7 @@ namespace MS.Internal.PtsHost
                     {
                         // Disconnect obsolete paragraphs.
                         BaseParagraph paraInvalid = _firstChild;
-                        while (paraInvalid != null)
+                        while (paraInvalid is not null)
                         {
                             paraInvalid.Dispose();
                             paraInvalid = paraInvalid.Next;
@@ -144,7 +144,7 @@ namespace MS.Internal.PtsHost
                 else
                 {
                     // If in update mode, setup update info for the first para.
-                    if (_ur != null && _ur.InProcessing && _ur.FirstPara == _firstChild)
+                    if (_ur is not null && _ur.InProcessing && _ur.FirstPara == _firstChild)
                     {
                         _firstChild.SetUpdateInfo(PTS.FSKCHANGE.fskchInside, false);
                     }
@@ -152,7 +152,7 @@ namespace MS.Internal.PtsHost
             }
 
 #if TEXTPANELLAYOUTDEBUG
-            bool cached = _firstChild != null;
+            bool cached = _firstChild is not null;
 #endif
             if (_firstChild is null)
             {
@@ -161,7 +161,7 @@ namespace MS.Internal.PtsHost
                 _firstChild = GetParagraph(textPointer, false);
 
                 // If in update mode, setup update info.
-                if (_ur != null && _firstChild != null)
+                if (_ur is not null && _firstChild is not null)
                 {
                     _firstChild.SetUpdateInfo(PTS.FSKCHANGE.fskchNew, false);
                 }
@@ -174,14 +174,14 @@ namespace MS.Internal.PtsHost
 
             // Initialize output parameters.
             _lastFetchedChild = _firstChild;
-            fSuccessful = PTS.FromBoolean(_firstChild != null);
-            firstParaName = (_firstChild != null) ? _firstChild.Handle : IntPtr.Zero;
+            fSuccessful = PTS.FromBoolean(_firstChild is not null);
+            firstParaName = (_firstChild is not null) ? _firstChild.Handle : IntPtr.Zero;
 #if TEXTPANELLAYOUTDEBUG
             if (StructuralCache.CurrentFormatContext.IncrementalUpdate)
             {
                 System.Text.StringBuilder msg = new System.Text.StringBuilder();
                 msg.Append("ContPara.GetFirstPara, Found=" + fSuccessful);
-                if (_firstChild != null)
+                if (_firstChild is not null)
                 {
                     msg.Append(" Cached=" + cached + " Para=" + _firstChild.GetType().Name);
                 }
@@ -198,15 +198,15 @@ namespace MS.Internal.PtsHost
             out int fFound,                     // OUT: is there next paragraph?
             out IntPtr nextParaName)            // OUT: name of the next paragraph in section
         {
-            if (_ur != null)
+            if (_ur is not null)
             {
                 // Determine if synchronization point has been reached.
                 int cpCurrent = prevParagraph.ParagraphEndCharacterPosition;
-                if (_ur.SyncPara != null && cpCurrent == _ur.SyncPara.ParagraphStartCharacterPosition)
+                if (_ur.SyncPara is not null && cpCurrent == _ur.SyncPara.ParagraphStartCharacterPosition)
                 {
                     _ur.SyncPara.Previous = prevParagraph;
                     prevParagraph.Next = _ur.SyncPara;
-                    if (_ur.Next != null && _ur.Next.FirstPara == _ur.SyncPara)
+                    if (_ur.Next is not null && _ur.Next.FirstPara == _ur.SyncPara)
                     {
                         _ur.SyncPara.SetUpdateInfo(_ur.Next.ChangeType, false);
                     }
@@ -225,12 +225,12 @@ namespace MS.Internal.PtsHost
                     // This situation may happen when we go to the next UpdateRecord after finding 
                     // synchronization point. It means that we have to run into _ur.FirstPara and all 
                     // paragraphs up to this point dont need to be updated.
-                    if (!_ur.InProcessing && _ur.FirstPara != prevParagraph.Next && prevParagraph.Next != null)
+                    if (!_ur.InProcessing && _ur.FirstPara != prevParagraph.Next && prevParagraph.Next is not null)
                     {
                         prevParagraph.Next.SetUpdateInfo(PTS.FSKCHANGE.fskchNone, false);
                     }
                     // If updated paragraph return it
-                    else if (_ur.FirstPara != null && _ur.FirstPara == prevParagraph.Next)
+                    else if (_ur.FirstPara is not null && _ur.FirstPara == prevParagraph.Next)
                     {
                         Debug.Assert(_ur.ChangeType == PTS.FSKCHANGE.fskchInside); // Inconsistent UpdateRecord data
                         _ur.InProcessing = true;
@@ -241,7 +241,7 @@ namespace MS.Internal.PtsHost
 
             BaseParagraph nextParagraph = prevParagraph.Next;
 #if TEXTPANELLAYOUTDEBUG
-            bool cached = nextParagraph != null;
+            bool cached = nextParagraph is not null;
 #endif
             if (nextParagraph is null)
             {
@@ -250,7 +250,7 @@ namespace MS.Internal.PtsHost
                 nextParagraph = GetParagraph(textPointer, true);
 
                 // Add new paragraph to a linked list of paragraphs in the segment
-                if (nextParagraph != null)
+                if (nextParagraph is not null)
                 {
                     nextParagraph.Previous = prevParagraph;
                     prevParagraph.Next = nextParagraph;
@@ -262,7 +262,7 @@ namespace MS.Internal.PtsHost
             }
 
             // Initialize output parameters
-            if (nextParagraph != null)
+            if (nextParagraph is not null)
             {
                 fFound = PTS.True;
                 nextParaName = nextParagraph.Handle;
@@ -282,7 +282,7 @@ namespace MS.Internal.PtsHost
             {
                 System.Text.StringBuilder msg = new System.Text.StringBuilder();
                 msg.Append("ContPara.GetNextPara, Found=" + fFound);
-                if (nextParagraph != null)
+                if (nextParagraph is not null)
                 {
                     msg.Append(" Cached=" + cached + " Para=" + nextParagraph.GetType().Name);
                 }
@@ -303,8 +303,8 @@ namespace MS.Internal.PtsHost
 
             BuildUpdateRecord();
 
-            fFound = PTS.FromBoolean(_ur != null);
-            fChangeFirst = PTS.FromBoolean((_ur != null) && (_firstChild is null || _firstChild == _ur.FirstPara));
+            fFound = PTS.FromBoolean(_ur is not null);
+            fChangeFirst = PTS.FromBoolean((_ur is not null) && (_firstChild is null || _firstChild == _ur.FirstPara));
             if (PTS.ToBoolean(fFound) && !PTS.ToBoolean(fChangeFirst))
             {
                 if (_ur.FirstPara is null)
@@ -312,7 +312,7 @@ namespace MS.Internal.PtsHost
                     // Something has been added at the end of container paragraph. 
                     // Find the last paragraph.
                     BaseParagraph lastPara = _lastFetchedChild;
-                    while (lastPara.Next != null)
+                    while (lastPara.Next is not null)
                     {
                         lastPara = lastPara.Next;
                     }
@@ -362,7 +362,7 @@ namespace MS.Internal.PtsHost
         internal void UpdGetSegmentChange(
             out PTS.FSKCHANGE fskch)            // OUT: kind of change
         {
-            Debug.Assert(StructuralCache.CurrentFormatContext.FinitePage || _ur != null); // For bottomless case UpdateRecord needs to be created in UpdGetFirstChangeInSegment.
+            Debug.Assert(StructuralCache.CurrentFormatContext.FinitePage || _ur is not null); // For bottomless case UpdateRecord needs to be created in UpdGetFirstChangeInSegment.
             // During update of finite page, UpdGetFirstChangeInSegment is not called.
             // Hence needs to calculate and set update info on all children paragraphs.
             if (StructuralCache.CurrentFormatContext.FinitePage)
@@ -374,7 +374,7 @@ namespace MS.Internal.PtsHost
                     TextContainerHelper.GetCPFromElement(StructuralCache.TextContainer, Element, ElementEdge.BeforeStart), LastFormatCch);
 
                 // Build update records
-                if (dtrs != null)
+                if (dtrs is not null)
                 {
                     // The NameTable is cleaned from the start position of the first DTR.
                     // Hence all paragraphs after the first DTR are new.
@@ -386,7 +386,7 @@ namespace MS.Internal.PtsHost
                     BaseParagraph para = _firstChild;
                     if (dcpPara < dtr.StartIndex)
                     {
-                        while (para != null)
+                        while (para is not null)
                         {
                             // We're looking for first affected para - We start with dco content. For
                             // all paras but TextParagraph, StartPosition/EndPosition is 
@@ -403,7 +403,7 @@ namespace MS.Internal.PtsHost
                             dcpPara += para.Cch;
                             para = para.Next;
                         }
-                        if (para != null)
+                        if (para is not null)
                         {
                             para.SetUpdateInfo(PTS.FSKCHANGE.fskchInside, false);
                         }
@@ -414,10 +414,10 @@ namespace MS.Internal.PtsHost
                     }
 
                     // All following paragraph are new.
-                    if (para != null)
+                    if (para is not null)
                     {
                         para = para.Next;
-                        while (para != null)
+                        while (para is not null)
                         {
                             para.SetUpdateInfo(PTS.FSKCHANGE.fskchNew, false);
                             para = para.Next;
@@ -495,7 +495,7 @@ namespace MS.Internal.PtsHost
             // This problem is currently investigated by PTS team: PTSLS bug 915.
             // For now, MCS gets ignored here.
             //ErrorHandler.Assert(pbrkrecIn == IntPtr.Zero || mcs is null, ErrorHandler.BrokenParaHasMcs);
-            if (mcs != null && pbrkrecIn != IntPtr.Zero)
+            if (mcs is not null && pbrkrecIn != IntPtr.Zero)
             {
                 mcs = null;
             }
@@ -549,7 +549,7 @@ namespace MS.Internal.PtsHost
             {
                 PTS.Validate(PTS.FsFormatSubtrackFinite(PtsContext.Context, pbrkrecIn, fBRFromPreviousPage, this.Handle, iArea, 
                     footnoteRejector, geometry, fEmptyOk, fSuppressTopSpace, fswdirSubtrack, ref fsrcToFillSubtrack, 
-                    (mcsContainer != null) ? mcsContainer.Handle : IntPtr.Zero, fskclearIn, 
+                    (mcsContainer is not null) ? mcsContainer.Handle : IntPtr.Zero, fskclearIn, 
                     fsksuppresshardbreakbeforefirstparaIn, 
                     out fsfmtr, out pfspara, out pbrkrecOut, out dvrUsed, out fsbbox, out pmcsclientOut, out fskclearOut, 
                     out dvrSubTrackTopSpace), PtsContext);
@@ -557,7 +557,7 @@ namespace MS.Internal.PtsHost
             finally
             {
                 // Destroy top margin collapsing state (not needed anymore).
-                if (mcsContainer != null)
+                if (mcsContainer is not null)
                 {
                     mcsContainer.Dispose();
                     mcsContainer = null;
@@ -596,7 +596,7 @@ namespace MS.Internal.PtsHost
                 // There is no bottom margin collapsing if paragraph will be continued (output break record is not null).
                 MarginCollapsingState mcsNew = null;
                 MarginCollapsingState.CollapseBottomMargin(PtsContext, mbp, mcsContainer, out mcsNew, out marginBottom);
-                pmcsclientOut = (mcsNew != null) ? mcsNew.Handle : IntPtr.Zero;
+                pmcsclientOut = (mcsNew is not null) ? mcsNew.Handle : IntPtr.Zero;
 
                 // If we exceed fill rectangle after adding bottom border and padding, clip them
                 dvrUsed += marginBottom + mbp.BPBottom;
@@ -605,7 +605,7 @@ namespace MS.Internal.PtsHost
 
             // Since MCS returned by PTS is never passed back, destroy MCS provided by PTS.
             // If necessary, new MCS is created and passed back to PTS.
-            if (mcsContainer != null)
+            if (mcsContainer is not null)
             {
                 mcsContainer.Dispose();
                 mcsContainer = null;
@@ -692,14 +692,14 @@ namespace MS.Internal.PtsHost
             {
                 PTS.Validate(PTS.FsFormatSubtrackBottomless(PtsContext.Context, this.Handle, iArea, 
                     geometry, fSuppressTopSpace, fswdirSubtrack, urSubtrack, durSubtrack, vrSubtrack, 
-                    (mcsContainer != null) ? mcsContainer.Handle : IntPtr.Zero, fskclearIn, fInterruptable, 
+                    (mcsContainer is not null) ? mcsContainer.Handle : IntPtr.Zero, fskclearIn, fInterruptable, 
                     out fsfmtrbl, out pfspara, out dvrUsed, out fsbbox, out pmcsclientOut, 
                     out fskclearOut, out dvrSubTrackTopSpace, out fPageBecomesUninterruptable), PtsContext);
             }
             finally
             {
                 // Destroy top margin collapsing state (not needed anymore).
-                if (mcsContainer != null)
+                if (mcsContainer is not null)
                 {
                     mcsContainer.Dispose();
                     mcsContainer = null;
@@ -720,11 +720,11 @@ namespace MS.Internal.PtsHost
                 int marginBottom;
                 MarginCollapsingState mcsNew;
                 MarginCollapsingState.CollapseBottomMargin(PtsContext, mbp, mcsContainer, out mcsNew, out marginBottom);
-                pmcsclientOut = (mcsNew != null) ? mcsNew.Handle : IntPtr.Zero;
+                pmcsclientOut = (mcsNew is not null) ? mcsNew.Handle : IntPtr.Zero;
 
                 // Since MCS returned by PTS is never passed back, destroy MCS provided by PTS.
                 // If necessary, new MCS is created and passed back to PTS.
-                if (mcsContainer != null)
+                if (mcsContainer is not null)
                 {
                     mcsContainer.Dispose();
                     mcsContainer = null;
@@ -822,14 +822,14 @@ namespace MS.Internal.PtsHost
             {
                 PTS.Validate(PTS.FsUpdateBottomlessSubtrack(PtsContext.Context, pfspara, this.Handle, iArea,
                     pfsgeom, fSuppressTopSpace, fswdirSubtrack, urSubtrack, durSubtrack, vrSubtrack, 
-                    (mcsContainer != null) ? mcsContainer.Handle : IntPtr.Zero, fskclearIn, fInterruptable, 
+                    (mcsContainer is not null) ? mcsContainer.Handle : IntPtr.Zero, fskclearIn, fInterruptable, 
                     out fsfmtrbl, out dvrUsed, out fsbbox, out pmcsclientOut, 
                     out fskclearOut, out dvrSubTrackTopSpace, out fPageBecomesUninterruptable), PtsContext);
             }
             finally
             {
                 // Destroy top margin collapsing state (not needed anymore).
-                if (mcsContainer != null)
+                if (mcsContainer is not null)
                 {
                     mcsContainer.Dispose();
                     mcsContainer = null;
@@ -850,11 +850,11 @@ namespace MS.Internal.PtsHost
                 int marginBottom;
                 MarginCollapsingState mcsNew;
                 MarginCollapsingState.CollapseBottomMargin(PtsContext, mbp, mcsContainer, out mcsNew, out marginBottom);
-                pmcsclientOut = (mcsNew != null) ? mcsNew.Handle : IntPtr.Zero;
+                pmcsclientOut = (mcsNew is not null) ? mcsNew.Handle : IntPtr.Zero;
 
                 // Since MCS returned by PTS is never passed back, destroy MCS provided by PTS.
                 // If necessary, new MCS is created and passed back to PTS.
-                if (mcsContainer != null)
+                if (mcsContainer is not null)
                 {
                     mcsContainer.Dispose();
                     mcsContainer = null;
@@ -901,7 +901,7 @@ namespace MS.Internal.PtsHost
         internal override void ClearUpdateInfo()
         {
             BaseParagraph paraChild = _firstChild;
-            while (paraChild != null)
+            while (paraChild is not null)
             {
                 paraChild.ClearUpdateInfo();
                 paraChild = paraChild.Next;
@@ -927,7 +927,7 @@ namespace MS.Internal.PtsHost
             if (startPosition <= openEdgeCp + TextContainerHelper.ElementEdgeCharacterLength) // If before or equal to content start, whole para content is invalid
             {
                 paraChild = _firstChild;
-                while (paraChild != null)
+                while (paraChild is not null)
                 {
                     BaseParagraph para = paraChild;
                     paraChild = paraChild.Next;
@@ -944,7 +944,7 @@ namespace MS.Internal.PtsHost
                 paraChild = _firstChild;
 
                 // Move to the first paragraph that is affected by the DTR.
-                while (paraChild != null)
+                while (paraChild is not null)
                 {
                     if ((paraChild.ParagraphStartCharacterPosition + paraChild.LastFormatCch) >= startPosition)
                     {
@@ -958,9 +958,9 @@ namespace MS.Internal.PtsHost
 
                         // paraChild and all following paragraph are invalid.
                         // Disconnect them from the Name Table.
-                        if (paraChild != null)
+                        if (paraChild is not null)
                         {
-                            if (paraChild.Previous != null)
+                            if (paraChild.Previous is not null)
                             {
                                 paraChild.Previous.Next = null;
                                 _lastFetchedChild = paraChild.Previous;
@@ -969,7 +969,7 @@ namespace MS.Internal.PtsHost
                             {
                                 _firstChild = _lastFetchedChild = null;
                             }
-                            while (paraChild != null)
+                            while (paraChild is not null)
                             {
                                 BaseParagraph para = paraChild;
                                 paraChild = paraChild.Next;
@@ -992,7 +992,7 @@ namespace MS.Internal.PtsHost
         internal override void InvalidateFormatCache()
         {
             BaseParagraph para = _firstChild;
-            while (para != null)
+            while (para is not null)
             {
                 para.InvalidateFormatCache();
                 para = para.Next;
@@ -1108,7 +1108,7 @@ namespace MS.Internal.PtsHost
                     break;
             }
 
-            if (paragraph != null)
+            if (paragraph is not null)
             {
                 StructuralCache.CurrentFormatContext.DependentMax = (TextPointer) textPointer;
             }
@@ -1124,7 +1124,7 @@ namespace MS.Internal.PtsHost
             // Get list of DTRs for the container paragraph. 
             // Starting from the first character of the container (BeforeEdge). 
             DtrList dtrs = StructuralCache.DtrsFromRange(ParagraphStartCharacterPosition, LastFormatCch);
-            return (dtrs != null);
+            return (dtrs is not null);
         }
 
         // ------------------------------------------------------------------
@@ -1140,7 +1140,7 @@ namespace MS.Internal.PtsHost
             DtrList dtrs = StructuralCache.DtrsFromRange(ParagraphStartCharacterPosition, LastFormatCch);
 
             // Build update records
-            if (dtrs != null)
+            if (dtrs is not null)
             {
                 UpdateRecord urPrev = null;
                 for (int i = 0; i < dtrs.Length; i++)
@@ -1166,13 +1166,13 @@ namespace MS.Internal.PtsHost
                 // There might be a case when 2 adjacent update records are overlapping 
                 // the same paragraph. In this case they have to be merged.
                 ur = _ur;
-                while (ur.Next != null)
+                while (ur.Next is not null)
                 {
                     // Determine if 2 UpdateRecords are overlapping the same paragraph.
                     // Because DTRs of update records are not overlapping it is enough 
                     // to compare last affected paragraph of the first UpdateRecord 
                     // with the first affected paragraph of the second UpdateRecord.
-                    if (ur.SyncPara != null)
+                    if (ur.SyncPara is not null)
                     {
                         if (ur.SyncPara.Previous == ur.Next.FirstPara)
                         {
@@ -1199,7 +1199,7 @@ namespace MS.Internal.PtsHost
 
             // Disconnect obsolete paragraphs
             ur = _ur;
-            while (ur != null && ur.FirstPara != null)
+            while (ur is not null && ur.FirstPara is not null)
             {
                 BaseParagraph paraInvalid = null;
                 if (ur.ChangeType == PTS.FSKCHANGE.fskchInside)
@@ -1213,11 +1213,11 @@ namespace MS.Internal.PtsHost
                 }
                 while (paraInvalid != ur.SyncPara)
                 {
-                    if (paraInvalid.Next != null)
+                    if (paraInvalid.Next is not null)
                     {
                         paraInvalid.Next.Previous = null;
                     }
-                    if (paraInvalid.Previous != null)
+                    if (paraInvalid.Previous is not null)
                     {
                         paraInvalid.Previous.Next = null;
                     }
@@ -1228,7 +1228,7 @@ namespace MS.Internal.PtsHost
             }
 
             // Initalize update state of the paragraph
-            if (_ur != null)
+            if (_ur is not null)
             {
                 // If the first UpdateRecord points to the first paragraph and
                 // this paragraph is new, reinitialize first para.
@@ -1263,7 +1263,7 @@ namespace MS.Internal.PtsHost
             int dcpPara = dcpContent;
             if (dcpPara < ur.Dtr.StartIndex)
             {
-                while (para != null)
+                while (para is not null)
                 {
                     // We're looking for first affected para - We start with dco content. For
                     // all paras but TextParagraph, StartPosition/EndPosition is 
@@ -1301,7 +1301,7 @@ namespace MS.Internal.PtsHost
 
             // (4) Find synchronization point, the first paragraph after DTR
             ur.SyncPara = null;
-            while (para != null)
+            while (para is not null)
             {
                 if (   (dcpPara + para.LastFormatCch > ur.Dtr.StartIndex + ur.Dtr.PositionsRemoved)
                     || (dcpPara + para.LastFormatCch == ur.Dtr.StartIndex + ur.Dtr.PositionsRemoved && ur.ChangeType != PTS.FSKCHANGE.fskchNew))

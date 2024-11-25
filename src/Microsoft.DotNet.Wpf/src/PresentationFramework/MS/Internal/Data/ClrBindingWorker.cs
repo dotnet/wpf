@@ -38,7 +38,7 @@ namespace MS.Internal.Data
         {
             PropertyPath path = ParentBinding.Path;
 
-            if (ParentBinding.XPath != null)
+            if (ParentBinding.XPath is not null)
             {
                 path = PrepareXmlBinding(path);
             }
@@ -205,7 +205,7 @@ namespace MS.Internal.Data
         internal override void DetachDataItem()
         {
             PW.DetachFromRootItem();
-            if (XmlWorker != null)
+            if (XmlWorker is not null)
             {
                 XmlWorker.DetachDataItem();
             }
@@ -214,14 +214,14 @@ namespace MS.Internal.Data
             // but is now waiting in the dispatcher queue, it will be ignored because
             // we set _pending*Request to null.
             AsyncGetValueRequest pendingGetValueRequest = (AsyncGetValueRequest)GetValue(Feature.PendingGetValueRequest, null);
-            if (pendingGetValueRequest != null)
+            if (pendingGetValueRequest is not null)
             {
                 pendingGetValueRequest.Cancel();
                 ClearValue(Feature.PendingGetValueRequest);
             }
 
             AsyncSetValueRequest pendingSetValueRequest = (AsyncSetValueRequest)GetValue(Feature.PendingSetValueRequest, null);
-            if (pendingSetValueRequest != null)
+            if (pendingSetValueRequest is not null)
             {
                 pendingSetValueRequest.Cancel();
                 ClearValue(Feature.PendingSetValueRequest);
@@ -260,7 +260,7 @@ namespace MS.Internal.Data
 
         internal override void OnCurrentChanged(ICollectionView collectionView, EventArgs args)
         {
-            if (XmlWorker != null)
+            if (XmlWorker is not null)
                 XmlWorker.OnCurrentChanged(collectionView, args);
             PW.OnCurrentChanged(collectionView);
         }
@@ -322,7 +322,7 @@ namespace MS.Internal.Data
         internal void ReplaceCurrentItem(ICollectionView oldCollectionView, ICollectionView newCollectionView)
         {
             // detach from old view
-            if (oldCollectionView != null)
+            if (oldCollectionView is not null)
             {
                 CurrentChangedEventManager.RemoveHandler(oldCollectionView, ParentBindingExpression.OnCurrentChanged);
                 if (IsReflective)
@@ -332,7 +332,7 @@ namespace MS.Internal.Data
             }
 
             // attach to new view
-            if (newCollectionView != null)
+            if (newCollectionView is not null)
             {
                 CurrentChangedEventManager.AddHandler(newCollectionView, ParentBindingExpression.OnCurrentChanged);
                 if (IsReflective)
@@ -351,7 +351,7 @@ namespace MS.Internal.Data
             // this method is called when the last item in the path is replaced.
             // BindingGroup also wants to know about this.
             BindingGroup bindingGroup = parent.BindingGroup;
-            if (bindingGroup != null)
+            if (bindingGroup is not null)
             {
                 bindingGroup.UpdateTable(parent);
             }
@@ -414,7 +414,7 @@ namespace MS.Internal.Data
                     if (ParentBindingExpression.TargetWantsCrossThreadNotifications)
                     {
                         LiveShapingItem lsi = TargetElement as LiveShapingItem;
-                        if (lsi != null)
+                        if (lsi is not null)
                         {
                             lsi.OnCrossThreadPropertyChange(TargetProperty);
                         }
@@ -547,7 +547,7 @@ namespace MS.Internal.Data
         internal void ReportBadXPath(TraceEventType traceType)
         {
             XmlBindingWorker xmlWorker = XmlWorker;
-            if (xmlWorker != null)
+            if (xmlWorker is not null)
             {
                 xmlWorker.ReportBadXPath(traceType);
             }
@@ -603,10 +603,10 @@ namespace MS.Internal.Data
                     for (int k = 0; k < PW.Length; ++k)
                     {
                         DependencyProperty dp = PW.GetAccessor(k) as DependencyProperty;
-                        if (dp != null)
+                        if (dp is not null)
                         {
                             DependencyObject d = PW.GetItem(k) as DependencyObject;
-                            if (d != null)
+                            if (d is not null)
                                 newSources[n++] = new WeakDependencySource(d, dp);
                         }
                     }
@@ -617,7 +617,7 @@ namespace MS.Internal.Data
                         // (as of today - 11/14/08), so we only need to propagate
                         // them when the raw value is a Freezable.
                         DependencyObject d = PW.RawValue() as Freezable;
-                        if (d != null)
+                        if (d is not null)
                             newSources[n++] = new WeakDependencySource(d, DependencyObject.DirectDependencyProperty);
                     }
                 }
@@ -632,11 +632,11 @@ namespace MS.Internal.Data
         {
             // get information about the property whose value we want
             string name = GetNameFromInfo(PW.GetAccessor(level));
-            Invariant.Assert(name != null, "Async GetValue expects a name");
+            Invariant.Assert(name is not null, "Async GetValue expects a name");
 
             // abandon any previous request
             AsyncGetValueRequest pendingGetValueRequest = (AsyncGetValueRequest)GetValue(Feature.PendingGetValueRequest, null);
-            if (pendingGetValueRequest != null)
+            if (pendingGetValueRequest is not null)
             {
                 pendingGetValueRequest.Cancel();
             }
@@ -666,7 +666,7 @@ namespace MS.Internal.Data
             ClrBindingWorker worker = (ClrBindingWorker)request.Args[0];
 
             DataBindEngine engine = worker.Engine;
-            if (engine != null) // could be null if binding has been detached
+            if (engine is not null) // could be null if binding has been detached
             {
                 engine.Marshal(CompleteGetValueLocalCallback, request);
             }
@@ -716,11 +716,11 @@ namespace MS.Internal.Data
         {
             // get information about the property whose value we want
             string name = GetNameFromInfo(PW.GetAccessor(PW.Length - 1));
-            Invariant.Assert(name != null, "Async SetValue expects a name");
+            Invariant.Assert(name is not null, "Async SetValue expects a name");
 
             // abandon any previous request
             AsyncSetValueRequest pendingSetValueRequest = (AsyncSetValueRequest)GetValue(Feature.PendingSetValueRequest, null);
-            if (pendingSetValueRequest != null)
+            if (pendingSetValueRequest is not null)
             {
                 pendingSetValueRequest.Cancel();
             }
@@ -748,7 +748,7 @@ namespace MS.Internal.Data
             ClrBindingWorker worker = (ClrBindingWorker)request.Args[0];
 
             DataBindEngine engine = worker.Engine;
-            if (engine != null) // could be null if binding has been detached
+            if (engine is not null) // could be null if binding has been detached
             {
                 engine.Marshal(CompleteSetValueLocalCallback, request);
             }
@@ -784,7 +784,7 @@ namespace MS.Internal.Data
                         Exception exception = filteredException as Exception;
                         ValidationError validationError;
 
-                        if (exception != null)
+                        if (exception is not null)
                         {
                             if (TraceData.IsEnabled)
                             {
@@ -793,7 +793,7 @@ namespace MS.Internal.Data
                                 ReportSetValueError(k, request.TargetItem, request.Value, exception);
                             }
                         }
-                        else if ((validationError = filteredException as ValidationError) != null)
+                        else if ((validationError = filteredException as ValidationError) is not null)
                         {
                             Validation.MarkInvalid(ParentBindingExpression, validationError);
                         }
@@ -809,13 +809,13 @@ namespace MS.Internal.Data
             PropertyDescriptor pd;
             DynamicObjectAccessor doa;
 
-            if ((mi = info as MemberInfo) != null)
+            if ((mi = info as MemberInfo) is not null)
                 return mi.Name;
 
-            if ((pd = info as PropertyDescriptor) != null)
+            if ((pd = info as PropertyDescriptor) is not null)
                 return pd.Name;
 
-            if ((doa = info as DynamicObjectAccessor) != null)
+            if ((doa = info as DynamicObjectAccessor) is not null)
                 return doa.PropertyName;
 
             return null;

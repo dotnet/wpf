@@ -65,7 +65,7 @@ namespace DrtXaml.XamlTestFramework
 
         public void RunTest()
         {
-            if (TestDelegate != null)
+            if (TestDelegate is not null)
             {
                 RunMethodTest();
             }
@@ -137,7 +137,7 @@ namespace DrtXaml.XamlTestFramework
         private void LoadAndValidate(XamlStringParser loader, string xamlString, PostTreeValidator validator)
         {
             object root = loader(xamlString);
-            if (validator != null)
+            if (validator is not null)
             {
                 validator(root);
             }

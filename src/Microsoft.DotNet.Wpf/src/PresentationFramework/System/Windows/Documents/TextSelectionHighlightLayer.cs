@@ -238,7 +238,7 @@ namespace System.Windows.Documents
             _oldStart = newStart;
             _oldEnd = newEnd;
 
-            if (this.Changed != null)
+            if (this.Changed is not null)
             {
                 if (invalidRangeLeftStart.CompareTo(invalidRangeLeftEnd) != 0 || invalidRangeRightStart.CompareTo(invalidRangeRightEnd) != 0)
                 {

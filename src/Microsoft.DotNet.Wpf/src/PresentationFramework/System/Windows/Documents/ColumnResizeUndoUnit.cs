@@ -52,7 +52,7 @@ namespace System.Windows.Documents
                 _columnWidths[_columnIndex + 1] += _resizeAmount;
             }
 
-            if(undoManager != null && undoManager.IsEnabled)
+            if(undoManager is not null && undoManager.IsEnabled)
             {
                 redo = new ColumnResizeUndoUnit(textPointerTable, _columnIndex, _columnWidths, -_resizeAmount);
                 undoManager.Open(redo);
@@ -60,7 +60,7 @@ namespace System.Windows.Documents
 
             TextRangeEditTables.EnsureTableColumnsAreFixedSize(table, _columnWidths);
     
-            if(redo != null)
+            if(redo is not null)
             {
                 undoManager.Close(redo, UndoCloseAction.Commit);
             }

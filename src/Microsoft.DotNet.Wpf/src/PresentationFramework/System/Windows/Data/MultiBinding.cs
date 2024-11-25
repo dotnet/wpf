@@ -56,7 +56,7 @@ public class MultiBinding : BindingBase, IAddChild
     void IAddChild.AddChild(Object value)
     {
         BindingBase binding = value as BindingBase;
-        if (binding != null)
+        if (binding is not null)
             Bindings.Add(binding);
         else
             throw new ArgumentException(SR.Format(SR.ChildHasWrongType, this.GetType().Name, "BindingBase", value.GetType().FullName), "value");
@@ -95,7 +95,7 @@ public class MultiBinding : BindingBase, IAddChild
     [EditorBrowsable(EditorBrowsableState.Never)]
     public bool ShouldSerializeBindings()
     {
-        return (Bindings != null && Bindings.Count > 0);
+        return (Bindings is not null && Bindings.Count > 0);
     }
 
     /// <summary> Binding type </summary>
@@ -368,7 +368,7 @@ public class MultiBinding : BindingBase, IAddChild
     internal object DoFilterException(object bindExpr, Exception exception)
     {
         UpdateSourceExceptionFilterCallback callback = (UpdateSourceExceptionFilterCallback)GetValue(Feature.ExceptionFilterCallback, null);
-        if (callback != null)
+        if (callback is not null)
             return callback(bindExpr, exception);
 
         return exception;
@@ -377,7 +377,7 @@ public class MultiBinding : BindingBase, IAddChild
     internal static void CheckTrigger(BindingBase bb)
     {
         Binding binding = bb as Binding;
-        if (binding != null)
+        if (binding is not null)
         {
             if (binding.UpdateSourceTrigger != UpdateSourceTrigger.PropertyChanged &&
                 binding.UpdateSourceTrigger != UpdateSourceTrigger.Default)

@@ -87,7 +87,7 @@ namespace MS.Internal.AutomationProxies
             if (idObject != NativeMethods.OBJID_VSCROLL && idObject != NativeMethods.OBJID_HSCROLL)
             {
                 ProxySimple el = (ProxyHwnd) WindowsAltTab.Create(hwnd, 0);
-                if (el != null)
+                if (el is not null)
                 {
                     el.DispatchEvents(eventId, idProp, idObject, idChild);
                 }
@@ -247,7 +247,7 @@ namespace MS.Internal.AutomationProxies
         {
             altTabInfo.cbSize = (uint)Marshal.SizeOf(typeof(UnsafeNativeMethods.ALTTABINFO));
             uint cchItemText = 0;
-            if (itemText != null)
+            if (itemText is not null)
             {
                 cchItemText = (uint)itemText.Capacity;
             }

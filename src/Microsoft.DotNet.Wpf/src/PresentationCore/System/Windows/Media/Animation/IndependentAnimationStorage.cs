@@ -64,11 +64,11 @@ namespace System.Windows.Media.Animation
                 // I'm not sure how our target animated DependencyObject would get garbage
                 // collected before we call AddRefOnChannel on one of its animated property
                 // resources, but if it happens it will be a bad thing.
-                Debug.Assert(d != null);
+                Debug.Assert(d is not null);
 
                 // Any animated DependencyObject must be associated with a Dispatcher because the
                 // AnimationClocks doing the animating must be associated with a Dispatcher.
-                Debug.Assert(d.Dispatcher != null);
+                Debug.Assert(d.Dispatcher is not null);
 
                 // Make sure the target belongs to this thread
                 Debug.Assert(d.CheckAccess());
@@ -109,10 +109,10 @@ namespace System.Windows.Media.Animation
 
                     // DependencyObject shouldn't have been garbage collected before we've
                     // released all of its property animation resources.
-                    Debug.Assert(d != null);
+                    Debug.Assert(d is not null);
 
                     // The target DependencyObject should be associated with a Dispatcher.
-                    Debug.Assert(d.Dispatcher != null);
+                    Debug.Assert(d.Dispatcher is not null);
 
                     // Make sure the target belongs to this thread
                     Debug.Assert(d.CheckAccess());
@@ -205,14 +205,14 @@ namespace System.Windows.Media.Animation
             // If _updateResourceHandler is null we haven't been added to our channel yet so
             //     there's no need to update anything.
             if (   _isValid
-                && _updateResourceHandler != null)
+                && _updateResourceHandler is not null)
             {
                 DependencyObject d = (DependencyObject)_dependencyObject.Target;
 
                 // If d is null it means the resource that we're animating has been garbage
                 // collected and had not fully been released it from its channel. This is
                 // highly unlikely and if it occurs something has gone horribly wrong.
-                Debug.Assert(d != null);
+                Debug.Assert(d is not null);
 
                 // Just make sure that this resource has been added to the channel associated
                 // with the MediaContext associated with the target object's Dispatcher.
@@ -232,8 +232,8 @@ namespace System.Windows.Media.Animation
 
         internal static DUCE.ResourceHandle GetResourceHandle(DependencyObject d, DependencyProperty dp, DUCE.Channel channel)
         {
-            Debug.Assert(d != null);
-            Debug.Assert(dp != null);
+            Debug.Assert(d is not null);
+            Debug.Assert(dp is not null);
             Debug.Assert(d is Animatable ? ((Animatable)d).HasAnimatedProperties : true);
 
             IndependentAnimationStorage storage = AnimationStorage.GetStorage(d, dp) as IndependentAnimationStorage;

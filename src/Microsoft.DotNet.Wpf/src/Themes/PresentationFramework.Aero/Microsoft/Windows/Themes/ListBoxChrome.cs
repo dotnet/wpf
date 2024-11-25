@@ -222,7 +222,7 @@ namespace Microsoft.Windows.Themes
             }
 
             UIElement child = Child;
-            if (child != null)
+            if (child is not null)
             {
                 Size childConstraint = new Size();
                 bool isWidthTooSmall = (availableSize.Width < borderX);
@@ -292,7 +292,7 @@ namespace Microsoft.Windows.Themes
                 childArrangeRect.Height = finalSize.Height - borderY;
             }
 
-            if (Child != null)
+            if (Child is not null)
             {
                 Child.Arrange(childArrangeRect);
             }
@@ -334,7 +334,7 @@ namespace Microsoft.Windows.Themes
                 Brush fill = Background;
 
                 // Draw Background
-                if (fill != null)
+                if (fill is not null)
                     dc.DrawRectangle(fill, null, backgroundRect);
 
                 // Draw Background Overlay inset by 1px from edge of main border
@@ -348,7 +348,7 @@ namespace Microsoft.Windows.Themes
 
                     // Draw BackgroundOverlay
                     fill = BackgroundOverlay;
-                    if (fill != null)
+                    if (fill is not null)
                         dc.DrawRoundedRectangle(fill, null, backgroundRect, 1, 1);
                 }
             }
@@ -371,17 +371,17 @@ namespace Microsoft.Windows.Themes
                         Pen pen = GetBorderPen(BorderBrush);
                         Pen overlayPen = BorderOverlayPen;
 
-                        if (pen != null)
+                        if (pen is not null)
                             dc.DrawRoundedRectangle(null, pen, rect, 1.0, 1.0);
 
-                        if (overlayPen != null)
+                        if (overlayPen is not null)
                             dc.DrawRoundedRectangle(null, overlayPen, rect, 1.0, 1.0);
                     }
                     else
                     {
                         Geometry geometry = GetBorderGeometry(border, bounds);
 
-                        if (BorderBrush != null)
+                        if (BorderBrush is not null)
                             dc.DrawGeometry(BorderBrush, null, geometry);
                     }
                 }
@@ -416,7 +416,7 @@ namespace Microsoft.Windows.Themes
         {
             Pen pen = null;
 
-            if (border != null)
+            if (border is not null)
             {
                 if (_commonBorderPen is null)   // Common case, if non-null, avoid the lock
                 {
@@ -452,7 +452,7 @@ namespace Microsoft.Windows.Themes
                     }
                 }
 
-                if (_commonBorderPen != null && border == _commonBorderPen.Brush)
+                if (_commonBorderPen is not null && border == _commonBorderPen.Brush)
                 {
 
                     pen = _commonBorderPen;
@@ -643,7 +643,7 @@ namespace Microsoft.Windows.Themes
                     return CommonDisabledBorderOverlay;
                 }
 
-                if (_localResources != null)
+                if (_localResources is not null)
                 {
                     if (_localResources.BorderOverlayPen is null)
                     {

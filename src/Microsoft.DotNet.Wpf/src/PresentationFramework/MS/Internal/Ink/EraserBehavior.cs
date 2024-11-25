@@ -119,7 +119,7 @@ namespace MS.Internal.Ink
                 case InkCanvasEditingMode.Select:
                     {
                         // Make a copy of the current cached points.
-                        StylusPointCollection cachedPoints = _stylusPoints != null ? 
+                        StylusPointCollection cachedPoints = _stylusPoints is not null ? 
                                                                 _stylusPoints.Clone() : null;
 
                         // Commit the current behavior.
@@ -128,12 +128,12 @@ namespace MS.Internal.Ink
                         // Change the Select mode
                         IStylusEditing newBehavior = EditingCoordinator.ChangeStylusEditingMode(this, mode);
 
-                        if ( cachedPoints != null
+                        if ( cachedPoints is not null
                             // NOTICE-2006/04/27-WAYNEZEN,
                             // EditingCoordinator.ChangeStylusEditingMode raises external event.
                             // The user code could take any arbitrary action for instance calling InkCanvas.ReleaseMouseCapture()
                             // So there is no guarantee that we could receive the newBehavior.
-                            && newBehavior != null )
+                            && newBehavior is not null )
                         {
                             // Now add the previous points to the lasso behavior
                             newBehavior.AddStylusPoints(cachedPoints, false/*userInitiated*/);
@@ -173,7 +173,7 @@ namespace MS.Internal.Ink
             else if ( newEraseMode == InkCanvasEditingMode.EraseByPoint )
             {
                 // Invalidate the PointEraser if we don't have the cache yet.
-                bool isPointEraserCursorValid = _cachedStylusShape != null;
+                bool isPointEraserCursorValid = _cachedStylusShape is not null;
 
                 // 
                 // If the cached EraserShape is different from the current EraserShape, we shoud just reset the cache.
@@ -184,7 +184,7 @@ namespace MS.Internal.Ink
                         || _cachedStylusShape.Rotation != InkCanvas.EraserShape.Rotation
                         || _cachedStylusShape.GetType() != InkCanvas.EraserShape.GetType()) )
                 {
-                    Debug.Assert(_cachedPointEraserCursor != null, "_cachedPointEraserCursor shouldn't be null.");
+                    Debug.Assert(_cachedPointEraserCursor is not null, "_cachedPointEraserCursor shouldn't be null.");
                     ResetCachedPointEraserCursor();
                     isPointEraserCursorValid = false;
                 }
@@ -406,7 +406,7 @@ namespace MS.Internal.Ink
                 {
                     // Erase only if the event wasn't cancelled
                     StrokeCollection eraseResult = e.GetPointEraseResults();
-                    Debug.Assert(eraseResult != null, "eraseResult cannot be null");
+                    Debug.Assert(eraseResult is not null, "eraseResult cannot be null");
 
                     StrokeCollection strokesToReplace = new StrokeCollection();
                     strokesToReplace.Add(e.HitStroke);

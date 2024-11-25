@@ -70,7 +70,7 @@ namespace MS.Internal.Annotations.Component
             get
             {
                 ArrayList list = new ArrayList();
-                if (_attachedAnnotation != null)
+                if (_attachedAnnotation is not null)
                 {
                     list.Add(_attachedAnnotation);
                 }
@@ -176,7 +176,7 @@ namespace MS.Internal.Annotations.Component
         {
             get
             {
-                return _attachedAnnotation != null ? (_attachedAnnotation.Parent as UIElement) : null;
+                return _attachedAnnotation is not null ? (_attachedAnnotation.Parent as UIElement) : null;
             }
         }
 
@@ -221,7 +221,7 @@ namespace MS.Internal.Annotations.Component
         /// <param name="attachedAnnotation">The attached annotation to be added to the component</param>
         public void AddAttachedAnnotation(IAttachedAnnotation attachedAnnotation)
         {
-            if (_attachedAnnotation != null)
+            if (_attachedAnnotation is not null)
             {
                 throw new ArgumentException(SR.MoreThanOneAttachedAnnotation);
             }
@@ -238,7 +238,7 @@ namespace MS.Internal.Annotations.Component
             GetColors(attachedAnnotation.Annotation, out _background, out _selectedBackground);
             _range = textAnchor;
 
-            Invariant.Assert(textContainer.Highlights != null, "textContainer.Highlights is null");
+            Invariant.Assert(textContainer.Highlights is not null, "textContainer.Highlights is null");
 
             //get or create AnnotationHighlightLayer in the textContainer
             AnnotationHighlightLayer highlightLayer = textContainer.Highlights.GetLayer(typeof(HighlightComponent)) as AnnotationHighlightLayer;
@@ -276,7 +276,7 @@ namespace MS.Internal.Annotations.Component
                 throw new ArgumentException(SR.InvalidAttachedAnnotation, "attachedAnnotation");
             }
 
-            Invariant.Assert(_range != null, "null highlight range");
+            Invariant.Assert(_range is not null, "null highlight range");
 
             //fire trace event
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordAnnotation, EventTrace.Event.RemoveAttachedHighlightBegin);
@@ -284,11 +284,11 @@ namespace MS.Internal.Annotations.Component
             //check input data and retrieve the TextContainer
             ITextContainer textContainer = CheckInputData(attachedAnnotation);
 
-            Invariant.Assert(textContainer.Highlights != null, "textContainer.Highlights is null");
+            Invariant.Assert(textContainer.Highlights is not null, "textContainer.Highlights is null");
 
             //get AnnotationHighlightLayer in the textContainer
             AnnotationHighlightLayer highlightLayer = textContainer.Highlights.GetLayer(typeof(HighlightComponent)) as AnnotationHighlightLayer;
-            Invariant.Assert(highlightLayer != null, "AnnotationHighlightLayer is not initialized");
+            Invariant.Assert(highlightLayer is not null, "AnnotationHighlightLayer is not initialized");
 
             //unregister of cargo changes
             _attachedAnnotation.Annotation.CargoChanged -= new AnnotationResourceChangedEventHandler(OnAnnotationUpdated);
@@ -330,15 +330,15 @@ namespace MS.Internal.Annotations.Component
             }
 
             TextAnchor textAnchor = _attachedAnnotation.AttachedAnchor as TextAnchor;
-            Invariant.Assert(textAnchor != null, "AttachedAnchor is not a text anchor");
+            Invariant.Assert(textAnchor is not null, "AttachedAnchor is not a text anchor");
 
             //this should be in a fixed or flow textcontainer
             ITextContainer textContainer = textAnchor.Start.TextContainer;
-            Invariant.Assert(textContainer != null, "TextAnchor does not belong to a TextContainer");
+            Invariant.Assert(textContainer is not null, "TextAnchor does not belong to a TextContainer");
 
             //get AnnotationHighlightLayer in the textContainer
             AnnotationHighlightLayer highlightLayer = textContainer.Highlights.GetLayer(typeof(HighlightComponent)) as AnnotationHighlightLayer;
-            Invariant.Assert(highlightLayer != null, "AnnotationHighlightLayer is not initialized");
+            Invariant.Assert(highlightLayer is not null, "AnnotationHighlightLayer is not initialized");
 
             highlightLayer.ActivateRange(this, active);
             _active = active;
@@ -452,14 +452,14 @@ namespace MS.Internal.Annotations.Component
         internal bool IsSelected(ITextRange selection)
         {
             ArgumentNullException.ThrowIfNull(selection);
-            Invariant.Assert(_attachedAnnotation != null, "No _attachedAnnotation");
+            Invariant.Assert(_attachedAnnotation is not null, "No _attachedAnnotation");
 
             // For activation based on the selection state, we need to use anchors that
             // span virtualized content (i.e., content that isn't visible).  For that we
             // grab the 'fullly resolved' anchors instead of the anchors used by the
             // framework for all other purposes.
             TextAnchor fullAnchor = _attachedAnnotation.FullyAttachedAnchor as TextAnchor;
-            //Debug.Assert(fullAnchor != null, "null TextAnchor");
+            //Debug.Assert(fullAnchor is not null, "null TextAnchor");
             if (fullAnchor is null)
                 return false;
 
@@ -475,11 +475,11 @@ namespace MS.Internal.Annotations.Component
         /// <param name="activeBackgroundColor">background Color for active highlight</param>
         internal static void GetCargoColors(Annotation annot, ref Nullable<Color> backgroundColor, ref Nullable<Color> activeBackgroundColor)
         {
-            Invariant.Assert(annot != null, "annotation is null");
+            Invariant.Assert(annot is not null, "annotation is null");
 
             ICollection<AnnotationResource> cargos = annot.Cargos;
 
-            if (cargos != null)
+            if (cargos is not null)
             {
                 foreach (AnnotationResource cargo in cargos)
                 {
@@ -491,9 +491,9 @@ namespace MS.Internal.Annotations.Component
                             if ((content.LocalName == ColorsContentName) &&
                                 (content.NamespaceURI == AnnotationXmlConstants.Namespaces.BaseSchemaNamespace))
                             {
-                                if (content.Attributes[BackgroundAttributeName] != null)
+                                if (content.Attributes[BackgroundAttributeName] is not null)
                                     backgroundColor = GetColor(content.Attributes[BackgroundAttributeName].Value);
-                                if (content.Attributes[ActiveBackgroundAttributeName] != null)
+                                if (content.Attributes[ActiveBackgroundAttributeName] is not null)
                                     activeBackgroundColor = GetColor(content.Attributes[ActiveBackgroundAttributeName].Value);
                             }
                         }
@@ -524,7 +524,7 @@ namespace MS.Internal.Annotations.Component
             //this should be in a fixed or flow textcontainer
             ITextContainer textContainer = textAnchor.Start.TextContainer;
 
-            Invariant.Assert(textContainer != null, "TextAnchor does not belong to a TextContainer");
+            Invariant.Assert(textContainer is not null, "TextAnchor does not belong to a TextContainer");
 
             if (attachedAnnotation.Annotation is null)
             {
@@ -573,17 +573,17 @@ namespace MS.Internal.Annotations.Component
         /// <param name="args">event arguments</param>
         private void OnAnnotationUpdated(object sender, AnnotationResourceChangedEventArgs args)
         {
-            Invariant.Assert(_attachedAnnotation != null && _attachedAnnotation.Annotation == args.Annotation, "_attachedAnnotation is different than the input one");
-            Invariant.Assert(_range != null, "The highlight range is null");
+            Invariant.Assert(_attachedAnnotation is not null && _attachedAnnotation.Annotation == args.Annotation, "_attachedAnnotation is different than the input one");
+            Invariant.Assert(_range is not null, "The highlight range is null");
 
             //get text container
             TextAnchor textAnchor = _attachedAnnotation.AttachedAnchor as TextAnchor;
-            Invariant.Assert(textAnchor != null, "wrong anchor type of the saved attached annotation");
+            Invariant.Assert(textAnchor is not null, "wrong anchor type of the saved attached annotation");
 
             //this should be in a fixed or flow textcontainer
             ITextContainer textContainer = textAnchor.Start.TextContainer;
 
-            Invariant.Assert(textContainer != null, "TextAnchor does not belong to a TextContainer");
+            Invariant.Assert(textContainer is not null, "TextAnchor does not belong to a TextContainer");
 
 
             //Get highlight Colors from the cargo and update the highlight layer
@@ -594,7 +594,7 @@ namespace MS.Internal.Annotations.Component
                 !_selectedBackground.Equals(activeBackground))
             {
                 //modify the highlight
-                Invariant.Assert(textContainer.Highlights != null, "textContainer.Highlights is null");
+                Invariant.Assert(textContainer.Highlights is not null, "textContainer.Highlights is null");
 
                 //get AnnotationHighlightLayer in the textContainer
                 AnnotationHighlightLayer highlightLayer = textContainer.Highlights.GetLayer(typeof(HighlightComponent)) as AnnotationHighlightLayer;
@@ -621,7 +621,7 @@ namespace MS.Internal.Annotations.Component
             foreach (Visual child in Children)
             {
                 Shape uiChild = child as Shape;
-                Invariant.Assert(uiChild != null, "HighlightComponent has non-Shape children.");
+                Invariant.Assert(uiChild is not null, "HighlightComponent has non-Shape children.");
                 uiChild.InvalidateMeasure();
             }
 

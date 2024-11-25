@@ -44,7 +44,7 @@ namespace MS.Internal.Data
             view.CurrentChanged += new EventHandler(_OnCurrentChanged);
 
             INotifyPropertyChanged ipc = view as INotifyPropertyChanged;
-            if (ipc != null)
+            if (ipc is not null)
                 ipc.PropertyChanged += new PropertyChangedEventHandler(_OnPropertyChanged);
         }
 
@@ -171,7 +171,7 @@ namespace MS.Internal.Data
         public override void Refresh()
         {
             IndexedEnumerable indexer = (IndexedEnumerable)Interlocked.Exchange(ref _indexer, null);
-            if (indexer != null)
+            if (indexer is not null)
             {
                 indexer.Invalidate();
             }
@@ -335,7 +335,7 @@ namespace MS.Internal.Data
         /// </summary>
         public override bool PassesFilter(object item)
         {
-            if (ProxiedView.CanFilter && ProxiedView.Filter != null &&
+            if (ProxiedView.CanFilter && ProxiedView.Filter is not null &&
                     item != NewItemPlaceholder && item != ((IEditableCollectionView)this).CurrentAddItem)
                 return ProxiedView.Filter(item);
 
@@ -362,7 +362,7 @@ namespace MS.Internal.Data
         /// </summary>
         public override void DetachFromSourceCollection()
         {
-            if (_view != null)
+            if (_view is not null)
             {
                 _view.CollectionChanged -= new NotifyCollectionChangedEventHandler(_OnViewChanged);
 
@@ -370,7 +370,7 @@ namespace MS.Internal.Data
                 _view.CurrentChanged -= new EventHandler(_OnCurrentChanged);
 
                 INotifyPropertyChanged ipc = _view as INotifyPropertyChanged;
-                if (ipc != null)
+                if (ipc is not null)
                     ipc.PropertyChanged -= new PropertyChangedEventHandler(_OnPropertyChanged);
 
                 _view = null;
@@ -394,7 +394,7 @@ namespace MS.Internal.Data
             get
             {
                 IEditableCollectionView ecv = ProxiedView as IEditableCollectionView;
-                if (ecv != null)
+                if (ecv is not null)
                 {
                     return ecv.NewItemPlaceholderPosition;
                 }
@@ -406,7 +406,7 @@ namespace MS.Internal.Data
             set
             {
                 IEditableCollectionView ecv = ProxiedView as IEditableCollectionView;
-                if (ecv != null)
+                if (ecv is not null)
                 {
                     ecv.NewItemPlaceholderPosition = value;
                 }
@@ -425,7 +425,7 @@ namespace MS.Internal.Data
             get
             {
                 IEditableCollectionView ecv = ProxiedView as IEditableCollectionView;
-                if (ecv != null)
+                if (ecv is not null)
                 {
                     return ecv.CanAddNew;
                 }
@@ -445,7 +445,7 @@ namespace MS.Internal.Data
         object IEditableCollectionView.AddNew()
         {
             IEditableCollectionView ecv = ProxiedView as IEditableCollectionView;
-            if (ecv != null)
+            if (ecv is not null)
             {
                 return ecv.AddNew();
             }
@@ -464,7 +464,7 @@ namespace MS.Internal.Data
         void IEditableCollectionView.CommitNew()
         {
             IEditableCollectionView ecv = ProxiedView as IEditableCollectionView;
-            if (ecv != null)
+            if (ecv is not null)
             {
                 ecv.CommitNew();
             }
@@ -481,7 +481,7 @@ namespace MS.Internal.Data
         void IEditableCollectionView.CancelNew()
         {
             IEditableCollectionView ecv = ProxiedView as IEditableCollectionView;
-            if (ecv != null)
+            if (ecv is not null)
             {
                 ecv.CancelNew();
             }
@@ -499,7 +499,7 @@ namespace MS.Internal.Data
             get
             {
                 IEditableCollectionView ecv = ProxiedView as IEditableCollectionView;
-                if (ecv != null)
+                if (ecv is not null)
                 {
                     return ecv.IsAddingNew;
                 }
@@ -519,7 +519,7 @@ namespace MS.Internal.Data
             get
             {
                 IEditableCollectionView ecv = ProxiedView as IEditableCollectionView;
-                if (ecv != null)
+                if (ecv is not null)
                 {
                     return ecv.CurrentAddItem;
                 }
@@ -543,7 +543,7 @@ namespace MS.Internal.Data
             get
             {
                 IEditableCollectionView ecv = ProxiedView as IEditableCollectionView;
-                if (ecv != null)
+                if (ecv is not null)
                 {
                     return ecv.CanRemove;
                 }
@@ -562,7 +562,7 @@ namespace MS.Internal.Data
         void IEditableCollectionView.RemoveAt(int index)
         {
             IEditableCollectionView ecv = ProxiedView as IEditableCollectionView;
-            if (ecv != null)
+            if (ecv is not null)
             {
                 ecv.RemoveAt(index);
             }
@@ -578,7 +578,7 @@ namespace MS.Internal.Data
         void IEditableCollectionView.Remove(object item)
         {
             IEditableCollectionView ecv = ProxiedView as IEditableCollectionView;
-            if (ecv != null)
+            if (ecv is not null)
             {
                 ecv.Remove(item);
             }
@@ -602,7 +602,7 @@ namespace MS.Internal.Data
         void IEditableCollectionView.EditItem(object item)
         {
             IEditableCollectionView ecv = ProxiedView as IEditableCollectionView;
-            if (ecv != null)
+            if (ecv is not null)
             {
                 ecv.EditItem(item);
             }
@@ -619,7 +619,7 @@ namespace MS.Internal.Data
         void IEditableCollectionView.CommitEdit()
         {
             IEditableCollectionView ecv = ProxiedView as IEditableCollectionView;
-            if (ecv != null)
+            if (ecv is not null)
             {
                 ecv.CommitEdit();
             }
@@ -636,7 +636,7 @@ namespace MS.Internal.Data
         void IEditableCollectionView.CancelEdit()
         {
             IEditableCollectionView ecv = ProxiedView as IEditableCollectionView;
-            if (ecv != null)
+            if (ecv is not null)
             {
                 ecv.CancelEdit();
             }
@@ -659,7 +659,7 @@ namespace MS.Internal.Data
             get
             {
                 IEditableCollectionView ecv = ProxiedView as IEditableCollectionView;
-                if (ecv != null)
+                if (ecv is not null)
                 {
                     return ecv.CanCancelEdit;
                 }
@@ -678,7 +678,7 @@ namespace MS.Internal.Data
             get
             {
                 IEditableCollectionView ecv = ProxiedView as IEditableCollectionView;
-                if (ecv != null)
+                if (ecv is not null)
                 {
                     return ecv.IsEditingItem;
                 }
@@ -698,7 +698,7 @@ namespace MS.Internal.Data
             get
             {
                 IEditableCollectionView ecv = ProxiedView as IEditableCollectionView;
-                if (ecv != null)
+                if (ecv is not null)
                 {
                     return ecv.CurrentEditItem;
                 }
@@ -723,7 +723,7 @@ namespace MS.Internal.Data
             get
             {
                 IEditableCollectionViewAddNewItem ani = ProxiedView as IEditableCollectionViewAddNewItem;
-                if (ani != null)
+                if (ani is not null)
                 {
                     return ani.CanAddNewItem;
                 }
@@ -743,7 +743,7 @@ namespace MS.Internal.Data
         object IEditableCollectionViewAddNewItem.AddNewItem(object newItem)
         {
             IEditableCollectionViewAddNewItem ani = ProxiedView as IEditableCollectionViewAddNewItem;
-            if (ani != null)
+            if (ani is not null)
             {
                 return ani.AddNewItem(newItem);
             }
@@ -765,7 +765,7 @@ namespace MS.Internal.Data
             get
             {
                 ICollectionViewLiveShaping cvls = ProxiedView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.CanChangeLiveSorting : false;
+                return (cvls is not null) ? cvls.CanChangeLiveSorting : false;
             }
         }
 
@@ -777,7 +777,7 @@ namespace MS.Internal.Data
             get
             {
                 ICollectionViewLiveShaping cvls = ProxiedView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.CanChangeLiveFiltering : false;
+                return (cvls is not null) ? cvls.CanChangeLiveFiltering : false;
             }
         }
 
@@ -789,7 +789,7 @@ namespace MS.Internal.Data
             get
             {
                 ICollectionViewLiveShaping cvls = ProxiedView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.CanChangeLiveGrouping : false;
+                return (cvls is not null) ? cvls.CanChangeLiveGrouping : false;
             }
         }
 
@@ -805,12 +805,12 @@ namespace MS.Internal.Data
             get
             {
                 ICollectionViewLiveShaping cvls = ProxiedView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.IsLiveSorting : null;
+                return (cvls is not null) ? cvls.IsLiveSorting : null;
             }
             set
             {
                 ICollectionViewLiveShaping cvls = ProxiedView as ICollectionViewLiveShaping;
-                if (cvls != null)
+                if (cvls is not null)
                     cvls.IsLiveSorting = value;
                 else
                     throw new InvalidOperationException(SR.Format(SR.CannotChangeLiveShaping, "IsLiveSorting", "CanChangeLiveSorting"));
@@ -828,12 +828,12 @@ namespace MS.Internal.Data
             get
             {
                 ICollectionViewLiveShaping cvls = ProxiedView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.IsLiveFiltering : null;
+                return (cvls is not null) ? cvls.IsLiveFiltering : null;
             }
             set
             {
                 ICollectionViewLiveShaping cvls = ProxiedView as ICollectionViewLiveShaping;
-                if (cvls != null)
+                if (cvls is not null)
                     cvls.IsLiveFiltering = value;
                 else
                     throw new InvalidOperationException(SR.Format(SR.CannotChangeLiveShaping, "IsLiveFiltering", "CanChangeLiveFiltering"));
@@ -851,12 +851,12 @@ namespace MS.Internal.Data
             get
             {
                 ICollectionViewLiveShaping cvls = ProxiedView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.IsLiveGrouping : null;
+                return (cvls is not null) ? cvls.IsLiveGrouping : null;
             }
             set
             {
                 ICollectionViewLiveShaping cvls = ProxiedView as ICollectionViewLiveShaping;
-                if (cvls != null)
+                if (cvls is not null)
                     cvls.IsLiveGrouping = value;
                 else
                     throw new InvalidOperationException(SR.Format(SR.CannotChangeLiveShaping, "IsLiveGrouping", "CanChangeLiveGrouping"));
@@ -884,7 +884,7 @@ namespace MS.Internal.Data
             get
             {
                 ICollectionViewLiveShaping cvls = ProxiedView as ICollectionViewLiveShaping;
-                if (cvls != null)
+                if (cvls is not null)
                     return cvls.LiveSortingProperties;
 
                 // use a dummy collection.  Its elements are ignored, but at least it won't crash.
@@ -910,7 +910,7 @@ namespace MS.Internal.Data
             get
             {
                 ICollectionViewLiveShaping cvls = ProxiedView as ICollectionViewLiveShaping;
-                if (cvls != null)
+                if (cvls is not null)
                     return cvls.LiveFilteringProperties;
 
                 // use a dummy collection.  Its elements are ignored, but at least it won't crash.
@@ -940,7 +940,7 @@ namespace MS.Internal.Data
             get
             {
                 ICollectionViewLiveShaping cvls = ProxiedView as ICollectionViewLiveShaping;
-                if (cvls != null)
+                if (cvls is not null)
                     return cvls.LiveGroupingProperties;
 
                 // use a dummy collection.  Its elements are ignored, but at least it won't crash.
@@ -965,7 +965,7 @@ namespace MS.Internal.Data
             get
             {
                 IItemProperties iip = ProxiedView as IItemProperties;
-                if (iip != null)
+                if (iip is not null)
                 {
                     return iip.ItemProperties;
                 }
@@ -1001,12 +1001,12 @@ namespace MS.Internal.Data
         internal override void GetCollectionChangedSources(int level, Action<int, object, bool?, List<string>> format, List<string> sources)
         {
             format(level, this, false, sources);
-            if (_view != null)
+            if (_view is not null)
             {
                 format(level + 1, _view, true, sources);
 
                 object collection = _view.SourceCollection;
-                if (collection != null)
+                if (collection is not null)
                 {
                     format(level + 2, collection, null, sources);
                 }
@@ -1039,7 +1039,7 @@ namespace MS.Internal.Data
         {
             //             VerifyAccess();    // will throw an exception if caller is not in correct UiContext
 
-            if (PrivateCurrentChanging != null)
+            if (PrivateCurrentChanging is not null)
                 PrivateCurrentChanging(this, args);
         }
 
@@ -1047,7 +1047,7 @@ namespace MS.Internal.Data
         {
             //             VerifyAccess();    // will throw an exception if caller is not in correct UiContext
 
-            if (PrivateCurrentChanged != null)
+            if (PrivateCurrentChanged is not null)
                 PrivateCurrentChanged(this, args);
         }
 

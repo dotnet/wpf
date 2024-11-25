@@ -147,7 +147,7 @@ namespace MS.Internal.Controls
     {
         internal ContentModelTreeEnumerator(ContentControl contentControl, object content) : base(content)
         {
-            Debug.Assert(contentControl != null, "contentControl should be non-null.");
+            Debug.Assert(contentControl is not null, "contentControl should be non-null.");
 
             _owner = contentControl;
         }
@@ -167,8 +167,8 @@ namespace MS.Internal.Controls
     {
         internal HeaderedContentModelTreeEnumerator(HeaderedContentControl headeredContentControl, object content, object header) : base(header)
         {
-            Debug.Assert(headeredContentControl != null, "headeredContentControl should be non-null.");
-            Debug.Assert(header != null, "Header should be non-null. If Header was null, the base ContentControl enumerator should have been used.");
+            Debug.Assert(headeredContentControl is not null, "headeredContentControl should be non-null.");
+            Debug.Assert(header is not null, "Header should be non-null. If Header was null, the base ContentControl enumerator should have been used.");
 
             _owner = headeredContentControl;
             _content = content;
@@ -178,7 +178,7 @@ namespace MS.Internal.Controls
         {
             get
             {
-                if ((Index == 1) && (_content != null))
+                if ((Index == 1) && (_content is not null))
                 {
                     return _content;
                 }
@@ -189,7 +189,7 @@ namespace MS.Internal.Controls
 
         protected override bool MoveNext()
         {
-            if (_content != null)
+            if (_content is not null)
             {
                 if (Index == 0)
                 {
@@ -227,9 +227,9 @@ namespace MS.Internal.Controls
     {
         internal HeaderedItemsModelTreeEnumerator(HeaderedItemsControl headeredItemsControl, IEnumerator items, object header) : base(header)
         {
-            Debug.Assert(headeredItemsControl != null, "headeredItemsControl should be non-null.");
-            Debug.Assert(items != null, "items should be non-null.");
-            Debug.Assert(header != null, "header should be non-null. If Header was null, the base ItemsControl enumerator should have been used.");
+            Debug.Assert(headeredItemsControl is not null, "headeredItemsControl should be non-null.");
+            Debug.Assert(items is not null, "items should be non-null.");
+            Debug.Assert(header is not null, "header should be non-null. If Header was null, the base ItemsControl enumerator should have been used.");
 
             _owner = headeredItemsControl;
             _items = items;

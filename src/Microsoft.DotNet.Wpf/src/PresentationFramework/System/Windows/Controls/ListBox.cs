@@ -257,7 +257,7 @@ namespace System.Windows.Controls
             AdjustItemInfo(e, _anchorItem);
 
             // If the anchor item is removed, drop our reference to it.
-            if (_anchorItem != null && _anchorItem.Index < 0)
+            if (_anchorItem is not null && _anchorItem.Index < 0)
             {
                 _anchorItem = null;
             }
@@ -289,9 +289,9 @@ namespace System.Windows.Controls
             if (SelectionMode == SelectionMode.Single)
             {
                 ItemInfo info = InternalSelectedInfo;
-                ListBoxItem listItem = (info != null) ? info.Container as ListBoxItem : null;
+                ListBoxItem listItem = (info is not null) ? info.Container as ListBoxItem : null;
 
-                if (listItem != null)
+                if (listItem is not null)
                     UpdateAnchorAndActionItem(info);
             }
 
@@ -301,7 +301,7 @@ namespace System.Windows.Controls
                 ||  AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection)   )
             {
                 ListBoxAutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(this) as ListBoxAutomationPeer;
-                if (peer != null)
+                if (peer is not null)
                     peer.RaiseSelectionEvents(e);
             }
         }
@@ -334,8 +334,8 @@ namespace System.Windows.Controls
                     // Ctrl-Backslash = Select the item with focus.
                     if (((Keyboard.Modifiers) == (ModifierKeys.Control)) && (SelectionMode == SelectionMode.Extended))
                     {
-                        ListBoxItem focusedItemUI = (FocusedInfo != null) ? FocusedInfo.Container as ListBoxItem : null;
-                        if (focusedItemUI != null)
+                        ListBoxItem focusedItemUI = (FocusedInfo is not null) ? FocusedInfo.Container as ListBoxItem : null;
+                        if (focusedItemUI is not null)
                         {
                             MakeSingleSelection(focusedItemUI);
                         }
@@ -356,7 +356,7 @@ namespace System.Windows.Controls
 
                         // Depend on logical orientation we decide to move focus or just scroll
                         // shouldScroll also detects if we can scroll more in this direction
-                        bool shouldScroll = ScrollHost != null;
+                        bool shouldScroll = ScrollHost is not null;
                         if (shouldScroll)
                         {
                             shouldScroll =
@@ -372,7 +372,7 @@ namespace System.Windows.Controls
                         }
                         else
                         {
-                            if ((ItemsHost != null && ItemsHost.IsKeyboardFocusWithin) || IsKeyboardFocused)
+                            if ((ItemsHost is not null && ItemsHost.IsKeyboardFocusWithin) || IsKeyboardFocused)
                             {
                                 if (!NavigateByLine(KeyboardNavigation.KeyToTraversalDirection(key),
                                         new ItemNavigateArgs(e.Device, Keyboard.Modifiers)))
@@ -422,14 +422,14 @@ namespace System.Windows.Controls
                             TextSearch instance = TextSearch.EnsureInstance(this);
                             // If TextSearch enabled and Prefix is not empty
                             // then let this SPACE go so ITS can process it.
-                            if (instance != null && (instance.GetCurrentPrefix() != String.Empty))
+                            if (instance is not null && (instance.GetCurrentPrefix() != String.Empty))
                             {
                                 handled = false;
                                 break;
                             }
                         }
 
-                        if (source != null && ItemsControlFromItemContainer(source) == this)
+                        if (source is not null && ItemsControlFromItemContainer(source) == this)
                         {
                             switch (SelectionMode)
                             {
@@ -504,7 +504,7 @@ namespace System.Windows.Controls
 
                             if (modifierKeys == ModifierKeys.Alt)
                             {
-                                if (e.OriginalSource is GridViewColumnHeader gridViewColumnHeader && gridViewColumnHeader.Column != null)
+                                if (e.OriginalSource is GridViewColumnHeader gridViewColumnHeader && gridViewColumnHeader.Column is not null)
                                 {
                                     double width = 0;
                                     if (e.SystemKey == Key.Left)
@@ -590,18 +590,18 @@ namespace System.Windows.Controls
 
             // Only in case focus moves from one ListBoxItem to another we want the selection to follow focus
             ListBoxItem newListBoxItem = e.NewFocus as ListBoxItem;
-            if (newListBoxItem != null && ItemsControlFromItemContainer(newListBoxItem) == listbox)
+            if (newListBoxItem is not null && ItemsControlFromItemContainer(newListBoxItem) == listbox)
             {
                 DependencyObject oldFocus = e.OldFocus as DependencyObject;
                 Visual visualOldFocus = oldFocus as Visual;
                 if (visualOldFocus is null)
                 {
                     ContentElement ce = oldFocus as ContentElement;
-                    if (ce != null)
+                    if (ce is not null)
                         visualOldFocus = KeyboardNavigation.GetParentUIElementFromContentElement(ce);
                 }
 
-                if ((visualOldFocus != null && listbox.IsAncestorOf(visualOldFocus))
+                if ((visualOldFocus is not null && listbox.IsAncestorOf(visualOldFocus))
                     || oldFocus == listbox)
                 {
                     listbox.LastActionItem = newListBoxItem;
@@ -631,7 +631,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                if (_autoScrollTimer != null)
+                if (_autoScrollTimer is not null)
                 {
                     _autoScrollTimer.Stop();
                     _autoScrollTimer = null;
@@ -890,7 +890,7 @@ namespace System.Windows.Controls
                 }
 
                 IDisposable d = enumerator as IDisposable;
-                if (d != null)
+                if (d is not null)
                 {
                     d.Dispose();
                 }
@@ -955,7 +955,7 @@ namespace System.Windows.Controls
 
         private object GetWeakReferenceTarget(ref WeakReference weakReference)
         {
-            if (weakReference != null)
+            if (weakReference is not null)
             {
                 return weakReference.Target;
             }
@@ -981,7 +981,7 @@ namespace System.Windows.Controls
 
             ListBoxItem listItem = info.Container as ListBoxItem;
 
-            if (listItem != null)
+            if (listItem is not null)
             {
                 LastActionItem = listItem;
 
@@ -1007,7 +1007,7 @@ namespace System.Windows.Controls
 
             set
             {
-                if (value != null && value != DependencyProperty.UnsetValue)
+                if (value is not null && value != DependencyProperty.UnsetValue)
                 {
                     ItemInfo info = NewItemInfo(value);
                     ListBoxItem listBoxItem = info.Container as ListBoxItem;
@@ -1033,12 +1033,12 @@ namespace System.Windows.Controls
         internal ItemInfo AnchorItemInternal
         {
             get { return _anchorItem; }
-            set { _anchorItem = (value != null) ? value.Clone() : null; }   // clone, so that adjustments to selection and anchor don't double-adjust
+            set { _anchorItem = (value is not null) ? value.Clone() : null; }   // clone, so that adjustments to selection and anchor don't double-adjust
         }
 
         /// <summary>
         ///     Last item to be acted upon -- and the element that has focus while selection is happening.
-        ///     AnchorItemInternal != null implies LastActionItem != null.
+        ///     AnchorItemInternal is not null implies LastActionItem is not null.
         /// </summary>
         internal ListBoxItem LastActionItem
         {

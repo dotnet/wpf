@@ -46,7 +46,7 @@ namespace MS.Internal
             IntPtr hMetafile = IntPtr.Zero;
             Metafile metafile = data as Metafile;
 
-            if (metafile != null)
+            if (metafile is not null)
             {
                 // Get the Windows handle from the metafile object.
                 hMetafile = metafile.GetHenhmetafile();
@@ -91,7 +91,7 @@ namespace MS.Internal
         internal override IntPtr GetHBitmapFromBitmap(object data)
         {
             Bitmap bitmap = data as Bitmap;
-            return (bitmap != null) ? bitmap.GetHbitmap() : IntPtr.Zero;
+            return (bitmap is not null) ? bitmap.GetHbitmap() : IntPtr.Zero;
         }
 
         // Convert a metafile to HBitmap
@@ -134,7 +134,7 @@ namespace MS.Internal
         private static Bitmap GetBitmapImpl(object data)
         {
             BitmapSource bitmapSource = data as BitmapSource;
-            if (bitmapSource != null)
+            if (bitmapSource is not null)
             {
                 // Convert BitmapSource to System.Drawing.Bitmap to get Win32 HBITMAP.
                 BitmapEncoder bitmapEncoder;

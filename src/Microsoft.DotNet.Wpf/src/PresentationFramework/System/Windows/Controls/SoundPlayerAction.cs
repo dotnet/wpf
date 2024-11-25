@@ -51,7 +51,7 @@ namespace System.Windows.Controls
        /// </summary>
        public void Dispose()
        {
-           if (m_player != null)
+           if (m_player is not null)
            {
                m_player.Dispose();
            }
@@ -152,7 +152,7 @@ namespace System.Windows.Controls
            {
                m_playRequested = true;
            }
-           else if (m_player != null)
+           else if (m_player is not null)
            {
                // If the Player has not yet loaded, m_streamLoadInProgress must be true
                Debug.Assert(m_player.IsLoadCompleted);
@@ -164,7 +164,7 @@ namespace System.Windows.Controls
 
        private void BeginLoadStream()
        {
-           if (m_lastRequestedAbsoluteUri != null)  // Only reload if the new source is non-null
+           if (m_lastRequestedAbsoluteUri is not null)  // Only reload if the new source is non-null
            {
                m_streamLoadInProgress = true;
 
@@ -210,13 +210,13 @@ namespace System.Windows.Controls
            if (m_uriChangedWhileLoadingStream)  // The source URI was changed, redo Stream loading
            {
                m_uriChangedWhileLoadingStream = false;
-               if (newStream != null)  // Don't hold on to the new stream - it's not needed anymore
+               if (newStream is not null)  // Don't hold on to the new stream - it's not needed anymore
                {
                    newStream.Dispose();
                }
                BeginLoadStream();
            }
-           else if (newStream != null)  // We loaded the Stream, begin buffering it
+           else if (newStream is not null)  // We loaded the Stream, begin buffering it
            {
                if (m_player is null)
                {

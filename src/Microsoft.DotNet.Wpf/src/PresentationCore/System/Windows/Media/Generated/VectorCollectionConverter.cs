@@ -103,7 +103,7 @@ namespace System.Windows.Media
 
             String source = value as string;
 
-            if (source != null)
+            if (source is not null)
             {
                 return VectorCollection.Parse(source);
             }
@@ -127,7 +127,7 @@ namespace System.Windows.Media
         /// <param name="destinationType"> The type to which this will convert the VectorCollection instance. </param>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType != null && value is VectorCollection)
+            if (destinationType is not null && value is VectorCollection)
             {
                 VectorCollection instance = (VectorCollection)value;
 

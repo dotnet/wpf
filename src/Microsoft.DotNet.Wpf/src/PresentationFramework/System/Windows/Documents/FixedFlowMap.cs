@@ -165,7 +165,7 @@ namespace System.Windows.Documents
         // Each has a mapped FixedNode set. 
         internal void MappingReplace(FlowNode flowOld, List<FlowNode> flowNew)
         {
-            Debug.Assert(flowOld.Type == FlowNodeType.Virtual || flowNew != null);
+            Debug.Assert(flowOld.Type == FlowNodeType.Virtual || flowNew is not null);
 
             // Insert a new entry into Flow Order for each new FlowNode
             int index = flowOld.Fp;
@@ -181,7 +181,7 @@ namespace System.Windows.Documents
         {
             List<FixedSOMElement> entry = _GetEntry(fixedp);
 
-            if (entry != null)
+            if (entry is not null)
             {
                 foreach (FixedSOMElement element in entry)
                 {
@@ -219,7 +219,7 @@ namespace System.Windows.Documents
 
             while (!foundEnd)
             {
-				if (flowNode.FixedSOMElements != null)
+				if (flowNode.FixedSOMElements is not null)
 				{
 					foreach (FixedSOMElement element in flowNode.FixedSOMElements)
 					{

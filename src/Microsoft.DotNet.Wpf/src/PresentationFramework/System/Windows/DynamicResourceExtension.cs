@@ -59,7 +59,7 @@ namespace System.Windows
                 throw new InvalidOperationException(SR.MarkupExtensionResourceKey);
             }
 
-            if (serviceProvider != null)
+            if (serviceProvider is not null)
             {
                 // DynamicResourceExtensions are not allowed On CLR props except for Setter,Trigger,Condition (bugs 1183373,1572537)
 

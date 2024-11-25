@@ -70,10 +70,10 @@ namespace MS.Internal.PtsHost
         /// </summary>
         public override void Dispose()
         {
-            Debug.Assert(_line != null, "Line has been already disposed.");
+            Debug.Assert(_line is not null, "Line has been already disposed.");
             try
             {
-                if (_line != null)
+                if (_line is not null)
                 {
                     _line.Dispose();
                 }
@@ -177,7 +177,7 @@ namespace MS.Internal.PtsHost
                     run = new ParagraphBreakRun(_syntheticCharacterLength, PTS.FSFLRES.fsflrEndOfParagraph);
                     break;
             }
-            Invariant.Assert(run != null, "TextRun has not been created.");
+            Invariant.Assert(run is not null, "TextRun has not been created.");
             Invariant.Assert(run.Length > 0, "TextRun has to have positive length.");
             return run;
         }
@@ -218,7 +218,7 @@ namespace MS.Internal.PtsHost
                 precedingText = new CharacterBufferRange(precedingTextString, 0, precedingTextString.Length);                
 
                 StaticTextPointer pointer = position.CreateStaticPointer();
-                DependencyObject element = (pointer.Parent != null) ? pointer.Parent : _paraClient.Paragraph.Element;
+                DependencyObject element = (pointer.Parent is not null) ? pointer.Parent : _paraClient.Paragraph.Element;
                 culture = DynamicPropertyReader.GetCultureInfo(element);
             }
 
@@ -293,7 +293,7 @@ namespace MS.Internal.PtsHost
                     _line = _host.TextFormatter.RecreateLine(_host, dcp, ctx.LineFormatLengthTarget, _wrappingWidth, lineProps, textLineBreak, ctx.TextRunCache);
                 }
                 _runs = _line.GetTextRunSpans();
-                Invariant.Assert(_runs != null, "Cannot retrieve runs collection.");
+                Invariant.Assert(_runs is not null, "Cannot retrieve runs collection.");
 
                 // Submit inline objects (only in measure mode)
                 if (_formattingContext.MeasureMode)
@@ -423,10 +423,10 @@ namespace MS.Internal.PtsHost
 
                             // Disconnect visual from its old parent, if necessary.
                             Visual currentParent = VisualTreeHelper.GetParent(inlineObject.UIElementIsland) as Visual;
-                            if (currentParent != null)
+                            if (currentParent is not null)
                             {
                                 ContainerVisual parent = currentParent as ContainerVisual;
-                                Invariant.Assert(parent != null, "Parent should always derives from ContainerVisual.");
+                                Invariant.Assert(parent is not null, "Parent should always derives from ContainerVisual.");
                                 parent.Children.Remove(inlineObject.UIElementIsland);
                             }                                                        
 
@@ -607,7 +607,7 @@ namespace MS.Internal.PtsHost
             cp = _paraClient.Paragraph.ParagraphStartCharacterPosition + charIndex.FirstCharacterIndex + charIndex.TrailingLength;
             position = TextContainerHelper.GetTextPointerFromCP(_paraClient.Paragraph.StructuralCache.TextContainer, cp, LogicalDirection.Forward) as TextPointer;
 
-            if (position != null)
+            if (position is not null)
             {
                 // If start of character, look forward. Otherwise, look backward.
                 type = position.GetPointerContext((charIndex.TrailingLength == 0) ? LogicalDirection.Forward : LogicalDirection.Backward);
@@ -647,7 +647,7 @@ namespace MS.Internal.PtsHost
             System.Windows.Media.TextFormatting.TextLine collapsedLine = _line.Collapse(GetCollapsingProps(_wrappingWidth, TextParagraph.Properties));
             Invariant.Assert(collapsedLine.HasCollapsed, "Line has not been collapsed");
             IList<TextCollapsedRange> collapsedRanges = collapsedLine.GetTextCollapsedRanges();
-            if (collapsedRanges != null)
+            if (collapsedRanges is not null)
             {
                 Invariant.Assert(collapsedRanges.Count == 1, "Multiple collapsed ranges are not supported.");
                 TextCollapsedRange collapsedRange = collapsedRanges[0];
@@ -1017,9 +1017,9 @@ namespace MS.Internal.PtsHost
             {
                 textBounds = _line.GetTextBounds(cp, cch);
             }
-            Invariant.Assert(textBounds != null && textBounds.Count == 1, "Expecting exactly one TextBounds for a single text position.");
+            Invariant.Assert(textBounds is not null && textBounds.Count == 1, "Expecting exactly one TextBounds for a single text position.");
             IList<TextRunBounds> runBounds = textBounds[0].TextRunBounds;
-            if (runBounds != null)
+            if (runBounds is not null)
             {
                 Debug.Assert(runBounds.Count == 1, "Expecting exactly one TextRunBounds for a single text position.");
                 rect = runBounds[0].Rectangle;
@@ -1087,7 +1087,7 @@ namespace MS.Internal.PtsHost
                 {
                     // Add a glyph run
                     GlyphRun glyphRun = glyphRunDrawing.GlyphRun;
-                    if (glyphRun != null)
+                    if (glyphRun is not null)
                     {
                         cchGlyphRuns += (glyphRun.Characters is null ? 0 : glyphRun.Characters.Count);
                         glyphRunsCollection.Add(glyphRun);

@@ -96,13 +96,13 @@ namespace System.Windows.Input
             {
                 MouseGesture oldMouseGesture = Gesture as MouseGesture;
                 MouseGesture mouseGesture = value as MouseGesture;
-                if (mouseGesture != null)
+                if (mouseGesture is not null)
                 {
                      base.Gesture  = mouseGesture;
                      SynchronizePropertiesFromGesture(mouseGesture);
                      if (oldMouseGesture != mouseGesture)
                      {
-                         if (oldMouseGesture != null)
+                         if (oldMouseGesture is not null)
                          {
                              oldMouseGesture.PropertyChanged -= new PropertyChangedEventHandler(OnMouseGesturePropertyChanged);
                          }
@@ -230,7 +230,7 @@ namespace System.Windows.Input
             if (string.Equals(e.PropertyName, "MouseAction", StringComparison.Ordinal))
             {
                 MouseGesture mouseGesture = Gesture as MouseGesture;
-                if (mouseGesture != null)
+                if (mouseGesture is not null)
                 {
                     SynchronizePropertiesFromGesture(mouseGesture);
                 }
@@ -240,7 +240,7 @@ namespace System.Windows.Input
         private void CloneGesture()
         {
             MouseGesture mouseGesture = Gesture as MouseGesture;
-            if (mouseGesture != null)
+            if (mouseGesture is not null)
             {
                 mouseGesture.PropertyChanged += new PropertyChangedEventHandler(OnMouseGesturePropertyChanged);
             }

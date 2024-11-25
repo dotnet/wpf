@@ -296,7 +296,7 @@ namespace System.Windows.Input.Manipulations
         /// previous timestamp for the current manipulation.</exception>
         public void CompleteManipulation(Int64 timestamp)
         {
-            if (this.currentManipulation != null)
+            if (this.currentManipulation is not null)
             {
                 this.currentManipulation.CompleteManipulation(timestamp);
                 this.currentManipulation = null;
@@ -327,7 +327,7 @@ namespace System.Windows.Input.Manipulations
         private void OnManipulationStarted(object sender, Manipulation2DStartedEventArgs args)
         {
             // A new manipulation has begun, so make it the current one.
-            Debug.Assert(sender != null);
+            Debug.Assert(sender is not null);
             Debug.Assert(this.currentManipulation is null, "Manipulation was already in progress");
             this.currentManipulation = (ManipulationSequence)sender;
 
@@ -337,7 +337,7 @@ namespace System.Windows.Input.Manipulations
             this.currentManipulation.Completed += OnManipulationCompleted;
 
             // Fire the Started event on the manipulation processor.
-            if (Started != null)
+            if (Started is not null)
             {
                 Started(this, args);
             }
@@ -351,7 +351,7 @@ namespace System.Windows.Input.Manipulations
         private void OnManipulationDelta(object sender, Manipulation2DDeltaEventArgs args)
         {
             Debug.Assert(object.ReferenceEquals(sender, this.currentManipulation));
-            if (Delta != null)
+            if (Delta is not null)
             {
                 Delta(this, args);
             }
@@ -373,7 +373,7 @@ namespace System.Windows.Input.Manipulations
             this.currentManipulation = null;
 
             // Fire the Completed event on the manipulation processor.
-            if (Completed != null)
+            if (Completed is not null)
             {
                 Completed(this, args);
             }

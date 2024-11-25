@@ -116,7 +116,7 @@ namespace MS.Internal.Documents.Application
 
             _editableTextBox = GetTemplateChild("PART_EditableTextBox") as TextBox;
 
-            if (_editableTextBox != null)
+            if (_editableTextBox is not null)
             {
                 _editableTextBox.TextAlignment = TextAlignment.Right;
 
@@ -139,7 +139,7 @@ namespace MS.Internal.Documents.Application
                 this.Text = zoomString;
                 _isEditingText = false;
                 // If this is currently focused, refocus to reset text selection.
-                if ((_editableTextBox != null) && (_editableTextBox.IsFocused))
+                if ((_editableTextBox is not null) && (_editableTextBox.IsFocused))
                 {
                     _editableTextBox.SelectAll();
                 }
@@ -258,7 +258,7 @@ namespace MS.Internal.Documents.Application
             // This will check for the use of 'enter', 'escape' and 'tab' and take the appropriate action
 
             // Ensure the arguments are not null.
-            if (e != null)
+            if (e is not null)
             {
                 // Check which Key was pressed.
                 switch (e.Key)
@@ -282,7 +282,7 @@ namespace MS.Internal.Documents.Application
                             // (via up/down) was ignored, first we must copy the selected
                             // value into the TextBox.  Then we process it as if the user
                             // had typed it in.
-                            if (SelectedItem != null)
+                            if (SelectedItem is not null)
                             {
                                 Text = ((ComboBoxItem)SelectedItem).Content.ToString();
                             }
@@ -358,7 +358,7 @@ namespace MS.Internal.Documents.Application
         {
             // This will limit which characters are allowed to be entered into the TextBox
             // Currently this is limited to 0-9, ',', '.', '%'
-            if ((e != null) && (!String.IsNullOrEmpty(e.Text)))
+            if ((e is not null) && (!String.IsNullOrEmpty(e.Text)))
             {
                 if (IsValidInputChar(e.Text[0]))
                 {

@@ -47,7 +47,7 @@ namespace System.Windows.Interop
         {
             get
             {
-                if (_hwndSource != null)
+                if (_hwndSource is not null)
                 {
                     IntPtr handle = _hwndSource.CriticalHandle;
                     if (handle != IntPtr.Zero)
@@ -68,7 +68,7 @@ namespace System.Windows.Interop
         /// <param name="inInertia">Whether the edge was hit due to inertia or the user panning.</param>
         public void UpdatePanningFeedback(Vector totalOverpanOffset, bool inInertia)
         {
-            if ((_hwndSource != null) && IsSupported)
+            if ((_hwndSource is not null) && IsSupported)
             {
                 if (!_isProvidingPanningFeedback)
                 {
@@ -112,10 +112,10 @@ namespace System.Windows.Interop
         /// <param name="animateBack">Whether to animate or snap back to the original position</param>
         public void EndPanningFeedback(bool animateBack)
         {
-            if (_hwndSource != null && _isProvidingPanningFeedback)
+            if (_hwndSource is not null && _isProvidingPanningFeedback)
             {
                 _isProvidingPanningFeedback = false;
-                if (_updatePanningOperation != null)
+                if (_updatePanningOperation is not null)
                 {
                     _updatePanningOperation.Abort();
                     _updatePanningOperation = null;

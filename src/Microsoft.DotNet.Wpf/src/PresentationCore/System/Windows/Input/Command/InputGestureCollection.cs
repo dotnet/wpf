@@ -49,7 +49,7 @@ namespace System.Windows.Input
         /// <param name="inputGestures">InputGesture array</param>
         public InputGestureCollection( IList inputGestures )
         {
-            if (inputGestures != null && inputGestures.Count > 0)
+            if (inputGestures is not null && inputGestures.Count > 0)
             {
                 this.AddRange(inputGestures as ICollection);
             }
@@ -74,7 +74,7 @@ namespace System.Windows.Input
         /// <param name="index"></param>
         void ICollection.CopyTo(System.Array array, int index) 
         {
-            if (_innerGestureList != null)
+            if (_innerGestureList is not null)
                 ((ICollection)_innerGestureList).CopyTo(array, index);
         }
      
@@ -97,7 +97,7 @@ namespace System.Windows.Input
         int IList.IndexOf(object value)
         {
             InputGesture inputGesture = value as InputGesture;
-            return ((inputGesture != null) ? this.IndexOf(inputGesture) : -1) ;
+            return ((inputGesture is not null) ? this.IndexOf(inputGesture) : -1) ;
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace System.Windows.Input
          /// <returns></returns>
          public IEnumerator GetEnumerator()
          {
-             if (_innerGestureList != null)
+             if (_innerGestureList is not null)
                  return _innerGestureList.GetEnumerator();
 
              List<InputGesture> list = new List<InputGesture>(0);
@@ -178,7 +178,7 @@ namespace System.Windows.Input
          {
              get
              {
-                 return (_innerGestureList != null ? _innerGestureList[index] : null);
+                 return (_innerGestureList is not null ? _innerGestureList[index] : null);
              }
              set
              {
@@ -187,7 +187,7 @@ namespace System.Windows.Input
 
                  EnsureList();
 
-                 if (_innerGestureList != null)
+                 if (_innerGestureList is not null)
                  {
                      _innerGestureList[index] = value;
                  }
@@ -201,7 +201,7 @@ namespace System.Windows.Input
          {
              get
              {
-                 if (_innerGestureList != null)
+                 if (_innerGestureList is not null)
                      return ((IList)_innerGestureList).IsSynchronized;
 
                  return false;
@@ -215,7 +215,7 @@ namespace System.Windows.Input
          {
              get
              {
-                 return _innerGestureList != null ? ((IList)_innerGestureList).SyncRoot : this;
+                 return _innerGestureList is not null ? ((IList)_innerGestureList).SyncRoot : this;
              }
          }
 
@@ -226,7 +226,7 @@ namespace System.Windows.Input
          /// <returns></returns>
          public int IndexOf(InputGesture value)
          {
-             return (_innerGestureList != null) ? _innerGestureList.IndexOf(value) : -1;
+             return (_innerGestureList is not null) ? _innerGestureList.IndexOf(value) : -1;
          }
 
          /// <summary>
@@ -238,7 +238,7 @@ namespace System.Windows.Input
              if (IsReadOnly)
                  throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
 
-             if (_innerGestureList != null)
+             if (_innerGestureList is not null)
                 _innerGestureList.RemoveAt(index);
          }
 
@@ -295,7 +295,7 @@ namespace System.Windows.Input
                 while(collectionEnum.MoveNext()) 
                 {
                     InputGesture inputGesture = collectionEnum.Current as InputGesture;
-                    if (inputGesture != null)
+                    if (inputGesture is not null)
                     {
                         _innerGestureList.Add(inputGesture);
                     }
@@ -320,7 +320,7 @@ namespace System.Windows.Input
             if (inputGesture is null)
                 throw new NotSupportedException(SR.CollectionOnlyAcceptsInputGestures);
 
-            if (_innerGestureList != null)
+            if (_innerGestureList is not null)
                 _innerGestureList.Insert(index, inputGesture);
         }
 
@@ -348,7 +348,7 @@ namespace System.Windows.Input
 
             ArgumentNullException.ThrowIfNull(inputGesture);
 
-            if (_innerGestureList != null && _innerGestureList.Contains(inputGesture))
+            if (_innerGestureList is not null && _innerGestureList.Contains(inputGesture))
             {
                 _innerGestureList.Remove(inputGesture as InputGesture);
             }
@@ -361,7 +361,7 @@ namespace System.Windows.Input
         {
             get 
             {
-                return (_innerGestureList != null ? _innerGestureList.Count : 0 );
+                return (_innerGestureList is not null ? _innerGestureList.Count : 0 );
             }
         }
 
@@ -375,7 +375,7 @@ namespace System.Windows.Input
                  throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
             }
          
-	    if (_innerGestureList != null)
+	    if (_innerGestureList is not null)
             {
                _innerGestureList.Clear();
                _innerGestureList = null;
@@ -389,7 +389,7 @@ namespace System.Windows.Input
         /// <returns>true - if found, false - otherwise</returns>
         public bool Contains(InputGesture key) 
         {
-            if (_innerGestureList != null && key != null)
+            if (_innerGestureList is not null && key is not null)
             {
                return _innerGestureList.Contains(key) ;
             }
@@ -403,7 +403,7 @@ namespace System.Windows.Input
         /// <param name="index">start index of items to copy</param>
         public void CopyTo(InputGesture[] inputGestures, int index) 
         {
-            if (_innerGestureList != null)
+            if (_innerGestureList is not null)
                 _innerGestureList.CopyTo(inputGestures, index);
         }
 

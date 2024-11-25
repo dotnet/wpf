@@ -107,7 +107,7 @@ namespace System.Windows.Xps.Serialization
             //
             foreach (object pageContent in (IEnumerable)serializableObjectContext.TargetObject)
             {
-                if (pageContent != null)
+                if (pageContent is not null)
                 {
                     // Serialize the current item
                     SerializePageContent(pageContent);

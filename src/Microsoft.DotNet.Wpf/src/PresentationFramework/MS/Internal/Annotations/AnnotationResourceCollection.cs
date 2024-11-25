@@ -126,7 +126,7 @@ namespace MS.Internal.Annotations
         // raise CollectionChanged event to any listeners
         protected override void OnItemPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (ItemChanged != null)
+            if (ItemChanged is not null)
             {
                 ItemChanged(sender, e);
             }

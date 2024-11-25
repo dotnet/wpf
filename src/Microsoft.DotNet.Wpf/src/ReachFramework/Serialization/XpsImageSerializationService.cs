@@ -56,10 +56,10 @@ namespace System.Windows.Xps.Serialization
                 BitmapFrame bitmapImage = bitmapSource as BitmapFrame;
                 BitmapCodecInfo codecInfo = null;
 
-                if (bitmapImage != null && bitmapImage.Decoder != null)
+                if (bitmapImage is not null && bitmapImage.Decoder is not null)
                     codecInfo = bitmapImage.Decoder.CodecInfo;
 
-                if (codecInfo != null)
+                if (codecInfo is not null)
                 {
                     encoder = BitmapEncoder.Create(codecInfo.ContainerFormat);
 
@@ -123,13 +123,13 @@ namespace System.Windows.Xps.Serialization
                 //
                 BitmapFrame bitmapFrame = bitmapSource as BitmapFrame;
                 
-                if (bitmapFrame != null && bitmapFrame.Decoder != null)
+                if (bitmapFrame is not null && bitmapFrame.Decoder is not null)
                 {
                     codecInfo = bitmapFrame.Decoder.CodecInfo;
                 }
             }
             
-            if (codecInfo != null)
+            if (codecInfo is not null)
             {
                 imageMimeType = codecInfo.MimeTypes;
             }

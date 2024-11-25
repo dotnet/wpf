@@ -105,7 +105,7 @@ namespace System.Windows.Media
             Brush newV = (Brush) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 DUCE.IResource targetResource = (DUCE.IResource)target;
                 using (CompositionEngineLock.Acquire())
@@ -149,7 +149,7 @@ namespace System.Windows.Media
             Pen newV = (Pen) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 DUCE.IResource targetResource = (DUCE.IResource)target;
                 using (CompositionEngineLock.Acquire())
@@ -193,7 +193,7 @@ namespace System.Windows.Media
             Geometry newV = (Geometry) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 DUCE.IResource targetResource = (DUCE.IResource)target;
                 using (CompositionEngineLock.Acquire())
@@ -308,9 +308,9 @@ namespace System.Windows.Media
                 Geometry vGeometry = Geometry;
 
                 // Obtain handles for properties that implement DUCE.IResource
-                DUCE.ResourceHandle hBrush = vBrush != null ? ((DUCE.IResource)vBrush).GetHandle(channel) : DUCE.ResourceHandle.Null;
-                DUCE.ResourceHandle hPen = vPen != null ? ((DUCE.IResource)vPen).GetHandle(channel) : DUCE.ResourceHandle.Null;
-                DUCE.ResourceHandle hGeometry = vGeometry != null ? ((DUCE.IResource)vGeometry).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                DUCE.ResourceHandle hBrush = vBrush is not null ? ((DUCE.IResource)vBrush).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                DUCE.ResourceHandle hPen = vPen is not null ? ((DUCE.IResource)vPen).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                DUCE.ResourceHandle hGeometry = vGeometry is not null ? ((DUCE.IResource)vGeometry).GetHandle(channel) : DUCE.ResourceHandle.Null;
 
                 // Pack & send command packet
                 DUCE.MILCMD_GEOMETRYDRAWING data;
@@ -334,11 +334,11 @@ namespace System.Windows.Media
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_GEOMETRYDRAWING))
                 {
                     Brush vBrush = Brush;
-                    if (vBrush != null) ((DUCE.IResource)vBrush).AddRefOnChannel(channel);
+                    if (vBrush is not null) ((DUCE.IResource)vBrush).AddRefOnChannel(channel);
                     Pen vPen = Pen;
-                    if (vPen != null) ((DUCE.IResource)vPen).AddRefOnChannel(channel);
+                    if (vPen is not null) ((DUCE.IResource)vPen).AddRefOnChannel(channel);
                     Geometry vGeometry = Geometry;
-                    if (vGeometry != null) ((DUCE.IResource)vGeometry).AddRefOnChannel(channel);
+                    if (vGeometry is not null) ((DUCE.IResource)vGeometry).AddRefOnChannel(channel);
 
                     AddRefOnChannelAnimations(channel);
 
@@ -355,11 +355,11 @@ namespace System.Windows.Media
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
                     Brush vBrush = Brush;
-                    if (vBrush != null) ((DUCE.IResource)vBrush).ReleaseOnChannel(channel);
+                    if (vBrush is not null) ((DUCE.IResource)vBrush).ReleaseOnChannel(channel);
                     Pen vPen = Pen;
-                    if (vPen != null) ((DUCE.IResource)vPen).ReleaseOnChannel(channel);
+                    if (vPen is not null) ((DUCE.IResource)vPen).ReleaseOnChannel(channel);
                     Geometry vGeometry = Geometry;
-                    if (vGeometry != null) ((DUCE.IResource)vGeometry).ReleaseOnChannel(channel);
+                    if (vGeometry is not null) ((DUCE.IResource)vGeometry).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
 }

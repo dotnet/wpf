@@ -311,7 +311,7 @@ namespace MS.Internal.Documents
         protected override void OnCancelPrintCommand()
         {
 #if !DONOTREFPRINTINGASMMETA
-            if (_documentWriter != null)
+            if (_documentWriter is not null)
             {
                 _documentWriter.CancelAsync();
             }
@@ -326,7 +326,7 @@ namespace MS.Internal.Documents
         private void HandlePrintCompleted(object sender, WritingCompletedEventArgs e)
         {
 #if !DONOTREFPRINTINGASMMETA
-            if (_documentWriter != null)
+            if (_documentWriter is not null)
             {
                 _documentWriter.WritingCompleted -= new WritingCompletedEventHandler(HandlePrintCompleted);
                 _documentWriter = null;
@@ -345,7 +345,7 @@ namespace MS.Internal.Documents
         private void HandlePrintCancelled(object sender, WritingCancelledEventArgs e)
         {
 #if !DONOTREFPRINTINGASMMETA
-            if (_documentWriter != null)
+            if (_documentWriter is not null)
             {
                 _documentWriter.WritingCancelled -= new WritingCancelledEventHandler(HandlePrintCancelled);
                 _documentWriter = null;
@@ -368,12 +368,12 @@ namespace MS.Internal.Documents
             PageRange			    pageRange = new PageRange(0);
 
             // Only one printing job is allowed.
-            if (_documentWriter != null)
+            if (_documentWriter is not null)
             {
                 return;
             }
 
-            if (Document != null)
+            if (Document is not null)
             {
                 // Show print dialog.
                 docWriter = PrintQueue.CreateXpsDocumentWriter(
@@ -381,7 +381,7 @@ namespace MS.Internal.Documents
                     ref ia,
                     ref pageRangeSelection,
                     ref pageRange);
-                if (docWriter != null && ia != null)
+                if (docWriter is not null && ia is not null)
                 {
                     // Register for WritingCompleted event.
                     _documentWriter = docWriter;
@@ -450,7 +450,7 @@ namespace MS.Internal.Documents
             FixedDocument dstDoc = new FixedDocument();
             FixedDocumentSequence fds = docPaginator.Source as FixedDocumentSequence;
 
-            if (fds != null)
+            if (fds is not null)
             {
                 //
                 // If the source is a FixedDocumentSequence (Should be in Mongoose!), do not use a DocumentPaginator
@@ -546,7 +546,7 @@ namespace MS.Internal.Documents
             // to reset the DocumentViewer to the stored state (usually this will mean the
             // default state)
             DynamicDocumentPaginator paginator = Document.DocumentPaginator as DynamicDocumentPaginator;
-            if (paginator != null)
+            if (paginator is not null)
             {
                 paginator.PaginationCompleted += new EventHandler(OnPaginationCompleted);
 
@@ -569,7 +569,7 @@ namespace MS.Internal.Documents
             // was invoked via the Menu key.
             // A negative offset for e.CursorLeft means the user invoked
             // the menu with a hotkey (shift-F10).
-            if (_scrollViewer != null && DoubleUtil.LessThan(e.CursorLeft, 0))
+            if (_scrollViewer is not null && DoubleUtil.LessThan(e.CursorLeft, 0))
             {
                 this.ContextMenu = ScrollViewer.ContextMenu;
             }
@@ -713,7 +713,7 @@ namespace MS.Internal.Documents
                 {
                     // Find ContentControl to host the ZoomComboBox.
                     ContentControl host = GetTemplateChild("ZoomComboBoxHost") as ContentControl;
-                    if (host != null)
+                    if (host is not null)
                     {
                         // Construct a new ZoomComboBox, and insert it into the host.
                         _zoomComboBox = new ZoomComboBox();
@@ -765,7 +765,7 @@ namespace MS.Internal.Documents
                 {
                     // Find ContentControl to host the PageTextBox.
                     ContentControl host = GetTemplateChild("PageTextBoxHost") as ContentControl;
-                    if (host != null)
+                    if (host is not null)
                     {
                         // Construct a new PageTextBox, and insert it into the host.
                         _pageTextBox = new PageTextBox();
@@ -963,7 +963,7 @@ namespace MS.Internal.Documents
                     // Setup InfoBar Close Button
                     _infoBarCloseButton = GetTemplateChild(_infoBarCloseButtonName)
                             as Button;
-                    if (_infoBarCloseButton != null)
+                    if (_infoBarCloseButton is not null)
                     {
                         _infoBarCloseButton.Click += OnInfoBarCloseClicked;
                     }
@@ -985,7 +985,7 @@ namespace MS.Internal.Documents
                 {
                     // Setup Digital Signature Status Changes
                     _infoBarDigSigButton = GetTemplateChild(_infoBarSignaturesButtonName) as Button;
-                    if (_infoBarDigSigButton != null)
+                    if (_infoBarDigSigButton is not null)
                     {
                         _infoBarDigSigButton.Command = DocumentApplicationDocumentViewer.ShowSignatureSummary;
                         _infoBarDigSigButton.ApplyTemplate();
@@ -1010,7 +1010,7 @@ namespace MS.Internal.Documents
                 {
                     // Setup Rights Management Status Changes
                     _infoBarRMButton = GetTemplateChild(_infoBarRMButtonName) as Button;
-                    if (_infoBarRMButton != null)
+                    if (_infoBarRMButton is not null)
                     {
                         _infoBarRMButton.Command = DocumentApplicationDocumentViewer.ShowRMPermissions;
                         _infoBarRMButton.ApplyTemplate();
@@ -1035,7 +1035,7 @@ namespace MS.Internal.Documents
                     // Find ContentControl to host the FindToolBar.
 
                     ContentControl host = GetTemplateChild("PART_FindToolBarHost") as ContentControl;
-                    if ((host != null) && ((_findToolBar = host.Content as FindToolBar) != null))
+                    if ((host is not null) && ((_findToolBar = host.Content as FindToolBar) is not null))
                     {
                         ResourceKey toolBarStyleKey = new ComponentResourceKey(
                             typeof(PresentationUIStyleResources), _toolBarStyleKeyName);
@@ -1185,22 +1185,22 @@ namespace MS.Internal.Documents
         /// <returns></returns>
         private bool RequiredControlsExist()
         {
-            return ((ToolBar != null) &&
-                 (SaveAsButton != null) &&
-                 (RMButton != null) &&
-                 (DigitalSignaturesMenuItem != null) &&
-                 (FindToolBar != null) &&
-                 (InfoBar != null) &&
-                 (PageTextBox != null) &&
-                 (PageUpButton != null) &&
-                 (PageDownButton != null) &&
-                 (ActualSizeButton != null) &&
-                 (PageWidthButton != null) &&
-                 (WholePageButton != null) &&
-                 (TwoPageButton != null) &&
-                 (ThumbnailButton != null) &&
-                 (ZoomComboBox != null) &&
-                 (ScrollViewer != null)
+            return ((ToolBar is not null) &&
+                 (SaveAsButton is not null) &&
+                 (RMButton is not null) &&
+                 (DigitalSignaturesMenuItem is not null) &&
+                 (FindToolBar is not null) &&
+                 (InfoBar is not null) &&
+                 (PageTextBox is not null) &&
+                 (PageUpButton is not null) &&
+                 (PageDownButton is not null) &&
+                 (ActualSizeButton is not null) &&
+                 (PageWidthButton is not null) &&
+                 (WholePageButton is not null) &&
+                 (TwoPageButton is not null) &&
+                 (ThumbnailButton is not null) &&
+                 (ZoomComboBox is not null) &&
+                 (ScrollViewer is not null)
                  );
         }
 
@@ -1210,7 +1210,7 @@ namespace MS.Internal.Documents
         /// <param name="uie">The element whose visibility will be changed</param>
         private void ChangeControlVisibility(UIElement uie)
         {
-            if (uie != null)
+            if (uie is not null)
             {
                 ChangeControlVisibility(uie, uie.Visibility == Visibility.Collapsed);
             }
@@ -1223,7 +1223,7 @@ namespace MS.Internal.Documents
         /// <param name="visibility">True if uie should be set visible, false for collapsed</param>
         private void ChangeControlVisibility(UIElement uie, bool visibility)
         {
-            if (uie != null)
+            if (uie is not null)
             {
                 if (visibility)
                 {
@@ -1247,7 +1247,7 @@ namespace MS.Internal.Documents
         private void MenuPreviewKeyDown(object sender, KeyEventArgs e)
         {
             MenuItem menuItem = sender as MenuItem;
-            if (menuItem != null && menuItem.Role == MenuItemRole.TopLevelHeader &&
+            if (menuItem is not null && menuItem.Role == MenuItemRole.TopLevelHeader &&
                 !menuItem.IsSubmenuOpen && e.Key == Key.Escape)
             {
                 Focus();
@@ -1298,11 +1298,11 @@ namespace MS.Internal.Documents
             DocumentManager docManager = DocumentManager.CreateDefault();
 
             Invariant.Assert(
-                docManager != null,
+                docManager is not null,
                 "Required DocumentManager instance is not available.");
 
             // Check if arguments are valid, fail silently otherwise.
-            if ((e != null) && (e.Command != null))
+            if ((e is not null) && (e.Command is not null))
             {
                 // Check which command was executed, and act appropriately
                 if (e.Command.Equals(ApplicationCommands.Save))
@@ -1336,7 +1336,7 @@ namespace MS.Internal.Documents
 
                     // Ensure that the sender is a DocumentApplicationDocumentViewer
                     DocumentApplicationDocumentViewer docViewer = sender as DocumentApplicationDocumentViewer;
-                    Invariant.Assert(docViewer != null, "Sender must be a valid DocumentApplicationDocumentViewer");
+                    Invariant.Assert(docViewer is not null, "Sender must be a valid DocumentApplicationDocumentViewer");
 
                     // Handle command so that it doesn't bubble up to DocumentViewer
                     e.Handled = true;
@@ -1356,7 +1356,7 @@ namespace MS.Internal.Documents
         {
 
             // Check if arguments are valid, fail silently otherwise.
-            if ((e != null) && (e.Command != null))
+            if ((e is not null) && (e.Command is not null))
             {
 
                 // Check which command was executed, and act appropriately
@@ -1366,7 +1366,7 @@ namespace MS.Internal.Documents
 
                     // Check DocumentManager to see if we can save package
                     DocumentManager documentManager = DocumentManager.CreateDefault();
-                    if (documentManager != null)
+                    if (documentManager is not null)
                     {
                         e.CanExecute = documentManager.CanSave && documentManager.IsModified;
                     }
@@ -1412,7 +1412,7 @@ namespace MS.Internal.Documents
         {
             DocumentApplicationDocumentViewer dv = sender as DocumentApplicationDocumentViewer;
 
-            if ((e != null) && (dv != null) && (e.Command != null))
+            if ((e is not null) && (dv is not null) && (e.Command is not null))
             {
                 // If FirstPage or LastPage were executed, add a journal entry
                 if (e.Command.Equals(NavigationCommands.FirstPage))
@@ -1438,7 +1438,7 @@ namespace MS.Internal.Documents
         {
             DocumentApplicationDocumentViewer dv = sender as DocumentApplicationDocumentViewer;
 
-            if ((e != null) && (dv != null) && (e.Command != null))
+            if ((e is not null) && (dv is not null) && (e.Command is not null))
             {
                 // Check if the commands are allowed
                 if (e.Command.Equals(NavigationCommands.FirstPage))
@@ -1464,7 +1464,7 @@ namespace MS.Internal.Documents
 
             // Ensure parameters are valid, and DocumentSignatureManager is set.
             // This method is setup to fail silently if called inappropriately.
-            if ((e != null) && (dv != null) && (dv._docSigManager != null))
+            if ((e is not null) && (dv is not null) && (dv._docSigManager is not null))
             {
                 // Check which command was executed, and act appropriately
                 if (e.Command.Equals(DocumentApplicationDocumentViewer.Sign))
@@ -1493,7 +1493,7 @@ namespace MS.Internal.Documents
 
             // Ensure parameters are valid, and DocumentSignatureManager is set.
             // This method is setup to fail silently if called inappropriately.
-            if ((e != null) && (dv != null) && (dv._docSigManager != null))
+            if ((e is not null) && (dv is not null) && (dv._docSigManager is not null))
             {
                 // Check which command was executed, and act appropriately:
                 // 1) The Sign command can always be executed.
@@ -1555,7 +1555,7 @@ namespace MS.Internal.Documents
 
             // Ensure parameters are valid, and DocumentRightsManagementManager is set.
             // This method is setup to fail silently if called inappropriately.
-            if ((e != null) && (dv != null) && (dv._rmManager != null))
+            if ((e is not null) && (dv is not null) && (dv._rmManager is not null))
             {
                 // Verify that the RM Client is installed.
                 if (dv._rmManager.IsRMInstalled)
@@ -1591,7 +1591,7 @@ namespace MS.Internal.Documents
             DocumentApplicationDocumentViewer dv = sender as DocumentApplicationDocumentViewer;
             // Ensure parameters are valid.
             // This method is setup to fail silently if called inappropriately.
-            if ((e != null) && (dv != null))
+            if ((e is not null) && (dv is not null))
             {
                 // Check which command was executed, and act appropriately
 
@@ -1641,7 +1641,7 @@ namespace MS.Internal.Documents
         /// <param name="args"></param>
         private void OnRMStatusChanged(object sender, DocumentRightsManagementManager.RightsManagementStatusEventArgs args)
         {
-            if (args != null)
+            if (args is not null)
             {
                 _rightsManagementStatus = args.RMStatus;
                 if (_rightsManagementStatus == RightsManagementStatus.Protected)
@@ -1690,7 +1690,7 @@ namespace MS.Internal.Documents
                     ComboBoxItem cbItem = ZoomComboBox.SelectedItem as ComboBoxItem;
                     // Check if a selection is made (when an item is selected from the list the
                     // SelectedItem will be non-null)
-                    if (cbItem != null &&
+                    if (cbItem is not null &&
                         cbItem.Content is ZoomComboBoxItem)
                     {
                         ZoomComboBoxItem item = (ZoomComboBoxItem)cbItem.Content;
@@ -1848,7 +1848,7 @@ namespace MS.Internal.Documents
             try
             {
                 // Remove whitespace on either end of the string.
-                if ((culture != null) && !zoomString.IsEmpty)
+                if ((culture is not null) && !zoomString.IsEmpty)
                 {
                     zoomString = zoomString.Trim();
 
@@ -1976,7 +1976,7 @@ namespace MS.Internal.Documents
             try
             {
                 // Remove whitespace on either end of the string.
-                if ((culture != null) && !String.IsNullOrEmpty(pageNumberString))
+                if ((culture is not null) && !String.IsNullOrEmpty(pageNumberString))
                 {
                     pageNumberString = pageNumberString.Trim();
 
@@ -2127,14 +2127,14 @@ namespace MS.Internal.Documents
         private static void BindCommand(RoutedUICommand command, ExecutedRoutedEventHandler executeHandler,
             CanExecuteRoutedEventHandler queryEnabledHandler)
         {
-            if (command != null)
+            if (command is not null)
             {
                 // Register DocumentApplicationDocumentViewer has a handler for the command.
                 CommandManager.RegisterClassCommandBinding(typeof(DocumentApplicationDocumentViewer),
                     new CommandBinding(command, executeHandler, queryEnabledHandler));
 
                 // Bind each input gesture on the DocumentApplicationDocumentViewer
-                if (command.InputGestures != null)
+                if (command.InputGestures is not null)
                 {
                     foreach (InputGesture inputGesture in command.InputGestures)
                     {
@@ -2402,7 +2402,7 @@ namespace MS.Internal.Documents
                 FixedPage fixedPage = null;
                 FixedDocument fd = _documentPaginator.Source as FixedDocument;
 
-                if (fd != null && pageNumber < fd.Pages.Count)
+                if (fd is not null && pageNumber < fd.Pages.Count)
                 {
                     fixedPage = fd.Pages[pageNumber].GetPageRoot(false) as FixedPage;
                 }

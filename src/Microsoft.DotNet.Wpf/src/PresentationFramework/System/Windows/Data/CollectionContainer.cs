@@ -96,7 +96,7 @@ namespace System.Windows.Data
             // Try to see if there is an item in the Collection without
             // creating an enumerator.
             ICollection collection = Collection as ICollection;
-            if (collection != null && collection.Count == 0)
+            if (collection is not null && collection.Count == 0)
             {
                 return false;
             }
@@ -105,7 +105,7 @@ namespace System.Windows.Data
             IEnumerator enumerator = Collection.GetEnumerator();
             bool result = enumerator.MoveNext();
             IDisposable d = enumerator as IDisposable;
-            if (d != null)
+            if (d is not null)
             {
                 d.Dispose();
             }
@@ -139,15 +139,15 @@ namespace System.Windows.Data
                     return 0;
 
                 CollectionView cv = View as CollectionView;
-                if (cv != null)
+                if (cv is not null)
                     return cv.Count;
 
                 ICollection coll = View as ICollection;
-                if (coll != null)
+                if (coll is not null)
                     return coll.Count;
 
                 // As a last resort, use the IList interface or IndexedEnumerable to find the count.
-                if (ViewList != null)
+                if (ViewList is not null)
                     return ViewList.Count;
 
                 return 0;
@@ -162,18 +162,18 @@ namespace System.Windows.Data
                     return true;
 
                 ICollectionView cv = View as ICollectionView;
-                if (cv != null)
+                if (cv is not null)
                     return cv.IsEmpty;
 
                 ICollection coll = View as ICollection;
-                if (coll != null)
+                if (coll is not null)
                     return (coll.Count == 0);
 
                 // As a last resort, use the IList interface or IndexedEnumerable to find the count.
-                if (ViewList != null)
+                if (ViewList is not null)
                 {
                     IndexedEnumerable le = ViewList as IndexedEnumerable;
-                    if (le != null)
+                    if (le is not null)
                         return le.IsEmpty;
                     else
                         return (ViewList.Count == 0);
@@ -195,16 +195,16 @@ namespace System.Windows.Data
 
         internal object ViewItem(int index)
         {
-            Invariant.Assert(index >= 0 && View != null);
+            Invariant.Assert(index >= 0 && View is not null);
 
             CollectionView cv = View as CollectionView;
-            if (cv != null)
+            if (cv is not null)
             {
                 return cv.GetItemAt(index);
             }
 
             // As a last resort, use the IList interface or IndexedEnumerable to iterate to the nth item.
-            if (ViewList != null)
+            if (ViewList is not null)
                 return ViewList[index];
 
             return null;
@@ -216,13 +216,13 @@ namespace System.Windows.Data
                 return -1;
 
             CollectionView cv = View as CollectionView;
-            if (cv != null)
+            if (cv is not null)
             {
                 return cv.IndexOf(item);
             }
 
             // As a last resort, use the IList interface or IndexedEnumerable to look for the item.
-            if (ViewList != null)
+            if (ViewList is not null)
                 return ViewList.IndexOf(item);
 
             return -1;
@@ -231,10 +231,10 @@ namespace System.Windows.Data
         internal void GetCollectionChangedSources(int level, Action<int, object, bool?, List<string>> format, List<string> sources)
         {
             format(level, this, false, sources);
-            if (_view != null)
+            if (_view is not null)
             {
                 CollectionView cv = _view as CollectionView;
-                if (cv != null)
+                if (cv is not null)
                 {
                     cv.GetCollectionChangedSources(level+1, format, sources);
                 }
@@ -268,7 +268,7 @@ namespace System.Windows.Data
         /// </summary>
         protected virtual void OnContainedCollectionChanged(NotifyCollectionChangedEventArgs args)
         {
-            if (CollectionChanged != null)
+            if (CollectionChanged is not null)
                 CollectionChanged(this, args);
         }
 
@@ -306,7 +306,7 @@ namespace System.Windows.Data
         {
             get
             {
-                if (_viewList is null && View != null)
+                if (_viewList is null && View is not null)
                 {
                     _viewList = new IndexedEnumerable(View);
                 }
@@ -351,27 +351,27 @@ namespace System.Windows.Data
             _viewList = null;
 
             // unhook from the old collection view
-            if (View != null)
+            if (View is not null)
             {
                 CollectionChangedEventManager.RemoveHandler(View, OnCollectionChanged);
 
-                if (_traceLog != null)
+                if (_traceLog is not null)
                     _traceLog.Add("Unsubscribe to CollectionChange from {0}",
                             TraceLog.IdFor(View));
             }
 
             // change to the new view
-            if (newCollection != null)
+            if (newCollection is not null)
                 _view = CollectionViewSource.GetDefaultCollectionView(newCollection, this);
             else
                 _view = null;
 
             // hook up to the new collection view
-            if (View != null)
+            if (View is not null)
             {
                 CollectionChangedEventManager.AddHandler(View, OnCollectionChanged);
 
-                if (_traceLog != null)
+                if (_traceLog is not null)
                     _traceLog.Add("Subscribe to CollectionChange from {0}", TraceLog.IdFor(View));
             }
 

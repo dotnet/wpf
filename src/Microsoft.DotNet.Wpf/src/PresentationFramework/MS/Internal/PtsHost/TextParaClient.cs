@@ -281,7 +281,7 @@ namespace MS.Internal.PtsHost
                         if (start < paraClient.Paragraph.ParagraphEndCharacterPosition)
                         {
                             rectangles = paraClient.GetRectangles(e, start, length);
-                            Invariant.Assert(rectangles != null);
+                            Invariant.Assert(rectangles is not null);
                             if (rectangles.Count != 0)
                             {
                                 break;
@@ -325,7 +325,7 @@ namespace MS.Internal.PtsHost
                 Debug.Assert(false, "Should not get here. ParaCache is not currently used.");
             }
 
-            Invariant.Assert(rectangles != null);
+            Invariant.Assert(rectangles is not null);
             return rectangles;
         }
 
@@ -416,7 +416,7 @@ namespace MS.Internal.PtsHost
                     }
                 }
             }
-            return (floaters != null && floaters.Count > 0) ? new ReadOnlyCollection<ParagraphResult>(floaters) : null;
+            return (floaters is not null && floaters.Count > 0) ? new ReadOnlyCollection<ParagraphResult>(floaters) : null;
         }
 
         // ------------------------------------------------------------------
@@ -453,7 +453,7 @@ namespace MS.Internal.PtsHost
                     }
                 }
             }
-            return (figures != null && figures.Count > 0) ? new ReadOnlyCollection<ParagraphResult>(figures) : null;
+            return (figures is not null && figures.Count > 0) ? new ReadOnlyCollection<ParagraphResult>(figures) : null;
         }
 
         // ------------------------------------------------------------------
@@ -802,7 +802,7 @@ namespace MS.Internal.PtsHost
             }
 
             //  at this point geometry contains only the text content related geometry
-            if (geometry != null && transform != null)
+            if (geometry is not null && transform is not null)
             {
                 //  mirror back to page flow direction
                 CaretElement.AddTransformToGeometry(geometry, transform);
@@ -810,7 +810,7 @@ namespace MS.Internal.PtsHost
 
             //  rectangles from which floatAndFigGeometry is calculated are already mirrored.
             //  this is why geometry and floatAndFigGeometry are combined after geometry is mirrored above
-            if (floatAndFigGeometry != null)
+            if (floatAndFigGeometry is not null)
             {
                 CaretElement.AddGeometry(ref geometry, floatAndFigGeometry);
             }
@@ -1266,7 +1266,7 @@ namespace MS.Internal.PtsHost
 
                             // Enumerate all inline objects and reformat them.
                             List<InlineObject> inlineObjects = TextParagraph.InlineObjectsFromRange(lineDesc.dcpFirst, lineDesc.dcpLim);
-                            if (inlineObjects != null)
+                            if (inlineObjects is not null)
                             {
                                 for (int i = 0; i < inlineObjects.Count; i++)
                                 {
@@ -1300,7 +1300,7 @@ namespace MS.Internal.PtsHost
 
                                 // Enumerate all inline objects and reformat them.
                                 List<InlineObject> inlineObjects = TextParagraph.InlineObjectsFromRange(element.dcpFirst, element.dcpLim);
-                                if (inlineObjects != null)
+                                if (inlineObjects is not null)
                                 {
                                     for (int i = 0; i < inlineObjects.Count; i++)
                                     {
@@ -1904,7 +1904,7 @@ namespace MS.Internal.PtsHost
                             visibleRect
                             );
 
-                    if (rectangles != null)
+                    if (rectangles is not null)
                     {
                         for (int i = 0, count = rectangles.Count; i < count; ++i)
                         {
@@ -2016,7 +2016,7 @@ namespace MS.Internal.PtsHost
                                 visibleRect
                                 );
 
-                        if (rectangles != null)
+                        if (rectangles is not null)
                         {
                             for (int i = 0, count = rectangles.Count; i < count; ++i)
                             {
@@ -2079,7 +2079,7 @@ namespace MS.Internal.PtsHost
 
             //  width has to be adjusted to include trailing whitespaces...
             LineVisual lineVisual = FetchLineVisual(lineIndex);
-            if (lineVisual != null)
+            if (lineVisual is not null)
             {
                 lineRect.Width = Math.Max(lineVisual.WidthIncludingTrailingWhitespace, 0);
             }
@@ -2190,7 +2190,7 @@ namespace MS.Internal.PtsHost
 
             //  width has to be adjusted to include trailing whitespaces...
             LineVisual lineVisual = FetchLineVisualComposite(lineIndex, elemIndex);
-            if (lineVisual != null)
+            if (lineVisual is not null)
             {
                 elementRect.Width = Math.Max(lineVisual.WidthIncludingTrailingWhitespace, 0);
             }
@@ -2285,7 +2285,7 @@ namespace MS.Internal.PtsHost
                 {
                     visual = VisualTreeHelper.GetChild(Visual, visualIndex) as LineVisual;
                     //  verify that our assumptions about visual structure is correct...
-                    Invariant.Assert(visual != null || VisualTreeHelper.GetChild(Visual, visualIndex) is null);
+                    Invariant.Assert(visual is not null || VisualTreeHelper.GetChild(Visual, visualIndex) is null);
                 }
             }
 
@@ -2314,7 +2314,7 @@ namespace MS.Internal.PtsHost
 
                 visual = VisualTreeHelper.GetChild(temp, visualIndex) as LineVisual;
                 //  verify that our assumptions about visual structure is correct...
-                Invariant.Assert(visual != null || VisualTreeHelper.GetChild(temp, visualIndex) is null);
+                Invariant.Assert(visual is not null || VisualTreeHelper.GetChild(temp, visualIndex) is null);
             }
 
             return (visual);
@@ -2959,7 +2959,7 @@ namespace MS.Internal.PtsHost
                     break;
                 }
             }
-            Debug.Assert(backspaceCaretPosition != null);
+            Debug.Assert(backspaceCaretPosition is not null);
             return backspaceCaretPosition;
         }
 
@@ -3888,7 +3888,7 @@ namespace MS.Internal.PtsHost
             {
                 PTS.FSLINEDESCRIPTIONSINGLE lineDesc = arrayLineDesc[index];
                 List<Rect> lineRectangles = GetRectanglesInSingleLine(lineDesc, e, localStart, length);
-                Invariant.Assert(lineRectangles != null);
+                Invariant.Assert(lineRectangles is not null);
                 if (lineRectangles.Count != 0)
                 {
                     rectangles.AddRange(lineRectangles);
@@ -4067,7 +4067,7 @@ namespace MS.Internal.PtsHost
                 if (lineDesc.cElements == 0) continue;
 
                 List<Rect> lineRectangles = GetRectanglesInCompositeLine(lineDesc, e, localStart, length);
-                Invariant.Assert(lineRectangles != null);
+                Invariant.Assert(lineRectangles is not null);
 
                 if (lineRectangles.Count != 0)
                 {

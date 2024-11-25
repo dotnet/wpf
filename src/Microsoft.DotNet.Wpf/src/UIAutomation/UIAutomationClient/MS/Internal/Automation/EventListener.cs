@@ -31,7 +31,7 @@ namespace MS.Internal.Automation
         {
             _eventId = eventId;
             _scope = scope;
-            if (properties != null)
+            if (properties is not null)
                 _properties = (AutomationProperty[])properties.Clone();
             else
                 _properties = null;

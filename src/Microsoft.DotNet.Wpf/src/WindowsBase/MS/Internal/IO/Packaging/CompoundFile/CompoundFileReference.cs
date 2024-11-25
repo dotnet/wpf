@@ -138,7 +138,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 bytes += ContainerUtilities.WriteByteLengthPrefixedDWordPaddedUnicodeString(writer, segments[i]);
             }
 
-            if (streamReference != null)
+            if (streamReference is not null)
             {
                 // we are responsible for the prefix
                 if (!calcOnly)
@@ -198,7 +198,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 {
                     case RefComponentType.Storage:
                     {
-                        if (streamName != null)
+                        if (streamName is not null)
                             throw new FileFormatException(
                                 SR.CFRCorruptStgFollowStm);
 
@@ -211,7 +211,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 } break;
                     case RefComponentType.Stream:
                     {
-                        if (streamName != null)
+                        if (streamName is not null)
                             throw new FileFormatException(
                                 SR.CFRCorruptMultiStream);
 

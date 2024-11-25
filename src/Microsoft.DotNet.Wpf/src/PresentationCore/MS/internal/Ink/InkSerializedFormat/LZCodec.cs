@@ -41,7 +41,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         internal byte[] Uncompress(byte[] input, int inputIndex)
         {
             //first things first
-            Debug.Assert(input != null);
+            Debug.Assert(input is not null);
             Debug.Assert(input.Length > 1);
             Debug.Assert(inputIndex < input.Length);
             Debug.Assert(inputIndex >= 0);

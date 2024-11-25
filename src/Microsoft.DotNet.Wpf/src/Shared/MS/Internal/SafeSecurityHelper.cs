@@ -72,7 +72,7 @@ namespace System.Xaml
         {
             AssemblyName name = new AssemblyName(assembly.FullName);
             string partialName = name.Name;
-            return (partialName != null) ? partialName : string.Empty;
+            return (partialName is not null) ? partialName : string.Empty;
         }
 #endif
 
@@ -222,7 +222,7 @@ namespace System.Xaml
                         keysToRemove.Add(key);
                     }
                 }
-                if (keysToRemove != null)
+                if (keysToRemove is not null)
                 {
                     foreach (object key in keysToRemove)
                     {
@@ -260,7 +260,7 @@ namespace System.Xaml
                // Both Key Tokens are not set, treat them as same.
                isSame = true;
            }
-           else if (reqKeyToken != null && curKeyToken != null)
+           else if (reqKeyToken is not null && curKeyToken is not null)
            {
                // Both KeyTokens are set.
                if (reqKeyToken.Length == curKeyToken.Length)
@@ -306,7 +306,7 @@ namespace System.Xaml
         public WeakRefKey(object target)
             :base(target)
         {
-            Debug.Assert(target != null);
+            Debug.Assert(target is not null);
             _hashCode = target.GetHashCode();
         }
 
@@ -318,12 +318,12 @@ namespace System.Xaml
         public override bool Equals(object o)
         {
             WeakRefKey weakRef = o as WeakRefKey;
-            if (weakRef != null)
+            if (weakRef is not null)
             {
                 object target1 = Target;
                 object target2 = weakRef.Target;
 
-                if (target1 != null && target2 != null)
+                if (target1 is not null && target2 is not null)
                 {
                     return (target1 == target2);
                 }

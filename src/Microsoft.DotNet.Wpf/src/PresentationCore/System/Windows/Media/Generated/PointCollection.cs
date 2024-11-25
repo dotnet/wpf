@@ -404,7 +404,7 @@ namespace System.Windows.Media
             {
                 ReadPreamble();
 
-                return IsFrozen || Dispatcher != null;
+                return IsFrozen || Dispatcher is not null;
             }
         }
 
@@ -782,7 +782,7 @@ namespace System.Windows.Media
 
             internal Enumerator(PointCollection list)
             {
-                Debug.Assert(list != null, "list may not be null.");
+                Debug.Assert(list is not null, "list may not be null.");
 
                 _list = list;
                 _version = list._version;
@@ -938,7 +938,7 @@ namespace System.Windows.Media
 
             ICollection<Point> icollectionOfT = collection as ICollection<Point>;
 
-            if (icollectionOfT != null)
+            if (icollectionOfT is not null)
             {
                 _collection = new FrugalStructList<Point>(icollectionOfT);
             }
@@ -946,7 +946,7 @@ namespace System.Windows.Media
             {
                 ICollection icollection = collection as ICollection;
 
-                if (icollection != null) // an IC but not and IC<T>
+                if (icollection is not null) // an IC but not and IC<T>
                 {
                     _collection = new FrugalStructList<Point>(icollection);
                 }

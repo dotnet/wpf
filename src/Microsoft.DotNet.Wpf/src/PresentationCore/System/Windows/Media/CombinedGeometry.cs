@@ -161,7 +161,7 @@ namespace System.Windows.Media
                 bool hit2 = false;
 
                 Transform transform = Transform;
-                if (transform != null && !transform.IsIdentity)
+                if (transform is not null && !transform.IsIdentity)
                 {
                     // Inverse-transform the hit point
                     Matrix matrix = transform.Value;
@@ -179,11 +179,11 @@ namespace System.Windows.Media
 
                 Geometry geometry1 = Geometry1;
                 Geometry geometry2 = Geometry2;
-                if (geometry1 != null)
+                if (geometry1 is not null)
                 {
                     hit1 = geometry1.ContainsInternal(pen, hitPoint, tolerance, type);
                 }
-                if (geometry2 != null)
+                if (geometry2 is not null)
                 {
                     hit2 = geometry2.ContainsInternal(pen, hitPoint, tolerance, type);
                 }
@@ -210,7 +210,7 @@ namespace System.Windows.Media
             }
             else
             {
-                // pen != null
+                // pen is not null
                 return base.ContainsInternal(pen, hitPoint, tolerance, type);
             }
         }
@@ -320,9 +320,9 @@ namespace System.Windows.Media
         {
             Geometry geometry1 = Geometry1;
             Geometry geometry2 = Geometry2;
-            return ((geometry1 != null) && geometry1.MayHaveCurves())
+            return ((geometry1 is not null) && geometry1.MayHaveCurves())
                 ||
-                   ((geometry2 != null) && geometry2.MayHaveCurves());
+                   ((geometry2 is not null) && geometry2.MayHaveCurves());
         }
     }
 }

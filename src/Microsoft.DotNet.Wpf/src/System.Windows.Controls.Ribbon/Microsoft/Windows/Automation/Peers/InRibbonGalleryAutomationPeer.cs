@@ -52,40 +52,40 @@ namespace Microsoft.Windows.Automation.Peers
                 List<AutomationPeer> children = new List<AutomationPeer>();
 
                 RibbonGallery firstGallery = irg.FirstGallery;
-                if (firstGallery != null)
+                if (firstGallery is not null)
                 {
                     AutomationPeer galleryPeer = UIElementAutomationPeer.CreatePeerForElement(firstGallery);
-                    if (galleryPeer != null)
+                    if (galleryPeer is not null)
                     {
                         children.Add(galleryPeer);
                     }
                 }
 
                 RepeatButton scrollUpButton = irg.ScrollUpButton;
-                if (scrollUpButton != null)
+                if (scrollUpButton is not null)
                 {
                     AutomationPeer scrollUpButtonPeer = UIElementAutomationPeer.CreatePeerForElement(scrollUpButton);
-                    if (scrollUpButtonPeer != null)
+                    if (scrollUpButtonPeer is not null)
                     {
                         children.Add(scrollUpButtonPeer);
                     }
                 }
 
                 RepeatButton scrollDownButton = irg.ScrollDownButton;
-                if (scrollDownButton != null)
+                if (scrollDownButton is not null)
                 {
                     AutomationPeer scrollDownButtonPeer = UIElementAutomationPeer.CreatePeerForElement(scrollDownButton);
-                    if (scrollDownButtonPeer != null)
+                    if (scrollDownButtonPeer is not null)
                     {
                         children.Add(scrollDownButtonPeer);
                     }
                 }
 
                 ToggleButton partToggleButton = irg.PartToggleButton;
-                if (partToggleButton != null)
+                if (partToggleButton is not null)
                 {
                     AutomationPeer partToggleButtonPeer = UIElementAutomationPeer.CreatePeerForElement(partToggleButton);
-                    if (partToggleButtonPeer != null)
+                    if (partToggleButtonPeer is not null)
                     {
                         children.Add(partToggleButtonPeer);
                     }

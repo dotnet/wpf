@@ -54,7 +54,7 @@ namespace System.Windows.Media
             // Suppress PRESharp warning that fontFamily can be null; apparently PRESharp
             // doesn't understand short circuit evaluation of operator &&.
 #pragma warning suppress 56506
-            return fontFamily != null && fontFamily.Source != null && fontFamily.Source.Length != 0;           
+            return fontFamily is not null && fontFamily.Source is not null && fontFamily.Source.Length != 0;           
         }
 
         /// <summary>

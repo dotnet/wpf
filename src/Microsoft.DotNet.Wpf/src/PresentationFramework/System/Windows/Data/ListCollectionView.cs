@@ -337,7 +337,7 @@ namespace System.Windows.Data
         {
             if (!IsGrouping)
             {
-                if (ActiveComparer != null)
+                if (ActiveComparer is not null)
                     return ActiveComparer.Compare(o1, o2);
 
                 int i1 = InternalList.IndexOf(o1);
@@ -633,7 +633,7 @@ namespace System.Windows.Data
                 }
 
                 // now make the change and raise the events
-                if (args != null)
+                if (args is not null)
                 {
                     _newItemPlaceholderPosition = value;
 
@@ -685,7 +685,7 @@ namespace System.Windows.Data
                     EnsureItemConstructor();
                 }
 
-                return (_itemConstructor != null);
+                return (_itemConstructor is not null);
             }
         }
 
@@ -694,7 +694,7 @@ namespace System.Windows.Data
             if (!_isItemConstructorValid)
             {
                 Type itemType = GetItemType(true);
-                if (itemType != null)
+                if (itemType is not null)
                 {
                     _itemConstructor = itemType.GetConstructor(Type.EmptyTypes);
                     _isItemConstructorValid = true;
@@ -777,13 +777,13 @@ namespace System.Windows.Data
             MoveCurrentTo(newItem);
 
             ISupportInitialize isi = newItem as ISupportInitialize;
-            if (isi != null)
+            if (isi is not null)
             {
                 isi.BeginInit();
             }
 
             IEditableObject ieo = newItem as IEditableObject;
-            if (ieo != null)
+            if (ieo is not null)
             {
                 ieo.BeginEdit();
             }
@@ -992,7 +992,7 @@ namespace System.Windows.Data
             SetNewItem(NoNewItem);  // leave "adding-new" mode
 
             IEditableObject ieo = newItem as IEditableObject;
-            if (ieo != null)
+            if (ieo is not null)
             {
                 if (cancel)
                 {
@@ -1005,7 +1005,7 @@ namespace System.Windows.Data
             }
 
             ISupportInitialize isi = newItem as ISupportInitialize;
-            if (isi != null)
+            if (isi is not null)
             {
                 isi.EndInit();
             }
@@ -1180,7 +1180,7 @@ namespace System.Windows.Data
             SetEditItem(item);
 
             IEditableObject ieo = item as IEditableObject;
-            if (ieo != null)
+            if (ieo is not null)
             {
                 ieo.BeginEdit();
             }
@@ -1203,7 +1203,7 @@ namespace System.Windows.Data
             IEditableObject ieo = _editItem as IEditableObject;
             SetEditItem(null);
 
-            if (ieo != null)
+            if (ieo is not null)
             {
                 ieo.EndEdit();
             }
@@ -1251,7 +1251,7 @@ namespace System.Windows.Data
                                                         fromIndex),
                                     fromIndex, -1);
                     }
-                    else if (ActiveComparer != null)
+                    else if (ActiveComparer is not null)
                     {
                         // the item may have moved within the view
                         int localIndex = fromIndex - delta;
@@ -1313,7 +1313,7 @@ namespace System.Windows.Data
             IEditableObject ieo = _editItem as IEditableObject;
             SetEditItem(null);
 
-            if (ieo != null)
+            if (ieo is not null)
             {
                 ieo.CancelEdit();
             }
@@ -1326,7 +1326,7 @@ namespace System.Windows.Data
             IEditableObject ieo = _editItem as IEditableObject;
             SetEditItem(null);
 
-            if (ieo != null)
+            if (ieo is not null)
             {
                 ieo.CancelEdit();
             }
@@ -1350,7 +1350,7 @@ namespace System.Windows.Data
         /// </summary>
         public bool IsEditingItem
         {
-            get { return (_editItem != null); }
+            get { return (_editItem is not null); }
         }
 
         /// <summary>
@@ -1560,7 +1560,7 @@ namespace System.Windows.Data
         public void ResetComparisons()
         {
             LiveShapingList lsList = InternalList as LiveShapingList;
-            if (lsList != null)
+            if (lsList is not null)
             {
                 lsList.ResetComparisons();
             }
@@ -1569,7 +1569,7 @@ namespace System.Windows.Data
         public void ResetCopies()
         {
             LiveShapingList lsList = InternalList as LiveShapingList;
-            if (lsList != null)
+            if (lsList is not null)
             {
                 lsList.ResetCopies();
             }
@@ -1578,7 +1578,7 @@ namespace System.Windows.Data
         public void ResetAverageCopy()
         {
             LiveShapingList lsList = InternalList as LiveShapingList;
-            if (lsList != null)
+            if (lsList is not null)
             {
                 lsList.ResetAverageCopy();
             }
@@ -1587,19 +1587,19 @@ namespace System.Windows.Data
         public int GetComparisons()
         {
             LiveShapingList lsList = InternalList as LiveShapingList;
-            return (lsList != null) ? lsList.GetComparisons() : 0;
+            return (lsList is not null) ? lsList.GetComparisons() : 0;
         }
 
         public int GetCopies()
         {
             LiveShapingList lsList = InternalList as LiveShapingList;
-            return (lsList != null) ? lsList.GetCopies() : 0;
+            return (lsList is not null) ? lsList.GetCopies() : 0;
         }
 
         public double GetAverageCopy()
         {
             LiveShapingList lsList = InternalList as LiveShapingList;
-            return (lsList != null) ? lsList.GetAverageCopy() : 0.0;
+            return (lsList is not null) ? lsList.GetAverageCopy() : 0.0;
         }
 
         #endif // LiveShapingInstrumentation
@@ -1815,7 +1815,7 @@ namespace System.Windows.Data
                         }
                     }
 
-                    if (ActiveComparer != null && adjustedOldIndex == adjustedNewIndex)
+                    if (ActiveComparer is not null && adjustedOldIndex == adjustedNewIndex)
                     {
                         // when we're sorting, ignore Move from the underlying collection -
                         // the position is irrelevant
@@ -1888,8 +1888,8 @@ namespace System.Windows.Data
             bool oldIsCurrentAfterLast = IsCurrentAfterLast;
             bool oldIsCurrentBeforeFirst = IsCurrentBeforeFirst;
 
-            object oldItem = (args.OldItems != null && args.OldItems.Count > 0) ? args.OldItems[0] : null;
-            object newItem = (args.NewItems != null && args.NewItems.Count > 0) ? args.NewItems[0] : null;
+            object oldItem = (args.OldItems is not null && args.OldItems.Count > 0) ? args.OldItems[0] : null;
+            object newItem = (args.NewItems is not null && args.NewItems.Count > 0) ? args.NewItems[0] : null;
 
             LiveShapingList lsList = InternalList as LiveShapingList;
             LiveShapingItem lsi;
@@ -1906,7 +1906,7 @@ namespace System.Windows.Data
                     // for live filtering
                     if (adjustedNewIndex == -2)
                     {
-                        if (lsList != null && IsLiveFiltering == true)
+                        if (lsList is not null && IsLiveFiltering == true)
                         {
                             lsList.AddFilteredItem(newItem);
                         }
@@ -1940,7 +1940,7 @@ namespace System.Windows.Data
                     // live filtering
                     if (adjustedOldIndex == -2)
                     {
-                        if (lsList != null && IsLiveFiltering == true)
+                        if (lsList is not null && IsLiveFiltering == true)
                         {
                             lsList.RemoveFilteredItem(oldItem);
                         }
@@ -1977,7 +1977,7 @@ namespace System.Windows.Data
                     // the live filtering list
                     if (adjustedOldIndex == -2)
                     {
-                        if (lsList != null && IsLiveFiltering == true)
+                        if (lsList is not null && IsLiveFiltering == true)
                         {
                             lsList.ReplaceFilteredItem(oldItem, newItem);
                         }
@@ -2107,7 +2107,7 @@ namespace System.Windows.Data
             {
                 // we've already returned if (args.Action == NotifyCollectionChangedAction.Reset) above
                 OnCollectionChanged(args);
-                if (args2 != null)
+                if (args2 is not null)
                     OnCollectionChanged(args2);
 
                 // Any scalar properties that changed don't need a further notification,
@@ -2301,7 +2301,7 @@ namespace System.Windows.Data
         /// </summary>
         protected bool UsesLocalArray
         {
-            get { return ActiveComparer != null || ActiveFilter != null || (IsGrouping && IsLiveGrouping == true); }
+            get { return ActiveComparer is not null || ActiveFilter is not null || (IsGrouping && IsLiveGrouping == true); }
         }
 
         /// <summary>
@@ -2441,24 +2441,24 @@ namespace System.Windows.Data
         // without tripping off lazy creation of .SortDescriptions collection
         internal bool HasSortDescriptions
         {
-            get { return ((_sort != null) && (_sort.Count > 0)); }
+            get { return ((_sort is not null) && (_sort.Count > 0)); }
         }
 
         // return an appropriate comparer.   Common logic used by ListCollectionView
         // and by CollectionViewGroupInternal.
         internal static IComparer PrepareComparer(IComparer customSort, SortDescriptionCollection sort, Func<object, CollectionView> lazyGetCollectionView, object state)
         {
-            if (customSort != null)
+            if (customSort is not null)
             {
                 return customSort;
             }
 
-            if (sort != null && sort.Count > 0)
+            if (sort is not null && sort.Count > 0)
             {
                 CollectionView view = lazyGetCollectionView(state);
-                Debug.Assert(view != null, "lazyGetCollectionView should not return null");
+                Debug.Assert(view is not null, "lazyGetCollectionView should not return null");
 
-                if (view.SourceCollection != null)
+                if (view.SourceCollection is not null)
                 {
                     IComparer xmlComparer = SystemXmlHelper.PrepareXmlComparer(view.SourceCollection, sort, view.Culture);
                     if (xmlComparer!= null)
@@ -2563,7 +2563,7 @@ namespace System.Windows.Data
             PrepareShaping();
 
             LiveShapingList lsList = _internalList as LiveShapingList;
-            if (lsList != null)
+            if (lsList is not null)
             {
                 lsList.LiveShapingDirty -= new EventHandler(OnLiveShapingDirty);
                 lsList.Clear();
@@ -2602,12 +2602,12 @@ namespace System.Windows.Data
                 }
 
                 // sort the local array
-                if (ActiveComparer != null)
+                if (ActiveComparer is not null)
                 {
                     localList.Sort(ActiveComparer);
                 }
 
-                if (lsList != null)
+                if (lsList is not null)
                 {
                     lsList.LiveShapingDirty += new EventHandler(OnLiveShapingDirty);
                 }
@@ -2735,7 +2735,7 @@ namespace System.Windows.Data
                 {
                     index = -1;
                 }
-                else if (ActiveComparer != null)
+                else if (ActiveComparer is not null)
                 {
                     // if there's a sort order, use binary search
                     index = InternalList.Search(item, ActiveComparer);
@@ -2907,20 +2907,20 @@ namespace System.Windows.Data
             // initialize the synthetic top level group
             _group.Initialize();
 
-            _isGrouping = (_group.GroupBy != null);
+            _isGrouping = (_group.GroupBy is not null);
         }
 
         // set new SortDescription collection; rehook collection change notification handler
         private void SetSortDescriptions(SortDescriptionCollection descriptions)
         {
-            if (_sort != null)
+            if (_sort is not null)
             {
                 ((INotifyCollectionChanged)_sort).CollectionChanged -= new NotifyCollectionChangedEventHandler(SortDescriptionsChanged);
             }
 
             _sort = descriptions;
 
-            if (_sort != null)
+            if (_sort is not null)
             {
                 Invariant.Assert(_sort.Count == 0, "must be empty SortDescription collection");
                 ((INotifyCollectionChanged)_sort).CollectionChanged += new NotifyCollectionChangedEventHandler(SortDescriptionsChanged);
@@ -2953,14 +2953,14 @@ namespace System.Windows.Data
 
             // reset the grouping comparer
             IComparer comparer = ActiveComparer;
-            if (comparer != null)
+            if (comparer is not null)
             {
                 _group.ActiveComparer = comparer;
             }
             else
             {
                 CollectionViewGroupInternal.IListComparer ilc = _group.ActiveComparer as CollectionViewGroupInternal.IListComparer;
-                if (ilc != null)
+                if (ilc is not null)
                 {
                     ilc.ResetList(InternalList);
                 }
@@ -2987,7 +2987,7 @@ namespace System.Windows.Data
             for (int k=0, n=InternalList.Count;  k<n;  ++k)
             {
                 object item = InternalList[k];
-                LiveShapingItem lsi = (lsList != null) ? lsList.ItemAt(k) : null;
+                LiveShapingItem lsi = (lsList is not null) ? lsList.ItemAt(k) : null;
 
                 if (!IsAddingNew || !System.Windows.Controls.ItemsControl.EqualsEx(_newItem, item))
                 {
@@ -3113,7 +3113,7 @@ namespace System.Windows.Data
             int oldIndex, newIndex;
 
             // restore sorting
-            if (ActiveComparer != null)
+            if (ActiveComparer is not null)
             {
                 double dirtyDensity = ((double)list.SortDirtyItems.Count) / (list.Count + 1);
                 if (dirtyDensity < LiveSortingDensityThreshold)
@@ -3154,7 +3154,7 @@ namespace System.Windows.Data
             list.SortDirtyItems.Clear();
 
             // restore filtering
-            if (ActiveFilter != null)
+            if (ActiveFilter is not null)
             {
                 foreach (LiveShapingItem lsi in list.FilterDirtyItems)
                 {
@@ -3186,7 +3186,7 @@ namespace System.Windows.Data
                             list.RemoveFilteredItem(lsi);
 
                             // find where it belongs in the main list
-                            if (ActiveComparer != null)
+                            if (ActiveComparer is not null)
                             {
                                 // if there's a sort order, do a binary search
                                 index = list.Search(0, list.Count, item);
@@ -3307,7 +3307,7 @@ namespace System.Windows.Data
         // perform the deferred work, if any
         private void DoDeferredActions()
         {
-            if (_deferredActions != null)
+            if (_deferredActions is not null)
             {
                 List<Action> deferredActions = _deferredActions;
                 _deferredActions = null;

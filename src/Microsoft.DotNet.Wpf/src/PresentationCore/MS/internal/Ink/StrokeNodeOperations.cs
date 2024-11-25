@@ -46,7 +46,7 @@ namespace MS.Internal.Ink
         /// <param name="nodeShape">shape of the nodes</param>
         internal StrokeNodeOperations(StylusShape nodeShape)
         {
-            System.Diagnostics.Debug.Assert(nodeShape != null);
+            System.Diagnostics.Debug.Assert(nodeShape is not null);
             _vertices = nodeShape.GetVerticesAsVectors();
         }
 

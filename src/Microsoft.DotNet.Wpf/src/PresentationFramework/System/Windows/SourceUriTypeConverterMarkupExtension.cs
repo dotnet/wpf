@@ -36,10 +36,10 @@ namespace System.Windows.Baml2006
             object convertedValue =  base.ProvideValue(serviceProvider);
             Uri convertedUri = convertedValue as Uri;
             
-            if (convertedUri != null)
+            if (convertedUri is not null)
             {
                 Uri appendedVersionUri = BaseUriHelper.AppendAssemblyVersion(convertedUri, _assemblyInfo);
-                if (appendedVersionUri != null)
+                if (appendedVersionUri is not null)
                 {
                     return new ResourceDictionary.ResourceDictionarySourceUriWrapper(convertedUri, appendedVersionUri);
                 }

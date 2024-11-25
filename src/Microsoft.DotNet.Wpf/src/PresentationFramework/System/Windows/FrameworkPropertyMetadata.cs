@@ -576,7 +576,7 @@ namespace System.Windows
 
             // Source type is guaranteed to be the same type or base type
             FrameworkPropertyMetadata fbaseMetadata = baseMetadata as FrameworkPropertyMetadata;
-            if (fbaseMetadata != null)
+            if (fbaseMetadata is not null)
             {
                 // Merge source metadata into this
 

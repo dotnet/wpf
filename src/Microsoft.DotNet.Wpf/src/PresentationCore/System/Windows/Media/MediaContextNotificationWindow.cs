@@ -147,7 +147,7 @@ namespace System.Windows.Media
             ObjectDisposedException.ThrowIf(_isDisposed, typeof(MediaContextNotificationWindow));
 
             WindowMessage message = (WindowMessage)msg;
-            Debug.Assert(_ownerMediaContext != null);
+            Debug.Assert(_ownerMediaContext is not null);
 
             if (message == WindowMessage.WM_DWMCOMPOSITIONCHANGED)
             {

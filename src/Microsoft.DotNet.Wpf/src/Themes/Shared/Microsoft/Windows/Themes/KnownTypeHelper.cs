@@ -221,7 +221,7 @@ namespace Microsoft.Windows.Themes
             protected override XamlMember LookupMember(string name, bool skipReadOnlyCheck)
             {
                 XamlMember member = FindKnownMember(name);
-                if (member != null)
+                if (member is not null)
                 {
                     return member;
                 }
@@ -232,7 +232,7 @@ namespace Microsoft.Windows.Themes
             protected override XamlMember LookupAttachableMember(string name)
             {
                 XamlMember member = FindKnownMember(name);
-                if (member != null)
+                if (member is not null)
                 {
                     return member;
                 }

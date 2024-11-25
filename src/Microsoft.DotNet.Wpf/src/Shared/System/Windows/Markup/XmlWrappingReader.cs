@@ -30,7 +30,7 @@ namespace System.Windows.Markup
 // Constructor
 //
         internal XmlWrappingReader( XmlReader baseReader ) {
-            Debug.Assert( baseReader != null );
+            Debug.Assert( baseReader is not null );
             Reader = baseReader;
         }
 

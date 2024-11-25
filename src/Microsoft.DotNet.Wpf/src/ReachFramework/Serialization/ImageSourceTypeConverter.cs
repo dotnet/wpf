@@ -183,7 +183,7 @@ namespace System.Windows.Xps.Serialization
             // Get the current page image cache
             //
             Dictionary<int, Uri> currentPageImageTable = manager.ResourcePolicy.CurrentPageImageTable;
-            if (imageUri != null)
+            if (imageUri is not null)
             {
                 int uriHashCode = imageUri.GetHashCode();
                 if(!currentPageImageTable.ContainsKey(uriHashCode))
@@ -228,8 +228,8 @@ namespace System.Windows.Xps.Serialization
                 BitmapFrame bitmapFrame = bitmapSource as BitmapFrame;
 
                 if (isSupportedMimeType &&
-                    bitmapFrame != null &&
-                    bitmapFrame.Decoder != null
+                    bitmapFrame is not null &&
+                    bitmapFrame.Decoder is not null
                     )
                 {
                     BitmapDecoder decoder = bitmapFrame.Decoder;
@@ -357,9 +357,9 @@ namespace System.Windows.Xps.Serialization
             // If bitmapSource is indexed, has a color palette and transparency (e.g. transparent GIF)
             // PNG conversion may lose color or transparency or both information
             // To avoid this we convert all paletted bitmapSources to the 32 bit per pixel bgra format
-            if (bitmapSource != null
-                && bitmapSource.Palette != null
-                && bitmapSource.Palette.Colors != null
+            if (bitmapSource is not null
+                && bitmapSource.Palette is not null
+                && bitmapSource.Palette.Colors is not null
                 && bitmapSource.Palette.Colors.Count > 0)
             {
                 bitmapSource = new FormatConvertedBitmap(bitmapSource, PixelFormats.Bgra32, null, 0.0);
@@ -450,11 +450,11 @@ namespace System.Windows.Xps.Serialization
             BitmapFrame bitmapFrame = bitmapSource as BitmapFrame;
 
             //Use the Uri hash table if we have a bitmap with a Uri
-            if (bitmapFrame != null &&
-                bitmapFrame.Decoder != null)
+            if (bitmapFrame is not null &&
+                bitmapFrame.Decoder is not null)
             {
                 String sourceUri  = bitmapFrame.Decoder.ToString();
-                if (sourceUri != null)
+                if (sourceUri is not null)
                 {
                     _uriHashValue = sourceUri.GetHashCode();
 

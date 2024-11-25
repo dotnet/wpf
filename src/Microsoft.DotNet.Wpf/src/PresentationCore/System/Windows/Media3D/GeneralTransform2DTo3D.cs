@@ -32,7 +32,7 @@ namespace System.Windows.Media.Media3D
         {            
             Visual child = containingVisual3D.Visual;
 
-            Debug.Assert(child != null, "Going from 2D to 3D containingVisual3D.Visual should not be null");
+            Debug.Assert(child is not null, "Going from 2D to 3D containingVisual3D.Visual should not be null");
             
             _transform3D = (GeneralTransform3D)transform3D.GetCurrentValueAsFrozen();
 
@@ -80,7 +80,8 @@ namespace System.Windows.Media.Media3D
                                                             _textureCoords,
                                                             _triIndices))
             {
-                return false;}
+                return false;
+}
 
             if (!_transform3D.TryTransform(coordPoint, out result))
             {

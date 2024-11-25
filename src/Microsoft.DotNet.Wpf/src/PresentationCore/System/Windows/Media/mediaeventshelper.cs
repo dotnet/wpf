@@ -93,8 +93,8 @@ namespace System.Windows.Media
         /// </summary>
         internal void SetSender(MediaPlayer sender)
         {
-            Debug.Assert((sender != null), "Sender is null");
-            Debug.Assert((sender.Dispatcher != null), "Dispatcher is null");
+            Debug.Assert((sender is not null), "Sender is null");
+            Debug.Assert((sender.Dispatcher is not null), "Dispatcher is null");
 
             _sender = sender;
             _dispatcher = sender.Dispatcher;
@@ -224,7 +224,7 @@ namespace System.Windows.Media
 
         internal void RaiseMediaFailed(Exception e)
         {
-            if (DispatcherMediaFailed != null)
+            if (DispatcherMediaFailed is not null)
             {
                 _dispatcher.BeginInvoke(
                     DispatcherPriority.Normal,
@@ -278,7 +278,7 @@ namespace System.Windows.Media
                 {
                 case AVEvent.AVMediaOpened:
 
-                    if (DispatcherMediaOpened != null)
+                    if (DispatcherMediaOpened is not null)
                     {
                         _dispatcher.BeginInvoke(DispatcherPriority.Normal, DispatcherMediaOpened, null);
                     }
@@ -291,7 +291,7 @@ namespace System.Windows.Media
 
                 case AVEvent.AVMediaBufferingStarted:
 
-                    if (DispatcherBufferingStarted != null)
+                    if (DispatcherBufferingStarted is not null)
                     {
                         _dispatcher.BeginInvoke(DispatcherPriority.Normal, DispatcherBufferingStarted, null);
                     }
@@ -299,7 +299,7 @@ namespace System.Windows.Media
 
                 case AVEvent.AVMediaBufferingEnded:
 
-                    if (DispatcherBufferingEnded != null)
+                    if (DispatcherBufferingEnded is not null)
                     {
                         _dispatcher.BeginInvoke(DispatcherPriority.Normal, DispatcherBufferingEnded, null);
                     }
@@ -307,7 +307,7 @@ namespace System.Windows.Media
 
                 case AVEvent.AVMediaEnded:
 
-                    if (DispatcherMediaEnded != null)
+                    if (DispatcherMediaEnded is not null)
                     {
                         _dispatcher.BeginInvoke(DispatcherPriority.Normal, DispatcherMediaEnded, null);
                     }
@@ -315,7 +315,7 @@ namespace System.Windows.Media
 
                 case AVEvent.AVMediaPrerolled:
 
-                    if (DispatcherMediaPrerolled != null)
+                    if (DispatcherMediaPrerolled is not null)
                     {
                         _dispatcher.BeginInvoke(DispatcherPriority.Normal, DispatcherMediaPrerolled, null);
                     }
@@ -328,7 +328,7 @@ namespace System.Windows.Media
 
                 case AVEvent.AVMediaNewFrame:
 
-                    if (DispatcherMediaNewFrame != null)
+                    if (DispatcherMediaNewFrame is not null)
                     {
                         //
                         // We set frame updates to background because media is high frequency and bandwidth enough
@@ -365,7 +365,7 @@ namespace System.Windows.Media
             int parameterTypeLength = (int)reader.ReadUInt32();
             int parameterValueLength = (int)reader.ReadUInt32();
 
-            if (DispatcherScriptCommand != null)
+            if (DispatcherScriptCommand is not null)
             {
                 string parameterType = GetStringFromReader(reader, parameterTypeLength);
                 string parameterValue = GetStringFromReader(reader, parameterValueLength);

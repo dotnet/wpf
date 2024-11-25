@@ -21,21 +21,21 @@ namespace MS.Internal
         internal static bool IsXmlNode(object item)
         {
             SystemXmlExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemXml();
-            return (extensions != null) ? extensions.IsXmlNode(item) : false;
+            return (extensions is not null) ? extensions.IsXmlNode(item) : false;
         }
 
         // return true if the item is an XmlNamespaceManager
         internal static bool IsXmlNamespaceManager(object item)
         {
             SystemXmlExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemXml();
-            return (extensions != null) ? extensions.IsXmlNamespaceManager(item) : false;
+            return (extensions is not null) ? extensions.IsXmlNamespaceManager(item) : false;
         }
 
         // if the item is an XmlNode, get the value corresponding to the given name
         internal static bool TryGetValueFromXmlNode(object item, string name, out object value)
         {
             SystemXmlExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemXml();
-            if (extensions != null)
+            if (extensions is not null)
             {
                 return extensions.TryGetValueFromXmlNode(item, name, out value);
             }
@@ -48,7 +48,7 @@ namespace MS.Internal
         internal static IComparer PrepareXmlComparer(IEnumerable collection, SortDescriptionCollection sort, CultureInfo culture)
         {
             SystemXmlExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemXml();
-            if (extensions != null)
+            if (extensions is not null)
             {
                 return extensions.PrepareXmlComparer(collection, sort, culture);
             }
@@ -60,7 +60,7 @@ namespace MS.Internal
         internal static bool IsEmptyXmlDataCollection(object parent)
         {
             SystemXmlExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemXml();
-            return (extensions != null) ? extensions.IsEmptyXmlDataCollection(parent) : false;
+            return (extensions is not null) ? extensions.IsEmptyXmlDataCollection(parent) : false;
         }
 
         // when item is an XmlNode, get its tag name (using the target DO as context
@@ -68,7 +68,7 @@ namespace MS.Internal
         internal static string GetXmlTagName(object item, DependencyObject target)
         {
             SystemXmlExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemXml();
-            return (extensions != null) ? extensions.GetXmlTagName(item, target) : null;
+            return (extensions is not null) ? extensions.GetXmlTagName(item, target) : null;
         }
 
         // find a node with the given string as its InnerText
@@ -76,14 +76,14 @@ namespace MS.Internal
         {
             index = -1;
             SystemXmlExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemXml();
-            return (extensions != null) ? extensions.FindXmlNodeWithInnerText(items, innerText, out index) : DependencyProperty.UnsetValue;
+            return (extensions is not null) ? extensions.FindXmlNodeWithInnerText(items, innerText, out index) : DependencyProperty.UnsetValue;
         }
 
         // get the InnerText of the given node
         internal static object GetInnerText(object item)
         {
             SystemXmlExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemXml();
-            return (extensions != null) ? extensions.GetInnerText(item) : null;
+            return (extensions is not null) ? extensions.GetInnerText(item) : null;
         }
     }
 }

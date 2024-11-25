@@ -65,10 +65,10 @@ namespace Microsoft.Windows.Controls.Ribbon
 
                 if (!string.IsNullOrEmpty(toolTipTitle) ||
                     !string.IsNullOrEmpty(toolTipDescription) ||
-                    toolTipImageSource != null ||
+                    toolTipImageSource is not null ||
                     !string.IsNullOrEmpty(toolTipFooterTitle) ||
                     !string.IsNullOrEmpty(toolTipFooterDescription) ||
-                    toolTipFooterImageSource != null)
+                    toolTipFooterImageSource is not null)
                 {
                     RibbonToolTip ribbonToolTip = new RibbonToolTip();
                     ribbonToolTip.Title = toolTipTitle;
@@ -125,10 +125,10 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// <param name="value">Set or Unset ToolTip</param>
         public static void SetContentAsToolTip(FrameworkElement element, FrameworkElement visualChild, object content, bool value)
         {
-            if (visualChild != null)
+            if (visualChild is not null)
             {
                 // Checks if ToolTip is not already set on the element
-                if (value && element.ToolTip is null && content != null)
+                if (value && element.ToolTip is null && content is not null)
                 {
                     RibbonToolTip ribbonToolTip = visualChild.ToolTip as RibbonToolTip;
                     if (ribbonToolTip is null ||
@@ -153,11 +153,11 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (popup is null)
             {
                 DependencyObject rootVisual = TreeHelper.FindVisualRoot(element);
-                if (rootVisual != null)
+                if (rootVisual is not null)
                 {
                     popup = LogicalTreeHelper.GetParent(rootVisual) as Popup;
 
-                    if (popup != null)
+                    if (popup is not null)
                     {
                         popup.Opened += OnPopupOpenedOrClosed;
                         popup.Closed += OnPopupOpenedOrClosed;
@@ -205,15 +205,15 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 return null;
             }
-            Debug.Assert(property != null);
+            Debug.Assert(property is not null);
             return new ValueAndValueSource() { Value = d.GetValue(property), ValueSource = DependencyPropertyHelper.GetValueSource(d, property).BaseValueSource };
         }
 
         private static void RestoreValue(DependencyObject d, DependencyProperty property, ValueAndValueSource v)
         {
-            Debug.Assert(d != null);
-            Debug.Assert(property != null);
-            Debug.Assert(v != null);
+            Debug.Assert(d is not null);
+            Debug.Assert(property is not null);
+            Debug.Assert(v is not null);
             if (v.ValueSource == BaseValueSource.Local)
             {
                 d.SetValue(property, v.Value);
@@ -268,7 +268,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             // those values should be kept for master-detail scenarios to be working correctly.
 
             HeaderedItemsControl hic = itemsControl as HeaderedItemsControl;
-            HierarchicalDataTemplate hTemplate = hic != null ? hic.HeaderTemplate as HierarchicalDataTemplate : null;
+            HierarchicalDataTemplate hTemplate = hic is not null ? hic.HeaderTemplate as HierarchicalDataTemplate : null;
 
             if (itemsControl.ItemTemplate == parentItemsControl.ItemTemplate)
             {
@@ -328,19 +328,19 @@ namespace Microsoft.Windows.Controls.Ribbon
                 }
             }
 
-            if (hic != null)
+            if (hic is not null)
             {
-                if (headerTemplate != null && hic.HeaderTemplate == parentItemsControl.ItemTemplate && hTemplate is null)
+                if (headerTemplate is not null && hic.HeaderTemplate == parentItemsControl.ItemTemplate && hTemplate is null)
                 {
                     RestoreValue(hic, HeaderedItemsControl.HeaderTemplateProperty, headerTemplate);
                 }
 
-                if (headerTemplateSelector != null && hic.HeaderTemplateSelector == parentItemsControl.ItemTemplateSelector && hTemplate is null)
+                if (headerTemplateSelector is not null && hic.HeaderTemplateSelector == parentItemsControl.ItemTemplateSelector && hTemplate is null)
                 {
                     RestoreValue(hic, HeaderedItemsControl.HeaderTemplateSelectorProperty, headerTemplateSelector);
                 }
 
-                if (headerStringFormat != null && hic.HeaderStringFormat == parentItemsControl.ItemStringFormat && hTemplate is null)
+                if (headerStringFormat is not null && hic.HeaderStringFormat == parentItemsControl.ItemStringFormat && hTemplate is null)
                 {
                     RestoreValue(hic, HeaderedItemsControl.HeaderStringFormatProperty, headerStringFormat);
                 }
@@ -366,15 +366,15 @@ namespace Microsoft.Windows.Controls.Ribbon
             // Compute visible portion of the rectangle.
 
             Visual visual = VisualTreeHelper.GetParent(element) as Visual;
-            while (visual != null && boundingRect != Rect.Empty && boundingRect.Height != 0 && boundingRect.Width != 0)
+            while (visual is not null && boundingRect != Rect.Empty && boundingRect.Height != 0 && boundingRect.Width != 0)
             {
                 Geometry clipGeometry = VisualTreeHelper.GetClip(visual);
-                if (clipGeometry != null)
+                if (clipGeometry is not null)
                 {
                     GeneralTransform transform = element.TransformToAncestor(visual).Inverse;
                     // Safer version of transform to descendent (doing the inverse ourself and saves us changing the co-ordinate space of the owner's bounding rectangle),
                     // we want the rect inside of our space. (Which is always rectangular and much nicer to work with)
-                    if (transform != null)
+                    if (transform is not null)
                     {
                         Rect clipBounds = clipGeometry.Bounds;
                         clipBounds = transform.TransformBounds(clipBounds);
@@ -438,7 +438,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 }
 
                 RibbonControlSizeDefinition controlSizeDefinition = RibbonControlService.GetControlSizeDefinition(parent);
-                if (controlSizeDefinition != null)
+                if (controlSizeDefinition is not null)
                 {
                     RibbonControlService.SetControlSizeDefinition(child, controlSizeDefinition);
                 }
@@ -447,7 +447,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         internal static void ClearPseudoInheritedProperties(DependencyObject child)
         {
-            if (child != null)
+            if (child is not null)
             {
                 child.ClearValue(RibbonControlService.IsInQuickAccessToolBarPropertyKey);
                 child.ClearValue(RibbonControlService.IsInControlGroupPropertyKey);
@@ -480,12 +480,12 @@ namespace Microsoft.Windows.Controls.Ribbon
         public static bool MoveFocus(FocusNavigationDirection direction)
         {
             UIElement uie = Keyboard.FocusedElement as UIElement;
-            if (uie != null)
+            if (uie is not null)
             {
                 return uie.MoveFocus(new TraversalRequest(direction));
             }
             ContentElement ce = Keyboard.FocusedElement as ContentElement;
-            if (ce != null)
+            if (ce is not null)
             {
                 return ce.MoveFocus(new TraversalRequest(direction));
             }
@@ -498,15 +498,15 @@ namespace Microsoft.Windows.Controls.Ribbon
             ContentElement ce;
             UIElement3D uie3d;
 
-            if ((uie = element as UIElement) != null)
+            if ((uie = element as UIElement) is not null)
             {
                 return uie.PredictFocus(direction);
             }
-            else if ((ce = element as ContentElement) != null)
+            else if ((ce = element as ContentElement) is not null)
             {
                 return ce.PredictFocus(direction);
             }
-            else if ((uie3d = element as UIElement3D) != null)
+            else if ((uie3d = element as UIElement3D) is not null)
             {
                 return uie3d.PredictFocus(direction);
             }
@@ -520,15 +520,15 @@ namespace Microsoft.Windows.Controls.Ribbon
             ContentElement ce;
             UIElement3D uie3d;
 
-            if ((uie = element as UIElement) != null)
+            if ((uie = element as UIElement) is not null)
             {
                 return uie.Focus();
             }
-            else if ((ce = element as ContentElement) != null)
+            else if ((ce = element as ContentElement) is not null)
             {
                 return ce.Focus();
             }
-            else if ((uie3d = element as UIElement3D) != null)
+            else if ((uie3d = element as UIElement3D) is not null)
             {
                 return uie3d.Focus();
             }
@@ -543,7 +543,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         internal static bool NavigateToFirstItem(ItemsControl itemsControl, Action<int> bringIntoViewCallback, Func<FrameworkElement, bool> additionalCheck)
         {
             FrameworkElement firstItem = FindContainer(itemsControl, 0, 1, bringIntoViewCallback, additionalCheck);
-            if (firstItem != null)
+            if (firstItem is not null)
             {
                 firstItem.Focus();
                 return true;
@@ -554,7 +554,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         internal static bool NavigateToLastItem(ItemsControl itemsControl, Action<int> bringIntoViewCallback, Func<FrameworkElement, bool> additionalCheck)
         {
             FrameworkElement lastItem = FindContainer(itemsControl, itemsControl.Items.Count - 1, -1, bringIntoViewCallback, additionalCheck);
-            if (lastItem != null)
+            if (lastItem is not null)
             {
                 lastItem.Focus();
                 return true;
@@ -572,13 +572,13 @@ namespace Microsoft.Windows.Controls.Ribbon
                     FrameworkElement container = itemsControl.ItemContainerGenerator.ContainerFromIndex(startIndex) as FrameworkElement;
 
                     // If container is virtualized, call BringIntoView.
-                    if (container is null && bringIntoViewCallback != null)
+                    if (container is null && bringIntoViewCallback is not null)
                     {
                         bringIntoViewCallback(startIndex);
                         container = itemsControl.ItemContainerGenerator.ContainerFromIndex(startIndex) as FrameworkElement;
                     }
 
-                    if (container != null && (additionalCheck is null || additionalCheck(container)))
+                    if (container is not null && (additionalCheck is null || additionalCheck(container)))
                     {
                         return container;
                     }
@@ -593,7 +593,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (itemIndex < parent.Items.Count)
             {
                 FrameworkElement nextElement = RibbonHelper.FindContainer(parent, itemIndex, 1, bringIntoViewCallback, null);
-                if (nextElement != null)
+                if (nextElement is not null)
                 {
                     nextElement.Focus();
                     return true;
@@ -610,7 +610,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (startIndex < parent.Items.Count - 1)
             {
                 FrameworkElement nextElement = RibbonHelper.FindContainer(parent, startIndex + 1, 1, bringIntoViewCallback, IsMenuItemFocusable);
-                if (nextElement != null)
+                if (nextElement is not null)
                 {
                     RibbonGallery gallery = nextElement as RibbonGallery;
                     if (gallery is null)
@@ -639,7 +639,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (startIndex > 0)
             {
                 FrameworkElement previousElement = RibbonHelper.FindContainer(parent, startIndex - 1, -1, bringIntoViewCallback, IsMenuItemFocusable);
-                if (previousElement != null)
+                if (previousElement is not null)
                 {
                     RibbonGallery gallery = previousElement as RibbonGallery;
                     if (gallery is null)
@@ -658,10 +658,10 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private static bool NavigateUpToGallery(RibbonGallery gallery)
         {
-            if (gallery != null)
+            if (gallery is not null)
             {
                 RibbonGalleryCategory lastCategory = RibbonHelper.FindContainer(gallery, gallery.Items.Count - 1, -1, null, IsContainerVisible) as RibbonGalleryCategory;
-                if (lastCategory != null)
+                if (lastCategory is not null)
                 {
                     return RibbonHelper.NavigateToLastItem(lastCategory, /* BringIntoView callback */ null, IsContainerFocusable);
                 }
@@ -671,14 +671,14 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private static bool NavigateDownToGallery(RibbonGallery gallery)
         {
-            if (gallery != null)
+            if (gallery is not null)
             {
                 if (gallery.CanUserFilter)
                 {
                     // Move focus to FilterContentPane of FilterMenuButton accordingly.
                     FrameworkElement focusObject = null;
                     ContentPresenter filterContentPane = gallery.FilterContentPane;
-                    if (filterContentPane != null &&
+                    if (filterContentPane is not null &&
                         filterContentPane.IsVisible)
                     {
                         focusObject = filterContentPane;
@@ -686,13 +686,13 @@ namespace Microsoft.Windows.Controls.Ribbon
                     if (focusObject is null)
                     {
                         RibbonFilterMenuButton filterButton = gallery.FilterMenuButton;
-                        if (filterButton != null &&
+                        if (filterButton is not null &&
                             filterButton.IsVisible)
                         {
                             focusObject = filterButton;
                         }
                     }
-                    if (focusObject != null)
+                    if (focusObject is not null)
                     {
                         focusObject.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
                         return true;
@@ -700,7 +700,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 }
 
                 RibbonGalleryCategory firstCategory = RibbonHelper.FindContainer(gallery, 0, 1, null, IsContainerVisible) as RibbonGalleryCategory;
-                if (firstCategory != null)
+                if (firstCategory is not null)
                 {
                     return RibbonHelper.NavigateToFirstItem(firstCategory, /* BringIntoView callback */ null, IsContainerFocusable);
                 }
@@ -710,17 +710,17 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private static bool IsContainerFocusable(FrameworkElement container)
         {
-            return container != null && container.Focusable;
+            return container is not null && container.Focusable;
         }
 
         private static bool IsContainerVisible(FrameworkElement container)
         {
-            return container != null && container.Visibility == Visibility.Visible;
+            return container is not null && container.Visibility == Visibility.Visible;
         }
 
         private static bool IsMenuItemFocusable(FrameworkElement container)
         {
-            return container != null && (container is RibbonGallery || container.Focusable);
+            return container is not null && (container is RibbonGallery || container.Focusable);
         }
 
         // This method is called when trying to navigate a single step up, down, left or
@@ -728,10 +728,10 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         internal static bool NavigateAndHighlightGalleryItem(RibbonGalleryItem focusedElement, FocusNavigationDirection direction)
         {
-            if (focusedElement != null)
+            if (focusedElement is not null)
             {
                 RibbonGalleryItem predictedFocus = focusedElement.PredictFocus(direction) as RibbonGalleryItem;
-                if (predictedFocus != null)
+                if (predictedFocus is not null)
                 {
                     predictedFocus.IsHighlighted = true;
                     return true;
@@ -760,23 +760,23 @@ namespace Microsoft.Windows.Controls.Ribbon
             highlightedGalleryItem = null;
 
             RibbonGalleryCategoriesPanel categoriesPanel = gallery.ItemsHostSite as RibbonGalleryCategoriesPanel;
-            if (categoriesPanel != null)
+            if (categoriesPanel is not null)
             {
                 double viewportWidth = categoriesPanel.ViewportWidth;
                 double viewportHeight = categoriesPanel.ViewportHeight;
 
                 RibbonGalleryCategory category, prevCategory = null;
-                if (galleryItem != null)
+                if (galleryItem is not null)
                 {
                     category = galleryItem.RibbonGalleryCategory;
                 }
                 else
                 {
                     category = gallery.Items.Count > 0 ? gallery.ItemContainerGenerator.ContainerFromIndex(0) as RibbonGalleryCategory : null;
-                    galleryItem = category != null && category.Items.Count > 0 ? category.ItemContainerGenerator.ContainerFromIndex(0) as RibbonGalleryItem : null;
+                    galleryItem = category is not null && category.Items.Count > 0 ? category.ItemContainerGenerator.ContainerFromIndex(0) as RibbonGalleryItem : null;
                 }
 
-                if (category != null)
+                if (category is not null)
                 {
                     Debug.Assert(category.RibbonGallery == gallery, "The reference RibbongalleryItem and the RibbonGallery must be related.");
 
@@ -811,10 +811,10 @@ namespace Microsoft.Windows.Controls.Ribbon
 
                         if (direction == FocusNavigationDirection.Up)
                         {
-                            startItemIndex = galleryItem != null ? category.ItemContainerGenerator.IndexFromContainer(galleryItem) : category.Items.Count - 1;
+                            startItemIndex = galleryItem is not null ? category.ItemContainerGenerator.IndexFromContainer(galleryItem) : category.Items.Count - 1;
                             endItemIndex = -1;
 
-                            if (prevCategory != null)
+                            if (prevCategory is not null)
                             {
                                 viewportHeight -= prevCategory.HeaderPresenter.ActualHeight;
 
@@ -834,16 +834,16 @@ namespace Microsoft.Windows.Controls.Ribbon
                             }
                             else
                             {
-                                startColumnIndex = (galleryItem != null ? startItemIndex : category.Items.Count - 1) % columnCount;
+                                startColumnIndex = (galleryItem is not null ? startItemIndex : category.Items.Count - 1) % columnCount;
                                 endColumnIndex = 0;
                             }
                         }
                         else
                         {
-                            startItemIndex = galleryItem != null ? category.ItemContainerGenerator.IndexFromContainer(galleryItem) : 0;
+                            startItemIndex = galleryItem is not null ? category.ItemContainerGenerator.IndexFromContainer(galleryItem) : 0;
                             endItemIndex = category.Items.Count;
 
-                            if (prevCategory != null)
+                            if (prevCategory is not null)
                             {
                                 viewportHeight -= category.HeaderPresenter.ActualHeight;
 
@@ -866,7 +866,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                                 int remainingItems = category.Items.Count;
                                 bool isLastRow = remainingItems <= columnCount;
 
-                                startColumnIndex = galleryItem != null ? (startItemIndex % columnCount) : 0;
+                                startColumnIndex = galleryItem is not null ? (startItemIndex % columnCount) : 0;
                                 endColumnIndex = isLastRow ? remainingItems - 1 : columnCount - 1;
                             }
                         }
@@ -924,7 +924,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         prevCategory = category;
                     }
 
-                    if (highlightedGalleryItem != null)
+                    if (highlightedGalleryItem is not null)
                     {
                         highlightedGalleryItem.IsHighlighted = true;
                         return true;
@@ -941,25 +941,25 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         internal static void AddHandler(DependencyObject element, RoutedEvent routedEvent, Delegate handler)
         {
-            Debug.Assert(element != null, "Element must not be null");
-            Debug.Assert(routedEvent != null, "RoutedEvent must not be null");
+            Debug.Assert(element is not null, "Element must not be null");
+            Debug.Assert(routedEvent is not null, "RoutedEvent must not be null");
 
             UIElement uiElement = element as UIElement;
-            if (uiElement != null)
+            if (uiElement is not null)
             {
                 uiElement.AddHandler(routedEvent, handler);
             }
             else
             {
                 ContentElement contentElement = element as ContentElement;
-                if (contentElement != null)
+                if (contentElement is not null)
                 {
                     contentElement.AddHandler(routedEvent, handler);
                 }
                 else
                 {
                     UIElement3D uiElement3D = element as UIElement3D;
-                    if (uiElement3D != null)
+                    if (uiElement3D is not null)
                     {
                         uiElement3D.AddHandler(routedEvent, handler);
                     }
@@ -969,25 +969,25 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         internal static void RemoveHandler(DependencyObject element, RoutedEvent routedEvent, Delegate handler)
         {
-            Debug.Assert(element != null, "Element must not be null");
-            Debug.Assert(routedEvent != null, "RoutedEvent must not be null");
+            Debug.Assert(element is not null, "Element must not be null");
+            Debug.Assert(routedEvent is not null, "RoutedEvent must not be null");
 
             UIElement uiElement = element as UIElement;
-            if (uiElement != null)
+            if (uiElement is not null)
             {
                 uiElement.RemoveHandler(routedEvent, handler);
             }
             else
             {
                 ContentElement contentElement = element as ContentElement;
-                if (contentElement != null)
+                if (contentElement is not null)
                 {
                     contentElement.RemoveHandler(routedEvent, handler);
                 }
                 else
                 {
                     UIElement3D uiElement3D = element as UIElement3D;
-                    if (uiElement3D != null)
+                    if (uiElement3D is not null)
                     {
                         uiElement3D.RemoveHandler(routedEvent, handler);
                     }
@@ -1001,12 +1001,12 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static bool IsOurWindow(IntPtr hwnd, DependencyObject element)
         {
-            Debug.Assert(element != null);
+            Debug.Assert(element is not null);
             if (hwnd != IntPtr.Zero)
             {
                 HwndSource hwndSource;
                 hwndSource = HwndSource.FromHwnd(hwnd);
-                if (hwndSource != null &&
+                if (hwndSource is not null &&
                     hwndSource.Dispatcher == element.Dispatcher)
                 {
                     // The window has the same dispatcher, must be ours.
@@ -1023,7 +1023,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             UIElement targetCapture,
             UIElement targetFocus)
         {
-            if (getter() && targetCapture != null)
+            if (getter() && targetCapture is not null)
             {
                 IntPtr capturedHwnd = IntPtr.Zero;
                 bool isOurWindowCaptured = false;
@@ -1103,7 +1103,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static bool ReacquireCapture(UIElement targetCapture, UIElement targetFocus)
         {
             bool success = Mouse.Capture(targetCapture, CaptureMode.SubTree);
-            if (success && targetFocus != null && !targetFocus.IsKeyboardFocusWithin)
+            if (success && targetFocus is not null && !targetFocus.IsKeyboardFocusWithin)
             {
                 targetFocus.Focus();
             }
@@ -1147,7 +1147,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     {
                         source = element;
                     }
-                    if (source != null)
+                    if (source is not null)
                     {
                         source.RaiseEvent(new RibbonDismissPopupEventArgs(RibbonDismissPopupMode.MousePhysicallyNotOver));
                     }
@@ -1194,12 +1194,12 @@ namespace Microsoft.Windows.Controls.Ribbon
                 {
                     if (getter())
                     {
-                        if (targetFocus != null && !targetFocus.IsKeyboardFocusWithin)
+                        if (targetFocus is not null && !targetFocus.IsKeyboardFocusWithin)
                         {
                             targetFocus.Focus();
                         }
 
-                        if (targetCapture != null &&
+                        if (targetCapture is not null &&
                             (Mouse.Captured is null ||
                             !IsCaptureInSubtree(targetCapture)))
                         {
@@ -1213,14 +1213,14 @@ namespace Microsoft.Windows.Controls.Ribbon
         public static void RestoreFocusAndCapture(UIElement targetCapture,
             UIElement targetFocus)
         {
-            if (targetFocus != null &&
+            if (targetFocus is not null &&
                 targetFocus.IsKeyboardFocusWithin)
             {
                 Keyboard.Focus(null);
             }
 
-            if (targetCapture != null &&
-                Mouse.Captured != null &&
+            if (targetCapture is not null &&
+                Mouse.Captured is not null &&
                 IsCaptureInSubtree(targetCapture))
             {
                 Mouse.Capture(null);
@@ -1264,7 +1264,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         {
                             settor(false);
                             e.Handled = true;
-                            if (targetFocusOnFalse != null)
+                            if (targetFocusOnFalse is not null)
                             {
                                 targetFocusOnFalse.Focus();
                             }
@@ -1280,7 +1280,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         {
                             // Raise DismissPopup event and hence the key down event.
                             UIElement uie = sender as UIElement;
-                            if (uie != null)
+                            if (uie is not null)
                             {
                                 RibbonDismissPopupEventArgs dismissArgs = new RibbonDismissPopupEventArgs();
                                 uie.RaiseEvent(dismissArgs);
@@ -1295,7 +1295,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         {
                             settor(false);
                             e.Handled = true;
-                            if (targetFocusOnFalse != null)
+                            if (targetFocusOnFalse is not null)
                             {
                                 targetFocusOnFalse.Focus();
                             }
@@ -1303,7 +1303,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         else
                         {
                             settor(true);
-                            if (targetFocusContainerOnTrue != null)
+                            if (targetFocusContainerOnTrue is not null)
                             {
                                 targetFocusContainerOnTrue.Dispatcher.BeginInvoke(
                                     (Action)delegate()
@@ -1338,7 +1338,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         public static bool IsCaptureInVisualSubtree(UIElement element)
         {
-            return (element != null && Mouse.Captured != null && (Mouse.Captured == element ||
+            return (element is not null && Mouse.Captured is not null && (Mouse.Captured == element ||
                 TreeHelper.IsVisualAncestorOf(element, Mouse.Captured as DependencyObject)));
         }
 
@@ -1348,7 +1348,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 return false;
             }
-            return TreeHelper.FindAncestor(element, delegate(DependencyObject d) { return d == ancestor; }) != null;
+            return TreeHelper.FindAncestor(element, delegate(DependencyObject d) { return d == ancestor; }) is not null;
         }
 
         /// <summary>
@@ -1378,25 +1378,25 @@ namespace Microsoft.Windows.Controls.Ribbon
         // Registers itself to StarLayout manager in the parent chain.
         public static void InitializeStarLayoutManager(DependencyObject starLayoutProvider)
         {
-            Debug.Assert(starLayoutProvider != null);
+            Debug.Assert(starLayoutProvider is not null);
 
             ISupportStarLayout starLayoutManager = TreeHelper.FindVisualAncestor(starLayoutProvider,
                 RibbonHelper.IsISupportStarLayout) as ISupportStarLayout;
             IContainsStarLayoutManager iContainsStarLayoutManager = starLayoutProvider as IContainsStarLayoutManager;
 
-            if (iContainsStarLayoutManager != null)
+            if (iContainsStarLayoutManager is not null)
             {
                 IProvideStarLayoutInfoBase iProvideStarLayoutInfoBase = (IProvideStarLayoutInfoBase)starLayoutProvider;
-                if (starLayoutManager is null && iContainsStarLayoutManager.StarLayoutManager != null)
+                if (starLayoutManager is null && iContainsStarLayoutManager.StarLayoutManager is not null)
                 {
                     iContainsStarLayoutManager.StarLayoutManager.UnregisterStarLayoutProvider(iProvideStarLayoutInfoBase);
                     iContainsStarLayoutManager.StarLayoutManager = null;
                 }
-                else if (starLayoutManager != null)
+                else if (starLayoutManager is not null)
                 {
                     if (starLayoutManager != iContainsStarLayoutManager.StarLayoutManager)
                     {
-                        if (iContainsStarLayoutManager.StarLayoutManager != null)
+                        if (iContainsStarLayoutManager.StarLayoutManager is not null)
                         {
                             iContainsStarLayoutManager.StarLayoutManager.UnregisterStarLayoutProvider(iProvideStarLayoutInfoBase);
                         }
@@ -1415,7 +1415,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     // will already be dirty for measure.
 
                     UIElement managerElement = starLayoutManager as UIElement;
-                    if (managerElement != null)
+                    if (managerElement is not null)
                     {
                         managerElement.InvalidateMeasure();
                     }
@@ -1439,7 +1439,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 if (baseValueSource == BaseValueSource.Default)
                 {
                     RibbonContextMenu cm = RibbonContextMenu.ChooseContextMenu(d);
-                    if (cm != null)
+                    if (cm is not null)
                     {
                         return cm;
                     }
@@ -1475,7 +1475,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             ICommandSource commandSource = d as ICommandSource;
             if (baseValue is null &&
-                commandSource != null)
+                commandSource is not null)
             {
                 return commandSource.Command;
             }
@@ -1500,7 +1500,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 if (baseValueSource == BaseValueSource.Default)
                 {
                     FrameworkElement fe =  d as FrameworkElement;
-                    if (fe != null && fe.TemplatedParent != null && !(fe.TemplatedParent is ContentPresenter))
+                    if (fe is not null && fe.TemplatedParent is not null && !(fe.TemplatedParent is ContentPresenter))
                     {
                         return false;
                     }
@@ -1526,9 +1526,9 @@ namespace Microsoft.Windows.Controls.Ribbon
             Ribbon ribbon = (Ribbon)element.GetValue(RibbonControlService.RibbonProperty);
             object qatID = RibbonControlService.GetQuickAccessToolBarId(element);
 
-            if (ribbon != null &&
-                ribbon.QuickAccessToolBar != null &&
-                qatID != null)
+            if (ribbon is not null &&
+                ribbon.QuickAccessToolBar is not null &&
+                qatID is not null)
             {
                 return ribbon.QuickAccessToolBar.ContainsId(qatID);
             }
@@ -1566,7 +1566,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 // Actually perform the transfer.
 
                 BindingBase binding = BindingOperations.GetBindingBase(original, originalProperty);
-                if (binding != null)
+                if (binding is not null)
                 {
                     // Transfer Bindings
 
@@ -1575,12 +1575,12 @@ namespace Microsoft.Windows.Controls.Ribbon
                 else
                 {
                     Expression expr = original.ReadLocalValue(originalProperty) as Expression;
-                    if (expr != null)
+                    if (expr is not null)
                     {
                         // Transfer DynamicResource
 
                         DynamicResourceExtension dynamicResource = _rreConverter.ConvertTo(expr, typeof(MarkupExtension)) as DynamicResourceExtension;
-                        if (dynamicResource != null)
+                        if (dynamicResource is not null)
                         {
                             clone.SetValue(cloneProperty, dynamicResource.ProvideValue(null));
                         }
@@ -1874,7 +1874,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 original is ContentElement)
             {
                 FrameworkElement feOriginal = original as FrameworkElement;
-                if (feOriginal != null)
+                if (feOriginal is not null)
                 {
                     FrameworkElement feClone = CreateInstance(feOriginal, allowTransformations);
 
@@ -1906,7 +1906,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             else
             {
                 Freezable freezable = original as Freezable;
-                if (freezable != null && !freezable.CanFreeze)
+                if (freezable is not null && !freezable.CanFreeze)
                 {
                     return freezable.Clone();
                 }
@@ -1921,7 +1921,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 RibbonMenuItem menuItem = original as RibbonMenuItem;
 
-                if (menuItem != null)
+                if (menuItem is not null)
                 {
                     // Determine which control type the wrapper should be
                     // based on the Items and IsCheckable values.
@@ -1962,7 +1962,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
 #if IN_RIBBON_GALLERY
                 InRibbonGallery inRibbonGallery = original as InRibbonGallery;
-                if (inRibbonGallery != null)
+                if (inRibbonGallery is not null)
                 {
                     return new RibbonMenuButton();
                 }
@@ -2261,7 +2261,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             MarkupObject markupObjOriginal = MarkupWriter.GetMarkupObjectFor(original);
             foreach (MarkupProperty markupProp in markupObjOriginal.Properties)
             {
-                if (markupProp.DependencyProperty != null)
+                if (markupProp.DependencyProperty is not null)
                 {
                     DependencyObject cloneElement = (DependencyObject)clone;
 
@@ -2289,7 +2289,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
 
                     BindingBase binding = markupProp.Value as BindingBase;
-                    if (binding != null)
+                    if (binding is not null)
                     {
                         // Transfer bindings.
 
@@ -2298,7 +2298,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     else
                     {
                         MarkupExtension markupExtension = markupProp.Value as MarkupExtension;
-                        if (markupExtension != null)
+                        if (markupExtension is not null)
                         {
                             // Transfer dynamic resources and other markup extensions.
 
@@ -2313,7 +2313,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         }
                     }
                 }
-                else if (markupProp.PropertyDescriptor != null)
+                else if (markupProp.PropertyDescriptor is not null)
                 {
                     // Transfer CLR properties.
 
@@ -2329,7 +2329,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         }
 
                         IList items = markupProp.PropertyDescriptor.GetValue(clone) as IList;
-                        if (items != null)
+                        if (items is not null)
                         {
                             foreach (MarkupObject subObj in markupProp.Items)
                             {
@@ -2358,7 +2358,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         internal static void SetApplicationMenuLevel(bool parentIsTopLevel, DependencyObject element)
         {
             RibbonApplicationMenuItem rami = element as RibbonApplicationMenuItem;
-            if (rami != null)
+            if (rami is not null)
             {
                 if (parentIsTopLevel)
                 {
@@ -2372,7 +2372,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             else
             {
                 RibbonApplicationSplitMenuItem rasmi = element as RibbonApplicationSplitMenuItem;
-                if (rasmi != null)
+                if (rasmi is not null)
                 {
                     if (parentIsTopLevel)
                     {
@@ -2389,13 +2389,13 @@ namespace Microsoft.Windows.Controls.Ribbon
         internal static bool CoerceIsSubmenuOpenForTopLevelItem(RibbonMenuItem menuItem, ItemsControl parentItemsControl, bool baseValue)
         {
             bool isSubMenuOpen = (bool)baseValue;
-            if (!isSubMenuOpen && menuItem.CloseSubmenuTimer != null && menuItem.CloseSubmenuTimer.IsEnabled)
+            if (!isSubMenuOpen && menuItem.CloseSubmenuTimer is not null && menuItem.CloseSubmenuTimer.IsEnabled)
             {
                 RibbonApplicationMenu ram = parentItemsControl as RibbonApplicationMenu;
-                if (ram != null)
+                if (ram is not null)
                 {
                     RibbonMenuItem currentMenuItem = ram.RibbonCurrentSelection as RibbonMenuItem;
-                    if (currentMenuItem != null && currentMenuItem.CanOpenSubMenu && currentMenuItem != menuItem)
+                    if (currentMenuItem is not null && currentMenuItem.CanOpenSubMenu && currentMenuItem != menuItem)
                     {
                         return true;
                     }
@@ -2408,7 +2408,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         internal static void HookPopupForTopLevelMenuItem(RibbonMenuItem menuItem, ItemsControl parentItemsControl)
         {
             Popup popup = menuItem.Popup;
-            if (popup != null)
+            if (popup is not null)
             {
                 Binding binding = new Binding("SubmenuPlaceholder");
                 binding.Source = parentItemsControl;
@@ -2428,7 +2428,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         internal static void UnhookPopupForTopLevelMenuItem(RibbonMenuItem menuItem)
         {
             Popup popup = menuItem.Popup;
-            if (popup != null)
+            if (popup is not null)
             {
                 popup.ClearValue(Popup.PlacementTargetProperty);
                 popup.ClearValue(Popup.WidthProperty);
@@ -2448,7 +2448,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 e.Key == Key.Down)
             {
                 RibbonApplicationMenu applicationMenu = ItemsControl.ItemsControlFromItemContainer(menuItem) as RibbonApplicationMenu;
-                if (applicationMenu != null)
+                if (applicationMenu is not null)
                 {
                     if (RibbonHelper.IsEndFocusableMenuItem(menuItem, e.Key == Key.Up /* isFirst */))
                     {
@@ -2488,7 +2488,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static bool IsEndFocusableMenuItem(RibbonMenuItem menuItem, bool isFirst)
         {
             ItemsControl parentItemsControl = ItemsControl.ItemsControlFromItemContainer(menuItem);
-            Debug.Assert(parentItemsControl != null);
+            Debug.Assert(parentItemsControl is not null);
 
             int parentItemCount = parentItemsControl.Items.Count;
             int itemIndex = parentItemsControl.ItemContainerGenerator.IndexFromContainer(menuItem);
@@ -2502,7 +2502,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             for (int i = itemIndex + incr; i < parentItemCount && i >= 0; i += incr)
             {
                 UIElement container = parentItemsControl.ItemContainerGenerator.ContainerFromIndex(i) as UIElement;
-                if (container != null &&
+                if (container is not null &&
                     container.IsVisible &&
                     container.IsEnabled &&
                     container.Focusable)
@@ -2579,14 +2579,14 @@ namespace Microsoft.Windows.Controls.Ribbon
         public static UIElement GetContainingUIElement(DependencyObject element)
         {
             UIElement uie = element as UIElement;
-            if (uie != null)
+            if (uie is not null)
             {
                 return uie;
             }
             else
             {
                 ContentElement ce = element as ContentElement;
-                if (ce != null)
+                if (ce is not null)
                 {
                     DependencyObject parent = ContentOperations.GetParent(ce);
                     if (parent is null)
@@ -2594,7 +2594,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         parent = LogicalTreeHelper.GetParent(ce);
                     }
 
-                    if (parent != null)
+                    if (parent is not null)
                     {
                         return GetContainingUIElement(parent);
                     }
@@ -2629,7 +2629,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 e.KeyTipVerticalPlacement = KeyTipVerticalPlacement.KeyTipCenterAtTargetCenter;
                 e.KeyTipHorizontalOffset = e.KeyTipVerticalOffset = 0;
                 RibbonControlSizeDefinition controlSizeDefinition = RibbonControlService.GetControlSizeDefinition(element);
-                if (controlSizeDefinition != null)
+                if (controlSizeDefinition is not null)
                 {
                     if (controlSizeDefinition.IsLabelVisible)
                     {
@@ -2676,7 +2676,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 e.KeyTipVerticalPlacement = KeyTipVerticalPlacement.KeyTipCenterAtTargetCenter;
                 e.KeyTipHorizontalOffset = e.KeyTipVerticalOffset = 0;
                 RibbonControlSizeDefinition controlSizeDefinition = RibbonControlService.GetControlSizeDefinition(element);
-                if (controlSizeDefinition != null)
+                if (controlSizeDefinition is not null)
                 {
                     if (controlSizeDefinition.ImageSize == RibbonImageSize.Large)
                     {
@@ -2710,7 +2710,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 e.KeyTipVerticalPlacement = KeyTipVerticalPlacement.KeyTipCenterAtTargetCenter;
                 e.KeyTipHorizontalOffset = e.KeyTipVerticalOffset = 0;
                 RibbonControlSizeDefinition controlSizeDefinition = splitButton.ControlSizeDefinition;
-                if (controlSizeDefinition != null)
+                if (controlSizeDefinition is not null)
                 {
                     if (controlSizeDefinition.IsLabelVisible)
                     {
@@ -2765,7 +2765,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 e.KeyTipVerticalPlacement = KeyTipVerticalPlacement.KeyTipCenterAtTargetCenter;
                 e.KeyTipHorizontalOffset = e.KeyTipVerticalOffset = 0;
                 RibbonControlSizeDefinition controlSizeDefinition = splitButton.ControlSizeDefinition;
-                if (controlSizeDefinition != null)
+                if (controlSizeDefinition is not null)
                 {
                     if (controlSizeDefinition.IsLabelVisible)
                     {
@@ -2815,7 +2815,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 e.KeyTipVerticalPlacement = KeyTipVerticalPlacement.KeyTipTopAtTargetBottom;
                 e.KeyTipHorizontalOffset = e.KeyTipVerticalOffset = 0;
 
-                if (irg.PartToggleButton != null)
+                if (irg.PartToggleButton is not null)
                 {
                     e.PlacementTarget = irg.PartToggleButton;
                 }
@@ -2837,7 +2837,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 ribbonGroup = TreeHelper.FindLogicalAncestor<RibbonGroup>(fe);
             }
-            if (ribbonGroup != null &&
+            if (ribbonGroup is not null &&
                 ribbonGroup.IsCollapsed &&
                 !ribbonGroup.IsDropDownOpen)
             {
@@ -2856,7 +2856,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (peer is null)
             {
                 FrameworkElement elementFE = element as FrameworkElement;
-                if (elementFE != null)
+                if (elementFE is not null)
                     peer = new FrameworkElementAutomationPeer(elementFE);
                 else
                     peer = new UIElementAutomationPeer(element);
@@ -2871,7 +2871,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         public static void SetDropDownHeight(FrameworkElement itemsPresenter, bool hasGallery, double dropDownHeight)
         {
-            if (itemsPresenter != null)
+            if (itemsPresenter is not null)
             {
                 // First time the dropdown opens, HasGallery is always false
                 // because item container generation never happened yet and hence
@@ -2901,7 +2901,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         internal static void InvalidateScrollBarVisibility(ScrollViewer submenuScrollViewer)
         {
-            if (submenuScrollViewer != null)
+            if (submenuScrollViewer is not null)
             {
                 // The scroll viewer needs to re-evaluate the visibility of the scrollbars
                 // and that happens in its MeasureOverride call. Also note that we need to
@@ -2923,15 +2923,15 @@ namespace Microsoft.Windows.Controls.Ribbon
         internal static Matrix GetTransformToDevice(Visual targetVisual)
         {
             HwndSource hwndSource = null;
-            if (targetVisual != null)
+            if (targetVisual is not null)
             {
                 hwndSource = PresentationSource.FromVisual(targetVisual) as HwndSource;
             }
 
-            if (hwndSource != null)
+            if (hwndSource is not null)
             {
                 CompositionTarget ct = hwndSource.CompositionTarget;
-                if (ct != null)
+                if (ct is not null)
                 {
                     return ct.TransformToDevice;
                 }
@@ -2955,7 +2955,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             for (int i = 0; i < childCount; i++)
             {
                 DependencyObject child = VisualTreeHelper.GetChild(element, i);
-                if (child != null)
+                if (child is not null)
                 {
                     // Determine if any of the child's subtree is
                     // dirty for measure
@@ -2963,7 +2963,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 }
             }
             UIElement uie = element as UIElement;
-            if (uie != null)
+            if (uie is not null)
             {
                 if (!uie.IsMeasureValid)
                 {

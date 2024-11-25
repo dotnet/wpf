@@ -61,7 +61,7 @@ namespace System.Windows.Controls.Primitives
         {
             // If a new template has just been generated then 
             // be sure to clear any stale ItemsHost references
-            if (InternalItemsHost != null && !this.IsAncestorOf(InternalItemsHost))
+            if (InternalItemsHost is not null && !this.IsAncestorOf(InternalItemsHost))
             {
                 InternalItemsHost = null;
             }
@@ -71,14 +71,14 @@ namespace System.Windows.Controls.Primitives
             // Find the columns collection and set the ItemsSource.
             DataGrid grid = ParentDataGrid;
 
-            if (grid != null)
+            if (grid is not null)
             {
                 ItemsSource = new DataGridColumnHeaderCollection(grid.Columns);
                 grid.ColumnHeadersPresenter = this;
                 DataGridHelper.TransferProperty(this, VirtualizingPanel.IsVirtualizingProperty);
 
                 DataGridColumnHeader fillerColumnHeader = GetTemplateChild(ElementFillerColumnHeader) as DataGridColumnHeader;
-                if (fillerColumnHeader != null)
+                if (fillerColumnHeader is not null)
                 {
                     DataGridHelper.TransferProperty(fillerColumnHeader, DataGridColumnHeader.StyleProperty);
                     DataGridHelper.TransferProperty(fillerColumnHeader, DataGridColumnHeader.HeightProperty);
@@ -115,7 +115,7 @@ namespace System.Windows.Controls.Primitives
             desiredSize = base.MeasureOverride(childConstraint);
 
             Size indicatorSize;
-            if (_columnHeaderDragIndicator != null && _isColumnHeaderDragging)
+            if (_columnHeaderDragIndicator is not null && _isColumnHeaderDragging)
             {
                 _columnHeaderDragIndicator.Measure(childConstraint);
                 indicatorSize = _columnHeaderDragIndicator.DesiredSize;
@@ -123,7 +123,7 @@ namespace System.Windows.Controls.Primitives
                 desiredSize.Height = Math.Max(desiredSize.Height, indicatorSize.Height);
             }
 
-            if (_columnHeaderDropLocationIndicator != null && _isColumnHeaderDragging)
+            if (_columnHeaderDropLocationIndicator is not null && _isColumnHeaderDragging)
             {
                 _columnHeaderDropLocationIndicator.Measure(availableSize);
                 indicatorSize = _columnHeaderDropLocationIndicator.DesiredSize;
@@ -144,11 +144,11 @@ namespace System.Windows.Controls.Primitives
         {
             UIElement child = (VisualTreeHelper.GetChildrenCount(this) > 0) ? VisualTreeHelper.GetChild(this, 0) as UIElement : null;
 
-            if (child != null)
+            if (child is not null)
             {
                 Rect childRect = new Rect(finalSize);
                 DataGrid dataGrid = ParentDataGrid;
-                if (dataGrid != null)
+                if (dataGrid is not null)
                 {
                     childRect.X = -dataGrid.HorizontalScrollOffset;
                     childRect.Width = Math.Max(finalSize.Width, dataGrid.CellsPanelActualWidth);
@@ -157,14 +157,14 @@ namespace System.Windows.Controls.Primitives
                 child.Arrange(childRect);
             }
 
-            if (_columnHeaderDragIndicator != null && _isColumnHeaderDragging)
+            if (_columnHeaderDragIndicator is not null && _isColumnHeaderDragging)
             {
                 _columnHeaderDragIndicator.Arrange(new Rect(
                     new Point(_columnHeaderDragCurrentPosition.X - _columnHeaderDragStartRelativePosition.X, 0),
                     new Size(_columnHeaderDragIndicator.Width, _columnHeaderDragIndicator.Height)));
             }
 
-            if (_columnHeaderDropLocationIndicator != null && _isColumnHeaderDragging)
+            if (_columnHeaderDropLocationIndicator is not null && _isColumnHeaderDragging)
             {
                 Point point = FindColumnHeaderPositionByCurrentPosition(_columnHeaderDragCurrentPosition, true);
                 double dropIndicatorWidth = _columnHeaderDropLocationIndicator.Width;
@@ -226,10 +226,10 @@ namespace System.Windows.Controls.Primitives
         {
             DataGridColumnHeader header = element as DataGridColumnHeader;
 
-            if (header != null)
+            if (header is not null)
             {
                 DataGridColumn column = ColumnFromContainer(header);
-                Debug.Assert(column != null, "We shouldn't have generated this column header if we don't have a column.");
+                Debug.Assert(column is not null, "We shouldn't have generated this column header if we don't have a column.");
 
                 if (header.Column is null)
                 {
@@ -256,7 +256,7 @@ namespace System.Windows.Controls.Primitives
 
             base.ClearContainerForItemOverride(element, item);
 
-            if (header != null)
+            if (header is not null)
             {
                 header.Tracker.StopTracking(ref _headerTrackingRoot);
                 header.ClearHeader();
@@ -265,7 +265,7 @@ namespace System.Windows.Controls.Primitives
 
         private DataGridColumn ColumnFromContainer(DataGridColumnHeader container)
         {
-            Debug.Assert(HeaderCollection != null, "This is a helper method for preparing and clearing a container; if it's called we must have a valid ItemSource");
+            Debug.Assert(HeaderCollection is not null, "This is a helper method for preparing and clearing a container; if it's called we must have a valid ItemSource");
 
             int index = ItemContainerGenerator.IndexFromContainer(container);
             return HeaderCollection.ColumnFromIndex(index);
@@ -334,7 +334,7 @@ namespace System.Windows.Controls.Primitives
             {
                 if (e.Property == DataGridColumn.HeaderProperty)
                 {
-                    if (HeaderCollection != null)
+                    if (HeaderCollection is not null)
                     {
                         HeaderCollection.NotifyHeaderPropertyChanged(column, e);
                     }
@@ -344,7 +344,7 @@ namespace System.Windows.Controls.Primitives
                     // Notify the DataGridColumnHeader objects about property changes
                     ContainerTracking<DataGridColumnHeader> tracker = _headerTrackingRoot;
 
-                    while (tracker != null)
+                    while (tracker is not null)
                     {
                         tracker.Container.NotifyPropertyChanged(d, e);
                         tracker = tracker.Next;
@@ -355,7 +355,7 @@ namespace System.Windows.Controls.Primitives
                         (e.Property == DataGrid.ColumnHeaderStyleProperty || e.Property == DataGrid.ColumnHeaderHeightProperty) )
                     {
                         DataGridColumnHeader fillerColumnHeader = GetTemplateChild(ElementFillerColumnHeader) as DataGridColumnHeader;
-                        if (fillerColumnHeader != null)
+                        if (fillerColumnHeader is not null)
                         {
                             fillerColumnHeader.NotifyPropertyChanged(d, e);
                         }
@@ -400,7 +400,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         private void InvalidateDataGridCellsPanelMeasureAndArrange()
         {
-            if (_internalItemsHost != null)
+            if (_internalItemsHost is not null)
             {
                 _internalItemsHost.InvalidateMeasure();
                 _internalItemsHost.InvalidateArrange();
@@ -446,12 +446,12 @@ namespace System.Windows.Controls.Primitives
             get
             {
                 int visualChildrenCount = base.VisualChildrenCount;
-                if (_columnHeaderDragIndicator != null)
+                if (_columnHeaderDragIndicator is not null)
                 {
                     visualChildrenCount++;
                 }
 
-                if (_columnHeaderDropLocationIndicator != null)
+                if (_columnHeaderDropLocationIndicator is not null)
                 {
                     visualChildrenCount++;
                 }
@@ -468,11 +468,11 @@ namespace System.Windows.Controls.Primitives
             int visualChildrenCount = base.VisualChildrenCount;
             if (index == visualChildrenCount)
             {
-                if (_columnHeaderDragIndicator != null)
+                if (_columnHeaderDragIndicator is not null)
                 {
                     return _columnHeaderDragIndicator;
                 }
-                else if (_columnHeaderDropLocationIndicator != null)
+                else if (_columnHeaderDropLocationIndicator is not null)
                 {
                     return _columnHeaderDropLocationIndicator;
                 }
@@ -480,7 +480,7 @@ namespace System.Windows.Controls.Primitives
 
             if (index == visualChildrenCount + 1)
             {
-                if (_columnHeaderDragIndicator != null && _columnHeaderDropLocationIndicator != null)
+                if (_columnHeaderDragIndicator is not null && _columnHeaderDropLocationIndicator is not null)
                 {
                     return _columnHeaderDropLocationIndicator;
                 }
@@ -499,13 +499,13 @@ namespace System.Windows.Controls.Primitives
                 return;
             }
 
-            if (_columnHeaderDragIndicator != null)
+            if (_columnHeaderDragIndicator is not null)
             {
                 RemoveVisualChild(_columnHeaderDragIndicator);
                 _columnHeaderDragIndicator = null;
             }
 
-            if (_columnHeaderDropLocationIndicator != null)
+            if (_columnHeaderDropLocationIndicator is not null)
             {
                 RemoveVisualChild(_columnHeaderDropLocationIndicator);
                 _columnHeaderDropLocationIndicator = null;
@@ -514,7 +514,7 @@ namespace System.Windows.Controls.Primitives
             Point mousePosition = e.GetPosition(this);
             DataGridColumnHeader header = FindColumnHeaderByPosition(mousePosition);
 
-            if (header != null)
+            if (header is not null)
             {
                 DataGridColumn column = header.Column;
 
@@ -555,12 +555,12 @@ namespace System.Windows.Controls.Primitives
                         bool shouldDisplayDragIndicator = IsMousePositionValidForColumnDrag(2.0);
                         Visibility dragIndicatorVisibility = shouldDisplayDragIndicator ? Visibility.Visible : Visibility.Collapsed;
 
-                        if (_columnHeaderDragIndicator != null)
+                        if (_columnHeaderDragIndicator is not null)
                         {
                             _columnHeaderDragIndicator.Visibility = dragIndicatorVisibility;
                         }
 
-                        if (_columnHeaderDropLocationIndicator != null)
+                        if (_columnHeaderDropLocationIndicator is not null)
                         {
                             _columnHeaderDropLocationIndicator.Visibility = dragIndicatorVisibility;
                         }
@@ -616,13 +616,13 @@ namespace System.Windows.Controls.Primitives
             _isColumnHeaderDragging = false;
             _prepareColumnHeaderDragging = false;
             _draggingSrcColumnHeader = null;
-            if (_columnHeaderDragIndicator != null)
+            if (_columnHeaderDragIndicator is not null)
             {
                 RemoveVisualChild(_columnHeaderDragIndicator);
                 _columnHeaderDragIndicator = null;
             }
 
-            if (_columnHeaderDropLocationIndicator != null)
+            if (_columnHeaderDropLocationIndicator is not null)
             {
                 RemoveVisualChild(_columnHeaderDropLocationIndicator);
                 _columnHeaderDropLocationIndicator = null;
@@ -665,13 +665,13 @@ namespace System.Windows.Controls.Primitives
         {
             nearestDisplayIndex = -1;
             bool isDraggingColumnFrozen = false;
-            if (_draggingSrcColumnHeader.Column != null)
+            if (_draggingSrcColumnHeader.Column is not null)
             {
                 isDraggingColumnFrozen = _draggingSrcColumnHeader.Column.IsFrozen;
             }
 
             int frozenCount = 0;
-            if (ParentDataGrid != null)
+            if (ParentDataGrid is not null)
             {
                 frozenCount = ParentDataGrid.FrozenColumnCount;
             }
@@ -707,7 +707,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         private void StartColumnHeaderDrag()
         {
-            Debug.Assert(ParentDataGrid != null, "ParentDataGrid is null");
+            Debug.Assert(ParentDataGrid is not null, "ParentDataGrid is null");
 
             _columnHeaderDragStartPosition = _columnHeaderDragCurrentPosition;
             DragStartedEventArgs dragStartedEventArgs = new DragStartedEventArgs(_columnHeaderDragStartPosition.X, _columnHeaderDragStartPosition.Y);
@@ -728,13 +728,13 @@ namespace System.Windows.Controls.Primitives
                 _columnHeaderDragIndicator = reorderingEventArgs.DragIndicator;
                 _columnHeaderDropLocationIndicator = reorderingEventArgs.DropLocationIndicator;
 
-                if (_columnHeaderDragIndicator != null)
+                if (_columnHeaderDragIndicator is not null)
                 {
                     SetDefaultsOnDragIndicator();
                     AddVisualChild(_columnHeaderDragIndicator);
                 }
 
-                if (_columnHeaderDropLocationIndicator != null)
+                if (_columnHeaderDropLocationIndicator is not null)
                 {
                     SetDefaultsOnDropIndicator();
                     AddVisualChild(_columnHeaderDropLocationIndicator);
@@ -754,7 +754,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         private Control CreateColumnHeaderDragIndicator()
         {
-            Debug.Assert(_draggingSrcColumnHeader != null, "Dragging header is null");
+            Debug.Assert(_draggingSrcColumnHeader is not null, "Dragging header is null");
 
             DataGridColumnFloatingHeader floatingHeader = new DataGridColumnFloatingHeader();
             floatingHeader.ReferenceHeader = _draggingSrcColumnHeader;
@@ -766,11 +766,11 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         private void SetDefaultsOnDragIndicator()
         {
-            Debug.Assert(_columnHeaderDragIndicator != null, "Drag indicator is null");
-            Debug.Assert(_draggingSrcColumnHeader != null, "Dragging header is null");
+            Debug.Assert(_columnHeaderDragIndicator is not null, "Drag indicator is null");
+            Debug.Assert(_draggingSrcColumnHeader is not null, "Dragging header is null");
             DataGridColumn column = _draggingSrcColumnHeader.Column;
             Style style = null;
-            if (column != null)
+            if (column is not null)
             {
                 style = column.DragIndicatorStyle;
             }
@@ -785,7 +785,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         private Control CreateColumnHeaderDropIndicator()
         {
-            Debug.Assert(_draggingSrcColumnHeader != null, "Dragging header is null");
+            Debug.Assert(_draggingSrcColumnHeader is not null, "Dragging header is null");
 
             DataGridColumnDropSeparator indicator = new DataGridColumnDropSeparator();
             indicator.ReferenceHeader = _draggingSrcColumnHeader;
@@ -797,10 +797,10 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         private void SetDefaultsOnDropIndicator()
         {
-            Debug.Assert(_columnHeaderDropLocationIndicator != null, "Drag indicator is null");
-            Debug.Assert(_draggingSrcColumnHeader != null, "Dragging header is null");
+            Debug.Assert(_columnHeaderDropLocationIndicator is not null, "Drag indicator is null");
+            Debug.Assert(_draggingSrcColumnHeader is not null, "Dragging header is null");
             Style style = null;
-            if (ParentDataGrid != null)
+            if (ParentDataGrid is not null)
             {
                 style = ParentDataGrid.DropLocationIndicatorStyle;
             }
@@ -815,17 +815,17 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         private void FinishColumnHeaderDrag(bool isCancel)
         {
-            Debug.Assert(ParentDataGrid != null, "ParentDataGrid is null");
+            Debug.Assert(ParentDataGrid is not null, "ParentDataGrid is null");
             _prepareColumnHeaderDragging = false;
             _isColumnHeaderDragging = false;
 
             _draggingSrcColumnHeader.SuppressClickEvent = false;
 
-            if (_columnHeaderDragIndicator != null)
+            if (_columnHeaderDragIndicator is not null)
             {
                 _columnHeaderDragIndicator.Visibility = Visibility.Collapsed;
                 DataGridColumnFloatingHeader floatingHeader = _columnHeaderDragIndicator as DataGridColumnFloatingHeader;
-                if (floatingHeader != null)
+                if (floatingHeader is not null)
                 {
                     floatingHeader.ClearHeader();
                 }
@@ -833,11 +833,11 @@ namespace System.Windows.Controls.Primitives
                 RemoveVisualChild(_columnHeaderDragIndicator);
             }
 
-            if (_columnHeaderDropLocationIndicator != null)
+            if (_columnHeaderDropLocationIndicator is not null)
             {
                 _columnHeaderDropLocationIndicator.Visibility = Visibility.Collapsed;
                 DataGridColumnDropSeparator separator = _columnHeaderDropLocationIndicator as DataGridColumnDropSeparator;
-                if (separator != null)
+                if (separator is not null)
                 {
                     separator.ReferenceHeader = null;
                 }
@@ -861,7 +861,7 @@ namespace System.Windows.Controls.Primitives
                     out newDisplayIndex);
 
                 DataGridColumn column = _draggingSrcColumnHeader.Column;
-                if (column != null && dragEndPositionValid && newDisplayIndex != column.DisplayIndex)
+                if (column is not null && dragEndPositionValid && newDisplayIndex != column.DisplayIndex)
                 {
                     column.DisplayIndex = newDisplayIndex;
 
@@ -931,7 +931,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         private void FindDisplayIndexAndHeaderPosition(Point startPos, bool findNearestColumn, out int displayIndex, out Point headerPos, out DataGridColumnHeader header)
         {
-            Debug.Assert(ParentDataGrid != null, "ParentDataGrid is null");
+            Debug.Assert(ParentDataGrid is not null, "ParentDataGrid is null");
 
             Point originPoint = new Point(0, 0);
             headerPos = originPoint;
@@ -1002,7 +1002,7 @@ namespace System.Windows.Controls.Primitives
                             displayIndex++;
                         }
 
-                        if (_draggingSrcColumnHeader != null && _draggingSrcColumnHeader.Column != null && _draggingSrcColumnHeader.Column.DisplayIndex < displayIndex)
+                        if (_draggingSrcColumnHeader is not null && _draggingSrcColumnHeader.Column is not null && _draggingSrcColumnHeader.Column.DisplayIndex < displayIndex)
                         {
                             displayIndex--;
                         }

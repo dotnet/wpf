@@ -59,7 +59,7 @@ namespace System.Windows.Markup.Localizer
         /// <param name="other"> the other localizale resource </param>
         internal BamlLocalizableResource(BamlLocalizableResource other)
         {
-            Debug.Assert(other != null);            
+            Debug.Assert(other is not null);            
             _content        = other._content;
             _comments       = other._comments;
             _flags          = other._flags;            

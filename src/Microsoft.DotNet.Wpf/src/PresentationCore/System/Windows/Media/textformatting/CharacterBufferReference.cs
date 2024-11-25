@@ -103,7 +103,7 @@ namespace System.Windows.Media.TextFormatting
         /// </summary>
         public override int GetHashCode()
         {
-            return _charBuffer != null ? _charBuffer.GetHashCode() ^ _offsetToFirstChar : 0;
+            return _charBuffer is not null ? _charBuffer.GetHashCode() ^ _offsetToFirstChar : 0;
         }
 
 

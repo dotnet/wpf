@@ -56,28 +56,28 @@ namespace System.Windows.Automation.Peers
         {
             // see whether the DataGridRow uses the standard control template
             DataGridCellsPresenter cellsPresenter = OwningDataGridRow.CellsPresenter;
-            if (cellsPresenter != null && cellsPresenter.ItemsHost != null)
+            if (cellsPresenter is not null && cellsPresenter.ItemsHost is not null)
             {
                 // this is the normal case
                 List<AutomationPeer> children = new List<AutomationPeer>(3);
 
                 // Step 1: Add row header if exists
                 AutomationPeer dataGridRowHeaderAutomationPeer = RowHeaderAutomationPeer;
-                if (dataGridRowHeaderAutomationPeer != null)
+                if (dataGridRowHeaderAutomationPeer is not null)
                 {
                     children.Add(dataGridRowHeaderAutomationPeer);
                 }
 
                 // Step 2: Add all cells
                 DataGridItemAutomationPeer itemPeer = this.EventsSource as DataGridItemAutomationPeer;
-                if (itemPeer != null)
+                if (itemPeer is not null)
                 {
                     children.AddRange(itemPeer.GetCellItemPeers());
                 }
 
                 // Step 3: Add DetailsPresenter last if exists
                 AutomationPeer dataGridDetailsPresenterAutomationPeer = DetailsPresenterAutomationPeer;
-                if (dataGridDetailsPresenterAutomationPeer != null)
+                if (dataGridDetailsPresenterAutomationPeer is not null)
                 {
                     children.Add(dataGridDetailsPresenterAutomationPeer);
                 }
@@ -100,7 +100,7 @@ namespace System.Windows.Automation.Peers
             get
             {
                 DataGridRowHeader dataGridRowHeader = OwningDataGridRow.RowHeader;
-                if (dataGridRowHeader != null)
+                if (dataGridRowHeader is not null)
                 {
                     return CreatePeerForElement(dataGridRowHeader);
                 }
@@ -114,7 +114,7 @@ namespace System.Windows.Automation.Peers
             get
             {
                 DataGridDetailsPresenter dataGridDetailsPresenter = OwningDataGridRow.DetailsPresenter;
-                if (dataGridDetailsPresenter != null)
+                if (dataGridDetailsPresenter is not null)
                 {
                     return CreatePeerForElement(dataGridDetailsPresenter);
                 }

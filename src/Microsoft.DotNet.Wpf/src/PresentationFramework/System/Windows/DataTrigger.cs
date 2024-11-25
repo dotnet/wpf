@@ -187,7 +187,7 @@ namespace System.Windows
         // evaluate the current state of the trigger
         internal override bool GetCurrentState(DependencyObject container, UncommonField<HybridDictionary[]> dataField)
         {
-            Debug.Assert( TriggerConditions != null && TriggerConditions.Length == 1,
+            Debug.Assert( TriggerConditions is not null && TriggerConditions.Length == 1,
                 "This method assumes there is exactly one TriggerCondition." );
 
             return TriggerConditions[0].ConvertAndMatch(StyleHelper.GetDataTriggerValue(dataField, container, TriggerConditions[0].Binding));
@@ -203,7 +203,7 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(eventArgs);
 
             DataTrigger trigger = targetObject as DataTrigger;
-            if (trigger != null && eventArgs.Member.Name == "Binding" && eventArgs.MarkupExtension is BindingBase)
+            if (trigger is not null && eventArgs.Member.Name == "Binding" && eventArgs.MarkupExtension is BindingBase)
             {
                 trigger.Binding = eventArgs.MarkupExtension as BindingBase;
 

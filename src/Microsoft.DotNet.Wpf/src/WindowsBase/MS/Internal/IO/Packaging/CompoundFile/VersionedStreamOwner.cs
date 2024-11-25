@@ -167,7 +167,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             get
             {
-                return (BaseStream != null) && BaseStream.CanRead && IsReadable;
+                return (BaseStream is not null) && BaseStream.CanRead && IsReadable;
             }
         }
 
@@ -179,7 +179,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             get
             {
-                return (BaseStream != null) && BaseStream.CanSeek && IsReadable;
+                return (BaseStream is not null) && BaseStream.CanSeek && IsReadable;
             }
         }
 
@@ -191,7 +191,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             get
             {
-                return (BaseStream != null) && BaseStream.CanWrite && IsUpdatable;
+                return (BaseStream is not null) && BaseStream.CanWrite && IsUpdatable;
             }
         }
         #endregion

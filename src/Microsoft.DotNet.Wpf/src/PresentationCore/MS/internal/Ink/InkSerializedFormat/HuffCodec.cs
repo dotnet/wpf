@@ -93,10 +93,10 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="outputBuffer"></param>
         internal uint Uncompress(DataXform dtxf, byte[] input, int startIndex, int[] outputBuffer)
         {
-            Debug.Assert(input != null);
+            Debug.Assert(input is not null);
             Debug.Assert(input.Length >= 2);
             Debug.Assert(startIndex == 1);
-            Debug.Assert(outputBuffer != null);
+            Debug.Assert(outputBuffer is not null);
             Debug.Assert(outputBuffer.Length != 0);
 
             BitStreamReader reader = new BitStreamReader(input, startIndex);

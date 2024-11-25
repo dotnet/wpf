@@ -20,10 +20,10 @@ namespace System.Xaml.Schema
         {
             string typeName = value as string;
 
-            if (context != null && typeName != null)
+            if (context is not null && typeName is not null)
             {
                 XamlType result = ConvertStringToXamlType(context, typeName);
-                if (result != null)
+                if (result is not null)
                 {
                     return result;
                 }
@@ -41,10 +41,10 @@ namespace System.Xaml.Schema
         {
             XamlType xamlType = value as XamlType;
 
-            if (context != null && xamlType != null && destinationType == typeof(string))
+            if (context is not null && xamlType is not null && destinationType == typeof(string))
             {
                 string result = ConvertXamlTypeToString(context, xamlType);
-                if (result != null)
+                if (result is not null)
                 {
                     return result;
                 }
@@ -92,7 +92,7 @@ namespace System.Xaml.Schema
         private static XamlType GetXamlTypeOrUnknown(XamlSchemaContext schemaContext, XamlTypeName typeName)
         {
             XamlType result = schemaContext.GetXamlType(typeName);
-            if (result != null)
+            if (result is not null)
             {
                 return result;
             }

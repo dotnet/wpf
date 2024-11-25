@@ -64,7 +64,7 @@ namespace System.Windows.Input
             if (destinationType == typeof(string))
             {
                 // When invoked by the serialization engine we can convert to string only for known type
-                if (context != null && context.Instance != null)
+                if (context is not null && context.Instance is not null)
                 {
                     Key key = (Key)context.Instance;
                     return ((int)key >= (int)Key.None && (int)key <= (int)Key.DeadCharProcessed);
@@ -87,7 +87,7 @@ namespace System.Windows.Input
             {
                 string fullName = ((string)source).Trim();
                 object key = GetKey(fullName, CultureInfo.InvariantCulture);
-                if (key != null)
+                if (key is not null)
                 {
                     return ((Key)key);
                 }
@@ -112,7 +112,7 @@ namespace System.Windows.Input
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (destinationType == typeof(string) && value != null)
+            if (destinationType == typeof(string) && value is not null)
             {
                 Key key = (Key)value;
                 if (key == Key.None)
@@ -131,7 +131,7 @@ namespace System.Windows.Input
                 }
 
                 String strKey = MatchKey(key, culture);
-                if (strKey != null)
+                if (strKey is not null)
                 {
                     return strKey;
                 }

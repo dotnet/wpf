@@ -2366,7 +2366,7 @@ namespace MS.Internal.Printing.Configuration
                 #endif
             }
 
-            if (valueLocalName != null)
+            if (valueLocalName is not null)
             {
                 enumValue = SchemaNameToEnumValueWithArray(schemaNames, schemaEnums, valueLocalName);
 

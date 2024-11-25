@@ -47,7 +47,7 @@ namespace System.Windows.Documents
                     {
                         string encoding = base["encoding"];
 
-                        if (encoding != null)
+                        if (encoding is not null)
                         {
                             if (!encoding.Equals(Encoding.Unicode.WebName, StringComparison.OrdinalIgnoreCase) &&
                                         !encoding.Equals(Encoding.UTF8.WebName, StringComparison.OrdinalIgnoreCase))
@@ -99,7 +99,7 @@ namespace System.Windows.Documents
             xmlReader = new XmlCompatibilityReader(xmlReader, predefinedNamespaces);
             xmlReader = XmlReader.Create(xmlReader, schema.GetXmlReaderSettings());
 
-            if (schema.HasUriAttributes(mimeType) && packageUri != null && baseUri != null)
+            if (schema.HasUriAttributes(mimeType) && packageUri is not null && baseUri is not null)
             {
                 xmlReader = new RootXMLNSAndUriValidatingXmlReader(loader, schema, 
                                                         xmlReader, packageUri, baseUri);
@@ -165,7 +165,7 @@ namespace System.Windows.Documents
                 {
                     _lastAttr = attr;
                     string [] uris = _schema.ExtractUriFromAttr(localName, attr);
-                    if (uris != null)
+                    if (uris is not null)
                     {
                         foreach (string uriAttr in uris)
                         {
@@ -255,7 +255,7 @@ namespace System.Windows.Documents
 
         protected void RegisterRequiredResourceMimeTypes(ContentType[] requiredResourceMimeTypes)
         {
-            if (requiredResourceMimeTypes != null)
+            if (requiredResourceMimeTypes is not null)
             {
                 foreach (ContentType type in requiredResourceMimeTypes)
                 {

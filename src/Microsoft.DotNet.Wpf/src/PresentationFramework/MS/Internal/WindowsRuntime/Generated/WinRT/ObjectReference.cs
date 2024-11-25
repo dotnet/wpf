@@ -81,7 +81,7 @@ namespace WinRT
         {
             ThrowIfDisposed();
             var ctor = typeof(T).GetConstructor(new[] { typeof(IObjectReference) });
-            if (ctor != null)
+            if (ctor is not null)
             {
                 return (T)ctor.Invoke(new[] { this });
             }

@@ -268,7 +268,7 @@ namespace MS.Internal.Annotations.Anchoring
             DocumentPage docPage = null;
             FixedPage page = startNode as FixedPage;
 
-            if (page != null)
+            if (page is not null)
             {
                 docPage = GetDocumentPage(page);
             }
@@ -278,7 +278,7 @@ namespace MS.Internal.Annotations.Anchoring
                 // extract the DocumentPage from it;  its TextView will be used to
                 // turn coordinates into text positions
                 DocumentPageView dpv = startNode as DocumentPageView;
-                if (dpv != null)
+                if (dpv is not null)
                 {
                     docPage = dpv.DocumentPage as FixedDocumentPage;
                     if (docPage is null)
@@ -298,7 +298,7 @@ namespace MS.Internal.Annotations.Anchoring
             attachmentLevel = AttachmentLevel.Unresolved;
 
             ITextView tv = (ITextView)((IServiceProvider)docPage).GetService(typeof(ITextView));
-            Debug.Assert(tv != null);
+            Debug.Assert(tv is not null);
 
             ReadOnlyCollection<TextSegment> ts = tv.TextSegments;
 
@@ -308,7 +308,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             TextAnchor resolvedAnchor = new TextAnchor();
 
-            if (docPage != null)
+            if (docPage is not null)
             {
                 string stringCount = locatorPart.NameValuePairs["Count"];
                 if (stringCount is null)
@@ -354,7 +354,7 @@ namespace MS.Internal.Annotations.Anchoring
                     }
 
                     //end TP can not be null when start is not
-                    Invariant.Assert(segEnd != null, "end TP is null when start TP is not");
+                    Invariant.Assert(segEnd is not null, "end TP is null when start TP is not");
 
                     attachmentLevel = AttachmentLevel.Full;  // Not always true right?
                     resolvedAnchor.AddTextSegment(segStart, segEnd);
@@ -405,11 +405,11 @@ namespace MS.Internal.Annotations.Anchoring
 
         private DocumentPage GetDocumentPage(FixedPage page)
         {
-            Invariant.Assert(page != null);
+            Invariant.Assert(page is not null);
 
             DocumentPage docPage = null;
             PageContent content = page.Parent as PageContent;
-            if (content != null)
+            if (content is not null)
             {
                 FixedDocument document = content.Parent as FixedDocument;
 
@@ -417,7 +417,7 @@ namespace MS.Internal.Annotations.Anchoring
                 // FixedDocumentSequenceDocumentPage for the FixedPage (cause its TextView is
                 // the one we want to use).
                 FixedDocumentSequence sequence = document.Parent as FixedDocumentSequence;
-                if (sequence != null)
+                if (sequence is not null)
                 {
                     docPage = sequence.GetPage(document, document.GetIndexOfPage(page));
                 }
@@ -443,7 +443,7 @@ namespace MS.Internal.Annotations.Anchoring
             ITextPointer start = null;
             ITextRange textRange = selection as ITextRange;
 
-            if (textRange != null)
+            if (textRange is not null)
             {
                 start = textRange.Start;
                 textSegments = textRange.TextSegments;
@@ -451,7 +451,7 @@ namespace MS.Internal.Annotations.Anchoring
             else
             {
                 TextAnchor anchor = selection as TextAnchor;
-                if (anchor != null)
+                if (anchor is not null)
                 {
                     start = anchor.Start;
                     textSegments = anchor.TextSegments;
@@ -524,7 +524,7 @@ namespace MS.Internal.Annotations.Anchoring
         private Point GetPoint(string xstr, string ystr)
         {
             Point point;
-            if (xstr != null && !String.IsNullOrEmpty(xstr.Trim()) && ystr != null && !String.IsNullOrEmpty(ystr.Trim()))
+            if (xstr is not null && !String.IsNullOrEmpty(xstr.Trim()) && ystr is not null && !String.IsNullOrEmpty(ystr.Trim()))
             {
                 double x = Double.Parse(xstr, NumberFormatInfo.InvariantInfo);
                 double y = Double.Parse(ystr, NumberFormatInfo.InvariantInfo);
@@ -601,7 +601,7 @@ namespace MS.Internal.Annotations.Anchoring
             Invariant.Assert(documentPage != DocumentPage.Missing);
 
             textView = ((IServiceProvider)documentPage).GetService(typeof(ITextView)) as ITextView;
-            Invariant.Assert(textView != null, "DocumentPage didn't provide a TextView.");
+            Invariant.Assert(textView is not null, "DocumentPage didn't provide a TextView.");
 
             //check if there is any content
             if ((textView.TextSegments is null) || (textView.TextSegments.Count == 0))
@@ -609,7 +609,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             start = textView.TextSegments[0].Start.CreatePointer(LogicalDirection.Forward);
             end = textView.TextSegments[textView.TextSegments.Count - 1].End.CreatePointer(LogicalDirection.Backward);
-            Debug.Assert((start != null) && (end != null), "null start/end TextPointer on a non empty page");
+            Debug.Assert((start is not null) && (end is not null), "null start/end TextPointer on a non empty page");
             return true;
         }
 

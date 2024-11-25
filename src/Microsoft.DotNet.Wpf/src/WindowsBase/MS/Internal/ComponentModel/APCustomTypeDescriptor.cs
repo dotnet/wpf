@@ -78,12 +78,12 @@ namespace MS.Internal.ComponentModel
 
             PropertyFilterOptions filter = PropertyFilterOptions.Valid | PropertyFilterOptions.SetValues;
 
-            if (attributes != null) 
+            if (attributes is not null) 
             {
                 foreach (Attribute attr in attributes) 
                 {
                     PropertyFilterAttribute filterAttr = attr as PropertyFilterAttribute;
-                    if (filterAttr != null) 
+                    if (filterAttr is not null) 
                     {
                         filter = filterAttr.Filter;
                         break;

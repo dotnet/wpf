@@ -45,7 +45,7 @@ namespace System.Windows.Markup
 
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType != null && value is DateTime)
+            if (destinationType is not null && value is DateTime)
             {
                 return _dateTimeValueSerializer.ConvertToString(value as string, null);
             }

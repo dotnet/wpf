@@ -68,7 +68,7 @@ namespace System.Windows.Documents
             if (scope is DocumentGrid)
             {
                 _uiScope = ((DocumentGrid)scope).DocumentViewerOwner;
-                Invariant.Assert(_uiScope != null, "DocumentGrid's DocumentViewerOwner cannot be null.");
+                Invariant.Assert(_uiScope is not null, "DocumentGrid's DocumentViewerOwner cannot be null.");
             }
             else
             {
@@ -91,7 +91,7 @@ namespace System.Windows.Documents
         {
             ClearSelection();
 
-            if (_scope != null)
+            if (_scope is not null)
             {
                 _scope.MouseLeftButtonDown -= new MouseButtonEventHandler(OnLeftMouseDown);
                 _scope.MouseLeftButtonUp -= new MouseButtonEventHandler(OnLeftMouseUp);
@@ -100,7 +100,7 @@ namespace System.Windows.Documents
                 _scope = null;
             }
 
-            if (_uiScope != null)
+            if (_uiScope is not null)
             {
                 CommandBindingCollection commandBindings = _uiScope.CommandBindings;
                 foreach (CommandBinding binding in commandBindings)
@@ -150,10 +150,10 @@ namespace System.Windows.Documents
         //redraws highlights on page
         private void UpdateHighlightVisual(FixedPage page)
         {
-            if (page != null)
+            if (page is not null)
             {
                 HighlightVisual hv = HighlightVisual.GetHighlightVisual(page);
-                if (hv != null)
+                if (hv is not null)
                 {
                     hv.UpdateRubberbandSelection(this);
                 }
@@ -175,7 +175,7 @@ namespace System.Windows.Documents
                 // Order of data is irrelevant, the pasting application will determine format
                 dataObject.SetData(DataFormats.Text, textString, true);
                 dataObject.SetData(DataFormats.UnicodeText, textString, true);
-                if (bmp != null)
+                if (bmp is not null)
                 {
                     dataObject.SetData(DataFormats.Bitmap, bmp, true);
                 }
@@ -275,14 +275,14 @@ namespace System.Windows.Documents
 
             FixedNode[] nodesInLine = _panel.FixedContainer.FixedTextBuilder.GetFirstLine(_pageIndex);
 
-            while (nodesInLine != null && nodesInLine.Length > 0)
+            while (nodesInLine is not null && nodesInLine.Length > 0)
             {
                 TextPositionPair textRange = null; //current text range
 
                 foreach (FixedNode node in nodesInLine)
                 {
                     Glyphs g = _page.GetGlyphsElement(node);
-                    if (g != null)
+                    if (g is not null)
                     {
                         int begin, end; //first and last index in range
                         bool includeEnd; //is the end of this glyphs included in selection?
@@ -320,7 +320,7 @@ namespace System.Windows.Documents
             string text = "";
             foreach (TextPositionPair range in ranges)
             {
-                Debug.Assert(range.first != null && range.second != null);
+                Debug.Assert(range.first is not null && range.second is not null);
                 text = $"{text}{TextRangeBase.GetTextInternal(range.first, range.second)}\r\n"; //CRLF
             }
 
@@ -333,7 +333,7 @@ namespace System.Windows.Documents
 
             // Create a FlowPosition to represent this fixed position
             FlowPosition flowHit = _panel.FixedContainer.FixedTextBuilder.CreateFlowPosition(fixedPosition);
-            if (flowHit != null)
+            if (flowHit is not null)
             {
                 // Create a TextPointer from the flow position
                 return new FixedTextPointer(false, LogicalDirection.Forward, flowHit);
@@ -506,7 +506,7 @@ namespace System.Windows.Documents
             e.Handled = true;
 
             FixedDocumentPage dp = GetFixedPanelDocumentPage(e.GetPosition(_scope));
-            if (dp != null)
+            if (dp is not null)
             {
                 //give focus to the UI Scope so that actions like
                 //Copy will work after making a selection.
@@ -534,7 +534,7 @@ namespace System.Windows.Documents
             if (_isSelecting)
             {
                 _isSelecting = false;
-                if (_page != null)
+                if (_page is not null)
                 {
                     ExtendSelection(e.GetPosition(_page));
                 }
@@ -551,7 +551,7 @@ namespace System.Windows.Documents
             }
             else if (_isSelecting)
             {
-                if (_page != null)
+                if (_page is not null)
                 {
                     ExtendSelection(e.GetPosition(_page));
                 }
@@ -560,7 +560,7 @@ namespace System.Windows.Documents
 
         private void OnQueryCursor(object sender, QueryCursorEventArgs e)
         {
-            if (_isSelecting || GetFixedPanelDocumentPage(e.GetPosition(_scope)) != null)
+            if (_isSelecting || GetFixedPanelDocumentPage(e.GetPosition(_scope)) is not null)
             {
                 e.Cursor = Cursors.Cross;
             }
@@ -575,14 +575,14 @@ namespace System.Windows.Documents
         private FixedDocumentPage GetFixedPanelDocumentPage(Point pt)
         {
             DocumentGrid mpScope = _scope as DocumentGrid;
-            if (mpScope != null)
+            if (mpScope is not null)
             {
                 DocumentPage dp = mpScope.GetDocumentPageFromPoint(pt);
                 FixedDocumentPage fdp = dp as FixedDocumentPage;
                 if (fdp is null)
                 {
                     FixedDocumentSequenceDocumentPage fdsdp = dp as FixedDocumentSequenceDocumentPage;
-                    if (fdsdp != null)
+                    if (fdsdp is not null)
                     {
                         fdp = fdsdp.ChildDocumentPage as FixedDocumentPage;
                     }
@@ -606,7 +606,7 @@ namespace System.Windows.Documents
 
         internal bool HasSelection
         {
-            get { return _page != null && _panel != null && !_selectionRect.IsEmpty; }
+            get { return _page is not null && _panel is not null && !_selectionRect.IsEmpty; }
         }
         #endregion Internal Properties
 

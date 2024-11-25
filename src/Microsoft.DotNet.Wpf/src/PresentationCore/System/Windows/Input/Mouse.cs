@@ -472,10 +472,10 @@ namespace System.Windows.Input
             // Security Mitigation: do not give out input state if the device is not active.
             if(Mouse.PrimaryDevice.IsActive)
             {
-                if (relativeTo != null)
+                if (relativeTo is not null)
                 {
                     PresentationSource inputSource = PresentationSource.FromDependencyObject(InputElement.GetContainingVisual(relativeTo as DependencyObject));
-                    if (inputSource != null)
+                    if (inputSource is not null)
                     {
                         IMouseInputProvider mouseInputProvider = inputSource.GetInputProvider(typeof(MouseDevice)) as IMouseInputProvider;
                         if (null != mouseInputProvider)

@@ -93,14 +93,14 @@ namespace MS.Internal.AutomationProxies
             // Use the Accessible object if this is a Winforms control.  Only Winforms StatusBars
             // can have children.
             Accessible accChild = null;
-            if (_acc != null)
+            if (_acc is not null)
             {
                 // OLEACC's Win32 proxy does use a 1, 2, 3... scheme, but the Winforms
                 // controls in some cases supply their own children, using a different scheme.
                 // Using the "ByIndex" approach avoids having to know what the underlying
                 // object's idChild scheme is.
                 accChild = Accessible.GetFullAccessibleChildByIndex(_acc, index);
-                if (accChild != null && accChild.Role != AccessibleRole.PushButton)
+                if (accChild is not null && accChild.Role != AccessibleRole.PushButton)
                 {
                     // WinForms toolbars have full IAccessibles for their children, but 
                     // return the overall hwnd; treat those same as regular items.
@@ -239,7 +239,7 @@ namespace MS.Internal.AutomationProxies
                 if (Misc.PtInRect(ref rc, x, y))
                 {
                     ProxySimple grip = StatusBarGrip.Create(_hwnd, this, -1);
-                    return (ProxySimple)(grip != null ? grip : this);
+                    return (ProxySimple)(grip is not null ? grip : this);
                 }
             }
             return this;
@@ -298,12 +298,12 @@ namespace MS.Internal.AutomationProxies
             // loop over all the band to find it.
 
             // Only Winforms StatusBars can have children.
-            if (_acc != null)
+            if (_acc is not null)
             {
                 Accessible accChild = _acc.FirstChild;
                 IntPtr hwndChild = IntPtr.Zero;
 
-                for (int i = 0; accChild != null; i++, accChild = accChild.NextSibling(_acc))
+                for (int i = 0; accChild is not null; i++, accChild = accChild.NextSibling(_acc))
                 {
                     hwndChild = accChild.Window;
                     if (hwndChild == IntPtr.Zero)

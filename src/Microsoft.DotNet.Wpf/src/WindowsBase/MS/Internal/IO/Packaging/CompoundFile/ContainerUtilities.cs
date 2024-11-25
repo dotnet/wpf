@@ -117,12 +117,12 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             {
                 Int32 strByteLen = 0;
 
-                if (outputString != null)
+                if (outputString is not null)
                 {
                     strByteLen = outputString.Length * 2;
                 }
 
-                if (writer != null)
+                if (writer is not null)
                 {
                     // Write length, in bytes, of the unicode string
                     writer.Write(strByteLen);
@@ -142,7 +142,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     {
                         strByteLen += padLength;
 
-                        if (writer != null)
+                        if (writer is not null)
                         {
                             writer.Write(_paddingBuf, 0, padLength);
                         }

@@ -62,7 +62,7 @@ namespace System.Windows.Automation.Text
         internal TextPatternRange(SafeTextRangeHandle hTextRange, TextPattern pattern)
         {
             Debug.Assert(!hTextRange.IsInvalid);
-            Debug.Assert(pattern != null);
+            Debug.Assert(pattern is not null);
 
             _hTextRange = hTextRange;
             _pattern = pattern;
@@ -250,7 +250,7 @@ namespace System.Windows.Automation.Text
                 // Convert ints from COM Interop to the appropriate enum type
                 obj = Enum.ToObject(ai.Type, (int)obj);
             }
-            else if (obj != AutomationElement.NotSupported && ai.ObjectConverter != null)
+            else if (obj != AutomationElement.NotSupported && ai.ObjectConverter is not null)
             {
                 // Use a custom converter, if needed (eg. converts LCIDs to CultureInfo)
                 obj = ai.ObjectConverter(obj);

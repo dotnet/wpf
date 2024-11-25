@@ -21,7 +21,7 @@ namespace System.Windows.Controls
             if (csv || string.Equals(format, DataFormats.Text, StringComparison.OrdinalIgnoreCase)
                 || string.Equals(format, DataFormats.UnicodeText, StringComparison.OrdinalIgnoreCase))
             {
-                if (cellValue != null)
+                if (cellValue is not null)
                 {
                     bool escapeApplied = false;
                     int length = sb.Length;
@@ -52,7 +52,7 @@ namespace System.Windows.Controls
                 }
 
                 sb.Append("<TD>"); // Start cell
-                if (cellValue != null)
+                if (cellValue is not null)
                 {
                     FormatPlainTextAsHtml(cellValue.ToString(), new StringWriter(sb, CultureInfo.CurrentCulture));
                 }
@@ -118,7 +118,7 @@ namespace System.Windows.Controls
 
         private static void FormatPlainText(string s, bool csv, TextWriter output, ref bool escapeApplied)
         {
-            if (s != null)
+            if (s is not null)
             {
                 int length = s.Length;
                 for (int i = 0; i < length; i++)

@@ -230,7 +230,7 @@ namespace MS.Internal.IO.Packaging
         {
             // Argument errors can only be due to internal inconsistencies, since no input data makes its way here.
             Invariant.Assert(breakType >= CHUNK_BREAKTYPE.CHUNK_NO_BREAK && breakType <= CHUNK_BREAKTYPE.CHUNK_EOC);
-            Invariant.Assert(attribute != null);
+            Invariant.Assert(attribute is not null);
             // Note that lcid values potentially cover the full range of uint values
             // (see http://msdn.microsoft.com/library/default.asp?url=/library/en-us/intl/nls_8sj7.asp)
             // and so no useful validation can be made for lcid.

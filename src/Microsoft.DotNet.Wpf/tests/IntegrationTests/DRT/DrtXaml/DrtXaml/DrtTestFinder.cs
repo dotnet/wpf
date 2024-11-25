@@ -40,7 +40,7 @@ namespace DrtXaml
             DrtTest drtTest = null;
             string name = testBlk.Name;
 
-            if (testBlk.TestDelegate != null)
+            if (testBlk.TestDelegate is not null)
             {
                 SimpleTest test = testBlk.TestDelegate;
 

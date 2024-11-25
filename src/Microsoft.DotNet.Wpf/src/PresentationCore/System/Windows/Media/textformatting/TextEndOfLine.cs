@@ -50,7 +50,7 @@ namespace System.Windows.Media.TextFormatting
         {
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(length);
 
-            if (textRunProperties != null && textRunProperties.Typeface is null)
+            if (textRunProperties is not null && textRunProperties.Typeface is null)
                 throw new ArgumentNullException("textRunProperties.Typeface");
 
             _length = length;

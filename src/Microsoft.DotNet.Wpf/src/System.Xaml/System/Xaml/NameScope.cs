@@ -190,7 +190,7 @@ namespace System.Xaml
             ArgumentNullException.ThrowIfNull(key);
 
             object value = FindName(key);
-            return value != null;
+            return value is not null;
         }
 
         public bool Remove(string key)

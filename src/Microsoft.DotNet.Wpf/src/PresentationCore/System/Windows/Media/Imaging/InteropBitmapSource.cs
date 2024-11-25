@@ -62,7 +62,7 @@ namespace System.Windows.Interop
                         hpalette,
                         alphaOptions,
                         out _unmanagedSource));
-                Debug.Assert (_unmanagedSource != null && !_unmanagedSource.IsInvalid);
+                Debug.Assert (_unmanagedSource is not null && !_unmanagedSource.IsInvalid);
             }
 
             _unmanagedSource.CalculateSize();
@@ -93,7 +93,7 @@ namespace System.Windows.Interop
                     myFactory.ImagingFactoryPtr,
                     hicon,
                     out _unmanagedSource));
-                Debug.Assert (_unmanagedSource != null && !_unmanagedSource.IsInvalid);
+                Debug.Assert (_unmanagedSource is not null && !_unmanagedSource.IsInvalid);
             }
 
             _unmanagedSource.CalculateSize();
@@ -140,7 +140,7 @@ namespace System.Windows.Interop
                     (uint)offset,
                     out _unmanagedSource
                     ));
-            Debug.Assert (_unmanagedSource != null && !_unmanagedSource.IsInvalid);
+            Debug.Assert (_unmanagedSource is not null && !_unmanagedSource.IsInvalid);
 
             _unmanagedSource.CalculateSize();
             _sourceRect = Int32Rect.Empty;
@@ -289,7 +289,7 @@ namespace System.Windows.Interop
 
             WritePreamble();
 
-            if (_unmanagedSource != null)
+            if (_unmanagedSource is not null)
             {
                 if(UsableWithoutCache)
                 {
@@ -382,7 +382,7 @@ namespace System.Windows.Interop
                     transformedSource = wicClipper;
                 }
 
-                if (_sizeOptions != null)
+                if (_sizeOptions is not null)
                 {
                     if (_sizeOptions.DoesScale)
                     {
@@ -424,7 +424,7 @@ namespace System.Windows.Interop
                         }
                     }
 
-                    if (wicTransformer != null)
+                    if (wicTransformer is not null)
                     {
                         transformedSource = wicTransformer;
                     }

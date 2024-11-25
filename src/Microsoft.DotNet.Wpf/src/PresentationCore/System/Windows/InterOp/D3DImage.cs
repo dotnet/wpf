@@ -83,7 +83,7 @@ namespace System.Windows.Interop
 
         ~D3DImage()
         {
-            if (_pInteropDeviceBitmap != null)
+            if (_pInteropDeviceBitmap is not null)
             {
                 // Stop unmanaged code from sending us messages because we're being collected
                 UnsafeNativeMethods.InteropDeviceBitmap.Detach(_pInteropDeviceBitmap);
@@ -183,7 +183,7 @@ namespace System.Windows.Interop
             // exists because it won't be deleted until the composition thread is done 
             // with it or until the garbage collector runs.
             //
-            if (_pInteropDeviceBitmap != null)
+            if (_pInteropDeviceBitmap is not null)
             {
                 // 1. Tell the old bitmap to stop sending front buffer messages because
                 //    our new back buffer may be on a different adapter. Plus, tell the
@@ -357,7 +357,7 @@ namespace System.Windows.Interop
             {
                 WritePreamble();
 
-                if (value != null)
+                if (value is not null)
                 {
                     _isFrontBufferAvailableChangedHandlers += value;
                 }
@@ -367,7 +367,7 @@ namespace System.Windows.Interop
             {
                 WritePreamble();
     
-                if (value != null)
+                if (value is not null)
                 {
                     _isFrontBufferAvailableChangedHandlers -= value;
                 }
@@ -529,7 +529,7 @@ namespace System.Windows.Interop
             
             BitmapSource copy = null;
             
-            if (_pInteropDeviceBitmap != null)
+            if (_pInteropDeviceBitmap is not null)
             {
                 BitmapSourceSafeMILHandle pIWICBitmapSource;
                 
@@ -657,7 +657,7 @@ namespace System.Windows.Interop
                 }
             }
         
-            if (img._isFrontBufferAvailableChangedHandlers != null)
+            if (img._isFrontBufferAvailableChangedHandlers is not null)
             {
                 img._isFrontBufferAvailableChangedHandlers(img, e);
             }
@@ -794,7 +794,7 @@ namespace System.Windows.Interop
                 {
                     data.Type = MILCMD.MilCmdD3DImage;
                     data.Handle = _duceResource.GetHandle(channel);
-                    if (_pInteropDeviceBitmap != null)
+                    if (_pInteropDeviceBitmap is not null)
                     {
                         UnsafeNativeMethods.MILUnknown.AddRef(_pInteropDeviceBitmap);
                         
@@ -811,7 +811,7 @@ namespace System.Windows.Interop
                     {
                         _softwareCopy = CopyBackBuffer();
                         
-                        if (_softwareCopy != null)
+                        if (_softwareCopy is not null)
                         {
                             UnsafeNativeMethods.MILUnknown.AddRef(_softwareCopy.WicSourceHandle);
                             
@@ -891,7 +891,7 @@ namespace System.Windows.Interop
         // IAppDomainShutdownListener
         void IAppDomainShutdownListener.NotifyShutdown()
         {
-            if (_pInteropDeviceBitmap != null)
+            if (_pInteropDeviceBitmap is not null)
             {
                 // Stop unmanaged code from sending us messages because the AppDomain is going down
                 UnsafeNativeMethods.InteropDeviceBitmap.Detach(_pInteropDeviceBitmap);

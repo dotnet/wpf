@@ -79,12 +79,12 @@ namespace System.Windows.Media
             PathFigureCollection result = new PathFigureCollection();
             GeometryCollection children = Children;
 
-            if (children != null)
+            if (children is not null)
             {
                 for (int i = 0; i < children.Count; i++)
                 {
                     PathFigureCollection pathFigures = children.Internal_GetItem(i).GetTransformedFigureCollection(combined);
-                    if (pathFigures != null)
+                    if (pathFigures is not null)
                     {
                         int count = pathFigures.Count;
                         for (int j = 0; j < count; ++j)

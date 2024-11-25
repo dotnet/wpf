@@ -121,7 +121,7 @@ namespace MS.Internal.AppModel
         {
             // We can get this event from cancellation. We do not care about the error if there is any
             // that happened as a result of cancellation.
-            if ((!args.Cancelled) && (args.Error != null))
+            if ((!args.Cancelled) && (args.Error is not null))
             {
                 throw args.Error;
             }

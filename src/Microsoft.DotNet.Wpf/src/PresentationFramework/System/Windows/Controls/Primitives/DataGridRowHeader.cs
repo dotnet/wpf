@@ -215,7 +215,7 @@ namespace System.Windows.Controls.Primitives
             // Give the Row a pointer to the RowHeader so that it can propagate down change notifications
             DataGridRow parent = ParentRow;
 
-            if (parent != null)
+            if (parent is not null)
             {
                 parent.RowHeader = this;
                 SyncProperties();
@@ -298,7 +298,7 @@ namespace System.Windows.Controls.Primitives
                 // If the DataGrid has not run layout the headers parent may not position the cells correctly when the header size changes.
                 // This will cause the cells to be out of sync with the columns. To avoid this we will force a layout of the headers parent panel.
                 var parent = this.Parent as UIElement;
-                if (parent != null)
+                if (parent is not null)
                 {
                     parent.InvalidateMeasure();
                     parent.InvalidateArrange();
@@ -338,7 +338,7 @@ namespace System.Windows.Controls.Primitives
         {
             var header = d as DataGridRowHeader;
             var row = header.ParentRow;
-            var dataGrid = row != null ? row.DataGridOwner : null;
+            var dataGrid = row is not null ? row.DataGridOwner : null;
             return DataGridHelper.GetCoercedTransferPropertyValue(
                 header,
                 baseValue,
@@ -356,7 +356,7 @@ namespace System.Windows.Controls.Primitives
         {
             var header = d as DataGridRowHeader;
             var row = header.ParentRow;
-            var dataGrid = row != null ? row.DataGridOwner : null;
+            var dataGrid = row is not null ? row.DataGridOwner : null;
             return DataGridHelper.GetCoercedTransferPropertyValue(
                 header,
                 baseValue,
@@ -406,10 +406,10 @@ namespace System.Windows.Controls.Primitives
             get
             {
                 var row = ParentRow;
-                if (row != null)
+                if (row is not null)
                 {
                     var dataGrid = row.DataGridOwner;
-                    if (dataGrid != null)
+                    if (dataGrid is not null)
                     {
                         return dataGrid.IsCurrent(row);
                     }
@@ -424,7 +424,7 @@ namespace System.Windows.Controls.Primitives
             get
             {
                 var row = ParentRow;
-                if (row != null)
+                if (row is not null)
                 {
                     return row.IsEditing;
                 }
@@ -438,7 +438,7 @@ namespace System.Windows.Controls.Primitives
             get
             {
                 var row = ParentRow;
-                if (row != null)
+                if (row is not null)
                 {
                     return row.IsMouseOver;
                 }
@@ -452,10 +452,10 @@ namespace System.Windows.Controls.Primitives
             get
             {
                 var row = ParentRow;
-                if (row != null)
+                if (row is not null)
                 {
                     var dataGrid = row.DataGridOwner;
-                    if (dataGrid != null)
+                    if (dataGrid is not null)
                     {
                         return dataGrid.IsKeyboardFocusWithin;
                     }
@@ -540,7 +540,7 @@ namespace System.Windows.Controls.Primitives
         {
             DataGridRowHeader header = (DataGridRowHeader)d;
             DataGridRow parent = header.ParentRow;
-            if (parent != null)
+            if (parent is not null)
             {
                 return parent.IsSelected;
             }
@@ -564,7 +564,7 @@ namespace System.Windows.Controls.Primitives
 
             DataGrid dataGridOwner = DataGridOwner;
             DataGridRow parentRow = ParentRow;
-            if ((dataGridOwner != null) && (parentRow != null))
+            if ((dataGridOwner is not null) && (parentRow is not null))
             {
                 dataGridOwner.HandleSelectionForRowHeaderAndDetailsInput(parentRow, /* startDragging = */ true);
             }
@@ -600,7 +600,7 @@ namespace System.Windows.Controls.Primitives
             _topGripper = GetTemplateChild(TopHeaderGripperTemplateName) as Thumb;
             _bottomGripper = GetTemplateChild(BottomHeaderGripperTemplateName) as Thumb;
 
-            if (_topGripper != null)
+            if (_topGripper is not null)
             {
                 _topGripper.DragStarted += new DragStartedEventHandler(OnRowHeaderGripperDragStarted);
                 _topGripper.DragDelta += new DragDeltaEventHandler(OnRowHeaderResize);
@@ -609,7 +609,7 @@ namespace System.Windows.Controls.Primitives
                 SetTopGripperVisibility();
             }
 
-            if (_bottomGripper != null)
+            if (_bottomGripper is not null)
             {
                 _bottomGripper.DragStarted += new DragStartedEventHandler(OnRowHeaderGripperDragStarted);
                 _bottomGripper.DragDelta += new DragDeltaEventHandler(OnRowHeaderResize);
@@ -624,7 +624,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         private void UnhookGripperEvents()
         {
-            if (_topGripper != null)
+            if (_topGripper is not null)
             {
                 _topGripper.DragStarted -= new DragStartedEventHandler(OnRowHeaderGripperDragStarted);
                 _topGripper.DragDelta -= new DragDeltaEventHandler(OnRowHeaderResize);
@@ -633,7 +633,7 @@ namespace System.Windows.Controls.Primitives
                 _topGripper = null;
             }
 
-            if (_bottomGripper != null)
+            if (_bottomGripper is not null)
             {
                 _bottomGripper.DragStarted -= new DragStartedEventHandler(OnRowHeaderGripperDragStarted);
                 _bottomGripper.DragDelta -= new DragDeltaEventHandler(OnRowHeaderResize);
@@ -645,11 +645,11 @@ namespace System.Windows.Controls.Primitives
 
         private void SetTopGripperVisibility()
         {
-            if (_topGripper != null)
+            if (_topGripper is not null)
             {
                 DataGrid dataGrid = DataGridOwner;
                 DataGridRow parent = ParentRow;
-                if (dataGrid != null && parent != null &&
+                if (dataGrid is not null && parent is not null &&
                     dataGrid.CanUserResizeRows && dataGrid.Items.Count > 1 &&
                     !object.ReferenceEquals(parent.Item, dataGrid.Items[0]))
                 {
@@ -664,10 +664,10 @@ namespace System.Windows.Controls.Primitives
 
         private void SetBottomGripperVisibility()
         {
-            if (_bottomGripper != null)
+            if (_bottomGripper is not null)
             {
                 DataGrid dataGrid = DataGridOwner;
-                if (dataGrid != null && dataGrid.CanUserResizeRows)
+                if (dataGrid is not null && dataGrid.CanUserResizeRows)
                 {
                     _bottomGripper.Visibility = Visibility.Visible;
                 }
@@ -686,10 +686,10 @@ namespace System.Windows.Controls.Primitives
             get
             {
                 DataGridRow row = ParentRow;
-                if (row != null)
+                if (row is not null)
                 {
                     DataGrid dataGrid = row.DataGridOwner;
-                    if (dataGrid != null)
+                    if (dataGrid is not null)
                     {
                         int index = dataGrid.ItemContainerGenerator.IndexFromContainer(row);
                         if (index > 0)
@@ -716,7 +716,7 @@ namespace System.Windows.Controls.Primitives
         private void OnRowHeaderGripperDragStarted(object sender, DragStartedEventArgs e)
         {
             DataGridRow rowToResize = RowToResize(sender);
-            if (rowToResize != null)
+            if (rowToResize is not null)
             {
                 rowToResize.OnRowResizeStarted();
                 e.Handled = true;
@@ -726,7 +726,7 @@ namespace System.Windows.Controls.Primitives
         private void OnRowHeaderResize(object sender, DragDeltaEventArgs e)
         {
             DataGridRow rowToResize = RowToResize(sender);
-            if (rowToResize != null)
+            if (rowToResize is not null)
             {
                 rowToResize.OnRowResize(e.VerticalChange);
                 e.Handled = true;
@@ -737,7 +737,7 @@ namespace System.Windows.Controls.Primitives
         private void OnRowHeaderGripperDragCompleted(object sender, DragCompletedEventArgs e)
         {
             DataGridRow rowToResize = RowToResize(sender);
-            if (rowToResize != null)
+            if (rowToResize is not null)
             {
                 rowToResize.OnRowResizeCompleted(e.Canceled);
                 e.Handled = true;
@@ -747,7 +747,7 @@ namespace System.Windows.Controls.Primitives
         private void OnGripperDoubleClicked(object sender, MouseButtonEventArgs e)
         {
             DataGridRow rowToResize = RowToResize(sender);
-            if (rowToResize != null)
+            if (rowToResize is not null)
             {
                 rowToResize.OnRowResizeReset();
                 e.Handled = true;
@@ -777,7 +777,7 @@ namespace System.Windows.Controls.Primitives
             get
             {
                 DataGridRow parent = ParentRow;
-                if (parent != null)
+                if (parent is not null)
                 {
                     return parent.DataGridOwner;
                 }

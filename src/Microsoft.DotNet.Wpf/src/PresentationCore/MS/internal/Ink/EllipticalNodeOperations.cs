@@ -25,7 +25,7 @@ namespace MS.Internal.Ink
         internal EllipticalNodeOperations(StylusShape nodeShape)
             : base(nodeShape)
         {
-            System.Diagnostics.Debug.Assert((nodeShape != null) && nodeShape.IsEllipse);
+            System.Diagnostics.Debug.Assert((nodeShape is not null) && nodeShape.IsEllipse);
 
             _radii = new Size(nodeShape.Width * 0.5, nodeShape.Height * 0.5);
 

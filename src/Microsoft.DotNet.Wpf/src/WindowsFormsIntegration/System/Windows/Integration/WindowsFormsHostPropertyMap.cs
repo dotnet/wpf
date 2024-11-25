@@ -67,15 +67,15 @@ namespace System.Windows.Forms.Integration
                 {
                     brush = (Brush)parent.GetValue(SWC.Control.BackgroundProperty);
                     parent = VisualTreeHelper.GetParent(parent);
-                } while (parent != null && brush is null);
+                } while (parent is not null && brush is null);
             }
 
             WinFormsAdapter adapter = GetAdapter(host);
 
-            if (adapter != null && brush != null)
+            if (adapter is not null && brush is not null)
             {
                 WindowsFormsHost windowsFormsHost = host as WindowsFormsHost;
-                if (windowsFormsHost != null)
+                if (windowsFormsHost is not null)
                 {
                     SWF.Control child = windowsFormsHost.Child;
 
@@ -101,7 +101,7 @@ namespace System.Windows.Forms.Integration
         {
             SWF.Control childControl = GetChildControl(host, FlowDirectionPropertyTranslator, value);
             WinFormsAdapter adapter = GetAdapter(host);
-            if (adapter != null && childControl != null)
+            if (adapter is not null && childControl is not null)
             {
                 if (value is SW.FlowDirection)
                 {
@@ -113,11 +113,11 @@ namespace System.Windows.Forms.Integration
                     {
                         case SW.FlowDirection.RightToLeft:
                             adapter.RightToLeft = SWF.RightToLeft.Yes;
-                            if (propertyInfo != null) { propertyInfo.SetValue(childControl, true, null); }
+                            if (propertyInfo is not null) { propertyInfo.SetValue(childControl, true, null); }
                             break;
                         case SW.FlowDirection.LeftToRight:
                             adapter.RightToLeft = SWF.RightToLeft.No;
-                            if (propertyInfo != null) { propertyInfo.SetValue(childControl, false, null); }
+                            if (propertyInfo is not null) { propertyInfo.SetValue(childControl, false, null); }
                             break;
                     }
                 }
@@ -133,10 +133,10 @@ namespace System.Windows.Forms.Integration
         private void FontFamilyPropertyTranslator(object host, string propertyName, object value)
         {
             WinFormsAdapter adapter = GetAdapter(host);
-            if (adapter != null)
+            if (adapter is not null)
             {
                 SWM.FontFamily family = value as SWM.FontFamily;
-                if (family != null)
+                if (family is not null)
                 {
                     string familySource = family.Source;
                     adapter.Font = new SD.Font(familySource, adapter.Font.Size, adapter.Font.Style);
@@ -153,7 +153,7 @@ namespace System.Windows.Forms.Integration
         private void FontStylePropertyTranslator(object host, string propertyName, object value)
         {
             WinFormsAdapter adapter = GetAdapter(host);
-            if (adapter != null)
+            if (adapter is not null)
             {
                 if (value is SW.FontStyle)
                 {
@@ -184,7 +184,7 @@ namespace System.Windows.Forms.Integration
         private void FontWeightPropertyTranslator(object host, string propertyName, object value)
         {
             WinFormsAdapter adapter = GetAdapter(host);
-            if (adapter != null && value is SW.FontWeight)
+            if (adapter is not null && value is SW.FontWeight)
             {
                 SD.FontStyle style = CurrentFontStyle;
                 if (HostUtils.FontWeightIsBold((SW.FontWeight)value))
@@ -204,7 +204,7 @@ namespace System.Windows.Forms.Integration
         private void FontSizePropertyTranslator(object host, string propertyName, object value)
         {
             WinFormsAdapter adapter = GetAdapter(host);
-            if (adapter != null && value is double)
+            if (adapter is not null && value is double)
             {
                 double pointSize = Convert.FontSizeToSystemDrawing((double)value);
                 adapter.Font = new SD.Font(CurrentFontFamily, (float)pointSize, CurrentFontStyle);
@@ -217,14 +217,14 @@ namespace System.Windows.Forms.Integration
         private void ForegroundPropertyTranslator(object host, string propertyName, object value)
         {
             SWM.Brush brush = value as SWM.Brush;
-            if (brush != null)
+            if (brush is not null)
             {
                 bool defined;
                 SD.Color wfColor = WindowsFormsHostPropertyMap.TranslateSolidOrGradientBrush(brush, out defined);
                 if (defined)
                 {
                     WinFormsAdapter adapter = GetAdapter(host);
-                    if (adapter != null)
+                    if (adapter is not null)
                     {
                         adapter.ForeColor = wfColor;
                     }
@@ -238,7 +238,7 @@ namespace System.Windows.Forms.Integration
         private void IsEnabledPropertyTranslator(object host, string propertyName, object value)
         {
             WinFormsAdapter adapter = GetAdapter(host);
-            if (adapter != null && value is bool)
+            if (adapter is not null && value is bool)
             {
                 adapter.Enabled = (bool)value;
             }
@@ -251,7 +251,7 @@ namespace System.Windows.Forms.Integration
         {
             SWF.Control childControl = GetChildControl(host, PaddingPropertyTranslator, value);
             WinFormsAdapter adapter = GetAdapter(host);
-            if (adapter != null && childControl != null)
+            if (adapter is not null && childControl is not null)
             {
                 if (value is SW.Thickness)
                 {
@@ -268,7 +268,7 @@ namespace System.Windows.Forms.Integration
             if (value is SW.Visibility)
             {
                 WindowsFormsHost windowsFormsHost = host as WindowsFormsHost;
-                if (windowsFormsHost != null && windowsFormsHost.Child != null)
+                if (windowsFormsHost is not null && windowsFormsHost.Child is not null)
                 {
                     //Visible for Visible, not Visible for Hidden/Collapsed
                     windowsFormsHost.Child.Visible = ((SW.Visibility)value == SW.Visibility.Visible);
@@ -378,7 +378,7 @@ namespace System.Windows.Forms.Integration
             SD.Color wfColor = SD.Color.Empty;
             defined = false;
             SWM.SolidColorBrush solidColorBrush = brush as SWM.SolidColorBrush;
-            if (solidColorBrush != null)
+            if (solidColorBrush is not null)
             {
                 brushColor = solidColorBrush.Color;
                 defined = true;
@@ -387,13 +387,13 @@ namespace System.Windows.Forms.Integration
             else
             {
                 SWM.GradientBrush gradientBrush = brush as SWM.GradientBrush;
-                if (gradientBrush != null)
+                if (gradientBrush is not null)
                 {
                     SWM.GradientStopCollection grads = gradientBrush.GradientStops;
-                    if (grads != null)
+                    if (grads is not null)
                     {
                         SWM.GradientStop firstStop = grads[0];
-                        if (firstStop != null)
+                        if (firstStop is not null)
                         {
                             brushColor = firstStop.Color;
                             defined = true;

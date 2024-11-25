@@ -349,7 +349,7 @@ namespace System.Windows.Annotations
         /// </summary>
         private void OnPropertyChanged(Object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (_propertyChanged != null)
+            if (_propertyChanged is not null)
             {
                 _propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs("NameValuePairs"));
             }

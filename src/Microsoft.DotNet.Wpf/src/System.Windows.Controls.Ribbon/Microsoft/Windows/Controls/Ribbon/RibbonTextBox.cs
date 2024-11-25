@@ -164,11 +164,11 @@ namespace Microsoft.Windows.Controls.Ribbon
             ICommand oldCommand = (ICommand)e.OldValue;
             ICommand newCommand = (ICommand)e.NewValue;
 
-            if (oldCommand != null)
+            if (oldCommand is not null)
             {
                 textBox.UnhookCommand(oldCommand);
             }
-            if (newCommand != null)
+            if (newCommand is not null)
             {
                 textBox.HookCommand(newCommand);
             }
@@ -192,7 +192,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 #if RIBBON_IN_FRAMEWORK
             CanExecuteChangedEventManager.RemoveHandler(command, OnCanExecuteChanged);
 #else
-            if (_canExecuteChangedHandler != null)
+            if (_canExecuteChangedHandler is not null)
             {
                 command.CanExecuteChanged -= _canExecuteChangedHandler;
                 _canExecuteChangedHandler = null;
@@ -208,7 +208,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private void UpdateCanExecute()
         {
-            if (Command != null)
+            if (Command is not null)
             {
                 CanExecute = CommandHelpers.CanExecuteCommandSource(CommandParameter, this);
             }

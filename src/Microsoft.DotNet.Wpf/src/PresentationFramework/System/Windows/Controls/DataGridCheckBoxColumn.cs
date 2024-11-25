@@ -107,7 +107,7 @@ namespace System.Windows.Controls
 
         private CheckBox GenerateCheckBox(bool isEditing, DataGridCell cell)
         {
-            CheckBox checkBox = (cell != null) ? (cell.Content as CheckBox) : null;
+            CheckBox checkBox = (cell is not null) ? (cell.Content as CheckBox) : null;
             if (checkBox is null)
             {
                 checkBox = new CheckBox();
@@ -169,7 +169,7 @@ namespace System.Windows.Controls
         protected override object PrepareCellForEdit(FrameworkElement editingElement, RoutedEventArgs editingEventArgs)
         {
             CheckBox checkBox = editingElement as CheckBox;
-            if (checkBox != null)
+            if (checkBox is not null)
             {
                 checkBox.Focus();
                 bool? uneditedValue = checkBox.IsChecked;
@@ -199,7 +199,7 @@ namespace System.Windows.Controls
         private static bool IsMouseLeftButtonDown(RoutedEventArgs e)
         {
             MouseButtonEventArgs mouseArgs = e as MouseButtonEventArgs;
-            return (mouseArgs != null) &&
+            return (mouseArgs is not null) &&
                    (mouseArgs.ChangedButton == MouseButton.Left) &&
                    (mouseArgs.ButtonState == MouseButtonState.Pressed);
         }
@@ -208,13 +208,13 @@ namespace System.Windows.Controls
         {
             // This element is new, so the IsMouseOver property will not have been updated
             // yet, but there is enough information to do a hit-test.
-            return checkBox.InputHitTest(((MouseButtonEventArgs)e).GetPosition(checkBox)) != null;
+            return checkBox.InputHitTest(((MouseButtonEventArgs)e).GetPosition(checkBox)) is not null;
         }
 
         private static bool IsSpaceKeyDown(RoutedEventArgs e)
         {
             KeyEventArgs keyArgs = e as KeyEventArgs;
-            return (keyArgs != null) &&
+            return (keyArgs is not null) &&
                     keyArgs.RoutedEvent == Keyboard.KeyDownEvent && 
                    ((keyArgs.KeyStates & KeyStates.Down) == KeyStates.Down) &&
                    (keyArgs.Key == Key.Space);

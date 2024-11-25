@@ -93,8 +93,8 @@ namespace MS.Internal.FontFace
         {
             get
             {
-                Debug.Assert((_family != null && _familyTypefaceCollection is null)|| (_familyTypefaceCollection != null && _family is null));
-                if (_family != null)
+                Debug.Assert((_family is not null && _familyTypefaceCollection is null)|| (_familyTypefaceCollection is not null && _family is null));
+                if (_family is not null)
                 {
                     return checked((int)_family.Count);
                 }
@@ -144,9 +144,9 @@ namespace MS.Internal.FontFace
             {
                 _typefaceCollection = typefaceCollection;
 
-                Debug.Assert((typefaceCollection._family != null && typefaceCollection._familyTypefaceCollection is null)
-                    || (typefaceCollection._familyTypefaceCollection != null && typefaceCollection._family is null));
-                if (typefaceCollection._family != null)
+                Debug.Assert((typefaceCollection._family is not null && typefaceCollection._familyTypefaceCollection is null)
+                    || (typefaceCollection._familyTypefaceCollection is not null && typefaceCollection._family is null));
+                if (typefaceCollection._family is not null)
                 {
                     _familyEnumerator = ((IEnumerable<Text.TextInterface.Font>)typefaceCollection._family).GetEnumerator();
                     _familyTypefaceEnumerator = null;
@@ -164,7 +164,7 @@ namespace MS.Internal.FontFace
             {
                 get
                 {
-                    if (_typefaceCollection._family != null)
+                    if (_typefaceCollection._family is not null)
                     {
                         Text.TextInterface.Font face = _familyEnumerator.Current;
                         return new Typeface(_typefaceCollection._fontFamily, new FontStyle((int)face.Style), new FontWeight((int)face.Weight), new FontStretch((int)face.Stretch));
@@ -197,7 +197,7 @@ namespace MS.Internal.FontFace
 
             public bool MoveNext()
             {
-                if (_familyEnumerator != null)
+                if (_familyEnumerator is not null)
                 {
                     return _familyEnumerator.MoveNext();
                 }
@@ -209,7 +209,7 @@ namespace MS.Internal.FontFace
 
             public void Reset()
             {
-                if (_typefaceCollection._family != null)
+                if (_typefaceCollection._family is not null)
                 {
                     _familyEnumerator = ((IEnumerable<Text.TextInterface.Font>)_typefaceCollection._family).GetEnumerator();
                     _familyTypefaceEnumerator = null;

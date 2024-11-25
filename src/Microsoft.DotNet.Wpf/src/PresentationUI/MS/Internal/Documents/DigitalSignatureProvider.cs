@@ -147,7 +147,7 @@ namespace MS.Internal.Documents
                     );
 
 
-            if (xpsDigitalSignature != null)
+            if (xpsDigitalSignature is not null)
             {
                 // Fill in relevant fields from the XPS signature
                 digitalSignature.XpsDigitalSignature = xpsDigitalSignature;
@@ -214,7 +214,7 @@ namespace MS.Internal.Documents
             AssertIsSignable();
 
             XpsSignatureDefinition definition = FindSignatureDefinition(spotId);
-            if (definition != null)
+            if (definition is not null)
             {
                 FixedDocument.RemoveSignatureDefinition(definition);
                 FixedDocument.CommitSignatureDefinition();
@@ -254,7 +254,7 @@ namespace MS.Internal.Documents
                 {
                     // Remove the associated XpsDigitalSignature from the
                     // document
-                    if (signature.XpsDigitalSignature != null)
+                    if (signature.XpsDigitalSignature is not null)
                     {
                         XpsDocument.RemoveSignature(signature.XpsDigitalSignature);
                         signature.XpsDigitalSignature = null;
@@ -262,7 +262,7 @@ namespace MS.Internal.Documents
 
                     // Check if the document contains a signature definition
                     // corresponding to this signature
-                    bool matchesDefinition = (FindSignatureDefinition(id) != null);
+                    bool matchesDefinition = (FindSignatureDefinition(id) is not null);
 
                     // If the signature matches a signature definition in the
                     // document, mark the signature as NotSigned (i.e. an
@@ -301,7 +301,7 @@ namespace MS.Internal.Documents
             foreach (DigitalSignature signature in DigitalSignatureList)
             {
 
-                if (signature.XpsDigitalSignature != null)
+                if (signature.XpsDigitalSignature is not null)
                 {
                     signature.SignatureState =
                         VerifyXpsDigitalSignature(signature.XpsDigitalSignature);
@@ -320,7 +320,7 @@ namespace MS.Internal.Documents
             {
                 X509Certificate2 certificate = signature.Certificate;
 
-                if (certificate != null && !certificateList.Contains(certificate))
+                if (certificate is not null && !certificateList.Contains(certificate))
                 {
                     certificateList.Add(certificate);
                 }
@@ -409,14 +409,14 @@ namespace MS.Internal.Documents
                 ICollection<XpsSignatureDefinition> documentSignatureDefinitionList =
                     fixedDocument.SignatureDefinitions;
 
-                if (documentSignatureDefinitionList != null)
+                if (documentSignatureDefinitionList is not null)
                 {
                     // Add each signature definition to either the GUID map or
                     // the list of requested signatures
                     foreach (XpsSignatureDefinition signatureDefinition in documentSignatureDefinitionList)
                     {
                         // If the signature definition has a GUID, add it to the map
-                        if (signatureDefinition.SpotId != null)
+                        if (signatureDefinition.SpotId is not null)
                         {
                             signatureDefinitionMap.Add(signatureDefinition.SpotId.Value, signatureDefinition);
                         }
@@ -504,7 +504,7 @@ namespace MS.Internal.Documents
             // Copy simple fields if cert isn't null.  If it is null then the
             // cert wasn't embedded into container so don't copy cert related
             // fields.
-            if (x509Certificate2 != null)
+            if (x509Certificate2 is not null)
             {
                 digitalSignature.Certificate = x509Certificate2;
                 digitalSignature.SignedOn = xpsDigitalSignature.SigningTime;

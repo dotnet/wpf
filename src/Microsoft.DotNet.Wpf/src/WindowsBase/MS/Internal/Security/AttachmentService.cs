@@ -86,7 +86,7 @@ internal sealed class AttachmentService : IDisposable
     {
         if (disposing)
         {
-            if (_native != null)
+            if (_native is not null)
             {
                 Marshal.ReleaseComObject(_native);
                 _native = null;

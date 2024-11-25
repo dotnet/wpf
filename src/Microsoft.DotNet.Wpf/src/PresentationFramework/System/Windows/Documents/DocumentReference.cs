@@ -82,7 +82,7 @@ namespace System.Windows.Documents
              VerifyAccess();
 
             FixedDocument idp = null;
-            if (_doc != null)
+            if (_doc is not null)
             {
                 idp = _doc;
             }
@@ -96,7 +96,7 @@ namespace System.Windows.Documents
                 if (idp is null)
                 {
                     FixedDocument idpReloaded = _LoadDocument();
-                    if (idpReloaded != null)
+                    if (idpReloaded is not null)
                     {
                         DocumentsTrace.FixedDocumentSequence.IDF.Trace(
                             $"DocumentReference.GetDocument Loaded IDP {idpReloaded.GetHashCode()}");
@@ -107,7 +107,7 @@ namespace System.Windows.Documents
                 }
             }
 
-            if (idp != null)
+            if (idp is not null)
             {
                 LogicalTreeHelper.AddLogicalChild(this.Parent, idp);
             }
@@ -263,7 +263,7 @@ namespace System.Windows.Documents
         private Uri _ResolveUri()
         {
             Uri uriToNavigate = this.Source;
-            if (uriToNavigate != null)
+            if (uriToNavigate is not null)
             {
                 uriToNavigate = BindUriHelper.GetUriToNavigate(this, ((IUriContext)this).BaseUri, uriToNavigate);
             }
@@ -276,7 +276,7 @@ namespace System.Windows.Documents
         {
             FixedDocument idp = null;
             Uri uriToLoad = _ResolveUri();
-            if (uriToLoad != null)
+            if (uriToLoad is not null)
             {
                 ContentType mimeType = null;
                 Stream docStream = null;

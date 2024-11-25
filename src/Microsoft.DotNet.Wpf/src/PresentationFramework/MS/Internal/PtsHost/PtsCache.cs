@@ -81,7 +81,7 @@ namespace MS.Internal.PtsHost
         internal static void ReleaseContext(PtsContext ptsContext)
         {
             PtsCache ptsCache = ptsContext.Dispatcher.PtsCache as PtsCache;
-            Invariant.Assert(ptsCache != null, "Cannot retrieve PtsCache from PtsContext object.");
+            Invariant.Assert(ptsCache is not null, "Cannot retrieve PtsCache from PtsContext object.");
             ptsCache.ReleaseContextCore(ptsContext);
         }
 
@@ -93,7 +93,7 @@ namespace MS.Internal.PtsHost
         internal static void GetFloaterHandlerInfo(PtsHost ptsHost, IntPtr pobjectinfo)
         {
             PtsCache ptsCache = Dispatcher.CurrentDispatcher.PtsCache as PtsCache;
-            Invariant.Assert(ptsCache != null, "Cannot retrieve PtsCache from the current Dispatcher.");
+            Invariant.Assert(ptsCache is not null, "Cannot retrieve PtsCache from the current Dispatcher.");
             ptsCache.GetFloaterHandlerInfoCore(ptsHost, pobjectinfo);
         }
 
@@ -105,7 +105,7 @@ namespace MS.Internal.PtsHost
         internal static void GetTableObjHandlerInfo(PtsHost ptsHost, IntPtr pobjectinfo)
         {
             PtsCache ptsCache = Dispatcher.CurrentDispatcher.PtsCache as PtsCache;
-            Invariant.Assert(ptsCache != null, "Cannot retrieve PtsCache from the current Dispatcher.");
+            Invariant.Assert(ptsCache is not null, "Cannot retrieve PtsCache from the current Dispatcher.");
             ptsCache.GetTableObjHandlerInfoCore(ptsHost, pobjectinfo);
         }
 
@@ -116,10 +116,10 @@ namespace MS.Internal.PtsHost
         {
             bool disposed = true;
             Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 PtsCache ptsCache = Dispatcher.CurrentDispatcher.PtsCache as PtsCache;
-                if (ptsCache != null)
+                if (ptsCache is not null)
                 {
                     disposed = (ptsCache._disposed == 1);
                 }
@@ -313,7 +313,7 @@ namespace MS.Internal.PtsHost
             while (index < _contextPool.Count)
             {
                 PtsContext ptsContext = _contextPool[index].Owner.Target as PtsContext;
-                if (ptsContext != null)
+                if (ptsContext is not null)
                 {
                     Invariant.Assert(_contextPool[index].PtsHost.Context == ptsContext.Context, "PTS Context mismatch.");
                     _contextPool[index].Owner = new WeakReference(null);
@@ -334,7 +334,7 @@ namespace MS.Internal.PtsHost
                     PTS.IgnoreError(PTS.DestroyInstalledObjectsInfo(_contextPool[index].InstalledObjects));
                     // Explicitly dispose the penalty module object to ensure proper destruction
                     // order of PTSContext  and the penalty module (PTS context must be destroyed first).
-                    if (_contextPool[index].TextPenaltyModule != null)
+                    if (_contextPool[index].TextPenaltyModule is not null)
                     {
                         _contextPool[index].TextPenaltyModule.Dispose();
                     }
@@ -370,7 +370,7 @@ namespace MS.Internal.PtsHost
             lock (_lock)
             {
                 // Dispose any pending PtsContexts
-                if (_releaseQueue != null)
+                if (_releaseQueue is not null)
                 {
                     foreach (PtsContext ptsContext in _releaseQueue)
                     {
@@ -409,7 +409,7 @@ namespace MS.Internal.PtsHost
                         PTS.Validate(PTS.DestroyInstalledObjectsInfo(_contextPool[index].InstalledObjects));
                         // Explicitly dispose the penalty module object to ensure proper destruction
                         // order of PTSContext  and the penalty module (PTS context must be destroyed first).
-                        if (_contextPool[index].TextPenaltyModule != null)
+                        if (_contextPool[index].TextPenaltyModule is not null)
                         {
                             _contextPool[index].TextPenaltyModule.Dispose();
                         }
@@ -435,7 +435,7 @@ namespace MS.Internal.PtsHost
             IntPtr context;
 
             ptsHost = _contextPool[index].PtsHost;
-            Invariant.Assert(ptsHost != null);
+            Invariant.Assert(ptsHost is not null);
 
             // Create installed object info.
             InitInstalledObjectsInfo(ptsHost, ref _contextPool[index].SubtrackParaInfo, ref _contextPool[index].SubpageParaInfo, out installedObjects, out installedObjectsCount);

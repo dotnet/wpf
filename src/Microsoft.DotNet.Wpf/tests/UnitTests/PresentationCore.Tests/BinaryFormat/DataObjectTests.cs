@@ -28,7 +28,7 @@ public class DataObjectTests
         IDataObject ClipboardDataObject = Clipboard.GetDataObject();
         try
         {
-            if (ClipboardDataObject != null)
+            if (ClipboardDataObject is not null)
             {
                 Assert.Throws<System.Runtime.InteropServices.COMException>(() => ClipboardDataObject.GetData(DataFormats.Serializable));   
             }

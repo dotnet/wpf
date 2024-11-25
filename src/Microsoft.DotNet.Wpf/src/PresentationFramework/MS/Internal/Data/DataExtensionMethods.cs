@@ -25,11 +25,11 @@ namespace MS.Internal.Data
             ArrayList al;
             LiveShapingList lsList;
 
-            if ((al = list as ArrayList) != null)
+            if ((al = list as ArrayList) is not null)
             {
                 return al.BinarySearch(index, count, value, comparer);
             }
-            else if ((lsList = list as LiveShapingList) != null)
+            else if ((lsList = list as LiveShapingList) is not null)
             {
                 return lsList.Search(index, count, value);
             }
@@ -52,13 +52,13 @@ namespace MS.Internal.Data
             ArrayList al;
             LiveShapingList lsList;
 
-            if ((al = list as ArrayList) != null)
+            if ((al = list as ArrayList) is not null)
             {
                 object item = al[oldIndex];
                 al.RemoveAt(oldIndex);
                 al.Insert(newIndex, item);
             }
-            else if ((lsList = list as LiveShapingList) != null)
+            else if ((lsList = list as LiveShapingList) is not null)
             {
                 lsList.Move(oldIndex, newIndex);
             }
@@ -71,11 +71,11 @@ namespace MS.Internal.Data
             ArrayList al;
             LiveShapingList lsList;
 
-            if ((al = list as ArrayList) != null)
+            if ((al = list as ArrayList) is not null)
             {
                 SortFieldComparer.SortHelper(al, comparer);
             }
-            else if ((lsList = list as LiveShapingList) != null)
+            else if ((lsList = list as LiveShapingList) is not null)
             {
                 lsList.Sort();
             }

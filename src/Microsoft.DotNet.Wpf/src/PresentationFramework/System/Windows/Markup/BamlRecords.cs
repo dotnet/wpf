@@ -1199,7 +1199,7 @@ namespace System.Windows.Markup
             //
             short count = 0;
 
-            if (AssemblyIds != null && AssemblyIds.Length > 0)
+            if (AssemblyIds is not null && AssemblyIds.Length > 0)
             {
                 count = (short) AssemblyIds.Length;
             }
@@ -2489,7 +2489,7 @@ namespace System.Windows.Markup
                 // if ValueMemberName exists then remember that the ValueId is a TypeId of the
                 // type that declares ValueMemberName, so that it can be resolved correctly at
                 // load time.
-                if (ValueMemberName != null)
+                if (ValueMemberName is not null)
                 {
                     bamlBinaryWriter.Write((short)(serializerTypeId | TypeIdValueMask));
                 }
@@ -2503,7 +2503,7 @@ namespace System.Windows.Markup
                 bamlBinaryWriter.Write(ValueId);
 
                 // Write out the ValueMemberName if it exists
-                if (ValueMemberName != null)
+                if (ValueMemberName is not null)
                 {
                     bamlBinaryWriter.Write(ValueMemberName);
                 }
@@ -2517,7 +2517,7 @@ namespace System.Windows.Markup
 
             // If we have an enum or a bool, do conversion to custom binary data here,
             // since we do not have a serializer associated with these types.
-            if (ValueType != null && ValueType.IsEnum)
+            if (ValueType is not null && ValueType.IsEnum)
             {
                 uint uintValue = 0;
                 string [] enumValues = Value.Split(',');
@@ -2526,7 +2526,7 @@ namespace System.Windows.Markup
                 foreach (string enumValue in enumValues)
                 {
                     FieldInfo enumField = ValueType.GetField(enumValue.Trim(), BindingFlags.Static | BindingFlags.Public | BindingFlags.IgnoreCase);
-                    if (enumField != null)
+                    if (enumField is not null)
                     {
                         // get the raw va;ue of the enum field and convert to a uint.
                         object rawEnumValue = enumField.GetRawConstantValue();
@@ -3364,7 +3364,7 @@ namespace System.Windows.Markup
         {
             bamlBinaryWriter.Write(TypeId);
 
-            if( RuntimeName != null )
+            if( RuntimeName is not null )
             {
                 bamlBinaryWriter.Write(RuntimeName);
             }
@@ -3987,7 +3987,7 @@ namespace System.Windows.Markup
         {
             // Remember the file location of this baml record.  This
             // is needed if we have to come back later to update the sync mode.
-            if (FilePos == -1 && bamlBinaryWriter != null)
+            if (FilePos == -1 && bamlBinaryWriter is not null)
             {
                 FilePos = bamlBinaryWriter.Seek(0,SeekOrigin.Current);
             }
@@ -4725,7 +4725,7 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-                    Debug.Assert(arr.Length == 3 && arr[0] != null && arr[1] != null);
+                    Debug.Assert(arr.Length == 3 && arr[0] is not null && arr[1] is not null);
                     arr[2] = propertyMember;
                 }
             }
@@ -4768,7 +4768,7 @@ namespace System.Windows.Markup
             {
                 // The attribute has multiple member info. Choose which one to return.
                 object[] arr = (object[])PropertyMember;
-                Debug.Assert(arr.Length == 3 && arr[0] != null && arr[1] != null);
+                Debug.Assert(arr.Length == 3 && arr[0] is not null && arr[1] is not null);
 
                 // If someone queries any MemberInfo for the given attribute then we return the
                 // first member info cached for it. If they are looking specifically for a
@@ -4834,7 +4834,7 @@ namespace System.Windows.Markup
             set
             {
                 _dp = value;
-                if (_dp != null)
+                if (_dp is not null)
                 {
                     // Release the other copy of the string
                     _name = _dp.Name;

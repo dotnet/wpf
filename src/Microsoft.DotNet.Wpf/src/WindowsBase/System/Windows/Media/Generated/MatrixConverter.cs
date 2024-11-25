@@ -91,7 +91,7 @@ namespace System.Windows.Media
 
             String source = value as string;
 
-            if (source != null)
+            if (source is not null)
             {
                 return Matrix.Parse(source);
             }
@@ -115,7 +115,7 @@ namespace System.Windows.Media
         /// <param name="destinationType"> The type to which this will convert the Matrix instance. </param>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType != null && value is Matrix)
+            if (destinationType is not null && value is Matrix)
             {
                 Matrix instance = (Matrix)value;
 

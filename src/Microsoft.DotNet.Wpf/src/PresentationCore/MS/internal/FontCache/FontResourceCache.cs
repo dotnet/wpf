@@ -29,7 +29,7 @@ namespace MS.Internal.FontCache
         {
             // For entryAssembly build a set of mapping from paths to entries that describe each resource.
             HashSet<string> contentFiles = ContentFileHelper.GetContentFiles(entryAssembly);
-            if (contentFiles != null)
+            if (contentFiles is not null)
             {
                 foreach (string contentFile in contentFiles)
                 {
@@ -38,7 +38,7 @@ namespace MS.Internal.FontCache
             }
 
             IList resourceList = new ResourceManagerWrapper(entryAssembly).ResourceList;
-            if (resourceList != null)
+            if (resourceList is not null)
             {
                 foreach (string resource in resourceList)
                 {

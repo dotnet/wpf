@@ -54,7 +54,7 @@ namespace System.Windows.Media.TextFormatting
             int                 paragraphWidth
             )
         {
-            Invariant.Assert(settings != null);
+            Invariant.Assert(settings is not null);
 
             // create full text
             _finiteFormatWidth = settings.GetFiniteFormatWidth(paragraphWidth);
@@ -86,7 +86,7 @@ namespace System.Windows.Media.TextFormatting
             if(lserr != LsErr.None)
             {
                 GC.SuppressFinalize(this);
-                if(callbackException != null)
+                if(callbackException is not null)
                 {                        
                     // rethrow exception thrown in callbacks
                     throw new InvalidOperationException(SR.Format(SR.CreateParaBreakingSessionFailure, lserr), callbackException);

@@ -71,7 +71,7 @@ namespace MS.Internal.ComponentModel
                     MethodInfo m = AttachMethod;
                     object[] attributes = null;
 
-                    if (m != null) 
+                    if (m is not null) 
                     {
                         AttachedPropertyBrowsableAttribute[] browsableAttributes = null;
 
@@ -138,13 +138,13 @@ namespace MS.Internal.ComponentModel
                 {
                     MethodInfo m = AttachMethod;
 
-                    if (m != null) 
+                    if (m is not null) 
                     {
                         ParameterInfo[] parameters = m.GetParameters();
                         // The AttachMethod property should have already done the correct
                         // work to ensure this method has the right signature.  Assert here
                         // that we assume this is the case.
-                        Debug.Assert(parameters != null && parameters.Length == 1, "GetAttachedPropertyMethod should return a method with one parameter.");
+                        Debug.Assert(parameters is not null && parameters.Length == 1, "GetAttachedPropertyMethod should return a method with one parameter.");
                         TypeDescriptionProvider typeProvider = TypeDescriptor.GetProvider(_dp.OwnerType);
                         _paramTypeAttribute = new AttachedPropertyBrowsableForTypeAttribute(typeProvider.GetRuntimeType(parameters[0].ParameterType));
                     }
@@ -171,14 +171,14 @@ namespace MS.Internal.ComponentModel
         //
         internal bool CanAttach(DependencyObject instance)
         {
-            Debug.Assert(instance != null, "Caller should validate non-null instance before calling CanAttach.");
+            Debug.Assert(instance is not null, "Caller should validate non-null instance before calling CanAttach.");
 
-            if (AttachMethod != null) 
+            if (AttachMethod is not null) 
             {
                 int numAttrs = 0;
 
                 AttachedPropertyBrowsableAttribute[] attrs = Attributes;
-                if (attrs != null) 
+                if (attrs is not null) 
                 {
                     numAttrs = attrs.Length;
                     for(int idx = 0; idx < numAttrs; idx++)

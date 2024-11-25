@@ -225,7 +225,7 @@ namespace System.Windows.Media.Animation
             double progress = animationClock.CurrentProgress.Value;
 
             IEasingFunction easingFunction = EasingFunction;
-            if (easingFunction != null)
+            if (easingFunction is not null)
             {
                 progress = easingFunction.Ease(progress);
             }

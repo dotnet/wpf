@@ -66,7 +66,7 @@ namespace System.Xaml.Schema
 
         private ClrProperty(string name, PropertyInfo pi, XamlType declaringType, bool isStatic)
         {
-            Debug.Assert(pi != null);
+            Debug.Assert(pi is not null);
             Debug.Assert(pi.Name == name);
 #if DEBUG
             if (declaringType is null)
@@ -383,7 +383,7 @@ namespace System.Xaml.Schema
             {
                 string doPropertyName = ((DependsOnAttribute)obj).Name;
                 XamlProperty xp = _declaringType.GetProperty(doPropertyName);
-                if (xp != null)
+                if (xp is not null)
                     return xp;
                 else
                 {

@@ -136,7 +136,7 @@ namespace Microsoft.Internal.DeploymentUI
         static void OnCommandRefresh(object sender, RoutedEventArgs e)
         {
             TenFeetInstallationProgress page = sender as TenFeetInstallationProgress;
-            if (page != null && page.RefreshCallback != null)
+            if (page is not null && page.RefreshCallback is not null)
             {
                 page.RefreshCallback(null);
             }
@@ -151,7 +151,7 @@ namespace Microsoft.Internal.DeploymentUI
         static void OnCommandStop(object sender, RoutedEventArgs e)
         {
             TenFeetInstallationProgress page = sender as TenFeetInstallationProgress;
-            if (page != null && page.StopCallback != null)
+            if (page is not null && page.StopCallback is not null)
             {
                 page.StopCallback(null);
             }

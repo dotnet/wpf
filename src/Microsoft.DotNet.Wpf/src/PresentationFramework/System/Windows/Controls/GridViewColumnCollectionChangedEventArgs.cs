@@ -47,7 +47,7 @@ namespace System.Windows.Controls
         {
             Debug.Assert(action == NotifyCollectionChangedAction.Add || action == NotifyCollectionChangedAction.Remove,
                 "This constructor only supports Add/Remove action.");
-            Debug.Assert(changedItem != null, "changedItem can't be null");
+            Debug.Assert(changedItem is not null, "changedItem can't be null");
             Debug.Assert(index >= 0, "index must >= 0");
             Debug.Assert(actualIndex >= 0, "actualIndex must >= 0");
 
@@ -60,8 +60,8 @@ namespace System.Windows.Controls
         internal GridViewColumnCollectionChangedEventArgs(NotifyCollectionChangedAction action, GridViewColumn newItem, GridViewColumn oldItem, int index, int actualIndex)
             : base(action, newItem, oldItem, index)
         {
-            Debug.Assert(newItem != null, "newItem can't be null");
-            Debug.Assert(oldItem != null, "oldItem can't be null");
+            Debug.Assert(newItem is not null, "newItem can't be null");
+            Debug.Assert(oldItem is not null, "oldItem can't be null");
             Debug.Assert(index >= 0, "index must >= 0");
             Debug.Assert(actualIndex >= 0, "actualIndex must >= 0");
 
@@ -74,7 +74,7 @@ namespace System.Windows.Controls
         internal GridViewColumnCollectionChangedEventArgs(NotifyCollectionChangedAction action, GridViewColumn changedItem, int index, int oldIndex, int actualIndex)
             : base(action, changedItem, index, oldIndex)
         {
-            Debug.Assert(changedItem != null, "changedItem can't be null");
+            Debug.Assert(changedItem is not null, "changedItem can't be null");
             Debug.Assert(index >= 0, "index must >= 0");
             Debug.Assert(oldIndex >= 0, "oldIndex must >= 0");
             Debug.Assert(actualIndex >= 0, "actualIndex must >= 0");

@@ -51,7 +51,7 @@ namespace MS.Internal.Data
         {
             get
             {
-                if (_nsMgr is null && _xds != null)
+                if (_nsMgr is null && _xds is not null)
                     _nsMgr = _xds.XmlNamespaceManager;
                 return _nsMgr;
             }

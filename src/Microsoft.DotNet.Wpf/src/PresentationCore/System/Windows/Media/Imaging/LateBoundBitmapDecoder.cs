@@ -64,8 +64,8 @@ namespace System.Windows.Media.Imaging
             _requestCachePolicy = requestCachePolicy;
 
             // Check to see if we need to download content off thread
-            Uri uriToDecode = (_baseUri != null) ? new Uri(_baseUri, _uri) : _uri;
-            if (uriToDecode != null)
+            Uri uriToDecode = (_baseUri is not null) ? new Uri(_baseUri, _uri) : _uri;
+            if (uriToDecode is not null)
             {
                 if (uriToDecode.Scheme == Uri.UriSchemeHttp ||
                     uriToDecode.Scheme == Uri.UriSchemeHttps)
@@ -76,7 +76,7 @@ namespace System.Windows.Media.Imaging
                 }
             }
 
-            if (_stream != null && !_stream.CanSeek)
+            if (_stream is not null && !_stream.CanSeek)
             {
                 // Begin the download
                 BitmapDownload.BeginDownload(this, uriToDecode, _requestCachePolicy, _stream);
@@ -290,7 +290,7 @@ namespace System.Windows.Media.Imaging
                 // If so, we need to ensure that the real decoder
                 // references the same frame as the one we already created
                 // Creating a new object would be bad.
-                if (_readOnlyFrames != null)
+                if (_readOnlyFrames is not null)
                 {
                     _realDecoder.SetupFrames(null, _readOnlyFrames);
 

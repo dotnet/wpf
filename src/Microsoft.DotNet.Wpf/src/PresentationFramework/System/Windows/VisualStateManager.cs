@@ -52,11 +52,11 @@ namespace System.Windows
             // This is because we don't know what the custom VSM will want to do. But for our default implementation,
             // we know that if we haven't found the state, we don't actually want to do anything.
             VisualStateManager customVsm = GetCustomVisualStateManager(stateGroupsRoot);
-            if (customVsm != null)
+            if (customVsm is not null)
             {
                 return customVsm.GoToStateCore(control, stateGroupsRoot, stateName, group, state, useTransitions);
             }
-            else if (state != null)
+            else if (state is not null)
             {
                 return GoToStateInternal(control, stateGroupsRoot, group, state, useTransitions);
             }
@@ -175,7 +175,7 @@ namespace System.Windows
             {
                 VisualStateGroup g = groups[groupIndex];
                 VisualState s = g.GetState(stateName);
-                if (s != null)
+                if (s is not null)
                 {
                     group = g;
                     state = s;
@@ -219,7 +219,7 @@ namespace System.Windows
                                             (transition.Storyboard is null || transition.Storyboard.Duration == DurationZero)))
             {
                 // Start new state Storyboard and stop any previously running Storyboards
-                if (transition != null && transition.Storyboard != null)
+                if (transition is not null && transition.Storyboard is not null)
                 {
                     group.StartNewThenStopOld(stateGroupsRoot, transition.Storyboard, state.Storyboard);
                 }
@@ -257,7 +257,7 @@ namespace System.Windows
                     transition.DynamicStoryboardCompleted = true;
                 };
 
-                if (transition.Storyboard != null && transition.ExplicitStoryboardCompleted == true)
+                if (transition.Storyboard is not null && transition.ExplicitStoryboardCompleted == true)
                 {
                     EventHandler transitionCompleted = null;
                     transitionCompleted = new EventHandler(delegate(object sender, EventArgs e)
@@ -308,21 +308,21 @@ namespace System.Windows
             // We cannot simply check control.IsLoaded because the control may not be in the visual tree
             // even though IsLoaded is true.  Instead we will check that it can find a PresentationSource
             // which would tell us it's in the visual tree.
-            if (control != null)
+            if (control is not null)
             {
                 // If it's visible then it's in the visual tree, so we don't even have to look for a 
                 // PresentationSource
                 if (!control.IsVisible)
                 {
-                    controlInTree = (PresentationSource.CriticalFromVisual(control) != null);
+                    controlInTree = (PresentationSource.CriticalFromVisual(control) is not null);
                 }
             }
 
-            if (stateGroupsRoot != null)
+            if (stateGroupsRoot is not null)
             {
                 if (!stateGroupsRoot.IsVisible)
                 {
-                    stateGroupsRootInTree = (PresentationSource.CriticalFromVisual(stateGroupsRoot) != null);
+                    stateGroupsRootInTree = (PresentationSource.CriticalFromVisual(stateGroupsRoot) is not null);
                 }
             }
 
@@ -364,7 +364,7 @@ namespace System.Windows
             IEasingFunction easingFunction = null;
             Storyboard dynamic = new Storyboard();
             
-            if (transition != null)
+            if (transition is not null)
             {
                 if (transition.GeneratedDuration != DurationZero)
                 {
@@ -379,7 +379,7 @@ namespace System.Windows
             }
 
             Dictionary<TimelineDataToken, Timeline> currentAnimations = FlattenTimelines(group.CurrentStoryboards);
-            Dictionary<TimelineDataToken, Timeline> transitionAnimations = FlattenTimelines(transition != null ? transition.Storyboard : null);
+            Dictionary<TimelineDataToken, Timeline> transitionAnimations = FlattenTimelines(transition is not null ? transition.Storyboard : null);
             Dictionary<TimelineDataToken, Timeline> newStateAnimations = FlattenTimelines(newState.Storyboard);
 
             // Remove any animations that the transition already animates.
@@ -399,7 +399,7 @@ namespace System.Windows
 
                 // If the animation is of a type that we can't generate transition animations
                 // for, GenerateToAnimation will return null, and we should just keep going.
-                if (toAnimation != null)
+                if (toAnimation is not null)
                 {
                     toAnimation.Duration = dynamic.Duration;
                     dynamic.Children.Add(toAnimation);
@@ -413,7 +413,7 @@ namespace System.Windows
             foreach (KeyValuePair<TimelineDataToken, Timeline> pair in currentAnimations)
             {
                 Timeline fromAnimation = GenerateFromAnimation(root, pair.Value, easingFunction);
-                if (fromAnimation != null)
+                if (fromAnimation is not null)
                 {
                     fromAnimation.Duration = dynamic.Duration;
                     dynamic.Children.Add(fromAnimation);
@@ -440,7 +440,7 @@ namespace System.Windows
                 result = new PointAnimation() { EasingFunction = easingFunction };
             }
 
-            if (result != null)
+            if (result is not null)
             {
                 CopyStoryboardTargetProperties(root, timeline, result);
             }
@@ -481,7 +481,7 @@ namespace System.Windows
                 }
             }
 
-            if (result != null)
+            if (result is not null)
             {
                 CopyStoryboardTargetProperties(root, timeline, result);
             }
@@ -491,7 +491,7 @@ namespace System.Windows
 
         private static void CopyStoryboardTargetProperties(FrameworkElement root, Timeline source, Timeline destination)
         {
-            if (source != null || destination != null)
+            if (source is not null || destination is not null)
             {
                 // Target takes priority over TargetName
                 string targetName = Storyboard.GetTargetName(source);
@@ -503,17 +503,17 @@ namespace System.Windows
                     target = root.FindName(targetName) as DependencyObject;
                 }
 
-                if (targetName != null)
+                if (targetName is not null)
                 {
                     Storyboard.SetTargetName(destination, targetName);
                 }
 
-                if (target != null)
+                if (target is not null)
                 {
                     Storyboard.SetTarget(destination, target);
                 }
 
-                if (path != null)
+                if (path is not null)
                 {
                     Storyboard.SetTargetProperty(destination, path);
                 }
@@ -541,7 +541,7 @@ namespace System.Windows
             int bestScore = -1;
 
             IList<VisualTransition> transitions = (IList<VisualTransition>)group.Transitions;
-            if (transitions != null)
+            if (transitions is not null)
             {
                 foreach (VisualTransition transition in transitions)
                 {
@@ -560,7 +560,7 @@ namespace System.Windows
                     {
                         score += 1;
                     }
-                    else if (transitionFromState != null)
+                    else if (transitionFromState is not null)
                     {
                         continue;
                     }
@@ -569,7 +569,7 @@ namespace System.Windows
                     {
                         score += 2;
                     }
-                    else if (transitionToState != null)
+                    else if (transitionToState is not null)
                     {
                         continue;
                     }
@@ -595,13 +595,13 @@ namespace System.Windows
         private static Color? GetTargetColor(Timeline timeline, bool isEntering)
         {
             ColorAnimation ca = timeline as ColorAnimation;
-            if (ca != null)
+            if (ca is not null)
             {
                 return ca.From.HasValue ? ca.From : ca.To;
             }
 
             ColorAnimationUsingKeyFrames cak = timeline as ColorAnimationUsingKeyFrames;
-            if (cak != null)
+            if (cak is not null)
             {
                 if (cak.KeyFrames.Count == 0)
                 {
@@ -618,13 +618,13 @@ namespace System.Windows
         private static double? GetTargetDouble(Timeline timeline, bool isEntering)
         {
             DoubleAnimation da = timeline as DoubleAnimation;
-            if (da != null)
+            if (da is not null)
             {
                 return da.From.HasValue ? da.From : da.To;
             }
 
             DoubleAnimationUsingKeyFrames dak = timeline as DoubleAnimationUsingKeyFrames;
-            if (dak != null)
+            if (dak is not null)
             {
                 if (dak.KeyFrames.Count == 0)
                 {
@@ -641,13 +641,13 @@ namespace System.Windows
         private static Point? GetTargetPoint(Timeline timeline, bool isEntering)
         {
             PointAnimation pa = timeline as PointAnimation;
-            if (pa != null)
+            if (pa is not null)
             {
                 return pa.From.HasValue ? pa.From : pa.To;
             }
 
             PointAnimationUsingKeyFrames pak = timeline as PointAnimationUsingKeyFrames;
-            if (pak != null)
+            if (pak is not null)
             {
                 if (pak.KeyFrames.Count == 0)
                 {
@@ -700,7 +700,7 @@ namespace System.Windows
             {
                 Timeline child = storyboard.Children[index];
                 Storyboard childStoryboard = child as Storyboard;
-                if (childStoryboard != null)
+                if (childStoryboard is not null)
                 {
                     FlattenTimelines(childStoryboard, result);
                 }
@@ -724,11 +724,11 @@ namespace System.Windows
             public bool Equals(TimelineDataToken other)
             {
                 bool targetsEqual = false;
-                if (_targetName != null)
+                if (_targetName is not null)
                 {
                     targetsEqual = other._targetName == _targetName;
                 }
-                else if (_target != null)
+                else if (_target is not null)
                 {
                     targetsEqual = other._target == _target;
                 }
@@ -767,11 +767,11 @@ namespace System.Windows
                 // For example the Opacity can be specified either from a string "Opacity" or via the string "(0)"
                 // and a parameter Visual.OpacityPropety.  These wont match as far as VSM is concerned.
                 //
-                int targetHash = _target != null ? _target.GetHashCode() : 0;
-                int targetNameHash = _targetName != null ? _targetName.GetHashCode() : 0;
-                int targetPropertyHash = (_targetProperty != null && _targetProperty.Path != null) ? _targetProperty.Path.GetHashCode() : 0;
+                int targetHash = _target is not null ? _target.GetHashCode() : 0;
+                int targetNameHash = _targetName is not null ? _targetName.GetHashCode() : 0;
+                int targetPropertyHash = (_targetProperty is not null && _targetProperty.Path is not null) ? _targetProperty.Path.GetHashCode() : 0;
 
-                return ((_targetName != null) ? targetNameHash : targetHash) ^ targetPropertyHash;
+                return ((_targetName is not null) ? targetNameHash : targetHash) ^ targetPropertyHash;
             }
 
             private DependencyObject _target;

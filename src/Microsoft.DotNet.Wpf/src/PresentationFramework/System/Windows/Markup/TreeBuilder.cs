@@ -213,7 +213,7 @@ namespace System.Windows.Markup
             ArrayList roots = RecordReader.RootList;                
             object root = (null == roots || 0 == roots.Count) ? null : roots[0];
 
-            if (root != null && roots.Count > 1)
+            if (root is not null && roots.Count > 1)
             {
                 throw new XamlParseException(SR.ParserMultiRoot);
             }
@@ -257,7 +257,7 @@ namespace System.Windows.Markup
         /// </summary>
         internal bool ParseError
         {
-            get { return _parseException != null; }
+            get { return _parseException is not null; }
         }
 
         /// <summary>

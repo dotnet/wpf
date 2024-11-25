@@ -23,7 +23,7 @@ namespace System.Windows.Controls
         {
             _columns = columns;
 
-            if (_columns != null)
+            if (_columns is not null)
             {
                 _columns.CollectionChanged += OnColumnsChanged;
             }
@@ -66,7 +66,7 @@ namespace System.Windows.Controls
         public void Dispose()
         {
             GC.SuppressFinalize(this);
-            if (_columns != null)
+            if (_columns is not null)
             {
                 _columns.CollectionChanged -= OnColumnsChanged;
             }
@@ -85,7 +85,7 @@ namespace System.Windows.Controls
         {
             public ColumnHeaderCollectionEnumerator(ObservableCollection<DataGridColumn> columns)
             {
-                if (columns != null)
+                if (columns is not null)
                 {
                     _columns = columns;
                     _columns.CollectionChanged += OnColumnsChanged;
@@ -104,7 +104,7 @@ namespace System.Windows.Controls
                     {
                         DataGridColumn column = _columns[_current];
 
-                        if (column != null)
+                        if (column is not null)
                         {
                             return column.Header;
                         }
@@ -123,7 +123,7 @@ namespace System.Windows.Controls
                     throw new InvalidOperationException();
                 }
 
-                if (_columns != null && _current < _columns.Count - 1)
+                if (_columns is not null && _current < _columns.Count - 1)
                 {
                     _current++;
                     return true;
@@ -149,7 +149,7 @@ namespace System.Windows.Controls
             public void Dispose()
             {
                 GC.SuppressFinalize(this);
-                if (_columns != null)
+                if (_columns is not null)
                 {
                     _columns.CollectionChanged -= OnColumnsChanged;
                 }
@@ -171,7 +171,7 @@ namespace System.Windows.Controls
             {
                 get
                 {
-                    return _columns != null && _current >= 0 && _current < _columns.Count && !HasChanged;
+                    return _columns is not null && _current >= 0 && _current < _columns.Count && !HasChanged;
                 }
             }
 
@@ -237,7 +237,7 @@ namespace System.Windows.Controls
 
         private void FireCollectionChanged(NotifyCollectionChangedEventArgs args)
         {
-            if (CollectionChanged != null)
+            if (CollectionChanged is not null)
             {
                 CollectionChanged(this, args);
             }
@@ -251,7 +251,7 @@ namespace System.Windows.Controls
             {
                 DataGridColumn column = columns[i] as DataGridColumn;
 
-                if (column != null)
+                if (column is not null)
                 {
                     headers[i] = column.Header;
                 }

@@ -125,7 +125,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             RibbonComboBoxAutomationPeer peer = UIElementAutomationPeer.FromElement(cb) as RibbonComboBoxAutomationPeer;
             // Raise the propetyChangeEvent for Value if Automation Peer exist, the new Value must
             // be the one in SelctionBoxItem(selected value is the one user will care about)
-            if (peer != null)
+            if (peer is not null)
                 peer.RaiseValuePropertyChangedEvent((string)e.OldValue, (string)e.NewValue);
 
 
@@ -169,7 +169,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             // If we're an editable combobox, forward focus to the TextBox element
             if (!e.Handled)
             {
-                if (IsEditable && EditableTextBoxSite != null)
+                if (IsEditable && EditableTextBoxSite is not null)
                 {
                     RetainFocusOnEscape = RibbonHelper.IsKeyboardMostRecentInputDevice();
 
@@ -202,8 +202,8 @@ namespace Microsoft.Windows.Controls.Ribbon
                 enable = false;
             }
             else if (!(IsKeyboardFocused ||
-                (EditableTextBoxSite != null && EditableTextBoxSite.IsKeyboardFocused) ||
-                (PartToggleButton != null && PartToggleButton.IsKeyboardFocused)))
+                (EditableTextBoxSite is not null && EditableTextBoxSite.IsKeyboardFocused) ||
+                (PartToggleButton is not null && PartToggleButton.IsKeyboardFocused)))
             {
                 enable = false;
             }
@@ -350,7 +350,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             get { return _selectedItem; }
             set
             {
-                if (_firstGallery != null && !UpdatingSelectedItem)
+                if (_firstGallery is not null && !UpdatingSelectedItem)
                 {
                     _firstGallery.SelectedItem = value;
                 }
@@ -362,7 +362,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             get
             {
-                if (_firstGallery != null)
+                if (_firstGallery is not null)
                 {
                     return _firstGallery.HighlightedItem;
                 }
@@ -371,7 +371,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             set
             {
-                if (_firstGallery != null)
+                if (_firstGallery is not null)
                 {
                     _firstGallery.HighlightedItem = value;
                 }
@@ -392,7 +392,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 if (!UpdatingText)
                 {
                     string text = String.Empty;
-                    if (_firstGallery != null && _firstGallery.SelectedCategory != null)
+                    if (_firstGallery is not null && _firstGallery.SelectedCategory is not null)
                     {
                         text = TextSearchInternal.GetPrimaryTextFromItem(_firstGallery.SelectedCategory, SelectedItem, true);
                         _firstGallery.ScrollIntoView(SelectedItem);
@@ -426,7 +426,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 if (!UpdatingText)
                 {
                     string text = String.Empty;
-                    if (_firstGallery != null && _firstGallery.HighlightedCategory != null)
+                    if (_firstGallery is not null && _firstGallery.HighlightedCategory is not null)
                     {
                         text = TextSearchInternal.GetPrimaryTextFromItem(_firstGallery.HighlightedCategory, HighlightedItem, true);
                         _firstGallery.ScrollIntoView(HighlightedItem);
@@ -475,7 +475,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     string text = Text;
 
                     // Copy ComboBox.Text to the editable TextBox
-                    if (EditableTextBoxSite != null && EditableTextBoxSite.Text != text)
+                    if (EditableTextBoxSite is not null && EditableTextBoxSite.Text != text)
                     {
                         EditableTextBoxSite.Text = text;
                         EditableTextBoxSite.SelectAll();
@@ -500,16 +500,16 @@ namespace Microsoft.Windows.Controls.Ribbon
             // propagate the new selected item to the SelectionBoxItem property;
             // this displays it in the selection box
             object item = HighlightedItem;
-            bool isHighlightedItem = (item != null);
+            bool isHighlightedItem = (item is not null);
             item = isHighlightedItem ? item : SelectedItem;
             DataTemplate itemTemplate = null;
             string stringFormat = null;
             DataTemplateSelector itemTemplateSelector = null;
 
-            if (_firstGallery != null)
+            if (_firstGallery is not null)
             {
                 RibbonGalleryCategory category = isHighlightedItem ? _firstGallery.HighlightedCategory : _firstGallery.SelectedCategory;
-                if (category != null)
+                if (category is not null)
                 {
                     itemTemplate = category.ItemTemplate;
                     stringFormat = category.ItemStringFormat;
@@ -521,14 +521,14 @@ namespace Microsoft.Windows.Controls.Ribbon
             // (this handles the case of ComboBoxItem)
             ContentControl contentControl = item as ContentControl;
 
-            if (contentControl != null)
+            if (contentControl is not null)
             {
                 item = contentControl.Content;
                 itemTemplate = contentControl.ContentTemplate;
                 stringFormat = contentControl.ContentStringFormat;
             }
 
-            if (_clonedElement != null)
+            if (_clonedElement is not null)
             {
                 _clonedElement.LayoutUpdated -= CloneLayoutUpdated;
                 _clonedElement = null;
@@ -541,12 +541,12 @@ namespace Microsoft.Windows.Controls.Ribbon
                 // Instead, try to extract some useful text from the visual.
                 DependencyObject logicalElement = item as DependencyObject;
 
-                if (logicalElement != null)
+                if (logicalElement is not null)
                 {
                     // If the item is a UIElement, create a copy using a visual brush
                     _clonedElement = logicalElement as UIElement;
 
-                    if (_clonedElement != null)
+                    if (_clonedElement is not null)
                     {
                         // Create visual copy of selected element
                         VisualBrush visualBrush = new VisualBrush(_clonedElement);
@@ -666,10 +666,10 @@ namespace Microsoft.Windows.Controls.Ribbon
                     UpdatingText = true;
 
                     // Try searching for an item matching the new text
-                    if (IsTextSearchEnabled && _firstGallery != null)
+                    if (IsTextSearchEnabled && _firstGallery is not null)
                     {
 #if RIBBON_IN_FRAMEWORK
-                        if (_updateTextBoxOperation != null)
+                        if (_updateTextBoxOperation is not null)
                         {
                             // cancel any pending async update of the textbox
                             _updateTextBoxOperation.Abort();
@@ -680,7 +680,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         ItemsControl matchedGalleryCategory = null;
                         object matchedItem = TextSearchInternal.FindMatchingPrefix(_firstGallery, newText, true, out matchedGalleryCategory);
 
-                        if (matchedItem != null)
+                        if (matchedItem is not null)
                         {
                             // Allow partial matches when updating textbox
                             if (textBoxUpdated)
@@ -700,8 +700,8 @@ namespace Microsoft.Windows.Controls.Ribbon
                                      // it doesn't get confused with the IME's undo stack.
                                      MS.Internal.Documents.UndoManager undoManager =
                                          EditableTextBoxSite.TextContainer.UndoManager;
-                                     if (undoManager != null &&
-                                         undoManager.OpenedUnit != null &&
+                                     if (undoManager is not null &&
+                                         undoManager.OpenedUnit is not null &&
                                          undoManager.OpenedUnit.GetType() != typeof(TextParentUndoUnit))
                                      {
                                          _updateTextBoxOperation = Dispatcher.BeginInvoke(DispatcherPriority.Normal,
@@ -744,11 +744,11 @@ namespace Microsoft.Windows.Controls.Ribbon
 
                                     bool updated = false;
 
-                                    if (matchedGalleryCategory != null && matchedItem != null)
+                                    if (matchedGalleryCategory is not null && matchedItem is not null)
                                     {
                                         RibbonGalleryItem galleryItem =
                                             matchedGalleryCategory.ItemContainerGenerator.ContainerFromItem(matchedItem) as RibbonGalleryItem;
-                                        if (galleryItem != null)
+                                        if (galleryItem is not null)
                                         {
                                             updated = true;
                                             galleryItem.IsHighlighted = true;
@@ -778,7 +778,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     {
                         SetValue(TextProperty, newText);
                     }
-                    else if (EditableTextBoxSite != null)
+                    else if (EditableTextBoxSite is not null)
                     {
                         EditableTextBoxSite.Text = newText;
                     }
@@ -848,11 +848,11 @@ namespace Microsoft.Windows.Controls.Ribbon
             TextElement textElement;
             string strValue = String.Empty;
 
-            if ((text = d as TextBlock) != null)
+            if ((text = d as TextBlock) is not null)
             {
                 strValue = text.Text;
             }
-            else if ((visual = d as Visual) != null)
+            else if ((visual = d as Visual) is not null)
             {
                 int count = VisualTreeHelper.GetChildrenCount(visual);
                 for (int i = 0; i < count; i++)
@@ -860,7 +860,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     strValue += ExtractString((DependencyObject)(VisualTreeHelper.GetChild(visual, i)));
                 }
             }
-            else if ((textElement = d as TextElement) != null)
+            else if ((textElement = d as TextElement) is not null)
             {
                 strValue += textElement.ContentStart.GetTextInRun(LogicalDirection.Forward);
             }
@@ -876,7 +876,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if ((bool)e.NewValue)
             {
                 // Select text if editable
-                if (IsEditable && EditableTextBoxSite != null)
+                if (IsEditable && EditableTextBoxSite is not null)
                 {
                     EditableTextBoxSite.Focus();
                     EditableTextBoxSite.SelectAll();
@@ -887,7 +887,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
                 Dispatcher.BeginInvoke((Action)delegate()
                 {
-                    if (_firstGallery != null)
+                    if (_firstGallery is not null)
                     {
                         // Scroll the highlighted item into view. Note that we need to do the
                         // scroll in a Dispatcher operation because the scroll operation wont
@@ -1028,7 +1028,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 // the cases where focus is in non-popup parts of combobox. For other regions we assume
                 // that their default keyboard navigation will kick in.
                 RibbonGalleryItem focusedGalleryItem = null;
-                if (IsDropDownOpen && _firstGallery != null)
+                if (IsDropDownOpen && _firstGallery is not null)
                 {
                     focusedGalleryItem = _firstGallery.HighlightedContainer;
                     if (focusedGalleryItem is null && _firstGallery.SelectedContainers.Count > 0)
@@ -1055,7 +1055,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                                     handled = RibbonHelper.NavigateToNextMenuItemOrGallery(this, -1, BringIndexIntoView);
                                 }
                             }
-                            if (!handled && focusedGalleryItem != null)
+                            if (!handled && focusedGalleryItem is not null)
                             {
                                 // Move focus to the next/previous element.
                                 focusedGalleryItem.MoveFocus(new TraversalRequest(shiftPressed ? FocusNavigationDirection.Previous : FocusNavigationDirection.Next));
@@ -1175,10 +1175,10 @@ namespace Microsoft.Windows.Controls.Ribbon
                 // Note that the _firstGallery does not physically take keyboard focus.
                 // Hence if either the combobox itself or its editable textbox or its
                 // toggle button has focus, then we assume navigation for first gallery.
-                return _firstGallery != null &&
+                return _firstGallery is not null &&
                     (this.IsKeyboardFocused ||
-                    (EditableTextBoxSite != null && EditableTextBoxSite.IsKeyboardFocused) ||
-                    (PartToggleButton != null && PartToggleButton.IsKeyboardFocused));
+                    (EditableTextBoxSite is not null && EditableTextBoxSite.IsKeyboardFocused) ||
+                    (PartToggleButton is not null && PartToggleButton.IsKeyboardFocused));
             }
         }
 
@@ -1186,18 +1186,18 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             get
             {
-                if (_firstGallery != null &&
+                if (_firstGallery is not null &&
                     _firstGallery.IsKeyboardFocusWithin)
                 {
                     Panel galleryItemsHostSite = _firstGallery.ItemsHostSite;
-                    if (galleryItemsHostSite != null)
+                    if (galleryItemsHostSite is not null)
                     {
                         return galleryItemsHostSite.IsKeyboardFocusWithin;
                     }
 
                     DependencyObject focusedElement = Keyboard.FocusedElement as DependencyObject;
-                    if (focusedElement != null &&
-                        (TreeHelper.FindVisualAncestor<RibbonGalleryCategory>(focusedElement) != null))
+                    if (focusedElement is not null &&
+                        (TreeHelper.FindVisualAncestor<RibbonGalleryCategory>(focusedElement) is not null))
                     {
                         return true;
                     }
@@ -1258,7 +1258,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 Visual originalSource = e.OriginalSource as Visual;
                 Visual textBox = EditableTextBoxSite;
 
-                if (originalSource != null && textBox != null
+                if (originalSource is not null && textBox is not null
                     && textBox.IsAncestorOf(originalSource))
                 {
                     if (IsDropDownOpen && StaysOpenOnEdit)
@@ -1286,7 +1286,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 TextSearchInternal instance = TextSearchInternal.EnsureInstance(_firstGallery);
 
-                if (instance != null)
+                if (instance is not null)
                 {
                     instance.DoHierarchicalSearch(e.Text);
                     // Note: we always want to handle the event to denote that we
@@ -1308,7 +1308,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             EditableTextBoxSite = GetTemplateChild(EditableTextBoxTemplateName) as TextBox;
 
             // EditableTextBoxSite should have been set by now if it's in the visual tree
-            if (EditableTextBoxSite != null)
+            if (EditableTextBoxSite is not null)
             {
                 EditableTextBoxSite.TextChanged += new TextChangedEventHandler(OnEditableTextBoxTextChanged);
                 EditableTextBoxSite.SelectionChanged += new RoutedEventHandler(OnEditableTextBoxSelectionChanged);
@@ -1321,7 +1321,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             // RibbonGallery needs to be hooked up to the Visual tree, so that its DataContext is inherited.
             // Similarly RibbonGalleryCategory and RibbonGalleryItem should be in Visual tree to extract SelectedItem and the container for the SelectedItem
             // Therefore its not sufficient to just generate containers, we need a full Layout on RibbonGallery.
-            if (Popup != null && Popup.Child != null)
+            if (Popup is not null && Popup.Child is not null)
             {
                 Popup.Child.Measure(new Size());
                 UpdateFirstGallery();
@@ -1345,7 +1345,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             foreach(object item in Items)
             {
                 firstGallery = ItemContainerGenerator.ContainerFromItem(item) as RibbonGallery;
-                if (firstGallery != null)
+                if (firstGallery is not null)
                 {
                     _firstGalleryItem = new WeakReference(item);
                     break;
@@ -1359,9 +1359,9 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             // If a new Gallery container has been generated for _galleryItem, update _gallery reference.
             RibbonGallery gallery = element as RibbonGallery;
-            if (gallery != null)
+            if (gallery is not null)
             {
-                if (_firstGalleryItem != null && _firstGalleryItem.IsAlive && _firstGalleryItem.Target.Equals(item))
+                if (_firstGalleryItem is not null && _firstGalleryItem.IsAlive && _firstGalleryItem.Target.Equals(item))
                 {
                     FirstGallery = gallery;
                 }
@@ -1372,7 +1372,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         protected override void ClearContainerForItemOverride(DependencyObject element, object item)
         {
-            if (_firstGalleryItem != null && _firstGalleryItem.IsAlive && _firstGalleryItem.Target.Equals(item))
+            if (_firstGalleryItem is not null && _firstGalleryItem.IsAlive && _firstGalleryItem.Target.Equals(item))
             {
                 FirstGallery = null;
             }
@@ -1389,7 +1389,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 object selectedItem = null, selectedValue = null;
                 string selectedValuePath = string.Empty;
 
-                if (_firstGallery != null)
+                if (_firstGallery is not null)
                 {
                     selectedItem = _firstGallery.SelectedItem;
                     selectedValue = _firstGallery.SelectedValue;
@@ -1430,7 +1430,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             // logic to detect this scenario in RibbonGallery.
 
             //if (RibbonHelper.IsKeyboardMostRecentInputDevice() && navigateInFirstGallery)
-            if (_firstGallery != null &&
+            if (_firstGallery is not null &&
                 !_firstGallery.HasHighlightChangedViaMouse &&
                 (NavigateInFirstGallery || IsFocusWithinFirstGalleryItemsHostSite))
             {
@@ -1444,13 +1444,13 @@ namespace Microsoft.Windows.Controls.Ribbon
             // focus reinstate focus to the parent based on the IsEditable mode
 
             RibbonGalleryItem focusedGalleryItem = Keyboard.FocusedElement as RibbonGalleryItem;
-            if (focusedGalleryItem != null)
+            if (focusedGalleryItem is not null)
             {
-                if (IsEditable && EditableTextBoxSite != null)
+                if (IsEditable && EditableTextBoxSite is not null)
                 {
                     EditableTextBoxSite.Focus();
                 }
-                else if (!IsEditable && PartToggleButton != null)
+                else if (!IsEditable && PartToggleButton is not null)
                 {
                     PartToggleButton.Focus();
                 }
@@ -1487,7 +1487,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private void CacheSelectedItem()
         {
-            if (_firstGallery != null && !IsSelectedItemCached)
+            if (_firstGallery is not null && !IsSelectedItemCached)
             {
                 try
                 {
@@ -1508,7 +1508,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private void RestoreCachedSelectedItem()
         {
-            if (_firstGallery != null && IsSelectedItemCached)
+            if (_firstGallery is not null && IsSelectedItemCached)
             {
                 try
                 {
@@ -1535,7 +1535,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 // Discard cached selection and set selection
                 // to be the same as highlight
 
-                if (HighlightedItem != null)
+                if (HighlightedItem is not null)
                 {
                     SelectedItem = HighlightedItem;
                     HighlightedItem = null;
@@ -1567,7 +1567,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 if (this.IsEditable)
                 {
-                    if (EditableTextBoxSite != null)
+                    if (EditableTextBoxSite is not null)
                     {
                         RibbonHelper.OpenParentRibbonGroupDropDownSync(this, TemplateApplied);
                         EditableTextBoxSite.Focus();
@@ -1595,7 +1595,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             get { return _firstGallery; }
             private set
             {
-                if (_firstGallery != null)
+                if (_firstGallery is not null)
                 {
                     _firstGallery.ShouldGalleryItemsAcquireFocus = true;
 
@@ -1608,7 +1608,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
                 _firstGallery = value;
 
-                if (_firstGallery != null)
+                if (_firstGallery is not null)
                 {
                     _firstGallery.ShouldGalleryItemsAcquireFocus = false;
 

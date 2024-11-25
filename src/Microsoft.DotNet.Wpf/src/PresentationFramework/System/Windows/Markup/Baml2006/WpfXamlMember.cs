@@ -151,7 +151,7 @@ namespace System.Windows.Baml2006
 
         protected override XamlType LookupType()
         {
-            if (DependencyProperty != null)
+            if (DependencyProperty is not null)
             {
                 if (_isBamlMember)
                 {
@@ -162,7 +162,7 @@ namespace System.Windows.Baml2006
                     return System.Windows.Markup.XamlReader.GetWpfSchemaContext().GetXamlType(DependencyProperty.PropertyType);
                 }
             }
-            else if (RoutedEvent != null)
+            else if (RoutedEvent is not null)
             {
                 if (_isBamlMember)
                 {
@@ -184,7 +184,7 @@ namespace System.Windows.Baml2006
             MemberInfo member = base.LookupUnderlyingMember();
             if (member is null)
             {
-                if (BaseUnderlyingMember != null)
+                if (BaseUnderlyingMember is not null)
                 {
                     member = BaseUnderlyingMember.UnderlyingMember;
                 }
@@ -199,7 +199,7 @@ namespace System.Windows.Baml2006
             MethodInfo setter = base.LookupUnderlyingSetter();
             if (setter is null)
             {
-                if (BaseUnderlyingMember != null)
+                if (BaseUnderlyingMember is not null)
                 {
                     setter = BaseUnderlyingMember.Invoker.UnderlyingSetter;
                 }
@@ -214,7 +214,7 @@ namespace System.Windows.Baml2006
             MethodInfo getter = base.LookupUnderlyingGetter();
             if (getter is null)
             {
-                if (BaseUnderlyingMember != null)
+                if (BaseUnderlyingMember is not null)
                 {
                     getter = BaseUnderlyingMember.Invoker.UnderlyingGetter;
                 }
@@ -225,7 +225,7 @@ namespace System.Windows.Baml2006
 
         protected override bool LookupIsReadOnly()
         {
-            if (DependencyProperty != null)
+            if (DependencyProperty is not null)
             {
                 return DependencyProperty.ReadOnly;
             }
@@ -234,7 +234,7 @@ namespace System.Windows.Baml2006
 
         protected override bool LookupIsEvent()
         {
-            if (RoutedEvent != null)
+            if (RoutedEvent is not null)
             {
                 return true;
             }
@@ -291,7 +291,7 @@ namespace System.Windows.Baml2006
         {
             get
             {
-                if (DependencyProperty != null)
+                if (DependencyProperty is not null)
                 {
                     return DependencyProperty;
                 }

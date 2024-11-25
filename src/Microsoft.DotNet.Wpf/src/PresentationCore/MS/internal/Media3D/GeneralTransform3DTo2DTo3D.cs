@@ -38,7 +38,7 @@ namespace MS.Internal.Media3D
         internal GeneralTransform3DTo2DTo3D(GeneralTransform3DTo2D transform3DTo2D,
                                             GeneralTransform2DTo3D transform2DTo3D)
         {   
-            Debug.Assert(transform3DTo2D != null && transform2DTo3D != null);
+            Debug.Assert(transform3DTo2D is not null && transform2DTo3D is not null);
             
             _transform3DTo2D = (GeneralTransform3DTo2D)transform3DTo2D.GetAsFrozen();
             _transform2DTo3D = (GeneralTransform2DTo3D)transform2DTo3D.GetAsFrozen();

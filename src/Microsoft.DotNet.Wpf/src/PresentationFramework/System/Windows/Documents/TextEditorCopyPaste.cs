@@ -117,7 +117,7 @@ namespace System.Windows.Documents
                     if (xamlTextWithImages.Length > 0)
                     {
                         // ConfirmDataFormatSetting raises a public event - could throw recoverable exception.
-                        if (wpfContainerMemory != null && ConfirmDataFormatSetting(This.UiScope, dataObject, DataFormats.XamlPackage))
+                        if (wpfContainerMemory is not null && ConfirmDataFormatSetting(This.UiScope, dataObject, DataFormats.XamlPackage))
                         {
                             dataObject.SetData(DataFormats.XamlPackage, wpfContainerMemory);
                         }
@@ -136,7 +136,7 @@ namespace System.Windows.Documents
 
                     // Add a CF_BITMAP if we have only one image selected.
                     Image image = This.Selection.GetUIElementSelected() as Image;
-                    if (image != null && image.Source is System.Windows.Media.Imaging.BitmapSource)
+                    if (image is not null && image.Source is System.Windows.Media.Imaging.BitmapSource)
                     {
                         dataObject.SetImage((System.Windows.Media.Imaging.BitmapSource)image.Source);
                     }
@@ -187,7 +187,7 @@ namespace System.Windows.Documents
         internal static bool _DoPaste(TextEditor This, IDataObject dataObject, bool isDragDrop)
         {
 
-            Invariant.Assert(dataObject != null);
+            Invariant.Assert(dataObject is not null);
 
             // Choose what format we are going to paste
             string formatToApply;
@@ -287,14 +287,14 @@ namespace System.Windows.Documents
 
             TextEditorTyping._BreakTypingSequence(This);
 
-            if (This.Selection != null && !This.Selection.IsEmpty)
+            if (This.Selection is not null && !This.Selection.IsEmpty)
             {
                 // Copy content onto the clipboard
 
                 // Note: _CreateDataObject raises a public event which might throw a recoverable exception.
                 DataObject dataObject = TextEditorCopyPaste._CreateDataObject(This, /*isDragDrop:*/false);
 
-                if (dataObject != null)
+                if (dataObject is not null)
                 {
                     try
                     {
@@ -335,12 +335,12 @@ namespace System.Windows.Documents
 
             TextEditorTyping._BreakTypingSequence(This);
 
-            if (This.Selection != null && !This.Selection.IsEmpty)
+            if (This.Selection is not null && !This.Selection.IsEmpty)
             {
                 // Note: _CreateDataObject raises a public event which might throw a recoverable exception.
                 DataObject dataObject = TextEditorCopyPaste._CreateDataObject(This, /*isDragDrop:*/false);
 
-                if (dataObject != null)
+                if (dataObject is not null)
                 {
                     try
                     {
@@ -396,7 +396,7 @@ namespace System.Windows.Documents
 
             bool forceLayoutUpdate = This.Selection.CoversEntireContent;
 
-            if (dataObject != null)
+            if (dataObject is not null)
             {
                 using (This.Selection.DeclareChangeBlock())
                 {
@@ -432,7 +432,7 @@ namespace System.Windows.Documents
         {
             // Create XamlRtfConverter to process the converting from Xaml to Rtf
             XamlRtfConverter xamlRtfConverter = new XamlRtfConverter();
-            if (wpfContainerMemory != null)
+            if (wpfContainerMemory is not null)
             {
                 xamlRtfConverter.WpfPayload = WpfPayload.OpenWpfPayload(wpfContainerMemory);
             }
@@ -691,7 +691,7 @@ namespace System.Windows.Documents
                 {
                     System.Windows.Media.Imaging.BitmapSource bitmapSource = GetPasteData(dataObjectToApply, DataFormats.Bitmap) as System.Windows.Media.Imaging.BitmapSource;
 
-                    if (bitmapSource != null)
+                    if (bitmapSource is not null)
                     {
                         // Pack the image into a WPF container
                         MemoryStream packagedImage = WpfPayload.SaveImage(bitmapSource, WpfPayload.ImageBmpContentType);
@@ -713,7 +713,7 @@ namespace System.Windows.Documents
                     object pastedData = GetPasteData(dataObjectToApply, DataFormats.XamlPackage);
 
                     MemoryStream pastedMemoryStream = pastedData as MemoryStream;
-                    if (pastedMemoryStream != null)
+                    if (pastedMemoryStream is not null)
                     {
                         object element = WpfPayload.LoadElement(pastedMemoryStream);
                         if ((element is Section || element is Span) && PasteTextElement(This, (TextElement)element))
@@ -754,7 +754,7 @@ namespace System.Windows.Documents
                 {
                     object pastedData = GetPasteData(dataObjectToApply, DataFormats.Xaml);
 
-                    if (pastedData != null && PasteXaml(This, pastedData.ToString()))
+                    if (pastedData is not null && PasteXaml(This, pastedData.ToString()))
                     {
                         return true;
                     }
@@ -787,10 +787,10 @@ namespace System.Windows.Documents
                     object pastedData = GetPasteData(dataObjectToApply, DataFormats.Rtf);
 
                     // Convert rtf to xaml text to paste rtf data into the target.
-                    if (pastedData != null)
+                    if (pastedData is not null)
                     {
                         MemoryStream memoryStream = ConvertRtfToXaml(pastedData.ToString());
-                        if (memoryStream != null)
+                        if (memoryStream is not null)
                         {
                             TextElement textElement = WpfPayload.LoadElement(memoryStream) as TextElement;
                             if ((textElement is Section || textElement is Span) && PasteTextElement(This, textElement))
@@ -836,7 +836,7 @@ namespace System.Windows.Documents
             if (formatToApply == DataFormats.Text)
             {
                 object pastedData = GetPasteData(dataObjectToApply, DataFormats.Text);
-                if (pastedData != null && PastePlainText(This, pastedData.ToString()))
+                if (pastedData is not null && PastePlainText(This, pastedData.ToString()))
                 {
                     return true;
                 }
@@ -935,7 +935,7 @@ namespace System.Windows.Documents
                     // In case of XamlParseException, we shouldn't paste anything and quiet.
                     // Xaml invalid character range is from 0x00 to 0x20. (e.g. &#0x03)
                     //  We need some indication of a failure. Silence here is very confusing...
-                    Invariant.Assert(e != null); //to make compiler happy about not using a variable e. This variable is useful in debugging process though - to see a reason of a parsing failure
+                    Invariant.Assert(e is not null); //to make compiler happy about not using a variable e. This variable is useful in debugging process though - to see a reason of a parsing failure
                     success = false;
                 }
             }

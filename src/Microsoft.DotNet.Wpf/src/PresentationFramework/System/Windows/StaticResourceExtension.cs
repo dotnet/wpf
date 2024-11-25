@@ -137,11 +137,11 @@ namespace System.Windows
                 // for the purposes of diagnostics, a deferred reference is a success -
                 // we only need the dictionary that holds the value, not the value itself
                 DeferredResourceReference deferredReference = value as DeferredResourceReference;
-                if (deferredReference != null)
+                if (deferredReference is not null)
                 {
                     success = true;
                     ResourceDictionary dict = deferredReference.Dictionary;
-                    if (dict != null)
+                    if (dict is not null)
                     {
                         // the result may not have been recorded yet
                         ResourceDictionaryDiagnostics.RecordLookupResult(ResourceKey, dict);
@@ -247,7 +247,7 @@ namespace System.Windows
 
             List<AmbientPropertyValue> ambientList;
             ambientList = ambientValues as List<AmbientPropertyValue>;
-            Debug.Assert(ambientList != null, "IAmbientProvider.GetAllAmbientValues no longer returns List<>, please copy the list");
+            Debug.Assert(ambientList is not null, "IAmbientProvider.GetAllAmbientValues no longer returns List<>, please copy the list");
 
             for(int i=0; i<ambientList.Count; i++)
             {
@@ -265,7 +265,7 @@ namespace System.Windows
                 {
                     var style = (Style)ambientValue.Value;
                     var resourceDictionary = style.FindResourceDictionary(ResourceKey);
-                    if (resourceDictionary != null)
+                    if (resourceDictionary is not null)
                     {
                         return resourceDictionary;
                     }
@@ -279,7 +279,7 @@ namespace System.Windows
             ResourceDictionary dictionaryWithKey = FindTheResourceDictionary(serviceProvider, /* isDeferredContentSearch */ true);
             object value = DependencyProperty.UnsetValue;
 
-            if (dictionaryWithKey != null)
+            if (dictionaryWithKey is not null)
             {
                 value = dictionaryWithKey.Lookup(ResourceKey, allowDeferredReference, mustReturnDeferredResourceReference, canCacheAsThemeResource:false);
             }
@@ -327,7 +327,7 @@ namespace System.Windows
         {
             ResourceDictionary dictionaryWithKey = FindTheResourceDictionary(serviceProvider, /* isDeferredContentSearch */ false);
 
-            if (dictionaryWithKey != null)
+            if (dictionaryWithKey is not null)
             {
                 object value = dictionaryWithKey.Lookup(ResourceKey, allowDeferredReference, mustReturnDeferredResourceReference, canCacheAsThemeResource:false);
                 return value;

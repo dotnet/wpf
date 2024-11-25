@@ -69,7 +69,7 @@ namespace Microsoft.Windows.Controls
 
         protected override Size MeasureOverride(Size constraint)
         {
-            if (_keyTipControl != null)
+            if (_keyTipControl is not null)
             {
                 Size childConstraint = new Size(Double.PositiveInfinity, Double.PositiveInfinity);
                 _keyTipControl.Measure(childConstraint);
@@ -79,7 +79,7 @@ namespace Microsoft.Windows.Controls
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            if (_keyTipControl != null)
+            if (_keyTipControl is not null)
             {
                 _keyTipControl.Arrange(new Rect(_keyTipControl.DesiredSize));
             }
@@ -108,11 +108,11 @@ namespace Microsoft.Windows.Controls
             if (keyTipStyle is null)
             {
                 Ribbon.Ribbon ribbon = RibbonControlService.GetRibbon(PlacementTarget);
-                if (ribbon != null)
+                if (ribbon is not null)
                 {
                     // Use Ribbon properties if the owner element belongs to a Ribbon.
                     keyTipStyle = KeyTipService.GetKeyTipStyle(ribbon);
-                    if (keyTipStyle != null)
+                    if (keyTipStyle is not null)
                     {
                         _keyTipControl.Style = keyTipStyle;
                     }
@@ -140,7 +140,7 @@ namespace Microsoft.Windows.Controls
         /// </summary>
         public void UnlinkKeyTipControl()
         {
-            if (_keyTipControl != null)
+            if (_keyTipControl is not null)
             {
                 _keyTipControl.KeyTipAdorner = null;
                 RemoveVisualChild(_keyTipControl);
@@ -196,7 +196,7 @@ namespace Microsoft.Windows.Controls
         private void EnsureTransformX()
         {
             UIElement placementTarget = PlacementTarget;
-            if (placementTarget != null)
+            if (placementTarget is not null)
             {
                 int horizontalPlacementValue = (int)HorizontalPlacement;
                 double horizontalPosition = 0;
@@ -214,7 +214,7 @@ namespace Microsoft.Windows.Controls
                             break;
                     }
 
-                    if (_keyTipControl != null)
+                    if (_keyTipControl is not null)
                     {
                         if (horizontalPlacementValue >= 6)
                         {
@@ -249,7 +249,7 @@ namespace Microsoft.Windows.Controls
                 placementTarget = AdornedElement;
             }
 
-            if (placementTarget != null)
+            if (placementTarget is not null)
             {
                 int verticalPlacementValue = (int)VerticalPlacement;
                 double verticalPosition = 0;
@@ -267,7 +267,7 @@ namespace Microsoft.Windows.Controls
                             break;
                     }
 
-                    if (_keyTipControl != null)
+                    if (_keyTipControl is not null)
                     {
                         if (verticalPlacementValue >= 6)
                         {
@@ -297,17 +297,17 @@ namespace Microsoft.Windows.Controls
         /// </summary>
         private double NudgeToRibbonGroupAxis(UIElement placementTarget, double verticalPosition)
         {
-            if (OwnerRibbonGroup != null)
+            if (OwnerRibbonGroup is not null)
             {
                 ItemsPresenter itemsPresenter = OwnerRibbonGroup.ItemsPresenter;
-                if (itemsPresenter != null)
+                if (itemsPresenter is not null)
                 {
                     GeneralTransform transform = placementTarget.TransformToAncestor(itemsPresenter);
                     Point targetOrigin = transform.Transform(new Point());
                     double keyTipTopY = verticalPosition + targetOrigin.Y;
                     double keyTipCenterY = keyTipTopY;
                     double keyTipBottomY = keyTipTopY;
-                    if (_keyTipControl != null)
+                    if (_keyTipControl is not null)
                     {
                         keyTipBottomY += _keyTipControl.ActualHeight;
                         keyTipCenterY += _keyTipControl.ActualHeight / 2;
@@ -335,7 +335,7 @@ namespace Microsoft.Windows.Controls
         /// </summary>
         internal void NudgeIntoAdornerLayerBoundary(AdornerLayer adornerLayer)
         {
-            if (_keyTipControl != null && _keyTipControl.IsLoaded)
+            if (_keyTipControl is not null && _keyTipControl.IsLoaded)
             {
                 Point adornerOrigin = this.TranslatePoint(new Point(), adornerLayer);
                 Rect adornerLayerRect = new Rect(0, 0, adornerLayer.ActualWidth, adornerLayer.ActualHeight);

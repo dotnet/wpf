@@ -50,7 +50,7 @@ namespace MS.Internal
             //
             RegistryKey key = Registry.LocalMachine.OpenSubKey(RegistryKeys.WPF);
 
-            if (key != null)
+            if (key is not null)
             {
                 object obj = key.GetValue("InvariantStrict");
 
@@ -241,7 +241,7 @@ namespace MS.Internal
                 //
                 // Check for the enable.
                 //
-                if (key != null)
+                if (key is not null)
                 {
                     object dbgJITDebugLaunchSettingValue = key.GetValue("DbgJITDebugLaunchSetting");
                     string dbgManagedDebuggerValue = key.GetValue("DbgManagedDebugger") as string;
@@ -252,7 +252,7 @@ namespace MS.Internal
                     enabled = (dbgJITDebugLaunchSettingValue is int && ((int)dbgJITDebugLaunchSettingValue & 2) != 0);
                     if (enabled)
                     {
-                        enabled = dbgManagedDebuggerValue != null && dbgManagedDebuggerValue.Length > 0;
+                        enabled = dbgManagedDebuggerValue is not null && dbgManagedDebuggerValue.Length > 0;
                     }
                 }
                 return enabled;

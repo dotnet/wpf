@@ -139,7 +139,7 @@ namespace MS.Internal
         //
         internal void CloseStream()
         {
-            if (_stream != null)
+            if (_stream is not null)
             {
                 _stream.Close();
                 _stream = null;

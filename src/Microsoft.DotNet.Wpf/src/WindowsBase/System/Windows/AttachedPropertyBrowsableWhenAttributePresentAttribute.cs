@@ -98,7 +98,7 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(dp);
 
             Attribute a = TypeDescriptor.GetAttributes(d)[_attributeType];
-            return (a != null && !a.IsDefaultAttribute());
+            return (a is not null && !a.IsDefaultAttribute());
         }
     
         //------------------------------------------------------

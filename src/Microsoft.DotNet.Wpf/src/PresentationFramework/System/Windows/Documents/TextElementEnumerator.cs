@@ -33,7 +33,7 @@ namespace System.Windows.Documents
         // Null start/end creates an empty enumerator.
         internal TextElementEnumerator(TextPointer start, TextPointer end)
         {
-            Invariant.Assert(start != null && end != null || start is null && end is null, "If start is null end should be null!");
+            Invariant.Assert(start is not null && end is not null || start is null && end is null, "If start is null end should be null!");
 
             _start = start;
             _end = end;
@@ -41,7 +41,7 @@ namespace System.Windows.Documents
             // Remember what generation the backing store was in when we started,
             // so we can throw if this enumerator is accessed after content has
             // changed.
-            if (_start != null)
+            if (_start is not null)
             {
                 _generation = _start.TextContainer.Generation;
             }
@@ -111,7 +111,7 @@ namespace System.Windows.Documents
         public bool MoveNext()
         {
             // Throw if the tree has been modified since this enumerator was created.
-            if (_start != null && _generation != _start.TextContainer.Generation)
+            if (_start is not null && _generation != _start.TextContainer.Generation)
             {
                 throw new InvalidOperationException(SR.EnumeratorVersionChanged);
             }
@@ -123,7 +123,7 @@ namespace System.Windows.Documents
             }
 
             // Return false if the navigator reached the end of the collection
-            if (_navigator != null && _navigator.CompareTo(_end) >= 0)
+            if (_navigator is not null && _navigator.CompareTo(_end) >= 0)
             {
                 return false;
             }
@@ -156,7 +156,7 @@ namespace System.Windows.Documents
             }
 
             // Return true if the content was found
-            return (_current != null);
+            return (_current is not null);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace System.Windows.Documents
         public void Reset()
         {
             // Throw if the tree has been modified since this enumerator was created.
-            if (_start != null && _generation != _start.TextContainer.Generation)
+            if (_start is not null && _generation != _start.TextContainer.Generation)
             {
                 throw new InvalidOperationException(SR.EnumeratorVersionChanged);
             }

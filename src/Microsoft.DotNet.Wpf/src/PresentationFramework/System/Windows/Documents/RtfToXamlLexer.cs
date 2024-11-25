@@ -141,7 +141,7 @@ namespace System.Windows.Documents
                 default:
                     _rtfIndex--;
 
-                    if (formatState != null && formatState.RtfDestination == RtfDestination.DestPicture)
+                    if (formatState is not null && formatState.RtfDestination == RtfDestination.DestPicture)
                     {
                         token.Type = RtfTokenType.TokenPictureData;
                         break;
@@ -181,7 +181,7 @@ namespace System.Windows.Documents
                         break;
 
                     case RtfTokenType.TokenControl:
-                        if (token.RtfControlWordInfo != null && token.RtfControlWordInfo.Control == RtfControlWord.Ctrl_BIN)
+                        if (token.RtfControlWordInfo is not null && token.RtfControlWordInfo.Control == RtfControlWord.Ctrl_BIN)
                         {
                             AdvanceForBinary((int)token.Parameter);
                         }

@@ -141,7 +141,7 @@ namespace System.Windows.Media
             Point current = StartPoint;
             result.StartPoint = current * matrix;
 
-            if (segments != null)
+            if (segments is not null)
             {
                 int count = segments.Count;
                 for (int i=0; i<count; i++)
@@ -225,7 +225,7 @@ namespace System.Windows.Media
             PathSegmentCollection segments = Segments;
             return "M" + 
                 ((IFormattable)StartPoint).ToString(format, provider) + 
-                (segments != null ? segments.ConvertToString(format, provider) : "") +
+                (segments is not null ? segments.ConvertToString(format, provider) : "") +
                 (IsClosed ? "z" : "");
         }
  

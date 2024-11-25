@@ -177,7 +177,7 @@ namespace System.Windows.Documents
                 if (TranslatePageNumber(pageNumber, out childPaginator, out childPageNumber))
                 {
                     childFixedDoc = childPaginator.Source as FixedDocument;
-                    if (childFixedDoc != null)
+                    if (childFixedDoc is not null)
                     {
                         uiElementRet = childFixedDoc.GetFixedPage(childPageNumber);
                     }
@@ -189,10 +189,10 @@ namespace System.Windows.Documents
                 {
                     childPaginator = GetPaginator(docRef);
                     childFixedDoc = childPaginator.Source as FixedDocument;
-                    if (childFixedDoc != null)
+                    if (childFixedDoc is not null)
                     {
                         uiElementRet = ((IFixedNavigate)childFixedDoc).FindElementByID(elementID, out rootFixedPage);
-                        if (uiElementRet != null)
+                        if (uiElementRet is not null)
                         {
                             break;
                         }
@@ -260,7 +260,7 @@ namespace System.Windows.Documents
             if (TranslatePageNumber(pageNumber, out innerPaginator, out innerPageNumber))
             {
                 innerDP = innerPaginator.GetPage(innerPageNumber);
-                Debug.Assert(innerDP != null);
+                Debug.Assert(innerDP is not null);
 
                 // Now warp inner DP and return it
                 return new FixedDocumentSequenceDocumentPage(this, innerPaginator, innerDP);
@@ -281,7 +281,7 @@ namespace System.Windows.Documents
             ArgumentNullException.ThrowIfNull(document);
 
             DocumentPage innerDP = document.GetPage(fixedDocPageNumber);
-            Debug.Assert(innerDP != null);
+            Debug.Assert(innerDP is not null);
 
             // Now wrap inner DP and return it
             return new FixedDocumentSequenceDocumentPage(this, document.DocumentPaginator as DynamicDocumentPaginator, innerDP);
@@ -356,10 +356,10 @@ namespace System.Windows.Documents
             if (_asyncOps.ContainsKey(userState))
             {
                 GetPageAsyncRequest asyncRequest = _asyncOps[userState];
-                if (asyncRequest != null)
+                if (asyncRequest is not null)
                 {
                     asyncRequest.Cancelled = true;
-                    if (asyncRequest.Page.ChildPaginator != null)
+                    if (asyncRequest.Page.ChildPaginator is not null)
                     {
                         asyncRequest.Page.ChildPaginator.CancelAsync(asyncRequest);
                     }
@@ -377,7 +377,7 @@ namespace System.Windows.Documents
             foreach (DocumentReference docRef in References)
             {
                 DynamicDocumentPaginator childPaginator = GetPaginator(docRef);
-                if (childPaginator != null)
+                if (childPaginator is not null)
                 {
                     ContentPosition cp = childPaginator.GetObjectPosition(o);
                     if (cp != ContentPosition.Missing && (cp is ITextPointer))
@@ -449,7 +449,7 @@ namespace System.Windows.Documents
                 foreach (DocumentReference docRef in References)
                 {
                     DynamicDocumentPaginator paginator = GetPaginator(docRef);
-                    if (paginator != null)
+                    if (paginator is not null)
                     {
                         count += paginator.PageCount;
                         if (!paginator.IsPageCountValid)
@@ -566,22 +566,22 @@ namespace System.Windows.Documents
         internal DynamicDocumentPaginator GetPaginator(DocumentReference docRef)
         {
             // #966803: Source change won't be a support scenario.
-            Debug.Assert(docRef != null);
+            Debug.Assert(docRef is not null);
             DynamicDocumentPaginator paginator = null;
             IDocumentPaginatorSource document = docRef.CurrentlyLoadedDoc;
 
-            if (document != null)
+            if (document is not null)
             {
                 paginator = document.DocumentPaginator as DynamicDocumentPaginator;
-                Debug.Assert(paginator != null);
+                Debug.Assert(paginator is not null);
             }
             else
             {
                 document = docRef.GetDocument(false /*forceReload*/);
-                if (document != null)
+                if (document is not null)
                 {
                     paginator = document.DocumentPaginator as DynamicDocumentPaginator;
-                    Debug.Assert(paginator != null);
+                    Debug.Assert(paginator is not null);
                     // hook up event handlers
                     paginator.PaginationCompleted += new EventHandler(_OnChildPaginationCompleted);
                     paginator.PaginationProgress += new PaginationProgressEventHandler(_OnChildPaginationProgress);
@@ -607,7 +607,7 @@ namespace System.Windows.Documents
             foreach (DocumentReference docRef in References)
             {
                 childPaginator = GetPaginator(docRef);
-                if (childPaginator != null)
+                if (childPaginator is not null)
                 {
                     childPageNumber = pageNumber;
                     if (childPaginator.PageCount > childPageNumber)
@@ -696,10 +696,10 @@ namespace System.Windows.Documents
             if (PageCount > 0)
             {
                 DocumentPage docPage = GetPage(0);
-                if (docPage != null)
+                if (docPage is not null)
                 {
                     FixedPage page = docPage.Visual as FixedPage;
-                    if (page != null)
+                    if (page is not null)
                     {
                         this.Language = page.Language;
                     }
@@ -773,7 +773,7 @@ namespace System.Windows.Documents
             foreach (DocumentReference docRef in References)
             {
                 DynamicDocumentPaginator innerPaginator = GetPaginator(docRef);
-                if (innerPaginator != null)
+                if (innerPaginator is not null)
                 {
                     if (innerPaginator == childPaginator)
                     {
@@ -794,7 +794,7 @@ namespace System.Windows.Documents
             for(int i = 0; i < childIndex && i < References.Count; i++)
             {
                 DocumentPaginator childDoc = GetPaginator(References[i]);
-                if (childDoc != null)
+                if (childDoc is not null)
                 {
                     count += childDoc.PageCount;
                     if (!childDoc.IsPageCountValid)
@@ -1065,9 +1065,9 @@ namespace System.Windows.Documents
         internal FixedDocumentSequenceDocumentPage(FixedDocumentSequence documentSequence, DynamicDocumentPaginator documentPaginator, DocumentPage documentPage)
             : base((documentPage is FixedDocumentPage) ? ((FixedDocumentPage)documentPage).FixedPage : documentPage.Visual, documentPage.Size, documentPage.BleedBox, documentPage.ContentBox)
         {
-            Debug.Assert(documentSequence != null);
-            Debug.Assert(documentPaginator != null);
-            Debug.Assert(documentPage != null);
+            Debug.Assert(documentSequence is not null);
+            Debug.Assert(documentPaginator is not null);
+            Debug.Assert(documentPage is not null);
             _fixedDocumentSequence = documentSequence;
             _documentPaginator = documentPaginator;
             _documentPage = documentPage;
@@ -1139,7 +1139,7 @@ namespace System.Windows.Documents
                     _layedOut = true;
 
                     UIElement e;
-                    if ((e = ((object)base.Visual) as UIElement) != null)
+                    if ((e = ((object)base.Visual) as UIElement) is not null)
                     {
                         e.Measure(base.Size);
                         e.Arrange(new Rect(base.Size));
@@ -1154,7 +1154,7 @@ namespace System.Windows.Documents
             get
             {
                 ITextPointer childPosition = _documentPaginator.GetPagePosition(_documentPage) as ITextPointer;
-                if (childPosition != null)
+                if (childPosition is not null)
                 {
                     ChildDocumentBlock childBlock = new ChildDocumentBlock(_fixedDocumentSequence.TextContainer,
                                             ChildDocumentReference);

@@ -40,7 +40,7 @@ namespace MS.Internal.Security.RightsManagement
             // on some platforms in the failure cases the out parameter is being created with the value 0
             // in order to simplify error handling and Disposing of those handles we will just close them as 
             // soon as we detect such case  
-            if ((phSession != null) && phSession.IsInvalid)
+            if ((phSession is not null) && phSession.IsInvalid)
             {
                 phSession.Dispose();
                 phSession = null;
@@ -113,12 +113,12 @@ namespace MS.Internal.Security.RightsManagement
             // on some platforms in the failure cases the out parameter is being created with the value 0
             // in order to simplify error handling and Disposing of those handles we will just close them as 
             // soon as we detect such case  
-            if ((environmentHandle != null) && environmentHandle.IsInvalid)
+            if ((environmentHandle is not null) && environmentHandle.IsInvalid)
             {
                 environmentHandle.Dispose();
                 environmentHandle = null;
             }
-            if ((defaultLibrary != null) && defaultLibrary.IsInvalid)
+            if ((defaultLibrary is not null) && defaultLibrary.IsInvalid)
             {
                 defaultLibrary.Dispose();
                 defaultLibrary = null;
@@ -174,7 +174,7 @@ namespace MS.Internal.Security.RightsManagement
             // on some platforms in the failure cases the out parameter is being created with the value 0
             // in order to simplify error handling and Disposing of those handles we will just close them as 
             // soon as we detect such case  
-            if ((phLicenseStorageSession != null) && phLicenseStorageSession.IsInvalid)
+            if ((phLicenseStorageSession is not null) && phLicenseStorageSession.IsInvalid)
             {
                 phLicenseStorageSession.Dispose();
                 phLicenseStorageSession = null;
@@ -259,7 +259,7 @@ namespace MS.Internal.Security.RightsManagement
             // on some platforms in the failure cases the out parameter is being created with the value 0
             // in order to simplify error handling and Disposing of those handles we will just close them as 
             // soon as we detect such case  
-            if ((queryRootHandle != null) && queryRootHandle.IsInvalid)
+            if ((queryRootHandle is not null) && queryRootHandle.IsInvalid)
             {
                 queryRootHandle.Dispose();
                 queryRootHandle = null;
@@ -293,7 +293,7 @@ namespace MS.Internal.Security.RightsManagement
             // on some platforms in the failure cases the out parameter is being created with the value 0
             // in order to simplify error handling and Disposing of those handles we will just close them as 
             // soon as we detect such case  
-            if ((subQueryHandle != null) && subQueryHandle.IsInvalid)
+            if ((subQueryHandle is not null) && subQueryHandle.IsInvalid)
             {
                 subQueryHandle.Dispose();
                 subQueryHandle = null;
@@ -316,7 +316,7 @@ namespace MS.Internal.Security.RightsManagement
             // on some platforms in the failure cases the out parameter is being created with the value 0
             // in order to simplify error handling and Disposing of those handles we will just close them as 
             // soon as we detect such case  
-            if ((subQueryHandle != null) && subQueryHandle.IsInvalid)
+            if ((subQueryHandle is not null) && subQueryHandle.IsInvalid)
             {
                 subQueryHandle.Dispose();
                 subQueryHandle = null;
@@ -381,7 +381,7 @@ namespace MS.Internal.Security.RightsManagement
             // on some platforms in the failure cases the out parameter is being created with the value 0
             // in order to simplify error handling and Disposing of those handles we will just close them as 
             // soon as we detect such case  
-            if ((issuanceLicenseHandle != null) && issuanceLicenseHandle.IsInvalid)
+            if ((issuanceLicenseHandle is not null) && issuanceLicenseHandle.IsInvalid)
             {
                 issuanceLicenseHandle.Dispose();
                 issuanceLicenseHandle = null;
@@ -404,7 +404,7 @@ namespace MS.Internal.Security.RightsManagement
             // on some platforms in the failure cases the out parameter is being created with the value 0
             // in order to simplify error handling and Disposing of those handles we will just close them as 
             // soon as we detect such case  
-            if ((userHandle != null) && userHandle.IsInvalid)
+            if ((userHandle is not null) && userHandle.IsInvalid)
             {
                 userHandle.Dispose();
                 userHandle = null;
@@ -425,7 +425,7 @@ namespace MS.Internal.Security.RightsManagement
             // on some platforms in the failure cases the out parameter is being created with the value 0
             // in order to simplify error handling and Disposing of those handles we will just close them as 
             // soon as we detect such case  
-            if ((userHandle != null) && userHandle.IsInvalid)
+            if ((userHandle is not null) && userHandle.IsInvalid)
             {
                 userHandle.Dispose();
                 userHandle = null;
@@ -448,7 +448,7 @@ namespace MS.Internal.Security.RightsManagement
             // on some platforms in the failure cases the out parameter is being created with the value 0
             // in order to simplify error handling and Disposing of those handles we will just close them as 
             // soon as we detect such case  
-            if ((rightHandle != null) && rightHandle.IsInvalid)
+            if ((rightHandle is not null) && rightHandle.IsInvalid)
             {
                 rightHandle.Dispose();
                 rightHandle = null;
@@ -510,7 +510,7 @@ namespace MS.Internal.Security.RightsManagement
             // on some platforms in the failure cases the out parameter is being created with the value 0
             // in order to simplify error handling and Disposing of those handles we will just close them as 
             // soon as we detect such case  
-            if ((rightHandle != null) && rightHandle.IsInvalid)
+            if ((rightHandle is not null) && rightHandle.IsInvalid)
             {
                 rightHandle.Dispose();
                 rightHandle = null;
@@ -596,7 +596,7 @@ namespace MS.Internal.Security.RightsManagement
             // on some platforms in the failure cases the out parameter is being created with the value 0
             // in order to simplify error handling and Disposing of those handles we will just close them as 
             // soon as we detect such case  
-            if ((ownerHandle != null) && ownerHandle.IsInvalid)
+            if ((ownerHandle is not null) && ownerHandle.IsInvalid)
             {
                 ownerHandle.Dispose();
                 ownerHandle = null;
@@ -715,7 +715,7 @@ namespace MS.Internal.Security.RightsManagement
             // on some platforms in the failure cases the out parameter is being created with the value 0
             // in order to simplify error handling and Disposing of those handles we will just close them as 
             // soon as we detect such case  
-            if ((boundLicenseHandle != null) && boundLicenseHandle.IsInvalid)
+            if ((boundLicenseHandle is not null) && boundLicenseHandle.IsInvalid)
             {
                 boundLicenseHandle.Dispose();
                 boundLicenseHandle = null;
@@ -739,7 +739,7 @@ namespace MS.Internal.Security.RightsManagement
             // on some platforms in the failure cases the out parameter is being created with the value 0
             // in order to simplify error handling and Disposing of those handles we will just close them as 
             // soon as we detect such case  
-            if ((decryptorHandle != null) && decryptorHandle.IsInvalid)
+            if ((decryptorHandle is not null) && decryptorHandle.IsInvalid)
             {
                 decryptorHandle.Dispose();
                 decryptorHandle = null;
@@ -763,7 +763,7 @@ namespace MS.Internal.Security.RightsManagement
             // on some platforms in the failure cases the out parameter is being created with the value 0
             // in order to simplify error handling and Disposing of those handles we will just close them as 
             // soon as we detect such case  
-            if ((encryptorHandle != null) && encryptorHandle.IsInvalid)
+            if ((encryptorHandle is not null) && encryptorHandle.IsInvalid)
             {
                 encryptorHandle.Dispose();
                 encryptorHandle = null;

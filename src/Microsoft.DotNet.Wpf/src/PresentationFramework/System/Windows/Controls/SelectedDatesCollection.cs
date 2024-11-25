@@ -362,7 +362,7 @@ namespace System.Windows.Controls
 
                 if (fireChangeNotification)
                 {
-                    if (this._owner.SelectedDate != null)
+                    if (this._owner.SelectedDate is not null)
                     {
                         this._owner.SelectedDate = null;
                     }

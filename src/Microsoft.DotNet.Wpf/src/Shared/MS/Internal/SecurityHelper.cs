@@ -182,7 +182,7 @@ internal static class SecurityHelper
             )
         {
             // if we have a known parent window set, let's use it when alerting the user.
-            if (parent != null)
+            if (parent is not null)
             {
                 System.Windows.MessageBox.Show(parent, text, title, buttons, image);
             }
@@ -219,7 +219,7 @@ internal static class SecurityHelper
             object value = null;
 
             RegistryKey key = baseRegistryKey.OpenSubKey(keyName);
-            if (key != null)
+            if (key is not null)
             {
                 using( key )
                 {

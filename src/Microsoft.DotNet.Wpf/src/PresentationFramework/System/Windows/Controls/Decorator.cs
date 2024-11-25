@@ -71,7 +71,7 @@ namespace System.Windows.Controls
                 throw new ArgumentException (SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value");
             }
 
-            if (this.Child != null)
+            if (this.Child is not null)
             {
                 throw new ArgumentException(SR.Format(SR.CanOnlyHaveOneChild, this.GetType(), value.GetType()));
             }
@@ -193,7 +193,7 @@ namespace System.Windows.Controls
         protected override Size MeasureOverride(Size constraint)
         {
             UIElement child = Child;
-            if (child != null)
+            if (child is not null)
             {
                 child.Measure(constraint);
                 return (child.DesiredSize);
@@ -209,7 +209,7 @@ namespace System.Windows.Controls
         protected override Size ArrangeOverride(Size arrangeSize)
         {
             UIElement child = Child;
-            if (child != null)
+            if (child is not null)
             {
                 child.Arrange(new Rect(arrangeSize));
             }

@@ -20,21 +20,21 @@ namespace MS.Internal
         internal static DependencyObject GetUIParentCore(DependencyObject o)
         {
             UIElement e = o as UIElement;
-            if (e != null)
+            if (e is not null)
             {
                 return e.GetUIParentCore();
             }
             else
             {
                 ContentElement ce = o as ContentElement;
-                if (ce != null)
+                if (ce is not null)
                 {
                     return ce.GetUIParentCore();
                 }
                 else
                 {
                     UIElement3D e3D = o as UIElement3D;
-                    if (e3D != null)
+                    if (e3D is not null)
                     {
                         return e3D.GetUIParentCore();
                     }
@@ -133,24 +133,24 @@ namespace MS.Internal
                 visualParent = UIElementHelper.GetUIParent(o);
             }
             DependencyObject logicalParent = SynchronizedInputHelper.GetUIParentCore(o);
-            if (logicalParent != null && logicalParent != visualParent)
+            if (logicalParent is not null && logicalParent != visualParent)
             {
                 UIElement e = logicalParent as UIElement;
-                if (e != null)
+                if (e is not null)
                 {
                     e.AddSynchronizedInputPreOpportunityHandler(route, args);
                 }
                 else
                 {
                     ContentElement ce = logicalParent as ContentElement;
-                    if (ce != null)
+                    if (ce is not null)
                     {
                         ce.AddSynchronizedInputPreOpportunityHandler(route, args);
                     }
                     else
                     {
                         UIElement3D e3D = logicalParent as UIElement3D;
-                        if (e3D != null)
+                        if (e3D is not null)
                         {
                             e3D.AddSynchronizedInputPreOpportunityHandler(route, args);
                         }
@@ -172,14 +172,14 @@ namespace MS.Internal
             KeyboardEventArgs kArgs = args as KeyboardEventArgs;
             // if it's the keyboard event then we have 1:1 mapping between handlers & events,
             // so no remapping required.
-            if (kArgs != null)
+            if (kArgs is not null)
             {
                 InputManager.SynchronizedInputState = SynchronizedInputStates.HadOpportunity;
             }
             else
             {
                 TextCompositionEventArgs tArgs = args as TextCompositionEventArgs;
-                if (tArgs != null)
+                if (tArgs is not null)
                 {
                     InputManager.SynchronizedInputState = SynchronizedInputStates.HadOpportunity;
                 }
@@ -188,9 +188,9 @@ namespace MS.Internal
                     // If this is an mouse event then we have handlers only for generic MouseDown & MouseUp events,
                     // so we need additional logic here to decide between Mouse left and right button events.
                     MouseButtonEventArgs mbArgs = args as MouseButtonEventArgs;
-                    if (mbArgs != null)
+                    if (mbArgs is not null)
                     {
-                        Debug.Assert(mbArgs != null);
+                        Debug.Assert(mbArgs is not null);
                         switch (mbArgs.ChangedButton)
                         {
                             case MouseButton.Left:
@@ -222,14 +222,14 @@ namespace MS.Internal
             KeyboardEventArgs kArgs = args as KeyboardEventArgs;
             // if it's the keyboard event then we have 1:1 mapping between handlers & events,
             // so no remapping required.
-            if (kArgs != null)
+            if (kArgs is not null)
             {
                 InputManager.SynchronizedInputState = SynchronizedInputStates.Handled;
             }
             else
             {
                 TextCompositionEventArgs tArgs = args as TextCompositionEventArgs;
-                if (tArgs != null)
+                if (tArgs is not null)
                 {
                     InputManager.SynchronizedInputState = SynchronizedInputStates.Handled;
                 }
@@ -238,8 +238,8 @@ namespace MS.Internal
                     // If this is an mouse event then we have handlers only for generic MouseDown & MouseUp events,
                     // so we need additional logic here to decide between Mouse left and right button events.
                     MouseButtonEventArgs mbArgs = args as MouseButtonEventArgs;
-                    Debug.Assert(mbArgs != null);
-                    if (mbArgs != null)
+                    Debug.Assert(mbArgs is not null);
+                    if (mbArgs is not null)
                     {
                         switch (mbArgs.ChangedButton)
                         {
@@ -318,7 +318,7 @@ namespace MS.Internal
         // Raise synchronized input automation events here.
         internal static void RaiseAutomationEvent(AutomationPeer peer)
         {
-            if (peer != null)
+            if (peer is not null)
             {
                 switch (InputManager.SynchronizedInputState)
                 {

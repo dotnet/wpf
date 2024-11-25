@@ -103,7 +103,7 @@ namespace System.Windows.Interop
             remove
             {
 
-                if(_hooks != null)
+                if(_hooks is not null)
                 {
                     _hooks.Remove(value);
 
@@ -344,13 +344,13 @@ namespace System.Windows.Interop
             if (( CriticalHandle != IntPtr.Zero) && IsVisible)
             {
                 source = PresentationSource.CriticalFromVisual(this, false /* enable2DTo3DTransition */);
-                if(source != null)
+                if(source is not null)
                 {
                     vt = source.CompositionTarget;
                 }
             }
 
-            if(vt != null && vt.RootVisual != null)
+            if(vt is not null && vt.RootVisual is not null)
             {
                 // Translate the layout information assigned to us from the co-ordinate
                 // space of this element, through the root visual, to the Win32 client
@@ -483,7 +483,7 @@ namespace System.Windows.Interop
 
                 // Remove our subclass.  Even if this fails, it will be forcably removed
                 // when the window is destroyed.
-                if (_hwndSubclass != null)
+                if (_hwndSubclass is not null)
                 {
                     // Check if it is trusted (WebOC and AddInHost), call CriticalDetach to avoid the Demand.
                     if (_fTrusted == true)
@@ -505,7 +505,7 @@ namespace System.Windows.Interop
                 PresentationSource.RemoveSourceChangedHandler(this, new SourceChangedEventHandler(OnSourceChanged));
             }
 
-            if (_weakEventDispatcherShutdown != null) // Can be null if the static ctor failed ... see WebBrowser.
+            if (_weakEventDispatcherShutdown is not null) // Can be null if the static ctor failed ... see WebBrowser.
             {
                 _weakEventDispatcherShutdown.Dispose();
                 _weakEventDispatcherShutdown = null;
@@ -567,7 +567,7 @@ namespace System.Windows.Interop
                 case WindowMessage.WM_WINDOWPOSCHANGING:
                     PresentationSource source = PresentationSource.CriticalFromVisual(this, false /* enable2DTo3DTransition */);
 
-                    if (source != null)
+                    if (source is not null)
                     {
                         // Get the rect assigned by layout to us.
                         NativeMethods.RECT assignedRC = CalculateAssignedRC(source);
@@ -634,7 +634,7 @@ namespace System.Windows.Interop
             IntPtr result = IntPtr.Zero;
 
             AutomationPeer containerPeer = UIElementAutomationPeer.CreatePeerForElement(this);
-            if (containerPeer != null)
+            if (containerPeer is not null)
             {
                 // get the element proxy
                 IRawElementProviderSimple el = containerPeer.GetInteropChild();
@@ -851,7 +851,7 @@ namespace System.Windows.Interop
             // Remove ourselves as an IKeyboardInputSinks child of our previous
             // containing window.
             IKeyboardInputSite keyboardInputSite = ((IKeyboardInputSink)this).KeyboardInputSite;
-            if (keyboardInputSite != null)
+            if (keyboardInputSite is not null)
             {
                 // Derived classes that implement IKeyboardInputSink should support setting it to null.
                 ((IKeyboardInputSink)this).KeyboardInputSite = null;
@@ -861,7 +861,7 @@ namespace System.Windows.Interop
 
             // Add ourselves as an IKeyboardInputSinks child of our containing window.
             IKeyboardInputSink source = PresentationSource.CriticalFromVisual(this, false /* enable2DTo3DTransition */) as IKeyboardInputSink;
-            if(source != null)
+            if(source is not null)
             {
                 ((IKeyboardInputSink)this).KeyboardInputSite = source.RegisterKeyboardInputSink(this);
             }
@@ -930,10 +930,10 @@ namespace System.Windows.Interop
             // the child window.
             IntPtr hwndParent = IntPtr.Zero;
             PresentationSource source = PresentationSource.CriticalFromVisual(this, false /* enable2DTo3DTransition */);
-            if(source != null)
+            if(source is not null)
             {
                 HwndSource hwndSource = source as HwndSource ;
-                if(hwndSource != null)
+                if(hwndSource is not null)
                 {
                     hwndParent = hwndSource.CriticalHandle;
                 }
@@ -943,7 +943,7 @@ namespace System.Windows.Interop
                 // attempt to also walk through 3D - if we get a non-null result then we know we are inside of
                 // a 3D scene which is not supported
                 PresentationSource goingThrough3DSource = PresentationSource.CriticalFromVisual(this, true /* enable2DTo3DTransition */);
-                if (goingThrough3DSource != null)
+                if (goingThrough3DSource is not null)
                 {
                     if (TraceHwndHost.IsEnabled)
                     {
@@ -978,8 +978,8 @@ namespace System.Windows.Interop
                     // This keeps the child window around, but it is not visible.  We can reparent the 
                     // window later when a new parent is available
                     var hwnd = SystemResources.GetDpiAwarenessCompatibleNotificationWindow(_hwnd);
-                    Debug.Assert(hwnd != null);
-                    if (hwnd != null)
+                    Debug.Assert(hwnd is not null);
+                    if (hwnd is not null)
                     {
                         UnsafeNativeMethods.SetParent(_hwnd, new HandleRef(null, hwnd.Handle));
                         // ...But we have a potential problem: If the SystemResources listener window gets 
@@ -1132,7 +1132,7 @@ namespace System.Windows.Interop
             result = WndProc(hwnd, msg, wParam, lParam, ref handled);
 
             // Call the handlers for the MessageHook event.
-            if(!handled && _hooks != null)
+            if(!handled && _hooks is not null)
             {
                 for(int i = 0, nCount = _hooks.Count; i < nCount; i++)
                 {

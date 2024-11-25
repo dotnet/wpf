@@ -49,7 +49,7 @@ namespace System.Windows.Documents
         /// </param>
         internal CaretElement(TextEditor textEditor, bool isBlinkEnabled) : base(textEditor.TextView.RenderScope)
         {
-            Invariant.Assert(textEditor.TextView != null && textEditor.TextView.RenderScope != null, "Assert: textView != null && RenderScope != null");
+            Invariant.Assert(textEditor.TextView is not null && textEditor.TextView.RenderScope is not null, "Assert: textView is not null && RenderScope is not null");
 
             _textEditor = textEditor;
 
@@ -124,7 +124,7 @@ namespace System.Windows.Documents
         // Render override -- we render the selection here.
         protected override void OnRender(DrawingContext drawingContext)
         {
-            if (_selectionGeometry != null)
+            if (_selectionGeometry is not null)
             {
                 FrameworkElement owner = GetOwnerElement();
                 Brush selectionBrush = (Brush)owner.GetValue(TextBoxBase.SelectionBrushProperty);
@@ -245,7 +245,7 @@ namespace System.Windows.Documents
             double newWidth;
             bool positionChanged;
 
-            Invariant.Assert(caretBrush != null, "Assert: caretBrush != null");
+            Invariant.Assert(caretBrush is not null, "Assert: caretBrush is not null");
 
             // Make sure we're attached to the view.  We have to delay this work
             // until now because if we swap out a render scope on the fly, the
@@ -389,7 +389,7 @@ namespace System.Windows.Documents
             // Find the scroller from the render scope
             ScrollViewer scroller = _textEditor._Scroller as ScrollViewer;
 
-            if (scroller != null)
+            if (scroller is not null)
             {
                 Point targetPoint = new Point(targetRect.Left, targetRect.Top);
 
@@ -441,7 +441,7 @@ namespace System.Windows.Documents
                 // No heuristics implemented for document viewer horizontal scrolling,
                 // as a result we will bring each character or word into view on demand.
                 // (Unlike the scrollviewer heuristic above where we bring 1/4th of scroller width into view.)
-                if (!_textEditor.Selection.MovingPosition.HasValidLayout && _textEditor.TextView != null && _textEditor.TextView.IsValid)
+                if (!_textEditor.Selection.MovingPosition.HasValidLayout && _textEditor.TextView is not null && _textEditor.TextView.IsValid)
                 {
                     DoSimpleScrollToView(scrollToOriginPosition, targetRect);
                 }
@@ -480,7 +480,7 @@ namespace System.Windows.Documents
 
         internal static void AddGeometry(ref Geometry geometry, Geometry addedGeometry)
         {
-            if (addedGeometry != null)
+            if (addedGeometry is not null)
             {
                 if (geometry is null)
                 {
@@ -495,7 +495,7 @@ namespace System.Windows.Documents
 
         internal static void ClipGeometryByViewport(ref Geometry geometry, Rect viewport)
         {
-            if (geometry != null)
+            if (geometry is not null)
             {
                 Geometry viewportGeometry = new RectangleGeometry(viewport);
                 geometry = Geometry.Combine(geometry, viewportGeometry, GeometryCombineMode.Intersect, null, CaretElement.c_geometryCombineTolerance, ToleranceType.Absolute);
@@ -504,7 +504,7 @@ namespace System.Windows.Documents
 
         internal static void AddTransformToGeometry(Geometry targetGeometry, Transform transformToAdd)
         {
-            if (targetGeometry != null && transformToAdd != null)
+            if (targetGeometry is not null && transformToAdd is not null)
             {
                 targetGeometry.Transform = (targetGeometry.Transform is null || targetGeometry.Transform.IsIdentity)
                     ? transformToAdd
@@ -550,11 +550,11 @@ namespace System.Windows.Documents
             // Cache _adornerLayer to avoid reentrancy problems during Update.
             AdornerLayer adornerLayer = _adornerLayer;
 
-            if (adornerLayer != null)
+            if (adornerLayer is not null)
             {
                 Adorner[] adorners = adornerLayer.GetAdorners(this.AdornedElement);
 
-                if (adorners != null)
+                if (adorners is not null)
                 {
                     // Verify we still adorn our element.
                     // We have a persistent but still unexplained stress bug where
@@ -577,7 +577,7 @@ namespace System.Windows.Documents
         {
             SetBlinking(/*isBlinkEnabled:*/false);
 
-            if (_adornerLayer != null)
+            if (_adornerLayer is not null)
             {
                 _adornerLayer.Remove(this);
                 _adornerLayer = null;
@@ -591,7 +591,7 @@ namespace System.Windows.Documents
                 // Stopping blinking
                 if (_isBlinkEnabled)
                 {
-                    if (_blinkAnimationClock != null)
+                    if (_blinkAnimationClock is not null)
                     {
                         if (_blinkAnimationClock.CurrentState == ClockState.Active)
                         {
@@ -840,7 +840,7 @@ namespace System.Windows.Documents
                 // Return the FlowDocumentReader since this class holds the public propertie values.
                 DependencyObject node = uiScope;
 
-                while (node != null)
+                while (node is not null)
                 {
                     if (node is FlowDocumentReader)
                     {
@@ -863,7 +863,7 @@ namespace System.Windows.Documents
             if (layer is null)
             {
                 // There is no AdornerLayer available.  Clear cached value and exit.
-                if (_adornerLayer != null)
+                if (_adornerLayer is not null)
                 {
                     // We're currently in a layer that doesn't exist.
                     _adornerLayer.Remove(this);
@@ -879,7 +879,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            if (_adornerLayer != null)
+            if (_adornerLayer is not null)
             {
                 // We're currently in the wrong layer.
                 _adornerLayer.Remove(this);
@@ -926,14 +926,14 @@ namespace System.Windows.Documents
                     _caretElement.ApplyAnimationClock(UIElement.OpacityProperty, _blinkAnimationClock);
                 }
             }
-            else if (_blinkAnimationClock != null)
+            else if (_blinkAnimationClock is not null)
             {
                 // No blink (control panel option).
                 _caretElement.ApplyAnimationClock(UIElement.OpacityProperty, null);
                 _blinkAnimationClock = null;
             }
 
-            if (_blinkAnimationClock != null)
+            if (_blinkAnimationClock is not null)
             {
                 // Disable the animation when the caret isn't rendered
                 // to get better perf.
@@ -973,7 +973,7 @@ namespace System.Windows.Documents
                 IntPtr hwnd = IntPtr.Zero;
                 PresentationSource source = PresentationSource.CriticalFromVisual(this);
 
-                if (source != null)
+                if (source is not null)
                 {
                         hwnd = (source as IWin32Window).Handle;
                 }
@@ -1062,7 +1062,7 @@ namespace System.Windows.Documents
             // Get the presentation source to find a root visual.
             PresentationSource source = null;
             source = PresentationSource.CriticalFromVisual(this);
-            if (source != null)
+            if (source is not null)
             {
                 // Calculate the current caret position then transform the point to the window's client position
                 // so that Win32 applicatioin like as Magnifer(MSAA) or Tablet Ink icon can track the right

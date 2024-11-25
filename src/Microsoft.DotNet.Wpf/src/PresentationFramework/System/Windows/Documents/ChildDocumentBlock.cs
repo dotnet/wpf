@@ -47,14 +47,14 @@ namespace System.Windows.Documents
         #region Ctors
         internal ChildDocumentBlock(DocumentSequenceTextContainer aggregatedContainer, ITextContainer childContainer)
         {
-            Debug.Assert(childContainer != null);
+            Debug.Assert(childContainer is not null);
             _aggregatedContainer = aggregatedContainer;
             _container = childContainer;
         }
 
         internal ChildDocumentBlock(DocumentSequenceTextContainer aggregatedContainer, DocumentReference docRef)
         {
-            Debug.Assert(docRef != null);
+            Debug.Assert(docRef is not null);
             _aggregatedContainer = aggregatedContainer;
             _docRef = docRef;
             _SetStatus(BlockStatus.UnloadedBlock);
@@ -72,14 +72,14 @@ namespace System.Windows.Documents
         // Insert a new node into this list.
         internal ChildDocumentBlock InsertNextBlock(ChildDocumentBlock newBlock)
         {
-            Debug.Assert(newBlock != null);
+            Debug.Assert(newBlock is not null);
 
             // Setup the new block correctly
             newBlock._nextBlock     = this._nextBlock;
             newBlock._previousBlock = this;
 
             // Link old next block to the new block
-            if (this._nextBlock != null)
+            if (this._nextBlock is not null)
             {
                 this._nextBlock._previousBlock = newBlock;
             }
@@ -159,7 +159,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return (this._previousBlock != null && this._nextBlock != null);
+                return (this._previousBlock is not null && this._nextBlock is not null);
             }
         }
 #endif
@@ -230,10 +230,10 @@ namespace System.Windows.Documents
                 // Load the TextContainer
                 IDocumentPaginatorSource idp = _docRef.GetDocument(false /*forceReload*/);
                 IServiceProvider isp = idp as IServiceProvider;
-                if (isp != null)
+                if (isp is not null)
                 {
                     ITextContainer tc = isp.GetService(typeof(ITextContainer)) as ITextContainer;
-                    if (tc != null)
+                    if (tc is not null)
                     {
                         _container = tc;
                         DocumentsTrace.FixedDocumentSequence.TextOM.Trace("Got ITextContainer");

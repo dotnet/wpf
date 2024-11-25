@@ -263,7 +263,7 @@ namespace MS.Internal.Controls
             lprcPosRect.bottom = (int)this.Host.Bounds.bottom;
 
             lprcClipRect = this.Host.Bounds;
-            if (lpFrameInfo != null)
+            if (lpFrameInfo is not null)
             {
                 lpFrameInfo.cb = (uint)Marshal.SizeOf(typeof(NativeMethods.OLEINPLACEFRAMEINFO));
                 lpFrameInfo.fMDIApp = false;
@@ -387,10 +387,10 @@ namespace MS.Internal.Controls
             /*
             try {
                 ISite site = this.Host.Site;
-                if (site != null) {
+                if (site is not null) {
                     IComponentChangeService changeService = (IComponentChangeService)site.GetService(typeof(IComponentChangeService));
 
-                    if (changeService != null) {
+                    if (changeService is not null) {
                         try {
                             changeService.OnComponentChanging(this.Host, null);
                         }
@@ -438,11 +438,11 @@ namespace MS.Internal.Controls
 
         internal void StartEvents()
         {
-            if (_connectionPoint != null)
+            if (_connectionPoint is not null)
                 return;
 
             Object nativeObject = this.Host.ActiveXInstance;
-            if (nativeObject != null)
+            if (nativeObject is not null)
             {
                 try
                 {
@@ -460,7 +460,7 @@ namespace MS.Internal.Controls
 
         internal void StopEvents()
         {
-            if (_connectionPoint != null)
+            if (_connectionPoint is not null)
             {
                 _connectionPoint.Disconnect();
                 _connectionPoint = null;
@@ -469,7 +469,7 @@ namespace MS.Internal.Controls
 
         internal int OnActiveXRectChange(NativeMethods.COMRECT lprcPosRect)
         {
-            if (this.Host.ActiveXInPlaceObject != null)
+            if (this.Host.ActiveXInPlaceObject is not null)
             {
                 this.Host.ActiveXInPlaceObject.SetObjectRects(
                         lprcPosRect,

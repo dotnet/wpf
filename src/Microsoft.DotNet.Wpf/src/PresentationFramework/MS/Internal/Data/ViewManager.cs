@@ -151,7 +151,7 @@ namespace MS.Internal.Data
         internal WeakRefKey(object target)
         {
             _weakRef = new WeakReference(target);
-            _hashCode = (target != null) ? target.GetHashCode() : 314159;
+            _hashCode = (target is not null) ? target.GetHashCode() : 314159;
         }
 
         //------------------------------------------------------
@@ -184,7 +184,7 @@ namespace MS.Internal.Data
                 object c1 = Target;
                 object c2 = ck.Target;
 
-                if (c1 != null && c2 != null)
+                if (c1 is not null && c2 is not null)
                     return (c1 == c2);
                 else
                     return (_weakRef == ck._weakRef);
@@ -237,7 +237,7 @@ namespace MS.Internal.Data
             get { return (ViewRecord)base[new WeakRefKey(cvs)]; }
             set
             {
-                Debug.Assert(cvs != null, "Required CVS key is missing");
+                Debug.Assert(cvs is not null, "Required CVS key is missing");
                 base[new WeakRefKey(cvs)] = value;
             }
         }
@@ -256,7 +256,7 @@ namespace MS.Internal.Data
                     ViewRecord vr = (ViewRecord)de.Value;
                     CollectionView cv = vr.View as CollectionView;
 
-                    if (cv != null)
+                    if (cv is not null)
                     {
                         if (!cv.IsInUse)
                         {
@@ -380,18 +380,18 @@ namespace MS.Internal.Data
                 // distinguish static methods (target = null) from methods whose
                 // target gets GC'd
                 object target = callback.Target;
-                _callbackTarget = (target != null) ? new WeakReference(target) : ViewManager.StaticWeakRef;
+                _callbackTarget = (target is not null) ? new WeakReference(target) : ViewManager.StaticWeakRef;
             }
         }
 
         public bool IsSynchronized
         {
-            get { return _context != null || _callbackMethod != null; }
+            get { return _context is not null || _callbackMethod is not null; }
         }
 
         public void AccessCollection(IEnumerable collection, Action accessMethod, bool writeAccess)
         {
-            if (_callbackMethod != null)
+            if (_callbackMethod is not null)
             {
                 // make sure the callback's target is still available
                 object target = _callbackTarget.Target;
@@ -403,10 +403,10 @@ namespace MS.Internal.Data
                     target = null;          // static method
 
                 WeakReference wrContext = _context as WeakReference;
-                object context = (wrContext != null) ? wrContext.Target : _context;
+                object context = (wrContext is not null) ? wrContext.Target : _context;
                 _callbackMethod.Invoke(target, new object[] { collection, context, accessMethod, writeAccess });
             }
-            else if (_context != null)
+            else if (_context is not null)
             {
                 lock (_context)
                 {
@@ -423,8 +423,8 @@ namespace MS.Internal.Data
         {
             get
             {
-                return (_callbackMethod != null && _callbackTarget.IsAlive) ||
-                        (_callbackMethod is null && _context != null);
+                return (_callbackMethod is not null && _callbackTarget.IsAlive) ||
+                        (_callbackMethod is null && _context is not null);
             }
         }
 
@@ -518,7 +518,7 @@ namespace MS.Internal.Data
             // if the view already exists, just return it
             // Also, return null if it doesn't exist and we're called in "lazy" mode
             ViewRecord viewRecord = GetExistingView(collection, cvs, collectionViewType, GetSourceItem);
-            if (viewRecord != null || !createView)
+            if (viewRecord is not null || !createView)
             {
                 return viewRecord;
             }
@@ -527,12 +527,12 @@ namespace MS.Internal.Data
             // underlying list.
             IListSource ils = collection as IListSource;
             IList ilsList = null;
-            if (ils != null)
+            if (ils is not null)
             {
                 ilsList = ils.GetList();
                 viewRecord = GetExistingView(ilsList, cvs, collectionViewType, GetSourceItem);
 
-                if (viewRecord != null)
+                if (viewRecord is not null)
                 {
                     return CacheView(collection, cvs, (CollectionView)viewRecord.View, viewRecord);
                 }
@@ -541,7 +541,7 @@ namespace MS.Internal.Data
             // Create a new view
             ICollectionView icv = collection as ICollectionView;
 
-            if (icv != null)
+            if (icv is not null)
             {
                 icv = new CollectionViewProxy(icv);
             }
@@ -549,7 +549,7 @@ namespace MS.Internal.Data
             {
                 // Caller didn't specify a type for the view.
                 ICollectionViewFactory icvf = collection as ICollectionViewFactory;
-                if (icvf != null)
+                if (icvf is not null)
                 {
                     // collection is a view factory - call its factory method
                     icv = icvf.CreateView();
@@ -557,12 +557,12 @@ namespace MS.Internal.Data
                 else
                 {
                     // collection is not a factory - create an appropriate view
-                    IList il = (ilsList != null) ? ilsList : collection as IList;
-                    if (il != null)
+                    IList il = (ilsList is not null) ? ilsList : collection as IList;
+                    if (il is not null)
                     {
                         // create a view on an IList or IBindingList
                         IBindingList ibl = il as IBindingList;
-                        if (ibl != null)
+                        if (ibl is not null)
                             icv = new BindingListCollectionView(ibl);
                         else
                             icv = new ListCollectionView(il);
@@ -571,7 +571,7 @@ namespace MS.Internal.Data
                     {
                         // collection is not IList, wrap it
                         IEnumerable ie = collection as IEnumerable;
-                        if (ie != null)
+                        if (ie is not null)
                         {
                             icv = new EnumerableCollectionView(ie);
                         }
@@ -585,7 +585,7 @@ namespace MS.Internal.Data
                     throw new ArgumentException(SR.Format(SR.CollectionView_WrongType, collectionViewType.Name));
 
                 // if collection is IListSource, get its list first (bug 1023903)
-                object arg = (ilsList != null) ? ilsList : collection;
+                object arg = (ilsList is not null) ? ilsList : collection;
 
                 try
                 {
@@ -601,14 +601,14 @@ namespace MS.Internal.Data
             }
 
             // if we got a view, add it to the tables
-            if (icv != null)
+            if (icv is not null)
             {
                 // if the view doesn't derive from CollectionView, create a proxy that does
                 CollectionView cv = icv as CollectionView;
                 if (cv is null)
                     cv = new CollectionViewProxy(icv);
 
-                if (ilsList != null)    // IListSource's list shares the same view
+                if (ilsList is not null)    // IListSource's list shares the same view
                     viewRecord = CacheView(ilsList, cvs, cv, null);
 
                 viewRecord = CacheView(collection, cvs, cv, viewRecord);
@@ -630,9 +630,9 @@ namespace MS.Internal.Data
                 cr = new CollectionRecord();
                 Add(collection, cr);
 
-                object parent = (GetSourceItem != null) ? GetSourceItem(collection) : null;
+                object parent = (GetSourceItem is not null) ? GetSourceItem(collection) : null;
                 IEnumerable ie = collection as IEnumerable;
-                if (ie != null)
+                if (ie is not null)
                 {
                     BindingOperations.OnCollectionRegistering(ie, parent);
                 }
@@ -650,14 +650,14 @@ namespace MS.Internal.Data
             cr.SynchronizationInfo = new SynchronizationInfo(context, synchronizationCallback);
 
             ViewTable vt = cr.ViewTable;
-            if (vt != null)
+            if (vt is not null)
             {
                 bool isSynchronized = cr.SynchronizationInfo.IsSynchronized;
                 foreach (DictionaryEntry de in vt)
                 {
                     ViewRecord vr = (ViewRecord)de.Value;
                     CollectionView cv = vr.View as CollectionView;
-                    if (cv != null)
+                    if (cv is not null)
                     {
                         cv.SetAllowsCrossThreadChanges(isSynchronized);
                     }
@@ -668,7 +668,7 @@ namespace MS.Internal.Data
         internal SynchronizationInfo GetSynchronizationInfo(IEnumerable collection)
         {
             CollectionRecord cr = this[collection];
-            return (cr != null) ? cr.SynchronizationInfo : SynchronizationInfo.None;
+            return (cr is not null) ? cr.SynchronizationInfo : SynchronizationInfo.None;
         }
 
         public void AccessCollection(
@@ -696,10 +696,10 @@ namespace MS.Internal.Data
                 // look up cached entry
                 CollectionRecord cr = EnsureCollectionRecord(collection, GetSourceItem);
                 ViewTable vt = cr.ViewTable;
-                if (vt != null)
+                if (vt is not null)
                 {
                     ViewRecord vr = vt[cvs];
-                    if (vr != null)
+                    if (vr is not null)
                     {
                         cv = (CollectionView)vr.View;
                     }
@@ -722,7 +722,7 @@ namespace MS.Internal.Data
                 result = new ViewRecord(cv);
             }
 
-            if (cv != null)
+            if (cv is not null)
             {
                 ValidateViewType(cv, collectionViewType);
             }
@@ -807,7 +807,7 @@ namespace MS.Internal.Data
                 {
                     // also purge ViewTable entries whose key (CVS) has been GC'd
                     ViewTable vt = cr.ViewTable;
-                    if (vt != null && vt.Purge())
+                    if (vt is not null && vt.Purge())
                     {
                         foundViewTableDirt = true;
                         if (vt.Count == 0)
@@ -834,7 +834,7 @@ namespace MS.Internal.Data
 
         private void ValidateViewType(CollectionView cv, Type collectionViewType)
         {
-            if (collectionViewType != null)
+            if (collectionViewType is not null)
             {
                 // If the view contained in the ViewTable is a proxy of another
                 // view, then what we really want to compare is the type of that

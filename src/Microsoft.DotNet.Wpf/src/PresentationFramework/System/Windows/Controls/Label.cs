@@ -113,7 +113,7 @@ namespace System.Windows.Controls
 
             // If the Target property has changed, set the LabeledByProperty on 
             // the new Target and clear the LabeledByProperty on the old Target.
-            if (oldElement != null)
+            if (oldElement is not null)
             {
                 object oldValueLabeledBy = oldElement.GetValue(LabeledByProperty);
 
@@ -125,7 +125,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            if (newElement != null)
+            if (newElement is not null)
             {
                 newElement.SetValue(LabeledByProperty, label);
             }

@@ -168,8 +168,8 @@ namespace MS.Internal.FontCache
 
             if (Interlocked.Increment(ref _mutex) == 1)
             {
-                if (_buffers != null &&
-                    _buffers[index] != null &&
+                if (_buffers is not null &&
+                    _buffers[index] is not null &&
                     length <= _buffers[index].Length)
                 {
                     buffer = _buffers[index];
@@ -192,7 +192,7 @@ namespace MS.Internal.FontCache
         /// </param>
         private static void ReleaseBuffer(Array buffer, int index)
         {
-            if (buffer != null)
+            if (buffer is not null)
             {
                 if (Interlocked.Increment(ref _mutex) == 1)
                 {

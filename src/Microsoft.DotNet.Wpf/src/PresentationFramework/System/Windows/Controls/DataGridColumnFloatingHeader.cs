@@ -43,10 +43,10 @@ namespace System.Windows.Controls
         {
             DataGridColumnFloatingHeader header = (DataGridColumnFloatingHeader)d;
             double width = (double)e.NewValue;
-            if (header._visualBrushCanvas != null && !double.IsNaN(width))
+            if (header._visualBrushCanvas is not null && !double.IsNaN(width))
             {
                 VisualBrush brush = header._visualBrushCanvas.Background as VisualBrush;
-                if (brush != null)
+                if (brush is not null)
                 {
                     Rect viewBox = brush.Viewbox;
                     brush.Viewbox = new Rect(viewBox.X, viewBox.Y, width - header.GetVisualCanvasMarginX(), viewBox.Height);
@@ -58,7 +58,7 @@ namespace System.Windows.Controls
         {
             double width = (double)baseValue;
             DataGridColumnFloatingHeader header = (DataGridColumnFloatingHeader)d;
-            if (header._referenceHeader != null && double.IsNaN(width))
+            if (header._referenceHeader is not null && double.IsNaN(width))
             {
                 return header._referenceHeader.ActualWidth + header.GetVisualCanvasMarginX();
             }
@@ -70,10 +70,10 @@ namespace System.Windows.Controls
         {
             DataGridColumnFloatingHeader header = (DataGridColumnFloatingHeader)d;
             double height = (double)e.NewValue;
-            if (header._visualBrushCanvas != null && !double.IsNaN(height))
+            if (header._visualBrushCanvas is not null && !double.IsNaN(height))
             {
                 VisualBrush brush = header._visualBrushCanvas.Background as VisualBrush;
-                if (brush != null)
+                if (brush is not null)
                 {
                     Rect viewBox = brush.Viewbox;
                     brush.Viewbox = new Rect(viewBox.X, viewBox.Y, viewBox.Width, height - header.GetVisualCanvasMarginY());
@@ -85,7 +85,7 @@ namespace System.Windows.Controls
         {
             double height = (double)baseValue;
             DataGridColumnFloatingHeader header = (DataGridColumnFloatingHeader)d;
-            if (header._referenceHeader != null && double.IsNaN(height))
+            if (header._referenceHeader is not null && double.IsNaN(height))
             {
                 return header._referenceHeader.ActualHeight + header.GetVisualCanvasMarginY();
             }
@@ -119,7 +119,7 @@ namespace System.Windows.Controls
 
         private void UpdateVisualBrush()
         {
-            if (_referenceHeader != null && _visualBrushCanvas != null)
+            if (_referenceHeader is not null && _visualBrushCanvas is not null)
             {
                 VisualBrush visualBrush = new VisualBrush(_referenceHeader);
 
@@ -155,7 +155,7 @@ namespace System.Windows.Controls
         internal void ClearHeader()
         {
             _referenceHeader = null;
-            if (_visualBrushCanvas != null)
+            if (_visualBrushCanvas is not null)
             {
                 _visualBrushCanvas.Background = null;
             }
@@ -164,7 +164,7 @@ namespace System.Windows.Controls
         private double GetVisualCanvasMarginX()
         {
             double delta = 0;
-            if (_visualBrushCanvas != null)
+            if (_visualBrushCanvas is not null)
             {
                 Thickness margin = _visualBrushCanvas.Margin;
                 delta += margin.Left;
@@ -177,7 +177,7 @@ namespace System.Windows.Controls
         private double GetVisualCanvasMarginY()
         {
             double delta = 0;
-            if (_visualBrushCanvas != null)
+            if (_visualBrushCanvas is not null)
             {
                 Thickness margin = _visualBrushCanvas.Margin;
                 delta += margin.Top;

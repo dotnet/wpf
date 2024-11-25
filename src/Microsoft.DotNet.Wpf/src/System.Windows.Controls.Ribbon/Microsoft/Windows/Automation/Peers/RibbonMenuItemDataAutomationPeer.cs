@@ -49,7 +49,7 @@ namespace Microsoft.Windows.Automation.Peers
         protected override string GetClassNameCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.GetClassName();
             }
@@ -60,7 +60,7 @@ namespace Microsoft.Windows.Automation.Peers
         protected override AutomationControlType GetAutomationControlTypeCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.GetAutomationControlType();
             }
@@ -72,13 +72,13 @@ namespace Microsoft.Windows.Automation.Peers
         {
             object result = null;
             UIElement owner = GetWrapper();
-            if (owner != null)
+            if (owner is not null)
             {
                 RibbonMenuItem menuItemOwner = owner as RibbonMenuItem;
                 if (menuItemOwner is null)
                 {
                     AutomationPeer wrapperPeer = GetWrapperPeer();
-                    if (wrapperPeer != null)
+                    if (wrapperPeer is not null)
                     {
                         result = wrapperPeer.GetPattern(patternInterface);
                     }
@@ -119,7 +119,7 @@ namespace Microsoft.Windows.Automation.Peers
                     else
                     {
                         AutomationPeer wrapperPeer = GetWrapperPeer();
-                        if (wrapperPeer != null)
+                        if (wrapperPeer is not null)
                         {
                             result = wrapperPeer.GetPattern(patternInterface);
                         }
@@ -146,7 +146,7 @@ namespace Microsoft.Windows.Automation.Peers
             }
 
             RibbonMenuItem menuItemOwner = owner as RibbonMenuItem;
-            if (menuItemOwner != null)
+            if (menuItemOwner is not null)
             {
                 MenuItemRole role = menuItemOwner.Role;
 
@@ -177,7 +177,7 @@ namespace Microsoft.Windows.Automation.Peers
             }
 
             RibbonMenuItem menuItemOwner = owner as RibbonMenuItem;
-            if (menuItemOwner != null)
+            if (menuItemOwner is not null)
             {
                 MenuItemRole role = menuItemOwner.Role;
 
@@ -209,7 +209,7 @@ namespace Microsoft.Windows.Automation.Peers
                 ExpandCollapseState result = ExpandCollapseState.Collapsed;
 
                 RibbonMenuItem menuItemOwner = owner as RibbonMenuItem;
-                if (menuItemOwner != null)
+                if (menuItemOwner is not null)
                 {
                     MenuItemRole role = menuItemOwner.Role;
 
@@ -314,7 +314,7 @@ namespace Microsoft.Windows.Automation.Peers
             get 
             {
                 RibbonMenuItem owner = GetWrapper() as RibbonMenuItem;
-                if (owner != null)
+                if (owner is not null)
                 {
                     return IsEnabled() && (owner.CanUserResizeVertically || owner.CanUserResizeHorizontally);
                 }
@@ -373,10 +373,10 @@ namespace Microsoft.Windows.Automation.Peers
         {
             UIElement wrapper = null;
             ItemsControlAutomationPeer itemsControlAutomationPeer = ItemsControlAutomationPeer;
-            if (itemsControlAutomationPeer != null)
+            if (itemsControlAutomationPeer is not null)
             {
                 ItemsControl owner = (ItemsControl)(itemsControlAutomationPeer.Owner);
-                if (owner != null)
+                if (owner is not null)
                 {
                     wrapper = owner.ItemContainerGenerator.ContainerFromItem(Item) as UIElement;
                 }
@@ -388,7 +388,7 @@ namespace Microsoft.Windows.Automation.Peers
         {
             AutomationPeer wrapperPeer = null;
             UIElement wrapper = GetWrapper();
-            if (wrapper != null)
+            if (wrapper is not null)
             {
                 wrapperPeer = UIElementAutomationPeer.CreatePeerForElement(wrapper);
                 if (wrapperPeer is null)

@@ -101,7 +101,7 @@ namespace System.Windows
             RoutedEvent routedEvent,
             RoutedEventHandlerInfoList baseClassListeners)
         {
-            Debug.Assert(baseClassListeners != null, "Update only when there are base class listeners to be updated");
+            Debug.Assert(baseClassListeners is not null, "Update only when there are base class listeners to be updated");
             
             // Get the handlers index corresponding to the given RoutedEvent
             int index = GetHandlersIndex(routedEvent);
@@ -162,9 +162,9 @@ namespace System.Windows
                 //   change the linked list for C. Since B's linked list has already been updated we get 
                 //   C -> B - > A -> NULL.
                 
-                if (handlers != null)
+                if (handlers is not null)
                 {
-                    if (baseClassListeners.Next != null && baseClassListeners.Next.Contains(handlers))
+                    if (baseClassListeners.Next is not null && baseClassListeners.Next.Contains(handlers))
                     {
                         needToChange = true;
                     }
@@ -291,7 +291,7 @@ namespace System.Windows
         internal bool Contains(RoutedEventHandlerInfoList handlers)
         {
             RoutedEventHandlerInfoList tempHandlers = this;
-            while (tempHandlers != null)
+            while (tempHandlers is not null)
             {
                 if (tempHandlers == handlers)
                 {

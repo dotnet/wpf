@@ -37,7 +37,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             switch (args.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    if (Generator != null)
+                    if (Generator is not null)
                     {
                         using (Generator.StartAt(args.Position, GeneratorDirection.Forward, true))
                         {
@@ -53,8 +53,8 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
                     break;
                 case NotifyCollectionChangedAction.Reset:
                     RemoveInternalChildRange(0, InternalChildren.Count);
-                    if (QAT != null &&
-                        QAT.OverflowPanel != null)
+                    if (QAT is not null &&
+                        QAT.OverflowPanel is not null)
                     {
                         QAT.OverflowPanel.Children.Clear();
                     }
@@ -80,8 +80,8 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             else
             {
                 int indexInOverflowPanel = index - InternalChildren.Count;
-                if (QAT != null &&
-                    QAT.OverflowPanel != null)
+                if (QAT is not null &&
+                    QAT.OverflowPanel is not null)
                 {
                     QAT.OverflowPanel.Children.RemoveAt(indexInOverflowPanel);
                 }
@@ -102,7 +102,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             get
             {
                 if (_generator is null &&
-                    QAT != null)
+                    QAT is not null)
                 {
                     IItemContainerGenerator parentGenerator = QAT.ItemContainerGenerator;
                     _generator = parentGenerator.GetItemContainerGeneratorForPanel(this);
@@ -139,14 +139,14 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
                 _generatedChildren.Clear();
             }
 
-            if (Generator != null)
+            if (Generator is not null)
             {
                 GeneratorPosition startPos = Generator.GeneratorPositionFromIndex(0);
 
                 UIElement child;
                 using (Generator.StartAt(startPos, GeneratorDirection.Forward, true))
                 {
-                    while ((child = Generator.GenerateNext() as UIElement) != null)
+                    while ((child = Generator.GenerateNext() as UIElement) is not null)
                     {
                         Generator.PrepareItemContainer(child);
                         _generatedChildren.Add(child);
@@ -187,14 +187,14 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             for (int i = 0; i < generatedItems.Count; i++)
             {
                 UIElement generatedChild = generatedItems[i];
-                Debug.Assert(generatedChild != null);
+                Debug.Assert(generatedChild is not null);
 
                 if (!sendToOverflow)
                 {
                     if (i >= children.Count ||
                         !object.ReferenceEquals(children[i], generatedChild))
                     {
-                        if (overflowPanel != null &&
+                        if (overflowPanel is not null &&
                             overflowPanel.Children.Count > 0 &&
                             object.ReferenceEquals(overflowPanel.Children[0], generatedChild))
                         {
@@ -228,7 +228,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
                 {
                     Debug.Assert(overflowPanel.Children.Count >= overflowIndex, "overflowIndex should never get above overflowPanel.Children.Count");
 
-                    if (overflowPanel != null &&
+                    if (overflowPanel is not null &&
                         overflowPanel.Children.Count == overflowIndex ||
                         !object.ReferenceEquals(overflowPanel.Children[overflowIndex], generatedChild))
                     {
@@ -241,7 +241,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             }
 
             // If necessary, set HasOverflowItems and invalidate the overflow panel's measure.
-            if (QAT != null)
+            if (QAT is not null)
             {
                 if (QAT.HasOverflowItems != sendToOverflow)
                 {
@@ -252,7 +252,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
                     Dispatcher.BeginInvoke((Action)delegate()
                         {
                             UIElement parent = VisualTreeHelper.GetParent(this) as UIElement;
-                            if (parent != null)
+                            if (parent is not null)
                             {
                                 parent.InvalidateMeasure();
                             }
@@ -262,7 +262,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
                 }
 
                 if (sendToOverflow &&
-                    QAT.OverflowPanel != null)
+                    QAT.OverflowPanel is not null)
                 {
                     QAT.OverflowPanel.InvalidateMeasure();
                 }
@@ -322,7 +322,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             {
                 Debug.Assert(object.ReferenceEquals(InternalChildren[j], GeneratedChildren[j]));
                 UIElement currentChild = InternalChildren[j];
-                Debug.Assert(currentChild != null);
+                Debug.Assert(currentChild is not null);
                 Debug.Assert(RibbonQuickAccessToolBar.GetIsOverflowItem(currentChild) == false);
                 Debug.Assert(this.Children.Contains(currentChild) == true);
                 Debug.Assert(QAT.OverflowPanel.Children.Contains(currentChild) == false);
@@ -336,7 +336,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
                 int overflowPanelIndex = k - InternalChildren.Count;
                 Debug.Assert(object.ReferenceEquals(QAT.OverflowPanel.Children[overflowPanelIndex], GeneratedChildren[k]));
                 UIElement currentChild = GeneratedChildren[k];
-                Debug.Assert(currentChild != null);
+                Debug.Assert(currentChild is not null);
                 Debug.Assert(RibbonQuickAccessToolBar.GetIsOverflowItem(currentChild) == true);
                 Debug.Assert(this.Children.Contains(currentChild) == false);
                 Debug.Assert(QAT.OverflowPanel.Children.Contains(currentChild) == true);

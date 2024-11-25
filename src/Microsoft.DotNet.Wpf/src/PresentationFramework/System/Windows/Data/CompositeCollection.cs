@@ -116,7 +116,7 @@ namespace System.Windows.Data
         public int Add(object newItem)
         {
             CollectionContainer cc = newItem as CollectionContainer;
-            if (cc != null)
+            if (cc is not null)
             {
                 AddCollectionContainer(cc);
             }
@@ -137,7 +137,7 @@ namespace System.Windows.Data
             for (int k=0, n=InternalList.Count;  k < n;  ++k)
             {
                 CollectionContainer cc = this[k] as CollectionContainer;
-                if (cc != null)
+                if (cc is not null)
                 {
                     RemoveCollectionContainer(cc);
                 }
@@ -192,7 +192,7 @@ namespace System.Windows.Data
         public void Insert(int insertIndex, object insertItem)
         {
             CollectionContainer cc = insertItem as CollectionContainer;
-            if (cc != null)
+            if (cc is not null)
             {
                 AddCollectionContainer(cc);
             }
@@ -238,7 +238,7 @@ namespace System.Windows.Data
                 object removedItem = this[removeIndex];
 
                 CollectionContainer cc = removedItem as CollectionContainer;
-                if (cc != null)
+                if (cc is not null)
                 {
                     RemoveCollectionContainer(cc);
                 }
@@ -315,11 +315,11 @@ namespace System.Windows.Data
 
                 // unhook the old, hook the new
                 CollectionContainer cc;
-                if ((cc = originalItem as CollectionContainer) != null)
+                if ((cc = originalItem as CollectionContainer) is not null)
                 {
                     RemoveCollectionContainer(cc);
                 }
-                if ((cc = value as CollectionContainer) != null)
+                if ((cc = value as CollectionContainer) is not null)
                 {
                     AddCollectionContainer(cc);
                 }
@@ -449,7 +449,7 @@ namespace System.Windows.Data
 
         private void OnContainedCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (ContainedCollectionChanged != null)
+            if (ContainedCollectionChanged is not null)
                 ContainedCollectionChanged(sender, e);
         }
 
@@ -508,7 +508,7 @@ namespace System.Windows.Data
             _hasRepeatedCollectionIsValid = false;
 #endif
 
-            if (CollectionChanged != null)
+            if (CollectionChanged is not null)
             {
                 CollectionChanged(this, new NotifyCollectionChangedEventArgs(action));
             }
@@ -517,7 +517,7 @@ namespace System.Windows.Data
         // raise CollectionChanged event to any listeners
         void OnCollectionChanged(NotifyCollectionChangedAction action, object item, int index)
         {
-            if (CollectionChanged != null)
+            if (CollectionChanged is not null)
             {
                 CollectionChanged(this, new NotifyCollectionChangedEventArgs(action, item, index));
             }
@@ -526,7 +526,7 @@ namespace System.Windows.Data
         /// raise CollectionChanged event to any listeners
         void OnCollectionChanged(NotifyCollectionChangedAction action, object oldItem, object newItem, int index)
         {
-            if (CollectionChanged != null)
+            if (CollectionChanged is not null)
             {
                 CollectionChanged(this, new NotifyCollectionChangedEventArgs(action, newItem, oldItem, index));
             }
@@ -573,10 +573,10 @@ namespace System.Windows.Data
             for (int i = 0; i < Count; ++i)
             {
                 CollectionContainer cc = this[i] as CollectionContainer;
-                if (cc != null && cc.Collection != null)
+                if (cc is not null && cc.Collection is not null)
                 {
                     CompositeCollection composite = cc.Collection as CompositeCollection;
-                    if (composite != null)
+                    if (composite is not null)
                     {
                         if (composite.FindRepeatedCollection(collections))
                             return true;
@@ -600,7 +600,7 @@ namespace System.Windows.Data
             foreach (object o in InternalList)
             {
                 CollectionContainer cc = o as CollectionContainer;
-                if (cc != null)
+                if (cc is not null)
                 {
                     cc.GetCollectionChangedSources(level+1, format, sources);
                 }

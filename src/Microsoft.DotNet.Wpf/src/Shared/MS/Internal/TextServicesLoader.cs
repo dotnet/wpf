@@ -199,7 +199,7 @@ namespace MS.Internal
             key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\CTF", false);
 
             // Is cicero disabled completely for the current user?
-            if (key != null)
+            if (key is not null)
             {
                 obj = key.GetValue("Disable Thread Input Manager");
 

@@ -45,14 +45,14 @@ namespace System.Windows
         internal ResourcesChangeInfo(ResourceDictionary oldDictionary, ResourceDictionary newDictionary)
         {
             _oldDictionaries = null;
-            if (oldDictionary != null)
+            if (oldDictionary is not null)
             {
                 _oldDictionaries = new List<ResourceDictionary>(1);
                 _oldDictionaries.Add(oldDictionary);
             }
 
             _newDictionaries = null;
-            if (newDictionary != null)
+            if (newDictionary is not null)
             {
                 _newDictionaries = new List<ResourceDictionary>(1);
                 _newDictionaries.Add(newDictionary);
@@ -196,13 +196,13 @@ namespace System.Windows
         // This flag is used to indicate if the current operation is an effective add operation
         internal bool IsResourceAddOperation
         {
-            get { return _key != null || (_newDictionaries != null && _newDictionaries.Count > 0); }
+            get { return _key is not null || (_newDictionaries is not null && _newDictionaries.Count > 0); }
         }
 
         // This flag is used to indicate if the current operation is a single resource update operation
         internal bool IsIndividualResourceChange
         {
-            get { return _key != null; }
+            get { return _key is not null; }
         }
 
         // This member is used to identify the container when a style change happens
@@ -227,9 +227,9 @@ namespace System.Windows
                 return !isImplicitStyleKey;
             }
 
-            Debug.Assert(_oldDictionaries != null || _newDictionaries != null || _key != null, "Must have a dictionary or a key that has changed");
+            Debug.Assert(_oldDictionaries is not null || _newDictionaries is not null || _key is not null, "Must have a dictionary or a key that has changed");
 
-            if (_key != null)
+            if (_key is not null)
             {
                 if (Object.Equals(_key, key))
                 {
@@ -237,7 +237,7 @@ namespace System.Windows
                 }
             }
 
-            if (_oldDictionaries != null)
+            if (_oldDictionaries is not null)
             {
                 for (int i=0; i<_oldDictionaries.Count; i++)
                 {
@@ -248,7 +248,7 @@ namespace System.Windows
                 }
             }
 
-            if (_newDictionaries != null)
+            if (_newDictionaries is not null)
             {
                 for (int i=0; i<_newDictionaries.Count; i++)
                 {
@@ -268,7 +268,7 @@ namespace System.Windows
             bool isImplicitDataTemplateChange = (IsCatastrophicDictionaryChange ||
                                                 (_key is DataTemplateKey));
 
-            if (!isImplicitDataTemplateChange && _oldDictionaries != null)
+            if (!isImplicitDataTemplateChange && _oldDictionaries is not null)
             {
                 foreach (ResourceDictionary rd in _oldDictionaries)
                 {
@@ -280,7 +280,7 @@ namespace System.Windows
                 }
             }
 
-            if (!isImplicitDataTemplateChange && _newDictionaries != null)
+            if (!isImplicitDataTemplateChange && _newDictionaries is not null)
             {
                 foreach (ResourceDictionary rd in _newDictionaries)
                 {

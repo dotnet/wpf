@@ -40,7 +40,7 @@ namespace System.Windows.Documents
         internal FixedHighlight(UIElement element, int beginOffset, int endOffset, FixedHighlightType t,
                                 Brush foreground, Brush background)
         {
-            Debug.Assert(element != null && beginOffset >= 0 && endOffset >= 0);
+            Debug.Assert(element is not null && beginOffset >= 0 && endOffset >= 0);
             _element = element;
             _gBeginOffset = beginOffset;
             _gEndOffset = endOffset;
@@ -113,14 +113,14 @@ namespace System.Windows.Documents
             if (g is null)
             {
                 Image im = _element as Image;
-                if (im != null && im.Source != null)
+                if (im is not null && im.Source is not null)
                 {
                     return new Rect(0, 0, im.Width, im.Height);
                 }
                 else
                 {
                     Path p = _element as Path;
-                    if (p != null)
+                    if (p is not null)
                     {
                         return p.Data.Bounds;
                     }

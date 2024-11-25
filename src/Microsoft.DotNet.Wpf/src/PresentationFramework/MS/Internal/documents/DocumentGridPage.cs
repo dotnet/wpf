@@ -315,17 +315,17 @@ namespace MS.Internal.Documents
             //If the GetPageCompleted action completed successfully
             //and is our page then we'll set the flag and fire the event.
             if (!_disposed &&
-                e != null &&
+                e is not null &&
                 !e.Cancelled &&
                 e.Error is null &&
                 e.PageNumber != int.MaxValue &&
                 e.PageNumber == this.PageNumber &&
-                e.DocumentPage != null &&
+                e.DocumentPage is not null &&
                 e.DocumentPage != DocumentPage.Missing)
             {
                 _loaded = true;
 
-                if (PageLoaded != null)
+                if (PageLoaded is not null)
                 {
                     PageLoaded(this, EventArgs.Empty);
                 }
@@ -342,7 +342,7 @@ namespace MS.Internal.Documents
                 _disposed = true;
 
                 //Detach the GetPageCompleted event from the content.
-                if (_paginator != null)
+                if (_paginator is not null)
                 {
                     _paginator.GetPageCompleted -= new GetPageCompletedEventHandler(OnGetPageCompleted);
                     _paginator = null;
@@ -350,7 +350,7 @@ namespace MS.Internal.Documents
 
                 //Dispose our DocumentPageView.
                 IDisposable dpv = _documentPageView as IDisposable;
-                if (dpv != null)
+                if (dpv is not null)
                 {
                     dpv.Dispose();
                 }

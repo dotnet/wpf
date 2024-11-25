@@ -108,7 +108,7 @@ namespace System.Windows.Media
         /// <returns>converted value</returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType != null && value is Color)
+            if (destinationType is not null && value is Color)
             {
                 if (destinationType == typeof(InstanceDescriptor))
                 {

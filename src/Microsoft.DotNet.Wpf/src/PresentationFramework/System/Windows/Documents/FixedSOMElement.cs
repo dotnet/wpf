@@ -33,7 +33,7 @@ namespace System.Windows.Documents
             _startIndex = startIndex;
             _endIndex = endIndex;
             Transform trans = transform.AffineTransform;
-            if (trans != null)
+            if (trans is not null)
             {
                 _mat = trans.Value;
             }
@@ -48,7 +48,7 @@ namespace System.Windows.Documents
             _fixedNode = fixedNode;
 
             Transform trans = transform.AffineTransform;
-            if (trans != null)
+            if (trans is not null)
             {
                 _mat = trans.Value;
             }

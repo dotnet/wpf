@@ -39,7 +39,7 @@ namespace MS.Internal.IO.Packaging
         internal ByteStream(object underlyingStream, FileAccess openAccess)
         {
             SecuritySuppressedIStream stream = underlyingStream as SecuritySuppressedIStream;
-            Debug.Assert(stream != null);
+            Debug.Assert(stream is not null);
 
             _securitySuppressedIStream = stream;
             

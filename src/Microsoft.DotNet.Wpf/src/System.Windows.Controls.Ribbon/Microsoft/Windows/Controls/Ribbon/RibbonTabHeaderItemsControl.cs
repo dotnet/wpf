@@ -78,7 +78,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             // If a new template has just been generated then 
             // be sure to clear any stale ItemsHost references
-            if (InternalItemsHost != null && !this.IsAncestorOf(InternalItemsHost))
+            if (InternalItemsHost is not null && !this.IsAncestorOf(InternalItemsHost))
             {
                 InternalItemsHost = null;
             }
@@ -107,7 +107,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             base.PrepareContainerForItemOverride(element, item);
             RibbonTabHeader header = element as RibbonTabHeader;
-            if (header != null)
+            if (header is not null)
             {
                 header.PrepareRibbonTabHeader();
             }
@@ -159,20 +159,20 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             int index = (int)arg;
             FrameworkElement element = ItemContainerGenerator.ContainerFromIndex(index) as FrameworkElement;
-            if (element != null)
+            if (element is not null)
             {
                 element.BringIntoView();
 
                 // If there is a margin on TabHeader on the end, BringIntoView call
                 // may not scroll to the end. Explicitly scroll to end in such cases.
                 IScrollInfo scrollInfo = InternalItemsHost as IScrollInfo;
-                if (scrollInfo != null)
+                if (scrollInfo is not null)
                 {
                     ScrollViewer scrollViewer = scrollInfo.ScrollOwner;
-                    if (scrollViewer != null)
+                    if (scrollViewer is not null)
                     {
                         Ribbon ribbon = RibbonControlService.GetRibbon(this);
-                        if (ribbon != null)
+                        if (ribbon is not null)
                         {
                             int displayIndex = ribbon.GetTabDisplayIndexForIndex(index);
                             if (displayIndex == 0)

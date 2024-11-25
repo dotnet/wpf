@@ -166,7 +166,7 @@ namespace System.Windows.Interop
         /// <summary>
         public void RemoveThreadPreprocessMessageHandlerFirst(ThreadMessageEventHandler handler)
         {
-            if (_threadPreprocessMessage != null)
+            if (_threadPreprocessMessage is not null)
             {
                 ThreadMessageEventHandler newHandler = null;
 

@@ -42,12 +42,12 @@ namespace System.Windows.Input
 
                 // Get them from Properties
                 PropertyInfo propertyInfo = ownerType.GetProperty(localName, BindingFlags.Public | BindingFlags.Static);
-                if (propertyInfo != null)
+                if (propertyInfo is not null)
                     return true;
 
                 // Get them from Fields (ScrollViewer.PageDownCommand is a static readonly field
                 FieldInfo fieldInfo = ownerType.GetField(localName, BindingFlags.Static | BindingFlags.Public);
-                if (fieldInfo != null)
+                if (fieldInfo is not null)
                     return true;
             }
 
@@ -61,7 +61,7 @@ namespace System.Windows.Input
 
         public override string ConvertToString(object value, IValueSerializerContext context)
         {
-            if (value != null)
+            if (value is not null)
             {
                 RoutedCommand command = value as RoutedCommand;
                 if (null != command && null != command.OwnerType)
@@ -99,12 +99,12 @@ namespace System.Windows.Input
 
         public override IEnumerable<Type> TypeReferences(object value, IValueSerializerContext context)
         {
-            if (value != null)
+            if (value is not null)
             {
                 RoutedCommand command = value as RoutedCommand;
-                if (command != null)
+                if (command is not null)
                 {
-                    if (command.OwnerType != null && !CommandConverter.IsKnownType(command.OwnerType))
+                    if (command.OwnerType is not null && !CommandConverter.IsKnownType(command.OwnerType))
                     {
                         return new Type[] { command.OwnerType };
                     }
@@ -115,7 +115,7 @@ namespace System.Windows.Input
 
         public override object ConvertFromString(string value, IValueSerializerContext context)
         {
-            if (value != null)
+            if (value is not null)
             {
                 if (value.Length != 0)
                 {
@@ -160,7 +160,7 @@ namespace System.Windows.Input
                     // Find the command given the declaring type & name (this is shared with CommandConverter)
                     ICommand command = CommandConverter.ConvertFromHelper( declaringType, commandName );
 
-                    if (command != null)
+                    if (command is not null)
                     {
                         return command;
                     }

@@ -156,7 +156,7 @@ namespace MS.Internal.Automation
         {
             lock( _classLock )
             {
-                if( _listeners != null )
+                if( _listeners is not null )
                 {
                     bool boundingRectListeners = false; // if not removing BoundingRect listeners no need to do check below
                     bool menuListeners = false; // if not removing MenuOpenedOrClosed listeners no need to do check below
@@ -375,13 +375,13 @@ namespace MS.Internal.Automation
                 return;
 
             // if there are listeners then can't stop
-            if (_listeners != null)
+            if (_listeners is not null)
                 return;
 
             // Are any WinEvents currently being tracked for this client?
             foreach (WinEventWrap eventWrapper in _winEventTrackers)
             {
-                if (eventWrapper != null)
+                if (eventWrapper is not null)
                 {
                     return;
                 }
@@ -400,7 +400,7 @@ namespace MS.Internal.Automation
             for (i=0; i<(int)Tracker.NumEventTrackers; i++)
             {
                 WinEventWrap eventWrapper = _winEventTrackers[i];
-                if (eventWrapper != null)
+                if (eventWrapper is not null)
                 {
                     eventWrapper.StopListening();
                     _winEventTrackers[i] = null;
@@ -559,7 +559,7 @@ namespace MS.Internal.Automation
 
             lock ( _classLock )
             {
-                if (_listeners != null)
+                if (_listeners is not null)
                 {
                     // if an hwnd is hidden or closed remove event listeners for the window's provider
                     for (int i = 0; i < _listeners.Count; i++)
@@ -598,7 +598,7 @@ namespace MS.Internal.Automation
             {
                 // When the hwnd is just hidden, rawEl will not be null, so can test if this would support WindowPattern
                 // and throw this event away if the window doesn't support that CP
-                if ( rawEl != null && !HwndProxyElementProvider.IsWindowPatternWindow( NativeMethods.HWND.Cast( hwnd ) ) )
+                if ( rawEl is not null && !HwndProxyElementProvider.IsWindowPatternWindow( NativeMethods.HWND.Cast( hwnd ) ) )
                     return;
 
                 // Go ahead and raise a client-side only WindowClosedEvent (if anyone is listening)
@@ -622,7 +622,7 @@ namespace MS.Internal.Automation
 
             lock ( _classLock )
             {
-                if (_listeners != null)
+                if (_listeners is not null)
                 {
                     // if rawEl is w/in the scope of any listeners then register for events in the new UI
                     for (int i = 0; i < _listeners.Count; i++)
@@ -663,7 +663,7 @@ namespace MS.Internal.Automation
             {
                 // Filter on the control elements.  Otherwise, this is extremely noisy.  Consider not filtering if there is feedback.
                 //ControlType ct = (ControlType)rawEl.GetPropertyValue( AutomationElement.ControlTypeProperty );
-                //if ( ct != null )
+                //if ( ct is not null )
                 {
                     // Last,raise an event for structure changed
                     StructureChangedEventArgs e = new StructureChangedEventArgs( StructureChangeType.ChildAdded, rawEl.GetRuntimeId() );

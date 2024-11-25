@@ -171,7 +171,7 @@ namespace System.Windows.Xps.Serialization
             bool incrCount
             )
         {
-            if (List != null)
+            if (List is not null)
             {
                 if ((Count + delta) > List.Length)
                 {
@@ -206,7 +206,7 @@ namespace System.Windows.Xps.Serialization
         Sort(
             )
         {
-            if (List != null)
+            if (List is not null)
             {
                 Array.Sort(List, 0, Count);
             }
@@ -577,7 +577,7 @@ namespace System.Windows.Xps.Serialization
             xmlWriter = _serializationManager.AcquireXmlWriter(typeof(FixedPage));
 
             Visual visual = _serializedObject as Visual;
-            if (visual != null)
+            if (visual is not null)
             {
                 _treeWalker = new ReachTreeWalker(xmlWriter,_serializationManager);
                 _treeWalker.SerializeLinksInVisual(visual);
@@ -632,7 +632,7 @@ namespace System.Windows.Xps.Serialization
 
             _serializationManager.PackagingPolicy.PreCommitCurrentPage();
 
-            if (_treeWalker != null)
+            if (_treeWalker is not null)
             {
                 _treeWalker.CommitHyperlinks();
                 _treeWalker = null;
@@ -679,7 +679,7 @@ namespace System.Windows.Xps.Serialization
             //
             if(e.Modified)
             {
-                if(e.PrintTicket != null)
+                if(e.PrintTicket is not null)
                 {
                     PrintTicketSerializer serializer = new PrintTicketSerializer(_serializationManager);
                     serializer.SerializeObject(e.PrintTicket);
@@ -700,7 +700,7 @@ namespace System.Windows.Xps.Serialization
             //Try to cast the visual down to a UIElement so we can get the PreviousArrangeSize
             //
             UIElement element = visual as UIElement;
-            if (element != null)
+            if (element is not null)
             {
                 Rect rect = element.PreviousArrangeRect;
                 sz = Toolbox.Layout(element, rect.Size, printTicket);
@@ -770,7 +770,7 @@ namespace System.Windows.Xps.Serialization
         internal void CommitHyperlinks()
         {
             //copy hyperlinks into stream
-            if (_linkStream != null)
+            if (_linkStream is not null)
             {
                 _linkStream.Close();
                 XmlWriter.WriteRaw(_linkStream.ToString());
@@ -782,7 +782,7 @@ namespace System.Windows.Xps.Serialization
             IContentHost contentHost = page as IContentHost;
             Visual root = page.Visual;
 
-            if (contentHost != null)
+            if (contentHost is not null)
             {
                 SerializeLinksForIContentHost(contentHost, root);
             }
@@ -828,7 +828,7 @@ namespace System.Windows.Xps.Serialization
             }
 
             IContentHost contentHost = visual as IContentHost;
-            if (contentHost != null)
+            if (contentHost is not null)
             {
                 //recursively find links in its elements
                 SerializeLinksForIContentHost(contentHost, visual);
@@ -904,7 +904,7 @@ namespace System.Windows.Xps.Serialization
                     AddLinkTarget(id);
                 }
             }
-            else if (element is FrameworkContentElement && contentHost != null)
+            else if (element is FrameworkContentElement && contentHost is not null)
             {
                 FrameworkContentElement fce = (FrameworkContentElement)element;
                 string id = fce.Name;
@@ -915,11 +915,11 @@ namespace System.Windows.Xps.Serialization
                     uri = ((Hyperlink)element).NavigateUri;
                 }
 
-                if (!String.IsNullOrEmpty(id) || uri != null)
+                if (!String.IsNullOrEmpty(id) || uri is not null)
                 {
                     Transform transform = Transform.Identity;
                     Visual contentVisual = contentHost as Visual;
-                    if (contentVisual != null && root != null && root.IsAncestorOf(contentVisual))
+                    if (contentVisual is not null && root is not null && root.IsAncestorOf(contentVisual))
                     {
                         GeneralTransform t = contentVisual.TransformToAncestor(root);
 
@@ -930,7 +930,7 @@ namespace System.Windows.Xps.Serialization
                     }
 
                     Transform rootTransform = root.VisualTransform;
-                    if (rootTransform != null)
+                    if (rootTransform is not null)
                     {
                         transform = new MatrixTransform(Matrix.Multiply(transform.Value, rootTransform.Value));
                     }
@@ -976,7 +976,7 @@ namespace System.Windows.Xps.Serialization
 
             writer.WriteStartElement(nameForType);
 
-            if (navigateUri != null)
+            if (navigateUri is not null)
             {
                 if (IsFragment(navigateUri))
                 {
@@ -1025,7 +1025,7 @@ namespace System.Windows.Xps.Serialization
 
         private bool AddLinkTarget(string name)
         {
-            if (LinkTargetList != null && !LinkTargetList.Contains(name))
+            if (LinkTargetList is not null && !LinkTargetList.Contains(name))
             {
                 LinkTargetList.Add(name);
                 return true;
@@ -1086,7 +1086,7 @@ namespace System.Windows.Xps.Serialization
                 if (_linkTargetList is null)
                 {
                     IXpsSerializationManager rsm = SerializationManager as IXpsSerializationManager;
-                    if (rsm != null)
+                    if (rsm is not null)
                     {
                         XmlWriter writer = this.XmlWriter; // guarantee page is created
                         _linkTargetList = SerializationManager.PackagingPolicy.AcquireStreamForLinkTargets();
@@ -1198,8 +1198,8 @@ namespace System.Windows.Xps.Serialization
                 Size sz = new Size(0, 0);
 
                 //if print ticket definied, use printTicket dimensions
-                if (printTicket != null &&
-                    printTicket.PageMediaSize != null &&
+                if (printTicket is not null &&
+                    printTicket.PageMediaSize is not null &&
                     printTicket.PageMediaSize.Width.HasValue &&
                     printTicket.PageMediaSize.Height.HasValue)
                 {

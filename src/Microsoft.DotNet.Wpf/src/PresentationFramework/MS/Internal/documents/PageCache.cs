@@ -76,7 +76,7 @@ namespace MS.Internal.Documents
 
                     //If the old DocumentPaginator is non-null, we need to
                     //remove the old event handlers before we assign the new one.
-                    if (_documentPaginator != null)
+                    if (_documentPaginator is not null)
                     {
                         _documentPaginator.PagesChanged -= new PagesChangedEventHandler(OnPagesChanged);
                         _documentPaginator.GetPageCompleted -= new GetPageCompletedEventHandler(OnGetPageCompleted);
@@ -94,7 +94,7 @@ namespace MS.Internal.Documents
                     ClearCache();
 
                     //Attach our event handlers and set relevant properties if the new content is non-null.
-                    if (_documentPaginator != null)
+                    if (_documentPaginator is not null)
                     {
                         _documentPaginator.PagesChanged += new PagesChangedEventHandler(OnPagesChanged);
                         _documentPaginator.GetPageCompleted += new GetPageCompletedEventHandler(OnGetPageCompleted);
@@ -135,7 +135,7 @@ namespace MS.Internal.Documents
                     //If the content is already paginated (as is the case for certain Fixed content)
                     //we'll call OnPaginationProgress here to let the Cache (and any listeners) know that 
                     //some or all the pages are available.
-                    if (_documentPaginator != null)
+                    if (_documentPaginator is not null)
                     {
                         if (_documentPaginator.PageCount > 0)
                         {
@@ -280,7 +280,7 @@ namespace MS.Internal.Documents
         // /// <returns>Nothing.</returns>
         // public void GetPage(int pageNumber)
         // {
-        //     if (_documentPaginator != null)
+        //     if (_documentPaginator is not null)
         //     {
         //         _documentPaginator.GetPageAsync(pageNumber, (object)pageNumber);
         //     }
@@ -381,7 +381,7 @@ namespace MS.Internal.Documents
                 {
                     //Completely new pages, so we add new cache entries
                     change = AddRange(args.Start, args.Count);
-                    if (change != null)
+                    if (change is not null)
                     {
                         changes.Add(change);
                     }
@@ -394,7 +394,7 @@ namespace MS.Internal.Documents
                     {
                         //All pre-existing pages, so we just dirty the current cache entries.
                         change = DirtyRange(args.Start, args.Count);
-                        if (change != null)
+                        if (change is not null)
                         {
                             changes.Add(change);
                         }
@@ -403,13 +403,13 @@ namespace MS.Internal.Documents
                     {
                         //Some pre-existing pages, some new.
                         change = DirtyRange(args.Start, _cache.Count - args.Start);
-                        if (change != null)
+                        if (change is not null)
                         {
                             changes.Add(change);
                         }
 
                         change = AddRange(_cache.Count, args.Count - (_cache.Count - args.Start) + 1);
-                        if (change != null)
+                        if (change is not null)
                         {
                             changes.Add(change);
                         }
@@ -419,7 +419,7 @@ namespace MS.Internal.Documents
 
             //If the document's PageCount is now less than the size of our cache due to repagination
             //we remove the extra entries.
-            int pageCount = _documentPaginator != null ? _documentPaginator.PageCount : 0;
+            int pageCount = _documentPaginator is not null ? _documentPaginator.PageCount : 0;
 
             if (pageCount < _cache.Count)
             {
@@ -434,7 +434,7 @@ namespace MS.Internal.Documents
             FirePageCacheChangedEvent(changes);
 
             //Fire the PaginationProgress event.
-            if (PaginationProgress != null)
+            if (PaginationProgress is not null)
             {
                 PaginationProgress(this, args);
             }
@@ -473,7 +473,7 @@ namespace MS.Internal.Documents
             _isPaginationCompleted = true;
 
             //Fire the PaginationProgress event.
-            if (PaginationCompleted != null)
+            if (PaginationCompleted is not null)
             {
                 PaginationCompleted(this, args);
             }
@@ -538,7 +538,7 @@ namespace MS.Internal.Documents
             if (adjustedCount > 0)
             {
                 PageCacheChange change = DirtyRange(args.Start, adjustedCount);
-                if (change != null)
+                if (change is not null)
                 {
                     changes.Add(change);
                 }
@@ -548,7 +548,7 @@ namespace MS.Internal.Documents
             }
 
             //Fire the PagesChanged event.
-            if (PagesChanged != null)
+            if (PagesChanged is not null)
             {
                 PagesChanged(this, args);
             }
@@ -630,14 +630,14 @@ namespace MS.Internal.Documents
                     //Add the new page (this will cause any pages we
                     //skipped over to be filled in)
                     change = AddRange(args.PageNumber, 1);
-                    if (change != null)
+                    if (change is not null)
                     {
                         changes.Add(change);
                     }
 
                     //Update the just-retrieved-page to reflect the actual page size.
                     change = UpdateEntry(args.PageNumber, newEntry);
-                    if (change != null)
+                    if (change is not null)
                     {
                         changes.Add(change);
                     }
@@ -646,7 +646,7 @@ namespace MS.Internal.Documents
                 {
                     //Just update the retrieved page's cache entry.
                     change = UpdateEntry(args.PageNumber, newEntry);
-                    if (change != null)
+                    if (change is not null)
                     {
                         changes.Add(change);
                     }
@@ -680,7 +680,7 @@ namespace MS.Internal.Documents
             }
 
             //Fire the GetPageCompleted event.
-            if (GetPageCompleted != null)
+            if (GetPageCompleted is not null)
             {
                 GetPageCompleted(this, args);
             }
@@ -720,7 +720,7 @@ namespace MS.Internal.Documents
                     newEntry.Dirty = true;
 
                     PageCacheChange change = UpdateEntry(i, newEntry);
-                    if (change != null)
+                    if (change is not null)
                     {
                         changes.Add(change);
                     }
@@ -737,10 +737,10 @@ namespace MS.Internal.Documents
         /// <param name="changes">The changes to pass along with the event.</param>
         private void FirePageCacheChangedEvent(List<PageCacheChange> changes)
         {
-            Debug.Assert(changes != null, "Attempt to fire PageCacheChangedEvent with null change set.");
+            Debug.Assert(changes is not null, "Attempt to fire PageCacheChangedEvent with null change set.");
 
             //Fire off our PageCacheChangedEvent if we have any changes
-            if (PageCacheChanged != null && changes != null && changes.Count > 0)
+            if (PageCacheChanged is not null && changes is not null && changes.Count > 0)
             {
                 PageCacheChangedEventArgs args = new PageCacheChangedEventArgs(changes);
                 PageCacheChanged(this, args);
@@ -989,7 +989,7 @@ namespace MS.Internal.Documents
         private void OnPageDestroyed(object sender, EventArgs e)
         {
             DocumentPage page = sender as DocumentPage;
-            Invariant.Assert(page != null, "Invalid type in PageDestroyedWatcher");
+            Invariant.Assert(page is not null, "Invalid type in PageDestroyedWatcher");
 
             if (_table.Contains(page))
             {

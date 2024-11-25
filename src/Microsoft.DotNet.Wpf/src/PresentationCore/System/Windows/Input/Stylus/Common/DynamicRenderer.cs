@@ -253,7 +253,7 @@ namespace System.Windows.Input.StylusPlugIns
 
             // Make sure the stylusdevice specified (or mouse if null stylusdevice) is currently in 
             // down state!
-            bool inAir = (stylusDevice != null) ? 
+            bool inAir = (stylusDevice is not null) ? 
                             stylusDevice.InAir : 
                             Mouse.PrimaryDevice.LeftButton == MouseButtonState.Released;
             
@@ -271,12 +271,12 @@ namespace System.Windows.Input.StylusPlugIns
 
                     // Now create new si and insert it in the list.
                     StrokeInfo si = new StrokeInfo(DrawingAttributes, 
-                                                   (stylusDevice != null) ? stylusDevice.Id : 0, 
+                                                   (stylusDevice is not null) ? stylusDevice.Id : 0, 
                                                    Environment.TickCount, GetCurrentHostVisual());
                     _strokeInfoList.Add(si);
                     si.IsReset = true;
 
-                    if (stylusPoints != null)
+                    if (stylusPoints is not null)
                     {
                         RenderPackets(stylusPoints, si); // do this inside of lock to make sure this renders first.
                     }
@@ -375,7 +375,7 @@ namespace System.Windows.Input.StylusPlugIns
             {
                 StrokeInfo si = FindStrokeInfo(rawStylusInput.Timestamp);
 
-                if (si != null)
+                if (si is not null)
                 {
                     if (rawStylusInput.StylusDeviceId == si.StylusId)
                     {
@@ -411,7 +411,7 @@ namespace System.Windows.Input.StylusPlugIns
         protected override void OnStylusDown(RawStylusInput rawStylusInput)
         {
             // Only allow inking if someone has queried our RootVisual.
-            if (_mainContainerVisual != null)
+            if (_mainContainerVisual is not null)
             {
                 StrokeInfo si;
                 
@@ -421,7 +421,7 @@ namespace System.Windows.Input.StylusPlugIns
 
                     // If we find we are already in the middle of stroke then bail out.
                     // Can only ink with one stylus at a time.
-                    if (si != null)
+                    if (si is not null)
                     {
                         return; 
                     }
@@ -442,11 +442,11 @@ namespace System.Windows.Input.StylusPlugIns
         protected override void OnStylusMove(RawStylusInput rawStylusInput)
         {
             // Only allow inking if someone has queried our RootVisual.
-            if (_mainContainerVisual != null)
+            if (_mainContainerVisual is not null)
             {
                 StrokeInfo si = FindStrokeInfo(rawStylusInput.Timestamp);
 
-                if (si != null && (si.StylusId == rawStylusInput.StylusDeviceId))
+                if (si is not null && (si.StylusId == rawStylusInput.StylusDeviceId))
                 {
                     // We only render packets that are in the proper order due to
                     // how our incremental rendering uses the last point to continue
@@ -468,11 +468,11 @@ namespace System.Windows.Input.StylusPlugIns
         protected override void OnStylusUp(RawStylusInput rawStylusInput)
         {
             // Only allow inking if someone has queried our RootVisual.
-            if (_mainContainerVisual != null)
+            if (_mainContainerVisual is not null)
             {
                 StrokeInfo si = FindStrokeInfo(rawStylusInput.Timestamp);
 
-                if (si != null && 
+                if (si is not null && 
                     ((si.StylusId == rawStylusInput.StylusDeviceId) ||
                      (rawStylusInput.StylusDeviceId == 0 && 
                       (si.IsReset || 
@@ -511,7 +511,7 @@ namespace System.Windows.Input.StylusPlugIns
             StrokeInfo si = _renderCompleteStrokeInfo;
             Debug.Assert(si!=null);  // should never get here unless we are transitioning a stroke.
             
-            if (si != null)
+            if (si is not null)
             {
                 // See if we are done transitioning this stroke!!
                 if (si.StrokeHV.Clip is null)
@@ -530,17 +530,17 @@ namespace System.Windows.Input.StylusPlugIns
 
         void RemoveDynamicRendererVisualAndNotifyWhenDone(StrokeInfo si)
         {
-            if (si != null)
+            if (si is not null)
             {
                 DynamicRendererThreadManager renderingThread = _renderingThread; // Keep it alive
-                if (renderingThread != null)
+                if (renderingThread is not null)
                 {
                     // We are being called by the main UI thread, so marshal over to
                     // the inking thread before cleaning up the stroke visual.
                     renderingThread.ThreadDispatcher.BeginInvoke(DispatcherPriority.Send,
                     (DispatcherOperationCallback)delegate(object unused)
                     {
-                        if (si.StrokeRTICV != null)
+                        if (si.StrokeRTICV is not null)
                         {
                             // Now wait till this is rendered and then notify UI thread.
                             if (_onDRThreadRenderComplete is null)
@@ -581,7 +581,7 @@ namespace System.Windows.Input.StylusPlugIns
         private void NotifyAppOfDRThreadRenderComplete(StrokeInfo si)
         {
             Dispatcher dispatcher = _applicationDispatcher;
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 // We are being called by the inking thread, so marshal over to
                 // the UI thread before handling the StrokeInfos that are done rendering.
@@ -591,7 +591,7 @@ namespace System.Windows.Input.StylusPlugIns
                     // See if this is the one we are doing a full transition for.
                     if (si == _renderCompleteStrokeInfo)
                     {
-                        if (si.StrokeHV.Clip != null)
+                        if (si.StrokeHV.Clip is not null)
                         {
                             si.StrokeHV.Clip = null;
                             NotifyOnNextRenderComplete();
@@ -619,11 +619,11 @@ namespace System.Windows.Input.StylusPlugIns
             Dispatcher drDispatcher = null;
                        
             // Remove RenderComplete hook.
-            if (drThread != null)
+            if (drThread is not null)
             {
                 drDispatcher = drThread.ThreadDispatcher;
                 
-                if (drDispatcher != null)
+                if (drDispatcher is not null)
                 {
                     if (_renderCompleteDRThreadStrokeInfoList.Count > 0)
                     {
@@ -642,7 +642,7 @@ namespace System.Windows.Input.StylusPlugIns
                     {
                         // Process next waiting one.  Note we don't remove till removed processed.
                         StrokeInfo siNext = _renderCompleteDRThreadStrokeInfoList.Peek();
-                        if (siNext.StrokeRTICV != null)
+                        if (siNext.StrokeRTICV is not null)
                         {
                             // Post this back to our thread to make sure we return from the
                             // this render complete call first before queuing up the next.
@@ -763,7 +763,7 @@ namespace System.Windows.Input.StylusPlugIns
         /// </summary>
         protected Dispatcher GetDispatcher()
         {
-            return _renderingThread != null ? _renderingThread.ThreadDispatcher : null;
+            return _renderingThread is not null ? _renderingThread.ThreadDispatcher : null;
         }
 
         /////////////////////////////////////////////////////////////////////
@@ -776,7 +776,7 @@ namespace System.Windows.Input.StylusPlugIns
 
             // Get a collection of ink nodes built from the new stylusPoints.
             si.StrokeNodeIterator = si.StrokeNodeIterator.GetIteratorForNextSegment(stylusPoints);
-            if (si.StrokeNodeIterator != null)
+            if (si.StrokeNodeIterator is not null)
             {
                 // Create a PathGeometry representing the contour of the ink increment
                 Geometry strokeGeometry;
@@ -828,7 +828,7 @@ namespace System.Windows.Input.StylusPlugIns
                     
                     // Now add it to the visual tree (making sure we still have StrokeCV after
                     // onDraw called above).
-                    if (si.StrokeCV != null)
+                    if (si.StrokeCV is not null)
                     {
                         si.StrokeCV.Children.Add(visual);
                     }
@@ -836,10 +836,10 @@ namespace System.Windows.Input.StylusPlugIns
                 else
                 {
                     DynamicRendererThreadManager renderingThread = _renderingThread; // keep it alive
-                    Dispatcher drDispatcher = renderingThread != null ? renderingThread.ThreadDispatcher : null;
+                    Dispatcher drDispatcher = renderingThread is not null ? renderingThread.ThreadDispatcher : null;
 
                     // Only try to render if we get a ref on the rendering thread.
-                    if (drDispatcher != null)
+                    if (drDispatcher is not null)
                     {
                         // We are on a pen thread so marshal this call to our inking thread.
                         drDispatcher.BeginInvoke(DispatcherPriority.Send,
@@ -848,7 +848,7 @@ namespace System.Windows.Input.StylusPlugIns
                             SolidColorBrush fillBrush = si.FillBrush;
 
                             // Make sure this stroke is not aborted
-                            if (fillBrush != null)
+                            if (fillBrush is not null)
                             {
                                 // See if we need to create a new container visual for the stroke.
                                 if (si.StrokeRTICV is null)
@@ -932,9 +932,9 @@ namespace System.Windows.Input.StylusPlugIns
             RemoveStrokeInfo(si);
             
             // remove si visuals and this si
-            if (si.StrokeCV != null)
+            if (si.StrokeCV is not null)
             {
-                if (_mainRawInkContainerVisual != null)
+                if (_mainRawInkContainerVisual is not null)
                 {
                     _mainRawInkContainerVisual.Children.Remove(si.StrokeCV);
                 }
@@ -991,7 +991,7 @@ namespace System.Windows.Input.StylusPlugIns
             }
             else
             {
-                HostVisual transitioningHostVisual = _renderCompleteStrokeInfo != null ?
+                HostVisual transitioningHostVisual = _renderCompleteStrokeInfo is not null ?
                                                         _renderCompleteStrokeInfo.StrokeHV : null;
 
                 if (_currentHostVisual.InUse)
@@ -1103,7 +1103,7 @@ namespace System.Windows.Input.StylusPlugIns
         private void CreateRealTimeVisuals()
         {
             // Only create if we have a root visual and have not already created them.
-            if (_mainContainerVisual != null && _rawInkHostVisual1 is null)
+            if (_mainContainerVisual is not null && _rawInkHostVisual1 is null)
             {
                 // Create new VisualTarget and hook up in apps visuals under element.
                 _rawInkHostVisual1 = new DynamicRendererHostVisual();
@@ -1149,7 +1149,7 @@ namespace System.Windows.Input.StylusPlugIns
         private void DestroyRealTimeVisuals()
         {
             // Only need to handle if already created visuals.
-            if (_mainContainerVisual != null && _rawInkHostVisual1 != null)
+            if (_mainContainerVisual is not null && _rawInkHostVisual1 is not null)
             {
                 // Make sure we unhook the rendercomplete event.
                 if (_waitingForRenderComplete)
@@ -1164,9 +1164,9 @@ namespace System.Windows.Input.StylusPlugIns
                 _renderCompleteStrokeInfo = null;
 
                 DynamicRendererThreadManager renderingThread = _renderingThread; // keep ref to keep it alive in this routine
-                Dispatcher drDispatcher = renderingThread != null ? renderingThread.ThreadDispatcher : null;
+                Dispatcher drDispatcher = renderingThread is not null ? renderingThread.ThreadDispatcher : null;
 
-                if (drDispatcher != null)
+                if (drDispatcher is not null)
                 {
                     drDispatcher.BeginInvoke(DispatcherPriority.Send,
                     (DispatcherOperationCallback)delegate(object unused)
@@ -1175,7 +1175,7 @@ namespace System.Windows.Input.StylusPlugIns
                         
                         drDispatcher = renderingThread.ThreadDispatcher;
                         
-                        if (drDispatcher != null && _waitingForDRThreadRenderComplete)
+                        if (drDispatcher is not null && _waitingForDRThreadRenderComplete)
                         {
                             MediaContext.From(drDispatcher).RenderComplete -= _onDRThreadRenderComplete;
                         }

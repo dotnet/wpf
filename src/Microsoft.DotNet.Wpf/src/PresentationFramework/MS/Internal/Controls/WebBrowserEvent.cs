@@ -41,7 +41,7 @@ namespace MS.Internal.Controls
         public WebBrowserEvent(WebBrowser parent)
         {
             _parent = parent;
-            Debug.Assert(parent != null, "WebBrowser control required for hooking webbrowser events");
+            Debug.Assert(parent is not null, "WebBrowser control required for hooking webbrowser events");
         }
 
         public void BeforeNavigate2(object pDisp, ref object url, ref object flags, ref object targetFrameName, ref object postData, ref object headers, ref bool cancel)
@@ -162,7 +162,7 @@ namespace MS.Internal.Controls
         /// </summary>
         private static bool IsAllowedScriptScheme(Uri uri)
         {
-            return uri != null && (uri.Scheme == "javascript" || uri.Scheme == "vbscript");
+            return uri is not null && (uri.Scheme == "javascript" || uri.Scheme == "vbscript");
         }
 
         /// <summary>
@@ -178,17 +178,17 @@ namespace MS.Internal.Controls
             if (_parent.AxIWebBrowser2 == axIWebBrowser2 && !ShouldIgnoreCompletionEvent(ref url))
             {
                 // If we are loading from stream.
-                if (_parent.DocumentStream != null)
+                if (_parent.DocumentStream is not null)
                 {
                     Invariant.Assert(_parent.NavigatingToAboutBlank && string.Equals((string)url, WebBrowser.AboutBlankUriString, StringComparison.OrdinalIgnoreCase));
 
                     try
                     {
                         UnsafeNativeMethods.IHTMLDocument nativeHTMLDocument = _parent.NativeHTMLDocument;
-                        if (nativeHTMLDocument != null)
+                        if (nativeHTMLDocument is not null)
                         {
                             UnsafeNativeMethods.IPersistStreamInit psi = nativeHTMLDocument as UnsafeNativeMethods.IPersistStreamInit;
-                            Debug.Assert(psi != null, "The Document does not implement IPersistStreamInit");
+                            Debug.Assert(psi is not null, "The Document does not implement IPersistStreamInit");
 
                             System.Runtime.InteropServices.ComTypes.IStream iStream =
                                 new MS.Internal.IO.Packaging.ManagedIStream(_parent.DocumentStream);

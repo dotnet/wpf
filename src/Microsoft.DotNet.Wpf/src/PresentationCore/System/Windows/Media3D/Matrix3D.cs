@@ -522,7 +522,7 @@ namespace System.Windows.Media.Media3D
         /// <param name="points">Points to transform.</param>
         public void Transform(Point3D[] points)
         {
-            if (points != null)
+            if (points is not null)
             {
                 for(int i = 0; i < points.Length; i++)
                 {
@@ -548,7 +548,7 @@ namespace System.Windows.Media.Media3D
         /// <param name="points">Points to transform.</param>
         public void Transform(Point4D[] points)
         {
-            if (points != null)
+            if (points is not null)
             {
                 for(int i = 0; i < points.Length; i++)
                 {
@@ -574,7 +574,7 @@ namespace System.Windows.Media.Media3D
         /// <param name="vectors">Vectors to transform.</param>
         public void Transform(Vector3D[] vectors)
         {
-            if (vectors != null)
+            if (vectors is not null)
             {
                 for(int i = 0; i < vectors.Length; i++)
                 {

@@ -89,7 +89,7 @@ namespace System.Windows.Controls.Primitives
             {
                 if (_bullet != value)
                 {
-                    if (_bullet != null)
+                    if (_bullet is not null)
                     {
                         // notify the visual layer that the old bullet has been removed.
                         RemoveVisualChild(_bullet);
@@ -106,7 +106,7 @@ namespace System.Windows.Controls.Primitives
 
                     // If we decorator content exists we need to move it at the end of the visual tree
                     UIElement child = Child;
-                    if (child != null)
+                    if (child is not null)
                     {
                         RemoveVisualChild(child);
                         AddVisualChild(child);
@@ -152,8 +152,8 @@ namespace System.Windows.Controls.Primitives
         {
             internal DoubleChildEnumerator(object child1, object child2)
             {
-                Debug.Assert(child1 != null, "First child should be non-null.");
-                Debug.Assert(child2 != null, "Second child should be non-null.");
+                Debug.Assert(child1 is not null, "First child should be non-null.");
+                Debug.Assert(child2 is not null, "Second child should be non-null.");
 
                 _child1 = child1;
                 _child2 = child2;
@@ -198,7 +198,7 @@ namespace System.Windows.Controls.Primitives
         {
             // Draw background in rectangle inside border.
             Brush background = this.Background;
-            if (background != null)
+            if (background is not null)
             {
                 dc.DrawRectangle(background,
                                  null,
@@ -224,7 +224,7 @@ namespace System.Windows.Controls.Primitives
                 throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
 
-            if (index == 0 && _bullet != null)
+            if (index == 0 && _bullet is not null)
             {
                 return _bullet;
             }
@@ -245,14 +245,14 @@ namespace System.Windows.Controls.Primitives
                 UIElement content = Child;
 
                 // If we have bullet we should measure it first
-                if (bullet != null)
+                if (bullet is not null)
                 {
                     bullet.Measure(constraint);
                     bulletSize = bullet.DesiredSize;
                 }
 
                 // If we have second child (content) we should measure it
-                if (content != null)
+                if (content is not null)
                 {
                     Size contentConstraint = constraint;
                     contentConstraint.Width = Math.Max(0.0, contentConstraint.Width - bulletSize.Width);
@@ -281,7 +281,7 @@ namespace System.Windows.Controls.Primitives
                 Size bulletSize = new Size();
 
                 // Arrange the bullet if exist
-                if (bullet != null)
+                if (bullet is not null)
                 {
                     bullet.Arrange(new Rect(bullet.DesiredSize));
                     bulletSize = bullet.RenderSize;
@@ -290,12 +290,12 @@ namespace System.Windows.Controls.Primitives
                 }
 
                 // Arrange the content if exist
-                if (content != null)
+                if (content is not null)
                 {
                     // Helper arranges child and may substitute a child's explicit properties for its DesiredSize.
                     // The actual size the child takes up is stored in its RenderSize.
                     Size contentSize = arrangeSize;
-                    if (bullet != null)
+                    if (bullet is not null)
                     {
                         contentSize.Width = Math.Max(content.DesiredSize.Width, arrangeSize.Width - bullet.DesiredSize.Width);
                         contentSize.Height = Math.Max(content.DesiredSize.Height, arrangeSize.Height);
@@ -307,7 +307,7 @@ namespace System.Windows.Controls.Primitives
                 }
 
                 // Re-Position the bullet if exist
-                if (bullet != null && !DoubleUtil.IsZero(bulletOffsetY))
+                if (bullet is not null && !DoubleUtil.IsZero(bulletOffsetY))
                 {
                     bullet.Arrange(new Rect(0, bulletOffsetY, bullet.DesiredSize.Width, bullet.DesiredSize.Height));
                 }
@@ -333,7 +333,7 @@ namespace System.Windows.Controls.Primitives
             // Common scenario when used in styles is that BulletDecorator content is a ContentPresenter
             UIElement text = FindText(element);
             ReadOnlyCollection<LineResult> lr = null;
-            if (text != null)
+            if (text is not null)
             {
                 TextBlock textElement = ((TextBlock)text);
                 if (textElement.IsLayoutDataValid)
@@ -342,23 +342,23 @@ namespace System.Windows.Controls.Primitives
             else
             {
                 text = FindFlowDocumentScrollViewer(element);
-                if (text != null)
+                if (text is not null)
                 {
                     TextDocumentView tdv = ((IServiceProvider)text).GetService(typeof(ITextView)) as TextDocumentView;
-                    if (tdv != null && tdv.IsValid)
+                    if (tdv is not null && tdv.IsValid)
                     {
                         ReadOnlyCollection<ColumnResult> cr = tdv.Columns;
-                        if (cr != null && cr.Count > 0)
+                        if (cr is not null && cr.Count > 0)
                         {
                             ColumnResult columnResult = cr[0];
                             ReadOnlyCollection<ParagraphResult> pr = columnResult.Paragraphs;
-                            if (pr != null && pr.Count > 0)
+                            if (pr is not null && pr.Count > 0)
                             {
                                 ContainerParagraphResult cpr = pr[0] as ContainerParagraphResult;
-                                if (cpr != null)
+                                if (cpr is not null)
                                 {
                                     TextParagraphResult textParagraphResult = cpr.Paragraphs[0] as TextParagraphResult;
-                                    if (textParagraphResult != null)
+                                    if (textParagraphResult is not null)
                                     {
                                         lr = textParagraphResult.Lines;
                                     }
@@ -369,7 +369,7 @@ namespace System.Windows.Controls.Primitives
                 }
             }
 
-            if (lr != null && lr.Count > 0)
+            if (lr is not null && lr.Count > 0)
             {
                 Point ancestorOffset = new Point();
                 text.TransformToAncestor(element).TryTransform(ancestorOffset, out ancestorOffset);
@@ -383,11 +383,11 @@ namespace System.Windows.Controls.Primitives
         {
             // Cases where the root is itself a TextBlock
             TextBlock text = root as TextBlock;
-            if (text != null)
+            if (text is not null)
                 return text;
 
             ContentPresenter cp = root as ContentPresenter;
-            if (cp != null)
+            if (cp is not null)
             {
                 if (VisualTreeHelper.GetChildrenCount(cp) == 1)
                 {
@@ -398,7 +398,7 @@ namespace System.Windows.Controls.Primitives
                     if (textBlock is null)
                     {
                         AccessText accessText = child as AccessText;
-                        if (accessText != null &&
+                        if (accessText is not null &&
                             VisualTreeHelper.GetChildrenCount(accessText) == 1)
                         {
                             // Cases where the child is an AccessText whose child is a TextBlock
@@ -411,7 +411,7 @@ namespace System.Windows.Controls.Primitives
             else
             {
                 AccessText accessText = root as AccessText;
-                if (accessText != null &&
+                if (accessText is not null &&
                     VisualTreeHelper.GetChildrenCount(accessText) == 1)
                 {
                     // Cases where the root is an AccessText whose child is a TextBlock
@@ -424,11 +424,11 @@ namespace System.Windows.Controls.Primitives
         private FlowDocumentScrollViewer FindFlowDocumentScrollViewer(Visual root)
         {
             FlowDocumentScrollViewer text = root as FlowDocumentScrollViewer;
-            if (text != null)
+            if (text is not null)
                 return text;
 
             ContentPresenter cp = root as ContentPresenter;
-            if (cp != null)
+            if (cp is not null)
             {
                 if(VisualTreeHelper.GetChildrenCount(cp) == 1)
                     return VisualTreeHelper.GetChild(cp, 0) as FlowDocumentScrollViewer;

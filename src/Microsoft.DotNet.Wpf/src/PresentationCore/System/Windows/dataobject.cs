@@ -71,7 +71,7 @@ namespace System.Windows
 
             IDataObject dataObject = data as IDataObject;
 
-            if (dataObject != null)
+            if (dataObject is not null)
             {
                 _innerData = dataObject;
             }
@@ -79,7 +79,7 @@ namespace System.Windows
             {
                 IComDataObject oleDataObject= data as IComDataObject;
 
-                if (oleDataObject != null)
+                if (oleDataObject is not null)
                 {
                     _innerData = new OleConverter(oleDataObject);
                 }
@@ -410,7 +410,7 @@ namespace System.Windows
             fileDropListCollection = new StringCollection();
 
             fileDropList = GetData(DataFormats.FileDrop, /*autoConvert*/true) as string[];
-            if (fileDropList != null)
+            if (fileDropList is not null)
             {
                 fileDropListCollection.AddRange(fileDropList);
             }
@@ -448,7 +448,7 @@ namespace System.Windows
 
             text = (string)GetData(DataFormats.ConvertToDataFormats(format), false);
 
-            if (text != null)
+            if (text is not null)
             {
                 return text;
             }
@@ -1389,12 +1389,12 @@ namespace System.Windows
                     MemoryStream memoryStream;
 
                     memoryStream = data as MemoryStream;
-                    if (memoryStream != null)
+                    if (memoryStream is not null)
                     {
                         byte[] buffer;
 
                         buffer = memoryStream.GetBuffer();
-                        if (buffer != null && buffer.Length != 0)
+                        if (buffer is not null && buffer.Length != 0)
                         {
                             hEnhancedMetafile = NativeMethods.SetEnhMetaFileBits((uint)buffer.Length, buffer);
                             int win32Error = Marshal.GetLastWin32Error(); // Dance around FxCop
@@ -1540,7 +1540,7 @@ namespace System.Windows
 #pragma warning disable SYSLIB0050
             else if (IsFormatEqual(format, DataFormats.Serializable)
                 || data is ISerializable
-                || (data != null && data.GetType().IsSerializable))
+                || (data is not null && data.GetType().IsSerializable))
             {
                 hr = SaveObjectToHandle(medium.unionmember, data, doNotReallocate);
             }
@@ -1579,7 +1579,7 @@ namespace System.Windows
                 {
                     Stream inkStream = data as Stream;
 
-                    if ( inkStream != null )
+                    if ( inkStream is not null )
                     {
                         IntPtr size = (IntPtr)inkStream.Length;
 
@@ -1775,7 +1775,7 @@ namespace System.Windows
                 Win32DeleteObject(new HandleRef(this, hbitmap));
             }
 
-            Invariant.Assert(bitmapSource != null);
+            Invariant.Assert(bitmapSource is not null);
 
             // Get BitmapSource stream to save it as the handle
             bitmapEncoder = new BmpBitmapEncoder();
@@ -1793,7 +1793,7 @@ namespace System.Windows
         {
             object systemDrawingBitmap = SystemDrawingHelper.GetBitmap(data);
 
-            Invariant.Assert(systemDrawingBitmap != null);
+            Invariant.Assert(systemDrawingBitmap is not null);
 
             return SaveObjectToHandle(handle, systemDrawingBitmap, doNotReallocate);
         }
@@ -2098,7 +2098,7 @@ namespace System.Windows
             return
                  IsFormatEqual(format, DataFormats.Serializable)
                   || data is ISerializable
-                  || (data != null && data.GetType().IsSerializable);
+                  || (data is not null && data.GetType().IsSerializable);
         }
 #pragma warning restore SYSLIB0050
 
@@ -2280,7 +2280,7 @@ namespace System.Windows
                 formats = dataObject.GetFormats();
                 _formats = new FORMATETC[formats is null ? 0 : formats.Length];
 
-                if (formats != null)
+                if (formats is not null)
                 {
                     for (int i = 0; i < formats.Length; i++)
                     {
@@ -2345,7 +2345,7 @@ namespace System.Windows
                     fetched++;
                 }
 
-                if (pceltFetched != null)
+                if (pceltFetched is not null)
                 {
                     pceltFetched[0] = fetched;
                 }
@@ -2489,7 +2489,7 @@ namespace System.Windows
 
                 enumFORMATETC = EnumFormatEtcInner(DATADIR.DATADIR_GET);
 
-                if (enumFORMATETC != null)
+                if (enumFORMATETC is not null)
                 {
                     FORMATETC []formatetc;
                     int[] retrieved;
@@ -2614,7 +2614,7 @@ namespace System.Windows
                     string[] mappedFormats;
 
                     mappedFormats = GetMappedFormats(format);
-                    if (mappedFormats != null)
+                    if (mappedFormats is not null)
                     {
                         for (int i = 0; i < mappedFormats.Length; i++)
                         {
@@ -2622,7 +2622,7 @@ namespace System.Windows
                             {
                                 baseVar = GetDataFromBoundOleDataObject(mappedFormats[i], aspect, index);
 
-                                if (baseVar != null && !(baseVar is MemoryStream))
+                                if (baseVar is not null && !(baseVar is MemoryStream))
                                 {
                                     if (IsDataSystemBitmapSource(baseVar) || SystemDrawingHelper.IsBitmap(baseVar))
                                     {
@@ -2639,7 +2639,7 @@ namespace System.Windows
                     }
                 }
 
-                if (original != null)
+                if (original is not null)
                 {
                     return original;
                 }
@@ -2661,7 +2661,7 @@ namespace System.Windows
                     string[] mappedFormats;
 
                     mappedFormats = GetMappedFormats(format);
-                    if (mappedFormats != null)
+                    if (mappedFormats is not null)
                     {
                         for (int i = 0; i < mappedFormats.Length; i++)
                         {
@@ -3116,7 +3116,7 @@ namespace System.Windows
                 // Read the bitmap stream from the handle
                 bitmapStream = ReadByteStreamFromHandle(handle, out isSerializedObject);
 
-                if (bitmapStream != null)
+                if (bitmapStream is not null)
                 {
                     // Create BitmapSource instance from the bitmap stream
                     bitmapSource = (BitmapSource)BitmapFrame.Create(bitmapStream);
@@ -3534,7 +3534,7 @@ namespace System.Windows
                     string[] mappedFormats;
 
                     mappedFormats = GetMappedFormats(format);
-                    if (mappedFormats != null)
+                    if (mappedFormats is not null)
                     {
                         for (int i = 0; i < mappedFormats.Length; i++)
                         {
@@ -3546,7 +3546,7 @@ namespace System.Windows
 
                                 baseVar = GetDataFromDataStoreEntry(foundDataStoreEntry, mappedFormats[i]);
 
-                                if (baseVar != null && !(baseVar is MemoryStream))
+                                if (baseVar is not null && !(baseVar is MemoryStream))
                                 {
                                     if (IsDataSystemBitmapSource(baseVar) || SystemDrawingHelper.IsBitmap(baseVar))
                                     {
@@ -3563,7 +3563,7 @@ namespace System.Windows
                     }
                 }
 
-                if (original != null)
+                if (original is not null)
                 {
                     return original;
                 }
@@ -3612,13 +3612,13 @@ namespace System.Windows
 
                     // If we couldn't find a specific entry, we'll use
                     // aspect == Content and index == 0.
-                    if (dse is null && naturalDse != null)
+                    if (dse is null && naturalDse is not null)
                     {
                         dse = naturalDse;
                     }
 
                     // If we still didn't find data, return false.
-                    return (dse != null);
+                    return (dse is not null);
                 }
                 else
                 {
@@ -3672,7 +3672,7 @@ namespace System.Windows
                 naturalDataStoreEntry = null;
 
                 // Find the entry with the given aspect and index
-                if (dataStoreEntries != null)
+                if (dataStoreEntries is not null)
                 {
                     for (int i = 0; i < dataStoreEntries.Length; i++)
                     {
@@ -3696,7 +3696,7 @@ namespace System.Windows
 
                 // If we couldn't find a specific entry, we'll use
                 // aspect == Content and index == 0.
-                if (dataStoreEntry is null && naturalDataStoreEntry != null)
+                if (dataStoreEntry is null && naturalDataStoreEntry is not null)
                 {
                     dataStoreEntry = naturalDataStoreEntry;
                 }
@@ -3709,7 +3709,7 @@ namespace System.Windows
                 Object data;
 
                 data = null;
-                if (dataStoreEntry != null)
+                if (dataStoreEntry is not null)
                 {
                     data = dataStoreEntry.Data;
                 }

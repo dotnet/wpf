@@ -257,7 +257,7 @@ namespace System.ComponentModel
                     }
 
                     // do the actual re-install of "in-use" lists that changed
-                    if (toInstall != null)
+                    if (toInstall is not null)
                     {
                         IDictionaryEnumerator installDE = toInstall.GetEnumerator() as IDictionaryEnumerator;
                         while (installDE.MoveNext())
@@ -286,7 +286,7 @@ namespace System.ComponentModel
                     // if there are no more listeners at all, remove the entry from
                     // the main table, and prepare to stop listening
                     purgeAll = true;
-                    if (source != null)     // source may have been GC'd
+                    if (source is not null)     // source may have been GC'd
                     {
                         this.Remove(source);
                     }
@@ -302,7 +302,7 @@ namespace System.ComponentModel
             if (purgeAll)
             {
                 // stop listening.  List cleanup is handled by Purge()
-                if (source != null) // source may have been GC'd
+                if (source is not null) // source may have been GC'd
                 {
                     StopListening(source);
                 }
@@ -354,7 +354,7 @@ namespace System.ComponentModel
         // Add a listener to the named property (empty means "any property")
         private void PrivateAddListener(INotifyPropertyChanged source, IWeakEventListener listener, string propertyName)
         {
-            Debug.Assert(listener != null && source != null && propertyName != null,
+            Debug.Assert(listener is not null && source is not null && propertyName is not null,
                 "Listener, source, and propertyName of event cannot be null");
 
             AddListener(source, propertyName, listener, null);
@@ -363,7 +363,7 @@ namespace System.ComponentModel
         // Remove a listener to the named property (empty means "any property")
         private void PrivateRemoveListener(INotifyPropertyChanged source, IWeakEventListener listener, string propertyName)
         {
-            Debug.Assert(listener != null && source != null && propertyName != null,
+            Debug.Assert(listener is not null && source is not null && propertyName is not null,
                 "Listener, source, and propertyName of event cannot be null");
 
             RemoveListener(source, propertyName, listener, null);
@@ -415,7 +415,7 @@ namespace System.ComponentModel
                 }
 
                 // add a listener to the list
-                if (handler != null)
+                if (handler is not null)
                 {
                     ListenerList<PropertyChangedEventArgs> hlist = (ListenerList<PropertyChangedEventArgs>)list;
                     hlist.AddHandler(handler);
@@ -439,11 +439,11 @@ namespace System.ComponentModel
             {
                 HybridDictionary dict = (HybridDictionary)this[source];
 
-                if (dict != null)
+                if (dict is not null)
                 {
                     ListenerList list = (ListenerList)dict[propertyName];
 
-                    if (list != null)
+                    if (list is not null)
                     {
                         // make sure list is ready for writing
                         if (ListenerList.PrepareForWriting(ref list))
@@ -452,7 +452,7 @@ namespace System.ComponentModel
                         }
 
                         // remove a listener from the list
-                        if (handler != null)
+                        if (handler is not null)
                         {
                             ListenerList<PropertyChangedEventArgs> hlist = (ListenerList<PropertyChangedEventArgs>)list;
                             hlist.RemoveHandler(handler);
@@ -510,7 +510,7 @@ namespace System.ComponentModel
 
                     if (genericListeners is null)
                     {
-                        if (listeners != null)
+                        if (listeners is not null)
                         {
                             list = listeners;           // only specific listeners
                         }
@@ -521,7 +521,7 @@ namespace System.ComponentModel
                     }
                     else
                     {
-                        if (listeners != null)
+                        if (listeners is not null)
                         {
                             // there are both specific and generic listeners -
                             // combine the two lists.
@@ -599,7 +599,7 @@ namespace System.ComponentModel
                     if (_proposedAllListenersList == list)
                     {
                         HybridDictionary dict = (HybridDictionary)this[sender];
-                        if (dict != null)
+                        if (dict is not null)
                         {
                             dict[AllListenersKey] = list;
                         }

@@ -215,7 +215,7 @@ namespace System.Windows.Documents
         /// <param name="e">Event arguments for the GetPageCompleted event.</param>
         protected virtual void OnGetPageCompleted(GetPageCompletedEventArgs e)
         {
-            if (this.GetPageCompleted != null)
+            if (this.GetPageCompleted is not null)
             {
                 this.GetPageCompleted(this, e);
             }
@@ -227,7 +227,7 @@ namespace System.Windows.Documents
         /// <param name="e">Event arguments for the ComputePageCountCompleted event.</param>
         protected virtual void OnComputePageCountCompleted(AsyncCompletedEventArgs e)
         {
-            if (this.ComputePageCountCompleted != null)
+            if (this.ComputePageCountCompleted is not null)
             {
                 this.ComputePageCountCompleted(this, e);
             }
@@ -239,7 +239,7 @@ namespace System.Windows.Documents
         /// <param name="e">Event arguments for the PagesChanged event.</param>
         protected virtual void OnPagesChanged(PagesChangedEventArgs e)
         {
-            if (this.PagesChanged != null)
+            if (this.PagesChanged is not null)
             {
                 this.PagesChanged(this, e);
             }

@@ -40,7 +40,7 @@ namespace System.Windows.Automation.Peers
             // If the owner is IFlowDocumentViewer, it means that it is embedded inside
             // FlowDocumentReaer. In this case DocumentAutumationPeer is already exposed.
             // Hence need to remove it from children collection.
-            if (Owner is IFlowDocumentViewer && children != null && children.Count > 0)
+            if (Owner is IFlowDocumentViewer && children is not null && children.Count > 0)
             {
                 if (children[children.Count-1] is DocumentAutomationPeer)
                 {

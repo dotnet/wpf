@@ -498,7 +498,7 @@ namespace System.Windows.Media
                 {
                     // At this point, _buffer must be non-null and
                     // _buffer.Length must be >= newOffset
-                    Invariant.Assert((_chunkList[currentChunk] != null) 
+                    Invariant.Assert((_chunkList[currentChunk] is not null) 
                         && (_chunkList[currentChunk].Length >= bufferOffset + cbDataForThisChunk));
 
                     // Also, because pinning a 0-length buffer fails, we assert this too.
@@ -678,7 +678,7 @@ namespace System.Windows.Media
                                    bool hasCurves,
                                    MIL_SEGMENT_TYPE segmentType)
         {
-            Debug.Assert(points != null);
+            Debug.Assert(points is not null);
             Debug.Assert(count > 0);
 
             if (_currentPathFigureDataOffset == -1)

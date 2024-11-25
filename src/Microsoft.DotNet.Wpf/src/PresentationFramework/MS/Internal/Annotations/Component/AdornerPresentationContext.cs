@@ -43,11 +43,11 @@ namespace MS.Internal.Annotations.Component
             ArgumentNullException.ThrowIfNull(adornerLayer);
 
             _adornerLayer = adornerLayer;
-            if (adorner != null)
+            if (adorner is not null)
             {
                 if (adorner.AnnotationComponent is null)
                     throw new ArgumentNullException("annotation component");
-                if (adorner.AnnotationComponent.PresentationContext != null)
+                if (adorner.AnnotationComponent.PresentationContext is not null)
                     throw new InvalidOperationException(SR.Format(SR.ComponentAlreadyInPresentationContext, adorner.AnnotationComponent));
                 _annotationAdorner = adorner;
             }
@@ -104,7 +104,7 @@ namespace MS.Internal.Annotations.Component
         internal static void SetTypeZLevel(Type type, int level)
         {
             Invariant.Assert(level >= 0, "level is < 0");
-            Invariant.Assert(type != null, "type is null");
+            Invariant.Assert(type is not null, "type is null");
 
             s_ZLevel[type] = level;
         }
@@ -204,7 +204,7 @@ namespace MS.Internal.Annotations.Component
                 // now get rid of reference from presentation context of annotation component to annotation adorner
                 AdornerPresentationContext p = component.PresentationContext as AdornerPresentationContext;
 
-                if (p != null) p.ResetInternalAnnotationAdorner();
+                if (p is not null) p.ResetInternalAnnotationAdorner();
 
                 // finally get rid of reference from annotation component to presentation context
                 component.PresentationContext = null;
@@ -268,7 +268,7 @@ namespace MS.Internal.Annotations.Component
         {
             AdornerPresentationContext p = o as AdornerPresentationContext;
 
-            if (p != null)
+            if (p is not null)
             {
                 return (p._adornerLayer == this._adornerLayer);
             }
@@ -317,7 +317,7 @@ namespace MS.Internal.Annotations.Component
         /// <param name="component">the component</param>
         public void UpdateComponentZOrder(IAnnotationComponent component)
         {
-            Invariant.Assert(component != null, "null component");
+            Invariant.Assert(component is not null, "null component");
 
             //check Z-order range for this level
             int level = GetComponentLevel(component);
@@ -361,7 +361,7 @@ namespace MS.Internal.Annotations.Component
         /// <returns>True if the component is internal</returns>
         private bool IsInternalComponent(IAnnotationComponent component)
         {
-            return _annotationAdorner != null && component == _annotationAdorner.AnnotationComponent;
+            return _annotationAdorner is not null && component == _annotationAdorner.AnnotationComponent;
         }
 
         /// <summary>
@@ -379,7 +379,7 @@ namespace MS.Internal.Annotations.Component
             {
                 AnnotationAdorner annotationAdorner = adorner as AnnotationAdorner;
 
-                if (annotationAdorner != null && annotationAdorner.AnnotationComponent == component) return annotationAdorner;
+                if (annotationAdorner is not null && annotationAdorner.AnnotationComponent == component) return annotationAdorner;
             }
 
             return null;
@@ -403,7 +403,7 @@ namespace MS.Internal.Annotations.Component
             {
                 DependencyObject child = VisualTreeHelper.GetChild(_adornerLayer, i);
                 AnnotationAdorner adorner = child as AnnotationAdorner;
-                if (adorner != null)
+                if (adorner is not null)
                 {
                     IAnnotationComponent childComponent = adorner.AnnotationComponent;
                     if ((childComponent != component) &&
@@ -427,7 +427,7 @@ namespace MS.Internal.Annotations.Component
         /// will be added at the end of the list. That is why we start scaning from the end.</remarks>
         private void AddAdorner(List<AnnotationAdorner> adorners, AnnotationAdorner adorner)
         {
-            Debug.Assert((adorners != null) && (adorner != null), "null adorners list or adorner");
+            Debug.Assert((adorners is not null) && (adorner is not null), "null adorners list or adorner");
 
             int index = 0;
             if (adorners.Count > 0)
@@ -450,7 +450,7 @@ namespace MS.Internal.Annotations.Component
         /// <returns>next free Z-order value</returns>
         private static int GetNextZOrder(AdornerLayer adornerLayer, int level)
         {
-            Invariant.Assert(adornerLayer != null, "null adornerLayer");
+            Invariant.Assert(adornerLayer is not null, "null adornerLayer");
 
             int res = 0;
 
@@ -462,7 +462,7 @@ namespace MS.Internal.Annotations.Component
             {
                 DependencyObject child = VisualTreeHelper.GetChild(adornerLayer, i);
                 AnnotationAdorner adorner = child as AnnotationAdorner;
-                if (adorner != null)
+                if (adorner is not null)
                 {
                     if ((GetComponentLevel(adorner.AnnotationComponent) == level) &&
                         (adorner.AnnotationComponent.ZOrder >= res))

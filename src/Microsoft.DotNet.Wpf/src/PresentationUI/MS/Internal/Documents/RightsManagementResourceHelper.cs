@@ -128,7 +128,7 @@ namespace MS.Internal.Documents
                 _frameworkElement = new TextBlock();
             }
 
-            if ((_brushResources != null) && (_frameworkElement != null))
+            if ((_brushResources is not null) && (_frameworkElement is not null))
             {
                 int index = (int)status;
 

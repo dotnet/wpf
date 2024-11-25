@@ -43,7 +43,7 @@ namespace MS.Internal.AppModel
             object objToReturn = null;
             asyncObjectConverter = null;
 
-            if (contentType != null)
+            if (contentType is not null)
             {
                 StreamToObjectFactoryDelegateCore d;
                 if (_objectConvertersCore.TryGetValue(contentType, out d))

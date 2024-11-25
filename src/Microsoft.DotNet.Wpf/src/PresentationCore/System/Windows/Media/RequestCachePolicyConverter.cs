@@ -116,7 +116,7 @@ namespace System.Windows.Media
             ArgumentNullException.ThrowIfNull(destinationType);
 
             HttpRequestCachePolicy httpPolicy = value as HttpRequestCachePolicy;
-            if(httpPolicy != null)
+            if(httpPolicy is not null)
             {
                 if (destinationType == typeof(string))
                 {
@@ -131,7 +131,7 @@ namespace System.Windows.Media
 
             //if it's not an HttpRequestCachePolicy, try a regular RequestCachePolicy
             RequestCachePolicy policy = value as RequestCachePolicy;
-            if (policy != null)
+            if (policy is not null)
             {
                 if (destinationType == typeof(string))
                 {

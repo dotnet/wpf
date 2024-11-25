@@ -102,7 +102,7 @@ namespace MS.Internal.AutomationProxies
             {
                 // raise events for the children 
                 ProxySimple scrollBarBit = WindowsScrollBarBits.CreateFromChildId(hwnd, wtv, idChild, NativeMethods.SB_CTL);
-                if (scrollBarBit != null)
+                if (scrollBarBit is not null)
                 {
                     scrollBarBit.DispatchEvents(eventId, idProp, idObject, idChild);
                 }
@@ -200,7 +200,7 @@ namespace MS.Internal.AutomationProxies
             {
                 // When a scroll bar is embedded into a control, treat it as a piece of the control
                 // and not as a control, i.e. ignore the WS_TABSTOP style.
-                if (_parent != null)
+                if (_parent is not null)
                 {
                     // If it's visible and enabled it might be focusable 
                     if (SafeNativeMethods.IsWindowVisible(_hwnd) &&

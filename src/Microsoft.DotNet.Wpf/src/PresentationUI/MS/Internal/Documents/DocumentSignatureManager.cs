@@ -51,7 +51,7 @@ namespace MS.Internal.Documents
             DocumentRightsManagementManager rightsManagementManager =
                 DocumentRightsManagementManager.Current;
 
-            if(rightsManagementManager != null)
+            if(rightsManagementManager is not null)
             {
                 rightsManagementManager.RMPolicyChange += 
                     new DocumentRightsManagementManager.RMPolicyChangeHandler(OnRMPolicyChanged);
@@ -253,7 +253,7 @@ namespace MS.Internal.Documents
                 false /*Sig Request Dialog*/);
                 dialog.ShowDialog(parentWindow);
 
-            if (dialog != null)
+            if (dialog is not null)
             {
                 dialog.Dispose();
             }
@@ -289,7 +289,7 @@ namespace MS.Internal.Documents
                     true /*Sig Request Dialog*/);
                     dialog.ShowDialog(parentWindow);
 
-                if (dialog != null)
+                if (dialog is not null)
                 {
                     dialog.Dispose();
                 }
@@ -524,7 +524,7 @@ namespace MS.Internal.Documents
                 this);
             dialog.ShowDialog(NativeWindow.FromHandle(parentWindow));
 
-            if (dialog != null)
+            if (dialog is not null)
             {
                 dialog.Dispose();
             }
@@ -577,7 +577,7 @@ namespace MS.Internal.Documents
             //First place this new DigSig's Cert in the CertStatus Table as CertificatePriorityStatus.Ok
             //since user has selected this cert to use for signing.  We will not be checking the status of
             //this cert since the user selected it for signing.
-            if (_certificateStatusTable != null && !_certificateStatusTable.ContainsKey(digSig.Certificate))
+            if (_certificateStatusTable is not null && !_certificateStatusTable.ContainsKey(digSig.Certificate))
             {
                 _certificateStatusTable.Add(digSig.Certificate, CertificatePriorityStatus.Ok);
             }
@@ -645,7 +645,7 @@ namespace MS.Internal.Documents
             //The signing is complete, now lets save the package.
             //Save XPS document to file
             DocumentManager docManager = DocumentManager.CreateDefault();
-            if (docManager != null)
+            if (docManager is not null)
             {
                 if (isSaveAs)
                 {
@@ -744,12 +744,12 @@ namespace MS.Internal.Documents
             DigitalSignature digSig = _digSigSigResources[signatureResources];
             X509Certificate2 certificate = null;
 
-            if (digSig != null)
+            if (digSig is not null)
             {
                 certificate = digSig.Certificate;
             }
 
-            if (certificate != null)
+            if (certificate is not null)
             {
                 X509Certificate2UI.DisplayCertificate(certificate, parentWindow);
             }
@@ -819,7 +819,7 @@ namespace MS.Internal.Documents
 
             //If this is a request signature it won't have a cert. This can also
             //happen if the signature is invalid because it is missing a cert.
-            if (digSig.Certificate != null)
+            if (digSig.Certificate is not null)
             {
                 rtn = true;
             }
@@ -1132,7 +1132,7 @@ namespace MS.Internal.Documents
         /// </summary>
         private void RaiseSignatureStatusChange(SignatureStatusEventArgs args)
         {
-            if (SignatureStatusChange != null)
+            if (SignatureStatusChange is not null)
             {
                 SignatureStatusChange(this, args);
             }
@@ -1143,7 +1143,7 @@ namespace MS.Internal.Documents
         /// </summary>
         private void RaiseSignaturesChanged()
         {
-            if (SignaturesChanged != null)
+            if (SignaturesChanged is not null)
             {
                 SignaturesChanged(this, EventArgs.Empty);
             }
@@ -1276,7 +1276,7 @@ namespace MS.Internal.Documents
 
                 foreach (DigitalSignature signature in DigitalSignatureProvider.Signatures)
                 {
-                    if (signature.Certificate != null &&
+                    if (signature.Certificate is not null &&
                         !_certificateStatusTable.ContainsKey(signature.Certificate))
                     {
                         return false;

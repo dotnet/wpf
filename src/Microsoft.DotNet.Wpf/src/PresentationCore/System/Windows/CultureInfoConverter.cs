@@ -90,7 +90,7 @@ namespace System.Windows
                                            object source)
         {
             string cultureName = source as string;
-            if (cultureName != null)
+            if (cultureName is not null)
             {
                 return CultureInfo.GetCultureInfoByIetfLanguageTag(cultureName);
             }
@@ -123,7 +123,7 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(destinationType);
 
             CultureInfo culture = value as CultureInfo;
-            if (culture != null)
+            if (culture is not null)
             {
                 if (destinationType == typeof(string))
                 {

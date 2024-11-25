@@ -70,7 +70,7 @@ namespace MS.Internal.Data
                     // arguments.
                     IEnumerable xda = _propertyDescriptor.GetValue(component) as IEnumerable;
 
-                    if (xda != null && name != FullCollectionKey)
+                    if (xda is not null && name != FullCollectionKey)
                     {
                         // call xelement.Elements[name] via reflection.  We know that
                         // xda really has type XDeferredAxis<T>, which has only one
@@ -117,7 +117,7 @@ namespace MS.Internal.Data
             public Record(IEnumerable xda)
             {
                 _xda = xda;
-                if (xda != null)
+                if (xda is not null)
                 {
                     _dc = new DifferencingCollection(xda);
                     _rooc = new ReadOnlyObservableCollection<object>(_dc);

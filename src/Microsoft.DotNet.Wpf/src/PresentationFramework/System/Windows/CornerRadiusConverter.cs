@@ -102,7 +102,7 @@ namespace System.Windows
         /// <param name="source"> The object to convert to a CornerRadius. </param>
         public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object source)
         {
-            if (source != null)
+            if (source is not null)
             {
                 if (source is string) { return FromString((string)source, cultureInfo); }
                 else                  { return new CornerRadius(Convert.ToDouble(source, cultureInfo)); }

@@ -514,7 +514,7 @@ namespace System.Windows
             
             _routeItemList.Clear();
 
-            if (_branchNodeStack != null)
+            if (_branchNodeStack is not null)
             {
                 _branchNodeStack.Clear();
             }

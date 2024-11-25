@@ -63,7 +63,7 @@ namespace MS.Internal.Navigation
 
         private void UpdateNavProgressHelper(long numBytes)
         {
-            if ((_callbackDispatcher != null) && (_callbackDispatcher.CheckAccess() != true))
+            if ((_callbackDispatcher is not null) && (_callbackDispatcher.CheckAccess() != true))
             {
                 _callbackDispatcher.BeginInvoke(
                                 DispatcherPriority.Send,
@@ -198,7 +198,7 @@ namespace MS.Internal.Navigation
 
             // if current dispatcher is not the same as the dispatcher we should call back on,
             // post to the call back dispatcher.
-            if ((_callbackDispatcher != null) && (_callbackDispatcher.CheckAccess() != true))
+            if ((_callbackDispatcher is not null) && (_callbackDispatcher.CheckAccess() != true))
             {
                 _callbackDispatcher.BeginInvoke(
                                 DispatcherPriority.Send,
@@ -439,10 +439,10 @@ namespace MS.Internal.Navigation
             get
             {
                 Assembly assembly = null;
-                if (_stream != null)
+                if (_stream is not null)
                 {
                     IStreamInfo streamInfo = _stream as IStreamInfo;
-                    if (streamInfo != null)
+                    if (streamInfo is not null)
                     {
                         assembly = streamInfo.Assembly;
                     }

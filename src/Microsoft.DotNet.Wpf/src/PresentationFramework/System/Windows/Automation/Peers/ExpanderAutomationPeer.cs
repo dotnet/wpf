@@ -45,13 +45,13 @@ namespace System.Windows.Automation.Peers
             List<AutomationPeer> children = base.GetChildrenCore();
             ToggleButton expanderToggleButton = ((Expander)Owner).ExpanderToggleButton;
 
-            if (!AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures && children != null)
+            if (!AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures && children is not null)
             {
                 foreach (UIElementAutomationPeer peer in children)
                 {
                     if (peer.Owner == expanderToggleButton)
                     {
-                        peer.EventsSource = (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && this.EventsSource != null) ? this.EventsSource : this;
+                        peer.EventsSource = (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && this.EventsSource is not null) ? this.EventsSource : this;
                         break;
                     }
                 }

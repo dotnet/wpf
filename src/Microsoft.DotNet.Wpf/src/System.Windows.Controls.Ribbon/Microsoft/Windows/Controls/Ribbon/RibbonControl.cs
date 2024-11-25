@@ -134,7 +134,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             base.OnTemplateChanged(oldTemplate, newTemplate);
 
-            if ((oldTemplate != null) && (_partContentPresenter != null))
+            if ((oldTemplate is not null) && (_partContentPresenter is not null))
             {
                 RibbonHelper.ClearPseudoInheritedProperties(_partContentPresenter);
                 _partContentPresenter = null;
@@ -152,18 +152,18 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         private static void OnItemForItemContainerChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (e.OldValue != null)
+            if (e.OldValue is not null)
             {
                 UIElement element = e.OldValue as UIElement;
-                if (element != null)
+                if (element is not null)
                 {
                     element.PositionAndSizeOfSetController = null;
                 }
             }
-            if (e.NewValue != null)
+            if (e.NewValue is not null)
             {
                 UIElement element = e.NewValue as UIElement;
-                if (element != null)
+                if (element is not null)
                 {
                     RibbonControl rc = (RibbonControl)d;
                     element.PositionAndSizeOfSetController = rc;
@@ -197,7 +197,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private void TransferPseudoInheritedProperties()
         {
-            if (_partContentPresenter != null)
+            if (_partContentPresenter is not null)
             {
                 RibbonHelper.TransferPseudoInheritedProperties(this, _partContentPresenter);
             }
@@ -209,7 +209,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         internal bool HostsRibbonGroup()
         {
-            if (_partContentPresenter != null)
+            if (_partContentPresenter is not null)
             {
                 if (VisualTreeHelper.GetChildrenCount(_partContentPresenter) > 0 &&
                    VisualTreeHelper.GetChild(_partContentPresenter, 0) is RibbonGroup)
@@ -226,22 +226,22 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         internal UIElement ContentChild
         {
-            get { return _partContentPresenter != null ? _partContentPresenter.ContentChild : null; }
+            get { return _partContentPresenter is not null ? _partContentPresenter.ContentChild : null; }
         }
 
         internal bool ChildHasLargeImage
         {
-            get { return _partContentPresenter != null ? _partContentPresenter.ChildHasLargeImage : false; }
+            get { return _partContentPresenter is not null ? _partContentPresenter.ChildHasLargeImage : false; }
         }
 
         internal bool ChildHasSmallImage
         {
-            get { return _partContentPresenter != null ? _partContentPresenter.ChildHasSmallImage : false; }
+            get { return _partContentPresenter is not null ? _partContentPresenter.ChildHasSmallImage : false; }
         }
 
         internal bool ChildHasLabel
         {
-            get { return _partContentPresenter != null ? _partContentPresenter.ChildHasLabel : false; }
+            get { return _partContentPresenter is not null ? _partContentPresenter.ChildHasLabel : false; }
         }
 
         #endregion

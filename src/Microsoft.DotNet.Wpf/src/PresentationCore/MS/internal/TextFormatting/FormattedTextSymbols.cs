@@ -54,7 +54,7 @@ namespace MS.Internal.TextFormatting
             _isSideways = isSideways;
             ITextSymbols  symbols = textSymbols as ITextSymbols;
 
-            Debug.Assert(symbols != null);
+            Debug.Assert(symbols is not null);
 
             // break down a single text run into pieces
             IList<TextShapeableSymbols> shapeables = symbols.GetTextShapeableSymbols(
@@ -77,7 +77,7 @@ namespace MS.Internal.TextFormatting
                 _isSideways
                 );
 
-            Debug.Assert(shapeables != null && shapeables.Count > 0);
+            Debug.Assert(shapeables is not null && shapeables.Count > 0);
 
             _rightToLeft = rightToLeft;
             _glyphs = new Glyphs[shapeables.Count];
@@ -91,7 +91,7 @@ namespace MS.Internal.TextFormatting
             while (i < shapeables.Count)
             {
                 TextShapeableSymbols current = shapeables[i] as TextShapeableSymbols;
-                Debug.Assert(current != null);
+                Debug.Assert(current is not null);
 
                 int cch = current.Length;
                 int j;
@@ -203,7 +203,7 @@ namespace MS.Internal.TextFormatting
         {
             get 
             {
-                Debug.Assert(_glyphs != null);
+                Debug.Assert(_glyphs is not null);
 
                 double width = 0;
                 foreach (Glyphs glyphs in _glyphs)
@@ -226,18 +226,18 @@ namespace MS.Internal.TextFormatting
         {
             Rect inkBoundingBox = Rect.Empty;
 
-            Debug.Assert(_glyphs != null);
+            Debug.Assert(_glyphs is not null);
 
             foreach (Glyphs glyphs in _glyphs)
             {
                 GlyphRun glyphRun = glyphs.CreateGlyphRun(currentOrigin, _rightToLeft);
                 Rect boundingBox;
 
-                if (glyphRun != null)
+                if (glyphRun is not null)
                 {
                     boundingBox = glyphRun.ComputeInkBoundingBox();                    
 
-                    if (drawingContext != null)
+                    if (drawingContext is not null)
                     {
                         // Emit glyph run background. 
                         glyphRun.EmitBackground(drawingContext, glyphs.BackgroundBrush);
@@ -352,11 +352,11 @@ namespace MS.Internal.TextFormatting
                     _width += _glyphAdvances[i];                
 }
 
-                if (glyphIndices != null)
+                if (glyphIndices is not null)
                 {
                     _clusterMap = clusterMap;
 
-                    if (glyphOffsets != null)
+                    if (glyphOffsets is not null)
                     {
                         _glyphOffsets  = new PartialArray<Point>(new Point[glyphOffsets.Length]);                    
                     

@@ -928,7 +928,7 @@ namespace System.Windows.Media.Animation
             // copy of the original.
 
             EventHandlersStore sourceStore = EventHandlersStoreField.GetValue(sourceTimeline);
-            if (sourceStore != null)
+            if (sourceStore is not null)
             {
                 Debug.Assert(sourceStore.Count > 0);
                 EventHandlersStoreField.SetValue(this, new EventHandlersStore(sourceStore));
@@ -947,7 +947,7 @@ namespace System.Windows.Media.Animation
             WritePreamble();
 
             EventHandlersStore store = EventHandlersStoreField.GetValue(this);
-            if (store != null)
+            if (store is not null)
             {
                 store.Remove(key, handler);
                 if (store.Count == 0)
@@ -1009,7 +1009,7 @@ namespace System.Windows.Media.Animation
                     {
                         WeakReference weakRef = (WeakReference)_objectTable[idTable[index]];
                         Timeline timeline = (Timeline)weakRef.Target;
-                        if (timeline != null)
+                        if (timeline is not null)
                         {
                             timeline.BuildInfo(builder, 0, true);
                             timelineCount++;
@@ -1045,10 +1045,10 @@ namespace System.Windows.Media.Animation
             depth++;
             TimelineGroup timelineGroup = this as TimelineGroup;
 
-            if (timelineGroup != null)
+            if (timelineGroup is not null)
             {
                 TimelineCollection children = timelineGroup.Children;
-                if (children != null)
+                if (children is not null)
                 {
                     for (int childIndex = 0; childIndex < children.Count; childIndex++)
                     {
@@ -1083,7 +1083,7 @@ namespace System.Windows.Media.Animation
             builder.Append(GetType().Name);
 
             // Build attributes
-            if (Name != null)
+            if (Name is not null)
             {
                 builder.Append(", Name=\"");
                 builder.Append(Name);
@@ -1139,7 +1139,7 @@ namespace System.Windows.Media.Animation
             lock (_debugLockObject)
             {
                 object handleReference = _objectTable[id];
-                if (handleReference != null)
+                if (handleReference is not null)
                 {
                     WeakReference weakRef = (WeakReference)handleReference;
                     timeline = (Timeline)weakRef.Target;

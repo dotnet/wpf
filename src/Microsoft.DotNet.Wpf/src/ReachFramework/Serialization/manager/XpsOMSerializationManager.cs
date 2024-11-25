@@ -113,7 +113,7 @@ namespace System.Windows.Xps.Serialization
 
                 ReachSerializer reachSerializer = GetSerializer(serializedObject);
 
-                if (reachSerializer != null)
+                if (reachSerializer is not null)
                 {
                 
                      //Things that need to be done at this stage
@@ -305,7 +305,7 @@ namespace System.Windows.Xps.Serialization
         internal override Xml.XmlWriter AcquireXmlWriter(Type writerType)
         {
             XmlWriter xmlWriter = null;
-            if (_packagingPolicy != null)
+            if (_packagingPolicy is not null)
             {
                 if (writerType == typeof(FixedPage))
                 {
@@ -330,14 +330,14 @@ namespace System.Windows.Xps.Serialization
             int refCnt = DecrementRefCntByType(writerType);
 
             // signal the font sub-setter that we completed a node
-            if (_resourcePolicy != null)
+            if (_resourcePolicy is not null)
             {
                 XpsFontSerializationService fontService = (XpsFontSerializationService)_resourcePolicy.GetService(typeof(XpsFontSerializationService));
                 //
                 // The font subsetter will determine if based on this
                 // signal we have completed a subset
                 //
-                if (fontService != null && refCnt == 0)
+                if (fontService is not null && refCnt == 0)
                 {
                     subsetComplete = fontService.SignalCommit(writerType);
                 }
@@ -380,7 +380,7 @@ namespace System.Windows.Xps.Serialization
             //
             // Allow the packaging policy to release the stream
             //
-            if (_packagingPolicy != null)
+            if (_packagingPolicy is not null)
             {
                 if (writerType == typeof(FixedPage))
                 {
@@ -416,7 +416,7 @@ namespace System.Windows.Xps.Serialization
         {
             XpsResourceStream resourceStream = null;
 
-            if (_packagingPolicy != null)
+            if (_packagingPolicy is not null)
             {
                 if (resourceType == typeof(GlyphRun))
                 {
@@ -450,7 +450,7 @@ namespace System.Windows.Xps.Serialization
             Type resourceType
             )
         {
-            if (_packagingPolicy != null)
+            if (_packagingPolicy is not null)
             {
                 if (resourceType == typeof(GlyphRun))
                 {
@@ -542,7 +542,7 @@ namespace System.Windows.Xps.Serialization
         {
             IServiceProvider resourceServiceProvider = (IServiceProvider)ResourcePolicy;
             XpsFontSerializationService fontService = (XpsFontSerializationService)resourceServiceProvider.GetService(typeof(XpsFontSerializationService));
-            if (fontService != null)
+            if (fontService is not null)
             {
                 XpsFontSubsetter fontSubsetter = fontService.FontSubsetter;
                 fontSubsetter.SetSubsetCommitPolicy(policy);
@@ -573,7 +573,7 @@ namespace System.Windows.Xps.Serialization
         {
             IServiceProvider resourceServiceProvider = (IServiceProvider)ResourcePolicy;
             XpsFontSerializationService fontService = (XpsFontSerializationService)resourceServiceProvider.GetService(typeof(XpsFontSerializationService));
-            if (fontService != null)
+            if (fontService is not null)
             {
                 XpsFontSubsetter fontSubsetter = fontService.FontSubsetter;
                 fontSubsetter.SetSubsetCommitCountPolicy(countPolicy);
@@ -632,7 +632,7 @@ namespace System.Windows.Xps.Serialization
         {
             XpsSerializationPrintTicketRequiredEventArgs e = operationState as XpsSerializationPrintTicketRequiredEventArgs;
 
-            if (XpsSerializationPrintTicketRequired != null)
+            if (XpsSerializationPrintTicketRequired is not null)
             {
                 e.Modified = true;
 
@@ -648,7 +648,7 @@ namespace System.Windows.Xps.Serialization
         {
             XpsSerializationProgressChangedEventArgs e = operationState as XpsSerializationProgressChangedEventArgs;
 
-            if (XpsSerializationProgressChanged != null)
+            if (XpsSerializationProgressChanged is not null)
             {
                 XpsSerializationProgressChanged(this, e);
             }

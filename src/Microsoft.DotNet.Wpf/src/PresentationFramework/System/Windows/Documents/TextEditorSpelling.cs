@@ -245,7 +245,7 @@ namespace System.Windows.Documents
 
             SpellingError spellingError = GetSpellingErrorAtSelection(This);
 
-            args.CanExecute = (spellingError != null);
+            args.CanExecute = (spellingError is not null);
         }
 
         // Returns the position preceeding the next text character in a specified
@@ -257,7 +257,7 @@ namespace System.Windows.Documents
 
             character = (char)0;
 
-            while (position != null &&
+            while (position is not null &&
                    !foundText &&
                    (limit is null || position.CompareTo(limit) < 0))
             {
@@ -304,7 +304,7 @@ namespace System.Windows.Documents
         {
             char character;
 
-            Invariant.Assert(limit != null);
+            Invariant.Assert(limit is not null);
 
             while (true)
             {

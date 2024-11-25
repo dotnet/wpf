@@ -43,7 +43,7 @@ namespace System.Windows.Controls
 
             ContextMenu cm = (ContextMenu)element.GetValue(ContextMenuProperty);
 
-            if ((cm != null) && (element.Dispatcher != cm.Dispatcher))
+            if ((cm is not null) && (element.Dispatcher != cm.Dispatcher))
             {
                 throw new ArgumentException(SR.ContextMenuInDifferentDispatcher);
             }
@@ -403,7 +403,7 @@ namespace System.Windows.Controls
             if (e.TargetElement is null)
             {
                 DependencyObject o = sender as DependencyObject;
-                if (o != null)
+                if (o is not null)
                 {
                     if (ContextMenuIsEnabled(o))
                     {
@@ -422,7 +422,7 @@ namespace System.Windows.Controls
         {
             bool contextMenuIsEnabled = false;
             object menu = GetContextMenu(o);
-            if ((menu != null) && GetIsEnabled(o))
+            if ((menu is not null) && GetIsEnabled(o))
             {
                 if (PopupControlService.IsElementEnabled(o) || GetShowOnDisabled(o))
                 {

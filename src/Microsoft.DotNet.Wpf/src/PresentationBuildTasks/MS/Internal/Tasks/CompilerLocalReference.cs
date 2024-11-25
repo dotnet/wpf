@@ -179,7 +179,7 @@ namespace MS.Internal.Tasks
         internal bool SaveCacheInformation(MarkupCompilePass1 mcPass1)
         {
             Debug.Assert(String.IsNullOrEmpty(_localCacheFile) != true, "_localCacheFile must not be empty.");
-            Debug.Assert(mcPass1 != null, "A valid instance of MarkupCompilePass1 must be passed to method SaveCacheInformation.");
+            Debug.Assert(mcPass1 is not null, "A valid instance of MarkupCompilePass1 must be passed to method SaveCacheInformation.");
 
             bool bSuccess = false;
 
@@ -217,7 +217,7 @@ namespace MS.Internal.Tasks
                     sw.WriteLine(LocalApplicationFile.Serialize());
                 }
 
-                if (LocalMarkupPages != null && LocalMarkupPages.Length > 0)
+                if (LocalMarkupPages is not null && LocalMarkupPages.Length > 0)
                 {
                     for (int i = 0; i < LocalMarkupPages.Length; i++)
                     {
@@ -271,7 +271,7 @@ namespace MS.Internal.Tasks
                     lineText = srCache.ReadLine();
                     LocalReferenceFile lrf = LocalReferenceFile.Deserialize(lineText);
 
-                    if (lrf != null)
+                    if (lrf is not null)
                     {
                         alMarkupPages.Add(lrf);
                     }

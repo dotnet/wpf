@@ -99,7 +99,7 @@ namespace System.Windows.Controls
 
             // Initialize FindTooBar host.
             // If old FindToolBar is enabled, disable it first to ensure appropriate cleanup.
-            if (FindToolBar != null)
+            if (FindToolBar is not null)
             {
                 ToggleFindToolBar(false);
             }
@@ -107,14 +107,14 @@ namespace System.Windows.Controls
 
             // Initialize TooBar host.
             _toolBarHost = GetTemplateChild(_toolBarHostTemplateName) as Decorator;
-            if (_toolBarHost != null)
+            if (_toolBarHost is not null)
             {
                 _toolBarHost.Visibility = IsToolBarVisible ? Visibility.Visible : Visibility.Collapsed;
             }
 
             // Initialize ContentHost.
             // If old ContentHost is enabled, disable it first to ensure appropriate cleanup.
-            if (_contentHost != null)
+            if (_contentHost is not null)
             {
                 BindingOperations.ClearBinding(_contentHost, HorizontalScrollBarVisibilityProperty);
                 BindingOperations.ClearBinding(_contentHost, VerticalScrollBarVisibilityProperty);
@@ -124,9 +124,9 @@ namespace System.Windows.Controls
                 _contentHost.Content = null;
             }
             _contentHost = GetTemplateChild(_contentHostTemplateName) as ScrollViewer;
-            if (_contentHost != null)
+            if (_contentHost is not null)
             {
-                if (_contentHost.Content != null)
+                if (_contentHost.Content is not null)
                 {
                     throw new NotSupportedException(SR.FlowDocumentScrollViewerMarkedAsContentHostMustHaveNoContent);
                 }
@@ -216,7 +216,7 @@ namespace System.Windows.Controls
             {
                 ITextSelection textSelection = null;
                 FlowDocument flowDocument = Document;
-                if (flowDocument != null)
+                if (flowDocument is not null)
                 {
                     textSelection = flowDocument.StructuralCache.TextContainer.TextSelection;
                 }
@@ -539,20 +539,20 @@ namespace System.Windows.Controls
             Thickness pagePadding;
 
             // Only one printing job is allowed.
-            if (_printingState != null)
+            if (_printingState is not null)
             {
                 return;
             }
 
             // If the document is FlowDocument, do custom printing. Otherwise go through default path.
-            if (Document != null)
+            if (Document is not null)
             {
                 // Show print dialog.
                 docWriter = System.Printing.PrintQueue.CreateXpsDocumentWriter(ref ia);
-                if (docWriter != null && ia != null)
+                if (docWriter is not null && ia is not null)
                 {
                     // Suspend layout on FlowDocumentView.
-                    if (RenderScope != null)
+                    if (RenderScope is not null)
                     {
                         RenderScope.SuspendLayout();
                     }
@@ -574,7 +574,7 @@ namespace System.Windows.Controls
                     docWriter.WritingCancelled += new WritingCancelledEventHandler(HandlePrintCancelled);
 
                     // Add PreviewCanExecute handler to have a chance to disable UI Commands during printing.
-                    if (_contentHost != null)
+                    if (_contentHost is not null)
                     {
                         CommandManager.AddPreviewCanExecuteHandler(_contentHost, new CanExecuteRoutedEventHandler(PreviewCanExecuteRoutedEventHandler));
                     }
@@ -616,7 +616,7 @@ namespace System.Windows.Controls
         protected virtual void OnCancelPrintCommand()
         {
 #if !DONOTREFPRINTINGASMMETA
-            if (_printingState != null)
+            if (_printingState is not null)
             {
                 _printingState.XpsDocumentWriter.CancelAsync();
             }
@@ -659,7 +659,7 @@ namespace System.Windows.Controls
             {
                 // Esc -- Close FindToolBar
                 case Key.Escape:
-                    if (FindToolBar != null)
+                    if (FindToolBar is not null)
                     {
                         ToggleFindToolBar(false);
                         e.Handled = true;
@@ -670,7 +670,7 @@ namespace System.Windows.Controls
                 case Key.F3:
                     if (CanShowFindToolBar)
                     {
-                        if (FindToolBar != null)
+                        if (FindToolBar is not null)
                         {
                             // If the Shift key is also pressed, then search up.
                             FindToolBar.SearchUp = ((e.KeyboardDevice.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift);
@@ -701,7 +701,7 @@ namespace System.Windows.Controls
         {
             if (e.Handled) { return; }
 
-            if (_contentHost != null)
+            if (_contentHost is not null)
             {
                 //Press Ctrl and scroll mouse wheel will zoom in/out the document
                 if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
@@ -772,7 +772,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (HasLogicalChildren && Document != null)
+                if (HasLogicalChildren && Document is not null)
                 {
                     return new SingleChildEnumerator(Document);
                 }
@@ -804,10 +804,10 @@ namespace System.Windows.Controls
             // This breaks navigation cursor management logic, because TextEditor attached
             // to FlowDocumentScrollViewer handles those events first.
             DependencyObject document = this.Document as DependencyObject;
-            if (document != null && LogicalTreeHelper.GetParent(document) != this)
+            if (document is not null && LogicalTreeHelper.GetParent(document) != this)
             {
                 DependencyObject branchNode = route.PeekBranchNode() as DependencyObject;
-                if (branchNode != null && DocumentViewerHelper.IsLogicalDescendent(branchNode, document))
+                if (branchNode is not null && DocumentViewerHelper.IsLogicalDescendent(branchNode, document))
                 {
                     // Add intermediate ContentElements to the route.
                     FrameworkElement.AddIntermediateElementsToRoute(
@@ -822,10 +822,10 @@ namespace System.Windows.Controls
             bool continueInvalidation = true;
 
             DependencyObject document = this.Document as DependencyObject;
-            if (document != null && LogicalTreeHelper.GetParent(document) != this)
+            if (document is not null && LogicalTreeHelper.GetParent(document) != this)
             {
                 DependencyObject branchNode = (branchNodeStack.Count > 0) ? branchNodeStack.Peek() : null;
-                if (branchNode != null && DocumentViewerHelper.IsLogicalDescendent(branchNode, document))
+                if (branchNode is not null && DocumentViewerHelper.IsLogicalDescendent(branchNode, document))
                 {
                     continueInvalidation = FrameworkElement.InvalidateAutomationIntermediateElements(LogicalTreeHelper.GetParent(document), LogicalTreeHelper.GetParent(branchNode));
                 }
@@ -842,10 +842,10 @@ namespace System.Windows.Controls
         internal object BringContentPositionIntoView(object arg)
         {
             ITextPointer contentPosition = arg as ITextPointer;
-            if (contentPosition != null)
+            if (contentPosition is not null)
             {
                 ITextView textView = GetTextView();
-                if (textView != null && textView.IsValid && textView.RenderScope is IScrollInfo && contentPosition.TextContainer == textView.TextContainer)
+                if (textView is not null && textView.IsValid && textView.RenderScope is IScrollInfo && contentPosition.TextContainer == textView.TextContainer)
                 {
                     if (textView.Contains(contentPosition))
                     {
@@ -886,7 +886,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal bool CanShowFindToolBar
         {
-            get { return (_findToolBarHost != null && Document != null && _textEditor != null); }
+            get { return (_findToolBarHost is not null && Document is not null && _textEditor is not null); }
         }
 
         /// <summary>
@@ -894,7 +894,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal bool IsPrinting
         {
-            get { return (_printingState != null); }
+            get { return (_printingState is not null); }
         }
 
         /// <summary>
@@ -906,7 +906,7 @@ namespace System.Windows.Controls
             {
                 TextPointer contentPosition = null;
                 ITextView textView = GetTextView();
-                if (textView != null && textView.IsValid && textView.RenderScope is IScrollInfo)
+                if (textView is not null && textView.IsValid && textView.RenderScope is IScrollInfo)
                 {
                     contentPosition = textView.GetTextPositionFromPoint(new Point(), true) as TextPointer;
                 }
@@ -934,7 +934,7 @@ namespace System.Windows.Controls
             DocumentViewerHelper.ToggleFindToolBar(_findToolBarHost, new EventHandler(OnFindInvoked), enable);
             // FindToolBar is embedded inside the toolbar, so event if the ToolBar is not visible
             // it needs to be shown when showing FindToolBar.
-            if (!IsToolBarVisible && _toolBarHost != null)
+            if (!IsToolBarVisible && _toolBarHost is not null)
             {
                 _toolBarHost.Visibility = enable ? Visibility.Visible : Visibility.Collapsed;
             }
@@ -945,7 +945,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void ApplyZoom()
         {
-            if (RenderScope != null)
+            if (RenderScope is not null)
             {
                 RenderScope.LayoutTransform = new ScaleTransform(Zoom / 100, Zoom / 100);
             }
@@ -961,7 +961,7 @@ namespace System.Windows.Controls
             bool serviceOldState = false;
 
             //disable the service if enabled
-            if ((service != null) && service.IsEnabled)
+            if ((service is not null) && service.IsEnabled)
             {
                 serviceOldState = true;
                 service.Disable();
@@ -969,7 +969,7 @@ namespace System.Windows.Controls
 
             // This method is called when Document is changing or control template
             // is replaced, so need to drop old TextEditor data.
-            if (_textEditor != null)
+            if (_textEditor is not null)
             {
                 _textEditor.TextContainer.TextView = null;
                 _textEditor.OnDetach();
@@ -977,19 +977,19 @@ namespace System.Windows.Controls
             }
 
             ITextView textView = null;
-            if (Document != null)
+            if (Document is not null)
             {
                 textView = GetTextView();
                 Document.StructuralCache.TextContainer.TextView = textView;
             }
 
             // If new Document supports TextEditor, create one.
-            // If the Document is already attached to TextEditor (TextSelection != null),
+            // If the Document is already attached to TextEditor (TextSelection is not null),
             // do not create TextEditor for this instance of the viewer. (This situation may happen
             // when the same instance of Document is attached to more than one viewer).
             if (IsSelectionEnabled &&
-                Document != null &&
-                RenderScope != null &&
+                Document is not null &&
+                RenderScope is not null &&
                 Document.StructuralCache.TextContainer.TextSelection is null)
             {
                 _textEditor = new TextEditor(Document.StructuralCache.TextContainer, this, false);
@@ -998,13 +998,13 @@ namespace System.Windows.Controls
             }
 
             //restore AnnotationsService state
-            if ((service != null) && serviceOldState)
+            if ((service is not null) && serviceOldState)
             {
                 service.Enable(service.Store);
             }
 
             // If TextEditor is not enabled, FindToolBar cannot be visible.
-            if (_textEditor is null && FindToolBar != null)
+            if (_textEditor is null && FindToolBar is not null)
             {
                 ToggleFindToolBar(false);
             }
@@ -1051,10 +1051,10 @@ namespace System.Windows.Controls
         private void ClearPrintingState()
         {
 #if !DONOTREFPRINTINGASMMETA
-            if (_printingState != null)
+            if (_printingState is not null)
             {
                 // Resume layout on FlowDocumentView.
-                if (RenderScope != null)
+                if (RenderScope is not null)
                 {
                     RenderScope.ResumeLayout();
                 }
@@ -1066,7 +1066,7 @@ namespace System.Windows.Controls
                 }
 
                 // Remove PreviewCanExecute handler (added when Print command was executed).
-                if (_contentHost != null)
+                if (_contentHost is not null)
                 {
                     CommandManager.RemovePreviewCanExecuteHandler(_contentHost, new CanExecuteRoutedEventHandler(PreviewCanExecuteRoutedEventHandler));
                 }
@@ -1100,7 +1100,7 @@ namespace System.Windows.Controls
             UIElement targetUIElement;
             Rect targetRect = Rect.Empty;
 
-            if (args != null && args.TargetObject != null && Document != null)
+            if (args is not null && args.TargetObject is not null && Document is not null)
             {
                 document = Document;
 
@@ -1110,7 +1110,7 @@ namespace System.Windows.Controls
                 // This supports navigating from baseURI#anchor to just baseURI.
                 if (args.TargetObject == document)
                 {
-                    if (_contentHost != null)
+                    if (_contentHost is not null)
                     {
                         _contentHost.ScrollToHome();
                     }
@@ -1122,7 +1122,7 @@ namespace System.Windows.Controls
                     // Since entire content of FlowDocument is represented by
                     // bottomless page, the target has to be connected to visual tree.
                     // Otherwise, it is not descendant of FlowDocument.
-                    if (RenderScope != null && RenderScope.IsAncestorOf(targetUIElement))
+                    if (RenderScope is not null && RenderScope.IsAncestorOf(targetUIElement))
                     {
                         targetRect = args.TargetRect;
                         if (targetRect.IsEmpty)
@@ -1144,15 +1144,15 @@ namespace System.Windows.Controls
                 {
                     // Verify if TargetObject is in fact a child of Document.
                     child = args.TargetObject;
-                    while (child != null && child != document)
+                    while (child is not null && child != document)
                     {
                        child = LogicalTreeHelper.GetParent(child);
                     }
 
-                    if (child != null)
+                    if (child is not null)
                     {
                         ich = GetIContentHost();
-                        if (ich != null)
+                        if (ich is not null)
                         {
                             // Get the position of the content.
                             rects = ich.GetRectangles((ContentElement)args.TargetObject);
@@ -1195,15 +1195,15 @@ namespace System.Windows.Controls
         {
             // Use TextSelection to determine whether the new document belongs to another
             // control or not.
-            if (newDocument != null &&
-                newDocument.StructuralCache.TextContainer != null &&
-                newDocument.StructuralCache.TextContainer.TextSelection != null)
+            if (newDocument is not null &&
+                newDocument.StructuralCache.TextContainer is not null &&
+                newDocument.StructuralCache.TextContainer.TextSelection is not null)
             {
                 throw new ArgumentException(SR.FlowDocumentScrollViewerDocumentBelongsToAnotherFlowDocumentScrollViewerAlready);
             }
 
             // Cleanup state associated with the old document.
-            if (oldDocument != null)
+            if (oldDocument is not null)
             {
                 // If Document was added to logical tree of FlowDocumentScrollViewer before, remove it.
                 if (_documentAsLogicalChild)
@@ -1211,7 +1211,7 @@ namespace System.Windows.Controls
                     RemoveLogicalChild(oldDocument);
                 }
                 // Remove the document from the ContentHost.
-                if (RenderScope != null)
+                if (RenderScope is not null)
                 {
                     RenderScope.Document = null;
                 }
@@ -1222,7 +1222,7 @@ namespace System.Windows.Controls
 
             // If FlowDocumentScrollViewer was created through style, then do not modify
             // the logical tree. Instead, set "core parent" for the Document.
-            if (newDocument != null && LogicalTreeHelper.GetParent(newDocument) != null)
+            if (newDocument is not null && LogicalTreeHelper.GetParent(newDocument) is not null)
             {
                 // Set the "core parent" back to us.
                 ContentOperations.SetParent(newDocument, this);
@@ -1234,10 +1234,10 @@ namespace System.Windows.Controls
             }
 
             // Initialize state associated with the new document.
-            if (newDocument != null)
+            if (newDocument is not null)
             {
                 // Set the document on the ContentHost.
-                if (RenderScope != null)
+                if (RenderScope is not null)
                 {
                     RenderScope.Document = newDocument;
                 }
@@ -1260,7 +1260,7 @@ namespace System.Windows.Controls
             if (!CanShowFindToolBar)
             {
                 // Disable FindToolBar, if the content does not support it.
-                if (FindToolBar != null)
+                if (FindToolBar is not null)
                 {
                     ToggleFindToolBar(false);
                 }
@@ -1268,7 +1268,7 @@ namespace System.Windows.Controls
 
             // Document is also represented as Automation child. Need to invalidate peer to force update.
             FlowDocumentScrollViewerAutomationPeer peer = UIElementAutomationPeer.FromElement(this) as FlowDocumentScrollViewerAutomationPeer;
-            if (peer != null)
+            if (peer is not null)
             {
                 peer.InvalidatePeer();
             }
@@ -1294,7 +1294,7 @@ namespace System.Windows.Controls
         private IContentHost GetIContentHost()
         {
             IContentHost ich = null;
-            if (RenderScope != null && VisualTreeHelper.GetChildrenCount(RenderScope) > 0)
+            if (RenderScope is not null && VisualTreeHelper.GetChildrenCount(RenderScope) > 0)
             {
                 ich = VisualTreeHelper.GetChild(RenderScope, 0) as IContentHost;
             }
@@ -1399,8 +1399,8 @@ namespace System.Windows.Controls
         private static void CanExecuteRoutedEventHandler(object target, CanExecuteRoutedEventArgs args)
         {
             FlowDocumentScrollViewer viewer = target as FlowDocumentScrollViewer;
-            Invariant.Assert(viewer != null, "Target of QueryEnabledEvent must be FlowDocumentScrollViewer.");
-            Invariant.Assert(args != null, "args cannot be null.");
+            Invariant.Assert(viewer is not null, "Target of QueryEnabledEvent must be FlowDocumentScrollViewer.");
+            Invariant.Assert(args is not null, "args cannot be null.");
 
             // FlowDocumentScrollViewer is capable of execution of the majority of its commands.
             // Special rules:
@@ -1416,7 +1416,7 @@ namespace System.Windows.Controls
                 }
                 else if (args.Command == ApplicationCommands.Print)
                 {
-                    args.CanExecute = (viewer.Document != null);
+                    args.CanExecute = (viewer.Document is not null);
                 }
                 else if (args.Command == ApplicationCommands.CancelPrint)
                 {
@@ -1441,8 +1441,8 @@ namespace System.Windows.Controls
         private static void ExecutedRoutedEventHandler(object target, ExecutedRoutedEventArgs args)
         {
             FlowDocumentScrollViewer viewer = target as FlowDocumentScrollViewer;
-            Invariant.Assert(viewer != null, "Target of ExecuteEvent must be FlowDocumentScrollViewer.");
-            Invariant.Assert(args != null, "args cannot be null.");
+            Invariant.Assert(viewer is not null, "Target of ExecuteEvent must be FlowDocumentScrollViewer.");
+            Invariant.Assert(args is not null, "args cannot be null.");
 
             // Now we execute the method corresponding to the Command that fired this event;
             // each Command has its own protected virtual method that performs the operation
@@ -1469,56 +1469,56 @@ namespace System.Windows.Controls
             }
             else if (args.Command == _commandLineDown)
             {
-                if (viewer._contentHost != null)
+                if (viewer._contentHost is not null)
                 {
                     viewer._contentHost.LineDown();
                 }
             }
             else if (args.Command == _commandLineUp)
             {
-                if (viewer._contentHost != null)
+                if (viewer._contentHost is not null)
                 {
                     viewer._contentHost.LineUp();
                 }
             }
             else if (args.Command == _commandLineLeft)
             {
-                if (viewer._contentHost != null)
+                if (viewer._contentHost is not null)
                 {
                     viewer._contentHost.LineLeft();
                 }
             }
             else if (args.Command == _commandLineRight)
             {
-                if (viewer._contentHost != null)
+                if (viewer._contentHost is not null)
                 {
                     viewer._contentHost.LineRight();
                 }
             }
             else if (args.Command == NavigationCommands.NextPage)
             {
-                if (viewer._contentHost != null)
+                if (viewer._contentHost is not null)
                 {
                     viewer._contentHost.PageDown();
                 }
             }
             else if (args.Command == NavigationCommands.PreviousPage)
             {
-                if (viewer._contentHost != null)
+                if (viewer._contentHost is not null)
                 {
                     viewer._contentHost.PageUp();
                 }
             }
             else if (args.Command == NavigationCommands.FirstPage)
             {
-                if (viewer._contentHost != null)
+                if (viewer._contentHost is not null)
                 {
                     viewer._contentHost.ScrollToHome();
                 }
             }
             else if (args.Command == NavigationCommands.LastPage)
             {
-                if (viewer._contentHost != null)
+                if (viewer._contentHost is not null)
                 {
                     viewer._contentHost.ScrollToEnd();
                 }
@@ -1540,7 +1540,7 @@ namespace System.Windows.Controls
             ITextRange findResult;
             FindToolBar findToolBar = FindToolBar;
 
-            if (findToolBar != null && _textEditor != null)
+            if (findToolBar is not null && _textEditor is not null)
             {
                 // In order to show current text selection TextEditor requires Focus to be set on the UIScope.
                 // If there embedded controls, it may happen that embedded control currently has focus and find
@@ -1566,11 +1566,11 @@ namespace System.Windows.Controls
         private void PreviewCanExecuteRoutedEventHandler(object target, CanExecuteRoutedEventArgs args)
         {
             ScrollViewer sv = target as ScrollViewer;
-            Invariant.Assert(sv != null, "Target of PreviewCanExecuteRoutedEventHandler must be ScrollViewer.");
-            Invariant.Assert(args != null, "args cannot be null.");
+            Invariant.Assert(sv is not null, "Target of PreviewCanExecuteRoutedEventHandler must be ScrollViewer.");
+            Invariant.Assert(args is not null, "args cannot be null.");
 
             // Disable UI commands, if printing is in progress.
-            if (_printingState != null)
+            if (_printingState is not null)
             {
                 args.CanExecute = false;
                 args.Handled = true;
@@ -1622,7 +1622,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static void DocumentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Invariant.Assert(d != null && d is FlowDocumentScrollViewer);
+            Invariant.Assert(d is not null && d is FlowDocumentScrollViewer);
             ((FlowDocumentScrollViewer)d).DocumentChanged((FlowDocument)e.OldValue, (FlowDocument)e.NewValue);
 
             // Since Document state is used to determine CanExecute state, we must invalidate that state.
@@ -1634,7 +1634,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static void ZoomChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Invariant.Assert(d != null && d is FlowDocumentScrollViewer);
+            Invariant.Assert(d is not null && d is FlowDocumentScrollViewer);
             FlowDocumentScrollViewer viewer = (FlowDocumentScrollViewer)d;
             if (!DoubleUtil.AreClose((double)e.OldValue, (double)e.NewValue))
             {
@@ -1652,7 +1652,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static object CoerceZoom(DependencyObject d, object value)
         {
-            Invariant.Assert(d != null && d is FlowDocumentScrollViewer);
+            Invariant.Assert(d is not null && d is FlowDocumentScrollViewer);
             FlowDocumentScrollViewer viewer = (FlowDocumentScrollViewer)d;
 
             double zoom = (double)value;
@@ -1677,7 +1677,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static void MaxZoomChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Invariant.Assert(d != null && d is FlowDocumentScrollViewer);
+            Invariant.Assert(d is not null && d is FlowDocumentScrollViewer);
             FlowDocumentScrollViewer viewer = (FlowDocumentScrollViewer)d;
 
             viewer.CoerceValue(ZoomProperty);
@@ -1689,7 +1689,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static object CoerceMaxZoom(DependencyObject d, object value)
         {
-            Invariant.Assert(d != null && d is FlowDocumentScrollViewer);
+            Invariant.Assert(d is not null && d is FlowDocumentScrollViewer);
             FlowDocumentScrollViewer viewer = (FlowDocumentScrollViewer)d;
 
             double min = viewer.MinZoom;
@@ -1701,7 +1701,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static void MinZoomChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Invariant.Assert(d != null && d is FlowDocumentScrollViewer);
+            Invariant.Assert(d is not null && d is FlowDocumentScrollViewer);
             FlowDocumentScrollViewer viewer = (FlowDocumentScrollViewer)d;
 
             viewer.CoerceValue(MaxZoomProperty);
@@ -1727,7 +1727,7 @@ namespace System.Windows.Controls
         /// <param name="args">RequestBringIntoViewEventArgs indicates the element and region to scroll into view.</param>
         private static void HandleRequestBringIntoView(object sender, RequestBringIntoViewEventArgs args)
         {
-            if (sender != null && sender is FlowDocumentScrollViewer)
+            if (sender is not null && sender is FlowDocumentScrollViewer)
             {
                 ((FlowDocumentScrollViewer)sender).HandleRequestBringIntoView(args);
             }
@@ -1738,7 +1738,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static void IsSelectionEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Invariant.Assert(d != null && d is FlowDocumentScrollViewer);
+            Invariant.Assert(d is not null && d is FlowDocumentScrollViewer);
             FlowDocumentScrollViewer viewer = (FlowDocumentScrollViewer)d;
 
             viewer.AttachTextEditor();
@@ -1749,10 +1749,10 @@ namespace System.Windows.Controls
         /// </summary>
         private static void IsToolBarVisibleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Invariant.Assert(d != null && d is FlowDocumentScrollViewer);
+            Invariant.Assert(d is not null && d is FlowDocumentScrollViewer);
             FlowDocumentScrollViewer viewer = (FlowDocumentScrollViewer)d;
 
-            if (viewer._toolBarHost != null)
+            if (viewer._toolBarHost is not null)
             {
                 viewer._toolBarHost.Visibility = (bool)e.NewValue ? Visibility.Visible : Visibility.Collapsed;
             }
@@ -1765,10 +1765,10 @@ namespace System.Windows.Controls
         {
             FlowDocumentScrollViewer viewer = (FlowDocumentScrollViewer)d;
 
-            if (viewer.Selection != null)
+            if (viewer.Selection is not null)
             {
                 CaretElement caretElement = viewer.Selection.CaretElement;
-                if (caretElement != null)
+                if (caretElement is not null)
                 {
                     caretElement.InvalidateVisual();
                 }
@@ -1792,7 +1792,7 @@ namespace System.Windows.Controls
         /// </summary>
         private FindToolBar FindToolBar
         {
-            get { return (_findToolBarHost != null) ? _findToolBarHost.Child as FindToolBar : null; }
+            get { return (_findToolBarHost is not null) ? _findToolBarHost.Child as FindToolBar : null; }
         }
 
         /// <summary>
@@ -1800,7 +1800,7 @@ namespace System.Windows.Controls
         /// </summary>
         private FlowDocumentView RenderScope
         {
-            get { return (_contentHost != null) ? _contentHost.Content as FlowDocumentView : null; }
+            get { return (_contentHost is not null) ? _contentHost.Content as FlowDocumentView : null; }
         }
 
         #endregion Private Properties
@@ -1850,7 +1850,7 @@ namespace System.Windows.Controls
         {
             ArgumentNullException.ThrowIfNull(value);
             // Check if Content has already been set.
-            if (this.Document != null)
+            if (this.Document is not null)
             {
                 throw new ArgumentException(SR.FlowDocumentScrollViewerCanHaveOnlyOneChild);
             }
@@ -1899,7 +1899,7 @@ namespace System.Windows.Controls
             }
             else if (serviceType == typeof(TextContainer) || serviceType == typeof(ITextContainer))
             {
-                if (Document != null)
+                if (Document is not null)
                 {
                     service = ((IServiceProvider)Document).GetService(serviceType);
                 }
@@ -1939,7 +1939,7 @@ namespace System.Windows.Controls
             int cp = -1;
             LogicalDirection cpDirection = LogicalDirection.Forward;
             TextPointer contentPosition = ContentPosition;
-            if (contentPosition != null)
+            if (contentPosition is not null)
             {
                 cp = contentPosition.Offset;
                 cpDirection = contentPosition.LogicalDirection;
@@ -1953,13 +1953,13 @@ namespace System.Windows.Controls
         void IJournalState.RestoreJournalState(CustomJournalStateInternal state)
         {
             JournalState viewerState = state as JournalState;
-            if (state != null)
+            if (state is not null)
             {
                 Zoom = viewerState.Zoom;
                 if (viewerState.ContentPosition != -1)
                 {
                     FlowDocument document = Document;
-                    if (document != null)
+                    if (document is not null)
                     {
                         TextContainer textContainer = document.StructuralCache.TextContainer;
                         if (viewerState.ContentPosition <= textContainer.SymbolCount)

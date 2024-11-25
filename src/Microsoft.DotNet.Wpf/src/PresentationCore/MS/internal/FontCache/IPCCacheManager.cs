@@ -458,7 +458,7 @@ namespace MS.Internal.FontCache
 
         internal void CloseConnection()
         {
-            if (_conn != null)
+            if (_conn is not null)
             {
                 int errorCode = 0;
                 //ignore return value
@@ -525,7 +525,7 @@ namespace MS.Internal.FontCache
         // Internal Properties
         //----------------------------------------
 #region Internal Properties
-        internal bool IsConnected { get { return (_conn != null); } }
+        internal bool IsConnected { get { return (_conn is not null); } }
         internal int MaxRequestBytes { get { return _conn.GetMaxRequestBytes(); } }
 #endregion Internal Properties
 

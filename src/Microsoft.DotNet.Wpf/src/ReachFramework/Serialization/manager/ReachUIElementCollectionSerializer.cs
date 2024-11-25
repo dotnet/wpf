@@ -127,7 +127,7 @@ namespace System.Windows.Xps.Serialization
             //
             foreach (object uiElement in (IEnumerable)serializableObjectContext.TargetObject)
             {
-                if (uiElement != null)
+                if (uiElement is not null)
                 {
                     //
                     // Serialize the current ui element
@@ -149,7 +149,7 @@ namespace System.Windows.Xps.Serialization
         {
             Visual visual = uiElement as Visual;
 
-            if(visual != null)
+            if(visual is not null)
             {
                 ReachSerializer serializer = SerializationManager.GetSerializer(visual);
 

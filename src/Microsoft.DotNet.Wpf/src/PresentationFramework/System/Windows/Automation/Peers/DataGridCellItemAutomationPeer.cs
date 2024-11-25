@@ -44,7 +44,7 @@ namespace System.Windows.Automation.Peers
         protected override string GetAcceleratorKeyCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.GetAcceleratorKey();
             else
                 ThrowElementNotAvailableException();
@@ -56,7 +56,7 @@ namespace System.Windows.Automation.Peers
         protected override string GetAccessKeyCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.GetAccessKey();
             else
                 ThrowElementNotAvailableException();
@@ -74,7 +74,7 @@ namespace System.Windows.Automation.Peers
         protected override string GetAutomationIdCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.GetAutomationId();
             else
                 ThrowElementNotAvailableException();
@@ -86,7 +86,7 @@ namespace System.Windows.Automation.Peers
         protected override Rect GetBoundingRectangleCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.GetBoundingRectangle();
             }
@@ -100,7 +100,7 @@ namespace System.Windows.Automation.Peers
         protected override List<AutomationPeer> GetChildrenCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 // We need to manually update children here since the wrapperPeer is not in the automation tree.
                 // When containers are recycled the visual (DataGridCell) will point to a new item. ForceEnsureChildren will just refresh children of this peer,
@@ -118,7 +118,7 @@ namespace System.Windows.Automation.Peers
         protected override string GetClassNameCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.GetClassName();
             }
@@ -133,7 +133,7 @@ namespace System.Windows.Automation.Peers
         protected override Point GetClickablePointCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.GetClickablePoint();
             else
                 ThrowElementNotAvailableException();
@@ -145,7 +145,7 @@ namespace System.Windows.Automation.Peers
         protected override string GetHelpTextCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.GetHelpText();
             else
                 ThrowElementNotAvailableException();
@@ -157,7 +157,7 @@ namespace System.Windows.Automation.Peers
         protected override string GetItemStatusCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.GetItemStatus();
             else
                 ThrowElementNotAvailableException();
@@ -169,7 +169,7 @@ namespace System.Windows.Automation.Peers
         protected override string GetItemTypeCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.GetItemType();
             else
                 ThrowElementNotAvailableException();
@@ -181,7 +181,7 @@ namespace System.Windows.Automation.Peers
         protected override AutomationPeer GetLabeledByCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.GetLabeledBy();
             else
                 ThrowElementNotAvailableException();
@@ -207,7 +207,7 @@ namespace System.Windows.Automation.Peers
             AutomationPeer wrapperPeer = OwningCellPeer;
             AutomationLiveSetting liveSetting = AutomationLiveSetting.Off;
 
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 liveSetting = wrapperPeer.GetLiveSetting();
             }
@@ -225,7 +225,7 @@ namespace System.Windows.Automation.Peers
             AutomationPeer wrapperPeer = OwningCellPeer;
             string name = null;
 
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 name = wrapperPeer.GetName();
 
             if (string.IsNullOrEmpty(name))
@@ -240,7 +240,7 @@ namespace System.Windows.Automation.Peers
         protected override AutomationOrientation GetOrientationCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.GetOrientation();
             else
                 ThrowElementNotAvailableException();
@@ -255,7 +255,7 @@ namespace System.Windows.Automation.Peers
             switch (patternInterface)
             {
                 case PatternInterface.Invoke:
-                    if (this.OwningDataGrid != null && !this.OwningDataGrid.IsReadOnly && !_column.IsReadOnly)
+                    if (this.OwningDataGrid is not null && !this.OwningDataGrid.IsReadOnly && !_column.IsReadOnly)
                     {
                         return this;
                     }
@@ -280,14 +280,14 @@ namespace System.Windows.Automation.Peers
                 case PatternInterface.TableItem:
                     return this;
                 case PatternInterface.VirtualizedItem:
-                    if (VirtualizedItemPatternIdentifiers.Pattern != null)
+                    if (VirtualizedItemPatternIdentifiers.Pattern is not null)
                     {
                         if (OwningCellPeer is null)
                             return this;
                         else
                         {
                             // If the Item is in Automation Tree we consider it Realized and need not return VirtualizedItem pattern.
-                            if (OwningItemPeer != null && !IsItemInAutomationTree())
+                            if (OwningItemPeer is not null && !IsItemInAutomationTree())
                             {
                                 return this;
                             }
@@ -318,7 +318,7 @@ namespace System.Windows.Automation.Peers
             AutomationPeer wrapperPeer = OwningCellPeer;
             int position = AutomationProperties.AutomationPositionInSetDefault;
 
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 position = wrapperPeer.GetPositionInSet();
             }
@@ -344,7 +344,7 @@ namespace System.Windows.Automation.Peers
             AutomationPeer wrapperPeer = OwningCellPeer;
             int size = AutomationProperties.AutomationSizeOfSetDefault;
 
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 size = wrapperPeer.GetSizeOfSet();
             }
@@ -362,7 +362,7 @@ namespace System.Windows.Automation.Peers
             AutomationPeer wrapperPeer = OwningCellPeer;
             AutomationHeadingLevel headingLevel = AutomationHeadingLevel.None;
 
-            if(wrapperPeer != null)
+            if(wrapperPeer is not null)
             {
                 headingLevel = wrapperPeer.GetHeadingLevel();
             }
@@ -377,7 +377,7 @@ namespace System.Windows.Automation.Peers
         override internal Rect GetVisibleBoundingRectCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 return wrapperPeer.GetVisibleBoundingRectCore();
             }
@@ -388,7 +388,7 @@ namespace System.Windows.Automation.Peers
         protected override bool HasKeyboardFocusCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.HasKeyboardFocus();
             else
                 ThrowElementNotAvailableException();
@@ -400,7 +400,7 @@ namespace System.Windows.Automation.Peers
         protected override bool IsContentElementCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.IsContentElement();
 
             return true;
@@ -410,7 +410,7 @@ namespace System.Windows.Automation.Peers
         protected override bool IsControlElementCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.IsControlElement();
 
             return true;
@@ -420,7 +420,7 @@ namespace System.Windows.Automation.Peers
         protected override bool IsDialogCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.IsDialog();
             else
                 ThrowElementNotAvailableException();
@@ -432,7 +432,7 @@ namespace System.Windows.Automation.Peers
         protected override bool IsEnabledCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.IsEnabled();
             else
                 ThrowElementNotAvailableException();
@@ -444,7 +444,7 @@ namespace System.Windows.Automation.Peers
         protected override bool IsKeyboardFocusableCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.IsKeyboardFocusable();
             else
                 ThrowElementNotAvailableException();
@@ -456,7 +456,7 @@ namespace System.Windows.Automation.Peers
         protected override bool IsOffscreenCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.IsOffscreen();
             else
                 ThrowElementNotAvailableException();
@@ -469,7 +469,7 @@ namespace System.Windows.Automation.Peers
         protected override bool IsPasswordCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.IsPassword();
             else
                 ThrowElementNotAvailableException();
@@ -481,7 +481,7 @@ namespace System.Windows.Automation.Peers
         protected override bool IsRequiredForFormCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 return wrapperPeer.IsRequiredForForm();
             else
                 ThrowElementNotAvailableException();
@@ -493,7 +493,7 @@ namespace System.Windows.Automation.Peers
         protected override void SetFocusCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
                 wrapperPeer.SetFocus();
             else
                 ThrowElementNotAvailableException();
@@ -507,7 +507,7 @@ namespace System.Windows.Automation.Peers
         override internal void AddToParentProxyWeakRefCache()
         {
             DataGridItemAutomationPeer owningItemPeer = this.OwningItemPeer;
-            if (owningItemPeer != null)
+            if (owningItemPeer is not null)
             {
                 owningItemPeer.AddProxyToWeakRefStorage(this.ElementProxyWeakReference, this);
             }
@@ -564,15 +564,15 @@ namespace System.Windows.Automation.Peers
 
         IRawElementProviderSimple[] ITableItemProvider.GetColumnHeaderItems()
         {
-            if (this.OwningDataGrid != null &&
+            if (this.OwningDataGrid is not null &&
                 (this.OwningDataGrid.HeadersVisibility & DataGridHeadersVisibility.Column) == DataGridHeadersVisibility.Column &&
-                this.OwningDataGrid.ColumnHeadersPresenter != null)
+                this.OwningDataGrid.ColumnHeadersPresenter is not null)
             {
                 DataGridColumnHeadersPresenterAutomationPeer columnHeadersPresenterPeer = UIElementAutomationPeer.CreatePeerForElement(this.OwningDataGrid.ColumnHeadersPresenter) as DataGridColumnHeadersPresenterAutomationPeer;
-                if (columnHeadersPresenterPeer != null)
+                if (columnHeadersPresenterPeer is not null)
                 {
                     AutomationPeer dataGridColumnHeaderPeer = columnHeadersPresenterPeer.FindOrCreateItemAutomationPeer(_column);
-                    if (dataGridColumnHeaderPeer != null)
+                    if (dataGridColumnHeaderPeer is not null)
                     {
                         List<IRawElementProviderSimple> providers = new List<IRawElementProviderSimple>(1);
                         providers.Add(ProviderFromPeer(dataGridColumnHeaderPeer));
@@ -586,15 +586,15 @@ namespace System.Windows.Automation.Peers
 
         IRawElementProviderSimple[] ITableItemProvider.GetRowHeaderItems()
         {
-            if (this.OwningDataGrid != null &&
+            if (this.OwningDataGrid is not null &&
                 (this.OwningDataGrid.HeadersVisibility & DataGridHeadersVisibility.Row) == DataGridHeadersVisibility.Row)
             {
                 DataGridAutomationPeer dataGridAutomationPeer = UIElementAutomationPeer.CreatePeerForElement(this.OwningDataGrid) as DataGridAutomationPeer;
                 DataGridItemAutomationPeer dataGridItemAutomationPeer = dataGridAutomationPeer.FindOrCreateItemAutomationPeer(Item) as DataGridItemAutomationPeer;
-                if (dataGridItemAutomationPeer != null)
+                if (dataGridItemAutomationPeer is not null)
                 {
                     AutomationPeer rowHeaderAutomationPeer = dataGridItemAutomationPeer.RowHeaderAutomationPeer;
-                    if (rowHeaderAutomationPeer != null)
+                    if (rowHeaderAutomationPeer is not null)
                     {
                         List<IRawElementProviderSimple> providers = new List<IRawElementProviderSimple>(1);
                         providers.Add(ProviderFromPeer(rowHeaderAutomationPeer));
@@ -629,7 +629,7 @@ namespace System.Windows.Automation.Peers
 
             // Put current cell into edit mode
             DataGridCell cell = this.OwningCell;
-            if (cell != null)
+            if (cell is not null)
             {
                 if (!cell.IsEditing)
                 {
@@ -762,7 +762,7 @@ namespace System.Windows.Automation.Peers
             {
                 throw new InvalidOperationException(SR.DataGrid_ColumnIsReadOnly);
             }
-            if (this.OwningDataGrid != null)
+            if (this.OwningDataGrid is not null)
             {
                 OwningDataGrid.SetCellAutomationValue(Item, _column, value);
             }
@@ -772,7 +772,7 @@ namespace System.Windows.Automation.Peers
         {
             get
             {
-                if (this.OwningDataGrid != null)
+                if (this.OwningDataGrid is not null)
                 {
                     return OwningDataGrid.GetCellAutomationValue(Item, _column);
                 }
@@ -808,14 +808,14 @@ namespace System.Windows.Automation.Peers
         {
             // To avoid the situation on legacy systems which may not have new unmanaged core. this check with old unmanaged core
             // avoids throwing exception and provide older behavior returning default values for items which are virtualized rather than throwing exception.
-            if (VirtualizedItemPatternIdentifiers.Pattern != null && !IsItemInAutomationTree())
+            if (VirtualizedItemPatternIdentifiers.Pattern is not null && !IsItemInAutomationTree())
                 throw new ElementNotAvailableException(SR.VirtualizedElement);
         }
 
         private bool IsItemInAutomationTree()
         {
             AutomationPeer parent = this.GetParent();
-            if (this.Index != -1 && parent != null && parent.Children != null && this.Index < parent.Children.Count && parent.Children[this.Index] == this)
+            if (this.Index != -1 && parent is not null && parent.Children is not null && this.Index < parent.Children.Count && parent.Children[this.Index] == this)
                 return true;
             else return false;
         }
@@ -828,7 +828,7 @@ namespace System.Windows.Automation.Peers
         {
             get
             {
-                return (this.OwningDataGrid != null && (this.OwningDataGrid.SelectionUnit == DataGridSelectionUnit.Cell ||
+                return (this.OwningDataGrid is not null && (this.OwningDataGrid.SelectionUnit == DataGridSelectionUnit.Cell ||
                 this.OwningDataGrid.SelectionUnit == DataGridSelectionUnit.CellOrRowHeader));
             }
         }
@@ -856,7 +856,7 @@ namespace System.Windows.Automation.Peers
             get
             {
                 DataGrid dataGrid = this.OwningDataGrid;
-                return (dataGrid != null) ? dataGrid.TryFindCell(Item, _column) : null;
+                return (dataGrid is not null) ? dataGrid.TryFindCell(Item, _column) : null;
             }
         }
 
@@ -866,7 +866,7 @@ namespace System.Windows.Automation.Peers
             {
                 DataGridCellAutomationPeer cellPeer = null;
                 DataGridCell cell = this.OwningCell;
-                if (cell != null)
+                if (cell is not null)
                 {
                     cellPeer = FrameworkElementAutomationPeer.CreatePeerForElement(cell) as DataGridCellAutomationPeer;
                     cellPeer.EventsSource = this;
@@ -881,7 +881,7 @@ namespace System.Windows.Automation.Peers
             get
             {
                 AutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(OwningDataGrid);
-                if (peer != null)
+                if (peer is not null)
                 {
                     return ProviderFromPeer(peer);
                 }
@@ -907,10 +907,10 @@ namespace System.Windows.Automation.Peers
         {
             get
             {
-                if (OwningDataGrid != null)
+                if (OwningDataGrid is not null)
                 {
                     DataGridAutomationPeer dataGridPeer = FrameworkElementAutomationPeer.CreatePeerForElement(OwningDataGrid) as DataGridAutomationPeer;
-                    if (dataGridPeer != null)
+                    if (dataGridPeer is not null)
                     {
                         return dataGridPeer.GetExistingPeerByItem(Item, /*checkInWeakRefStorage*/ true) as DataGridItemAutomationPeer;
                     }
@@ -931,7 +931,7 @@ namespace System.Windows.Automation.Peers
                 if (value)
                     return;
                 AutomationPeer wrapperPeer = OwningCellPeer;
-                if (wrapperPeer != null)
+                if (wrapperPeer is not null)
                 {
                     wrapperPeer.AncestorsInvalid = false;
                 }

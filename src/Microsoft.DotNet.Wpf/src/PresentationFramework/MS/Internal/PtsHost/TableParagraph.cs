@@ -52,7 +52,7 @@ namespace MS.Internal.PtsHost
             Table.TableStructureChanged -= new System.EventHandler(TableStructureChanged);
 
             BaseParagraph paraChild = _firstChild;
-            while (paraChild != null)
+            while (paraChild is not null)
             {
                 BaseParagraph para = paraChild;
                 paraChild = paraChild.Next;
@@ -107,7 +107,7 @@ namespace MS.Internal.PtsHost
                 MarginCollapsingState mcsOut = null;
                 MarginCollapsingState.CollapseTopMargin(PtsContext, mbp, mcs, out mcsOut, out dvr);
 
-                if (mcsOut != null)
+                if (mcsOut is not null)
                 {
                     dvr = mcsOut.Margin;
                     mcsOut.Dispose();
@@ -192,7 +192,7 @@ namespace MS.Internal.PtsHost
             MarginCollapsingState mcsNew = null;
             int margin;
             MarginCollapsingState.CollapseBottomMargin(PtsContext, mbp, mcs, out mcsNew, out margin);
-            if (mcsNew != null)
+            if (mcsNew is not null)
                 ppmcsclientOut = mcsNew.Handle;
         }
 
@@ -282,7 +282,7 @@ namespace MS.Internal.PtsHost
                     }
                 }
 
-                if(tableRow != null)
+                if(tableRow is not null)
                 {
                     _firstChild = new RowParagraph(tableRow, StructuralCache);
 
@@ -290,7 +290,7 @@ namespace MS.Internal.PtsHost
                 }
             }
 
-            if(_firstChild != null)
+            if(_firstChild is not null)
             {
                 fFound = PTS.True;
                 pnmFirstRow = _firstChild.Handle;
@@ -355,7 +355,7 @@ namespace MS.Internal.PtsHost
                     nextRowGroupIndex++;
                 }
 
-                if(tableRow != null)
+                if(tableRow is not null)
                 {
                     nextParagraph = new RowParagraph(tableRow, StructuralCache);
                     prevParagraph.Next = nextParagraph;
@@ -365,7 +365,7 @@ namespace MS.Internal.PtsHost
                 }
             }
 
-            if(nextParagraph != null)
+            if(nextParagraph is not null)
             {
                 fFound = PTS.True;
                 pnmNextRow = nextParagraph.Handle;
@@ -449,7 +449,7 @@ namespace MS.Internal.PtsHost
             bool isEntireTableInvalid = true;
             RowParagraph currentParagraph = _firstChild as RowParagraph;
 
-            while(currentParagraph != null)
+            while(currentParagraph is not null)
             {
                 if(!InvalidateRowStructure(currentParagraph, startPosition))
                 {
@@ -469,7 +469,7 @@ namespace MS.Internal.PtsHost
         {
             RowParagraph currentParagraph = _firstChild as RowParagraph;
 
-            while(currentParagraph != null)
+            while(currentParagraph is not null)
             {
                 InvalidateRowFormatCache(currentParagraph);
 
@@ -546,7 +546,7 @@ namespace MS.Internal.PtsHost
         {
             // Disconnect obsolete paragraphs.
             BaseParagraph paraInvalid = _firstChild;
-            while (paraInvalid != null)
+            while (paraInvalid is not null)
             {
                 paraInvalid.Dispose();
                 paraInvalid = paraInvalid.Next;
@@ -564,7 +564,7 @@ namespace MS.Internal.PtsHost
                 DirtyTextRange dtr = new DirtyTextRange(Table.ContentStartOffset, charCount, charCount);
                 StructuralCache.AddDirtyTextRange(dtr);
             }
-            if (StructuralCache.FormattingOwner.Formatter != null)
+            if (StructuralCache.FormattingOwner.Formatter is not null)
             {
                 StructuralCache.FormattingOwner.Formatter.OnContentInvalidated(true, Table.ContentStart, Table.ContentEnd);
             }

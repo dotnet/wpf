@@ -81,7 +81,7 @@ namespace System.Windows.Xps.Serialization
                 {
                     UIElementCollectionSerializerContext thisContext = context as UIElementCollectionSerializerContext;
 
-                    if(thisContext != null)
+                    if(thisContext is not null)
                     {
                         SerializeNextUIElement(thisContext.Enumerator,
                                                thisContext.ObjectContext);
@@ -213,7 +213,7 @@ namespace System.Windows.Xps.Serialization
         {
             Visual visual = uiElement as Visual;
 
-            if(visual != null)
+            if(visual is not null)
             {
                 ReachSerializer serializer = SerializationManager.GetSerializer(visual);
 

@@ -99,7 +99,7 @@ namespace System.Windows.Media.Media3D
 
             String source = value as string;
 
-            if (source != null)
+            if (source is not null)
             {
                 return Matrix3D.Parse(source);
             }
@@ -123,7 +123,7 @@ namespace System.Windows.Media.Media3D
         /// <param name="destinationType"> The type to which this will convert the Matrix3D instance. </param>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType != null && value is Matrix3D)
+            if (destinationType is not null && value is Matrix3D)
             {
                 Matrix3D instance = (Matrix3D)value;
 

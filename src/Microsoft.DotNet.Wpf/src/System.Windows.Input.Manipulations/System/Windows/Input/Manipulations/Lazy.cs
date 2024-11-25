@@ -29,7 +29,7 @@ namespace System.Windows.Input.Manipulations
         /// <param name="getValue">Function for evaluating the value.</param>
         public Lazy(Func<T> getValue)
         {
-            Debug.Assert(getValue != null);
+            Debug.Assert(getValue is not null);
             this.getValue = getValue;
             this.gotValue = false;
         }

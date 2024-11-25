@@ -63,7 +63,7 @@ namespace MS.Internal.Text
                 run = new TextEndOfParagraph(_syntheticCharacterLength);
             }
 
-            if (run.Properties != null)
+            if (run.Properties is not null)
             {
                 run.Properties.PixelsPerDip = this.PixelsPerDip;
             }
@@ -127,7 +127,7 @@ namespace MS.Internal.Text
         // ------------------------------------------------------------------
         internal SimpleLine(System.Windows.Controls.TextBlock owner, string content, TextRunProperties textProps) : base(owner)
         {
-            Debug.Assert(content != null);
+            Debug.Assert(content is not null);
             _content = content;
             _textProps = textProps;
         }

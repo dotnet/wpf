@@ -46,7 +46,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         private void OnRibbonGalleryCategoriesPanelUnloaded(object sender, RoutedEventArgs e)
         {
             IContainsStarLayoutManager iContainsStarLayoutManager = (IContainsStarLayoutManager)this;
-            if (iContainsStarLayoutManager.StarLayoutManager != null)
+            if (iContainsStarLayoutManager.StarLayoutManager is not null)
             {
                 iContainsStarLayoutManager.StarLayoutManager.UnregisterStarLayoutProvider(this);
                 iContainsStarLayoutManager.StarLayoutManager = null;
@@ -56,7 +56,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         private void OnRibbonGalleryCategoriesPanelLoaded(object sender, RoutedEventArgs e)
         {
             RibbonGallery gallery = this.Gallery;
-            if (gallery != null)
+            if (gallery is not null)
             {
 #if IN_RIBBON_GALLERY
                 if (gallery.IsInInRibbonGalleryMode())
@@ -83,7 +83,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             {
                 RibbonGalleryCategory child = children[i] as RibbonGalleryCategory;
                 RibbonGalleryItemsPanel itemPanel = child.ItemsHostSite as RibbonGalleryItemsPanel;
-                if (itemPanel != null)
+                if (itemPanel is not null)
                 {
                     int itemPanelChildrenCount = itemPanel.Children.Count;
                     for (int j = 0; j < itemPanelChildrenCount; j++)
@@ -98,7 +98,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             }
 
             RibbonGallery gallery = this.Gallery;
-            if (gallery != null)
+            if (gallery is not null)
             {
                 gallery.MaxItemHeight = maxItemHeight;
                 gallery.MaxColumnWidth = maxColumnWidth;
@@ -138,7 +138,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         // At the time this method is called, scrolling state is in its new, valid state.
         private void OnScrollChange()
         {
-            if (ScrollOwner != null) { ScrollOwner.InvalidateScrollInfo(); }
+            if (ScrollOwner is not null) { ScrollOwner.InvalidateScrollInfo(); }
         }
 
         private void VerifyScrollingData(Size viewport, Size extent, Vector offset)
@@ -209,7 +209,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
 
         private bool IsScrolling
         {
-            get { return (_scrollData != null) && (_scrollData._scrollOwner != null); }
+            get { return (_scrollData is not null) && (_scrollData._scrollOwner is not null); }
         }
 
         private bool CanMouseWheelVerticallyScroll
@@ -234,15 +234,15 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         {
             RibbonGallery gallery = this.Gallery;
 #if IN_RIBBON_GALLERY
-            InRibbonGallery parentInRibbonGallery = gallery != null ? gallery.ParentInRibbonGallery : null;
-            bool isInInRibbonMode = parentInRibbonGallery != null ? parentInRibbonGallery.IsInInRibbonMode : false;
+            InRibbonGallery parentInRibbonGallery = gallery is not null ? gallery.ParentInRibbonGallery : null;
+            bool isInInRibbonMode = parentInRibbonGallery is not null ? parentInRibbonGallery.IsInInRibbonMode : false;
 
             // For an InRibbonGallery rendering with IsDropDownOpen==true, we force gallery.ItemsPresenter's
             // MinWidth to be at least the value of IRG.ContentPresenter.ActualWidth.  This way, the IRG's popup
             // totally eclipses the IRG, which is required by the Office Fluent UI guidelines.
-            if (gallery != null &&
-                gallery.ItemsPresenter != null &&
-                parentInRibbonGallery != null)
+            if (gallery is not null &&
+                gallery.ItemsPresenter is not null &&
+                parentInRibbonGallery is not null)
             {
                 if (isInInRibbonMode && _irgIsConstrainingWidth)
                 {
@@ -393,7 +393,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
                     maxChildHeight = Math.Max(maxChildHeight, childSize.Height);
 
                     RibbonGalleryCategory category = child as RibbonGalleryCategory;
-                    if (category != null)
+                    if (category is not null)
                     {
                         galleryItemCount += category.averageItemHeightInfo.Count;
                         galleryItemCumulativeHeight += category.averageItemHeightInfo.CumulativeHeight;
@@ -512,7 +512,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         {
             RibbonGallery gallery = this.Gallery;
 #if IN_RIBBON_GALLERY
-            if (gallery != null &&
+            if (gallery is not null &&
                 gallery.IsInInRibbonGalleryMode())
             {
                 return InRibbonGalleryModeArrangeOverride(finalSize);
@@ -562,10 +562,10 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
 
             // Refresh the IsEnabled state of the InRibbonGallery's LineUp & LineDown buttons.
             RibbonGallery gallery = Gallery;
-            if (gallery != null)
+            if (gallery is not null)
             {
                 InRibbonGallery irg = gallery.ParentInRibbonGallery;
-                if (irg != null &&
+                if (irg is not null &&
                     irg.IsInInRibbonMode)
                 {
                     irg.CoerceValue(InRibbonGallery.CanLineUpProperty);
@@ -620,11 +620,11 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         public void OnInitializeLayout()
         {
             IContainsStarLayoutManager iContainsStarLayoutManager = (IContainsStarLayoutManager)this;
-            if (iContainsStarLayoutManager.StarLayoutManager != null)
+            if (iContainsStarLayoutManager.StarLayoutManager is not null)
             {
                 TreeHelper.InvalidateMeasureForVisualAncestorPath(this, RibbonHelper.IsISupportStarLayout);
                 RibbonGallery gallery = this.Gallery;
-                if (gallery != null)
+                if (gallery is not null)
                 {
                     gallery.InvalidateMeasureOnAllCategoriesPanel();
                 }

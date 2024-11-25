@@ -30,7 +30,7 @@ namespace System.Xaml.MS.Impl
         {
             _properties = new Dictionary<string, DirectiveProperty>();
             _elements = new Dictionary<string, XamlType>();
-            if (infos != null)
+            if (infos is not null)
             {
                 foreach (DirectiveInfo info in infos)
                 {

@@ -509,7 +509,7 @@ namespace System.IO.Packaging
                             // prevent recursion in our call to _responseStream.Close()
                             _disposed = true;
 
-                            if (_responseStream != null)
+                            if (_responseStream is not null)
                             {
 #if DEBUG
                         if (PackWebRequestFactory._traceSwitch.Enabled)
@@ -522,7 +522,7 @@ namespace System.IO.Packaging
                             }
 
                             // FullResponse
-                            if (_fullResponse != null)
+                            if (_fullResponse is not null)
                             {
 #if DEBUG
                         if (PackWebRequestFactory._traceSwitch.Enabled)
@@ -539,7 +539,7 @@ namespace System.IO.Packaging
                             _responseAvailable.Close();     // this call can not throw an exception
 
                             // timer
-                            if (_timeoutTimer != null)
+                            if (_timeoutTimer is not null)
                             {
                                 _timeoutTimer.Dispose();
                             }
@@ -572,7 +572,7 @@ namespace System.IO.Packaging
         {
             get
             {
-                return (_cachedResponse != null);
+                return (_cachedResponse is not null);
             }
         }
 
@@ -704,7 +704,7 @@ namespace System.IO.Packaging
                     // Prevent recursion - this sync-protected member is safe to set in a CachedResponse
                     // mode because we have no other thread in operation.
                     _parent._disposed = true;
-                    if (_parent._responseStream != null)
+                    if (_parent._responseStream is not null)
                         _parent._responseStream.Close();
                 }
                 finally
@@ -777,7 +777,7 @@ namespace System.IO.Packaging
                     if (!_disposed)
                     {
                         // dispose the timer - it is no longer needed
-                        if (_timeoutTimer != null)
+                        if (_timeoutTimer is not null)
                             _timeoutTimer.Dispose();
 #if DEBUG
                         if (PackWebRequestFactory._traceSwitch.Enabled)
@@ -911,7 +911,7 @@ namespace System.IO.Packaging
                     }
 #endif
                     // clean up
-                    if (_timeoutTimer != null)
+                    if (_timeoutTimer is not null)
                     {
                         _timeoutTimer.Dispose();
                     }

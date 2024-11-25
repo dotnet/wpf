@@ -42,7 +42,7 @@ namespace System.Windows
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            if (value != null)
+            if (value is not null)
             {
                 ArgumentNullException.ThrowIfNull(context);
 
@@ -71,7 +71,7 @@ namespace System.Windows
                 if (stream is null)
                 {
                     byte[] bytes = value as byte[];
-                    if (bytes != null)
+                    if (bytes is not null)
                     {
                         stream = new MemoryStream(bytes);
                     }

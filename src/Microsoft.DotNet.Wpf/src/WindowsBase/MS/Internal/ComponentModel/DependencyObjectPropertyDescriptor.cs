@@ -43,7 +43,7 @@ namespace MS.Internal.ComponentModel
             _property = property;
             _dp = dp;
 
-            Debug.Assert(property != null && dp != null);
+            Debug.Assert(property is not null && dp is not null);
             Debug.Assert(!(property is DependencyObjectPropertyDescriptor), "Wrapping a DP in a DP");
 
             _componentType = property.ComponentType;
@@ -110,11 +110,11 @@ namespace MS.Internal.ComponentModel
 
             DependencyObject DO = FromObj(component);
 
-            if (_resetMethod != null) 
+            if (_resetMethod is not null) 
             {
                 // See if we need to pass parameters to this method.  When
                 // _property is null, this is an attached property and
-                // the method is static.  When _property != null, this
+                // the method is static.  When _property is not null, this
                 // is a direct property and the method is instanced.
 
                 if (_property is null) 
@@ -161,18 +161,18 @@ namespace MS.Internal.ComponentModel
                 {
                     MethodInfo method = GetSpecialMethod("ShouldSerialize");
                     
-                    if (method != null && method.ReturnType == BoolType) 
+                    if (method is not null && method.ReturnType == BoolType) 
                     {
                         _shouldSerializeMethod = method;
                     }
                     _queriedShouldSerializeMethod = true;
                 }
 
-                if (_shouldSerializeMethod != null)
+                if (_shouldSerializeMethod is not null)
                 {
                     // See if we need to pass parameters to this method.  When
                     // _property is null, this is an attached property and
-                    // the method is static.  When _property != null, this
+                    // the method is static.  When _property is not null, this
                     // is a direct property and the method is instanced.
 
                     if (_property is null) 
@@ -263,7 +263,7 @@ namespace MS.Internal.ComponentModel
                     lock(_attributeSyncLock) 
                     {
                         attrs = base.Attributes;
-                        Debug.Assert(attrs != null);
+                        Debug.Assert(attrs is not null);
                     }
                 }
 
@@ -402,7 +402,7 @@ namespace MS.Internal.ComponentModel
             object methodObj = _getMethodCache[dp];
             method = methodObj as MethodInfo;
 
-            if (methodObj is null || (method != null && !object.ReferenceEquals(method.DeclaringType, reflectionType))) {
+            if (methodObj is null || (method is not null && !object.ReferenceEquals(method.DeclaringType, reflectionType))) {
                 BindingFlags f = BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly;
                 string methodName = string.Concat("Get", dp.Name);
                 method = reflectionType.GetMethod(methodName, f, _dpBinder, DpType, null);
@@ -464,14 +464,14 @@ namespace MS.Internal.ComponentModel
         {
             MethodInfo mi = GetAttachedPropertyMethod(_dp);
 
-            if (mi != null) 
+            if (mi is not null) 
             {
                 Type attrType = AttributeType;
                 Attribute[] attrArray = (Attribute[])mi.GetCustomAttributes(attrType, true);
 
                 Type propertyReflectionType = TypeDescriptor.GetReflectionType(_dp.PropertyType);
                 Attribute[] typeAttrArray = (Attribute[])propertyReflectionType.GetCustomAttributes(attrType, true);
-                if (typeAttrArray != null && typeAttrArray.Length > 0)
+                if (typeAttrArray is not null && typeAttrArray.Length > 0)
                 {
                     // Merge attrArry and typeAttrArray
                     Attribute[] mergedAttrArray = new Attribute[attrArray.Length + typeAttrArray.Length];
@@ -490,16 +490,16 @@ namespace MS.Internal.ComponentModel
                 foreach(Attribute attr in attrArray) 
                 {
                     AttributeProviderAttribute pa = attr as AttributeProviderAttribute;
-                    if (pa != null) 
+                    if (pa is not null) 
                     {
                         Type providerType = Type.GetType(pa.TypeName);
-                        if (providerType != null) 
+                        if (providerType is not null) 
                         {
                             Attribute[] paAttrs = null;
                             if (!string.IsNullOrEmpty(pa.PropertyName)) 
                             {
                                 MemberInfo[] milist = providerType.GetMember(pa.PropertyName);
-                                if (milist.Length > 0 && milist[0] != null) 
+                                if (milist.Length > 0 && milist[0] is not null) 
                                 {
                                     paAttrs = (Attribute[])milist[0].GetCustomAttributes(typeof(Attribute), true);
                                 }
@@ -508,7 +508,7 @@ namespace MS.Internal.ComponentModel
                                 paAttrs = (Attribute[])providerType.GetCustomAttributes(typeof(Attribute), true);
                             }
 
-                            if (paAttrs != null)
+                            if (paAttrs is not null)
                             {
                                 if (addAttrs is null) 
                                 {
@@ -528,7 +528,7 @@ namespace MS.Internal.ComponentModel
 
                 // See if we gathered additional attributes.  These are always lower priority
                 // and therefore get tacked onto the end of the list
-                if (addAttrs != null) 
+                if (addAttrs is not null) 
                 {
                     Attribute[] newArray = new Attribute[addAttrs.Length + attrArray.Length];
                     attrArray.CopyTo(newArray, 0);
@@ -568,7 +568,7 @@ namespace MS.Internal.ComponentModel
             object methodObj = _setMethodCache[dp];
             method = methodObj as MethodInfo;
 
-            if (methodObj is null || (method != null && !object.ReferenceEquals(method.DeclaringType, reflectionType))) {
+            if (methodObj is null || (method is not null && !object.ReferenceEquals(method.DeclaringType, reflectionType))) {
                 BindingFlags f = BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly;
                 string methodName = string.Concat("Set", dp.Name);
     
@@ -632,7 +632,7 @@ namespace MS.Internal.ComponentModel
 
             MethodInfo methodInfo = reflectionType.GetMethod(methodName, flags, _dpBinder, types, null);
 
-            if (methodInfo != null) 
+            if (methodInfo is not null) 
             {
                 // We don't support non-public ShouldSerialize/ClearValue methods.  We could just look
                 // for public methods in the first place, but then authors might get confused as
@@ -656,7 +656,7 @@ namespace MS.Internal.ComponentModel
         {
             AttributeCollection baseAttributes;
 
-            if (_property != null) 
+            if (_property is not null) 
             {
                 baseAttributes = _property.Attributes;
             }
@@ -674,7 +674,7 @@ namespace MS.Internal.ComponentModel
                 Attribute attrToAdd = a;
                 DefaultValueAttribute defAttr = a as DefaultValueAttribute;
 
-                if (defAttr != null) 
+                if (defAttr is not null) 
                 {
                     // DP metadata always overrides CLR metadata for
                     // default value.
@@ -683,7 +683,7 @@ namespace MS.Internal.ComponentModel
                 else 
                 {
                     ReadOnlyAttribute roAttr = a as ReadOnlyAttribute;
-                    if (roAttr != null)
+                    if (roAttr is not null)
                     {
                         // DP metata is the merge of CLR metadata for
                         // read only
@@ -692,7 +692,7 @@ namespace MS.Internal.ComponentModel
                     }
                 }
 
-                if (attrToAdd != null) newAttributes.Add(attrToAdd);
+                if (attrToAdd is not null) newAttributes.Add(attrToAdd);
             }
 
             // Always include the metadata choice

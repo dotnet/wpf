@@ -124,7 +124,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            else if ((root = this.VisualTree) != null)
+            else if ((root = this.VisualTree) is not null)
             {
                 // This is a FEF-style template
                 if (!typeof(Panel).IsAssignableFrom(root.Type))

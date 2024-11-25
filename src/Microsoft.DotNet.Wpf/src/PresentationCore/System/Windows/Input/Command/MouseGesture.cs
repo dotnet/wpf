@@ -158,7 +158,7 @@ namespace System.Windows.Input
         /// </summary>
         internal virtual void OnPropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
+            if (PropertyChanged is not null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
@@ -178,7 +178,7 @@ namespace System.Windows.Input
             MouseAction MouseAction = MouseAction.None;
 
             MouseEventArgs mouseArgs = inputArgs as MouseEventArgs;
-            if(mouseArgs != null)
+            if(mouseArgs is not null)
             {
                 if(inputArgs is MouseWheelEventArgs)
                 {

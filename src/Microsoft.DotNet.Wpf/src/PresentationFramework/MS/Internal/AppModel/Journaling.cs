@@ -174,7 +174,7 @@ namespace MS.Internal.AppModel
 
         internal override void SaveState(object contentObject)
         {
-            Invariant.Assert(this.Source != null, "Can't journal by Uri without a Uri.");
+            Invariant.Assert(this.Source is not null, "Can't journal by Uri without a Uri.");
             base.SaveState(contentObject); // Save controls state (JournalDataStreams).
         }
 
@@ -196,7 +196,7 @@ namespace MS.Internal.AppModel
         internal JournalEntryKeepAlive(JournalEntryGroupState jeGroupState, Uri uri, object keepAliveRoot)
             : base(jeGroupState, uri)
         {
-            Invariant.Assert(keepAliveRoot != null);
+            Invariant.Assert(keepAliveRoot is not null);
             _keepAliveRoot = keepAliveRoot;
         }
 
@@ -218,7 +218,7 @@ namespace MS.Internal.AppModel
 
         internal override bool IsAlive()
         {
-            return this.KeepAliveRoot != null;
+            return this.KeepAliveRoot is not null;
         }
 
         internal override void SaveState(object contentObject)
@@ -231,7 +231,7 @@ namespace MS.Internal.AppModel
         internal override bool Navigate(INavigator navigator, NavigationMode navMode)
         {
             Debug.Assert(navMode == NavigationMode.Back || navMode == NavigationMode.Forward);
-            Debug.Assert(this.KeepAliveRoot != null);
+            Debug.Assert(this.KeepAliveRoot is not null);
             return navigator.Navigate(this.KeepAliveRoot, new NavigateInfo(Source, navMode, this));
         }
 
@@ -372,7 +372,7 @@ namespace MS.Internal.AppModel
                 else
                 {
                     // we are looking for a PageFunction
-                    if ((pageFunctionEntry != null) && (pageFunctionEntry.PageFunctionId == endingPF.ParentPageFunctionId))
+                    if ((pageFunctionEntry is not null) && (pageFunctionEntry.PageFunctionId == endingPF.ParentPageFunctionId))
                     {
                         return index; // found!
                     }
@@ -414,7 +414,7 @@ namespace MS.Internal.AppModel
         internal JournalEntryPageFunctionKeepAlive(JournalEntryGroupState jeGroupState, PageFunctionBase pageFunction)
             : base(jeGroupState, pageFunction)
         {
-            Debug.Assert(pageFunction != null && pageFunction.KeepAlive);
+            Debug.Assert(pageFunction is not null && pageFunction.KeepAlive);
             this._keepAlivePageFunction = pageFunction;
         }
 
@@ -432,7 +432,7 @@ namespace MS.Internal.AppModel
 
         internal override bool IsAlive()
         {
-            return this.KeepAlivePageFunction != null;
+            return this.KeepAlivePageFunction is not null;
         }
 
         internal PageFunctionBase KeepAlivePageFunction
@@ -464,7 +464,7 @@ namespace MS.Internal.AppModel
             // otherwise, its Start() override may not be called.
             PageFunctionBase pf = (navigator.Content == _keepAlivePageFunction) ?
                 _keepAlivePageFunction : ResumePageFunction();
-            Debug.Assert(pf != null);
+            Debug.Assert(pf is not null);
             return navigator.Navigate(pf, new NavigateInfo(this.Source, navMode, this));
         }
 
@@ -568,14 +568,14 @@ namespace MS.Internal.AppModel
             // Special case: doing fragment navigation or CustomContentState navigation
             // within a PF. Then don't create a new PF object!
             IDownloader idl = navigator as IDownloader;
-            NavigationService ns = idl != null ? idl.Downloader : null;
-            Debug.Assert(ns != null, "Fragment navigation won't work when the INavigator doesn't have a NavigationService.");
+            NavigationService ns = idl is not null ? idl.Downloader : null;
+            Debug.Assert(ns is not null, "Fragment navigation won't work when the INavigator doesn't have a NavigationService.");
 
             PageFunctionBase pageFunction =
-                (ns != null && ns.ContentId == this.ContentId) ?
+                (ns is not null && ns.ContentId == this.ContentId) ?
                 (PageFunctionBase)ns.Content : ResumePageFunction();
 
-            Debug.Assert(pageFunction != null);
+            Debug.Assert(pageFunction is not null);
 
             return navigator.Navigate(pageFunction, new NavigateInfo(this.Source, navMode, this));
         }
@@ -671,7 +671,7 @@ namespace MS.Internal.AppModel
         {
             PageFunctionBase pageFunction;
 
-            Invariant.Assert(this._typeName != null, "JournalEntry does not contain the Type for the PageFunction to be created");
+            Invariant.Assert(this._typeName is not null, "JournalEntry does not contain the Type for the PageFunction to be created");
 
             //First try Type.GetType from the saved typename, then try Activator.CreateInstanceFrom
             //Type.GetType - Since the typename is fullyqualified
@@ -704,7 +704,7 @@ namespace MS.Internal.AppModel
         {
             // Need to explicitly add a call to InitializeComponent() for Page
             IComponentConnector iComponentConnector = pageFunction as IComponentConnector;
-            if (iComponentConnector != null)
+            if (iComponentConnector is not null)
             {
                 iComponentConnector.InitializeComponent();
             }
@@ -790,7 +790,7 @@ namespace MS.Internal.AppModel
             // and elements while the tree is created from the original baml stream.
             //
 
-            Debug.Assert(_markupUri != null, "_markupUri in JournalEntryPageFunctionUri should be set.");
+            Debug.Assert(_markupUri is not null, "_markupUri in JournalEntryPageFunctionUri should be set.");
 
             pageFunction = Application.LoadComponent(_markupUri, true) as PageFunctionBase;
 

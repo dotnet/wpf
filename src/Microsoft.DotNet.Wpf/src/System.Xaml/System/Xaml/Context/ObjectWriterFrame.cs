@@ -32,11 +32,11 @@ namespace MS.Internal.Xaml.Context
             // Calling the getter will instantiate new Dictionaries.
             // So we just check the field instead to verify that it isn't
             // being used.
-            if (source._preconstructionPropertyValues != null)
+            if (source._preconstructionPropertyValues is not null)
             {
                 _preconstructionPropertyValues = new Dictionary<XamlMember, object>(source.PreconstructionPropertyValues);
             }
-            if (source._assignedProperties != null)
+            if (source._assignedProperties is not null)
             {
                 _assignedProperties = new HashSet<XamlMember>(source.AssignedProperties);
             }
@@ -142,7 +142,7 @@ namespace MS.Internal.Xaml.Context
                 // We use a special KeyHolder in some x:Reference scenarios.
                 // We need to unwrap this when returning.
                 FixupTargetKeyHolder ftkh = _key as FixupTargetKeyHolder;
-                if (ftkh != null)
+                if (ftkh is not null)
                 {
                     return ftkh.Key;
                 }
@@ -179,7 +179,7 @@ namespace MS.Internal.Xaml.Context
 
         public bool HasPreconstructionPropertyValuesDictionary
         {
-            get { return _preconstructionPropertyValues != null; }
+            get { return _preconstructionPropertyValues is not null; }
         }
 
         /// <summary>

@@ -72,7 +72,7 @@ namespace MS.Internal.PtsHost
             CellParaClient cellParaClient;
             Size subpageSize;
     
-            Debug.Assert(Cell.Table != null);
+            Debug.Assert(Cell.Table is not null);
 
             cellParaClient = new CellParaClient(this, tableParaClient);
 
@@ -104,7 +104,7 @@ namespace MS.Internal.PtsHost
             {
                 if (PTS.ToBoolean(fEmptyOK))
                 {
-                    if (cellParaClient != null)     { cellParaClient.Dispose(); }
+                    if (cellParaClient is not null)     { cellParaClient.Dispose(); }
                     if (pfsbrkcellOut != IntPtr.Zero)
                     {
                         PTS.Validate(PTS.FsDestroySubpageBreakRecord(cellParaClient.PtsContext.Context, pfsbrkcellOut), cellParaClient.PtsContext);
@@ -141,7 +141,7 @@ namespace MS.Internal.PtsHost
             Debug.Assert(Cell.Index != -1 && Cell.ColumnIndex != -1, 
                 "Cell is not in a table");
     
-            Debug.Assert(Cell.Table != null);
+            Debug.Assert(Cell.Table is not null);
     
             CellParaClient cellParaClient = new CellParaClient(this, tableParaClient);
     
@@ -170,7 +170,7 @@ namespace MS.Internal.PtsHost
             Debug.Assert(Cell.Index != -1 && Cell.ColumnIndex != -1, 
                 "Cell is not in a table");
     
-            Debug.Assert(Cell.Table != null);
+            Debug.Assert(Cell.Table is not null);
     
             cellParaClient.UpdateBottomlessCell(fswdirTable, cellParaClient.CalculateCellWidth(tableParaClient), out fmtrbl, out dvrUsed);
         }

@@ -79,7 +79,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                return _resourcesParent != null ? typeof(ResourceDictionary) : PropertyDefinition.PropertyType;
+                return _resourcesParent is not null ? typeof(ResourceDictionary) : PropertyDefinition.PropertyType;
             }
         }
 
@@ -121,11 +121,11 @@ namespace System.Windows.Markup
                 
                 // the order of precedence is the fast-tracked Resources property, then DP, then the attached property
                 // setter, then the property info
-                if (_resourcesParent != null)
+                if (_resourcesParent is not null)
                 {
                     _resourcesParent.Resources = (ResourceDictionary)Collection;
                 }
-                else if (PropertyDefinition.DependencyProperty != null)
+                else if (PropertyDefinition.DependencyProperty is not null)
                 {
                     DependencyObject dpParent = Parent as DependencyObject;
                     if (dpParent is null)
@@ -134,11 +134,11 @@ namespace System.Windows.Markup
                     }
                     _reader.SetDependencyValue(dpParent, PropertyDefinition.DependencyProperty, Collection);
                 }
-                else if (PropertyDefinition.AttachedPropertySetter != null)
+                else if (PropertyDefinition.AttachedPropertySetter is not null)
                 {
                     PropertyDefinition.AttachedPropertySetter.Invoke(null, new object[] { Parent, Collection });
                 }
-                else if (PropertyDefinition.PropertyInfo != null)
+                else if (PropertyDefinition.PropertyInfo is not null)
                 {
                     PropertyDefinition.PropertyInfo.SetValue(Parent,
                                     Collection, BindingFlags.Instance |
@@ -165,15 +165,15 @@ namespace System.Windows.Markup
             }
 
             // the order of precedence according to the spec is DP, then attached property, then PropertyInfo
-            else if (PropertyDefinition.DependencyProperty != null)
+            else if (PropertyDefinition.DependencyProperty is not null)
             {
                 _defaultCollection = ((DependencyObject)Parent).GetValue(PropertyDefinition.DependencyProperty);
             }
-            else if (PropertyDefinition.AttachedPropertyGetter != null)
+            else if (PropertyDefinition.AttachedPropertyGetter is not null)
             {
                 _defaultCollection = PropertyDefinition.AttachedPropertyGetter.Invoke(null, new object[] { Parent });
             }
-            else if (PropertyDefinition.PropertyInfo != null)
+            else if (PropertyDefinition.PropertyInfo is not null)
             {
                 if (PropertyDefinition.IsInternal)
                 {

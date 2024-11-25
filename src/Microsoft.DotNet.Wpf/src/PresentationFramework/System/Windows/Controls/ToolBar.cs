@@ -122,7 +122,7 @@ namespace System.Windows.Controls
         private static object CoerceOrientation(DependencyObject d, object value)
         {
             ToolBarTray toolBarTray = ((ToolBar) d).ToolBarTray;
-            return (toolBarTray != null) ? toolBarTray.Orientation : value;
+            return (toolBarTray is not null) ? toolBarTray.Orientation : value;
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace System.Windows.Controls
             {
                 // If focus is still within the ToolBarOverflowPanel, make sure we the focus is restored to the main focus scope
                 ToolBarOverflowPanel overflow = toolBar.ToolBarOverflowPanel;
-                if (overflow != null && overflow.IsKeyboardFocusWithin)
+                if (overflow is not null && overflow.IsKeyboardFocusWithin)
                 {
                     Keyboard.Focus(null);
                 }
@@ -280,7 +280,7 @@ namespace System.Windows.Controls
         {
             Dispatcher.BeginInvoke(DispatcherPriority.Input, new DispatcherOperationCallback(delegate(object param)
             {
-                if (ToolBarOverflowPanel != null)
+                if (ToolBarOverflowPanel is not null)
                 {
                     // If the overflow is opened by keyboard - focus the first item
                     // otherwise - set focus on the panel itself
@@ -392,7 +392,7 @@ namespace System.Windows.Controls
             // invalidate layout so that the child can be placed in the correct
             // location (in the main bar or the overflow menu).
             ToolBar toolBar = ItemsControl.ItemsControlFromItemContainer(element) as ToolBar;
-            if (toolBar != null)
+            if (toolBar is not null)
             {
                 toolBar.InvalidateLayout();
             }
@@ -408,7 +408,7 @@ namespace System.Windows.Controls
             InvalidateMeasure();
 
             ToolBarPanel toolBarPanel = this.ToolBarPanel;
-            if (toolBarPanel != null)
+            if (toolBarPanel is not null)
             {
                 // Whether elements are in the overflow or not is decided
                 // in ToolBarPanel.MeasureOverride.
@@ -471,7 +471,7 @@ namespace System.Windows.Controls
             // For certain known types, automatically change their default style
             // to point to a ToolBar version.
             FrameworkElement fe = element as FrameworkElement;
-            if (fe != null)
+            if (fe is not null)
             {
                 Type feType = fe.GetType();
                 ResourceKey resourceKey = null;
@@ -492,7 +492,7 @@ namespace System.Windows.Controls
                 else if (feType == typeof(Menu))
                     resourceKey = MenuStyleKey;
 
-                if (resourceKey != null)
+                if (resourceKey is not null)
                 {
                     bool hasModifiers;
                     BaseValueSourceInternal vs = fe.GetValueSource(StyleProperty, null, out hasModifiers);
@@ -548,7 +548,7 @@ namespace System.Windows.Controls
             // then these values will always be zero, and ToolBarTray will not layout correctly.
             //
             ToolBarPanel toolBarPanel = ToolBarPanel;
-            if (toolBarPanel != null)
+            if (toolBarPanel is not null)
             {
                 // Calculate the extra length from the extra space allocated between the ToolBar and the ToolBarPanel.
                 double extraLength;
@@ -608,7 +608,7 @@ namespace System.Windows.Controls
         {
             DependencyObject child = GetTemplateChild(ToolBarPanelTemplateName);
             ToolBarPanel toolBarPanel = child as ToolBarPanel;
-            if (child != null && toolBarPanel is null)
+            if (child is not null && toolBarPanel is null)
                 throw new NotSupportedException(SR.Format(SR.ToolBar_InvalidStyle_ToolBarPanel, child.GetType()));
             return toolBarPanel;
         }
@@ -631,7 +631,7 @@ namespace System.Windows.Controls
         {
             DependencyObject child = GetTemplateChild(ToolBarOverflowPanelTemplateName);
             ToolBarOverflowPanel toolBarOverflowPanel = child as ToolBarOverflowPanel;
-            if (child != null && toolBarOverflowPanel is null)
+            if (child is not null && toolBarOverflowPanel is null)
                 throw new NotSupportedException(SR.Format(SR.ToolBar_InvalidStyle_ToolBarOverflowPanel, child.GetType()));
             return toolBarOverflowPanel;
         }
@@ -644,11 +644,11 @@ namespace System.Windows.Controls
         {
             UIElement newFocusElement = null;
             UIElement currentFocusElement = e.Source as UIElement;
-            if (currentFocusElement != null && ItemsControl.ItemsControlFromItemContainer(currentFocusElement) == this)
+            if (currentFocusElement is not null && ItemsControl.ItemsControlFromItemContainer(currentFocusElement) == this)
             {
                 // itemsHost should be either ToolBarPanel or ToolBarOverflowPanel
                 Panel itemsHost = VisualTreeHelper.GetParent(currentFocusElement) as Panel;
-                if (itemsHost != null)
+                if (itemsHost is not null)
                 {
                     switch (e.Key)
                     {
@@ -663,7 +663,7 @@ namespace System.Windows.Controls
                             {
                                 // If focus is within ToolBarOverflowPanel - move focus the the toggle button
                                 ToolBarOverflowPanel overflow = ToolBarOverflowPanel;
-                                if (overflow != null && overflow.IsKeyboardFocusWithin)
+                                if (overflow is not null && overflow.IsKeyboardFocusWithin)
                                 {
                                     MoveFocus(new TraversalRequest(FocusNavigationDirection.Last));
                                 }
@@ -678,7 +678,7 @@ namespace System.Windows.Controls
                             break;
                     }
 
-                    if (newFocusElement != null)
+                    if (newFocusElement is not null)
                     {
                         if (newFocusElement.Focus())
                             e.Handled = true;
@@ -707,7 +707,7 @@ namespace System.Windows.Controls
         {
             ToolBar toolBar = (ToolBar)e;
             ButtonBase bb = args.OriginalSource as ButtonBase;
-            if (toolBar.IsOverflowOpen && bb != null && bb.Parent == toolBar)
+            if (toolBar.IsOverflowOpen && bb is not null && bb.Parent == toolBar)
                 toolBar.Close();
         }
 

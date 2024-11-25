@@ -47,7 +47,7 @@ namespace System.Windows.Automation.Peers
             if (!string.IsNullOrEmpty(result))
             {
                 TabItem tabItem = GetWrapper() as TabItem;
-                if ((tabItem != null) && (tabItem.Header is string))
+                if ((tabItem is not null) && (tabItem.Header is string))
                 {
                     return AccessText.RemoveAccessKeyMarker(result);
                 }
@@ -65,17 +65,17 @@ namespace System.Windows.Automation.Peers
 
             // Only if the TabItem is selected we need to add its visual children
             TabItem tabItem = GetWrapper() as TabItem;
-            if (tabItem != null && tabItem.IsSelected)
+            if (tabItem is not null && tabItem.IsSelected)
             {
                 TabControl parentTabControl = ItemsControlAutomationPeer.Owner as TabControl;
-                if (parentTabControl != null)
+                if (parentTabControl is not null)
                 {
                     ContentPresenter contentHost = parentTabControl.SelectedContentPresenter;
-                    if (contentHost != null)
+                    if (contentHost is not null)
                     {
                         AutomationPeer contentHostPeer = new FrameworkElementAutomationPeer(contentHost);
                         List<AutomationPeer> contentChildren = contentHostPeer.GetChildren();
-                        if (contentChildren != null)
+                        if (contentChildren is not null)
                         {
                             if (headerChildren is null)
                                 headerChildren = contentChildren;
@@ -95,7 +95,7 @@ namespace System.Windows.Automation.Peers
                 throw new ElementNotEnabledException();
 
             TabItem tabItem = GetWrapper() as TabItem;
-            if ((tabItem != null) && tabItem.IsSelected)
+            if ((tabItem is not null) && tabItem.IsSelected)
             {
                 throw new InvalidOperationException(SR.UIA_OperationCannotBePerformed);
             }
@@ -107,7 +107,7 @@ namespace System.Windows.Automation.Peers
         {
             ISelectionItemProvider selectionItemProvider = this as ISelectionItemProvider;
             Selector parentSelector = (Selector)(ItemsControlAutomationPeer.Owner);
-            if (parentSelector != null && selectionItemProvider != null)
+            if (parentSelector is not null && selectionItemProvider is not null)
             {
                 if (parentSelector.CanSelectMultiple)
                     selectionItemProvider.AddToSelection();

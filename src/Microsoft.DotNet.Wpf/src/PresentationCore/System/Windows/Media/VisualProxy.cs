@@ -301,7 +301,7 @@ namespace System.Windows.Media.Composition
 
             if (proxyRemoved) 
             {
-                if (_tail != null) 
+                if (_tail is not null) 
                 {
                     //
                     // Keep the tail short. We allow for one extra free element
@@ -497,7 +497,7 @@ namespace System.Windows.Media.Composition
             bool value,
             VisualProxyFlags flags)
         {
-            if (_head.Channel != null) 
+            if (_head.Channel is not null) 
             {
                 _head.Flags = 
                     value ? (_head.Flags | flags) : (_head.Flags & ~flags);
@@ -517,7 +517,7 @@ namespace System.Windows.Media.Composition
         internal bool CheckFlagsOnAllChannels(
             VisualProxyFlags conjunctionFlags)
         {
-            if (_head.Channel != null) 
+            if (_head.Channel is not null) 
             {
                 if ((_head.Flags & conjunctionFlags) != conjunctionFlags)
                     return false;
@@ -552,7 +552,7 @@ namespace System.Windows.Media.Composition
             {
                 return PROXY_STORED_INLINE;
             }
-            else if (_tail != null) 
+            else if (_tail is not null) 
             {
                 for (int i = 0, limit = Count - 1; i < limit; i++) 
                 {

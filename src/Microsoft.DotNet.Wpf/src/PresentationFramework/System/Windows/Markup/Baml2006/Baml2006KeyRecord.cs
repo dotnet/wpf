@@ -62,7 +62,7 @@ namespace System.Windows.Baml2006
 
         public bool HasStaticResources
         {
-            get { return (_resources != null && _resources.Count > 0); }
+            get { return (_resources is not null && _resources.Count > 0); }
         }
 
         public StaticResource LastStaticResource

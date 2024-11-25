@@ -150,7 +150,7 @@ namespace System.Windows.Input.Manipulations
             }
 
             OnCompleteManipulation(timestamp);
-            if (this.manipulatorStates != null)
+            if (this.manipulatorStates is not null)
             {
                 this.manipulatorStates.Clear();
             }
@@ -168,7 +168,7 @@ namespace System.Windows.Input.Manipulations
         private static bool IsPinned(ISettings settings)
         {
             return !settings.SupportedManipulations.SupportsAny(Manipulations2D.Translate)
-                && (settings.Pivot != null)
+                && (settings.Pivot is not null)
                 && settings.Pivot.HasPosition;
         }
 
@@ -302,15 +302,15 @@ namespace System.Windows.Input.Manipulations
             updatedManipulatorCount = 0;
             currentManipulatorCount = 0;
             addedManipulatorList = null;
-            removedManipulatorIds = ((this.manipulatorStates != null) && (this.manipulatorStates.Count > 0))
+            removedManipulatorIds = ((this.manipulatorStates is not null) && (this.manipulatorStates.Count > 0))
                 ? new HashSet<int>(this.manipulatorStates.Keys)
                 : null;
 
-            if (manipulators != null)
+            if (manipulators is not null)
             {
                 foreach (Manipulator2D manipulator in manipulators)
                 {
-                    if (removedManipulatorIds != null)
+                    if (removedManipulatorIds is not null)
                     {
                         removedManipulatorIds.Remove(manipulator.Id);
                     }
@@ -423,7 +423,7 @@ namespace System.Windows.Input.Manipulations
             }
 
             // Step 2: Initialize the manipulation if necessary.
-            if (addedManipulatorList != null && addedManipulatorList.Count > 0)
+            if (addedManipulatorList is not null && addedManipulatorList.Count > 0)
             {
                 EnsureReadyToProcessManipulators(timestamp);
             }
@@ -441,10 +441,10 @@ namespace System.Windows.Input.Manipulations
             // Step 4a: If there are adds or removes, modify the collection.
             ProcessAddsAndRemoves(timestamp, addedManipulatorList, removedManipulatorIds);
             // Step 4b: Update the composite position if necessary.
-            if ((addedManipulatorList != null && addedManipulatorList.Count > 0) ||
-                (removedManipulatorIds != null && removedManipulatorIds.Count > 0))
+            if ((addedManipulatorList is not null && addedManipulatorList.Count > 0) ||
+                (removedManipulatorIds is not null && removedManipulatorIds.Count > 0))
             {
-                if (this.manipulatorStates != null && this.manipulatorStates.Count > 0)
+                if (this.manipulatorStates is not null && this.manipulatorStates.Count > 0)
                 {
                     // As long as we haven't removed the last manipulator, just update the position.
                     OverwriteManipulationState(
@@ -474,7 +474,7 @@ namespace System.Windows.Input.Manipulations
         /// <param name="removedManipulatorIds">the list of removed manipulators</param>
         private void ProcessAddsAndRemoves(Int64 timestamp, List<ManipulatorState> addedManipulatorList, HashSet<int> removedManipulatorIds)
         {
-            if (addedManipulatorList != null && addedManipulatorList.Count > 0)
+            if (addedManipulatorList is not null && addedManipulatorList.Count > 0)
             {
                 foreach (ManipulatorState state in addedManipulatorList)
                 {
@@ -485,7 +485,7 @@ namespace System.Windows.Input.Manipulations
                     AddManipulator(state);
                 }
             }
-            if ((removedManipulatorIds != null) && (removedManipulatorIds.Count > 0))
+            if ((removedManipulatorIds is not null) && (removedManipulatorIds.Count > 0))
             {
                 foreach (int removedId in removedManipulatorIds)
                 {
@@ -511,14 +511,14 @@ namespace System.Windows.Input.Manipulations
             {
                 // now starting a manipulation
                 this.processorState = ProcessorState.Manipulating;
-                Debug.Assert(Started != null, "Processor hasn't registered for Started event");
+                Debug.Assert(Started is not null, "Processor hasn't registered for Started event");
                 Started(this, new Manipulation2DStartedEventArgs(
                     this.currentManipulationState.Position.X, this.currentManipulationState.Position.Y));
             }
             else
             {
                  // raise delta event with smoothed values
-                Debug.Assert(Delta != null, "Processor hasn't registered for Delta event");
+                Debug.Assert(Delta is not null, "Processor hasn't registered for Delta event");
                 float scaleDelta = this.smoothedCumulativeScale / previousSmoothedScale;
                 float expansionDelta = this.smoothedCumulativeExpansion - previousSmoothedExpansion;
 
@@ -578,7 +578,7 @@ namespace System.Windows.Input.Manipulations
                 "Manipulation\tCompleted\t" + lastKnownOrigin + "\t" + smoothedScale + "\t" + smoothedExpansion + "\t" + smoothedRotate);
 #endif
             // raise the event
-            Debug.Assert(Completed != null, "Processor hasn't registered for Completed event");
+            Debug.Assert(Completed is not null, "Processor hasn't registered for Completed event");
             ManipulationDelta2D total = new ManipulationDelta2D(
                 translate.X,
                 translate.Y,
@@ -624,7 +624,7 @@ namespace System.Windows.Input.Manipulations
         /// <returns>true if the manipulator was removed, false otherwise</returns>
         private bool RemoveManipulator(int manipulatorId)
         {
-            if (this.manipulatorStates != null)
+            if (this.manipulatorStates is not null)
             {
                 return this.manipulatorStates.Remove(manipulatorId);
             }
@@ -684,7 +684,7 @@ namespace System.Windows.Input.Manipulations
             // then the average radius will be re-calculated
             this.averageRadius = 0;
 
-            if (this.manipulatorStates != null)
+            if (this.manipulatorStates is not null)
             {
                 if (this.manipulatorStates.Count > 1 && // rotate and scale require more than one manipulator
                     settings.SupportedManipulations.SupportsAny(Manipulations2D.Rotate | Manipulations2D.Scale))
@@ -694,7 +694,7 @@ namespace System.Windows.Input.Manipulations
                 }
                 else if ((this.manipulatorStates.Count == 1) // try single-manipulator rotation
                     && settings.SupportedManipulations.SupportsAny(Manipulations2D.Rotate)
-                    && (settings.Pivot != null)
+                    && (settings.Pivot is not null)
                     && settings.Pivot.HasPosition)
                 {
                     // Rotate around the settings.Pivot point, only dampening if the manipulation is not pinned.
@@ -799,7 +799,7 @@ namespace System.Windows.Input.Manipulations
             // MaxSmoothingRadius ->        smoothingLevel = 0 (no smoothing)
             // MinimumScaleRotateRadius ->  smoothingLevel = 1 (max smoothing)
             //
-            Debug.Assert(this.manipulatorStates != null);
+            Debug.Assert(this.manipulatorStates is not null);
 
             float minimumScaleRotateRadius = settings.MinimumScaleRotateRadius;
             float maximumSmoothingRadius = 10F * settings.MinimumScaleRotateRadius;
@@ -946,7 +946,7 @@ namespace System.Windows.Input.Manipulations
             PointF previousPosition,
             ISettings settings)
         {
-            Debug.Assert(settings.Pivot != null, "don't call unless we have a settings.Pivot");
+            Debug.Assert(settings.Pivot is not null, "don't call unless we have a settings.Pivot");
             Debug.Assert(settings.Pivot.HasPosition, "don't call unless there's a settings.Pivot location");
             bool dampen = !IsPinned(settings);
             PointF pivotPoint = new PointF(settings.Pivot.X, settings.Pivot.Y);
@@ -1014,7 +1014,7 @@ namespace System.Windows.Input.Manipulations
         /// <returns>the average point</returns>
         private PointF GetAveragePoint()
         {
-            Debug.Assert(this.manipulatorStates != null && this.manipulatorStates.Count > 0);
+            Debug.Assert(this.manipulatorStates is not null && this.manipulatorStates.Count > 0);
 
             float x = 0;
             float y = 0;
@@ -1035,7 +1035,7 @@ namespace System.Windows.Input.Manipulations
         /// <param name="settings">manipulation settings</param>
         private void SetVectorsFromPoint(in PointF referenceOrigin, ISettings settings)
         {
-            Debug.Assert(this.manipulatorStates != null && this.manipulatorStates.Count > 0);
+            Debug.Assert(this.manipulatorStates is not null && this.manipulatorStates.Count > 0);
 
             foreach (KeyValuePair<int, ManipulatorState> pair in this.manipulatorStates)
             {
@@ -1074,7 +1074,7 @@ namespace System.Windows.Input.Manipulations
         /// <returns>the weighted moving average, could be 0 if the average cannot be determined</returns>
         private static float CalculateWeightedMovingAverage(Queue<ManipulationState> queue, PropertyAccessor accessor)
         {
-            Debug.Assert(queue != null);
+            Debug.Assert(queue is not null);
 
             // calculate velocity vector through weighted moving average based on translation history
             // WMA = Sum(i * P(i)) / (N * (N+1) / 2), where i=1..N
@@ -1136,7 +1136,7 @@ namespace System.Windows.Input.Manipulations
         /// <returns></returns>
         private static float CalculateMovingAverage(Queue<ManipulationState> queue, PropertyAccessor accessor, float defaultValue)
         {
-            Debug.Assert(queue != null);
+            Debug.Assert(queue is not null);
 
             // calculate average
             // MA = Sum(P(i)) / N;
@@ -1265,7 +1265,7 @@ namespace System.Windows.Input.Manipulations
             /// <param name="stopMark"></param>
             public void Enqueue(ManipulationState item, bool stopMark)
             {
-                if (this.previousTimestamp != null && item.Timestamp - this.previousTimestamp.Value < ManipulationProcessor2D.TimestampTicksPerMillisecond)
+                if (this.previousTimestamp is not null && item.Timestamp - this.previousTimestamp.Value < ManipulationProcessor2D.TimestampTicksPerMillisecond)
                 {
                     // do nothing, the new sample is too close to the previous one
                     return;

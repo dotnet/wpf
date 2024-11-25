@@ -35,8 +35,8 @@ namespace System.Windows.Documents
         // Ctor always set mutable flag to false
         internal DocumentSequenceTextPointer(ChildDocumentBlock childBlock, ITextPointer childPosition)
         {
-            Debug.Assert(childBlock != null);
-            Debug.Assert(childPosition != null);
+            Debug.Assert(childBlock is not null);
+            Debug.Assert(childPosition is not null);
             _childBlock = childBlock;
             _childTp = childPosition;
         }
@@ -349,7 +349,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return (((ITextPointer)this).TextContainer.TextView != null &&
+                return (((ITextPointer)this).TextContainer.TextView is not null &&
                         ((ITextPointer)this).TextContainer.TextView.IsValid &&
                         ((ITextPointer)this).TextContainer.TextView.Contains(this));
             }
@@ -566,7 +566,7 @@ namespace System.Windows.Documents
             set
             {
                 _childTp = value;
-                Debug.Assert(_childTp != null);
+                Debug.Assert(_childTp is not null);
             }
         }
 
@@ -939,7 +939,7 @@ namespace System.Windows.Documents
         //  overlap.
         private static int xGapAwareCompareTo(DocumentSequenceTextPointer thisTp, DocumentSequenceTextPointer tp)
         {
-            Debug.Assert(tp != null);
+            Debug.Assert(tp is not null);
             if ((object)thisTp == (object)tp)
             {
                 return 0;

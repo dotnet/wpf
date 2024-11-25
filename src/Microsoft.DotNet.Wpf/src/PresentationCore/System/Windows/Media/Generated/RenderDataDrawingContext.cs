@@ -1104,7 +1104,7 @@ namespace System.Windows.Media
             {
                 EnsureRenderData();
 
-                if (guidelines != null && guidelines.IsFrozen && guidelines.IsDynamic)
+                if (guidelines is not null && guidelines.IsFrozen && guidelines.IsDynamic)
                 {
                     DoubleCollection guidelinesX = guidelines.GuidelinesX;
                     DoubleCollection guidelinesY = guidelines.GuidelinesY;

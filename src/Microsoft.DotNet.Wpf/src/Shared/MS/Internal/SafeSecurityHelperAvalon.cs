@@ -47,7 +47,7 @@ namespace MS.Internal.Drt
         {
             bool isConnected = false; 
 
-            isConnected = PresentationSource.CriticalFromVisual(visual ) != null;
+            isConnected = PresentationSource.CriticalFromVisual(visual ) is not null;
 
             return isConnected ; 
         }

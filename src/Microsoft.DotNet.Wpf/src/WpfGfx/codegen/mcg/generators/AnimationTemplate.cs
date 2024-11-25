@@ -106,7 +106,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                 }
                 else
                 {
-                    checkNotNull = " != null";
+                    checkNotNull = " is not null";
                     propertyTypeName = instance.TypeName;
                     nullableAccessor = "";
                 }
@@ -334,7 +334,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         double progress = animationClock.CurrentProgress.Value;
 
                                         IEasingFunction easingFunction = EasingFunction;
-                                        if (easingFunction != null)
+                                        if (easingFunction is not null)
                                         {
                                             progress = easingFunction.Ease(progress);
                                         }

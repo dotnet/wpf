@@ -136,7 +136,7 @@ namespace MS.Internal.Automation
                     new DispatcherOperationCallback(InContextGetHostRawElementProvider), 
                     null);
 
-                if(hwndWrapper != null)
+                if(hwndWrapper is not null)
                     host = GetHostHelper(hwndWrapper);
                 
                 return host;
@@ -262,7 +262,7 @@ namespace MS.Internal.Automation
         {
             ElementProxy result = null;
 
-            if (peer != null)
+            if (peer is not null)
             {
                 //referencePeer is well-connected, since UIA is asking us using it.
                 //However we are trying to return the peer that is possibly just created on some 
@@ -270,10 +270,10 @@ namespace MS.Internal.Automation
                 //"connected" or initialized before we return it to UIA.
                 //This method ensures it has the right _parent and other hookup.
                 peer = peer.ValidateConnected(referencePeer);
-                if (peer != null)
+                if (peer is not null)
                 {
                     // Use the already created Wrapper proxy for peer if it is still alive
-                    if(peer.ElementProxyWeakReference != null)
+                    if(peer.ElementProxyWeakReference is not null)
                     {
                         result = peer.ElementProxyWeakReference.Target as ElementProxy;
                     }
@@ -285,7 +285,7 @@ namespace MS.Internal.Automation
 
                     // If the peer corresponds to DataItem notify peer to add to storage to 
                     // keep reference of peers going to the UIA Client
-                    if(result != null)
+                    if(result is not null)
                     {
                         if(peer.IsDataItemAutomationPeer())
                         {

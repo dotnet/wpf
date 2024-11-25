@@ -56,9 +56,9 @@ namespace System.Windows.Controls
 
         internal DataGridCellInfo(object item, DataGridColumn column, DataGrid owner)
         {
-            Debug.Assert(item != null, "item should not be null.");
-            Debug.Assert(column != null, "column should not be null.");
-            Debug.Assert(owner != null, "owner should not be null.");
+            Debug.Assert(item is not null, "item should not be null.");
+            Debug.Assert(column is not null, "column should not be null.");
+            Debug.Assert(owner is not null, "owner should not be null.");
 
             _info = owner.NewItemInfo(item);
             _column = column;
@@ -67,9 +67,9 @@ namespace System.Windows.Controls
 
         internal DataGridCellInfo(ItemsControl.ItemInfo info, DataGridColumn column, DataGrid owner)
         {
-            Debug.Assert(info != null, "item should not be null.");
-            Debug.Assert(column != null, "column should not be null.");
-            Debug.Assert(owner != null, "owner should not be null.");
+            Debug.Assert(info is not null, "item should not be null.");
+            Debug.Assert(column is not null, "column should not be null.");
+            Debug.Assert(owner is not null, "owner should not be null.");
 
             _info = info;
             _column = column;
@@ -107,7 +107,7 @@ namespace System.Windows.Controls
         /// </remarks>
         private DataGridCellInfo(DataGrid owner, DataGridColumn column, object item)
         {
-            Debug.Assert(owner != null, "owner should not be null.");
+            Debug.Assert(owner is not null, "owner should not be null.");
 
             _info = owner.NewItemInfo(item);
             _column = column;
@@ -119,7 +119,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal static DataGridCellInfo CreatePossiblyPartialCellInfo(object item, DataGridColumn column, DataGrid owner)
         {
-            Debug.Assert(owner != null, "owner should not be null.");
+            Debug.Assert(owner is not null, "owner should not be null.");
 
             if ((item is null) && (column is null))
             {
@@ -136,7 +136,7 @@ namespace System.Windows.Controls
         /// </summary>
         public object Item
         {
-            get { return (_info != null) ? _info.Item : null; }
+            get { return (_info is not null) ? _info.Item : null; }
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace System.Windows.Controls
 
         internal bool IsSet
         {
-            get { return _column != null || _info.Item != DependencyProperty.UnsetValue; }
+            get { return _column is not null || _info.Item != DependencyProperty.UnsetValue; }
         }
 
         internal ItemsControl.ItemInfo ItemInfo
@@ -226,7 +226,7 @@ namespace System.Windows.Controls
 
         private bool ArePropertyValuesValid
         {
-            get { return (Item != DependencyProperty.UnsetValue) && (_column != null); }
+            get { return (Item != DependencyProperty.UnsetValue) && (_column is not null); }
         }
 
 #if STRICT_VALIDATION
@@ -235,7 +235,7 @@ namespace System.Windows.Controls
             get
             {
                 DataGrid owner = Owner;
-                if (owner != null)
+                if (owner is not null)
                 {
                     return owner.Columns.Contains(_column);
                 }
@@ -249,7 +249,7 @@ namespace System.Windows.Controls
             get
             {
                 DataGrid owner = Owner;
-                if (owner != null)
+                if (owner is not null)
                 {
                     owner.Items.Contains(Item);
                 }
@@ -271,7 +271,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_owner != null)
+                if (_owner is not null)
                 {
                     return (DataGrid)_owner.Target;
                 }

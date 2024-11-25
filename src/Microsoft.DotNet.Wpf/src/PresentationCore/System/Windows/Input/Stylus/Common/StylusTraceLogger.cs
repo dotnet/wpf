@@ -210,7 +210,7 @@ namespace System.Windows.Input.Tracing
         /// <param name="stylusData">The statistics to log</param>
         internal static void LogStatistics(StylusStatistics stylusData)
         {
-            Requires<ArgumentNullException>(stylusData != null);
+            Requires<ArgumentNullException>(stylusData is not null);
 
             Log(StatisticsTag, stylusData);
         }
@@ -229,7 +229,7 @@ namespace System.Windows.Input.Tracing
         /// <param name="error"></param>
         internal static void LogError(string error)
         {
-            Requires<ArgumentNullException>(error != null);
+            Requires<ArgumentNullException>(error is not null);
 
             Log(ErrorTag, new StylusErrorEventData() { Error = error });
         }
@@ -240,7 +240,7 @@ namespace System.Windows.Input.Tracing
         /// <param name="deviceInfo"></param>
         internal static void LogDeviceConnect(StylusDeviceInfo deviceInfo)
         {
-            Requires<ArgumentNullException>(deviceInfo != null);
+            Requires<ArgumentNullException>(deviceInfo is not null);
 
             Log(DeviceConnectTag, deviceInfo);
         }

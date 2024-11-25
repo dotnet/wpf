@@ -143,7 +143,7 @@ namespace MS.Internal.AutomationProxies
                 default :
                 {
                     ProxySimple el = new WindowsListView( hwnd, null, -1 );
-                    if (el != null)
+                    if (el is not null)
                     {
                         el.DispatchEvents( eventId, idProp, idObject, idChild );
                     }
@@ -231,7 +231,7 @@ namespace MS.Internal.AutomationProxies
                 }
 
                 WindowsListViewGroup windowsListViewGroup = child as WindowsListViewGroup;
-                if (windowsListViewGroup != null)
+                if (windowsListViewGroup is not null)
                 {
                     // The group might have destroyed by an event between a first an now
                     _groupsCollection.EnsureCreation (_hwnd);
@@ -286,7 +286,7 @@ namespace MS.Internal.AutomationProxies
 
                 // check if current child is a group
                 WindowsListViewGroup windowsListViewGroup = child as WindowsListViewGroup;
-                if (windowsListViewGroup != null)
+                if (windowsListViewGroup is not null)
                 {
                     int groupID = windowsListViewGroup.ID;
                     int location = Array.IndexOf (groupIds, groupID);
@@ -491,7 +491,7 @@ namespace MS.Internal.AutomationProxies
 
         internal override void AdviseEventAdded (AutomationEvent eventId, AutomationProperty [] aidProps)
         {
-            if (aidProps != null)
+            if (aidProps is not null)
             {
                 for (int i = 0, c = aidProps.Length; i < c; i++)
                 {
@@ -520,7 +520,7 @@ namespace MS.Internal.AutomationProxies
 
         internal override void AdviseEventRemoved (AutomationEvent eventId, AutomationProperty [] aidProps)
         {
-            if (aidProps != null)
+            if (aidProps is not null)
             {
                 for (int i = 0, c = aidProps.Length; i < c; i++)
                 {
@@ -800,7 +800,7 @@ namespace MS.Internal.AutomationProxies
                 if (size > 0)
                 {
                     IRawElementProviderSimple [] columns = new IRawElementProviderSimple [size];
-                    for (ProxySimple headerItem = header.GetFirstChild (); headerItem != null; headerItem = header.GetNextSibling (headerItem))
+                    for (ProxySimple headerItem = header.GetFirstChild (); headerItem is not null; headerItem = header.GetNextSibling (headerItem))
                     {
                         columns [headerItem._item] = headerItem;
                     }
@@ -1628,10 +1628,10 @@ namespace MS.Internal.AutomationProxies
             // ListView items on the Start Menu are special.  The IAccessible is needed to get
             // information from these special ListView items.  If a valid IAccessible can not be
             // obtained default to the normal ListView item.
-            if (InStartMenu() && AccessibleObject != null)
+            if (InStartMenu() && AccessibleObject is not null)
             {
                 ProxyFragment proxyFragment = new ListViewItemStartMenu(_hwnd, parent, item, AccessibleObject);
-                if (proxyFragment != null)
+                if (proxyFragment is not null)
                 {
                     proxyFragment.AccessibleObject = AccessibleObject;
                 }
@@ -1858,7 +1858,7 @@ namespace MS.Internal.AutomationProxies
             if (eventId == NativeMethods.EventObjectSelectionRemove && automationProperty == SelectionItemPattern.IsSelectedProperty)
             {
                 el = wlv.CreateListViewItemCheckIfInGroup(idChild - 1);
-                if (el != null)
+                if (el is not null)
                 {
                     el.DispatchEvents(eventId, idProp, idObject, idChild);
                     return;
@@ -1942,7 +1942,7 @@ namespace MS.Internal.AutomationProxies
             else if (eventId == NativeMethods.EventObjectReorder && (automationProperty == GridItemPattern.ColumnProperty || automationProperty == GridItemPattern.RowProperty))
             {
                 // GridItem case. We need to recursively call all of the list items
-                for (el = wlv.GetFirstChild(); el != null; el = wlv.GetNextSibling(el))
+                for (el = wlv.GetFirstChild(); el is not null; el = wlv.GetNextSibling(el))
                 {
                     el.DispatchEvents(eventId, idProp, idObject, idChild);
                 }
@@ -1986,7 +1986,7 @@ namespace MS.Internal.AutomationProxies
                     {
                         // Get the item with the resetted collection of groups (may be null if the group is empty)
                         ProxySimple lvi = wlv.CreateListViewItemCheckIfInGroup(idChild - 1);
-                        if (lvi != null)
+                        if (lvi is not null)
                             parent = lvi.GetParent();
                     }
                 }
@@ -2005,7 +2005,7 @@ namespace MS.Internal.AutomationProxies
                 el = wlv;
             }
 
-            if (el != null)
+            if (el is not null)
             {
                 el.DispatchEvents(eventId, idProp, idObject, idChild);
             }

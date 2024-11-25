@@ -303,7 +303,7 @@ namespace System.Xaml.Schema
 
         internal IList<XamlType> TryAddPositionalParameters(int paramCount, IList<XamlType> paramList)
         {
-            Debug.Assert(_positionalParameterTypes != null, "TryGetPositionalParameters should have been called first");
+            Debug.Assert(_positionalParameterTypes is not null, "TryGetPositionalParameters should have been called first");
             return _positionalParameterTypes.TryAdd(paramCount, paramList);
         }
 
@@ -335,7 +335,7 @@ namespace System.Xaml.Schema
                 result = _xmlLangProperty.IsSet;
                 member = _xmlLangProperty.Value;
             }
-            else if (_aliasedProperties != null)
+            else if (_aliasedProperties is not null)
             {
                 result = _aliasedProperties.TryGetValue(directive, out member);
             }
@@ -402,12 +402,12 @@ namespace System.Xaml.Schema
             // So it's fine to use live reflection here.
             object obj = GetCustomAttribute(typeof(XAML3.NameScopePropertyAttribute), xamlType.UnderlyingType);
             XAML3.NameScopePropertyAttribute nspAttr = obj as XAML3.NameScopePropertyAttribute;
-            if (nspAttr != null)
+            if (nspAttr is not null)
             {
                 Type ownerType = nspAttr.Type;
                 string propertyName = nspAttr.Name;
                 XamlMember prop;
-                if (ownerType != null)
+                if (ownerType is not null)
                 {
                     XamlType ownerXamlType = xamlType.SchemaContext.GetXamlType(ownerType);
                     prop = ownerXamlType.GetAttachableMember(propertyName);
@@ -425,9 +425,9 @@ namespace System.Xaml.Schema
 
         internal PropertyInfo LookupProperty(string name)
         {
-            Debug.Assert(UnderlyingType != null, "Caller should check for UnderlyingType is null");
+            Debug.Assert(UnderlyingType is not null, "Caller should check for UnderlyingType is null");
             PropertyInfo pi = GetNonIndexerProperty(name);
-            if (pi != null && IsPrivate(pi))
+            if (pi is not null && IsPrivate(pi))
             {
                 pi = null;
             }
@@ -436,10 +436,10 @@ namespace System.Xaml.Schema
 
         internal EventInfo LookupEvent(string name)
         {
-            Debug.Assert(UnderlyingType != null, "Caller should check for UnderlyingType is null");
+            Debug.Assert(UnderlyingType is not null, "Caller should check for UnderlyingType is null");
             // In case of shadowing, Type.GetEvent returns the most derived Event
             EventInfo ei = UnderlyingType.GetEvent(name, AllProperties_BF);
-            if (ei != null && IsPrivate(ei))
+            if (ei is not null && IsPrivate(ei))
             {
                 ei = null;
             }
@@ -449,8 +449,8 @@ namespace System.Xaml.Schema
         internal void LookupAllMembers(out ICollection<PropertyInfo> newProperties,
             out ICollection<EventInfo> newEvents, out List<XamlMember> knownMembers)
         {
-            Debug.Assert(UnderlyingType != null, "Caller should check for UnderlyingType is null");
-            Debug.Assert(_nonAttachableMemberCache != null, "Members property should have been invoked before this");
+            Debug.Assert(UnderlyingType is not null, "Caller should check for UnderlyingType is null");
+            Debug.Assert(_nonAttachableMemberCache is not null, "Members property should have been invoked before this");
 
             PropertyInfo[] propList = UnderlyingType.GetProperties(AllProperties_BF);
             EventInfo[] eventList = UnderlyingType.GetEvents(AllProperties_BF);
@@ -462,8 +462,8 @@ namespace System.Xaml.Schema
         // Returns properties that don't yet have corresponding XamlMembers
         internal IList<PropertyInfo> LookupRemainingProperties()
         {
-            Debug.Assert(UnderlyingType != null, "Caller should check for UnderlyingType is null");
-            Debug.Assert(_nonAttachableMemberCache != null, "Members property should have been invoked before this");
+            Debug.Assert(UnderlyingType is not null, "Caller should check for UnderlyingType is null");
+            Debug.Assert(_nonAttachableMemberCache is not null, "Members property should have been invoked before this");
             PropertyInfo[] propList = UnderlyingType.GetProperties(AllProperties_BF);
             return FilterProperties(propList, null, false);
         }
@@ -481,9 +481,9 @@ namespace System.Xaml.Schema
                 XamlMember knownMember;
                 if (_nonAttachableMemberCache.TryGetValue(currentProp.Name, out knownMember))
                 {
-                    if (knownMember != null)
+                    if (knownMember is not null)
                     {
-                        if (knownMembers != null)
+                        if (knownMembers is not null)
                         {
                             knownMembers.Add(knownMember);
                         }
@@ -538,7 +538,7 @@ namespace System.Xaml.Schema
                 XamlMember knownMember;
                 if (_nonAttachableMemberCache.TryGetValue(currentEvent.Name, out knownMember))
                 {
-                    if (knownMember != null)
+                    if (knownMember is not null)
                     {
                         knownMembers.Add(knownMember);
                     }
@@ -622,7 +622,7 @@ namespace System.Xaml.Schema
             List<KeyValuePair<MethodInfo, MethodInfo>> candidates =
                 new List<KeyValuePair<MethodInfo, MethodInfo>>();
 
-            if (setters != null && getters != null)
+            if (setters is not null && getters is not null)
             {
                 foreach (MethodInfo curSetter in setters)
                 {
@@ -652,7 +652,7 @@ namespace System.Xaml.Schema
                 setter = candidates[0].Value;
             }
             else if (setters is null || setters.Count == 0
-                || (getters != null && getters.Count > 0 && UnderlyingType.IsVisible && getters[0].IsPublic && !setters[0].IsPublic))
+                || (getters is not null && getters.Count > 0 && UnderlyingType.IsVisible && getters[0].IsPublic && !setters[0].IsPublic))
             {
                 getter = getters[0];
                 setter = null;
@@ -666,7 +666,7 @@ namespace System.Xaml.Schema
 
         private MethodInfo PickAttachableEventAdder(IEnumerable<MethodInfo> adders)
         {
-            if (adders != null)
+            if (adders is not null)
             {
                 // See disambiguation note in PickAttachablePropertyAccessors
                 foreach (MethodInfo adder in adders)
@@ -682,7 +682,7 @@ namespace System.Xaml.Schema
 
         internal bool LookupAttachableProperty(string name, out MethodInfo getter, out MethodInfo setter)
         {
-            Debug.Assert(UnderlyingType != null, "Caller should check for UnderlyingType is null");
+            Debug.Assert(UnderlyingType is not null, "Caller should check for UnderlyingType is null");
             List<MethodInfo> setters = LookupStaticSetters(name);
             List<MethodInfo> getters = LookupStaticGetters(name);
 
@@ -699,7 +699,7 @@ namespace System.Xaml.Schema
 
         internal MethodInfo LookupAttachableEvent(string name)
         {
-            Debug.Assert(UnderlyingType != null, "Caller should check for UnderlyingType is null");
+            Debug.Assert(UnderlyingType is not null, "Caller should check for UnderlyingType is null");
             List<MethodInfo> adders = LookupStaticAdders(name);
             if (adders is null || adders.Count == 0)
             {
@@ -949,8 +949,8 @@ namespace System.Xaml.Schema
         // That is the cleanest way to pass back the information we need without JITting or boxing.
         internal IList<XamlMember> LookupAllAttachableMembers(XamlSchemaContext schemaContext)
         {
-            Debug.Assert(UnderlyingType != null, "Caller should check for UnderlyingType is null");
-            Debug.Assert(_attachableMemberCache != null, "AttachableMembers property should have been invoked before this");
+            Debug.Assert(UnderlyingType is not null, "Caller should check for UnderlyingType is null");
+            Debug.Assert(_attachableMemberCache is not null, "AttachableMembers property should have been invoked before this");
 
             List<XamlMember> result = new List<XamlMember>();
 
@@ -987,7 +987,7 @@ namespace System.Xaml.Schema
                         member = null;
                     }
                 }
-                if (member != null)
+                if (member is not null)
                 {
                     result.Add(member);
                 }
@@ -1017,7 +1017,7 @@ namespace System.Xaml.Schema
                     MethodInfo adder = PickAttachableEventAdder(nameAndAdderList.Value);
                     member = schemaContext.GetAttachableEvent(name, adder);
                 }
-                if (member != null)
+                if (member is not null)
                 {
                     result.Add(member);
                 }
@@ -1155,7 +1155,7 @@ namespace System.Xaml.Schema
                         listOfNulls.Add(pair.Key);
                     }
                 }
-                if (listOfNulls != null)
+                if (listOfNulls is not null)
                 {
                     for (int i = 0; i < listOfNulls.Count; i++)
                     {

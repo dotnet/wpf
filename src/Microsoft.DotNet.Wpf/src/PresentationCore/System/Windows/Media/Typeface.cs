@@ -186,7 +186,7 @@ namespace System.Windows.Media
         public bool TryGetGlyphTypeface(out GlyphTypeface glyphTypeface)
         {
             glyphTypeface = CachedTypeface.TypefaceMetrics as GlyphTypeface;
-            return glyphTypeface != null;
+            return glyphTypeface is not null;
         }
 
 
@@ -630,7 +630,7 @@ namespace System.Windows.Media
             // This function should only be called if CheckFastPathNominalGlyphs has
             // returned true so we can assume the ITypefaceMetrics is a GlyphTypeface.
             GlyphTypeface glyphTypeface = TryGetGlyphTypeface();
-            Invariant.Assert(glyphTypeface != null);
+            Invariant.Assert(glyphTypeface is not null);
 
             MS.Internal.Text.TextInterface.GlyphMetrics[] glyphMetrics = BufferCache.GetGlyphMetrics(charBufferRange.Length);
 
@@ -674,7 +674,7 @@ namespace System.Windows.Media
         {
             int hash = _fontFamily.GetHashCode();
 
-            if (_fallbackFontFamily != null)
+            if (_fallbackFontFamily is not null)
                 hash = HashFn.HashMultiply(hash) + _fallbackFontFamily.GetHashCode();
 
             hash = HashFn.HashMultiply(hash) + _style.GetHashCode();
@@ -759,7 +759,7 @@ namespace System.Windows.Media
 
             if (firstFontFamily is null)
             {
-                if (FallbackFontFamily != null)
+                if (FallbackFontFamily is not null)
                 {
                     sourceFontFamily = FallbackFontFamily;
                     firstFontFamily = sourceFontFamily.FindFirstFontFamilyAndFace(
@@ -777,13 +777,13 @@ namespace System.Windows.Media
             }
 
             // If it's a named font, map all occurrences of the same name to one cached IFontFamily.
-            if (sourceFontFamily != null && sourceFontFamily.Source != null)
+            if (sourceFontFamily is not null && sourceFontFamily.Source is not null)
             {
                 // We lookup in the cache to see if there is cached IFontFamily instance of the source FontFamily. Otherwise, 
                 // this IFontFamily value is added to the TypefaceMetrics cache. 
                 IFontFamily cachedValue = TypefaceMetricsCache.ReadonlyLookup(sourceFontFamily.FamilyIdentifier) as IFontFamily;
                 
-                if (cachedValue != null)
+                if (cachedValue is not null)
                 {
                     firstFontFamily = cachedValue;
                 }

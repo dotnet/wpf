@@ -68,7 +68,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             )
         {
 
-            Invariant.Assert(s != null, "s cannot be null");
+            Invariant.Assert(s is not null, "s cannot be null");
 
             UnsafeNativeCompoundFileMethods.UnsafeNativeIStorage storage;
             UnsafeNativeCompoundFileMethods.UnsafeLockBytesOnStream lockByteStream = new UnsafeNativeCompoundFileMethods.UnsafeLockBytesOnStream(s);
@@ -98,7 +98,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             )
         {
 
-            Invariant.Assert(s != null, "s cannot be null");
+            Invariant.Assert(s is not null, "s cannot be null");
 
             UnsafeNativeCompoundFileMethods.UnsafeNativeIStorage storage;
             UnsafeNativeCompoundFileMethods.UnsafeLockBytesOnStream lockByteStream = new UnsafeNativeCompoundFileMethods.UnsafeLockBytesOnStream(s);
@@ -229,7 +229,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                 try
                 {
-                    if (disposing && (_unsafeStorage != null))
+                    if (disposing && (_unsafeStorage is not null))
                     {
                         // We only need to release IStorage only not IPropertySetStorage
                         //  since it shares once instance of RCW
@@ -237,7 +237,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                         // If the storage was originally opened on lockbyte implementation
                         //  we need to dispose it as well
-                        if (_unsafeLockByteStream != null)
+                        if (_unsafeLockByteStream is not null)
                         {
                             _unsafeLockByteStream.Dispose();
                         }
@@ -384,7 +384,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 IStorage ppstg )
             {
 
-                Invariant.Assert(ppstg != null, "ppstg cannot be null");
+                Invariant.Assert(ppstg is not null, "ppstg cannot be null");
 
                 _unsafeStorage.CopyTo(
                     ciidExclude,
@@ -400,7 +400,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 int grfFlags )
             {
 
-                Invariant.Assert(pstgDest != null, "pstgDest cannot be null");
+                Invariant.Assert(pstgDest is not null, "pstgDest cannot be null");
 
                 _unsafeStorage.MoveElementTo(
                     pwcsName,
@@ -438,7 +438,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     reserved3,
                     out enumSTATSTG);
 
-                if (enumSTATSTG != null)
+                if (enumSTATSTG is not null)
                     ppEnum = new SafeIEnumSTATSTGImplementation(enumSTATSTG);
                 else
                     ppEnum = null;
@@ -523,7 +523,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     out propertyStorage
                     );
 
-                if (propertyStorage != null)
+                if (propertyStorage is not null)
                     ppprstg = new SafeIPropertyStorageImplementation(propertyStorage);
                 else
                     ppprstg = null;
@@ -544,7 +544,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     out propertyStorage
                     );
 
-                if (propertyStorage != null)
+                if (propertyStorage is not null)
                     ppprstg = new SafeIPropertyStorageImplementation(propertyStorage);
                 else
                     ppprstg = null;
@@ -573,7 +573,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     out enumSTATPROPSETSTG
                     );
 
-                if (enumSTATPROPSETSTG != null)
+                if (enumSTATPROPSETSTG is not null)
                     ppenum = new SafeIEnumSTATPROPSETSTGImplementation(enumSTATPROPSETSTG);
                 else
                     ppenum = null;
@@ -603,7 +603,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                 try
                 {
-                    if (disposing && (_unsafeStream != null))
+                    if (disposing && (_unsafeStream is not null))
                     {
                         MS.Win32.UnsafeNativeMethods.SafeReleaseComObject((object) _unsafeStream);
                     }
@@ -671,7 +671,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             void IStream.CopyTo(IStream pstm, long cb, out long pcbRead, out long pcbWritten)
             {
 
-                Invariant.Assert(pstm != null, "pstm cannot be null");
+                Invariant.Assert(pstm is not null, "pstm cannot be null");
 
                 if (cb < 0)
                 {
@@ -736,7 +736,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                 _unsafeStream.Clone(out stream);
 
-                if (stream != null)
+                if (stream is not null)
                 {
                     ppstm = new SafeIStreamImplementation(stream);
                 }
@@ -772,7 +772,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                 try
                 {
-                    if (disposing && (_unsafeEnumSTATPROPSETSTG != null))
+                    if (disposing && (_unsafeEnumSTATPROPSETSTG is not null))
                     {
                         MS.Win32.UnsafeNativeMethods.SafeReleaseComObject((object) _unsafeEnumSTATPROPSETSTG);
                     }
@@ -824,7 +824,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                 _unsafeEnumSTATPROPSETSTG.Clone(out enumSTATPROPSETSTG);
 
-                if (enumSTATPROPSETSTG != null)
+                if (enumSTATPROPSETSTG is not null)
                     ppenum = new SafeIEnumSTATPROPSETSTGImplementation(enumSTATPROPSETSTG);
                 else
                     ppenum = null;
@@ -856,7 +856,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                 try
                 {
-                    if (disposing && (_unsafePropertyStorage != null))
+                    if (disposing && (_unsafePropertyStorage is not null))
                     {
                         MS.Win32.UnsafeNativeMethods.SafeReleaseComObject((object) _unsafePropertyStorage);
                     }
@@ -983,7 +983,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     out unsafeEnumSTATPROPSTG
                     );
 
-                if (unsafeEnumSTATPROPSTG != null)
+                if (unsafeEnumSTATPROPSTG is not null)
                     ppenum = new SafeIEnumSTATPROPSTGImplementation(unsafeEnumSTATPROPSTG);
                 else
 #endif                    
@@ -1051,7 +1051,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                 try
                 {
-                    if (disposing && (_unsafeEnumSTATPROPSTG != null))
+                    if (disposing && (_unsafeEnumSTATPROPSTG is not null))
                     {
                         MS.Win32.UnsafeNativeMethods.SafeReleaseComObject((object) _unsafeEnumSTATPROPSTG);
                     }
@@ -1103,7 +1103,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                 _unsafeEnumSTATPROPSTG.Clone(out enumSTATPROPSTG);
 
-                if (enumSTATPROPSTG != null)
+                if (enumSTATPROPSTG is not null)
                     ppenum = new SafeIEnumSTATPROPSTGImplementation(enumSTATPROPSTG);
                 else
                     ppenum = null;
@@ -1136,7 +1136,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                 try
                 {
-                    if (disposing && (_unsafeEnumSTATSTG != null))
+                    if (disposing && (_unsafeEnumSTATSTG is not null))
                     {
                         MS.Win32.UnsafeNativeMethods.SafeReleaseComObject((object) _unsafeEnumSTATSTG);
                     }
@@ -1188,7 +1188,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 _unsafeEnumSTATSTG.Clone(
                     out enumSTATSTG );
 
-                if (enumSTATSTG != null)
+                if (enumSTATSTG is not null)
                     ppenum = new SafeIEnumSTATSTGImplementation(enumSTATSTG);
                 else
                     ppenum = null;

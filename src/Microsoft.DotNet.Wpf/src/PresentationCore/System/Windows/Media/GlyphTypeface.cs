@@ -1465,7 +1465,7 @@ namespace System.Windows.Media
             TextFormattingMode textFormattingMode,
             bool isSideways)
         {
-            Debug.Assert(glyphIndices != null || glyphMetrics != null);
+            Debug.Assert(glyphIndices is not null || glyphMetrics is not null);
 
             if (characters.Length * sizeof(uint) < GlyphRun.MaxStackAlloc)
             {
@@ -1517,7 +1517,7 @@ namespace System.Windows.Media
             {
                 _fontFace.CharacterMap.TryGetValues(pCodepoints, checked((uint)characterCount), pGlyphIndices);
 
-                if (glyphMetrics != null)
+                if (glyphMetrics is not null)
                 {
                     fixed (MS.Internal.Text.TextInterface.GlyphMetrics* pGlyphMetrics = &glyphMetrics[0])
                     {

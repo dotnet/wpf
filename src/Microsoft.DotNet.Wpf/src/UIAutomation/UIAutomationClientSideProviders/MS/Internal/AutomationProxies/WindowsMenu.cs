@@ -47,10 +47,10 @@ namespace MS.Internal.AutomationProxies
             FixMDIMenuType();
 
             // (Vista Explorer FolerBandModuleInner menu items don't raise InvokedEvent).  During events, this ctor is
-            // called with parent = null and type = MenuType.Menu.  I think it should be parent != null and type = MenuType.Toplevel
+            // called with parent = null and type = MenuType.Menu.  I think it should be parent is not null and type = MenuType.Toplevel
             // since it is acting like a top-level menu.  Need to work through this with the other core team members, though.  Start
             // here to investigate.
-            //Console.WriteLine("WindowsMenu {0} is {1} parent is {2}", hwnd.ToInt32(), (int)_type, (parent != null)?parent._hwnd.ToInt32() : 0);
+            //Console.WriteLine("WindowsMenu {0} is {1} parent is {2}", hwnd.ToInt32(), (int)_type, (parent is not null)?parent._hwnd.ToInt32() : 0);
 
             // According to spec:
             switch (_type)
@@ -127,7 +127,7 @@ namespace MS.Internal.AutomationProxies
                 // at this point the only thing we can know about this menu item is whether it was an item on the system menu or
                 // a menu bar and an identifier for the menu item.
                 MenuParentInfo parentInfo = (MenuParentInfo)_expandedMenus[hwndMenu];
-                if (parentInfo != null)
+                if (parentInfo is not null)
                 {
                     return new DestroyedMenuItem(hwndMenu, idChild, parentInfo._hwndParent);
                 }
@@ -140,7 +140,7 @@ namespace MS.Internal.AutomationProxies
         // which would otherwise be treated as a normal submenu.
         private void FixMDIMenuType()
         {
-            if (_type == MenuType.Submenu && GetHierarchyParent(_hwnd) is null && GetSystemPopupParent() != null)
+            if (_type == MenuType.Submenu && GetHierarchyParent(_hwnd) is null && GetSystemPopupParent() is not null)
             {
                 _type = MenuType.SystemPopup;
             }
@@ -377,7 +377,7 @@ namespace MS.Internal.AutomationProxies
         {
             get
             {
-                if (_parent != null && _type == MenuType.Submenu)
+                if (_parent is not null && _type == MenuType.Submenu)
                 {
                     return _parent.LocalizedName;
                 }
@@ -432,7 +432,7 @@ namespace MS.Internal.AutomationProxies
             {
                 // The point might be in this menu item or in one of the popup Menu Item
                 ProxySimple menuItem = CreateMenuItem(item).ElementProviderFromPoint(x, y);
-                if (menuItem != null)
+                if (menuItem is not null)
                 {
                     return menuItem;
                 }
@@ -989,7 +989,7 @@ namespace MS.Internal.AutomationProxies
                             menu = (WindowsMenu) WindowsMenu.Create (parentInfo._hwndParent, 0);
                         }
 
-                        if (menu != null)
+                        if (menu is not null)
                         {
                             parent = (MenuItem) menu.CreateMenuItem (parentInfo._menuItem);
                         }
@@ -1019,7 +1019,7 @@ namespace MS.Internal.AutomationProxies
                     {
                         menu = CreateSystemMenu(parentInfo._hwndParent, null);
                     }
-                    if (menu != null)
+                    if (menu is not null)
                     {
                         parent = (MenuItem)menu.CreateMenuItem(0);
                     }
@@ -1044,11 +1044,11 @@ namespace MS.Internal.AutomationProxies
             }
 
             // Raise an event
-            if (parent != null)
+            if (parent is not null)
             {
                 object propertyValue = ((IExpandCollapseProvider)parent).ExpandCollapseState;
 
-                if (propertyValue != null && propertyValue != AutomationElement.NotSupported)
+                if (propertyValue is not null && propertyValue != AutomationElement.NotSupported)
                 {
                     AutomationInteropProvider.RaiseAutomationPropertyChangedEvent(parent, new AutomationPropertyChangedEventArgs((AutomationProperty)idProp, null, propertyValue));
                 }
@@ -1334,11 +1334,11 @@ namespace MS.Internal.AutomationProxies
                     string menuText = menuRawText.ToLower(CultureInfo.InvariantCulture);
                     string accelerator;
 
-                    if ((accelerator = AccelatorKeyCtrl(keyCtrl.ToLower(CultureInfo.InvariantCulture), keyCtrl + " + ", menuText, menuRawText, out pos)) != null ||
-                        (accelerator = AccelatorKeyCtrl(keyControl.ToLower(CultureInfo.InvariantCulture), keyCtrl + " + ", menuText, menuRawText, out pos)) != null ||
-                        (accelerator = AccelatorKeyCtrl(keyAlt.ToLower(CultureInfo.InvariantCulture), keyAlt + " + ", menuText, menuRawText, out pos)) != null ||
-                        (accelerator = AccelatorKeyCtrl(keyShift.ToLower(CultureInfo.InvariantCulture), keyShift + " + ", menuText, menuRawText, out pos)) != null ||
-                        (accelerator = AccelatorKeyCtrl(keyWin.ToLower(CultureInfo.InvariantCulture), keyWin + " + ", menuText, menuRawText, out pos)) != null)
+                    if ((accelerator = AccelatorKeyCtrl(keyCtrl.ToLower(CultureInfo.InvariantCulture), keyCtrl + " + ", menuText, menuRawText, out pos)) is not null ||
+                        (accelerator = AccelatorKeyCtrl(keyControl.ToLower(CultureInfo.InvariantCulture), keyCtrl + " + ", menuText, menuRawText, out pos)) is not null ||
+                        (accelerator = AccelatorKeyCtrl(keyAlt.ToLower(CultureInfo.InvariantCulture), keyAlt + " + ", menuText, menuRawText, out pos)) is not null ||
+                        (accelerator = AccelatorKeyCtrl(keyShift.ToLower(CultureInfo.InvariantCulture), keyShift + " + ", menuText, menuRawText, out pos)) is not null ||
+                        (accelerator = AccelatorKeyCtrl(keyWin.ToLower(CultureInfo.InvariantCulture), keyWin + " + ", menuText, menuRawText, out pos)) is not null)
                     {
                         return menuRawText.Substring(0, SkipMenuSpaceChar(menuText, pos));
                     }
@@ -1641,11 +1641,11 @@ namespace MS.Internal.AutomationProxies
             internal override ProxySimple ElementProviderFromPoint (int x, int y)
             {
                 // Hit test on all the descendent
-                for (MenuItem menuCur = FirstOrLastChild (true); menuCur != null; menuCur = menuCur.NextMenuItem)
+                for (MenuItem menuCur = FirstOrLastChild (true); menuCur is not null; menuCur = menuCur.NextMenuItem)
                 {
                     ProxySimple menuItem = menuCur.ElementProviderFromPoint(x, y);
 
-                    if (menuItem != null)
+                    if (menuItem is not null)
                     {
                         return menuItem;
                     }
@@ -2179,7 +2179,7 @@ namespace MS.Internal.AutomationProxies
                     // Wait until the action has been completed
                     // If fShow == true, also make sure last child is present.
                     // (This makes it more certain that the menu is done with initialization.)
-                    if ((fShow && firstMenu != null && FirstOrLastChild(false) != null
+                    if ((fShow && firstMenu is not null && FirstOrLastChild(false) is not null
                             || !fShow && firstMenu is null)
                         || (dwDelta = SubtractTicks (SafeNativeMethods.GetTickCount (), dwTicks)) >= WindowsMenu.TimeOut)
                     {
@@ -2758,11 +2758,11 @@ namespace MS.Internal.AutomationProxies
                     string menuText = menuRawText.ToLower(CultureInfo.InvariantCulture);
                     string accelerator;
 
-                    if ((accelerator = AccelatorKeyCtrl(keyCtrl.ToLower(CultureInfo.InvariantCulture), keyCtrl + " + ", menuText, menuRawText, out pos)) != null ||
-                        (accelerator = AccelatorKeyCtrl(keyControl.ToLower(CultureInfo.InvariantCulture), keyCtrl + " + ", menuText, menuRawText, out pos)) != null ||
-                        (accelerator = AccelatorKeyCtrl(keyAlt.ToLower(CultureInfo.InvariantCulture), keyAlt + " + ", menuText, menuRawText, out pos)) != null ||
-                        (accelerator = AccelatorKeyCtrl(keyShift.ToLower(CultureInfo.InvariantCulture), keyShift + " + ", menuText, menuRawText, out pos)) != null ||
-                        (accelerator = AccelatorKeyCtrl(keyWin.ToLower(CultureInfo.InvariantCulture), keyWin + " + ", menuText, menuRawText, out pos)) != null)
+                    if ((accelerator = AccelatorKeyCtrl(keyCtrl.ToLower(CultureInfo.InvariantCulture), keyCtrl + " + ", menuText, menuRawText, out pos)) is not null ||
+                        (accelerator = AccelatorKeyCtrl(keyControl.ToLower(CultureInfo.InvariantCulture), keyCtrl + " + ", menuText, menuRawText, out pos)) is not null ||
+                        (accelerator = AccelatorKeyCtrl(keyAlt.ToLower(CultureInfo.InvariantCulture), keyAlt + " + ", menuText, menuRawText, out pos)) is not null ||
+                        (accelerator = AccelatorKeyCtrl(keyShift.ToLower(CultureInfo.InvariantCulture), keyShift + " + ", menuText, menuRawText, out pos)) is not null ||
+                        (accelerator = AccelatorKeyCtrl(keyWin.ToLower(CultureInfo.InvariantCulture), keyWin + " + ", menuText, menuRawText, out pos)) is not null)
                     {
                         return accelerator;
                     }

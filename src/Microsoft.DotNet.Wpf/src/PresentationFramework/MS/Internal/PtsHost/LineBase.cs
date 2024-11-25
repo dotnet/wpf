@@ -91,7 +91,7 @@ namespace MS.Internal.PtsHost
 
             Invariant.Assert(position.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text, "TextPointer does not point to characters.");
 
-            if (position.Parent != null)
+            if (position.Parent is not null)
             {
                 element = position.Parent;
             }
@@ -143,7 +143,7 @@ namespace MS.Internal.PtsHost
             //      In the future, handle visibility collapsed.
             TextRun run = null;
             TextElement element = (TextElement)position.GetAdjacentElement(LogicalDirection.Forward);
-            Debug.Assert(element != null, "Cannot use ITextContainer that does not provide TextElement instances.");
+            Debug.Assert(element is not null, "Cannot use ITextContainer that does not provide TextElement instances.");
 
             Invariant.Assert(!(element is Block), "We do not expect any Blocks inside Paragraphs");
 
@@ -196,7 +196,7 @@ namespace MS.Internal.PtsHost
 
                 TextDecorationCollection inlineTextDecorations = DynamicPropertyReader.GetTextDecorations(inline);
 
-                if(parent != null)
+                if(parent is not null)
                 {
                     parentFlowDirection = (FlowDirection)parent.GetValue(FrameworkElement.FlowDirectionProperty);
                 }
@@ -265,12 +265,12 @@ namespace MS.Internal.PtsHost
             else
             {
                 TextElement element = (TextElement)position.GetAdjacentElement(LogicalDirection.Forward);
-                Debug.Assert(element != null, "Element should be here.");
+                Debug.Assert(element is not null, "Element should be here.");
                 Inline inline = (Inline) element;
                 DependencyObject parent = inline.Parent;
                 FlowDirection parentFlowDirection = inline.FlowDirection;
 
-                if(parent != null)
+                if(parent is not null)
                 {
                     parentFlowDirection = (FlowDirection)parent.GetValue(FrameworkElement.FlowDirectionProperty);
                 }

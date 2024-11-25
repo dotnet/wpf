@@ -556,7 +556,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return (((ITextPointer)this).TextContainer.TextView != null &&
+                return (((ITextPointer)this).TextContainer.TextView is not null &&
                         ((ITextPointer)this).TextContainer.TextView.IsValid &&
                         ((ITextPointer)this).TextContainer.TextView.Contains(this));
             }

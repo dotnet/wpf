@@ -388,7 +388,7 @@ namespace System.Windows.Markup
                 object obj = _properties[_propertiesIndex];
 
                 BamlPropertyInfo info = obj as BamlPropertyInfo;
-                if (info != null)
+                if (info is not null)
                 {
                     _name = info.Name;
                     _localName = info.LocalName;
@@ -486,7 +486,7 @@ namespace System.Windows.Markup
         /// </summary>
         private void GetNextRecord()
         {
-            if (_currentStaticResourceRecords != null)
+            if (_currentStaticResourceRecords is not null)
             {
                 // Load the record from the front loaded static resource
                 _currentBamlRecord = _currentStaticResourceRecords[_currentStaticResourceRecordIndex++];
@@ -1068,7 +1068,7 @@ namespace System.Windows.Markup
             }
             else
             {
-                if (_propertyDP != null)
+                if (_propertyDP is not null)
                 {
                     propertyType = _propertyDP.PropertyType;
                     propertyName = _propertyDP.Name;
@@ -1255,7 +1255,7 @@ namespace System.Windows.Markup
                 // that maps ids to assemblies, types and attributes.
                 case BamlRecordType.DefAttributeKeyString:
                     BamlDefAttributeKeyStringRecord stringKeyRecord = _currentBamlRecord as BamlDefAttributeKeyStringRecord;
-                    if (stringKeyRecord != null)
+                    if (stringKeyRecord is not null)
                     {
                         BamlKeyInfo info;
 
@@ -1288,7 +1288,7 @@ namespace System.Windows.Markup
 
                 case BamlRecordType.DefAttributeKeyType:
                     BamlDefAttributeKeyTypeRecord typeKeyRecord = _currentBamlRecord as BamlDefAttributeKeyTypeRecord;
-                    if (typeKeyRecord != null)
+                    if (typeKeyRecord is not null)
                     {
                         // Translate the type information held in the baml record into
                         // the {x:Type prefix:Classname} format that would be used on
@@ -1387,7 +1387,7 @@ namespace System.Windows.Markup
         private BamlKeyInfo CheckForSharedness()
         {
             IBamlDictionaryKey dictKey = (IBamlDictionaryKey)_currentBamlRecord;
-            Debug.Assert(dictKey != null, "Bad Key record");
+            Debug.Assert(dictKey is not null, "Bad Key record");
             if (!dictKey.SharedSet)
                 return null;
 
@@ -1418,7 +1418,7 @@ namespace System.Windows.Markup
         private BamlKeyInfo ProcessKeyTree()
         {
             BamlKeyElementStartRecord keyStartRecord = _currentBamlRecord as BamlKeyElementStartRecord;
-            Debug.Assert(keyStartRecord != null, "Bad Key Element Start record");
+            Debug.Assert(keyStartRecord is not null, "Bad Key Element Start record");
 
             // Translate the type information held in the baml record into
             // the "{prefix:Classname " format that would be used on
@@ -1509,7 +1509,7 @@ namespace System.Windows.Markup
                     case BamlRecordType.TextWithId:
 
                         BamlTextWithIdRecord textWithIdRecord = _currentBamlRecord as BamlTextWithIdRecord;
-                        if (textWithIdRecord != null)
+                        if (textWithIdRecord is not null)
                         {
                             // Get the value string from the string table, and cache it in the
                             // record.
@@ -1762,7 +1762,7 @@ namespace System.Windows.Markup
                     }
                     builder.Append('\\');
                 }
-                if (builder != null)
+                if (builder is not null)
                 {
                     builder.Append(value[i]);
                 }
@@ -2178,7 +2178,7 @@ namespace System.Windows.Markup
             ClearProperties();
 
             BamlTextWithIdRecord textWithIdRecord = _currentBamlRecord as BamlTextWithIdRecord;
-            if (textWithIdRecord != null)
+            if (textWithIdRecord is not null)
             {
                 // Get the value string from the string table, and cache it in the
                 // record.
@@ -2187,7 +2187,7 @@ namespace System.Windows.Markup
             }
 
             BamlTextWithConverterRecord textWithConverter = _currentBamlRecord as BamlTextWithConverterRecord;
-            if (textWithConverter != null)
+            if (textWithConverter is not null)
             {
                 short converterTypeId = textWithConverter.ConverterTypeId;
                 Type converter = MapTable.GetTypeFromId(converterTypeId);
@@ -2712,7 +2712,7 @@ namespace System.Windows.Markup
                 // If there is nothing in the prefix dictionary for this namespace,
                 // then assume this is the default namespace and set prefix to
                 // an empty string.
-                if (prefixObject != null)
+                if (prefixObject is not null)
                 {
                     prefix = (string)prefixObject;
                 }
@@ -2726,7 +2726,7 @@ namespace System.Windows.Markup
             string prefix;
             string xmlns;
 
-            if (xmlnsList != null)
+            if (xmlnsList is not null)
             {
                 // return the first non-null prefix defined.
                 // the default prefix is "" and is non-null.
@@ -2734,7 +2734,7 @@ namespace System.Windows.Markup
                 {
                     xmlns = xmlnsList[i];
                     prefix = _prefixDictionary[xmlns];
-                    if(prefix != null)
+                    if(prefix is not null)
                         return prefix;
                 }
             }

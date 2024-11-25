@@ -116,7 +116,7 @@ namespace System.Windows.Ink
                 clone._stylusPoints = _stylusPoints.Clone();
             }
             clone._drawingAttributes = _drawingAttributes.Clone();
-            if (_extendedProperties != null)
+            if (_extendedProperties is not null)
             {
                 clone._extendedProperties = _extendedProperties.Clone();
             } 
@@ -263,7 +263,7 @@ namespace System.Windows.Ink
         /// </summary>
         private StylusPointCollection GetInterpolatedStylusPoints(List<Point> bezierPoints)
         {
-            Debug.Assert(bezierPoints != null && bezierPoints.Count > 0);
+            Debug.Assert(bezierPoints is not null && bezierPoints.Count > 0);
 
             //new points need the same description
             StylusPointCollection bezierStylusPoints =
@@ -602,7 +602,7 @@ namespace System.Windows.Ink
                 throw new ArgumentNullException("e", SR.EventArgIsNull);
             }
 
-            if (DrawingAttributesChanged != null)
+            if (DrawingAttributesChanged is not null)
             {
                 DrawingAttributesChanged(this, e);
             }
@@ -633,7 +633,7 @@ namespace System.Windows.Ink
                 throw new ArgumentNullException("e", SR.EventArgIsNull);
             }
 
-            if (StylusPointsReplaced != null)
+            if (StylusPointsReplaced is not null)
                 StylusPointsReplaced(this, e);
         }
 
@@ -648,7 +648,7 @@ namespace System.Windows.Ink
                 throw new ArgumentNullException("e", SR.EventArgIsNull);
             }
 
-            if (StylusPointsChanged != null)
+            if (StylusPointsChanged is not null)
                 StylusPointsChanged(this, e);
         }
 
@@ -665,7 +665,7 @@ namespace System.Windows.Ink
                 throw new ArgumentNullException("e", SR.EventArgIsNull);
             }
 
-            if (PropertyDataChanged != null)
+            if (PropertyDataChanged is not null)
             {
                 PropertyDataChanged(this, e);
             }
@@ -683,7 +683,7 @@ namespace System.Windows.Ink
                 throw new ArgumentNullException("e", SR.EventArgIsNull);
             }
 
-            if (Invalidated != null)
+            if (Invalidated is not null)
             {
                 Invalidated(this, e);
             }
@@ -697,7 +697,7 @@ namespace System.Windows.Ink
         /// instance, but every other INotifyPropertyChanged implementation follows this pattern.</remarks>
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if (_propertyChanged != null)
+            if (_propertyChanged is not null)
             {
                 _propertyChanged(this, e);
             }
@@ -727,7 +727,7 @@ namespace System.Windows.Ink
         /// <param name="cutAt">Fragment markers for clipping</param>
         private StrokeCollection Clip(StrokeFIndices[] cutAt)
         {
-            System.Diagnostics.Debug.Assert(cutAt != null);
+            System.Diagnostics.Debug.Assert(cutAt is not null);
             System.Diagnostics.Debug.Assert(cutAt.Length != 0);
 
 #if DEBUG
@@ -789,7 +789,7 @@ namespace System.Windows.Ink
         /// <returns>Survived fragments of current Stroke as a StrokeCollection</returns>
         private StrokeCollection Erase(StrokeFIndices[] cutAt)
         {
-            System.Diagnostics.Debug.Assert(cutAt != null);
+            System.Diagnostics.Debug.Assert(cutAt is not null);
             System.Diagnostics.Debug.Assert(cutAt.Length != 0);
 
 #if DEBUG
@@ -862,7 +862,7 @@ namespace System.Windows.Ink
         /// </summary>
         private Stroke Copy(StylusPointCollection sourceStylusPoints, double beginFIndex, double endFIndex)
         {
-            Debug.Assert(sourceStylusPoints != null);
+            Debug.Assert(sourceStylusPoints is not null);
             //
             // get the floor and ceiling to copy from, we'll adjust the ends below
             //
@@ -1159,9 +1159,9 @@ namespace System.Windows.Ink
         /// </summary>
         internal static int GetCount(IEnumerable<Point> ienum)
         {
-            Debug.Assert(ienum != null);
+            Debug.Assert(ienum is not null);
             ICollection<Point> icol = ienum as ICollection<Point>;
-            if (icol != null)
+            if (icol is not null)
             {
                 return icol.Count;
             }
@@ -1178,9 +1178,9 @@ namespace System.Windows.Ink
         /// </summary>
         internal static Point[] GetPointArray(IEnumerable<Point> ienum)
         {
-            Debug.Assert(ienum != null);
+            Debug.Assert(ienum is not null);
             Point[] points = ienum as Point[];
-            if (points != null)
+            if (points is not null)
             {
                 return points;
             }

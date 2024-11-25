@@ -116,7 +116,7 @@ namespace System.ComponentModel
         /// </summary>
         private void OnCollectionChanged(NotifyCollectionChangedAction action, object item, int index)
         {
-            if (CollectionChanged != null)
+            if (CollectionChanged is not null)
             {
                 CollectionChanged(this, new NotifyCollectionChangedEventArgs(action, item, index));
             }
@@ -124,7 +124,7 @@ namespace System.ComponentModel
         // raise CollectionChanged event to any listeners
         void OnCollectionChanged(NotifyCollectionChangedAction action)
         {
-            if (CollectionChanged != null)
+            if (CollectionChanged is not null)
             {
                 CollectionChanged(this, new NotifyCollectionChangedEventArgs(action));
             }

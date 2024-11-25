@@ -447,13 +447,13 @@ namespace System.Windows.Documents
                         else
                         {
                             navigator.MoveToNextContextPosition(LogicalDirection.Forward);
-                            hitLimit = (limit != null && navigator.CompareTo(limit) >= 0);
+                            hitLimit = (limit is not null && navigator.CompareTo(limit) >= 0);
                         }
                         break;
 
                     case TextPointerContext.ElementEnd:
                         navigator.MoveToNextContextPosition(LogicalDirection.Forward);
-                        hitLimit = (limit != null && navigator.CompareTo(limit) >= 0);
+                        hitLimit = (limit is not null && navigator.CompareTo(limit) >= 0);
                         break;
 
                     case TextPointerContext.None:
@@ -497,7 +497,7 @@ namespace System.Windows.Documents
 
             GetNormalizedRange(startIndex, endIndex, out start, out end);
 
-            while (start != null && TextPointerBase.IsBeforeFirstTable(start))
+            while (start is not null && TextPointerBase.IsBeforeFirstTable(start))
             {
                 start = start.GetNextInsertionPosition(LogicalDirection.Forward);
             }
@@ -576,7 +576,7 @@ namespace System.Windows.Documents
                 {
                     object rawobj = textPosition.GetAdjacentElement(LogicalDirection.Forward);
                     InkInteropObject inkobject = rawobj as InkInteropObject;
-                    if (inkobject != null)
+                    if (inkobject is not null)
                     {
                         obj = inkobject.OleDataObject;
                     }
@@ -960,7 +960,7 @@ namespace System.Windows.Documents
 
             // Convert to local coordinates.
             GeneralTransform transform = compositionTarget.RootVisual.TransformToDescendant(RenderScope);
-            if (transform != null)
+            if (transform is not null)
             {
                 // REVIEW: should we throw if the point could not be transformed?
                 transform.TryTransform(milPoint, out milPoint);
@@ -1347,7 +1347,7 @@ namespace System.Windows.Documents
 
             bool compositionRangeShifted = false;
 
-            if (rangeNew != null)
+            if (rangeNew is not null)
             {
                 TextPositionsFromITfRange(rangeNew, out newStart, out newEnd);
                 compositionRangeShifted = (newStart.Offset != oldStart.Offset || newEnd.Offset != oldEnd.Offset);
@@ -1421,7 +1421,7 @@ namespace System.Windows.Documents
 
                 // Composition event is completed, so new composition undo unit will be opened.
                 CompositionParentUndoUnit unit = PeekCompositionParentUndoUnit();
-                if (unit != null)
+                if (unit is not null)
                 {
                     unit.IsLastCompositionUnit = true;
                 }
@@ -1483,7 +1483,7 @@ namespace System.Windows.Documents
         {
             fDeleteResultRange = true;
 
-            if (rangeResult != null)
+            if (rangeResult is not null)
             {
                 string result = StringFromITfRange(rangeResult, ecReadOnly);
                 if (result.Length > 0)

@@ -241,13 +241,13 @@ namespace System.Security.RightsManagement
         {
             bool IEqualityComparer<ContentUser>.Equals(ContentUser user1, ContentUser user2)
             {
-                Invariant.Assert(user1 != null, "user1 should not be null");
+                Invariant.Assert(user1 is not null, "user1 should not be null");
                 return user1.GenericEquals(user2);
             }
 
             int IEqualityComparer<ContentUser>.GetHashCode(ContentUser user)
             {
-                Invariant.Assert(user != null, "user should not be null");
+                Invariant.Assert(user is not null, "user should not be null");
                 return user.GetHashCode();
             }
         }

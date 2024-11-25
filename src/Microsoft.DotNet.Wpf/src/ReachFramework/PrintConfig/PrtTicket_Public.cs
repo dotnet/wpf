@@ -91,7 +91,7 @@ namespace MS.Internal.Printing.Configuration
 
 		        // WARNING: windows/wcp/Print/Reach/PrintConfig/PrtTicket_Public_Simple.cs
 		        //          assumes that our xml stream is _always_ UTF-8 encoded
-                if (xmlDecl != null)
+                if (xmlDecl is not null)
                 {
                     // XML declaration already exists in the input PrintTicket XML stream.
                     // So enforce the UTF-8 encoding.

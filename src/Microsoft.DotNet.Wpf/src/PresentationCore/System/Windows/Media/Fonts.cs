@@ -94,7 +94,7 @@ namespace System.Windows.Media
         public static ICollection<FontFamily> GetFontFamilies(Uri baseUri, string location)
         {
             // Both Uri parameters are optional but neither can be relative.
-            if (baseUri != null && !baseUri.IsAbsoluteUri)
+            if (baseUri is not null && !baseUri.IsAbsoluteUri)
                 throw new ArgumentException(SR.UriNotAbsolute, "baseUri");
 
             // Determine the font location from the base URI and location string.

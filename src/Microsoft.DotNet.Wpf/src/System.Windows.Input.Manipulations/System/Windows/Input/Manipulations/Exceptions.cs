@@ -98,8 +98,8 @@ namespace System.Windows.Input.Manipulations
             string paramName1,
             string paramName2)
         {
-            Debug.Assert(paramName1 != null);
-            Debug.Assert(paramName2 != null);
+            Debug.Assert(paramName1 is not null);
+            Debug.Assert(paramName2 is not null);
             return new NotSupportedException(Format(
                 SR.OnlyProportionalExpansionSupported,
                 paramName1,
@@ -116,8 +116,8 @@ namespace System.Windows.Input.Manipulations
             string paramName1,
             string paramName2)
         {
-            Debug.Assert(paramName1 != null);
-            Debug.Assert(paramName2 != null);
+            Debug.Assert(paramName1 is not null);
+            Debug.Assert(paramName2 is not null);
             return new InvalidOperationException(Format(
                 SR.InertiaParametersUnspecified2,
                 paramName1,
@@ -136,9 +136,9 @@ namespace System.Windows.Input.Manipulations
             string paramName2a,
             string paramName2b)
         {
-            Debug.Assert(paramName1 != null);
-            Debug.Assert(paramName2a != null);
-            Debug.Assert(paramName2b != null);
+            Debug.Assert(paramName1 is not null);
+            Debug.Assert(paramName2a is not null);
+            Debug.Assert(paramName2b is not null);
             return new InvalidOperationException(Format(
                 SR.InertiaParametersUnspecified1and2,
                 paramName1,
@@ -196,8 +196,8 @@ namespace System.Windows.Input.Manipulations
             object value,
             string messageFormat)
         {
-            Debug.Assert(paramName != null);
-            Debug.Assert(messageFormat != null);
+            Debug.Assert(paramName is not null);
+            Debug.Assert(messageFormat is not null);
 
             string valueName = IsPropertyName(paramName) ? "value" : paramName;
             string message = string.Format(
@@ -215,7 +215,7 @@ namespace System.Windows.Input.Manipulations
         /// <returns></returns>
         private static bool IsPropertyName(string paramName)
         {
-            Debug.Assert(paramName != null);
+            Debug.Assert(paramName is not null);
             Debug.Assert(paramName.Length > 0);
 
             // We use capital letters to indicate property names. The
@@ -235,7 +235,7 @@ namespace System.Windows.Input.Manipulations
         /// <returns></returns>
         private static string Format(string format, params object[] args)
         {
-            Debug.Assert(format != null);
+            Debug.Assert(format is not null);
             return string.Format(
                 System.Globalization.CultureInfo.CurrentCulture,
                 format,

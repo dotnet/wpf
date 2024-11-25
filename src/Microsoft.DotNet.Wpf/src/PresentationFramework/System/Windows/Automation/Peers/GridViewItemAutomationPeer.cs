@@ -28,7 +28,7 @@ namespace System.Windows.Automation.Peers
         public GridViewItemAutomationPeer(object owner, ListViewAutomationPeer listviewAP)
             : base(owner, listviewAP)
         {
-            Invariant.Assert(listviewAP != null);
+            Invariant.Assert(listviewAP is not null);
 
             _listviewAP = listviewAP;
         }
@@ -49,14 +49,14 @@ namespace System.Windows.Automation.Peers
         protected override List<AutomationPeer> GetChildrenCore()
         {
             ListView listview = _listviewAP.Owner as ListView;
-            Invariant.Assert(listview != null);
+            Invariant.Assert(listview is not null);
             object item = Item;
 
             ListViewItem lvi = listview.ItemContainerGenerator.ContainerFromItem(item) as ListViewItem;
-            if (lvi != null)
+            if (lvi is not null)
             {
                 GridViewRowPresenter rowPresenter = GridViewAutomationPeer.FindVisualByType(lvi, typeof(GridViewRowPresenter)) as GridViewRowPresenter;
-                if (rowPresenter != null)
+                if (rowPresenter is not null)
                 {
                     Hashtable oldChildren = _dataChildren; //cache the old ones for possible reuse
                     _dataChildren = new Hashtable(rowPresenter.ActualCells.Count);

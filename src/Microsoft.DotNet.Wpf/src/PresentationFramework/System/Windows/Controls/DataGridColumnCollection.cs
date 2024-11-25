@@ -22,7 +22,7 @@ namespace System.Windows.Controls
     {
         internal DataGridColumnCollection(DataGrid dataGridOwner)
         {
-            Debug.Assert(dataGridOwner != null, "We should have a valid DataGrid");
+            Debug.Assert(dataGridOwner is not null, "We should have a valid DataGrid");
 
             DisplayIndexMap = new List<int>(5);
             _dataGridOwner = dataGridOwner;
@@ -45,7 +45,7 @@ namespace System.Windows.Controls
                 throw new ArgumentNullException("item", SR.DataGrid_NullColumn);
             }
 
-            if (item.DataGridOwner != null)
+            if (item.DataGridOwner is not null)
             {
                 throw new ArgumentException(SR.Format(SR.DataGrid_InvalidColumnReuse, item.Header), "item");
             }
@@ -71,7 +71,7 @@ namespace System.Windows.Controls
                 throw new ArgumentOutOfRangeException("index", SR.Format(SR.DataGrid_ColumnIndexOutOfRange, item.Header));
             }
 
-            if (item.DataGridOwner != null && this[index] != item)
+            if (item.DataGridOwner is not null && this[index] != item)
             {
                 throw new ArgumentException(SR.Format(SR.DataGrid_InvalidColumnReuse, item.Header), "item");
             }
@@ -475,7 +475,7 @@ namespace System.Windows.Controls
             int columnCount = Count;
             Dictionary<int, int> assignedDisplayIndexMap = new Dictionary<int, int>(); // <DisplayIndex, ColumnIndex>
 
-            if (changingColumn != null && oldDisplayIndex >= columnCount)
+            if (changingColumn is not null && oldDisplayIndex >= columnCount)
             {
                 throw new ArgumentOutOfRangeException("displayIndex", oldDisplayIndex, SR.Format(SR.DataGrid_ColumnDisplayIndexOutOfRange, changingColumn.Header));
             }
@@ -597,13 +597,13 @@ namespace System.Windows.Controls
         /// </summary>
         private void UpdateDisplayIndexForReplacedColumn(IList oldColumns, IList newColumns)
         {
-            if (oldColumns != null && oldColumns.Count > 0 && newColumns != null && newColumns.Count > 0)
+            if (oldColumns is not null && oldColumns.Count > 0 && newColumns is not null && newColumns.Count > 0)
             {
                 Debug.Assert(oldColumns.Count == 1 && newColumns.Count == 1, "Multi replace isn't possible with ObservableCollection");
                 DataGridColumn oldColumn = (DataGridColumn)oldColumns[0];
                 DataGridColumn newColumn = (DataGridColumn)newColumns[0];
 
-                if (oldColumn != null && newColumn != null)
+                if (oldColumn is not null && newColumn is not null)
                 {
                     int newDisplayIndex = CoerceDefaultDisplayIndex(newColumn);
 
@@ -623,7 +623,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void ClearDisplayIndex(IList oldColumns, IList newColumns)
         {
-            if (oldColumns != null)
+            if (oldColumns is not null)
             {
                 try
                 {
@@ -634,7 +634,7 @@ namespace System.Windows.Controls
                         var column = (DataGridColumn)oldColumns[i];
 
                         // Only clear the old column's index if its not in newColumns
-                        if (newColumns != null && newColumns.Contains(column))
+                        if (newColumns is not null && newColumns.Contains(column))
                         {
                             continue;
                         }
@@ -1056,7 +1056,7 @@ namespace System.Windows.Controls
             // size of the row presenter
             VirtualizingStackPanel vsp = (DataGridOwner is null) ? null :
                     DataGridOwner.InternalItemsHost as VirtualizingStackPanel;
-            if (vsp != null)
+            if (vsp is not null)
             {
                 vsp.ResetMaximumDesiredSize();
             }
@@ -1379,7 +1379,7 @@ namespace System.Windows.Controls
             DataGridLength width = changedColumn.Width;
             if (DoubleUtil.GreaterThan(width.DesiredValue, oldWidth.DisplayValue))
             {
-                double nonRetrievableSpace = TakeAwayWidthFromColumns(changedColumn, width.DesiredValue - oldWidth.DisplayValue, changedColumn != null);
+                double nonRetrievableSpace = TakeAwayWidthFromColumns(changedColumn, width.DesiredValue - oldWidth.DisplayValue, changedColumn is not null);
                 if (DoubleUtil.GreaterThanZero(nonRetrievableSpace))
                 {
                     changedColumn.SetWidthInternal(new DataGridLength(
@@ -1482,7 +1482,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal void OnColumnResizeCompleted(bool cancel)
         {
-            if (cancel && _originalWidthsForResize != null)
+            if (cancel && _originalWidthsForResize is not null)
             {
                 foreach (DataGridColumn column in this)
                 {
@@ -1972,7 +1972,7 @@ namespace System.Windows.Controls
         private double GiveAwayWidthToColumns(DataGridColumn ignoredColumn, double giveAwayWidth, bool recomputeStars)
         {
             double originalGiveAwayWidth = giveAwayWidth;
-            giveAwayWidth = GiveAwayWidthToScrollViewerExcess(giveAwayWidth, /*includedInColumnsWidth*/ ignoredColumn != null);
+            giveAwayWidth = GiveAwayWidthToScrollViewerExcess(giveAwayWidth, /*includedInColumnsWidth*/ ignoredColumn is not null);
             giveAwayWidth = GiveAwayWidthToNonStarColumns(ignoredColumn, giveAwayWidth);
 
             if (DoubleUtil.GreaterThanZero(giveAwayWidth) || recomputeStars)

@@ -89,7 +89,7 @@ namespace System.Windows.Media
             {
                 ObjectDisposedException.ThrowIf(target is null, typeof(EventProxyWrapper));
                 IInvokable invokable = (IInvokable)target.Target;
-                if (invokable != null)
+                if (invokable is not null)
                 {
                     invokable.RaiseEvent(buffer, (int)cb);
                 }
@@ -122,7 +122,7 @@ namespace System.Windows.Media
         internal static int RaiseEvent(ref EventProxyDescriptor pEPD, byte[] buffer, uint cb)
         {
             EventProxyWrapper target = EventProxyWrapper.FromEPD(ref pEPD);
-            if (target != null)
+            if (target is not null)
             {
                 return target.RaiseEvent(buffer, cb);
             }

@@ -52,7 +52,7 @@ namespace System.Windows.Documents
             // to correct its structure after the merge
             ListItem secondListItem = secondParagraphOrBlockUIContainer.PreviousBlock is null ? secondParagraphOrBlockUIContainer.Parent as ListItem : null;
 
-            if (secondListItem != null && secondListItem.PreviousListItem is null && secondParagraphOrBlockUIContainer.NextBlock is List)
+            if (secondListItem is not null && secondListItem.PreviousListItem is null && secondParagraphOrBlockUIContainer.NextBlock is List)
             {
                 // The second paragraph is a first list item in some list.
                 // It has a sublists in it, so this sublist must be unindented
@@ -78,7 +78,7 @@ namespace System.Windows.Documents
             while (secondParagraphOrBlockUIContainer.ElementStart.GetPointerContext(LogicalDirection.Backward) == TextPointerContext.ElementStart)
             {
                 TextElement parentBlock = (TextElement)secondParagraphOrBlockUIContainer.Parent; 
-                Invariant.Assert(parentBlock != null);
+                Invariant.Assert(parentBlock is not null);
                 Invariant.Assert(TextSchema.AllowsParagraphMerging(parentBlock.GetType()));
 
                 if (secondParagraphOrBlockUIContainer.ElementEnd.CompareTo(parentBlock.ContentEnd) == 0)
@@ -102,7 +102,7 @@ namespace System.Windows.Documents
                 TextElement previousBlock = secondParagraphOrBlockUIContainer.ElementStart.GetAdjacentElement(LogicalDirection.Backward) as TextElement;
                 // Note: We cannot use Block.NextSibling property, because the structure is invalid during this process
 
-                Invariant.Assert(previousBlock != null);
+                Invariant.Assert(previousBlock is not null);
 
                 if (previousBlock is Paragraph || previousBlock is BlockUIContainer)
                 {
@@ -145,10 +145,10 @@ namespace System.Windows.Documents
             // Merge ListItems wrapping first and second paragraphs.
             ListItem followingListItem = positionAfterSecondParagraph.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.ElementStart 
                 ? positionAfterSecondParagraph.GetAdjacentElement(LogicalDirection.Forward) as ListItem : null;
-            if (followingListItem != null && followingListItem == secondListItem)
+            if (followingListItem is not null && followingListItem == secondListItem)
             {
                 ListItem precedingListItem = positionAfterSecondParagraph.GetAdjacentElement(LogicalDirection.Backward) as ListItem;
-                if (precedingListItem != null)
+                if (precedingListItem is not null)
                 {
                     // Merge the second list item with the preceding one
                     Invariant.Assert(positionAfterSecondParagraph.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.ElementStart);
@@ -250,7 +250,7 @@ namespace System.Windows.Documents
             Block firstBlock = range.Start.ParagraphOrBlockUIContainer;
             Block lastBlock = end.ParagraphOrBlockUIContainer;
 
-            if (firstBlock != null && lastBlock != null && firstBlock.Parent == lastBlock.Parent)
+            if (firstBlock is not null && lastBlock is not null && firstBlock.Parent == lastBlock.Parent)
             {
                 return true;
             }
@@ -290,7 +290,7 @@ namespace System.Windows.Documents
 
             // Check that all top-level elements of selection are Paragraphs.
             // We do not apply the command to Tables or Sections.
-            for (Block block = firstBlock; block != lastBlock && block != null; block = block.NextBlock)
+            for (Block block = firstBlock; block != lastBlock && block is not null; block = block.NextBlock)
             {
                 if (block is Table || block is Section)
                 {
@@ -299,13 +299,13 @@ namespace System.Windows.Documents
             }
 
             ListItem parentListItem = firstBlock.Parent as ListItem;
-            if (parentListItem != null)
+            if (parentListItem is not null)
             {
                 // Paragraphs are inside of ListItem already.
 
                 // Split a current ListItem before each of selected blocks
                 Block block = firstBlock;
-                while (block != null)
+                while (block is not null)
                 {
                     Block nextBlock = block == lastBlock ? null : block.ElementEnd.GetAdjacentElement(LogicalDirection.Forward) as Block;
 
@@ -348,7 +348,7 @@ namespace System.Windows.Documents
             List listToRemove = null;
 
             ListItem leadingListItem = firstListItem.PreviousListItem;
-            if (leadingListItem != null)
+            if (leadingListItem is not null)
             {
                 // We have a leading ListItem, so pull selected items into it
                 leadingListItem.Reposition(leadingListItem.ContentStart, lastListItem.ElementEnd);
@@ -358,7 +358,7 @@ namespace System.Windows.Documents
                 // We do not have a leading ListItem. So pull selected items out of a list
 
                 // Cut wrapping list after endListItem
-                if (lastListItem.NextListItem != null)
+                if (lastListItem.NextListItem is not null)
                 {
                     TextRangeEdit.SplitElement(lastListItem.ElementEnd);
                 }
@@ -369,7 +369,7 @@ namespace System.Windows.Documents
 
             // Remove ListItems from all selected blocks
             ListItem listItem = firstListItem;
-            while (listItem != null)
+            while (listItem is not null)
             {
                 ListItem nextListItem = listItem.ElementEnd.GetAdjacentElement(LogicalDirection.Forward) as ListItem;
 
@@ -384,7 +384,7 @@ namespace System.Windows.Documents
             }
 
             // If we have a list to remove, remove it and set its FlowDirection to its children
-            if (listToRemove != null)
+            if (listToRemove is not null)
             {
                 FlowDirection flowDirection = (FlowDirection)listToRemove.GetValue(Paragraph.FlowDirectionProperty);                
                 listToRemove.Reposition(null, null);
@@ -424,11 +424,11 @@ namespace System.Windows.Documents
 
             // Unwrap sublist from the last selected list item (to keep it on its level)
             Paragraph leadingParagraphOfLastItem = lastListItem.Blocks.FirstBlock as Paragraph;
-            if (leadingParagraphOfLastItem != null)
+            if (leadingParagraphOfLastItem is not null)
             {
                 // Unindenting all items of a sublist - if it is the only following element of a list
                 List nestedListOfLastItem = leadingParagraphOfLastItem.NextBlock as List;
-                if (nestedListOfLastItem != null && nestedListOfLastItem.NextBlock is null)
+                if (nestedListOfLastItem is not null && nestedListOfLastItem.NextBlock is null)
                 {
                     lastListItem.Reposition(lastListItem.ContentStart, nestedListOfLastItem.ElementStart);
                     nestedListOfLastItem.Reposition(null, null);
@@ -482,13 +482,13 @@ namespace System.Windows.Documents
             }
 
             // Cut wrapping list before startListItem
-            if (firstListItem.PreviousListItem != null)
+            if (firstListItem.PreviousListItem is not null)
             {
                 TextRangeEdit.SplitElement(firstListItem.ElementStart);
             }
 
             // Cut wrapping list after endListItem
-            if (lastListItem.NextListItem != null)
+            if (lastListItem.NextListItem is not null)
             {
                 TextRangeEdit.SplitElement(lastListItem.ElementEnd);
             }
@@ -498,7 +498,7 @@ namespace System.Windows.Documents
 
             // Check whether we have outer ListItem
             ListItem outerListItem = unindentedList.Parent as ListItem;
-            if (outerListItem != null)
+            if (outerListItem is not null)
             {
                 // Selected items belong to a nested list.
                 // So we need to pull them to the level of enclosing ListItem, i.e. cut this ListItem.
@@ -555,7 +555,7 @@ namespace System.Windows.Documents
 
                 // Remove ListItems from all selected items
                 ListItem listItem = firstListItem;
-                while (listItem != null)
+                while (listItem is not null)
                 {
                     ListItem nextListItem = listItem.ElementEnd.GetAdjacentElement(LogicalDirection.Forward) as ListItem;
 
@@ -590,7 +590,7 @@ namespace System.Windows.Documents
             ListItem endListItem = TextPointerBase.GetListItem(end);
 
             // Check if the ListItems belong to one List wrapper.
-            if (startListItem != null && endListItem != null && startListItem.Parent == endListItem.Parent)
+            if (startListItem is not null && endListItem is not null && startListItem.Parent == endListItem.Parent)
             {
                 return true;
             }
@@ -602,7 +602,7 @@ namespace System.Windows.Documents
             //      * bb
             //      * cc
             // Special case so that list operations are applicable in this scenario.
-            if (startListItem != null && endListItem != null)
+            if (startListItem is not null && endListItem is not null)
             {
                 while (end.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.ElementEnd)
                 {
@@ -675,12 +675,12 @@ namespace System.Windows.Documents
             ListItem startListItem = start.GetListAncestor();
 
             // Unindent startListItem's list to prepare for a split, if the List's FlowDirection value is different.
-            if (startListItem != null && 
-                startListItem.List != null && // Check for unparented list items
+            if (startListItem is not null && 
+                startListItem.List is not null && // Check for unparented list items
                 !TextSchema.ValuesAreEqual(/*newValue*/newFlowDirectionValue, /*currentValue*/startListItem.List.GetValue(Paragraph.FlowDirectionProperty)))
             {
-                while (startListItem != null &&
-                    startListItem.List != null &&
+                while (startListItem is not null &&
+                    startListItem.List is not null &&
                     startListItem.List.Parent is ListItem)
                 {
                     // startListItem is within a nested List.
@@ -695,11 +695,11 @@ namespace System.Windows.Documents
             ListItem endListItem = end.GetListAncestor();
 
             // Unindent endListItem's list to prepare for a split, if the List's FlowDirection value is different.
-            if (endListItem != null &&
-                endListItem.List != null && 
+            if (endListItem is not null &&
+                endListItem.List is not null && 
                 !TextSchema.ValuesAreEqual(/*newValue*/newFlowDirectionValue, /*currentValue*/endListItem.List.GetValue(Paragraph.FlowDirectionProperty)))
             {
-                if (startListItem != null && startListItem.List != null &&
+                if (startListItem is not null && startListItem.List is not null &&
                     endListItem.List.ElementEnd.CompareTo(startListItem.List.ElementEnd) < 0)
                 {
                     // endListItem's List is contained within startListItem's List. 
@@ -707,7 +707,7 @@ namespace System.Windows.Documents
                 }
                 else
                 {
-                    while (endListItem != null &&
+                    while (endListItem is not null &&
                         endListItem.List !=  null && 
                         endListItem.List.Parent is ListItem)
                     {
@@ -726,27 +726,27 @@ namespace System.Windows.Documents
             //  and
             //  2. start/end's parent List's flow direction value is different than the new value being set
 
-            if ((startListItem = start.GetListAncestor()) != null && startListItem.PreviousListItem != null &&
-                startListItem.List != null && // Check for unparented list items
+            if ((startListItem = start.GetListAncestor()) is not null && startListItem.PreviousListItem is not null &&
+                startListItem.List is not null && // Check for unparented list items
                 (!TextSchema.ValuesAreEqual(/*newValue*/newFlowDirectionValue, /*currentValue*/startListItem.List.GetValue(Paragraph.FlowDirectionProperty))))
             {
                 Invariant.Assert(!(startListItem.List.Parent is ListItem), "startListItem's list must not be nested!");
                 TextRangeEdit.SplitElement(startListItem.ElementStart);
             }
 
-            if ((endListItem = end.GetListAncestor()) != null &&
-                endListItem.List != null && // Check for unparented list items
+            if ((endListItem = end.GetListAncestor()) is not null &&
+                endListItem.List is not null && // Check for unparented list items
                 (!TextSchema.ValuesAreEqual(/*newValue*/newFlowDirectionValue, /*currentValue*/endListItem.List.GetValue(Paragraph.FlowDirectionProperty))))
             {
                 // Walk up from endListItem to find the topmost listitem that contains it.
                 if (endListItem.List.Parent is ListItem)
                 {
-                    while (endListItem.List != null && endListItem.List.Parent is ListItem)
+                    while (endListItem.List is not null && endListItem.List.Parent is ListItem)
                     {
                         endListItem = (ListItem)endListItem.List.Parent;
                     }
                 }
-                if (endListItem.List != null && endListItem.NextListItem != null)
+                if (endListItem.List is not null && endListItem.NextListItem is not null)
                 {
                     Invariant.Assert(!(endListItem.List.Parent is ListItem), "endListItem's list must not be nested!");
                     TextRangeEdit.SplitElement(endListItem.ElementEnd);
@@ -759,10 +759,10 @@ namespace System.Windows.Documents
         // Finds an insertion position after the list
         private static TextPointer GetPositionAfterList(List list)
         {
-            Invariant.Assert(list != null, "list cannot be null");
+            Invariant.Assert(list is not null, "list cannot be null");
 
             TextPointer adjustedEnd = list.ElementEnd.GetInsertionPosition(LogicalDirection.Backward);
-            if (adjustedEnd != null)
+            if (adjustedEnd is not null)
             {
                 adjustedEnd = adjustedEnd.GetNextInsertionPosition(LogicalDirection.Forward);
             }

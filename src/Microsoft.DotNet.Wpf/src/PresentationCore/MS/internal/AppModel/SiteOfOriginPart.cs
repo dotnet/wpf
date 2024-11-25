@@ -105,7 +105,7 @@ namespace MS.Internal.AppModel
                 // then we need to retrieve the stream to get the mime type.
                 // That stream is then stored as _cacheStream and returned
                 // the next time GetStreamCore() is called.
-                if (_cacheStream != null)
+                if (_cacheStream is not null)
                 {
 #if DEBUG
                     if (SiteOfOriginContainer._traceSwitch.Enabled)

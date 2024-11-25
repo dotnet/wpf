@@ -267,7 +267,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            if (_textBlock1 != null && _textBlock2 != null && _path != null)
+            if (_textBlock1 is not null && _textBlock2 is not null && _path is not null)
             {
                 bool hasTwoLines = GetHasTwoLines(this);
                 if (!hasTwoLines)
@@ -298,7 +298,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         MeasureWithoutConstraint(out secondLinePointer);
                     }
 
-                    if (secondLinePointer != null)
+                    if (secondLinePointer is not null)
                     {
                         // We need to split Text manually
                         string firstLineText = secondLinePointer.GetTextInRun(LogicalDirection.Backward);
@@ -338,7 +338,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// <param name="secondLinePointer">TextPointer to where a LineBreak occurs</param>
         private void MeasureWithConstraint(Size availableSize, out TextPointer secondLinePointer)
         {
-            Debug.Assert(_textBlock1 != null && _textBlock2 != null);
+            Debug.Assert(_textBlock1 is not null && _textBlock2 is not null);
 
             // Temporarily assign _textBlock1.Text to measure the length it would require
             _textBlock1.Text = this.Text;
@@ -372,7 +372,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// <param name="secondLinePointer">TextPointer to where a LineBreak occurs</param>
         private void MeasureWithoutConstraint(out TextPointer secondLinePointer)
         {
-            Debug.Assert(_textBlock1 != null && _textBlock2 != null);
+            Debug.Assert(_textBlock1 is not null && _textBlock2 is not null);
 
             secondLinePointer = null;
 
@@ -401,14 +401,14 @@ namespace Microsoft.Windows.Controls.Ribbon
 
                 // If text flows into more than 2 lines
                 TextPointer currentLinePointer = _textBlock1.ContentStart.GetLineStartPosition(2);
-                if (currentLinePointer != null)
+                if (currentLinePointer is not null)
                 {
                     double extraLength = 0.0;
                     Rect lastCharacter, firstCharacter;
 
                     // Iterate through 3rd to (n-1)th line and add up their lengths.
                     TextPointer nextLinePointer = currentLinePointer.GetLineStartPosition(1);
-                    while (nextLinePointer != null)
+                    while (nextLinePointer is not null)
                     {
                         lastCharacter = nextLinePointer.GetCharacterRect(LogicalDirection.Backward);
                         firstCharacter = currentLinePointer.GetCharacterRect(LogicalDirection.Forward);

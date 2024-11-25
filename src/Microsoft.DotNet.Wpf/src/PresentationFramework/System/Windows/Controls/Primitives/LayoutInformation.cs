@@ -59,7 +59,7 @@ namespace System.Windows.Controls.Primitives
             UIElement e = null;
             ContextLayoutManager lm = ContextLayoutManager.From(dispatcher);
 
-            if(lm != null)
+            if(lm is not null)
                 e = lm.GetLastExceptionElement();
 
             return e;

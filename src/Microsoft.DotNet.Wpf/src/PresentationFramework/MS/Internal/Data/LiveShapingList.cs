@@ -86,7 +86,7 @@ namespace MS.Internal.Data
             _dpFromPath = new DPFromPath();
             _root = new LiveShapingTree(this);
 
-            if (comparer != null)
+            if (comparer is not null)
                 _root.Comparison = CompareLiveShapingItems;
 
             _sortDirtyItems = new List<LiveShapingItem>();
@@ -188,14 +188,14 @@ namespace MS.Internal.Data
                     // if no explicit list, use the group description properties
                     groupingProperties = new Collection<string>();
                     ICollectionView icv = View as ICollectionView;
-                    ObservableCollection<GroupDescription> groupDescriptions = (icv != null) ? icv.GroupDescriptions : null;
+                    ObservableCollection<GroupDescription> groupDescriptions = (icv is not null) ? icv.GroupDescriptions : null;
 
-                    if (groupDescriptions != null)
+                    if (groupDescriptions is not null)
                     {
                         foreach (GroupDescription gd in groupDescriptions)
                         {
                             PropertyGroupDescription pgd = gd as PropertyGroupDescription;
-                            if (pgd != null)
+                            if (pgd is not null)
                             {
                                 groupingProperties.Add(pgd.PropertyName);
                             }
@@ -342,7 +342,7 @@ namespace MS.Internal.Data
         internal void RemoveFilteredItem(object item)
         {
             LiveShapingItem lsi = _filterRoot.FindItem(item);
-            if (lsi != null)
+            if (lsi is not null)
             {
                 RemoveFilteredItem(lsi);
             }
@@ -352,7 +352,7 @@ namespace MS.Internal.Data
         internal void ReplaceFilteredItem(object oldItem, object newItem)
         {
             LiveShapingItem lsi = _filterRoot.FindItem(oldItem);
-            if (lsi != null)
+            if (lsi is not null)
             {
                 ClearItem(lsi);
                 InitializeItem(lsi, newItem, true, false);
@@ -471,7 +471,7 @@ namespace MS.Internal.Data
 
         void OnLiveShapingDirty()
         {
-            if (LiveShapingDirty != null)
+            if (LiveShapingDirty is not null)
                 LiveShapingDirty(this, EventArgs.Empty);
         }
 

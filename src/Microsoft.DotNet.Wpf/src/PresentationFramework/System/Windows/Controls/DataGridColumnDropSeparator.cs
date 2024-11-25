@@ -52,7 +52,7 @@ namespace System.Windows.Controls
         {
             double height = (double)baseValue;
             DataGridColumnDropSeparator separator = (DataGridColumnDropSeparator)d;
-            if (separator._referenceHeader != null && double.IsNaN(height))
+            if (separator._referenceHeader is not null && double.IsNaN(height))
             {
                 return separator._referenceHeader.ActualHeight;
             }

@@ -99,7 +99,7 @@ namespace System.Windows.Markup
                 bool hasCacheInfo = true;
                 Assembly assy;
 
-                if (_assemblyHasCacheInfo[assemblyName] != null)
+                if (_assemblyHasCacheInfo[assemblyName] is not null)
                 {
                    hasCacheInfo = (bool)_assemblyHasCacheInfo[assemblyName];
                 }
@@ -122,7 +122,7 @@ namespace System.Windows.Markup
                         assy = ReflectionHelper.LoadAssembly(assemblyName, assemblyFullPath);
                     }
                 }
-                if (assy != null)
+                if (assy is not null)
                 {
                     interestingAssemblies.Add(assy);
                 }
@@ -165,7 +165,7 @@ namespace System.Windows.Markup
                 clrNsMapping = _cacheTable[xmlns] as List<ClrNamespaceAssemblyPair>;
                 if (clrNsMapping is null)
                 {
-                    if (_uriToAssemblyNameTable[xmlns] != null)
+                    if (_uriToAssemblyNameTable[xmlns] is not null)
                     {
                         //
                         // if the xmlns maps to a list of assembly names which are saved in the baml records,

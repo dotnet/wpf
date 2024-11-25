@@ -16,10 +16,10 @@ namespace MS.Internal.Xaml.Context
         public static object GetTargetProperty(ObjectWriterContext xamlContext)
         {
             // If the XamlMember implements IProvideValueTarget, ask it for the TargetProperty first
-            Debug.Assert(xamlContext.ParentProperty != null);
+            Debug.Assert(xamlContext.ParentProperty is not null);
 
             IProvideValueTarget ipvt = xamlContext.ParentProperty as IProvideValueTarget;
-            if (ipvt != null)
+            if (ipvt is not null)
             {
                 return ipvt.TargetProperty;
             }

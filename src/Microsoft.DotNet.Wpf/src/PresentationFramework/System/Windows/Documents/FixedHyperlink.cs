@@ -50,17 +50,17 @@ namespace System.Windows.Documents
         {
             FixedDocument fixedContent = d as FixedDocument;
 
-            if (fixedContent != null)
+            if (fixedContent is not null)
             {
                 NavigationService oldService = (NavigationService) e.OldValue;
                 NavigationService newService = (NavigationService) e.NewValue;
 
-                if (oldService != null)
+                if (oldService is not null)
                 {
                     oldService.FragmentNavigation -= new FragmentNavigationEventHandler(FragmentHandler);
                 }
 
-                if (newService != null)
+                if (newService is not null)
                 {
                     newService.FragmentNavigation += new FragmentNavigationEventHandler(FragmentHandler);
                 }
@@ -76,12 +76,12 @@ namespace System.Windows.Documents
         {
             NavigationService ns = sender as NavigationService;
 
-            if (ns != null)
+            if (ns is not null)
             {
                 string fragment = e.Fragment;
                 IFixedNavigate fixedNavigate = ns.Content as IFixedNavigate;
 
-                if (fixedNavigate != null)
+                if (fixedNavigate is not null)
                 {
                     fixedNavigate.NavigateAsync(e.Fragment);
                     e.Handled = true;
@@ -101,7 +101,7 @@ namespace System.Windows.Documents
 
             targetElement = ((IFixedNavigate)ElementHost).FindElementByID(elementID, out rootFixedPage) as FrameworkElement;
 
-            if (targetElement != null)
+            if (targetElement is not null)
             {
                 if (targetElement is FixedPage)
                 {

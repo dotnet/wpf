@@ -102,7 +102,7 @@ namespace MS.Internal.PtsHost
         internal override void Update(EmbeddedObject newObject)
         {
             AttachedObject newAttachedObject = newObject as AttachedObject;
-            ErrorHandler.Assert(newAttachedObject != null, ErrorHandler.EmbeddedObjectTypeMismatch);
+            ErrorHandler.Assert(newAttachedObject is not null, ErrorHandler.EmbeddedObjectTypeMismatch);
             ErrorHandler.Assert(newAttachedObject.Element.Equals(Element), ErrorHandler.EmbeddedObjectOwnerMismatch);
             Dcp = newAttachedObject.Dcp;
             Para.SetUpdateInfo(PTS.FSKCHANGE.fskchInside, false);
@@ -156,7 +156,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal override void Dispose()
         {
-            if (_uiElementIsland != null)
+            if (_uiElementIsland is not null)
             {
                 _uiElementIsland.DesiredSizeChanged -= new DesiredSizeChangedEventHandler(_para.OnUIElementDesiredSizeChanged);
             }
@@ -175,7 +175,7 @@ namespace MS.Internal.PtsHost
             // These should definitely be the same
             InlineObject newInline = newObject as InlineObject;
 
-            ErrorHandler.Assert(newInline != null, ErrorHandler.EmbeddedObjectTypeMismatch);
+            ErrorHandler.Assert(newInline is not null, ErrorHandler.EmbeddedObjectTypeMismatch);
             ErrorHandler.Assert(newInline._uiElementIsland == _uiElementIsland, ErrorHandler.EmbeddedObjectOwnerMismatch);
 
             // We've ensured ownership is still with the old InlineObject, so we now null this out to prevent dispose from disconnecting.

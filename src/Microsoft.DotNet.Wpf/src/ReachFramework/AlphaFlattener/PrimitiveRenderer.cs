@@ -61,11 +61,11 @@ namespace Microsoft.Internal.AlphaFlattener
             Geometry topBounds;
             Geometry inter;
 
-            if (_pen != null)
+            if (_pen is not null)
             {
                 Debug.Assert(_brush is null, "no brush");
 
-                if ((_overlapping != null) && FindIntersection(gp.WidenGeometry, ref start, out topPI, out topBounds, out inter))
+                if ((_overlapping is not null) && FindIntersection(gp.WidenGeometry, ref start, out topPI, out topBounds, out inter))
                 {
                     cur    = gp.WidenGeometry;
                     _brush = _pen.StrokeBrush;
@@ -116,7 +116,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             // If glyph has intersection with something on the top, change to geometry fill
             // Use bounding rectangle to test for overlapping first, avoinding expensive BuildGeometry call
-            if ((_overlapping != null) && FindIntersection(new RectangleGeometry(bounds), ref start, out topPI, out topBounds, out inter))
+            if ((_overlapping is not null) && FindIntersection(new RectangleGeometry(bounds), ref start, out topPI, out topBounds, out inter))
             {
                 start = 0;
 
@@ -127,7 +127,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 if (FindIntersection(cur, ref start, out topPI, out topBounds, out inter))
                 {
                     // FillGeometry expects brush in world space. Apply trans to brush.
-                    if (_brush != null)
+                    if (_brush is not null)
                     {
                         _brush = _brush.ApplyTransformCopy(trans);
                     }
@@ -266,7 +266,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 // DrawImage may modify image
                 ImageProxy imageBlend = new ImageProxy(image.GetImage());
 
-                if (diff != null)
+                if (diff is not null)
                 {
                     // Render cur - top
 #if DEBUG
@@ -335,7 +335,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 {
                     PrimitiveInfo pi = _commands[_overlapping[s]] as PrimitiveInfo;
 
-                    if ((pi != null) && !pi.primitive.IsTransparent && !pi.primitive.IsOpaque)
+                    if ((pi is not null) && !pi.primitive.IsTransparent && !pi.primitive.IsOpaque)
                     {
                         allopaque = false;
                         break;
@@ -357,13 +357,13 @@ namespace Microsoft.Internal.AlphaFlattener
                 {
                     topBounds = topPI.primitive.GetClippedShapeGeometry();
 
-                    if (topBounds != null)
+                    if (topBounds is not null)
                     {
                         bool empty;
 
                         inter = Utility.Intersect(cur, topBounds, Matrix.Identity, out empty);
 
-                        if (inter != null)
+                        if (inter is not null)
                         {
                             return true;
                         }
@@ -391,7 +391,7 @@ namespace Microsoft.Internal.AlphaFlattener
             }
             else
             {
-                if (curAlt != null)
+                if (curAlt is not null)
                 {
                     cur  = curAlt;
                     desp = despAlt;
@@ -420,7 +420,7 @@ namespace Microsoft.Internal.AlphaFlattener
             Primitive p = topPI.primitive;
             Geometry diff = Utility.Exclude(cur, topBounds, Matrix.Identity);
 
-            if (diff != null)
+            if (diff is not null)
             {
                 // Render cur [- topBounds] using original brush
 
@@ -437,7 +437,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     // Only diff = cur - topBounds need to be rendered. But it may generate more
                     // complicated path and gaps between objects
 
-                    if (curAlt != null)
+                    if (curAlt is not null)
                     {
 #if DEBUG
                         FillGeometry(diff, Oper(desp, '-', topPI.id), curAlt, despAlt, start + 1);
@@ -481,7 +481,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                         // Clip image data to the intersection. Resulting draw bounds are in image space.
                         BitmapSource clippedImage = ip.Image.GetClippedImage(drawBounds, out drawBounds);
-                        if (clippedImage != null)
+                        if (clippedImage is not null)
                         {
                             // Transform draw bounds back to world space.
                             drawBounds.Scale(ip.DstRect.Width / imageWidth, ip.DstRect.Height / imageHeight);
@@ -526,13 +526,13 @@ namespace Microsoft.Internal.AlphaFlattener
                     }
                 }
 
-                if (cur != null)
+                if (cur is not null)
                 {
                     bool empty;
 
                     Geometry geo = Utility.Intersect(cur, _clip, Matrix.Identity, out empty);
 
-                    if (geo != null)
+                    if (geo is not null)
                     {
                         topPI.primitive.Exclude(geo); // exclude cur & _clip
 

@@ -30,13 +30,13 @@ namespace System.Windows.Input
         {
             _input = input;
 
-            if(promote != null && promote._dictionary != null)
+            if(promote is not null && promote._dictionary is not null)
             {
                 _dictionary = (Hashtable) promote._dictionary.Clone();
             }
             else
             {
-                if(_dictionary != null)
+                if(_dictionary is not null)
                 {
                     _dictionary.Clear();
                 }

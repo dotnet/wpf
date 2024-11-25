@@ -182,7 +182,7 @@ namespace System.Windows.Controls
             {
                 KeyEventArgs keyEventArgs = inputEventArgs as KeyEventArgs;
                 Slider slider = targetElement as Slider;
-                if (keyEventArgs != null && slider != null && Keyboard.Modifiers == ModifierKeys.None)
+                if (keyEventArgs is not null && slider is not null && Keyboard.Modifiers == ModifierKeys.None)
                 {
                     if((int)_normal == (int)keyEventArgs.RealKey)
                     {
@@ -217,7 +217,7 @@ namespace System.Windows.Controls
         private static void OnIncreaseSmallCommand(object sender, ExecutedRoutedEventArgs e)
         {
             Slider slider = sender as Slider;
-            if (slider != null)
+            if (slider is not null)
             {
                 slider.OnIncreaseSmall();
             }
@@ -226,7 +226,7 @@ namespace System.Windows.Controls
         private static void OnDecreaseSmallCommand(object sender, ExecutedRoutedEventArgs e)
         {
             Slider slider = sender as Slider;
-            if (slider != null)
+            if (slider is not null)
             {
                 slider.OnDecreaseSmall();
             }
@@ -235,7 +235,7 @@ namespace System.Windows.Controls
         private static void OnMaximizeValueCommand(object sender, ExecutedRoutedEventArgs e)
         {
             Slider slider = sender as Slider;
-            if (slider != null)
+            if (slider is not null)
             {
                 slider.OnMaximizeValue();
             }
@@ -244,7 +244,7 @@ namespace System.Windows.Controls
         private static void OnMinimizeValueCommand(object sender, ExecutedRoutedEventArgs e)
         {
             Slider slider = sender as Slider;
-            if (slider != null)
+            if (slider is not null)
             {
                 slider.OnMinimizeValue();
             }
@@ -253,7 +253,7 @@ namespace System.Windows.Controls
         private static void OnIncreaseLargeCommand(object sender, ExecutedRoutedEventArgs e)
         {
             Slider slider = sender as Slider;
-            if (slider != null)
+            if (slider is not null)
             {
                 slider.OnIncreaseLarge();
             }
@@ -262,7 +262,7 @@ namespace System.Windows.Controls
         private static void OnDecreaseLargeCommand(object sender, ExecutedRoutedEventArgs e)
         {
             Slider slider = sender as Slider;
-            if (slider != null)
+            if (slider is not null)
             {
                 slider.OnDecreaseLarge();
             }
@@ -770,7 +770,7 @@ namespace System.Windows.Controls
         /// <param name="e"></param>
         protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            if (IsMoveToPointEnabled && Track != null && Track.Thumb != null && !Track.Thumb.IsMouseOver)
+            if (IsMoveToPointEnabled && Track is not null && Track.Thumb is not null && !Track.Thumb.IsMouseOver)
             {
                 // Move Thumb to the Mouse location
 
@@ -868,7 +868,7 @@ namespace System.Windows.Controls
         {
             Thumb thumb = e.OriginalSource as Thumb;
             // Convert to Track's co-ordinate
-            if (Track != null && thumb == Track.Thumb)
+            if (Track is not null && thumb == Track.Thumb)
             {
                 double newValue = Value + Track.ValueFromDistance(e.HorizontalChange, e.VerticalChange);
                 if (System.Windows.Shapes.Shape.IsDoubleFinite(newValue))
@@ -922,7 +922,7 @@ namespace System.Windows.Controls
                 return;
             }
 
-            if (_autoToolTip != null)
+            if (_autoToolTip is not null)
             {
                 _autoToolTip.IsOpen = false;
             }
@@ -994,7 +994,7 @@ namespace System.Windows.Controls
             }
 
             trackSize = Track.RenderSize;
-            thumbSize = (Track.Thumb != null) ? Track.Thumb.RenderSize : new Size(0d, 0d);
+            thumbSize = (Track.Thumb is not null) ? Track.Thumb.RenderSize : new Size(0d, 0d);
 
             double range = Maximum - Minimum;
             double valueToSize;
@@ -1067,7 +1067,7 @@ namespace System.Windows.Controls
             }
 
             Size trackSize = Track.RenderSize;
-            Size thumbSize = (Track.Thumb != null) ? Track.Thumb.RenderSize : new Size(0d, 0d);
+            Size thumbSize = (Track.Thumb is not null) ? Track.Thumb.RenderSize : new Size(0d, 0d);
             double range = Maximum - Minimum;
             double valueToSize;
 
@@ -1190,7 +1190,7 @@ namespace System.Windows.Controls
 
                 // If ticks collection is available, use it.
                 // Note that ticks may be unsorted.
-                if ((ticks != null) && (ticks.Count > 0))
+                if ((ticks is not null) && (ticks.Count > 0))
                 {
                     for (int i = 0; i < ticks.Count; i++)
                     {
@@ -1254,7 +1254,7 @@ namespace System.Windows.Controls
 
                     // If ticks collection is available, use it.
                     // Note that ticks may be unsorted.
-                    if ((ticks != null) && (ticks.Count > 0))
+                    if ((ticks is not null) && (ticks.Count > 0))
                     {
                         for (int i = 0; i < ticks.Count; i++)
                         {
@@ -1360,9 +1360,9 @@ namespace System.Windows.Controls
             SelectedRangeElement = GetTemplateChild(SelectedRangeElementName) as FrameworkElement;
             Track = GetTemplateChild(TrackName) as Track;
 
-            if (_autoToolTip != null)
+            if (_autoToolTip is not null)
             {
-                _autoToolTip.PlacementTarget = Track != null ? Track.Thumb : null;
+                _autoToolTip.PlacementTarget = Track is not null ? Track.Thumb : null;
             }
         }
 

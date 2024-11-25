@@ -73,7 +73,7 @@ namespace Microsoft.Windows.Controls
                 var propertySource = DependencyPropertyHelper.GetValueSource(baseObject, baseProperty);
                 var maxBaseValueSource = propertySource.BaseValueSource;
 
-                if (parentObject != null)
+                if (parentObject is not null)
                 {
                     var parentPropertySource = DependencyPropertyHelper.GetValueSource(parentObject, parentProperty);
 
@@ -84,7 +84,7 @@ namespace Microsoft.Windows.Controls
                     }
                 }
 
-                if (grandParentObject != null)
+                if (grandParentObject is not null)
                 {
                     var grandParentPropertySource = DependencyPropertyHelper.GetValueSource(grandParentObject, grandParentProperty);
 
@@ -133,7 +133,7 @@ namespace Microsoft.Windows.Controls
         {
             var propertyTransferEnabledForObject = _propertyTransferEnabledMap[d] as Dictionary<DependencyProperty, bool>;
 
-            if (propertyTransferEnabledForObject != null)
+            if (propertyTransferEnabledForObject is not null)
             {
                 bool isPropertyTransferEnabled;
                 if (propertyTransferEnabledForObject.TryGetValue(p, out isPropertyTransferEnabled))

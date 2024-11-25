@@ -56,7 +56,7 @@ namespace System.Windows.Xps.Serialization
                 {
                     ReachVisualSerializerContext thisContext = context as ReachVisualSerializerContext;
 
-                    if(thisContext != null)
+                    if(thisContext is not null)
                     {
                         SerializeNextTreeNode(thisContext);
                     }
@@ -169,7 +169,7 @@ namespace System.Windows.Xps.Serialization
 
                 Visual v = ctx.GetNextChild();
 
-                if (v != null)
+                if (v is not null)
                 {
                     if (flattener.StartVisual(v))
                     {

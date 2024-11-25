@@ -36,7 +36,7 @@ namespace System.Windows.Input.StylusPointer
         {
             get
             {
-                return _manager != null;
+                return _manager is not null;
             }
         }
 
@@ -67,7 +67,7 @@ namespace System.Windows.Input.StylusPointer
             {
                 PresentationSource presentationSource = PresentationSource.CriticalFromVisual(element as Visual);
 
-                if (presentationSource != null)
+                if (presentationSource is not null)
                 {
                     unhook = false;
 
@@ -77,7 +77,7 @@ namespace System.Windows.Input.StylusPointer
                         _manager = StylusLogic.GetCurrentStylusLogicAs<PointerLogic>().PlugInManagers[presentationSource];
 
                         // _manager must be non null or don't do anything.
-                        if (_manager != null)
+                        if (_manager is not null)
                         {
                             _manager.AddStylusPlugInCollection(Wrapper);
 
@@ -108,7 +108,7 @@ namespace System.Windows.Input.StylusPointer
         internal override void Unhook()
         {
             // Are we currently unhooked?  If not then unhook.
-            if (_manager != null)
+            if (_manager is not null)
             {
                 _manager.RemoveStylusPlugInCollection(Wrapper);
 

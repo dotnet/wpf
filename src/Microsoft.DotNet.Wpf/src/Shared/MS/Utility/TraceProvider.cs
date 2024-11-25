@@ -118,7 +118,7 @@ namespace MS.Utility
             string dataString = null;
             byte* dataBuffer = stackalloc byte[s_basicTypeAllocationBufferSize];
 
-            if (eventData != null)
+            if (eventData is not null)
             {
                 dataString = EncodeObject(ref eventData, &userData, dataBuffer);
                 argCount = 1;
@@ -129,7 +129,7 @@ namespace MS.Utility
                 return ErrorEventTooBig;
             }
 
-            if (dataString != null)
+            if (dataString is not null)
             {
                 fixed(char* pdata = dataString)
                 {
@@ -166,13 +166,13 @@ namespace MS.Utility
 
             for (int index = 0; index < argCount; index++)
             {
-                if (eventPayload[index] != null)
+                if (eventPayload[index] is not null)
                 {
                     string isString = EncodeObject(ref eventPayload[index], userDataPtr, currentBuffer);
                     currentBuffer += s_basicTypeAllocationBufferSize;
                     totalEventSize = userDataPtr->Size;
                     userDataPtr++;
-                    if (isString != null)
+                    if (isString is not null)
                     {
                         Debug.Assert(stringIndex < s_etwAPIMaxStringCount); // need to increase string count or emit fewer strings
                         dataString[stringIndex] = isString;
@@ -191,35 +191,35 @@ namespace MS.Utility
                     s4 = dataString[4], s5 = dataString[5], s6 = dataString[6], s7 = dataString[7])
             {
                 userDataPtr = userData;
-                if (dataString[0] != null)
+                if (dataString[0] is not null)
                 {
                     userDataPtr[stringPosition[0]].Ptr = (ulong)s0;
                 }
-                if (dataString[1] != null)
+                if (dataString[1] is not null)
                 {
                     userDataPtr[stringPosition[1]].Ptr = (ulong)s1;
                 }
-                if (dataString[2] != null)
+                if (dataString[2] is not null)
                 {
                     userDataPtr[stringPosition[2]].Ptr = (ulong)s2;
                 }
-                if (dataString[3] != null)
+                if (dataString[3] is not null)
                 {
                     userDataPtr[stringPosition[3]].Ptr = (ulong)s3;
                 }
-                if (dataString[4] != null)
+                if (dataString[4] is not null)
                 {
                     userDataPtr[stringPosition[4]].Ptr = (ulong)s4;
                 }
-                if (dataString[5] != null)
+                if (dataString[5] is not null)
                 {
                     userDataPtr[stringPosition[5]].Ptr = (ulong)s5;
                 }
-                if (dataString[6] != null)
+                if (dataString[6] is not null)
                 {
                     userDataPtr[stringPosition[6]].Ptr = (ulong)s6;
                 }
-                if (dataString[7] != null)
+                if (dataString[7] is not null)
                 {
                     userDataPtr[stringPosition[7]].Ptr = (ulong)s7;
                 }
@@ -274,7 +274,7 @@ namespace MS.Utility
             dataDescriptor->Reserved = 0;
 
             string sRet = data as string;
-            if (sRet != null)
+            if (sRet is not null)
             {
                 dataDescriptor->Size = (uint)((sRet.Length + 1) * 2);
                 return sRet;

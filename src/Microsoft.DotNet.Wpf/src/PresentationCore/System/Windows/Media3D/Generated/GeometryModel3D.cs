@@ -101,7 +101,7 @@ namespace System.Windows.Media.Media3D
             Geometry3D newV = (Geometry3D) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 DUCE.IResource targetResource = (DUCE.IResource)target;
                 using (CompositionEngineLock.Acquire())
@@ -150,7 +150,7 @@ namespace System.Windows.Media.Media3D
             Material newV = (Material) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 DUCE.IResource targetResource = (DUCE.IResource)target;
                 using (CompositionEngineLock.Acquire())
@@ -199,7 +199,7 @@ namespace System.Windows.Media.Media3D
             Material newV = (Material) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 DUCE.IResource targetResource = (DUCE.IResource)target;
                 using (CompositionEngineLock.Acquire())
@@ -326,9 +326,9 @@ namespace System.Windows.Media.Media3D
                 {
                     hTransform = ((DUCE.IResource)vTransform).GetHandle(channel);
                 }
-                DUCE.ResourceHandle hGeometry = vGeometry != null ? ((DUCE.IResource)vGeometry).GetHandle(channel) : DUCE.ResourceHandle.Null;
-                DUCE.ResourceHandle hMaterial = vMaterial != null ? ((DUCE.IResource)vMaterial).GetHandle(channel) : DUCE.ResourceHandle.Null;
-                DUCE.ResourceHandle hBackMaterial = vBackMaterial != null ? ((DUCE.IResource)vBackMaterial).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                DUCE.ResourceHandle hGeometry = vGeometry is not null ? ((DUCE.IResource)vGeometry).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                DUCE.ResourceHandle hMaterial = vMaterial is not null ? ((DUCE.IResource)vMaterial).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                DUCE.ResourceHandle hBackMaterial = vBackMaterial is not null ? ((DUCE.IResource)vBackMaterial).GetHandle(channel) : DUCE.ResourceHandle.Null;
 
                 // Pack & send command packet
                 DUCE.MILCMD_GEOMETRYMODEL3D data;
@@ -353,13 +353,13 @@ namespace System.Windows.Media.Media3D
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_GEOMETRYMODEL3D))
                 {
                     Transform3D vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
+                    if (vTransform is not null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
                     Geometry3D vGeometry = Geometry;
-                    if (vGeometry != null) ((DUCE.IResource)vGeometry).AddRefOnChannel(channel);
+                    if (vGeometry is not null) ((DUCE.IResource)vGeometry).AddRefOnChannel(channel);
                     Material vMaterial = Material;
-                    if (vMaterial != null) ((DUCE.IResource)vMaterial).AddRefOnChannel(channel);
+                    if (vMaterial is not null) ((DUCE.IResource)vMaterial).AddRefOnChannel(channel);
                     Material vBackMaterial = BackMaterial;
-                    if (vBackMaterial != null) ((DUCE.IResource)vBackMaterial).AddRefOnChannel(channel);
+                    if (vBackMaterial is not null) ((DUCE.IResource)vBackMaterial).AddRefOnChannel(channel);
 
                     AddRefOnChannelAnimations(channel);
 
@@ -376,13 +376,13 @@ namespace System.Windows.Media.Media3D
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
                     Transform3D vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
+                    if (vTransform is not null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
                     Geometry3D vGeometry = Geometry;
-                    if (vGeometry != null) ((DUCE.IResource)vGeometry).ReleaseOnChannel(channel);
+                    if (vGeometry is not null) ((DUCE.IResource)vGeometry).ReleaseOnChannel(channel);
                     Material vMaterial = Material;
-                    if (vMaterial != null) ((DUCE.IResource)vMaterial).ReleaseOnChannel(channel);
+                    if (vMaterial is not null) ((DUCE.IResource)vMaterial).ReleaseOnChannel(channel);
                     Material vBackMaterial = BackMaterial;
-                    if (vBackMaterial != null) ((DUCE.IResource)vBackMaterial).ReleaseOnChannel(channel);
+                    if (vBackMaterial is not null) ((DUCE.IResource)vBackMaterial).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
 }

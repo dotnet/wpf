@@ -216,7 +216,7 @@ namespace DRT
         protected DrtBase()
         {
             string assertExit = Environment.GetEnvironmentVariable("AVALON_ASSERTEXIT");
-            if (assertExit != null && assertExit.Length > 0)
+            if (assertExit is not null && assertExit.Length > 0)
             {
                 _loudAsserts = true;
                 _assertsAsExceptions = false;
@@ -657,7 +657,7 @@ namespace DRT
 
         private void OnResetInputState()
         {
-            if (ResetInputState != null)
+            if (ResetInputState is not null)
             {
                 ResetInputState(this, EventArgs.Empty);
             }
@@ -1057,7 +1057,7 @@ namespace DRT
                     _timer.Tick -= new EventHandler(RunNextTestTimerTask);
                     _timer = null;
                 }
-                if (_timer != null)
+                if (_timer is not null)
                 {
                     _timer.Interval = TimeSpan.FromMilliseconds(_frequency);
                 }
@@ -1090,7 +1090,7 @@ namespace DRT
             if (!cond)
             {
                 string testID;
-                if (0 <= _testIndex && _testIndex < _test.Length && _currentTest != null)
+                if (0 <= _testIndex && _testIndex < _test.Length && _currentTest is not null)
                 {
                     if (_currentTest == _test[_testIndex])
                     {
@@ -1109,7 +1109,7 @@ namespace DRT
                 else
                 {
                     testID = String.Format("Suite: {0}  Test: {1}\n",
-                                    _currentSuite != null ? _currentSuite.Name : "(null)",
+                                    _currentSuite is not null ? _currentSuite.Name : "(null)",
                                     _testIndex);
                 }
 
@@ -1233,15 +1233,15 @@ namespace DRT
 
             Console.WriteLine();
 
-            if (message != null)
+            if (message is not null)
                 Console.WriteLine(message, args);
 
-            if (e != null)
+            if (e is not null)
             {
                 Console.WriteLine("{0}: {1}\n{2}",
                             e.GetType().FullName, e.Message, e.StackTrace);
 
-                while (e.InnerException != null)
+                while (e.InnerException is not null)
                 {
                     e = e.InnerException;
                     Console.WriteLine("Inner Exception was {0}: {1}\n{2}",
@@ -1439,7 +1439,7 @@ namespace DRT
             for(int i = 0; i < count; i++)
             {
                 DependencyObject result = FindVisualByPropertyValue(dp, value, VisualTreeHelper.GetChild(node, i), true);
-                if (result != null)
+                if (result is not null)
                     return result;
             }
 
@@ -1524,7 +1524,7 @@ namespace DRT
             for(int i = 0; i < count; i++)
               {
                 DependencyObject result = FindVisualByType(type,  VisualTreeHelper.GetChild(node,i), true, ref skip);
-                if (result != null)
+                if (result is not null)
                     return result;
             }
 
@@ -1595,7 +1595,7 @@ namespace DRT
             }
 
             // if not, look at the ancestors
-            for (node = VisualTreeHelper.GetParent(node); node != null; node = VisualTreeHelper.GetParent(node))
+            for (node = VisualTreeHelper.GetParent(node); node is not null; node = VisualTreeHelper.GetParent(node))
             {
                 if (type == node.GetType())
                     return node;
@@ -1635,20 +1635,20 @@ namespace DRT
             {
                 child = currentChild as DependencyObject;
                 result = FindElementByPropertyValue(dp, value, child, true);
-                if (result != null)
+                if (result is not null)
                     return result;
             }
 
             // then the visual children
             Visual vNode = node as Visual;
-            if (vNode != null)
+            if (vNode is not null)
             {
                 int count = VisualTreeHelper.GetChildrenCount(vNode);
                 for(int i = 0; i < count; i++)
                 {
                     child = VisualTreeHelper.GetChild(vNode, i) as DependencyObject;
                     result = FindElementByPropertyValue(dp, value, child, true);
-                    if (result != null)
+                    if (result is not null)
                         return result;
                 }
             }
@@ -1783,13 +1783,13 @@ namespace DRT
 
         public void Dispose()
         {
-            if (_source != null)
+            if (_source is not null)
             {
                 _source.Dispose();
                 _source = null;
             }
 
-            if (_timer != null)
+            if (_timer is not null)
             {
                 _timer.Stop();
                 _timer.Tick -= new EventHandler(RunNextTestTimerTask);
@@ -1900,7 +1900,7 @@ namespace DRT
 
                 if (IsSelected(suite))
                 {
-                    if (_currentSuite != null)
+                    if (_currentSuite is not null)
                         _currentSuite.ReleaseResources();
 
                     OnResetInputState();
@@ -1929,7 +1929,7 @@ namespace DRT
             // all suites are done - close the app
             if (!_keepAlive)
             {
-                if (_currentSuite != null)
+                if (_currentSuite is not null)
                 {
                     _currentSuite.ReleaseResources();
                     _currentSuite = null;
@@ -2027,7 +2027,7 @@ namespace DRT
                 action = "Starting";
             }
 
-            if (_currentTest != null)
+            if (_currentTest is not null)
             {
                 Trace("{0} test {1} - {2}", action, _testIndex, _currentTest.Method.Name);
 
@@ -2116,7 +2116,7 @@ namespace DRT
                 _drtInfoReported = true;
             }
 
-            if (!_suiteInfoReported && _currentSuite != null)
+            if (!_suiteInfoReported && _currentSuite is not null)
             {
                 Console.WriteLine("  >> Suite Information:");
                 Console.WriteLine("  currently running suite '{0}'", _currentSuite.Name);
@@ -2205,10 +2205,10 @@ namespace DRT
         {
             using(RegistryKey subKey = key.OpenSubKey(path))
             {
-                if(subKey != null)
+                if(subKey is not null)
                 {
                     object valueAsObject = subKey.GetValue(valueName);
-                    if(valueAsObject != null && valueAsObject is int)
+                    if(valueAsObject is not null && valueAsObject is int)
                     {
                         int valueAsInt = (int)valueAsObject;
                         if(valueAsInt == value && subKey.GetValueKind(valueName) == RegistryValueKind.DWord)
@@ -2240,7 +2240,7 @@ namespace DRT
             int longestName = 0;
             foreach (DrtTestSuite suite in _suites)
             {
-                if (suite != null && suite.Name != null)
+                if (suite is not null && suite.Name is not null)
                     longestName = Math.Max(longestName, suite.Name.Length);
             }
 
@@ -2274,7 +2274,7 @@ namespace DRT
 
             foreach (DrtTestSuite suite in _suites)
             {
-                if (suite != null)
+                if (suite is not null)
                     suite.PrintOptions();
             }
         }
@@ -2680,7 +2680,7 @@ namespace DRT
                     }
                 }
 
-                return _logFile != null;
+                return _logFile is not null;
             }
 
             protected override void Dispose(bool disposing)
@@ -2757,7 +2757,7 @@ namespace DRT
             {
                 lock(_instanceLock)
                 {
-                    if (_logFile != null)
+                    if (_logFile is not null)
                     {
                         _logFile.Close();
                         _logFile = null;

@@ -298,7 +298,7 @@ namespace System.Windows.Documents
                     }
                     curIndex--;
                 }
-                if (mergedChange != null)
+                if (mergedChange is not null)
                 {
                     // the change got merged.  Use the merged change as the basis for righthand merging.
                     change = mergedChange;

@@ -111,7 +111,7 @@ namespace MS.Internal.PtsHost
                 // Main text segment is null for section, no update possible.
                 canUpdate = false;
             }
-            else if (_section.StructuralCache != null)
+            else if (_section.StructuralCache is not null)
             {
                 // No update is possible when ForceReformat flag is set.
                 // Clear update information and clear entire NameTable.
@@ -120,7 +120,7 @@ namespace MS.Internal.PtsHost
                     canUpdate = false;
                     _section.StructuralCache.ClearUpdateInfo(true);
                 }
-                else if (_section.StructuralCache.DtrList != null)
+                else if (_section.StructuralCache.DtrList is not null)
                 {
                     // If there is DRT list and the page cannot be updated, 
                     // invalidate entire NameTable starting from the position 
@@ -162,7 +162,7 @@ namespace MS.Internal.PtsHost
 #if DEBUG
             Debug.Assert(!canUpdate || _section.CanUpdate);
 #endif
-            if (_section.StructuralCache != null)
+            if (_section.StructuralCache is not null)
             {
                 // No update is possible when ForceReformat flag is set.
                 // Clear update information and clear entire NameTable.
@@ -180,7 +180,7 @@ namespace MS.Internal.PtsHost
                 // If there is DRT list, invalidate entire NameTable starting from the 
                 // position of the first DTR.
                 // Then clear update info, if incremental update is not possible.
-                else if (_section.StructuralCache.DtrList != null)
+                else if (_section.StructuralCache.DtrList is not null)
                 {
                     _section.InvalidateStructure();
                     if (!canUpdate)
@@ -395,7 +395,7 @@ namespace MS.Internal.PtsHost
             }
 
             // Retrieve PTS break record
-            IntPtr brIn = (breakRecord != null) ? breakRecord.BreakRecord : IntPtr.Zero;
+            IntPtr brIn = (breakRecord is not null) ? breakRecord.BreakRecord : IntPtr.Zero;
 
             // Create finite page and update layout size information
             PTS.FSFMTR formattingResult;
@@ -416,9 +416,9 @@ namespace MS.Internal.PtsHost
             if (brOut != IntPtr.Zero)
             {
                 StructuralCache structuralCache = _section.StructuralCache;
-                if (structuralCache != null)
+                if (structuralCache is not null)
                 {
-                    _breakRecord = new PageBreakRecord(PtsContext, brOut, (breakRecord != null) ? breakRecord.PageNumber + 1 : 1);
+                    _breakRecord = new PageBreakRecord(PtsContext, brOut, (breakRecord is not null) ? breakRecord.PageNumber + 1 : 1);
                 }
             }
 
@@ -456,7 +456,7 @@ namespace MS.Internal.PtsHost
             }
 
             // Retrieve PTS break record
-            IntPtr brIn = (breakRecord != null) ? breakRecord.BreakRecord : IntPtr.Zero;
+            IntPtr brIn = (breakRecord is not null) ? breakRecord.BreakRecord : IntPtr.Zero;
 
             // Create finite page and update layout size information
             PTS.FSFMTR formattingResult;
@@ -475,9 +475,9 @@ namespace MS.Internal.PtsHost
             if (brOut != IntPtr.Zero)
             {
                 StructuralCache structuralCache = _section.StructuralCache;
-                if (structuralCache != null)
+                if (structuralCache is not null)
                 {
-                    _breakRecord = new PageBreakRecord(PtsContext, brOut, (breakRecord != null) ? breakRecord.PageNumber + 1 : 1);
+                    _breakRecord = new PageBreakRecord(PtsContext, brOut, (breakRecord is not null) ? breakRecord.PageNumber + 1 : 1);
                 }
             }
 
@@ -750,7 +750,7 @@ namespace MS.Internal.PtsHost
             _pageContextOfThisPage.PageRect = new PTS.FSRECT(new Rect(_section.StructuralCache.CurrentFormatContext.PageSize));
 
             // Ensure we have no background work pending
-            if (_backgroundFormatOperation != null)
+            if (_backgroundFormatOperation is not null)
             {
                 _backgroundFormatOperation.Abort();
             }
@@ -811,7 +811,7 @@ namespace MS.Internal.PtsHost
 
             // Make sure that structural cache is in clean state after formatting
             // is done.
-            if (_section.StructuralCache != null)
+            if (_section.StructuralCache is not null)
             {
                 _section.StructuralCache.ClearUpdateInfo(false);
             }
@@ -1191,7 +1191,7 @@ namespace MS.Internal.PtsHost
         {
             IInputElement ie = null;
 
-            if(_pageContextOfThisPage.FloatingElementList != null)
+            if(_pageContextOfThisPage.FloatingElementList is not null)
             {
                 for(int index = 0; index < _pageContextOfThisPage.FloatingElementList.Count && ie is null; index++)
                 {
@@ -1295,7 +1295,7 @@ namespace MS.Internal.PtsHost
                         rectangles = GetRectanglesInSection(e, start, length, ref arraySectionDesc[index]);
                         
                         // For consistency, helpers cannot return null for rectangles
-                        Invariant.Assert(rectangles != null);
+                        Invariant.Assert(rectangles is not null);
                         if (rectangles.Count != 0)
                         {
                             // Found element and rectangles. We will sotp here because the element has been
@@ -1417,7 +1417,7 @@ namespace MS.Internal.PtsHost
                         List<Rect> trackRectangles = PtsHelper.GetRectanglesInTrack(PtsContext, e, start, length, ref arrayColumnDesc[index]);
                         
                         // For consistency, rectangles collection is never null, only empty
-                        Invariant.Assert(trackRectangles != null);
+                        Invariant.Assert(trackRectangles is not null);
                         if (trackRectangles.Count != 0)
                         {
                             // Add rectangles found in this track to rectangles for element

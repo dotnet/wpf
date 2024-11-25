@@ -88,7 +88,7 @@ namespace System.Windows.Media
             DUCE.Channel channel, 
             DUCE.ResourceHandle root)
         {
-            Debug.Assert(channel != null);
+            Debug.Assert(channel is not null);
 
             _channel = channel;
             _root = root;

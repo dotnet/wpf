@@ -112,7 +112,7 @@ namespace MS.Internal.AutomationProxies
             }
             
             
-            if (raiseEvent != null)
+            if (raiseEvent is not null)
             {
                 raiseEvent(el, hwnd, eventId);
             }
@@ -444,7 +444,7 @@ namespace MS.Internal.AutomationProxies
         
         private static void RaisePropertyChangedEvent(ProxySimple el, AutomationProperty property, object propertyValue)
         {
-            if (propertyValue != null && propertyValue != AutomationElement.NotSupported)
+            if (propertyValue is not null && propertyValue != AutomationElement.NotSupported)
             {
                 AutomationInteropProvider.RaiseAutomationPropertyChangedEvent(el, new AutomationPropertyChangedEventArgs(property, null, propertyValue));
             }
@@ -481,12 +481,12 @@ namespace MS.Internal.AutomationProxies
                 // store the previous range and compare it to the current range.  The range will not change when scrolling.
                 ITextRangeProvider[] currentRanges = textProvider.GetSelection();
                 ITextRangeProvider currentRange = null;
-                if (currentRanges != null && currentRanges.Length > 0)
+                if (currentRanges is not null && currentRanges.Length > 0)
                     currentRange = currentRanges[0];
 
-                if (hwnd == _hwndLast && currentRange != null)
+                if (hwnd == _hwndLast && currentRange is not null)
                 {
-                    if (_lastSelection != null && !currentRange.Compare(_lastSelection))
+                    if (_lastSelection is not null && !currentRange.Compare(_lastSelection))
                     {
                         AutomationInteropProvider.RaiseAutomationEvent(TextPattern.TextSelectionChangedEvent, el, new AutomationEventArgs(TextPattern.TextSelectionChangedEvent));
                     }

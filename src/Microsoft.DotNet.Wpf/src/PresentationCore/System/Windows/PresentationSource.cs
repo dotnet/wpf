@@ -136,7 +136,7 @@ namespace System.Windows
 
             // I would rather throw an exception here, but the CLR doesn't
             // so we won't either.
-            if (handler != null)
+            if (handler is not null)
             {
                 FrugalObjectList<RoutedEventHandlerInfo> info;
 
@@ -201,7 +201,7 @@ namespace System.Windows
 
             // I would rather throw an exception here, but the CLR doesn't
             // so we won't either.
-            if (handler != null)
+            if (handler is not null)
             {
                 FrugalObjectList<RoutedEventHandlerInfo> info = null;
                 EventHandlersStore store;
@@ -213,7 +213,7 @@ namespace System.Windows
                 {
                     uie.RemoveHandler(SourceChangedEvent, handler);
                     store = uie.EventHandlersStore;
-                    if (store != null)
+                    if (store is not null)
                     {
                         info = store[SourceChangedEvent];
                     }
@@ -227,7 +227,7 @@ namespace System.Windows
                 {
                     uie3D.RemoveHandler(SourceChangedEvent, handler);
                     store = uie3D.EventHandlersStore;
-                    if (store != null)
+                    if (store is not null)
                     {
                         info = store[SourceChangedEvent];
                     }
@@ -241,7 +241,7 @@ namespace System.Windows
                 {
                     ce.RemoveHandler(SourceChangedEvent, handler);
                     store = ce.EventHandlersStore;
-                    if (store != null)
+                    if (store is not null)
                     {
                         info = store[SourceChangedEvent];
                     }
@@ -434,14 +434,14 @@ namespace System.Windows
             }
 
             // Always clear the RootSourceProperty on the old root.
-            if (oldRoot != null)
+            if (oldRoot is not null)
             {
                 oldSource = (PresentationSource)oldRoot.GetValue(RootSourceProperty);
                 oldRoot.ClearValue(RootSourceProperty);
             }
             
             // Always set the SourceProperty on the new root.
-            if (newRoot != null)
+            if (newRoot is not null)
             {
                 newRoot.SetValue(RootSourceProperty, this);
             }
@@ -451,23 +451,23 @@ namespace System.Windows
 
             // The IsVisible property can only be true if root visual is connected to a presentation source.
             // For Read-Only force-inherited properties, use a private update method.
-            if(oldRootUIElement != null)
+            if(oldRootUIElement is not null)
             {
                 oldRootUIElement.UpdateIsVisibleCache();
             }
-            if(newRootUIElement != null)
+            if(newRootUIElement is not null)
             {
                 newRootUIElement.UpdateIsVisibleCache();
             }
 
             // Broadcast the Unloaded event starting at the old root visual
-            if (oldRootUIElement != null)
+            if (oldRootUIElement is not null)
             {
                 oldRootUIElement.OnPresentationSourceChanged(false);
             }
 
             // Broadcast the Loaded event starting at the root visual
-            if (newRootUIElement != null)
+            if (newRootUIElement is not null)
             {
                 newRootUIElement.OnPresentationSourceChanged(true);
             }
@@ -583,7 +583,7 @@ namespace System.Windows
         internal static object FireContentRendered(object arg)
         {
             PresentationSource ps = (PresentationSource)arg;
-            if (ps.ContentRendered != null)
+            if (ps.ContentRendered is not null)
             {
                 ps.ContentRendered(arg, EventArgs.Empty);
             }
@@ -689,7 +689,7 @@ namespace System.Windows
             // For "ContentElements" it climbs the logical parent until it
             // reaches a visual then climbs to the top of the visual tree.
             DependencyObject v = InputElement.GetRootVisual(o, enable2DTo3DTransition);
-            if (v != null)
+            if (v is not null)
             {
                source = (PresentationSource)v.GetValue(RootSourceProperty);
             }

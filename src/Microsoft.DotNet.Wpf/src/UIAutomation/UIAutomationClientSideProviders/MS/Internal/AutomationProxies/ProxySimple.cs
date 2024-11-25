@@ -70,7 +70,7 @@ namespace MS.Internal.AutomationProxies
             _parent = parent;
 
             // is element a leaf?
-            _fSubTree = (_parent != null);
+            _fSubTree = (_parent is not null);
         }
 
         #endregion
@@ -171,7 +171,7 @@ namespace MS.Internal.AutomationProxies
         {
             get
             {
-                if (_hwnd == IntPtr.Zero || (GetParent() != null && GetParent()._hwnd == _hwnd))
+                if (_hwnd == IntPtr.Zero || (GetParent() is not null && GetParent()._hwnd == _hwnd))
                 {
                     return null;
                 }
@@ -195,7 +195,7 @@ namespace MS.Internal.AutomationProxies
             }
             else if(idProp == AutomationElement.ControlTypeProperty)
             {
-                return _cControlType != null ? (object)_cControlType.Id : null;
+                return _cControlType is not null ? (object)_cControlType.Id : null;
             }
             else if (idProp == AutomationElement.IsContentElementProperty)
             {
@@ -252,7 +252,7 @@ namespace MS.Internal.AutomationProxies
                 // _sAutomationId being null is invalid, while being empty is a valid state.
                 // The use of IsNullOrEmpty while hide this.
 #pragma warning suppress 6507
-                System.Diagnostics.Debug.Assert(_sAutomationId != null, "_sAutomationId is null!");
+                System.Diagnostics.Debug.Assert(_sAutomationId is not null, "_sAutomationId is null!");
 #pragma warning suppress 6507
                 return _sAutomationId.Length > 0 ? _sAutomationId : null;
             }
@@ -320,7 +320,7 @@ namespace MS.Internal.AutomationProxies
             // As per the specs, IsOffscreen only takes immediate parent-child relationship into account,
             // so we only need to check if this item in offscreen with respect to its immediate parent.
             ProxySimple parent = GetParent();
-            if (parent != null )
+            if (parent is not null )
             {
                 if ((bool)parent.GetElementProperty(AutomationElement.IsOffscreenProperty))
                 {
@@ -451,7 +451,7 @@ namespace MS.Internal.AutomationProxies
         // ProxySimple object are leaf so it returns null except for the parent
         IRawElementProviderFragment IRawElementProviderFragment.Navigate(NavigateDirection direction)
         {
-            System.Diagnostics.Debug.Assert(_parent != null, "Navigate: Leaf element does not have parent");
+            System.Diagnostics.Debug.Assert(_parent is not null, "Navigate: Leaf element does not have parent");
             switch (direction)
             {
                 case NavigateDirection.Parent:
@@ -484,7 +484,7 @@ namespace MS.Internal.AutomationProxies
                 // Traverse up the parents until you find a node with no parents, this is the root
                 ProxySimple walk = this;
 
-                while (walk.GetParent() != null)
+                while (walk.GetParent() is not null)
                 {
                     walk = walk.GetParent();
                 }
@@ -605,7 +605,7 @@ namespace MS.Internal.AutomationProxies
 
             // First go through all the children to exclude whatever is on top
             ProxyFragment proxyFrag = this as ProxyFragment;
-            if (proxyFrag != null)
+            if (proxyFrag is not null)
             {
                 ClickablePoint.ExcludeChildren(proxyFrag, alIn, alOut);
             }
@@ -618,7 +618,7 @@ namespace MS.Internal.AutomationProxies
             string name = null;
 
             IAccessible acc = AccessibleObject;
-            if (acc != null)
+            if (acc is not null)
             {
                 name = acc.get_accName(item);
                 name = string.IsNullOrEmpty(name) ? null : name;

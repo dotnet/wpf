@@ -258,7 +258,7 @@ namespace System.Windows.Documents
                 end = GetRunEndPositionDynamic(index);
             }
 
-            return (start != null);
+            return (start is not null);
         }
 
         // Returns the type and end of the Run intersecting position.

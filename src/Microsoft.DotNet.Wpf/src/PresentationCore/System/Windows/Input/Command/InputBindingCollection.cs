@@ -53,7 +53,7 @@ namespace System.Windows.Input
         /// <param name="inputBindings">InputBinding array</param>
         public InputBindingCollection(IList inputBindings)
         {
-            if (inputBindings != null && inputBindings.Count > 0)
+            if (inputBindings is not null && inputBindings.Count > 0)
             {
                 this.AddRange(inputBindings as ICollection);
             }
@@ -87,7 +87,7 @@ namespace System.Windows.Input
         /// <param name="index"></param>
         void ICollection.CopyTo(System.Array array, int index)
         {
-            if (_innerBindingList != null)
+            if (_innerBindingList is not null)
             {
                 ((ICollection)_innerBindingList).CopyTo(array, index);
             }
@@ -112,7 +112,7 @@ namespace System.Windows.Input
         int IList.IndexOf(object value)
         {
             InputBinding inputBinding = value as InputBinding;
-            return ((inputBinding != null) ? this.IndexOf(inputBinding) : -1);
+            return ((inputBinding is not null) ? this.IndexOf(inputBinding) : -1);
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace System.Windows.Input
                 #pragma warning disable 1634, 1691
                 #pragma warning disable 6503
 
-                if (_innerBindingList != null)
+                if (_innerBindingList is not null)
                 {
                     return _innerBindingList[index];
                 }
@@ -191,7 +191,7 @@ namespace System.Windows.Input
             }
             set
             {
-                if (_innerBindingList != null)
+                if (_innerBindingList is not null)
                 {
                     InputBinding oldInputBinding = null;
                     if (index >= 0 && index < _innerBindingList.Count)
@@ -199,7 +199,7 @@ namespace System.Windows.Input
                         oldInputBinding = _innerBindingList[index];
                     }
                     _innerBindingList[index] = value;
-                    if (oldInputBinding != null)
+                    if (oldInputBinding is not null)
                     {
                         InheritanceContextHelper.RemoveContextFromObject(_owner, oldInputBinding);
                     }
@@ -218,7 +218,7 @@ namespace System.Windows.Input
         /// <param name="inputBinding"></param>
         public int Add(InputBinding inputBinding)
         {
-            if (inputBinding != null)
+            if (inputBinding is not null)
             {
                 if (_innerBindingList is null)
                     _innerBindingList = new System.Collections.Generic.List<InputBinding>(1);
@@ -240,7 +240,7 @@ namespace System.Windows.Input
         {
             get
             {
-                if (_innerBindingList != null)
+                if (_innerBindingList is not null)
                     return ((IList)_innerBindingList).IsSynchronized;
 
                 return false;
@@ -254,7 +254,7 @@ namespace System.Windows.Input
         /// <returns></returns>
         public int IndexOf(InputBinding value)
         {
-            return (_innerBindingList != null) ? _innerBindingList.IndexOf(value) : -1;
+            return (_innerBindingList is not null) ? _innerBindingList.IndexOf(value) : -1;
         }
 
         /// <summary>
@@ -276,7 +276,7 @@ namespace System.Windows.Input
                 while(collectionEnum.MoveNext())
                 {
                     InputBinding inputBinding = collectionEnum.Current as InputBinding;
-                    if (inputBinding != null)
+                    if (inputBinding is not null)
                     {
                         _innerBindingList.Add(inputBinding);
                         InheritanceContextHelper.ProvideContextForObject(_owner, inputBinding);
@@ -301,7 +301,7 @@ namespace System.Windows.Input
                 throw new NotSupportedException(SR.CollectionOnlyAcceptsInputBindings);
             }
 
-            if (_innerBindingList != null)
+            if (_innerBindingList is not null)
             {
                 _innerBindingList.Insert(index, inputBinding);
                 InheritanceContextHelper.ProvideContextForObject(_owner, inputBinding);
@@ -314,7 +314,7 @@ namespace System.Windows.Input
         /// <param name="inputBinding"></param>
         public void Remove(InputBinding inputBinding)
         {
-            if (_innerBindingList != null && inputBinding != null)
+            if (_innerBindingList is not null && inputBinding is not null)
             {
                 if (_innerBindingList.Remove(inputBinding as InputBinding))
                 {
@@ -329,7 +329,7 @@ namespace System.Windows.Input
         /// <param name="index">index at which the item needs to be removed</param>
         public void RemoveAt(int index)
         {
-            if (_innerBindingList != null)
+            if (_innerBindingList is not null)
             {
                 InputBinding oldInputBinding = null;
                 if (index >= 0 && index < _innerBindingList.Count)
@@ -337,7 +337,7 @@ namespace System.Windows.Input
                     oldInputBinding = _innerBindingList[index];
                 }
                 _innerBindingList.RemoveAt(index);
-                if (oldInputBinding != null)
+                if (oldInputBinding is not null)
                 {
                     InheritanceContextHelper.RemoveContextFromObject(_owner, oldInputBinding);
                 }
@@ -359,7 +359,7 @@ namespace System.Windows.Input
         {
             get
             {
-                return (_innerBindingList != null ? _innerBindingList.Count : 0);
+                return (_innerBindingList is not null ? _innerBindingList.Count : 0);
             }
         }
 
@@ -379,7 +379,7 @@ namespace System.Windows.Input
         /// </summary>
         public void Clear()
         {
-            if (_innerBindingList != null)
+            if (_innerBindingList is not null)
             {
                 List<InputBinding> oldInputBindings = new List<InputBinding>(_innerBindingList);
                 _innerBindingList.Clear();
@@ -398,7 +398,7 @@ namespace System.Windows.Input
         /// <returns></returns>
         public IEnumerator GetEnumerator()
         {
-            if (_innerBindingList != null)
+            if (_innerBindingList is not null)
                 return _innerBindingList.GetEnumerator();
 
             System.Collections.Generic.List<InputBinding> list = new System.Collections.Generic.List<InputBinding>(0);
@@ -421,7 +421,7 @@ namespace System.Windows.Input
         /// <returns>true - if found, false - otherwise</returns>
         public bool Contains(InputBinding key)
         {
-            if (_innerBindingList != null && key != null)
+            if (_innerBindingList is not null && key is not null)
             {
                 return _innerBindingList.Contains(key);
             }
@@ -436,7 +436,7 @@ namespace System.Windows.Input
         /// <param name="index">start index in the current list to copy</param>
         public void CopyTo(InputBinding[] inputBindings, int index)
         {
-            if (_innerBindingList != null)
+            if (_innerBindingList is not null)
             {
                 _innerBindingList.CopyTo(inputBindings, index);
             }
@@ -450,7 +450,7 @@ namespace System.Windows.Input
             for (int i = Count - 1; i >= 0; i--)
             {
                 InputBinding inputBinding = this[i];
-                if ((inputBinding.Command != null) && (inputBinding.Gesture != null) &&
+                if ((inputBinding.Command is not null) && (inputBinding.Gesture is not null) &&
                     inputBinding.Gesture.Matches(targetElement, inputEventArgs))
                 {
                     return inputBinding;

@@ -68,7 +68,7 @@ namespace System.Windows
         public void RegisterName(string name, object scopedElement)
         {
             INameScope nameScope = FrameworkElement.FindScope(this);
-            if (nameScope != null)
+            if (nameScope is not null)
             {
                 nameScope.RegisterName(name, scopedElement);
             }
@@ -86,7 +86,7 @@ namespace System.Windows
         public void UnregisterName(string name)
         {
             INameScope nameScope = FrameworkElement.FindScope(this);
-            if (nameScope != null)
+            if (nameScope is not null)
             {
                 nameScope.UnregisterName(name);
             }
@@ -112,7 +112,7 @@ namespace System.Windows
         internal object FindName(string name, out DependencyObject scopeOwner)
         {
             INameScope nameScope = FrameworkElement.FindScope(this, out scopeOwner);
-            if (nameScope != null)
+            if (nameScope is not null)
             {
                 return nameScope.FindName(name);
             }
@@ -167,7 +167,7 @@ namespace System.Windows
         internal object FindResourceOnSelf(object resourceKey, bool allowDeferredResourceReference, bool mustReturnDeferredResourceReference)
         {
             ResourceDictionary resources = ResourcesField.GetValue(this);
-            if ((resources != null) && resources.Contains(resourceKey))
+            if ((resources is not null) && resources.Contains(resourceKey))
             {
                 bool canCache;
                 return resources.FetchResource(resourceKey, allowDeferredResourceReference, mustReturnDeferredResourceReference, out canCache);
@@ -189,7 +189,7 @@ namespace System.Windows
         /// </summary>
         protected internal void AddLogicalChild(object child)
         {
-            if (child != null)
+            if (child is not null)
             {
                 // It is invalid to modify the children collection that we
                 // might be iterating during a property invalidation tree walk.
@@ -237,7 +237,7 @@ namespace System.Windows
         /// </summary>
         protected internal void RemoveLogicalChild(object child)
         {
-            if (child != null)
+            if (child is not null)
             {
                 // It is invalid to modify the children collection that we
                 // might be iterating during a property invalidation tree walk.
@@ -297,14 +297,14 @@ namespace System.Windows
             // to the dispatchers that the elements belong to.
             //
             this.VerifyAccess();
-            if(newParent != null)
+            if(newParent is not null)
             {
                 newParent.VerifyAccess();
             }
 
             // Logical Parent must first be dropped before you are attached to a newParent
             // This mitigates illegal tree state caused by logical child stealing as illustrated in bug 970706
-            if (_parent != null && newParent != null && _parent != newParent)
+            if (_parent is not null && newParent is not null && _parent != newParent)
             {
                 throw new System.InvalidOperationException(SR.HasLogicalParent);
             }
@@ -319,7 +319,7 @@ namespace System.Windows
             VisualDiagnostics.VerifyVisualTreeChange(this);
 
             // Logical Parent implies no InheritanceContext
-            if (newParent != null)
+            if (newParent is not null)
             {
                 ClearInheritanceContext();
             }
@@ -339,8 +339,8 @@ namespace System.Windows
             ///////////////////
 
             // Invalidate relevant properties for this subtree
-            DependencyObject parent = (newParent != null) ? newParent : oldParent;
-            TreeWalkHelper.InvalidateOnTreeChange(/* fe = */ this, /* fce = */ null, parent, (newParent != null));
+            DependencyObject parent = (newParent is not null) ? newParent : oldParent;
+            TreeWalkHelper.InvalidateOnTreeChange(/* fe = */ this, /* fce = */ null, parent, (newParent is not null));
 
             // If no one has called BeginInit then mark the element initialized and fire Initialized event
             // (non-parser programmatic tree building scenario)
@@ -364,7 +364,7 @@ namespace System.Windows
 
 
             // Synchronize ForceInherit properties
-            if(_parent != null && _parent is ContentElement)
+            if(_parent is not null && _parent is ContentElement)
             {
                 UIElement.SynchronizeForceInheritProperties(this, null, null, _parent);
             }
@@ -506,7 +506,7 @@ namespace System.Windows
                 InheritanceBehavior parentInheritanceBehavior = InheritanceBehavior.Default;
                 if (hasParent)
                 {
-                    if (parentFE != null)
+                    if (parentFE is not null)
                     {
                         parent = parentFE;
                         parentInheritanceBehavior = parentFE.InheritanceBehavior;
@@ -655,7 +655,7 @@ namespace System.Windows
                                     ContextMenuProperty,
                                     null,
                                     RequestFlags.DeferredReferences).Value as ContextMenu;
-                    if (contextMenu != null)
+                    if (contextMenu is not null)
                     {
                         TreeWalkHelper.InvalidateOnResourcesChange(contextMenu, null, ResourcesChangeInfo.ThemeChangeInfo);
                     }
@@ -667,7 +667,7 @@ namespace System.Windows
                                     null,
                                     RequestFlags.DeferredReferences).Value as DependencyObject;
 
-                    if (toolTip != null)
+                    if (toolTip is not null)
                     {
                         FrameworkObject toolTipFO = new FrameworkObject(toolTip);
                         if (toolTipFO.IsValid)
@@ -812,7 +812,7 @@ namespace System.Windows
                     InheritanceContextField.SetValue(this, context);
                     OnInheritanceContextChanged(EventArgs.Empty);
                 }
-                else if (InheritanceContext != null)
+                else if (InheritanceContext is not null)
                 {
                     // second request - remove all context and enter "shared" mode
                     InheritanceContextField.ClearValue(this);
@@ -840,7 +840,7 @@ namespace System.Windows
         // gets a real parent
         private void ClearInheritanceContext()
         {
-            if (InheritanceContext != null)
+            if (InheritanceContext is not null)
             {
                 InheritanceContextField.ClearValue(this);
                 OnInheritanceContextChanged(EventArgs.Empty);
@@ -861,11 +861,11 @@ namespace System.Windows
             {
                 MentorField.SetValue(this, newMentor);
 
-                if (oldMentor != null)
+                if (oldMentor is not null)
                 {
                     DisconnectMentor(oldMentor);
                 }
-                if (newMentor != null)
+                if (newMentor is not null)
                 {
                     ConnectMentor(newMentor);
                 }
@@ -1036,10 +1036,10 @@ namespace System.Windows
         internal void RaiseInheritedPropertyChangedEvent(ref InheritablePropertyChangeInfo info)
         {
             EventHandlersStore store = EventHandlersStore;
-            if (store != null)
+            if (store is not null)
             {
                 Delegate handler = store.Get(FrameworkElement.InheritedPropertyChangedKey);
-                if (handler != null)
+                if (handler is not null)
                 {
                     InheritedPropertyChangedEventArgs args = new InheritedPropertyChangedEventArgs(ref info);
                     ((InheritedPropertyChangedEventHandler)handler)(this, args);

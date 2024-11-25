@@ -108,7 +108,7 @@ namespace System.Windows.Markup
                 return this as IProvideValueTarget;
             }
 
-            if( _context != null )
+            if( _context is not null )
             {
                 if( service == typeof(IXamlTypeResolver))
                 {

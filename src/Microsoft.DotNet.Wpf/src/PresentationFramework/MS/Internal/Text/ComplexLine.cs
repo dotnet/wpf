@@ -66,9 +66,9 @@ namespace MS.Internal.Text
                     run = new TextEndOfParagraph(_syntheticCharacterLength);
                     break;
             }
-            Debug.Assert(run != null, "TextRun has not been created.");
+            Debug.Assert(run is not null, "TextRun has not been created.");
             Debug.Assert(run.Length > 0, "TextRun has to have positive length.");
-            if (run.Properties != null)
+            if (run.Properties is not null)
             {
                 run.Properties.PixelsPerDip = this.PixelsPerDip;
             }
@@ -106,7 +106,7 @@ namespace MS.Internal.Text
                 precedingText = new CharacterBufferRange(precedingTextString, 0, precedingTextString.Length);                         
 
                 StaticTextPointer pointer = position.CreateStaticPointer();                
-                DependencyObject element = (pointer.Parent != null) ? pointer.Parent : _owner;                
+                DependencyObject element = (pointer.Parent is not null) ? pointer.Parent : _owner;                
                 culture = DynamicPropertyReader.GetCultureInfo(element);                
             }
 
@@ -157,7 +157,7 @@ namespace MS.Internal.Text
             // Arrange inline objects
             int runDcp = _dcp;
             IList<TextSpan<TextRun>> runs = _line.GetTextRunSpans();
-            Debug.Assert(runs != null, "Cannot retrieve runs collection.");
+            Debug.Assert(runs is not null, "Cannot retrieve runs collection.");
 
             // Calculate offset shift due to trailing spaces
             double adjustedXOffset = lineOffset.X + CalculateXOffsetShift();
@@ -170,10 +170,10 @@ namespace MS.Internal.Text
 
                     // Disconnect visual from its old parent, if necessary.
                     Visual currentParent = VisualTreeHelper.GetParent(inlineObject.Element) as Visual;
-                    if (currentParent != null)
+                    if (currentParent is not null)
                     {
                         ContainerVisual parent = currentParent as ContainerVisual;
-                        Invariant.Assert(parent != null, "parent should always derives from ContainerVisual");
+                        Invariant.Assert(parent is not null, "parent should always derives from ContainerVisual");
                         parent.Children.Remove(inlineObject.Element);
                     }
 
@@ -189,7 +189,7 @@ namespace MS.Internal.Text
                         // Check parent's FlowDirection to determine if mirroring is needed
 
                         DependencyObject parent = ((FrameworkElement)inlineObject.Element).Parent; 
-                        if(parent != null)
+                        if(parent is not null)
                         {
                             parentFlowDirection = (FlowDirection)parent.GetValue(FrameworkElement.FlowDirectionProperty);
                         }
@@ -232,7 +232,7 @@ namespace MS.Internal.Text
             bool hasInlineObjects = false;
 
             IList<TextSpan<TextRun>> runs = _line.GetTextRunSpans();
-            Debug.Assert(runs != null, "Cannot retrieve runs collection.");
+            Debug.Assert(runs is not null, "Cannot retrieve runs collection.");
             foreach (TextSpan<TextRun> textSpan in runs)
             {
                 if (textSpan.Value is InlineObject)
@@ -268,7 +268,7 @@ namespace MS.Internal.Text
 
             // Adjusted offset for shift due to trailing spaces rendering
             double delta = CalculateXOffsetShift();
-            if (tree != null)
+            if (tree is not null)
             {
                 if (_line.HasOverflowed && _owner.ParagraphProperties.TextTrimming != TextTrimming.None)
                 {
@@ -287,7 +287,7 @@ namespace MS.Internal.Text
 
                 position = new TextPointer(_owner.ContentStart, CalcPositionOffset(charHit), LogicalDirection.Forward);
 
-                if (position != null)
+                if (position is not null)
                 {
                     if (charHit.TrailingLength == 0)
                     {
@@ -337,7 +337,7 @@ namespace MS.Internal.Text
             StaticTextPointer endOfRunPosition;
 
             Debug.Assert(position.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text, "TextPointer does not point to characters.");
-            if (position.Parent != null)
+            if (position.Parent is not null)
             {
                 element = position.Parent;
             }
@@ -388,7 +388,7 @@ namespace MS.Internal.Text
             //      Need to Handle visibility collapsed.
             TextRun run = null;
             TextElement element = (TextElement)position.GetAdjacentElement(LogicalDirection.Forward);
-            Debug.Assert(element != null, "Cannot use ITextContainer that does not provide TextElement instances.");
+            Debug.Assert(element is not null, "Cannot use ITextContainer that does not provide TextElement instances.");
 
             if (element is LineBreak)
             {
@@ -418,7 +418,7 @@ namespace MS.Internal.Text
                     FlowDirection inlineFlowDirection = inline.FlowDirection;
                     FlowDirection parentFlowDirection = inlineFlowDirection;
 
-                    if(parent != null)
+                    if(parent is not null)
                     {
                         parentFlowDirection = (FlowDirection)parent.GetValue(FrameworkElement.FlowDirectionProperty);
                     }
@@ -479,7 +479,7 @@ namespace MS.Internal.Text
             TextRun run = null;
 
             TextElement element = (TextElement)position.GetAdjacentElement(LogicalDirection.Forward);
-            Debug.Assert(element != null, "Element should be here.");
+            Debug.Assert(element is not null, "Element should be here.");
             Inline inline = element as Inline;
             if (inline is null)
             {
@@ -490,7 +490,7 @@ namespace MS.Internal.Text
                 DependencyObject parent = inline.Parent;
                 FlowDirection parentFlowDirection = inline.FlowDirection;
 
-                if(parent != null)
+                if(parent is not null)
                 {
                     parentFlowDirection = (FlowDirection)parent.GetValue(FrameworkElement.FlowDirectionProperty);
                 }

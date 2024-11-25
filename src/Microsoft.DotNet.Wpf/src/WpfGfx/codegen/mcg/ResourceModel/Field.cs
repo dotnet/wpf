@@ -81,13 +81,13 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                 McgField field = child as McgField;
                 McgBlockCommentedFields block = child as McgBlockCommentedFields;
 
-                if (field != null)
+                if (field is not null)
                 {
                     alFields.Add(field);
                 }
-                else if (block != null)
+                else if (block is not null)
                 {
-                    //CodeGenHelpers.ValidationAssert(block != null, "Unexpected child type.");
+                    //CodeGenHelpers.ValidationAssert(block is not null, "Unexpected child type.");
 
                     alFields.AddRange(StructChildArrayToFieldArray(block.Children));
                 }
@@ -118,14 +118,14 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                           bool cachedLocally)
         {
             Name = name;
-            UnmanagedName = (unmanagedName != null) ? unmanagedName : name;
+            UnmanagedName = (unmanagedName is not null) ? unmanagedName : name;
             Type = type;
             Comment = comment;
             IsManagedOnly = isManagedOnly;
             IsUnmanagedOnly = isUnmanagedOnly;
             IsAnimated = isAnimated;
             PropertyAlias = propertyAlias;
-            IsAliased = (propertyAlias != null) && (propertyAlias.Length > 0);
+            IsAliased = (propertyAlias is not null) && (propertyAlias.Length > 0);
             IsReadOnly = isReadOnly;
             IsValidate = isValidate;
             IsNew = isNew;

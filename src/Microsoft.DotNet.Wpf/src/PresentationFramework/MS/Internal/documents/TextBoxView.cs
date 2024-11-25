@@ -75,7 +75,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.LineUp()
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.LineUp(this);
             }
@@ -86,7 +86,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.LineDown()
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.LineDown(this);
             }
@@ -97,7 +97,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.LineLeft()
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.LineLeft(this);
             }
@@ -108,7 +108,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.LineRight()
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.LineRight(this);
             }
@@ -119,7 +119,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.PageUp()
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.PageUp(this);
             }
@@ -130,7 +130,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.PageDown()
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.PageDown(this);
             }
@@ -141,7 +141,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.PageLeft()
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.PageLeft(this);
             }
@@ -152,7 +152,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.PageRight()
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.PageRight(this);
             }
@@ -163,7 +163,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.MouseWheelUp()
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.MouseWheelUp(this);
             }
@@ -174,7 +174,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.MouseWheelDown()
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.MouseWheelDown(this);
             }
@@ -185,7 +185,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.MouseWheelLeft()
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.MouseWheelLeft(this);
             }
@@ -196,7 +196,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.MouseWheelRight()
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.MouseWheelRight(this);
             }
@@ -207,7 +207,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.SetHorizontalOffset(double offset)
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.SetHorizontalOffset(this, offset);
             }
@@ -218,7 +218,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.SetVerticalOffset(double offset)
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 _scrollData.SetVerticalOffset(this, offset);
             }
@@ -248,11 +248,11 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (_scrollData != null) ? _scrollData.CanVerticallyScroll : false;
+                return (_scrollData is not null) ? _scrollData.CanVerticallyScroll : false;
             }
             set
             {
-                if (_scrollData != null)
+                if (_scrollData is not null)
                 {
                     _scrollData.CanVerticallyScroll = value;
                 }
@@ -266,11 +266,11 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (_scrollData != null) ? _scrollData.CanHorizontallyScroll : false;
+                return (_scrollData is not null) ? _scrollData.CanHorizontallyScroll : false;
             }
             set
             {
-                if (_scrollData != null)
+                if (_scrollData is not null)
                 {
                     _scrollData.CanHorizontallyScroll = value;
                 }
@@ -286,7 +286,7 @@ namespace System.Windows.Controls
             {
                 double result = 0.0;
 
-                if (_scrollData != null)
+                if (_scrollData is not null)
                 {
                     result = _scrollData.ExtentWidth;
                     if (UseLayoutRounding)
@@ -313,7 +313,7 @@ namespace System.Windows.Controls
             {
                 double result = 0.0;
 
-                if (_scrollData != null)
+                if (_scrollData is not null)
                 {
                     result = _scrollData.ExtentHeight;
                     if (UseLayoutRounding)
@@ -338,7 +338,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (_scrollData != null) ? _scrollData.ViewportWidth : 0;
+                return (_scrollData is not null) ? _scrollData.ViewportWidth : 0;
             }
         }
 
@@ -349,7 +349,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (_scrollData != null) ? _scrollData.ViewportHeight : 0;
+                return (_scrollData is not null) ? _scrollData.ViewportHeight : 0;
             }
         }
 
@@ -360,7 +360,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (_scrollData != null) ? _scrollData.HorizontalOffset : 0;
+                return (_scrollData is not null) ? _scrollData.HorizontalOffset : 0;
             }
         }
 
@@ -371,7 +371,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (_scrollData != null) ? _scrollData.VerticalOffset : 0;
+                return (_scrollData is not null) ? _scrollData.VerticalOffset : 0;
             }
         }
 
@@ -382,7 +382,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (_scrollData != null) ? _scrollData.ScrollOwner : null;
+                return (_scrollData is not null) ? _scrollData.ScrollOwner : null;
             }
 
             set
@@ -453,7 +453,7 @@ namespace System.Windows.Controls
 
             // Treat an insert into an empty document just like a full invalidation,
             // to allow background layout to run.
-            if (_dirtyList != null &&
+            if (_dirtyList is not null &&
                 _lineMetrics.Count == 1 && _lineMetrics[0].EndOffset == 0)
             {
                 _lineMetrics.Clear();
@@ -498,7 +498,7 @@ namespace System.Windows.Controls
         Exit:
             // DesiredSize is set to the calculated size of the content.
             // If hosted by ScrollViewer, desired size is limited to constraint.
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 desiredSize.Width = Math.Min(constraint.Width, desiredSize.Width);
                 desiredSize.Height = Math.Min(constraint.Height, desiredSize.Height);
@@ -1153,7 +1153,7 @@ namespace System.Windows.Controls
         // change value.
         internal void Remeasure()
         {
-            if (_lineMetrics != null)
+            if (_lineMetrics is not null)
             {
                 _lineMetrics.Clear();
                 _viewportLineVisuals = null;
@@ -1220,7 +1220,7 @@ namespace System.Windows.Controls
             ((Control)_host).Unloaded -= OnHostUnloaded;
 
             // if the flag got set, all the variables should be non-null
-            System.Diagnostics.Debug.Assert(_host != null && _host.TextContainer != null && _host.TextContainer.Highlights != null,
+            System.Diagnostics.Debug.Assert(_host is not null && _host.TextContainer is not null && _host.TextContainer.Highlights is not null,
                 "TextBoxView partners should not be null");
 
             _host.TextContainer.Changing -= new EventHandler(OnTextContainerChanging);
@@ -1302,7 +1302,7 @@ namespace System.Windows.Controls
             get
             {
                 List<TextSegment> segments = new List<TextSegment>(1);
-                if (_lineMetrics != null)
+                if (_lineMetrics is not null)
                 {
                     ITextPointer start = _host.TextContainer.CreatePointerAtOffset(_lineMetrics[0].Offset, LogicalDirection.Backward);
                     ITextPointer end = _host.TextContainer.CreatePointerAtOffset(_lineMetrics[_lineMetrics.Count - 1].EndOffset, LogicalDirection.Forward);
@@ -1543,7 +1543,7 @@ namespace System.Windows.Controls
             // then we do not need to evaluate selection ranges, just merge with the current range as
             // there will be changes within the text range anyway.
             if (_dirtyList.Length > 0
-                && _dirtyList.DtrsFromRange(currentSelectionRange.StartIndex, currentSelectionRange.PositionsAdded) != null)
+                && _dirtyList.DtrsFromRange(currentSelectionRange.StartIndex, currentSelectionRange.PositionsAdded) is not null)
             {
                 _dirtyList.Merge(currentSelectionRange);
                 measureNeeded = true;
@@ -1630,7 +1630,7 @@ namespace System.Windows.Controls
         // Announces a layout change to any listeners.
         private void FireTextViewUpdatedEvent()
         {
-            if (UpdatedEvent != null)
+            if (UpdatedEvent is not null)
             {
                 UpdatedEvent(this, EventArgs.Empty);
             }
@@ -1797,7 +1797,7 @@ namespace System.Windows.Controls
                 invalidateScrollInfo = true;
             }
 
-            if (invalidateScrollInfo && _scrollData.ScrollOwner != null)
+            if (invalidateScrollInfo && _scrollData.ScrollOwner is not null)
             {
                 _scrollData.ScrollOwner.InvalidateScrollInfo();
             }
@@ -1816,7 +1816,7 @@ namespace System.Windows.Controls
             // have pending highlight changes to sync to.
             // These changes never affect line metrics, but
             // they will clear out any cached Visuals affected.
-            if (_dirtyList != null)
+            if (_dirtyList is not null)
             {
                 InvalidateDirtyVisuals();
                 _dirtyList = null;
@@ -1853,7 +1853,7 @@ namespace System.Windows.Controls
             double horizontalOffset = GetTextAlignmentCorrection(lineProperties.TextAlignment, width);
             double verticalOffset = this.VerticalAlignmentOffset;
 
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 horizontalOffset -= _scrollData.HorizontalOffset;
                 verticalOffset -= _scrollData.VerticalOffset;
@@ -2011,7 +2011,7 @@ namespace System.Windows.Controls
         // negative offset relative to visual space).
         private Point TransformToDocumentSpace(Point point)
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 point = new Point(point.X + _scrollData.HorizontalOffset, point.Y + _scrollData.VerticalOffset);
             }
@@ -2028,7 +2028,7 @@ namespace System.Windows.Controls
         // (where (0, 0) is the upper-left corner of this FrameworkElement).
         private Rect TransformToVisualSpace(Rect rect)
         {
-            if (_scrollData != null)
+            if (_scrollData is not null)
             {
                 rect.X -= _scrollData.HorizontalOffset;
                 rect.Y -= _scrollData.VerticalOffset;
@@ -2320,7 +2320,7 @@ namespace System.Windows.Controls
         // at the document end (due to pending background layout).
         private Size IncrementalMeasure(double constraintWidth, LineProperties lineProperties)
         {
-            Invariant.Assert(_dirtyList != null);
+            Invariant.Assert(_dirtyList is not null);
             Invariant.Assert(_dirtyList.Length > 0); // We only allocate _dirtyList when it has content.
 
             Size desiredSize = _contentSize;
@@ -2723,7 +2723,7 @@ namespace System.Windows.Controls
 
                 for (int i = 0; i < lineIndex - oldLineVisualsIndex; i++)
                 {
-                    if (oldLineVisuals[i] != null)
+                    if (oldLineVisuals[i] is not null)
                     {
                         oldLineVisuals[i].DiscardOnArrange = true;
                     }
@@ -2731,7 +2731,7 @@ namespace System.Windows.Controls
 
                 for (int i = lineIndex - oldLineVisualsIndex + lineCount; i < oldLineVisuals.Count; i++)
                 {
-                    if (oldLineVisuals[i] != null)
+                    if (oldLineVisuals[i] is not null)
                     {
                         oldLineVisuals[i].DiscardOnArrange = true;
                     }
@@ -2749,7 +2749,7 @@ namespace System.Windows.Controls
         {
             TextBoxLineDrawingVisual lineVisual = null;
 
-            if (_viewportLineVisuals != null)
+            if (_viewportLineVisuals is not null)
             {
                 lineVisual = _viewportLineVisuals[lineIndex - _viewportLineVisualsIndex];
             }
@@ -2760,7 +2760,7 @@ namespace System.Windows.Controls
         // Adds a Visual to the line Visuals cache.
         private void SetLineVisual(int lineIndex, TextBoxLineDrawingVisual lineVisual)
         {
-            if (_viewportLineVisuals != null)
+            if (_viewportLineVisuals is not null)
             {
                 _viewportLineVisuals[lineIndex - _viewportLineVisualsIndex] = lineVisual;
             }
@@ -2769,7 +2769,7 @@ namespace System.Windows.Controls
         // Adds an empty entry to the line Visuals cache.
         private void AddLineVisualPlaceholder(int lineIndex)
         {
-            if (_viewportLineVisuals != null)
+            if (_viewportLineVisuals is not null)
             {
                 // Clip to visible region.
                 if (lineIndex >= _viewportLineVisualsIndex &&
@@ -2783,12 +2783,12 @@ namespace System.Windows.Controls
         // Invalidates a cached line Visual.
         private void ClearLineVisual(int lineIndex)
         {
-            if (_viewportLineVisuals != null)
+            if (_viewportLineVisuals is not null)
             {
                 // Clip to visible region.
                 if (lineIndex >= _viewportLineVisualsIndex &&
                     lineIndex < _viewportLineVisualsIndex + _viewportLineVisuals.Count &&
-                    _viewportLineVisuals[lineIndex - _viewportLineVisualsIndex] != null)
+                    _viewportLineVisuals[lineIndex - _viewportLineVisualsIndex] is not null)
                 {
                     // Mark discarded line visual so it can be removed from the visual tree in ArrangeVisuals.
                     _viewportLineVisuals[lineIndex - _viewportLineVisualsIndex].DiscardOnArrange = true;
@@ -2800,7 +2800,7 @@ namespace System.Windows.Controls
         // Removes a range of Visuals from the line Visual cache.
         private void RemoveLineVisualRange(int lineIndex, int count)
         {
-            if (_viewportLineVisuals != null)
+            if (_viewportLineVisuals is not null)
             {
                 // Clip to visible region.
                 if (lineIndex < _viewportLineVisualsIndex)
@@ -2818,7 +2818,7 @@ namespace System.Windows.Controls
 
                     for (int i = 0; i < count; i++)
                     {
-                        if (_viewportLineVisuals[start + i] != null)
+                        if (_viewportLineVisuals[start + i] is not null)
                         {
                             _viewportLineVisuals[start + i].DiscardOnArrange = true;
                         }
@@ -2922,7 +2922,7 @@ namespace System.Windows.Controls
             Invariant.Assert(this.IsLayoutValid);
 
             return position.TextContainer == _host.TextContainer &&
-                   _lineMetrics != null &&
+                   _lineMetrics is not null &&
                    _lineMetrics[_lineMetrics.Count - 1].EndOffset >= position.Offset;
         }
 

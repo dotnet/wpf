@@ -166,13 +166,13 @@ namespace System.Windows.Controls
             _changeBlockLevel--;
 
             if (_changeBlockLevel == 0 &&
-                _changes != null)
+                _changes is not null)
             {
                 changes = _changes;
                 _changes = null;
 
                 // Contact any listeners.
-                if (this.Changed != null && !skipEvents)
+                if (this.Changed is not null && !skipEvents)
                 {
                     Changed(this, changes);
                 }
@@ -310,7 +310,7 @@ namespace System.Windows.Controls
             int index;
             PasswordTextPointer position;
 
-            Invariant.Assert(_positionList != null);
+            Invariant.Assert(_positionList is not null);
 
             for (index = 0; index < _positionList.Count; index++)
             {
@@ -626,7 +626,7 @@ namespace System.Windows.Controls
             Invariant.Assert(!_isReadOnly, "Illegal to modify PasswordTextContainer inside Change event scope!");
 
             // Contact any listeners.
-            if (this.Changing != null)
+            if (this.Changing is not null)
             {
                 Changing(this, EventArgs.Empty);
             }
@@ -639,7 +639,7 @@ namespace System.Windows.Controls
 
             _changes.AddChange(precursorTextChange, startPosition.Offset, symbolCount, false /* collectTextChanges */);
 
-            if (this.Change != null)
+            if (this.Change is not null)
             {
                 Invariant.Assert(precursorTextChange == PrecursorTextChangeType.ContentAdded || precursorTextChange == PrecursorTextChangeType.ContentRemoved);
                 TextChangeType textChange = (precursorTextChange == PrecursorTextChangeType.ContentAdded) ?
@@ -726,7 +726,7 @@ namespace System.Windows.Controls
                 {
                     position = GetPointerAtIndex(index);
 
-                    if (position != null)
+                    if (position is not null)
                     {
                         // If we found a position past the scope of the change,
                         // we can break out of this loop -- no more special cases.
@@ -766,7 +766,7 @@ namespace System.Windows.Controls
             {
                 position = GetPointerAtIndex(index);
 
-                if (position != null)
+                if (position is not null)
                 {
                     position.Offset += delta;
                 }
@@ -809,13 +809,13 @@ namespace System.Windows.Controls
             PasswordTextPointer position;
             int index;
 
-            Invariant.Assert(_positionList != null);
+            Invariant.Assert(_positionList is not null);
 
             for (index = 0; index < _positionList.Count; index++)
             {
                 position = GetPointerAtIndex(index);
 
-                if (position != null)
+                if (position is not null)
                 {
                     if (position.Offset == offset &&
                         (position.LogicalDirection == gravity || gravity == LogicalDirection.Backward))
@@ -848,7 +848,7 @@ namespace System.Windows.Controls
                 {
                     position = GetPointerAtIndex(index);
 
-                    if (position != null)
+                    if (position is not null)
                     {
                         Invariant.Assert(position.Offset >= 0 && position.Offset <= _password.Length);
                         Invariant.Assert(lastOffset <= position.Offset);
@@ -877,13 +877,13 @@ namespace System.Windows.Controls
             object strongReference;
             PasswordTextPointer position;
 
-            Invariant.Assert(_positionList != null);
+            Invariant.Assert(_positionList is not null);
 
             weakReference = (WeakReference)_positionList[index];
-            Invariant.Assert(weakReference != null);
+            Invariant.Assert(weakReference is not null);
 
             strongReference = weakReference.Target;
-            if (strongReference != null && !(strongReference is PasswordTextPointer))
+            if (strongReference is not null && !(strongReference is PasswordTextPointer))
             {
                 // Diagnostics for bug 1267261.
                 Invariant.Assert(false, $"Unexpected type: {strongReference.GetType()}");
@@ -908,7 +908,7 @@ namespace System.Windows.Controls
             {
                 position = GetPointerAtIndex(index);
 
-                if (position != null)
+                if (position is not null)
                 {
                     Debug.Write($"({position.DebugId}) {position.Offset}/{((position.LogicalDirection == LogicalDirection.Forward) ? "f " : "b ")}");
                 }

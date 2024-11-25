@@ -100,14 +100,14 @@ namespace System.Windows.Markup
             _xmlLang     = xmlParserContext.XmlLang;
 
             TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(XmlSpace));
-            if (typeConverter != null)
+            if (typeConverter is not null)
                 _xmlSpace = (string) typeConverter.ConvertToString(null, TypeConverterHelper.InvariantEnglishUS, xmlParserContext.XmlSpace);
             else
                 _xmlSpace = String.Empty;
 
             _xmlnsDictionary = new XmlnsDictionary() ;
 
-            if (xmlParserContext.BaseURI != null && xmlParserContext.BaseURI.Length > 0)
+            if (xmlParserContext.BaseURI is not null && xmlParserContext.BaseURI.Length > 0)
             {
                 _baseUri = new Uri(xmlParserContext.BaseURI, UriKind.RelativeOrAbsolute);
             }
@@ -131,7 +131,7 @@ namespace System.Windows.Markup
         /// </summary>
         internal ParserContext( XmlReader xmlReader )
         {
-            if( xmlReader.BaseURI != null && xmlReader.BaseURI.Length != 0 )
+            if( xmlReader.BaseURI is not null && xmlReader.BaseURI.Length != 0 )
             {
                 BaseUri = new Uri( xmlReader.BaseURI );
             }
@@ -161,7 +161,7 @@ namespace System.Windows.Markup
             _masterBracketCharacterCache = parserContext.MasterBracketCharacterCache;
             
             _rootElement = parserContext._rootElement;
-            if (parserContext._nameScopeStack != null)
+            if (parserContext._nameScopeStack is not null)
                 _nameScopeStack = (Stack)parserContext._nameScopeStack.Clone();
             else
                 _nameScopeStack = null;
@@ -173,7 +173,7 @@ namespace System.Windows.Markup
 
             // when there are no namespace prefix mappings in incoming ParserContext,
              // we are not going to create an empty XmlnsDictionary.
-            if (parserContext._xmlnsDictionary != null &&
+            if (parserContext._xmlnsDictionary is not null &&
                 parserContext._xmlnsDictionary.Count > 0)
             {
                 _xmlnsDictionary = new XmlnsDictionary();
@@ -217,7 +217,7 @@ namespace System.Windows.Markup
             _currentFreezeStackFrame.IncrementRepeatCount();
 
             // Wait till the context needs XmlnsDictionary, create on first use.
-            if (_xmlnsDictionary != null)
+            if (_xmlnsDictionary is not null)
                 _xmlnsDictionary.PushScope();
         }
 
@@ -251,7 +251,7 @@ namespace System.Windows.Markup
             }
 
             // Wait till the context needs XmlnsDictionary, create on first use.
-            if (_xmlnsDictionary != null)
+            if (_xmlnsDictionary is not null)
                 _xmlnsDictionary.PopScope();
         }
 
@@ -429,7 +429,7 @@ namespace System.Windows.Markup
             XmlNamespaceManager xmlnsMgr = new XmlNamespaceManager(new NameTable());
             XmlSpace xmlSpace = System.Xml.XmlSpace.None;
 
-            if (parserContext.XmlSpace != null && parserContext.XmlSpace.Length != 0)
+            if (parserContext.XmlSpace is not null && parserContext.XmlSpace.Length != 0)
             {
                 TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(System.Xml.XmlSpace));
                 if (null != typeConverter)
@@ -447,7 +447,7 @@ namespace System.Windows.Markup
 
             // We start getting Keys list only if we have non-empty dictionary
 
-            if (parserContext._xmlnsDictionary != null)
+            if (parserContext._xmlnsDictionary is not null)
             {
                 foreach (string key in parserContext._xmlnsDictionary.Keys)
                 {
@@ -622,7 +622,7 @@ namespace System.Windows.Markup
         /// </summary>
         internal bool InDeferredSection
         {
-            get { return (_staticResourcesStack != null && _staticResourcesStack.Count > 0); }
+            get { return (_staticResourcesStack is not null && _staticResourcesStack.Count > 0); }
         }
 #endif
 
@@ -660,21 +660,21 @@ namespace System.Windows.Markup
 
             // Copy the name scope stack, if necessary.
 
-            if (_nameScopeStack != null && copyNameScopeStack)
-                context._nameScopeStack = (_nameScopeStack != null) ? (Stack)_nameScopeStack.Clone() : null;
+            if (_nameScopeStack is not null && copyNameScopeStack)
+                context._nameScopeStack = (_nameScopeStack is not null) ? (Stack)_nameScopeStack.Clone() : null;
             else
                 context._nameScopeStack = null;
 
             // Deep copy only selected scope dependent instance variables
-            context._langSpaceStack = (_langSpaceStack != null) ? (Stack)_langSpaceStack.Clone() : null;
+            context._langSpaceStack = (_langSpaceStack is not null) ? (Stack)_langSpaceStack.Clone() : null;
 
-            if (_xmlnsDictionary != null)
+            if (_xmlnsDictionary is not null)
                 context._xmlnsDictionary = new XmlnsDictionary(_xmlnsDictionary);
             else
                 context._xmlnsDictionary = null;
 
             context._currentFreezeStackFrame = _currentFreezeStackFrame;
-            context._freezeStack = (_freezeStack != null) ? (Stack) _freezeStack.Clone() : null;
+            context._freezeStack = (_freezeStack is not null) ? (Stack) _freezeStack.Clone() : null;
 
             return context;
         }
@@ -688,7 +688,7 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         internal void TrimState()
         {
-                if( _nameScopeStack != null && _nameScopeStack.Count == 0 )
+                if( _nameScopeStack is not null && _nameScopeStack.Count == 0 )
                 {
                     _nameScopeStack = null;
                 }
@@ -719,8 +719,8 @@ namespace System.Windows.Markup
             ParserContext context = ScopedCopy();
 
             // Deep copy only selected instance variables
-            context._mapTable = (_mapTable != null) ? _mapTable.Clone() : null;
-            context._xamlTypeMapper = (_xamlTypeMapper != null) ? _xamlTypeMapper.Clone() : null;
+            context._mapTable = (_mapTable is not null) ? _mapTable.Clone() : null;
+            context._xamlTypeMapper = (_xamlTypeMapper is not null) ? _xamlTypeMapper.Clone() : null;
 
             // Connect the XamlTypeMapper and bamlmaptable
             context._xamlTypeMapper.MapTable = context._mapTable;
@@ -804,7 +804,7 @@ namespace System.Windows.Markup
         internal Freezable TryGetFreezable(string value)
         {
             Freezable freezable = null;
-            if (_freezeCache != null)
+            if (_freezeCache is not null)
             {
                 _freezeCache.TryGetValue(value, out freezable);
             }
@@ -886,11 +886,11 @@ namespace System.Windows.Markup
                     }
                 }
 
-                if (bracketCharacters != null)
+                if (bracketCharacters is not null)
                 {
                     bracketCharacters.EndInit();
                     cache.Add(propertyName, bracketCharacters);
-                    if (constructorArgumentName != null)
+                    if (constructorArgumentName is not null)
                     {
                         cache.Add(constructorArgumentName, bracketCharacters);
                     }

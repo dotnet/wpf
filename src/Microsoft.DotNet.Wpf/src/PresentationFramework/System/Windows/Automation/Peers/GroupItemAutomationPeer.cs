@@ -52,10 +52,10 @@ namespace System.Windows.Automation.Peers
             {
                 GroupItem groupItem = (GroupItem)Owner;
                 CollectionViewGroupInternal group = groupItem.GetValue(ItemContainerGenerator.ItemForItemContainerProperty) as CollectionViewGroupInternal;
-                if (group != null)
+                if (group is not null)
                 {
                     CollectionViewGroup parent = group.Parent;
-                    if (parent != null)
+                    if (parent is not null)
                     {
                         positionInSet =  parent.Items.IndexOf(group) + 1;
                     }
@@ -81,10 +81,10 @@ namespace System.Windows.Automation.Peers
             {
                 GroupItem groupItem = (GroupItem)Owner;
                 CollectionViewGroupInternal group = groupItem.GetValue(ItemContainerGenerator.ItemForItemContainerProperty) as CollectionViewGroupInternal;
-                if (group != null)
+                if (group is not null)
                 {
                     CollectionViewGroup parent = group.Parent;
-                    if (parent != null)
+                    if (parent is not null)
                     {
                         sizeOfSet = parent.Items.Count;
                     }
@@ -106,10 +106,10 @@ namespace System.Windows.Automation.Peers
             if(patternInterface == PatternInterface.ExpandCollapse)
             {
                 GroupItem groupItem = (GroupItem)Owner;
-                if(groupItem.Expander != null)
+                if(groupItem.Expander is not null)
                 {
                     AutomationPeer expanderPeer = UIElementAutomationPeer.CreatePeerForElement(groupItem.Expander);
-                    if(expanderPeer != null && expanderPeer is IExpandCollapseProvider)
+                    if(expanderPeer is not null && expanderPeer is IExpandCollapseProvider)
                     {
                         expanderPeer.EventsSource = this;
                         return (IExpandCollapseProvider)expanderPeer;
@@ -125,19 +125,19 @@ namespace System.Windows.Automation.Peers
         {
             GroupItem owner = (GroupItem)Owner;
             ItemsControl itemsControl = ItemsControl.ItemsControlFromItemContainer(Owner);
-            if (itemsControl != null)
+            if (itemsControl is not null)
             {
                 ItemsControlAutomationPeer itemsControlAP = itemsControl.CreateAutomationPeer() as ItemsControlAutomationPeer;
-                if (itemsControlAP != null)
+                if (itemsControlAP is not null)
                 {
                     List<AutomationPeer> children = new List<AutomationPeer>();
                     bool useNetFx472CompatibleAccessibilityFeatures = AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures;
 
-                    if (!useNetFx472CompatibleAccessibilityFeatures && owner.Expander != null)
+                    if (!useNetFx472CompatibleAccessibilityFeatures && owner.Expander is not null)
                     {
                         _expanderPeer = UIElementAutomationPeer.CreatePeerForElement(owner.Expander);
 
-                        if (_expanderPeer != null)
+                        if (_expanderPeer is not null)
                         {
                             _expanderPeer.EventsSource = this;
 
@@ -169,7 +169,7 @@ namespace System.Windows.Automation.Peers
                         if (!((MS.Internal.Controls.IGeneratorHost)itemsControl).IsItemItsOwnContainer(child))
                         {
                             UIElementAutomationPeer peer = child.CreateAutomationPeer() as UIElementAutomationPeer;
-                            if (peer != null)
+                            if (peer is not null)
                             {
                                 children.Add(peer);
 
@@ -184,7 +184,7 @@ namespace System.Windows.Automation.Peers
                                     if (itemsControlAP.RecentlyRealizedPeers.Count > 0 && this.AncestorsInvalid)
                                     {
                                         GroupItemAutomationPeer groupItemPeer = peer as GroupItemAutomationPeer;
-                                        if (groupItemPeer != null)
+                                        if (groupItemPeer is not null)
                                         {
                                             groupItemPeer.InvalidateGroupItemPeersContainingRecentlyRealizedPeers(itemsControlAP.RecentlyRealizedPeers);
                                         }
@@ -201,7 +201,7 @@ namespace System.Windows.Automation.Peers
                                     if (this.AncestorsInvalid)
                                     {
                                         GroupItemAutomationPeer groupItemPeer = peer as GroupItemAutomationPeer;
-                                        if (groupItemPeer != null)
+                                        if (groupItemPeer is not null)
                                         {
                                             // invalidate all GroupItemAP children, so
                                             // that the top-level ItemsControlAP's
@@ -232,7 +232,7 @@ namespace System.Windows.Automation.Peers
 
                             peer = itemsControlAP.ReusePeerForItem(peer, item);
 
-                            if (peer != null)
+                            if (peer is not null)
                             {
                                 if (useNetFx472CompatibleAccessibilityFeatures)
                                 {
@@ -252,10 +252,10 @@ namespace System.Windows.Automation.Peers
                             }
 
                             //perform hookup so the events sourced from wrapper peer are fired as if from the data item
-                            if (peer != null)
+                            if (peer is not null)
                             {
                                 AutomationPeer wrapperPeer = peer.GetWrapperPeer();
-                                if (wrapperPeer != null)
+                                if (wrapperPeer is not null)
                                 {
                                     wrapperPeer.EventsSource = peer;
                                     if (peer.ChildrenValid && peer.Children is null && this.AncestorsInvalid)
@@ -274,7 +274,7 @@ namespace System.Windows.Automation.Peers
                             // but only if we haven't added a peer for this item during this GetChildrenCore call.
                             bool itemMissingPeerInGlobalStorage = itemsControlAP.ItemPeers[item] is null;
 
-                            if (peer != null && (itemMissingPeerInGlobalStorage
+                            if (peer is not null && (itemMissingPeerInGlobalStorage
                                 || (peer.GetParent() == this && addedChildren[item] is null)))
                             {
                                 children.Add(peer);
@@ -299,10 +299,10 @@ namespace System.Windows.Automation.Peers
         internal void InvalidateGroupItemPeersContainingRecentlyRealizedPeers(List<ItemAutomationPeer> recentlyRealizedPeers)
         {
             ItemsControl itemsControl = ItemsControl.ItemsControlFromItemContainer(Owner);
-            if (itemsControl != null)
+            if (itemsControl is not null)
             {
                 CollectionViewGroupInternal cvg = itemsControl.ItemContainerGenerator.ItemFromContainer(Owner) as CollectionViewGroupInternal;
-                if (cvg != null)
+                if (cvg is not null)
                 {
                     for (int i=0; i<recentlyRealizedPeers.Count; i++)
                     {
@@ -323,7 +323,7 @@ namespace System.Windows.Automation.Peers
         override protected void SetFocusCore()
         {
             GroupItem owner = (GroupItem)Owner;
-            if (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && owner.Expander != null)
+            if (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && owner.Expander is not null)
             {
                 if (owner.Expander.ExpanderToggleButton?.Focus() != true)
                 {
@@ -339,7 +339,7 @@ namespace System.Windows.Automation.Peers
 
         protected override bool IsKeyboardFocusableCore()
         {
-            if (_expanderPeer != null)
+            if (_expanderPeer is not null)
             {
                 return _expanderPeer.IsKeyboardFocusable();
             }
@@ -351,7 +351,7 @@ namespace System.Windows.Automation.Peers
 
         override protected bool HasKeyboardFocusCore()
         {
-            if (_expanderPeer != null)
+            if (_expanderPeer is not null)
             {
                 return _expanderPeer.HasKeyboardFocus();
             }

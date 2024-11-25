@@ -198,7 +198,7 @@ namespace System.Windows.Markup.Primitives
                 }
                 else
                     scope.MakeAddressable(property.TypeReferences);
-                if (property.DependencyProperty != null)
+                if (property.DependencyProperty is not null)
                     scope.MakeAddressable(property.DependencyProperty.OwnerType);
                 if (property.IsKey)
                     scope.MakeAddressable(NamespaceCache.XamlNamespace);
@@ -256,7 +256,7 @@ namespace System.Windows.Markup.Primitives
 
                 public Entry(TKey key, TValue value)
                 {
-                    Debug.Assert( (object)key != null);
+                    Debug.Assert( (object)key is not null);
                     Key = key;
                     Value = value;
                     Predecessors = null;
@@ -266,7 +266,7 @@ namespace System.Windows.Markup.Primitives
                 public override bool Equals(object obj)
                 {
                     Entry other = obj as Entry;
-                    return other != null && other.Key.Equals(Key);
+                    return other is not null && other.Key.Equals(Key);
                 }
 
                 public override int GetHashCode()
@@ -369,7 +369,7 @@ namespace System.Windows.Markup.Primitives
                     _entries[index].Link = Entry.INDFS;
 
                     // search the predecessors
-                    if (_entries[index].Predecessors != null)
+                    if (_entries[index].Predecessors is not null)
                     {
                         foreach (int predIndex in _entries[index].Predecessors)
                         {
@@ -417,7 +417,7 @@ namespace System.Windows.Markup.Primitives
                 while (index >= 0)
                 {
                     Entry entry = _entries[index];
-                    if (entry.Value != null)
+                    if (entry.Value is not null)
                         yield return entry.Value;
 
                     index = entry.Link;
@@ -440,7 +440,7 @@ namespace System.Windows.Markup.Primitives
 
         internal void WriteItem(MarkupObject item)
         {
-            Debug.Assert(item != null && _writer != null);
+            Debug.Assert(item is not null && _writer is not null);
 
             // We must check the type here, even though we check again in WriteScope(item, scope), because we
             // will wrap the type in an ExtensionSimpliefMarkupObject, which is the type that will be checked
@@ -494,7 +494,7 @@ namespace System.Windows.Markup.Primitives
             List<MarkupProperty> composites = null;
             Dictionary<string, string> writtenAttributes = new Dictionary<string, string>();
             PartiallyOrderedList<string, MarkupProperty> deferredProperties = null;
-            Formatting previousFormatting = (_xmlTextWriter != null) ? _xmlTextWriter.Formatting : Formatting.None;
+            Formatting previousFormatting = (_xmlTextWriter is not null) ? _xmlTextWriter.Formatting : Formatting.None;
 
             foreach (MarkupProperty property in item.GetProperties(false /*mapToConstructorArgs*/))
             {
@@ -541,12 +541,12 @@ namespace System.Windows.Markup.Primitives
 
                         // Property is attached
                         DependencyProperty dependencyProperty = property.DependencyProperty;
-                        Debug.Assert(dependencyProperty != null, "Problem with MarkupObject implementation: If PropertyDescriptor is null one of the following needs to be true; IsKey, IsValueAsString, IsConstructorArgument, or DependencyProperty is not null");
+                        Debug.Assert(dependencyProperty is not null, "Problem with MarkupObject implementation: If PropertyDescriptor is null one of the following needs to be true; IsKey, IsValueAsString, IsConstructorArgument, or DependencyProperty is not null");
 
                         string typeUri = scope.MakeAddressable(dependencyProperty.OwnerType);
                         scope.MakeAddressable(property.TypeReferences);
 
-                        if (property.Attributes[typeof(DesignerSerializationOptionsAttribute)] != null)
+                        if (property.Attributes[typeof(DesignerSerializationOptionsAttribute)] is not null)
                         {
                             DesignerSerializationOptionsAttribute option = property.Attributes[typeof(DesignerSerializationOptionsAttribute)] as DesignerSerializationOptionsAttribute;
                             if (option.DesignerSerializationOptions == DesignerSerializationOptions.SerializeAsAttribute)
@@ -579,12 +579,12 @@ namespace System.Windows.Markup.Primitives
                     {
                         property.VerifyOnlySerializableTypes();
 
-                        if (xlpa != null && xlpa.Name == property.PropertyDescriptor.Name)
+                        if (xlpa is not null && xlpa.Name == property.PropertyDescriptor.Name)
                         {
                             // This is an xml:lang attribute
                             _writer.WriteAttributeString("xml", "lang", NamespaceCache.XmlNamespace, property.StringValue);
                         }
-                        else if (upa != null && upa.Name == property.PropertyDescriptor.Name)
+                        else if (upa is not null && upa.Name == property.PropertyDescriptor.Name)
                         {
                             string xamlUri = scope.MakeAddressable(NamespaceCache.XamlNamespace);
                             _writer.WriteAttributeString(scope.GetPrefixOf(xamlUri), property.PropertyDescriptor.Name, xamlUri, property.StringValue);
@@ -598,7 +598,7 @@ namespace System.Windows.Markup.Primitives
                 }
                 else
                 {
-                    if (property.DependencyProperty != null)
+                    if (property.DependencyProperty is not null)
                     {
                         // ensure xmlns are not needed on attached composite properties.
                         scope.MakeAddressable(property.DependencyProperty.OwnerType);
@@ -635,7 +635,7 @@ namespace System.Windows.Markup.Primitives
             // by detecting if we are writing any raw strings out and if they will be changed due to
             // normalization. This is done by checking if the normalized version of the string would differ
             // from the non-normalized version.
-            if (!scope.XmlnsSpacePreserve && contentProperty != null &&
+            if (!scope.XmlnsSpacePreserve && contentProperty is not null &&
                 !HasOnlyNormalizationNeutralStrings(contentProperty, false, false))
             {
                 _writer.WriteAttributeString("xml", "space", NamespaceCache.XmlNamespace, "preserve");
@@ -658,7 +658,7 @@ namespace System.Windows.Markup.Primitives
                 // have no net effect.
                 _writer.WriteString(string.Empty);
 
-                if( scope.IsTopOfSpacePreservationScope && _xmlTextWriter != null )
+                if( scope.IsTopOfSpacePreservationScope && _xmlTextWriter is not null )
                 {
                     // If we are entering a xml:space="preserve" scope and using
                     //  a XmlTextWriter, we need to turn off its formatting options.
@@ -673,7 +673,7 @@ namespace System.Windows.Markup.Primitives
             // int argumentCompositeIndex = 0;
 
             // Write composite properties
-            if (composites != null)
+            if (composites is not null)
             {
                 foreach (MarkupProperty property in composites)
                 {
@@ -734,13 +734,13 @@ namespace System.Windows.Markup.Primitives
                 }
             }
 
-            if (contentProperty != null)
+            if (contentProperty is not null)
             {
                 // If we have a content property, write it here
                 if (contentProperty.IsComposite)
                 {
                     IXmlSerializable serializable = contentProperty.Value as IXmlSerializable;
-                    if (serializable != null)
+                    if (serializable is not null)
                     {
                         WriteXmlIsland(serializable, scope);
                     }
@@ -822,7 +822,7 @@ namespace System.Windows.Markup.Primitives
             }
 
             // Write any defered content
-            if (deferredProperties != null)
+            if (deferredProperties is not null)
             {
                 // A property had a DependsOn attribute and we needed to defer it until
                 // we are sure the property was written.
@@ -830,7 +830,7 @@ namespace System.Windows.Markup.Primitives
                 {
                     if (!writtenAttributes.ContainsKey(property.Name))
                     {
-                        Debug.Assert(property.PropertyDescriptor != null);
+                        Debug.Assert(property.PropertyDescriptor is not null);
                         writtenAttributes[property.Name] = property.Name;
                         _writer.WriteStartElement(prefix, $"{item.ObjectType.Name}.{property.PropertyDescriptor.Name}", uri);
 
@@ -854,7 +854,7 @@ namespace System.Windows.Markup.Primitives
             _writer.WriteEndElement();
 
             if( scope.IsTopOfSpacePreservationScope &&
-                _xmlTextWriter != null &&
+                _xmlTextWriter is not null &&
                 _xmlTextWriter.Formatting != previousFormatting )
             {
                 // Exiting a xml:space="preserve" scope.  Restore formatting options
@@ -874,16 +874,16 @@ namespace System.Windows.Markup.Primitives
                 PropertyDescriptor descriptor = property.PropertyDescriptor;
 
                 // FrameworkTemplate.VisualTree should be treated as Content
-                if (descriptor != null &&
+                if (descriptor is not null &&
                     typeof(FrameworkTemplate).IsAssignableFrom(descriptor.ComponentType) &&
                     property.Name == "Template" || property.Name == "VisualTree")
                 {
                     isContentProperty = true;
                 }
 
-                if (cpa != null &&
+                if (cpa is not null &&
                     contentProperty is null &&
-                    descriptor != null &&
+                    descriptor is not null &&
                     descriptor.Name == cpa.Name)
                 {
                     if (property.IsComposite)
@@ -910,7 +910,7 @@ namespace System.Windows.Markup.Primitives
                         // non-normalized string.  E.g. otherwise it would not be
                         // possible to write a Button or TextBox with tabs.
 
-                        if (property.Value != null &&
+                        if (property.Value is not null &&
                             !(property.Value is MarkupExtension) &&
                             property.PropertyType.IsAssignableFrom(typeof(string)) )
                         {
@@ -934,13 +934,13 @@ namespace System.Windows.Markup.Primitives
         {
             bool defer = false;
 
-            if (property.PropertyDescriptor != null)
+            if (property.PropertyDescriptor is not null)
             {
                 // Since there can be multiple DependsOn attributes, we need to iterate
                 foreach (Attribute attribute in property.Attributes)
                 {
                     DependsOnAttribute dependsOn = attribute as DependsOnAttribute;
-                    if (dependsOn != null)
+                    if (dependsOn is not null)
                     {
                         if (!writtenAttributes.ContainsKey(dependsOn.Name))
                         {
@@ -1034,7 +1034,7 @@ namespace System.Windows.Markup.Primitives
         /// </summary>
         private void WriteExplicitTagStart(MarkupProperty property, Scope scope)
         {
-            Debug.Assert(property.Value != null);
+            Debug.Assert(property.Value is not null);
             Type tagType = property.Value.GetType();
 
             string uri = scope.MakeAddressable(tagType);
@@ -1094,7 +1094,7 @@ namespace System.Windows.Markup.Primitives
                 foreach (Attribute attribute in attributes)
                 {
                     ContentWrapperAttribute contentAttribute = attribute as ContentWrapperAttribute;
-                    if (contentAttribute != null)
+                    if (contentAttribute is not null)
                         wrapperTypes.Add(contentAttribute.ContentWrapper);
                 }
                 return wrapperTypes;
@@ -1109,7 +1109,7 @@ namespace System.Windows.Markup.Primitives
             MarkupProperty contentProperty = null;
             foreach (MarkupProperty property in item.Properties)
             {
-                if (property.IsContent || (cpa != null && property.PropertyDescriptor != null && property.PropertyDescriptor.Name == cpa.Name))
+                if (property.IsContent || (cpa is not null && property.PropertyDescriptor is not null && property.PropertyDescriptor.Name == cpa.Name))
                     contentProperty = property;
                 else
                 {
@@ -1183,14 +1183,14 @@ namespace System.Windows.Markup.Primitives
                     previousTrimSurroundingWhitespace = currentTrimSurroundingWhitespace;
                     currentTrimSurroundingWhitespace = ShouldTrimSurroundingWhitespace(subItem);
 
-                    if (text != null)
+                    if (text is not null)
                     {
                         result = IsNormalizationNeutralString(text, !previousTrimSurroundingWhitespace,
                             !currentTrimSurroundingWhitespace);
                         text = null;
                         if (!result) return false;
                     }
-                    if (nestedContentProperty != null)
+                    if (nestedContentProperty is not null)
                     {
                         result = HasOnlyNormalizationNeutralStrings(nestedContentProperty,
                             !previousTrimSurroundingWhitespace, !currentTrimSurroundingWhitespace);
@@ -1201,13 +1201,13 @@ namespace System.Windows.Markup.Primitives
                     if (subItem.ObjectType == typeof(string))
                     {
                         text = TextValue(subItem);
-                        if (text != null)
+                        if (text is not null)
                             continue;
                     }
-                    if (wrapperTypes != null)
+                    if (wrapperTypes is not null)
                     {
                         MarkupProperty wrappedProperty = GetWrappedProperty(wrapperTypes, subItem);
-                        if (wrappedProperty != null)
+                        if (wrappedProperty is not null)
                         {
                             nestedContentProperty = wrappedProperty;
                             continue;
@@ -1215,13 +1215,13 @@ namespace System.Windows.Markup.Primitives
                     }
                 }
 
-                if (text != null)
+                if (text is not null)
                 {
                     // The last element was a string. Determine if it is normalization neutural.
                     result = IsNormalizationNeutralString(text, !previousTrimSurroundingWhitespace,
                         keepTrailingSpace);
                 }
-                else if (nestedContentProperty != null)
+                else if (nestedContentProperty is not null)
                 {
                     // The last element was a wrapped element. Determine if it is normalization neutural.
                     result = HasOnlyNormalizationNeutralStrings(nestedContentProperty,
@@ -1235,7 +1235,7 @@ namespace System.Windows.Markup.Primitives
         {
             // An item declares how surrounding whitespace should be treated with the TrimSurroundingWhitespaceAttribute.
             TrimSurroundingWhitespaceAttribute attribute = item.Attributes[typeof(TrimSurroundingWhitespaceAttribute)] as TrimSurroundingWhitespaceAttribute;
-            return (attribute != null);
+            return (attribute is not null);
         }
 
         private bool IsNormalizationNeutralString(string value, bool keepLeadingSpace, bool keepTrailingSpace)
@@ -1289,7 +1289,7 @@ namespace System.Windows.Markup.Primitives
             public override bool Equals(object obj)
             {
                 Mapping other = obj as Mapping;
-                return other != null && Uri.Equals(other.Uri) && Prefix.Equals(other.Prefix);
+                return other is not null && Uri.Equals(other.Uri) && Prefix.Equals(other.Prefix);
             }
 
             public override int GetHashCode()
@@ -1319,9 +1319,9 @@ namespace System.Windows.Markup.Primitives
             {
                 get
                 {
-                    if (_xmlnsSpacePreserve != null)
+                    if (_xmlnsSpacePreserve is not null)
                         return (bool)_xmlnsSpacePreserve;
-                    else if (_containingScope != null)
+                    else if (_containingScope is not null)
                         return _containingScope.XmlnsSpacePreserve;
                     else
                         return false;
@@ -1372,9 +1372,9 @@ namespace System.Windows.Markup.Primitives
             public string GetPrefixOf(string uri)
             {
                 string result;
-                if (_uriToPrefix != null && _uriToPrefix.TryGetValue(uri, out result))
+                if (_uriToPrefix is not null && _uriToPrefix.TryGetValue(uri, out result))
                     return result;
-                if (_containingScope != null)
+                if (_containingScope is not null)
                     return _containingScope.GetPrefixOf(uri);
                 return null;
             }
@@ -1382,9 +1382,9 @@ namespace System.Windows.Markup.Primitives
             public string GetUriOf(string prefix)
             {
                 string result;
-                if (_prefixToUri != null && _prefixToUri.TryGetValue(prefix, out result))
+                if (_prefixToUri is not null && _prefixToUri.TryGetValue(prefix, out result))
                     return result;
-                if (_containingScope != null)
+                if (_containingScope is not null)
                     return _containingScope.GetUriOf(prefix);
                 return null;
             }
@@ -1401,7 +1401,7 @@ namespace System.Windows.Markup.Primitives
 
             public void MakeAddressable(IEnumerable<Type> types)
             {
-                if (types != null)
+                if (types is not null)
                     foreach (Type type in types)
                         MakeAddressable(type);
             }
@@ -1418,7 +1418,7 @@ namespace System.Windows.Markup.Primitives
                     string basePrefix = NamespaceCache.GetDefaultPrefixFor(uri);
                     string prefix = basePrefix;
                     int i = 0;
-                    while (GetUriOf(prefix) != null)
+                    while (GetUriOf(prefix) is not null)
                         prefix = string.Concat(basePrefix, i++);
                     RecordMapping(prefix, uri);
                 }
@@ -1429,7 +1429,7 @@ namespace System.Windows.Markup.Primitives
             {
                 get
                 {
-                    if (_uriToPrefix != null)
+                    if (_uriToPrefix is not null)
                         foreach (KeyValuePair<string, string> mapping in _uriToPrefix)
                             yield return new Mapping(mapping.Key, mapping.Value);
                 }
@@ -1439,7 +1439,7 @@ namespace System.Windows.Markup.Primitives
             {
                 get
                 {
-                    if (_containingScope != null)
+                    if (_containingScope is not null)
                         foreach (Mapping mapping in _containingScope.EnumerateAllMappings)
                             yield return mapping;
                     foreach (Mapping mapping in EnumerateLocalMappings)
@@ -1540,7 +1540,7 @@ namespace System.Windows.Markup.Primitives
             public override IEnumerable<Type> TypeReferences(object value, IValueSerializerContext context)
             {
                 Type type = value as Type;
-                if (type != null)
+                if (type is not null)
                     return new Type[] { type };
                 else
                     return base.TypeReferences(value, context);
@@ -1596,7 +1596,7 @@ namespace System.Windows.Markup.Primitives
                             else
                             {
                                 Assembly referencedAssembly = Assembly.Load(new AssemblyName(definition.AssemblyName));
-                                if (referencedAssembly != null)
+                                if (referencedAssembly is not null)
                                 {
                                     Dictionary<string, string> assembliesNamespacetoUri = GetMappingsFor(referencedAssembly);
                                     assembliesNamespacetoUri[definition.ClrNamespace] = definition.XmlNamespace;

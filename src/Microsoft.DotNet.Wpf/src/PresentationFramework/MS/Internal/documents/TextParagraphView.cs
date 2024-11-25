@@ -152,7 +152,7 @@ namespace MS.Internal.Documents
             }
 
             ReadOnlyCollection<LineResult> lines = Lines;
-            Debug.Assert(lines != null && lines.Count > 0);
+            Debug.Assert(lines is not null && lines.Count > 0);
 
             // Get index of the line that contains position.
             int lineIndex = GetLineFromPosition(lines, position);
@@ -270,7 +270,7 @@ namespace MS.Internal.Documents
             ValidationHelper.VerifyPosition(_textContainer, position, "position");
 
             lines = Lines;
-            Debug.Assert(lines != null && lines.Count > 0);
+            Debug.Assert(lines is not null && lines.Count > 0);
 
             // Get index of the line that contains position.
             lineIndex = GetLineFromPosition(lines, position);
@@ -326,7 +326,7 @@ namespace MS.Internal.Documents
             int lineIndex;
             ITextPointer orientedPosition;
 
-            Debug.Assert(lines != null && lines.Count > 0, "Line array is empty.");
+            Debug.Assert(lines is not null && lines.Count > 0, "Line array is empty.");
 
             // Figure out which line is the closest to the input pixel position.
             lineIndex = GetLineFromPoint(lines, point, snapToText);
@@ -529,7 +529,7 @@ namespace MS.Internal.Documents
         /// </returns>
         internal static int GetLineFromPoint(ReadOnlyCollection<LineResult> lines, Point point, bool snapToText)
         {
-            Debug.Assert(lines != null && lines.Count > 0);
+            Debug.Assert(lines is not null && lines.Count > 0);
 
             int lineIndex;
             bool foundHit;
@@ -566,7 +566,7 @@ namespace MS.Internal.Documents
         /// <returns>True if hit has been found.</returns>
         private static bool GetVerticalLineFromPoint(ReadOnlyCollection<LineResult> lines, Point point, bool snapToText, out int lineIndex)
         {
-            Debug.Assert(lines != null && lines.Count > 0);
+            Debug.Assert(lines is not null && lines.Count > 0);
 
             bool foundHit = false;
             double approximatedLineHeight;
@@ -693,7 +693,7 @@ namespace MS.Internal.Documents
         /// <returns>True if hit has been found.</returns>
         private static bool GetHorizontalLineFromPoint(ReadOnlyCollection<LineResult> lines, Point point, bool snapToText, ref int lineIndex)
         {
-            Debug.Assert(lines != null && lines.Count > 0);
+            Debug.Assert(lines is not null && lines.Count > 0);
 
             bool foundHit = false;
             bool lookForSiblings = true;

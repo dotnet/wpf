@@ -88,13 +88,13 @@ namespace Microsoft.Windows.Shell
                 return;
             }
 
-            if (_chromeInfo != null)
+            if (_chromeInfo is not null)
             {
                 _chromeInfo.PropertyChangedThatRequiresRepaint -= _OnChromePropertyChangedThatRequiresRepaint;
             }
 
             _chromeInfo = newChrome;
-            if (_chromeInfo != null)
+            if (_chromeInfo is not null)
             {
                 _chromeInfo.PropertyChangedThatRequiresRepaint += _OnChromePropertyChangedThatRequiresRepaint;
             }
@@ -157,7 +157,7 @@ namespace Microsoft.Windows.Shell
                 Assert.IsNotNull(_hwndSource);
                 _window.ApplyTemplate();
 
-                if (_chromeInfo != null)
+                if (_chromeInfo is not null)
                 {
                     _ApplyNewCustomChrome();
                 }
@@ -175,7 +175,7 @@ namespace Microsoft.Windows.Shell
             _hwndSource = HwndSource.FromHwnd(_hwnd);
             Assert.IsNotNull(_hwndSource);
 
-            if (_chromeInfo != null)
+            if (_chromeInfo is not null)
             {
                 _ApplyNewCustomChrome();
             }
@@ -183,7 +183,7 @@ namespace Microsoft.Windows.Shell
 
         private void UnsubscribeWindowEvents()
         {
-            if (_window != null)
+            if (_window is not null)
             {
                 Utility.RemoveDependencyPropertyChangeListener(_window, Window.TemplateProperty, _OnWindowPropertyChangedThatRequiresTemplateFixup);
                 Utility.RemoveDependencyPropertyChangeListener(_window, Window.FlowDirectionProperty, _OnWindowPropertyChangedThatRequiresTemplateFixup);
@@ -195,7 +195,7 @@ namespace Microsoft.Windows.Shell
         {
             UnsubscribeWindowEvents();
 
-            if (_chromeInfo != null)
+            if (_chromeInfo is not null)
             {
                 _chromeInfo.PropertyChangedThatRequiresRepaint -= _OnChromePropertyChangedThatRequiresRepaint;
             }
@@ -219,7 +219,7 @@ namespace Microsoft.Windows.Shell
 
         private void _OnWindowPropertyChangedThatRequiresTemplateFixup(object sender, EventArgs e)
         {
-            if (_chromeInfo != null && _hwnd != IntPtr.Zero)
+            if (_chromeInfo is not null && _hwnd != IntPtr.Zero)
             {
                 // Assume that when the template changes it's going to be applied.
                 // We don't have a good way to externally hook into the template
@@ -496,7 +496,7 @@ namespace Microsoft.Windows.Shell
             // This allows apps to set the glass frame to be non-empty, still cover it with WPF content to hide all the glass,
             // yet still get DWM to draw a drop shadow.
             IInputElement inputElement = _window.InputHitTest(mousePosWindow);
-            if (inputElement != null)
+            if (inputElement is not null)
             {
                 if (WindowChrome.GetIsHitTestVisibleInChrome(inputElement))
                 {

@@ -123,7 +123,7 @@ namespace MS.Internal.Ink
         {
             ArgumentNullException.ThrowIfNull(stylusPoints);
 
-            if (_stylusPoints != null && _stylusPoints.Count > 0 && stylusPoints.Count > 0)
+            if (_stylusPoints is not null && _stylusPoints.Count > 0 && stylusPoints.Count > 0)
             {
                 //insert the previous last point, but we need insert a compatible
                 //previous point.  The easiest way to do this is to clone a point
@@ -152,7 +152,7 @@ namespace MS.Internal.Ink
         {
             ArgumentNullException.ThrowIfNull(points);
             StylusPointCollection newStylusPoints = new StylusPointCollection(points);
-            if (_stylusPoints != null && _stylusPoints.Count > 0)
+            if (_stylusPoints is not null && _stylusPoints.Count > 0)
             {
                 //insert the previous last point
                 newStylusPoints.Insert(0, _stylusPoints[_stylusPoints.Count - 1]);

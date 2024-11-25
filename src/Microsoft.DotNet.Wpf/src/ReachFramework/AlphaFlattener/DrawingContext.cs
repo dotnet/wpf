@@ -75,7 +75,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
         void IProxyDrawingContext.DrawGeometry(BrushProxy brush, PenProxy pen, Geometry geometry, Geometry clip, Matrix brushTrans, ProxyDrawingFlags flags)
         {
-            if ((brush != null) && (pen != null)) // Split fill & stroke into two
+            if ((brush is not null) && (pen is not null)) // Split fill & stroke into two
             {
                 ((IProxyDrawingContext)(this)).DrawGeometry(brush, null, geometry, clip, brushTrans, flags);
 
@@ -99,7 +99,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 geo.PixelSnapBounds = true;
             }
 
-            if (pen != null)
+            if (pen is not null)
             {
                 if (! brushTrans.IsIdentity)
                 {
@@ -130,7 +130,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 }
             }
 
-            if (brush != null)
+            if (brush is not null)
             {
                 geo.Brush = brush.ApplyTransformCopy(brushTrans);
             }
@@ -241,7 +241,7 @@ namespace Microsoft.Internal.AlphaFlattener
             BrushProxy saveMask = linear.OpacityMask;
             double saveOpacity  = linear.Opacity;
 
-            if (b != null)
+            if (b is not null)
             {
                 opacity = linear.Opacity;
             }
@@ -251,7 +251,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 opacity     = saveMask.Opacity;
                 opacityOnly = true;
 
-                Debug.Assert(b != null, "LinearGradientBrush expected");
+                Debug.Assert(b is not null, "LinearGradientBrush expected");
             }
 
             linear.OpacityMask = null;
@@ -306,7 +306,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     {
                         blend = BrushProxy.BlendColorWithBrush(false, color, saveMask, false);
 
-                        if (blend != null)
+                        if (blend is not null)
                         {
                             if (pre)
                             {
@@ -364,7 +364,7 @@ namespace Microsoft.Internal.AlphaFlattener
             BrushProxy saveMask = radial.OpacityMask;
             double saveOpacity  = radial.Opacity;
 
-            if (b != null)
+            if (b is not null)
             {
                 opacity = radial.Opacity;
             }
@@ -374,7 +374,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 opacity     = saveMask.Opacity;
                 opacityOnly = true;
 
-                Debug.Assert(b != null, "RadialGradientBrush expected");
+                Debug.Assert(b is not null, "RadialGradientBrush expected");
             }
 
             radial.OpacityMask = null;
@@ -476,7 +476,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="geometry">Geometry to fill</param>
         private bool FillGeometry(BrushProxy one, ArrayList brushes, int from, Geometry geometry)
         {
-            Debug.Assert(one != null);
+            Debug.Assert(one is not null);
 
             BrushProxy two = null;
 
@@ -597,8 +597,8 @@ namespace Microsoft.Internal.AlphaFlattener
         /// </summary>
         private void RasterizeGeometry(BrushProxy brush, Geometry shape)
         {
-            Debug.Assert(brush != null, "brush expected");
-            Debug.Assert(shape != null, "shape expected");
+            Debug.Assert(brush is not null, "brush expected");
+            Debug.Assert(shape is not null, "shape expected");
             Debug.Assert(!_costing, "in costing mode DrawImage");
 
             Rect bounds = shape.Bounds;
@@ -699,12 +699,12 @@ namespace Microsoft.Internal.AlphaFlattener
                 return;
             }
 
-            if (!_costing && (clip != null))
+            if (!_costing && (clip is not null))
             {
                 _dc.PushClip(clip);
             }
 
-            if (brush != null)
+            if (brush is not null)
             {
                 brush = BrushProxy.BlendColorWithBrush(false, Colors.White, brush, false);
             }
@@ -719,7 +719,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 line.Transform  = Transform.Identity;
             }
 
-            if ((brush != null) && (brush.BrushList != null)) // List of brushes
+            if ((brush is not null) && (brush.BrushList is not null)) // List of brushes
             {
                 Debug.Assert(pen is null, "no pen");
 
@@ -740,7 +740,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     {
                         bool empty = false;
 
-                        if (clip != null)
+                        if (clip is not null)
                         {
                             // Fix bug 1506957: Clip geometry prior to rasterizing to prevent excessive
                             // rasterization bitmap size.
@@ -759,7 +759,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 Pen p                  = null;
                 BrushProxy strokeBrush = null;
 
-                if (pen != null) // Blend pen with White
+                if (pen is not null) // Blend pen with White
                 {
                     p = pen.GetPen(true);
                     strokeBrush = pen.StrokeBrush;
@@ -774,11 +774,11 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 if (_costing)
                 {
-                    if (brush != null)
+                    if (brush is not null)
                     {
                         // DrawingBrush is always rasterized onward from this stage. 
                         // Avoid the cost of creating new DrawingBrush in GetRealBrush during costing
-                        if ((brush.Brush != null) && (brush.Brush is DrawingBrush))
+                        if ((brush.Brush is not null) && (brush.Brush is DrawingBrush))
                         {
                             b = brush.Brush;
                         }
@@ -792,7 +792,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 }
                 else
                 {
-                    if (brush != null)
+                    if (brush is not null)
                     {
                         b = brush.GetRealBrush();
                     }
@@ -822,7 +822,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 }
             }
 
-            if (!_costing && (clip != null))
+            if (!_costing && (clip is not null))
             {
                 _dc.PopClip();
             }
@@ -839,7 +839,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             // Sometimes clip selects only a small portion of the image. Clip image to reduce amount
             // of data sent to GDI.
-            if (clip != null)
+            if (clip is not null)
             {
                 if (!Utility.IsRenderVisible(clip.Bounds))
                 {
@@ -890,7 +890,7 @@ namespace Microsoft.Internal.AlphaFlattener
             
             // BitmapSource img = image.GetImage();
             
-            if (clip != null)
+            if (clip is not null)
             {
                 _dc.PushClip(clip);
             }
@@ -921,7 +921,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 _dc.PopTransform();
             }
 
-            if (clip != null)
+            if (clip is not null)
             {
                 _dc.PopClip();
             }
@@ -940,7 +940,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 return false;
             }
             
-            if (clip != null)
+            if (clip is not null)
             {
                 _dc.PushClip(clip);
             }
@@ -971,7 +971,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 _dc.PopTransform();
             }
 
-            if (clip != null)
+            if (clip is not null)
             {
                 _dc.PopClip();
             }

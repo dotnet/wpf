@@ -97,12 +97,12 @@ namespace System.Windows.Media.Animation
             TimelineGroup timelineGroup = timeline as TimelineGroup;
 
             // Only a TimelineGroup should have allocated a ClockGroup.
-            Debug.Assert(timelineGroup != null);
+            Debug.Assert(timelineGroup is not null);
 
             // Create a clock for each of the children of the timeline
             TimelineCollection timelineChildren = timelineGroup.Children;
 
-            if (timelineChildren != null && timelineChildren.Count > 0)
+            if (timelineChildren is not null && timelineChildren.Count > 0)
             {
                 Clock childClock;
 
@@ -172,7 +172,7 @@ namespace System.Windows.Media.Animation
 
                 List<Clock> children = _children;
 
-                if (children != null)
+                if (children is not null)
                 {
                     firstChild = children[0];
                 }
@@ -197,7 +197,7 @@ namespace System.Windows.Media.Animation
             {
                 Clock currentClock = enumerator.Current;
 
-                if (currentClock != null && currentClock.CurrentState == ClockState.Active)
+                if (currentClock is not null && currentClock.CurrentState == ClockState.Active)
                 {
                     int? currentDesiredFrameRate = currentClock.DesiredFrameRate;
                     if (currentDesiredFrameRate.HasValue)
@@ -290,14 +290,14 @@ namespace System.Windows.Media.Animation
         // Recursive postfix walk, culled by NeedsPostfixTraversal flags (hence cannot use PostfixSubtreeEnumerator)
         private void ComputeTreeStatePostfix()
         {
-            if (_children != null)
+            if (_children is not null)
             {
                 for (int c = 0; c < _children.Count; c++)
                 {
                     if (_children[c].NeedsPostfixTraversal)  // Traverse deeper if this is part of the visited tree subset
                     {
                         ClockGroup group = _children[c] as ClockGroup;
-                        Debug.Assert(group != null);  // We should only have this flag set for ClockGroups
+                        Debug.Assert(group is not null);  // We should only have this flag set for ClockGroups
 
                         group.ComputeTreeStatePostfix();
                     }
@@ -311,7 +311,7 @@ namespace System.Windows.Media.Animation
         // Derived class does the actual clipping
         private void ClipNextTickByChildren()
         {
-            Debug.Assert(_children != null);
+            Debug.Assert(_children is not null);
 
             for (int c = 0; c < _children.Count; c++)
             {
@@ -345,10 +345,10 @@ namespace System.Windows.Media.Animation
 
                 // The container ends when all of its children have ended at least
                 // one of their active periods.
-                if (_children != null)
+                if (_children is not null)
                 {
                     bool hasChildWithUnresolvedDuration = false;
-                    bool bufferingSlipNode = (_syncData != null    // This variable makes sure that our slip node completes as needed
+                    bool bufferingSlipNode = (_syncData is not null    // This variable makes sure that our slip node completes as needed
                                              && _syncData.IsInSyncPeriod
                                              && !_syncData.SyncClockHasReachedEffectiveDuration);
 
@@ -436,13 +436,13 @@ namespace System.Windows.Media.Animation
         internal override void ResetNodesWithSlip()
         {
             Debug.Assert(IsRoot);
-            if (_children != null)
+            if (_children is not null)
             {
                 for (int c = 0; c < _children.Count; c++)
                 {
                     Clock child = _children[c];
 
-                    if (child._syncData != null)
+                    if (child._syncData is not null)
                     {
                         child._beginTime = child._timeline.BeginTime;  // Realign the clock
                         child._syncData.IsInSyncPeriod = false;
@@ -461,7 +461,7 @@ namespace System.Windows.Media.Animation
         internal void RootActivate()
         {
             Debug.Assert(IsTimeManager, "Invalid call to RootActivate for a non-root Clock");
-            Debug.Assert(_timeManager != null);  // RootActivate should be called by our own TimeManager
+            Debug.Assert(_timeManager is not null);  // RootActivate should be called by our own TimeManager
 
             // Reset the state of the timing tree
             TimeIntervalCollection currentIntervals = TimeIntervalCollection.CreatePoint(_timeManager.InternalCurrentGlobalTime);
@@ -550,7 +550,7 @@ namespace System.Windows.Media.Animation
                 return;
             }
 
-            if (_children != null)
+            if (_children is not null)
             {
                 for (int childIndex = 0; childIndex < _children.Count; childIndex++)
                 {

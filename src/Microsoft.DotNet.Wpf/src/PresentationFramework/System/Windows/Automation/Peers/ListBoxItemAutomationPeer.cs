@@ -55,7 +55,7 @@ namespace System.Windows.Automation.Peers
         internal override void RealizeCore()
         {
             ComboBox parent = ItemsControlAutomationPeer.Owner as ComboBox;
-            if (parent != null)
+            if (parent is not null)
             {
                 IExpandCollapseProvider iecp = (IExpandCollapseProvider)UIElementAutomationPeer.FromElement(parent) as ComboBoxAutomationPeer;
                 if (iecp.ExpandCollapseState != ExpandCollapseState.Expanded)
@@ -67,12 +67,12 @@ namespace System.Windows.Automation.Peers
         void IScrollItemProvider.ScrollIntoView()
         {
             ListBox parent = ItemsControlAutomationPeer.Owner as ListBox;
-            if (parent != null)
+            if (parent is not null)
                 parent.ScrollIntoView(Item);
             else
             {
                 ComboBoxAutomationPeer parentPeer = ItemsControlAutomationPeer as ComboBoxAutomationPeer;
-                if(parentPeer != null)
+                if(parentPeer is not null)
                     parentPeer.ScrollItemIntoView(Item);
             }
         }

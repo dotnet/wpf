@@ -179,7 +179,7 @@ namespace MS.Internal.Ink
         protected override void StylusInputContinue(StylusPointCollection stylusPoints, bool userInitiated)
         {
             // Check whether Lasso has started.
-            if ( _lassoHelper != null )
+            if ( _lassoHelper is not null )
             {
                 //
                 // pump packets to the LassoHelper, it will convert them into an array of equidistant
@@ -245,7 +245,7 @@ namespace MS.Internal.Ink
             StrokeCollection selectedStrokes = new StrokeCollection();
             List<UIElement> elementsToSelect = new List<UIElement>();
 
-            if ( _lassoHelper != null )
+            if ( _lassoHelper is not null )
             {
                 // This is a lasso selection.
 
@@ -276,13 +276,13 @@ namespace MS.Internal.Ink
                 TapSelectObject(_startPoint, out tappedStroke, out tappedElement);
 
                 // If we have a pre-selected object, we should select it now.
-                if ( tappedStroke != null )
+                if ( tappedStroke is not null )
                 {
                     Debug.Assert(tappedElement is null);
                     selectedStrokes = new StrokeCollection();
                     selectedStrokes.Add(tappedStroke);
                 }
-                else if ( tappedElement != null )
+                else if ( tappedElement is not null )
                 {
                     Debug.Assert(tappedStroke is null);
                     elementsToSelect.Add(tappedElement);
@@ -390,8 +390,8 @@ namespace MS.Internal.Ink
         /// </summary>
         private static ElementCornerPoints GetTransformedElementCornerPoints(InkCanvasInnerCanvas canvas, UIElement childElement)
         {
-            Debug.Assert(canvas != null);
-            Debug.Assert(childElement != null);
+            Debug.Assert(canvas is not null);
+            Debug.Assert(childElement is not null);
 
             Debug.Assert(canvas.CheckAccess());
 

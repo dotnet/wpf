@@ -140,7 +140,7 @@ namespace System.Windows.Media
                 foreach (GeneralTransform gt in Children)
                 {
                     Transform t = gt.AffineTransform;
-                    if (t != null)
+                    if (t is not null)
                     {
                         matrix *= t.Value;
                     }

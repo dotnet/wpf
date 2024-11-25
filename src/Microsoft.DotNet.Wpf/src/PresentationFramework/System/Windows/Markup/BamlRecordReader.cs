@@ -109,7 +109,7 @@ namespace System.Windows.Markup
 
             ParserContext = parserContext;
             _rootElement = root;
-            _bamlAsForest = (root != null);
+            _bamlAsForest = (root is not null);
             if (_bamlAsForest)
             {
                 ParserContext.RootElement = _rootElement;
@@ -273,7 +273,7 @@ namespace System.Windows.Markup
                     }
                 }
             }
-            else if (PreParsedCurrentRecord != null) // If the preparsed list has not reached its end
+            else if (PreParsedCurrentRecord is not null) // If the preparsed list has not reached its end
             {
                 bamlRecord = PreParsedCurrentRecord;   // return the record pointed to index
                 PreParsedCurrentRecord = PreParsedCurrentRecord.Next;
@@ -369,7 +369,7 @@ namespace System.Windows.Markup
         /// </summary>
         internal void Close()
         {
-            if (BamlStream != null)
+            if (BamlStream is not null)
             {
                 BamlStream.Close();
             }
@@ -486,7 +486,7 @@ namespace System.Windows.Markup
                 // serializers handle the end record, so don't increment the element
                 // depth for types that have serializers (such as styles).
                 BamlElementStartRecord startRecord = bamlRecord as BamlElementStartRecord;
-                if (startRecord != null)
+                if (startRecord is not null)
                 {
                     if (!MapTable.HasSerializerForTypeId(startRecord.TypeId))
                     {
@@ -538,7 +538,7 @@ namespace System.Windows.Markup
         protected virtual void ReadConnectionId(BamlConnectionIdRecord bamlConnectionIdRecord)
         {
             // Hookup any IDs or events that correspond to this connectionId on the component
-            if (_componentConnector != null)
+            if (_componentConnector is not null)
             {
                 object target = GetCurrentObjectData();
                 Debug.Assert(bamlConnectionIdRecord.ConnectionId > 0);
@@ -940,7 +940,7 @@ namespace System.Windows.Markup
         internal void SetDependencyValue(DependencyObject dependencyObject, DependencyProperty dependencyProperty, object value)
         {
             // We don't need to get the metadata if we aren't skipping journaled properties
-            FrameworkPropertyMetadata metadata = ParserContext != null && ParserContext.SkipJournaledProperties ?
+            FrameworkPropertyMetadata metadata = ParserContext is not null && ParserContext.SkipJournaledProperties ?
                 dependencyProperty.GetMetadata(dependencyObject.DependencyObjectType) as FrameworkPropertyMetadata
                 : null;
 
@@ -1013,7 +1013,7 @@ namespace System.Windows.Markup
 
             if (_bamlAsForest && currentContext is null)
             {
-                Debug.Assert(_rootElement != null);
+                Debug.Assert(_rootElement is not null);
                 element = _rootElement;
 
                 flags = GetFlagsFromType(element.GetType());
@@ -1049,8 +1049,8 @@ namespace System.Windows.Markup
 
             if (!_bamlAsForest &&
                 currentContext is null &&
-                element != null &&
-                bamlStream != null &&
+                element is not null &&
+                bamlStream is not null &&
                 !(bamlStream is ReaderStream) &&
                 StreamPosition == StreamLength)
             {
@@ -1081,7 +1081,7 @@ namespace System.Windows.Markup
                 // If we have a real element at this point, instead of some object that will be
                 // delay created later, check for various interfaces that are called upon
                 // element creation.
-                if (element != null)
+                if (element is not null)
                 {
                     // If this is an element start record that carries its name also, then register the name now also.
                     string elementName = null;
@@ -1108,7 +1108,7 @@ namespace System.Windows.Markup
                 // to aid in having all properties set prior to adding them to the tree.
                 // See PS workitem #19080
                 if (BuildTopDown &&
-                    element != null &&
+                    element is not null &&
                     ((element is UIElement) ||
                     (element is ContentElement) ||
                     (element is UIElement3D)))
@@ -1228,7 +1228,7 @@ namespace System.Windows.Markup
             // Deferred content and constructor parameters aren't handled in SetPropertyValueToParent
 
             if ((flags & (ReaderFlags.AddedToTree)) == 0 &&
-                CurrentContext != null)
+                CurrentContext is not null)
             {
                 Debug.Assert( CurrentContext.ContextType != ReaderFlags.PropertyComplexClr );
                 Debug.Assert( CurrentContext.ContextType != ReaderFlags.PropertyComplexDP );
@@ -1297,7 +1297,7 @@ namespace System.Windows.Markup
 
             // Try KnownTypes Optimization: When the property is known use generated code for accessing it
             object parent = GetCurrentObjectData();
-            if (parent != null)
+            if (parent is not null)
             {
                 short elementId = BamlMapTable.GetKnownTypeIdFromType(parent.GetType());
                 if (elementId < 0)
@@ -1311,7 +1311,7 @@ namespace System.Windows.Markup
                 WpfPropertyDefinition propertyDefinition = new WpfPropertyDefinition(this, attributeId, parent is DependencyObject);
 
                 // Try DependencyProperty Optimization: When a DP exists for the property, use it for accessing the property
-                if (propertyDefinition.DependencyProperty != null)
+                if (propertyDefinition.DependencyProperty is not null)
                 {
                     Debug.Assert(parent is DependencyObject);
 
@@ -1333,7 +1333,7 @@ namespace System.Windows.Markup
                 {
                     // We consider only PropertyInfo case here.
                     // We do not consider AttachedPropertySetter in this case because content property cannot be attached.
-                    if (propertyDefinition.PropertyInfo != null)
+                    if (propertyDefinition.PropertyInfo is not null)
                     {
                         // Try to treat the content property as IList
                         if (propertyDefinition.IsInternal)
@@ -1426,7 +1426,7 @@ namespace System.Windows.Markup
                         // Note that this assumes that TypeExtension has a
                         // constructor with one param of type Type or String.
                         Type t = param as Type;
-                        if (t != null)
+                        if (t is not null)
                         {
                             instance = new TypeExtension(t);
                         }
@@ -1475,7 +1475,7 @@ namespace System.Windows.Markup
                         {
                             string paramString = param as string;
                             Type ownerType = ParserContext.TargetType;
-                            Debug.Assert(paramString != null);
+                            Debug.Assert(paramString is not null);
 
                             dp = XamlTypeMapper.ParsePropertyName(ParserContext,
                                                                   paramString.Trim(),
@@ -1513,7 +1513,7 @@ namespace System.Windows.Markup
 
                         if (paramCount == 1)
                         {
-                            Debug.Assert(param != null && paramList is null, "Must have a single param");
+                            Debug.Assert(param is not null && paramList is null, "Must have a single param");
                             ProcessConstructorParameter(paramInfos[0], param, ref paramArray[0]);
 
                             // Fast code path for other markupextensions
@@ -1527,7 +1527,7 @@ namespace System.Windows.Markup
                         }
                         else
                         {
-                            Debug.Assert(param is null && paramList != null, "Must have a paramList");
+                            Debug.Assert(param is null && paramList is not null, "Must have a paramList");
 
                             // Check each type and attempt to convert the paramList using
                             // the type converter associated with each parameter type.
@@ -1557,7 +1557,7 @@ namespace System.Windows.Markup
                                 }
 
                                 TargetInvocationException tie = e as TargetInvocationException;
-                                if( tie != null )
+                                if( tie is not null )
                                 {
                                     e = tie.InnerException;
                                 }
@@ -1597,13 +1597,13 @@ namespace System.Windows.Markup
             // Check for MarkupExtensions in the parameter list and
             // get values from those, if available.
             MarkupExtension me = param as MarkupExtension;
-            if (me != null)
+            if (me is not null)
             {
                 param = ProvideValueFromMarkupExtension(me, null, null);
             }
 
             // Don't convert parameters of type object.  Leave them alone.
-            if (param != null &&
+            if (param is not null &&
                 paramInfo.ParameterType != typeof(Object) &&
                 paramInfo.ParameterType != param.GetType())
             {
@@ -1689,7 +1689,7 @@ namespace System.Windows.Markup
         {
             ResourceDictionary dictionary = GetDictionaryFromContext(CurrentContext, true /*toInsert*/) as ResourceDictionary;
 
-            if (dictionary != null)
+            if (dictionary is not null)
             {
                 // At present we DO NOT SUPPORT having deferable content in an async
                 // stream, since we don't have a good way to defer the load of this block
@@ -1774,7 +1774,7 @@ namespace System.Windows.Markup
                         {
                             object keyObject = GetCurrentObjectData();
                             MarkupExtension me = keyObject as MarkupExtension;
-                            if (me != null)
+                            if (me is not null)
                             {
                                 keyObject = ProvideValueFromMarkupExtension(me, GetParentObjectData(), null);
                             }
@@ -1791,7 +1791,7 @@ namespace System.Windows.Markup
                 else
                 {
                     BamlDefAttributeKeyStringRecord stringKeyRecord = keyRecord as BamlDefAttributeKeyStringRecord;
-                    if (stringKeyRecord != null)
+                    if (stringKeyRecord is not null)
                     {
                         // Get the value string from the string table, and cache it in the
                         // record.
@@ -1804,7 +1804,7 @@ namespace System.Windows.Markup
                     else
                     {
                         BamlDefAttributeKeyTypeRecord typeKeyRecord = keyRecord as BamlDefAttributeKeyTypeRecord;
-                        if (typeKeyRecord != null)
+                        if (typeKeyRecord is not null)
                         {
                             dictionaryKeyRecord.KeyObject = MapTable.GetTypeFromId(
                                              typeKeyRecord.TypeId);
@@ -1901,7 +1901,7 @@ namespace System.Windows.Markup
                         BamlStaticResourceIdRecord bamlStaticResourceIdRecord = (BamlStaticResourceIdRecord)GetNextRecord();
 
                         // Find the StaticResourceValue for the given Id
-                        Debug.Assert(staticResourceValues != null, "Must have a list of StaticResourceValues for lookup");
+                        Debug.Assert(staticResourceValues is not null, "Must have a list of StaticResourceValues for lookup");
                         DeferredResourceReference prefetchedValue = (DeferredResourceReference)staticResourceValues[bamlStaticResourceIdRecord.StaticResourceId];
                         staticResources.Add(new StaticResourceHolder(prefetchedValue.Key, prefetchedValue));
 
@@ -1974,7 +1974,7 @@ namespace System.Windows.Markup
         {
             // Get the value of the property
             object[] staticResourceValues = ParserContext.StaticResourcesStack[ParserContext.StaticResourcesStack.Count-1];
-            Debug.Assert(staticResourceValues != null, "Must have a list of StaticResourceValues for lookup");
+            Debug.Assert(staticResourceValues is not null, "Must have a list of StaticResourceValues for lookup");
 
             // Find the StaticResourceValue for the given Id
             DeferredResourceReference prefetchedValue =
@@ -1988,11 +1988,11 @@ namespace System.Windows.Markup
         internal virtual void ReadLiteralContentRecord(
             BamlLiteralContentRecord bamlLiteralContentRecord)
         {
-            if (CurrentContext != null)
+            if (CurrentContext is not null)
             {
                  object dpOrPi = null;
                  object parent = null;
-                 if (CurrentContext.ContentProperty != null)
+                 if (CurrentContext.ContentProperty is not null)
                  {
                     dpOrPi = CurrentContext.ContentProperty;
                     parent = CurrentContext.ObjectData;
@@ -2006,7 +2006,7 @@ namespace System.Windows.Markup
 
                 IXmlSerializable xmlSerializable = null;
                 PropertyInfo pi = dpOrPi as PropertyInfo;
-                if (pi != null)
+                if (pi is not null)
                 {
                     if (typeof(IXmlSerializable).IsAssignableFrom(pi.PropertyType))
                     {
@@ -2016,7 +2016,7 @@ namespace System.Windows.Markup
                 else
                 {
                     DependencyProperty dp = dpOrPi as DependencyProperty;
-                    if (dp != null)
+                    if (dp is not null)
                     {
                         if (typeof(IXmlSerializable).IsAssignableFrom(dp.PropertyType))
                         {
@@ -2024,7 +2024,7 @@ namespace System.Windows.Markup
                         }
                     }
                 }
-                if (xmlSerializable != null)
+                if (xmlSerializable is not null)
                 {
                     // REVIEW: keep reader open, some ReadXml impl like XmlDP's will load XML later on different thread
                     // callee is expected to close reader once done
@@ -2059,7 +2059,7 @@ namespace System.Windows.Markup
                                     ReaderFlags.DependencyObject == CurrentContext.ContextType /*targetIsDependencyObject*/ );
 
             // Try DependencyProperty optimization.
-            if (propertyDefinition.DependencyProperty != null)
+            if (propertyDefinition.DependencyProperty is not null)
             {
                 // For the case of a DependencyProperty, store the BamlAttributeInfo on the
                 // stack, because we may need to know the actual added owner type for the DP
@@ -2067,17 +2067,17 @@ namespace System.Windows.Markup
                 // are multiple owners.
                 PushContext(ReaderFlags.PropertyComplexDP, propertyDefinition.AttributeInfo, propertyDefinition.PropertyType, 0);
             }
-            else if (propertyDefinition.PropertyInfo != null)
+            else if (propertyDefinition.PropertyInfo is not null)
             {
                 // Regular case for clr property
                 PushContext(ReaderFlags.PropertyComplexClr, propertyDefinition.PropertyInfo, propertyDefinition.PropertyType, 0);
             }
-            else if (propertyDefinition.AttachedPropertySetter != null)
+            else if (propertyDefinition.AttachedPropertySetter is not null)
             {
                 // Assignable Attached property
                 PushContext(ReaderFlags.PropertyComplexClr, propertyDefinition.AttachedPropertySetter, propertyDefinition.PropertyType, 0);
             }
-            else if (propertyDefinition.AttachedPropertyGetter != null)
+            else if (propertyDefinition.AttachedPropertyGetter is not null)
             {
                 // Readonly Attached property
                 PushContext(ReaderFlags.PropertyComplexClr, propertyDefinition.AttachedPropertyGetter, propertyDefinition.PropertyType, 0);
@@ -2240,12 +2240,12 @@ namespace System.Windows.Markup
 
             FreezeIfRequired(valueObject);
 
-            if (propertyDefinition.DependencyProperty != null)
+            if (propertyDefinition.DependencyProperty is not null)
             {
                 Debug.Assert(element is DependencyObject, "Guaranteed by PropertyDefinition constructor");
                 SetDependencyValue((DependencyObject)element, propertyDefinition.DependencyProperty, valueObject);
             }
-            else if (propertyDefinition.PropertyInfo != null)
+            else if (propertyDefinition.PropertyInfo is not null)
             {
                 // Regular case for CLR property
                 if (propertyDefinition.IsInternal)
@@ -2267,7 +2267,7 @@ namespace System.Windows.Markup
                         null, TypeConverterHelper.InvariantEnglishUS);
                 }
             }
-            else if (propertyDefinition.AttachedPropertySetter != null)
+            else if (propertyDefinition.AttachedPropertySetter is not null)
             {
                 propertyDefinition.AttachedPropertySetter.Invoke(null, new object[] { element, valueObject });
             }
@@ -2372,7 +2372,7 @@ namespace System.Windows.Markup
             else
             {
                 BamlAttributeInfoRecord attribInfo = MapTable.GetAttributeInfoFromId(memberId);
-                if (attribInfo != null)
+                if (attribInfo is not null)
                 {
                     StaticExtension se = new StaticExtension();
                     se.MemberType = MapTable.GetTypeFromId(attribInfo.OwnerTypeId);
@@ -2470,7 +2470,7 @@ namespace System.Windows.Markup
 #endif
                 // if the value is a ME, get the actual value from it.
                 MarkupExtension me = value as MarkupExtension;
-                if (me != null)
+                if (me is not null)
                 {
                     value = ProvideValueFromMarkupExtension(me, element, propertyDefinition.DpOrPiOrMi);
 
@@ -2500,7 +2500,7 @@ namespace System.Windows.Markup
                 }
 
                 TargetInvocationException tie = e as TargetInvocationException;
-                if( tie != null )
+                if( tie is not null )
                 {
                     e = tie.InnerException;
                 }
@@ -2525,7 +2525,7 @@ namespace System.Windows.Markup
             // DP case
             //
 
-            if (propertyDefinition.DependencyProperty != null)
+            if (propertyDefinition.DependencyProperty is not null)
             {
                 if( TraceMarkup.IsEnabled )
                 {
@@ -2553,7 +2553,7 @@ namespace System.Windows.Markup
             // Non-attached CLR property case.
             //
 
-            else if (propertyDefinition.PropertyInfo != null)
+            else if (propertyDefinition.PropertyInfo is not null)
             {
                 if( TraceMarkup.IsEnabled )
                 {
@@ -2595,7 +2595,7 @@ namespace System.Windows.Markup
             // Attached CLR property case
             //
 
-            else if (propertyDefinition.AttachedPropertySetter != null)
+            else if (propertyDefinition.AttachedPropertySetter is not null)
             {
                 if( TraceMarkup.IsEnabled )
                 {
@@ -2673,7 +2673,7 @@ namespace System.Windows.Markup
                 }
 
                 TargetInvocationException tie = e as TargetInvocationException;
-                if( tie != null )
+                if( tie is not null )
                 {
                     e = tie.InnerException;
                 }
@@ -2750,7 +2750,7 @@ namespace System.Windows.Markup
                 }
 
                 // Try DependencyProperty case: If the property is a DP we can handle it faster than the general reflection case
-                if (propertyDefinition.DependencyProperty != null)
+                if (propertyDefinition.DependencyProperty is not null)
                 {
                     Debug.Assert(element is DependencyObject);
 
@@ -2770,7 +2770,7 @@ namespace System.Windows.Markup
                         SetPropertyValue( element, propertyDefinition, propertyValue );
                     }
                 }
-                else if (propertyDefinition.PropertyInfo != null)
+                else if (propertyDefinition.PropertyInfo is not null)
                 {
                     // General case of CLR or Attached property
 
@@ -2791,7 +2791,7 @@ namespace System.Windows.Markup
                         SetPropertyValue( element, propertyDefinition, propertyValue );
                     }
                 }
-                else if (propertyDefinition.AttachedPropertySetter != null)
+                else if (propertyDefinition.AttachedPropertySetter is not null)
                 {
                     // Attached property
                     // General case of CLR or Attached property
@@ -2824,12 +2824,12 @@ namespace System.Windows.Markup
                     object reidOrEi = null;
                     bool isInternal = false;
 
-                    if (_componentConnector != null && _rootElement != null)
+                    if (_componentConnector is not null && _rootElement is not null)
                     {
                         reidOrEi = GetREOrEiFromAttributeId(attributeId, out isInternal, out isRE);
                     }
 
-                    if (reidOrEi != null)
+                    if (reidOrEi is not null)
                     {
                         Delegate d;
 
@@ -2846,14 +2846,14 @@ namespace System.Windows.Markup
                             }
 
                             UIElement uiel = element as UIElement;
-                            if (uiel != null)
+                            if (uiel is not null)
                             {
                                 uiel.AddHandler(reid, d);
                             }
                             else
                             {
                                 ContentElement ce = element as ContentElement;
-                                if (ce != null)
+                                if (ce is not null)
                                 {
                                     ce.AddHandler(reid, d);
                                 }
@@ -2915,7 +2915,7 @@ namespace System.Windows.Markup
                 }
 
                 TargetInvocationException tie = e as TargetInvocationException;
-                if( tie != null )
+                if( tie is not null )
                 {
                     e = tie.InnerException;
                 }
@@ -2937,18 +2937,18 @@ namespace System.Windows.Markup
         private void DoRegisterName( string name, object element )
         {
             // Store this name in the context (used by XamlParseException).
-            if( CurrentContext != null )
+            if( CurrentContext is not null )
             {
                 CurrentContext.ElementNameOrPropertyName = name;
             }
 
 
-            if (ParserContext != null && ParserContext.NameScopeStack != null)
+            if (ParserContext is not null && ParserContext.NameScopeStack is not null)
             {
                 if (0 != ParserContext.NameScopeStack.Count)
                 {
                     INameScope nameScopeTop = ParserContext.NameScopeStack.Pop() as INameScope;
-                    if ((NameScope.NameScopeFromObject(element) != null) && 0 != ParserContext.NameScopeStack.Count)
+                    if ((NameScope.NameScopeFromObject(element) is not null) && 0 != ParserContext.NameScopeStack.Count)
                     {
                         // Consider the following scenario
                         // <Window x:Name="myWindow">
@@ -2964,7 +2964,7 @@ namespace System.Windows.Markup
                         // "myStyle" also gets registered with the Window
                         // "myBrush" gets registered with the Style
                         INameScope nameScopePeek = ParserContext.NameScopeStack.Peek() as INameScope;
-                        if (nameScopePeek != null)
+                        if (nameScopePeek is not null)
                         {
                             nameScopePeek.RegisterName(name, element);
                         }
@@ -3016,7 +3016,7 @@ namespace System.Windows.Markup
 
             ArrayExtension arrayExt = holder.ArrayExt;
 
-            Debug.Assert(arrayExt != null);
+            Debug.Assert(arrayExt is not null);
 
             holder.Collection = ProvideValueFromMarkupExtension(arrayExt, holder, null);
             holder.SetPropertyValue();
@@ -3052,7 +3052,7 @@ namespace System.Windows.Markup
                 holder.ReadOnly = true;
             }
             else if (typeof(IEnumerable).IsAssignableFrom(expectedType) &&
-                     (BamlRecordManager.AsIAddChild(GetCurrentObjectData())) != null)
+                     (BamlRecordManager.AsIAddChild(GetCurrentObjectData())) is not null)
             {
                 flags = ReaderFlags.PropertyIAddChild;
                 holder.Collection = CurrentContext.ObjectData;
@@ -3146,7 +3146,7 @@ namespace System.Windows.Markup
                 arrayExt.Type = context.ExpectedType.GetElementType();
                 holder.Collection = arrayExt;
             }
-            else if (holder.DefaultCollection != null)
+            else if (holder.DefaultCollection is not null)
             {
                 // if we the property getter returned a default value, then we use that collection to insert
                 // as the property's collection.
@@ -3186,7 +3186,7 @@ namespace System.Windows.Markup
         {
             IDictionary result = null;
 
-            if (context != null)
+            if (context is not null)
             {
                 if (context.CheckFlag(ReaderFlags.IDictionary))
                 {
@@ -3207,7 +3207,7 @@ namespace System.Windows.Markup
         {
             IList result = null;
 
-            if (context != null)
+            if (context is not null)
             {
                 if (context.CheckFlag(ReaderFlags.IList))
                 {
@@ -3228,7 +3228,7 @@ namespace System.Windows.Markup
         {
             IAddChild result = null;
 
-            if (context != null)
+            if (context is not null)
             {
                 if (context.CheckFlag(ReaderFlags.IAddChild))
                 {
@@ -3249,7 +3249,7 @@ namespace System.Windows.Markup
         {
             ArrayExtension result = null;
 
-            if (context != null)
+            if (context is not null)
             {
                 result = context.ObjectData as ArrayExtension;
 
@@ -3318,7 +3318,7 @@ namespace System.Windows.Markup
                 //  created objects are never UIElements. Instantiating non-UIElements here
                 //  will cause delay creation of value types to fail.
                 UIElement element = CurrentContext.ObjectData as UIElement;
-                if( element != null )
+                if( element is not null )
                 {
                     SetDependencyValue(element, UIElement.UidProperty, bamlDefAttributeRecord.Value);
                 }
@@ -3335,7 +3335,7 @@ namespace System.Windows.Markup
             {
                 object element = GetCurrentObjectData();
 
-                if( element != null )
+                if( element is not null )
                 {
                     DoRegisterName(bamlDefAttributeRecord.Value, element);
                 }
@@ -3393,7 +3393,7 @@ namespace System.Windows.Markup
                     BamlCollectionHolder holder = (BamlCollectionHolder)parentContext.ObjectData;
                     object element = context.ObjectData;
 
-                    if (element != null && element == holder.Dictionary)
+                    if (element is not null && element == holder.Dictionary)
                     {
                         ThrowExceptionWithLine(SR.Format(SR.ParserKeyOnExplicitDictionary, attributeName,
                                        element.GetType().ToString(), holder.PropertyDefinition.Name), e);
@@ -3414,7 +3414,7 @@ namespace System.Windows.Markup
         protected virtual void ReadTextRecord(BamlTextRecord bamlTextRecord)
         {
             BamlTextWithIdRecord bamlTextWithId = bamlTextRecord as BamlTextWithIdRecord;
-            if (bamlTextWithId != null)
+            if (bamlTextWithId is not null)
             {
                 // Get the value string from the string table, and cache it in the
                 // record.
@@ -3442,7 +3442,7 @@ namespace System.Windows.Markup
             // Check if there is a type converter associated with this text.
             short converterTypeId = 0; // 0 is an invalid typeId for a converter
             BamlTextWithConverterRecord bamlTextWithConverter = bamlTextRecord as BamlTextWithConverterRecord;
-            if (bamlTextWithConverter != null)
+            if (bamlTextWithConverter is not null)
             {
                 converterTypeId = bamlTextWithConverter.ConverterTypeId;
             }
@@ -3455,7 +3455,7 @@ namespace System.Windows.Markup
                 {
                     if (CurrentContext.CreateUsingTypeConverter)
                     {
-                        Debug.Assert( CurrentContext.ObjectData is null && CurrentContext.ExpectedType != null,
+                        Debug.Assert( CurrentContext.ObjectData is null && CurrentContext.ExpectedType is not null,
                             "We had expected to create this object using a TypeConverter - but there's already an instance here.  Who created the instance and broke our ability to use a TypeConverter?");
 
                         // Use a TypeConverter to create an object instance from text.
@@ -3486,11 +3486,11 @@ namespace System.Windows.Markup
                         // We have object instance, and we have several ways to put
                         //  text into that object.
                         IAddChild iacParent = GetIAddChildFromContext(CurrentContext);
-                        if (iacParent != null)
+                        if (iacParent is not null)
                         {
                             iacParent.AddText(bamlTextRecord.Value);
                         }
-                        else if (CurrentContext.ContentProperty != null)
+                        else if (CurrentContext.ContentProperty is not null)
                         {
                             AddToContentProperty(parent, CurrentContext.ContentProperty, bamlTextRecord.Value);
                         }
@@ -3670,7 +3670,7 @@ namespace System.Windows.Markup
                 // Check if the object is a MarkupExtension.  If so, then get the value
                 // to set on this property from the MarkupExtension itself.
                 MarkupExtension me = o as MarkupExtension;
-                if (me != null)
+                if (me is not null)
                 {
                     o = ProvideValueFromMarkupExtension(me, currentTarget, dp);
                 }
@@ -3678,11 +3678,11 @@ namespace System.Windows.Markup
                 // Check if we have a Nullable type.  If so and the object being set is
                 // not a Nullable or an expression, then attempt a conversion.
                 Type propertyType = null;
-                if (dp != null)
+                if (dp is not null)
                 {
                     propertyType = dp.PropertyType;
                 }
-                else if (propertyInfo != null)
+                else if (propertyInfo is not null)
                 {
                     propertyType = propertyInfo.PropertyType;
                 }
@@ -3694,7 +3694,7 @@ namespace System.Windows.Markup
                         XamlTypeMapper.UpdateAttachedPropertySetter(attribInfo);
                     }
                     attachedPropertySetter = attribInfo.AttachedPropertySetter;
-                    if (attachedPropertySetter != null)
+                    if (attachedPropertySetter is not null)
                     {
                         propertyType = attachedPropertySetter.GetParameters()[1].ParameterType;
                     }
@@ -3707,17 +3707,17 @@ namespace System.Windows.Markup
 
                 // DependencyProperty, use the associated DependencyObject's SetValue.  Otherwise
                 // use the PropertyInfo's SetValue.
-                if (dp != null)
+                if (dp is not null)
                 {
                     Debug.Assert(currentTarget is DependencyObject);
                     SetDependencyValue((DependencyObject)currentTarget, dp, o);
                 }
-                else if (propertyInfo != null)
+                else if (propertyInfo is not null)
                 {
                     propertyInfo.SetValue(currentTarget,o,BindingFlags.Default,null,null,
                                     TypeConverterHelper.InvariantEnglishUS);
                 }
-                else if (attachedPropertySetter != null)
+                else if (attachedPropertySetter is not null)
                 {
                     attachedPropertySetter.Invoke(null, new object[] { currentTarget, o });
                 }
@@ -3737,7 +3737,7 @@ namespace System.Windows.Markup
                 }
 
                 TargetInvocationException tie = e as TargetInvocationException;
-                if( tie != null )
+                if( tie is not null )
                 {
                     e = tie.InnerException;
                 }
@@ -3782,10 +3782,10 @@ namespace System.Windows.Markup
         {
             // if o was nullable, it has been unwrapped and boxed when it was passed into this function
 
-            if ((o != null) && IsNullable(propertyType) && !(o is Expression) && !(o is MarkupExtension) )
+            if ((o is not null) && IsNullable(propertyType) && !(o is Expression) && !(o is MarkupExtension) )
             {
                 Type genericType = (Type)propertyType.GetGenericArguments()[0];
-                Debug.Assert(genericType != null);
+                Debug.Assert(genericType is not null);
 
                 if (genericType != o.GetType())
                 {
@@ -3812,7 +3812,7 @@ namespace System.Windows.Markup
             // to set on this property from the MarkupExtension itself.
 
             MarkupExtension me = value as MarkupExtension;
-            if (me != null)
+            if (me is not null)
             {
                 value = ProvideValueFromMarkupExtension(me, parentObject, memberInfo);
             }
@@ -3876,7 +3876,7 @@ namespace System.Windows.Markup
                 }
 
                 TargetInvocationException tie = e as TargetInvocationException;
-                if( tie != null )
+                if( tie is not null )
                 {
                     e = tie.InnerException;
                 }
@@ -3900,7 +3900,7 @@ namespace System.Windows.Markup
             // The object may be a MarkupExtension, so get its value if that's the case
             // and use that as the element.
             MarkupExtension me = o as MarkupExtension;
-            if (me != null)
+            if (me is not null)
             {
                 o = ProvideValueFromMarkupExtension(me, null, null);
             }
@@ -3936,7 +3936,7 @@ namespace System.Windows.Markup
 
             // For cases where we have object factories, we may not have a valid DependencyObject at
             // this point, so don't try to set the xmlns dictionary.
-            if (e != null)
+            if (e is not null)
             {
                 XmlnsDictionary elemDict = XmlAttributeProperties.GetXmlnsDictionary(e);
 
@@ -4049,7 +4049,7 @@ namespace System.Windows.Markup
             bool            mustReturnDeferredResourceReference)
         {
             ResourceDictionary resourceDictionary;
-            if (allowDeferredResourceReference && (resourceDictionary = dictionary as ResourceDictionary) != null)
+            if (allowDeferredResourceReference && (resourceDictionary = dictionary as ResourceDictionary) is not null)
             {
                 // Attempt to delay load resources from ResourceDictionaries
                 bool canCache;
@@ -4084,14 +4084,14 @@ namespace System.Windows.Markup
             ParserStack contextStack = ReaderContextStack;
             BamlRecordReader reader = this;
 
-            while( contextStack != null )
+            while( contextStack is not null )
             {
                 for (int i = contextStack.Count-1; i >= 0; i--)
                 {
                     ReaderContextStackData stackData = (ReaderContextStackData) contextStack[i];
                     IDictionary dictionary = GetDictionaryFromContext(stackData, false /*toInsert*/);
 
-                    if (dictionary != null && dictionary.Contains(resourceNameObject))
+                    if (dictionary is not null && dictionary.Contains(resourceNameObject))
                     {
                         value = Lookup(dictionary, resourceNameObject, allowDeferredResourceReference, mustReturnDeferredResourceReference);
                     }
@@ -4102,11 +4102,11 @@ namespace System.Windows.Markup
                         FrameworkContentElement fceParent;
 
                         Helper.DowncastToFEorFCE(feOrfceParent, out feParent, out fceParent, false /*throwIfNeither*/);
-                        if (feParent != null)
+                        if (feParent is not null)
                         {
                             value = feParent.FindResourceOnSelf(resourceNameObject, allowDeferredResourceReference, mustReturnDeferredResourceReference);
                         }
-                        else if (fceParent != null)
+                        else if (fceParent is not null)
                         {
                             value = fceParent.FindResourceOnSelf(resourceNameObject, allowDeferredResourceReference, mustReturnDeferredResourceReference);
                         }
@@ -4135,7 +4135,7 @@ namespace System.Windows.Markup
                 // look at another one.
 
                 bool newContextStackFound = false;
-                while (reader._previousBamlRecordReader != null)
+                while (reader._previousBamlRecordReader is not null)
                 {
                     // Yes, move to the next reader
                     reader = reader._previousBamlRecordReader;
@@ -4186,7 +4186,7 @@ namespace System.Windows.Markup
                 result = SystemResources.FindResourceInternal(resourceNameObject, allowDeferredResourceReference, mustReturnDeferredResourceReference);
             }
 
-            if (result != null)
+            if (result is not null)
             {
                 return result;
             }
@@ -4331,7 +4331,7 @@ namespace System.Windows.Markup
 
             INameScope nameScope = NameScope.NameScopeFromObject(contextData);
 
-            if (nameScope != null)
+            if (nameScope is not null)
             {
                 ParserContext.NameScopeStack.Push(nameScope);
             }
@@ -4345,7 +4345,7 @@ namespace System.Windows.Markup
             // If we're through with an Name scoping point, take it off the stack.
             INameScope nameScope = NameScope.NameScopeFromObject(stackData.ObjectData);
 
-            if (nameScope != null)
+            if (nameScope is not null)
             {
                 ParserContext.NameScopeStack.Pop();
             }
@@ -4392,7 +4392,7 @@ namespace System.Windows.Markup
             // Tell the Element Initialization has begun and hence postpone the Initialized event
             // If the element implements ISupportInitialize, call it.
             ISupportInitialize supportInitializeElement = element as ISupportInitialize;
-            if (supportInitializeElement != null)
+            if (supportInitializeElement is not null)
             {
                 if( TraceMarkup.IsEnabled )
                 {
@@ -4414,7 +4414,7 @@ namespace System.Windows.Markup
 
             // If this is an element start record that carries its name also, then register the name now.
 
-            if (name != null)
+            if (name is not null)
             {
                 DoRegisterName(name, element);
             }
@@ -4422,7 +4422,7 @@ namespace System.Windows.Markup
 
             // Tell element its base uri
             IUriContext uriContext = element as IUriContext;
-            if (uriContext != null)
+            if (uriContext is not null)
             {
                 uriContext.BaseUri = GetBaseUri();
             }
@@ -4436,7 +4436,7 @@ namespace System.Windows.Markup
             }
 
             UIElement uiElement = element as UIElement;
-            if (uiElement != null)
+            if (uiElement is not null)
             {
                 uiElement.SetPersistId(++_persistId);
             }
@@ -4450,7 +4450,7 @@ namespace System.Windows.Markup
                 if (_componentConnector is null) // why was this necessary?
                 {
                     _componentConnector = icc = element as IComponentConnector;
-                    if (_componentConnector != null)
+                    if (_componentConnector is not null)
                     {
                         if (ParserContext.RootElement is null)
                         {
@@ -4467,11 +4467,11 @@ namespace System.Windows.Markup
                 DependencyObject doRoot = element as DependencyObject;
                 if (!(element is INameScope)
                     && ParserContext.NameScopeStack.Count == 0
-                    && (doRoot != null))
+                    && (doRoot is not null))
                 {
                     NameScope namescope = null;
                     // if the root element is markup sub-classed and already is a namescope, use it.
-                    if (icc != null)
+                    if (icc is not null)
                     {
                         namescope = NameScope.GetNameScope(doRoot) as NameScope;
                     }
@@ -4482,7 +4482,7 @@ namespace System.Windows.Markup
                     }
                 }
 
-                if (doRoot != null)
+                if (doRoot is not null)
                 {
                     Uri baseuri = GetBaseUri();
                     SetDependencyValue(doRoot, BaseUriHelper.BaseUriProperty, baseuri);
@@ -4499,7 +4499,7 @@ namespace System.Windows.Markup
                 // Tell element initialization is complete since there are no more children.
                 // If the element implements ISupportInitialize, call it.
                 ISupportInitialize supportInitializeElement = element as ISupportInitialize;
-                if (supportInitializeElement != null)
+                if (supportInitializeElement is not null)
                 {
                     if( TraceMarkup.IsEnabled )
                     {
@@ -4528,7 +4528,7 @@ namespace System.Windows.Markup
                 // Check if the ParentContext represents a property
 
                 ReaderContextStackData parentContext = ParentContext;
-                ReaderFlags parentContextType = parentContext != null ? parentContext.ContextType : ReaderFlags.Unknown;
+                ReaderFlags parentContextType = parentContext is not null ? parentContext.ContextType : ReaderFlags.Unknown;
 
                 if (parentContextType == ReaderFlags.PropertyComplexClr ||
                     parentContextType == ReaderFlags.PropertyComplexDP ||
@@ -4540,7 +4540,7 @@ namespace System.Windows.Markup
                     // Check if the GrandParent object implements IProvidePropertyFallback
 
                     IProvidePropertyFallback iProvidePropertyFallback = GrandParentObjectData as IProvidePropertyFallback;
-                    if (iProvidePropertyFallback != null)
+                    if (iProvidePropertyFallback is not null)
                     {
                         // Find the property name from the ParentContext
 
@@ -4646,7 +4646,7 @@ namespace System.Windows.Markup
                 // Handle parent as a dictionary:
 
                 IDictionary dictionary = GetDictionaryFromContext(parentContext, true /*toInsert*/);
-                if (dictionary != null)
+                if (dictionary is not null)
                 {
                     // if this SetPropertyValueToParent call occurred during ReadElementStart, then we
                     // don't have a key for this element yet, and should wait until ReadElementEnd
@@ -4671,7 +4671,7 @@ namespace System.Windows.Markup
                 // Handle parent as an IList:
 
                 IList list = GetListFromContext(parentContext);
-                if (list != null)
+                if (list is not null)
                 {
                     currentObject = GetElementValue(currentObject, list, null /*contentProperty*/, ref isMarkupExtension);
 
@@ -4684,7 +4684,7 @@ namespace System.Windows.Markup
                 // Handle parent as an array:
 
                 ArrayExtension arrayExt = GetArrayExtensionFromContext(parentContext);
-                if (arrayExt != null)
+                if (arrayExt is not null)
                 {
                     currentObject = GetElementValue(currentObject, arrayExt, null /*contentProperty*/, ref isMarkupExtension);
 
@@ -4706,7 +4706,7 @@ namespace System.Windows.Markup
                 // Handle parent as IAddChild:
 
                 IAddChild iac = GetIAddChildFromContext(parentContext);
-                if (iac != null)
+                if (iac is not null)
                 {
                     currentObject = GetElementValue(currentObject, iac, null /*contentProperty*/, ref isMarkupExtension);
 
@@ -4715,7 +4715,7 @@ namespace System.Windows.Markup
                     // call the appropriate IAddChild method.
                     string text = currentObject as string;
 
-                    if (text != null)
+                    if (text is not null)
                     {
                         iac.AddText(text);
                     }
@@ -4739,7 +4739,7 @@ namespace System.Windows.Markup
                 // Handle parent as CPA:
 
                 object contentProperty = parentContext.ContentProperty;
-                if (contentProperty != null)
+                if (contentProperty is not null)
                 {
                     currentObject = GetElementValue(currentObject, parentContext.ObjectData, contentProperty, ref isMarkupExtension);
                     AddToContentProperty(parent, contentProperty, currentObject); // Traces to TraceXamnl
@@ -4815,11 +4815,11 @@ namespace System.Windows.Markup
                 parent = ((BamlCollectionHolder)parent).Collection;
             }
 
-            if (parent != null)
+            if (parent is not null)
             {
                 return parent.GetType();
             }
-            else if (parentContext.ExpectedType != null)
+            else if (parentContext.ExpectedType is not null)
             {
                 return parentContext.ExpectedType;
             }
@@ -4832,7 +4832,7 @@ namespace System.Windows.Markup
             // The element may be a MarkupExtension, so get its value if that's the case
             // and use that as the element.
             MarkupExtension me = element as MarkupExtension;
-            if (me != null)
+            if (me is not null)
             {
                 isMarkupExtension = true;
                 element = ProvideValueFromMarkupExtension(me, parent, contentProperty);
@@ -4851,9 +4851,9 @@ namespace System.Windows.Markup
             ReaderContextStackData parentContext = ParentContext;
 
             // if the parent context is a BamlCollectionHolder, and has not been set, then continue check
-            if (parentContext != null &&
+            if (parentContext is not null &&
                 parentContext.CheckFlag(ReaderFlags.CollectionHolder) &&
-                parentContext.ExpectedType != null)
+                parentContext.ExpectedType is not null)
             {
                 BamlCollectionHolder holder = (BamlCollectionHolder)parentContext.ObjectData;
 
@@ -4900,7 +4900,7 @@ namespace System.Windows.Markup
 
         private void AddToContentProperty(object container, object contentProperty, object value)
         {
-            Debug.Assert(contentProperty != null);
+            Debug.Assert(contentProperty is not null);
             IList contentList = contentProperty as IList;
             object traceCurrentObject = null;
 
@@ -4911,7 +4911,7 @@ namespace System.Windows.Markup
 
                 // Adding to a collection?
 
-                if (contentList != null)
+                if (contentList is not null)
                 {
                     if( TraceMarkup.IsEnabled )
                     {
@@ -4938,7 +4938,7 @@ namespace System.Windows.Markup
                     // Setting to a DP?
 
                     DependencyProperty dp = contentProperty as DependencyProperty;
-                    if (dp != null)
+                    if (dp is not null)
                     {
                         DependencyObject dpo = container as DependencyObject;
                         if (dpo is null)
@@ -4972,7 +4972,7 @@ namespace System.Windows.Markup
                         // Setting to a CLR property?
 
                         PropertyInfo pi = contentProperty as PropertyInfo;
-                        if (pi != null)
+                        if (pi is not null)
                         {
                             if( TraceMarkup.IsEnabled )
                             {
@@ -5127,7 +5127,7 @@ namespace System.Windows.Markup
                                                                 BindingFlags.Public |
                                                                 BindingFlags.NonPublic);
 
-                                    if (attribInfo.EventInfo != null)
+                                    if (attribInfo.EventInfo is not null)
                                     {
                                         attribInfo.IsInternal = true;
                                     }
@@ -5145,7 +5145,7 @@ namespace System.Windows.Markup
                 }
             }
 
-            if (attribInfo != null)
+            if (attribInfo is not null)
             {
                 isInternal = attribInfo.IsInternal;
             }
@@ -5158,14 +5158,14 @@ namespace System.Windows.Markup
         private string GetPropNameFrom(object PiOrAttribInfo)
         {
             BamlAttributeInfoRecord attribInfo = PiOrAttribInfo as BamlAttributeInfoRecord;
-            if (attribInfo != null)
+            if (attribInfo is not null)
             {
                 return $"{attribInfo.OwnerType.Name}.{attribInfo.Name}";
             }
             else
             {
                 PropertyInfo pi = PiOrAttribInfo as PropertyInfo;
-                if (pi != null)
+                if (pi is not null)
                 {
                     return $"{pi.DeclaringType.Name}.{pi.Name}";
                 }
@@ -5227,7 +5227,7 @@ namespace System.Windows.Markup
             if (typeId >= 0)
             {
                 typeInfo = MapTable.GetTypeInfoFromId(typeId);
-                if (typeInfo != null)
+                if (typeInfo is not null)
                 {
                     publicOnly = !typeInfo.IsInternalType;
                 }
@@ -5312,7 +5312,7 @@ namespace System.Windows.Markup
                    // inserted an element tag that the user is not aware of, so
                    // give a more detailed error message.  Otherwise just complain
                    // that the type cannot be created.
-                   if (ParentContext != null &&
+                   if (ParentContext is not null &&
                        ParentContext.ContextType == ReaderFlags.PropertyComplexDP)
                    {
                        BamlAttributeInfoRecord attribInfo = GetParentObjectData() as BamlAttributeInfoRecord;
@@ -5350,7 +5350,7 @@ namespace System.Windows.Markup
             if (_parserContext.FreezeFreezables)
             {
                 Freezable f = element as Freezable;
-                if (f != null)
+                if (f is not null)
                 {
                     f.Freeze();
                 }
@@ -5417,7 +5417,7 @@ namespace System.Windows.Markup
                     _xamlReaderStream = null;
                 }
 
-                if (BamlStream != null)
+                if (BamlStream is not null)
                 {
                     _binaryReader = new BamlBinaryReader(BamlStream, new System.Text.UTF8Encoding());
                 }
@@ -5704,7 +5704,7 @@ namespace System.Windows.Markup
             _dependencyProperty = null;
             _attributeInfo = null;
 
-            if (_reader.MapTable != null && targetIsDependencyObject)
+            if (_reader.MapTable is not null && targetIsDependencyObject)
             {
                 _dependencyProperty = _reader.MapTable.GetDependencyProperty(_attributeId);
             }
@@ -5722,11 +5722,11 @@ namespace System.Windows.Markup
         {
             get
             {
-                if (_attributeInfo != null)
+                if (_attributeInfo is not null)
                 {
                     return _attributeInfo.AttributeUsage;
                 }
-                else if (_reader.MapTable != null)
+                else if (_reader.MapTable is not null)
                 {
                     short ownerTypeId;
                     string name;
@@ -5745,13 +5745,13 @@ namespace System.Windows.Markup
         {
             get
             {
-                if (_attributeInfo is null && _reader.MapTable != null)
+                if (_attributeInfo is null && _reader.MapTable is not null)
                 {
                     // Either the attribute is not a DP or the record is still needed.
                     // This version of the method makes sure that attributeInfo.OwnerType is calculated.
                     // In most other cases we ant to avoid unnecessary type allocations.
                     _attributeInfo = _reader.MapTable.GetAttributeInfoFromIdWithOwnerType(_attributeId);
-                    Debug.Assert(_attributeInfo != null);
+                    Debug.Assert(_attributeInfo is not null);
                 }
                 return _attributeInfo;
             }
@@ -5832,21 +5832,21 @@ namespace System.Windows.Markup
         {
             get
             {
-                if (this.DependencyProperty != null)
+                if (this.DependencyProperty is not null)
                 {
                     return this.DependencyProperty.PropertyType;
                 }
-                else if (this.PropertyInfo != null)
+                else if (this.PropertyInfo is not null)
                 {
                     return this.PropertyInfo.PropertyType;
                 }
-                else if (this.AttachedPropertySetter != null)
+                else if (this.AttachedPropertySetter is not null)
                 {
                     return XamlTypeMapper.GetPropertyType(this.AttachedPropertySetter);
                 }
                 else
                 {
-                    Debug.Assert(this.AttachedPropertyGetter != null);
+                    Debug.Assert(this.AttachedPropertyGetter is not null);
                     return this.AttachedPropertyGetter.ReturnType;
                 }
             }
@@ -5856,19 +5856,19 @@ namespace System.Windows.Markup
         {
             get
             {
-                if (this.DependencyProperty != null)
+                if (this.DependencyProperty is not null)
                 {
                     return this.DependencyProperty.Name;
                 }
-                else if (this.PropertyInfo != null)
+                else if (this.PropertyInfo is not null)
                 {
                     return this.PropertyInfo.Name;
                 }
-                else if (this.AttachedPropertySetter != null)
+                else if (this.AttachedPropertySetter is not null)
                 {
                     return this.AttachedPropertySetter.Name.Substring("Set".Length);
                 }
-                else if (this.AttachedPropertyGetter != null)
+                else if (this.AttachedPropertyGetter is not null)
                 {
                     return this.AttachedPropertyGetter.Name.Substring("Get".Length);
                 }
@@ -5878,7 +5878,7 @@ namespace System.Windows.Markup
                     //  failed, then something has gone wrong.  But we still need
                     //  to be able to provide *something* because a name is
                     //  needed for the exception message.
-                    if( _attributeInfo != null )
+                    if( _attributeInfo is not null )
                     {
                         return _attributeInfo.Name;
                     }
@@ -5895,8 +5895,8 @@ namespace System.Windows.Markup
             get
             {
                 return
-                    this.DependencyProperty != null ? (object)this.DependencyProperty :
-                    this.PropertyInfo != null ? (object)this.PropertyInfo :
+                    this.DependencyProperty is not null ? (object)this.DependencyProperty :
+                    this.PropertyInfo is not null ? (object)this.PropertyInfo :
                     (object)this.AttachedPropertySetter;
             }
         }

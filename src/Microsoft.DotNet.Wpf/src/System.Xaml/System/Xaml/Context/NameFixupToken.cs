@@ -180,7 +180,7 @@ namespace MS.Internal.Xaml.Context
                 foreach (XAML3.INameScopeDictionary nameScope in NameScopeDictionaryList)
                 {
                     namedObject = nameScope.FindName(name);
-                    if (namedObject != null)
+                    if (namedObject is not null)
                     {
                         break;
                     }

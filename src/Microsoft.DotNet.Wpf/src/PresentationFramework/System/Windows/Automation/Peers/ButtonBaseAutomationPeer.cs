@@ -35,7 +35,7 @@ namespace System.Windows.Automation.Peers
             if (acceleratorKey == string.Empty)
             {
                 RoutedUICommand uiCommand = ((ButtonBase)Owner).Command as RoutedUICommand;
-                if (uiCommand != null && !string.IsNullOrEmpty(uiCommand.Text))
+                if (uiCommand is not null && !string.IsNullOrEmpty(uiCommand.Text))
                 {
                     acceleratorKey = uiCommand.Text;
                 }
@@ -51,7 +51,7 @@ namespace System.Windows.Automation.Peers
            {
                ButtonBase owner = (ButtonBase)Owner;
                RoutedCommand command = owner.Command as RoutedCommand;
-               if (command != null)
+               if (command is not null)
                {
                    string commandName = command.Name;
                    if (!string.IsNullOrEmpty(commandName))
@@ -80,7 +80,7 @@ namespace System.Windows.Automation.Peers
             else
             {
                 RoutedUICommand uiCommand = bb.Command as RoutedUICommand;
-                if (uiCommand != null && !string.IsNullOrEmpty(uiCommand.Text))
+                if (uiCommand is not null && !string.IsNullOrEmpty(uiCommand.Text))
                 {
                     result = uiCommand.Text;
                 }

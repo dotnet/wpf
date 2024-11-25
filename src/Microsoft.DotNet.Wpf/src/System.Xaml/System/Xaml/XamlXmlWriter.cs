@@ -54,7 +54,7 @@ namespace System.Xaml
         {
             ArgumentNullException.ThrowIfNull(stream);
 
-            if (settings != null && settings.CloseOutput)
+            if (settings is not null && settings.CloseOutput)
             {
                 InitializeXamlXmlWriter(XmlWriter.Create(stream, new XmlWriterSettings { CloseOutput = true }), schemaContext, settings);
             }
@@ -73,7 +73,7 @@ namespace System.Xaml
         {
             ArgumentNullException.ThrowIfNull(textWriter);
 
-            if (settings != null && settings.CloseOutput)
+            if (settings is not null && settings.CloseOutput)
             {
                 InitializeXamlXmlWriter(XmlWriter.Create(textWriter, new XmlWriterSettings { CloseOutput = true }), schemaContext, settings);
             }
@@ -171,7 +171,7 @@ namespace System.Xaml
 
             currentState.WriteObject(this, type, false);
 
-            if (type.TypeArguments != null)
+            if (type.TypeArguments is not null)
             {
                 WriteTypeArguments(type);
             }
@@ -380,8 +380,8 @@ namespace System.Xaml
 
         bool IsShadowed(string ns, string prefix)
         {
-            Debug.Assert(ns != null);
-            Debug.Assert(prefix != null);
+            Debug.Assert(ns is not null);
+            Debug.Assert(prefix is not null);
 
             string registeredNamespace;
             foreach (Frame frame in namespaceScopes)
@@ -563,7 +563,7 @@ namespace System.Xaml
                 currentState.WriteNamespace(this, new NamespaceDeclaration(chosenNamespace, prefix));
             }
 
-            if (type.TypeArguments != null)
+            if (type.TypeArguments is not null)
             {
                 foreach (XamlType arg in type.TypeArguments)
                 {
@@ -585,7 +585,7 @@ namespace System.Xaml
                 return true;
             }
 
-            if (type.TypeArguments != null)
+            if (type.TypeArguments is not null)
             {
                 foreach (XamlType arg in type.TypeArguments)
                 {
@@ -633,7 +633,7 @@ namespace System.Xaml
             typeNamePrefixed = GenericTypeNameScanner.StripSubscript(typeNamePrefixed, out subscript);
 
             builder.Append(typeNamePrefixed);
-            if (type.TypeArguments != null)
+            if (type.TypeArguments is not null)
             {
                 bool added = false;
                 builder.Append('(');
@@ -650,7 +650,7 @@ namespace System.Xaml
             }
 
             // re-attach the subscript
-            if (subscript != null)
+            if (subscript is not null)
             {
                 builder.Append(subscript);
             }
@@ -1015,7 +1015,7 @@ namespace System.Xaml
                 writer.namespaceScopes.Peek().Member = property;
 
                 XamlType parentType = writer.namespaceScopes.Peek().Type;
-                if ((property == XamlLanguage.Items && parentType != null && parentType.IsWhitespaceSignificantCollection) ||
+                if ((property == XamlLanguage.Items && parentType is not null && parentType.IsWhitespaceSignificantCollection) ||
                     (property == XamlLanguage.UnknownContent))
                 {
                     writer.isFirstElementOfWhitespaceSignificantCollection = true;
@@ -1056,7 +1056,7 @@ namespace System.Xaml
 
                     // but in order to expand parameters, the markup extension needs to have a default constructor
 
-                    if (containingType != null && containingType.ConstructionRequiresArguments)
+                    if (containingType is not null && containingType.ConstructionRequiresArguments)
                     {
                         throw new XamlXmlWriterException(SR.ExpandPositionalParametersinTypeWithNoDefaultConstructor);
                     }
@@ -1119,7 +1119,7 @@ namespace System.Xaml
             public override void WriteStartMember(XamlXmlWriter writer, XamlMember property)
             {
                 XamlType parentType = writer.namespaceScopes.Peek().Type;
-                if ((property == XamlLanguage.Items && parentType != null && parentType.IsWhitespaceSignificantCollection) ||
+                if ((property == XamlLanguage.Items && parentType is not null && parentType.IsWhitespaceSignificantCollection) ||
                     (property == XamlLanguage.UnknownContent))
                 {
                     writer.isFirstElementOfWhitespaceSignificantCollection = true;
@@ -1164,7 +1164,7 @@ namespace System.Xaml
                     writer.namespaceScopes.Pop();
                     // but in order to expand properties, the markup extension needs to have a default constructor
 
-                    if (containingType != null && containingType.ConstructionRequiresArguments)
+                    if (containingType is not null && containingType.ConstructionRequiresArguments)
                     {
                         throw new XamlXmlWriterException(SR.ExpandPositionalParametersinTypeWithNoDefaultConstructor);
                     }
@@ -1183,7 +1183,7 @@ namespace System.Xaml
                 {
                     writer.currentState = TryContentPropertyInTryAttributesState.State;
                 }
-                else if (property.IsDirective && (property.Type != null && (property.Type.IsCollection || property.Type.IsDictionary)))
+                else if (property.IsDirective && (property.Type is not null && (property.Type.IsCollection || property.Type.IsDictionary)))
                 {
                     writer.WriteDeferredNamespaces(XamlNodeType.StartObject);
                     WriteMemberAsElement(writer);
@@ -1256,7 +1256,7 @@ namespace System.Xaml
                     {
                         XamlType containingXamlType = GetContainingXamlType(writer);
                         //Treat unknown types as WhitespaceSignificantCollections
-                        if (containingXamlType != null && !containingXamlType.IsWhitespaceSignificantCollection)
+                        if (containingXamlType is not null && !containingXamlType.IsWhitespaceSignificantCollection)
                         {
                             WriteXmlSpaceOrThrow(writer, value);
                             writer.output.WriteValue(value);
@@ -1376,7 +1376,7 @@ namespace System.Xaml
                     if (frame.AllocatingNodeType == XamlNodeType.StartMember)
                     {
                         XamlType memberType = frame.Member.Type;
-                        if (memberType != null && !memberType.IsCollection && !memberType.IsDictionary)
+                        if (memberType is not null && !memberType.IsCollection && !memberType.IsDictionary)
                         {
                             throw new InvalidOperationException(SR.XamlXmlWriterIsObjectFromMemberSetForArraysOrNonCollections);
                         }
@@ -1592,7 +1592,7 @@ namespace System.Xaml
             {
                 //  We should remove the !type.IsGeneric check once
                 //  XamlReader is fixed to handle Generic MEs.
-                if (type != null && type.IsMarkupExtension && !type.IsGeneric)
+                if (type is not null && type.IsMarkupExtension && !type.IsGeneric)
                 {
                     writer.meWriter.Reset();
                     writer.meNodesStack.Push(new List<XamlNode>());
@@ -1737,7 +1737,7 @@ namespace System.Xaml
                 }
                 else
                 {
-                    Debug.Assert(value != null);
+                    Debug.Assert(value is not null);
                     writer.namespaceScopes.Peek().IsContent = false;
                     writer.currentState = InMemberTryAttributes.State;
                     writer.currentState.WriteValue(writer, value);
@@ -1809,7 +1809,7 @@ namespace System.Xaml
                 }
 
                 // Did writing the markup extension succeed?
-                if (writer.meWriter.MarkupExtensionString != null)
+                if (writer.meWriter.MarkupExtensionString is not null)
                 {
                     writer.meNodesStack.Pop();
                     writer.deferredValue = writer.meWriter.MarkupExtensionString;
@@ -1885,7 +1885,7 @@ namespace System.Xaml
                 Debug.Assert(frame.AllocatingNodeType == XamlNodeType.StartObject);
 
                 XamlType objectXamlType = frame.Type;
-                Debug.Assert(objectXamlType != null);
+                Debug.Assert(objectXamlType is not null);
 
                 Type objectClrType = objectXamlType.UnderlyingType;
                 if (objectClrType is null)
@@ -1926,7 +1926,7 @@ namespace System.Xaml
                     }
 
                     XamlMember member = objectXamlType.GetMember(matchingProperty.Name);
-                    Debug.Assert(member != null);
+                    Debug.Assert(member is not null);
 
                     if (member.IsReadOnly)
                     {
@@ -1952,7 +1952,7 @@ namespace System.Xaml
                 foreach (var xamlType in paramXamlTypes)
                 {
                     Type underlyingType = xamlType.UnderlyingType;
-                    if (underlyingType != null)
+                    if (underlyingType is not null)
                     {
                         paramClrTypes[i++] = underlyingType;
                     }

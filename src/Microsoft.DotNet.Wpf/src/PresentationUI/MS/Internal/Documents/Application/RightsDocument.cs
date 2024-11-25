@@ -36,7 +36,7 @@ internal class RightsDocument : StreamDocument<StreamProxy>
     /// </summary>
     internal bool IsDestinationProtected()
     {
-        if (DestinationPackage != null)
+        if (DestinationPackage is not null)
         {
             return true;
         }
@@ -52,7 +52,7 @@ internal class RightsDocument : StreamDocument<StreamProxy>
     /// </summary>
     internal bool IsSourceProtected()
     {
-        if (SourcePackage != null)
+        if (SourcePackage is not null)
         {
             return true;
         }
@@ -129,7 +129,7 @@ internal class RightsDocument : StreamDocument<StreamProxy>
                 // three more try/finally blocks) for each Close call.
                 try
                 {
-                    if (DestinationPackage != null)
+                    if (DestinationPackage is not null)
                     {
                         if (DestinationPackage == SourcePackage)
                         {
@@ -143,7 +143,7 @@ internal class RightsDocument : StreamDocument<StreamProxy>
                 {
                     try
                     {
-                        if (WorkspacePackage != null)
+                        if (WorkspacePackage is not null)
                         {
                             WorkspacePackage.Close();
                             WorkspacePackage = null;
@@ -151,7 +151,7 @@ internal class RightsDocument : StreamDocument<StreamProxy>
                     }
                     finally
                     {
-                        if (SourcePackage != null)
+                        if (SourcePackage is not null)
                         {
                             SourcePackage.Close();
                             SourcePackage = null;

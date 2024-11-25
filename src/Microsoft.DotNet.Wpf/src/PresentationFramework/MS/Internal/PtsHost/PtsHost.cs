@@ -66,7 +66,7 @@ namespace MS.Internal.PtsHost
         }
         private PtsContext PtsContext
         {
-            get { Invariant.Assert(_ptsContext != null); return _ptsContext; }
+            get { Invariant.Assert(_ptsContext is not null); return _ptsContext; }
         }
         private PtsContext _ptsContext;
 
@@ -1327,7 +1327,7 @@ namespace MS.Internal.PtsHost
                 TextParagraph para = PtsContext.HandleToObject(nmp) as TextParagraph;
                 PTS.ValidateHandle(para);
                 Line line = PtsContext.HandleToObject(pfslineLast) as Line;
-                if(line != null)
+                if(line is not null)
                 {
                     PTS.ValidateHandle(line);
                     para.FormatBottomText(iArea, fswdir, line, dvrLine, out pmcsclientOut);
@@ -1543,7 +1543,7 @@ namespace MS.Internal.PtsHost
 
                     TextLineBreak textLineBreakOut = textBreakpoint.GetTextLineBreak();
 
-                    if(textLineBreakOut != null)
+                    if(textLineBreakOut is not null)
                     {
 #pragma warning disable 56518
                 // Disable PRESharp warning 6518. Line is an UnmamangedHandle, that adds itself
@@ -1735,7 +1735,7 @@ namespace MS.Internal.PtsHost
             try
             {
                 Line line = PtsContext.HandleToObject(pfsline) as Line;
-                if(line != null)
+                if(line is not null)
                 {
                     PTS.ValidateHandle(line);
                     line.GetDvrSuppressibleBottomSpace(out dvrSuppressible);
@@ -2175,7 +2175,7 @@ namespace MS.Internal.PtsHost
             try
             {
                 Line line = PtsContext.HandleToObject(pfsline) as Line;
-                if(line != null)
+                if(line is not null)
                 {
                     PTS.ValidateHandle(line);
                     FigureParagraph paraFigure = PtsContext.HandleToObject(nmpFigure) as FigureParagraph;
@@ -2525,7 +2525,7 @@ namespace MS.Internal.PtsHost
                 FloaterBaseParaClient paraClient = PtsContext.HandleToObject(pfsFloaterContent) as FloaterBaseParaClient;
                 if (paraClient is UIElementParaClient)
                 {
-                    if (((BlockUIContainer)paraClient.Paragraph.Element).Child != null)
+                    if (((BlockUIContainer)paraClient.Paragraph.Element).Child is not null)
                     {
                         nlines = 1;
                         UIElement uiElement = ((BlockUIContainer)paraClient.Paragraph.Element).Child;
@@ -4098,7 +4098,7 @@ namespace MS.Internal.PtsHost
             try
             {
                 CellParaClient cellParaClient = PtsContext.HandleToObject(pfsCell) as CellParaClient;
-                if (cellParaClient != null)
+                if (cellParaClient is not null)
                 {
                     cellParaClient.Dispose();
                 }

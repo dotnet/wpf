@@ -29,10 +29,10 @@ namespace WinRT
         public static string GetSignature(Type type)
         {
             var helperType = type.FindHelperType();
-            if (helperType != null)
+            if (helperType is not null)
             {
                 var sigMethod = helperType.GetMethod("GetGuidSignature", BindingFlags.Static | BindingFlags.Public);
-                if (sigMethod != null)
+                if (sigMethod is not null)
                 {
                     return (string)sigMethod.Invoke(null, new Type[] { });
                 }

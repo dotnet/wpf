@@ -56,7 +56,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             string valueAsStr = value as string;
-            if (valueAsStr != null)
+            if (valueAsStr is not null)
             {
                 string str = valueAsStr.Trim();
                 if (str.Length == 0)
@@ -65,7 +65,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 }
 
                 char ch = ',';
-                if (culture != null)
+                if (culture is not null)
                 {
                     ch = culture.TextInfo.ListSeparator[0];
                 }
@@ -103,12 +103,12 @@ namespace Microsoft.Windows.Controls.Ribbon
             ArgumentNullException.ThrowIfNull(destinationType);
 
             StringCollection stringCollectionValue = value as StringCollection;
-            if (stringCollectionValue != null)
+            if (stringCollectionValue is not null)
             {
                 if (destinationType == typeof(string))
                 {
                     char ch = ',';
-                    if (culture != null)
+                    if (culture is not null)
                     {
                         ch = culture.TextInfo.ListSeparator[0];
                     }

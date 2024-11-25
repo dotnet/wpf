@@ -148,7 +148,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void OnDropDownToolTipPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             RibbonSplitMenuItem splitMenuItem = (RibbonSplitMenuItem)d;
-            if (splitMenuItem._partArrowButton != null)
+            if (splitMenuItem._partArrowButton is not null)
             {
                 splitMenuItem._partArrowButton.CoerceValue(FrameworkElement.ToolTipProperty);
             }
@@ -162,13 +162,13 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             base.OnApplyTemplate();
 
-            if (_headerButton != null)
+            if (_headerButton is not null)
             {
                 _headerButton.Click -= new RoutedEventHandler(OnHeaderClicked);
             }
             _headerButton = GetTemplateChild(HeaderButtonTemplatePart) as ButtonBase;
 
-            if (_headerButton != null)
+            if (_headerButton is not null)
             {
                 _headerButton.Click += new RoutedEventHandler(OnHeaderClicked);
             }
@@ -204,7 +204,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             RibbonSplitMenuItem splitMenuItem = (RibbonSplitMenuItem)d;
 
             RibbonToggleButton toggleButton = splitMenuItem._headerButton as RibbonToggleButton;
-            if (toggleButton != null)
+            if (toggleButton is not null)
             {
                 toggleButton.IsChecked = splitMenuItem.IsChecked;
             }
@@ -261,7 +261,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private void SetIsPressedBinding()
         {
-            if (_partHeaderButton != null)
+            if (_partHeaderButton is not null)
             {
                 // Clear any existing Binding
                 BindingOperations.ClearBinding(this, IsPressedInternalProperty);
@@ -271,7 +271,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             // Clicking on HeaderToggleButton eats up MouseDown input, hence MenuItem.IsPressed doesnt get updated.
             // Bind to Button.IsPressed and set MenuItem.IsPressed manually.
-            if (_partHeaderButton != null)
+            if (_partHeaderButton is not null)
             {
                 Binding binding = new Binding("IsPressed");
                 binding.Source = _partHeaderButton;
@@ -293,12 +293,12 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private void SetBorderThickness()
         {
-            if (_highlightLeftBorder != null)
+            if (_highlightLeftBorder is not null)
             {
                 // Right = 0.0
                 _highlightLeftBorder.BorderThickness = new Thickness(BorderThickness.Left, BorderThickness.Top, 0.0, BorderThickness.Bottom);
             }
-            if (_highlightRightBorder != null)
+            if (_highlightRightBorder is not null)
             {
                 // Left = 0.0
                 _highlightRightBorder.BorderThickness = new Thickness(0.0, BorderThickness.Top, BorderThickness.Right, BorderThickness.Bottom);
@@ -407,7 +407,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     IsSubmenuOpen = true;
                     RibbonHelper.NavigateToNextMenuItemOrGallery(this, -1, BringIndexIntoView);
                     UIElement popupChild = Popup.TryGetChild();
-                    if (popupChild != null)
+                    if (popupChild is not null)
                     {
                         KeyTipService.SetIsKeyTipScope(popupChild, true);
                         e.TargetKeyTipScope = popupChild;

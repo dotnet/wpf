@@ -170,7 +170,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             get
             {
-                return ContextualTabGroupHeader != null;
+                return ContextualTabGroupHeader is not null;
             }
         }
 
@@ -182,13 +182,13 @@ namespace Microsoft.Windows.Controls.Ribbon
             get
             {
                 Ribbon ribbon = Ribbon;
-                if (ribbon != null)
+                if (ribbon is not null)
                 {
                     int index = ribbon.ItemContainerGenerator.IndexFromContainer(this);
                     if (index >= 0)
                     {
                         RibbonTabHeaderItemsControl headerItemsControl = ribbon.RibbonTabHeaderItemsControl;
-                        if (headerItemsControl != null)
+                        if (headerItemsControl is not null)
                         {
                             return headerItemsControl.ItemContainerGenerator.ContainerFromIndex(index) as RibbonTabHeader;
                         }
@@ -249,7 +249,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
         {
             ItemsControl childItemsControl = element as ItemsControl;
-            if (childItemsControl != null)
+            if (childItemsControl is not null)
             {
                 // copy templates and styles from this ItemsControl
                 var itemTemplate = RibbonHelper.GetValueAndValueSource(childItemsControl, ItemsControl.ItemTemplateProperty);
@@ -286,7 +286,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
 
             RibbonGroup ribbonGroup = element as RibbonGroup;
-            if (ribbonGroup != null)
+            if (ribbonGroup is not null)
             {
                 ribbonGroup.PrepareRibbonGroup();
             }
@@ -296,7 +296,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             base.ClearContainerForItemOverride(element, item);
             RibbonGroup ribbonGroup = element as RibbonGroup;
-            if (ribbonGroup != null)
+            if (ribbonGroup is not null)
             {
                 ribbonGroup.ClearRibbonGroup();
             }
@@ -333,7 +333,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     _groupReductionResizeStatus.Clear();
                     break;
                 case NotifyCollectionChangedAction.Remove:
-                    if (GroupSizeReductionOrder != null)
+                    if (GroupSizeReductionOrder is not null)
                     {
                         int removedCount = e.OldItems.Count;
                         for (int i = 0; i < removedCount; i++)
@@ -351,7 +351,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                                 }
                             }
 
-                            if (_groupAutoResizeIndex != null &&
+                            if (_groupAutoResizeIndex is not null &&
                                 _groupAutoResizeIndex.Value > deletedItemIndex)
                             {
                                 _groupAutoResizeIndex--;
@@ -377,7 +377,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 DependencyObject focusedElement = Keyboard.FocusedElement as DependencyObject;
                 RibbonTabHeader tabHeader = RibbonTabHeader;
-                if (e.Key == Key.Up && focusedElement != null && tabHeader != null)
+                if (e.Key == Key.Up && focusedElement is not null && tabHeader is not null)
                 {
                     // On arrow up key press if the focus goes out of the tab,
                     // then force it to move to the corresponding TabHeader.
@@ -435,7 +435,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 int nextGroupIndex = _automaticResizeOrder[automaticResizeOrderCount - 1];
                 nextRibbonGroup = ItemContainerGenerator.ContainerFromIndex(nextGroupIndex) as RibbonGroup;
-                if (nextRibbonGroup != null)
+                if (nextRibbonGroup is not null)
                 {
                     resizeSuccessful = nextRibbonGroup.IncreaseGroupSize(update);
                 }
@@ -449,7 +449,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             if (!resizeSuccessful)
             {
-                if (GroupSizeReductionOrder != null &&
+                if (GroupSizeReductionOrder is not null &&
                     _groupReduceOrderLocation >= 0)
                 {
                     int groupReduceOrderLocation = _groupReduceOrderLocation;
@@ -509,7 +509,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         internal bool DecreaseNextGroupSize()
         {
             bool resizeSuccessful = false;
-            if (GroupSizeReductionOrder != null)
+            if (GroupSizeReductionOrder is not null)
             {
                 while (_groupReduceOrderLocation < GroupSizeReductionOrder.Count - 1 && !resizeSuccessful)
                 {
@@ -563,7 +563,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 {
                     numAttempts++;
                     RibbonGroup group = ItemContainerGenerator.ContainerFromIndex((_groupAutoResizeIndex--).Value) as RibbonGroup;
-                    if (group != null)
+                    if (group is not null)
                     {
                         resizeSuccessful = group.DecreaseGroupSize();
                     }
@@ -607,7 +607,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         internal void PrepareRibbonTab()
         {
-            if (ContextualTabGroupHeader != null && Ribbon.ContextualTabGroupItemsControl != null)
+            if (ContextualTabGroupHeader is not null && Ribbon.ContextualTabGroupItemsControl is not null)
             {
                 ContextualTabGroup = Ribbon.ContextualTabGroupItemsControl.FindHeader(ContextualTabGroupHeader);
             }
@@ -615,7 +615,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             CoerceValue(VisibilityProperty);
 
             RibbonTabHeader tabHeader = RibbonTabHeader;
-            if (tabHeader != null)
+            if (tabHeader is not null)
             {
                 tabHeader.InitializeTransferProperties();
             }
@@ -642,17 +642,17 @@ namespace Microsoft.Windows.Controls.Ribbon
             Visibility baseVisibility = (Visibility)value;
             Visibility contextualVisibility = Visibility.Visible;
             RibbonTab tab = (RibbonTab)d;
-            bool contextualHeaderSet = tab.ContextualTabGroupHeader != null;
+            bool contextualHeaderSet = tab.ContextualTabGroupHeader is not null;
 
             if (tab.ContextualTabGroup is null && contextualHeaderSet)
             {
-                if (tab.Ribbon != null && tab.Ribbon.ContextualTabGroupItemsControl != null)
+                if (tab.Ribbon is not null && tab.Ribbon.ContextualTabGroupItemsControl is not null)
                 {
                     tab.ContextualTabGroup = tab.Ribbon.ContextualTabGroupItemsControl.FindHeader(tab.ContextualTabGroupHeader);
                 }
             }
 
-            if (tab.ContextualTabGroup != null)
+            if (tab.ContextualTabGroup is not null)
             {
                 contextualVisibility = tab.ContextualTabGroup.Visibility;
             }
@@ -675,14 +675,14 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void OnVisibilityChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             RibbonTab tab = (RibbonTab)sender;
-            if (tab.RibbonTabHeader != null)
+            if (tab.RibbonTabHeader is not null)
             {
                 tab.RibbonTabHeader.CoerceValue(VisibilityProperty);
             }
 
             // If the selected tab goes from visible to no longer visible, then reset the Ribbon's selected tab.
             Ribbon ribbon = tab.Ribbon;
-            if (ribbon != null &&
+            if (ribbon is not null &&
                 tab.IsSelected &&
                 (Visibility)e.OldValue == Visibility.Visible &&
                 (Visibility)e.NewValue != Visibility.Visible)
@@ -698,7 +698,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             RibbonTab tab = (RibbonTab)d;
             Ribbon ribbon = tab.Ribbon;
-            if (ribbon != null)
+            if (ribbon is not null)
             {
                 ribbon.NotifyTabHeaderChanged();
             }
@@ -720,7 +720,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 ribbonTab.OnUnselected(new RoutedEventArgs(Selector.UnselectedEvent, ribbonTab));
             }
             RibbonTabHeader header = ribbonTab.RibbonTabHeader;
-            if (header != null)
+            if (header is not null)
             {
                 header.CoerceValue(RibbonTabHeader.IsRibbonTabSelectedProperty);
             }
@@ -730,7 +730,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 || AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection))
             {
                 RibbonTabAutomationPeer peer = RibbonTabAutomationPeer.CreatePeerForElement(ribbonTab) as RibbonTabAutomationPeer;
-                if (peer != null)
+                if (peer is not null)
                 {
                     peer.RaiseTabSelectionEvents();
                 }
@@ -744,7 +744,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             RibbonTab ribbonTab = (RibbonTab)sender;
             RibbonTabHeader header = ribbonTab.RibbonTabHeader;
-            if (header != null)
+            if (header is not null)
             {
                 header.CoerceValue(RibbonTabHeader.IsEnabledProperty);
             }
@@ -757,10 +757,10 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             RibbonTab ribbonTab = (RibbonTab)d;
             Ribbon ribbon = ribbonTab.Ribbon;
-            if (ribbon != null)
+            if (ribbon is not null)
             {
                 ribbon.NotifyTabContextualTabGroupHeaderChanged();
-                if (e.NewValue != null && ribbonTab.Ribbon.ContextualTabGroupItemsControl != null)
+                if (e.NewValue is not null && ribbonTab.Ribbon.ContextualTabGroupItemsControl is not null)
                 {
                     ribbonTab.ContextualTabGroup = ribbonTab.Ribbon.ContextualTabGroupItemsControl.FindHeader(e.NewValue);
                 }
@@ -776,7 +776,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private RibbonGroup FindRibbonGroupWithName(string groupName)
         {
-            if (groupName != null)
+            if (groupName is not null)
             {
                 groupName = groupName.Trim();
             }
@@ -788,7 +788,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             for (int i = 0; i < itemCount; i++)
             {
                 RibbonGroup group = ItemContainerGenerator.ContainerFromIndex(i) as RibbonGroup;
-                if (group != null && group.Name == groupName)
+                if (group is not null && group.Name == groupName)
                 {
                     return group;
                 }
@@ -801,7 +801,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             RibbonTab tab = (RibbonTab)d;
             tab.NotifyPropertyChanged(e);
             RibbonTabHeader tabHeader = tab.RibbonTabHeader;
-            if (tabHeader != null)
+            if (tabHeader is not null)
             {
                 tabHeader.NotifyPropertyChanged(e);
             }
@@ -844,7 +844,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             RibbonTab tab = (RibbonTab)d;
             RibbonTabHeader tabHeader = tab.RibbonTabHeader;
-            if (tabHeader != null)
+            if (tabHeader is not null)
             {
                 tabHeader.CoerceValue(KeyTipService.KeyTipProperty);
             }

@@ -49,9 +49,9 @@ namespace MS.Internal.IO.Packaging
         #pragma warning disable SYSLIB0014 
         internal PseudoWebRequest(Uri uri, Uri packageUri, Uri partUri, Package cacheEntry)
         {
-            Debug.Assert(uri != null, "PackWebRequest uri cannot be null");
-            Debug.Assert(packageUri != null, "packageUri cannot be null");
-            Debug.Assert(partUri != null, "partUri cannot be null");
+            Debug.Assert(uri is not null, "PackWebRequest uri cannot be null");
+            Debug.Assert(packageUri is not null, "packageUri cannot be null");
+            Debug.Assert(partUri is not null, "partUri cannot be null");
 
             // keep these
             _uri = uri;

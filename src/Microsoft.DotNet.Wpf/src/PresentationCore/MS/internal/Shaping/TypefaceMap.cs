@@ -59,7 +59,7 @@ namespace MS.Internal.Shaping
             bool                 nullFont
             )
         {
-            Invariant.Assert(fontFamily != null);
+            Invariant.Assert(fontFamily is not null);
 
             _fontFamilies = fallbackFontFamily is null ?
                  new FontFamily[] { fontFamily }
@@ -543,7 +543,7 @@ namespace MS.Internal.Shaping
                 // Determine whether the run is using a device font, and limit the run to the
                 // first boundary between device/non-device font usage.
                 bool useDeviceFont = false;
-                if (deviceFont != null)
+                if (deviceFont is not null)
                 {
                     // Determine whether the first run uses a device font by inspecting the first character.
                     // We do not support device fonts for codepoints >= U+10000 (aka surrogates), so we
@@ -614,7 +614,7 @@ namespace MS.Internal.Shaping
                 else if (!string.IsNullOrEmpty(targetFamilyName))
                 {
                     // The base Uri used for resolving target family names is the Uri of the composite font.
-                    Uri baseUri = (canonicalFamilyReference != null) ? canonicalFamilyReference.LocationUri : null;
+                    Uri baseUri = (canonicalFamilyReference is not null) ? canonicalFamilyReference.LocationUri : null;
 
                     // map to the target of the family map
                     cchAdvance = MapByFontFamilyName(
@@ -686,7 +686,7 @@ namespace MS.Internal.Shaping
                 // We didn't find any valid physical font family so use the default "Arial", and
                 // set nullFont to true to ensure that we always display missing glyphs.
                 fontFamily = FontFamily.LookupFontFamily(FontFamily.NullFontFamilyCanonicalName);
-                Invariant.Assert(fontFamily != null);
+                Invariant.Assert(fontFamily is not null);
                 nullFont = true;
             }
 
@@ -869,7 +869,7 @@ namespace MS.Internal.Shaping
             out int                             nextValid
             )
         {
-            Invariant.Assert(familyList != null);
+            Invariant.Assert(familyList is not null);
 
             int advance = 0;
             nextValid = 0;
@@ -910,7 +910,7 @@ namespace MS.Internal.Shaping
                 // Inner loop to loop over all name tokens of a FontFamily.
                 for (;;)
                 {
-                    if (targetFamily != null)
+                    if (targetFamily is not null)
                     {
                         advance = MapByFontFamily(
                             mapString,
@@ -997,10 +997,10 @@ namespace MS.Internal.Shaping
             out int                 nextValid
             )
         {
-            Invariant.Assert(fontFamily != null);
+            Invariant.Assert(fontFamily is not null);
 
             PhysicalFontFamily fontFaceFamily = fontFamily as PhysicalFontFamily;
-            Invariant.Assert(fontFaceFamily != null);
+            Invariant.Assert(fontFaceFamily is not null);
 
             int advance = unicodeString.Length;
             nextValid = 0;
@@ -1031,7 +1031,7 @@ namespace MS.Internal.Shaping
                     );
             }
 
-            Invariant.Assert(glyphTypeface != null);
+            Invariant.Assert(glyphTypeface is not null);
 
             int cch = unicodeString.Length;
             if(!ignoreMissing && advance > 0)

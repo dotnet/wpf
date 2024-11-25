@@ -61,7 +61,7 @@ namespace MS.Internal.Documents
 
                 //If the old PageCache is non-null, we need to
                 //remove the old event handlers before we assign the new one.
-                if (_pageCache != null)
+                if (_pageCache is not null)
                 {
                     _pageCache.PageCacheChanged -= new PageCacheChangedEventHandler(OnPageCacheChanged);
                     _pageCache.PaginationCompleted -= new EventHandler(OnPaginationCompleted);
@@ -70,7 +70,7 @@ namespace MS.Internal.Documents
                 _pageCache = value;
 
                 //Attach our event handlers if the new content is non-null.
-                if (_pageCache != null)
+                if (_pageCache is not null)
                 {
                     _pageCache.PageCacheChanged += new PageCacheChangedEventHandler(OnPageCacheChanged);
                     _pageCache.PaginationCompleted += new EventHandler(OnPaginationCompleted);
@@ -1207,7 +1207,7 @@ namespace MS.Internal.Documents
                             {
                                 //Completely new pages, so we add new cache entries
                                 RowCacheChange change = AddPageRange(pageChange.Start, pageChange.Count);
-                                if (change != null)
+                                if (change is not null)
                                 {
                                     changes.Add(change);
                                 }
@@ -1218,7 +1218,7 @@ namespace MS.Internal.Documents
                                 {
                                     //All pre-existing pages, so we just update the current cache entries.
                                     RowCacheChange change = UpdatePageRange(pageChange.Start, pageChange.Count);
-                                    if (change != null)
+                                    if (change is not null)
                                     {
                                         changes.Add(change);
                                     }
@@ -1228,12 +1228,12 @@ namespace MS.Internal.Documents
                                     //Some pre-existing pages, some new.                        
                                     RowCacheChange change;
                                     change = UpdatePageRange(pageChange.Start, LastPageInCache - pageChange.Start);
-                                    if (change != null)
+                                    if (change is not null)
                                     {
                                         changes.Add(change);
                                     }
                                     change = AddPageRange(LastPageInCache + 1, pageChange.Count - (LastPageInCache - pageChange.Start));
-                                    if (change != null)
+                                    if (change is not null)
                                     {
                                         changes.Add(change);
                                     }
@@ -1249,7 +1249,7 @@ namespace MS.Internal.Documents
                                 //Remove pages starting at the first no-longer-existent page.
                                 //(PageCache.PageCount now points to the first dead page)
                                 RowCacheChange change = TrimPageRange(PageCache.PageCount);
-                                if (change != null)
+                                if (change is not null)
                                 {
                                     changes.Add(change);
                                 }

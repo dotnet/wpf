@@ -64,13 +64,13 @@ namespace System.Windows.Documents
         /// </param>
         public InlineUIContainer(UIElement childUIElement, TextPointer insertionPosition)
         {
-            if (insertionPosition != null)
+            if (insertionPosition is not null)
             {
                 insertionPosition.TextContainer.BeginChange();
             }
             try
             {
-                if (insertionPosition != null)
+                if (insertionPosition is not null)
                 {
                     // This will throw InvalidOperationException if schema validity is violated.
                     insertionPosition.InsertInline(this);
@@ -80,7 +80,7 @@ namespace System.Windows.Documents
             }
             finally
             {
-                if (insertionPosition != null)
+                if (insertionPosition is not null)
                 {
                     insertionPosition.TextContainer.EndChange();
                 }
@@ -117,13 +117,13 @@ namespace System.Windows.Documents
                     TextPointer contentStart = this.ContentStart;
 
                     UIElement child = Child;
-                    if (child != null)
+                    if (child is not null)
                     {
                         textContainer.DeleteContentInternal(contentStart, this.ContentEnd);
                         ContainerTextElementField.ClearValue(child);
                     }
 
-                    if (value != null)
+                    if (value is not null)
                     {
                         ContainerTextElementField.SetValue(value, this);
                         contentStart.InsertUIElement(value);
@@ -168,13 +168,13 @@ namespace System.Windows.Documents
 
             if(_uiElementIsland is null || _uiElementIsland.Root != childElement)
             {
-                if(_uiElementIsland != null)
+                if(_uiElementIsland is not null)
                 {
                     _uiElementIsland.Dispose();
                     _uiElementIsland = null;
                 }
 
-                if(childElement != null)
+                if(childElement is not null)
                 {
                     _uiElementIsland = new UIElementIsland(childElement);
                 }

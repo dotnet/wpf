@@ -186,7 +186,7 @@ namespace System.Windows.Automation.Peers
                     for (int i = 0; i < items.Count; i++)
                     {
                         UIElement uiElement = owner.ItemContainerGenerator.ContainerFromIndex(i) as UIElement;
-                        if (uiElement != null)
+                        if (uiElement is not null)
                         {
                             AutomationPeer peer = UIElementAutomationPeer.FromElement(uiElement);
                             if (peer is null)

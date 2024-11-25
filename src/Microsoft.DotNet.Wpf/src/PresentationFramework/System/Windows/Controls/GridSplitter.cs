@@ -420,7 +420,7 @@ namespace System.Windows.Controls
             protected override Visual GetVisualChild(int index)
             {
                 // it is initialized in the constructor
-                Debug.Assert(_decorator != null);
+                Debug.Assert(_decorator is not null);
                 if(index != 0)
                 {
                     throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
@@ -443,7 +443,7 @@ namespace System.Windows.Controls
                 get 
                 {
                     // it is initialized in the constructor
-                    Debug.Assert(_decorator != null);
+                    Debug.Assert(_decorator is not null);
                     return 1; 
                 }
             }
@@ -476,7 +476,7 @@ namespace System.Windows.Controls
         private void RemovePreviewAdorner()
         {
             // Remove the preview grid from the adorner
-            if (_resizeData.Adorner != null)
+            if (_resizeData.Adorner is not null)
             {
                 AdornerLayer layer = VisualTreeHelper.GetParent(_resizeData.Adorner) as AdornerLayer;
                 layer.Remove(_resizeData.Adorner);
@@ -493,7 +493,7 @@ namespace System.Windows.Controls
             Grid grid = Parent as Grid;
 
             // If not in a grid or can't resize, do nothing
-            if (grid != null)
+            if (grid is not null)
             {
                 // Setup data used for resizing
                 _resizeData = new ResizeData();
@@ -617,7 +617,7 @@ namespace System.Windows.Controls
         {
             base.OnLostKeyboardFocus(e);
 
-            if (_resizeData != null)
+            if (_resizeData is not null)
             {
                 CancelResize();
             }
@@ -646,7 +646,7 @@ namespace System.Windows.Controls
         // Thumb dragged
         private void OnDragDelta(DragDeltaEventArgs e)
         {
-            if (_resizeData != null)
+            if (_resizeData is not null)
             {
                 double horizontalChange = e.HorizontalChange;
                 double verticalChange = e.VerticalChange;
@@ -685,7 +685,7 @@ namespace System.Windows.Controls
         // Thumb dragging finished
         private void OnDragCompleted(DragCompletedEventArgs e)
         {
-            if (_resizeData != null)
+            if (_resizeData is not null)
             {
                 if (_resizeData.ShowsPreview)
                 {
@@ -708,7 +708,7 @@ namespace System.Windows.Controls
             switch (key)
             {
                 case Key.Escape:
-                    if (_resizeData != null)
+                    if (_resizeData is not null)
                     {
                         CancelResize();
                         e.Handled = true;
@@ -866,7 +866,7 @@ namespace System.Windows.Controls
         // Move the splitter by the given Delta's in the horizontal and vertical directions
         private void MoveSplitter(double horizontalChange, double verticalChange)
         {
-            Debug.Assert(_resizeData != null, "_resizeData should not be null when calling MoveSplitter");
+            Debug.Assert(_resizeData is not null, "_resizeData should not be null when calling MoveSplitter");
 
             double delta;
             DpiScale dpi = GetDpi();
@@ -896,7 +896,7 @@ namespace System.Windows.Controls
 
             DefinitionBase definition1 = _resizeData.Definition1;
             DefinitionBase definition2 = _resizeData.Definition2;
-            if (definition1 != null && definition2 != null)
+            if (definition1 is not null && definition2 is not null)
             {
                 double actualLength1 = GetActualLength(definition1);
                 double actualLength2 = GetActualLength(definition2);
@@ -943,7 +943,7 @@ namespace System.Windows.Controls
         internal bool KeyboardMoveSplitter(double horizontalChange, double verticalChange)
         {
             // If moving with the mouse, ignore keyboard motion
-            if (_resizeData != null)
+            if (_resizeData is not null)
             {
                 return false;  // don't handle the event
             }

@@ -207,7 +207,7 @@ namespace System.Windows.Controls
         private static void OnDisplayDateEndChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DatePicker dp = d as DatePicker;
-            Debug.Assert(dp != null);
+            Debug.Assert(dp is not null);
 
             dp.CoerceValue(DisplayDateProperty);
         }
@@ -253,7 +253,7 @@ namespace System.Windows.Controls
         private static void OnDisplayDateStartChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DatePicker dp = d as DatePicker;
-            Debug.Assert(dp != null);
+            Debug.Assert(dp is not null);
 
             dp.CoerceValue(DisplayDateEndProperty);
             dp.CoerceValue(DisplayDateProperty);
@@ -318,7 +318,7 @@ namespace System.Windows.Controls
         private static object OnCoerceIsDropDownOpen(DependencyObject d, object baseValue)
         {
             DatePicker dp = d as DatePicker;
-            Debug.Assert(dp != null);
+            Debug.Assert(dp is not null);
 
             if (!dp.IsEnabled)
             {
@@ -336,10 +336,10 @@ namespace System.Windows.Controls
         private static void OnIsDropDownOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DatePicker dp = d as DatePicker;
-            Debug.Assert(dp != null);
+            Debug.Assert(dp is not null);
 
             bool newValue = (bool)e.NewValue;
-            if (dp._popUp != null && dp._popUp.IsOpen != newValue)
+            if (dp._popUp is not null && dp._popUp.IsOpen != newValue)
             {
                 dp._popUp.IsOpen = newValue;
                 if (newValue)
@@ -363,7 +363,7 @@ namespace System.Windows.Controls
         private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DatePicker dp = d as DatePicker;
-            Debug.Assert(dp != null);
+            Debug.Assert(dp is not null);
 
             dp.CoerceValue(IsDropDownOpenProperty);
 
@@ -435,7 +435,7 @@ namespace System.Windows.Controls
         private static void OnSelectedDateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DatePicker dp = d as DatePicker;
-            Debug.Assert(dp != null);
+            Debug.Assert(dp is not null);
 
             Collection<DateTime> addedItems = new Collection<DateTime>();
             Collection<DateTime> removedItems = new Collection<DateTime>();
@@ -482,7 +482,7 @@ namespace System.Windows.Controls
 
             DatePickerAutomationPeer peer = UIElementAutomationPeer.FromElement(dp) as DatePickerAutomationPeer;
             // Raise the propetyChangeEvent for Value if Automation Peer exist
-            if (peer != null)
+            if (peer is not null)
             {
                 string addedDateString = addedDate.HasValue ? dp.DateTimeToString(addedDate.Value) : "";
                 string removedDateString = removedDate.HasValue ? dp.DateTimeToString(removedDate.Value) : "";
@@ -531,9 +531,9 @@ namespace System.Windows.Controls
         private static void OnSelectedDateFormatChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DatePicker dp = d as DatePicker;
-            Debug.Assert(dp != null);
+            Debug.Assert(dp is not null);
 
-            if (dp._textBox != null)
+            if (dp._textBox is not null)
             {
                 // Update DatePickerTextBox.Text
                 if (string.IsNullOrEmpty(dp._textBox.Text))
@@ -544,7 +544,7 @@ namespace System.Windows.Controls
                 {
                     DateTime? date = dp.ParseText(dp._textBox.Text);
 
-                    if (date != null)
+                    if (date is not null)
                     {
                         dp.SetTextInternal(dp.DateTimeToString((DateTime)date));
                     }
@@ -583,15 +583,15 @@ namespace System.Windows.Controls
         private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DatePicker dp = d as DatePicker;
-            Debug.Assert(dp != null);
+            Debug.Assert(dp is not null);
 
             if (!dp.IsHandlerSuspended(DatePicker.TextProperty))
             {
                 string newValue = e.NewValue as string;
 
-                if (newValue != null)
+                if (newValue is not null)
                 {
-                    if (dp._textBox != null)
+                    if (dp._textBox is not null)
                     {
                         dp._textBox.Text = newValue;
                     }
@@ -657,7 +657,7 @@ namespace System.Windows.Controls
         /// </summary>
         public override void OnApplyTemplate()
         {
-            if (_popUp != null)
+            if (_popUp is not null)
             {
                 _popUp.RemoveHandler(PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(PopUp_PreviewMouseLeftButtonDown));
                 _popUp.Opened -= PopUp_Opened;
@@ -665,13 +665,13 @@ namespace System.Windows.Controls
                 _popUp.Child = null;
             }
 
-            if (_dropDownButton != null)
+            if (_dropDownButton is not null)
             {
                 _dropDownButton.Click -= DropDownButton_Click;
                 _dropDownButton.RemoveHandler(MouseLeaveEvent, new MouseEventHandler(DropDownButton_MouseLeave));
             }
 
-            if (_textBox != null)
+            if (_textBox is not null)
             {
                 _textBox.RemoveHandler(TextBox.KeyDownEvent, new KeyEventHandler(TextBox_KeyDown));
                 _textBox.RemoveHandler(TextBox.TextChangedEvent, new TextChangedEventHandler(TextBox_TextChanged));
@@ -682,7 +682,7 @@ namespace System.Windows.Controls
 
             _popUp = GetTemplateChild(ElementPopup) as Popup;
 
-            if (_popUp != null)
+            if (_popUp is not null)
             {
                 _popUp.AddHandler(PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(PopUp_PreviewMouseLeftButtonDown));
                 _popUp.Opened += PopUp_Opened;
@@ -696,7 +696,7 @@ namespace System.Windows.Controls
             }
 
             _dropDownButton = GetTemplateChild(ElementButton) as Button;
-            if (_dropDownButton != null)
+            if (_dropDownButton is not null)
             {
                 _dropDownButton.Click += DropDownButton_Click;
                 _dropDownButton.AddHandler(MouseLeaveEvent, new MouseEventHandler(DropDownButton_MouseLeave), true);
@@ -716,7 +716,7 @@ namespace System.Windows.Controls
                 SetWaterMarkText();
             }
 
-            if (_textBox != null)
+            if (_textBox is not null)
             {
                 _textBox.AddHandler(TextBox.KeyDownEvent, new KeyEventHandler(TextBox_KeyDown), true);
                 _textBox.AddHandler(TextBox.TextChangedEvent, new TextChangedEventHandler(TextBox_TextChanged), true);
@@ -743,7 +743,7 @@ namespace System.Windows.Controls
         /// <returns>A text representation of the selected date, or an empty string if SelectedDate is a null reference.</returns>
         public override string ToString()
         {
-            if (this.SelectedDate != null)
+            if (this.SelectedDate is not null)
             {
                 return this.SelectedDate.Value.ToString(DateTimeHelper.GetDateFormat(DateTimeHelper.GetCulture(this)));
             }
@@ -810,7 +810,7 @@ namespace System.Windows.Controls
         protected virtual void OnDateValidationError(DatePickerDateValidationErrorEventArgs e)
         {
             EventHandler<DatePickerDateValidationErrorEventArgs> handler = this.DateValidationError;
-            if (handler != null)
+            if (handler is not null)
             {
                 handler(this, e);
             }
@@ -820,7 +820,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_textBox != null)
+                if (_textBox is not null)
                 {
                     return _textBox.HasEffectiveKeyboardFocus;
                 }
@@ -839,7 +839,7 @@ namespace System.Windows.Controls
         {
             // When Datepicker gets focus move it to the TextBox
             DatePicker picker = (DatePicker)sender;
-            if ((!e.Handled) && (picker._textBox != null))
+            if ((!e.Handled) && (picker._textBox is not null))
             {
                 if (e.OriginalSource == picker)
                 {
@@ -869,7 +869,7 @@ namespace System.Windows.Controls
 
         private bool IsHandlerSuspended(DependencyProperty property)
         {
-            return _isHandlerSuspended != null && _isHandlerSuspended.ContainsKey(property);
+            return _isHandlerSuspended is not null && _isHandlerSuspended.ContainsKey(property);
         }
 
         private void SetIsHandlerSuspended(DependencyProperty property, bool value)
@@ -885,7 +885,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                if (_isHandlerSuspended != null)
+                if (_isHandlerSuspended is not null)
                 {
                     _isHandlerSuspended.Remove(property);
                 }
@@ -895,11 +895,11 @@ namespace System.Windows.Controls
         private void PopUp_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Popup popup = sender as Popup;
-            if (popup != null && !popup.StaysOpen)
+            if (popup is not null && !popup.StaysOpen)
             {
-                if (this._dropDownButton != null)
+                if (this._dropDownButton is not null)
                 {
-                    if (this._dropDownButton.InputHitTest(e.GetPosition(this._dropDownButton)) != null)
+                    if (this._dropDownButton.InputHitTest(e.GetPosition(this._dropDownButton)) is not null)
                     {
                         // This popup is being closed by a mouse press on the drop down button
                         // The following mouse release will cause the closed popup to immediately reopen.
@@ -917,7 +917,7 @@ namespace System.Windows.Controls
                 this.SetCurrentValueInternal(IsDropDownOpenProperty, BooleanBoxes.TrueBox);
             }
 
-            if (this._calendar != null)
+            if (this._calendar is not null)
             {
                 this._calendar.DisplayMode = CalendarMode.Month;
                 this._calendar.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
@@ -951,8 +951,8 @@ namespace System.Windows.Controls
             Calendar c = sender as Calendar;
             KeyEventArgs args = (KeyEventArgs)e;
 
-            Debug.Assert(c != null);
-            Debug.Assert(args != null);
+            Debug.Assert(c is not null);
+            Debug.Assert(args is not null);
 
             if (args.Key == Key.Escape || ((args.Key == Key.Enter || args.Key == Key.Space) && c.DisplayMode == CalendarMode.Month))
             {
@@ -1143,7 +1143,7 @@ namespace System.Windows.Controls
                 DatePickerDateValidationErrorEventArgs textParseError = new DatePickerDateValidationErrorEventArgs(ex, text);
                 OnDateValidationError(textParseError);
 
-                if (textParseError.ThrowException && textParseError.Exception != null)
+                if (textParseError.ThrowException && textParseError.Exception is not null)
                 {
                     throw textParseError.Exception;
                 }
@@ -1187,13 +1187,13 @@ namespace System.Windows.Controls
 
         private void SetSelectedDate()
         {
-            if (this._textBox != null)
+            if (this._textBox is not null)
             {
                 if (!string.IsNullOrEmpty(this._textBox.Text))
                 {
                     string s = this._textBox.Text;
 
-                    if (this.SelectedDate != null)
+                    if (this.SelectedDate is not null)
                     {
                         // If the string value of the SelectedDate and the TextBox string value are equal,
                         // we do not parse the string again
@@ -1254,7 +1254,7 @@ namespace System.Windows.Controls
             {
                 DateTime? d = ParseText(s);
 
-                if (d != null)
+                if (d is not null)
                 {
                     SafeSetText(this.DateTimeToString((DateTime)d));
                     return d;
@@ -1263,7 +1263,7 @@ namespace System.Windows.Controls
                 {
                     // If parse error:
                     // TextBox should have the latest valid selecteddate value:
-                    if (this.SelectedDate != null)
+                    if (this.SelectedDate is not null)
                     {
                         string newtext = this.DateTimeToString((DateTime)this.SelectedDate);
                         SafeSetText(newtext);
@@ -1280,7 +1280,7 @@ namespace System.Windows.Controls
 
         private void SetWaterMarkText()
         {
-            if (this._textBox != null)
+            if (this._textBox is not null)
             {
                 DateTimeFormatInfo dtfi = DateTimeHelper.GetDateFormat(DateTimeHelper.GetCulture(this));
                 this.SetTextInternal(string.Empty);

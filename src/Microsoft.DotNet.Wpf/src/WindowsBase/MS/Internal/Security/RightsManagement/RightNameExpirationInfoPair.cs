@@ -22,7 +22,7 @@ namespace MS.Internal.Security.RightsManagement
     {
         internal RightNameExpirationInfoPair (string rightName, DateTime validFrom, DateTime validUntil)
         {
-            Debug.Assert(rightName != null);
+            Debug.Assert(rightName is not null);
             
             _rightName = rightName;
             _validFrom = validFrom;

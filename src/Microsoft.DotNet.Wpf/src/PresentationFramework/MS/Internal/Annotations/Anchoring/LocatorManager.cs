@@ -116,7 +116,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             _subtreeProcessors[processorId] = processor;
 
-            if (locatorPartTypes != null)
+            if (locatorPartTypes is not null)
             {
                 foreach (XmlQualifiedName typeName in locatorPartTypes)
                 {
@@ -150,7 +150,7 @@ namespace MS.Internal.Annotations.Anchoring
             {
                 SubTreeProcessor processor = (SubTreeProcessor)_subtreeProcessors[processorString];
 
-                if (processor != null)
+                if (processor is not null)
                     return processor;
                 else
                     throw new ArgumentException(SR.Format(SR.InvalidSubTreeProcessor, processorString));
@@ -205,7 +205,7 @@ namespace MS.Internal.Annotations.Anchoring
             XmlQualifiedName[] locatorPartTypes = processor.GetLocatorPartTypes();
             _selectionProcessors[selectionType] = processor;
 
-            if (locatorPartTypes != null)
+            if (locatorPartTypes is not null)
             {
                 foreach (XmlQualifiedName type in locatorPartTypes)
                 {
@@ -242,7 +242,7 @@ namespace MS.Internal.Annotations.Anchoring
                 processor = _selectionProcessors[selectionType] as SelectionProcessor;
                 selectionType = selectionType.BaseType;
             }
-            while (processor is null && selectionType != null);
+            while (processor is null && selectionType is not null);
 
             return processor;
         }
@@ -288,7 +288,7 @@ namespace MS.Internal.Annotations.Anchoring
             if (locators.Count > 0)
             {
                 AnnotationStore store = null;
-                if (_internalStore != null)
+                if (_internalStore is not null)
                 {
                     store = _internalStore;
                 }
@@ -327,7 +327,7 @@ namespace MS.Internal.Annotations.Anchoring
 
                             if (attachmentLevel != AttachmentLevel.Unresolved)
                             {
-                                Debug.Assert(attachedAnchor != null, "AttachedAnchor cannot be null if attachmentLevel is not Unresolved.");
+                                Debug.Assert(attachedAnchor is not null, "AttachedAnchor cannot be null if attachmentLevel is not Unresolved.");
                                 attachedAnnotations.Add(new AttachedAnnotation(this, annotation, anchor, attachedAnchor, attachmentLevel));
 
                                 // Only process one locator per resource
@@ -362,7 +362,7 @@ namespace MS.Internal.Annotations.Anchoring
             ICollection nodes = null;
             SelectionProcessor selProcessor = GetSelectionProcessor(selection.GetType());
 
-            if (selProcessor != null)
+            if (selProcessor is not null)
             {
                 nodes = (ICollection)selProcessor.GetSelectedNodes(selection);
             }
@@ -374,10 +374,10 @@ namespace MS.Internal.Annotations.Anchoring
             IList<ContentLocatorBase> returnLocators = null;
             PathNode pathRoot = PathNode.BuildPathForElements(nodes);
 
-            if (pathRoot != null)
+            if (pathRoot is not null)
             {
                 SubTreeProcessor processor = GetSubTreeProcessor(pathRoot.Node);
-                Debug.Assert(processor != null, "SubtreeProcessor can not be null");
+                Debug.Assert(processor is not null, "SubtreeProcessor can not be null");
 
                 returnLocators = GenerateLocators(processor, pathRoot, selection);
             }
@@ -415,7 +415,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             // Offset need only be checked for Locators
             ContentLocator realLocator = locator as ContentLocator;
-            if (realLocator != null)
+            if (realLocator is not null)
             {
                 ArgumentOutOfRangeException.ThrowIfNegative(offset);
                 ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(offset, realLocator.Parts.Count);
@@ -574,7 +574,7 @@ namespace MS.Internal.Annotations.Anchoring
                     }
                     // If there was anything left to resolve then its incomplete
                     // what if its an incompletely resolved locator set? Can that happen?
-                    else if (realLocator != null && locatorPartIdx < realLocator.Parts.Count)
+                    else if (realLocator is not null && locatorPartIdx < realLocator.Parts.Count)
                     {
                         attachmentLevel = AttachmentLevel.Incomplete;
                         anchor = startNode;
@@ -608,7 +608,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             // If we have a locator set or there are no prefixes then we
             // are 'matched' implicitly.
-            if (realLocator != null && prefixes != null && prefixes.Length > 0)
+            if (realLocator is not null && prefixes is not null && prefixes.Length > 0)
             {
                 matched = false;
                 foreach (ContentLocator prefix in prefixes)
@@ -655,7 +655,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// the element tree</exception>
         private IList<ContentLocatorBase> GenerateLocators(SubTreeProcessor processor, PathNode startNode, Object selection)
         {
-            Debug.Assert(startNode != null, "startNode can not be null");
+            Debug.Assert(startNode is not null, "startNode can not be null");
 
             List<ContentLocatorBase> locatorsToReturn = new List<ContentLocatorBase>();
             bool continueProcessing = true;
@@ -663,7 +663,7 @@ namespace MS.Internal.Annotations.Anchoring
             // Process the current PathNode, with the possibilty of doing the whole
             // subtree (in which case continueProcessing comes back false).
             ContentLocator list = processor.GenerateLocator(startNode, out continueProcessing);
-            bool processSelection = list != null;
+            bool processSelection = list is not null;
             IList<ContentLocatorBase> newLocators = null;
 
             // If we should continue processing, we look at the children of the 
@@ -674,7 +674,7 @@ namespace MS.Internal.Annotations.Anchoring
                 {
                     case 0:
                         // No children - we just return what we have so far
-                        if (list != null)
+                        if (list is not null)
                         {
                             locatorsToReturn.Add(list);
                         }
@@ -687,10 +687,10 @@ namespace MS.Internal.Annotations.Anchoring
                         SubTreeProcessor newProcessor = GetSubTreeProcessor(startNode.Node);
                         newLocators = GenerateLocators(newProcessor, (PathNode)startNode.Children[0], selection);
 
-                        if (newLocators != null && newLocators.Count > 0)
+                        if (newLocators is not null && newLocators.Count > 0)
                             processSelection = false;
 
-                        if (list != null)
+                        if (list is not null)
                             locatorsToReturn.AddRange(Merge(list, newLocators));
                         else
                             locatorsToReturn.AddRange(newLocators);
@@ -704,12 +704,12 @@ namespace MS.Internal.Annotations.Anchoring
                         // child.
                         ContentLocatorBase newLocator = GenerateLocatorGroup(startNode, selection);
 
-                        if (newLocator != null)
+                        if (newLocator is not null)
                             processSelection = false;
 
-                        if (list != null)
+                        if (list is not null)
                             locatorsToReturn.Add(list.Merge(newLocator));
-                        else if (newLocator != null)
+                        else if (newLocator is not null)
                             locatorsToReturn.Add(newLocator);
                         break;
                 }
@@ -718,7 +718,7 @@ namespace MS.Internal.Annotations.Anchoring
             {
                 // If we shouldn't continue processing we package up the
                 // locator we got from the first GenerateLocator call
-                if (list != null)
+                if (list is not null)
                 {
                     locatorsToReturn.Add(list);
                 }
@@ -726,16 +726,16 @@ namespace MS.Internal.Annotations.Anchoring
 
             // If we produced a locator for root and no one below us did as well,
             // we need to process the selection, if any
-            if (processSelection && selection != null)
+            if (processSelection && selection is not null)
             {
                 SelectionProcessor selProcessor = GetSelectionProcessor(selection.GetType());
 
-                if (selProcessor != null)
+                if (selProcessor is not null)
                 {
                     IList<ContentLocatorPart> locatorParts = selProcessor.GenerateLocatorParts(selection, startNode.Node);
                     // Possible bug - AddLocatorPartsToLocator was only written to handle normal locators, not
                     // locator groups. ToDo
-                    if (locatorParts != null && locatorParts.Count > 0)
+                    if (locatorParts is not null && locatorParts.Count > 0)
                     {
                         List<ContentLocatorBase> tempLocators = new List<ContentLocatorBase>(locatorsToReturn.Count * locatorParts.Count);
 
@@ -767,7 +767,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// the element tree</exception>
         private ContentLocatorBase GenerateLocatorGroup(PathNode node, Object selection)
         {
-            Debug.Assert(node != null, "node can not be null");
+            Debug.Assert(node is not null, "node can not be null");
 
             SubTreeProcessor processor = GetSubTreeProcessor(node.Node);
             IList<ContentLocatorBase> tempLocators = null;
@@ -780,20 +780,20 @@ namespace MS.Internal.Annotations.Anchoring
             foreach (PathNode child in node.Children)
             {
                 tempLocators = GenerateLocators(processor, child, selection);
-                if (tempLocators != null && tempLocators.Count > 0)
+                if (tempLocators is not null && tempLocators.Count > 0)
                 {
                     // Don't add empty Locators to the ContentLocatorGroup
-                    if (tempLocators[0] != null)
+                    if (tempLocators[0] is not null)
                     {
                         ContentLocatorGroup locatorGroup = null;
                         ContentLocator locator = tempLocators[0] as ContentLocator;
-                        if (locator != null && locator.Parts.Count != 0)
+                        if (locator is not null && locator.Parts.Count != 0)
                         {
                             // NOTE - We currently only support producing one locator
                             // per branch of the locator set.
                             ContentLocatorGroup.Locators.Add(locator);
                         }
-                        else if ((locatorGroup = tempLocators[0] as ContentLocatorGroup) != null)
+                        else if ((locatorGroup = tempLocators[0] as ContentLocatorGroup) is not null)
                         {
                             // TODO - need to merge two locator groups
                             // Not supported in V1
@@ -834,15 +834,15 @@ namespace MS.Internal.Annotations.Anchoring
         /// <returns>returns whether or not the children should be visited</returns>
         private bool PreVisit(DependencyObject dependencyObject, ProcessingTreeState data, bool visitedViaVisualTree)
         {
-            Debug.Assert(data != null, "dataBlob is either null or not of ProcessingTreeState type");
+            Debug.Assert(data is not null, "dataBlob is either null or not of ProcessingTreeState type");
 
             bool calledProcessAnnotations = false;
 
             SubTreeProcessor processor = GetSubTreeProcessor(dependencyObject);
-            Debug.Assert(processor != null, "SubtreeProcessor can not be null"); // There is always a default processor
+            Debug.Assert(processor is not null, "SubtreeProcessor can not be null"); // There is always a default processor
 
             IList<IAttachedAnnotation> attachedAnnotations = processor.PreProcessNode(dependencyObject, out calledProcessAnnotations);
-            if (attachedAnnotations != null)
+            if (attachedAnnotations is not null)
                 data.AttachedAnnotations.AddRange(attachedAnnotations);
 
             // Combine whether this processor called ProcessAnnotations with the info of its siblings
@@ -861,15 +861,15 @@ namespace MS.Internal.Annotations.Anchoring
         /// <returns>return value is ignored</returns>
         private bool PostVisit(DependencyObject dependencyObject, ProcessingTreeState data, bool visitedViaVisualTree)
         {
-            Debug.Assert(data != null, "dataBlob is either null or not of ProcessingTreeState type");
+            Debug.Assert(data is not null, "dataBlob is either null or not of ProcessingTreeState type");
 
             bool childrenCalledProcessAnnotations = data.Pop();
             SubTreeProcessor processor = GetSubTreeProcessor(dependencyObject);
-            Debug.Assert(processor != null, "SubtreeProcessor can not be null");
+            Debug.Assert(processor is not null, "SubtreeProcessor can not be null");
 
             bool calledProcessAnnotations = false;
             IList<IAttachedAnnotation> attachedAnnotations = processor.PostProcessNode(dependencyObject, childrenCalledProcessAnnotations, out calledProcessAnnotations);
-            if (attachedAnnotations != null)
+            if (attachedAnnotations is not null)
                 data.AttachedAnnotations.AddRange(attachedAnnotations);
 
             // This flag is information available to PostVisit calls
@@ -900,8 +900,8 @@ namespace MS.Internal.Annotations.Anchoring
         /// can't be merged</exception>
         private Object InternalResolveLocator(ContentLocatorBase locator, int offset, DependencyObject startNode, bool skipStartNode, out AttachmentLevel attachmentLevel)
         {
-            Debug.Assert(locator != null, "locator can not be null");
-            Debug.Assert(startNode != null, "startNode can not be null");
+            Debug.Assert(locator is not null, "locator can not be null");
+            Debug.Assert(startNode is not null, "startNode can not be null");
 
             // Set it to unresolved initially
             attachmentLevel = AttachmentLevel.Full;
@@ -912,12 +912,12 @@ namespace MS.Internal.Annotations.Anchoring
 
             // If only one locator part left, it might represent a selection so we take
             // care of that case before trying to resolve the locator part
-            if (realLocator != null && offset == realLocator.Parts.Count - 1)
+            if (realLocator is not null && offset == realLocator.Parts.Count - 1)
             {
                 ContentLocatorPart locatorPart = realLocator.Parts[offset];
                 SelectionProcessor selProcessor = GetSelectionProcessorForLocatorPart(locatorPart);
 
-                if (selProcessor != null)
+                if (selProcessor is not null)
                 {
                     selection = selProcessor.ResolveLocatorPart(locatorPart, startNode, out individualAttachmentLevel);
                     attachmentLevel = individualAttachmentLevel;
@@ -946,7 +946,7 @@ namespace MS.Internal.Annotations.Anchoring
             {
                 // If there is a service, start at its root.
                 AnnotationService svc = AnnotationService.GetService(startNode);
-                if (svc != null)
+                if (svc is not null)
                 {
                     startNode = svc.Root;
                 }
@@ -1050,14 +1050,14 @@ namespace MS.Internal.Annotations.Anchoring
             PrePostDescendentsWalker<ResolvingLocatorState> walker = new PrePostDescendentsWalker<ResolvingLocatorState>(TreeWalkPriority.VisualTree, ResolveLocatorPart, TerminateResolve, data);
             walker.StartWalk(startNode, skipStartNode);
 
-            if (data.AttachmentLevel == AttachmentLevel.Full && data.AttachedAnchor != null)
+            if (data.AttachmentLevel == AttachmentLevel.Full && data.AttachedAnchor is not null)
             {
                 // Merge the results with pre-existing selection
-                if (selection != null)
+                if (selection is not null)
                 {
                     SelectionProcessor selProcessor = GetSelectionProcessor(selection.GetType());
                     object newSelection;
-                    if (selProcessor != null)
+                    if (selProcessor is not null)
                     {
                         if (selProcessor.MergeSelections(selection, data.AttachedAnchor, out newSelection))
                         {
@@ -1108,7 +1108,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             ContentLocator locator = data.ContentLocatorBase;
 
-            Debug.Assert(locator != null, "locator can not be null");
+            Debug.Assert(locator is not null, "locator can not be null");
             Debug.Assert(data.LocatorPartIndex >= 0 && data.LocatorPartIndex < locator.Parts.Count,
                          "LocatorPartIndex out of range");
 
@@ -1129,10 +1129,10 @@ namespace MS.Internal.Annotations.Anchoring
                 keepResolving = false;
             }
 
-            if (locatorPart != null && processor != null)
+            if (locatorPart is not null && processor is not null)
             {
                 node = processor.ResolveLocatorPart(locatorPart, dependencyObject, out keepResolving);
-                if (node != null)
+                if (node is not null)
                 {
                     // At a minimum we are incompletely resolved
                     data.AttachmentLevel = AttachmentLevel.Incomplete;
@@ -1159,11 +1159,11 @@ namespace MS.Internal.Annotations.Anchoring
                         locatorPart = locator.Parts[data.LocatorPartIndex];
 
                         SelectionProcessor selProcessor = GetSelectionProcessorForLocatorPart(locatorPart);
-                        if (selProcessor != null)
+                        if (selProcessor is not null)
                         {
                             AttachmentLevel attachmentLevel;
                             Object selection = selProcessor.ResolveLocatorPart(locatorPart, node, out attachmentLevel);
-                            if (selection != null)
+                            if (selection is not null)
                             {
                                 data.AttachmentLevel = attachmentLevel;
                                 data.AttachedAnchor = selection;

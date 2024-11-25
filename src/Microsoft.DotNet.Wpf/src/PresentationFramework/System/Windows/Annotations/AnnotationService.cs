@@ -193,7 +193,7 @@ namespace System.Windows.Annotations
 
             // If our root is a DocumentViewerBase we need to setup some special processors.
             DocumentViewerBase viewer = _root as DocumentViewerBase;
-            if (viewer != null)
+            if (viewer is not null)
             {
                 bool isFixed = viewer.Document is FixedDocument || viewer.Document is FixedDocumentSequence;
                 bool isFlow = !isFixed && viewer.Document is FlowDocument;
@@ -241,7 +241,7 @@ namespace System.Windows.Annotations
             // If it hasn't been run yet, abort the pending operation.  Still need to
             // unregister and unload annotations.  They may have been loaded due to a
             // store event.
-            if (_asyncLoadOperation != null)
+            if (_asyncLoadOperation is not null)
             {
                 _asyncLoadOperation.Abort();
                 _asyncLoadOperation = null;
@@ -260,20 +260,20 @@ namespace System.Windows.Annotations
                 DocumentViewerBase viewer;
 
                 GetViewerAndDocument(_root, out viewer, out document);
-                if (viewer != null)
+                if (viewer is not null)
                 {
                     // If our root is a DocumentViewerBase or Reader in pageView mode -
                     // we need to unregister for changes
                     // to its collection of DocumentPageViews.
                     UnregisterOnDocumentViewer(viewer);
                 }
-                else if (document != null)
+                else if (document is not null)
                 {
                     // If working with a FlowDocumentScrollViewer or a FlowDocumentReader
                     // in Scroll mode, we need to unregister for TextViewUpdated events
                     ITextView textView = GetTextView(document);
                     // ITextView may have gone away already
-                    if (textView != null)
+                    if (textView is not null)
                     {
                         textView.Updated -= OnContentChanged;
                     }
@@ -358,7 +358,7 @@ namespace System.Windows.Annotations
         {
             // If a LoadAnnotations call has happened before our initial asynchronous
             // load has happened, we should just ignore this call
-            if (_asyncLoadOperation != null)
+            if (_asyncLoadOperation is not null)
                 return;
 
             ArgumentNullException.ThrowIfNull(element);
@@ -726,7 +726,7 @@ namespace System.Windows.Annotations
         /// <param name="root">the tree node the service is being created on</param>
         private void Initialize(DependencyObject root)
         {
-            Invariant.Assert(root != null, "Parameter 'root' is null.");
+            Invariant.Assert(root is not null, "Parameter 'root' is null.");
 
             // Root of the subtree this service will operate on
             _root = root;
@@ -766,7 +766,7 @@ namespace System.Windows.Annotations
 
             GetViewerAndDocument(Root, out documentViewerBase, out document);
 
-            if (documentViewerBase != null)
+            if (documentViewerBase is not null)
             {
                 // If our root is a DocumentViewerBase - we need to register for changes
                 // to its collection of DocumentPageViews.  This allows us to unload/load
@@ -775,7 +775,7 @@ namespace System.Windows.Annotations
                 // on the DPV yet.
                 RegisterOnDocumentViewer(documentViewerBase);
             }
-            else if (document != null)
+            else if (document is not null)
             {
                 // If working with a FlowDocumentScrollViewer or FlowDocumentReader
                 // in Scroll mode, we must register on ITextView to
@@ -783,7 +783,7 @@ namespace System.Windows.Annotations
                 // happens synchronously which is not true for the FDPV - we register OnPageConnected
                 // for each page there.
                 ITextView textView = GetTextView(document);
-                if (textView != null)
+                if (textView is not null)
                 {
                     textView.Updated += OnContentChanged;
                 }
@@ -854,7 +854,7 @@ namespace System.Windows.Annotations
                 // If new anchor is text anchor - compare it to old anchor to
                 // detect if any changes actually happened.
                 TextAnchor newAnchor = secondAttachedAnnotation.AttachedAnchor as TextAnchor;
-                if (newAnchor != null)
+                if (newAnchor is not null)
                 {
                     if (newAnchor.Equals(oldAttachedAnchor))
                        return true;
@@ -877,17 +877,17 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentException">element is not a FrameworkElement or FrameworkContentElement</exception>
         private void LoadAnnotationsFromList(IList<IAttachedAnnotation> attachedAnnotations)
         {
-            Invariant.Assert(attachedAnnotations != null, "null attachedAnnotations list");
+            Invariant.Assert(attachedAnnotations is not null, "null attachedAnnotations list");
 
             List<AttachedAnnotationChangedEventArgs> eventsToFire = new List<AttachedAnnotationChangedEventArgs>(attachedAnnotations.Count);
 
             IAttachedAnnotation matchingAnnotation = null;
             foreach (IAttachedAnnotation attachedAnnotation in attachedAnnotations)
             {
-                Invariant.Assert((attachedAnnotation != null) && (attachedAnnotation.Annotation != null), "invalid attached annotation");
+                Invariant.Assert((attachedAnnotation is not null) && (attachedAnnotation.Annotation is not null), "invalid attached annotation");
                 matchingAnnotation = FindAnnotationInList(attachedAnnotation, _annotationMap.GetAttachedAnnotations(attachedAnnotation.Annotation.Id));
 
-                if (matchingAnnotation != null)
+                if (matchingAnnotation is not null)
                 {
                     //the annotation exists, but we do not know if the attached anchor has
                     //changed, so we we always modify it
@@ -931,7 +931,7 @@ namespace System.Windows.Annotations
         /// <param name="attachedAnnotations">list of annotations</param>
         private void UnloadAnnotationsFromList(IList attachedAnnotations)
         {
-            Invariant.Assert(attachedAnnotations != null, "null attachedAnnotations list");
+            Invariant.Assert(attachedAnnotations is not null, "null attachedAnnotations list");
 
             List<AttachedAnnotationChangedEventArgs> eventsToFire = new List<AttachedAnnotationChangedEventArgs>(attachedAnnotations.Count);
 
@@ -954,7 +954,7 @@ namespace System.Windows.Annotations
         {
             // Unregister for the event
             UIElement root = _root as UIElement;
-            if (root != null)
+            if (root is not null)
                 root.LayoutUpdated -= OnLayoutUpdated;
 
             UpdateAnnotations();
@@ -969,7 +969,7 @@ namespace System.Windows.Annotations
         {
             // If a UpdateAnnotations call has happened before our initial asynchronous
             // load has finished, we should just ignore this call
-            if (_asyncLoadOperation != null)
+            if (_asyncLoadOperation is not null)
                 return;
 
             //the service must be Enabled
@@ -986,7 +986,7 @@ namespace System.Windows.Annotations
             for (int i = existingAnnotations.Count - 1; i >= 0; i--)
             {
                 IAttachedAnnotation match = FindAnnotationInList(existingAnnotations[i], attachedAnnotations);
-                if ((match != null) && AttachedAnchorsEqual(match, existingAnnotations[i]))
+                if ((match is not null) && AttachedAnchorsEqual(match, existingAnnotations[i]))
                 {
                     //we do not need to load the matching one
                     attachedAnnotations.Remove(match);
@@ -999,7 +999,7 @@ namespace System.Windows.Annotations
             }
 
             //now every thing that is left in existingAnnotations must be removed
-            if ((existingAnnotations != null) && (existingAnnotations.Count > 0))
+            if ((existingAnnotations is not null) && (existingAnnotations.Count > 0))
             {
                 UnloadAnnotationsFromList(existingAnnotations);
             }
@@ -1009,21 +1009,21 @@ namespace System.Windows.Annotations
             foreach (IAttachedAnnotation annotation in dirtyAnnotations)
             {
                 UIElement parent = annotation.Parent as UIElement;
-                if ((parent != null) && !processedElements.Contains(parent))
+                if ((parent is not null) && !processedElements.Contains(parent))
                 {
                     processedElements.Add(parent);
                     InvalidateAdorners(parent);
                 }
             }
 
-            if (_asyncLoadFromListOperation != null)
+            if (_asyncLoadFromListOperation is not null)
             {
                 //stop this one - we  will set a new one in the queue
                 _asyncLoadFromListOperation.Abort();
                 _asyncLoadFromListOperation = null;
             }
 
-            if ((attachedAnnotations != null) && (attachedAnnotations.Count > 0))
+            if ((attachedAnnotations is not null) && (attachedAnnotations.Count > 0))
                 LoadAnnotationsFromListAsync(attachedAnnotations);
 		}
 
@@ -1034,18 +1034,18 @@ namespace System.Windows.Annotations
         private static void InvalidateAdorners(UIElement element)
         {
             AdornerLayer layer = AdornerLayer.GetAdornerLayer(element);
-            if (layer != null)
+            if (layer is not null)
             {
                 //mark the components that adorn the same element as dirty
                 Adorner[] adorners = layer.GetAdorners(element);
-                if (adorners != null)
+                if (adorners is not null)
                 {
                     for (int i = 0; i < adorners.Length; i++)
                     {
                         AnnotationAdorner adorner = adorners[i] as AnnotationAdorner;
-                        if (adorner != null)
+                        if (adorner is not null)
                         {
-                            Invariant.Assert(adorner.AnnotationComponent != null, "AnnotationAdorner component undefined");
+                            Invariant.Assert(adorner.AnnotationComponent is not null, "AnnotationAdorner component undefined");
                             adorner.AnnotationComponent.IsDirty = true;
                         }
                     }
@@ -1061,10 +1061,10 @@ namespace System.Windows.Annotations
         /// <exception cref="InvalidOperationException">Other Instance of AnnotationService Is Already Set</exception>
         static private void VerifyServiceConfiguration(DependencyObject root)
         {
-            Invariant.Assert(root != null, "Parameter 'root' is null.");
+            Invariant.Assert(root is not null, "Parameter 'root' is null.");
 
             // First make sure there isn't a service above us
-            if (AnnotationService.GetService(root) != null)
+            if (AnnotationService.GetService(root) is not null)
                 throw new InvalidOperationException(SR.AnnotationServiceAlreadyExists);
 
             // Now check the tree below us for an existing service
@@ -1086,14 +1086,14 @@ namespace System.Windows.Annotations
             // Initialize out parameters
             document = null;
 
-            if (documentViewerBase != null)
+            if (documentViewerBase is not null)
             {
                 document = documentViewerBase.Document;
             }
             else
             {
                 FlowDocumentReader reader = root as FlowDocumentReader;
-                if (reader != null)
+                if (reader is not null)
                 {
                     documentViewerBase = AnnotationHelper.GetFdrHost(reader) as DocumentViewerBase;
                     document = reader.Document;
@@ -1104,7 +1104,7 @@ namespace System.Windows.Annotations
                     // For backwards compatibility with internal APIs - you can enable
                     // a service on any element with internal APIs - so the root might
                     // not be neither an FDR or a FDSV
-                    if (docScrollViewer != null)
+                    if (docScrollViewer is not null)
                     {
                         document = docScrollViewer.Document;
                     }
@@ -1121,10 +1121,10 @@ namespace System.Windows.Annotations
         {
             ITextView textView = null;
             IServiceProvider provider = document as IServiceProvider;
-            if (provider != null)
+            if (provider is not null)
             {
                 ITextContainer textContainer = provider.GetService(typeof(ITextContainer)) as ITextContainer;
-                if (textContainer != null)
+                if (textContainer is not null)
                     textView = textContainer.TextView;
             }
             return textView;
@@ -1143,13 +1143,13 @@ namespace System.Windows.Annotations
         /// <returns>always returns true, to continue the traversal</returns>
         static private bool VerifyNoServiceOnNode(DependencyObject node, object data, bool visitedViaVisualTree)
         {
-            Invariant.Assert(node != null, "Parameter 'node' is null.");
+            Invariant.Assert(node is not null, "Parameter 'node' is null.");
 
             // Check that there is no existing service for this node - we use the local value
             // because we don't want to get a false positive based on a service set further
             // up the tree.
             AnnotationService existingService = node.ReadLocalValue(AnnotationService.ServiceProperty) as AnnotationService;
-            if (existingService != null)
+            if (existingService is not null)
             {
                 throw new InvalidOperationException(SR.AnnotationServiceAlreadyExists);
             }
@@ -1186,7 +1186,7 @@ namespace System.Windows.Annotations
         /// <returns>list of all attached annotations found. it never returns null.</returns>
         private IList GetAllAttachedAnnotationsFor(DependencyObject element)
         {
-            Invariant.Assert(element != null, "Parameter 'element' is null.");
+            Invariant.Assert(element is not null, "Parameter 'element' is null.");
 
             List<IAttachedAnnotation> result = new List<IAttachedAnnotation>();
             DescendentsWalker<List<IAttachedAnnotation>> walker = new DescendentsWalker<List<IAttachedAnnotation>>(TreeWalkPriority.VisualTree, GetAttachedAnnotationsFor, result);
@@ -1205,11 +1205,11 @@ namespace System.Windows.Annotations
         /// <returns>always returns true, to continue the traversal</returns>
         private bool GetAttachedAnnotationsFor(DependencyObject node, List<IAttachedAnnotation> result, bool visitedViaVisualTree)
         {
-            Invariant.Assert(node != null, "Parameter 'node' is null.");
-            Invariant.Assert(result != null, "Incorrect data passed - should be a List<IAttachedAnnotation>.");
+            Invariant.Assert(node is not null, "Parameter 'node' is null.");
+            Invariant.Assert(result is not null, "Incorrect data passed - should be a List<IAttachedAnnotation>.");
 
             List<IAttachedAnnotation> annotationsOnNode = node.GetValue(AnnotationService.AttachedAnnotationsProperty) as List<IAttachedAnnotation>;
-            if (annotationsOnNode != null)
+            if (annotationsOnNode is not null)
             {
                 result.AddRange(annotationsOnNode);
             }
@@ -1281,7 +1281,7 @@ namespace System.Windows.Annotations
                     break;
             }
 
-            if (newArgs != null)
+            if (newArgs is not null)
             {
                 AttachedAnnotationChanged(this, newArgs);
             }
@@ -1294,7 +1294,7 @@ namespace System.Windows.Annotations
         /// <param name="annotation">the annotation added to the store</param>
         private void AnnotationAdded(Annotation annotation)
         {
-            Invariant.Assert(annotation != null, "Parameter 'annotation' is null.");
+            Invariant.Assert(annotation is not null, "Parameter 'annotation' is null.");
 
             // if we already have an annotation in our map - then something is messed up (store has bug)
             // we are getting an add event on something that already exists - throw an exception
@@ -1309,7 +1309,7 @@ namespace System.Windows.Annotations
                     continue; // attachedAnchor without locator, keep looping
 
                 AttachedAnnotationChangedEventArgs args = AnchorAdded(annotation, anchor);
-                if (args != null)
+                if (args is not null)
                 {
                     eventsToFire.Add(args);
                 }
@@ -1353,7 +1353,7 @@ namespace System.Windows.Annotations
         /// <returns></returns>
         private AttachedAnnotationChangedEventArgs AnchorAdded(Annotation annotation, AnnotationResource anchor)
         {
-            Invariant.Assert(annotation != null && anchor != null, "Parameter 'annotation' or 'anchor' is null.");
+            Invariant.Assert(annotation is not null && anchor is not null, "Parameter 'annotation' or 'anchor' is null.");
 
             AttachedAnnotationChangedEventArgs args = null;
             AttachmentLevel attachmentLevel;
@@ -1362,7 +1362,7 @@ namespace System.Windows.Annotations
 
             if (attachmentLevel != AttachmentLevel.Unresolved && attachmentLevel != AttachmentLevel.Incomplete)
             {
-                Invariant.Assert(attachedAnchor != null, "Must have a valid attached anchor.");
+                Invariant.Assert(attachedAnchor is not null, "Must have a valid attached anchor.");
                 AttachedAnnotation attachedAnnotation = new AttachedAnnotation(
                     this.LocatorManager,
                     annotation,
@@ -1384,7 +1384,7 @@ namespace System.Windows.Annotations
         /// <returns>EventArgs to use when firing an AttachedAnnotationChanged event</returns>
         private AttachedAnnotationChangedEventArgs AnchorRemoved(Annotation annotation, AnnotationResource anchor)
         {
-            Invariant.Assert(annotation != null && anchor != null, "Parameter 'annotation' or 'anchor' is null.");
+            Invariant.Assert(annotation is not null && anchor is not null, "Parameter 'annotation' or 'anchor' is null.");
 
             AttachedAnnotationChangedEventArgs args = null;
 
@@ -1419,7 +1419,7 @@ namespace System.Windows.Annotations
         /// <returns></returns>
         private AttachedAnnotationChangedEventArgs AnchorModified(Annotation annotation, AnnotationResource anchor)
         {
-            Invariant.Assert(annotation != null && anchor != null, "Parameter 'annotation' or 'anchor' is null.");
+            Invariant.Assert(annotation is not null && anchor is not null, "Parameter 'annotation' or 'anchor' is null.");
 
             AttachedAnnotationChangedEventArgs args = null;
             AttachmentLevel newAttachmentLevel;
@@ -1441,7 +1441,7 @@ namespace System.Windows.Annotations
 
                     if (newAttachmentLevel != AttachmentLevel.Unresolved)
                     {
-                        Invariant.Assert(newAttachedAnchor != null, "AttachedAnnotation with AttachmentLevel != Unresolved should have non-null AttachedAnchor.");
+                        Invariant.Assert(newAttachedAnchor is not null, "AttachedAnnotation with AttachmentLevel != Unresolved should have non-null AttachedAnchor.");
 
                         object oldAttachedAnchor = attachedAnnotation.AttachedAnchor;
                         AttachmentLevel oldAttachmentLevel = attachedAnnotation.AttachmentLevel;
@@ -1468,7 +1468,7 @@ namespace System.Windows.Annotations
             // If it wasn't previously attached, but can be resolved now we create an AttachedAnnotation
             if (!previouslyAttached && newAttachmentLevel != AttachmentLevel.Unresolved && newAttachmentLevel != AttachmentLevel.Incomplete)
             {
-                Invariant.Assert(newAttachedAnchor != null, "AttachedAnnotation with AttachmentLevel != Unresolved should have non-null AttachedAnchor.");
+                Invariant.Assert(newAttachedAnchor is not null, "AttachedAnnotation with AttachmentLevel != Unresolved should have non-null AttachedAnchor.");
                 AttachedAnnotation attachedAnnotation = new AttachedAnnotation(
                     this.LocatorManager,
                     annotation,
@@ -1489,10 +1489,10 @@ namespace System.Windows.Annotations
         /// <param name="attachedAnnotation">the attachedannotation to be added to the map and the element tree</param>
         private void DoAddAttachedAnnotation(IAttachedAnnotation attachedAnnotation)
         {
-            Invariant.Assert(attachedAnnotation != null, "Parameter 'attachedAnnotation' is null.");
+            Invariant.Assert(attachedAnnotation is not null, "Parameter 'attachedAnnotation' is null.");
 
             DependencyObject element = attachedAnnotation.Parent;
-            Invariant.Assert(element != null, "AttachedAnnotation being added should have non-null Parent.");
+            Invariant.Assert(element is not null, "AttachedAnnotation being added should have non-null Parent.");
 
             List<IAttachedAnnotation> list = element.GetValue(AnnotationService.AttachedAnnotationsProperty) as List<IAttachedAnnotation>;
 
@@ -1515,16 +1515,16 @@ namespace System.Windows.Annotations
         /// <param name="attachedAnnotation"></param>
         private void DoRemoveAttachedAnnotation(IAttachedAnnotation attachedAnnotation)
         {
-            Invariant.Assert(attachedAnnotation != null, "Parameter 'attachedAnnotation' is null.");
+            Invariant.Assert(attachedAnnotation is not null, "Parameter 'attachedAnnotation' is null.");
 
             DependencyObject element = attachedAnnotation.Parent;
-            Invariant.Assert(element != null, "AttachedAnnotation being added should have non-null Parent.");
+            Invariant.Assert(element is not null, "AttachedAnnotation being added should have non-null Parent.");
 
             _annotationMap.RemoveAttachedAnnotation(attachedAnnotation);
 
             List<IAttachedAnnotation> list = element.GetValue(AnnotationService.AttachedAnnotationsProperty) as List<IAttachedAnnotation>;
 
-            if (list != null)
+            if (list is not null)
             {
                 list.Remove(attachedAnnotation);
                 // note, we do not guarantee DP change event firing, this is not used in our framework and the DP is internal
@@ -1544,7 +1544,7 @@ namespace System.Windows.Annotations
         /// </summary>
         private void FullyResolveAnchor(IAttachedAnnotation attachedAnnotation)
         {
-            Invariant.Assert(attachedAnnotation != null, "Attached annotation cannot be null.");
+            Invariant.Assert(attachedAnnotation is not null, "Attached annotation cannot be null.");
 
             // Do nothing if attachment level is already full.
             if (attachedAnnotation.AttachmentLevel == AttachmentLevel.Full)
@@ -1564,23 +1564,23 @@ namespace System.Windows.Annotations
             else
                 viewer = null;
 
-            if (viewer != null)
+            if (viewer is not null)
             {
                 try
                 {
                     if (isFlow)
                     {
                         flowRangeProcessor = this.LocatorManager.GetSelectionProcessor(typeof(TextRange)) as TextSelectionProcessor;
-                        Invariant.Assert(flowRangeProcessor != null, "TextSelectionProcessor should be available if we are processing flow content.");
+                        Invariant.Assert(flowRangeProcessor is not null, "TextSelectionProcessor should be available if we are processing flow content.");
                         flowRangeProcessor.Clamping = false;
                         flowAnchorProcessor = this.LocatorManager.GetSelectionProcessor(typeof(TextAnchor)) as TextSelectionProcessor;
-                        Invariant.Assert(flowAnchorProcessor != null, "TextSelectionProcessor should be available if we are processing flow content.");
+                        Invariant.Assert(flowAnchorProcessor is not null, "TextSelectionProcessor should be available if we are processing flow content.");
                         flowAnchorProcessor.Clamping = false;
                     }
                     else
                     {
                         fixedProcessor = this.LocatorManager.GetSubTreeProcessorForLocatorPart(FixedPageProcessor.CreateLocatorPart(0)) as FixedPageProcessor;
-                        Invariant.Assert(fixedProcessor != null, "FixedPageProcessor should be available if we are processing fixed content.");
+                        Invariant.Assert(fixedProcessor is not null, "FixedPageProcessor should be available if we are processing fixed content.");
                         fixedProcessor.UseLogicalTree = true;
                     }
 
@@ -1615,7 +1615,7 @@ namespace System.Windows.Annotations
         /// <returns></returns>
         private object FindAttachedAnchor(AnnotationResource anchor, out AttachmentLevel attachmentLevel)
         {
-            Invariant.Assert(anchor != null, "Parameter 'anchor' is null.");
+            Invariant.Assert(anchor is not null, "Parameter 'anchor' is null.");
 
             attachmentLevel = AttachmentLevel.Unresolved;
             Object attachedAnchor = null;
@@ -1626,7 +1626,7 @@ namespace System.Windows.Annotations
                                                                     null,
                                                                     locator,
                                                                     out attachmentLevel);
-                if (attachedAnchor != null)
+                if (attachedAnchor is not null)
                     break;
             }
 
@@ -1639,9 +1639,9 @@ namespace System.Windows.Annotations
         /// <param name="eventsToFire">list of AttachedAnnotationChangedEventArgs to fire events for</param>
         private void FireEvents(List<AttachedAnnotationChangedEventArgs> eventsToFire)
         {
-            Invariant.Assert(eventsToFire != null, "Parameter 'eventsToFire' is null.");
+            Invariant.Assert(eventsToFire is not null, "Parameter 'eventsToFire' is null.");
 
-            if (AttachedAnnotationChanged != null)
+            if (AttachedAnnotationChanged is not null)
             {
                 foreach (AttachedAnnotationChangedEventArgs args in eventsToFire)
                 {
@@ -1659,7 +1659,7 @@ namespace System.Windows.Annotations
         /// </summary>
         private void RegisterOnDocumentViewer(DocumentViewerBase viewer)
         {
-            Invariant.Assert(viewer != null, "Parameter 'viewer' is null.");
+            Invariant.Assert(viewer is not null, "Parameter 'viewer' is null.");
             Invariant.Assert(_views.Count == 0, "Failed to unregister on a viewer before registering on new viewer.");
             foreach (DocumentPageView view in viewer.PageViews)
             {
@@ -1675,7 +1675,7 @@ namespace System.Windows.Annotations
         /// </summary>
         private void UnregisterOnDocumentViewer(DocumentViewerBase viewer)
         {
-            Invariant.Assert(viewer != null, "Parameter 'viewer' is null.");
+            Invariant.Assert(viewer is not null, "Parameter 'viewer' is null.");
             foreach (DocumentPageView view in _views)
             {
                 view.PageConnected -= new EventHandler(OnContentChanged);
@@ -1695,7 +1695,7 @@ namespace System.Windows.Annotations
         private void OnPageViewsChanged(object sender, EventArgs e)
         {
             DocumentViewerBase viewer = sender as DocumentViewerBase;
-            Invariant.Assert(viewer != null, "Sender for PageViewsChanged event should be a DocumentViewerBase.");
+            Invariant.Assert(viewer is not null, "Sender for PageViewsChanged event should be a DocumentViewerBase.");
 
             // First unregister from all page views
             UnregisterOnDocumentViewer(viewer);
@@ -1721,7 +1721,7 @@ namespace System.Windows.Annotations
         private void OnContentChanged(object sender, EventArgs e)
         {
             UIElement root = _root as UIElement;
-            if (root != null)
+            if (root is not null)
                 root.LayoutUpdated += OnLayoutUpdated;
         }
 

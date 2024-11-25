@@ -58,7 +58,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
         {
             get
             {
-                if (MarshalAs != null)
+                if (MarshalAs is not null)
                 {
                     return MarshalAs;
                 }

@@ -110,16 +110,16 @@ namespace MS.Internal.PtsHost
 
             // Add UIElementIsland to visual tree and set appropiate offset.
             UIElementIsland uiElementIsland = ((UIElementParagraph)Paragraph).UIElementIsland;
-            if (uiElementIsland != null)
+            if (uiElementIsland is not null)
             {
                 if (_visual.Children.Count != 1 || _visual.Children[0] != uiElementIsland)
                 {
                     // Disconnect UIElementIsland from its old parent.
                     Visual currentParent = VisualTreeHelper.GetParent(uiElementIsland) as Visual;
-                    if (currentParent != null)
+                    if (currentParent is not null)
                     {
                         ContainerVisual parent = currentParent as ContainerVisual;
-                        Invariant.Assert(parent != null, "Parent should always derives from ContainerVisual.");
+                        Invariant.Assert(parent is not null, "Parent should always derives from ContainerVisual.");
                         parent.Children.Remove(uiElementIsland);
                     }                           
 

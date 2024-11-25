@@ -618,7 +618,7 @@ namespace System.Windows.Markup
         {
             string namespaceName = Reader.LookupNamespace(prefix);
 
-            if (namespaceName != null)
+            if (namespaceName is not null)
             {
                 namespaceName = GetMappedNamespace(namespaceName);
             }
@@ -709,7 +709,7 @@ namespace System.Windows.Markup
                 XmlTextReader xmlTextReader = Reader as XmlTextReader;
 
                 // review, what if not the XmlTextReader.
-                if (null != xmlTextReader)
+                if (xmlTextReader is not null)
                 {
                     xmlTextReader.Normalization = value;
                 }
@@ -802,7 +802,7 @@ namespace System.Windows.Markup
         /// </returns>
         private string MapNewNamespace(string namespaceName)
         {
-            if (_namespaceCallback != null)
+            if (_namespaceCallback is not null)
             {
                 string mappedNamespace;
 
@@ -1659,7 +1659,7 @@ namespace System.Windows.Markup
                 get
                 {
                     bool result;
-                    if (_inProcessContent && _previous != null)
+                    if (_inProcessContent && _previous is not null)
                     {
                         result = _previous.FallbackSeen;
                     }
@@ -1671,7 +1671,7 @@ namespace System.Windows.Markup
                 }
                 set
                 {
-                    if (_inProcessContent && _previous != null)
+                    if (_inProcessContent && _previous is not null)
                     {
                         _previous.FallbackSeen = value;
                     }
@@ -1687,7 +1687,7 @@ namespace System.Windows.Markup
                 get
                 {
                     bool result;
-                    if (_inProcessContent && _previous != null)
+                    if (_inProcessContent && _previous is not null)
                     {
                         result = _previous.InAlternateContent;
                     }
@@ -1716,7 +1716,7 @@ namespace System.Windows.Markup
                 get
                 {
                     bool result;
-                    if (_inProcessContent && _previous != null)
+                    if (_inProcessContent && _previous is not null)
                     {
                         result = _previous.ChoiceTaken;
                     }
@@ -1728,7 +1728,7 @@ namespace System.Windows.Markup
                 }
                 set
                 {
-                    if (_inProcessContent && _previous != null)
+                    if (_inProcessContent && _previous is not null)
                     {
                         _previous.ChoiceTaken = value;
                     }
@@ -1744,7 +1744,7 @@ namespace System.Windows.Markup
                 get
                 {
                     bool result;
-                    if (_inProcessContent && _previous != null)
+                    if (_inProcessContent && _previous is not null)
                     {
                         result = _previous.ChoiceSeen;
                     }
@@ -1756,7 +1756,7 @@ namespace System.Windows.Markup
                 }
                 set
                 {
-                    if (_inProcessContent && _previous != null)
+                    if (_inProcessContent && _previous is not null)
                     {
                         _previous.ChoiceSeen = value;
                     }
@@ -1771,7 +1771,7 @@ namespace System.Windows.Markup
             {
                 bool result = IsIgnorableAtCurrentScope(namespaceName);
 
-                if (!result && _previous != null)
+                if (!result && _previous is not null)
                 {
                     result = _previous.CanIgnore(namespaceName);
                 }
@@ -1781,18 +1781,18 @@ namespace System.Windows.Markup
 
             public bool IsIgnorableAtCurrentScope(string namespaceName)
             {
-                return _ignorables != null && _ignorables.ContainsKey(namespaceName);
+                return _ignorables is not null && _ignorables.ContainsKey(namespaceName);
             }
 
             public bool ShouldProcessContent(string namespaceName, string elementName)
             {
                 bool result = false;
                 ProcessContentSet set;
-                if (_processContents != null && _processContents.TryGetValue(namespaceName, out set))
+                if (_processContents is not null && _processContents.TryGetValue(namespaceName, out set))
                 {
                     result = set.ShouldProcessContent(elementName);
                 }
-                else if (_previous != null)
+                else if (_previous is not null)
                 {
                     result = _previous.ShouldProcessContent(namespaceName, elementName);
                 }
@@ -1856,16 +1856,16 @@ namespace System.Windows.Markup
 
             /*public bool ShouldPreserveElement(string namespaceName, string elementName)
             {
-                bool result = _preserveItems != null && _preserveItems.ShouldPreserveElement(namespaceName, elementName);
-                if (!result && _previous != null)
+                bool result = _preserveItems is not null && _preserveItems.ShouldPreserveElement(namespaceName, elementName);
+                if (!result && _previous is not null)
                     result = _previous.ShouldPreserveElement(namespaceName, elementName);
                 return result;
             }
 
             public bool ShouldPreserveAttribute(string namespaceName, string attributeName)
             {
-                bool result = _preserveItems != null && _preserveItems.ShouldPreserveAttribute(namespaceName, attributeName);
-                if (!result && _previous != null)
+                bool result = _preserveItems is not null && _preserveItems.ShouldPreserveAttribute(namespaceName, attributeName);
+                if (!result && _previous is not null)
                     result = _previous.ShouldPreserveAttribute(namespaceName, attributeName);
                 return result;
             }*/
@@ -1873,7 +1873,7 @@ namespace System.Windows.Markup
             public void Verify()
             {
                 // Check process content
-                if (_processContents != null)
+                if (_processContents is not null)
                 {
                     foreach (string key in _processContents.Keys)
                     {
@@ -1884,7 +1884,7 @@ namespace System.Windows.Markup
                     }
                 }
                 // Check preserve elements
-                if (_preserveElements != null)
+                if (_preserveElements is not null)
                 {
                     foreach (string key in _preserveElements.Keys)
                     {
@@ -1895,7 +1895,7 @@ namespace System.Windows.Markup
                     }
                 }
                 // Check preserve attributes
-                if (_preserveAttributes != null)
+                if (_preserveAttributes is not null)
                 {
                     foreach (string key in _preserveAttributes.Keys)
                     {
@@ -1923,7 +1923,7 @@ namespace System.Windows.Markup
 
             public bool ShouldProcessContent(string elementName)
             {
-                return _all || (_names != null && _names.Contains(elementName));
+                return _all || (_names is not null && _names.Contains(elementName));
             }
 
             public void Add(string elementName)
@@ -1942,7 +1942,7 @@ namespace System.Windows.Markup
 
                 if (elementName == "*")
                 {
-                    if (_names != null)
+                    if (_names is not null)
                     {
                         _reader.Error(SR.XCRInvalidProcessContent, _namespaceName);
                     }
@@ -1978,7 +1978,7 @@ namespace System.Windows.Markup
 
             public bool ShouldPreserveItem(string itemName)
             {
-                return _all || (_names != null && _names.ContainsKey(itemName));
+                return _all || (_names is not null && _names.ContainsKey(itemName));
             }
 
             public void Add(string itemName)
@@ -1997,7 +1997,7 @@ namespace System.Windows.Markup
 
                 if (itemName == "*")
                 {
-                    if (_names != null)
+                    if (_names is not null)
                     {
                         _reader.Error(SR.XCRInvalidPreserve, _namespaceName);
                     }

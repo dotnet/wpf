@@ -66,7 +66,7 @@ namespace Microsoft.Windows.Automation.Peers
             if (String.IsNullOrEmpty(helpText))
             {
                 RibbonToolTip toolTip = ((RibbonGalleryItem)Owner).ToolTip as RibbonToolTip;
-                if (toolTip != null)
+                if (toolTip is not null)
                 {
                     helpText = toolTip.Description;
                 }
@@ -104,7 +104,7 @@ namespace Microsoft.Windows.Automation.Peers
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
         internal void RaiseAutomationIsSelectedChanged(bool isSelected)
         {
-            if (EventsSource != null)
+            if (EventsSource is not null)
             {
                 EventsSource.RaisePropertyChangedEvent(
                     SelectionItemPatternIdentifiers.IsSelectedProperty,
@@ -117,7 +117,7 @@ namespace Microsoft.Windows.Automation.Peers
         // Selection Events needs to be raised on DataItem Peers now when they exist.
         internal void RaiseAutomationSelectionEvent(AutomationEvents eventId)
         {
-            if (EventsSource != null)
+            if (EventsSource is not null)
             {
                 EventsSource.RaiseAutomationEvent(eventId);
             }

@@ -166,7 +166,7 @@ namespace MS.Internal.PtsHost
             }
 
             // Rectangles must be non-null
-            Invariant.Assert(rectangles != null);    
+            Invariant.Assert(rectangles is not null);    
             return rectangles;
         }
 
@@ -271,7 +271,7 @@ namespace MS.Internal.PtsHost
             PTS.FSSUBTRACKDETAILS subtrackDetails;
             PTS.FSPARADESCRIPTION[] arrayParaDesc;
             
-            Invariant.Assert(elementOwner != null, "Expecting TextElement as owner of ContainerParagraph.");
+            Invariant.Assert(elementOwner is not null, "Expecting TextElement as owner of ContainerParagraph.");
 
             // Query paragraph details
             PTS.Validate(PTS.FsQuerySubtrackDetails(PtsContext.Context, _paraHandle, out subtrackDetails));
@@ -314,7 +314,7 @@ namespace MS.Internal.PtsHost
                 }
             }
 
-            Invariant.Assert(textContentRange != null);
+            Invariant.Assert(textContentRange is not null);
             return textContentRange;
         }
 
@@ -402,7 +402,7 @@ namespace MS.Internal.PtsHost
         {
             bool hasTextContent;
             ReadOnlyCollection<ParagraphResult> paragraphs = GetChildrenParagraphResults(out hasTextContent);
-            Invariant.Assert(paragraphs != null, "Paragraph collection is null.");
+            Invariant.Assert(paragraphs is not null, "Paragraph collection is null.");
 
             if (paragraphs.Count > 0)
             {

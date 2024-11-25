@@ -348,13 +348,13 @@ namespace System.Windows.Input
             GeneralTransform elementTransform = Transform.Identity;
             DependencyObject doRelativeTo = relativeTo as DependencyObject;
 
-            if (doRelativeTo != null)
+            if (doRelativeTo is not null)
             {
                 Visual visualFirstAncestor = VisualTreeHelper.GetContainingVisual2D(InputElement.GetContainingVisual(doRelativeTo));
                 Visual visualRoot = VisualTreeHelper.GetContainingVisual2D(InputElement.GetRootVisual(doRelativeTo));
 
                 GeneralTransform g = visualRoot.TransformToDescendant(visualFirstAncestor);
-                if (g != null)
+                if (g is not null)
                 {
                     elementTransform = g;
                 }

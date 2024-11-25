@@ -32,12 +32,12 @@ namespace MS.Internal.TextFormatting
             // Assume default culture unless we can do better.
             CultureInfo specificCulture = TypeConverterHelper.InvariantEnglishUS;
 
-            if (runCulture != null)
+            if (runCulture is not null)
             {
                 // Assign _cachedCultureMap to a local variable for thread safety. The reference assignment
                 // is atomic and the CachedCultureMap class is immutable.
                 CachedCultureMap cachedCultureMap = _cachedCultureMap;
-                if (cachedCultureMap != null && object.ReferenceEquals(cachedCultureMap.OriginalCulture, runCulture))
+                if (cachedCultureMap is not null && object.ReferenceEquals(cachedCultureMap.OriginalCulture, runCulture))
                     return cachedCultureMap.SpecificCulture;
 
                 // Unfortunately we cannot use reference comparison here because, for example, new CultureInfo("") 

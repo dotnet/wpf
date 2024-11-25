@@ -249,7 +249,7 @@ namespace System.Windows.Ink
             }
             finally
             {
-                if (strokeInfo != null)
+                if (strokeInfo is not null)
                 {
                     //detach from event handlers, or else we leak.
                     strokeInfo.Detach();
@@ -305,7 +305,7 @@ namespace System.Windows.Ink
             }
             finally
             {
-                if (strokeInfo != null)
+                if (strokeInfo is not null)
                 {
                     //detach from event handlers, or else we leak.
                     strokeInfo.Detach();
@@ -496,7 +496,7 @@ namespace System.Windows.Ink
             }
 
             // return a ref to our _cachedGeometry
-            System.Diagnostics.Debug.Assert(_cachedGeometry != null && _cachedGeometry.IsFrozen);
+            System.Diagnostics.Debug.Assert(_cachedGeometry is not null && _cachedGeometry.IsFrozen);
             return _cachedGeometry;
         }
 
@@ -557,7 +557,7 @@ namespace System.Windows.Ink
         /// </summary>
         internal void SetGeometry(Geometry geometry)
         {
-            System.Diagnostics.Debug.Assert(geometry != null);
+            System.Diagnostics.Debug.Assert(geometry is not null);
             _cachedGeometry = geometry;
         }
 
@@ -576,8 +576,8 @@ namespace System.Windows.Ink
         /// <returns>StrokeIntersection array for these segments</returns>
         internal StrokeIntersection[] EraseTest(IEnumerable<Point> path, StylusShape shape)
         {
-            System.Diagnostics.Debug.Assert(shape != null);
-            System.Diagnostics.Debug.Assert(path != null);
+            System.Diagnostics.Debug.Assert(shape is not null);
+            System.Diagnostics.Debug.Assert(path is not null);
             if (IEnumerablePointHelper.GetCount(path) == 0)
             {
                 return Array.Empty<StrokeIntersection>();
@@ -596,7 +596,7 @@ namespace System.Windows.Ink
         internal StrokeIntersection[] HitTest(Lasso lasso)
         {
             // Check the input parameters
-            System.Diagnostics.Debug.Assert(lasso != null);
+            System.Diagnostics.Debug.Assert(lasso is not null);
             if (lasso.IsEmpty)
             {
                 return Array.Empty<StrokeIntersection>();
@@ -619,7 +619,7 @@ namespace System.Windows.Ink
         /// <returns></returns>
         internal StrokeCollection Erase(StrokeIntersection[] cutAt)
         {
-            System.Diagnostics.Debug.Assert(cutAt != null);
+            System.Diagnostics.Debug.Assert(cutAt is not null);
 
             // Nothing needs to be erased
             if(cutAt.Length == 0)
@@ -643,7 +643,7 @@ namespace System.Windows.Ink
         /// <returns>The resulting StrokeCollection</returns>
         internal StrokeCollection Clip(StrokeIntersection[] cutAt)
         {
-            System.Diagnostics.Debug.Assert(cutAt != null);
+            System.Diagnostics.Debug.Assert(cutAt is not null);
 
             // Nothing is inside
             if (cutAt.Length == 0)

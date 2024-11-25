@@ -114,7 +114,7 @@ namespace MS.Internal.FontCache
 
         private void SetFontSources()
         {
-            if (_fontSources != null)
+            if (_fontSources is not null)
                 return;
 
             lock (this)
@@ -142,12 +142,12 @@ namespace MS.Internal.FontCache
                                 using (RegistryKey fontsKey = Registry.LocalMachine.OpenSubKey(InstalledWindowsFontsRegistryKey))
                                 {
                                     // The registry key should be present on a valid Windows installation.
-                                    Invariant.Assert(fontsKey != null);
+                                    Invariant.Assert(fontsKey is not null);
 
                                     foreach (string fontValue in fontsKey.GetValueNames())
                                     {
                                         string fileName = fontsKey.GetValue(fontValue) as string;
-                                        if (fileName != null)
+                                        if (fileName is not null)
                                         {
                                             // See if the path doesn't contain any directory information.
                                             // Shell uses the same method to determine whether to prepend the path with %windir%\fonts.

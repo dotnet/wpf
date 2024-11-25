@@ -420,7 +420,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal void InvalidateFormatCache()
         {
-            if (_mainTextSegment != null)
+            if (_mainTextSegment is not null)
             {
                 _mainTextSegment.InvalidateFormatCache();
             }
@@ -431,7 +431,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal void ClearUpdateInfo()
         {
-            if (_mainTextSegment != null)
+            if (_mainTextSegment is not null)
             {
                 _mainTextSegment.ClearUpdateInfo();
             }
@@ -442,10 +442,10 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal void InvalidateStructure()
         {
-            if (_mainTextSegment != null)
+            if (_mainTextSegment is not null)
             {
                 DtrList dtrs = _structuralCache.DtrList;
-                if (dtrs != null)
+                if (dtrs is not null)
                 {
                     _mainTextSegment.InvalidateStructure(dtrs[0].StartIndex);
                 }
@@ -457,7 +457,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal void DestroyStructure()
         {
-            if (_mainTextSegment != null)
+            if (_mainTextSegment is not null)
             {
                 _mainTextSegment.Dispose();
                 _mainTextSegment = null;
@@ -469,7 +469,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal void UpdateSegmentLastFormatPositions()
         {
-            if(_mainTextSegment != null)
+            if(_mainTextSegment is not null)
             {
                 _mainTextSegment.UpdateLastFormatPositions();
             }
@@ -482,7 +482,7 @@ namespace MS.Internal.PtsHost
         {
             get 
             { 
-                return _mainTextSegment != null; 
+                return _mainTextSegment is not null; 
             }
         }
 

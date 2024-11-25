@@ -380,7 +380,7 @@ namespace MS.Internal.Tasks
             {
                 CompilerLocalReference.LoadCacheFile();
 
-                if (CompilerLocalReference.LocalApplicationFile != null)
+                if (CompilerLocalReference.LocalApplicationFile is not null)
                 {
                     // Application file contains local types, it will be recompiled.
                     recompileApp = true;
@@ -530,7 +530,7 @@ namespace MS.Internal.Tasks
                 //
                 // Take whatever setting in _mcPass1 task.
                 //
-                if (_mcPass1.ApplicationMarkup != null && _mcPass1.ApplicationMarkup.Length > 0 && _mcPass1.ApplicationMarkup[0] != null)
+                if (_mcPass1.ApplicationMarkup is not null && _mcPass1.ApplicationMarkup.Length > 0 && _mcPass1.ApplicationMarkup[0] is not null)
                 {
                     ITaskItem taskItem = _mcPass1.ApplicationMarkup[0];
                     _recompileApplicationFile = new FileUnit(
@@ -598,7 +598,7 @@ namespace MS.Internal.Tasks
         {
             bool isNotEmpty = false;
 
-            if (list != null && list.Length > 0)
+            if (list is not null && list.Length > 0)
             {
                 isNotEmpty = true;
             }

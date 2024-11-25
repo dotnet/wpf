@@ -21,7 +21,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (DataType != null) ? new ItemContainerTemplateKey(DataType) : null;
+                return (DataType is not null) ? new ItemContainerTemplateKey(DataType) : null;
             }
         }
     }

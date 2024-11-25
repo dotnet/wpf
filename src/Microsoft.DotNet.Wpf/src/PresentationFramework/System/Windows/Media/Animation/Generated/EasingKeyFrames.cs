@@ -95,7 +95,7 @@ namespace System.Windows.Media.Animation
         protected override Thickness InterpolateValueCore(Thickness baseValue, double keyFrameProgress)
         {
             IEasingFunction easingFunction = EasingFunction;
-            if (easingFunction != null)
+            if (easingFunction is not null)
             {
                 keyFrameProgress = easingFunction.Ease(keyFrameProgress);
             }

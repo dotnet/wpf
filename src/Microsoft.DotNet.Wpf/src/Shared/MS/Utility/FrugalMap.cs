@@ -1578,7 +1578,7 @@ namespace MS.Utility
                 _entries = new Dictionary<int, object>(MINSIZE);
             }
 
-            _entries[key] = ((value != NullValue) && (value != null)) ? value : NullValue;
+            _entries[key] = ((value != NullValue) && (value is not null)) ? value : NullValue;
             return FrugalMapStoreState.Success;
         }
 
@@ -1781,7 +1781,7 @@ namespace MS.Utility
             {
                 if (null != list)
                 {
-                    if (_mapStore != null)
+                    if (_mapStore is not null)
                     {
                         _mapStore.Iterate(list, callback);
                     }
@@ -2130,7 +2130,7 @@ namespace MS.Utility
             {
                 if (null != list)
                 {
-                    if (_mapStore != null)
+                    if (_mapStore is not null)
                     {
                         _mapStore.Iterate(list, callback);
                     }

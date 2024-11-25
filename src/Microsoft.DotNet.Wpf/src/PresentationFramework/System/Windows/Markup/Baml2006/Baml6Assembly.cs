@@ -38,7 +38,7 @@ namespace System.Windows.Baml2006
         {
             get
             {
-                if (_assembly != null)
+                if (_assembly is not null)
                 {
                     return _assembly;
                 }
@@ -48,7 +48,7 @@ namespace System.Windows.Baml2006
                 if (_assembly is null)
                 {
                     byte[] publicKeyToken = assemblyName.GetPublicKeyToken();
-                    if (assemblyName.Version != null || assemblyName.CultureInfo != null || publicKeyToken != null)
+                    if (assemblyName.Version is not null || assemblyName.CultureInfo is not null || publicKeyToken is not null)
                     {
                         try
                         {
@@ -57,7 +57,7 @@ namespace System.Windows.Baml2006
                         catch
                         {
                             AssemblyName shortName = new AssemblyName(assemblyName.Name);
-                            if (publicKeyToken != null)
+                            if (publicKeyToken is not null)
                             {
                                 shortName.SetPublicKeyToken(publicKeyToken);
                             }

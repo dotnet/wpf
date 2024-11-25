@@ -345,7 +345,7 @@ namespace System.Printing
                         inputBinOptions = _printCap.PageInputBinCapability.InputBins;
                     }
 
-                    if (inputBinOptions != null)
+                    if (inputBinOptions is not null)
                     {
                         foreach (InputBinOption option in inputBinOptions)
                         {
@@ -538,7 +538,7 @@ namespace System.Printing
                 if (_pageImageableArea is null)
                 {
                     if (_printCap.SupportsCapability(CapabilityName.PageImageableSize) &&
-                        (_printCap.PageImageableSizeCapability.ImageableArea != null))
+                        (_printCap.PageImageableSizeCapability.ImageableArea is not null))
                     {
                         CanvasImageableArea area = _printCap.PageImageableSizeCapability.ImageableArea;
 

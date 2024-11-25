@@ -76,7 +76,7 @@ namespace System.Windows.Automation.Peers
             if (SelectionItemPatternIdentifiers.IsSelectedProperty.Id == propertyId)
             {
                 ISelectionItemProvider selectionItem = itemPeer.GetPattern(PatternInterface.SelectionItem) as ISelectionItemProvider;
-                if (selectionItem != null)
+                if (selectionItem is not null)
                     return selectionItem.IsSelected;
                 else
                     return null;
@@ -106,7 +106,7 @@ namespace System.Windows.Automation.Peers
                 for(int i=0; i<count; i++)
                 {
                     SelectorItemAutomationPeer peer = FindOrCreateItemAutomationPeer(owner._selectedItems[i].Item) as SelectorItemAutomationPeer;
-                    if(peer != null)
+                    if(peer is not null)
                     {
                         selectedProviders.Add(ProviderFromPeer(peer));
                     }
@@ -159,7 +159,7 @@ namespace System.Windows.Automation.Peers
             if (numSelected == 1 && numAdded == 1)
             {
                 SelectorItemAutomationPeer peer = FindOrCreateItemAutomationPeer(owner._selectedItems[0].Item) as SelectorItemAutomationPeer;
-                if(peer != null)
+                if(peer is not null)
                 {
                     peer.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementSelected);
                 }
@@ -180,7 +180,7 @@ namespace System.Windows.Automation.Peers
                     {
                         SelectorItemAutomationPeer peer = FindOrCreateItemAutomationPeer(e.AddedItems[i]) as SelectorItemAutomationPeer;
 
-                        if (peer != null)
+                        if (peer is not null)
                         {
                             peer.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementAddedToSelection);
                         }
@@ -190,7 +190,7 @@ namespace System.Windows.Automation.Peers
                     {
                         SelectorItemAutomationPeer peer = FindOrCreateItemAutomationPeer(e.RemovedItems[i]) as SelectorItemAutomationPeer;
 
-                        if (peer != null)
+                        if (peer is not null)
                         {
                             peer.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection);
                         }

@@ -56,7 +56,7 @@ namespace System.Windows.Ink
                 throw new System.InvalidOperationException(SR.EndHitTestingCalled);
             }
 
-            System.Diagnostics.Debug.Assert(_strokes != null);
+            System.Diagnostics.Debug.Assert(_strokes is not null);
 
             AddPointsCore(points);
         }
@@ -79,7 +79,7 @@ namespace System.Windows.Ink
                 throw new System.InvalidOperationException(SR.EndHitTestingCalled);
             }
 
-            System.Diagnostics.Debug.Assert(_strokes != null);
+            System.Diagnostics.Debug.Assert(_strokes is not null);
 
             Point[] points = new Point[stylusPoints.Count];
             for (int x = 0; x < stylusPoints.Count; x++)
@@ -96,7 +96,7 @@ namespace System.Windows.Ink
         /// </summary>
         public void EndHitTesting()
         {
-            if (_strokes != null)
+            if (_strokes is not null)
             {
                 // Detach the event handler
                 _strokes.StrokesChangedInternal -= new StrokeCollectionChangedEventHandler(OnStrokesChanged);
@@ -125,7 +125,7 @@ namespace System.Windows.Ink
         /// <param name="strokes">strokes to hit-test</param>
         internal IncrementalHitTester(StrokeCollection strokes)
         {
-            System.Diagnostics.Debug.Assert(strokes != null);
+            System.Diagnostics.Debug.Assert(strokes is not null);
 
             // Create a StrokeInfo object for each stroke.
             _strokeInfos = new List<StrokeInfo>(strokes.Count);
@@ -168,7 +168,7 @@ namespace System.Windows.Ink
         /// </remarks>
         private void OnStrokesChanged(object sender, StrokeCollectionChangedEventArgs args)
         {
-            System.Diagnostics.Debug.Assert((_strokes != null) && (_strokeInfos != null) && (_strokes == sender));
+            System.Diagnostics.Debug.Assert((_strokes is not null) && (_strokeInfos is not null) && (_strokes == sender));
 
             StrokeCollection added = args.Added;
             StrokeCollection removed = args.Removed;
@@ -240,7 +240,7 @@ namespace System.Windows.Ink
                 for (int x = 0; x < _strokeInfos.Count; x++)
                 {
                     StrokeInfo strokeInfo = _strokeInfos[x];
-                    if (strokeInfo != null && stroke == strokeInfo.Stroke)
+                    if (strokeInfo is not null && stroke == strokeInfo.Stroke)
                     {
                         newStrokeInfos.Add(strokeInfo);
                         //just set to null instead of removing and shifting
@@ -262,7 +262,7 @@ namespace System.Windows.Ink
             {
                 StrokeInfo strokeInfo = _strokeInfos[x];
             
-                if (strokeInfo != null)
+                if (strokeInfo is not null)
                 {
                     strokeInfo.Detach();
                 }
@@ -330,7 +330,7 @@ namespace System.Windows.Ink
         /// <param name="points">new points to add to the lasso</param>
         protected override void AddPointsCore(IEnumerable<Point> points)
         {
-            System.Diagnostics.Debug.Assert((points != null) && (IEnumerablePointHelper.GetCount(points)!= 0));
+            System.Diagnostics.Debug.Assert((points is not null) && (IEnumerablePointHelper.GetCount(points)!= 0));
 
             // Add the new points to the lasso
             int lastPointIndex = (0 != _lasso.PointCount) ? (_lasso.PointCount - 1) : 0;
@@ -467,8 +467,8 @@ namespace System.Windows.Ink
         /// <param name="eventArgs"></param>
         protected void OnSelectionChanged(LassoSelectionChangedEventArgs  eventArgs)
         {
-            System.Diagnostics.Debug.Assert(eventArgs != null);
-            if (SelectionChanged != null)
+            System.Diagnostics.Debug.Assert(eventArgs is not null);
+            if (SelectionChanged is not null)
             {
                 SelectionChanged(this, eventArgs);
             }
@@ -508,7 +508,7 @@ namespace System.Windows.Ink
         internal IncrementalStrokeHitTester(StrokeCollection strokes, StylusShape eraserShape)
             : base(strokes)
         {
-            System.Diagnostics.Debug.Assert(eraserShape != null);
+            System.Diagnostics.Debug.Assert(eraserShape is not null);
 
             // Create an ErasingStroke objects that implements the actual hit-testing
             _erasingStroke = new ErasingStroke(eraserShape);
@@ -521,8 +521,8 @@ namespace System.Windows.Ink
         /// in the moving of the erasing shape</param>
         protected override void AddPointsCore(IEnumerable<Point> points)
         {
-            System.Diagnostics.Debug.Assert((points != null) && (IEnumerablePointHelper.GetCount(points) != 0));
-            System.Diagnostics.Debug.Assert(_erasingStroke != null);
+            System.Diagnostics.Debug.Assert((points is not null) && (IEnumerablePointHelper.GetCount(points) != 0));
+            System.Diagnostics.Debug.Assert(_erasingStroke is not null);
 
             // Move the shape through the new points and build the contour of the move.
             _erasingStroke.MoveTo(points);
@@ -534,7 +534,7 @@ namespace System.Windows.Ink
 
             List<StrokeHitEventArgs> strokeHitEventArgCollection = null;
             // Do nothing if there's nobody listening to the events
-            if (StrokeHit != null)
+            if (StrokeHit is not null)
             {
                 List<StrokeIntersection> eraseAt = new List<StrokeIntersection>();
 
@@ -565,14 +565,14 @@ namespace System.Windows.Ink
             }
 
             // Raise StrokeHit event if needed.
-            if (strokeHitEventArgCollection != null)
+            if (strokeHitEventArgCollection is not null)
             {
                 System.Diagnostics.Debug.Assert(strokeHitEventArgCollection.Count != 0);
                 for (int x = 0; x < strokeHitEventArgCollection.Count; x++)
                 {
                     StrokeHitEventArgs eventArgs = strokeHitEventArgCollection[x];
 
-                    System.Diagnostics.Debug.Assert(eventArgs.HitStroke != null);
+                    System.Diagnostics.Debug.Assert(eventArgs.HitStroke is not null);
                     OnStrokeHit(eventArgs);
                 }
             }
@@ -583,8 +583,8 @@ namespace System.Windows.Ink
         /// </summary>
         protected void OnStrokeHit(StrokeHitEventArgs eventArgs)
         {
-            System.Diagnostics.Debug.Assert(eventArgs != null);
-            if (StrokeHit != null)
+            System.Diagnostics.Debug.Assert(eventArgs is not null);
+            if (StrokeHit is not null)
             {
                 StrokeHit(this, eventArgs);
             }
@@ -634,7 +634,7 @@ namespace System.Windows.Ink
         {
             get
             {
-                if (_selectedStrokes != null)
+                if (_selectedStrokes is not null)
                 {
                     StrokeCollection sc = new StrokeCollection();
                     sc.Add(_selectedStrokes);
@@ -654,7 +654,7 @@ namespace System.Windows.Ink
         {
             get
             {
-                if (_deselectedStrokes != null)
+                if (_deselectedStrokes is not null)
                 {
                     StrokeCollection sc = new StrokeCollection();
                     sc.Add(_deselectedStrokes);
@@ -681,7 +681,7 @@ namespace System.Windows.Ink
         /// </summary>
         internal StrokeHitEventArgs(Stroke stroke, StrokeIntersection[] hitFragments)
         {
-            System.Diagnostics.Debug.Assert(stroke != null && hitFragments != null && hitFragments.Length > 0);
+            System.Diagnostics.Debug.Assert(stroke is not null && hitFragments is not null && hitFragments.Length > 0);
             _stroke = stroke;
             _hitFragments = hitFragments;
         }
@@ -722,7 +722,7 @@ namespace MS.Internal.Ink
         /// </summary>
         internal StrokeInfo(Stroke stroke)
         {
-            System.Diagnostics.Debug.Assert(stroke != null);
+            System.Diagnostics.Debug.Assert(stroke is not null);
             _stroke = stroke;
             _bounds = stroke.GetBounds();
 
@@ -829,7 +829,7 @@ namespace MS.Internal.Ink
         {
             StylusPointCollection stylusPoints = this.StylusPoints;
             DrawingAttributes da = this.Stroke.DrawingAttributes;
-            System.Diagnostics.Debug.Assert(stylusPoints != null && index >= 0 && index < stylusPoints.Count);
+            System.Diagnostics.Debug.Assert(stylusPoints is not null && index >= 0 && index < stylusPoints.Count);
 
             double weight = 0f;
             if (index == 0)
@@ -859,7 +859,7 @@ namespace MS.Internal.Ink
         /// </summary>
         internal void Detach()
         {
-            if (_stroke != null)
+            if (_stroke is not null)
             {
                 // Detach the event handlers
                 _stroke.DrawingAttributesChanged -= new PropertyDataChangedEventHandler(OnStrokeDrawingAttributesChanged);
@@ -970,7 +970,7 @@ namespace MS.Internal.Ink
 //    internal IncrementalStrokeHitTester(StrokeCollection strokes, StylusShape eraserShape)
 //        : base(strokes)
 //    {
-//        System.Diagnostics.Debug.Assert(eraserShape != null);
+//        System.Diagnostics.Debug.Assert(eraserShape is not null);
 
 //        // Create an ErasingStroke objects that implements the actual hit-testing
 //        _erasingStroke = new ErasingStroke(eraserShape);
@@ -982,7 +982,7 @@ namespace MS.Internal.Ink
 //    /// <param name="eventArgs"></param>
 //    internal protected void OnStrokesHit(StrokesHitEventArgs eventArgs)
 //    {
-//        if (StrokesHit != null)
+//        if (StrokesHit is not null)
 //        {
 //            StrokesHit(this, eventArgs);
 //        }
@@ -995,8 +995,8 @@ namespace MS.Internal.Ink
 //    /// in the moving of the erasing shape</param>
 //    internal protected override void AddPointsCore(Point[] points)
 //    {
-//        System.Diagnostics.Debug.Assert((points != null) && (points.Length != 0));
-//        System.Diagnostics.Debug.Assert(_erasingStroke != null);
+//        System.Diagnostics.Debug.Assert((points is not null) && (points.Length != 0));
+//        System.Diagnostics.Debug.Assert(_erasingStroke is not null);
 
 //        // Move the shape through the new points and build the contour of the move.
 //        _erasingStroke.MoveTo(points);
@@ -1007,7 +1007,7 @@ namespace MS.Internal.Ink
 //        }
 
 //        StrokeCollection strokesHit = null;
-//        if (StrokesHit != null)
+//        if (StrokesHit is not null)
 //        {
 //            // Test stroke by stroke and collect hits.
 //            foreach (StrokeInfo strokeInfo in StrokeInfos)
@@ -1028,7 +1028,7 @@ namespace MS.Internal.Ink
 //        }
 
 //        // Raise StrokesHitChanged event if any strokes have been hit and there're listeners to the event.
-//        if (strokesHit != null)
+//        if (strokesHit is not null)
 //        {
 //            System.Diagnostics.Debug.Assert(strokesHit.Count != 0);
 //            OnStrokesHit(new StrokesHitEventArgs(strokesHit));
@@ -1058,7 +1058,7 @@ namespace MS.Internal.Ink
 //{
 //    internal StrokesHitEventArgs(StrokeCollection hitStrokes)
 //    {
-//        System.Diagnostics.Debug.Assert(hitStrokes != null && hitStrokes.Count > 0);
+//        System.Diagnostics.Debug.Assert(hitStrokes is not null && hitStrokes.Count > 0);
 //        _hitStrokes = hitStrokes;
 //    }
 

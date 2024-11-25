@@ -487,7 +487,7 @@ internal  class StorageRoot : StorageInfo
         // The root is created by calling unmanaged CompoundFile APIs. The return value from the call is always
         //  checked to see if is S_OK. If it is S_OK, the root should never be null. However, just to make sure
         //  call Invariant.Assert
-        Invariant.Assert(root != null);
+        Invariant.Assert(root is not null);
 
         System.Runtime.InteropServices.ComTypes.STATSTG rootSTAT;
         bool readOnly;

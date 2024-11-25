@@ -125,7 +125,7 @@ namespace Microsoft.Windows.Themes
         {
             get
             {
-                return (Background != null) || (BorderBrush != null);
+                return (Background is not null) || (BorderBrush is not null);
             }
         }
 
@@ -175,7 +175,7 @@ namespace Microsoft.Windows.Themes
             }
 
             UIElement child = Child;
-            if (child != null)
+            if (child is not null)
             {
                 // Use the public Padding property if it's set
                 Thickness padding = Padding;
@@ -220,7 +220,7 @@ namespace Microsoft.Windows.Themes
             }
 
             UIElement child = Child;
-            if (child != null)
+            if (child is not null)
             {
                 // Use the public Padding property if it's set
                 Thickness padding = Padding;
@@ -336,7 +336,7 @@ namespace Microsoft.Windows.Themes
         private static void ReleaseCache()
         {
             // Avoid locking if necessary
-            if (_freezableCache != null)
+            if (_freezableCache is not null)
             {
                 lock (_cacheAccess)
                 {

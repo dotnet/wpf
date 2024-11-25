@@ -27,10 +27,10 @@ namespace MS.Internal
         {
             phwnd = IntPtr.Zero;
 
-            if (Application.Current != null)
+            if (Application.Current is not null)
             {
                 Window curWindow = Application.Current.MainWindow;
-                if (curWindow != null)
+                if (curWindow is not null)
                 {
                     phwnd = curWindow.CriticalHandle;
                 }

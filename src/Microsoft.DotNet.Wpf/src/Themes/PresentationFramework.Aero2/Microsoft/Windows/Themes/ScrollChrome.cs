@@ -459,7 +459,7 @@ namespace Microsoft.Windows.Themes
             if ((bounds.Width > 0.0) && (bounds.Height > 2.0))
             {
                 Pen pen = Shadow;
-                if (pen != null)
+                if (pen is not null)
                 {
                     dc.DrawRoundedRectangle(
                         null,
@@ -478,7 +478,7 @@ namespace Microsoft.Windows.Themes
             {
                 Brush brush = Fill;
                 Pen pen = OuterBorder;
-                if (pen != null)
+                if (pen is not null)
                 {
                     dc.DrawRoundedRectangle(
                         brush,
@@ -492,7 +492,7 @@ namespace Microsoft.Windows.Themes
                 if ((bounds.Width >= 2.0) && (bounds.Height >= 2.0))
                 {
                     pen = InnerBorder;
-                    if ((pen != null) || (brush != null))
+                    if ((pen is not null) || (brush is not null))
                     {
                         dc.DrawRoundedRectangle(
                             brush,
@@ -510,7 +510,7 @@ namespace Microsoft.Windows.Themes
             if ((bounds.Width > 0.0) && (bounds.Height > 0.0))
             {
                 Brush brush = Glyph;
-                if ((brush != null) && (_scrollGlyph != ScrollGlyph.None))
+                if ((brush is not null) && (_scrollGlyph != ScrollGlyph.None))
                 {
                     switch (_scrollGlyph)
                     {
@@ -546,7 +546,7 @@ namespace Microsoft.Windows.Themes
 
                 for (int i = 0; i < 9; i += 3)
                 {
-                    if (glyphShadow != null)
+                    if (glyphShadow is not null)
                     {
                         dc.DrawRectangle(glyphShadow, null, new Rect(x + i - 0.5, y - 0.5, 3.0, shadowHeight));
                     }
@@ -569,7 +569,7 @@ namespace Microsoft.Windows.Themes
 
                 for (int i = 0; i < 9; i += 3)
                 {
-                    if (glyphShadow != null)
+                    if (glyphShadow is not null)
                     {
                         dc.DrawRectangle(glyphShadow, null, new Rect(x - 0.5, y + i - 0.5, shadowWidth, 3.0));
                     }
@@ -1019,7 +1019,7 @@ namespace Microsoft.Windows.Themes
                     }
                 }
 
-                if (_localResources != null)
+                if (_localResources is not null)
                 {
                     if (_localResources.Fill is null)
                     {
@@ -1165,7 +1165,7 @@ namespace Microsoft.Windows.Themes
                     }
                 }
 
-                if (_localResources != null)
+                if (_localResources is not null)
                 {
                     if (_localResources.OuterBorder is null)
                     {
@@ -1237,7 +1237,7 @@ namespace Microsoft.Windows.Themes
                     }
                 }
 
-                if (_localResources != null)
+                if (_localResources is not null)
                 {
                     if (_localResources.InnerBorder is null)
                     {
@@ -1308,7 +1308,7 @@ namespace Microsoft.Windows.Themes
                     }
                 }
 
-                if (_localResources != null)
+                if (_localResources is not null)
                 {
                     if (_localResources.Shadow is null)
                     {
@@ -1670,7 +1670,7 @@ namespace Microsoft.Windows.Themes
                     }
                 }
 
-                if (_localResources != null)
+                if (_localResources is not null)
                 {
                     if (_localResources.Glyph is null)
                     {
@@ -1758,7 +1758,7 @@ namespace Microsoft.Windows.Themes
                     }
                 }
 
-                if (_localResources != null)
+                if (_localResources is not null)
                 {
                     if (_localResources.GlyphShadow is null)
                     {

@@ -66,7 +66,7 @@ namespace MS.Internal.FontFace
 
         internal PhysicalFontFamily(Text.TextInterface.FontFamily family)
         {
-            Invariant.Assert(family != null);
+            Invariant.Assert(family is not null);
             _family = family;
         }
 
@@ -126,7 +126,7 @@ namespace MS.Internal.FontFace
             Text.TextInterface.Font bestMatch = _family.GetFirstMatchingFont((Text.TextInterface.FontWeight)weight.ToOpenTypeWeight(),
                                                                              (Text.TextInterface.FontStretch)stretch.ToOpenTypeStretch(),
                                                                              (Text.TextInterface.FontStyle)   style.GetStyleForInternalConstruction());
-            Debug.Assert(bestMatch != null);
+            Debug.Assert(bestMatch is not null);
             return new GlyphTypeface(bestMatch);
         }
 
@@ -210,7 +210,7 @@ namespace MS.Internal.FontFace
             // fall back to the closest style match
             advance = 0;
             nextValid = smallestInvalid;
-            Debug.Assert(bestStyleTypeface != null);
+            Debug.Assert(bestStyleTypeface is not null);
             return new GlyphTypeface(bestStyleTypeface);
         }
 

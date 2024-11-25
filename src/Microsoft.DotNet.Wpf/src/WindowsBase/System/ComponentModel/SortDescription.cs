@@ -129,7 +129,7 @@ namespace System.ComponentModel
         public override int GetHashCode()
         {
             int result = Direction.GetHashCode();
-            if (PropertyName != null)
+            if (PropertyName is not null)
             {
                 result = unchecked(PropertyName.GetHashCode() + result);
             }

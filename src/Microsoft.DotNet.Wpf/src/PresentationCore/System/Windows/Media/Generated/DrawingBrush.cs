@@ -105,7 +105,7 @@ namespace System.Windows.Media
             Drawing newV = (Drawing) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 DUCE.IResource targetResource = (DUCE.IResource)target;
                 using (CompositionEngineLock.Acquire())
@@ -212,7 +212,7 @@ namespace System.Windows.Media
                 {
                     hRelativeTransform = ((DUCE.IResource)vRelativeTransform).GetHandle(channel);
                 }
-                DUCE.ResourceHandle hDrawing = vDrawing != null ? ((DUCE.IResource)vDrawing).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                DUCE.ResourceHandle hDrawing = vDrawing is not null ? ((DUCE.IResource)vDrawing).GetHandle(channel) : DUCE.ResourceHandle.Null;
 
                 // Obtain handles for animated properties
                 DUCE.ResourceHandle hOpacityAnimations = GetAnimationResourceHandle(OpacityProperty, channel);
@@ -265,11 +265,11 @@ namespace System.Windows.Media
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_DRAWINGBRUSH))
                 {
                     Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
+                    if (vTransform is not null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
                     Transform vRelativeTransform = RelativeTransform;
-                    if (vRelativeTransform != null) ((DUCE.IResource)vRelativeTransform).AddRefOnChannel(channel);
+                    if (vRelativeTransform is not null) ((DUCE.IResource)vRelativeTransform).AddRefOnChannel(channel);
                     Drawing vDrawing = Drawing;
-                    if (vDrawing != null) ((DUCE.IResource)vDrawing).AddRefOnChannel(channel);
+                    if (vDrawing is not null) ((DUCE.IResource)vDrawing).AddRefOnChannel(channel);
 
                     AddRefOnChannelAnimations(channel);
 
@@ -286,11 +286,11 @@ namespace System.Windows.Media
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
                     Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
+                    if (vTransform is not null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
                     Transform vRelativeTransform = RelativeTransform;
-                    if (vRelativeTransform != null) ((DUCE.IResource)vRelativeTransform).ReleaseOnChannel(channel);
+                    if (vRelativeTransform is not null) ((DUCE.IResource)vRelativeTransform).ReleaseOnChannel(channel);
                     Drawing vDrawing = Drawing;
-                    if (vDrawing != null) ((DUCE.IResource)vDrawing).ReleaseOnChannel(channel);
+                    if (vDrawing is not null) ((DUCE.IResource)vDrawing).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
 }

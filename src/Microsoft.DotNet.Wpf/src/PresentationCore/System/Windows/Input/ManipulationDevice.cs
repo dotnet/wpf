@@ -81,7 +81,7 @@ namespace System.Windows.Input
         /// </remarks>
         internal static ManipulationDevice AddManipulationDevice(UIElement element)
         {
-            Debug.Assert(element != null, "element should be non-null.");
+            Debug.Assert(element is not null, "element should be non-null.");
 
             element.VerifyAccess();
 
@@ -110,9 +110,9 @@ namespace System.Windows.Input
         /// </returns>
         internal static ManipulationDevice GetManipulationDevice(UIElement element)
         {
-            Debug.Assert(element != null, "element should be non-null.");
+            Debug.Assert(element is not null, "element should be non-null.");
 
-            if (_manipulationDevices != null)
+            if (_manipulationDevices is not null)
             {
                 ManipulationDevice device;
                 _manipulationDevices.TryGetValue(element, out device);
@@ -135,7 +135,7 @@ namespace System.Windows.Input
 
             RemoveAllManipulators();
 
-            if (_manipulationDevices != null)
+            if (_manipulationDevices is not null)
             {
                 _manipulationDevices.Remove(_target);
             }
@@ -143,7 +143,7 @@ namespace System.Windows.Input
 
         private void RemoveAllManipulators()
         {
-            if (_manipulators != null)
+            if (_manipulators is not null)
             {
                 for (int i = _manipulators.Count - 1; i >= 0; i--)
                 {
@@ -155,7 +155,7 @@ namespace System.Windows.Input
 
         internal void AddManipulator(IManipulator manipulator)
         {
-            Debug.Assert(manipulator != null);
+            Debug.Assert(manipulator is not null);
             VerifyAccess();
             _manipulationEnded = false;
 
@@ -173,11 +173,11 @@ namespace System.Windows.Input
 
         internal void RemoveManipulator(IManipulator manipulator)
         {
-            Debug.Assert(manipulator != null);
+            Debug.Assert(manipulator is not null);
             VerifyAccess();
 
             manipulator.Updated -= OnManipulatorUpdated;
-            if (_manipulators != null)
+            if (_manipulators is not null)
             {
                 _manipulators.Remove(manipulator);
             }
@@ -218,7 +218,7 @@ namespace System.Windows.Input
 
         internal IEnumerable<IManipulator> GetManipulatorsReadOnly()
         {
-            if (_manipulators != null)
+            if (_manipulators is not null)
             {
                 return new ReadOnlyCollection<IManipulator>(_manipulators);
             }
@@ -241,7 +241,7 @@ namespace System.Windows.Input
 
         internal Point GetTransformedManipulatorPosition(Point point)
         {
-            if (_compensateForBoundaryFeedback != null)
+            if (_compensateForBoundaryFeedback is not null)
             {
                 return _compensateForBoundaryFeedback(point);
             }
@@ -254,12 +254,12 @@ namespace System.Windows.Input
         /// </summary>
         private static void ResumeAllTicking()
         {
-            if (_manipulationDevices != null)
+            if (_manipulationDevices is not null)
             {
                 foreach (UIElement element in _manipulationDevices.Keys)
                 {
                     ManipulationDevice device = _manipulationDevices[element];
-                    if (device != null && device._wasTicking)
+                    if (device is not null && device._wasTicking)
                     {
                         device.StartTicking();
                         device._wasTicking = false;
@@ -345,7 +345,7 @@ namespace System.Windows.Input
                 if (routedEvent == Manipulation.ManipulationDeltaEvent)
                 {
                     ManipulationDeltaEventArgs deltaEventArgs = inputEventArgs as ManipulationDeltaEventArgs;
-                    if (deltaEventArgs != null)
+                    if (deltaEventArgs is not null)
                     {
                         // During deltas, see if panning feedback is needed on the window
                         ManipulationDelta unusedManipulation = deltaEventArgs.UnusedManipulation;
@@ -368,7 +368,7 @@ namespace System.Windows.Input
                 else if (routedEvent == Manipulation.ManipulationStartingEvent)
                 {
                     ManipulationStartingEventArgs startingEventArgs = inputEventArgs as ManipulationStartingEventArgs;
-                    if (startingEventArgs != null && startingEventArgs.RequestedCancel)
+                    if (startingEventArgs is not null && startingEventArgs.RequestedCancel)
                     {
                         OnManipulationCancel();
                     }
@@ -376,7 +376,7 @@ namespace System.Windows.Input
                 else if (routedEvent == Manipulation.ManipulationStartedEvent)
                 {
                     ManipulationStartedEventArgs startedEventArgs = inputEventArgs as ManipulationStartedEventArgs;
-                    if (startedEventArgs != null)
+                    if (startedEventArgs is not null)
                     {
                         if (startedEventArgs.RequestedComplete)
                         {
@@ -406,7 +406,7 @@ namespace System.Windows.Input
 
                     // Initialize inertia
                     ManipulationInertiaStartingEventArgs inertiaEventArgs = inputEventArgs as ManipulationInertiaStartingEventArgs;
-                    if (inertiaEventArgs != null)
+                    if (inertiaEventArgs is not null)
                     {
                         if (inertiaEventArgs.RequestedCancel)
                         {
@@ -422,7 +422,7 @@ namespace System.Windows.Input
                 {
                     _manipulationLogic.OnCompleted();
                     ManipulationCompletedEventArgs completedEventArgs = inputEventArgs as ManipulationCompletedEventArgs;
-                    if (completedEventArgs != null)
+                    if (completedEventArgs is not null)
                     {
                         if (completedEventArgs.RequestedCancel)
                         {
@@ -440,7 +440,7 @@ namespace System.Windows.Input
                 else if (routedEvent == Manipulation.ManipulationBoundaryFeedbackEvent)
                 {
                     ManipulationBoundaryFeedbackEventArgs boundaryEventArgs = inputEventArgs as ManipulationBoundaryFeedbackEventArgs;
-                    if (boundaryEventArgs != null)
+                    if (boundaryEventArgs is not null)
                     {
                         _compensateForBoundaryFeedback = boundaryEventArgs.CompensateForBoundaryFeedback;
                     }
@@ -451,9 +451,9 @@ namespace System.Windows.Input
         private void OnManipulationCancel()
         {
             _manipulationEnded = true;
-            if (_manipulators != null)
+            if (_manipulators is not null)
             {
-                if (_removedManipulator != null)
+                if (_removedManipulator is not null)
                 {
                     Debug.Assert(_manipulators is null || _manipulators.Count == 0);
                     // Report Manipulation Cancel to last removed manipulator
@@ -475,7 +475,7 @@ namespace System.Windows.Input
         private void OnManipulationComplete()
         {
             _manipulationEnded = true;
-            if (_manipulators != null)
+            if (_manipulators is not null)
             {
                 // Report Manipulation Complete to all the remaining manipulators
                 List<IManipulator> manipulators = new List<IManipulator>(_manipulators);
@@ -497,7 +497,7 @@ namespace System.Windows.Input
         /// </summary>
         internal void CompleteManipulation(bool withInertia)
         {
-            if (_manipulationLogic != null)
+            if (_manipulationLogic is not null)
             {
                 _manipulationLogic.Complete(withInertia);
                 _manipulationLogic.PushEventsToDevice();

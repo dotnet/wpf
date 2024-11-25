@@ -95,7 +95,7 @@ namespace System.Windows.Markup
             BamlRecord record = startRecord;
             short      ownerTypeId = 0;
 
-            while (record != null)
+            while (record is not null)
             {
                 if (record.RecordType == BamlRecordType.ElementStart)
                 {

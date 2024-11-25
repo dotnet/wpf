@@ -118,12 +118,12 @@ namespace MS.Internal
                                 writer.WriteStartElement(LocComments.LocCommentsElement);
                                 writer.WriteAttributeString(LocComments.LocCommentIDAttribute, comment.Uid);
 
-                                if (comment.Attributes != null)
+                                if (comment.Attributes is not null)
                                 {
                                     writer.WriteAttributeString(LocComments.LocLocalizabilityAttribute, comment.Attributes);                                    
                                 }
 
-                                if (comment.Comments != null)
+                                if (comment.Comments is not null)
                                 {
                                     writer.WriteAttributeString(LocComments.LocCommentsAttribute, comment.Comments);
                                 }
@@ -155,9 +155,9 @@ namespace MS.Internal
         {
             if (_isSecondPass) return;
             
-            if (  _currentComment.Uid != null 
-               && (  _currentComment.Attributes != null 
-                  || _currentComment.Comments != null
+            if (  _currentComment.Uid is not null 
+               && (  _currentComment.Attributes is not null 
+                  || _currentComment.Comments is not null
                   )
                )
             {

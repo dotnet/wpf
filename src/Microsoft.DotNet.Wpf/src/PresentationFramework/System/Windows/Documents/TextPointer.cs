@@ -113,7 +113,7 @@ namespace System.Windows.Documents
     ///     {
     ///         // Traverse content in forward direction until the position is
     ///         // immediately after opening tag of a Run element.
-    ///         while (position != null &amp;&amp;
+    ///         while (position is not null &amp;&amp;
     ///             !(position.GetPointerContext(LogicalDirection.Backward) == TextPointerContext.ElementStart
     ///               &amp;&amp;
     ///               position.Parent is Run))
@@ -131,7 +131,7 @@ namespace System.Windows.Documents
     /// <code>
     ///     TextPointer FindWord(TextPointer position, string word)
     ///     {
-    ///         while (position != null)
+    ///         while (position is not null)
     ///         {
     ///             if (position.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
     ///             {
@@ -159,7 +159,7 @@ namespace System.Windows.Documents
     ///         int paragraphCount = 0;
     ///         TextPointer position = range.Start;
     ///
-    ///         while (position != null &amp;&amp; position.CompareTo(range.End) &lt; 0)
+    ///         while (position is not null &amp;&amp; position.CompareTo(range.End) &lt; 0)
     ///         {
     ///             if (position.GetPointerContext(LogicalDirection.Backward) == TextPointerContext.ElementStart &amp;&amp;
     ///                 position.Parent is Paragraph)
@@ -522,7 +522,7 @@ namespace System.Windows.Documents
         ///     {
         ///         int balanse = 0;
         ///
-        ///         while (start != null &amp;&amp; start.CompareTo(end) &lt; 0)
+        ///         while (start is not null &amp;&amp; start.CompareTo(end) &lt; 0)
         ///         {
         ///             TextPointerContext forwardContext = start.GetPointerContext(LogicalDirection.Forward);
         ///
@@ -597,7 +597,7 @@ namespace System.Windows.Documents
             {
                 TextTreeNode textNode = GetAdjacentTextNodeSibling(direction);
 
-                while (textNode != null)
+                while (textNode is not null)
                 {
                     count += textNode.SymbolCount;
                     textNode = ((direction == LogicalDirection.Forward) ? textNode.GetNextNode() : textNode.GetPreviousNode()) as TextTreeTextNode;
@@ -711,7 +711,7 @@ namespace System.Windows.Documents
         ///     {
         ///         StringBuilder buffer = new StringBuilder();
         ///
-        ///         while (start != null &amp;&amp; start.CompareTo(end) &lt; end)
+        ///         while (start is not null &amp;&amp; start.CompareTo(end) &lt; end)
         ///         {
         ///             if (start.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
         ///             {
@@ -982,7 +982,7 @@ namespace System.Windows.Documents
         ///             // Advance the naviagtor to the next context position.
         ///             navigator = navigator.GetNextContextPosition(LogicalDirection.Forward);
         ///
-        ///             Assert(navigator != null, "We do not expect to reach an end of a text container in this loop, as it is limited by element.ContentEnd bounadry");
+        ///             Assert(navigator is not null, "We do not expect to reach an end of a text container in this loop, as it is limited by element.ContentEnd bounadry");
         ///         }
         ///     }
         /// </code>
@@ -1106,11 +1106,11 @@ namespace System.Windows.Documents
         ///     {
         ///         int paragraphCount = 0;
         ///
-        ///         while (start != null &amp;&amp; start.CompareTo(end) &lt; 0)
+        ///         while (start is not null &amp;&amp; start.CompareTo(end) &lt; 0)
         ///         {
         ///             Paragraph paragraph = start.Paragraph;
         ///
-        ///             if (paragraph != null)
+        ///             if (paragraph is not null)
         ///             {
         ///                 paragraphCount++;
         ///
@@ -1385,14 +1385,14 @@ namespace System.Windows.Documents
         /// </exception>
         internal void InsertTextElement(TextElement textElement)
         {
-            Invariant.Assert(textElement != null);
+            Invariant.Assert(textElement is not null);
 
             _tree.EmptyDeadPositionList();
             SyncToTreeGeneration();
 
             ValidationHelper.ValidateChild(this, textElement, "textElement");
 
-            if (textElement.Parent != null)
+            if (textElement.Parent is not null)
             {
                 throw new InvalidOperationException(SR.TextPointer_CannotInsertTextElementBecauseItBelongsToAnotherTree);
             }
@@ -1420,7 +1420,7 @@ namespace System.Windows.Documents
             _tree.EmptyDeadPositionList();
             SyncToTreeGeneration();
 
-            if (this.TextContainer.Parent != null)
+            if (this.TextContainer.Parent is not null)
             {
                 Type containerType = this.TextContainer.Parent.GetType();
                 if (!TextSchema.IsValidChildOfContainer(containerType, typeof(Paragraph)))
@@ -1431,7 +1431,7 @@ namespace System.Windows.Documents
 
             Inline ancestor = this.GetNonMergeableInlineAncestor();
 
-            if (ancestor != null)
+            if (ancestor is not null)
             {
                 // Cannot split a hyperlink element!
                 throw new InvalidOperationException(SR.Format(SR.TextSchema_CannotSplitElement, ancestor.GetType().Name));
@@ -1726,7 +1726,7 @@ namespace System.Windows.Documents
         {
             Inline ancestor = this.Parent as Inline;
 
-            while (ancestor != null && TextSchema.IsMergeableInline(ancestor.GetType()))
+            while (ancestor is not null && TextSchema.IsMergeableInline(ancestor.GetType()))
             {
                 ancestor = ancestor.Parent as Inline;
             }
@@ -1739,7 +1739,7 @@ namespace System.Windows.Documents
         {
             TextElement ancestor = this.Parent as TextElement;
 
-            while (ancestor != null && !(ancestor is ListItem))
+            while (ancestor is not null && !(ancestor is ListItem))
             {
                 ancestor = ancestor.Parent as TextElement;
             }
@@ -1769,7 +1769,7 @@ namespace System.Windows.Documents
             {
                 throw new ArgumentException(SR.Format(SR.MaxLengthExceedsBufferSize, count, textBuffer.Length, startIndex));
             }
-            Invariant.Assert(textNode != null, "textNode is expected to be non-null");
+            Invariant.Assert(textNode is not null, "textNode is expected to be non-null");
 
             textContainer.EmptyDeadPositionList();
 
@@ -1789,7 +1789,7 @@ namespace System.Windows.Documents
             // split text nodes, if we just returned a single node's text
             // callers would see strange side effects where position.GetTextLength() !=
             // position.GetText() if another position is moved between the calls.
-            while (textNode != null)
+            while (textNode is not null)
             {
                 // Never return more textBuffer than the text following this position in the current text node.
                 finalCount += Math.Min(count - finalCount, textNode.SymbolCount - skipCount);
@@ -2205,7 +2205,7 @@ namespace System.Windows.Documents
                 {
                     case ElementEdge.BeforeStart:
                         newNode = _node.GetPreviousNode();
-                        if (newNode != null)
+                        if (newNode is not null)
                         {
                             // Move to the previous sibling.
                             edge = ElementEdge.AfterEnd;
@@ -2214,14 +2214,14 @@ namespace System.Windows.Documents
                         {
                             // Move to parent inner edge.
                             newNode = _node.GetContainingNode();
-                            Invariant.Assert(newNode != null, "Bad tree state: newNode must be non-null (BeforeStart)");
+                            Invariant.Assert(newNode is not null, "Bad tree state: newNode must be non-null (BeforeStart)");
                             edge = ElementEdge.AfterStart;
                         }
                         break;
 
                     case ElementEdge.AfterStart:
                         newNode = _node.GetFirstContainedNode();
-                        if (newNode != null)
+                        if (newNode is not null)
                         {
                             // Move to first child.
                             edge = ElementEdge.BeforeStart;
@@ -2237,7 +2237,7 @@ namespace System.Windows.Documents
 
                     case ElementEdge.BeforeEnd:
                         newNode = _node.GetLastContainedNode();
-                        if (newNode != null)
+                        if (newNode is not null)
                         {
                             // Move to last child.
                             edge = ElementEdge.AfterEnd;
@@ -2252,7 +2252,7 @@ namespace System.Windows.Documents
 
                     case ElementEdge.AfterEnd:
                         newNode = _node.GetNextNode();
-                        if (newNode != null)
+                        if (newNode is not null)
                         {
                             // Move to the next sibling.
                             edge = ElementEdge.BeforeStart;
@@ -2261,7 +2261,7 @@ namespace System.Windows.Documents
                         {
                             // Move to parent inner edge.
                             newNode = _node.GetContainingNode();
-                            Invariant.Assert(newNode != null, "Bad tree state: newNode must be non-null (AfterEnd)");
+                            Invariant.Assert(newNode is not null, "Bad tree state: newNode must be non-null (AfterEnd)");
                             edge = ElementEdge.BeforeEnd;
                         }
                         break;
@@ -2423,7 +2423,7 @@ namespace System.Windows.Documents
 
             element = GetElement(direction);
 
-            return element != null ? element.GetType() : null;
+            return element is not null ? element.GetType() : null;
         }
 
         bool ITextPointer.HasEqualScope(ITextPointer position)
@@ -2991,7 +2991,7 @@ namespace System.Windows.Documents
                         break;
 
                     fixup = parentNode as TextTreeFixupNode;
-                    if (fixup != null)
+                    if (fixup is not null)
                         break;
 
                     if (searchNode.Role == SplayTreeNodeRole.LocalRoot)
@@ -3009,7 +3009,7 @@ namespace System.Windows.Documents
                 // tells us which direction to follow it.
                 if (GetGravityInternal() == LogicalDirection.Forward)
                 {
-                    if (edge == ElementEdge.BeforeStart && fixup.FirstContainedNode != null)
+                    if (edge == ElementEdge.BeforeStart && fixup.FirstContainedNode is not null)
                     {
                         // We get here if and only if a single TextElementNode was removed.
                         // Because only a single element was removed, we don't have to worry
@@ -3027,7 +3027,7 @@ namespace System.Windows.Documents
                 }
                 else
                 {
-                    if (edge == ElementEdge.AfterEnd && fixup.LastContainedNode != null)
+                    if (edge == ElementEdge.AfterEnd && fixup.LastContainedNode is not null)
                     {
                         // We get here if and only if a single TextElementNode was removed.
                         // Because only a single element was removed, we don't have to worry
@@ -3127,7 +3127,7 @@ namespace System.Windows.Documents
                 {
                     case ElementEdge.BeforeStart:
                         newNode = currentNode.GetFirstContainedNode();
-                        if (newNode != null)
+                        if (newNode is not null)
                         {
                             // Move to inner edge/first child.
                         }
@@ -3148,7 +3148,7 @@ namespace System.Windows.Documents
 
                     case ElementEdge.AfterStart:
                         newNode = currentNode.GetFirstContainedNode();
-                        if (newNode != null)
+                        if (newNode is not null)
                         {
                             // Move to first child/second child or first child/first child child
                             if (newNode is TextTreeTextElementNode)
@@ -3177,7 +3177,7 @@ namespace System.Windows.Documents
 
                     case ElementEdge.BeforeEnd:
                         newNode = currentNode.GetNextNode();
-                        if (newNode != null)
+                        if (newNode is not null)
                         {
                             // Move to next node;
                             endedAdjacentToTextNode = newNode is TextTreeTextNode;
@@ -3195,7 +3195,7 @@ namespace System.Windows.Documents
                         startedAdjacentToTextNode = nextNode is TextTreeTextNode;
 
                         newNode = nextNode;
-                        if (newNode != null)
+                        if (newNode is not null)
                         {
                             // Move to next node/first child;
                             if (newNode is TextTreeTextElementNode)
@@ -3243,7 +3243,7 @@ namespace System.Windows.Documents
                     else
                     {
                         newNode = newNode.GetLastContainedNode();
-                        Invariant.Assert(newNode != null);
+                        Invariant.Assert(newNode is not null);
                         Invariant.Assert(edge == ElementEdge.AfterEnd);
                     }
 
@@ -3252,12 +3252,12 @@ namespace System.Windows.Documents
             }
             while (startedAdjacentToTextNode && endedAdjacentToTextNode);
 
-            if (newNode != null)
+            if (newNode is not null)
             {
                 node = (TextTreeNode)newNode;
             }
 
-            return (newNode != null);
+            return (newNode is not null);
         }
 
         internal bool GetPreviousNodeAndEdge(out TextTreeNode node, out ElementEdge edge)
@@ -3296,7 +3296,7 @@ namespace System.Windows.Documents
                 {
                     case ElementEdge.BeforeStart:
                         newNode = currentNode.GetPreviousNode();
-                        if (newNode != null)
+                        if (newNode is not null)
                         {
                             // Move to next node/last child;
                             if (newNode is TextTreeTextElementNode)
@@ -3325,7 +3325,7 @@ namespace System.Windows.Documents
 
                     case ElementEdge.AfterStart:
                         newNode = currentNode.GetPreviousNode();
-                        if (newNode != null)
+                        if (newNode is not null)
                         {
                             endedAdjacentToTextNode = newNode is TextTreeTextNode;
 
@@ -3341,7 +3341,7 @@ namespace System.Windows.Documents
 
                     case ElementEdge.BeforeEnd:
                         newNode = currentNode.GetLastContainedNode();
-                        if (newNode != null)
+                        if (newNode is not null)
                         {
                             // Move to penultimate child/last child or inner edge of last child.
                             if (newNode is TextTreeTextElementNode)
@@ -3370,7 +3370,7 @@ namespace System.Windows.Documents
 
                     case ElementEdge.AfterEnd:
                         newNode = currentNode.GetLastContainedNode();
-                        if (newNode != null)
+                        if (newNode is not null)
                         {
                             // Move to inner edge/last child.
                         }
@@ -3412,7 +3412,7 @@ namespace System.Windows.Documents
                     else
                     {
                         newNode = newNode.GetFirstContainedNode();
-                        Invariant.Assert(newNode != null);
+                        Invariant.Assert(newNode is not null);
                         Invariant.Assert(edge == ElementEdge.BeforeStart);
                     }
 
@@ -3421,12 +3421,12 @@ namespace System.Windows.Documents
             }
             while (startedAdjacentToTextNode && endedAdjacentToTextNode);
 
-            if (newNode != null)
+            if (newNode is not null)
             {
                 node = (TextTreeNode)newNode;
             }
 
-            return (newNode != null);
+            return (newNode is not null);
         }
 
         internal static TextPointerContext GetPointerContextForward(TextTreeNode node, ElementEdge edge)
@@ -3442,7 +3442,7 @@ namespace System.Windows.Documents
                     break;
 
                 case ElementEdge.AfterStart:
-                    if (node.ContainedNode != null)
+                    if (node.ContainedNode is not null)
                     {
                         firstContainedNode = (TextTreeNode)node.GetFirstContainedNode();
                         symbolType = firstContainedNode.GetPointerContext(LogicalDirection.Forward);
@@ -3455,20 +3455,20 @@ namespace System.Windows.Documents
 
                 case ElementEdge.BeforeEnd:
                     // The root node is special, there's no ElementStart/End, so test for null parent.
-                    Invariant.Assert(node.ParentNode != null || node is TextTreeRootNode, "Inconsistent node.ParentNode");
-                    symbolType = (node.ParentNode != null) ? TextPointerContext.ElementEnd : TextPointerContext.None;
+                    Invariant.Assert(node.ParentNode is not null || node is TextTreeRootNode, "Inconsistent node.ParentNode");
+                    symbolType = (node.ParentNode is not null) ? TextPointerContext.ElementEnd : TextPointerContext.None;
                     break;
 
                 case ElementEdge.AfterEnd:
                     nextNode = (TextTreeNode)node.GetNextNode();
-                    if (nextNode != null)
+                    if (nextNode is not null)
                     {
                         symbolType = nextNode.GetPointerContext(LogicalDirection.Forward);
                     }
                     else
                     {
                         // The root node is special, there's no ElementStart/End, so test for null parent.
-                        Invariant.Assert(node.GetContainingNode() != null, "Bad position!"); // Illegal to be at root AfterEnd.
+                        Invariant.Assert(node.GetContainingNode() is not null, "Bad position!"); // Illegal to be at root AfterEnd.
                         symbolType = (node.GetContainingNode() is TextTreeRootNode) ? TextPointerContext.None : TextPointerContext.ElementEnd;
                     }
                     break;
@@ -3493,27 +3493,27 @@ namespace System.Windows.Documents
             {
                 case ElementEdge.BeforeStart:
                     previousNode = (TextTreeNode)node.GetPreviousNode();
-                    if (previousNode != null)
+                    if (previousNode is not null)
                     {
                         symbolType = previousNode.GetPointerContext(LogicalDirection.Backward);
                     }
                     else
                     {
                         // The root node is special, there's no ElementStart/End, so test for null parent.
-                        Invariant.Assert(node.GetContainingNode() != null, "Bad position!"); // Illegal to be at root BeforeStart.
+                        Invariant.Assert(node.GetContainingNode() is not null, "Bad position!"); // Illegal to be at root BeforeStart.
                         symbolType = (node.GetContainingNode() is TextTreeRootNode) ? TextPointerContext.None : TextPointerContext.ElementStart;
                     }
                     break;
 
                 case ElementEdge.AfterStart:
                     // The root node is special, there's no ElementStart/End, so test for null parent.
-                    Invariant.Assert(node.ParentNode != null || node is TextTreeRootNode, "Inconsistent node.ParentNode");
-                    symbolType = (node.ParentNode != null) ? TextPointerContext.ElementStart : TextPointerContext.None;
+                    Invariant.Assert(node.ParentNode is not null || node is TextTreeRootNode, "Inconsistent node.ParentNode");
+                    symbolType = (node.ParentNode is not null) ? TextPointerContext.ElementStart : TextPointerContext.None;
                     break;
 
                 case ElementEdge.BeforeEnd:
                     lastChildNode = (TextTreeNode)node.GetLastContainedNode();
-                    if (lastChildNode != null)
+                    if (lastChildNode is not null)
                     {
                         symbolType = lastChildNode.GetPointerContext(LogicalDirection.Backward);
                     }
@@ -3621,7 +3621,7 @@ namespace System.Windows.Documents
 
                 DependencyObject element = this.Parent;
 
-                return element != null ? element.GetType() : null;
+                return element is not null ? element.GetType() : null;
             }
         }
 
@@ -3756,7 +3756,7 @@ namespace System.Windows.Documents
                         charOffset = _node.GetIMECharOffset();
 
                         elementNode = _node as TextTreeTextElementNode;
-                        if (elementNode != null)
+                        if (elementNode is not null)
                         {
                             charOffset += elementNode.IMELeftEdgeCharCount;
                         }
@@ -3829,7 +3829,7 @@ namespace System.Windows.Documents
             {
                 Inline ancestor = this.GetNonMergeableInlineAncestor();
 
-                return ancestor != null;
+                return ancestor is not null;
             }
         }
 
@@ -4136,7 +4136,7 @@ namespace System.Windows.Documents
             if (Invariant.Strict)
             {
                 // Positions must never have a null tree pointer.
-                Invariant.Assert(_node != null, "Null position node!");
+                Invariant.Assert(_node is not null, "Null position node!");
 
                 if (GetGravityInternal() == LogicalDirection.Forward)
                 {
@@ -4165,7 +4165,7 @@ namespace System.Windows.Documents
                     Invariant.Assert(_node is TextTreeTextElementNode, "Unknown node type!");
                 }
 
-                Invariant.Assert(_tree != null, "Position has no tree!");
+                Invariant.Assert(_tree is not null, "Position has no tree!");
 
 #if DEBUG_SLOW
                 // This test is so slow we can't afford to run it even with Invariant.Strict.
@@ -4181,7 +4181,7 @@ namespace System.Windows.Documents
                 {
                     count = 0;
                     for (TextTreeTextBlock textBlock = (TextTreeTextBlock)_tree.RootTextBlock.ContainedNode.GetMinSibling();
-                         textBlock != null;
+                         textBlock is not null;
                          textBlock = (TextTreeTextBlock)textBlock.GetNextNode())
                     {
                         Invariant.Assert(textBlock.Count > 0, "Empty TextBlock!");
@@ -4192,7 +4192,7 @@ namespace System.Windows.Documents
 
                 Invariant.Assert((_tree.RootNode is null && count == 2) || count == GetNodeSymbolCountSlow(_tree.RootNode), "TextNode symbol count not in synch with tree!");
 
-                if (_tree.RootNode != null)
+                if (_tree.RootNode is not null)
                 {
                     DebugWalkTree(_tree.RootNode.GetMinSibling());
                 }
@@ -4211,11 +4211,11 @@ namespace System.Windows.Documents
             previousNode = null;
             previousPreviousNode = null;
 
-            for (; node != null; node = node.GetNextNode())
+            for (; node is not null; node = node.GetNextNode())
             {
                 if (node.SymbolCount == 0 &&
-                    previousNode != null && previousNode.SymbolCount == 0 &&
-                    previousPreviousNode != null && previousPreviousNode.SymbolCount == 0)
+                    previousNode is not null && previousNode.SymbolCount == 0 &&
+                    previousPreviousNode is not null && previousPreviousNode.SymbolCount == 0)
                 {
                     Invariant.Assert(false, "Found three consecuative zero length nodes!");
                 }
@@ -4223,7 +4223,7 @@ namespace System.Windows.Documents
                 previousPreviousNode = previousNode;
                 previousNode = node;
 
-                if (node.ContainedNode != null)
+                if (node.ContainedNode is not null)
                 {
                     DebugWalkTree(node.ContainedNode.GetMinSibling());
                 }
@@ -4240,7 +4240,7 @@ namespace System.Windows.Documents
             if (node is TextTreeRootNode || node is TextTreeTextElementNode)
             {
                 count = 2;
-                for (child = node.GetFirstContainedNode(); child != null; child = child.GetNextNode())
+                for (child = node.GetFirstContainedNode(); child is not null; child = child.GetNextNode())
                 {
                     count += GetNodeSymbolCountSlow(child);
                 }

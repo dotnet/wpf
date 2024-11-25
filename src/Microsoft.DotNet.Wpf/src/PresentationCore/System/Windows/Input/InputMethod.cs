@@ -429,7 +429,7 @@ namespace System.Windows.Input
             
                 // Do not auto-create the dispatcher.
                 Dispatcher dispatcher = Dispatcher.FromThread(Thread.CurrentThread);
-                if(dispatcher != null)
+                if(dispatcher is not null)
                 {
                     inputMethod = dispatcher.InputMethod as InputMethod;
                 
@@ -536,7 +536,7 @@ namespace System.Windows.Input
                     //
                     TextServicesCompartment compartment;
                     compartment = TextServicesCompartmentContext.Current.GetCompartment(InputMethodStateType.ImeState);
-                    if (compartment != null)
+                    if (compartment is not null)
                     {
                         return compartment.BooleanValue ? InputMethodState.On
                                                     : InputMethodState.Off;
@@ -569,7 +569,7 @@ namespace System.Windows.Input
                 //
                 TextServicesCompartment compartment;
                 compartment = TextServicesCompartmentContext.Current.GetCompartment(InputMethodStateType.ImeState);
-                if (compartment != null)
+                if (compartment is not null)
                 {
                     // we don't have to set compartment unless the value is changed.
                     if (compartment.BooleanValue != (value == InputMethodState.On))
@@ -612,7 +612,7 @@ namespace System.Windows.Input
             {
                 TextServicesCompartment compartment;
                 compartment = TextServicesCompartmentContext.Current.GetCompartment(InputMethodStateType.MicrophoneState);
-                if (compartment != null)
+                if (compartment is not null)
                 {
                     return compartment.BooleanValue ? InputMethodState.On
                                                     : InputMethodState.Off;
@@ -627,7 +627,7 @@ namespace System.Windows.Input
 
                 TextServicesCompartment compartment;
                 compartment = TextServicesCompartmentContext.Current.GetCompartment(InputMethodStateType.MicrophoneState);
-                if (compartment != null)
+                if (compartment is not null)
                 {
                     // we don't have to set compartment unless the value is changed.
                     if (compartment.BooleanValue != (value == InputMethodState.On))
@@ -647,7 +647,7 @@ namespace System.Windows.Input
             {
                 TextServicesCompartment compartment;
                 compartment = TextServicesCompartmentContext.Current.GetCompartment(InputMethodStateType.HandwritingState);
-                if (compartment != null)
+                if (compartment is not null)
                 {
                     return compartment.BooleanValue ? InputMethodState.On
                                                     : InputMethodState.Off;
@@ -661,7 +661,7 @@ namespace System.Windows.Input
 
                 TextServicesCompartment compartment;
                 compartment = TextServicesCompartmentContext.Current.GetCompartment(InputMethodStateType.HandwritingState);
-                if (compartment != null)
+                if (compartment is not null)
                 {
                     // we don't have to set compartment unless the value is changed.
                     if (compartment.BooleanValue != (value == InputMethodState.On))
@@ -683,7 +683,7 @@ namespace System.Windows.Input
                 TextServicesCompartment compartment;
                 compartment = TextServicesCompartmentContext.Current.GetCompartment(InputMethodStateType.SpeechMode);
 
-                if (compartment != null)
+                if (compartment is not null)
                 {
                     int nValue = compartment.IntValue;
                     if ((nValue & UnsafeNativeMethods.TF_DICTATION_ON) != 0)
@@ -701,7 +701,7 @@ namespace System.Windows.Input
                 TextServicesCompartment compartment;
                 compartment = TextServicesCompartmentContext.Current.GetCompartment(InputMethodStateType.SpeechMode);
 
-                if (compartment != null)
+                if (compartment is not null)
                 {
                     int nValue = compartment.IntValue;
                     if (value == SpeechMode.Dictation)
@@ -747,7 +747,7 @@ namespace System.Windows.Input
                     TextServicesCompartment compartment;
                     compartment = TextServicesCompartmentContext.Current.GetCompartment(InputMethodStateType.ImeConversionModeValues);
 
-                    if (compartment != null)
+                    if (compartment is not null)
                     {
                         UnsafeNativeMethods.ConversionModeFlags convmode = (UnsafeNativeMethods.ConversionModeFlags)compartment.IntValue;
                         ImeConversionModeValues ret = 0;
@@ -841,7 +841,7 @@ namespace System.Windows.Input
                 TextServicesCompartment compartment;
                 compartment = TextServicesCompartmentContext.Current.GetCompartment(InputMethodStateType.ImeConversionModeValues);
 
-                if (compartment != null)
+                if (compartment is not null)
                 {
                     UnsafeNativeMethods.ConversionModeFlags currentConvMode;
                     if (_immEnabled)
@@ -1010,7 +1010,7 @@ namespace System.Windows.Input
                     TextServicesCompartment compartment;
                     compartment = TextServicesCompartmentContext.Current.GetCompartment(InputMethodStateType.ImeSentenceModeValues);
 
-                    if (compartment != null)
+                    if (compartment is not null)
                     {
                         UnsafeNativeMethods.SentenceModeFlags convmode = (UnsafeNativeMethods.SentenceModeFlags)compartment.IntValue;
                         ImeSentenceModeValues ret = 0;
@@ -1085,7 +1085,7 @@ namespace System.Windows.Input
                 TextServicesCompartment compartment;
                 compartment = TextServicesCompartmentContext.Current.GetCompartment(InputMethodStateType.ImeSentenceModeValues);
 
-                if (compartment != null)
+                if (compartment is not null)
                 {
                     UnsafeNativeMethods.SentenceModeFlags convmode = 0;
 
@@ -1237,19 +1237,19 @@ namespace System.Windows.Input
             // Check the InputLanguageProperty of the focus element.
             //
             value = focus.GetValue(PreferredImeStateProperty);
-            if ((value != null) && ((InputMethodState)value != InputMethodState.DoNotCare))
+            if ((value is not null) && ((InputMethodState)value != InputMethodState.DoNotCare))
             {
                 ImeState = (InputMethodState)value;
             }
 
             value = focus.GetValue(PreferredImeConversionModeProperty);
-            if ((value != null) && (((ImeConversionModeValues)value & ImeConversionModeValues.DoNotCare) == 0))
+            if ((value is not null) && (((ImeConversionModeValues)value & ImeConversionModeValues.DoNotCare) == 0))
             {
                 ImeConversionMode = (ImeConversionModeValues)value;
             }
 
             value = focus.GetValue(PreferredImeSentenceModeProperty);
-            if ((value != null) && (((ImeSentenceModeValues)value & ImeSentenceModeValues.DoNotCare) == 0))
+            if ((value is not null) && (((ImeSentenceModeValues)value & ImeSentenceModeValues.DoNotCare) == 0))
             {
                 ImeSentenceMode = (ImeSentenceModeValues)value;
             }
@@ -1260,7 +1260,7 @@ namespace System.Windows.Input
         /// </summary> 
         internal void OnChange(ref Guid rguid)
         {
-            if (_StateChanged != null)
+            if (_StateChanged is not null)
             {
                 InputMethodStateType imtype = InputMethodEventTypeInfo.ToType(ref rguid);
 
@@ -1318,7 +1318,7 @@ namespace System.Windows.Input
         {
             // InputMethod enable/disabled status was changed on the current focus Element.
             if (TextServicesLoader.ServicesInstalled &&
-                TextServicesContext.DispatcherCurrent != null)
+                TextServicesContext.DispatcherCurrent is not null)
             {
                 if (bEnabled)
                 {
@@ -1460,7 +1460,7 @@ namespace System.Windows.Input
                     compartment = TextServicesCompartmentContext.Current.GetThreadCompartment(iminfo.Guid);
                 else if (iminfo.Scope == CompartmentScope.Global)
                     compartment = TextServicesCompartmentContext.Current.GetGlobalCompartment(iminfo.Guid);
-                if (compartment != null)
+                if (compartment is not null)
                 {
                     if (_sink is null)
                         _sink = new TextServicesCompartmentEventSink(this);
@@ -1483,7 +1483,7 @@ namespace System.Windows.Input
                     compartment = TextServicesCompartmentContext.Current.GetThreadCompartment(iminfo.Guid);
                 else if (iminfo.Scope == CompartmentScope.Global)
                     compartment = TextServicesCompartmentContext.Current.GetGlobalCompartment(iminfo.Guid);
-                if (compartment != null)
+                if (compartment is not null)
                    compartment.UnadviseNotifySink();
             }
         }
@@ -1503,7 +1503,7 @@ namespace System.Windows.Input
             {
                 UnsafeNativeMethods.TF_LANGUAGEPROFILE tf_profile;
                 UnsafeNativeMethods.ITfFunctionProvider funcPrv = GetFunctionPrvForCurrentKeyboardTIP(out tf_profile);
-                if (funcPrv != null)
+                if (funcPrv is not null)
                 {
                     UnsafeNativeMethods.ITfFnConfigure fnConfigure;
 
@@ -1515,7 +1515,7 @@ namespace System.Windows.Input
                     object obj;
                     funcPrv.GetFunction(ref guidNull, ref iidFn, out obj);
                     fnConfigure = obj as UnsafeNativeMethods.ITfFnConfigure;
-                    if (fnConfigure != null)
+                    if (fnConfigure is not null)
                     {
                         // We could get ITfFnConfigure, we can say the configure UI can be shown.
                         bCanShown  = true;
@@ -1556,7 +1556,7 @@ namespace System.Windows.Input
             {
                 UnsafeNativeMethods.TF_LANGUAGEPROFILE tf_profile;
                 UnsafeNativeMethods.ITfFunctionProvider funcPrv = GetFunctionPrvForCurrentKeyboardTIP(out tf_profile);
-                if (funcPrv != null)
+                if (funcPrv is not null)
                 {
                     UnsafeNativeMethods.ITfFnConfigureRegisterWord fnConfigure;
 
@@ -1568,7 +1568,7 @@ namespace System.Windows.Input
                     object obj;
                     funcPrv.GetFunction(ref guidNull, ref iidFn, out obj);
                     fnConfigure = obj as UnsafeNativeMethods.ITfFnConfigureRegisterWord;
-                    if (fnConfigure != null)
+                    if (fnConfigure is not null)
                     {
                         // We could get ITfFnConfigureRegisterWord, we can say the configure UI can be shown.
                         bCanShown  = true;
@@ -1604,20 +1604,20 @@ namespace System.Windows.Input
         {
             IntPtr hwnd = (IntPtr)0;
             // We allow null element.
-            if (element != null)
+            if (element is not null)
             {
                 DependencyObject o = element as DependencyObject;
-                if (o != null)
+                if (o is not null)
                 {
                     DependencyObject containingVisual = InputElement.GetContainingVisual(o);
-                    if(containingVisual != null)
+                    if(containingVisual is not null)
                     {
                         IWin32Window win32Window = null;
                         PresentationSource source = PresentationSource.CriticalFromVisual(containingVisual);
-                        if (source != null)
+                        if (source is not null)
                         {
                             win32Window = source as IWin32Window;
-                            if (win32Window != null)
+                            if (win32Window is not null)
                             {
                                 hwnd = win32Window.Handle;
                             }
@@ -1663,7 +1663,7 @@ namespace System.Windows.Input
             UnsafeNativeMethods.ITfInputProcessorProfiles ipp = InputProcessorProfilesLoader.Load();
             UnsafeNativeMethods.TF_LANGUAGEPROFILE tf_profile = new UnsafeNativeMethods.TF_LANGUAGEPROFILE();
 
-            if (ipp != null)
+            if (ipp is not null)
             {
                 CultureInfo inputLang = InputLanguageManager.Current.CurrentInputLanguage;
                 UnsafeNativeMethods.IEnumTfLanguageProfiles enumIpp;

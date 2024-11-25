@@ -90,7 +90,7 @@ namespace System.Windows.Controls
             for (int i = 0; i < tabItemCollection.Count; i++)
             {
                 TabItem ti = tc.ItemContainerGenerator.ContainerFromIndex(i) as TabItem;
-                if (ti != null)
+                if (ti is not null)
                     ti.CoerceValue(TabItem.TabStripPlacementProperty);
             }
         }
@@ -351,7 +351,7 @@ namespace System.Windows.Controls
                 {
                     // If keyboard focus is within the control, make sure it is going to the correct place
                     TabItem item = GetSelectedTabItem();
-                    if (item != null)
+                    if (item is not null)
                     {
                         item.SetFocus();
                     }
@@ -369,7 +369,7 @@ namespace System.Windows.Controls
                 {
                     // If keyboard focus is within the control, make sure it is going to the correct place
                     TabItem item = GetSelectedTabItem();
-                    if (item != null)
+                    if (item is not null)
                     {
                         item.SetFocus();
                     }
@@ -383,7 +383,7 @@ namespace System.Windows.Controls
                 ||  AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection)   )
             {
                 TabControlAutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(this) as TabControlAutomationPeer;
-                if (peer != null)
+                if (peer is not null)
                     peer.RaiseSelectionEvents(e);
             }
         }
@@ -402,7 +402,7 @@ namespace System.Windows.Controls
                 if (startIndex > Items.Count)
                     startIndex = 0;
                 TabItem nextTabItem = FindNextTabItem(startIndex, -1);
-                if (nextTabItem != null)
+                if (nextTabItem is not null)
                     nextTabItem.SetCurrentValueInternal(TabItem.IsSelectedProperty, MS.Internal.KnownBoxes.BooleanBoxes.TrueBox);
             }
         }
@@ -445,7 +445,7 @@ namespace System.Windows.Controls
 
             nextTabItem = FindNextTabItem(startIndex, direction);
 
-            if (nextTabItem != null && nextTabItem != SelectedItem)
+            if (nextTabItem is not null && nextTabItem != SelectedItem)
             {
                 e.Handled = nextTabItem.SetFocus();
             }
@@ -469,7 +469,7 @@ namespace System.Windows.Controls
                         index = Items.Count - 1;
 
                     TabItem tabItem = ItemContainerGenerator.ContainerFromIndex(index) as TabItem;
-                    if (tabItem != null && tabItem.IsEnabled && tabItem.Visibility == Visibility.Visible)
+                    if (tabItem is not null && tabItem.IsEnabled && tabItem.Visibility == Visibility.Visible)
                     {
                         nextTabItem = tabItem;
                         break;
@@ -521,7 +521,7 @@ namespace System.Windows.Controls
         private TabItem GetSelectedTabItem()
         {
             object selectedItem = SelectedItem;
-            if (selectedItem != null)
+            if (selectedItem is not null)
             {
                 // Check if the selected item is a TabItem
                 TabItem tabItem = selectedItem as TabItem;
@@ -560,11 +560,11 @@ namespace System.Windows.Controls
             }
 
             TabItem tabItem = GetSelectedTabItem();
-            if (tabItem != null)
+            if (tabItem is not null)
             {
                 FrameworkElement visualParent = VisualTreeHelper.GetParent(tabItem) as FrameworkElement;
 
-                if (visualParent != null)
+                if (visualParent is not null)
                 {
                     KeyboardNavigation.SetTabOnceActiveElement(visualParent, tabItem);
                     KeyboardNavigation.SetTabOnceActiveElement(this, visualParent);
@@ -572,14 +572,14 @@ namespace System.Windows.Controls
 
                 SelectedContent = tabItem.Content;
                 ContentPresenter scp = SelectedContentPresenter;
-                if (scp != null)
+                if (scp is not null)
                 {
                     scp.HorizontalAlignment = tabItem.HorizontalContentAlignment;
                     scp.VerticalAlignment = tabItem.VerticalContentAlignment;
                 }
 
                 // Use tabItem's template or selector if specified, otherwise use TabControl's
-                if (tabItem.ContentTemplate != null || tabItem.ContentTemplateSelector != null || tabItem.ContentStringFormat != null)
+                if (tabItem.ContentTemplate is not null || tabItem.ContentTemplateSelector is not null || tabItem.ContentStringFormat is not null)
                 {
                     SelectedContentTemplate = tabItem.ContentTemplate;
                     SelectedContentTemplateSelector = tabItem.ContentTemplateSelector;

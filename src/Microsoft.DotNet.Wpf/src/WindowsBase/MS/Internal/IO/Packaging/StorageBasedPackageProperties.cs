@@ -441,7 +441,7 @@ namespace MS.Internal.IO.Packaging
             {
                 if (!_disposed && disposing)
                 {
-                    if (_psSummInfo != null)
+                    if (_psSummInfo is not null)
                     {
                         try
                         {
@@ -453,7 +453,7 @@ namespace MS.Internal.IO.Packaging
                         }
                     }
 
-                    if (_psDocSummInfo != null)
+                    if (_psDocSummInfo is not null)
                     {
                         try
                         {
@@ -646,7 +646,7 @@ namespace MS.Internal.IO.Packaging
                 //
                 // The property set does not exist, so create it.
                 //
-                if (propVal != null)
+                if (propVal is not null)
                 {
                     _pss.Create(
                             ref fmtid,
@@ -786,7 +786,7 @@ namespace MS.Internal.IO.Packaging
             )
         {
             object obj = GetOleProperty(fmtid, propId);
-            return obj != null ? (Nullable<DateTime>)obj : new Nullable<DateTime>();
+            return obj is not null ? (Nullable<DateTime>)obj : new Nullable<DateTime>();
         }
 
         private void

@@ -296,7 +296,7 @@ namespace MS.Internal.Printing.Configuration.Interop
                 case DevModePaperSizes.DMPAPER_TABLOID: { pageMediaSize = new PageMediaSize(PageMediaSizeName.NorthAmericaTabloid); break; }
             }
 
-            return pageMediaSize != null;
+            return pageMediaSize is not null;
         }
     }
 }

@@ -52,7 +52,7 @@ namespace Cdf.Test.Elements
             public void RunOne()
             {
                 var context = Target.DataContext;
-                if (context != null)
+                if (context is not null)
                 {
                     Type srcType = context.GetType();
                     PropertyInfo srcProperty = srcType.GetProperty(SourceProperty);
@@ -300,7 +300,7 @@ namespace Cdf.Test.Elements
         {
             var pvt = serviceProvider.GetService(typeof(MARKUP.IProvideValueTarget)) as MARKUP.IProvideValueTarget;
             var prop = pvt.TargetProperty as PropertyInfo;
-            if (prop != null)
+            if (prop is not null)
             {
                 var type = typeof(FakeLookupVariable < > ).MakeGenericType(prop.PropertyType.GetGenericArguments()[0]);
                 var variable = Activator.CreateInstance(type) as FakeVariable;
@@ -492,7 +492,7 @@ namespace Cdf.Test.Elements
             IEnumerable<AmbientPropertyValue> ambientEnumerable = iAmbient.GetAllAmbientValues(null, property);
             foreach (AmbientPropertyValue apVal in ambientEnumerable)
             {
-                if (apVal.Value != null)
+                if (apVal.Value is not null)
                 {
                     return apVal.Value;
                 }
@@ -660,7 +660,7 @@ namespace Cdf.Test.Elements
 
         public TReturn Evaluate()
         {
-            if (_loaderFactory != null)
+            if (_loaderFactory is not null)
             {
                 XamlObjectWriter writer = _loaderFactory.GetXamlObjectWriter(null);
                 System.Xaml.XamlReader reader = _nodes.GetReader();

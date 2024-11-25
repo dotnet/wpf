@@ -68,10 +68,10 @@ namespace System.Windows.Media
         /// </summary>
         internal virtual void CreateUCEResources(DUCE.Channel channel, DUCE.Channel outOfBandChannel)
         {
-            Debug.Assert(channel != null);
+            Debug.Assert(channel is not null);
             Debug.Assert(!_contentRoot.IsOnChannel(channel));
 
-            Debug.Assert(outOfBandChannel != null);
+            Debug.Assert(outOfBandChannel is not null);
             Debug.Assert(!_contentRoot.IsOnChannel(outOfBandChannel));
 
             //
@@ -94,7 +94,7 @@ namespace System.Windows.Media
         /// </summary>
         internal virtual void ReleaseUCEResources(DUCE.Channel channel, DUCE.Channel outOfBandChannel)
         {
-            if (_rootVisual != null)
+            if (_rootVisual is not null)
             {
                 ((DUCE.IResource)(_rootVisual)).ReleaseOnChannel(channel);
             }
@@ -244,7 +244,7 @@ namespace System.Windows.Media
             // render if one has not already been scheduled.
             //
 
-            if (_rootVisual != null)
+            if (_rootVisual is not null)
             {
                 //
                 // When replacing the root visual, we need to re-realize all
@@ -297,7 +297,7 @@ namespace System.Windows.Media
             _frameRateTimer.Begin();
 #endif
 
-            if (_rootVisual != null)
+            if (_rootVisual is not null)
             {
                 bool etwTracingEnabled = false;
 
@@ -433,8 +433,8 @@ namespace System.Windows.Media
 
             RenderContext rc = null;
 
-            Invariant.Assert(channel != null);
-            if (_cachedRenderContext != null)
+            Invariant.Assert(channel is not null);
+            if (_cachedRenderContext is not null)
             {
                 rc = _cachedRenderContext;
                 _cachedRenderContext = null;
@@ -474,8 +474,8 @@ namespace System.Windows.Media
             // We need to make this function robust by leaving the
             // _rootVisual in a consistent state.
 
-            if (visual != null &&
-                (visual._parent != null
+            if (visual is not null &&
+                (visual._parent is not null
                  || visual.IsRootElement))
             {
                 // If a Visual has already a parent it can not be the root in a CompositionTarget because
@@ -486,7 +486,7 @@ namespace System.Windows.Media
 
             DUCE.ChannelSet channelSet = MediaContext.From(Dispatcher).GetChannels();
             DUCE.Channel channel = channelSet.Channel;
-            if (_rootVisual != null && _contentRoot.IsOnChannel(channel))
+            if (_rootVisual is not null && _contentRoot.IsOnChannel(channel))
             {
                 ClearRootNode(channel);
 
@@ -497,7 +497,7 @@ namespace System.Windows.Media
 
             _rootVisual = visual;
 
-            if (_rootVisual != null)
+            if (_rootVisual is not null)
             {
                 _rootVisual.IsRootElement = true;
 

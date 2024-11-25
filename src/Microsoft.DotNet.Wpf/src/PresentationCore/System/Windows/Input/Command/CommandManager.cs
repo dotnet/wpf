@@ -310,10 +310,10 @@ namespace System.Windows.Input
                 localInputBindings = ((UIElement3D)targetElement).InputBindingsInternal;
             }
 
-            if (localInputBindings != null)
+            if (localInputBindings is not null)
             {
                 InputBinding inputBinding = localInputBindings.FindMatch(targetElement, inputEventArgs);
-                if (inputBinding != null)
+                if (inputBinding is not null)
                 {
                     command = inputBinding.Command;
                     target = inputBinding.CommandTarget;
@@ -327,13 +327,13 @@ namespace System.Windows.Input
                 lock (_classInputBindings.SyncRoot)
                 {
                     Type classType = targetElement.GetType();
-                    while (classType != null)
+                    while (classType is not null)
                     {
                         InputBindingCollection classInputBindings = _classInputBindings[classType] as InputBindingCollection;
-                        if (classInputBindings != null)
+                        if (classInputBindings is not null)
                         {
                             InputBinding inputBinding = classInputBindings.FindMatch(targetElement, inputEventArgs);
-                            if (inputBinding != null)
+                            if (inputBinding is not null)
                             {
                                 command = inputBinding.Command;
                                 target = inputBinding.CommandTarget;
@@ -364,7 +364,7 @@ namespace System.Windows.Input
                     localCommandBindings = ((UIElement3D)targetElement).CommandBindingsInternal;
                 }
 
-                if (localCommandBindings != null)
+                if (localCommandBindings is not null)
                 {
                     command = localCommandBindings.FindMatch(targetElement, inputEventArgs);
                 }
@@ -376,13 +376,13 @@ namespace System.Windows.Input
                 lock (_classCommandBindings.SyncRoot)
                 {
                     Type classType = targetElement.GetType();
-                    while (classType != null)
+                    while (classType is not null)
                     {
                         CommandBindingCollection classCommandBindings = _classCommandBindings[classType] as CommandBindingCollection;
-                        if (classCommandBindings != null)
+                        if (classCommandBindings is not null)
                         {
                             command = classCommandBindings.FindMatch(targetElement, inputEventArgs);
-                            if (command != null)
+                            if (command is not null)
                             {
                                 break;
                             }
@@ -395,7 +395,7 @@ namespace System.Windows.Input
             // Step 5: If found a command, then execute it (unless it is
             // the special "NotACommand" command, which we simply ignore without
             // setting Handled=true, so that the input bubbles up to the parent)
-            if (command != null && command != ApplicationCommands.NotACommand)
+            if (command is not null && command != ApplicationCommands.NotACommand)
             {
                 // We currently do not support declaring the element with focus as the target
                 // element by setting target is null.  Instead, we interpret a null target to indicate
@@ -408,7 +408,7 @@ namespace System.Windows.Input
                 bool continueRouting = false;
 
                 RoutedCommand routedCommand = command as RoutedCommand;
-                if (routedCommand != null)
+                if (routedCommand is not null)
                 {
                     if (routedCommand.CriticalCanExecute(parameter,
                                                     target,
@@ -448,21 +448,21 @@ namespace System.Windows.Input
         /// </summary>
         internal static void OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            if ((sender != null) && (e != null) && (e.Command != null))
+            if ((sender is not null) && (e is not null) && (e.Command is not null))
             {
                 FindCommandBinding(sender, e, e.Command, false);
 
                 if (!e.Handled && (e.RoutedEvent == CanExecuteEvent))
                 {
                     DependencyObject d = sender as DependencyObject;
-                    if (d != null)
+                    if (d is not null)
                     {
                         if (FocusManager.GetIsFocusScope(d))
                         {
                             // This element is a focus scope.
                             // Try to transfer the event to its parent focus scope's focused element.
                             IInputElement focusedElement = GetParentScopeFocusedElement(d);
-                            if (focusedElement != null)
+                            if (focusedElement is not null)
                             {
                                 TransferEvent(focusedElement, e);
                             }
@@ -483,21 +483,21 @@ namespace System.Windows.Input
         /// </summary>
         internal static void OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            if ((sender != null) && (e != null) && (e.Command != null))
+            if ((sender is not null) && (e is not null) && (e.Command is not null))
             {
                 FindCommandBinding(sender, e, e.Command, true);
 
                 if (!e.Handled && (e.RoutedEvent == ExecutedEvent))
                 {
                     DependencyObject d = sender as DependencyObject;
-                    if (d != null)
+                    if (d is not null)
                     {
                         if (FocusManager.GetIsFocusScope(d))
                         {
                             // This element is a focus scope.
                             // Try to transfer the event to its parent focus scope's focused element.
                             IInputElement focusedElement = GetParentScopeFocusedElement(d);
-                            if (focusedElement != null)
+                            if (focusedElement is not null)
                             {
                                 TransferEvent(focusedElement, e);
                             }
@@ -515,7 +515,7 @@ namespace System.Windows.Input
 
         internal static void OnCommandDevice(object sender, CommandDeviceEventArgs e)
         {
-            if ((sender != null) && (e != null) && (e.Command != null))
+            if ((sender is not null) && (e is not null) && (e.Command is not null))
             {
                 CanExecuteRoutedEventArgs canExecuteArgs = new CanExecuteRoutedEventArgs(e.Command, null /* parameter */);
                 canExecuteArgs.RoutedEvent = CommandManager.CanExecuteEvent;
@@ -655,7 +655,7 @@ namespace System.Windows.Input
         private static void TransferEvent(IInputElement newSource, CanExecuteRoutedEventArgs e)
         {
             RoutedCommand command = e.Command as RoutedCommand;
-            if (command != null)
+            if (command is not null)
             {
                 try
                 {
@@ -671,7 +671,7 @@ namespace System.Windows.Input
         private static void TransferEvent(IInputElement newSource, ExecutedRoutedEventArgs e)
         {
             RoutedCommand command = e.Command as RoutedCommand;
-            if (command != null)
+            if (command is not null)
             {
                 try
                 {
@@ -688,10 +688,10 @@ namespace System.Windows.Input
         private static IInputElement GetParentScopeFocusedElement(DependencyObject childScope)
         {
             DependencyObject parentScope = GetParentScope(childScope);
-            if (parentScope != null)
+            if (parentScope is not null)
             {
                 IInputElement focusedElement = FocusManager.GetFocusedElement(parentScope);
-                if ((focusedElement != null) && !ContainsElement(childScope, focusedElement as DependencyObject))
+                if ((focusedElement is not null) && !ContainsElement(childScope, focusedElement as DependencyObject))
                 {
                     // The focused element from the parent focus scope is not within the focus scope
                     // of the current element.
@@ -710,20 +710,20 @@ namespace System.Windows.Input
             ContentElement contentElement = (element is null) ? childScope as ContentElement : null;
             UIElement3D element3D = (element is null && contentElement is null) ? childScope as UIElement3D : null;
 
-            if (element != null)
+            if (element is not null)
             {
                 parent = element.GetUIParent(true);
             }
-            else if (contentElement != null)
+            else if (contentElement is not null)
             {
                 parent = contentElement.GetUIParent(true);
             }
-            else if (element3D != null)
+            else if (element3D is not null)
             {
                 parent = element3D.GetUIParent(true);
             }
 
-            if (parent != null)
+            if (parent is not null)
             {
                 // Get the next focus scope above this one
                 return FocusManager.GetFocusScope(parent);
@@ -734,10 +734,10 @@ namespace System.Windows.Input
 
         private static bool ContainsElement(DependencyObject scope, DependencyObject child)
         {
-            if (child != null)
+            if (child is not null)
             {
                 DependencyObject parentScope = FocusManager.GetFocusScope(child);
-                while (parentScope != null)
+                while (parentScope is not null)
                 {
                     if (parentScope == scope)
                     {
@@ -794,7 +794,7 @@ namespace System.Windows.Input
             if (_requerySuggestedOperation is null)
             {
                 Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
-                if ((dispatcher != null) && !dispatcher.HasShutdownStarted && !dispatcher.HasShutdownFinished)
+                if ((dispatcher is not null) && !dispatcher.HasShutdownStarted && !dispatcher.HasShutdownFinished)
                 {
                     _requerySuggestedOperation = dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(RaiseRequerySuggested), null);
                 }
@@ -806,7 +806,7 @@ namespace System.Windows.Input
             // Call the RequerySuggested handlers
             _requerySuggestedOperation = null;
 
-            if (PrivateRequerySuggested != null)
+            if (PrivateRequerySuggested is not null)
                 PrivateRequerySuggested(null, EventArgs.Empty);
 
             return null;

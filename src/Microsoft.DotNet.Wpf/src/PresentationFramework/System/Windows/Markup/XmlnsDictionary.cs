@@ -101,7 +101,7 @@ namespace System.Windows.Markup
             }
             
             // Copy the Declarations if they exists 
-            if (xmlnsDictionary != null && xmlnsDictionary.Count > 0)
+            if (xmlnsDictionary is not null && xmlnsDictionary.Count > 0)
             {
                 _lastDecl = xmlnsDictionary._lastDecl;
                 if (_nsDeclarations is null)
@@ -118,7 +118,7 @@ namespace System.Windows.Markup
                     // The reason is, Count, doesn't make sense when we are implementing the 
                     // storage in our own way. We don't remove the namespace declarations when 
                     // asked to remove, instead we set their uri values to null.
-                    if (xmlnsDictionary._nsDeclarations[i].Uri != null)
+                    if (xmlnsDictionary._nsDeclarations[i].Uri is not null)
                     {    _countDecl++;  }
 
                     _nsDeclarations[i].Prefix     = xmlnsDictionary._nsDeclarations[i].Prefix;
@@ -225,7 +225,7 @@ namespace System.Windows.Markup
 
             for (int thisDecl = 0; thisDecl < _lastDecl;  thisDecl++)
             {
-                if (_nsDeclarations[thisDecl].Uri != null)
+                if (_nsDeclarations[thisDecl].Uri is not null)
                 {
                     namespaceTable[_nsDeclarations[thisDecl].Prefix] = _nsDeclarations[thisDecl].Uri;
                 }
@@ -259,7 +259,7 @@ namespace System.Windows.Markup
         public void CopyTo(Array array, int index)
         {
             IDictionary dict = GetNamespacesInScope(NamespaceScope.All) as IDictionary;
-            if (dict != null)
+            if (dict is not null)
                 dict.CopyTo(array,index);
         }
 
@@ -299,7 +299,7 @@ namespace System.Windows.Markup
 
             for (int thisDecl = 0; thisDecl < _lastDecl; thisDecl++)
             {
-                if (_nsDeclarations[thisDecl].Uri != null)
+                if (_nsDeclarations[thisDecl].Uri is not null)
                 {
                     namespaceTable[_nsDeclarations[thisDecl].Prefix] = _nsDeclarations[thisDecl].Uri;
                 }
@@ -500,7 +500,7 @@ namespace System.Windows.Markup
                 for (int thisDecl =0; thisDecl < _lastDecl; thisDecl++)
                 {
                     // add all the Namespace Declarations whose Namespaces are not null
-                    if (_nsDeclarations[thisDecl].Uri != null)
+                    if (_nsDeclarations[thisDecl].Uri is not null)
                     {
                         if (!prefixes.Contains(_nsDeclarations[thisDecl].Prefix))
                             prefixes.Add(_nsDeclarations[thisDecl].Prefix);
@@ -521,7 +521,7 @@ namespace System.Windows.Markup
                 HybridDictionary namespaceTable = new HybridDictionary(_lastDecl+1);
                 for (int thisDecl = 0; thisDecl < _lastDecl; thisDecl++)
                 {
-                    if (_nsDeclarations[thisDecl].Uri != null)
+                    if (_nsDeclarations[thisDecl].Uri is not null)
                     {
                         namespaceTable[_nsDeclarations[thisDecl].Prefix] = _nsDeclarations[thisDecl].Uri;
                     }
@@ -710,7 +710,7 @@ namespace System.Windows.Markup
                 string prefix = _nsDeclarations[i].Prefix;
                 string xmlNamespace    = _nsDeclarations[i].Uri;
 
-                Debug.Assert(prefix != null);
+                Debug.Assert(prefix is not null);
                 if (xmlNamespace.Length > 0 || prefix.Length > 0)
                 {
                     dict[prefix] = xmlNamespace;
@@ -734,7 +734,7 @@ namespace System.Windows.Markup
                      thisDecl >= 0;
                      thisDecl--)
                 {
-                    if ( (_nsDeclarations[thisDecl].Prefix == prefix) && _nsDeclarations[thisDecl].Uri != null)
+                    if ( (_nsDeclarations[thisDecl].Prefix == prefix) && _nsDeclarations[thisDecl].Uri is not null)
                     {
                         if (prefix.Length > 0 || _nsDeclarations[thisDecl].Uri.Length > 0)
                         {

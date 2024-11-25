@@ -106,7 +106,7 @@ namespace System.Windows.Input.StylusWisp
                 // rest of this touch cycle.
                 PromotingToOther = false;
             }
-            if (_storedStagingAreaItems != null)
+            if (_storedStagingAreaItems is not null)
             {
                 _storedStagingAreaItems.Clear();
             }
@@ -137,7 +137,7 @@ namespace System.Windows.Input.StylusWisp
 
         protected override void OnDeactivateImpl()
         {
-            if (_storedStagingAreaItems != null)
+            if (_storedStagingAreaItems is not null)
             {
                 _storedStagingAreaItems.Clear();
             }

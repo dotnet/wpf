@@ -105,7 +105,7 @@ namespace System.Windows.Media
             ImageSource newV = (ImageSource) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
-            if (dispatcher != null)
+            if (dispatcher is not null)
             {
                 DUCE.IResource targetResource = (DUCE.IResource)target;
                 using (CompositionEngineLock.Acquire())
@@ -210,7 +210,7 @@ namespace System.Windows.Media
                 ImageSource vImageSource = ImageSource;
 
                 // Obtain handles for properties that implement DUCE.IResource
-                DUCE.ResourceHandle hImageSource = vImageSource != null ? ((DUCE.IResource)vImageSource).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                DUCE.ResourceHandle hImageSource = vImageSource is not null ? ((DUCE.IResource)vImageSource).GetHandle(channel) : DUCE.ResourceHandle.Null;
 
                 // Obtain handles for animated properties
                 DUCE.ResourceHandle hRectAnimations = GetAnimationResourceHandle(RectProperty, channel);
@@ -240,7 +240,7 @@ namespace System.Windows.Media
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_IMAGEDRAWING))
                 {
                     ImageSource vImageSource = ImageSource;
-                    if (vImageSource != null) ((DUCE.IResource)vImageSource).AddRefOnChannel(channel);
+                    if (vImageSource is not null) ((DUCE.IResource)vImageSource).AddRefOnChannel(channel);
 
                     AddRefOnChannelAnimations(channel);
 
@@ -257,7 +257,7 @@ namespace System.Windows.Media
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
                     ImageSource vImageSource = ImageSource;
-                    if (vImageSource != null) ((DUCE.IResource)vImageSource).ReleaseOnChannel(channel);
+                    if (vImageSource is not null) ((DUCE.IResource)vImageSource).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
 }

@@ -71,11 +71,11 @@ namespace MS.Internal.Xaml.Context
             // - Initialization, in which case FixupTarget.Instance is the object whose property the
             //   initialized object will be assigned to; and
             // - Key, in which case the FixupTarget.Instance is the dictionary
-            Debug.Assert(parentObject != null);
+            Debug.Assert(parentObject is not null);
 
             AddToMultiDict(_dependenciesByParentObject, parentObject, fixupToken);
 
-            if (fixupToken.ReferencedObject != null)
+            if (fixupToken.ReferencedObject is not null)
             {
                 Debug.Assert(fixupToken.FixupType == FixupType.UnresolvedChildren ||
                     fixupToken.FixupType == FixupType.MarkupExtensionFirstRun);
@@ -146,7 +146,7 @@ namespace MS.Internal.Xaml.Context
                 {
                     GetDependentNames(token.ReferencedObject, result);
                 }
-                else if (token.NeededNames != null)
+                else if (token.NeededNames is not null)
                 {
                     foreach (string name in token.NeededNames)
                     {
@@ -166,7 +166,7 @@ namespace MS.Internal.Xaml.Context
         {
             // Remove any dependency on this instance
             NameFixupToken token = null;
-            if (instance != null)
+            if (instance is not null)
             {
                 if (_dependenciesByChildObject.Remove(instance, out token))
                 {
@@ -178,7 +178,7 @@ namespace MS.Internal.Xaml.Context
             // Remove any dependencies on this name, and return any tokens whose dependencies
             // have all been resolved.
             FrugalObjectList<NameFixupToken> nameDependencies;
-            if (name != null && _dependenciesByName.TryGetValue(name, out nameDependencies))
+            if (name is not null && _dependenciesByName.TryGetValue(name, out nameDependencies))
             {
                 int i = 0;
                 while (i < nameDependencies.Count)
@@ -405,7 +405,7 @@ namespace MS.Internal.Xaml.Context
             }
 
             // Finally, if there was a deferred ProvideValue at the root, return it
-            if (_deferredRootProvideValue != null)
+            if (_deferredRootProvideValue is not null)
             {
                 yield return _deferredRootProvideValue;
             }

@@ -44,7 +44,7 @@ namespace System.Windows.Automation.Peers
         {
             get
             {
-                if (this.OwningCalendar != null && this.OwningCalendar.MonthControl != null)
+                if (this.OwningCalendar is not null && this.OwningCalendar.MonthControl is not null)
                 {
                     if (this.OwningCalendar.DisplayMode == CalendarMode.Month)
                     {
@@ -79,7 +79,7 @@ namespace System.Windows.Automation.Peers
                 case PatternInterface.Selection:
                 case PatternInterface.ItemContainer:
                     {
-                        if (this.OwningGrid != null)
+                        if (this.OwningGrid is not null)
                         {
                             return this;
                         }
@@ -119,17 +119,17 @@ namespace System.Windows.Automation.Peers
             // Step 1: Add previous, header and next buttons
             AutomationPeer buttonPeer;
             buttonPeer = FrameworkElementAutomationPeer.CreatePeerForElement(OwningCalendar.MonthControl.PreviousButton);
-            if (buttonPeer != null)
+            if (buttonPeer is not null)
             {
                 peers.Add(buttonPeer);
             }
             buttonPeer = FrameworkElementAutomationPeer.CreatePeerForElement(OwningCalendar.MonthControl.HeaderButton);
-            if (buttonPeer != null)
+            if (buttonPeer is not null)
             {
                 peers.Add(buttonPeer);
             }
             buttonPeer = FrameworkElementAutomationPeer.CreatePeerForElement(OwningCalendar.MonthControl.NextButton);
-            if (buttonPeer != null)
+            if (buttonPeer is not null)
             {
                 peers.Add(buttonPeer);
             }
@@ -144,7 +144,7 @@ namespace System.Windows.Automation.Peers
                 if (OwningCalendar.DisplayMode == CalendarMode.Month && childRow == 0)
                 {
                     AutomationPeer dayTitlePeer = UIElementAutomationPeer.CreatePeerForElement(child);
-                    if (dayTitlePeer != null)
+                    if (dayTitlePeer is not null)
                     {
                         peers.Add(dayTitlePeer);
                     }
@@ -152,7 +152,7 @@ namespace System.Windows.Automation.Peers
                 else
                 {
                     Button owningButton = child as Button;
-                    if (owningButton != null && owningButton.DataContext is DateTime)
+                    if (owningButton is not null && owningButton.DataContext is DateTime)
                     {
                         date = (DateTime)owningButton.DataContext;
                         peer = GetOrCreateDateTimeAutomationPeer(date, OwningCalendar.DisplayMode, /*addParentInfo*/ false);
@@ -230,7 +230,7 @@ namespace System.Windows.Automation.Peers
             if (peer is null)
             {
                 peer = GetPeerFromWeakRefStorage(key);
-                if (peer != null && !addParentInfo)
+                if (peer is not null && !addParentInfo)
                 {
                     // As cached peer is getting used it must be invalidated. addParentInfo check ensures that call is coming from GetChildrenCore
                     peer.AncestorsInvalid = false;
@@ -245,13 +245,13 @@ namespace System.Windows.Automation.Peers
                 // Sets hwnd and parent info
                 if (addParentInfo)
                 {
-                    if(peer != null)
+                    if(peer is not null)
                         peer.TrySetParentInfo(this);
                 }
             }
             // Set EventsSource if visual exists
             AutomationPeer wrapperPeer = peer.WrapperPeer;
-            if (wrapperPeer != null)
+            if (wrapperPeer is not null)
             {
                 wrapperPeer.EventsSource = peer;
             }
@@ -266,10 +266,10 @@ namespace System.Windows.Automation.Peers
             WeakReference weakRefEP = null;
             WeakRefElementProxyStorage.TryGetValue(dateTimeCalendarModePairKey, out weakRefEP);
 
-            if (weakRefEP != null)
+            if (weakRefEP is not null)
             {
                 ElementProxy provider = weakRefEP.Target as ElementProxy;
-                if (provider != null)
+                if (provider is not null)
                 {
                     returnPeer = PeerFromProvider(provider as IRawElementProviderSimple) as DateTimeAutomationPeer;
                     if (returnPeer is null)
@@ -300,7 +300,7 @@ namespace System.Windows.Automation.Peers
             if (AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementSelected) && numSelected == 1 && numAdded == 1)
             {
                 DateTimeAutomationPeer peer = GetOrCreateDateTimeAutomationPeer((DateTime)e.AddedItems[0], CalendarMode.Month);
-                if (peer != null)
+                if (peer is not null)
                 {
                     peer.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementSelected);
                 }
@@ -312,7 +312,7 @@ namespace System.Windows.Automation.Peers
                     foreach (DateTime date in e.AddedItems)
                     {
                         DateTimeAutomationPeer peer = GetOrCreateDateTimeAutomationPeer(date, CalendarMode.Month);
-                        if (peer != null)
+                        if (peer is not null)
                         {
                             peer.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementAddedToSelection);
                         }
@@ -325,7 +325,7 @@ namespace System.Windows.Automation.Peers
                 foreach (DateTime date in e.RemovedItems)
                 {
                     DateTimeAutomationPeer peer = GetOrCreateDateTimeAutomationPeer(date, CalendarMode.Month);
-                    if (peer != null)
+                    if (peer is not null)
                     {
                         peer.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection);
                     }
@@ -341,7 +341,7 @@ namespace System.Windows.Automation.Peers
         {
             get
             {
-                if (this.OwningGrid != null)
+                if (this.OwningGrid is not null)
                 {
                     return this.OwningGrid.ColumnDefinitions.Count;
                 }
@@ -354,7 +354,7 @@ namespace System.Windows.Automation.Peers
         {
             get
             {
-                if (this.OwningGrid != null)
+                if (this.OwningGrid is not null)
                 {
                     if (this.OwningCalendar.DisplayMode == CalendarMode.Month)
                     {
@@ -379,7 +379,7 @@ namespace System.Windows.Automation.Peers
                 row++;
             }
 
-            if (this.OwningGrid != null && row >= 0 && row < this.OwningGrid.RowDefinitions.Count && column >= 0 && column < this.OwningGrid.ColumnDefinitions.Count)
+            if (this.OwningGrid is not null && row >= 0 && row < this.OwningGrid.RowDefinitions.Count && column >= 0 && column < this.OwningGrid.ColumnDefinitions.Count)
             {
                 foreach (UIElement child in this.OwningGrid.Children)
                 {
@@ -498,7 +498,7 @@ namespace System.Windows.Automation.Peers
         {
             DateTimeAutomationPeer startAfterDatePeer = null;
             
-            if (startAfterProvider != null)
+            if (startAfterProvider is not null)
             {
                 startAfterDatePeer = PeerFromProvider(startAfterProvider) as DateTimeAutomationPeer;
                 // if provider is not null, peer must exist
@@ -526,12 +526,12 @@ namespace System.Windows.Automation.Peers
                     nextDate = parsedDate;
                 }
 
-                if( !nextDate.HasValue || (startAfterDatePeer != null && nextDate <= startAfterDatePeer.Date) )
+                if( !nextDate.HasValue || (startAfterDatePeer is not null && nextDate <= startAfterDatePeer.Date) )
                 {
                     throw new InvalidOperationException(SR.CalendarNamePropertyValueNotValid);
                 }
 
-                currentMode = (startAfterDatePeer != null) ? startAfterDatePeer.ButtonMode : OwningCalendar.DisplayMode;
+                currentMode = (startAfterDatePeer is not null) ? startAfterDatePeer.ButtonMode : OwningCalendar.DisplayMode;
             }
             else if (propertyId == 0 || propertyId == AutomationElementIdentifiers.ControlTypeProperty.Id)
             {
@@ -541,7 +541,7 @@ namespace System.Windows.Automation.Peers
                 {
                     return null;
                 }
-                currentMode = (startAfterDatePeer != null) ? startAfterDatePeer.ButtonMode : OwningCalendar.DisplayMode;
+                currentMode = (startAfterDatePeer is not null) ? startAfterDatePeer.ButtonMode : OwningCalendar.DisplayMode;
                 nextDate = GetNextDate(startAfterDatePeer, currentMode);
             }
             else
@@ -552,7 +552,7 @@ namespace System.Windows.Automation.Peers
             if (nextDate.HasValue)
             {
                 AutomationPeer nextPeer = GetOrCreateDateTimeAutomationPeer(nextDate.Value, currentMode);
-                if (nextPeer != null)
+                if (nextPeer is not null)
                 {
                     return ProviderFromPeer(nextPeer);
                 }
@@ -564,7 +564,7 @@ namespace System.Windows.Automation.Peers
         {
             DateTime? nextDate = null;
 
-            DateTime startDate = (currentDatePeer != null) ? currentDatePeer.Date : OwningCalendar.DisplayDate;
+            DateTime startDate = (currentDatePeer is not null) ? currentDatePeer.Date : OwningCalendar.DisplayDate;
             
             if (currentMode == CalendarMode.Month)
                 nextDate = startDate.AddDays(1);
@@ -578,7 +578,7 @@ namespace System.Windows.Automation.Peers
 
         private DateTime? GetNextSelectedDate(DateTimeAutomationPeer currentDatePeer, bool isSelected)
         {
-            DateTime startDate = (currentDatePeer != null) ? currentDatePeer.Date : OwningCalendar.DisplayDate;
+            DateTime startDate = (currentDatePeer is not null) ? currentDatePeer.Date : OwningCalendar.DisplayDate;
 
             if (isSelected)
             {
@@ -631,7 +631,7 @@ namespace System.Windows.Automation.Peers
                     {
                         AutomationPeer peer = CreatePeerForElement(child);
 
-                        if (peer != null)
+                        if (peer is not null)
                         {
                             providers.Add(ProviderFromPeer(peer));
                         }

@@ -549,9 +549,9 @@ namespace System.Windows.Automation
 
         public void Dispose()
         {
-            Debug.Assert( _request != null );
+            Debug.Assert( _request is not null );
 
-            if( _request != null )
+            if( _request is not null )
             {
                 _request.Pop();
                 _request = null;

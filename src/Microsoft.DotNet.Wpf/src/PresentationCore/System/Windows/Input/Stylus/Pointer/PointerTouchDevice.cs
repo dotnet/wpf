@@ -79,7 +79,7 @@ namespace System.Windows.Input.StylusPointer
             double pixelsPerInch = DpiUtil.DefaultPixelsPerInch;
 
             // If we have an active source and root visual use the DPI from there
-            if (ActiveSource?.RootVisual != null)
+            if (ActiveSource?.RootVisual is not null)
             {
                 pixelsPerInch = VisualTreeHelper.GetDpi(ActiveSource.RootVisual).PixelsPerInchX;
             }

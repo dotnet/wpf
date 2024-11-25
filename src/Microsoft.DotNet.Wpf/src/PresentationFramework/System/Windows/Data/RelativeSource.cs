@@ -176,7 +176,7 @@ namespace System.Windows.Data
                 if (_mode != RelativeSourceMode.FindAncestor)
                 {
                     // in all other modes, AncestorType should not get set to a non-null value
-                    if (value != null)
+                    if (value is not null)
                         throw new InvalidOperationException(SR.RelativeSourceNotInFindAncestorMode);
                 }
                 else

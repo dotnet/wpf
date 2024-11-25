@@ -76,7 +76,7 @@ namespace System.Windows.Markup
 
             DependencyProperty property = ResolveProperty(context, null, source);
 
-            if (property != null)
+            if (property is not null)
             {
                 return property;
             }
@@ -110,12 +110,12 @@ namespace System.Windows.Markup
             DependencyProperty dProperty = source as DependencyProperty;
             byte[] bytes;
             String value;
-            if (dProperty != null)
+            if (dProperty is not null)
             {
                 return dProperty;
             }
             // If it's a byte[] we got it from BAML.  Let's resolve it using the schema context
-            else if ((bytes = source as byte[]) != null)
+            else if ((bytes = source as byte[]) is not null)
             {
                 Baml2006SchemaContext schemaContext = (serviceProvider.GetService(typeof(IXamlSchemaContextProvider))
                     as IXamlSchemaContextProvider).SchemaContext as Baml2006SchemaContext;
@@ -138,7 +138,7 @@ namespace System.Windows.Markup
                     }
                 }
             }
-            else if ((value = source as string) != null)
+            else if ((value = source as string) is not null)
             {
                 value = value.Trim();
                 // If it contains a . it means that it is a full name with type and property.
@@ -167,7 +167,7 @@ namespace System.Windows.Markup
             }
 
             // We got additional info from either Trigger.SourceName or Setter.TargetName
-            if (type is null && targetName != null)
+            if (type is null && targetName is not null)
             {
                 IAmbientProvider ambientProvider = serviceProvider.GetService(typeof(IAmbientProvider))
                     as System.Xaml.IAmbientProvider;
@@ -215,7 +215,7 @@ namespace System.Windows.Markup
                 AmbientPropertyValue firstAmbientValue = ambientProvider.GetFirstAmbientValue(ceilingTypes, styleTargetType,
                     templateProperty, controlTemplateTargetType);
 
-                if (firstAmbientValue != null)
+                if (firstAmbientValue is not null)
                 {
                     if (firstAmbientValue.Value is Type)
                     {
@@ -235,7 +235,7 @@ namespace System.Windows.Markup
                 }
             }
 
-            if (type != null && property != null)
+            if (type is not null && property is not null)
             {
                 return DependencyProperty.FromName(property, type);
             }
@@ -259,7 +259,7 @@ namespace System.Windows.Markup
             TemplateContent templateHolder =
                 ambientValue.Value as System.Windows.TemplateContent;
 
-            if (templateHolder != null)
+            if (templateHolder is not null)
             {
                 return templateHolder.GetTypeForName(target).UnderlyingType;
             }

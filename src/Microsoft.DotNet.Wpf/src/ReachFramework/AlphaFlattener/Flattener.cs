@@ -61,9 +61,9 @@ namespace Microsoft.Internal.AlphaFlattener
 
             GeometryPrimitive gp = p as GeometryPrimitive;
 
-            if (gp != null)
+            if (gp is not null)
             {
-                if ((gp.Pen != null) && (gp.Pen.StrokeBrush.Brush is DrawingBrush))
+                if ((gp.Pen is not null) && (gp.Pen.StrokeBrush.Brush is DrawingBrush))
                 {
                     gp.Widen();
                 }
@@ -96,7 +96,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             CanvasPrimitive canvas = tree as CanvasPrimitive;
 
-            if (canvas != null)
+            if (canvas is not null)
             {
                 ArrayList children = canvas.Children;
 
@@ -109,7 +109,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 opacity *= tree.Opacity;
 
                 // transform opacity mask into current primitive space
-                if (opacityMask != null)
+                if (opacityMask is not null)
                 {
                     Matrix worldToPrimitiveTransform = tree.Transform;
                     worldToPrimitiveTransform.Invert();
@@ -173,7 +173,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     }
 #endif
 
-                    if (opacityMask != null)
+                    if (opacityMask is not null)
                     {
                         opacityMask.ApplyTransform(transform);
                     }
@@ -204,7 +204,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 GeometryPrimitive gp = tree as GeometryPrimitive;
 
-                if (gp != null && gp.Brush != null && gp.Pen != null &&
+                if (gp is not null && gp.Brush is not null && gp.Pen is not null &&
                     (!gp.IsOpaque || !Utility.IsOpaque(opacity)))
                 {
                     //
@@ -255,11 +255,11 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 tree.PushOpacity(opacity, opacityMask);
 
-                if (gp != null)
+                if (gp is not null)
                 {
                     // Split fill and stroke into separate primitives if no opacity involved.
                     // Intermediate Canvas not needed due to opaqueness.
-                    if ((gp.Brush != null) && (gp.Pen != null))
+                    if ((gp.Brush is not null) && (gp.Pen is not null))
                     {
                         GeometryPrimitive fill = gp.Clone() as GeometryPrimitive;
 
@@ -270,7 +270,7 @@ namespace Microsoft.Internal.AlphaFlattener
                         gp.Brush = null;
                         AddPrimitive(gp); // Followed by stroke only
                     }
-                    else if ((gp.Pen != null) || (gp.Brush != null))
+                    else if ((gp.Pen is not null) || (gp.Brush is not null))
                     {
                         AddPrimitive(gp);
                     }
@@ -366,7 +366,7 @@ namespace Microsoft.Internal.AlphaFlattener
 #if DEBUG
             for (int i = 0; i < count; i ++)
             {
-                if (commands[i] != null)
+                if (commands[i] is not null)
                 {
                     commands[i].SetID(i);
                 }
@@ -397,7 +397,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 desp = info.id;
 #endif
 
-                if (info.m_cluster != null)
+                if (info.m_cluster is not null)
                 {
                     info.m_cluster.Render(commands, dc);
                 }
@@ -433,7 +433,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             PrimitiveInfo pi = _dl.Commands[i];
 
-            if (pi.overlap != null)
+            if (pi.overlap is not null)
             {
                 foreach (int j in pi.overlap)
                 {
@@ -441,7 +441,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 }
             }
 
-            if (pi.underlay != null)
+            if (pi.underlay is not null)
             {
                 bool trans = ! pi.primitive.IsOpaque;
 
@@ -517,8 +517,8 @@ namespace Microsoft.Internal.AlphaFlattener
             GeometryPrimitive gi = pi.primitive as GeometryPrimitive;
             GeometryPrimitive gj = pj.primitive as GeometryPrimitive;
 
-            if ((gi != null) && (gi.Brush != null) &&
-                (gj != null) && (gj.Brush != null))
+            if ((gi is not null) && (gi.Brush is not null) &&
+                (gj is not null) && (gj.Brush is not null))
             {
                 // get brushes in world space
                 BrushProxy bi = gi.Brush.ApplyTransformCopy(gi.Transform);
@@ -543,7 +543,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="disconnect">Disconnect (i,j) overlap/underlay relationship</param>
         static private void SwitchCommands(List<PrimitiveInfo> commands, int i, PrimitiveInfo pi, int j, PrimitiveInfo pj, bool disconnect)
         {
-            if ((pi != null) && (pj != null) && disconnect)
+            if ((pi is not null) && (pj is not null) && disconnect)
             {
                 pi.overlap.Remove(j);
 
@@ -555,9 +555,9 @@ namespace Microsoft.Internal.AlphaFlattener
                 pj.underlay.Remove(i);
             }
 
-            if (pi != null)
+            if (pi is not null)
             {
-                if (pi.overlap != null)
+                if (pi.overlap is not null)
                 {
                     foreach (int k in pi.overlap)
                     {
@@ -566,7 +566,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     }
                 }
 
-                if (pi.underlay != null)
+                if (pi.underlay is not null)
                 {
                     foreach (int k in pi.underlay)
                     {
@@ -576,9 +576,9 @@ namespace Microsoft.Internal.AlphaFlattener
                 }
             }
 
-            if (pj != null)
+            if (pj is not null)
             {
-                if (pj.overlap != null)
+                if (pj.overlap is not null)
                 {
                     foreach (int k in pj.overlap)
                     {
@@ -587,7 +587,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     }
                 }
 
-                if (pj.underlay != null)
+                if (pj.underlay is not null)
                 {
                     foreach (int k in pj.underlay)
                     {
@@ -633,7 +633,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 GeometryPrimitive gi = pi.primitive as GeometryPrimitive;
 
-                if ((gi != null) && (gi.Pen is null) && (pi.overlap.Count == 1) && pj.FullyCovers(pi))
+                if ((gi is not null) && (gi.Pen is null) && (pi.overlap.Count == 1) && pj.FullyCovers(pi))
                 {
                     // c[i] ... c[j] => ... c[j] c[i]'
                     if (BlendCommands(pi, pj)) // pi.Brush = Blend(pi.Brush, pj.Brush)
@@ -669,11 +669,11 @@ namespace Microsoft.Internal.AlphaFlattener
 
             GeometryPrimitive gp = pi.primitive as GeometryPrimitive;
 
-            if (gp != null)
+            if (gp is not null)
             {
                 PrimitiveInfo qi = null;
 
-                if ((pi.underlay != null) && (pi.underlay.Count != 0))
+                if ((pi.underlay is not null) && (pi.underlay.Count != 0))
                 {
                     qi = commands[pi.underlay[pi.underlay.Count - 1]];
                 }
@@ -682,27 +682,27 @@ namespace Microsoft.Internal.AlphaFlattener
                 {
                     BrushProxy under = BrushProxy.CreateColorBrush(Colors.White);
 
-                    if (qi != null)
+                    if (qi is not null)
                     {
                         GeometryPrimitive qp = qi.primitive as GeometryPrimitive;
 
-                        if (qp != null)
+                        if (qp is not null)
                         {
                             under = qp.Brush;
                         }
                     }
 
-                    if (under != null)
+                    if (under is not null)
                     {
                         // Blend it with brush underneath
                         BrushProxy blendedBrush = gp.Brush;
                         BrushProxy blendedPenBrush = gp.Pen is null ? null : gp.Pen.StrokeBrush;
 
-                        if (blendedBrush != null)
+                        if (blendedBrush is not null)
                         {
                             blendedBrush = under.BlendBrush(blendedBrush);
                         }
-                        else if (blendedPenBrush != null)
+                        else if (blendedPenBrush is not null)
                         {
                             blendedPenBrush = under.BlendBrush(blendedPenBrush);
                         }
@@ -717,7 +717,7 @@ namespace Microsoft.Internal.AlphaFlattener
                         //
                         bool proceedBlending = true;
 
-                        if (blendedPenBrush != null && blendedPenBrush.BrushList != null)
+                        if (blendedPenBrush is not null && blendedPenBrush.BrushList is not null)
                         {
                             proceedBlending = false;
                         }
@@ -725,7 +725,7 @@ namespace Microsoft.Internal.AlphaFlattener
                         if (proceedBlending)
                         {
                             gp.Brush = blendedBrush;
-                            if (gp.Pen != null)
+                            if (gp.Pen is not null)
                             {
                                 gp.Pen.StrokeBrush = blendedPenBrush;
                             }
@@ -738,7 +738,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
 #endif
 
-                            if (pi.underlay != null)
+                            if (pi.underlay is not null)
                             {
                                 for (int k = 0; k < pi.underlay.Count; k++)
                                 {
@@ -763,7 +763,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="i"></param>
         private static void ReduceTie(PrimitiveInfo pi, List<PrimitiveInfo> commands, int i)
         {
-            if ((pi.underlay != null) && !pi.primitive.IsOpaque)
+            if ((pi.underlay is not null) && !pi.primitive.IsOpaque)
             {
                 int len = pi.underlay.Count;
 
@@ -797,7 +797,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 List<int> l = commands[i].underlay;
 
-                if (l != null)
+                if (l is not null)
                 {
                     oldUnderlay[i] = new List<int>(l.Count);
 
@@ -842,7 +842,7 @@ namespace Microsoft.Internal.AlphaFlattener
                         continue;
 
                     // Optimization: If a primitive is covered by an opaque primtive, delete it
-                    if (pi.overlap != null)
+                    if (pi.overlap is not null)
                     {
                         bool deleted = false;
 
@@ -866,7 +866,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                     // Optimization: If a primitive is covered by overlap[0], blend brush and switch order
                     // This results in smaller area being rendered as blending of two brushes.
-                    if ((pi.overlap != null) && (pi.overlap.Count != 0))
+                    if ((pi.overlap is not null) && (pi.overlap.Count != 0))
                     {
                         int j = pi.overlap[0]; // first overlapping primitive
 
@@ -922,7 +922,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     // in which it is on a remaing items in overlapping list.
                     // With overlapHasTransparency flag, it can be moved forward.
 
-                    if ((pi.overlap != null) && (pi.overlapHasTransparency == 0))
+                    if ((pi.overlap is not null) && (pi.overlapHasTransparency == 0))
                     {
                         foreach (int j in pi.overlap)
                         {
@@ -933,7 +933,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     }
 
                     // Optimization: If an opaque primitive is covered by all opaque primitives, cut its ties with primitives under it.
-                    if ((pi.underlay != null) && (pi.overlapHasTransparency == 0) && pi.primitive.IsOpaque)
+                    if ((pi.underlay is not null) && (pi.overlapHasTransparency == 0) && pi.primitive.IsOpaque)
                     {
                         foreach (int j in pi.underlay)
                         {
@@ -982,7 +982,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 {
                     PrimitiveInfo pi = commands[i];
 
-                    if ((pi != null) && ((pi.overlapHasTransparency != 0) || !pi.primitive.IsOpaque))
+                    if ((pi is not null) && ((pi.overlapHasTransparency != 0) || !pi.primitive.IsOpaque))
                     {
                         if (!pi.primitive.IsOpaque)
                         {
@@ -1029,7 +1029,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     {
                         PrimitiveInfo pi = commands[i];
 
-                        if ((pi != null) && ((pi.overlapHasTransparency != 0) || !pi.primitive.IsOpaque))
+                        if ((pi is not null) && ((pi.overlapHasTransparency != 0) || !pi.primitive.IsOpaque))
                         {
                             pi.primitive.OnRender(ctx);
 
@@ -1058,7 +1058,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 // save visual to xaml
                 string name = "vip.xaml";
 
-                for (int i = 0; (name != null) && (i < 10); i++)
+                for (int i = 0; (name is not null) && (i < 10); i++)
                 {
                     try
                     {
@@ -1119,7 +1119,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             GeometryPrimitive p = primitive as GeometryPrimitive;
 
-            if (p != null)
+            if (p is not null)
             {
                 ri.Brush = p.Brush;
                 ri.Pen   = p.Pen;
@@ -1130,7 +1130,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 GlyphPrimitive gp = p as GlyphPrimitive;
 
-                if (gp != null)
+                if (gp is not null)
                 {
                     done = ri.DrawGlyphs(gp.GlyphRun, gp.GetRectBounds(true), p.Transform, desp);
 
@@ -1148,12 +1148,12 @@ namespace Microsoft.Internal.AlphaFlattener
                         // to geometry and brush.
                         g = Utility.TransformGeometry(g, p.Transform);
 
-                        if (ri.Brush != null)
+                        if (ri.Brush is not null)
                         {
                             ri.Brush = ri.Brush.ApplyTransformCopy(p.Transform);
                         }
 
-                        if (ri.Pen != null && ri.Pen.StrokeBrush != null)
+                        if (ri.Pen is not null && ri.Pen.StrokeBrush is not null)
                         {
                             ri.Pen = ri.Pen.Clone();
                             ri.Pen.StrokeBrush = ri.Pen.StrokeBrush.ApplyTransformCopy(p.Transform);
@@ -1168,7 +1168,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             ImagePrimitive ip = primitive as ImagePrimitive;
 
-            if (ip != null)
+            if (ip is not null)
             {
                 ri.RenderImage(ip.Image, ip.DstRect, ip.Clip, ip.Transform, desp);
             }
@@ -1196,7 +1196,7 @@ namespace Microsoft.Internal.AlphaFlattener
             Nullable<OutputQuality> quality)
         {
             // Change Flattener quality setting based on OutputQualityValue
-            if (quality != null)
+            if (quality is not null)
             {
                 switch (quality)
                 {
@@ -1380,7 +1380,7 @@ namespace Microsoft.Internal.AlphaFlattener
 */
         void ILegacyDevice.DrawGeometry(Brush brush, Pen pen, Brush strokeBrush, Geometry geometry)
         {
-            if (pen != null)
+            if (pen is not null)
             {
                 if (strokeBrush is null)
                 {
@@ -1398,7 +1398,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
         void ILegacyDevice.DrawImage(BitmapSource source, Byte[] buffer, Rect rc)
         {
-            if (buffer != null)
+            if (buffer is not null)
             {
                 source = BitmapSource.Create(source.PixelWidth, source.PixelHeight,
                             96, 96, PixelFormats.Pbgra32, null, buffer, source.PixelWidth * 4);

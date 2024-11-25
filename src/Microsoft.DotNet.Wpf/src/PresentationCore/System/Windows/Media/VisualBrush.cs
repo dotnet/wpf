@@ -46,7 +46,7 @@ namespace System.Windows.Media
         /// <param name="visual"> The Visual representing the contents of this Brush. </param>
         public VisualBrush(Visual visual)
         {
-            if (this.Dispatcher != null)
+            if (this.Dispatcher is not null)
             {
                 MediaSystem.AssertSameContext(this, visual);
                 Visual = visual;
@@ -87,9 +87,9 @@ namespace System.Windows.Media
         {
             DUCE.IResource resource = this as DUCE.IResource;
 
-            if (resource != null)
+            if (resource is not null)
             {
-                if ((Dispatcher != null) && !_isAsyncRenderRegistered)
+                if ((Dispatcher is not null) && !_isAsyncRenderRegistered)
                 {
                     MediaContext mediaContext = MediaContext.From(Dispatcher);
 
@@ -116,7 +116,7 @@ namespace System.Windows.Media
             // The Visual may have been registered for an asynchronous render, but may have been
             // disconnected from the VisualBrush since then.  If so, don't bother to render here, if
             // the Visual is visible it will be rendered elsewhere.
-            if (vVisual != null && vVisual.CheckFlagsAnd(VisualFlags.NodeIsCyclicBrushRoot))
+            if (vVisual is not null && vVisual.CheckFlagsAnd(VisualFlags.NodeIsCyclicBrushRoot))
             {
                 // ------------------------------------------------------------------------------------
                 // 1) Prepare the visual for rendering.
@@ -159,7 +159,7 @@ namespace System.Windows.Media
         // to be specialized for Visual which doesn't implement DUCE.IResource
         internal void AddRefResource(Visual visual, DUCE.Channel channel)
         {
-            if (visual != null)
+            if (visual is not null)
             {
                 visual.AddRefOnChannelForCyclicBrush(this, channel);
             }
@@ -167,7 +167,7 @@ namespace System.Windows.Media
 
         internal void ReleaseResource(Visual visual, DUCE.Channel channel)
         {
-            if (visual != null)
+            if (visual is not null)
             {
                 visual.ReleaseOnChannelForCyclicBrush(this, channel);
             }
@@ -194,7 +194,7 @@ namespace System.Windows.Media
                         Debug.Assert(!_pendingLayout);                    
                         UIElement element = Visual as UIElement;
             
-                        if ((element != null) 
+                        if ((element is not null) 
                               && 
                               ((VisualTreeHelper.GetParent(element) is null && !(element.IsRootElement)) 
                                || (VisualTreeHelper.GetParent(element) is Visual3D)))                            
@@ -234,7 +234,7 @@ namespace System.Windows.Media
         /// </summary>
         private void DoLayout(UIElement element)
         {
-            Debug.Assert(element != null);
+            Debug.Assert(element is not null);
 
             DependencyObject parent = VisualTreeHelper.GetParent(element);
             if (!(element.IsRootElement)
@@ -260,7 +260,7 @@ namespace System.Windows.Media
 
             // Visual has to be a UIElement since the handler was added to it.
             UIElement element = (UIElement)Visual;
-            Debug.Assert(element != null);
+            Debug.Assert(element is not null);
 
             // Unregister for the event
             element.LayoutUpdated -= OnLayoutUpdated;
@@ -271,7 +271,7 @@ namespace System.Windows.Media
             // Dispatcher.BeginInvoke fired. So we can abort the DispatcherOperation as
             // we will do the layout here.
             //
-            Debug.Assert(_DispatcherLayoutResult != null);
+            Debug.Assert(_DispatcherLayoutResult is not null);
             Debug.Assert(_DispatcherLayoutResult.Status == DispatcherOperationStatus.Pending);
             bool abortStatus = _DispatcherLayoutResult.Abort();
             Debug.Assert(abortStatus);
@@ -289,7 +289,7 @@ namespace System.Windows.Media
             Debug.Assert(_pendingLayout);
 
             UIElement element = arg as UIElement;
-            Debug.Assert(element != null);
+            Debug.Assert(element is not null);
 
             //
             // Since we are in this function that means that Dispatcher.BeginInvoke fired

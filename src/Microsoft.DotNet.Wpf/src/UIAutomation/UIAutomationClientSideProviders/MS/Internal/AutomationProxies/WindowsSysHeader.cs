@@ -84,7 +84,7 @@ namespace MS.Internal.AutomationProxies
                         {
                             // Notify the Listview that the header Change
                             WindowsListView wlv = (WindowsListView) WindowsListView.Create (hwndParent, 0);
-                            if (wlv != null)
+                            if (wlv is not null)
                             {
                                 wlv.DispatchEvents (eventId, idProp, idObject, idChild);
                             }
@@ -228,7 +228,7 @@ namespace MS.Internal.AutomationProxies
             firstVisibleHeaderItem = null;
             lastVisibleHeaderItem = null;
             for (HeaderItem headerItem = GetFirstChild() as HeaderItem;
-                            headerItem != null;
+                            headerItem is not null;
                             headerItem = GetNextSibling(headerItem) as HeaderItem)
             {
                 bool isOffscreen = (bool) headerItem.GetElementProperty(AutomationElement.IsOffscreenProperty);
@@ -261,13 +261,13 @@ namespace MS.Internal.AutomationProxies
                     HeaderItem firstVisibleHeaderItem;
                     HeaderItem lastVisibleHeaderItem;
                     GetVisibleHeaderItemRange(out firstVisibleHeaderItem, out lastVisibleHeaderItem);
-                    if (firstVisibleHeaderItem != null && firstVisibleHeaderItem._item > headerItem._item)
+                    if (firstVisibleHeaderItem is not null && firstVisibleHeaderItem._item > headerItem._item)
                     {
                         // Scroll backward.
                         pixels = (int)(headerItem.BoundingRectangle.Left - firstVisibleHeaderItem.BoundingRectangle.Left);
                         columns = headerItem._item - firstVisibleHeaderItem._item;
                     }
-                    else if (lastVisibleHeaderItem != null && headerItem._item > lastVisibleHeaderItem._item)
+                    else if (lastVisibleHeaderItem is not null && headerItem._item > lastVisibleHeaderItem._item)
                     {
                         // Scroll forward.
                         pixels = (int)(headerItem.BoundingRectangle.Left - lastVisibleHeaderItem.BoundingRectangle.Left);
@@ -473,7 +473,7 @@ namespace MS.Internal.AutomationProxies
                 }
 
                 WindowsSysHeader parent = _parent as WindowsSysHeader;
-                if (parent != null)
+                if (parent is not null)
                 {
                     parent.ScrollIntoView(this);
                 }
@@ -721,7 +721,7 @@ namespace MS.Internal.AutomationProxies
                 }
 
                 WindowsSysHeader parent = _parent as WindowsSysHeader;
-                if (parent != null)
+                if (parent is not null)
                 {
                     parent.ScrollIntoView(this);
                 }

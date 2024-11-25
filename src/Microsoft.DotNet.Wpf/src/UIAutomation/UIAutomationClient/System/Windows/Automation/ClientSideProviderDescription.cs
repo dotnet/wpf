@@ -75,7 +75,7 @@ namespace System.Windows.Automation
         {
             // Null and Empty string mean different things here.
 #pragma warning suppress 6507
-            if (className != null)
+            if (className is not null)
                 _className = className.ToLower( System.Globalization.CultureInfo.InvariantCulture );
             else
                 _className = null;
@@ -98,7 +98,7 @@ namespace System.Windows.Automation
         {
             // Null and Empty string mean different things here
 #pragma warning suppress 6507
-            if (className != null)
+            if (className is not null)
                 _className = className.ToLower( System.Globalization.CultureInfo.InvariantCulture );
             else
                 _className = null;
@@ -107,7 +107,7 @@ namespace System.Windows.Automation
 
             // Null and Empty string mean different things here
 #pragma warning suppress 6507
-            if (imageName != null)
+            if (imageName is not null)
                 _imageName = imageName.ToLower( System.Globalization.CultureInfo.InvariantCulture );
             else
                 _imageName = null;

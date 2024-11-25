@@ -63,7 +63,7 @@ namespace MS.Internal.Ink.GestureRecognition
         /// </summary>
         private NativeRecognizer()
         {
-            Debug.Assert(NativeRecognizer.RecognizerHandleSingleton != null);
+            Debug.Assert(NativeRecognizer.RecognizerHandleSingleton is not null);
 
             int hr = MS.Win32.Recognizer.UnsafeNativeMethods.CreateContext(NativeRecognizer.RecognizerHandleSingleton,
                                                                         out _hContext);
@@ -95,7 +95,7 @@ namespace MS.Internal.Ink.GestureRecognition
         /// <returns>null if it fails</returns>
         internal static NativeRecognizer CreateInstance()
         {
-            if (NativeRecognizer.RecognizerHandleSingleton != null)
+            if (NativeRecognizer.RecognizerHandleSingleton is not null)
             {
                 return new NativeRecognizer();
             }
@@ -212,7 +212,7 @@ namespace MS.Internal.Ink.GestureRecognition
             uint count = 0;
             //we need to make a disconnected copy
             ICollection<ApplicationGesture> collection = applicationGestures as ICollection<ApplicationGesture>;
-            if (collection != null)
+            if (collection is not null)
             {
                 count = (uint)collection.Count;
             }
@@ -318,7 +318,7 @@ namespace MS.Internal.Ink.GestureRecognition
             String path = null;
             RegistryKey regkey = Registry.LocalMachine;
             RegistryKey recognizerKey = regkey.OpenSubKey(GestureRecognizerPath);
-            if (recognizerKey != null)
+            if (recognizerKey is not null)
             {
                 try
                 {
@@ -341,7 +341,7 @@ namespace MS.Internal.Ink.GestureRecognition
                 return false;
             }
  
-            if (path != null)
+            if (path is not null)
             {
                 IntPtr hModule = MS.Win32.UnsafeNativeMethods.LoadLibrary(path);
 
@@ -365,7 +365,7 @@ namespace MS.Internal.Ink.GestureRecognition
         /// </summary>
         private int SetEnabledGestures(MS.Win32.Recognizer.ContextSafeHandle recContext, ApplicationGesture[] enabledGestures)
         {
-            Debug.Assert(recContext != null && !recContext.IsInvalid);
+            Debug.Assert(recContext is not null && !recContext.IsInvalid);
 
             // NOTICE-2005/01/11-WAYNEZEN,
             // The following usage was copied from drivers\tablet\recognition\ink\core\twister\src\wispapis.c
@@ -412,7 +412,7 @@ namespace MS.Internal.Ink.GestureRecognition
         /// </summary>
         private int AddStrokes(MS.Win32.Recognizer.ContextSafeHandle recContext, StrokeCollection strokes)
         {
-            Debug.Assert(recContext != null && !recContext.IsInvalid);
+            Debug.Assert(recContext is not null && !recContext.IsInvalid);
 
             int hr;
 
@@ -501,7 +501,7 @@ namespace MS.Internal.Ink.GestureRecognition
                                                 StylusPointPropertyIds.Y, //required index for SPD
                                                 StylusPointPropertyIds.NormalPressure}; //required index for SPD
 
-            Debug.Assert(stylusPoints != null);
+            Debug.Assert(stylusPoints is not null);
             Debug.Assert(propertyGuids.Length == StylusPointDescription.RequiredCountOfProperties);
 
             // Get the packet description

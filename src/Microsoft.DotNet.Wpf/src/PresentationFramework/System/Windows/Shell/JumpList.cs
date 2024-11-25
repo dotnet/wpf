@@ -65,16 +65,16 @@ namespace System.Windows.Shell
         public JumpItemsRejectedEventArgs(IList<JumpItem> rejectedItems, IList<JumpItemRejectionReason> reasons)
         {
             // If one of the collections is null then the other has to be, too.
-            if ((rejectedItems is null && reasons != null)
-                || (reasons is null && rejectedItems != null)
-                || (rejectedItems != null && reasons != null && rejectedItems.Count != reasons.Count))
+            if ((rejectedItems is null && reasons is not null)
+                || (reasons is null && rejectedItems is not null)
+                || (rejectedItems is not null && reasons is not null && rejectedItems.Count != reasons.Count))
             {
                 throw new ArgumentException(SR.JumpItemsRejectedEventArgs_CountMismatch);
             }
 
             // We don't want the contents of the list getting modified in the event handler,
             // so use a read-only copy 
-            if (rejectedItems != null)
+            if (rejectedItems is not null)
             {
                 RejectedItems = new List<JumpItem>(rejectedItems).AsReadOnly();
                 RejectionReasons = new List<JumpItemRejectionReason>(reasons).AsReadOnly();
@@ -101,7 +101,7 @@ namespace System.Windows.Shell
 
         public JumpItemsRemovedEventArgs(IList<JumpItem> removedItems)
         {
-            if (removedItems != null)
+            if (removedItems is not null)
             {
                 RemovedItems = new List<JumpItem>(removedItems).AsReadOnly();
             }
@@ -170,7 +170,7 @@ namespace System.Windows.Shell
                 IShellLinkW shellLink = CreateLinkFromJumpTask(jumpTask, false);
                 try
                 {
-                    if (shellLink != null)
+                    if (shellLink is not null)
                     {
                         NativeMethods2.SHAddToRecentDocs(shellLink);
                     }
@@ -202,7 +202,7 @@ namespace System.Windows.Shell
             /// <param name="list">The list from which to release the resources.</param>
             public static void ReleaseShellObjects(List<_ShellObjectPair> list)
             {
-                if (list != null)
+                if (list is not null)
                 {
                     foreach (_ShellObjectPair shellMap in list)
                     {
@@ -228,7 +228,7 @@ namespace System.Windows.Shell
             {
                 // If this was associated with a different application, remove the association.
                 JumpList oldValue;
-                if (s_applicationMap.TryGetValue(application, out oldValue) && oldValue != null)
+                if (s_applicationMap.TryGetValue(application, out oldValue) && oldValue is not null)
                 {
                     oldValue._application = null;
                 }
@@ -236,13 +236,13 @@ namespace System.Windows.Shell
                 // Associate the jumplist with the application so we can retrieve it later.
                 s_applicationMap[application] = value;
 
-                if (value != null)
+                if (value is not null)
                 {
                     value._application = application;
                 }
             }
 
-            if (value != null)
+            if (value is not null)
             {
                 // Changes will only get applied if the list isn't in an ISupportInitialize block.
                 value.ApplyFromApplication();
@@ -286,7 +286,7 @@ namespace System.Windows.Shell
 
         public JumpList(IEnumerable<JumpItem> items, bool showFrequent, bool showRecent)
         {
-            if (items != null)
+            if (items is not null)
             {
                 _jumpItems = new List<JumpItem>(items);
             }
@@ -632,7 +632,7 @@ namespace System.Windows.Shell
 
                 Utilities.SafeRelease(ref destinationList);
 
-                if (categories != null)
+                if (categories is not null)
                 {
                     foreach (List<_ShellObjectPair> list in categories)
                     {
@@ -654,7 +654,7 @@ namespace System.Windows.Shell
             EventHandler<JumpItemsRejectedEventArgs> rejectedHandler = JumpItemsRejected;
             EventHandler<JumpItemsRemovedEventArgs> removedHandler = JumpItemsRemovedByUser;
 
-            if (rejectedList.Count > 0 && rejectedHandler != null)
+            if (rejectedList.Count > 0 && rejectedHandler is not null)
             {
                 var items = new List<JumpItem>(rejectedList.Count);
                 var reasons = new List<JumpItemRejectionReason>(rejectedList.Count);
@@ -668,13 +668,13 @@ namespace System.Windows.Shell
                 rejectedHandler(this, new JumpItemsRejectedEventArgs(items, reasons));
             }
 
-            if (removedList.Count > 0 && removedHandler != null)
+            if (removedList.Count > 0 && removedHandler is not null)
             {
                 var items = new List<JumpItem>(removedList.Count);
                 foreach (_ShellObjectPair shellMap in removedList)
                 {
                     // It's possible that not every shell object could be converted to a JumpItem.
-                    if (shellMap.JumpItem != null)
+                    if (shellMap.JumpItem is not null)
                     {
                         items.Add(shellMap.JumpItem);
                     }
@@ -689,8 +689,8 @@ namespace System.Windows.Shell
 
         private static bool ListContainsShellObject(List<_ShellObjectPair> removedList, object shellObject)
         {
-            Debug.Assert(removedList != null);
-            Debug.Assert(shellObject != null);
+            Debug.Assert(removedList is not null);
+            Debug.Assert(shellObject is not null);
 
             if (removedList.Count == 0)
             {
@@ -699,12 +699,12 @@ namespace System.Windows.Shell
 
             // Casts in .Net don't AddRef.  Don't need to release these.
             var shellItem = shellObject as IShellItem;
-            if (shellItem != null)
+            if (shellItem is not null)
             {
                 foreach (var shellMap in removedList)
                 {
                     var removedItem = shellMap.ShellObject as IShellItem;
-                    if (removedItem != null)
+                    if (removedItem is not null)
                     {
                         if (0 == shellItem.Compare(removedItem, SICHINT.CANONICAL | SICHINT.TEST_FILESYSPATH_IF_NOT_EQUAL))
                         {
@@ -716,12 +716,12 @@ namespace System.Windows.Shell
             }
 
             var shellLink = shellObject as IShellLinkW;
-            if (shellLink != null)
+            if (shellLink is not null)
             {
                 foreach (var shellMap in removedList)
                 {
                     var removedLink = shellMap.ShellObject as IShellLinkW;
-                    if (removedLink != null)
+                    if (removedLink is not null)
                     { 
                         // There's no intrinsic comparison function for ShellLinks.
                         // Talking to the Shell guys, the way they compare these is to catenate a string with
@@ -754,11 +754,11 @@ namespace System.Windows.Shell
             var jumpTask = jumpItem as JumpTask;
 
             // Either of these create functions could return null if the item is invalid but they shouldn't throw.
-            if (jumpPath != null)
+            if (jumpPath is not null)
             {
                 return CreateItemFromJumpPath(jumpPath);
             }
-            else if (jumpTask != null)
+            else if (jumpTask is not null)
             { 
                 return CreateLinkFromJumpTask(jumpTask, true);
             }
@@ -770,7 +770,7 @@ namespace System.Windows.Shell
 
         private static List<_ShellObjectPair> GenerateJumpItems(IObjectArray shellObjects)
         {
-            Debug.Assert(shellObjects != null);
+            Debug.Assert(shellObjects is not null);
 
             var retList = new List<_ShellObjectPair>();
 
@@ -808,7 +808,7 @@ namespace System.Windows.Shell
         private static void AddCategory(ICustomDestinationList cdl, string category, List<_ShellObjectPair> jumpItems, List<JumpItem> successList, List<_RejectedJumpItemPair> rejectionList, bool isHeterogenous)
         {
             Debug.Assert(jumpItems.Count != 0);
-            Debug.Assert(cdl != null);
+            Debug.Assert(cdl is not null);
 
             HRESULT hr;
             var shellObjectCollection = (IObjectCollection)Activator.CreateInstance(Type.GetTypeFromCLSID(new Guid(CLSID.EnumerableObjectCollection)));
@@ -885,7 +885,7 @@ namespace System.Windows.Shell
 
         private static IShellLinkW CreateLinkFromJumpTask(JumpTask jumpTask, bool allowSeparators)
         {
-            Debug.Assert(jumpTask != null);
+            Debug.Assert(jumpTask is not null);
 
             // Title is generally required.  If it's missing we need to treat this like a separator.
             // Everything else can still appear on separator elements,
@@ -998,7 +998,7 @@ namespace System.Windows.Shell
 
         private static IShellItem2 CreateItemFromJumpPath(JumpPath jumpPath)
         {
-            Debug.Assert(jumpPath != null);
+            Debug.Assert(jumpPath is not null);
 
             try
             {
@@ -1018,7 +1018,7 @@ namespace System.Windows.Shell
             var shellItem = shellObject as IShellItem2;
             var shellLink = shellObject as IShellLinkW;
 
-            if (shellItem != null)
+            if (shellItem is not null)
             {
                 JumpPath path = new JumpPath
                 {
@@ -1027,7 +1027,7 @@ namespace System.Windows.Shell
                 return path;
             }
 
-            if (shellLink != null)
+            if (shellLink is not null)
             {
                 var pathBuilder = new StringBuilder(Win32Constant.MAX_PATH);
                 shellLink.GetPath(pathBuilder, pathBuilder.Capacity, null, SLGP.RAWPATH);

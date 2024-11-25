@@ -31,7 +31,7 @@ namespace System.Xaml
             {
                 GetRootObjectAndDelegateType(context, out object? rootObject, out Type? delegateType);
 
-                if (rootObject != null && delegateType != null)
+                if (rootObject is not null && delegateType is not null)
                 {
                     return Delegate.CreateDelegate(delegateType, rootObject, valueString);
                 }

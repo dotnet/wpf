@@ -124,7 +124,7 @@ namespace System.Windows.Automation
         /// </summary>
         public int CompareTo(object obj)
         {
-            Debug.Assert(obj != null, "Null obj!");
+            Debug.Assert(obj is not null, "Null obj!");
             ArgumentNullException.ThrowIfNull(obj);
 
             // Ordering allows arrays of references to these to be sorted - though the sort order is undefined.
@@ -154,7 +154,7 @@ namespace System.Windows.Automation
             {
                 // See if instance already exists...
                 AutomationIdentifier autoid = (AutomationIdentifier)_idTable[id];
-                if (autoid != null)
+                if (autoid is not null)
                 {
                     return autoid;
                 }

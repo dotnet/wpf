@@ -220,7 +220,7 @@ namespace System.Windows.Data
         /// <param name="path">source path </param>
         public Binding(string path)
         {
-            if (path != null)
+            if (path is not null)
             {
                 if (System.Windows.Threading.Dispatcher.CurrentDispatcher is null)
                     throw new InvalidOperationException();  // This is actually never called since CurrentDispatcher will throw if null.
@@ -331,7 +331,7 @@ namespace System.Windows.Data
                 _attachedPropertiesInPath = -1;
                 ClearFlag(BindingFlags.PathGeneratedInternally);
 
-                if (_ppath != null && _ppath.StartsWithStaticProperty)
+                if (_ppath is not null && _ppath.StartsWithStaticProperty)
                 {
                     if (_sourceInUse == SourceProperties.None || _sourceInUse == SourceProperties.StaticSource ||
                         FrameworkCompatibilityPreferences.TargetsDesktop_V4_0) 
@@ -352,7 +352,7 @@ namespace System.Windows.Data
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool ShouldSerializePath()
         {
-            return _ppath != null && !TestFlag(BindingFlags.PathGeneratedInternally);
+            return _ppath is not null && !TestFlag(BindingFlags.PathGeneratedInternally);
         }
 
         /// <summary> The XPath path (for XML bindings).</summary>
@@ -570,7 +570,7 @@ namespace System.Windows.Data
                 if (_sourceInUse == SourceProperties.None || _sourceInUse == SourceProperties.RelativeSource)
                 {
                     SetValue(Feature.RelativeSource, value, null);
-                    SourceReference = (value != null) ? new RelativeObjectRef(value) : null;
+                    SourceReference = (value is not null) ? new RelativeObjectRef(value) : null;
                 }
                 else
                     throw new InvalidOperationException(SR.Format(SR.BindingConflict, SourceProperties.RelativeSource, _sourceInUse));
@@ -589,7 +589,7 @@ namespace System.Windows.Data
                 if (_sourceInUse == SourceProperties.None || _sourceInUse == SourceProperties.ElementName)
                 {
                     SetValue(Feature.ElementSource, value, null);
-                    SourceReference = (value != null) ? new ElementObjectRef(value) : null;
+                    SourceReference = (value is not null) ? new ElementObjectRef(value) : null;
                 }
                 else
                     throw new InvalidOperationException(SR.Format(SR.BindingConflict, SourceProperties.ElementName, _sourceInUse));
@@ -696,7 +696,7 @@ namespace System.Windows.Data
         internal object DoFilterException(object bindExpr, Exception exception)
         {
             UpdateSourceExceptionFilterCallback callback = (UpdateSourceExceptionFilterCallback)GetValue(Feature.ExceptionFilterCallback, null);
-            if (callback != null)
+            if (callback is not null)
                 return callback(bindExpr, exception);
 
             return exception;
@@ -765,7 +765,7 @@ namespace System.Windows.Data
                 // unless the properties are pre-resolved by the parser
                 if (_attachedPropertiesInPath < 0)
                 {
-                    if (_ppath != null)
+                    if (_ppath is not null)
                     {
                         _attachedPropertiesInPath = _ppath.ComputeUnresolvedAttachedPropertiesInPath();
                     }

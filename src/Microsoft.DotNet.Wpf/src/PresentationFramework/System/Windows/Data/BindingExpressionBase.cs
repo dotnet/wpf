@@ -136,7 +136,7 @@ namespace System.Windows.Data
 
             _flags = (PrivateFlags)binding.Flags;
 
-            if (parent != null)
+            if (parent is not null)
             {
                 ResolveNamesInTemplate = parent.ResolveNamesInTemplate;
 
@@ -177,12 +177,12 @@ namespace System.Windows.Data
                 }
             }
 
-            if (LookupValidationRule(typeof(ExceptionValidationRule)) != null)
+            if (LookupValidationRule(typeof(ExceptionValidationRule)) is not null)
             {
                 ChangeFlag(PrivateFlags.iValidatesOnExceptions, true);
             }
 
-            if (LookupValidationRule(typeof(DataErrorValidationRule)) != null)
+            if (LookupValidationRule(typeof(DataErrorValidationRule)) is not null)
             {
                 ChangeFlag(PrivateFlags.iValidatesOnDataErrors, true);
             }
@@ -457,7 +457,7 @@ namespace System.Windows.Data
         internal override DependencySource[] GetSources()
         {
             int j, k;
-            int n = (_sources != null) ? _sources.Length : 0;
+            int n = (_sources is not null) ? _sources.Length : 0;
             if (n == 0)
                 return null;
 
@@ -467,7 +467,7 @@ namespace System.Windows.Data
             for (j=0, k=0; k<n; ++k)
             {
                 DependencyObject d = _sources[k].DependencyObject;
-                if (d != null)
+                if (d is not null)
                 {
                     result[j++] = new DependencySource(d, _sources[k].DependencyProperty);
                 }
@@ -824,7 +824,7 @@ namespace System.Windows.Data
             get
             {
                 DependencyObject target = TargetElement;
-                if (target != null)
+                if (target is not null)
                 {
                     return TargetProperty.GetDefaultValue(target.DependencyObjectType);
                 }
@@ -853,7 +853,7 @@ namespace System.Windows.Data
             {
                 BindingExpressionBase child = this;
                 BindingExpressionBase parent = this.ParentBindingExpressionBase;
-                while (parent != null)
+                while (parent is not null)
                 {
                     child = parent;
                     parent = child.ParentBindingExpressionBase;
@@ -931,7 +931,7 @@ namespace System.Windows.Data
             if (dp == System.Windows.Controls.TextBox.TextProperty && IsReflective && !IsInBindingExpressionCollection)
             {
                 System.Windows.Controls.Primitives.TextBoxBase tbb = target as System.Windows.Controls.Primitives.TextBoxBase;
-                if (tbb != null)
+                if (tbb is not null)
                 {
                     tbb.PreviewTextInput += OnPreviewTextInput;
                 }
@@ -962,7 +962,7 @@ namespace System.Windows.Data
             if (TargetProperty == System.Windows.Controls.TextBox.TextProperty && IsReflective && !IsInBindingExpressionCollection)
             {
                 System.Windows.Controls.Primitives.TextBoxBase tbb = TargetElement as System.Windows.Controls.Primitives.TextBoxBase;
-                if (tbb != null)
+                if (tbb is not null)
                 {
                     tbb.PreviewTextInput -= OnPreviewTextInput;
                 }
@@ -1049,7 +1049,7 @@ namespace System.Windows.Data
         object RestoreUpdateTriggerOperation(object arg)
         {
             DependencyObject target = TargetElement;
-            if (!IsDetached && target != null)
+            if (!IsDetached && target is not null)
             {
                 FrameworkPropertyMetadata fwMetaData = TargetProperty.GetMetadata(target.DependencyObjectType) as FrameworkPropertyMetadata;
 
@@ -1172,7 +1172,7 @@ namespace System.Windows.Data
 
             // ignore an error from the implicit DataError rule - this is checked
             // separately (in BindingExpression.Validate).
-            if (oldValidationError != null &&
+            if (oldValidationError is not null &&
                 oldValidationError.RuleInError == DataErrorValidationRule.Instance)
             {
                 oldValidationError = null;
@@ -1180,7 +1180,7 @@ namespace System.Windows.Data
 
             Collection<ValidationRule> validationRules = ParentBindingBase.ValidationRulesInternal;
 
-            if (validationRules != null)
+            if (validationRules is not null)
             {
                 CultureInfo culture = GetCulture();
 
@@ -1209,7 +1209,7 @@ namespace System.Windows.Data
             }
 
             // this step is now valid - clear the old error (if any)
-            if (oldValidationError != null && oldValidationError == GetValidationErrors(validationStep))
+            if (oldValidationError is not null && oldValidationError == GetValidationErrors(validationStep))
             {
                 UpdateValidationError(null);
             }
@@ -1270,7 +1270,7 @@ namespace System.Windows.Data
                 if (_culture is null)
                 {
                     DependencyObject target = TargetElement;
-                    if (target != null)
+                    if (target is not null)
                     {
                         if (IsInTransfer && (TargetProperty == FrameworkElement.LanguageProperty))
                         {
@@ -1324,8 +1324,8 @@ namespace System.Windows.Data
                 System.Windows.Controls.Primitives.TextBoxBase tbb = Target as System.Windows.Controls.Primitives.TextBoxBase;
                 MS.Internal.Documents.UndoManager undoManager = (tbb is null) ? null :
                     tbb.TextContainer.UndoManager;
-                if (undoManager != null &&
-                    undoManager.OpenedUnit != null &&
+                if (undoManager is not null &&
+                    undoManager.OpenedUnit is not null &&
                     undoManager.OpenedUnit.GetType() != typeof(System.Windows.Documents.TextParentUndoUnit))
                 {
                     if (!HasValue(Feature.UpdateTargetOperation))
@@ -1419,7 +1419,7 @@ namespace System.Windows.Data
 
             _value = newValue;
 
-            if (notify && ValueChanged != null)
+            if (notify && ValueChanged is not null)
             {
                 ValueChanged(this, new BindingValueChangedEventArgs(oldValue, newValue));
             }
@@ -1484,7 +1484,7 @@ namespace System.Windows.Data
                 // cancel a pending UpdateTarget, so that it doesn't negate
                 // the effect of this change to the target value
                 DispatcherOperation op = (DispatcherOperation)GetValue(Feature.UpdateTargetOperation, null);
-                if (op != null)
+                if (op is not null)
                 {
                     ClearValue(Feature.UpdateTargetOperation);
                     op.Abort();
@@ -1528,7 +1528,7 @@ namespace System.Windows.Data
                 return;
 
             DependencyObject target = TargetElement;
-            if (target != null)
+            if (target is not null)
             {
                 if (IsInBindingExpressionCollection)
                     ParentBindingExpressionBase.InvalidateChild(this);
@@ -1644,7 +1644,7 @@ namespace System.Windows.Data
         {
             BindingGroup bindingGroup = RootBindingExpression.FindBindingGroup(isReflective, contextElement);
 
-            if (bindingGroup != null)
+            if (bindingGroup is not null)
             {
                 JoinBindingGroup(bindingGroup, /*explicit*/false);
             }
@@ -1655,7 +1655,7 @@ namespace System.Windows.Data
         {
             BindingExpressionBase root = RootBindingExpression;
             BindingGroup bg = root.BindingGroup;
-            if (bg != null)
+            if (bg is not null)
             {
                 bg.BindingExpressions.Remove(root);
                 root.ClearValue(Feature.BindingGroup);
@@ -1686,7 +1686,7 @@ namespace System.Windows.Data
             if (oldBindingGroup != newBindingGroup)
             {
                 root.LeaveBindingGroup();
-                if (newBindingGroup != null)
+                if (newBindingGroup is not null)
                 {
                     JoinBindingGroup(newBindingGroup, /*explicit*/false);
                 }
@@ -1699,7 +1699,7 @@ namespace System.Windows.Data
             Debug.Assert(RootBindingExpression == this, "Only call this with a root binding");
 
             // if we've already joined (or failed to join) a group, just return the result
-            if ((WeakReference<BindingGroup>)GetValue(Feature.BindingGroup, null) != null)
+            if ((WeakReference<BindingGroup>)GetValue(Feature.BindingGroup, null) is not null)
             {
                 return BindingGroup;
             }
@@ -1755,7 +1755,7 @@ namespace System.Windows.Data
                 // walk up the tree, looking for a matching binding group
                 DependencyProperty bindingGroupDP = FrameworkElement.BindingGroupProperty;
                 FrameworkObject fo = new FrameworkObject(Helper.FindMentor(TargetElement));
-                while (fo.DO != null)
+                while (fo.DO is not null)
                 {
                     BindingGroup bgCandidate = (BindingGroup)fo.DO.GetValue(bindingGroupDP);
                     if (bgCandidate is null)
@@ -1802,7 +1802,7 @@ namespace System.Windows.Data
             BindingExpressionBase root = null;  // set to non-null by the next loop
 
             for (   BindingExpressionBase bindingExpr = this;
-                    bindingExpr != null;
+                    bindingExpr is not null;
                     bindingExpr = bindingExpr.ParentBindingExpressionBase)
             {
                 root = bindingExpr;
@@ -1894,7 +1894,7 @@ namespace System.Windows.Data
                 {
                     if (!shouldStore)
                     {
-                        shouldStore = (bg.Owner != null) && (bg.IsDirty || bg.HasValidationError);
+                        shouldStore = (bg.Owner is not null) && (bg.IsDirty || bg.HasValidationError);
                     }
 
                     if (shouldStore)
@@ -1918,7 +1918,7 @@ namespace System.Windows.Data
         // when its active binding changes.   (Implemented here to get access to private flags.)
         internal void AdoptProperties(BindingExpressionBase bb)
         {
-            PrivateFlags newFlags = (bb != null) ? bb._flags : (PrivateFlags)0x0;
+            PrivateFlags newFlags = (bb is not null) ? bb._flags : (PrivateFlags)0x0;
             _flags = (_flags & ~PrivateFlags.iAdoptionMask) | (newFlags & PrivateFlags.iAdoptionMask);
         }
 
@@ -1975,10 +1975,10 @@ namespace System.Windows.Data
         {
             get
             {
-                if (_targetElement != null)
+                if (_targetElement is not null)
                 {
                     DependencyObject result = _targetElement.Target as DependencyObject;
-                    if (result != null)
+                    if (result is not null)
                         return result;
 
                     // target has been GC'd, sever all connections
@@ -2002,7 +2002,7 @@ namespace System.Windows.Data
 
         internal Dispatcher Dispatcher
         {
-            get { return (_engine != null) ? _engine.Dispatcher : null; }
+            get { return (_engine is not null) ? _engine.Dispatcher : null; }
         }
 
         internal object Value
@@ -2055,7 +2055,7 @@ namespace System.Windows.Data
         internal void Attach(DependencyObject target, DependencyProperty dp)
         {
             // make sure we're on the right thread to access the target
-            if (target != null)
+            if (target is not null)
             {
                 target.VerifyAccess();
             }
@@ -2195,7 +2195,7 @@ namespace System.Windows.Data
                 // if value isn't the right type, use a type converter to get a better value
                 bool success = false;
                 TypeConverter converter = DefaultValueConverter.GetConverter(dp.PropertyType);
-                if (converter != null && converter.CanConvertFrom(value.GetType()))
+                if (converter is not null && converter.CanConvertFrom(value.GetType()))
                 {
                     // PreSharp uses message numbers that the C# compiler doesn't know about.
                     // Disable the C# complaints, per the PreSharp documentation.
@@ -2289,12 +2289,12 @@ namespace System.Windows.Data
 
             SetValue(Feature.ValidationError, validationError, null);
 
-            if (validationError != null)
+            if (validationError is not null)
             {
                 AddValidationError(validationError, skipBindingGroup);
             }
 
-            if (oldValidationError != null)
+            if (oldValidationError is not null)
             {
                 RemoveValidationError(oldValidationError, skipBindingGroup);
             }
@@ -2309,7 +2309,7 @@ namespace System.Windows.Data
 
             // add the new errors, then remove the old ones - this avoid a transient
             // "no error" state
-            if (toAdd != null && toAdd.Count > 0)
+            if (toAdd is not null && toAdd.Count > 0)
             {
                 ValidationRule rule = NotifyDataErrorValidationRule.Instance;
                 List<ValidationError> notifyDataErrors = NotifyDataErrors;
@@ -2328,7 +2328,7 @@ namespace System.Windows.Data
                 }
             }
 
-            if (toRemove != null && toRemove.Count > 0)
+            if (toRemove is not null && toRemove.Count > 0)
             {
                 List<ValidationError> notifyDataErrors = NotifyDataErrors;
                 foreach (ValidationError veRemove in toRemove)
@@ -2394,7 +2394,7 @@ namespace System.Windows.Data
             if (!skipBindingGroup)
             {
                 BindingGroup bindingGroup = BindingGroup;
-                if (bindingGroup != null)
+                if (bindingGroup is not null)
                 {
                     bindingGroup.AddValidationError(validationError);
                 }
@@ -2410,7 +2410,7 @@ namespace System.Windows.Data
             if (!skipBindingGroup)
             {
                 BindingGroup bindingGroup = BindingGroup;
-                if (bindingGroup != null)
+                if (bindingGroup is not null)
                 {
                     bindingGroup.RemoveValidationError(validationError);
                 }
@@ -2463,7 +2463,7 @@ namespace System.Windows.Data
 
             var tempList = new List<WeakDependencySource>();
 
-            if (commonSources != null)
+            if (commonSources is not null)
             {
                 for (int i=0; i < commonSources.Length; ++i)
                 {
@@ -2475,7 +2475,7 @@ namespace System.Windows.Data
             {
                 BindingExpressionBase bindExpr = bindingExpressions[i];
                 WeakDependencySource[] sources = (i==index) ? newSources :
-                                            (bindExpr != null) ? bindExpr.WeakSources :
+                                            (bindExpr is not null) ? bindExpr.WeakSources :
                                             null;
                 int m = (sources is null) ? 0 : sources.Length;
                 for (int j = 0; j < m; ++j)
@@ -2494,7 +2494,7 @@ namespace System.Windows.Data
                         }
                     }
 
-                    if (candidate != null)
+                    if (candidate is not null)
                         tempList.Add(candidate);
                 }
             }
@@ -2510,7 +2510,7 @@ namespace System.Windows.Data
             if (mode == BindingMode.Default)
             {
                 BindingFlags f = BindingFlags.OneWay;
-                if (fwMetaData != null && fwMetaData.BindsTwoWayByDefault)
+                if (fwMetaData is not null && fwMetaData.BindsTwoWayByDefault)
                 {
                     f = BindingFlags.TwoWay;
                 }
@@ -2557,7 +2557,7 @@ namespace System.Windows.Data
         {
             UpdateSourceTrigger ust =
                 IsInMultiBindingExpression ? UpdateSourceTrigger.Explicit :
-                (fwMetaData != null) ? fwMetaData.DefaultUpdateSourceTrigger :
+                (fwMetaData is not null) ? fwMetaData.DefaultUpdateSourceTrigger :
                                     UpdateSourceTrigger.PropertyChanged;
             return ust;
         }
@@ -2573,7 +2573,7 @@ namespace System.Windows.Data
             Type targetType = TargetProperty.PropertyType;
             BindingExpressionBase be = this.ParentBindingExpressionBase;
 
-            while (be != null)
+            while (be is not null)
             {
                 if (be is MultiBindingExpression)
                 {
@@ -2603,7 +2603,7 @@ namespace System.Windows.Data
             string stringFormat = ParentBindingBase.StringFormat;
             BindingExpressionBase be = this.ParentBindingExpressionBase;
 
-            while (be != null)
+            while (be is not null)
             {
                 if (be is MultiBindingExpression)
                 {
@@ -2647,12 +2647,12 @@ namespace System.Windows.Data
                 {
                     FrameworkObject fo = new FrameworkObject(Helper.FindMentor(TargetElement));
                     ContentPresenter cp = fo.TemplatedParent as ContentPresenter;
-                    if (cp != null &&                       // (a)
-                        cp.ContentStringFormat != null)     // (c)
+                    if (cp is not null &&                       // (a)
+                        cp.ContentStringFormat is not null)     // (c)
                     {
                         DataTemplate dt = cp.TemplateInternal as DataTemplate;
-                        if (dt != null &&                   // (a)
-                            dt.DataType != null)            // (b)
+                        if (dt is not null &&                   // (a)
+                            dt.DataType is not null)            // (b)
                         {
                             stringFormat = cp.ContentStringFormat;
                         }
@@ -2676,7 +2676,7 @@ namespace System.Windows.Data
             object targetNullValue = ParentBindingBase.TargetNullValue;
             BindingExpressionBase be = this.ParentBindingExpressionBase;
 
-            while (be != null)
+            while (be is not null)
             {
                 if (be is MultiBindingExpression)
                 {
@@ -2728,7 +2728,7 @@ namespace System.Windows.Data
             if (!IsReflective)
                 return;
             for (BindingExpressionBase ancestor = ParentBindingExpressionBase;
-                    ancestor != null;  ancestor = ancestor.ParentBindingExpressionBase)
+                    ancestor is not null;  ancestor = ancestor.ParentBindingExpressionBase)
             {
                 if (ancestor is MultiBindingExpression)
                     return;
@@ -2750,7 +2750,7 @@ namespace System.Windows.Data
         {
             bool result = ParentBindingBase.ValidatesOnNotifyDataErrorsInternal;
             BindingExpressionBase beb = ParentBindingExpressionBase;
-            while (result && beb != null)
+            while (result && beb is not null)
             {
                 result = beb.ValidatesOnNotifyDataErrors;
                 beb = beb.ParentBindingExpressionBase;
@@ -2782,7 +2782,7 @@ namespace System.Windows.Data
             // Exception (bug 1970505):  Don't allocate a WeakRef for the common
             // case of the NullDataItem
 
-            if (item != null &&
+            if (item is not null &&
                 !(item is BindingListCollectionView) &&
                 !(item == BindingExpression.NullDataItem) &&
                 !(item == DisconnectedItem))
@@ -2810,7 +2810,7 @@ namespace System.Windows.Data
         // like CreateReference, except re-target the old WeakReference (if any)
         internal static object ReplaceReference(object oldReference, object item)
         {
-            if (item != null &&
+            if (item is not null &&
                 !(item is BindingListCollectionView) &&
                 !(item == BindingExpression.NullDataItem) &&
                 !(item == DisconnectedItem))
@@ -2821,7 +2821,7 @@ namespace System.Windows.Data
                 oldReference = ((ItemReference)oldReference).Item;
 #endif
                 WeakReference wr = oldReference as WeakReference;
-                if (wr != null)
+                if (wr is not null)
                 {
                     wr.Target = item;
                     item = wr;
@@ -2851,7 +2851,7 @@ namespace System.Windows.Data
 #endif
 
             WeakReference wr = reference as WeakReference;
-            if (wr != null)
+            if (wr is not null)
                 return wr.Target;
             else
                 return reference;
@@ -2890,7 +2890,7 @@ namespace System.Windows.Data
         {
             DependencySource[] sources;
 
-            if (newSources != null)
+            if (newSources is not null)
             {
                 // convert weak reference to strong
                 sources = new DependencySource[newSources.Length];
@@ -2898,7 +2898,7 @@ namespace System.Windows.Data
                 for (int i = 0; i < newSources.Length; ++i)
                 {
                     DependencyObject sourceDO = newSources[i].DependencyObject;
-                    if (sourceDO != null)
+                    if (sourceDO is not null)
                     {
                         // only include sources that are still alive
                         sources[n++] = new DependencySource(sourceDO, newSources[i].DependencyProperty);

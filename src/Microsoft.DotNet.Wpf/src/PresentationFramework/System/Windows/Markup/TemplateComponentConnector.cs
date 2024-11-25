@@ -59,7 +59,7 @@ namespace System.Windows.Markup
         {
             // Calls to IComponentConnector.Connect from template content get forwarded
             // to the outer style connector (when we have one).
-            if (_styleConnector != null)
+            if (_styleConnector is not null)
             {
                 _styleConnector.Connect(connectionId, target);
             }

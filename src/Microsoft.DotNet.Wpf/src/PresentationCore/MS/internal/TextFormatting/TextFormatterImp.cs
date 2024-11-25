@@ -74,7 +74,7 @@ namespace MS.Internal.TextFormatting
         {
             _textFormattingMode = textFormattingMode;
 
-            if (soleContext != null)
+            if (soleContext is not null)
                 _contextList.Add(soleContext);
 
             _multipleContextProhibited = (_contextList.Count != 0);
@@ -525,7 +525,7 @@ namespace MS.Internal.TextFormatting
             IntPtr      ploc
             )
         {
-            Invariant.Assert(owner != null);
+            Invariant.Assert(owner is not null);
 
             TextFormatterContext context = null;
 
@@ -574,7 +574,7 @@ namespace MS.Internal.TextFormatting
                 }
             }
 
-            Debug.Assert(context != null);
+            Debug.Assert(context is not null);
 
             context.Owner = owner;
             return context;

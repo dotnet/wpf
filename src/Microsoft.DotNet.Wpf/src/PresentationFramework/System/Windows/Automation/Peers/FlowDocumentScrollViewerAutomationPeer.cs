@@ -39,10 +39,10 @@ namespace System.Windows.Automation.Peers
             if (patternInterface == PatternInterface.Scroll)
             {
                 FlowDocumentScrollViewer owner = (FlowDocumentScrollViewer)Owner;
-                if (owner.ScrollViewer != null)
+                if (owner.ScrollViewer is not null)
                 {
                     AutomationPeer scrollPeer = UIElementAutomationPeer.CreatePeerForElement(owner.ScrollViewer);
-                    if (scrollPeer != null && scrollPeer is IScrollProvider)
+                    if (scrollPeer is not null && scrollPeer is IScrollProvider)
                     {
                         scrollPeer.EventsSource = this;
                         returnValue = scrollPeer;
@@ -55,7 +55,7 @@ namespace System.Windows.Automation.Peers
                 this.GetChildren();
 
                 // Re-expose TextPattern from hosted document.
-                if (_documentPeer != null)
+                if (_documentPeer is not null)
                 {
                     _documentPeer.EventsSource = this;
                     returnValue = _documentPeer.GetPattern(patternInterface);
@@ -89,18 +89,18 @@ namespace System.Windows.Automation.Peers
                 // Add AutomationPeer associated with the document.
                 // Make it the first child of the collection.
                 FlowDocument document = ((FlowDocumentScrollViewer)Owner).Document;
-                if (document != null)
+                if (document is not null)
                 {
                     AutomationPeer documentPeer = ContentElementAutomationPeer.CreatePeerForElement(document);
                     if (_documentPeer != documentPeer)
                     {
-                        if (_documentPeer != null)
+                        if (_documentPeer is not null)
                         {
                             _documentPeer.OnDisconnected();
                         }
                         _documentPeer = documentPeer as DocumentAutomationPeer;
                     }
-                    if (documentPeer != null)
+                    if (documentPeer is not null)
                     {
                         if (children is null)
                         {

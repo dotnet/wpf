@@ -87,7 +87,7 @@ namespace MS.Internal.Annotations
         /// <param name="previousAttachmentLevel">if action is modified, previous attachment level</param>
         internal AttachedAnnotationChangedEventArgs(AttachedAnnotationAction action, IAttachedAnnotation attachedAnnotation, object previousAttachedAnchor, AttachmentLevel previousAttachmentLevel)
         {
-            Invariant.Assert(attachedAnnotation != null);
+            Invariant.Assert(attachedAnnotation is not null);
 
             _action = action;
             _attachedAnnotation = attachedAnnotation;
@@ -157,7 +157,7 @@ namespace MS.Internal.Annotations
         /// <returns>the constructed AttachedAnnotationChangedEventArgs</returns>
         internal static AttachedAnnotationChangedEventArgs Added(IAttachedAnnotation attachedAnnotation)
         {
-            Invariant.Assert(attachedAnnotation != null);
+            Invariant.Assert(attachedAnnotation is not null);
 
             return new AttachedAnnotationChangedEventArgs(AttachedAnnotationAction.Added, attachedAnnotation, null, AttachmentLevel.Unresolved);
         }
@@ -169,7 +169,7 @@ namespace MS.Internal.Annotations
         /// <returns>the constructed AttachedAnnotationChangedEventArgs</returns>
         internal static AttachedAnnotationChangedEventArgs Loaded(IAttachedAnnotation attachedAnnotation)
         {
-            Invariant.Assert(attachedAnnotation != null);
+            Invariant.Assert(attachedAnnotation is not null);
 
             return new AttachedAnnotationChangedEventArgs(AttachedAnnotationAction.Loaded, attachedAnnotation, null, AttachmentLevel.Unresolved);
         }
@@ -181,7 +181,7 @@ namespace MS.Internal.Annotations
         /// <returns>the constructed AttachedAnnotationChangedEventArgs</returns>
         internal static AttachedAnnotationChangedEventArgs Deleted(IAttachedAnnotation attachedAnnotation)
         {
-            Invariant.Assert(attachedAnnotation != null);
+            Invariant.Assert(attachedAnnotation is not null);
 
             return new AttachedAnnotationChangedEventArgs(AttachedAnnotationAction.Deleted, attachedAnnotation, null, AttachmentLevel.Unresolved);
         }
@@ -193,7 +193,7 @@ namespace MS.Internal.Annotations
         /// <returns>the constructed AttachedAnnotationChangedEventArgs</returns>
         internal static AttachedAnnotationChangedEventArgs Unloaded(IAttachedAnnotation attachedAnnotation)
         {
-            Invariant.Assert(attachedAnnotation != null);
+            Invariant.Assert(attachedAnnotation is not null);
 
             return new AttachedAnnotationChangedEventArgs(AttachedAnnotationAction.Unloaded, attachedAnnotation, null, AttachmentLevel.Unresolved);
         }
@@ -207,7 +207,7 @@ namespace MS.Internal.Annotations
         /// <returns>the constructed AttachedAnnotationChangedEventArgs</returns>
         internal static AttachedAnnotationChangedEventArgs Modified(IAttachedAnnotation attachedAnnotation, object previousAttachedAnchor, AttachmentLevel previousAttachmentLevel)
         {
-            Invariant.Assert(attachedAnnotation != null && previousAttachedAnchor != null);
+            Invariant.Assert(attachedAnnotation is not null && previousAttachedAnchor is not null);
 
             return new AttachedAnnotationChangedEventArgs(AttachedAnnotationAction.AnchorModified, attachedAnnotation, previousAttachedAnchor, previousAttachmentLevel);
         }

@@ -337,7 +337,7 @@ namespace DrtXaml.Tests
 
             RoParentWithCP roParentWithCP = (RoParentWithCP)(ow.Result);
             List<Kid> kids = roParentWithCP.RoKids;
-            if (kids.Count != 2 || kids[0] != null || kids[1] != null)
+            if (kids.Count != 2 || kids[0] is not null || kids[1] is not null)
             {
                 throw new Exception("Calling WriteValue twice with a null value is malfunctioning.");
             }
@@ -359,7 +359,7 @@ namespace DrtXaml.Tests
             ow.WriteEndObject();
 
             HoldsOneElement holdsOneElement = (HoldsOneElement)(ow.Result);
-            if (holdsOneElement.Element != null)
+            if (holdsOneElement.Element is not null)
             {
                 throw new Exception("WriteValue of null by XamlObjectWriter can't be set to a singular property value");
             }

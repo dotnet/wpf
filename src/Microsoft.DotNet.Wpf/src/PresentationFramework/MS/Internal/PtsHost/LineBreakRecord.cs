@@ -37,7 +37,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         public override void Dispose()
         {
-            if(_textLineBreak != null)
+            if(_textLineBreak is not null)
             {
                 _textLineBreak.Dispose();
             }

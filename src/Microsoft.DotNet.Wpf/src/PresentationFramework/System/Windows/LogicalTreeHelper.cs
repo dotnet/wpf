@@ -73,7 +73,7 @@ public static class LogicalTreeHelper
 
         // Check given node against named element.
         IFrameworkInputElement selfNode = logicalTreeNode as IFrameworkInputElement;
-        if( selfNode != null )
+        if( selfNode is not null )
         {
             if( selfNode.Name == elementName )
             {
@@ -89,7 +89,7 @@ public static class LogicalTreeHelper
             childEnumerator = LogicalTreeHelper.GetLogicalChildren(logicalTreeNode);
 
             // If we can enumerate, check the children.
-            if( childEnumerator != null )
+            if( childEnumerator is not null )
             {
                 childEnumerator.Reset();
                 while( namedElement is null &&
@@ -97,7 +97,7 @@ public static class LogicalTreeHelper
                 {
                     childNode = childEnumerator.Current as DependencyObject;
 
-                    if( childNode != null )
+                    if( childNode is not null )
                     {
                         namedElement = FindLogicalNode( childNode, elementName );
                     }
@@ -119,13 +119,13 @@ public static class LogicalTreeHelper
         ArgumentNullException.ThrowIfNull(current);
 
         FrameworkElement fe = current as FrameworkElement;
-        if (fe != null)
+        if (fe is not null)
         {
             return fe.Parent;
         }
 
         FrameworkContentElement fce = current as FrameworkContentElement;
-        if (fce != null)
+        if (fce is not null)
         {
             return fce.Parent;
         }
@@ -143,13 +143,13 @@ public static class LogicalTreeHelper
         ArgumentNullException.ThrowIfNull(current);
 
         FrameworkElement fe = current as FrameworkElement;
-        if (fe != null)
+        if (fe is not null)
         {
             return new EnumeratorWrapper(fe.LogicalChildren);
         }
 
         FrameworkContentElement fce = current as FrameworkContentElement;
-        if (fce != null)
+        if (fce is not null)
         {
             return new EnumeratorWrapper(fce.LogicalChildren);
         }
@@ -185,13 +185,13 @@ public static class LogicalTreeHelper
         ArgumentNullException.ThrowIfNull(current);
 
         FrameworkElement fe = current as FrameworkElement;
-        if (fe != null)
+        if (fe is not null)
         {
             fe.BringIntoView();
         }
 
         FrameworkContentElement fce = current as FrameworkContentElement;
-        if (fce != null)
+        if (fce is not null)
         {
             fce.BringIntoView();
         }
@@ -204,14 +204,14 @@ public static class LogicalTreeHelper
     public static bool WalkUpLogicalTree(DependencyObject startNode, ParentTraversalCallback callback, bool skipStart, in out object data)
     {
         FrameworkElement startFE = startNode as FrameworkElement;
-        if (startFE != null)
+        if (startFE is not null)
         {
             return WalkUpLogicalTree(startFE, callback, skipStart, in out data);
         }
         else
         {
             FrameworkContentElement startFCE;
-            if (startFCE != null)
+            if (startFCE is not null)
             {
                 return WalkUpLogicalTree(startFCE, callback, skipStart, in out data);
             }
@@ -253,7 +253,7 @@ public static class LogicalTreeHelper
             }
 
             // No boundary or inheritance node found, continue search
-            if (parentFE != null)
+            if (parentFE is not null)
             {
                 hasParent = GetFrameworkParent(parentFE, out parentFE, out parentFCE);                           
             }
@@ -296,7 +296,7 @@ public static class LogicalTreeHelper
             }
 
             // No boundary or inheritance node found, continue search
-            if (parentFE != null)
+            if (parentFE is not null)
             {
                 hasParent = GetFrameworkParent(parentFE, out parentFE, out parentFCE);                           
             }
@@ -361,17 +361,17 @@ public static class LogicalTreeHelper
 
     internal static void AddLogicalChild(DependencyObject parent, object child)
     {
-        if (child != null && parent != null)
+        if (child is not null && parent is not null)
         {
             FrameworkElement parentFE = parent as FrameworkElement;
-            if (parentFE != null)
+            if (parentFE is not null)
             {
                 parentFE.AddLogicalChild(child);
             }
             else
             {
                 FrameworkContentElement parentFCE = parent as FrameworkContentElement;
-                if (parentFCE != null)
+                if (parentFCE is not null)
                 {
                     parentFCE.AddLogicalChild(child);
                 }
@@ -381,13 +381,13 @@ public static class LogicalTreeHelper
 
     internal static void AddLogicalChild(FrameworkElement parentFE, FrameworkContentElement parentFCE, object child)
     {
-        if (child != null)
+        if (child is not null)
         {
-            if (parentFE != null)
+            if (parentFE is not null)
             {
                 parentFE.AddLogicalChild(child);
             }
-            else if (parentFCE != null)
+            else if (parentFCE is not null)
             {
                 parentFCE.AddLogicalChild(child);
             }
@@ -396,17 +396,17 @@ public static class LogicalTreeHelper
 
     internal static void RemoveLogicalChild(DependencyObject parent, object child)
     {
-        if (child != null && parent != null)
+        if (child is not null && parent is not null)
         {
             FrameworkElement parentFE = parent as FrameworkElement;
-            if (parentFE != null)
+            if (parentFE is not null)
             {
                 parentFE.RemoveLogicalChild(child);
             }
             else
             {
                 FrameworkContentElement parentFCE = parent as FrameworkContentElement;
-                if (parentFCE != null)
+                if (parentFCE is not null)
                 {
                     parentFCE.RemoveLogicalChild(child);
                 }
@@ -416,10 +416,10 @@ public static class LogicalTreeHelper
 
     internal static void RemoveLogicalChild(FrameworkElement parentFE, FrameworkContentElement parentFCE, object child)
     {
-        if (child != null)
+        if (child is not null)
         {
-            Debug.Assert(parentFE != null || parentFCE != null, "Either parentFE or parentFCE should be non-null");
-            if (parentFE != null)
+            Debug.Assert(parentFE is not null || parentFCE is not null, "Either parentFE or parentFCE should be non-null");
+            if (parentFE is not null)
             {
                 parentFE.RemoveLogicalChild(child);
             }
@@ -433,13 +433,13 @@ public static class LogicalTreeHelper
     internal static IEnumerator GetLogicalChildren(DependencyObject current)
     {
         FrameworkElement fe = current as FrameworkElement;
-        if (fe != null)
+        if (fe is not null)
         {
             return fe.LogicalChildren;
         }
 
         FrameworkContentElement fce = current as FrameworkContentElement;
-        if (fce != null)
+        if (fce is not null)
         {
             return fce.LogicalChildren;
         }
@@ -467,7 +467,7 @@ public static class LogicalTreeHelper
     {
         public EnumeratorWrapper(IEnumerator enumerator)
         {
-            if (enumerator != null)
+            if (enumerator is not null)
             {
                 _enumerator = enumerator;
             }

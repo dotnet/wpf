@@ -148,7 +148,7 @@ namespace System.Windows.Controls
         protected virtual void OnItemChanged(object oldItem, object newItem)
         {
             DataGridCellsPresenter cellsPresenter = CellsPresenter;
-            if (cellsPresenter != null)
+            if (cellsPresenter is not null)
             {
                 cellsPresenter.Item = newItem;
             }
@@ -194,7 +194,7 @@ namespace System.Windows.Controls
             get
             {
                 var dataGrid = DataGridOwner;
-                if (dataGrid != null)
+                if (dataGrid is not null)
                 {
                     return dataGrid.IsKeyboardFocusWithin;
                 }
@@ -484,7 +484,7 @@ namespace System.Windows.Controls
             Debug.Assert(_owner == owningDataGrid, "_owner should be the same as the DataGrid that is clearing the row.");
 
             var cellsPresenter = CellsPresenter;
-            if (cellsPresenter != null)
+            if (cellsPresenter is not null)
             {
                 PersistAttachedItemValue(cellsPresenter, DataGridCellsPresenter.HeightProperty);
             }
@@ -493,7 +493,7 @@ namespace System.Windows.Controls
 
             Item = BindingExpressionBase.DisconnectedItem;
             DataGridDetailsPresenter detailsPresenter = DetailsPresenter;
-            if (detailsPresenter != null)
+            if (detailsPresenter is not null)
             {
                 detailsPresenter.Content = BindingExpressionBase.DisconnectedItem;
             }
@@ -536,7 +536,7 @@ namespace System.Windows.Controls
         internal void OnRowResizeStarted()
         {
             var cellsPresenter = CellsPresenter;
-            if (cellsPresenter != null)
+            if (cellsPresenter is not null)
             {
                 _cellsPresenterResizeHeight = cellsPresenter.Height;
             }
@@ -545,7 +545,7 @@ namespace System.Windows.Controls
         internal void OnRowResize(double changeAmount)
         {
             var cellsPresenter = CellsPresenter;
-            if (cellsPresenter != null)
+            if (cellsPresenter is not null)
             {
                 double newHeight = cellsPresenter.ActualHeight + changeAmount;
 
@@ -570,7 +570,7 @@ namespace System.Windows.Controls
         internal void OnRowResizeCompleted(bool canceled)
         {
             var cellsPresenter = CellsPresenter;
-            if (cellsPresenter != null && canceled)
+            if (cellsPresenter is not null && canceled)
             {
                 cellsPresenter.Height = _cellsPresenterResizeHeight;
             }
@@ -579,10 +579,10 @@ namespace System.Windows.Controls
         internal void OnRowResizeReset()
         {
             var cellsPresenter = CellsPresenter;
-            if (cellsPresenter != null)
+            if (cellsPresenter is not null)
             {
                 cellsPresenter.ClearValue(DataGridCellsPresenter.HeightProperty);
-                if (_owner != null)
+                if (_owner is not null)
                 {
                     _owner.ItemAttachedStorage.ClearValue(Item, DataGridCellsPresenter.HeightProperty);
                 }
@@ -601,7 +601,7 @@ namespace System.Windows.Controls
         protected internal virtual void OnColumnsChanged(ObservableCollection<DataGridColumn> columns, NotifyCollectionChangedEventArgs e)
         {
             DataGridCellsPresenter cellsPresenter = CellsPresenter;
-            if (cellsPresenter != null)
+            if (cellsPresenter is not null)
             {
                 cellsPresenter.OnColumnsChanged(columns, e);
             }
@@ -720,7 +720,7 @@ namespace System.Windows.Controls
             if (visibility is DataGridRowDetailsVisibilityMode)
             {
                 var visibilityMode = (DataGridRowDetailsVisibilityMode)visibility;
-                var hasDetailsTemplate = row.DetailsTemplate != null || row.DetailsTemplateSelector != null;
+                var hasDetailsTemplate = row.DetailsTemplate is not null || row.DetailsTemplateSelector is not null;
                 var isRealItem = row.Item != CollectionView.NewItemPlaceholder;
                 switch (visibilityMode)
                 {
@@ -749,7 +749,7 @@ namespace System.Windows.Controls
         {
             var row = (DataGridRow)d;
             var owningDataGrid = row.DataGridOwner;
-            if (row.Item == CollectionView.NewItemPlaceholder && owningDataGrid != null)
+            if (row.Item == CollectionView.NewItemPlaceholder && owningDataGrid is not null)
             {
                 return owningDataGrid.PlaceholderVisibility;
             }
@@ -799,11 +799,11 @@ namespace System.Windows.Controls
             if (row.DetailsLoaded &&
                 d.GetValue(e.Property) == e.NewValue)
             {
-                if (row.DataGridOwner != null)
+                if (row.DataGridOwner is not null)
                 {
                     row.DataGridOwner.OnUnloadingRowDetailsWrapper(row);
                 }
-                if (e.NewValue != null)
+                if (e.NewValue is not null)
                 {
                     // Invoke LoadingRowDetails, but only after the details template is expanded (so DetailsElement will be available).
                     Dispatcher.CurrentDispatcher.BeginInvoke(new DispatcherOperationCallback(DataGrid.DelayedOnLoadingRowDetails), DispatcherPriority.Loaded, row);
@@ -827,8 +827,8 @@ namespace System.Windows.Controls
         {
             var row = (DataGridRow)arg;
             var dataGrid = row.DataGridOwner;
-            var detailsElement = row.DetailsPresenter != null ? row.DetailsPresenter.DetailsElement : null;
-            if (dataGrid != null)
+            var detailsElement = row.DetailsPresenter is not null ? row.DetailsPresenter.DetailsElement : null;
+            if (dataGrid is not null)
             {
                 var detailsEventArgs = new DataGridRowDetailsEventArgs(row, detailsElement);
                 dataGrid.OnRowDetailsVisibilityChanged(detailsEventArgs);
@@ -937,7 +937,7 @@ namespace System.Windows.Controls
 
             if (DataGridHelper.ShouldNotifyDetailsPresenter(target))
             {
-                if (DetailsPresenter != null)
+                if (DetailsPresenter is not null)
                 {
                     DetailsPresenter.NotifyPropertyChanged(d, e);
                 }
@@ -948,13 +948,13 @@ namespace System.Windows.Controls
                 DataGridHelper.ShouldRefreshCellContent(target))
             {
                 DataGridCellsPresenter cellsPresenter = CellsPresenter;
-                if (cellsPresenter != null)
+                if (cellsPresenter is not null)
                 {
                     cellsPresenter.NotifyPropertyChanged(d, propertyName, e, target);
                 }
             }
 
-            if (DataGridHelper.ShouldNotifyRowHeaders(target) && RowHeader != null)
+            if (DataGridHelper.ShouldNotifyRowHeaders(target) && RowHeader is not null)
             {
                 RowHeader.NotifyPropertyChanged(d, e);
             }
@@ -964,7 +964,7 @@ namespace System.Windows.Controls
         {
             // Only validate if we have an Item.
             var bindingGroup = (BindingGroup)arg;
-            if (bindingGroup != null && bindingGroup.Items.Count > 0)
+            if (bindingGroup is not null && bindingGroup.Items.Count > 0)
             {
                 bindingGroup.ValidateWithoutUpdate();
             }
@@ -1008,18 +1008,18 @@ namespace System.Windows.Controls
             RestoreAttachedItemValue(this, DetailsVisibilityProperty);
 
             var cellsPresenter = CellsPresenter;
-            if (cellsPresenter != null)
+            if (cellsPresenter is not null)
             {
                 cellsPresenter.SyncProperties(forcePrepareCells);
                 RestoreAttachedItemValue(cellsPresenter, DataGridCellsPresenter.HeightProperty);
             }
 
-            if (DetailsPresenter != null)
+            if (DetailsPresenter is not null)
             {
                 DetailsPresenter.SyncProperties();
             }
 
-            if (RowHeader != null)
+            if (RowHeader is not null)
             {
                 RowHeader.SyncProperties();
             }
@@ -1088,13 +1088,13 @@ namespace System.Windows.Controls
             }
 
             DataGrid grid = row.DataGridOwner;
-            if (grid != null && row.DataContext != null)
+            if (grid is not null && row.DataContext is not null)
             {
                 DataGridAutomationPeer gridPeer = UIElementAutomationPeer.FromElement(grid) as DataGridAutomationPeer;
-                if (gridPeer != null)
+                if (gridPeer is not null)
                 {
                     DataGridItemAutomationPeer rowItemPeer = gridPeer.FindOrCreateItemAutomationPeer(row.DataContext) as DataGridItemAutomationPeer;
-                    if (rowItemPeer != null)
+                    if (rowItemPeer is not null)
                     {
                         rowItemPeer.RaisePropertyChangedEvent(
                             System.Windows.Automation.SelectionItemPatternIdentifiers.IsSelectedProperty,
@@ -1198,7 +1198,7 @@ namespace System.Windows.Controls
             get
             {
                 DataGrid dataGrid = DataGridOwner;
-                if (dataGrid != null)
+                if (dataGrid is not null)
                 {
                     DataGridSelectionUnit unit = dataGrid.SelectionUnit;
                     return (unit == DataGridSelectionUnit.FullRow) ||
@@ -1250,7 +1250,7 @@ namespace System.Windows.Controls
         internal void ScrollCellIntoView(int index)
         {
             DataGridCellsPresenter cellsPresenter = CellsPresenter;
-            if (cellsPresenter != null)
+            if (cellsPresenter is not null)
             {
                 cellsPresenter.ScrollCellIntoView(index);
             }
@@ -1266,7 +1266,7 @@ namespace System.Windows.Controls
         protected override Size ArrangeOverride(Size arrangeBounds)
         {
             DataGrid dataGrid = DataGridOwner;
-            if (dataGrid != null)
+            if (dataGrid is not null)
             {
                 dataGrid.QueueInvalidateCellsPanelHorizontalOffset();
             }
@@ -1314,7 +1314,7 @@ namespace System.Windows.Controls
         public int GetIndex()
         {
             DataGrid dataGridOwner = DataGridOwner;
-            if (dataGridOwner != null)
+            if (dataGridOwner is not null)
             {
                 return dataGridOwner.ItemContainerGenerator.IndexFromContainer(this);
             }
@@ -1347,7 +1347,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal bool DetailsPresenterDrawsGridLines
         {
-            get { return _detailsPresenter != null && _detailsPresenter.Visibility == Visibility.Visible; }
+            get { return _detailsPresenter is not null && _detailsPresenter.Visibility == Visibility.Visible; }
         }
 
         /// <summary>
@@ -1357,7 +1357,7 @@ namespace System.Windows.Controls
         internal DataGridCell TryGetCell(int index)
         {
             DataGridCellsPresenter cellsPresenter = CellsPresenter;
-            if (cellsPresenter != null)
+            if (cellsPresenter is not null)
             {
                 return cellsPresenter.ItemContainerGenerator.ContainerFromIndex(index) as DataGridCell;
             }

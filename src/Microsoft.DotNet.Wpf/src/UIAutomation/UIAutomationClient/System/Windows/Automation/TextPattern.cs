@@ -32,7 +32,7 @@ namespace System.Windows.Automation
         internal TextPattern(AutomationElement el, SafePatternHandle hPattern)
             : base(el, hPattern)
         {
-            Debug.Assert(el != null);
+            Debug.Assert(el is not null);
             Debug.Assert(!hPattern.IsInvalid);
 
             _hPattern = hPattern;

@@ -131,7 +131,7 @@ namespace System.Windows.Xps.Serialization
 
             DocumentPaginatorSerializerContext paginatorContext = context as DocumentPaginatorSerializerContext;
 
-            if (paginatorContext != null)
+            if (paginatorContext is not null)
             {
                 DocumentPaginator paginator = paginatorContext.Paginator;
                 int index = paginatorContext.Index;
@@ -152,7 +152,7 @@ namespace System.Windows.Xps.Serialization
                     DocumentPage page = Toolbox.GetPage(paginator, index - 1);
 
                     ReachSerializer serializer = SerializationManager.GetSerializer(page);
-                    if (serializer != null)
+                    if (serializer is not null)
                     {
                         serializer.SerializeObject(page);
                     }

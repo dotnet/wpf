@@ -77,10 +77,10 @@ namespace MS.Internal.IO.Packaging
                 Package package = null;
                 threadSafe = false;
 
-                if (_packagePairs != null)
+                if (_packagePairs is not null)
                 {
                     PackageThreadSafePair packagePair = _packagePairs[uri] as PackageThreadSafePair;
-                    if (packagePair != null)
+                    if (packagePair is not null)
                     {
                         package = packagePair.Package;
                         threadSafe = packagePair.ThreadSafe;
@@ -141,7 +141,7 @@ namespace MS.Internal.IO.Packaging
 
             lock (_globalLock)
             {
-                if (_packagePairs != null)
+                if (_packagePairs is not null)
                 {
                     _packagePairs.Remove(uri);
                 }
@@ -181,7 +181,7 @@ namespace MS.Internal.IO.Packaging
             //------------------------------------------------------
             internal PackageThreadSafePair(Package package, bool threadSafe)
             {
-                Invariant.Assert(package != null);
+                Invariant.Assert(package is not null);
 
                 _package = package;
                 _threadSafe = threadSafe;

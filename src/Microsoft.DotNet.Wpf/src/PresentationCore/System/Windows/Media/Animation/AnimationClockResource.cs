@@ -41,7 +41,7 @@ namespace System.Windows.Media.Animation
         {
             _animationClock = animationClock;
 
-            if (_animationClock != null)
+            if (_animationClock is not null)
             {
                 _animationClock.CurrentTimeInvalidated += new EventHandler(OnChanged);
             }
@@ -70,9 +70,9 @@ namespace System.Windows.Media.Animation
         /// <param name="args"> EventArgs - ignored. </param>
         protected void OnChanged(object sender, EventArgs args)
         {
-            Debug.Assert(sender as System.Windows.Threading.DispatcherObject != null);
-            Debug.Assert(((System.Windows.Threading.DispatcherObject)sender).Dispatcher != null);
-            Debug.Assert(_animationClock != null);
+            Debug.Assert(sender as System.Windows.Threading.DispatcherObject is not null);
+            Debug.Assert(((System.Windows.Threading.DispatcherObject)sender).Dispatcher is not null);
+            Debug.Assert(_animationClock is not null);
 
             System.Windows.Threading.Dispatcher dispatcher = ((System.Windows.Threading.DispatcherObject)sender).Dispatcher;
 
@@ -101,7 +101,7 @@ namespace System.Windows.Media.Animation
         internal virtual void PropagateChangedHandlersCore(EventHandler handler, bool adding)
         {
             // Nothing to do if the clock is null.
-            if (_animationClock != null)
+            if (_animationClock is not null)
             {
                 if (adding)
                 {

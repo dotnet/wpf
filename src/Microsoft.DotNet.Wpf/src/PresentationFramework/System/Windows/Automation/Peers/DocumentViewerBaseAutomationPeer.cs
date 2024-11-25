@@ -38,7 +38,7 @@ namespace System.Windows.Automation.Peers
                 this.GetChildren();
 
                 // Re-expose TextPattern from hosted document.
-                if (_documentPeer != null)
+                if (_documentPeer is not null)
                 {
                     _documentPeer.EventsSource = this;
                     returnValue = _documentPeer.GetPattern(patternInterface);
@@ -69,13 +69,13 @@ namespace System.Windows.Automation.Peers
             AutomationPeer documentPeer = GetDocumentAutomationPeer();
             if (_documentPeer != documentPeer)
             {
-                if (_documentPeer != null)
+                if (_documentPeer is not null)
                 {
                     _documentPeer.OnDisconnected();
                 }
                 _documentPeer = documentPeer as DocumentAutomationPeer;
             }
-            if (documentPeer != null)
+            if (documentPeer is not null)
             {
                 if (children is null)
                 {
@@ -111,7 +111,7 @@ namespace System.Windows.Automation.Peers
         {
             AutomationPeer documentPeer = null;
             IDocumentPaginatorSource document = ((DocumentViewerBase)Owner).Document;
-            if (document != null)
+            if (document is not null)
             {
                 if (document is UIElement)
                 {

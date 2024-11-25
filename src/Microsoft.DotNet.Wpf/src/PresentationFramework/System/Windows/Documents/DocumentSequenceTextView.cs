@@ -81,10 +81,10 @@ namespace System.Windows.Documents
             DocumentSequenceTextPointer tp = null;
             LogicalDirection edge = LogicalDirection.Forward;
 
-            if (ChildTextView != null)
+            if (ChildTextView is not null)
             {
                 ITextPointer childOTP = ChildTextView.GetTextPositionFromPoint(point, snapToText);
-                if (childOTP != null)
+                if (childOTP is not null)
                 {
                     tp = new DocumentSequenceTextPointer(ChildBlock, childOTP);
                     edge = childOTP.LogicalDirection;
@@ -130,14 +130,14 @@ namespace System.Windows.Documents
             // Initialize transform to identity
             transform = Transform.Identity;
 
-            if (position != null)
+            if (position is not null)
             {
                  tp = _docPage.FixedDocumentSequence.TextContainer.VerifyPosition(position);
             }
 
-            if (tp != null)
+            if (tp is not null)
             {
-                if (ChildTextView != null)
+                if (ChildTextView is not null)
                 {
                     if (ChildTextView.TextContainer == tp.ChildBlock.ChildContainer)
                     {
@@ -153,7 +153,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal override Geometry GetTightBoundingGeometryFromTextPositions(ITextPointer startPosition, ITextPointer endPosition)
         {
-            if (startPosition != null && endPosition != null && ChildTextView != null)
+            if (startPosition is not null && endPosition is not null && ChildTextView is not null)
             {
                 DocumentSequenceTextPointer startTp = null;
                 DocumentSequenceTextPointer endTp = null;
@@ -161,7 +161,7 @@ namespace System.Windows.Documents
                 startTp = _docPage.FixedDocumentSequence.TextContainer.VerifyPosition(startPosition);
                 endTp = _docPage.FixedDocumentSequence.TextContainer.VerifyPosition(endPosition);
 
-                if (startTp != null && endTp != null)
+                if (startTp is not null && endTp is not null)
                 {
                     return ChildTextView.GetTightBoundingGeometryFromTextPositions(startTp.ChildPointer, endTp.ChildPointer);
                 }
@@ -212,20 +212,20 @@ namespace System.Windows.Documents
             DocumentSequenceTextPointer newTp  = null;
             LogicalDirection newEdge = LogicalDirection.Forward;
             DocumentSequenceTextPointer tp = null;
-            if (position != null)
+            if (position is not null)
             {
                 tp = _docPage.FixedDocumentSequence.TextContainer.VerifyPosition(position);
             }
 
             // Note we do not handle cross page navigation
-            if (tp != null)
+            if (tp is not null)
             {
-                if (ChildTextView != null)
+                if (ChildTextView is not null)
                 {
                     if (ChildTextView.TextContainer == tp.ChildBlock.ChildContainer)
                     {
                         ITextPointer childOTP = ChildTextView.GetPositionAtNextLine(tp.ChildPointer.CreatePointer(position.LogicalDirection), suggestedX, count, out newSuggestedX, out linesMoved);
-                        if (childOTP != null)
+                        if (childOTP is not null)
                         {
                             newTp = new DocumentSequenceTextPointer(ChildBlock, childOTP);
                             newEdge = childOTP.LogicalDirection;
@@ -258,11 +258,11 @@ namespace System.Windows.Documents
         /// </remarks>
         internal override bool IsAtCaretUnitBoundary(ITextPointer position)
         {
-            Invariant.Assert(position != null);
+            Invariant.Assert(position is not null);
             ArgumentNullException.ThrowIfNull(position);
 
             //Verify the position and propagate the call to the child text view
-            Invariant.Assert(ChildTextView != null);
+            Invariant.Assert(ChildTextView is not null);
             DocumentSequenceTextPointer ftp = this.DocumentSequenceTextContainer.VerifyPosition(position);
 
             return this.ChildTextView.IsAtCaretUnitBoundary(ftp.ChildPointer);
@@ -305,11 +305,11 @@ namespace System.Windows.Documents
         /// </remarks>
         internal override ITextPointer GetNextCaretUnitPosition(ITextPointer position, LogicalDirection direction)
         {
-            Invariant.Assert(position != null);
+            Invariant.Assert(position is not null);
             ArgumentNullException.ThrowIfNull(position);
 
             //Verify the position and propagate the call to the child text view
-            Invariant.Assert(ChildTextView != null);
+            Invariant.Assert(ChildTextView is not null);
             DocumentSequenceTextPointer ftp = this.DocumentSequenceTextContainer.VerifyPosition(position);
 
             return this.ChildTextView.GetNextCaretUnitPosition(ftp.ChildPointer, direction);
@@ -331,11 +331,11 @@ namespace System.Windows.Documents
         /// </exception>
         internal override ITextPointer GetBackspaceCaretUnitPosition(ITextPointer position)
         {
-            Invariant.Assert(position != null);
+            Invariant.Assert(position is not null);
             ArgumentNullException.ThrowIfNull(position);
 
             //Verify the position and propagate the call to the child text view
-            Invariant.Assert(ChildTextView != null);
+            Invariant.Assert(ChildTextView is not null);
             DocumentSequenceTextPointer ftp = this.DocumentSequenceTextContainer.VerifyPosition(position);
 
             return this.ChildTextView.GetBackspaceCaretUnitPosition(ftp.ChildPointer);
@@ -362,9 +362,9 @@ namespace System.Windows.Documents
             DocumentSequenceTextPointer tpEnd   = null;
             DocumentSequenceTextPointer tpLine = null;
 
-            if (position != null)
+            if (position is not null)
             {
-                if (ChildTextView != null)
+                if (ChildTextView is not null)
                 {
                     tpLine = _docPage.FixedDocumentSequence.TextContainer.VerifyPosition(position);
 
@@ -432,15 +432,15 @@ namespace System.Windows.Documents
         {
             DocumentsTrace.FixedDocumentSequence.TextOM.Trace($"Contains {position} {position.LogicalDirection}");
             DocumentSequenceTextPointer tp = null;
-            if (position != null)
+            if (position is not null)
             {
                 tp = _docPage.FixedDocumentSequence.TextContainer.VerifyPosition(position);
             }
 
             // Note we do not handle cross page navigation
-            if (tp != null)
+            if (tp is not null)
             {
-                if (ChildTextView != null)
+                if (ChildTextView is not null)
                 {
                     if (ChildTextView.TextContainer == tp.ChildBlock.ChildContainer)
                     {
@@ -463,7 +463,7 @@ namespace System.Windows.Documents
         /// </remarks>
         internal override bool Validate()
         {
-            if (ChildTextView != null)
+            if (ChildTextView is not null)
             {
                 ChildTextView.Validate();
             }
@@ -474,7 +474,7 @@ namespace System.Windows.Documents
         /// <see cref="ITextView.Validate(Point)"/>
         internal override bool Validate(Point point)
         {
-            if (ChildTextView != null)
+            if (ChildTextView is not null)
             {
                 ChildTextView.Validate(point);
             }
@@ -500,7 +500,7 @@ namespace System.Windows.Documents
             {
                 Visual visual = _docPage.Visual;
 
-                while (visual != null && !(visual is UIElement))
+                while (visual is not null && !(visual is UIElement))
                 {
                     visual = VisualTreeHelper.GetParent(visual) as Visual;
                 }
@@ -528,7 +528,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (ChildTextView != null)
+                if (ChildTextView is not null)
                 {
                     return ChildTextView.IsValid;
                 }
@@ -558,7 +558,7 @@ namespace System.Windows.Documents
                 if (_textSegments is null)
                 {
                     ReadOnlyCollection<TextSegment> childSegments = ChildTextView.TextSegments;
-                    if (childSegments != null)
+                    if (childSegments is not null)
                     {
                         List<TextSegment> parentSegments = new List<TextSegment>(childSegments.Count);
                         foreach (TextSegment segment in childSegments)
@@ -590,7 +590,7 @@ namespace System.Windows.Documents
                 if (_childTextView is null)
                 {
                     IServiceProvider isp = _docPage.ChildDocumentPage as IServiceProvider;
-                    if (isp != null)
+                    if (isp is not null)
                     {
                         _childTextView = (ITextView)isp.GetService(typeof(ITextView));
                     }

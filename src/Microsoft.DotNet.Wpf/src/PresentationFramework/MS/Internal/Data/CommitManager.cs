@@ -57,7 +57,7 @@ namespace MS.Internal.Data
             foreach (BindingGroup bindingGroup in fullList)
             {
                 DependencyObject owner = bindingGroup.Owner;
-                if (owner != null && IsInScope(element, owner))
+                if (owner is not null && IsInScope(element, owner))
                 {
                     if (list == EmptyBindingGroupList)
                     {
@@ -81,7 +81,7 @@ namespace MS.Internal.Data
             foreach (BindingExpressionBase binding in fullList)
             {
                 DependencyObject owner = binding.TargetElement;
-                if (owner != null &&
+                if (owner is not null &&
                     binding.IsEligibleForCommit &&
                     IsInScope(element, owner))
                 {

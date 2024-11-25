@@ -79,7 +79,7 @@ namespace System.Windows.Media
         /// </returns>
         Rect IDrawingContent.GetContentBounds(BoundsDrawingContextWalker ctx)
         {     
-            Debug.Assert(ctx != null);        
+            Debug.Assert(ctx is not null);        
             
             WalkCurrentValue(ctx);
             

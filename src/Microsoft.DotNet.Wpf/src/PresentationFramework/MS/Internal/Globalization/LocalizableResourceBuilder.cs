@@ -163,7 +163,7 @@ namespace MS.Internal.Globalization
                                 propertyNode.PropertyName
                                 );
 
-                            isValidContent = (localizability != null && localizability.Readability == Readability.Readable);
+                            isValidContent = (localizability is not null && localizability.Readability == Readability.Readable);
                         }
                         return isValidContent;
                     }
@@ -234,7 +234,7 @@ namespace MS.Internal.Globalization
             GetLocalizabilityForElementNode(node, out attribute, out formattingTag);
             attribute = CombineAndPropagateInheritanceValues(node, attribute);
 
-            if (formattingTag != null
+            if (formattingTag is not null
               && attribute.Category != LocalizationCategory.NeverLocalize
               && attribute.Category != LocalizationCategory.Ignore
               && attribute.Modifiability == Modifiability.Modifiable
@@ -245,7 +245,7 @@ namespace MS.Internal.Globalization
                 StringBuilder contentBuilder = new StringBuilder();
 
                 // write opening tag
-                if (node.Uid != null)
+                if (node.Uid is not null)
                 {
                     contentBuilder.Append(
                         TypeConverterHelper.InvariantEnglishUS,
@@ -283,7 +283,7 @@ namespace MS.Internal.Globalization
                 // this node should be represented by place holder.
                 bool succeed = true;
 
-                if (node.Uid != null)
+                if (node.Uid is not null)
                 {
                     content = string.Create(
                         TypeConverterHelper.InvariantEnglishUS,
@@ -329,7 +329,7 @@ namespace MS.Internal.Globalization
             LocalizabilityGroup comment = null;
             comment = _resolver.GetLocalizabilityComment(node, BamlConst.ContentSuffix);
 
-            if (comment != null)
+            if (comment is not null)
             {
                 localizability = comment.Override(result.Attribute);
             }
@@ -373,7 +373,7 @@ namespace MS.Internal.Globalization
                     propertyLocalName
                     );
 
-            if (comment != null)
+            if (comment is not null)
             {
                 localizability = comment.Override(localizability);
             }
@@ -401,7 +401,7 @@ namespace MS.Internal.Globalization
 
             // If this node's inheritable localizability has been constructed, we can skip it
             // This can happen when recursively format the content
-            if (node.InheritableAttribute != null)
+            if (node.InheritableAttribute is not null)
             {
                 return (!node.IsIgnored) ? node.InheritableAttribute : LocalizabilityIgnore;
             }
@@ -431,7 +431,7 @@ namespace MS.Internal.Globalization
                 // if ancestor's inheritable value isn't resolved yet, we recursively
                 // resolve it here.
                 BamlStartElementNode elementNode = ancestor as BamlStartElementNode;
-                if (elementNode != null)
+                if (elementNode is not null)
                 {
                     string formattingTag;
                     GetLocalizabilityForElementNode(elementNode, out inheritableAttribute, out formattingTag);
@@ -445,7 +445,7 @@ namespace MS.Internal.Globalization
                 CombineAndPropagateInheritanceValues(ancestor, inheritableAttribute);
 
                 inheritableAttribute = ancestor.InheritableAttribute;
-                Debug.Assert(inheritableAttribute != null);
+                Debug.Assert(inheritableAttribute is not null);
             }
 
             // if this item is set to ignore

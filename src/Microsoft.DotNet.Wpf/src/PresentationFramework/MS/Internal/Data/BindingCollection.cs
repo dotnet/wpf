@@ -36,7 +36,7 @@ namespace MS.Internal.Data
         /// <summary> Constructor </summary>
         internal BindingCollection(BindingBase owner, BindingCollectionChangedCallback callback)
         {
-            Invariant.Assert(owner != null && callback != null);
+            Invariant.Assert(owner is not null && callback is not null);
             _owner = owner;
             _collectionChangedCallback = callback;
         }
@@ -124,7 +124,7 @@ namespace MS.Internal.Data
 
         void OnBindingCollectionChanged()
         {
-            if (_collectionChangedCallback != null)
+            if (_collectionChangedCallback is not null)
                 _collectionChangedCallback();
         }
 

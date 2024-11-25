@@ -87,7 +87,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override TimeSpan GetCurrentTimeCore()
         {
-            if (_mediaPlayer != null)
+            if (_mediaPlayer is not null)
             {
                 return _mediaPlayer.Position;
             }
@@ -104,7 +104,7 @@ namespace System.Windows.Media
         protected override void Stopped()
         {
             // Only perform the operation if we're controlling a player
-            if (_mediaPlayer != null)
+            if (_mediaPlayer is not null)
             {
                 _mediaPlayer.SetSpeedRatio(0);
                 _mediaPlayer.SetPosition(TimeSpan.FromTicks(0));
@@ -132,7 +132,7 @@ namespace System.Windows.Media
         private void Sync()
         {
             // Only perform the operation if we're controlling a player
-            if (_mediaPlayer != null)
+            if (_mediaPlayer is not null)
             {
                 double? currentSpeedProperty = this.CurrentGlobalSpeed;
                 double currentSpeedValue = currentSpeedProperty.HasValue ? currentSpeedProperty.Value : 0;
@@ -193,13 +193,13 @@ namespace System.Windows.Media
                     _mediaPlayer = newPlayer;
 
                     // Disassociate the old player
-                    if (oldPlayer != null)
+                    if (oldPlayer is not null)
                     {
                         oldPlayer.Clock = null;
                     }
 
                     // Associate the new player
-                    if (newPlayer != null)
+                    if (newPlayer is not null)
                     {
                         newPlayer.Clock = this;
 
@@ -208,7 +208,7 @@ namespace System.Windows.Media
                         Uri toPlay = null;
 
                         // ignore pack URIs for now (see work items 45396 and 41636)
-                        if (baseUri != null
+                        if (baseUri is not null
                          && baseUri.Scheme != System.IO.Packaging.PackUriHelper.UriSchemePack
                          && !Timeline.Source.IsAbsoluteUri)
                         {

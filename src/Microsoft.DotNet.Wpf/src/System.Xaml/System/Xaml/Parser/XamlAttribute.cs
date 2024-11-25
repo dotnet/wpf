@@ -31,7 +31,7 @@ namespace MS.Internal.Xaml.Parser
             Name = propName;
             Value = val;
             Kind = ScannerAttributeKind.Property;  // non-"namespace" default;
-            if (lineInfo != null)
+            if (lineInfo is not null)
             {
                 LineNumber = lineInfo.LineNumber;
                 LinePosition = lineInfo.LinePosition;

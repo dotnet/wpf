@@ -140,7 +140,7 @@ namespace MS.Internal.PtsHost
                 }
             }
 
-            if (paragraph != null)
+            if (paragraph is not null)
             {
                 StructuralCache.CurrentFormatContext.DependentMax = (TextPointer)textPointer;
             }

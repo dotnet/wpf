@@ -225,7 +225,7 @@ namespace MS.Internal.AutomationProxies
         {
             Group group = GetGroup(groupID);
 
-            if (group != null)
+            if (group is not null)
             {
                 return new GroupInfo(group.Items, group.Count);
             }
@@ -278,7 +278,7 @@ namespace MS.Internal.AutomationProxies
             #region Public Methods
             static public bool operator true(GroupInfo info)
             {
-                return info._items != null;
+                return info._items is not null;
             }
             static public bool operator false(GroupInfo info)
             {

@@ -94,7 +94,7 @@ namespace System.Windows.Media.Effects
             Stream stream = null;
 
             try {                    
-                if (newUri != null)
+                if (newUri is not null)
                 {
                     if (!newUri.IsAbsoluteUri)
                     {
@@ -120,7 +120,7 @@ namespace System.Windows.Media.Effects
             }
             finally
             {
-                if (stream != null)
+                if (stream is not null)
                 {
                     stream.Dispose();
                 }
@@ -135,7 +135,7 @@ namespace System.Windows.Media.Effects
         {
             _shaderBytecode = null;
 
-            if (source != null)
+            if (source is not null)
             {
                 if (!source.CanSeek)
                 {
@@ -157,7 +157,7 @@ namespace System.Windows.Media.Effects
                 // The first 4 bytes contain version info in the form of
                 // [Minor][Major][xx][xx]
                 //
-                if (_shaderBytecode != null && _shaderBytecode.Length > 3)
+                if (_shaderBytecode is not null && _shaderBytecode.Length > 3)
                 {
                     ShaderMajorVersion = _shaderBytecode[1];
                     ShaderMinorVersion = _shaderBytecode[0];
@@ -180,7 +180,7 @@ namespace System.Windows.Media.Effects
             // ShaderEffects using this PixelShader need to check that they are using only
             // registers that are valid in ps_2_0.
             //
-            if (_shaderBytecodeChanged != null)
+            if (_shaderBytecodeChanged is not null)
             {
                 _shaderBytecodeChanged(this, null);
             }
@@ -280,7 +280,7 @@ namespace System.Windows.Media.Effects
             byte[] sourceBytecode = shader._shaderBytecode;
             byte[] destinationBytecode = null;
 
-            if (sourceBytecode != null)
+            if (sourceBytecode is not null)
             {
                 destinationBytecode = new byte[sourceBytecode.Length];
                 sourceBytecode.CopyTo(destinationBytecode, 0);

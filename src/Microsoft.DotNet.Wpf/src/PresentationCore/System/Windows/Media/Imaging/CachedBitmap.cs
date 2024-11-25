@@ -212,7 +212,7 @@ namespace System.Windows.Media.Imaging
             // Avoid Animatable requesting resource updates for invalidations that occur during construction
             Animatable_IsResourceInvalidationNecessary = false;
 
-            if (sourceBitmap._source != null)
+            if (sourceBitmap._source is not null)
             {
                 BeginInit();
                 _syncObject = sourceBitmap._syncObject;

@@ -359,7 +359,7 @@ namespace System.Windows.Media
         /// <param name="points"> The Point array to transform </param>
         public void Transform(Point[] points)
         {
-            if (points != null)
+            if (points is not null)
             {
                 for (int i = 0; i < points.Length; i++)
                 {
@@ -388,7 +388,7 @@ namespace System.Windows.Media
         /// <param name="vectors"> The Vector array to transform </param>
         public void Transform(Vector[] vectors)
         {
-            if (vectors != null)
+            if (vectors is not null)
             {
                 for (int i = 0; i < vectors.Length; i++)
                 {

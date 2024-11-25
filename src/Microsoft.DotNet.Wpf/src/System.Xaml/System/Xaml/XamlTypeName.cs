@@ -32,7 +32,7 @@ namespace System.Xaml.Schema
         {
             Name = name;
             Namespace = xamlNamespace;
-            if (typeArguments != null)
+            if (typeArguments is not null)
             {
                 List<XamlTypeName> typeArgList = new List<XamlTypeName>(typeArguments);
                 _typeArguments = typeArgList;
@@ -44,7 +44,7 @@ namespace System.Xaml.Schema
             ArgumentNullException.ThrowIfNull(xamlType);
             Name = xamlType.Name;
             Namespace = xamlType.GetXamlNamespaces()[0];
-            if (xamlType.TypeArguments != null)
+            if (xamlType.TypeArguments is not null)
             {
                 foreach (XamlType argumentType in xamlType.TypeArguments)
                 {
@@ -126,7 +126,7 @@ namespace System.Xaml.Schema
             ArgumentNullException.ThrowIfNull(namespaceResolver);
 
             result = ParseInternal(typeName, namespaceResolver.GetNamespace, out _);
-            return (result != null);
+            return (result is not null);
         }
 
         public static bool TryParseList(string typeNameList, IXamlNamespaceResolver namespaceResolver,
@@ -136,14 +136,14 @@ namespace System.Xaml.Schema
             ArgumentNullException.ThrowIfNull(namespaceResolver);
 
             result = ParseListInternal(typeNameList, namespaceResolver.GetNamespace, out _);
-            return (result != null);
+            return (result is not null);
         }
 
         internal bool HasTypeArgs
         {
             get
             {
-                return _typeArguments != null && _typeArguments.Count > 0;
+                return _typeArguments is not null && _typeArguments.Count > 0;
             }
         }
 
@@ -176,7 +176,7 @@ namespace System.Xaml.Schema
         internal static XamlTypeName ParseInternal(string typeName, Func<string, string> prefixResolver, out string error)
         {
             XamlTypeName xamlTypeName = GenericTypeNameParser.ParseIfTrivalName(typeName, prefixResolver, out error);
-            if (xamlTypeName != null)
+            if (xamlTypeName is not null)
             {
                 return xamlTypeName;
             }

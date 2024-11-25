@@ -2,13 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-using System;
-
 namespace System.Windows.Input
 {
     /// <summary>
-    ///     The MouseWheelEventArgs describes the state of a Mouse wheel.
+    ///     The <see cref="MouseWheelEventArgs"/> describes the state of a <see cref="Mouse"/> wheel.
     /// </summary>
     public class MouseWheelEventArgs : MouseEventArgs
     {
@@ -34,7 +31,7 @@ namespace System.Windows.Input
         /// </summary>
         public int Delta
         {
-            get {return _delta;}
+            get => _delta;
         }
 
         /// <summary>
@@ -49,10 +46,14 @@ namespace System.Windows.Input
         /// </param>
         protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
-            MouseWheelEventHandler handler = (MouseWheelEventHandler) genericHandler;
+            MouseWheelEventHandler handler = (MouseWheelEventHandler)genericHandler;
             handler(genericTarget, this);
         }
 
-        private static int _delta;
+        /// <summary>
+        ///     Specifies the delta the mouse wheel has turned.
+        /// </summary>
+        private readonly int _delta;
+
     }
 }

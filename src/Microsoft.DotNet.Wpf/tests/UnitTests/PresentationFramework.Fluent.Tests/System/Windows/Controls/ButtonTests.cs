@@ -8,6 +8,6 @@ public class ButtonTests
     [WpfFact]
     public void Button_Create()
     {
-        Button button = new();
+        Button _ = new();
     }
 }

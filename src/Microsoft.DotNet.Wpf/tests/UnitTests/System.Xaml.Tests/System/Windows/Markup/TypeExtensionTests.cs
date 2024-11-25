@@ -184,7 +184,7 @@ public class TypeExtensionTests
     {
         var extension = new TypeExtension("member");
         TypeConverter converter = TypeDescriptor.GetConverter(extension);
-        InstanceDescriptor descriptor = Assert.IsType<InstanceDescriptor>(converter.ConvertTo(extension, typeof(InstanceDescriptor)));
+        Assert.IsType<InstanceDescriptor>(converter.ConvertTo(extension, typeof(InstanceDescriptor)));
         Assert.Equal(extension.ToString(), converter.ConvertTo(extension, typeof(string)));
     }
 
